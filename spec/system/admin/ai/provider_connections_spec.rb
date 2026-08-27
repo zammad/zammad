@@ -1055,10 +1055,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
       end
     end
 
-    # A warning, not the gate: whether the index is actually rebuilt is decided by the backend off
-    # the embedding fingerprint, so a change made through the API or the console gets the same
-    # treatment. This is only what keeps the admin from being surprised by the bill.
-    describe 'warning before a change that costs the knowledge base its embeddings' do
+    describe 'background rebuild notification' do
       let(:embedding_connection) do
         create(:ai_provider_connection, :default_chat, :default_embedding, name:   'embedding-connection',
                                                                            config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-large' })
@@ -1073,21 +1070,14 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         create(:ai_provider_connection, name:   'differing-connection',
                                         config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-small' })
       end
-      # Whether there is an index to lose - set as the real hidden setting the validator reads, so the
-      # examples do not depend on an Elasticsearch instance holding one.
+      # Whether there is an index to replace, recorded without depending on an Elasticsearch instance.
       let(:index_exists) { true }
 
-      # The dialog stacks on top of the wizard step it was submitted from, so the admin lands back
-      # in front of their own values on Cancel rather than having to enter them again. Found by what
-      # it says rather than through #in_modal, which expects to be the only modal on the page.
-      def in_confirm_dialog(&)
-        within(find('.modal', text: 'Are you sure you want to change the embedding configuration?'), &)
+      def in_stop_dialog(&)
+        within(find('.modal', text: 'Are you sure you want to stop semantic search?'), &)
       end
 
-      # The confirmed save is asynchronous and closes the wizard when it lands - and unlike #in_modal,
-      # #in_confirm_dialog does not wait for anything to disappear. Reading the record right after the
-      # click would race the request that writes it.
-      def await_confirmed_save
+      def await_save
         expect(page).to have_no_css('.modal')
       end
 
@@ -1123,72 +1113,51 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         refresh
       end
 
-      it 'warns before semantic search moves to a connection on another model' do
+      it 'moves semantic search to another model and reports the background rebuild', :aggregate_failures do
         open_row_action('differing-connection', 'set-default-embedding')
 
-        in_modal disappears: false do
-          expect(page)
-            .to have_text('Are you sure you want to change the embedding configuration?')
-            .and(have_text('may result in higher AI costs'))
-        end
+        expect(page).to have_text('The vector index rebuild has started and will continue in the background.')
+        expect(page).to have_no_text('Are you sure you want to change the embedding configuration?')
+        expect(differing_connection.reload.default_embedding).to be(true)
       end
 
-      # Same model, same dimensions: nothing about the index changes, so nothing is worth asking.
-      it 'moves semantic search to a connection on the same model without warning', :aggregate_failures do
+      it 'moves semantic search to a connection on the same model without reporting a rebuild', :aggregate_failures do
         open_row_action('other-connection', 'set-default-embedding')
 
         expect(page).to have_text('Default provider updated successfully.')
+        expect(page).to have_no_text('The vector index rebuild has started')
         expect(other_connection.reload.default_embedding).to be(true)
         expect(embedding_connection.reload.default_embedding).to be(false)
       end
 
-      it 'sends nothing when the warning is cancelled', :aggregate_failures do
-        open_row_action('differing-connection', 'set-default-embedding')
+      it 'reports a rebuild deferred until AI providers are re-enabled', :aggregate_failures do
+        await_empty_ajax_queue
+        find('.js-ai-provider-toggle label').click
 
-        in_modal disappears: true do
-          click_on 'Cancel & Go Back'
-        end
+        expect(page).to have_text('AI provider configuration disabled successfully.')
+        page.execute_script("App.Event.trigger('notify:removeall')")
 
-        expect(page).to have_no_text('Default provider updated successfully.')
-        expect(differing_connection.reload.default_embedding).to be(false)
-        expect(embedding_connection.reload.default_embedding).to be(true)
-      end
+        edit_embedding_model('text-embedding-3-small')
 
-      it 'applies the change once the warning is confirmed', :aggregate_failures do
-        open_row_action('differing-connection', 'set-default-embedding')
+        await_save
+        expect(page).to have_no_text('The vector index rebuild has started')
+        expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
 
-        in_modal disappears: true do
-          click_on 'Proceed'
-        end
+        find('.js-ai-provider-toggle label').click
 
-        expect(page).to have_text('Default provider updated successfully.')
-        expect(differing_connection.reload.default_embedding).to be(true)
-      end
+        expect(page).to have_text('The vector index rebuild has started and will continue in the background.')
+        expect(Setting.get('ai_provider')).to be(true)
 
-      # Once confirmed, the next change has to ask again: the flag travels in the query rather than on
-      # the record, so it cannot keep answering for the rest of the session.
-      context 'with a second model to change to' do
-        let(:model_list) do
-          { 'data' => [{ 'id' => 'gpt-4.1' }, { 'id' => 'text-embedding-3-small' }, { 'id' => 'text-embedding-ada-002' }] }
-        end
+        setting_id = Setting.find_by(name: 'ai_provider').id
+        expect(page.evaluate_script("App.Setting.findNative(#{setting_id}).vector_index_rebuild_started"))
+          .to be_nil
 
-        it 'asks again the next time the model is changed' do
-          edit_embedding_model('text-embedding-3-small')
+        page.execute_script("App.Event.trigger('notify:removeall')")
+        await_empty_ajax_queue
+        find('.js-ai-provider-toggle label').click
 
-          in_confirm_dialog do
-            click_on 'Proceed'
-          end
-
-          await_confirmed_save
-
-          expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
-
-          edit_embedding_model('text-embedding-ada-002')
-
-          in_confirm_dialog do
-            expect(page).to have_text('may result in higher AI costs')
-          end
-        end
+        expect(page).to have_text('AI provider configuration disabled successfully.')
+        expect(page).to have_no_text('The vector index rebuild has started')
       end
 
       # Nothing is re-embedded here - the index is simply left where it is, which is what makes
@@ -1196,46 +1165,25 @@ RSpec.describe 'AI > Provider Connections', type: :system do
       it 'warns that semantic search stops working when the default is cleared' do
         open_row_action('embedding-connection', 'clear-default-embedding')
 
-        in_modal disappears: false do
+        in_stop_dialog do
           expect(page)
             .to have_text('Semantic search will stop working')
-            .and(have_no_text('may result in higher AI costs'))
+            .and(have_no_text('The vector index rebuild has started'))
         end
       end
 
-      it 'warns before another embedding model is saved on the semantic search connection' do
+      it 'saves another embedding model and reports the background rebuild' do
         edit_embedding_model('text-embedding-3-small')
 
-        in_confirm_dialog do
-          expect(page).to have_text('may result in higher AI costs')
-        end
-      end
-
-      it 'saves the edited model once the warning is confirmed' do
-        edit_embedding_model('text-embedding-3-small')
-
-        in_confirm_dialog do
-          click_on 'Proceed'
-        end
-
-        await_confirmed_save
+        expect(page).to have_text('The vector index rebuild has started and will continue in the background.')
+        expect(page.evaluate_script("App.AIProviderConnection.findNative(#{embedding_connection.id}).vector_index_rebuild_started"))
+          .to be_nil
+        await_save
 
         expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
       end
 
-      # Coming back to correct one field should not cost the admin the others.
-      it 'keeps the edited values when the warning is cancelled', :aggregate_failures do
-        edit_embedding_model('text-embedding-3-small')
-
-        in_confirm_dialog do
-          click_on 'Cancel & Go Back'
-        end
-
-        expect(page).to have_select('config.embedding_model', selected: 'text-embedding-3-small')
-        expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-large')
-      end
-
-      it 'saves a change that leaves the embeddings alone without warning' do
+      it 'saves a change that leaves the embeddings alone without reporting a rebuild' do
         find('td', text: 'embedding-connection').click
 
         in_modal disappears: true do
@@ -1249,9 +1197,10 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         end
 
         expect(embedding_connection.reload.name).to eq('renamed-connection')
+        expect(page).to have_no_text('The vector index rebuild has started')
       end
 
-      it 'never warns for a connection that does not serve semantic search' do
+      it 'does not report a rebuild for a connection that does not serve semantic search' do
         find('td', text: 'other-connection').click
 
         in_modal disappears: true do
@@ -1265,6 +1214,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         end
 
         expect(other_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
+        expect(page).to have_no_text('The vector index rebuild has started')
       end
 
       # The same outcome as the explicit "Do not use for semantic search" action, reached by editing
@@ -1283,21 +1233,18 @@ RSpec.describe 'AI > Provider Connections', type: :system do
 
           click_on 'Submit'
 
-          # Stacked on top of the step, so it is found by what it says rather than through #in_modal.
-          in_confirm_dialog do
+          in_stop_dialog do
             expect(page).to have_text('Semantic search will stop working')
 
             click_on 'Proceed'
           end
 
-          await_confirmed_save
+          await_save
 
           expect(embedding_connection.reload).to have_attributes(provider: 'anthropic', default_embedding: false)
         end
       end
 
-      # The model is what identifies the vectors, so moving it to another provider costs no re-index
-      # and gets no warning - warning about one that will not happen is its own kind of wrong.
       context 'when the same model moves to another provider' do
         let(:self_hosted) { true }
         let(:embedding_connection) do
@@ -1306,7 +1253,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
                                                                              config:   { url: 'http://localhost:11434', embedding_model: 'bge-m3' })
         end
 
-        it 'saves without warning' do
+        it 'saves without reporting a rebuild' do
           find('td', text: 'embedding-connection').click
 
           in_modal disappears: true do
@@ -1318,6 +1265,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
           end
 
           expect(embedding_connection.reload.provider).to eq('zammad_ai')
+          expect(page).to have_no_text('The vector index rebuild has started')
         end
       end
 
@@ -1331,7 +1279,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
           refresh
         end
 
-        it 'asks, and creates the connection once confirmed', :aggregate_failures do
+        it 'creates the connection without reporting a rebuild while AI providers are disabled', :aggregate_failures do
           click '[data-type=new]'
 
           in_modal disappears: true do
@@ -1345,24 +1293,19 @@ RSpec.describe 'AI > Provider Connections', type: :system do
           find('select[name="config.embedding_model"]').select('text-embedding-3-small')
           click_on 'Submit'
 
-          in_confirm_dialog do
-            click_on 'Proceed'
-          end
-
           expect(page).to have_text('first-connection')
+          expect(page).to have_no_text('The vector index rebuild has started')
           expect(AI::ProviderConnection.find_by(name: 'first-connection').default_embedding).to be(true)
         end
       end
 
-      # Nothing built means nothing re-created: the change simply takes effect, and the first build is
-      # what switching the vector database on pays for.
       context 'when no index has been built yet' do
         let(:index_exists) { false }
 
-        it 'applies the change without warning', :aggregate_failures do
+        it 'applies the change and reports the initial background build', :aggregate_failures do
           open_row_action('differing-connection', 'set-default-embedding')
 
-          expect(page).to have_text('Default provider updated successfully.')
+          expect(page).to have_text('The vector index rebuild has started and will continue in the background.')
           expect(differing_connection.reload.default_embedding).to be(true)
         end
       end

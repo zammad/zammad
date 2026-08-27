@@ -108,7 +108,11 @@ class KnowledgeBaseFeatures extends App.ControllerAIFeatureBase
 
     App.Setting.set('vectordb_enabled', value,
       notify:    true
-      doneLocal: =>
+      doneLocal: (setting) =>
+        delete setting.vector_index_rebuild_started
+        cachedSetting = App.Setting.findNative(setting.id)
+        delete cachedSetting.vector_index_rebuild_started if cachedSetting
+
         @render()
         @syncVectorIndex() if value
       # The prerequisite messages are long, so they get a longer timeout, and the toggle is

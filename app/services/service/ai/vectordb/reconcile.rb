@@ -17,6 +17,10 @@ module Service::AI::VectorDB
       return if desired == Service::AI::VectorDB::Embedding::Configuration.indexed
 
       VectorIndexRebuildJob.perform_later
+
+      # The active-job lock may coalesce this enqueue into a rebuild that is already pending or
+      # running. Either way, background reconciliation is in progress for the desired state.
+      true
     end
   end
 end

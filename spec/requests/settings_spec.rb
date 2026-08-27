@@ -360,4 +360,37 @@ RSpec.describe 'Settings', type: :request do
       end
     end
   end
+
+  describe 'vector index rebuild response', authenticated_as: :admin, performs_jobs: true do
+    let(:connection) do
+      create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                          config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
+    end
+    let(:setting) { Setting.find_by(name: 'ai_provider') }
+
+    before do
+      connection
+      Setting.set('ai_provider', true)
+      Setting.set('vectordb_enabled', true)
+      Service::AI::VectorDB::Embedding::Configuration.record_indexed(Service::AI::VectorDB::Embedding::Configuration.current)
+      Setting.set('ai_provider', false)
+      connection.update_columns(config: connection.config.merge('embedding_model' => 'text-embedding-3-large'))
+      clear_jobs
+    end
+
+    it 'reports a rebuild that starts when AI providers are re-enabled', :aggregate_failures do
+      put "/api/v1/settings/#{setting.id}",
+          params: { state_current: { value: true } },
+          as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to include(
+        'id'                           => setting.id,
+        'name'                         => 'ai_provider',
+        'state_current'                => { 'value' => true },
+        'vector_index_rebuild_started' => true,
+      )
+      expect(VectorIndexRebuildJob).to have_been_enqueued
+    end
+  end
 end

@@ -223,7 +223,15 @@ module ApplicationController::RendersModels
               object.attributes_with_association_ids
             end
 
-    render json: mask_sensitive_values(attrs, object), status:
+    attrs = model_item_render_attributes(object, mask_sensitive_values(attrs, object))
+
+    render json: attrs, status:
+  end
+
+  # Hook for controllers that need to add action-specific response data while retaining the generic
+  # model response shape.
+  def model_item_render_attributes(_object, attrs)
+    attrs
   end
 
   def mask_attributes_with_association_ids(list)

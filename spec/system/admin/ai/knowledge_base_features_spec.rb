@@ -27,6 +27,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
 
     it 'allows enabling the vector database' do
       expect(Setting.get('vectordb_enabled')).to be(false)
+      setting_id = Setting.find_by(name: 'vectordb_enabled').id
 
       click '.js-vectordbEnabledSetting'
 
@@ -34,6 +35,8 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
 
       expect(Setting.get('vectordb_enabled')).to be(true)
       expect(VectorIndexSyncJob).to have_received(:perform_later).once
+      expect(page.evaluate_script("App.Setting.findNative(#{setting_id}).vector_index_rebuild_started"))
+        .to be_nil
     end
 
     context 'with a provider that cannot generate embeddings' do

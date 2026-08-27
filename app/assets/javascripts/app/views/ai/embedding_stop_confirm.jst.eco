@@ -1,0 +1,4 @@
+<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
+
+<p><%- @T('Semantic search will stop working until another provider is selected for it.') %></p>
+<p><%- @T('The knowledge base index is kept, so selecting the same provider again requires no re-index.') %></p>

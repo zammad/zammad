@@ -99,6 +99,12 @@ class SettingsController < ApplicationController
     params
   end
 
+  def model_item_render_attributes(object, attrs)
+    return attrs if !object.vector_index_rebuild_started
+
+    attrs.merge('vector_index_rebuild_started' => true)
+  end
+
   # Setting hash value keys matching those partterns are sanitized.
   # Checks inclusion of the substring in the key.
   SENSITIVE_STATE_KEYS = %w[_key token secret bind_pw].freeze

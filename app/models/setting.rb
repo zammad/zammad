@@ -23,6 +23,7 @@ class Setting < ApplicationModel
   validates_with Setting::Validator, if: -> { !skip_validate }
 
   attr_accessor :state, :skip_validate
+  attr_reader :vector_index_rebuild_started
 
   @@current         = {}
   @@raw             = {}
@@ -298,7 +299,7 @@ reload config settings
     return if VECTOR_INDEX_RECONCILE_SETTINGS.exclude?(name)
     return if !Setting.exists?(name: 'vectordb_enabled')
 
-    Service::AI::VectorDB::Reconcile.execute
+    @vector_index_rebuild_started = Service::AI::VectorDB::Reconcile.execute == true
   end
 
   def transform

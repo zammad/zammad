@@ -13,30 +13,10 @@ class AI::ProviderConnectionsController < ApplicationController
   end
 
   def create
-    # A created connection can serve semantic search the moment it exists - flagged in the request,
-    # or automatically as the first connection - and the index is then rebuilt for whatever it
-    # embeds with. The index comes out correct either way; the challenge is only so that the same
-    # rebuild #update and #set_default ask about is not silently bought through a third door.
-    return if serves_embeddings_after_create? && embedding_rebuild_unconfirmed?(
-      after: submitted_embedding_configuration,
-    )
-
     model_create_render(AI::ProviderConnection, params)
   end
 
   def update
-    connection = AI::ProviderConnection.find(params[:id])
-
-    # Only what the connection serving semantic search embeds with matters: what any other one is
-    # configured with was never indexed, so editing it invalidates nothing.
-    #
-    # Whether it will serve it after the save, not whether it does now - `default_embedding` is a
-    # column like any other, so an update can hand semantic search over without going through
-    # #set_default, and would otherwise rebuild the whole index unasked.
-    return if serves_embeddings_after_update?(connection) && embedding_rebuild_unconfirmed?(
-      after: submitted_embedding_configuration(connection),
-    )
-
     model_update_render(AI::ProviderConnection, params)
   end
 
@@ -65,19 +45,12 @@ class AI::ProviderConnectionsController < ApplicationController
     # rule the connection seeding follows. A provider with nothing to name still fails, with the
     # validation message telling the admin to configure a model first.
     #
-    # Before the confirmation, which compares the model this action is about to run on - the seeded
-    # one included.
     connection.seed_embedding_default if serves_search
 
-    # Handing semantic search to another connection embeds the knowledge base with whatever that one
-    # runs on, so what it would run on is compared against what the index holds. Clearing it leaves
-    # nothing to embed with, which is no rebuild and needs no confirmation.
-    return if serves_search && embedding_rebuild_unconfirmed?(
-      after: Service::AI::VectorDB::Embedding::Configuration.of(connection),
-    )
-
     connection.update!("default_#{purpose}" => enabled)
-    model_show_render(AI::ProviderConnection, params)
+    # Render the instance that committed the change: its after-commit reconciliation result is
+    # transient response state and would be lost by model_show_render loading the record again.
+    model_item_render(connection)
   end
 
   # The models the endpoint offers, for the dialog's model dropdown, along with the defaults its
@@ -196,57 +169,10 @@ class AI::ProviderConnectionsController < ApplicationController
     render json: { error: message }, status: :unprocessable_content
   end
 
-  # Answers the challenge with the reply that carries it, and tells the action to stop there.
-  #
-  # The reply names the validator to skip, which is what the dialog sends back on Proceed - so a
-  # client that does not know the convention gets a rejected request with a reason rather than an
-  # index it never asked to have rebuilt.
-  #
-  # @return [Boolean] whether the request was answered and the action must not go on
-  def embedding_rebuild_unconfirmed?(after:)
-    return false if skip_validators.include?(Service::AI::ProviderConnection::Validator::EmbeddingRebuild::IDENTIFIER)
+  def model_item_render_attributes(object, attrs)
+    return attrs if !object.vector_index_rebuild_started
 
-    Service::AI::ProviderConnection::Validator::EmbeddingRebuild.execute(after:)
-
-    false
-  rescue Service::AI::ProviderConnection::Validator::EmbeddingRebuild::Error => e
-    render json: { error: e.message, error_human: e.message, skip_validator: e.skip_validator }, status: :unprocessable_content
-
-    true
-  end
-
-  def skip_validators
-    Array(params[:skip_validators]).map(&:to_s)
-  end
-
-  # Whether this connection is the one semantic search runs on once the submitted attributes are
-  # stored - the flag it carries now, unless the save itself changes it.
-  def serves_embeddings_after_update?(connection)
-    return ActiveModel::Type::Boolean.new.cast(params[:default_embedding]) if params.key?(:default_embedding)
-
-    connection.default_embedding?
-  end
-
-  # Whether the connection will serve semantic search the moment it exists: flagged by the request
-  # itself, or automatically as the first connection
-  # (AI::ProviderConnection#seed_initial_optional_defaults). The automatic flag only lands where the
-  # provider can embed at all, but that needs no mirroring here - a configuration nothing embeds
-  # with resolves to nil, which no validator warns about.
-  def serves_embeddings_after_create?
-    return true if ActiveModel::Type::Boolean.new.cast(params[:default_embedding])
-
-    !AI::ProviderConnection.exists?
-  end
-
-  # What the submitted attributes amount to, as the save would store them: an omitted config leaves
-  # the stored one in place, and an omitted provider the stored provider - on a create, where there
-  # is nothing stored, they amount to nothing. The token is the only masked value and none of this
-  # reads it, so the mask never looks like a change.
-  def submitted_embedding_configuration(connection = nil)
-    Service::AI::VectorDB::Embedding::Configuration.for_provider(
-      provider: params[:provider].presence || connection&.provider,
-      config:   params.key?(:config) ? params[:config].to_unsafe_h : connection&.config || {},
-    )
+    attrs.merge('vector_index_rebuild_started' => true)
   end
 
   # Lets model_update_render's unmask_sensitive_params restore the stored token when the

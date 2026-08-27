@@ -1,7 +1,0 @@
-<% if @mode is 'clear': %>
-  <p><%- @T('Semantic search will stop working until another provider is selected for it.') %></p>
-  <p><%- @T('The knowledge base index is kept, so selecting the same provider again requires no re-index.') %></p>
-<% else: %>
-  <p><%- @T('This will rebuild the vector index used for the semantic search, which may result in higher AI costs.') %></p>
-  <p><%- @T('The number of extra AI requests will depend on the amount of indexable content.') %></p>
-<% end %>
