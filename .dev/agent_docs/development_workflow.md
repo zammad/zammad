@@ -17,6 +17,39 @@ All branches must start with `private/` to prevent unintended syncing.
 - **`glab` CLI** — for pushing branches, creating merge requests, and other
   GitLab operations. Authenticated against the self-hosted GitLab instance.
 
+## Before the lifecycle: the story
+
+The lifecycle below starts at "read the GitHub issue" and assumes a task
+issue already exists that says something useful. Getting there is its own
+stage, and it acts on a **story** rather than on a task:
+
+1. **Refine** — `/refine-story`. Checks whether the story can be planned at
+   all, whether it is really several stories, and whether its acceptance
+   criteria, its use cases and its linked design agree. Proposes the missing
+   criteria and sections, and writes them to the story on confirmation.
+2. **Break down** — `/plan-story`. Cuts a ready story into `Task` and `Spike`
+   sub-issues: a task carries the plan of how to solve it, a spike the question
+   it has to answer. Refuses to plan a story that is not ready.
+3. **Present** — `/present-story`. Explains the prepared work in a sprint
+   planning. Reads only.
+
+The rules all three follow — the definition of ready, how story size is
+judged, the closed list of layers a plan must give a verdict on, and how deep
+a plan may go — are in `.dev/agent_docs/story_planning_rules.md`, the
+counterpart of `code_review_rules.md` at the other end of the lifecycle.
+
+**A bug does not go through this stage.** It enters the lifecycle directly.
+A bug report has no user story and no acceptance criteria by design — the
+template asks for actual and expected behaviour and reproduction steps
+instead — so the definition of ready does not apply to it, and the story
+skills report that rather than demanding something a bug can never have. The
+exception is a bug so large it needs splitting, and that is worth a
+conversation about whether it should be a story.
+
+Note that **"Plan" means two different things**: step 3 of the lifecycle below
+is the technical plan for one task, written by whoever implements it.
+`/plan-story` is the story-level breakdown that produces those tasks.
+
 ## Lifecycle
 
 ### 1. Understand

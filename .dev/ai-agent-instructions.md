@@ -74,6 +74,9 @@ Issues are tracked on **GitHub**, code is developed on a self-hosted **GitLab**.
 GitHub hosts a read-only mirror. The agent uses the **GitHub MCP server** for
 issues and **`glab` CLI** for GitLab operations.
 
+Stories are refined and broken down into task issues before this lifecycle
+starts (`/refine-story` → `/plan-story`). Bugs skip that and enter it directly.
+
 Lifecycle: Understand → Research → Plan → Branch (`/prepare-issue-branch`) →
 Implement → Test → Commit → Review → MR (`/create-mr`) → Cherry-pick
 (`/cherry-pick-to-stable`)
