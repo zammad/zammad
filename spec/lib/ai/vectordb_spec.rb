@@ -535,4 +535,36 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
       end
     end
   end
+
+  describe '#config' do
+    describe 'SSL verification' do
+      # A fresh instance, because the config is memoized.
+      def ssl_config
+        described_class.new.config.dig(:transport_options, :ssl)
+      end
+
+      context 'when es_ssl_verify is enabled' do
+        before { Setting.set('es_ssl_verify', true) }
+
+        it 'verifies SSL against the store with the custom SSL certificates' do
+          expect(ssl_config).to include(cert_store: OpenSSL::SSL::SSLContext::DEFAULT_CERT_STORE)
+          expect(ssl_config).not_to include(verify: false)
+        end
+
+        it 'picks up a newly integrated SSL certificate' do
+          create(:ssl_certificate, fixture: 'RootCA')
+
+          expect { ssl_config }.to change { OpenSSL::SSL::SSLContext::DEFAULT_CERT_STORE }
+        end
+      end
+
+      context 'when es_ssl_verify is disabled' do
+        before { Setting.set('es_ssl_verify', false) }
+
+        it 'does not verify SSL' do
+          expect(ssl_config).to eq({ verify: false })
+        end
+      end
+    end
+  end
 end

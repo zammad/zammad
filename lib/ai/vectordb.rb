@@ -20,8 +20,19 @@ class AI::VectorDB
           open_timeout: 8,
           timeout:      ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_READ_TIMEOUT', 180).to_i,
         },
+        ssl:     ssl_options,
       },
     }
+  end
+
+  # Elasticsearch is reached through Faraday here instead of UserAgent, so the SSL setup
+  # SearchIndexBackend gets for free has to be passed explicitly: Faraday builds its own
+  # certificate store from the system CAs only and ignores the custom SSL certificates Zammad
+  # applies to the default OpenSSL context, and it defaults to verifying regardless of es_ssl_verify.
+  def ssl_options
+    return { verify: false } if !Setting.get('es_ssl_verify')
+
+    { cert_store: Certificate::ApplySSLCertificates.ensure_fresh_ssl_context }
   end
 
   def client

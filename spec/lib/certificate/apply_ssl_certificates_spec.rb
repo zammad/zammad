@@ -24,6 +24,15 @@ RSpec.describe Certificate::ApplySSLCertificates, :aggregate_failures, type: :mo
         expect { described_class.ensure_fresh_ssl_context }.to change { current_store }
       end
     end
+
+    context 'when the store is needed by the caller' do
+      it 'returns the current store, also when the context was fresh already' do
+        create(:ssl_certificate, fixture: 'RootCA')
+
+        expect(described_class.ensure_fresh_ssl_context).to be(current_store)
+        expect(described_class.ensure_fresh_ssl_context).to be(current_store)
+      end
+    end
   end
 
   describe '.extract_metadata' do
