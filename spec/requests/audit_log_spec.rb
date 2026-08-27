@@ -65,4 +65,17 @@ RSpec.describe 'AuditLog', type: :request do
       end
     end
   end
+
+  describe 'auditable_type_label' do
+    before { authenticated_as(admin) }
+
+    it 'is exposed in the assets payload for the frontend object type column' do
+      audit_log = create(:audit_log, auditable: create(:ai_provider_connection))
+
+      get '/api/v1/audit_logs', params: { full: true }, as: :json
+
+      asset = response.parsed_body.dig('assets', 'AuditLog', audit_log.id.to_s)
+      expect(asset).to include('auditable_type_label' => 'AI provider')
+    end
+  end
 end

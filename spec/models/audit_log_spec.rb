@@ -176,6 +176,14 @@ RSpec.describe AuditLog, type: :model do
     end
   end
 
+  describe '#auditable_type_label' do
+    it 'delegates to AuditLog::ObjectTypeLabels' do
+      audit_log = create(:audit_log, auditable: create(:ai_provider_connection))
+
+      expect(audit_log.auditable_type_label).to eq('AI provider')
+    end
+  end
+
   describe '.cleanup' do
     let(:audit_log) { create(:audit_log) }
 

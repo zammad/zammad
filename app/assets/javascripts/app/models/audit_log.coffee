@@ -1,12 +1,12 @@
 class App.AuditLog extends App.Model
-  @configure 'AuditLog', 'user_id', 'user_fullname', 'action_type', 'auditable_type', 'auditable_id', 'auditable_name', 'value_from', 'value_to', 'source_ip', 'preferences'
+  @configure 'AuditLog', 'user_id', 'user_fullname', 'action_type', 'auditable_type', 'auditable_type_label', 'auditable_id', 'auditable_name', 'value_from', 'value_to', 'source_ip', 'preferences'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/audit_logs'
 
   @configure_attributes = [
     { name: 'action_type',    display: __('Action'),    tag: 'select', options: { create: __('create object'), update: __('update object'), destroy: __('delete object'), switch_to: __('switch to user'), switch_back_to: __('switch back to user') }, translate: true, null: true },
     { name: 'user_fullname',  display: __('Updated by'), tag: 'input',  type: 'text', limit: 255, null: true },
-    { name: 'auditable_type', display: __('Object Type'), tag: 'input',  type: 'text', limit: 255, null: true },
+    { name: 'auditable_type', display: __('Object Type'), tag: 'input', type: 'text', limit: 255, null: true },
     { name: 'auditable_name', display: __('Object name'), tag: 'input', type: 'text', limit: 255, null: true },
     { name: 'diff',           display: __('Changes'),   tag: 'audit_log_diff', null: true },
     { name: 'source_ip',      display: __('Source IP'), tag: 'input',  type: 'text', limit: 50, null: true },

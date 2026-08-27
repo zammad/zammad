@@ -92,7 +92,7 @@ RSpec.describe 'Profile > Notifications', authenticated_as: :user, type: :system
 
         expect(user.reload.preferences).to include(
           notification_config: include(
-            group_ids: [group_a.id.to_s, group_b.id.to_s]
+            group_ids: contain_exactly(group_a.id.to_s, group_b.id.to_s)
           )
         )
 

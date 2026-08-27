@@ -21,6 +21,20 @@ class AuditLog < ApplicationModel
 
   before_create :set_user_fullname, :set_switched_from_user, :set_source_ip
 
+  # Human-readable label of the audited object type (e.g. "AI provider" for AI::ProviderConnection),
+  # used by the frontend "Object Type" column and looked up in the translation catalog there.
+  def auditable_type_label
+    AuditLog::ObjectTypeLabels.label_for(auditable_type)
+  end
+
+  # Expose the label to the frontend via the assets payload (same pattern as
+  # AI::TextTool#attributes_with_association_ids).
+  def attributes_with_association_ids
+    attributes = super
+    attributes['auditable_type_label'] = auditable_type_label
+    attributes
+  end
+
 =begin
 
 suspend all audit logging for the duration of a block (thread-local)
