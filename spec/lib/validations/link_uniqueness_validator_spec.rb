@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Validations::LinkUniquenessValidator do
   let(:instance) { described_class.new }
+  let(:from)     { create(:ticket) }
+  let(:to)       { create(:ticket) }
 
   shared_examples 'adds an error' do
     it 'adds an error' do
@@ -22,7 +24,7 @@ RSpec.describe Validations::LinkUniquenessValidator do
   end
 
   context 'when creating a new link' do
-    let(:record) { build(:link) }
+    let(:record) { build(:link, from:, to:) }
 
     context 'when an unrelated link exists' do
       before do
@@ -33,20 +35,20 @@ RSpec.describe Validations::LinkUniquenessValidator do
     end
 
     context 'when an identical link exists' do
-      before { create(:link) }
+      before { create(:link, from:, to:) }
 
       include_examples 'adds an error'
     end
 
     context 'when a partially identical link exists' do
-      before { create(:link, link_type: 'other') }
+      before { create(:link, from:, to:, link_type: 'other') }
 
       include_examples 'does not add an error'
     end
   end
 
   context 'when editing an existing link' do
-    let(:record) { create(:link) }
+    let(:record) { create(:link, from:, to:) }
 
     context 'when an unrelated link exists' do
       before do
@@ -58,7 +60,7 @@ RSpec.describe Validations::LinkUniquenessValidator do
 
     context 'when an identical link exists' do
       before do
-        create(:link, link_type: 'target')
+        create(:link, from:, to:, link_type: 'target')
         record.link_type = Link::Type.create_if_not_exists(name: 'target', active: true)
       end
 
@@ -67,7 +69,7 @@ RSpec.describe Validations::LinkUniquenessValidator do
 
     context 'when a partially identical link exists' do
       before do
-        create(:link, link_type: 'other')
+        create(:link, from:, to:, link_type: 'other')
         record.link_type = Link::Type.create_if_not_exists(name: 'target', active: true)
       end
 

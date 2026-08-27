@@ -82,6 +82,25 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
       end
     end
 
+    context 'when source is the target' do
+      let(:input) do
+        {
+          sourceId: gql.id(from),
+          targetId: gql.id(from),
+          type:     type
+        }
+      end
+
+      it 'returns error' do
+        expect { gql.execute(mutation, variables: variables) }
+          .not_to change(Link, :count)
+        expect(gql.result.data[:link]).to be_nil
+        expect(gql.result.data[:errors]).to contain_exactly(
+          hash_including('message' => 'An object cannot be linked to itself.', 'field' => nil)
+        )
+      end
+    end
+
     context 'when source is not accessible' do
       let(:authenticated) { create(:agent, groups: [to_group]) }
 

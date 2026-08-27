@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Link, type: :model do
-  subject(:link) { create(:link) }
+  subject(:link) { create(:link, from:, to:) }
+
+  let(:from) { create(:ticket) }
+  let(:to)   { create(:ticket) }
 
   it 'can be saved' do
     expect(link).to be_persisted
@@ -12,7 +15,7 @@ RSpec.describe Link, type: :model do
   it 'Validates link uniqueness' do
     link # create a matching link
 
-    other = build(:link)
+    other = build(:link, from:, to:)
     other.save
 
     expect(other.errors.full_messages).to include('Link already exists')

@@ -47,5 +47,27 @@ RSpec.describe 'Ticket zoom > Add Link action', type: :system do
         it_behaves_like 'adding link to target ticket'
       end
     end
+
+    context 'when source ticket is linked to itself' do
+      let(:source_ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+      before do
+        visit "#ticket/zoom/#{source_ticket.id}"
+      end
+
+      it 'does not add the link' do
+        click('.js-add-related-ticket', text: '+ Link')
+
+        in_modal do
+          fill_in 'ticket_number', with: source_ticket.number
+
+          click '.js-submit'
+
+          expect(page).to have_css('.alert--danger', text: 'An object cannot be linked to itself.')
+        end
+
+        expect(Link.list(link_object: 'Ticket', link_object_value: source_ticket.id)).to be_blank
+      end
+    end
   end
 end

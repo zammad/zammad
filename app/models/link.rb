@@ -9,6 +9,7 @@ class Link < ApplicationModel
   # Using custom validator instead of validates_uniqueness_of
   # To have a custom attribute-less error message
   validates_with Validations::LinkUniquenessValidator
+  validates_with Validations::LinkSelfReferenceValidator
 
   after_destroy :touch_link_references
 

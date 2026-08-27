@@ -75,6 +75,12 @@ class App.TicketLinkAdd extends App.ControllerModal
       alert(__("The required parameter 'link_type' is missing."))
       return
 
+    if @object instanceof App.Ticket && params['ticket_number'] is @object.number
+      @showAlert(App.i18n.translatePlain('An object cannot be linked to itself.'))
+      return
+
+    @clearAlerts()
+
     # get data
     @ajax(
       id:    "links_add_#{@object.id}_#{@object_type}"

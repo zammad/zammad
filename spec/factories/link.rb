@@ -6,8 +6,8 @@ FactoryBot.define do
       link_type { 'normal' }
       link_object_source { from.class.name }
       link_object_target { to.class.name }
-      from { Ticket.first }
-      to   { Ticket.last }
+      from { create(:ticket) } # rubocop:disable FactoryBot/FactoryAssociationWithStrategy
+      to   { create(:ticket) } # rubocop:disable FactoryBot/FactoryAssociationWithStrategy
     end
 
     link_type_id             { Link::Type.create_if_not_exists(name: link_type, active: true).id }

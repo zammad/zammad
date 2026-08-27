@@ -44,10 +44,10 @@ class LinksController < ApplicationController
       link_object_source_value: object.id,
     )
 
-    if link
+    if link.persisted?
       render json: link, status: :created
     else
-      render json: link.errors, status: :unprocessable_content
+      render json: { error: link.errors.full_messages.first }, status: :unprocessable_content
     end
   end
 

@@ -1772,6 +1772,11 @@ msgstr ""
 msgid "An error occurred: %s"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee:79
+#: lib/validations/link_self_reference_validator.rb:4
+msgid "An object cannot be linked to itself."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:60
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee:26
@@ -12282,7 +12287,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:424
+#: app/models/ticket.rb:432
 msgid "No triggers active"
 msgstr ""
 

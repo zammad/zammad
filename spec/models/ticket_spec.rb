@@ -121,6 +121,23 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      context 'when both tickets are linked with each other' do
+        before do
+          create(:link, from: ticket, to: target_ticket)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        end
+
+        it 'does not leave the target ticket linked to itself' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: target_ticket.id
+          )
+
+          expect(links.pluck('link_object_value')).not_to include(target_ticket.id)
+        end
+      end
+
       context 'when attempting to cross-merge (i.e., to merge B → A after merging A → B)' do
         before { target_ticket.merge_to(ticket_id: ticket.id, user_id: 1) }
 

@@ -425,6 +425,15 @@ returns
       ).update_all(link_object_target_value: data[:ticket_id])
       # rubocop:enable Rails/SkipsModelValidations
 
+      # a link between the two merged tickets now points to the target ticket
+      # itself, which is not a valid link (see #6319)
+      Link.where(
+        link_object_source_id:    ticket_source_id,
+        link_object_source_value: data[:ticket_id],
+        link_object_target_id:    ticket_source_id,
+        link_object_target_value: data[:ticket_id],
+      ).destroy_all
+
       # link tickets
       Link.add(
         link_type:                'parent',

@@ -73,6 +73,24 @@ instead.
 
 ## 7.2
 
+### Links between an object and itself are rejected, and failed link creations answer `422`
+
+**Who is affected?** Integrations that create links via `POST /api/v1/links/add`.
+
+An object can no longer be linked to itself: a link whose source and target are the same ticket or
+knowledge base answer is rejected with the validation error `An object cannot be linked to itself.`.
+Such a link was never usable — it showed up twice in the link list and was not clickable.
+
+At the same time the endpoint reports failed link creations correctly. Previously it answered
+`201 Created` as soon as the source object was found, even when the link was not stored at all, so an
+already existing link looked like a success. A rejected link now answers `422 Unprocessable Content`
+with the reason in the `error` key, for example `{"error":"Link already exists"}`.
+
+⚠️ Update integrations that treat every response of the endpoint as a success, and stop sending
+self-links.
+
+**Related issue:** [#6319](https://github.com/zammad/zammad/issues/6319)
+
 ### Dates with a year outside 1 to 9999 are no longer accepted
 
 **Who is affected?** Integrations that write date or datetime values with a year outside the range 1
