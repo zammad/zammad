@@ -104,6 +104,23 @@ Owner: product & UX · last reviewed 2026-08
   confirmed before it happens, through the shared confirmation dialog. _Violation: a delete that goes
   straight through, or a bespoke confirm dialog next to the shared one._
 
+## Deployment
+
+Owner: development · last reviewed 2026-08
+
+- **DEPLOY-1** — What the application is made of is decided at **build time**. A running instance
+  never mutates its own application files, and a container least of all. _Violation: any feature that
+  writes into the application directory at runtime and expects it to survive — installing a package,
+  dropping in a custom file override, generating assets in place._
+
+  Worth stating rather than assuming, because the codebase already contradicts it:
+  `app/models/package.rb` writes to `Rails.root` on install and uninstall, and reads
+  `auto_install/`. That mechanism predates containers being a supported deployment.
+
+  This principle rules the runtime write **out**. It says nothing about what replaces it — which of
+  an image layer, a mount or a documented build step is the supported answer is **unsettled**, so
+  treat a story that proposes one of them as touching an open question rather than as aligned.
+
 ## Language and localisation
 
 Owner: product · last reviewed 2026-08
@@ -162,6 +179,9 @@ existing code.
   visibility capability, which suggests there is no settled pattern for it yet.
 - **How much of the legacy interface does a new feature have to reach**, and when is parity
   explicitly not required?
+- **How custom file overrides and packages are meant to work in a container**, given `DEPLOY-1`.
+  The principle says a runtime write is out; it does not say which of an image layer, a mount or a
+  build step is the answer. `zammad/zammad#6229` is blocked on exactly that choice.
 - **Product direction beyond the above.** The company vision — democratising customer service,
   transparency, open source, data protection — is real but not story-level: nothing in a story can
   violate it. Whatever exists as actual direction is not written down anywhere in this repository
