@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-06 22:12+0000\n"
+"PO-Revision-Date: 2026-08-26 22:12+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
@@ -475,7 +475,7 @@ msgstr "%s створив(-ла) організацію |%s|"
 msgid "%s created role |%s|"
 msgstr "%s створив(-ла) роль |%s|"
 
-#: app/assets/javascripts/app/models/ticket.coffee:109
+#: app/assets/javascripts/app/models/ticket.coffee:112
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:21
 msgid "%s created ticket |%s|"
 msgstr "%s створив(-ла) заявку |%s|"
@@ -694,7 +694,7 @@ msgstr "%s оновив(ла) організацію |%s|"
 msgid "%s updated role |%s|"
 msgstr "%s оновив(ла) роль |%s|"
 
-#: app/assets/javascripts/app/models/ticket.coffee:111
+#: app/assets/javascripts/app/models/ticket.coffee:114
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:23
 msgid "%s updated ticket |%s|"
 msgstr "%s оновив(ла) заявку |%s|"
@@ -735,11 +735,11 @@ msgstr "%s% було повторно відкрито"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} може мати повний або обмежений доступ до групи"
 
-#: app/models/object_manager/attribute.rb:624
+#: app/models/object_manager/attribute.rb:636
 msgid "%{name} already exists"
 msgstr "%{name} вже існує"
 
-#: app/models/object_manager/attribute.rb:608
+#: app/models/object_manager/attribute.rb:620
 msgid "%{name} is a reserved word"
 msgstr "%{name} - зарезервоване слово"
 
@@ -1013,7 +1013,7 @@ msgid ""
 msgstr ""
 "Створена тестова заявка, Ви можете знайти її у своєму огляді \"%s\" %l."
 
-#: app/models/ticket.rb:299
+#: app/models/ticket.rb:300
 msgid "A ticket cannot be merged into itself."
 msgstr "Заявка не може бути об'єднана сама з собою."
 
@@ -1066,7 +1066,7 @@ msgstr "ШІ-Агент"
 msgid "AI Agents"
 msgstr "ШІ-Агенти"
 
-#: db/seeds/settings.rb:6183
+#: db/seeds/settings.rb:6192
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr "Відповідь ШІ з Бази знань Заявки"
 
@@ -1078,7 +1078,7 @@ msgstr "Відповіді Бази знань ШІ"
 msgid "AI Provider"
 msgstr "ШІ-Провайдер"
 
-#: db/seeds/settings.rb:6106
+#: db/seeds/settings.rb:6115
 msgid "AI Provider Config"
 msgstr "Конфігурація постачальника ШІ"
 
@@ -1147,7 +1147,7 @@ msgstr "ШІ чернетка"
 msgid "AI error log"
 msgstr "Журнал помилок ШІ"
 
-#: db/seeds/settings.rb:6089
+#: db/seeds/settings.rb:6098
 msgid "AI provider"
 msgstr "Постачальник ШІ"
 
@@ -1936,7 +1936,7 @@ msgstr "Агентський чат"
 msgid "Agent idle timeout"
 msgstr "Час простою агента"
 
-#: app/models/role.rb:151 app/models/user.rb:763
+#: app/models/role.rb:152 app/models/user.rb:764
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 "Ліміт агента перевищено, будь ласка, перевірте налаштування свого облікового "
@@ -2058,7 +2058,7 @@ msgstr "Усі значення вважатимуться витягнутим�
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr "Дозволяє ШІ агенту вибирати кілька категорій із усіх можливих значень."
 
-#: db/seeds/settings.rb:6074
+#: db/seeds/settings.rb:6083
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2097,7 +2097,7 @@ msgstr "Дозволити користувачам додавати нові т
 msgid "Allow users to create new tags."
 msgstr "Дозволити користувачам створювати нові теги."
 
-#: db/seeds/settings.rb:6065
+#: db/seeds/settings.rb:6074
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 "Дозвольте користувачам автоматично перемикатися на новий інтерфейс робочого "
@@ -2117,7 +2117,7 @@ msgstr "Дозволити веб-сайти (розділені знаком ;)
 msgid "Also notify via email"
 msgstr "Також сповіщати електронною поштою"
 
-#: db/seeds/settings.rb:5223
+#: db/seeds/settings.rb:5232
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -2242,7 +2242,7 @@ msgstr ""
 "\" target=\"zammad_app\">Переглянути заявку в#{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/assets/javascripts/app/models/ticket.coffee:121
+#: app/assets/javascripts/app/models/ticket.coffee:124
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Інша заявка була об'єднана із заявкою |%s|"
@@ -2380,13 +2380,13 @@ msgstr "Застосувати шаблон"
 msgid "Approve"
 msgstr "Схвалити"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Apr"
 msgstr "Квіт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "April"
 msgstr "Квітень"
 
@@ -2644,7 +2644,7 @@ msgstr ""
 "Час очікування призначення у хвилинах, якщо призначений агент не працює над "
 "заявкою. Заявка буде відображатись як «не призначена»."
 
-#: app/models/user.rb:665
+#: app/models/user.rb:666
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2664,7 +2664,7 @@ msgstr "Потрібно хоча б одне правило відповідн�
 msgid "At least one object must be selected."
 msgstr "Принаймні один об'єкт має бути обраний."
 
-#: app/models/role.rb:128 app/models/user.rb:742
+#: app/models/role.rb:129 app/models/user.rb:743
 msgid "At least one user needs to have admin permissions."
 msgstr "Принаймні один користувач повинен мати права адміністратора."
 
@@ -2776,13 +2776,13 @@ msgstr "Атрибути для порівняння"
 msgid "Audio file"
 msgstr "Аудіофайл"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Aug"
 msgstr "Серп."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "August"
 msgstr "Серпень"
 
@@ -2827,7 +2827,7 @@ msgstr "Автентифікація через %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5912
+#: db/seeds/settings.rb:5921
 msgid "Authenticator App"
 msgstr "Програма-автентифікатор"
 
@@ -2876,7 +2876,7 @@ msgstr "Користувачі, що ігноруються автоматичн
 msgid "Auto Assignment Selector"
 msgstr "Відбірник автоматичного призначення"
 
-#: db/seeds/settings.rb:6051
+#: db/seeds/settings.rb:6060
 msgid "Auto Shutdown"
 msgstr "Автоматичне вимкнення"
 
@@ -2884,7 +2884,7 @@ msgstr "Автоматичне вимкнення"
 msgid "Auto Wizard"
 msgstr "Майстер автоматизації"
 
-#: db/seeds/settings.rb:4546
+#: db/seeds/settings.rb:4555
 msgid "Auto close"
 msgstr "Закривати автоматично"
 
@@ -2892,7 +2892,7 @@ msgstr "Закривати автоматично"
 msgid "Auto create"
 msgstr "Створювати автоматично"
 
-#: db/seeds/settings.rb:4572
+#: db/seeds/settings.rb:4581
 msgid "Auto-close state"
 msgstr "Стан автоматично закритих"
 
@@ -3369,19 +3369,19 @@ msgstr "CTI (Комп'ютерна телефонія)"
 msgid "CTI (generic)"
 msgstr "Комп'ютерна телефонія (універсальна)"
 
-#: db/seeds/settings.rb:5282
+#: db/seeds/settings.rb:5291
 msgid "CTI Token"
 msgstr "Токен CTI"
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5278
 msgid "CTI config"
 msgstr "Налаштування CTI"
 
-#: db/seeds/settings.rb:5303
+#: db/seeds/settings.rb:5312
 msgid "CTI customer last activity"
 msgstr "Остання активність клієнта CTI"
 
-#: db/seeds/settings.rb:5241
+#: db/seeds/settings.rb:5250
 msgid "CTI integration"
 msgstr "Інтеграція з CTI"
 
@@ -3561,7 +3561,7 @@ msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 "Неможливе відстеження закритої заявки. Будь ласка, створіть нову заявку."
 
-#: app/models/sla.rb:44
+#: app/models/sla.rb:45
 msgid "Cannot have both response time and update time."
 msgstr "Не може мати одночасно час відгуку та час оновлення."
 
@@ -3856,7 +3856,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6024
+#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6033
 msgid "Checklists"
 msgstr "Чеклисти"
 
@@ -3864,11 +3864,11 @@ msgstr "Чеклисти"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4693
+#: db/seeds/settings.rb:4702
 msgid "Checkmk integration"
 msgstr "Інтеграція з Checkmk"
 
-#: db/seeds/settings.rb:4814
+#: db/seeds/settings.rb:4823
 msgid "Checkmk token"
 msgstr "Токен Checkmk"
 
@@ -4081,11 +4081,11 @@ msgstr "Очистити значення"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5405
+#: db/seeds/settings.rb:5414
 msgid "Clearbit config"
 msgstr "Конфігурація Clearbit"
 
-#: db/seeds/settings.rb:5379
+#: db/seeds/settings.rb:5388
 msgid "Clearbit integration"
 msgstr "Інтеграція з Clearbit"
 
@@ -4249,7 +4249,7 @@ msgstr "Ширина стовпця: %s пікселів"
 msgid "Combined subscription URL"
 msgstr "Комбінована URL-адреса підписки"
 
-#: db/seeds/settings.rb:5831
+#: db/seeds/settings.rb:5840
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4294,7 +4294,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5904
+#: db/seeds/settings.rb:5913
 msgid "Complete the sign-in with your security key."
 msgstr "Завершіть авторизацію за допомогою ключа безпеки."
 
@@ -5395,13 +5395,13 @@ msgstr "День(днів)"
 msgid "Days"
 msgstr "Дні"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Dec"
 msgstr "Груд."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "December"
 msgstr "Грудень"
 
@@ -5539,7 +5539,7 @@ msgstr "Визначте конфігурацію моделі для Elasticsea
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Визначте назву конвеєра для Elasticsearch."
 
-#: db/seeds/settings.rb:4365
+#: db/seeds/settings.rb:4374
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -5677,7 +5677,7 @@ msgstr ""
 "Визначає кінцеву точку (endpoint) Zendesk для імпорту користувачів, заявок, "
 "станів та статей."
 
-#: db/seeds/settings.rb:5483
+#: db/seeds/settings.rb:5492
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
 "Визначає серверну частину статистики на панелі моніторингу, яка запускається "
@@ -5782,23 +5782,23 @@ msgstr ""
 "Визначає, як зв'язатися з сервером WebSocket. \"websocket\" використовується "
 "за замовчуванням у продакшені, \"websocketPort\" – CI."
 
-#: db/seeds/settings.rb:4696
+#: db/seeds/settings.rb:4705
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "Визначає, чи увімкнено Checkmk (https://checkmk.com/) чи ні."
 
-#: db/seeds/settings.rb:5382
+#: db/seeds/settings.rb:5391
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Визначає, чи увімкнено Clearbit (http://www.clearbit.com) чи ні."
 
-#: db/seeds/settings.rb:4983
+#: db/seeds/settings.rb:4992
 msgid "Defines if Exchange is enabled or not."
 msgstr "Визначає, чи ввімкнено Exchange чи ні."
 
-#: db/seeds/settings.rb:4500
+#: db/seeds/settings.rb:4509
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Визначає, чи ввімкнено Icinga (http://www.icinga.org) чи ні."
 
-#: db/seeds/settings.rb:5593
+#: db/seeds/settings.rb:5602
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -5806,31 +5806,31 @@ msgstr ""
 "Визначає, чи буде увімкнено кнопку навігаційної панелі Бази знань для "
 "користувачів, які не мають прав доступу до Бази знань."
 
-#: db/seeds/settings.rb:5578
+#: db/seeds/settings.rb:5587
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "Визначає, чи ввімкнена кнопка навігаційної панелі \"База знань\"."
 
-#: db/seeds/settings.rb:4930
+#: db/seeds/settings.rb:4939
 msgid "Defines if LDAP is enabled or not."
 msgstr "Визначає, чи LDAP увімкнено, чи ні."
 
-#: db/seeds/settings.rb:4829
+#: db/seeds/settings.rb:4838
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "Визначає, чи увімкнено Monit (https://mmonit.com/monit/) чи ні."
 
-#: db/seeds/settings.rb:4598
+#: db/seeds/settings.rb:4607
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Визначає, чи ввімкнено Nagios (http://www.nagios.org) чи ні."
 
-#: db/seeds/settings.rb:5748
+#: db/seeds/settings.rb:5757
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "Визначає, чи ввімкнено шифрування PGP, чи ні."
 
-#: db/seeds/settings.rb:5319
+#: db/seeds/settings.rb:5328
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Визначає, чи ввімкнено Placetel (http://www.placetel.de) чи ні."
 
-#: db/seeds/settings.rb:5706
+#: db/seeds/settings.rb:5715
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "Визначає, чи ввімкнено шифрування S/MIME чи ні."
 
@@ -5846,7 +5846,7 @@ msgstr "Визначає, чи знаходиться програма в реж
 msgid "Defines if application is used as online service."
 msgstr "Визначає, чи використовується додаток як онлайн-сервіс."
 
-#: db/seeds/settings.rb:5855
+#: db/seeds/settings.rb:5864
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -5854,13 +5854,13 @@ msgstr ""
 "Визначає, чи відображаються календарні тижні в засобі вибору полів дати/"
 "часу, щоб легко вибрати правильну дату."
 
-#: db/seeds/settings.rb:5244
+#: db/seeds/settings.rb:5253
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 "Визначає, чи увімкнена універсальна інтеграція з комп'ютерною телефонією "
 "(CTI) чи ні."
 
-#: db/seeds/settings.rb:5947
+#: db/seeds/settings.rb:5956
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -5868,25 +5868,25 @@ msgstr ""
 "Визначає, чи можуть користувачі використовувати коди відновлення, якщо вони "
 "втратять доступ до інших методів двофакторної автентифікації."
 
-#: db/seeds/settings.rb:5161
+#: db/seeds/settings.rb:5170
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Визначає, чи ввімкнено sipgate.io (http://www.sipgate.io)."
 
-#: db/seeds/settings.rb:6092
+#: db/seeds/settings.rb:6101
 msgid "Defines if the AI provider is configured."
 msgstr "Визначає, чи налаштований постачальник ШІ."
 
-#: db/seeds/settings.rb:5092
+#: db/seeds/settings.rb:5101
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "Визначає, чи ввімкнена інтеграція з GitHub (http://www.github.com)."
 
-#: db/seeds/settings.rb:5050
+#: db/seeds/settings.rb:5059
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "Визначає, чи ввімкнена інтеграція з GitLab (http://www.gitlab.com)."
 
-#: db/seeds/settings.rb:5790
+#: db/seeds/settings.rb:5799
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "Визначає, чи ввімкнено конфігурацію псевдоніма одержувача PGP."
 
@@ -5907,7 +5907,7 @@ msgstr ""
 "однаковий пароль, і скидання пароля буде працювати без доставки електронною "
 "поштою)."
 
-#: db/seeds/settings.rb:6200
+#: db/seeds/settings.rb:6209
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -5916,7 +5916,7 @@ msgstr ""
 "тексту. Зауважте, що цей параметр буде проігноровано, якщо увімкнено "
 "помічник редактора."
 
-#: db/seeds/settings.rb:5999
+#: db/seeds/settings.rb:6008
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -5940,7 +5940,7 @@ msgstr ""
 "Визначає, чи електронний лист повинен відображатися в результатах віджету "
 "користувача/організації."
 
-#: db/seeds/settings.rb:5010
+#: db/seeds/settings.rb:5019
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
@@ -5964,7 +5964,7 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr "Визначає, чи ввімкнено типи обліку часу."
 
-#: db/seeds/settings.rb:5915
+#: db/seeds/settings.rb:5924
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
@@ -5972,7 +5972,7 @@ msgstr ""
 "Визначає, чи ввімкнено методу двофакторної автентифікації за допомогою "
 "додатку автентифікатора."
 
-#: db/seeds/settings.rb:5883
+#: db/seeds/settings.rb:5892
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
@@ -5984,12 +5984,12 @@ msgstr ""
 msgid "Defines if tickets can be created via web form."
 msgstr "Визначає, чи можна створювати заявки через веб-форму."
 
-#: db/seeds/settings.rb:4549
+#: db/seeds/settings.rb:4558
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr ""
 "Визначає, чи заявки підлягають закриттю при відновленні сервісу після збою."
 
-#: db/seeds/settings.rb:4401
+#: db/seeds/settings.rb:4410
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "Визначає фільтр постмайстра для фільтрів, керованих через інтерфейс "
@@ -6016,14 +6016,14 @@ msgid "Defines postmaster filter to handle secure mailing."
 msgstr ""
 "Визначає фільтр поштового адміністратора для обробки захищених повідомлень."
 
-#: db/seeds/settings.rb:4464
+#: db/seeds/settings.rb:4473
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "Визначає фільтр поштового адміністратора для ідентифікації листів Jira для "
 "коректних подальших дій."
 
-#: db/seeds/settings.rb:4446
+#: db/seeds/settings.rb:4455
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6053,7 +6053,7 @@ msgstr ""
 "Визначає фільтр постмайстра для визначення подальших дій (на основі "
 "налаштувань адміністратора)."
 
-#: db/seeds/settings.rb:4356
+#: db/seeds/settings.rb:4365
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6061,7 +6061,7 @@ msgstr ""
 "Визначає фільтр поштового адміністратора для виявлення позаофісних листів "
 "для подальшого виявлення та підтримки поточного стану заявки."
 
-#: db/seeds/settings.rb:4383
+#: db/seeds/settings.rb:4392
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6070,7 +6070,7 @@ msgstr ""
 "адміністратора; і вимикає надсилання сповіщення у разі постійної помилки "
 "доставки."
 
-#: db/seeds/settings.rb:4374
+#: db/seeds/settings.rb:4383
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets."
@@ -6078,7 +6078,7 @@ msgstr ""
 "Визначає фільтр поштомайстра для ідентифікації відхилень поштомайстра; та "
 "обробляє їх як подальші дії після оригінальних заявок."
 
-#: db/seeds/settings.rb:4392
+#: db/seeds/settings.rb:4401
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6095,11 +6095,11 @@ msgid "Defines postmaster filter to identify session user."
 msgstr ""
 "Визначає фільтр поштового майстра для ідентифікації користувача сеансу."
 
-#: db/seeds/settings.rb:4491
+#: db/seeds/settings.rb:4500
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "Визначає фільтр поштового майстра для ідентифікації групи заявки."
 
-#: db/seeds/settings.rb:4428
+#: db/seeds/settings.rb:4437
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6107,21 +6107,21 @@ msgstr ""
 "Визначає фільтр поштового майстра для керування листами Checkmk (http://"
 "mathias-kettner.com/check_mk.html)."
 
-#: db/seeds/settings.rb:4410
+#: db/seeds/settings.rb:4419
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Визначає фільтр постмайстра для керування електронними листами Icinga "
 "(http://www.icinga.org)."
 
-#: db/seeds/settings.rb:4437
+#: db/seeds/settings.rb:4446
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Визначає фільтр поштового адміністратора для керування імейлами Monit "
 "(https://mmonit.com/monit/)."
 
-#: db/seeds/settings.rb:4419
+#: db/seeds/settings.rb:4428
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
@@ -6135,6 +6135,14 @@ msgid ""
 msgstr ""
 "Визначає фільтр постмайстра для видалення заголовків X-Zammad з ненадійних "
 "джерел."
+
+#: db/seeds/settings.rb:4356
+msgid ""
+"Defines postmaster filter to remove references to local attachments from "
+"incoming emails."
+msgstr ""
+"Визначає фільтр postmaster для видалення посилань на локальні вкладення з "
+"вхідних електронних листів."
 
 #: db/seeds/settings.rb:4284
 msgid ""
@@ -6152,7 +6160,7 @@ msgstr ""
 "Визначає фільтр поштового адміністратора для визначення відправника імейлів "
 "на основі заголовка відповіді."
 
-#: db/seeds/settings.rb:4482
+#: db/seeds/settings.rb:4491
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6169,35 +6177,35 @@ msgstr "Визначає фільтр постмайстра."
 msgid "Defines pretty date format."
 msgstr "Визначає зручний формат дати."
 
-#: db/seeds/settings.rb:5472
+#: db/seeds/settings.rb:5481
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "Визначає час очікування очищення HTML."
 
-#: db/seeds/settings.rb:5131
+#: db/seeds/settings.rb:5140
 msgid "Defines sync transaction backend."
 msgstr "Визначає синхронну серверну операцію."
 
-#: db/seeds/settings.rb:5460
+#: db/seeds/settings.rb:5469
 msgid "Defines the CSS font information for HTML emails."
 msgstr "Визначає інформацію про CSS-шрифт для HTML-листів."
 
-#: db/seeds/settings.rb:5272
+#: db/seeds/settings.rb:5281
 msgid "Defines the CTI config."
 msgstr "Визначає налаштування CTI (Комп'ютерна телефонія)."
 
-#: db/seeds/settings.rb:4817
+#: db/seeds/settings.rb:4826
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "Визначає токен Checkmk для дозволу оновлень."
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5417
 msgid "Defines the Clearbit config."
 msgstr "Визначає конфігурацію Clearbit."
 
-#: db/seeds/settings.rb:4970
+#: db/seeds/settings.rb:4979
 msgid "Defines the Exchange OAuth config."
 msgstr "Визначає конфігурацію Exchange OAuth."
 
-#: db/seeds/settings.rb:4957
+#: db/seeds/settings.rb:4966
 msgid "Defines the Exchange config."
 msgstr "Визначає конфігурацію Exchange."
 
@@ -6205,19 +6213,19 @@ msgstr "Визначає конфігурацію Exchange."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Визначає протокол HTTP для вашого сервера."
 
-#: db/seeds/settings.rb:5776
+#: db/seeds/settings.rb:5785
 msgid "Defines the PGP config."
 msgstr "Визначає конфігурацію PGP."
 
-#: db/seeds/settings.rb:5347
+#: db/seeds/settings.rb:5356
 msgid "Defines the Placetel config."
 msgstr "Визначає конфігурацію Placetel."
 
-#: db/seeds/settings.rb:5734
+#: db/seeds/settings.rb:5743
 msgid "Defines the S/MIME config."
 msgstr "Визначає конфігурацію S/MIME."
 
-#: db/seeds/settings.rb:5449
+#: db/seeds/settings.rb:5458
 msgid "Defines the agent limit."
 msgstr "Визначає ліміт агента."
 
@@ -6301,7 +6309,7 @@ msgstr "Визначає тип обліку часу за замовчуван�
 msgid "Defines the default visibility for new notes."
 msgstr "Визначає видимість за замовчуванням для нових приміток."
 
-#: db/seeds/settings.rb:5306
+#: db/seeds/settings.rb:5315
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -6309,7 +6317,7 @@ msgstr ""
 "Визначає тривалість активності клієнта (в секундах) під час дзвінка до "
 "моменту, коли буде показано діалогове вікно профілю користувача."
 
-#: db/seeds/settings.rb:6172
+#: db/seeds/settings.rb:6181
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -6327,7 +6335,7 @@ msgstr ""
 "#{setting.fqdn}, яка знаходиться у всіх формах обміну повідомленнями, що "
 "використовуються програмою, для створення посилань на заявки у вашій системі."
 
-#: db/seeds/settings.rb:4745
+#: db/seeds/settings.rb:4754
 msgid "Defines the group of created tickets."
 msgstr "Визначає групу заявок, що створюються."
 
@@ -6335,7 +6343,7 @@ msgstr "Визначає групу заявок, що створюються."
 msgid "Defines the group of tickets created via web form."
 msgstr "Визначає групу заявок, створених за допомогою веб-форми."
 
-#: db/seeds/settings.rb:5037
+#: db/seeds/settings.rb:5046
 msgid "Defines the i-doit config."
 msgstr "Визначає конфігурацію i-doit."
 
@@ -6380,15 +6388,15 @@ msgstr "Визначає порт сервера WebSocket."
 msgid "Defines the random application secret."
 msgstr "Визначає випадковий ключ програми."
 
-#: db/seeds/settings.rb:4526
+#: db/seeds/settings.rb:4535
 msgid "Defines the sender email address of Icinga emails."
 msgstr "Визначає адресу електронної пошти відправника імейлів Icinga."
 
-#: db/seeds/settings.rb:4624
+#: db/seeds/settings.rb:4633
 msgid "Defines the sender email address of Nagios emails."
 msgstr "Визначає адресу електронної пошти відправника імейлів Nagios."
 
-#: db/seeds/settings.rb:4722
+#: db/seeds/settings.rb:4731
 msgid "Defines the sender email address of the service emails."
 msgstr ""
 "Визначає адресу електронної пошти відправника службових повідомлень "
@@ -6415,11 +6423,11 @@ msgstr ""
 "призначених дозволів буде використано найбільше значення тайм-ауту, інакше — "
 "значення за замовчуванням."
 
-#: db/seeds/settings.rb:5210
+#: db/seeds/settings.rb:5219
 msgid "Defines the sipgate.io config."
 msgstr "Визначає конфігурацію Sipgate (sipgate.io)."
 
-#: db/seeds/settings.rb:4575
+#: db/seeds/settings.rb:4584
 msgid "Defines the state of auto-closed tickets."
 msgstr "Визначає стан автоматично закритих заявок."
 
@@ -6441,31 +6449,31 @@ msgstr "Визначає поведінку вкладки після дії і�
 msgid "Defines the ticket states used for lookups."
 msgstr "Визначає стани заявки, які використовуються для пошуку."
 
-#: db/seeds/settings.rb:5605
+#: db/seeds/settings.rb:5614
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "Визначає проміжок часу, протягом якого можна видалити самостійно створену "
 "нотатку."
 
-#: db/seeds/settings.rb:5361
+#: db/seeds/settings.rb:5370
 msgid "Defines the token for Placetel."
 msgstr "Визначає токен для Placetel."
 
-#: db/seeds/settings.rb:5152
+#: db/seeds/settings.rb:5161
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 "Визначає серверну операцію виявлення підписів клієнтів в електронних листах."
 
-#: db/seeds/settings.rb:5134
+#: db/seeds/settings.rb:5143
 msgid "Defines the transaction backend to execute triggers."
 msgstr "Визначає серверну операцію виконання тригерів."
 
-#: db/seeds/settings.rb:5143
+#: db/seeds/settings.rb:5152
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "Визначає серверну операцію для надсилання повідомлень агенту."
 
-#: db/seeds/settings.rb:5430
+#: db/seeds/settings.rb:5439
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -6473,13 +6481,13 @@ msgstr ""
 "Визначає серверну операцію, яка виявляє Сaller ID (ідентифікатори абонентів, "
 "що викликають) в об'єктах і зберігає їх для пошуку CTI."
 
-#: db/seeds/settings.rb:5439
+#: db/seeds/settings.rb:5448
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
 "Визначає серверну операцію (Backend), яка виконує тригери, що базуються на "
 "часі."
 
-#: db/seeds/settings.rb:5421
+#: db/seeds/settings.rb:5430
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -6508,7 +6516,7 @@ msgstr ""
 "Визначає заголовок попередження, який показується при наявності відповідної "
 "заявки."
 
-#: db/seeds/settings.rb:5140
+#: db/seeds/settings.rb:5149
 msgid "Defines transaction backend."
 msgstr "Визначає серверну операцію."
 
@@ -6523,7 +6531,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr "Визначає, які параметри дозволено передавати через API форми."
 
-#: db/seeds/settings.rb:6083
+#: db/seeds/settings.rb:6092
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 "Визначає, яким ролям дозволено доступ до перемикача BETA UI на робочому "
@@ -6793,15 +6801,15 @@ msgstr "Конструктор форми"
 msgid "Desktop"
 msgstr "Версія для настільних комп'ютерів"
 
-#: db/seeds/settings.rb:6062
+#: db/seeds/settings.rb:6071
 msgid "Desktop BETA UI Switch"
 msgstr "Настільний перемикач BETA UI"
 
-#: db/seeds/settings.rb:6071
+#: db/seeds/settings.rb:6080
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "Меню адміністрування BETA UI перемикача робочого столу"
 
-#: db/seeds/settings.rb:6080
+#: db/seeds/settings.rb:6089
 msgid "Desktop BETA UI Switch Roles"
 msgstr "Ролі перемикачів у настільному інтерфейсі BETA UI"
 
@@ -7057,7 +7065,7 @@ msgstr "Не зашифровувати електронну пошту"
 msgid "Do not sign email"
 msgstr "Не підписувати електронну пошту"
 
-#: db/seeds/settings.rb:6009
+#: db/seeds/settings.rb:6018
 msgid "Do not update any tickets."
 msgstr "Не оновлювати жодну заявку."
 
@@ -7534,7 +7542,7 @@ msgstr "Обліковий запис електронної пошти"
 msgid "Email address"
 msgstr "Адреса електронної пошти"
 
-#: app/models/user.rb:675
+#: app/models/user.rb:676
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "Адреса електронної пошти '%{email}' вже використовується для іншого "
@@ -7661,7 +7669,7 @@ msgstr ""
 "електронної пошти та пароль). Кожен користувач повинен створити власні "
 "токени доступу в профілі користувача."
 
-#: db/seeds/settings.rb:5944
+#: db/seeds/settings.rb:5953
 msgid "Enable Recovery Codes"
 msgstr "Увімкнути коди відновлення"
 
@@ -7685,7 +7693,7 @@ msgstr "Увімкнути автоматичне призначення для 
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "Увімкнути автоматичне призначення, коли агент уперше відкриває заявку."
 
-#: db/seeds/settings.rb:6027
+#: db/seeds/settings.rb:6036
 msgid "Enable checklists."
 msgstr "Увімкнути чеклисти."
 
@@ -7713,7 +7721,7 @@ msgstr ""
 "Якщо Ви хочете процитувати певну фразу, просто виділіть текст і натисніть "
 "«відповісти» (ця можливість доступна завжди)."
 
-#: db/seeds/settings.rb:6186
+#: db/seeds/settings.rb:6195
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
@@ -7721,7 +7729,7 @@ msgstr ""
 "Увімкнути або вимкнути генерацію відповідей Бази знань на основі вмісту "
 "заявок."
 
-#: db/seeds/settings.rb:6054
+#: db/seeds/settings.rb:6063
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -7752,11 +7760,11 @@ msgstr ""
 "усіх не-адміністраторів завершується, і лише адміністратори зможуть почати "
 "нову сесію."
 
-#: db/seeds/settings.rb:6125
+#: db/seeds/settings.rb:6134
 msgid "Enable or disable the ticket summary."
 msgstr "Увімкніть або вимкніть підсумок заявки."
 
-#: db/seeds/settings.rb:6158
+#: db/seeds/settings.rb:6167
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Увімкніть або вимкніть текстові інструменти помічника редактора."
 
@@ -7797,7 +7805,7 @@ msgstr ""
 "Вмикає попередження користувачам під час створення заявки, якщо існує заявка "
 "з такими самими атрибутами."
 
-#: db/seeds/settings.rb:5801
+#: db/seeds/settings.rb:5810
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -7963,11 +7971,11 @@ msgstr "Кінцева точка (Endpoint)"
 msgid "Endpoint Settings"
 msgstr "Налаштування кінцевої точки (Endpoint)"
 
-#: db/seeds/settings.rb:5971
+#: db/seeds/settings.rb:5980
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "Примусове налаштування двофакторної автентифікації"
 
-#: db/seeds/settings.rb:5978
+#: db/seeds/settings.rb:5987
 msgid "Enforced for user roles"
 msgstr "Примусово для ролей користувачів"
 
@@ -8392,15 +8400,15 @@ msgstr "Винятки для користувачів"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4967
+#: db/seeds/settings.rb:4976
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:4954
+#: db/seeds/settings.rb:4963
 msgid "Exchange config"
 msgstr "Налаштування Exchange"
 
-#: db/seeds/settings.rb:4980
+#: db/seeds/settings.rb:4989
 msgid "Exchange integration"
 msgstr "Інтеграція з Exchange"
 
@@ -8634,13 +8642,13 @@ msgstr "Функція вимкнена, будь ласка, звернітьс
 msgid "Feature not configured, please contact your admin!"
 msgstr "Функція не налаштована, будь ласка, зверніться до адміністратора!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Feb"
 msgstr "Лют."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "February"
 msgstr "Лютий"
 
@@ -9035,11 +9043,11 @@ msgstr "Періодичність"
 msgid "Freshdesk"
 msgstr "Freshdesk"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Fri"
 msgstr "П'ят."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:11
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:19
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:56
@@ -9161,7 +9169,7 @@ msgstr "Почати"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5936
+#: db/seeds/settings.rb:5945
 msgid "Get the security code from the authenticator app on your device."
 msgstr "Отримайте код безпеки з програми-автентифікатора на вашому пристрої."
 
@@ -9191,11 +9199,11 @@ msgstr "Облікові дані додатку GitHub"
 msgid "GitHub OAuth Applications"
 msgstr "Додаток GitHub OAuth"
 
-#: db/seeds/settings.rb:5116
+#: db/seeds/settings.rb:5125
 msgid "GitHub config"
 msgstr "Конфігурація GitHub"
 
-#: db/seeds/settings.rb:5089
+#: db/seeds/settings.rb:5098
 msgid "GitHub integration"
 msgstr "Інтеграція з GitHub"
 
@@ -9226,11 +9234,11 @@ msgstr "Облікові дані програми GitLab"
 msgid "GitLab Applications"
 msgstr "Додаток GitLab"
 
-#: db/seeds/settings.rb:5074
+#: db/seeds/settings.rb:5083
 msgid "GitLab config"
 msgstr "Конфігурація GitLab"
 
-#: db/seeds/settings.rb:5047
+#: db/seeds/settings.rb:5056
 msgid "GitLab integration"
 msgstr "Інтеграція з GitLab"
 
@@ -9464,11 +9472,11 @@ msgstr "Групи…"
 msgid "HMAC SHA1 Signature Token"
 msgstr "Токен підпису HMAC SHA1"
 
-#: db/seeds/settings.rb:5457
+#: db/seeds/settings.rb:5466
 msgid "HTML Email CSS Font"
 msgstr "CSS-шрифт для HTML-писем"
 
-#: db/seeds/settings.rb:5469
+#: db/seeds/settings.rb:5478
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Закінчився час обробки очищення HTML"
 
@@ -9770,12 +9778,12 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "Підсвічування неактивне."
 
-#: db/seeds/settings.rb:5621
+#: db/seeds/settings.rb:5630
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
 "Виділяє, чи є нотатка, яку пише користувач, загальнодоступною чи приватною"
 
-#: db/seeds/settings.rb:5618
+#: db/seeds/settings.rb:5627
 msgid "Hint for adding an article to an existing ticket."
 msgstr "Підказка для додавання повідомлення до існуючої заявки."
 
@@ -9919,7 +9927,7 @@ msgstr "Протокол доступу до Інтернет-повідомле
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4497
+#: db/seeds/settings.rb:4506
 msgid "Icinga integration"
 msgstr "Інтеграція Icinga"
 
@@ -10539,7 +10547,7 @@ msgstr "Внутрішній"
 msgid "Internal Knowledge Base feed:"
 msgstr "Внутрішня стрічка даних бази знань:"
 
-#: app/models/object_manager/attribute.rb:694
+#: app/models/object_manager/attribute.rb:710
 msgid "Internal attributes cannot be deleted"
 msgstr "Внутрішні атрибути не можуть бути видалені"
 
@@ -10617,7 +10625,7 @@ msgstr "Невірний ідентифікатор клієнта (client_id) �
 msgid "Invalid client_id received!"
 msgstr "Отримано невірний ідентифікатор клієнта (client_id)!"
 
-#: app/models/user.rb:614
+#: app/models/user.rb:615
 msgid "Invalid email '%{email}'"
 msgstr "Невірно вказано email '%{email}'"
 
@@ -10843,7 +10851,7 @@ msgstr "Видалити користувача системи неможлив�
 msgid "It is not possible to delete your current account."
 msgstr "Видалити поточний обліковий запис неможливо."
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:298
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Об'єднання у вже об'єднану заявку неможливе."
 
@@ -10856,13 +10864,13 @@ msgstr "Елементи"
 msgid "Items per page"
 msgstr "Елементів на сторінці"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jan"
 msgstr "Січ."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "January"
 msgstr "Січень"
 
@@ -10884,23 +10892,23 @@ msgstr "Приєднатися до %s"
 msgid "Join feedback program"
 msgstr "Приєднатися до програми зворотного зв'язку"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jul"
 msgstr "Лип."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "July"
 msgstr "Липень"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jun"
 msgstr "Черв."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "June"
 msgstr "Червень"
 
@@ -11005,15 +11013,15 @@ msgstr "Веб-канал бази знань"
 msgid "Knowledge Base Reader"
 msgstr "Читач бази знань"
 
-#: db/seeds/settings.rb:5575
+#: db/seeds/settings.rb:5584
 msgid "Knowledge Base active"
 msgstr "Активація база знань"
 
-#: db/seeds/settings.rb:5590
+#: db/seeds/settings.rb:5599
 msgid "Knowledge Base active publicly"
 msgstr "База знань відкрита для всіх"
 
-#: db/seeds/settings.rb:5564
+#: db/seeds/settings.rb:5573
 msgid "Knowledge Base multilingual support"
 msgstr "Багатомовна підтримка бази знань"
 
@@ -11042,7 +11050,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "Хост LDAP"
 
-#: db/seeds/settings.rb:4927
+#: db/seeds/settings.rb:4936
 msgid "LDAP integration"
 msgstr "Інтеграція LDAP"
 
@@ -11968,13 +11976,13 @@ msgstr ""
 msgid "Mapping"
 msgstr "Співставлення"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Mar"
 msgstr "Бер."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "March"
 msgstr "Березень"
 
@@ -12084,7 +12092,7 @@ msgstr "Максимальна кількість рекурсивно вико�
 msgid "Maximum number of ticket shown in overviews"
 msgstr "Максимальна кількість заявок, що відображається в оглядах"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
@@ -12346,11 +12354,11 @@ msgstr "Модель"
 msgid "Module"
 msgstr "Модуль"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Mon"
 msgstr "Пн."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:7
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:15
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
@@ -12361,7 +12369,7 @@ msgstr "Понеділок"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4826
+#: db/seeds/settings.rb:4835
 msgid "Monit integration"
 msgstr "Інтеграція з Monit"
 
@@ -12392,7 +12400,7 @@ msgstr "Ескальованих заявок"
 msgid "More information can be found here."
 msgstr "Більше інформації можна знайти тут."
 
-#: app/models/user.rb:694
+#: app/models/user.rb:695
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Кількість додаткових організацій не може перевищувати 250."
 
@@ -12488,7 +12496,7 @@ msgstr "Мої заявки в роботі"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4595
+#: db/seeds/settings.rb:4604
 msgid "Nagios integration"
 msgstr "Інтеграція з Nagios"
 
@@ -13103,7 +13111,7 @@ msgstr "Конфігурацію не встановлено."
 msgid "No content to show"
 msgstr "Немає вмісту для показу"
 
-#: app/models/group.rb:36
+#: app/models/group.rb:37
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "Не допускаються подвійні двокрапки (::), зарезервований роздільник"
 
@@ -13265,7 +13273,7 @@ msgid "No shared drafts yet"
 msgstr "Ще немає спільних чернеток"
 
 #: app/controllers/organizations_controller.rb:107
-#: app/controllers/text_modules_controller.rb:75
+#: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
@@ -13301,7 +13309,7 @@ msgstr "Немає токену!"
 msgid "No translation for this locale available"
 msgstr "Немає перекладу для цієї мови"
 
-#: app/models/ticket.rb:422
+#: app/models/ticket.rb:423
 msgid "No triggers active"
 msgstr "Немає активних тригерів"
 
@@ -13345,7 +13353,7 @@ msgstr "Ні, дякую"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1979
+#: app/graphql/gql/types/ticket_type.rb:111 db/seeds/settings.rb:1979
 msgid "None"
 msgstr "Немає"
 
@@ -13560,13 +13568,13 @@ msgstr "Сповіщення"
 msgid "Notifications matrix"
 msgstr "Матриця сповіщень"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Nov"
 msgstr "Лист."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "November"
 msgstr "Листопад"
 
@@ -13680,13 +13688,13 @@ msgstr ""
 msgid "Objects"
 msgstr "Об’єкти"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Oct"
 msgstr "Жовт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "October"
 msgstr "Жовтень"
 
@@ -14280,15 +14288,15 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5787
+#: db/seeds/settings.rb:5796
 msgid "PGP Recipient Alias Configuration"
 msgstr "Налаштування псевдоніма одержувача PGP"
 
-#: db/seeds/settings.rb:5773
+#: db/seeds/settings.rb:5782
 msgid "PGP config"
 msgstr "Конфігурація PGP"
 
-#: db/seeds/settings.rb:5745
+#: db/seeds/settings.rb:5754
 msgid "PGP integration"
 msgstr "Інтеграція PGP"
 
@@ -14475,7 +14483,7 @@ msgstr "Потрібна оплата - будь ласка, поповніть 
 msgid "Pending Reached Tickets"
 msgstr "Заявки, що вийшли з очікування"
 
-#: app/assets/javascripts/app/models/ticket.coffee:113
+#: app/assets/javascripts/app/models/ticket.coffee:116
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Отримано відкладене нагадування для заявки |%s|"
@@ -14595,15 +14603,15 @@ msgstr "Місце для тексту, згенерованого ШІ"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5358
+#: db/seeds/settings.rb:5367
 msgid "Placetel Token"
 msgstr "Токен Placetel"
 
-#: db/seeds/settings.rb:5344
+#: db/seeds/settings.rb:5353
 msgid "Placetel config"
 msgstr "Конфігурація Placetel"
 
-#: db/seeds/settings.rb:5316
+#: db/seeds/settings.rb:5325
 msgid "Placetel integration"
 msgstr "Інтеграція з Placetel"
 
@@ -15732,21 +15740,21 @@ msgstr "Вимоги"
 
 #: db/seeds/settings.rb:1790
 msgid ""
-"Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) to "
-"be present and true before trusting an incoming email address for account "
-"auto-linking. Both must first be configured as optional claims on the Azure "
-"app registration. Until that is done, enabling this blocks all Microsoft 365 "
-"account auto-linking by email."
+"Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
+"to match the incoming email address, before trusting that address for "
+"account auto-linking. Both claims must first be configured as optional "
+"claims on the Azure app registration. Until that is done, enabling this "
+"blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
-"Перед тим, як довіряти вхідній адресі електронної пошти для автоматичного "
-"прив’язування облікового запису, необхідно, щоб претензія на токен "
-"ідентифікації «xms_edov» (разом із претензією «email») була присутня та мала "
-"значення «true». Обидва претензії спочатку потрібно налаштувати як "
+"Перед тим, як довіряти цій адресі для автоматичного прив’язування облікового "
+"запису, необхідно, щоб претензія на токен ідентифікації «xms_edov» мала "
+"значення «true», а претензія «email» відповідала вхідній адресі електронної "
+"пошти. Обидва заявлені параметри спочатку потрібно налаштувати як "
 "необов’язкові в реєстрації додатка в Azure. Доки це не буде зроблено, "
 "увімкнення цієї функції блокує будь-яке автоматичне прив’язування облікових "
 "записів Microsoft 365 за допомогою електронної пошти."
 
-#: db/seeds/settings.rb:5974
+#: db/seeds/settings.rb:5983
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
@@ -15984,7 +15992,7 @@ msgstr "Повторна спроба завантажити надіслані 
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "Перепишіть складний розділ та зробіть його легким для розуміння"
 
-#: db/seeds/settings.rb:6197
+#: db/seeds/settings.rb:6206
 msgid "Richtext Bubble Menu"
 msgstr "Бульбашкове меню Richtext"
 
@@ -16077,7 +16085,7 @@ msgstr ""
 "поширений метод (або, точніше, протокол) для надсилання зашифрованих та "
 "підписаних у цифровій формі повідомлень."
 
-#: db/seeds/settings.rb:5731
+#: db/seeds/settings.rb:5740
 msgid "S/MIME config"
 msgstr ""
 "Налаштування безпечних/багатоцільових розширень пошти Інтернету (S/MIME)"
@@ -16087,7 +16095,7 @@ msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr ""
 "S/MIME дозволяє надсилати зашифровані повідомлення з цифровим підписом."
 
-#: db/seeds/settings.rb:5703
+#: db/seeds/settings.rb:5712
 msgid "S/MIME integration"
 msgstr "Інтеграція з S/MIME"
 
@@ -16187,7 +16195,7 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5819
+#: db/seeds/settings.rb:5828
 msgid "SSO"
 msgstr "SSO"
 
@@ -16202,11 +16210,11 @@ msgstr "Запит SSO з неперевіреної IP-адреси."
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sat"
 msgstr "Сб."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:12
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:20
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:59
@@ -16601,13 +16609,13 @@ msgstr "Пошук…"
 msgid "Secondary organizations"
 msgstr "Другорядні організації"
 
-#: app/models/user.rb:682
+#: app/models/user.rb:683
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr "Можна вказати додаткові організації лише після встановлення основної."
 
-#: app/models/user.rb:688
+#: app/models/user.rb:689
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Вторинні організації не можуть включати первинну організацію."
 
@@ -16644,7 +16652,7 @@ msgstr "Ключ безпеки"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5880
+#: db/seeds/settings.rb:5889
 msgid "Security Keys"
 msgstr "Ключі безпеки"
 
@@ -16984,7 +16992,7 @@ msgstr "Надсилання…"
 msgid "Sent successfully!"
 msgstr "Відправлено успішно!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
@@ -16994,7 +17002,7 @@ msgstr "Вер."
 msgid "Separate multiple values by ;"
 msgstr "Розділяйте декілька значень символом ;"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "September"
 msgstr "Вересень"
 
@@ -17053,7 +17061,7 @@ msgstr "Налаштувати"
 msgid "Set a title for your ticket"
 msgstr "Встановіть назву для вашої заявки"
 
-#: db/seeds/settings.rb:5446
+#: db/seeds/settings.rb:5455
 msgid "Set agent limit"
 msgstr "Встановити обмеження агента"
 
@@ -17114,7 +17122,7 @@ msgstr "Встановити Caller ID (Ідентифікатор виклик�
 msgid "Set security keys as default"
 msgstr "Встановити ключі безпеки за замовчуванням"
 
-#: db/seeds/settings.rb:5608
+#: db/seeds/settings.rb:5617
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits."
@@ -17311,7 +17319,7 @@ msgstr "Показати все…"
 msgid "Show authenticator app secret"
 msgstr "Показати секрет програми-автентифікатора"
 
-#: db/seeds/settings.rb:5852
+#: db/seeds/settings.rb:5861
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Показувати календарні тижні в засобі вибору полів дати/часу"
 
@@ -17856,7 +17864,7 @@ msgstr "Статус"
 msgid "State icon"
 msgstr "Значок стану"
 
-#: db/seeds/settings.rb:5480
+#: db/seeds/settings.rb:5489
 msgid "Stats Backend"
 msgstr "Серверная часть (backend) статистики"
 
@@ -17930,19 +17938,19 @@ msgstr "Спосіб зберігання"
 msgid "Store"
 msgstr "Зберегти"
 
-#: db/seeds/settings.rb:6109
+#: db/seeds/settings.rb:6118
 msgid "Stores the AI provider configuration."
 msgstr "Зберігає конфігурацію постачальника штучного інтелекту."
 
-#: db/seeds/settings.rb:5119
+#: db/seeds/settings.rb:5128
 msgid "Stores the GitHub configuration."
 msgstr "Зберігає конфігурацію GitHub."
 
-#: db/seeds/settings.rb:5077
+#: db/seeds/settings.rb:5086
 msgid "Stores the GitLab configuration."
 msgstr "Зберігає конфігурацію GitLab."
 
-#: db/seeds/settings.rb:6139
+#: db/seeds/settings.rb:6148
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
@@ -18080,18 +18088,18 @@ msgstr "Формується підсумок…"
 msgid "Summer holiday"
 msgstr "літні вихідні"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sun"
 msgstr "Нд."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:13
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:21
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:62
 msgid "Sunday"
 msgstr "Неділя"
 
-#: db/seeds/settings.rb:5567
+#: db/seeds/settings.rb:5576
 msgid "Support of multilingual Knowledge Base."
 msgstr "Підтримка багатомовної бази знань."
 
@@ -18176,7 +18184,7 @@ msgstr ""
 "платформі %l. Вона має дуже зручний інтерфейс користувача на основі Weblate, "
 "спробуйте!"
 
-#: db/seeds/settings.rb:5640
+#: db/seeds/settings.rb:5649
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -18861,6 +18869,16 @@ msgstr ""
 msgid "The current password you provided is incorrect."
 msgstr "Поточний пароль, який ви вказали, є невірним."
 
+#: app/models/core_workflow/result.rb:61
+msgid "The current user is not allowed to access the referenced object."
+msgstr "Поточний користувач не має доступу до вказаного об’єкта."
+
+#: app/models/core_workflow/result.rb:45
+msgid "The current user is not allowed to use core workflow for this object."
+msgstr ""
+"Поточний користувач не має дозволу на використання основного робочого "
+"процесу для цього об’єкта."
+
 #: app/services/service/ai/vectordb/create_table.rb:18
 msgid "The currently selected AI provider does not support embeddings."
 msgstr "Обраний на даний момент ШІ-постачальник не підтримує вбудовування."
@@ -19295,7 +19313,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr "Версію продукту отримати не вдалося."
 
-#: app/models/webhook.rb:77
+#: app/models/webhook.rb:80
 msgid "The provided HTTP method is invalid."
 msgstr "Наданий HTTP-метод є недійсним."
 
@@ -19319,33 +19337,33 @@ msgstr "Надані облікові дані недійсні."
 msgid "The provided email account is already in use."
 msgstr "Наданий обліковий запис електронної пошти вже використовується."
 
-#: app/models/webhook.rb:57
+#: app/models/webhook.rb:60
 msgid ""
 "The provided endpoint is invalid, it could not be resolved to a safe IP "
 "address."
 msgstr ""
 "Надана кінцева точка недійсна, її не вдалося визначити як безпечну IP-адресу."
 
-#: app/models/webhook.rb:55
+#: app/models/webhook.rb:58
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
 msgstr ""
 "Надана кінцева точка недійсна, вона вказує на локальну IP-адресу каналу."
 
-#: app/models/webhook.rb:53
+#: app/models/webhook.rb:56
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
 msgstr ""
 "Надана кінцева точка недійсна, вона вказує на IP-адресу зворотного зв'язку."
 
-#: app/models/webhook.rb:47
+#: app/models/webhook.rb:50
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "Вказана кінцева точка є невірною, не вказано ім'я хоста."
 
-#: app/models/webhook.rb:46
+#: app/models/webhook.rb:49
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr "Вказана кінцева точка є недійсною, не вказано протокол http або https."
 
-#: app/models/webhook.rb:51
+#: app/models/webhook.rb:54
 msgid "The provided endpoint is invalid."
 msgstr "Вказана кінцева точка є невірною."
 
@@ -19357,7 +19375,7 @@ msgstr "Оператор збігу відсутній або недійсний
 msgid "The provided password is incorrect."
 msgstr "Наданий пароль є невірним."
 
-#: app/models/webhook.rb:66
+#: app/models/webhook.rb:69
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 "Надане корисне навантаження є недійсним. Будь ласка, перевірте синтаксис."
@@ -19875,6 +19893,10 @@ msgstr "Не вдалося витягти ім'я користувача 'prefe
 msgid "The username or password is incorrect."
 msgstr "Ім'я користувача або пароль неправильні."
 
+#: app/models/core_workflow/result.rb:40
+msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr "Значення параметра «payload->class_name» є недійсним."
+
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 msgid "The verification email could not be resent."
 msgstr "Лист з підтвердженням не може бути відправлений повторно."
@@ -20370,7 +20392,7 @@ msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 "Ця група не має адреси електронної пошти, налаштованої для вихідного зв'язку."
 
-#: app/models/group.rb:83
+#: app/models/group.rb:84
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr "Ця група або її нащадки перевищують допустиму глибину успадковування."
 
@@ -20727,11 +20749,11 @@ msgstr ""
 "вихідних листів, наприклад, коли агент пише листа або тригер надсилає "
 "автовідповідь."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Thu"
 msgstr "Чт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:10
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:18
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:53
@@ -20867,11 +20889,11 @@ msgstr "Збільшення кількості запитів за датами
 msgid "Ticket Number ignore system_id"
 msgstr "Номер заявки ігнорує ідентифікатор системи (system_id)"
 
-#: db/seeds/settings.rb:5996
+#: db/seeds/settings.rb:6005
 msgid "Ticket Organization Reassignment"
 msgstr "Перепризначення організації заявок"
 
-#: db/seeds/settings.rb:5637
+#: db/seeds/settings.rb:5646
 msgid "Ticket Overview Query Polling"
 msgstr "Налаштування опитування для огляду заявок"
 
@@ -20931,11 +20953,11 @@ msgstr "Відстеження заявок"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6122
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6131
 msgid "Ticket Summary"
 msgstr "Зведення за заявкою"
 
-#: db/seeds/settings.rb:6136
+#: db/seeds/settings.rb:6145
 msgid "Ticket Summary Config"
 msgstr "Конфігурація зведення за заявкою"
 
@@ -21207,17 +21229,17 @@ msgstr ""
 "Заявки із зазначеним ідентифікатором не знайдено. Спробуйте перевірити URL-"
 "адресу на наявність помилок."
 
-#: app/assets/javascripts/app/models/ticket.coffee:115
+#: app/assets/javascripts/app/models/ticket.coffee:118
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "Ticket |%s| has escalated!"
 msgstr "Заявку |%s| протерміновано!"
 
-#: app/assets/javascripts/app/models/ticket.coffee:119
+#: app/assets/javascripts/app/models/ticket.coffee:122
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "Заявка |% s| була об'єднана з іншою заявкою"
 
-#: app/assets/javascripts/app/models/ticket.coffee:117
+#: app/assets/javascripts/app/models/ticket.coffee:120
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Ticket |%s| will escalate soon!"
 msgstr "Заявку |%s| буде невдовзі передано на вищий рівень!"
@@ -21586,11 +21608,11 @@ msgstr "Доступ за допомогою токенів"
 msgid "Token authorization failed."
 msgstr "Помилка авторизації токена."
 
-#: db/seeds/settings.rb:5285
+#: db/seeds/settings.rb:5294
 msgid "Token for CTI."
 msgstr "Токен для телефонії (CTI)."
 
-#: db/seeds/settings.rb:5189
+#: db/seeds/settings.rb:5198
 msgid "Token for Sipgate."
 msgstr "Токен для Sipgate."
 
@@ -21726,7 +21748,7 @@ msgstr ""
 "тоді як тригери, активовані часовими подіями, виконуються при досягненні "
 "певного часу (наприклад, час очікування, протермінування)."
 
-#: db/seeds/settings.rb:5828
+#: db/seeds/settings.rb:5837
 msgid "Trusted SSO Proxy IPs"
 msgstr "Надійні IP-адреси проксі-сервера SSO"
 
@@ -21761,11 +21783,11 @@ msgstr "Спробуйте використати свій ключ безпек
 msgid "Trying to reconnect…"
 msgstr "Намагаюся відновити з'єднання…"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Tue"
 msgstr "Вівт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:8
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:16
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:47
@@ -22187,7 +22209,7 @@ msgstr "Оновити спільну чернетку"
 msgid "Update successful."
 msgstr "Оновлення успішне."
 
-#: db/seeds/settings.rb:6008
+#: db/seeds/settings.rb:6017
 msgid "Update the most recent tickets."
 msgstr "Оновити останні заявки."
 
@@ -23074,11 +23096,11 @@ msgstr "Посилання"
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Wed"
 msgstr "Сер."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:9
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:17
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:50
@@ -23326,11 +23348,11 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "Ви бажаєте залишити відгук про BETA UI?"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6155
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6164
 msgid "Writing Assistant"
 msgstr "Асистент з написання текстів"
 
-#: db/seeds/settings.rb:6169
+#: db/seeds/settings.rb:6178
 msgid "Writing Assistant Fixed Instructions"
 msgstr "Асистент з написання фіксованих інструкцій"
 
@@ -24033,6 +24055,7 @@ msgid "Zammad Foundation"
 msgstr "Фонд Zammad"
 
 #: db/seeds/settings.rb:114
+#: lib/auth/two_factor/authentication_method/authenticator_app.rb:38
 msgid "Zammad Helpdesk"
 msgstr "Служба підтримки Zammad"
 
@@ -24216,7 +24239,7 @@ msgstr "призначити заявки"
 msgid "at"
 msgstr "в"
 
-#: app/models/object_manager/attribute.rb:604
+#: app/models/object_manager/attribute.rb:616
 msgid "at least one letter is required"
 msgstr "принаймні одна літера потрібна"
 
@@ -24225,7 +24248,7 @@ msgstr "принаймні одна літера потрібна"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "вкладення, вкладений, прикріплений"
 
-#: app/models/object_manager/attribute.rb:637
+#: app/models/object_manager/attribute.rb:649
 msgid "attribute is not editable"
 msgstr "атрибут недоступний для редагування"
 
@@ -24259,7 +24282,7 @@ msgstr "зайнятий"
 msgid "camera,image,photo,picture"
 msgstr "камера, зображення, фото, малюнок"
 
-#: app/models/object_manager/attribute.rb:683
+#: app/models/object_manager/attribute.rb:699
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -24273,11 +24296,11 @@ msgstr "не може бути пустим"
 msgid "can't be empty"
 msgstr "не може бути порожнім"
 
-#: app/models/object_manager/attribute.rb:690
+#: app/models/object_manager/attribute.rb:706
 msgid "can't be modified"
 msgstr "не може бути змінено"
 
-#: app/models/object_manager/attribute.rb:595
+#: app/models/object_manager/attribute.rb:607
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "не може бути використано, оскільки *_id та *_ids не допускаються"
 
@@ -24303,7 +24326,7 @@ msgstr "зазначений елемент '%s' чеклиста"
 msgid "children"
 msgstr "нащадок"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:166
 msgid "clear"
 msgstr "очистити"
 
@@ -24573,7 +24596,7 @@ msgstr "закінчується"
 msgid "ends with one of"
 msgstr "закінчується одним з"
 
-#: app/assets/javascripts/app/models/ticket.coffee:84
+#: app/assets/javascripts/app/models/ticket.coffee:85
 msgid "escalated"
 msgstr "протерміновано"
 
@@ -24721,11 +24744,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5034
+#: db/seeds/settings.rb:5043
 msgid "i-doit config"
 msgstr "Налаштування i-doit"
 
-#: db/seeds/settings.rb:5007
+#: db/seeds/settings.rb:5016
 msgid "i-doit integration"
 msgstr "Інтеграція з i-doit"
 
@@ -24946,7 +24969,7 @@ msgstr "має неправильну довжину (має бути %{count} �
 msgid "is the wrong length (should be 1 character)"
 msgstr "має неправильну довжину (має бути 1 символ)"
 
-#: app/models/user.rb:879
+#: app/models/user.rb:880
 msgid "is too long"
 msgstr "занадто довгий(а)"
 
@@ -25220,7 +25243,7 @@ msgstr "сповіщення,заявки"
 msgid "now"
 msgstr "зараз"
 
-#: app/models/object_manager/attribute.rb:601
+#: app/models/object_manager/attribute.rb:613
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "дозволені тільки малі літери, цифри та '_'"
 
@@ -25290,7 +25313,7 @@ msgstr "опубліковано"
 msgid "quarter-hour(s)"
 msgstr "15 хвилин"
 
-#: app/assets/javascripts/app/models/ticket.coffee:82
+#: app/assets/javascripts/app/models/ticket.coffee:87
 msgid "reached"
 msgstr "одержаний/досягнутий"
 
@@ -25448,19 +25471,19 @@ msgstr "показати більше"
 msgid "shown"
 msgstr "показано"
 
-#: db/seeds/settings.rb:5186
+#: db/seeds/settings.rb:5195
 msgid "sipgate.io Token"
 msgstr "Токен sipgate.io"
 
-#: db/seeds/settings.rb:5220
+#: db/seeds/settings.rb:5229
 msgid "sipgate.io alternative FQDN"
 msgstr "Альтернативне доменне ім'я (FQDN) sipgate.io"
 
-#: db/seeds/settings.rb:5207
+#: db/seeds/settings.rb:5216
 msgid "sipgate.io config"
 msgstr "Налаштування sipgate.io"
 
-#: db/seeds/settings.rb:5158
+#: db/seeds/settings.rb:5167
 msgid "sipgate.io integration"
 msgstr "інтеграція з Sipgate (sipgate.io)"
 
@@ -25476,7 +25499,7 @@ msgstr "Пропущено"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:598
+#: app/models/object_manager/attribute.rb:610
 msgid "spaces are not allowed"
 msgstr "пробіли не дозволені"
 
@@ -25559,7 +25582,7 @@ msgid "to go to the homepage."
 msgstr "для переходу на головну сторінку."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 #: app/assets/javascripts/app/controllers/chat.coffee:757

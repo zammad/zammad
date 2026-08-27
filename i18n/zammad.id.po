@@ -538,7 +538,7 @@ msgstr "%s membuat organisasi |%s|"
 msgid "%s created role |%s|"
 msgstr "%s membuat peran |%s|"
 
-#: app/assets/javascripts/app/models/ticket.coffee:109
+#: app/assets/javascripts/app/models/ticket.coffee:112
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:21
 msgid "%s created ticket |%s|"
 msgstr "%s membuat tiket |%s|"
@@ -763,7 +763,7 @@ msgstr "%s memperbarui organisasi |%s|"
 msgid "%s updated role |%s|"
 msgstr "%s memperbarui peran |%s|"
 
-#: app/assets/javascripts/app/models/ticket.coffee:111
+#: app/assets/javascripts/app/models/ticket.coffee:114
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:23
 msgid "%s updated ticket |%s|"
 msgstr "%s memperbarui tiket |%s|"
@@ -804,11 +804,11 @@ msgstr "%s% telah dibuka kembali"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} dapat memiliki akses penuh atau terperinci ke grup"
 
-#: app/models/object_manager/attribute.rb:624
+#: app/models/object_manager/attribute.rb:636
 msgid "%{name} already exists"
 msgstr "%{name} sudah ada"
 
-#: app/models/object_manager/attribute.rb:608
+#: app/models/object_manager/attribute.rb:620
 msgid "%{name} is a reserved word"
 msgstr "%{name} adalah kata yang telah dipesan"
 
@@ -1085,7 +1085,7 @@ msgid ""
 msgstr ""
 "Tiket uji telah dibuat, Anda dapat menemukannya di ikhtisar Anda \"%s\" %l."
 
-#: app/models/ticket.rb:299
+#: app/models/ticket.rb:300
 msgid "A ticket cannot be merged into itself."
 msgstr "Sebuah tiket tidak dapat digabungkan ke diri sendiri."
 
@@ -1139,7 +1139,7 @@ msgstr "Agen AI"
 msgid "AI Agents"
 msgstr "Agen AI"
 
-#: db/seeds/settings.rb:6183
+#: db/seeds/settings.rb:6192
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer from Ticket"
@@ -1155,7 +1155,7 @@ msgstr "Jawaban Knowledge Base"
 msgid "AI Provider"
 msgstr "Penyedia AI"
 
-#: db/seeds/settings.rb:6106
+#: db/seeds/settings.rb:6115
 msgid "AI Provider Config"
 msgstr "Konfigurasi Penyedia AI"
 
@@ -1232,7 +1232,7 @@ msgstr "draf"
 msgid "AI error log"
 msgstr "Log kesalahan AI"
 
-#: db/seeds/settings.rb:6089
+#: db/seeds/settings.rb:6098
 msgid "AI provider"
 msgstr "Penyedia AI"
 
@@ -2041,7 +2041,7 @@ msgstr "Obrolan agen"
 msgid "Agent idle timeout"
 msgstr "Waktu tunggu idle agen"
 
-#: app/models/role.rb:151 app/models/user.rb:763
+#: app/models/role.rb:152 app/models/user.rb:764
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Batas agen terlampaui, harap periksa pengaturan akun Anda."
 
@@ -2171,7 +2171,7 @@ msgstr ""
 "Izinkan Agen AI untuk memilih beberapa kategori dari semua nilai yang "
 "mungkin."
 
-#: db/seeds/settings.rb:6074
+#: db/seeds/settings.rb:6083
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2208,7 +2208,7 @@ msgstr "Izinkan pengguna menambahkan tag baru."
 msgid "Allow users to create new tags."
 msgstr "Izinkan pengguna membuat tag baru."
 
-#: db/seeds/settings.rb:6065
+#: db/seeds/settings.rb:6074
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr "Izinkan pengguna beralih secara otomatis ke UI desktop baru."
 
@@ -2225,7 +2225,7 @@ msgstr "Izinkan situs web (dipisahkan dengan ;)"
 msgid "Also notify via email"
 msgstr "Juga beri tahu melalui email"
 
-#: db/seeds/settings.rb:5223
+#: db/seeds/settings.rb:5232
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -2350,7 +2350,7 @@ msgstr ""
 "target=\"zammad_app\">Lihat ini di #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/assets/javascripts/app/models/ticket.coffee:121
+#: app/assets/javascripts/app/models/ticket.coffee:124
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Tiket lain telah digabungkan ke tiket |%s|"
@@ -2494,13 +2494,13 @@ msgstr "Terapkan Template"
 msgid "Approve"
 msgstr "Setujui"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Apr"
 msgstr "Apr"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "April"
 msgstr "April"
 
@@ -2764,7 +2764,7 @@ msgstr ""
 "Waktu tunggu penugasan dalam menit jika agen yang ditugaskan tidak "
 "mengerjakannya. Tiket akan ditampilkan sebagai tidak ditetapkan."
 
-#: app/models/user.rb:665
+#: app/models/user.rb:666
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2788,7 +2788,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Setidaknya satu objek harus dipilih."
 
-#: app/models/role.rb:128 app/models/user.rb:742
+#: app/models/role.rb:129 app/models/user.rb:743
 msgid "At least one user needs to have admin permissions."
 msgstr "Setidaknya satu pengguna perlu memiliki izin admin."
 
@@ -2903,13 +2903,13 @@ msgstr "Atribut untuk dibandingkan"
 msgid "Audio file"
 msgstr "File audio"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Aug"
 msgstr "Agu"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "August"
 msgstr "Agustus"
 
@@ -2954,7 +2954,7 @@ msgstr "Autentikasi melalui %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5912
+#: db/seeds/settings.rb:5921
 msgid "Authenticator App"
 msgstr "Aplikasi Autentikator"
 
@@ -3005,7 +3005,7 @@ msgstr "Pengguna yang Diabaikan Penugasan Otomatis"
 msgid "Auto Assignment Selector"
 msgstr "Pemilih Penugasan Otomatis"
 
-#: db/seeds/settings.rb:6051
+#: db/seeds/settings.rb:6060
 msgid "Auto Shutdown"
 msgstr "Matikan Otomatis"
 
@@ -3013,7 +3013,7 @@ msgstr "Matikan Otomatis"
 msgid "Auto Wizard"
 msgstr "Wizard Otomatis"
 
-#: db/seeds/settings.rb:4546
+#: db/seeds/settings.rb:4555
 msgid "Auto close"
 msgstr "Tutup otomatis"
 
@@ -3021,7 +3021,7 @@ msgstr "Tutup otomatis"
 msgid "Auto create"
 msgstr "Buat otomatis"
 
-#: db/seeds/settings.rb:4572
+#: db/seeds/settings.rb:4581
 msgid "Auto-close state"
 msgstr "Status tutup otomatis"
 
@@ -3505,19 +3505,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (generik)"
 
-#: db/seeds/settings.rb:5282
+#: db/seeds/settings.rb:5291
 msgid "CTI Token"
 msgstr "Token CTI"
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5278
 msgid "CTI config"
 msgstr "Konfigurasi CTI"
 
-#: db/seeds/settings.rb:5303
+#: db/seeds/settings.rb:5312
 msgid "CTI customer last activity"
 msgstr "Aktivitas terakhir pelanggan CTI"
 
-#: db/seeds/settings.rb:5241
+#: db/seeds/settings.rb:5250
 msgid "CTI integration"
 msgstr "Integrasi CTI"
 
@@ -3699,7 +3699,7 @@ msgstr "Tidak dapat menghapus catatan karena %{record} yang bergantung ada"
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "Tidak dapat menindaklanjuti tiket yang ditutup. Harap buat tiket baru."
 
-#: app/models/sla.rb:44
+#: app/models/sla.rb:45
 msgid "Cannot have both response time and update time."
 msgstr "Tidak dapat memiliki waktu respons dan waktu pembaruan."
 
@@ -3996,7 +3996,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6024
+#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6033
 msgid "Checklists"
 msgstr "Daftar Periksa"
 
@@ -4004,11 +4004,11 @@ msgstr "Daftar Periksa"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4693
+#: db/seeds/settings.rb:4702
 msgid "Checkmk integration"
 msgstr "Integrasi Checkmk"
 
-#: db/seeds/settings.rb:4814
+#: db/seeds/settings.rb:4823
 msgid "Checkmk token"
 msgstr "Token Checkmk"
 
@@ -4231,11 +4231,11 @@ msgstr "Hapus nilai"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5405
+#: db/seeds/settings.rb:5414
 msgid "Clearbit config"
 msgstr "Konfigurasi Clearbit"
 
-#: db/seeds/settings.rb:5379
+#: db/seeds/settings.rb:5388
 msgid "Clearbit integration"
 msgstr "Integrasi Clearbit"
 
@@ -4403,7 +4403,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "URL langganan gabungan"
 
-#: db/seeds/settings.rb:5831
+#: db/seeds/settings.rb:5840
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4446,7 +4446,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5904
+#: db/seeds/settings.rb:5913
 msgid "Complete the sign-in with your security key."
 msgstr "Selesaikan login dengan kunci keamanan Anda."
 
@@ -5568,13 +5568,13 @@ msgstr "Hari"
 msgid "Days"
 msgstr "Hari"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Dec"
 msgstr "Des"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "December"
 msgstr "Desember"
 
@@ -5711,7 +5711,7 @@ msgstr "Tentukan konfigurasi model untuk Elasticsearch."
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Tentukan nama pipeline untuk Elasticsearch."
 
-#: db/seeds/settings.rb:4365
+#: db/seeds/settings.rb:4374
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -5847,7 +5847,7 @@ msgstr ""
 "Mendefinisikan endpoint Zendesk untuk mengimpor pengguna, tiket, status, dan "
 "artikel."
 
-#: db/seeds/settings.rb:5483
+#: db/seeds/settings.rb:5492
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
 "Mendefinisikan backend statistik dasbor yang dijadwalkan secara otomatis."
@@ -5958,27 +5958,27 @@ msgstr ""
 "Mendefinisikan cara mencapai server websocket. \"websocket\" adalah default "
 "pada produksi, \"websocketPort\" untuk CI"
 
-#: db/seeds/settings.rb:4696
+#: db/seeds/settings.rb:4705
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah Checkmk (https://checkmk.com/) diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:5382
+#: db/seeds/settings.rb:5391
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah Clearbit (http://www.clearbit.com) diaktifkan atau "
 "tidak."
 
-#: db/seeds/settings.rb:4983
+#: db/seeds/settings.rb:4992
 msgid "Defines if Exchange is enabled or not."
 msgstr "Mendefinisikan apakah Exchange diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:4500
+#: db/seeds/settings.rb:4509
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah Icinga (http://www.icinga.org) diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:5593
+#: db/seeds/settings.rb:5602
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -5986,36 +5986,36 @@ msgstr ""
 "Mendefinisikan apakah tombol navbar Knowledge Base diaktifkan untuk pengguna "
 "tanpa izin Knowledge Base."
 
-#: db/seeds/settings.rb:5578
+#: db/seeds/settings.rb:5587
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "Mendefinisikan apakah tombol navbar Knowledge Base diaktifkan."
 
-#: db/seeds/settings.rb:4930
+#: db/seeds/settings.rb:4939
 msgid "Defines if LDAP is enabled or not."
 msgstr "Mendefinisikan apakah LDAP diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:4829
+#: db/seeds/settings.rb:4838
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah Monit (https://mmonit.com/monit/) diaktifkan atau "
 "tidak."
 
-#: db/seeds/settings.rb:4598
+#: db/seeds/settings.rb:4607
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah Nagios (http://www.nagios.org) diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:5748
+#: db/seeds/settings.rb:5757
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "Mendefinisikan apakah enkripsi PGP diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:5319
+#: db/seeds/settings.rb:5328
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah Placetel (http://www.placetel.de) diaktifkan atau "
 "tidak."
 
-#: db/seeds/settings.rb:5706
+#: db/seeds/settings.rb:5715
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "Mendefinisikan apakah enkripsi S/MIME diaktifkan atau tidak."
 
@@ -6032,7 +6032,7 @@ msgstr "Mendefinisikan apakah aplikasi dalam mode inisialisasi."
 msgid "Defines if application is used as online service."
 msgstr "Mendefinisikan apakah aplikasi digunakan sebagai layanan online."
 
-#: db/seeds/settings.rb:5855
+#: db/seeds/settings.rb:5864
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -6040,11 +6040,11 @@ msgstr ""
 "Mendefinisikan apakah minggu kalender ditampilkan dalam pemilih bidang "
 "tanggal/tanggal-waktu untuk dengan mudah memilih tanggal yang benar."
 
-#: db/seeds/settings.rb:5244
+#: db/seeds/settings.rb:5253
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Mendefinisikan apakah integrasi CTI generik diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:5947
+#: db/seeds/settings.rb:5956
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -6052,31 +6052,31 @@ msgstr ""
 "Mendefinisikan apakah kode pemulihan dapat digunakan oleh pengguna jika "
 "mereka kehilangan akses ke metode autentikasi dua faktor lainnya."
 
-#: db/seeds/settings.rb:5161
+#: db/seeds/settings.rb:5170
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 "Mendefinisikan apakah sipgate.io (http://www.sipgate.io) diaktifkan atau "
 "tidak."
 
-#: db/seeds/settings.rb:6092
+#: db/seeds/settings.rb:6101
 msgid "Defines if the AI provider is configured."
 msgstr "Mendefinisikan apakah penyedia AI dikonfigurasi."
 
-#: db/seeds/settings.rb:5092
+#: db/seeds/settings.rb:5101
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
 "Mendefinisikan apakah integrasi GitHub (http://www.github.com) diaktifkan "
 "atau tidak."
 
-#: db/seeds/settings.rb:5050
+#: db/seeds/settings.rb:5059
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 "Mendefinisikan apakah integrasi GitLab (http://www.gitlab.com) diaktifkan "
 "atau tidak."
 
-#: db/seeds/settings.rb:5790
+#: db/seeds/settings.rb:5799
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr ""
 "Mendefinisikan apakah konfigurasi alias penerima PGP diaktifkan atau tidak."
@@ -6098,7 +6098,7 @@ msgstr ""
 "memiliki kata sandi yang sama dan reset kata sandi akan berfungsi tanpa "
 "pengiriman email)."
 
-#: db/seeds/settings.rb:6200
+#: db/seeds/settings.rb:6209
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6107,7 +6107,7 @@ msgstr ""
 "Perhatikan bahwa pengaturan ini akan diabaikan jika asisten penulisan "
 "diaktifkan."
 
-#: db/seeds/settings.rb:5999
+#: db/seeds/settings.rb:6008
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6135,7 +6135,7 @@ msgstr ""
 "Mendefinisikan apakah email harus ditampilkan dalam hasil widget pengguna/"
 "organisasi."
 
-#: db/seeds/settings.rb:5010
+#: db/seeds/settings.rb:5019
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
@@ -6162,7 +6162,7 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr "Mendefinisikan apakah jenis akuntansi waktu diaktifkan."
 
-#: db/seeds/settings.rb:5915
+#: db/seeds/settings.rb:5924
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
@@ -6170,7 +6170,7 @@ msgstr ""
 "Mendefinisikan apakah metode autentikasi dua faktor aplikasi autentikator "
 "diaktifkan atau tidak."
 
-#: db/seeds/settings.rb:5883
+#: db/seeds/settings.rb:5892
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
@@ -6182,11 +6182,11 @@ msgstr ""
 msgid "Defines if tickets can be created via web form."
 msgstr "Mendefinisikan apakah tiket dapat dibuat melalui formulir web."
 
-#: db/seeds/settings.rb:4549
+#: db/seeds/settings.rb:4558
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "Mendefinisikan apakah tiket harus ditutup jika layanan dipulihkan."
 
-#: db/seeds/settings.rb:4401
+#: db/seeds/settings.rb:4410
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "Mendefinisikan filter postmaster untuk filter yang dikelola melalui "
@@ -6212,14 +6212,14 @@ msgstr ""
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "Mendefinisikan filter postmaster untuk menangani email aman."
 
-#: db/seeds/settings.rb:4464
+#: db/seeds/settings.rb:4473
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "Mendefinisikan filter postmaster untuk mengidentifikasi email Jira untuk "
 "tindak lanjut yang benar."
 
-#: db/seeds/settings.rb:4446
+#: db/seeds/settings.rb:4455
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6249,7 +6249,7 @@ msgstr ""
 "Mendefinisikan filter postmaster untuk mengidentifikasi tindak lanjut "
 "(berdasarkan pengaturan admin)."
 
-#: db/seeds/settings.rb:4356
+#: db/seeds/settings.rb:4365
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6257,7 +6257,7 @@ msgstr ""
 "Mendefinisikan filter postmaster untuk mengidentifikasi email out-of-office "
 "untuk deteksi tindak lanjut dan mempertahankan status tiket saat ini."
 
-#: db/seeds/settings.rb:4383
+#: db/seeds/settings.rb:4392
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6265,7 +6265,7 @@ msgstr ""
 "Mendefinisikan filter postmaster untuk mengidentifikasi bouncing postmaster; "
 "dan menonaktifkan pengiriman notifikasi jika pengiriman gagal permanen."
 
-#: db/seeds/settings.rb:4374
+#: db/seeds/settings.rb:4383
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify postmaster bounces; and handles "
@@ -6277,7 +6277,7 @@ msgstr ""
 "Mendefinisikan filter postmaster untuk mengidentifikasi bouncing postmaster; "
 "dan menanganinya sebagai tindak lanjut dari tiket asli"
 
-#: db/seeds/settings.rb:4392
+#: db/seeds/settings.rb:4401
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6294,11 +6294,11 @@ msgstr ""
 msgid "Defines postmaster filter to identify session user."
 msgstr "Mendefinisikan filter postmaster untuk mengidentifikasi pengguna sesi."
 
-#: db/seeds/settings.rb:4491
+#: db/seeds/settings.rb:4500
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "Mendefinisikan filter postmaster untuk mengidentifikasi grup tiket."
 
-#: db/seeds/settings.rb:4428
+#: db/seeds/settings.rb:4437
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6306,21 +6306,21 @@ msgstr ""
 "Mendefinisikan filter postmaster untuk mengelola email Checkmk (http://"
 "mathias-kettner.com/check_mk.html)."
 
-#: db/seeds/settings.rb:4410
+#: db/seeds/settings.rb:4419
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Mendefinisikan filter postmaster untuk mengelola email Icinga (http://"
 "www.icinga.org)."
 
-#: db/seeds/settings.rb:4437
+#: db/seeds/settings.rb:4446
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Mendefinisikan filter postmaster untuk mengelola email Monit (https://"
 "mmonit.com/monit/)."
 
-#: db/seeds/settings.rb:4419
+#: db/seeds/settings.rb:4428
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
@@ -6334,6 +6334,18 @@ msgid ""
 msgstr ""
 "Mendefinisikan filter postmaster untuk menghapus header X-Zammad dari sumber "
 "yang tidak terpercaya."
+
+#: db/seeds/settings.rb:4356
+#, fuzzy
+#| msgid ""
+#| "Defines postmaster filter to identify auto responses to prevent auto "
+#| "replies from Zammad."
+msgid ""
+"Defines postmaster filter to remove references to local attachments from "
+"incoming emails."
+msgstr ""
+"Mendefinisikan filter postmaster untuk mengidentifikasi respons otomatis "
+"untuk mencegah balasan otomatis dari Zammad."
 
 #: db/seeds/settings.rb:4284
 msgid ""
@@ -6351,7 +6363,7 @@ msgstr ""
 "Mendefinisikan filter postmaster untuk mengatur pengirim/from email "
 "berdasarkan header reply-to."
 
-#: db/seeds/settings.rb:4482
+#: db/seeds/settings.rb:4491
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6368,35 +6380,35 @@ msgstr "Mendefinisikan filter postmaster."
 msgid "Defines pretty date format."
 msgstr "Mendefinisikan format tanggal yang cantik."
 
-#: db/seeds/settings.rb:5472
+#: db/seeds/settings.rb:5481
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "Mendefinisikan batas waktu pemrosesan untuk sanitizer html."
 
-#: db/seeds/settings.rb:5131
+#: db/seeds/settings.rb:5140
 msgid "Defines sync transaction backend."
 msgstr "Mendefinisikan backend transaksi sinkronisasi."
 
-#: db/seeds/settings.rb:5460
+#: db/seeds/settings.rb:5469
 msgid "Defines the CSS font information for HTML emails."
 msgstr "Mendefinisikan informasi font CSS untuk email HTML."
 
-#: db/seeds/settings.rb:5272
+#: db/seeds/settings.rb:5281
 msgid "Defines the CTI config."
 msgstr "Mendefinisikan konfigurasi CTI."
 
-#: db/seeds/settings.rb:4817
+#: db/seeds/settings.rb:4826
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "Mendefinisikan token Checkmk untuk mengizinkan pembaruan."
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5417
 msgid "Defines the Clearbit config."
 msgstr "Mendefinisikan konfigurasi Clearbit."
 
-#: db/seeds/settings.rb:4970
+#: db/seeds/settings.rb:4979
 msgid "Defines the Exchange OAuth config."
 msgstr "Mendefinisikan konfigurasi Exchange OAuth."
 
-#: db/seeds/settings.rb:4957
+#: db/seeds/settings.rb:4966
 msgid "Defines the Exchange config."
 msgstr "Mendefinisikan konfigurasi Exchange."
 
@@ -6404,19 +6416,19 @@ msgstr "Mendefinisikan konfigurasi Exchange."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Mendefinisikan protokol HTTP dari instance Anda."
 
-#: db/seeds/settings.rb:5776
+#: db/seeds/settings.rb:5785
 msgid "Defines the PGP config."
 msgstr "Mendefinisikan konfigurasi PGP."
 
-#: db/seeds/settings.rb:5347
+#: db/seeds/settings.rb:5356
 msgid "Defines the Placetel config."
 msgstr "Mendefinisikan konfigurasi Placetel."
 
-#: db/seeds/settings.rb:5734
+#: db/seeds/settings.rb:5743
 msgid "Defines the S/MIME config."
 msgstr "Mendefinisikan konfigurasi S/MIME."
 
-#: db/seeds/settings.rb:5449
+#: db/seeds/settings.rb:5458
 msgid "Defines the agent limit."
 msgstr "Mendefinisikan batas agen."
 
@@ -6499,7 +6511,7 @@ msgstr "Mendefinisikan jenis akuntansi waktu default."
 msgid "Defines the default visibility for new notes."
 msgstr "Mendefinisikan visibilitas default untuk catatan baru."
 
-#: db/seeds/settings.rb:5306
+#: db/seeds/settings.rb:5315
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -6507,7 +6519,7 @@ msgstr ""
 "Mendefinisikan durasi aktivitas pelanggan (dalam detik) pada panggilan "
 "hingga dialog profil pengguna ditampilkan."
 
-#: db/seeds/settings.rb:6172
+#: db/seeds/settings.rb:6181
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -6526,7 +6538,7 @@ msgstr ""
 "dalam semua bentuk pesan yang digunakan oleh aplikasi, untuk membangun "
 "tautan ke tiket dalam sistem Anda."
 
-#: db/seeds/settings.rb:4745
+#: db/seeds/settings.rb:4754
 msgid "Defines the group of created tickets."
 msgstr "Mendefinisikan grup tiket yang dibuat."
 
@@ -6534,7 +6546,7 @@ msgstr "Mendefinisikan grup tiket yang dibuat."
 msgid "Defines the group of tickets created via web form."
 msgstr "Mendefinisikan grup tiket yang dibuat melalui formulir web."
 
-#: db/seeds/settings.rb:5037
+#: db/seeds/settings.rb:5046
 msgid "Defines the i-doit config."
 msgstr "Mendefinisikan konfigurasi i-doit."
 
@@ -6581,15 +6593,15 @@ msgstr "Mendefinisikan port server websocket."
 msgid "Defines the random application secret."
 msgstr "Mendefinisikan rahasia aplikasi acak."
 
-#: db/seeds/settings.rb:4526
+#: db/seeds/settings.rb:4535
 msgid "Defines the sender email address of Icinga emails."
 msgstr "Mendefinisikan alamat email pengirim email Icinga."
 
-#: db/seeds/settings.rb:4624
+#: db/seeds/settings.rb:4633
 msgid "Defines the sender email address of Nagios emails."
 msgstr "Mendefinisikan alamat email pengirim email Nagios."
 
-#: db/seeds/settings.rb:4722
+#: db/seeds/settings.rb:4731
 msgid "Defines the sender email address of the service emails."
 msgstr "Mendefinisikan alamat email pengirim email layanan."
 
@@ -6614,11 +6626,11 @@ msgstr ""
 "izin yang ditugaskan nilai timeout tertinggi akan digunakan, jika tidak, "
 "default."
 
-#: db/seeds/settings.rb:5210
+#: db/seeds/settings.rb:5219
 msgid "Defines the sipgate.io config."
 msgstr "Mendefinisikan konfigurasi sipgate.io."
 
-#: db/seeds/settings.rb:4575
+#: db/seeds/settings.rb:4584
 msgid "Defines the state of auto-closed tickets."
 msgstr "Mendefinisikan status tiket yang ditutup otomatis."
 
@@ -6641,32 +6653,32 @@ msgstr "Mendefinisikan perilaku tab setelah tindakan tiket."
 msgid "Defines the ticket states used for lookups."
 msgstr "Mendefinisikan status tiket yang digunakan untuk pencarian."
 
-#: db/seeds/settings.rb:5605
+#: db/seeds/settings.rb:5614
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "Mendefinisikan jangka waktu di mana catatan yang dibuat sendiri dapat "
 "dihapus."
 
-#: db/seeds/settings.rb:5361
+#: db/seeds/settings.rb:5370
 msgid "Defines the token for Placetel."
 msgstr "Mendefinisikan token untuk Placetel."
 
-#: db/seeds/settings.rb:5152
+#: db/seeds/settings.rb:5161
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 "Mendefinisikan backend transaksi untuk mendeteksi tanda tangan pelanggan "
 "dalam email."
 
-#: db/seeds/settings.rb:5134
+#: db/seeds/settings.rb:5143
 msgid "Defines the transaction backend to execute triggers."
 msgstr "Mendefinisikan backend transaksi untuk mengeksekusi trigger."
 
-#: db/seeds/settings.rb:5143
+#: db/seeds/settings.rb:5152
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "Mendefinisikan backend transaksi untuk mengirim notifikasi agen."
 
-#: db/seeds/settings.rb:5430
+#: db/seeds/settings.rb:5439
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -6674,12 +6686,12 @@ msgstr ""
 "Mendefinisikan backend transaksi yang mendeteksi ID penelepon dalam objek "
 "dan menyimpannya untuk pencarian CTI."
 
-#: db/seeds/settings.rb:5439
+#: db/seeds/settings.rb:5448
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
 "Mendefinisikan backend transaksi yang mengeksekusi trigger berbasis waktu."
 
-#: db/seeds/settings.rb:5421
+#: db/seeds/settings.rb:5430
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -6706,7 +6718,7 @@ msgid ""
 msgstr ""
 "Mendefinisikan judul peringatan yang ditampilkan ketika tiket yang cocok ada."
 
-#: db/seeds/settings.rb:5140
+#: db/seeds/settings.rb:5149
 msgid "Defines transaction backend."
 msgstr "Mendefinisikan backend transaksi."
 
@@ -6722,7 +6734,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6083
+#: db/seeds/settings.rb:6092
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
@@ -7000,19 +7012,19 @@ msgstr "Desainer"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: db/seeds/settings.rb:6062
+#: db/seeds/settings.rb:6071
 #, fuzzy
 #| msgid "New BETA UI Switch"
 msgid "Desktop BETA UI Switch"
 msgstr "Sakelar UI BETA Baru"
 
-#: db/seeds/settings.rb:6071
+#: db/seeds/settings.rb:6080
 #, fuzzy
 #| msgid "UI Desktop Beta Switch"
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "Beralih UI Desktop Beta"
 
-#: db/seeds/settings.rb:6080
+#: db/seeds/settings.rb:6089
 #, fuzzy
 #| msgid "UI Desktop Beta Switch"
 msgid "Desktop BETA UI Switch Roles"
@@ -7278,7 +7290,7 @@ msgstr "Jangan enkripsi email"
 msgid "Do not sign email"
 msgstr "Jangan tandatangani email"
 
-#: db/seeds/settings.rb:6009
+#: db/seeds/settings.rb:6018
 msgid "Do not update any tickets."
 msgstr "Jangan perbarui tiket apa pun."
 
@@ -7768,7 +7780,7 @@ msgstr "Akun Email"
 msgid "Email address"
 msgstr "Alamat email"
 
-#: app/models/user.rb:675
+#: app/models/user.rb:676
 msgid "Email address '%{email}' is already used for another user."
 msgstr "Alamat email '%{email}' sudah digunakan untuk pengguna lain."
 
@@ -7900,7 +7912,7 @@ msgstr ""
 "sandi). Semua pengguna perlu untuk membuat kunci akses token mereka sendiri "
 "di profil pengguna."
 
-#: db/seeds/settings.rb:5944
+#: db/seeds/settings.rb:5953
 msgid "Enable Recovery Codes"
 msgstr "Aktifkan Kode Pemulihan"
 
@@ -7924,7 +7936,7 @@ msgstr "Aktifkan penugasan otomatis untuk tiket yang cocok berikut."
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "Aktifkan penugasan otomatis saat pertama kali agen membuka tiket."
 
-#: db/seeds/settings.rb:6027
+#: db/seeds/settings.rb:6036
 msgid "Enable checklists."
 msgstr "Aktifkan daftar periksa."
 
@@ -7952,13 +7964,13 @@ msgstr ""
 "mengutip frasa tertentu, cukup tandai teks dan tekan balas (fitur ini selalu "
 "tersedia)."
 
-#: db/seeds/settings.rb:6186
+#: db/seeds/settings.rb:6195
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
 
-#: db/seeds/settings.rb:6054
+#: db/seeds/settings.rb:6063
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -7988,11 +8000,11 @@ msgstr ""
 "non-administrator akan keluar dan hanya administrator yang dapat memulai "
 "sesi baru."
 
-#: db/seeds/settings.rb:6125
+#: db/seeds/settings.rb:6134
 msgid "Enable or disable the ticket summary."
 msgstr "Aktifkan atau nonaktifkan ringkasan tiket."
 
-#: db/seeds/settings.rb:6158
+#: db/seeds/settings.rb:6167
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Aktifkan atau nonaktifkan alat teks asisten menulis."
 
@@ -8033,7 +8045,7 @@ msgstr ""
 "Nyalakan peringatan untuk pengguna selama pembuatan tiket jika telah "
 "terdapat tiket dengan atribut serupa."
 
-#: db/seeds/settings.rb:5801
+#: db/seeds/settings.rb:5810
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -8194,11 +8206,11 @@ msgstr "Endpoint"
 msgid "Endpoint Settings"
 msgstr "Pengaturan Endpoint"
 
-#: db/seeds/settings.rb:5971
+#: db/seeds/settings.rb:5980
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "Paksa pengaturan autentikasi dua faktor"
 
-#: db/seeds/settings.rb:5978
+#: db/seeds/settings.rb:5987
 msgid "Enforced for user roles"
 msgstr "Dipaksakan untuk peran pengguna"
 
@@ -8640,15 +8652,15 @@ msgstr "Pengguna yang dikecualikan"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4967
+#: db/seeds/settings.rb:4976
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:4954
+#: db/seeds/settings.rb:4963
 msgid "Exchange config"
 msgstr "Konfigurasi Exchange"
 
-#: db/seeds/settings.rb:4980
+#: db/seeds/settings.rb:4989
 msgid "Exchange integration"
 msgstr "Integrasi Exchange"
 
@@ -8895,13 +8907,13 @@ msgstr "Fitur dinonaktifkan, harap hubungi administrator Anda!"
 msgid "Feature not configured, please contact your admin!"
 msgstr "Fitur tidak dikonfigurasi, harap hubungi admin Anda!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Feb"
 msgstr "Feb"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "February"
 msgstr "Februari"
 
@@ -9301,11 +9313,11 @@ msgstr "Frekuensi"
 msgid "Freshdesk"
 msgstr "Freshdesk"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Fri"
 msgstr "Jum"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:11
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:19
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:56
@@ -9431,7 +9443,7 @@ msgstr "Mulai"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5936
+#: db/seeds/settings.rb:5945
 msgid "Get the security code from the authenticator app on your device."
 msgstr "Dapatkan kode keamanan dari aplikasi autentikator di perangkat Anda."
 
@@ -9461,11 +9473,11 @@ msgstr "Kredensial App GitHub"
 msgid "GitHub OAuth Applications"
 msgstr "Aplikasi OAuth GitHub"
 
-#: db/seeds/settings.rb:5116
+#: db/seeds/settings.rb:5125
 msgid "GitHub config"
 msgstr "Konfigurasi GitHub"
 
-#: db/seeds/settings.rb:5089
+#: db/seeds/settings.rb:5098
 msgid "GitHub integration"
 msgstr "Integrasi GitHub"
 
@@ -9494,11 +9506,11 @@ msgstr "Kredensial App GitLab"
 msgid "GitLab Applications"
 msgstr "Aplikasi GitLab"
 
-#: db/seeds/settings.rb:5074
+#: db/seeds/settings.rb:5083
 msgid "GitLab config"
 msgstr "Konfigurasi GitLab"
 
-#: db/seeds/settings.rb:5047
+#: db/seeds/settings.rb:5056
 msgid "GitLab integration"
 msgstr "Integrasi GitLab"
 
@@ -9732,11 +9744,11 @@ msgstr "Grup adalah …"
 msgid "HMAC SHA1 Signature Token"
 msgstr "Token Tanda Tangan HMAC SHA1"
 
-#: db/seeds/settings.rb:5457
+#: db/seeds/settings.rb:5466
 msgid "HTML Email CSS Font"
 msgstr "Font CSS Email HTML"
 
-#: db/seeds/settings.rb:5469
+#: db/seeds/settings.rb:5478
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Batas Waktu Pemrosesan Sanitizer HTML"
 
@@ -10047,12 +10059,12 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "Organisasi tidak aktif."
 
-#: db/seeds/settings.rb:5621
+#: db/seeds/settings.rb:5630
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
 "Menyorot jika catatan yang ditulis pengguna bersifat publik atau pribadi"
 
-#: db/seeds/settings.rb:5618
+#: db/seeds/settings.rb:5627
 msgid "Hint for adding an article to an existing ticket."
 msgstr "Petunjuk untuk menambahkan artikel ke tiket yang ada."
 
@@ -10194,7 +10206,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4497
+#: db/seeds/settings.rb:4506
 msgid "Icinga integration"
 msgstr "Integrasi Icinga"
 
@@ -10808,7 +10820,7 @@ msgstr "Internal"
 msgid "Internal Knowledge Base feed:"
 msgstr "Feed Knowledge Base internal:"
 
-#: app/models/object_manager/attribute.rb:694
+#: app/models/object_manager/attribute.rb:710
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -10888,7 +10900,7 @@ msgstr "client_id tidak valid dalam loop penerimaan!"
 msgid "Invalid client_id received!"
 msgstr "client_id yang diterima tidak valid!"
 
-#: app/models/user.rb:614
+#: app/models/user.rb:615
 msgid "Invalid email '%{email}'"
 msgstr "Email tidak valid '%{email}'"
 
@@ -11120,7 +11132,7 @@ msgstr "Tidak mungkin menghapus pengguna sistem."
 msgid "It is not possible to delete your current account."
 msgstr "Tidak mungkin menghapus akun Anda saat ini."
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:298
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Tidak mungkin menggabungkan ke tiket yang sudah digabungkan."
 
@@ -11133,13 +11145,13 @@ msgstr "Item"
 msgid "Items per page"
 msgstr "Item per halaman"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jan"
 msgstr "Jan"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "January"
 msgstr "Januari"
 
@@ -11163,23 +11175,23 @@ msgstr "Bergabung dengan %s"
 msgid "Join feedback program"
 msgstr "Formulir Umpan Balik"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jul"
 msgstr "Jul"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "July"
 msgstr "Juli"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jun"
 msgstr "Jun"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "June"
 msgstr "Juni"
 
@@ -11290,15 +11302,15 @@ msgstr "Feed Knowledge Base"
 msgid "Knowledge Base Reader"
 msgstr "Pembaca Knowledge Base"
 
-#: db/seeds/settings.rb:5575
+#: db/seeds/settings.rb:5584
 msgid "Knowledge Base active"
 msgstr "Knowledge Base aktif"
 
-#: db/seeds/settings.rb:5590
+#: db/seeds/settings.rb:5599
 msgid "Knowledge Base active publicly"
 msgstr "Knowledge Base aktif secara publik"
 
-#: db/seeds/settings.rb:5564
+#: db/seeds/settings.rb:5573
 msgid "Knowledge Base multilingual support"
 msgstr "Dukungan multibahasa Knowledge Base"
 
@@ -11331,7 +11343,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "Host LDAP"
 
-#: db/seeds/settings.rb:4927
+#: db/seeds/settings.rb:4936
 msgid "LDAP integration"
 msgstr "Integrasi LDAP"
 
@@ -12272,13 +12284,13 @@ msgstr ""
 msgid "Mapping"
 msgstr "Pemetaan"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Mar"
 msgstr "Mar"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "March"
 msgstr "Maret"
 
@@ -12388,7 +12400,7 @@ msgstr "Jumlah maksimum pemicu yang dieksekusi secara rekursif."
 msgid "Maximum number of ticket shown in overviews"
 msgstr "Jumlah maksimum tiket yang ditampilkan di ikhtisar"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
@@ -12659,11 +12671,11 @@ msgstr "Model"
 msgid "Module"
 msgstr "Modul"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Mon"
 msgstr "Sen"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:7
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:15
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
@@ -12674,7 +12686,7 @@ msgstr "Senin"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4826
+#: db/seeds/settings.rb:4835
 msgid "Monit integration"
 msgstr "Integrasi Monit"
 
@@ -12705,7 +12717,7 @@ msgstr "Suasana Hati"
 msgid "More information can be found here."
 msgstr "Informasi lebih lanjut dapat ditemukan di sini."
 
-#: app/models/user.rb:694
+#: app/models/user.rb:695
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Lebih dari 250 organisasi sekunder tidak diizinkan."
 
@@ -12801,7 +12813,7 @@ msgstr "Tiket saya yang sedang diproses"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4595
+#: db/seeds/settings.rb:4604
 msgid "Nagios integration"
 msgstr "Integrasi Nagios"
 
@@ -13428,7 +13440,7 @@ msgstr "Tidak ada konfigurasi yang disetel."
 msgid "No content to show"
 msgstr "Tidak ada konten untuk ditampilkan"
 
-#: app/models/group.rb:36
+#: app/models/group.rb:37
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "Tidak diperbolehkan titik dua ganda (::), pembatas yang dicadangkan"
 
@@ -13590,7 +13602,7 @@ msgid "No shared drafts yet"
 msgstr "Belum ada draft bersama"
 
 #: app/controllers/organizations_controller.rb:107
-#: app/controllers/text_modules_controller.rb:75
+#: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
@@ -13626,7 +13638,7 @@ msgstr "Tidak ada token!"
 msgid "No translation for this locale available"
 msgstr "Tidak ada terjemahan untuk lokal ini"
 
-#: app/models/ticket.rb:422
+#: app/models/ticket.rb:423
 msgid "No triggers active"
 msgstr "Tidak ada pemicu yang aktif"
 
@@ -13670,7 +13682,7 @@ msgstr "Tidak, terima kasih"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1979
+#: app/graphql/gql/types/ticket_type.rb:111 db/seeds/settings.rb:1979
 msgid "None"
 msgstr "Tidak Ada"
 
@@ -13888,13 +13900,13 @@ msgstr "Notifikasi"
 msgid "Notifications matrix"
 msgstr "Matriks notifikasi"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Nov"
 msgstr "Nov"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "November"
 msgstr "November"
 
@@ -14012,13 +14024,13 @@ msgstr ""
 msgid "Objects"
 msgstr "Objek"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Oct"
 msgstr "Okt"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "October"
 msgstr "Oktober"
 
@@ -14638,15 +14650,15 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5787
+#: db/seeds/settings.rb:5796
 msgid "PGP Recipient Alias Configuration"
 msgstr "Konfigurasi Alias Penerima PGP"
 
-#: db/seeds/settings.rb:5773
+#: db/seeds/settings.rb:5782
 msgid "PGP config"
 msgstr "Konfigurasi PGP"
 
-#: db/seeds/settings.rb:5745
+#: db/seeds/settings.rb:5754
 msgid "PGP integration"
 msgstr "Integrasi PGP"
 
@@ -14835,7 +14847,7 @@ msgstr "Pembayaran diperlukan - harap isi ulang akun Anda"
 msgid "Pending Reached Tickets"
 msgstr "Tiket Tertunda yang Dicapai"
 
-#: app/assets/javascripts/app/models/ticket.coffee:113
+#: app/assets/javascripts/app/models/ticket.coffee:116
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Pengingat tertunda dicapai untuk tiket |%s|"
@@ -14960,15 +14972,15 @@ msgstr "Placeholder untuk teks yang dihasilkan AI"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5358
+#: db/seeds/settings.rb:5367
 msgid "Placetel Token"
 msgstr "Token Placetel"
 
-#: db/seeds/settings.rb:5344
+#: db/seeds/settings.rb:5353
 msgid "Placetel config"
 msgstr "Konfigurasi Placetel"
 
-#: db/seeds/settings.rb:5316
+#: db/seeds/settings.rb:5325
 msgid "Placetel integration"
 msgstr "Integrasi Placetel"
 
@@ -16141,14 +16153,14 @@ msgstr "Persyaratan"
 
 #: db/seeds/settings.rb:1790
 msgid ""
-"Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) to "
-"be present and true before trusting an incoming email address for account "
-"auto-linking. Both must first be configured as optional claims on the Azure "
-"app registration. Until that is done, enabling this blocks all Microsoft 365 "
-"account auto-linking by email."
+"Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
+"to match the incoming email address, before trusting that address for "
+"account auto-linking. Both claims must first be configured as optional "
+"claims on the Azure app registration. Until that is done, enabling this "
+"blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
 
-#: db/seeds/settings.rb:5974
+#: db/seeds/settings.rb:5983
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
@@ -16389,7 +16401,7 @@ msgstr "Mencoba ulang mengunduh media yang dikirim melalui WhatsApp gagal."
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "Tulis ulang bagian kompleks dan buat mudah dipahami"
 
-#: db/seeds/settings.rb:6197
+#: db/seeds/settings.rb:6206
 msgid "Richtext Bubble Menu"
 msgstr "Menu Bubble Richtext"
 
@@ -16484,7 +16496,7 @@ msgstr ""
 "umum diterima (atau lebih tepatnya, protokol) untuk mengirim pesan yang "
 "ditandatangani dan dienkripsi secara digital."
 
-#: db/seeds/settings.rb:5731
+#: db/seeds/settings.rb:5740
 msgid "S/MIME config"
 msgstr "Konfigurasi S/MIME"
 
@@ -16494,7 +16506,7 @@ msgstr ""
 "S/MIME memungkinkan Anda mengirim pesan yang ditandatangani dan dienkripsi "
 "secara digital."
 
-#: db/seeds/settings.rb:5703
+#: db/seeds/settings.rb:5712
 msgid "S/MIME integration"
 msgstr "Integrasi S/MIME"
 
@@ -16594,7 +16606,7 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5819
+#: db/seeds/settings.rb:5828
 msgid "SSO"
 msgstr "SSO"
 
@@ -16609,11 +16621,11 @@ msgstr ""
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sat"
 msgstr "Sab"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:12
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:20
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:59
@@ -17022,14 +17034,14 @@ msgstr "Cari…"
 msgid "Secondary organizations"
 msgstr "Organisasi sekunder"
 
-#: app/models/user.rb:682
+#: app/models/user.rb:683
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
 "Organisasi sekunder hanya diperbolehkan jika organisasi primer diberikan."
 
-#: app/models/user.rb:688
+#: app/models/user.rb:689
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Organisasi sekunder tidak dapat menyertakan organisasi primer."
 
@@ -17066,7 +17078,7 @@ msgstr "Kunci Keamanan"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5880
+#: db/seeds/settings.rb:5889
 msgid "Security Keys"
 msgstr "Kunci Keamanan"
 
@@ -17436,7 +17448,7 @@ msgstr "Mengirim…"
 msgid "Sent successfully!"
 msgstr "Berhasil dikirim!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
@@ -17446,7 +17458,7 @@ msgstr "Sep"
 msgid "Separate multiple values by ;"
 msgstr "Pisahkan beberapa nilai dengan ;"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "September"
 msgstr "September"
 
@@ -17505,7 +17517,7 @@ msgstr "Siapkan"
 msgid "Set a title for your ticket"
 msgstr "Tetapkan judul untuk tiket Anda"
 
-#: db/seeds/settings.rb:5446
+#: db/seeds/settings.rb:5455
 msgid "Set agent limit"
 msgstr "Tetapkan batas agen"
 
@@ -17567,7 +17579,7 @@ msgstr "Tetapkan ID penelepon keluar"
 msgid "Set security keys as default"
 msgstr "Tetapkan kunci keamanan sebagai default"
 
-#: db/seeds/settings.rb:5608
+#: db/seeds/settings.rb:5617
 #, fuzzy
 #| msgid ""
 #| "Set timeframe in seconds. If it's set to 0 you can delete notes without "
@@ -17775,7 +17787,7 @@ msgstr "Tampilkan semua…"
 msgid "Show authenticator app secret"
 msgstr "Tampilkan rahasia aplikasi autentikator"
 
-#: db/seeds/settings.rb:5852
+#: db/seeds/settings.rb:5861
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Tampilkan minggu kalender di pemilih bidang tanggal/datetime"
 
@@ -18348,7 +18360,7 @@ msgstr "Status"
 msgid "State icon"
 msgstr "Ikon Status"
 
-#: db/seeds/settings.rb:5480
+#: db/seeds/settings.rb:5489
 msgid "Stats Backend"
 msgstr "Backend Statistik"
 
@@ -18424,19 +18436,19 @@ msgstr "Metode Penyimpanan"
 msgid "Store"
 msgstr "Toko"
 
-#: db/seeds/settings.rb:6109
+#: db/seeds/settings.rb:6118
 msgid "Stores the AI provider configuration."
 msgstr "Menyimpan konfigurasi penyedia AI."
 
-#: db/seeds/settings.rb:5119
+#: db/seeds/settings.rb:5128
 msgid "Stores the GitHub configuration."
 msgstr "Menyimpan konfigurasi GitHub."
 
-#: db/seeds/settings.rb:5077
+#: db/seeds/settings.rb:5086
 msgid "Stores the GitLab configuration."
 msgstr "Menyimpan konfigurasi GitLab."
 
-#: db/seeds/settings.rb:6139
+#: db/seeds/settings.rb:6148
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr "Menyimpan opsi ringkasan tiket (misalnya konten mana yang terlihat)."
@@ -18574,18 +18586,18 @@ msgstr "Ringkasan sedang dibuat…"
 msgid "Summer holiday"
 msgstr "Liburan musim panas"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sun"
 msgstr "Min"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:13
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:21
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:62
 msgid "Sunday"
 msgstr "Minggu"
 
-#: db/seeds/settings.rb:5567
+#: db/seeds/settings.rb:5576
 msgid "Support of multilingual Knowledge Base."
 msgstr "Dukungan untuk Knowledge Base multibahasa."
 
@@ -18672,7 +18684,7 @@ msgstr ""
 "platform publik %l. Ini menggunakan antarmuka pengguna yang sangat mudah "
 "berbasis Weblate, coba!"
 
-#: db/seeds/settings.rb:5640
+#: db/seeds/settings.rb:5649
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -19364,6 +19376,14 @@ msgstr ""
 msgid "The current password you provided is incorrect."
 msgstr "Password saat ini yang Anda berikan salah."
 
+#: app/models/core_workflow/result.rb:61
+msgid "The current user is not allowed to access the referenced object."
+msgstr ""
+
+#: app/models/core_workflow/result.rb:45
+msgid "The current user is not allowed to use core workflow for this object."
+msgstr ""
+
 #: app/services/service/ai/vectordb/create_table.rb:18
 msgid "The currently selected AI provider does not support embeddings."
 msgstr "Penyedia AI yang dipilih saat ini tidak mendukung embedding."
@@ -19793,7 +19813,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr "Versi produk tidak dapat diambil."
 
-#: app/models/webhook.rb:77
+#: app/models/webhook.rb:80
 msgid "The provided HTTP method is invalid."
 msgstr "Metode HTTP yang diberikan tidak valid."
 
@@ -19817,7 +19837,7 @@ msgstr "Kredensial yang diberikan tidak valid."
 msgid "The provided email account is already in use."
 msgstr "Akun email yang diberikan sudah digunakan."
 
-#: app/models/webhook.rb:57
+#: app/models/webhook.rb:60
 #, fuzzy
 #| msgid ""
 #| "The provided endpoint is invalid, no http or https protocol was specified."
@@ -19828,33 +19848,33 @@ msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada protokol http atau https yang "
 "ditentukan."
 
-#: app/models/webhook.rb:55
+#: app/models/webhook.rb:58
 #, fuzzy
 #| msgid "The provided endpoint is invalid, no hostname was specified."
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada nama host yang ditentukan."
 
-#: app/models/webhook.rb:53
+#: app/models/webhook.rb:56
 #, fuzzy
 #| msgid "The provided endpoint is invalid, no hostname was specified."
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada nama host yang ditentukan."
 
-#: app/models/webhook.rb:47
+#: app/models/webhook.rb:50
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada nama host yang ditentukan."
 
-#: app/models/webhook.rb:46
+#: app/models/webhook.rb:49
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada protokol http atau https yang "
 "ditentukan."
 
-#: app/models/webhook.rb:51
+#: app/models/webhook.rb:54
 msgid "The provided endpoint is invalid."
 msgstr "Endpoint yang diberikan tidak valid."
 
@@ -19866,7 +19886,7 @@ msgstr "Operator pencocokan yang diberikan tidak ada atau tidak valid."
 msgid "The provided password is incorrect."
 msgstr "Password yang diberikan salah."
 
-#: app/models/webhook.rb:66
+#: app/models/webhook.rb:69
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "Payload yang diberikan tidak valid. Harap periksa sintaks Anda."
 
@@ -20364,6 +20384,12 @@ msgstr "'preferred_username' pengguna tidak dapat diekstrak dari 'id_token'."
 msgid "The username or password is incorrect."
 msgstr "Nama pengguna atau password salah."
 
+#: app/models/core_workflow/result.rb:40
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr "Parameter yang diperlukan 'payload->class_name' tidak ada."
+
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 msgid "The verification email could not be resent."
 msgstr "Email verifikasi tidak dapat dikirim ulang."
@@ -20854,7 +20880,7 @@ msgstr ""
 "Grup ini tidak memiliki alamat email yang dikonfigurasi untuk komunikasi "
 "keluar."
 
-#: app/models/group.rb:83
+#: app/models/group.rb:84
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr "Grup ini atau anaknya melebihi kedalaman sarang yang diizinkan."
 
@@ -21189,11 +21215,11 @@ msgstr ""
 "untuk surat keluar, misalnya ketika agen sedang mengkomposisi email atau "
 "trigger sedang mengirim balasan otomatis."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Thu"
 msgstr "Kam"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:10
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:18
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:53
@@ -21329,11 +21355,11 @@ msgstr "Tanggal Peningkatan Nomor Tiket"
 msgid "Ticket Number ignore system_id"
 msgstr "Nomor Tiket mengabaikan system_id"
 
-#: db/seeds/settings.rb:5996
+#: db/seeds/settings.rb:6005
 msgid "Ticket Organization Reassignment"
 msgstr "Penugasan Ulang Organisasi Tiket"
 
-#: db/seeds/settings.rb:5637
+#: db/seeds/settings.rb:5646
 msgid "Ticket Overview Query Polling"
 msgstr "Polling Kueri Ikhtisar Tiket"
 
@@ -21393,11 +21419,11 @@ msgstr "Langganan Tiket"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6122
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6131
 msgid "Ticket Summary"
 msgstr "Ringkasan Tiket"
 
-#: db/seeds/settings.rb:6136
+#: db/seeds/settings.rb:6145
 msgid "Ticket Summary Config"
 msgstr "Konfigurasi Ringkasan Tiket"
 
@@ -21680,17 +21706,17 @@ msgstr ""
 "Tiket dengan ID yang ditentukan tidak ditemukan. Coba periksa URL untuk "
 "kesalahan."
 
-#: app/assets/javascripts/app/models/ticket.coffee:115
+#: app/assets/javascripts/app/models/ticket.coffee:118
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "Ticket |%s| has escalated!"
 msgstr "Tiket |%s| telah dieskalasi!"
 
-#: app/assets/javascripts/app/models/ticket.coffee:119
+#: app/assets/javascripts/app/models/ticket.coffee:122
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "Tiket |%s| digabungkan ke tiket lain"
 
-#: app/assets/javascripts/app/models/ticket.coffee:117
+#: app/assets/javascripts/app/models/ticket.coffee:120
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Ticket |%s| will escalate soon!"
 msgstr "Tiket |%s| akan segera dieskalasi!"
@@ -22071,11 +22097,11 @@ msgstr "Akses Token"
 msgid "Token authorization failed."
 msgstr "Otorisasi token gagal."
 
-#: db/seeds/settings.rb:5285
+#: db/seeds/settings.rb:5294
 msgid "Token for CTI."
 msgstr "Token untuk CTI."
 
-#: db/seeds/settings.rb:5189
+#: db/seeds/settings.rb:5198
 msgid "Token for Sipgate."
 msgstr "Token untuk Sipgate."
 
@@ -22218,7 +22244,7 @@ msgstr ""
 "dieksekusi ketika waktu tertentu tercapai (misalnya waktu menunggu, "
 "eskalasi)."
 
-#: db/seeds/settings.rb:5828
+#: db/seeds/settings.rb:5837
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -22253,11 +22279,11 @@ msgstr "Coba gunakan kunci keamanan Anda lagi."
 msgid "Trying to reconnect…"
 msgstr "Mencoba terhubung kembali…"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Tue"
 msgstr "Sel"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:8
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:16
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:47
@@ -22704,7 +22730,7 @@ msgstr "Perbarui Draf Bersama"
 msgid "Update successful."
 msgstr "Pembaruan berhasil."
 
-#: db/seeds/settings.rb:6008
+#: db/seeds/settings.rb:6017
 msgid "Update the most recent tickets."
 msgstr "Perbarui tiket terbaru."
 
@@ -23598,11 +23624,11 @@ msgstr "Tautan Web"
 msgid "Website"
 msgstr "Situs Web"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Wed"
 msgstr "Rab"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:9
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:17
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:50
@@ -23851,11 +23877,11 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "Kirim Umpan Balik"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6155
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6164
 msgid "Writing Assistant"
 msgstr "Asisten Penulisan"
 
-#: db/seeds/settings.rb:6169
+#: db/seeds/settings.rb:6178
 msgid "Writing Assistant Fixed Instructions"
 msgstr "Instruksi Tetap Asisten Penulisan"
 
@@ -24572,6 +24598,7 @@ msgid "Zammad Foundation"
 msgstr "Zammad Foundation"
 
 #: db/seeds/settings.rb:114
+#: lib/auth/two_factor/authentication_method/authenticator_app.rb:38
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
 
@@ -24751,7 +24778,7 @@ msgstr "tugaskan tiket"
 msgid "at"
 msgstr "pada"
 
-#: app/models/object_manager/attribute.rb:604
+#: app/models/object_manager/attribute.rb:616
 msgid "at least one letter is required"
 msgstr "setidaknya satu huruf diperlukan"
 
@@ -24760,7 +24787,7 @@ msgstr "setidaknya satu huruf diperlukan"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "lampiran,terlampir,terlampir,lampiran"
 
-#: app/models/object_manager/attribute.rb:637
+#: app/models/object_manager/attribute.rb:649
 msgid "attribute is not editable"
 msgstr "atribut tidak dapat diedit"
 
@@ -24794,7 +24821,7 @@ msgstr "sibuk"
 msgid "camera,image,photo,picture"
 msgstr "kamera,gambar,foto,gambar"
 
-#: app/models/object_manager/attribute.rb:683
+#: app/models/object_manager/attribute.rb:699
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -24808,13 +24835,13 @@ msgstr "tidak boleh kosong"
 msgid "can't be empty"
 msgstr "tidak boleh kosong"
 
-#: app/models/object_manager/attribute.rb:690
+#: app/models/object_manager/attribute.rb:706
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "tidak boleh kosong"
 
-#: app/models/object_manager/attribute.rb:595
+#: app/models/object_manager/attribute.rb:607
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "tidak dapat digunakan karena *_id dan *_ids tidak diizinkan"
 
@@ -24840,7 +24867,7 @@ msgstr "mencentang item daftar periksa '%s'"
 msgid "children"
 msgstr "turunan"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:166
 msgid "clear"
 msgstr "hapus"
 
@@ -25114,7 +25141,7 @@ msgstr "berakhir dengan"
 msgid "ends with one of"
 msgstr "berakhir dengan salah satu"
 
-#: app/assets/javascripts/app/models/ticket.coffee:84
+#: app/assets/javascripts/app/models/ticket.coffee:85
 msgid "escalated"
 msgstr "dieskalasi"
 
@@ -25264,11 +25291,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5034
+#: db/seeds/settings.rb:5043
 msgid "i-doit config"
 msgstr "konfigurasi i-doit"
 
-#: db/seeds/settings.rb:5007
+#: db/seeds/settings.rb:5016
 msgid "i-doit integration"
 msgstr "integrasi i-doit"
 
@@ -25491,7 +25518,7 @@ msgstr "panjangnya salah (seharusnya %{count} karakter)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "panjangnya salah (seharusnya 1 karakter)"
 
-#: app/models/user.rb:879
+#: app/models/user.rb:880
 msgid "is too long"
 msgstr "terlalu panjang"
 
@@ -25766,7 +25793,7 @@ msgstr "notifikasi,tiket"
 msgid "now"
 msgstr "sekarang"
 
-#: app/models/object_manager/attribute.rb:601
+#: app/models/object_manager/attribute.rb:613
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "hanya huruf kecil, angka, dan '_' yang diizinkan"
 
@@ -25836,7 +25863,7 @@ msgstr "dipublikasikan"
 msgid "quarter-hour(s)"
 msgstr "seperempat jam"
 
-#: app/assets/javascripts/app/models/ticket.coffee:82
+#: app/assets/javascripts/app/models/ticket.coffee:87
 msgid "reached"
 msgstr "tercapai"
 
@@ -25996,19 +26023,19 @@ msgstr "tampilkan lebih banyak"
 msgid "shown"
 msgstr "ditampilkan"
 
-#: db/seeds/settings.rb:5186
+#: db/seeds/settings.rb:5195
 msgid "sipgate.io Token"
 msgstr "Token sipgate.io"
 
-#: db/seeds/settings.rb:5220
+#: db/seeds/settings.rb:5229
 msgid "sipgate.io alternative FQDN"
 msgstr "FQDN alternatif sipgate.io"
 
-#: db/seeds/settings.rb:5207
+#: db/seeds/settings.rb:5216
 msgid "sipgate.io config"
 msgstr "konfigurasi sipgate.io"
 
-#: db/seeds/settings.rb:5158
+#: db/seeds/settings.rb:5167
 msgid "sipgate.io integration"
 msgstr "integrasi sipgate.io"
 
@@ -26024,7 +26051,7 @@ msgstr "dilewati"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:598
+#: app/models/object_manager/attribute.rb:610
 msgid "spaces are not allowed"
 msgstr "spasi tidak diizinkan"
 
@@ -26109,7 +26136,7 @@ msgid "to go to the homepage."
 msgstr "untuk ke halaman beranda."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 #: app/assets/javascripts/app/controllers/chat.coffee:757
