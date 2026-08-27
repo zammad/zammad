@@ -356,4 +356,43 @@ RSpec.describe 'Manage > Trigger', type: :system do
       end
     end
   end
+
+  context 'Article HTML placeholders missing in a non-English profile #6327', authenticated_as: :admin do
+    let(:admin) { create(:admin, preferences: { locale: 'de-de' }) }
+
+    let(:html_placeholders) do
+      [
+        "\#{first_article.body_as_html}",
+        "\#{first_internal_article.body_as_html}",
+        "\#{first_external_article.body_as_html}",
+        "\#{last_article.body_as_html}",
+        "\#{last_internal_article.body_as_html}",
+        "\#{last_external_article.body_as_html}",
+        "\#{created_article.body_as_html}",
+        "\#{created_internal_article.body_as_html}",
+        "\#{created_external_article.body_as_html}",
+      ]
+    end
+
+    def placeholder_collection
+      page.evaluate_script("$('div[contenteditable]').data().plugin_textmodule.collection")
+    end
+
+    before do
+      visit '/#manage/trigger'
+    end
+
+    it 'offers the HTML article placeholders' do
+      click ".js-tableBody tr.item[data-id='#{Trigger.find_by(name: 'auto reply (on new tickets)').id}']"
+
+      # The plain article placeholders are unaffected by the bug, so they signal that
+      #   the collection is fully built before the actual assertion runs.
+      wait.until do
+        collection = placeholder_collection
+        collection.present? && collection.any? { |row| row['name'].include?('Letzter Artikel') }
+      end
+
+      expect(placeholder_collection.pluck('content')).to include(*html_placeholders)
+    end
+  end
 end
