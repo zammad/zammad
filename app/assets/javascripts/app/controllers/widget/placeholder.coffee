@@ -90,7 +90,8 @@ class App.WidgetPlaceholder extends App.Controller
           }
 
     # Add HTML format of articles
-    if (_.filter(all, (item) -> item.name.startsWith('Article')).length > 0)
+    # Match on the untranslated content, since the name is localized.
+    if _.some(all, (item) -> item.content.startsWith('#{article.'))
       all.push {
         # coffeelint: disable=no_interpolation_in_single_quotes
         name: __('Article > Text (HTML)'),
