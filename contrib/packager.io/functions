@@ -418,7 +418,7 @@ function set_env_vars () {
   # Opt out via "zammad config:set ZAMMAD_USE_JEMALLOC=no".
   if [[ "$(zammad config:get ZAMMAD_USE_JEMALLOC)" == "no" ]]; then
     if [[ "$(zammad config:get LD_PRELOAD)" == "libjemalloc.so.2" ]]; then
-      zammad config:set LD_PRELOAD=
+      zammad config:unset LD_PRELOAD
     fi
   elif ldconfig -p | grep -q libjemalloc.so.2; then
     zammad config:set LD_PRELOAD=libjemalloc.so.2
