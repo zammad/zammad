@@ -2573,8 +2573,8 @@ RSpec.describe 'Ticket', type: :request do
   end
 
   describe 'POST /api/v1/tickets' do
-    let(:group)  { create(:group) }
-    let(:agent)  { create(:agent, groups: [group]) }
+    let(:group) { create(:group) }
+    let(:agent) { create(:agent, groups: [group]) }
 
     let(:base_params) do
       {

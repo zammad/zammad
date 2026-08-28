@@ -147,10 +147,9 @@ RSpec.describe Cti::CallerId do
       context 'shared by multiple CallerIds' do
         context '(for different users)' do
           subject!(:caller_ids) do
-            #  rubocop:disable FactoryBot/CreateList
+            #  rubocop:disable-next FactoryBot/CreateList
             [create(:caller_id, caller_id: number, user: create(:user)),
              create(:caller_id, caller_id: number, user: create(:user))]
-            #  rubocop:enable FactoryBot/CreateList
           end
 
           it 'returns all corresponding CallerId records' do

@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Desktop > Ticket > Merge', app: :desktop_view, authenticated_as: :agent, type: :system do
-  let(:agent)   { create(:agent, groups: [group]) }
-  let(:group)   { create(:group) }
+  let(:agent) { create(:agent, groups: [group]) }
+  let(:group) { create(:group) }
 
   let!(:ticket) do
     create(:ticket, group:).tap do |ticket|

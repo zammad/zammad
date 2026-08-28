@@ -2,7 +2,7 @@
 
 # Class variables are used here as performance optimization.
 # Technically it is not thread-safe, but it never caused issues.
-# rubocop:disable Style/ClassVars
+# rubocop:disable-next Style/ClassVars
 class Setting < ApplicationModel
   include ChecksClientNotification
 
@@ -307,4 +307,3 @@ reload config settings
       .map { |klass| klass.constantize.new(self).run }
   end
 end
-# rubocop:enable Style/ClassVars

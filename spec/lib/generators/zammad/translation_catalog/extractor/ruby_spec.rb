@@ -29,9 +29,8 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::Ruby do
     end
 
     it 'finds the correct strings' do
-      # rubocop:disable Lint/InterpolationCheck
+      # rubocop:disable-next Lint/InterpolationCheck
       expect(result_strings).to eq(['__ String', '__ String that only looks like #{interpolation}', "__ double quoted String with '", 'translate String'])
-      # rubocop:enable Lint/InterpolationCheck
     end
   end
 

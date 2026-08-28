@@ -4,7 +4,7 @@ class Text::QuoteRemover::AttributionPattern::ForwardedMessage < Text::QuoteRemo
   # "Forwarded message" in common languages
   # Add more translations as needed when real-world examples appear
   # These are pattern matching strings, not UI strings - do not translate
-  # rubocop:disable Zammad/DetectTranslatableString
+  # rubocop:disable-next Zammad/DetectTranslatableString
   FORWARDED_MESSAGE = [
     'Forwarded message',          # English
     'Forwarded Message',          # English (capitalized)
@@ -36,7 +36,6 @@ class Text::QuoteRemover::AttributionPattern::ForwardedMessage < Text::QuoteRemo
     'Áframsent skilaboð',         # Icelandic
     'Προωθημένο μήνυμα',          # Greek
   ].join('|').freeze
-  # rubocop:enable Zammad/DetectTranslatableString
 
   def self.pattern
     # Forwarded message markers

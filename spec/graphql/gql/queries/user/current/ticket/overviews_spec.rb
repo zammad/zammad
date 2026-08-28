@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::User::Current::Ticket::Overviews, type: :graphql do
 
   context 'when fetching ticket overviews' do
-    let(:agent)     { create(:agent) }
-    let(:query)     do
+    let(:agent) { create(:agent) }
+    let(:query) do
       <<~QUERY
         query userCurrentTicketOverviews($ignoreUserConditions: Boolean!, $withTicketCount: Boolean!) {
           userCurrentTicketOverviews(ignoreUserConditions: $ignoreUserConditions) {

@@ -5,7 +5,7 @@ class Webhook::PreDefined::Slack < Webhook::PreDefined
     __('Slack Notifications')
   end
 
-  # rubocop:disable Lint/InterpolationCheck
+  # rubocop:disable-next Lint/InterpolationCheck
   def custom_payload
     {
       mrkdwn:      true,
@@ -21,5 +21,4 @@ class Webhook::PreDefined::Slack < Webhook::PreDefined
       ]
     }
   end
-  # rubocop:enable Lint/InterpolationCheck
 end

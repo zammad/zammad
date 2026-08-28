@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :agent, type: :system do
-  let(:group)                { create(:group) }
-  let(:agent)                { create(:agent, groups: [group]) }
+  let(:group) { create(:group) }
+  let(:agent) { create(:agent, groups: [group]) }
 
   before do
     article if defined?(article)

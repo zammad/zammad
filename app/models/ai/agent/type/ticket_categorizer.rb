@@ -71,13 +71,12 @@ class AI::Agent::Type::TicketCategorizer < AI::Agent::Type
 
   def action_definition
     {
-      # rubocop:disable Lint/InterpolationCheck
+      # rubocop:disable-next Lint/InterpolationCheck
       mapping: {
         'ticket.#{placeholder.category}' => {
           'value' => '#{ai_agent_result.#{placeholder.category}}'
         },
       },
-      # rubocop:enable Lint/InterpolationCheck
     }
   end
 

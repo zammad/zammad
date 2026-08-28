@@ -32,9 +32,9 @@ RSpec.describe 'System Assets', type: :request do
   end
 
   describe 'POST /translations/upsert', :aggregate_failures, authenticated_as: :admin do
-    let(:locale)                      { 'de-de' }
-    let(:source)                      { SecureRandom.uuid }
-    let(:target)                      { 'Other' }
+    let(:locale) { 'de-de' }
+    let(:source) { SecureRandom.uuid }
+    let(:target) { 'Other' }
 
     it 'creates a new translation record' do
       expect do

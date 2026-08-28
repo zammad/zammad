@@ -5,8 +5,8 @@ module User::UpdatesTicketOrganization
   extend ActiveSupport::Concern
 
   included do
-    after_create  :user_update_ticket_organization
-    after_update  :user_update_ticket_organization
+    after_create :user_update_ticket_organization
+    after_update :user_update_ticket_organization
   end
 
   private

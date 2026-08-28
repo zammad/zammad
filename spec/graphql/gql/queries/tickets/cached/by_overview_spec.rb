@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Tickets::Cached::ByOverview, :aggregate_failures, type: :graphql do
 
   context 'when fetching cached ticket overviews' do
-    let(:agent)     { create(:agent) }
-    let(:query)     do
+    let(:agent) { create(:agent) }
+    let(:query) do
       <<~QUERY
         query ticketsCachedByOverview(
           $overviewId: ID!

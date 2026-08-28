@@ -140,13 +140,12 @@ Always return only one match."
 
   def action_definition
     {
-      # rubocop:disable Lint/InterpolationCheck
+      # rubocop:disable-next Lint/InterpolationCheck
       mapping: {
         'ticket.#{placeholder.extracted_text}' => {
           'value' => '#{ai_agent_result.#{placeholder.extracted_text}}'
         },
       },
-      # rubocop:enable Lint/InterpolationCheck
     }
   end
 

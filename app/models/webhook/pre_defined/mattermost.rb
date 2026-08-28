@@ -5,7 +5,7 @@ class Webhook::PreDefined::Mattermost < Webhook::PreDefined
     __('Mattermost Notifications')
   end
 
-  # rubocop:disable Lint/InterpolationCheck
+  # rubocop:disable-next Lint/InterpolationCheck
   def custom_payload
     {
       channel:     '#{webhook.messaging_channel}',
@@ -24,7 +24,6 @@ class Webhook::PreDefined::Mattermost < Webhook::PreDefined
       ]
     }
   end
-  # rubocop:enable Lint/InterpolationCheck
 
   def fields
     [

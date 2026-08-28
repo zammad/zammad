@@ -2,7 +2,7 @@
 
 class DatetimePrecision < ActiveRecord::Migration[5.2]
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable-next Metrics/AbcSize
   def change
 
     # return if it's a new setup
@@ -43,5 +43,4 @@ class DatetimePrecision < ActiveRecord::Migration[5.2]
     change_column :oauth_applications, :created_at, :datetime, limit: 3, null: false
     change_column :oauth_applications, :updated_at, :datetime, limit: 3, null: false
   end
-  # rubocop:enable Metrics/AbcSize
 end

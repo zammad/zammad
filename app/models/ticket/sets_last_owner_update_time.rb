@@ -5,8 +5,8 @@ module Ticket::SetsLastOwnerUpdateTime
   extend ActiveSupport::Concern
 
   included do
-    before_create  :ticket_set_last_owner_update_time
-    before_update  :ticket_set_last_owner_update_time
+    before_create :ticket_set_last_owner_update_time
+    before_update :ticket_set_last_owner_update_time
   end
 
   private

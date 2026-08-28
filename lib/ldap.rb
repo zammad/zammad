@@ -171,10 +171,11 @@ class Ldap
   end
 
   def parse_host
-    return if @host !~ %r{\A([^:]+):(.+?)\z}
+    match = @host&.match(%r{\A(?<host>[^:]+):(?<port>.+?)\z})
+    return if match.blank?
 
-    @host = $1
-    @port = $2.to_i
+    @host = match[:host]
+    @port = match[:port].to_i
   end
 
   def handle_ssl_config

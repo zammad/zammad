@@ -15,7 +15,7 @@ FactoryBot.define do
         '_csrf_token' => 'my_secret_token'
       }
     end
-    created_at       { Time.zone.now }
-    updated_at       { Time.zone.now }
+    created_at { Time.zone.now }
+    updated_at { Time.zone.now }
   end
 end

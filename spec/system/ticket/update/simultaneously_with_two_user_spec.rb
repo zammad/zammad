@@ -9,7 +9,7 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
 
   around { |example| perform_enqueued_jobs { example.run } }
 
-  # rubocop:disable RSpec/InstanceVariable
+  # rubocop:disable-next RSpec/InstanceVariable
   define :have_avatar do |expected|
     chain(:changed, :text)
 
@@ -65,7 +65,6 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
       ".js-attributeBar .js-avatar .avatar--#{changed_class}"
     end
   end
-  # rubocop:enable RSpec/InstanceVariable
 
   def check_taskbar_tab(ticket_id, title: nil, modified: false)
     tab_data_key = "Ticket-#{ticket_id}"

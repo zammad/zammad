@@ -4,7 +4,7 @@ class Text::QuoteRemover::AttributionPattern::MsOriginalMessage < Text::QuoteRem
   # "Original Message" and "Original Appointment" in common languages
   # Add more translations as needed when real-world examples appear
   # These are pattern matching strings, not UI strings - do not translate
-  # rubocop:disable Zammad/DetectTranslatableString
+  # rubocop:disable-next Zammad/DetectTranslatableString
   ORIGINAL_MESSAGE = [
     'Original Message',           # English
     'Original Appointment',       # English (calendar)
@@ -44,7 +44,6 @@ class Text::QuoteRemover::AttributionPattern::MsOriginalMessage < Text::QuoteRem
     '邮件原件',                    # Chinese Simplified
     '原始郵件',                    # Chinese Traditional
   ].join('|').freeze
-  # rubocop:enable Zammad/DetectTranslatableString
 
   def self.pattern
     # Example: "-----Original Message-----" or "-------- Original Message --------"

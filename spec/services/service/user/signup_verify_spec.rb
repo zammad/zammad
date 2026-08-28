@@ -59,8 +59,8 @@ RSpec.describe Service::User::SignupVerify do
       context 'when different than the user being verified' do
         subject(:service_result) { described_class.with_current_user(agent).execute(token:) }
 
-        let(:token)       { User.signup_new_token(user)[:token].token } # NB: Don't ask!
-        let(:agent)       { create(:agent) }
+        let(:token) { User.signup_new_token(user)[:token].token } # NB: Don't ask!
+        let(:agent) { create(:agent) }
 
         it_behaves_like 'raising an error', Service::User::SignupVerify::InvalidTokenError, 'The provided token is invalid.'
       end

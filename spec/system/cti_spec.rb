@@ -20,8 +20,8 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
     }
   end
 
-  let(:first_params) { params.merge(event: 'newCall')  }
-  let(:second_params) { params.merge(event: 'hangup')  }
+  let(:first_params) { params.merge(event: 'newCall') }
+  let(:second_params) { params.merge(event: 'hangup') }
 
   let(:visit_cti) do
     visit 'cti'

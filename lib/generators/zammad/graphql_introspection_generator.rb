@@ -12,8 +12,7 @@ class Zammad::GraphqlIntrospectionGenerator < Rails::Generators::Base
     result = Gql::ZammadSchema.execute(GraphQL::Introspection::INTROSPECTION_QUERY, variables: {}, context: { is_graphql_introspection_generator: true })
     raise "GraphQL schema could not be successfully generated: #{result['errors'].first['message']}" if result['errors']
 
-    # rubocop:disable Rails/Output
+    # rubocop:disable-next Rails/Output
     puts JSON.pretty_generate(result)
-    # rubocop:enable Rails/Output
   end
 end

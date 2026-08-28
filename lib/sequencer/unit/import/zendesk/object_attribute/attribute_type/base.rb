@@ -18,9 +18,8 @@ class Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
     ObjectManager::Attribute.add(attribute_config(object, name, attribute))
     ObjectManager::Attribute.migration_execute(false)
   rescue
-    # rubocop:disable Style/SpecialGlobalVars
+    # rubocop:disable-next Style/SpecialGlobalVars
     raise $!, "Problem with ObjectManager Attribute '#{name}': #{$!}", $!.backtrace
-    # rubocop:enable Style/SpecialGlobalVars
   end
 
   def attribute_config(object, name, attribute)

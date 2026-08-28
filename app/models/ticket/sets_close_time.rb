@@ -5,8 +5,8 @@ module Ticket::SetsCloseTime
   extend ActiveSupport::Concern
 
   included do
-    before_create  :ticket_set_close_time
-    before_update  :ticket_set_close_time
+    before_create :ticket_set_close_time
+    before_update :ticket_set_close_time
   end
 
   private

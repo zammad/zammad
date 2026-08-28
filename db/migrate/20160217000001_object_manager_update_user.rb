@@ -570,7 +570,7 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration[4.2]
       position:    1400,
     )
 
-    # rubocop:disable Lint/BooleanSymbol
+    # rubocop:disable-next Lint/BooleanSymbol
     ObjectManager::Attribute.add(
       force:       true,
       object:      'User',
@@ -609,7 +609,6 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration[4.2]
       to_delete:   false,
       position:    1490,
     )
-    # rubocop:enable Lint/BooleanSymbol
 
     ObjectManager::Attribute.add(
       force:       true,

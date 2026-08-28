@@ -9,7 +9,7 @@ class OrganizationDomainBasedAssignment < ActiveRecord::Migration[4.2]
     add_column :organizations, :domain_assignment, :boolean, null: false, default: false
     add_index :organizations, [:domain]
 
-    # rubocop:disable Lint/BooleanSymbol
+    # rubocop:disable-next Lint/BooleanSymbol
     ObjectManager::Attribute.add(
       force:         true,
       object:        'Organization',
@@ -48,7 +48,6 @@ class OrganizationDomainBasedAssignment < ActiveRecord::Migration[4.2]
       updated_by_id: 1,
       created_by_id: 1,
     )
-    # rubocop:enable Lint/BooleanSymbol
 
     ObjectManager::Attribute.add(
       force:         true,

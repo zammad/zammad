@@ -15,8 +15,8 @@ class TextModule < ApplicationModel
   validates :name,    presence: true
   validates :content, presence: true
 
-  before_create  :validate_content
-  before_update  :validate_content
+  before_create :validate_content
+  before_update :validate_content
 
   validates :note, length: { maximum: 250 }
   sanitized_html :content, :note

@@ -14,7 +14,7 @@ RSpec.describe(Webhook::PreDefined) do
 
   context 'when definition is used' do
     let(:slack_custom_payload) do
-      # rubocop:disable Lint/InterpolationCheck
+      # rubocop:disable-next Lint/InterpolationCheck
       JSON.pretty_generate({
                              mrkdwn:      true,
                              text:        '# #{ticket.title}',
@@ -28,7 +28,6 @@ RSpec.describe(Webhook::PreDefined) do
                                }
                              ]
                            })
-      # rubocop:enable Lint/InterpolationCheck
     end
 
     it 'checks that pre defined webhook definitions are returned' do

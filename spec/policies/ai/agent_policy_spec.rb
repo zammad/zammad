@@ -20,7 +20,7 @@ describe AI::AgentPolicy do
   end
 
   context 'when user is agent' do
-    let(:user)  { create(:agent) }
+    let(:user) { create(:agent) }
 
     it { is_expected.to forbid_actions(:show, :create, :update, :destroy) }
   end

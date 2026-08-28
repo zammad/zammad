@@ -149,7 +149,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
 
       it 'returns current group options' do
         expect(resolved_result.resolve[:fields]).to include(
-          'group_id'    => include(expected_result['group_id']),
+          'group_id' => include(expected_result['group_id']),
         )
       end
     end

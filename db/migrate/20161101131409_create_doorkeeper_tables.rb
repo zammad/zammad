@@ -56,7 +56,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[4.2]
       # previous tokens are revoked as soon as a new access token is created.
       # Comment out this line if you'd rather have refresh tokens
       # instantly revoked.
-      t.string   :previous_refresh_token, null: false, default: ''
+      t.string :previous_refresh_token, null: false, default: ''
     end
 
     add_index :oauth_access_tokens, :token, unique: true

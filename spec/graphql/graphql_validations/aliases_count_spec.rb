@@ -9,7 +9,7 @@ RSpec.describe GraphqlValidations::AliasesCount do
     Class.new(Gql::ZammadSchema) do
       query(Class.new(GraphQL::Schema::Object) do
         graphql_name 'Query'
-        field :dummy, String, null: true # rubocop:disable GraphQL/FieldDescription
+        field :dummy, String, null: true
         def dummy() = 'ok'
       end)
     end

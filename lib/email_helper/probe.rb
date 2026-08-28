@@ -185,7 +185,7 @@ class EmailHelper
       end
 
       # prepare test email
-      # rubocop:disable Zammad/DetectTranslatableString
+      # rubocop:disable-next Zammad/DetectTranslatableString
       mail = if subject
                {
                  from:    email,
@@ -201,7 +201,6 @@ class EmailHelper
                  body:    "This is a test email from Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore or delete it.",
                }
              end
-      # rubocop:enable Zammad/DetectTranslatableString
 
       if subject.present?
         mail['X-Zammad-Test-Message'] = subject

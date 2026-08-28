@@ -57,7 +57,7 @@ class ExcelSheet::Ticket < ExcelSheet
         object_lookup: ObjectLookup.lookup(name: 'Ticket')
       )
       .where.not(
-        name:    header.pluck(:name)
+        name: header.pluck(:name)
       )
       .where.not(
         display: header.pluck(:display)

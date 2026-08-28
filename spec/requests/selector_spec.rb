@@ -6,9 +6,9 @@ RSpec.describe 'Selector', authenticated_as: :admin, type: :request do
   let(:admin) { create(:admin) }
 
   describe 'Ticket' do
-    let(:ticket_1)   { create(:ticket) }
-    let(:ticket_2)   { create(:ticket) }
-    let(:ticket_3)   { create(:ticket) }
+    let(:ticket_1) { create(:ticket) }
+    let(:ticket_2) { create(:ticket) }
+    let(:ticket_3) { create(:ticket) }
 
     before do
       ticket_1 && ticket_2 && ticket_3
@@ -46,9 +46,9 @@ RSpec.describe 'Selector', authenticated_as: :admin, type: :request do
   end
 
   describe 'User' do
-    let(:user_1)   { create(:user, firstname: 'User-1') }
-    let(:user_2)   { create(:user, firstname: 'User-2') }
-    let(:user_3)   { create(:user, firstname: 'User-3') }
+    let(:user_1) { create(:user, firstname: 'User-1') }
+    let(:user_2) { create(:user, firstname: 'User-2') }
+    let(:user_3) { create(:user, firstname: 'User-3') }
 
     before do
       user_1 && user_2 && user_3
@@ -86,9 +86,9 @@ RSpec.describe 'Selector', authenticated_as: :admin, type: :request do
   end
 
   describe 'Organization' do
-    let(:organization_1)   { create(:organization, name: 'Org-1') }
-    let(:organization_2)   { create(:organization, name: 'Org-2') }
-    let(:organization_3)   { create(:organization, name: 'Org-3') }
+    let(:organization_1) { create(:organization, name: 'Org-1') }
+    let(:organization_2) { create(:organization, name: 'Org-2') }
+    let(:organization_3) { create(:organization, name: 'Org-3') }
 
     before do
       organization_1 && organization_2 && organization_3

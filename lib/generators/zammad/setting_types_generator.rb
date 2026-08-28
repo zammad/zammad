@@ -45,7 +45,7 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
     MSG
   end
 
-  # rubocop:disable Rails/Output
+  # rubocop:disable-next Rails/Output
   def file_up_to_date?(filepath, new_content)
     original_file_content = filepath.read
     if original_file_content.eql? new_content
@@ -55,7 +55,6 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
       exit! # rubocop:disable Rails/Exit
     end
   end
-  # rubocop:enable Rails/Output
 
   def build_select_type(optional:, nullable:, options:, multiple:, name:)
     values = options.keys.map { |val| val.is_a?(String) ? "'#{val}'" : val }

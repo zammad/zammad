@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :'user/overview_sorting', aliases: %w[user_overview_sorting] do
     overview
-    created_by_id   { 1 }
-    updated_by_id   { 1 }
+    created_by_id { 1 }
+    updated_by_id { 1 }
   end
 end

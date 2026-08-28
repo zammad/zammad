@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :smime_certificate do
-    created_at         { Time.zone.now }
-    updated_at         { Time.zone.now }
+    created_at { Time.zone.now }
+    updated_at { Time.zone.now }
 
     transient do
       fixture { nil }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe NotificationFactory::Renderer do
-  # rubocop:disable Lint/InterpolationCheck
+  # rubocop:disable-next Lint/InterpolationCheck
   describe 'render' do
     before { @user = User.where(firstname: 'Nicole').first }
 
@@ -59,8 +59,8 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     describe 'interpolation error handling' do
-      let(:renderer)   { build(:notification_factory_renderer, objects: {}, template: template) }
-      let(:template)   { '#{ ticket.title }' }
+      let(:renderer) { build(:notification_factory_renderer, objects: {}, template: template) }
+      let(:template) { '#{ ticket.title }' }
 
       context 'with debug_errors' do
         it 'renders an debug message' do
@@ -852,7 +852,6 @@ RSpec.describe NotificationFactory::Renderer do
       end
     end
   end
-  # rubocop:enable Lint/InterpolationCheck
 
   context 'with user avatar' do
     let(:base64_img)  { 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }

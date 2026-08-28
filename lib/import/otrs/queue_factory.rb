@@ -5,9 +5,8 @@ module Import
     module QueueFactory
       extend Import::Factory
 
-      # rubocop:disable Style/ModuleFunction
+      # rubocop:disable-next Style/ModuleFunction
       extend self
-      # rubocop:enable Style/ModuleFunction
 
       # We need to sort the records by name, to avoid missing parent queues.
       def pre_import_hook(records, *_args)

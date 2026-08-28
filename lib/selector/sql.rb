@@ -412,7 +412,7 @@ class Selector::Sql < Selector::Base
         user = User.find_by(id: current_user_id)
         bind_params.push user.all_organization_ids
       else
-        # rubocop:disable Style/IfInsideElse, Metrics/BlockNesting
+        # rubocop:disable-next Style/IfInsideElse, Metrics/BlockNesting
         if block_condition[:value].nil?
           query << "#{attribute} IS NULL"
         else
@@ -433,7 +433,6 @@ class Selector::Sql < Selector::Base
             bind_params.push block_condition[:value]
           end
         end
-        # rubocop:enable Style/IfInsideElse, Metrics/BlockNesting
       end
     elsif block_condition[:operator] == 'is not'
       if block_condition[:pre_condition] == 'not_set'
@@ -455,7 +454,7 @@ class Selector::Sql < Selector::Base
         user = User.find_by(id: current_user_id)
         bind_params.push user.organization_id
       else
-        # rubocop:disable Style/IfInsideElse, Metrics/BlockNesting
+        # rubocop:disable-next Style/IfInsideElse, Metrics/BlockNesting
         if block_condition[:value].nil?
           query << "#{attribute} IS NOT NULL"
         else
@@ -476,7 +475,6 @@ class Selector::Sql < Selector::Base
             bind_params.push block_condition[:value]
           end
         end
-        # rubocop:enable Style/IfInsideElse, Metrics/BlockNesting
       end
     elsif block_condition[:operator] == 'contains'
       query << "#{attribute} ILIKE (?)"

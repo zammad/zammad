@@ -67,7 +67,7 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
                knowledge_base:, kb_locale: alternative_locale)
 
         create(:knowledge_base_category_translation,
-               category: category, title:  translated_title, kb_locale: alternative_locale)
+               category: category, title: translated_title, kb_locale: alternative_locale)
 
         create(:knowledge_base_category_translation,
                category: subcategory, kb_locale: alternative_locale)

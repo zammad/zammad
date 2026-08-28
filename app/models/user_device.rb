@@ -9,8 +9,8 @@ class UserDevice < ApplicationModel
 
   belongs_to :user
 
-  before_create  :fingerprint_validation
-  before_update  :fingerprint_validation
+  before_create :fingerprint_validation
+  before_update :fingerprint_validation
 
   association_attributes_ignored :user
 

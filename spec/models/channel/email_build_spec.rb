@@ -236,7 +236,7 @@ RSpec.describe Channel::EmailBuild, type: :model do
         end
 
         context 'when attachment is a calendar file' do
-          let(:filename)  { 'schedule.ics' }
+          let(:filename) { 'schedule.ics' }
           let(:mime_type)                { 'text/calendar' }
           let(:preferences_content_type) { "#{mime_type}; charset=UTF-8; filename=#{filename}" }
           let(:content)                  { 'xxxxxxx' }

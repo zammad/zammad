@@ -4,8 +4,8 @@ module Session::SetsPersistentFlag
   extend ActiveSupport::Concern
 
   included do
-    before_create  :session_set_persistent_flag
-    before_update  :session_set_persistent_flag
+    before_create :session_set_persistent_flag
+    before_update :session_set_persistent_flag
   end
 
   private

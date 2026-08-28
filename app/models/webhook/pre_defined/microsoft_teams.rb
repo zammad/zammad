@@ -5,7 +5,7 @@ class Webhook::PreDefined::MicrosoftTeams < Webhook::PreDefined
     __('Microsoft Teams Notifications')
   end
 
-  # rubocop:disable Lint/InterpolationCheck
+  # rubocop:disable-next Lint/InterpolationCheck
   def custom_payload
     {
       type:        'message',
@@ -52,7 +52,6 @@ class Webhook::PreDefined::MicrosoftTeams < Webhook::PreDefined
       ]
     }
   end
-  # rubocop:enable Lint/InterpolationCheck
 
   def post_replace(hash, tracks)
     hash['attachments'].first['content']['body'].first['color'] = state_color(tracks[:ticket])

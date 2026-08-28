@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-# rubocop:disable Rails/Output
+# rubocop:disable-next Rails/Output
 module FillDb
 
 =begin
@@ -809,4 +809,3 @@ or if you only want to create 100 tickets
     }
   end
 end
-# rubocop:enable Rails/Output

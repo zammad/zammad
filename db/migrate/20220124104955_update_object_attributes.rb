@@ -4,7 +4,7 @@ class UpdateObjectAttributes < ActiveRecord::Migration[6.0]
   def change
     return if !Setting.exists?(name: 'system_init_done')
 
-    # rubocop:disable Lint/BooleanSymbol
+    # rubocop:disable-next Lint/BooleanSymbol
     object_attributes_update = [
       {
         object:      'Organization',
@@ -54,7 +54,6 @@ class UpdateObjectAttributes < ActiveRecord::Migration[6.0]
         display: 'Last name',
       },
     ]
-    # rubocop:enable Lint/BooleanSymbol
 
     object_attributes_update.each do |attribute|
       fetched_attribute = ObjectManager::Attribute.get(name: attribute[:name], object: attribute[:object])

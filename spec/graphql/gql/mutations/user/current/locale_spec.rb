@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Mutations::User::Current::Locale, type: :graphql do
 
   context 'when updating language of the logged-in user', authenticated_as: :agent do
-    let(:agent)        { create(:agent, preferences: { 'locale' => 'de-de' }) }
-    let(:query)        do
+    let(:agent) { create(:agent, preferences: { 'locale' => 'de-de' }) }
+    let(:query) do
       <<~QUERY
         mutation userCurrentLocale($locale: String!) {
           userCurrentLocale(locale: $locale) {

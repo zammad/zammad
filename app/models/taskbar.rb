@@ -12,9 +12,9 @@ class Taskbar < ApplicationModel
     Search
   ].freeze
 
-  store           :state
-  store           :params
-  store           :preferences
+  store :state
+  store :params
+  store :preferences
 
   belongs_to :user
 

@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Selector::Sql, 'user' do
   describe 'user.role_ids' do
-    let(:user_1)   { create(:agent) }
-    let(:user_2)   { create(:admin) }
-    let(:user_3)   { create(:customer) }
-    let(:role_1)   { create(:role, name: 'Unused') }
+    let(:user_1) { create(:agent) }
+    let(:user_2) { create(:admin) }
+    let(:user_3) { create(:customer) }
+    let(:role_1) { create(:role, name: 'Unused') }
 
     before do
       role_1

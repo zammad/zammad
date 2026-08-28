@@ -4,7 +4,7 @@ class Text::QuoteRemover::AttributionPattern::BeginForwarded < Text::QuoteRemove
   # "Begin forwarded message" in common languages (Apple Mail style)
   # Add more translations as needed when real-world examples appear
   # These are pattern matching strings, not UI strings - do not translate
-  # rubocop:disable Zammad/DetectTranslatableString
+  # rubocop:disable-next Zammad/DetectTranslatableString
   BEGIN_FORWARDED = [
     'Begin forwarded message',                # English
     'Anfang der weitergeleiteten Nachricht',  # German
@@ -35,7 +35,6 @@ class Text::QuoteRemover::AttributionPattern::BeginForwarded < Text::QuoteRemove
     'Upphaf áframsends skilaboðs',            # Icelandic
     'Αρχή προωθημένου μηνύματος',             # Greek
   ].join('|').freeze
-  # rubocop:enable Zammad/DetectTranslatableString
 
   def self.pattern
     # Apple Mail forwarded message style

@@ -9,13 +9,12 @@ class Text::QuoteRemover::AttributionPattern::MsHeaderBlock < Text::QuoteRemover
   #   Gesendet: Montag, 1. Dezember 2025 10:00
 
   # "From" in various languages (27 languages)
-  # rubocop:disable Zammad/DetectTranslatableString
+  # rubocop:disable-next Zammad/DetectTranslatableString
   FROM_LABELS = [
     'From', 'Von', 'De', 'От', 'Z', 'Od', 'Ze', 'Fra', 'Van', 'Mistä',
     'Από', 'Dal', 'から', 'Из', 'од', 'iz', 'Från', 'จาก', 'з', 'Từ',
     'Feladó', 'Nuo', 'No', 'Saatja', 'Frá', 'De la',
   ].join('|').freeze
-  # rubocop:enable Zammad/DetectTranslatableString
 
   # Common email header labels that follow "From:" (To/Sent/Date/Subject)
   HEADER_LABELS = %w[

@@ -246,8 +246,8 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   # https://github.com/zammad/zammad/issues/3279
   describe 'previous/next clickability when at last or first ticket' do
-    let(:ticket_a)          { create(:ticket, title: 'ticket a', group: Group.first) }
-    let(:ticket_b)          { create(:ticket, title: 'ticket b', group: Group.first) }
+    let(:ticket_a) { create(:ticket, title: 'ticket a', group: Group.first) }
+    let(:ticket_b) { create(:ticket, title: 'ticket b', group: Group.first) }
 
     before do
       ticket_a && ticket_b
@@ -310,8 +310,8 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   # https://github.com/zammad/zammad/issues/3267
   describe 'previous/next buttons are added when open ticket is opened from overview' do
-    let(:ticket_a)          { create(:ticket, title: 'ticket a', group: Group.first) }
-    let(:ticket_b)          { create(:ticket, title: 'ticket b', group: Group.first) }
+    let(:ticket_a) { create(:ticket, title: 'ticket a', group: Group.first) }
+    let(:ticket_b) { create(:ticket, title: 'ticket b', group: Group.first) }
 
     # prepare an opened ticket and go to overview
     before do
@@ -1177,8 +1177,8 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   context 'Make sidebar attachments unique #3930', authenticated_as: :authenticate do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
-    let(:article1)         { create(:ticket_article, ticket: ticket) }
-    let(:article2)         { create(:ticket_article, ticket: ticket) }
+    let(:article1) { create(:ticket_article, ticket: ticket) }
+    let(:article2) { create(:ticket_article, ticket: ticket) }
 
     def attachment_add(article, filename)
       create(:store,

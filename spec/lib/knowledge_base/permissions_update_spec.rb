@@ -111,7 +111,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
             expect(child_category.permissions_effective)
               .to contain_exactly(
-                have_attributes(role: role_editor,  access: 'editor', permissionable: category),
+                have_attributes(role: role_editor, access: 'editor', permissionable: category),
               )
           end
 
@@ -137,7 +137,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
             expect(child_category.permissions_effective)
               .to contain_exactly(
-                have_attributes(role: role_editor,  access: 'none', permissionable: category),
+                have_attributes(role: role_editor, access: 'none', permissionable: category),
               )
           end
 

@@ -107,8 +107,8 @@ RSpec.describe 'KnowledgeBase feed', authenticated_as: :user, type: :request do
       KnowledgeBase::PermissionsUpdate.new(category, admin).update_using_params!(granular_permissions)
     end
 
-    let(:role_admin)   { Role.find_by(name: 'Admin') }
-    let(:role_agent)   { Role.find_by(name: 'Agent') }
+    let(:role_admin) { Role.find_by(name: 'Admin') }
+    let(:role_agent) { Role.find_by(name: 'Agent') }
 
     let(:granular_permissions) do
       {
