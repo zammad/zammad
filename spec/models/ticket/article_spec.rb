@@ -370,6 +370,27 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
+    describe 'Cti::CallerId cleanup on destroy' do
+      let(:ticket)   { create(:ticket) }
+      let!(:article) { create(:ticket_article, ticket: ticket, body: 'Please call me back on 0049 30 9876543.') }
+
+      before { Cti::CallerId.add(ticket) }
+
+      context 'when the source article is destroyed' do
+        it 'removes the caller ID record' do
+          expect { article.destroy }
+            .to change { Cti::CallerId.where(object: 'Ticket', o_id: article.id).count }.from(1).to(0)
+        end
+      end
+
+      context 'when the ticket is destroyed' do
+        it 'removes the caller ID record via the article cascade' do
+          expect { ticket.destroy }
+            .to change { Cti::CallerId.where(object: 'Ticket', o_id: article.id).count }.from(1).to(0)
+        end
+      end
+    end
+
     describe 'Sending of outgoing emails', performs_jobs: true do
       subject(:article) { create(:ticket_article, type_name: type, sender_name: sender) }
 

@@ -14,6 +14,18 @@ RSpec.describe DataPrivacyTask, type: :model do
   describe '#perform', aggregate_failures: true do
     let(:task) { create(:data_privacy_task, deletable: deletable) }
 
+    shared_examples 'erasure removes caller IDs from tickets' do
+      let!(:ticket)  { create(:ticket, customer: deletable) }
+      let!(:article) { create(:ticket_article, ticket: ticket, body: 'Please call me back on 0049 30 9876543.') }
+
+      before { Cti::CallerId.add(ticket) }
+
+      it 'removes the caller ID records' do
+        expect { task.perform }
+          .to change { Cti::CallerId.where(object: 'Ticket', o_id: article.id).count }.from(1).to(0)
+      end
+    end
+
     context 'when deletable is already deleted' do
       let(:organization) { create(:organization, name: 'test') }
       let(:deletable)    { create(:customer, organization: organization) }
@@ -33,6 +45,12 @@ RSpec.describe DataPrivacyTask, type: :model do
         task.perform
 
         expect(User).not_to exist(deletable.id)
+      end
+
+      context 'when the user is the customer of a ticket with caller IDs' do
+        let(:deletable) { create(:customer) }
+
+        it_behaves_like 'erasure removes caller IDs from tickets'
       end
 
       context 'when user belongs to an organization' do
@@ -58,6 +76,10 @@ RSpec.describe DataPrivacyTask, type: :model do
 
             expect(User).not_to exist(deletable.id)
             expect(Organization).not_to exist(organization.id)
+          end
+
+          context 'when a member is the customer of a ticket with caller IDs' do
+            it_behaves_like 'erasure removes caller IDs from tickets'
           end
 
           context 'when organization has more members' do

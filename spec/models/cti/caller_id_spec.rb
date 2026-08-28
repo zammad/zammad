@@ -282,6 +282,17 @@ RSpec.describe Cti::CallerId do
     end
   end
 
+  describe '.add' do
+    let(:ticket)   { create(:ticket) }
+    let!(:article) { create(:ticket_article, ticket: ticket, body: 'Please call me back on 0049 30 9876543.') }
+
+    it 'stores the phone number against the ticket, keyed by the article id (existing behavior)' do
+      described_class.add(ticket)
+
+      expect(described_class.where(object: 'Ticket', o_id: article.id, caller_id: '49309876543')).to exist
+    end
+  end
+
   describe 'callbacks' do
     subject!(:caller_id) { build(:cti_caller_id, caller_id: phone) }
 
