@@ -14,6 +14,7 @@ export const testOptions: AutocompleteSearchKnowledgeBaseAnswerEntry[] = [
     label: 'Reset your password',
     heading: 'Account',
     visibility: EnumKnowledgeBaseVisibility.Published,
+    url: '/desktop/knowledge-base/locale/en-us/answer/1',
   },
   {
     __typename: 'AutocompleteSearchKnowledgeBaseAnswerEntry',
@@ -21,5 +22,6 @@ export const testOptions: AutocompleteSearchKnowledgeBaseAnswerEntry[] = [
     label: 'Set up two-factor authentication',
     heading: 'Security',
     visibility: EnumKnowledgeBaseVisibility.Draft,
+    url: '/desktop/knowledge-base/locale/en-us/answer/2',
   },
 ]

@@ -129,12 +129,12 @@ whenever(
           :class="[
             action.class,
             {
-              'bg-gray-300': isActive?.(action.name, action.attributes),
+              'bg-gray-300': isActive?.(action.activeName || action.name, action.attributes),
             },
           ]"
           :disabled="action.disabled"
           :aria-label="$t(action.label || action.name)"
-          :aria-pressed="isActive?.(action.name, action.attributes)"
+          :aria-pressed="isActive?.(action.activeName || action.name, action.attributes)"
           tabindex="-1"
           @click="
             (event) => {

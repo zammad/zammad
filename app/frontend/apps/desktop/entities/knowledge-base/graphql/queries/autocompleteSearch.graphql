@@ -4,5 +4,6 @@ query autocompleteSearchKnowledgeBaseAnswer($input: AutocompleteSearchKnowledgeB
     label
     heading
     visibility
+    url
   }
 }

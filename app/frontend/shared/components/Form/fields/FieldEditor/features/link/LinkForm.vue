@@ -92,6 +92,10 @@ const handleLinkUpdate = () => {
           attrs: {
             href: url.value,
             target: '_blank',
+            // Editing a link to a knowledge base answer as a plain URL demotes it to a plain
+            //   link, the same way the legacy link popup drops the marker attributes.
+            'data-target-type': null,
+            'data-target-id': null,
           },
         },
       ],

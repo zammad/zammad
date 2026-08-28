@@ -220,7 +220,7 @@ export type AutocompleteSearchKnowledgeBaseAnswerQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchKnowledgeBaseAnswerQuery = { autocompleteSearchKnowledgeBaseAnswer: Array<{ __typename: 'AutocompleteSearchKnowledgeBaseAnswerEntry', value: string, label: string, heading: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }> };
+export type AutocompleteSearchKnowledgeBaseAnswerQuery = { autocompleteSearchKnowledgeBaseAnswer: Array<{ __typename: 'AutocompleteSearchKnowledgeBaseAnswerEntry', value: string, label: string, heading: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, url: string }> };
 
 export type AutocompleteSearchKnowledgeBaseCategoryIconQueryVariables = Exact<{
   input: Types.AutocompleteSearchKnowledgeBaseCategoryIconInput;

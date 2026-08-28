@@ -30,6 +30,9 @@ let editorComponents: EditorComponentMap = {
   actionBar: null,
   actionMenu: null,
   suggestionList: null,
+  // The knowledge base answer flavour of the link form. It is built on an autocomplete field only
+  //   the desktop app has, so the shared link extension reaches it through here.
+  knowledgeBaseAnswerLinkForm: null,
 }
 
 export const initializeFieldEditorClasses = (classes: FieldEditorClass) => {

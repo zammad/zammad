@@ -316,6 +316,34 @@
       @apply rounded-md bg-black/10 px-0.75 py-px font-mono wrap-break-word whitespace-pre-wrap dark:bg-black/20;
     }
 
+    /*
+      A video an author has embedded is stored as the plain-text marker the server turns into an
+      iframe on read. The marker stays in the document, but it is hidden and the chip below is drawn
+      in its place, so that an author is shown the video rather than the text it is stored as (see
+      the `videoEmbed` extension).
+    */
+    .video-widget-marker {
+      display: none;
+    }
+
+    .video-widget-chip {
+      @apply relative inline-flex w-xs max-w-full cursor-default flex-col overflow-hidden rounded-lg bg-neutral-50 align-bottom select-none dark:bg-gray-500;
+
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-widget-chip-remove-button {
+      @apply absolute inset-e-1.5 top-1.5 z-10 inline-flex h-min min-h-min w-min shrink-0 flex-nowrap items-center justify-center rounded-lg border-0 bg-pink-100 p-1 text-sm font-normal text-red-500 shadow-none transition-transform duration-200 hover:bg-pink-100 hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-0 focus:hover:outline-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:bg-red-900 dark:hover:bg-red-900 dark:hover:outline-blue-900;
+    }
+
+    .video-widget-chip-preview {
+      @apply flex grow items-center justify-center text-blue-800;
+    }
+
+    .video-widget-chip-caption {
+      @apply h-8.5 truncate border-t border-neutral-100 p-2 text-center text-xs leading-snug text-gray-100 dark:border-gray-900 dark:text-neutral-400;
+    }
+
     table.zammad-table,
     &:not(.Content .inner-article-body) table {
       @apply my-2 w-full max-w-full table-fixed border-collapse overflow-hidden border-2 border-neutral-700 dark:border-neutral-500;

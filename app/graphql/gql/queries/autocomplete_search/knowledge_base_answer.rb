@@ -24,7 +24,7 @@ module Gql::Queries
         )
         .then { it || ::KnowledgeBase::Answer::Translation.none }
         .where.not(id: excluded_ids(input))
-        .includes(:answer)
+        .includes(:answer, kb_locale: :system_locale)
 
       category_titles = category_titles_for(translations)
 
@@ -39,6 +39,7 @@ module Gql::Queries
         label:      translation.title,
         heading:    category_titles[[translation.answer.category_id, translation.kb_locale_id]],
         visibility: translation.answer.visibility,
+        url:        translation.desktop_url,
       }
     end
 

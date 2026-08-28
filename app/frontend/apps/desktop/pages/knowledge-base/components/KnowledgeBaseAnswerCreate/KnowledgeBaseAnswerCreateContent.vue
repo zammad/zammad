@@ -17,6 +17,7 @@ import { SidebarName } from '#desktop/components/layout/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useKnowledgeBaseAnswerCreate } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts'
 import type { KnowledgeBaseAnswerCreateFormData } from '#desktop/entities/knowledge-base/types.ts'
+import { ANSWER_EDITOR_TOOLS } from '#desktop/entities/knowledge-base/utils/answerEditorTools.ts'
 import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabContext } from '#desktop/entities/user/current/composables/useTaskbarTabContext.ts'
@@ -70,15 +71,13 @@ const formSchema = defineFormSchema([
         required: true,
       },
       {
-        // No `meta`: every editor plugin that would go in there is ticket-specific - the mention
-        //   plugins and the AI text tools all key off ticket form nodes, and `mentionKnowledgeBase`
-        //   inserts answers *into a ticket article*, which is the wrong direction here. Trimming the
-        //   toolbar itself is its own story (zammad/coordination-desktop-view#786), so the field goes
-        //   out with the default feature set.
         name: 'body',
         label: __('Text'),
         type: 'editor',
         required: true,
+        props: {
+          meta: ANSWER_EDITOR_TOOLS,
+        },
       },
       {
         // The files live in the upload cache under this form's id, which is the taskbar's - so they

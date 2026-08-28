@@ -48,7 +48,7 @@ describe('keyboard interactions', () => {
       props: {
         visible: true,
         contentType: 'text/html',
-        disabledPlugins: [],
+        disabledExtensions: [],
         formId: getUuid(),
       },
     })
@@ -78,7 +78,7 @@ describe('keyboard interactions', () => {
       props: {
         visible: true,
         contentType: 'text/html',
-        disabledPlugins: [],
+        disabledExtensions: [],
         formId: getUuid(),
       },
     })
@@ -99,7 +99,7 @@ describe('keyboard interactions', () => {
       props: {
         contentType: 'text/html',
         visible: true,
-        disabledPlugins: [],
+        disabledExtensions: [],
         formId: getUuid(),
       },
     })
@@ -115,7 +115,7 @@ describe('keyboard interactions', () => {
       props: {
         contentType: 'text/html',
         visible: true,
-        disabledPlugins: [],
+        disabledExtensions: [],
         formId: getUuid(),
       },
     })
@@ -132,7 +132,7 @@ describe('keyboard interactions', () => {
       props: {
         contentType: 'text/html',
         visible: true,
-        disabledPlugins: [],
+        disabledExtensions: [],
         formId: getUuid(),
       },
     })
@@ -145,11 +145,13 @@ describe('keyboard interactions', () => {
 
 describe('basic toolbar testing', () => {
   it("don't see disabled actions", () => {
+    mockPermissions(['ticket.agent'])
+
     const view = renderComponent(FieldEditorActionBar, {
       props: {
         contentType: 'text/html',
         visible: true,
-        disabledPlugins: ['mentionUser'],
+        disabledExtensions: ['mentionUser'],
         formId: getUuid(),
       },
     })
@@ -166,7 +168,7 @@ describe('basic toolbar testing', () => {
       props: {
         contentType: 'text/plain',
         visible: true,
-        disabledPlugins: [],
+        disabledExtensions: [],
         formId: getUuid(),
       },
     })
@@ -237,7 +239,7 @@ describe('basic toolbar testing', () => {
         props: {
           contentType: 'text/plain',
           visible: true,
-          disabledPlugins: [],
+          disabledExtensions: [],
           formId: getUuid(),
         },
       })
@@ -259,7 +261,7 @@ describe('basic toolbar testing', () => {
         props: {
           contentType: 'text/plain',
           visible: true,
-          disabledPlugins: [],
+          disabledExtensions: [],
           formId: getUuid(),
         },
       })
@@ -281,7 +283,7 @@ describe('basic toolbar testing', () => {
         props: {
           contentType: 'text/plain',
           visible: true,
-          disabledPlugins: [],
+          disabledExtensions: [],
           formId: getUuid(),
         },
       })
@@ -332,7 +334,7 @@ describe('basic toolbar testing', () => {
         props: {
           contentType: 'text/plain',
           visible: true,
-          disabledPlugins: [],
+          disabledExtensions: [],
           formId,
           editor: mockEditor,
           formContext: {

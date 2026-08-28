@@ -13,6 +13,7 @@ import { EXTENSION_NAME as userMentionExtensionName } from '#shared/components/F
 import {
   imageExtensionName,
   getCustomExtensions,
+  getDisabledExtensionNames,
   getHtmlExtensions,
   getPlainExtensions,
   PlaceholderExtensionName,
@@ -62,9 +63,7 @@ const actionBarComponent = getEditorComponents().actionBar
 const reactiveContext = toRef(props, 'context')
 const { currentValue } = useValue(reactiveContext)
 
-const disabledExtensions = Object.entries(props.context.meta || {})
-  .filter(([, value]) => value.disabled)
-  .map(([key]) => key as EditorCustomExtensions | string)
+const disabledExtensions = getDisabledExtensionNames(props.context.meta, props.context.extensionSet)
 
 const disableExtension = (extensionName: EditorCustomExtensions | string) => {
   if (disabledExtensions.includes(extensionName)) return

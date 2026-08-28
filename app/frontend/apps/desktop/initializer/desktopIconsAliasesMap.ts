@@ -55,6 +55,8 @@ export default {
   'editor-remove-formatting': 'remove-formatting',
   'editor-mention-user': 'at',
   'editor-mention-knowledge-base': 'book',
+  'editor-link-answer': 'kb-linked',
+  'editor-embed-video': 'play-fill',
   'editor-mention-text-module': 'text-modules',
   'editor-table': 'table',
   'editor-code': 'code',

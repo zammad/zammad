@@ -15,12 +15,16 @@ withDefaults(
     showLinkLabel?: boolean
     onLinkClick?: (e: MouseEvent) => void
     linkSize?: 'small' | 'medium' | 'large'
+    // A field link leaves the current context by default. Set this where the target belongs to the
+    // very thing being edited, and following it is meant to be a navigation, not a lookup.
+    noLinkOpenInNewTab?: boolean
   }>(),
   {
     linkIcon: 'form-field-link',
     linkLabel: __('Link'),
     showLinkLabel: false,
     linkSize: 'large',
+    noLinkOpenInNewTab: false,
   },
 )
 
@@ -42,7 +46,7 @@ const iconClassMap = {
         :class="[classMap.link, { 'text-nowrap': showLinkLabel }]"
         class="flex items-center justify-center"
         :size="linkSize"
-        open-in-new-tab
+        :open-in-new-tab="!noLinkOpenInNewTab"
         @click="onLinkClick"
       >
         <CommonIcon v-if="linkIcon" :name="linkIcon" :size="iconClassMap[linkSize]" decorative />

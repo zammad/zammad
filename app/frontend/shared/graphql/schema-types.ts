@@ -283,6 +283,8 @@ export type AutocompleteSearchKnowledgeBaseAnswerEntry = {
   icon?: Maybe<Scalars['String']['output']>;
   label: Scalars['String']['output'];
   labelPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  /** Route of the answer in the desktop app, e.g. the href to write when linking it from another answer */
+  url: Scalars['String']['output'];
   value: Scalars['String']['output'];
   /** Publication state, used for the state icon in the picker */
   visibility: EnumKnowledgeBaseVisibility;

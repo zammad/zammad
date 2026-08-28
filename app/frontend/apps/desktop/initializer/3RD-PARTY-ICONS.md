@@ -73,6 +73,7 @@
 - `assets/phone.svg`
 - `assets/pin-angle.svg`
 - `assets/pin.svg`
+- `assets/play-fill.svg`
 - `assets/plus.svg`
 - `assets/plus-circle.svg`
 - `assets/plus-square.svg`

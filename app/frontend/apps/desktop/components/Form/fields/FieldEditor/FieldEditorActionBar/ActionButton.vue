@@ -52,12 +52,12 @@ defineExpose({
     :class="[
       action.class,
       {
-        'bg-blue-800! text-white': isActive?.(action.name, action.attributes),
+        'bg-blue-800! text-white': isActive?.(action.activeName || action.name, action.attributes),
       },
     ]"
     :disabled="action.disabled"
     :aria-label="$t(action.label || action.name)"
-    :aria-pressed="isActive?.(action.name, action.attributes)"
+    :aria-pressed="isActive?.(action.activeName || action.name, action.attributes)"
     tabindex="-1"
     @click="$emit('click', $event)"
   >

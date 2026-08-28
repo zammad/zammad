@@ -19,6 +19,7 @@ import type {
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 
+import KnowledgeBaseAnswerLinkForm from '#desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue'
 import FieldEditorActionBar from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionBar.vue'
 import FieldEditorActionMenu from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionMenu.vue'
 import FieldEditorSuggestionList from '#desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue'
@@ -102,6 +103,9 @@ export const initializeFormFields = () => {
     actionBar: FieldEditorActionBar,
     actionMenu: FieldEditorActionMenu,
     suggestionList: FieldEditorSuggestionList,
+    // Not async loaded: the link form is handed to a `VueRenderer`, which renders nothing when the
+    //   component is still a promise at that point.
+    knowledgeBaseAnswerLinkForm: KnowledgeBaseAnswerLinkForm,
   })
 
   initializeFileClasses({

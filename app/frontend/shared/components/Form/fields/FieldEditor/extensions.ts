@@ -25,7 +25,14 @@ import TextModuleSuggestion from '#shared/components/Form/fields/FieldEditor/ext
 import UserMention, {
   UserLink,
 } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
-import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import VideoEmbed from '#shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts'
+import { ANSWER_LINK_ACTION_NAME } from '#shared/components/Form/fields/FieldEditor/features/link/answerLink.ts'
+import { VIDEO_EMBED_ACTION_NAME } from '#shared/components/Form/fields/FieldEditor/features/video-embed/videoEmbed.ts'
+import type {
+  EditorCustomExtensions,
+  EditorExtensionSet,
+  FieldEditorProps,
+} from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 import { HtmlCharacterCount } from './extensions/CharacterCount/HtmlCharacterCount.ts'
@@ -37,6 +44,39 @@ import type { Ref } from 'vue'
 
 export const imageExtensionName = Image.name
 export const PlaceholderExtensionName = Placeholder.name
+
+/**
+ * Editor tools that are off everywhere unless a field opts into them by naming them in its `meta`.
+ *
+ * Keyed on the tool name, not on a TipTap extension: `knowledgeBaseAnswerLink` is a toolbar action
+ * over the existing `link` mark and has no extension of its own. Both the extension list and the
+ * toolbar filter go by name, so either kind of tool belongs here.
+ */
+export const optInExtensionNames = [
+  ANSWER_LINK_ACTION_NAME,
+  VIDEO_EMBED_ACTION_NAME,
+] as const satisfies readonly EditorCustomExtensions[]
+
+/**
+ * Names of the extensions and tools a field switches off, in the single array both the extension
+ * list and the toolbar are filtered by.
+ *
+ * A regular tool is on until the field's `meta` switches it off with `disabled: true`. An opt-in
+ * tool is the other way around: off until the field declares its key, and off again if that key
+ * carries `disabled: true`. The basic set switches every opt-in tool off regardless of `meta`.
+ */
+export const getDisabledExtensionNames = (
+  meta: FieldEditorProps['meta'],
+  extensionSet?: EditorExtensionSet,
+): (EditorCustomExtensions | string)[] => {
+  const disabled = Object.entries(meta || {})
+    .filter(([, value]) => value.disabled)
+    .map(([key]) => key as EditorCustomExtensions | string)
+
+  const optedOut = optInExtensionNames.filter((name) => extensionSet === 'basic' || !meta?.[name])
+
+  return [...new Set([...disabled, ...optedOut])]
+}
 
 export const lowlight = createLowlight(common)
 
@@ -124,6 +164,7 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
   }),
   Link,
   TextStyle,
+  VideoEmbed,
   UserLink,
   PasteHandler,
   Placeholder.configure({

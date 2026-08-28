@@ -37,6 +37,12 @@ export const knowledgeBaseAnswerRoute = (
   params: { localeCode, answerInternalId: getIdFromGraphQLId(answerId) },
 })
 
+// An answer's own `url` — what the picker offers and what the server resolves an answer link's
+//   href to — is an app-absolute path, since it is written into a document as an href. A router
+//   location is relative to the app's mount point instead, so that comes off again to follow the
+//   link without a full page load.
+export const knowledgeBaseAnswerRouteFromUrl = (url: string) => url.replace(/^\/desktop/, '')
+
 // A create draft is one answer translation, so the locale is part of its URL and switching the
 //   language opens *another* draft instead of retitling this one. Every call mints a fresh tab
 //   id accordingly; an existing draft is reopened through its taskbar tab link.

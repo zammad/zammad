@@ -32,6 +32,15 @@ describe('FormFieldLink.vue', () => {
     expect(anchor).toHaveAttribute('target', '_blank')
   })
 
+  it('renders an anchor which stays in the current tab if requested', () => {
+    const wrapper = renderFormFieldLink({ noLinkOpenInNewTab: true })
+
+    const anchor = wrapper.getByTestId('common-link')
+
+    expect(anchor).toHaveAttribute('href', 'https://www.zammad.org')
+    expect(anchor).not.toHaveAttribute('target')
+  })
+
   it('renders the link label as visible text if requested', () => {
     const wrapper = renderFormFieldLink({
       linkLabel: 'Open external reference',

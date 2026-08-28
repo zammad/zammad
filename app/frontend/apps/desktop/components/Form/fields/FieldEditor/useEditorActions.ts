@@ -10,6 +10,12 @@ import { EXTENSION_NAME as TextModuleMentionName } from '#shared/components/Form
 import { EXTENSION_NAME as UserMentionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import AiAssistantTextTools from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue'
 import EditorColorMenu from '#shared/components/Form/fields/FieldEditor/features/color-picker/EditorColorMenu.vue'
+import {
+  ANSWER_LINK_ACTION_NAME,
+  ANSWER_LINK_TARGET_TYPE,
+} from '#shared/components/Form/fields/FieldEditor/features/link/answerLink.ts'
+import { EXTENSION_NAME as LINK_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/features/link/types.ts'
+import { VIDEO_EMBED_ACTION_NAME } from '#shared/components/Form/fields/FieldEditor/features/video-embed/videoEmbed.ts'
 import type {
   EditorButton,
   EditorContentType,
@@ -295,10 +301,38 @@ export default function useEditorActions(
     },
     {
       id: getUuid(),
-      name: 'link',
+      // Opted into per field (see `optInExtensionNames`), like the answer link tool. The form opens
+      //   next to the caret, or under the chip of the video the caret sits in (see the `VideoEmbed`
+      //   extension), and always embeds a video rather than editing one that is already there — so
+      //   there is no state of the document this tool is ever highlighted for.
+      name: VIDEO_EMBED_ACTION_NAME,
+      contentType: ['text/html'],
+      label: __('Embed video'),
+      icon: 'editor-embed-video',
+      command: focused((c) => c.openVideoEmbedForm()),
+    },
+    {
+      id: getUuid(),
+      // Opted into per field (see `optInExtensionNames`), so it stays out of every editor but the
+      //   knowledge base answer form. No permission: reaching an answer editor implies the access,
+      //   and the picker query is authorized on its own.
+      name: ANSWER_LINK_ACTION_NAME,
+      contentType: ['text/html'],
+      label: __('Link answer'),
+      icon: 'editor-link-answer',
+      activeName: LINK_EXTENSION_NAME,
+      attributes: { 'data-target-type': ANSWER_LINK_TARGET_TYPE },
+      command: focused((c) => c.openLinkForm('knowledgeBaseAnswer')),
+    },
+    {
+      id: getUuid(),
+      name: LINK_EXTENSION_NAME,
       contentType: ['text/html'],
       label: __('Add link'),
       icon: 'editor-inline-link',
+      // A link to a knowledge base answer belongs to the tool above, so it must not light this one
+      //   up: an ordinary link is one whose marker attribute is unset.
+      attributes: { 'data-target-type': null },
       command: focused((c) => c.openLinkForm()),
     },
     {

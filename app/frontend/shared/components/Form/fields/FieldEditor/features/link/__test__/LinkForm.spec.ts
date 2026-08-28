@@ -122,11 +122,54 @@ describe('LinkForm', () => {
           attrs: {
             href: 'https://updated.com',
             target: '_blank',
+            'data-target-type': null,
+            'data-target-id': null,
           },
         },
       ],
     })
     expect(editor.run).toHaveBeenCalled()
+  })
+
+  it('should demote a knowledge base answer link to a plain link when its URL is edited', async () => {
+    editor.getAttributes = vi.fn().mockReturnValue({
+      href: '/knowledge-base/answer/42',
+      'data-target-type': 'knowledge-base-answer',
+      'data-target-id': '42',
+    })
+
+    const wrapper = renderComponent(LinkForm, {
+      props: { editor },
+      form: true,
+      router: true,
+    })
+
+    await nextTick()
+
+    await wrapper.events.clear(wrapper.getByRole('textbox', { name: 'Link URL' }))
+
+    await wrapper.events.type(
+      wrapper.getByRole('textbox', { name: 'Link URL' }),
+      'https://example.com',
+    )
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Add link' }))
+
+    expect(editor.insertContent).toHaveBeenCalledWith({
+      type: 'text',
+      text: 'https://example.com',
+      marks: [
+        {
+          type: LINK_EXTENSION_NAME,
+          attrs: {
+            href: 'https://example.com',
+            target: '_blank',
+            'data-target-type': null,
+            'data-target-id': null,
+          },
+        },
+      ],
+    })
   })
 
   it('should remove a link when remove button is clicked', async () => {

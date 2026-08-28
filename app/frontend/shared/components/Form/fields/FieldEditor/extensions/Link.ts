@@ -4,13 +4,18 @@ import Link from '@tiptap/extension-link'
 import { Plugin } from '@tiptap/pm/state'
 import { type Editor, VueRenderer } from '@tiptap/vue-3'
 
+import { ANSWER_LINK_TARGET_TYPE } from '#shared/components/Form/fields/FieldEditor/features/link/answerLink.ts'
 // We can't async load LinkForm, otherwise initially VueRenderer will not render it
 import LinkForm from '#shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue'
-import { EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/features/link/types.ts'
+import {
+  EXTENSION_NAME,
+  type LinkFormVariant,
+} from '#shared/components/Form/fields/FieldEditor/features/link/types.ts'
 import {
   getActiveNodeOrMark,
   setFloatingPopover,
 } from '#shared/components/Form/fields/FieldEditor/utils.ts'
+import { getEditorComponents } from '#shared/components/Form/initializeFieldEditor.ts'
 import { useAppName } from '#shared/composables/useAppName.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
@@ -27,6 +32,26 @@ export default Link.extend({
         default: null,
         parseHTML: (element: HTMLLinkElement) => element.getAttribute('href'),
         renderHTML: (attributes: Record<string, string>) => ({ href: attributes.href }),
+      },
+      // Marker of a link to a knowledge base answer. The stored `href` is never trusted on read:
+      //   `KnowledgeBaseRichText.resolve_answer_links` looks the target up by these two and
+      //   rewrites the `href` per consumer. Losing them on a round trip turns the link dead.
+      //
+      // Parsed and rendered explicitly to keep both values strings, and to stay off an ordinary
+      //   link: the default handling coerces a numeric id and writes the attribute out as `null`.
+      'data-target-type': {
+        default: null,
+        parseHTML: (element: HTMLLinkElement) => element.getAttribute('data-target-type'),
+        renderHTML: (attributes: Record<string, string>) =>
+          attributes['data-target-type']
+            ? { 'data-target-type': attributes['data-target-type'] }
+            : {},
+      },
+      'data-target-id': {
+        default: null,
+        parseHTML: (element: HTMLLinkElement) => element.getAttribute('data-target-id'),
+        renderHTML: (attributes: Record<string, string>) =>
+          attributes['data-target-id'] ? { 'data-target-id': attributes['data-target-id'] } : {},
       },
     }
 
@@ -76,32 +101,45 @@ export default Link.extend({
       unsetAriaLabels()
     }
 
+    // The knowledge base answer flavour is built on a desktop-only autocomplete field, so it is
+    //   only known here through the component registry the app fills in.
+    const linkForm = (variant: LinkFormVariant) =>
+      variant === 'knowledgeBaseAnswer'
+        ? getEditorComponents().knowledgeBaseAnswerLinkForm
+        : LinkForm
+
     return {
-      openLinkForm: () => () => {
-        const { state } = this.editor
-        const { from, to } = state.selection
+      openLinkForm:
+        (variant = 'url') =>
+        () => {
+          const form = linkForm(variant)
 
-        const id = getUuid() // used to connect the link mark with the popover
+          if (!form) return false
 
-        setAriaLabels(id)
+          const { state } = this.editor
+          const { from, to } = state.selection
 
-        linkComponent = setFloatingPopover(
-          LinkForm,
-          this.editor,
-          {
-            from,
-            to,
-            id,
-          },
-          {
-            onClose: () => {
-              this.editor.commands.closeLinkForm()
+          const id = getUuid() // used to connect the link mark with the popover
+
+          setAriaLabels(id)
+
+          linkComponent = setFloatingPopover(
+            form,
+            this.editor,
+            {
+              from,
+              to,
+              id,
             },
-          },
-        )
+            {
+              onClose: () => {
+                this.editor.commands.closeLinkForm()
+              },
+            },
+          )
 
-        return true
-      },
+          return true
+        },
       closeLinkForm: () => () => {
         destroyLinkForm()
         return false
@@ -124,10 +162,17 @@ export default Link.extend({
                 return editor.commands.closeLinkForm()
               },
               handleClick() {
-                const isLinkClicked = editor.getAttributes(EXTENSION_NAME)
+                const clickedLink = editor.getAttributes(EXTENSION_NAME)
                 editor.commands.closeLinkForm()
 
-                if ('href' in isLinkClicked) editor.commands.openLinkForm()
+                // A link to a knowledge base answer is edited with the answer picker rather than
+                //   as a URL; its marker attribute is what gives it away.
+                if ('href' in clickedLink)
+                  editor.commands.openLinkForm(
+                    clickedLink['data-target-type'] === ANSWER_LINK_TARGET_TYPE
+                      ? 'knowledgeBaseAnswer'
+                      : 'url',
+                  )
 
                 return false
               },

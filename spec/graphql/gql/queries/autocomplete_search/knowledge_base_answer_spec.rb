@@ -22,6 +22,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::KnowledgeBaseAnswer, authentica
             label
             heading
             visibility
+            url
           }
         }
       QUERY
@@ -46,6 +47,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::KnowledgeBaseAnswer, authentica
         'label'      => answer_translation.title,
         'heading'    => category_translation.title,
         'visibility' => 'published',
+        'url'        => answer_translation.desktop_url,
       )
     end
 

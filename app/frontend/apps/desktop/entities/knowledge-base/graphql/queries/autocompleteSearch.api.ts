@@ -12,6 +12,7 @@ export const AutocompleteSearchKnowledgeBaseAnswerDocument = gql`
     label
     heading
     visibility
+    url
   }
 }
     `;

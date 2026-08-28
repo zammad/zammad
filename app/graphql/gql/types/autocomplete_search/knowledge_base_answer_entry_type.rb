@@ -6,5 +6,6 @@ module Gql::Types::AutocompleteSearch
     description 'Type that represents an autocomplete knowledge base answer entry.'
 
     field :visibility, Gql::Types::Enum::KnowledgeBase::VisibilityType, null: false, description: 'Publication state, used for the state icon in the picker'
+    field :url, String, null: false, description: 'Route of the answer in the desktop app, e.g. the href to write when linking it from another answer'
   end
 end

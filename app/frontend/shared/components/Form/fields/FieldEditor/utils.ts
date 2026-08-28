@@ -96,13 +96,18 @@ export const updateSelectedContent = (editor: Editor, content: string) => {
 /*
  * Floating-ui
  */
-export const updatePosition = (editor: Editor, element: HTMLElement) => {
-  const virtualElement = {
+/**
+ * @param anchor element the popover is placed against, for a form whose subject is not the text
+ *   under the caret — a stored video is rendered by a decoration, so the marker the caret sits in
+ *   has no size of its own to measure.
+ */
+export const updatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
+  const reference = anchor || {
     getBoundingClientRect: () =>
       posToDOMRect(editor.view, editor.state.selection.from, editor.state.selection.to),
   }
 
-  computePosition(virtualElement, element, {
+  computePosition(reference, element, {
     placement: 'bottom-start',
     strategy: 'fixed',
     middleware: [shift(), flip()],
@@ -119,27 +124,32 @@ export const getActiveNodeOrMark = (editor: Editor) => {
   return domNode.nodeType === Node.TEXT_NODE ? domNode.parentElement : (domNode as HTMLElement)
 }
 
-export const setAutoUpdate = (editor: Editor, element: HTMLElement) => {
-  const anchorNode = getActiveNodeOrMark(editor)
+export const setAutoUpdate = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
+  const anchorNode = anchor || getActiveNodeOrMark(editor)
 
   if (!anchorNode) {
     console.warn('FieldEditor: Could not find valid anchor node for autoUpdate.')
     return
   }
 
-  return autoUpdate(anchorNode, element, () => updatePosition(editor, element))
+  return autoUpdate(anchorNode, element, () => updatePosition(editor, element, anchor))
 }
 
-export const autoUpdatePosition = (editor: Editor, element: HTMLElement) => {
-  updatePosition(editor, element)
-  setAutoUpdate(editor, element)
+export const autoUpdatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
+  updatePosition(editor, element, anchor)
+  setAutoUpdate(editor, element, anchor)
 }
 
 const createHandleCloseOnClick = (editor: Editor, options?: SetFloatingPopoverOptions) => {
   const handleCloseOnClick = (event: MouseEvent) => {
-    if ((event.target as HTMLElement).closest('[data-id="floating-popover"]')) return
+    const target = event.target as HTMLElement
+
+    if (target.closest('[data-id="floating-popover"]')) return
     // Editor handles click itself
-    if ((event.target as HTMLElement).closest('[data-type="editor"]')) return
+    if (target.closest('[data-type="editor"]')) return
+    // A select dropdown of the popover's own form teleports to the body, so a click in it lands
+    //   outside the popover in the DOM while being inside it for the user.
+    if (target.closest('#common-select')) return
 
     document.removeEventListener('click', handleCloseOnClick)
     editor.commands.closeLinkForm()
@@ -175,7 +185,7 @@ export const setFloatingPopover = <T extends object>(
 
   document.body.appendChild(virtualComponent.element)
 
-  autoUpdatePosition(editor, virtualComponent.element as HTMLElement)
+  autoUpdatePosition(editor, virtualComponent.element as HTMLElement, options?.anchor)
 
   const clickHandler = createHandleCloseOnClick(editor, options)
 

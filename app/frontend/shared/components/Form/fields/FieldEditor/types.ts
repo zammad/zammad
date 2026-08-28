@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
+import type { LinkFormVariant } from '#shared/components/Form/fields/FieldEditor/features/link/types.ts'
 import type {
   KnowledgeBaseAnswerSuggestionsQuery,
   MentionSuggestionsQuery,
@@ -44,8 +45,12 @@ declare module '@tiptap/core' {
     }
     link: {
       toggleLink: (args: { href: string }) => ReturnType // command is set in the library extension
-      openLinkForm: () => ReturnType
+      openLinkForm: (variant?: LinkFormVariant) => ReturnType
       closeLinkForm: () => ReturnType
+    }
+    videoEmbed: {
+      openVideoEmbedForm: () => ReturnType
+      closeVideoEmbedForm: () => ReturnType
     }
   }
 }
@@ -140,6 +145,13 @@ export interface FieldEditorProps {
       // where to get id for the current group
       groupNodeName?: string
     }
+    // Opt-in tools, off unless the field declares the key. See `optInExtensionNames`.
+    knowledgeBaseAnswerLink?: {
+      disabled?: boolean
+    }
+    videoEmbed?: {
+      disabled?: boolean
+    }
   }
 }
 
@@ -176,6 +188,15 @@ export interface EditorButton {
   label?: string
   labelClass?: string
   contentType: EditorContentType[]
+  /**
+   * Node or mark name the highlight is decided by, when the tool is not named after one itself:
+   * `knowledgeBaseAnswerLink` writes the `link` mark rather than a mark of its own.
+   */
+  activeName?: string
+  /**
+   * Attributes the highlighted node or mark must carry, so that tools sharing one can tell their
+   * own writing apart — a heading by its level, a link by whether it points at an answer.
+   */
   attributes?: Record<string, unknown>
   command?: (e: MouseEvent) => void
   disabled?: boolean
@@ -188,6 +209,8 @@ export interface EditorButton {
 
 export interface SetFloatingPopoverOptions {
   onClose?: () => void
+  /** Element to place the popover against, instead of the text under the caret. */
+  anchor?: HTMLElement
 }
 
 export interface EditChangePayload {

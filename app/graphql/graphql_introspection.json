@@ -1765,6 +1765,22 @@
               "deprecationReason": null
             },
             {
+              "name": "url",
+              "description": "Route of the answer in the desktop app, e.g. the href to write when linking it from another answer",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "value",
               "description": null,
               "args": [],
