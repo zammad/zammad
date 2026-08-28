@@ -155,6 +155,10 @@ describe('knowledge base edit category', () => {
           view.queryByRole('heading', { level: 2, name: 'Edit category' }),
         ).not.toBeInTheDocument()
       })
+
+      // Only a create moves the page: renaming a category from a tile leaves the user in the
+      //   listing they renamed it from.
+      expect(view).toHaveCurrentUrl('/knowledge-base/locale/en-us')
     })
 
     // Gated per record now: a granular editor without access to this category gets the same

@@ -4,7 +4,10 @@ import { getNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
-import renderComponent, { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
+import renderComponent, {
+  getTestRouter,
+  initializePiniaStore,
+} from '#tests/support/components/renderComponent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
@@ -22,6 +25,8 @@ import { waitForKnowledgeBaseCategoryUpdateMutationCalls } from '#desktop/entiti
 import { mockKnowledgeBaseQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
 
 import KnowledgeBaseCategoryFlyout from '../KnowledgeBaseCategoryFlyout.vue'
+
+import type { RouteRecordRaw } from 'vue-router'
 
 const FLYOUT_NAME = 'knowledge-base-category'
 
@@ -98,6 +103,23 @@ const mockKnowledgeBase = () => {
   })
 }
 
+// A successful create navigates into the parent it was filed under, so the browse routes have to
+//   be known here — the default test routes are not the application's ones.
+const routerRoutes: RouteRecordRaw[] = [
+  { name: 'Dashboard', path: '/', component: { template: 'Welcome to zammad.' } },
+  {
+    name: 'KnowledgeBaseBrowse',
+    path: '/knowledge-base/locale/:localeCode?',
+    component: { template: 'knowledge base' },
+  },
+  {
+    name: 'KnowledgeBaseCategory',
+    path: '/knowledge-base/locale/:localeCode/category/:categoryInternalId(\\d+)',
+    component: { template: 'knowledge base category' },
+  },
+  { name: 'Error', path: '/:pathMatch(.*)*', component: { template: 'Error page' } },
+]
+
 const renderFlyout = (props: Record<string, unknown> = {}) => {
   initializePiniaStore()
 
@@ -110,6 +132,7 @@ const renderFlyout = (props: Record<string, unknown> = {}) => {
     },
     form: true,
     router: true,
+    routerRoutes,
     store: true,
     global: {
       stubs: {
@@ -120,6 +143,10 @@ const renderFlyout = (props: Record<string, unknown> = {}) => {
 }
 
 describe('KnowledgeBaseCategoryFlyout', () => {
+  beforeEach(async () => {
+    await getTestRouter()?.push('/')
+  })
+
   describe('when adding a category', () => {
     it('renders the category form', async () => {
       mockParentOptions()
@@ -348,6 +375,65 @@ describe('KnowledgeBaseCategoryFlyout', () => {
         expect(calls.at(-1)?.variables.input).not.toHaveProperty('permissions')
       })
 
+      // The created category belongs to a page the user is not on when they added it from a
+      //   category tile, so without this it would be invisible.
+      describe('navigating into the parent of the new category', () => {
+        const create = async (props: Record<string, unknown> = {}) => {
+          const wrapper = renderFlyout(props)
+
+          await wrapper.events.type(await wrapper.findByLabelText('Title'), 'Printers')
+          await wrapper.events.click(wrapper.getByRole('button', { name: 'Create' }))
+
+          await waitForKnowledgeBaseCategoryAddMutationCalls()
+
+          return wrapper
+        }
+
+        it('opens the parent it was added under', async () => {
+          mockParentOptions()
+
+          const wrapper = await create({ parentId: PARENT_ID })
+
+          await waitFor(() => {
+            expect(wrapper).toHaveCurrentUrl('/knowledge-base/locale/en-us/category/42')
+          })
+        })
+
+        // Nothing to open: a top level category has no parent, so its siblings are the localized
+        //   root listing.
+        it('stays on the localized root for a new top level category', async () => {
+          mockParentOptions()
+
+          const wrapper = await create()
+
+          await waitFor(() => {
+            expect(wrapper).toHaveCurrentUrl('/knowledge-base/locale/en-us')
+          })
+        })
+
+        // The preselected parent is a seed the user may correct, so the submitted parent decides
+        //   — not the one the flyout was opened with.
+        it('follows the parent picked in the treeselect', async () => {
+          mockParentOptions()
+
+          const wrapper = renderFlyout({ parentId: PARENT_ID })
+
+          await wrapper.events.type(await wrapper.findByLabelText('Title'), 'Printers')
+
+          await wrapper.events.click(wrapper.getByLabelText('Parent category'))
+          const option = await wrapper.findByRole('option', { name: 'Software' })
+          await wrapper.events.click(option.firstChild as Element)
+
+          await wrapper.events.click(wrapper.getByRole('button', { name: 'Create' }))
+
+          await waitForKnowledgeBaseCategoryAddMutationCalls()
+
+          await waitFor(() => {
+            expect(wrapper).toHaveCurrentUrl('/knowledge-base/locale/en-us/category/43')
+          })
+        })
+      })
+
       // The backend reports a duplicate title on the category's autosaved translation, so
       //   without remapping it the message would land on the form rather than the field.
       it('shows a title error on the title field', async () => {
@@ -377,6 +463,9 @@ describe('KnowledgeBaseCategoryFlyout', () => {
 
         // Still on the form, so the failed title can be corrected.
         expect(wrapper.getByLabelText('Title')).toHaveValue('Printers')
+
+        // Nothing was created, so there is nowhere to go.
+        expect(wrapper).toHaveCurrentUrl('/')
       })
     })
   })
@@ -426,6 +515,8 @@ describe('KnowledgeBaseCategoryFlyout', () => {
           },
           locale: 'en-us',
         })
+
+        expect(wrapper).toHaveCurrentUrl('/')
       })
 
       // An omitted parent means "leave it where it is" to the mutation, so a move to the

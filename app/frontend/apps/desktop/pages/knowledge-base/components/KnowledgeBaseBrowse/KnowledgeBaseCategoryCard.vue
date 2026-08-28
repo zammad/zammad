@@ -18,7 +18,10 @@ import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/k
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import KnowledgeBaseIconStatus from '#desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue'
 
-import { openKnowledgeBaseCategoryEditFlyout } from '../../composables/useKnowledgeBaseCategoryFlyout.ts'
+import {
+  openKnowledgeBaseCategoryAddFlyout,
+  openKnowledgeBaseCategoryEditFlyout,
+} from '../../composables/useKnowledgeBaseCategoryFlyout.ts'
 
 import type { KnowledgeBaseCategoryCompact } from '../../types.ts'
 
@@ -47,10 +50,19 @@ const { confirmCategoryDelete } = useKnowledgeBaseCategoryDelete()
 //   editor to a part of the tree, and offering an action the mutation then refuses is worse
 //   than not offering it (the legacy stack gates per record too).
 //
-// TODO(#775): "Add answer" joins this menu with its own slice.
-//   Adding a category deliberately does not — that lives on the add card in the grid.
+// TODO(#837): "Add answer" joins the creation group with its own slice.
+//   Adding at the browsed level does not — that stays on the add card in the grid.
 const actions = computed<MenuItem[]>(() => {
   const items: MenuItem[] = []
+
+  if (props.policy.createSubcategory) {
+    items.push({
+      key: 'add-subcategory',
+      label: __('Add sub-category'),
+      icon: 'folder-plus',
+      onClick: () => openKnowledgeBaseCategoryAddFlyout({ parentId: props.id }),
+    })
+  }
 
   if (props.policy.update) {
     items.push({

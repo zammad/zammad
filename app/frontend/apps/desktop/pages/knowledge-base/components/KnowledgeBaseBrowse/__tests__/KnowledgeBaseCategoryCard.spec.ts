@@ -69,4 +69,61 @@ describe('KnowledgeBaseCategoryCard', () => {
 
     expect(wrapper.queryByIconName('translate')).not.toBeInTheDocument()
   })
+
+  describe('action menu', () => {
+    const openMenu = async (props = {}) => {
+      const wrapper = renderCard(props)
+
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Category actions' }))
+
+      return wrapper
+    }
+
+    it('offers adding a sub-category below the parent category', async () => {
+      const wrapper = await openMenu()
+
+      expect(await wrapper.findByText('Add sub-category')).toBeInTheDocument()
+    })
+
+    it('does not offer adding a sub-category without that policy', async () => {
+      const wrapper = await openMenu({
+        policy: { update: true, destroy: true, createSubcategory: false },
+      })
+
+      expect(await wrapper.findByText('Edit category')).toBeInTheDocument()
+      expect(wrapper.queryByText('Add sub-category')).not.toBeInTheDocument()
+    })
+
+    // `update` is the same predicate today, but a deliberately separate policy method — a
+    //   category one may only create below still gets a menu.
+    it('offers it alone when the category may only be created below', async () => {
+      const wrapper = await openMenu({
+        policy: { update: false, destroy: false, createSubcategory: true },
+      })
+
+      expect(await wrapper.findByText('Add sub-category')).toBeInTheDocument()
+      expect(wrapper.queryByText('Edit category')).not.toBeInTheDocument()
+      expect(wrapper.queryByText('Delete category')).not.toBeInTheDocument()
+    })
+
+    it('lists creating before the actions on the category itself', async () => {
+      const wrapper = await openMenu()
+
+      const items = await wrapper.findAllByTestId('popover-menu-item')
+
+      expect(items.map((item) => item.textContent?.trim())).toEqual([
+        'Add sub-category',
+        'Edit category',
+        'Delete category',
+      ])
+    })
+
+    it('renders no menu for a category the user may only read', () => {
+      const wrapper = renderCard({
+        policy: { update: false, destroy: false, createSubcategory: false },
+      })
+
+      expect(wrapper.queryByRole('button', { name: 'Category actions' })).not.toBeInTheDocument()
+    })
+  })
 })

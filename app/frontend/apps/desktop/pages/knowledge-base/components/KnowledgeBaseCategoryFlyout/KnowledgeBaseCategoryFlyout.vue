@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -19,6 +20,7 @@ import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useKnowledgeBaseCategoryAddMutation } from '#desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryAdd.api.ts'
 import { useKnowledgeBaseCategoryUpdateMutation } from '#desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryUpdate.api.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
+import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
 import type { CategoryFormData } from './types.ts'
 import type { EditableKnowledgeBaseCategory } from '../../types.ts'
@@ -112,6 +114,8 @@ const formUpdaterId = computed(() =>
 
 const knowledgeBase = toRef(useKnowledgeBaseStore(), 'knowledgeBase')
 
+const router = useRouter()
+
 const { notify } = useNotifications()
 
 const categoryAddMutation = new MutationHandler(useKnowledgeBaseCategoryAddMutation())
@@ -150,8 +154,12 @@ const submitForm = async (data: FormSubmitData<CategoryFormData>) => {
     return
   }
 
+  // Also the navigation target below: the treeselect may have moved the category away from the
+  //   parent the flyout was opened with, and this is what the mutation is told to file it under.
+  const input = buildCategoryInput(data)
+
   const variables = {
-    input: buildCategoryInput(data),
+    input,
     // The locale of the call: the title is written into it, and the response comes back in it —
     //   which matters because it lands in the cache the browsed page reads from.
     locale,
@@ -166,6 +174,10 @@ const submitForm = async (data: FormSubmitData<CategoryFormData>) => {
   })
 
   closeFlyout(props.name)
+
+  if (isEditMode.value) return
+
+  router.push(knowledgeBaseBrowseRoute(locale, input.parentId ?? undefined))
 }
 </script>
 
