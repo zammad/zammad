@@ -413,6 +413,17 @@ function set_env_vars () {
   zammad config:set RUBY_GC_MALLOC_LIMIT_MAX=${ZAMMAD_RUBY_GC_MALLOC_LIMIT_MAX:=2177216}
   zammad config:set RUBY_GC_OLDMALLOC_LIMIT=${ZAMMAD_RUBY_GC_OLDMALLOC_LIMIT:=2177216}
   zammad config:set RUBY_GC_OLDMALLOC_LIMIT_MAX=${ZAMMAD_RUBY_GC_OLDMALLOC_LIMIT_MAX:=3000100}
+
+  # Use jemalloc as memory allocator if available, as recommended by Rails.
+  # Opt out via "zammad config:set ZAMMAD_USE_JEMALLOC=no".
+  if [[ "$(zammad config:get ZAMMAD_USE_JEMALLOC)" == "no" ]]; then
+    if [[ "$(zammad config:get LD_PRELOAD)" == "libjemalloc.so.2" ]]; then
+      zammad config:set LD_PRELOAD=
+    fi
+  elif ldconfig -p | grep -q libjemalloc.so.2; then
+    zammad config:set LD_PRELOAD=libjemalloc.so.2
+  fi
+
   if [[ "$(zammad config:get RAILS_LOG_TO_STDOUT)" == "enabled" ]];then
     echo 'Setting default Logging to file, set via "zammad config:set RAILS_LOG_TO_STDOUT=true" if you want to log to STDOUT!'
     zammad config:set RAILS_LOG_TO_STDOUT=
