@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-22 09:12+0000\n"
+"PO-Revision-Date: 2026-08-27 09:12+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/uk/>\n"
@@ -516,7 +516,7 @@ msgid "%s ended switch to |%s|!"
 msgstr "%s завершив(-ла) перемикання на |%s|!"
 
 #: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:10
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:199
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:204
 msgid "%s filter(s)"
 msgstr "%s фільтр(и)"
 
@@ -740,11 +740,11 @@ msgstr "%s% було повторно відкрито"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} може мати повний або обмежений доступ до групи"
 
-#: app/models/object_manager/attribute.rb:627
+#: app/models/object_manager/attribute.rb:639
 msgid "%{name} already exists"
 msgstr "%{name} вже існує"
 
-#: app/models/object_manager/attribute.rb:611
+#: app/models/object_manager/attribute.rb:623
 msgid "%{name} is a reserved word"
 msgstr "%{name} - зарезервоване слово"
 
@@ -1013,7 +1013,7 @@ msgid ""
 msgstr ""
 "Створена тестова заявка, Ви можете знайти її у своєму огляді \"%s\" %l."
 
-#: app/models/ticket.rb:300
+#: app/models/ticket.rb:301
 msgid "A ticket cannot be merged into itself."
 msgstr "Заявка не може бути об'єднана сама з собою."
 
@@ -1033,7 +1033,7 @@ msgstr ""
 "Стан заявки використовується для категоризації та керування життєвим циклом "
 "заявки або запиту клієнта."
 
-#: app/services/service/knowledge_base/category/create.rb:57
+#: app/services/service/knowledge_base/category/create.rb:56
 msgid "A title is required."
 msgstr "Заголовок є обов’язковим."
 
@@ -1078,15 +1078,15 @@ msgstr "Відгуки та журнали ШІ"
 msgid "AI Knowledge Base"
 msgstr "База знань ШІ"
 
-#: db/seeds/settings.rb:6333
+#: db/seeds/settings.rb:6342
 msgid "AI Knowledge Base Answer Suggestions"
 msgstr "Пропозиції відповідей бази знань ШІ"
 
-#: db/seeds/settings.rb:6347
+#: db/seeds/settings.rb:6356
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
 msgstr "Оцінка релевантності пропозицій відповідей бази знань ШІ"
 
-#: db/seeds/settings.rb:6319
+#: db/seeds/settings.rb:6328
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr "Відповідь ШІ з Бази знань Заявки"
 
@@ -1122,6 +1122,7 @@ msgstr "Асистент ШІ: %s"
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:7
 #: app/frontend/apps/mobile/components/AiAgent/AiAgentAvatar.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:44
+#: app/models/audit_log/object_type_labels.rb:5
 msgid "AI agent"
 msgstr "ШІ-Агент"
 
@@ -1159,15 +1160,15 @@ msgstr "ШІ чернетка"
 msgid "AI error log"
 msgstr "Журнал помилок ШІ"
 
-#: db/seeds/settings.rb:6223
+#: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6232
 msgid "AI provider"
 msgstr "Постачальник ШІ"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:205
 msgid "AI provider configuration disabled successfully."
 msgstr "Конфігурацію постачальника ШІ успішно вимкнено."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:203
 msgid "AI provider configuration enabled successfully."
 msgstr "Конфігурацію постачальника ШІ успішно ввімкнено."
 
@@ -1195,10 +1196,6 @@ msgstr "Постачальник AI не налаштований."
 #: app/services/service/ai/feature.rb:16
 msgid "AI service result is missing expected keys"
 msgstr "У результаті роботи ШІ відсутні очікувані ключі"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
-msgid "AI suggested knowledge"
-msgstr "Знання, запропоновані ШІ"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
 msgid "AI summary"
@@ -1332,7 +1329,7 @@ msgstr "Доступ до інтерфейсу заявок."
 msgid "Access token"
 msgstr "Токен доступу"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:155
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:130
 msgid "Access token renewed, update your RSS reader with the new feed URLs."
 msgstr ""
 "Токен доступу оновлено. Оновіть свій RSS reader, вказавши нові URL-адреси "
@@ -1444,7 +1441,7 @@ msgstr "Визначення дії"
 msgid "Action execution"
 msgstr "Виконання дії"
 
-#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:131
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:132
 msgid "Action menu button"
 msgstr "Кнопка меню дій"
 
@@ -1518,7 +1515,7 @@ msgstr ""
 msgid "Active"
 msgstr "Активний"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Активні Агенти"
@@ -1697,6 +1694,11 @@ msgstr "Додати оповіщення для відкладених та п�
 msgid "Add all values"
 msgstr "Додати всі значення"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:386
+msgid "Add answer"
+msgstr "Додати відповідь"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:194
 msgid "Add attachment option to upload."
 msgstr "Додати можливість завантаження вкладень."
@@ -1708,7 +1710,7 @@ msgstr "Додати маркований список"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:269
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:369
 msgid "Add category"
 msgstr "Додати категорію"
 
@@ -1825,7 +1827,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Додаткові канали"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:108
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:127
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -1955,7 +1957,7 @@ msgstr "Обліковий запис адміністратора"
 msgid "Advance to next ticket from overview"
 msgstr "Перейти до наступної заявки з огляду"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:238
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:243
 msgid "Advanced filters"
 msgstr "Розширені фільтри"
 
@@ -2025,7 +2027,7 @@ msgstr "Агентський чат"
 msgid "Agent idle timeout"
 msgstr "Час простою агента"
 
-#: app/models/role.rb:181 app/models/user.rb:788
+#: app/models/role.rb:182 app/models/user.rb:789
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 "Ліміт агента перевищено, будь ласка, перевірте налаштування свого облікового "
@@ -2153,7 +2155,7 @@ msgstr "Усі значення вважатимуться витягнутим�
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr "Дозволяє ШІ агенту вибирати кілька категорій із усіх можливих значень."
 
-#: db/seeds/settings.rb:6208
+#: db/seeds/settings.rb:6217
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2200,7 +2202,7 @@ msgstr "Дозволити користувачам додавати нові т
 msgid "Allow users to create new tags."
 msgstr "Дозволити користувачам створювати нові теги."
 
-#: db/seeds/settings.rb:6199
+#: db/seeds/settings.rb:6208
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 "Дозвольте користувачам автоматично перемикатися на новий інтерфейс робочого "
@@ -2220,7 +2222,7 @@ msgstr "Дозволити веб-сайти (розділені знаком ;)
 msgid "Also notify via email"
 msgstr "Також сповіщати електронною поштою"
 
-#: db/seeds/settings.rb:5301
+#: db/seeds/settings.rb:5310
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -2254,7 +2256,7 @@ msgstr ""
 "На адресу _%s_ було надіслано електронного листа. Перейдіть за посиланням у "
 "листі, щоб підтвердити свій обліковий запис."
 
-#: app/models/ai/provider_connection.rb:290
+#: app/models/ai/provider_connection.rb:294
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2279,6 +2281,13 @@ msgstr "Під час отримання попереднього перегля
 msgid "An error occurred: %s"
 msgstr "Виникла помилка: %s"
 
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee:79
+#: lib/validations/link_self_reference_validator.rb:4
+#, fuzzy
+#| msgid "A ticket cannot be merged into itself."
+msgid "An object cannot be linked to itself."
+msgstr "Заявка не може бути об'єднана сама з собою."
+
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:60
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee:26
@@ -2294,7 +2303,7 @@ msgstr "Виникла неочікувана помилка."
 msgid "An unexpected error occurred during system setup."
 msgstr "Під час налаштування системи сталася несподівана помилка."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:769
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:752
 #: lib/ai/provider/concerns/handles_response.rb:22
 msgid "An unknown error occurred"
 msgstr "Виникла невідома помилка"
@@ -2363,17 +2372,21 @@ msgstr "Інша заявка була об'єднана із заявкою |%s
 msgid "Answer"
 msgstr "Відповісти"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:101
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:126
 msgid "Answer actions"
 msgstr "Дії з відповідями"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:151
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
 msgid "Answer count: %s"
 msgstr "Кількість відповідей: %s"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:51
 msgid "Answer navigation"
 msgstr "Навігація по відповідях"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:69
+msgid "Answer title"
+msgstr "Заголовок відповіді"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
 msgid "Answers"
@@ -2448,7 +2461,6 @@ msgstr "Пароль програми"
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
 #: db/seeds/permissions.rb:449
 msgid "Appearance"
 msgstr "Вигляд"
@@ -2504,13 +2516,13 @@ msgstr "Застосувати шаблон"
 msgid "Approve"
 msgstr "Схвалити"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Apr"
 msgstr "Квіт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "April"
 msgstr "Квітень"
 
@@ -2535,6 +2547,10 @@ msgstr "Час відключення архіву"
 msgid "Archive emails"
 msgstr "Архів електронної пошти"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:156
+msgid "Archive this answer"
+msgstr "Додати цю відповідь до архіву"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:725
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:44
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:290
@@ -2543,8 +2559,9 @@ msgid "Archive ticket target state"
 msgstr "Стан архівної заявки"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:27
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:155
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:35
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:54
@@ -2559,10 +2576,6 @@ msgstr "Архівовано о"
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:14
 msgid "Are you sure to remove this article?"
 msgstr "Ви впевнені, що хочете видалити це повідомлення?"
-
-#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:16
-msgid "Are you sure you want to change the embedding configuration?"
-msgstr "Ви впевнені, що хочете змінити конфігурацію вбудовування?"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:147
 msgid "Are you sure you want to delete \"%s\"?"
@@ -2585,6 +2598,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:719
 msgid "Are you sure you want to set \"%s\" as default?"
+msgstr "Ви впевнені, що хочете встановити «%s» за замовчуванням?"
+
+#: app/assets/javascripts/app/controllers/_ai/embedding_stop_confirm.coffee:8
+#, fuzzy
+#| msgid "Are you sure you want to set \"%s\" as default?"
+msgid "Are you sure you want to stop semantic search?"
 msgstr "Ви впевнені, що хочете встановити «%s» за замовчуванням?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:735
@@ -2658,7 +2677,7 @@ msgstr "Ви впевнені? У вас є зміни, які втратять�
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:269
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Ви впевнені? У вас є незбережені зміни, які втратяться."
@@ -2785,7 +2804,7 @@ msgstr ""
 "Час очікування призначення у хвилинах, якщо призначений агент не працює над "
 "заявкою. Заявка буде відображатись як «не призначена»."
 
-#: app/models/user.rb:690
+#: app/models/user.rb:691
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2805,7 +2824,7 @@ msgstr "Потрібно хоча б одне правило відповідн�
 msgid "At least one object must be selected."
 msgstr "Принаймні один об'єкт має бути обраний."
 
-#: app/models/role.rb:158 app/models/user.rb:767
+#: app/models/role.rb:159 app/models/user.rb:768
 msgid "At least one user needs to have admin permissions."
 msgstr "Принаймні один користувач повинен мати права адміністратора."
 
@@ -2831,7 +2850,8 @@ msgstr "Вкладені файли"
 msgid "Attached files"
 msgstr "Вкласти файли"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
 msgid "Attachment"
@@ -2932,13 +2952,13 @@ msgstr "Журнал аудиту"
 msgid "Audit Logs"
 msgstr "Журнали аудиту"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Aug"
 msgstr "Серп."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "August"
 msgstr "Серпень"
 
@@ -2983,7 +3003,7 @@ msgstr "Автентифікація через %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:6046
+#: db/seeds/settings.rb:6055
 msgid "Authenticator App"
 msgstr "Програма-автентифікатор"
 
@@ -3032,7 +3052,7 @@ msgstr "Користувачі, що ігноруються автоматичн
 msgid "Auto Assignment Selector"
 msgstr "Відбірник автоматичного призначення"
 
-#: db/seeds/settings.rb:6185
+#: db/seeds/settings.rb:6194
 msgid "Auto Shutdown"
 msgstr "Автоматичне вимкнення"
 
@@ -3040,7 +3060,7 @@ msgstr "Автоматичне вимкнення"
 msgid "Auto Wizard"
 msgstr "Майстер автоматизації"
 
-#: db/seeds/settings.rb:4624
+#: db/seeds/settings.rb:4633
 msgid "Auto close"
 msgstr "Закривати автоматично"
 
@@ -3048,7 +3068,7 @@ msgstr "Закривати автоматично"
 msgid "Auto create"
 msgstr "Створювати автоматично"
 
-#: db/seeds/settings.rb:4650
+#: db/seeds/settings.rb:4659
 msgid "Auto-close state"
 msgstr "Стан автоматично закритих"
 
@@ -3147,7 +3167,6 @@ msgstr "Доступні типи для нової заявки"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:48
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
@@ -3208,7 +3227,7 @@ msgid "BETA UI illustration"
 msgstr "Ілюстрація BETA UI"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:817
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:800
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -3230,6 +3249,7 @@ msgid "Back to previous page"
 msgstr "Повернутися на попередню сторінку"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:122
 msgid "Back to search results"
 msgstr "Повернутися до результатів пошуку"
 
@@ -3512,7 +3532,7 @@ msgstr "Варіанти постачальників CAPTCHA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:173
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:105
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
@@ -3549,19 +3569,19 @@ msgstr "CTI (Комп'ютерна телефонія)"
 msgid "CTI (generic)"
 msgstr "Комп'ютерна телефонія (універсальна)"
 
-#: db/seeds/settings.rb:5360
+#: db/seeds/settings.rb:5369
 msgid "CTI Token"
 msgstr "Токен CTI"
 
-#: db/seeds/settings.rb:5347
+#: db/seeds/settings.rb:5356
 msgid "CTI config"
 msgstr "Налаштування CTI"
 
-#: db/seeds/settings.rb:5381
+#: db/seeds/settings.rb:5390
 msgid "CTI customer last activity"
 msgstr "Остання активність клієнта CTI"
 
-#: db/seeds/settings.rb:5319
+#: db/seeds/settings.rb:5328
 msgid "CTI integration"
 msgstr "Інтеграція з CTI"
 
@@ -3574,7 +3594,6 @@ msgstr "Інтеграція з CTI"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:55
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:29
 #: db/seeds/permissions.rb:65
 msgid "Calendar"
 msgstr "Каландар"
@@ -3710,7 +3729,8 @@ msgstr "Скасувати та вийти"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:435
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:354
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 msgid "Cancel & go back"
@@ -3737,7 +3757,7 @@ msgstr "Неможливо видалити запис, оскільки існ�
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "Неможливо видалити запис, оскільки існує залежний запис %{record}"
 
-#: app/models/ai/provider_connection.rb:434
+#: app/models/ai/provider_connection.rb:438
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr "Неможливо видалити підключення до Zammad AI на цій системі."
 
@@ -3746,7 +3766,7 @@ msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 "Неможливе відстеження закритої заявки. Будь ласка, створіть нову заявку."
 
-#: app/models/sla.rb:45
+#: app/models/sla.rb:46
 msgid "Cannot have both response time and update time."
 msgstr "Не може мати одночасно час відгуку та час оновлення."
 
@@ -3773,6 +3793,7 @@ msgstr "Категорії"
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:193
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:58
 msgid "Category"
 msgstr "Категорія"
@@ -3781,15 +3802,15 @@ msgstr "Категорія"
 msgid "Category Attribute"
 msgstr "Атрибут категорії"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:163
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:167
 msgid "Category actions"
 msgstr "Дії з категоріями"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:135
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:139
 msgid "Category count: %s"
 msgstr "Кількість категорій: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:196
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:164
 msgid "Category feed"
 msgstr "Канал новин категорій"
 
@@ -3851,7 +3872,7 @@ msgstr "Змінити дату"
 msgid "Change icon set"
 msgstr "Змінити набір піктограм"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:78
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:97
 msgid "Change language"
 msgstr "Змінити мову"
 
@@ -3990,7 +4011,7 @@ msgstr "Заголовок чату"
 msgid "Chat closed by %s"
 msgstr "Чат закрито %s"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr ""
 "У чаті немає відповіді, він автоматично переводиться в автономний режим."
@@ -4013,7 +4034,7 @@ msgstr "Перевірити канали."
 msgid "Check item"
 msgstr "Перевірити елемент"
 
-#: lib/search_index_backend.rb:459
+#: lib/search_index_backend.rb:468
 msgid "Check the response and payload for detailed information:"
 msgstr "Детальну інформацію див. у відповіді та корисних даних:"
 
@@ -4068,7 +4089,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:353 db/seeds/settings.rb:6158
+#: db/seeds/permissions.rb:353 db/seeds/settings.rb:6167
 msgid "Checklists"
 msgstr "Чеклисти"
 
@@ -4076,11 +4097,11 @@ msgstr "Чеклисти"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4771
+#: db/seeds/settings.rb:4780
 msgid "Checkmk integration"
 msgstr "Інтеграція з Checkmk"
 
-#: db/seeds/settings.rb:4892
+#: db/seeds/settings.rb:4901
 msgid "Checkmk token"
 msgstr "Токен Checkmk"
 
@@ -4259,16 +4280,16 @@ msgstr "Очистити вибір"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:29
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 msgid "Clear all"
 msgstr "Очистити все"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
 msgid "Clear all advanced filter(s)?"
 msgstr "Очистити всі розширені фільтри?"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:202
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:207
 msgid "Clear all filters"
 msgstr "Очистити всі фільтри"
 
@@ -4290,7 +4311,8 @@ msgstr "Очистити недавні пошуки"
 msgid "Clear recently closed"
 msgstr "Очистити нещодавно закриті"
 
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:116
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:115
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchResults.vue:76
 #: app/frontend/apps/mobile/components/CommonInputSearch/CommonInputSearch.vue:73
 msgid "Clear search"
 msgstr "Очистити пошук"
@@ -4317,11 +4339,11 @@ msgstr "Очистити значення"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5483
+#: db/seeds/settings.rb:5492
 msgid "Clearbit config"
 msgstr "Конфігурація Clearbit"
 
-#: db/seeds/settings.rb:5457
+#: db/seeds/settings.rb:5466
 msgid "Clearbit integration"
 msgstr "Інтеграція з Clearbit"
 
@@ -4496,7 +4518,7 @@ msgstr "Ширина стовпця: %s пікселів"
 msgid "Combined subscription URL"
 msgstr "Комбінована URL-адреса підписки"
 
-#: db/seeds/settings.rb:5965
+#: db/seeds/settings.rb:5974
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4541,7 +4563,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6047
 msgid "Complete the sign-in with your security key."
 msgstr "Завершіть авторизацію за допомогою ключа безпеки."
 
@@ -4807,7 +4829,7 @@ msgstr "Підключення відновлено"
 msgid "Connection test successful"
 msgstr "Тест з'єднання успішний"
 
-#: lib/ai/vectordb.rb:316
+#: lib/ai/vectordb.rb:314
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr "Підключення до Elasticsearch Vector DB не вдалося"
 
@@ -4825,7 +4847,7 @@ msgid "Content"
 msgstr "Зміст"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:111
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:92
 msgid "Content could not be loaded."
 msgstr "Вміст не вдалося завантажити."
 
@@ -4860,7 +4882,7 @@ msgstr "Контекст"
 msgid "Context menu"
 msgstr "Контекстне меню"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:388
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:392
 msgid "Context window size"
 msgstr "Розмір контекстного вікна"
 
@@ -4931,12 +4953,12 @@ msgstr "Скопійовано."
 msgid "Copy"
 msgstr "Копіювати"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:189
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:157
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:291
 msgid "Copy URL"
 msgstr "Копіювати URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:133
 msgid "Copy answer title"
 msgstr "Скопіювати заголовок відповіді"
 
@@ -4944,7 +4966,7 @@ msgstr "Скопіювати заголовок відповіді"
 msgid "Copy article permalink"
 msgstr "Скопіювати посилання на статтю"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:210
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:213
 msgid "Copy category title"
 msgstr "Скопіювати назву категорії"
 
@@ -5022,6 +5044,12 @@ msgstr ""
 "Основні робочі процеси – це дії або обмеження щодо вибору у формах. Залежно "
 "від дії можна приховати або обмежити поля або змінити обов’язковість їх "
 "заповнення."
+
+#: app/models/audit_log/object_type_labels.rb:8
+#, fuzzy
+#| msgid "Core Workflows"
+msgid "Core workflow"
+msgstr "Основні робочі процеси"
 
 #: app/services/service/user/signup.rb:53
 msgid ""
@@ -5136,9 +5164,10 @@ msgstr "Країна"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:365
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:180
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:499
 msgid "Create"
 msgstr "Створити"
@@ -5258,7 +5287,7 @@ msgstr "Створити мій обліковий запис"
 msgid "Create new Customer"
 msgstr "Створити нового клієнта"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:71
 msgid "Create new customer"
 msgstr "Створити нового клієнта"
@@ -5415,6 +5444,7 @@ msgstr "Створив"
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:16
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:29
 #: app/assets/javascripts/app/controllers/search.coffee:25
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:34
 msgid "Created within last 14 days"
 msgstr "Створено протягом останніх 14 днів"
 
@@ -5507,7 +5537,7 @@ msgid "Currently processing this ticket…"
 msgstr "Наразі відбувається обробка заявки…"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:161
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:161
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:160
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
 "administrator."
@@ -5688,6 +5718,7 @@ msgstr "Необхідне оновлення бази даних"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:183
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 msgid "Date"
 msgstr "Дата"
@@ -5725,13 +5756,13 @@ msgstr "День(днів)"
 msgid "Days"
 msgstr "Дні"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Dec"
 msgstr "Груд."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "December"
 msgstr "Грудень"
 
@@ -5778,7 +5809,7 @@ msgid "Default"
 msgstr "За замовчуванням"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:60
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:491
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:495
 msgid "Default (%s)"
 msgstr "За замовчуванням (%s)"
 
@@ -5828,7 +5859,7 @@ msgstr "За промовчанням для наступних дій"
 msgid "Default for new tickets"
 msgstr "За замовчуванням для нових заявок"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:177
 msgid "Default provider updated successfully."
 msgstr "Постачальник за замовчуванням успішно оновлено."
 
@@ -5880,7 +5911,7 @@ msgstr "Визначте конфігурацію моделі для Elasticsea
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Визначте назву конвеєра для Elasticsearch."
 
-#: db/seeds/settings.rb:4443
+#: db/seeds/settings.rb:4452
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -6018,7 +6049,7 @@ msgstr ""
 "Визначає кінцеву точку (endpoint) Zendesk для імпорту користувачів, заявок, "
 "станів та статей."
 
-#: db/seeds/settings.rb:5561
+#: db/seeds/settings.rb:5570
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
 "Визначає серверну частину статистики на панелі моніторингу, яка запускається "
@@ -6131,23 +6162,23 @@ msgstr ""
 "Визначає, як імена користувачів відображаються у випадаючих списках, оглядах "
 "та полях вибору."
 
-#: db/seeds/settings.rb:4774
+#: db/seeds/settings.rb:4783
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "Визначає, чи увімкнено Checkmk (https://checkmk.com/) чи ні."
 
-#: db/seeds/settings.rb:5460
+#: db/seeds/settings.rb:5469
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Визначає, чи увімкнено Clearbit (http://www.clearbit.com) чи ні."
 
-#: db/seeds/settings.rb:5061
+#: db/seeds/settings.rb:5070
 msgid "Defines if Exchange is enabled or not."
 msgstr "Визначає, чи ввімкнено Exchange чи ні."
 
-#: db/seeds/settings.rb:4578
+#: db/seeds/settings.rb:4587
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Визначає, чи ввімкнено Icinga (http://www.icinga.org) чи ні."
 
-#: db/seeds/settings.rb:5671
+#: db/seeds/settings.rb:5680
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -6155,31 +6186,31 @@ msgstr ""
 "Визначає, чи буде увімкнено кнопку навігаційної панелі Бази знань для "
 "користувачів, які не мають прав доступу до Бази знань."
 
-#: db/seeds/settings.rb:5656
+#: db/seeds/settings.rb:5665
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "Визначає, чи ввімкнена кнопка навігаційної панелі \"База знань\"."
 
-#: db/seeds/settings.rb:5008
+#: db/seeds/settings.rb:5017
 msgid "Defines if LDAP is enabled or not."
 msgstr "Визначає, чи LDAP увімкнено, чи ні."
 
-#: db/seeds/settings.rb:4907
+#: db/seeds/settings.rb:4916
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "Визначає, чи увімкнено Monit (https://mmonit.com/monit/) чи ні."
 
-#: db/seeds/settings.rb:4676
+#: db/seeds/settings.rb:4685
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Визначає, чи ввімкнено Nagios (http://www.nagios.org) чи ні."
 
-#: db/seeds/settings.rb:5854
+#: db/seeds/settings.rb:5863
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "Визначає, чи ввімкнено шифрування PGP, чи ні."
 
-#: db/seeds/settings.rb:5397
+#: db/seeds/settings.rb:5406
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Визначає, чи ввімкнено Placetel (http://www.placetel.de) чи ні."
 
-#: db/seeds/settings.rb:5784
+#: db/seeds/settings.rb:5793
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "Визначає, чи ввімкнено шифрування S/MIME чи ні."
 
@@ -6195,7 +6226,7 @@ msgstr "Визначає, чи знаходиться програма в реж
 msgid "Defines if application is used as online service."
 msgstr "Визначає, чи використовується додаток як онлайн-сервіс."
 
-#: db/seeds/settings.rb:5989
+#: db/seeds/settings.rb:5998
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -6203,13 +6234,13 @@ msgstr ""
 "Визначає, чи відображаються календарні тижні в засобі вибору полів дати/"
 "часу, щоб легко вибрати правильну дату."
 
-#: db/seeds/settings.rb:5322
+#: db/seeds/settings.rb:5331
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 "Визначає, чи увімкнена універсальна інтеграція з комп'ютерною телефонією "
 "(CTI) чи ні."
 
-#: db/seeds/settings.rb:6081
+#: db/seeds/settings.rb:6090
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -6217,37 +6248,37 @@ msgstr ""
 "Визначає, чи можуть користувачі використовувати коди відновлення, якщо вони "
 "втратять доступ до інших методів двофакторної автентифікації."
 
-#: db/seeds/settings.rb:5239
+#: db/seeds/settings.rb:5248
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Визначає, чи ввімкнено sipgate.io (http://www.sipgate.io)."
 
-#: db/seeds/settings.rb:5896
+#: db/seeds/settings.rb:5905
 msgid "Defines if system notification emails are PGP signed."
 msgstr ""
 "Визначає, чи підписуються системні повідомлення електронною поштою за "
 "допомогою PGP."
 
-#: db/seeds/settings.rb:5826
+#: db/seeds/settings.rb:5835
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr ""
 "Визначає, чи підписуються системні повідомлення електронною поштою за "
 "допомогою S/MIME."
 
-#: db/seeds/settings.rb:6226
+#: db/seeds/settings.rb:6235
 msgid "Defines if the AI provider is configured."
 msgstr "Визначає, чи налаштований постачальник ШІ."
 
-#: db/seeds/settings.rb:5170
+#: db/seeds/settings.rb:5179
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "Визначає, чи ввімкнена інтеграція з GitHub (http://www.github.com)."
 
-#: db/seeds/settings.rb:5128
+#: db/seeds/settings.rb:5137
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "Визначає, чи ввімкнена інтеграція з GitLab (http://www.gitlab.com)."
 
-#: db/seeds/settings.rb:5924
+#: db/seeds/settings.rb:5933
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "Визначає, чи ввімкнено конфігурацію псевдоніма одержувача PGP."
 
@@ -6268,7 +6299,7 @@ msgstr ""
 "однаковий пароль, і скидання пароля буде працювати без доставки електронною "
 "поштою)."
 
-#: db/seeds/settings.rb:6447
+#: db/seeds/settings.rb:6456
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6277,7 +6308,7 @@ msgstr ""
 "тексту. Зауважте, що цей параметр буде проігноровано, якщо увімкнено "
 "помічник редактора."
 
-#: db/seeds/settings.rb:6133
+#: db/seeds/settings.rb:6142
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6301,7 +6332,7 @@ msgstr ""
 "Визначає, чи електронний лист повинен відображатися в результатах віджету "
 "користувача/організації."
 
-#: db/seeds/settings.rb:5088
+#: db/seeds/settings.rb:5097
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
@@ -6325,7 +6356,7 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr "Визначає, чи ввімкнено типи обліку часу."
 
-#: db/seeds/settings.rb:6049
+#: db/seeds/settings.rb:6058
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
@@ -6333,7 +6364,7 @@ msgstr ""
 "Визначає, чи ввімкнено методу двофакторної автентифікації за допомогою "
 "додатку автентифікатора."
 
-#: db/seeds/settings.rb:6017
+#: db/seeds/settings.rb:6026
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
@@ -6345,12 +6376,12 @@ msgstr ""
 msgid "Defines if tickets can be created via web form."
 msgstr "Визначає, чи можна створювати заявки через веб-форму."
 
-#: db/seeds/settings.rb:4627
+#: db/seeds/settings.rb:4636
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr ""
 "Визначає, чи заявки підлягають закриттю при відновленні сервісу після збою."
 
-#: db/seeds/settings.rb:4479
+#: db/seeds/settings.rb:4488
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "Визначає фільтр постмайстра для фільтрів, керованих через інтерфейс "
@@ -6377,14 +6408,14 @@ msgid "Defines postmaster filter to handle secure mailing."
 msgstr ""
 "Визначає фільтр поштового адміністратора для обробки захищених повідомлень."
 
-#: db/seeds/settings.rb:4542
+#: db/seeds/settings.rb:4551
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "Визначає фільтр поштового адміністратора для ідентифікації листів Jira для "
 "коректних подальших дій."
 
-#: db/seeds/settings.rb:4524
+#: db/seeds/settings.rb:4533
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6414,7 +6445,7 @@ msgstr ""
 "Визначає фільтр постмайстра для визначення подальших дій (на основі "
 "налаштувань адміністратора)."
 
-#: db/seeds/settings.rb:4434
+#: db/seeds/settings.rb:4443
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6422,7 +6453,7 @@ msgstr ""
 "Визначає фільтр поштового адміністратора для виявлення позаофісних листів "
 "для подальшого виявлення та підтримки поточного стану заявки."
 
-#: db/seeds/settings.rb:4461
+#: db/seeds/settings.rb:4470
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6431,7 +6462,7 @@ msgstr ""
 "адміністратора; і вимикає надсилання сповіщення у разі постійної помилки "
 "доставки."
 
-#: db/seeds/settings.rb:4452
+#: db/seeds/settings.rb:4461
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets."
@@ -6439,7 +6470,7 @@ msgstr ""
 "Визначає фільтр поштомайстра для ідентифікації відхилень поштомайстра; та "
 "обробляє їх як подальші дії після оригінальних заявок."
 
-#: db/seeds/settings.rb:4470
+#: db/seeds/settings.rb:4479
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6456,11 +6487,11 @@ msgid "Defines postmaster filter to identify session user."
 msgstr ""
 "Визначає фільтр поштового майстра для ідентифікації користувача сеансу."
 
-#: db/seeds/settings.rb:4569
+#: db/seeds/settings.rb:4578
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "Визначає фільтр поштового майстра для ідентифікації групи заявки."
 
-#: db/seeds/settings.rb:4506
+#: db/seeds/settings.rb:4515
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6468,21 +6499,21 @@ msgstr ""
 "Визначає фільтр поштового майстра для керування листами Checkmk (http://"
 "mathias-kettner.com/check_mk.html)."
 
-#: db/seeds/settings.rb:4488
+#: db/seeds/settings.rb:4497
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Визначає фільтр постмайстра для керування електронними листами Icinga "
 "(http://www.icinga.org)."
 
-#: db/seeds/settings.rb:4515
+#: db/seeds/settings.rb:4524
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Визначає фільтр поштового адміністратора для керування імейлами Monit "
 "(https://mmonit.com/monit/)."
 
-#: db/seeds/settings.rb:4497
+#: db/seeds/settings.rb:4506
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
@@ -6496,6 +6527,14 @@ msgid ""
 msgstr ""
 "Визначає фільтр постмайстра для видалення заголовків X-Zammad з ненадійних "
 "джерел."
+
+#: db/seeds/settings.rb:4434
+msgid ""
+"Defines postmaster filter to remove references to local attachments from "
+"incoming emails."
+msgstr ""
+"Визначає фільтр postmaster для видалення посилань на локальні вкладення з "
+"вхідних електронних листів."
 
 #: db/seeds/settings.rb:4362
 msgid ""
@@ -6513,7 +6552,7 @@ msgstr ""
 "Визначає фільтр поштового адміністратора для визначення відправника імейлів "
 "на основі заголовка відповіді."
 
-#: db/seeds/settings.rb:4560
+#: db/seeds/settings.rb:4569
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6530,11 +6569,11 @@ msgstr "Визначає фільтр постмайстра."
 msgid "Defines pretty date format."
 msgstr "Визначає зручний формат дати."
 
-#: db/seeds/settings.rb:5550
+#: db/seeds/settings.rb:5559
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "Визначає час очікування обробки для засобу очищення html."
 
-#: db/seeds/settings.rb:5209
+#: db/seeds/settings.rb:5218
 msgid "Defines sync transaction backend."
 msgstr "Визначає синхронну серверну операцію."
 
@@ -6549,27 +6588,27 @@ msgstr ""
 "постачальників формується на основі зареєстрованих бекендів "
 "FormSpamProtection::Captcha."
 
-#: db/seeds/settings.rb:5538
+#: db/seeds/settings.rb:5547
 msgid "Defines the CSS font information for HTML emails."
 msgstr "Визначає інформацію про CSS-шрифт для HTML-листів."
 
-#: db/seeds/settings.rb:5350
+#: db/seeds/settings.rb:5359
 msgid "Defines the CTI config."
 msgstr "Визначає налаштування CTI (Комп'ютерна телефонія)."
 
-#: db/seeds/settings.rb:4895
+#: db/seeds/settings.rb:4904
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "Визначає токен Checkmk для дозволу оновлень."
 
-#: db/seeds/settings.rb:5486
+#: db/seeds/settings.rb:5495
 msgid "Defines the Clearbit config."
 msgstr "Визначає конфігурацію Clearbit."
 
-#: db/seeds/settings.rb:5048
+#: db/seeds/settings.rb:5057
 msgid "Defines the Exchange OAuth config."
 msgstr "Визначає конфігурацію Exchange OAuth."
 
-#: db/seeds/settings.rb:5035
+#: db/seeds/settings.rb:5044
 msgid "Defines the Exchange config."
 msgstr "Визначає конфігурацію Exchange."
 
@@ -6577,19 +6616,19 @@ msgstr "Визначає конфігурацію Exchange."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Визначає протокол HTTP для вашого сервера."
 
-#: db/seeds/settings.rb:5882
+#: db/seeds/settings.rb:5891
 msgid "Defines the PGP config."
 msgstr "Визначає конфігурацію PGP."
 
-#: db/seeds/settings.rb:5425
+#: db/seeds/settings.rb:5434
 msgid "Defines the Placetel config."
 msgstr "Визначає конфігурацію Placetel."
 
-#: db/seeds/settings.rb:5812
+#: db/seeds/settings.rb:5821
 msgid "Defines the S/MIME config."
 msgstr "Визначає конфігурацію S/MIME."
 
-#: db/seeds/settings.rb:5527
+#: db/seeds/settings.rb:5536
 msgid "Defines the agent limit."
 msgstr "Визначає ліміт агента."
 
@@ -6626,7 +6665,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr "Визначає бекенд-сервіс для визначення мови повідомлення заявки."
 
-#: db/seeds/settings.rb:6424
+#: db/seeds/settings.rb:6433
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr "Визначає стратегію фрагментації для векторної бази знань."
 
@@ -6677,7 +6716,7 @@ msgstr "Визначає тип обліку часу за замовчуван�
 msgid "Defines the default visibility for new notes."
 msgstr "Визначає видимість за замовчуванням для нових приміток."
 
-#: db/seeds/settings.rb:5384
+#: db/seeds/settings.rb:5393
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -6685,7 +6724,7 @@ msgstr ""
 "Визначає тривалість активності клієнта (в секундах) під час дзвінка до "
 "моменту, коли буде показано діалогове вікно профілю користувача."
 
-#: db/seeds/settings.rb:6308
+#: db/seeds/settings.rb:6317
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -6703,7 +6742,7 @@ msgstr ""
 "#{setting.fqdn}, яка знаходиться у всіх формах обміну повідомленнями, що "
 "використовуються програмою, для створення посилань на заявки у вашій системі."
 
-#: db/seeds/settings.rb:4823
+#: db/seeds/settings.rb:4832
 msgid "Defines the group of created tickets."
 msgstr "Визначає групу заявок, що створюються."
 
@@ -6711,7 +6750,7 @@ msgstr "Визначає групу заявок, що створюються."
 msgid "Defines the group of tickets created via web form."
 msgstr "Визначає групу заявок, створених за допомогою веб-форми."
 
-#: db/seeds/settings.rb:5115
+#: db/seeds/settings.rb:5124
 msgid "Defines the i-doit config."
 msgstr "Визначає конфігурацію i-doit."
 
@@ -6736,7 +6775,7 @@ msgstr ""
 "Визначає максимальну кількість відкритих вкладок, перш ніж автоматичне "
 "очищення видалить зайві вкладки при створенні нових вкладок."
 
-#: db/seeds/settings.rb:6350
+#: db/seeds/settings.rb:6359
 msgid ""
 "Defines the minimum relevance score (in percent) a knowledge base answer "
 "must reach to be suggested in the ticket sidebar."
@@ -6765,15 +6804,15 @@ msgstr "Визначає порт сервера WebSocket."
 msgid "Defines the random application secret."
 msgstr "Визначає випадковий ключ програми."
 
-#: db/seeds/settings.rb:4604
+#: db/seeds/settings.rb:4613
 msgid "Defines the sender email address of Icinga emails."
 msgstr "Визначає адресу електронної пошти відправника імейлів Icinga."
 
-#: db/seeds/settings.rb:4702
+#: db/seeds/settings.rb:4711
 msgid "Defines the sender email address of Nagios emails."
 msgstr "Визначає адресу електронної пошти відправника імейлів Nagios."
 
-#: db/seeds/settings.rb:4800
+#: db/seeds/settings.rb:4809
 msgid "Defines the sender email address of the service emails."
 msgstr ""
 "Визначає адресу електронної пошти відправника службових повідомлень "
@@ -6800,11 +6839,11 @@ msgstr ""
 "призначених дозволів буде використано найбільше значення тайм-ауту, інакше — "
 "значення за замовчуванням."
 
-#: db/seeds/settings.rb:5288
+#: db/seeds/settings.rb:5297
 msgid "Defines the sipgate.io config."
 msgstr "Визначає конфігурацію Sipgate (sipgate.io)."
 
-#: db/seeds/settings.rb:4653
+#: db/seeds/settings.rb:4662
 msgid "Defines the state of auto-closed tickets."
 msgstr "Визначає стан автоматично закритих заявок."
 
@@ -6826,31 +6865,31 @@ msgstr "Визначає поведінку вкладки після дії і�
 msgid "Defines the ticket states used for lookups."
 msgstr "Визначає стани заявки, які використовуються для пошуку."
 
-#: db/seeds/settings.rb:5683
+#: db/seeds/settings.rb:5692
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "Визначає проміжок часу, протягом якого можна видалити самостійно створену "
 "нотатку."
 
-#: db/seeds/settings.rb:5439
+#: db/seeds/settings.rb:5448
 msgid "Defines the token for Placetel."
 msgstr "Визначає токен для Placetel."
 
-#: db/seeds/settings.rb:5230
+#: db/seeds/settings.rb:5239
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 "Визначає серверну операцію виявлення підписів клієнтів в електронних листах."
 
-#: db/seeds/settings.rb:5212
+#: db/seeds/settings.rb:5221
 msgid "Defines the transaction backend to execute triggers."
 msgstr "Визначає серверну операцію виконання тригерів."
 
-#: db/seeds/settings.rb:5221
+#: db/seeds/settings.rb:5230
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "Визначає серверну операцію для надсилання повідомлень агенту."
 
-#: db/seeds/settings.rb:5508
+#: db/seeds/settings.rb:5517
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -6858,13 +6897,13 @@ msgstr ""
 "Визначає серверну операцію, яка виявляє Сaller ID (ідентифікатори абонентів, "
 "що викликають) в об'єктах і зберігає їх для пошуку CTI."
 
-#: db/seeds/settings.rb:5517
+#: db/seeds/settings.rb:5526
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
 "Визначає серверну операцію (Backend), яка виконує тригери, що базуються на "
 "часі."
 
-#: db/seeds/settings.rb:5499
+#: db/seeds/settings.rb:5508
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -6893,7 +6932,7 @@ msgstr ""
 "Визначає заголовок попередження, який показується при наявності відповідної "
 "заявки."
 
-#: db/seeds/settings.rb:5218
+#: db/seeds/settings.rb:5227
 msgid "Defines transaction backend."
 msgstr "Визначає серверну операцію."
 
@@ -6904,7 +6943,7 @@ msgid ""
 msgstr ""
 "Визначає, чи будуть показані відповідні заявки у випадку вже існуючих заявки."
 
-#: db/seeds/settings.rb:6415
+#: db/seeds/settings.rb:6424
 msgid ""
 "Defines which knowledge base categories are excluded from the vector "
 "database. Sub-categories of an excluded category are excluded as well. Note "
@@ -6920,7 +6959,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr "Визначає, які параметри дозволено передавати через API форми."
 
-#: db/seeds/settings.rb:6217
+#: db/seeds/settings.rb:6226
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 "Визначає, яким ролям дозволено доступ до перемикача BETA UI на робочому "
@@ -6942,7 +6981,7 @@ msgid ""
 msgstr ""
 "Визначає, які ролі користувачів отримають попередження у разі збігу заявки."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:129
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:128
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:700
@@ -7023,7 +7062,7 @@ msgstr "Видалити все"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:33
-#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:20
+#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:26
 msgid "Delete all child categories and answers, then try again."
 msgstr "Видаліть усі дочірні категорії та відповіді, а потім спробуйте ще раз."
 
@@ -7040,7 +7079,7 @@ msgid "Delete avatar"
 msgstr "Видалити аватар"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:72
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:165
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:168
 msgid "Delete category"
 msgstr "Видалити категорію"
 
@@ -7211,15 +7250,15 @@ msgstr "Конструктор форми"
 msgid "Desktop"
 msgstr "Версія для настільних комп'ютерів"
 
-#: db/seeds/settings.rb:6196
+#: db/seeds/settings.rb:6205
 msgid "Desktop BETA UI Switch"
 msgstr "Настільний перемикач BETA UI"
 
-#: db/seeds/settings.rb:6205
+#: db/seeds/settings.rb:6214
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "Меню адміністрування BETA UI перемикача робочого столу"
 
-#: db/seeds/settings.rb:6214
+#: db/seeds/settings.rb:6223
 msgid "Desktop BETA UI Switch Roles"
 msgstr "Ролі перемикачів у настільному інтерфейсі BETA UI"
 
@@ -7281,7 +7320,6 @@ msgstr "Пристрій було анульовано."
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
 #: db/seeds/permissions.rb:494
 msgid "Devices"
 msgstr "Пристрої"
@@ -7401,12 +7439,13 @@ msgid "Discard article"
 msgstr "Відхилити повідомлення"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:432
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:351
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:271
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
 msgstr "Відхилити зміни"
@@ -7475,11 +7514,11 @@ msgstr "Не зашифровувати електронну пошту"
 msgid "Do not sign email"
 msgstr "Не підписувати електронну пошту"
 
-#: db/seeds/settings.rb:6143
+#: db/seeds/settings.rb:6152
 msgid "Do not update any tickets."
 msgstr "Не оновлювати жодну заявку."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:122
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:121
 msgid "Do not use for image text recognition"
 msgstr "Не використовувати для розпізнавання тексту на зображеннях"
 
@@ -7638,7 +7677,8 @@ msgstr "Завантаження вкладень…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:12
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:14
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:140
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 msgid "Draft"
 msgstr "Чернетка"
@@ -7665,6 +7705,7 @@ msgid "Drafts & macros"
 msgstr "Чернетки та макроси"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:54
 msgid "Drafts only"
 msgstr "Тільки чернетки"
 
@@ -7733,7 +7774,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Свято Великодня"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:656
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:639
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -7793,7 +7834,7 @@ msgstr "Змінити програму автентифікатор"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:58
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:156
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:159
 msgid "Edit category"
 msgstr "Редагувати категорію"
 
@@ -7811,7 +7852,7 @@ msgid "Edit item"
 msgstr "Редагувати елемент"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:147
 msgid "Edit knowledge base"
 msgstr "Редагувати базу знань"
 
@@ -7892,11 +7933,11 @@ msgstr "Перевірка SSL в Elasticsearch"
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch Загальний розмір корисного навантаження"
 
-#: lib/ai/vectordb.rb:334
+#: lib/ai/vectordb.rb:337
 msgid "Elasticsearch index does not exist"
 msgstr "Індексу Elasticsearch не існує"
 
-#: lib/search_index_backend.rb:455
+#: lib/search_index_backend.rb:464
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -7999,7 +8040,7 @@ msgstr "Обліковий запис електронної пошти"
 msgid "Email address"
 msgstr "Адреса електронної пошти"
 
-#: app/models/user.rb:700
+#: app/models/user.rb:701
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "Адреса електронної пошти '%{email}' вже використовується для іншого "
@@ -8077,11 +8118,11 @@ msgstr ""
 "Листи електронної пошти, отримані до встановлених часів, імпортуються як "
 "архівні заявки. Після закінчення терміну – імпортуються як звичайні заявки."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
 msgid "Embedding Model"
 msgstr "Модель вбудовування"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:383
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:387
 msgid "Embedding dimensions"
 msgstr "Розміри вбудовування"
 
@@ -8142,7 +8183,7 @@ msgstr ""
 "електронної пошти та пароль). Кожен користувач повинен створити власні "
 "токени доступу в профілі користувача."
 
-#: db/seeds/settings.rb:6078
+#: db/seeds/settings.rb:6087
 msgid "Enable Recovery Codes"
 msgstr "Увімкнути коди відновлення"
 
@@ -8166,7 +8207,7 @@ msgstr "Увімкнути автоматичне призначення для 
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "Увімкнути автоматичне призначення, коли агент уперше відкриває заявку."
 
-#: db/seeds/settings.rb:6161
+#: db/seeds/settings.rb:6170
 msgid "Enable checklists."
 msgstr "Увімкнути чеклисти."
 
@@ -8202,7 +8243,7 @@ msgstr ""
 "Якщо Ви хочете процитувати певну фразу, просто виділіть текст і натисніть "
 "«відповісти» (ця можливість доступна завжди)."
 
-#: db/seeds/settings.rb:6322
+#: db/seeds/settings.rb:6331
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
@@ -8210,7 +8251,7 @@ msgstr ""
 "Увімкнути або вимкнути генерацію відповідей Бази знань на основі вмісту "
 "заявок."
 
-#: db/seeds/settings.rb:6188
+#: db/seeds/settings.rb:6197
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -8221,7 +8262,7 @@ msgstr ""
 "керуючий менеджер процесів, наприклад, systemd або docker, підтримує "
 "політику автоматичного перезапуску."
 
-#: db/seeds/settings.rb:6336
+#: db/seeds/settings.rb:6345
 msgid ""
 "Enable or disable the display of AI suggested knowledge base answers in the "
 "ticket sidebar."
@@ -8249,11 +8290,11 @@ msgstr ""
 "усіх не-адміністраторів завершується, і лише адміністратори зможуть почати "
 "нову сесію."
 
-#: db/seeds/settings.rb:6243
+#: db/seeds/settings.rb:6252
 msgid "Enable or disable the ticket summary."
 msgstr "Увімкніть або вимкніть підсумок заявки."
 
-#: db/seeds/settings.rb:6392
+#: db/seeds/settings.rb:6401
 msgid ""
 "Enable or disable the vector database, which is used for storing and "
 "retrieving vectorized data. Elasticsearch is used as the vector database "
@@ -8263,7 +8304,7 @@ msgstr ""
 "зберігання та пошуку векторизованих даних. В якості бекенду векторної бази "
 "даних використовується Elasticsearch."
 
-#: db/seeds/settings.rb:6294
+#: db/seeds/settings.rb:6303
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Увімкніть або вимкніть текстові інструменти помічника редактора."
 
@@ -8275,7 +8316,7 @@ msgstr "Увімкнути банер для перемикача бета-ве�
 msgid "Enable ticket auto assignment."
 msgstr "Увімкнути автоматичне призначення заявок."
 
-#: db/seeds/settings.rb:6276
+#: db/seeds/settings.rb:6285
 msgid "Enable ticket summary for following matching tickets."
 msgstr "Увімкнути зведення заявок для наступних відповідних заявок."
 
@@ -8308,7 +8349,7 @@ msgstr ""
 "Вмикає попередження користувачам під час створення заявки, якщо існує заявка "
 "з такими самими атрибутами."
 
-#: db/seeds/settings.rb:5935
+#: db/seeds/settings.rb:5944
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -8474,11 +8515,11 @@ msgstr "Кінцева точка (Endpoint)"
 msgid "Endpoint Settings"
 msgstr "Налаштування кінцевої точки (Endpoint)"
 
-#: db/seeds/settings.rb:6105
+#: db/seeds/settings.rb:6114
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "Примусове налаштування двофакторної автентифікації"
 
-#: db/seeds/settings.rb:6112
+#: db/seeds/settings.rb:6121
 msgid "Enforced for user roles"
 msgstr "Примусово для ролей користувачів"
 
@@ -8911,15 +8952,15 @@ msgstr "Винятки для користувачів"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:5045
+#: db/seeds/settings.rb:5054
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:5032
+#: db/seeds/settings.rb:5041
 msgid "Exchange config"
 msgstr "Налаштування Exchange"
 
-#: db/seeds/settings.rb:5058
+#: db/seeds/settings.rb:5067
 msgid "Exchange integration"
 msgstr "Інтеграція з Exchange"
 
@@ -9028,7 +9069,7 @@ msgstr "Розширений пошук"
 msgid "External data source field"
 msgstr "Поле зовнішнього джерела даних"
 
-#: lib/search_index_backend.rb:781
+#: lib/search_index_backend.rb:790
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Вилучення інформації про вкладення zammad з масивів"
 
@@ -9156,13 +9197,13 @@ msgstr "Функція вимкнена, будь ласка, звернітьс
 msgid "Feature not configured, please contact your admin!"
 msgstr "Функція не налаштована, будь ласка, зверніться до адміністратора!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Feb"
 msgstr "Лют."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "February"
 msgstr "Лютий"
 
@@ -9574,11 +9615,11 @@ msgstr "Періодичність"
 msgid "Freshdesk"
 msgstr "Freshdesk"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Fri"
 msgstr "П'ят."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:11
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:19
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:56
@@ -9714,7 +9755,7 @@ msgstr "Почати"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:6070
+#: db/seeds/settings.rb:6079
 msgid "Get the security code from the authenticator app on your device."
 msgstr "Отримайте код безпеки з програми-автентифікатора на вашому пристрої."
 
@@ -9744,11 +9785,11 @@ msgstr "Облікові дані додатку GitHub"
 msgid "GitHub OAuth Applications"
 msgstr "Додаток GitHub OAuth"
 
-#: db/seeds/settings.rb:5194
+#: db/seeds/settings.rb:5203
 msgid "GitHub config"
 msgstr "Конфігурація GitHub"
 
-#: db/seeds/settings.rb:5167
+#: db/seeds/settings.rb:5176
 msgid "GitHub integration"
 msgstr "Інтеграція з GitHub"
 
@@ -9779,11 +9820,11 @@ msgstr "Облікові дані програми GitLab"
 msgid "GitLab Applications"
 msgstr "Додаток GitLab"
 
-#: db/seeds/settings.rb:5152
+#: db/seeds/settings.rb:5161
 msgid "GitLab config"
 msgstr "Конфігурація GitLab"
 
-#: db/seeds/settings.rb:5125
+#: db/seeds/settings.rb:5134
 msgid "GitLab integration"
 msgstr "Інтеграція з GitLab"
 
@@ -10030,11 +10071,11 @@ msgstr "Групи…"
 msgid "HMAC SHA1 Signature Token"
 msgstr "Токен підпису HMAC SHA1"
 
-#: db/seeds/settings.rb:5535
+#: db/seeds/settings.rb:5544
 msgid "HTML Email CSS Font"
 msgstr "CSS-шрифт для HTML-писем"
 
-#: db/seeds/settings.rb:5547
+#: db/seeds/settings.rb:5556
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Закінчився час обробки очищення HTML"
 
@@ -10344,12 +10385,12 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "Підсвічування неактивне."
 
-#: db/seeds/settings.rb:5699
+#: db/seeds/settings.rb:5708
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
 "Виділяє, чи є нотатка, яку пише користувач, загальнодоступною чи приватною"
 
-#: db/seeds/settings.rb:5696
+#: db/seeds/settings.rb:5705
 msgid "Hint for adding an article to an existing ticket."
 msgstr "Підказка для додавання повідомлення до існуючої заявки."
 
@@ -10499,7 +10540,7 @@ msgstr "Протокол доступу до Інтернет-повідомле
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4575
+#: db/seeds/settings.rb:4584
 msgid "Icinga integration"
 msgstr "Інтеграція Icinga"
 
@@ -10633,7 +10674,7 @@ msgstr ""
 "Якщо ви втратили коди відновлення, ви можете згенерувати нові. Ця дія "
 "зробить попередні коди відновлення недійсними."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:180
 msgid ""
 "If you want to invalidate your feed URLs, renew the access token below. Make "
 "sure to update your RSS reader with new feed URLs afterwards."
@@ -10940,7 +10981,7 @@ msgstr ""
 msgid "Including private key."
 msgstr "Включаючи приватний ключ."
 
-#: lib/ai/vectordb.rb:327
+#: lib/ai/vectordb.rb:330
 msgid "Incompatible Elasticsearch version"
 msgstr "Несумісна версія Elasticsearch"
 
@@ -10958,7 +10999,7 @@ msgstr "Неповні пункти чеклиста"
 msgid "Incomplete credentials"
 msgstr "Неповні облікові дані"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:469
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
 msgid "Incomplete ticket checklist"
 msgstr "Неповний чеклист заявки"
 
@@ -11155,8 +11196,9 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "Перевірка цілісності завантажених медіафайлів WhatsApp не вдалася."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:17
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:19
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:145
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:206
 msgid "Internal"
@@ -11166,7 +11208,7 @@ msgstr "Внутрішній"
 msgid "Internal Knowledge Base feed:"
 msgstr "Внутрішня стрічка даних бази знань:"
 
-#: app/models/object_manager/attribute.rb:697
+#: app/models/object_manager/attribute.rb:713
 msgid "Internal attributes cannot be deleted"
 msgstr "Внутрішні атрибути не можуть бути видалені"
 
@@ -11174,7 +11216,7 @@ msgstr "Внутрішні атрибути не можуть бути вида�
 msgid "Internal error"
 msgstr "Внутрішня помилка"
 
-#: db/seeds/settings.rb:6406
+#: db/seeds/settings.rb:6415
 msgid ""
 "Internal record of the embedding model and vector size the knowledge base "
 "index was last built with. Used to detect a stale index by comparison, "
@@ -11258,15 +11300,15 @@ msgstr "Невірний параметр стану OAuth."
 msgid "Invalid auto wizard file."
 msgstr "Файл майстра автоматизації пошкоджено."
 
-#: app/controllers/long_polling_controller.rb:83
+#: app/controllers/long_polling_controller.rb:82
 msgid "Invalid client_id in receive loop!"
 msgstr "Невірний ідентифікатор клієнта (client_id) у циклі прийому!"
 
-#: app/controllers/long_polling_controller.rb:51
+#: app/controllers/long_polling_controller.rb:50
 msgid "Invalid client_id received!"
 msgstr "Отримано невірний ідентифікатор клієнта (client_id)!"
 
-#: app/models/user.rb:639
+#: app/models/user.rb:640
 msgid "Invalid email '%{email}'"
 msgstr "Невірно вказано email '%{email}'"
 
@@ -11488,7 +11530,7 @@ msgstr "Видалити користувача системи неможлив�
 msgid "It is not possible to delete your current account."
 msgstr "Видалити поточний обліковий запис неможливо."
 
-#: app/models/ticket.rb:298
+#: app/models/ticket.rb:299
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Об'єднання у вже об'єднану заявку неможливе."
 
@@ -11501,13 +11543,13 @@ msgstr "Елементи"
 msgid "Items per page"
 msgstr "Елементів на сторінці"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jan"
 msgstr "Січ."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "January"
 msgstr "Січень"
 
@@ -11529,23 +11571,23 @@ msgstr "Приєднатися до %s"
 msgid "Join feedback program"
 msgstr "Приєднатися до програми зворотного зв'язку"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jul"
 msgstr "Лип."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "July"
 msgstr "Липень"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jun"
 msgstr "Черв."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "June"
 msgstr "Червень"
 
@@ -11559,10 +11601,6 @@ msgstr ""
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:96
 msgid "Just switch back"
 msgstr "Просто перемкніться назад"
-
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:118
-msgid "KB Answer"
-msgstr "Відповідь у базі знань"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -11608,9 +11646,10 @@ msgstr "Ключові слова"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:67
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:67
-#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:26
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:70
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:103
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
+#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
 #: app/models/knowledge_base.rb:262 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "База знань"
@@ -11656,27 +11695,38 @@ msgstr "Головна сторінка бази знань"
 msgid "Knowledge Base Reader"
 msgstr "Читач бази знань"
 
-#: db/seeds/settings.rb:5653
+#: db/seeds/settings.rb:5662
 msgid "Knowledge Base active"
 msgstr "Активація база знань"
 
-#: db/seeds/settings.rb:5668
+#: db/seeds/settings.rb:5677
 msgid "Knowledge Base active publicly"
 msgstr "База знань відкрита для всіх"
 
-#: db/seeds/settings.rb:5642
+#: app/models/audit_log/object_type_labels.rb:10
+#, fuzzy
+#| msgid "Knowledge Base Answer"
+msgid "Knowledge Base language"
+msgstr "Відповідь в базі знань"
+
+#: db/seeds/settings.rb:5651
 msgid "Knowledge Base multilingual support"
 msgstr "Багатомовна підтримка бази знань"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:259
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:346
 msgid "Knowledge base actions"
 msgstr "Дії з базою знань"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:331
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
+msgid "Knowledge base answer"
+msgstr "Відповідь із Бази знань"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
 msgid "Knowledge base articles"
 msgstr "Статті бази знань"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:60
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:61
 msgid "Knowledge base controls"
 msgstr "Елементи управління базою знань"
 
@@ -11686,7 +11736,7 @@ msgstr "Елементи управління базою знань"
 msgid "Knowledge base draft could not be generated."
 msgstr "Не вдалося створити чернетку Бази Знань."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:177
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:145
 msgid "Knowledge base feed"
 msgstr "Новини з Бази знань"
 
@@ -11697,11 +11747,11 @@ msgstr "Новини з Бази знань"
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr "База знань недоступна або не налаштована належним чином."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:46
 msgid "Knowledge base navigation"
 msgstr "Навігація по базі знань"
 
-#: db/seeds/settings.rb:6375
+#: db/seeds/settings.rb:6384
 msgid "Knowledge base self-hosted video servers"
 msgstr "База знань про відеосервери, що розміщуються на власних серверах"
 
@@ -11712,7 +11762,7 @@ msgstr "Векторний пошук у Базі знань недоступн�
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
-#: db/seeds/settings.rb:1253
+#: app/models/audit_log/object_type_labels.rb:11 db/seeds/settings.rb:1253
 msgid "LDAP"
 msgstr "LDAP"
 
@@ -11720,7 +11770,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "Хост LDAP"
 
-#: db/seeds/settings.rb:5005
+#: db/seeds/settings.rb:5014
 msgid "LDAP integration"
 msgstr "Інтеграція LDAP"
 
@@ -11747,7 +11797,6 @@ msgstr "Макет цільової сторінки"
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:70
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
@@ -11902,7 +11951,7 @@ msgstr "Посилання на макет"
 msgid "Leave BETA UI feedback program?"
 msgstr "Залишити програму зворотного зв'язку BETA UI?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:429
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:433
 msgid "Leave empty to use URL (Completions)"
 msgstr "Залиште порожнім, щоб використовувати URL-адресу (завершення)"
 
@@ -11918,7 +11967,7 @@ msgstr "Вийти з програми"
 msgid "Legal Information"
 msgstr "Правова інформація"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:386
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:390
 msgid ""
 "Length of the vectors the embedding model produces. Filled in for a model "
 "whose size is known."
@@ -12088,7 +12137,7 @@ msgid "Linked Accounts"
 msgstr "Прив’язані облікові записи"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:49
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:196
 msgid "Linked accounts"
 msgstr "Пов'язані облікові записи"
 
@@ -12118,7 +12167,7 @@ msgstr "Список встановлених доповнень"
 msgid "List of issue labels"
 msgstr "Список назв проблем"
 
-#: db/seeds/settings.rb:6378
+#: db/seeds/settings.rb:6387
 msgid ""
 "List of self-hosted video servers. This list is used for content security "
 "policy."
@@ -12692,13 +12741,13 @@ msgstr ""
 msgid "Mapping"
 msgstr "Співставлення"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Mar"
 msgstr "Бер."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "March"
 msgstr "Березень"
 
@@ -12808,7 +12857,7 @@ msgstr "Максимальна кількість рекурсивно вико�
 msgid "Maximum number of ticket shown in overviews"
 msgstr "Максимальна кількість заявок, що відображається в оглядах"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
@@ -13070,11 +13119,11 @@ msgstr "Мобільний"
 msgid "Mode"
 msgstr "Закрити на обслуговування"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:344
 msgid "Model"
 msgstr "Модель"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:402
 msgid ""
 "Model used for image text recognition. Leave empty to use the model of this "
 "connection."
@@ -13082,7 +13131,7 @@ msgstr ""
 "Модель, що використовується для розпізнавання тексту на зображеннях. Залиште "
 "поле порожнім, щоб використовувати модель цього з’єднання."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:362
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:366
 msgid ""
 "Model used for vector embedding in semantic search. Required for the "
 "provider that serves semantic search."
@@ -13095,11 +13144,11 @@ msgstr ""
 msgid "Module"
 msgstr "Модуль"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Mon"
 msgstr "Пн."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:7
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:15
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
@@ -13110,7 +13159,7 @@ msgstr "Понеділок"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4904
+#: db/seeds/settings.rb:4913
 msgid "Monit integration"
 msgstr "Інтеграція з Monit"
 
@@ -13141,7 +13190,7 @@ msgstr "Ескальованих заявок"
 msgid "More information can be found here."
 msgstr "Більше інформації можна знайти тут."
 
-#: app/models/user.rb:719
+#: app/models/user.rb:720
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Кількість додаткових організацій не може перевищувати 250."
 
@@ -13237,15 +13286,15 @@ msgstr "Мої заявки в роботі"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4673
+#: db/seeds/settings.rb:4682
 msgid "Nagios integration"
 msgstr "Інтеграція з Nagios"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:522
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:526
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:79
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
@@ -13366,7 +13415,7 @@ msgstr ""
 "Потрібна допомога? Перегляньте документацію Zammad для отримання детальних "
 "інструкцій."
 
-#: lib/sessions/event/chat_base.rb:27
+#: lib/sessions/event/chat_base.rb:28
 msgid "Need session_id."
 msgstr "Необхідний ідентифікатор сеансу (session_id)."
 
@@ -13439,7 +13488,6 @@ msgstr "Новий атрибут"
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
 msgid "New BETA UI"
 msgstr "Нова бета-версія інтерфейсу користувача"
 
@@ -13582,6 +13630,13 @@ msgstr "Новий інструмент помічника з письма"
 msgid "New desktop BETA UI"
 msgstr "Новий настільний BETA UI"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerCreate.vue:30
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:230
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:111
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:90
+msgid "New knowledge base answer"
+msgstr "Нова відповідь у Базі знань"
+
 #: app/assets/javascripts/app/controllers/search.coffee:24
 msgid "New or open tickets"
 msgstr "Нові або відкриті заявки"
@@ -13615,7 +13670,7 @@ msgstr "Новий текстовий модуль"
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:81
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:19
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts:11
 msgid "New ticket"
@@ -13694,7 +13749,7 @@ msgid "New user?"
 msgstr "Новий користувач?"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:644
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:627
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -13842,7 +13897,7 @@ msgstr ""
 "З цим типом медіа не можна надсилати додатковий текст. Будь ласка, видаліть "
 "текст."
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:273
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:278
 msgid "No advanced filters available for %s."
 msgstr "Для %s немає розширених фільтрів."
 
@@ -13897,7 +13952,7 @@ msgstr "Конфігурацію не встановлено."
 msgid "No content to show"
 msgstr "Немає вмісту для показу"
 
-#: app/models/group.rb:40
+#: app/models/group.rb:41
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "Не допускаються подвійні двокрапки (::), зарезервований роздільник"
 
@@ -13960,7 +14015,7 @@ msgstr "Імпорт не виконується."
 msgid "No items available"
 msgstr "Немає доступних ітемів"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:238
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:321
 msgid "No knowledge base content is available yet."
 msgstr "Контент бази знань поки що недоступний."
 
@@ -13995,7 +14050,7 @@ msgid "No organizations found"
 msgstr "Організацій не знайдено"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:158
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:158
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:157
 msgid "No overviews"
 msgstr "Немає оглядів"
 
@@ -14055,6 +14110,7 @@ msgstr "Результатів не знайдено"
 msgid "No results were found."
 msgstr "Ніяких результатів не знайдено."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchResults.vue:73
 #: app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue:27
 msgid "No search results for this query."
 msgstr "За цим запитом результатів пошуку не знайдено."
@@ -14084,7 +14140,7 @@ msgid "No shared drafts yet"
 msgstr "Ще немає спільних чернеток"
 
 #: app/controllers/organizations_controller.rb:107
-#: app/controllers/text_modules_controller.rb:75
+#: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
 #: app/controllers/users_controller.rb:559
@@ -14125,12 +14181,12 @@ msgstr "Немає токену!"
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:41
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:101
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:117
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:203
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:206
 msgid "No translation for this locale available"
 msgstr "Немає перекладу для цієї мови"
 
-#: app/models/ticket.rb:423
+#: app/models/ticket.rb:432
 msgid "No triggers active"
 msgstr "Немає активних тригерів"
 
@@ -14163,7 +14219,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Ні x-zammad-session-user-id, ні відправника не задано!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:472
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
 msgid "No, just close the ticket"
 msgstr "Ні, просто закрити заявку"
 
@@ -14248,6 +14304,7 @@ msgstr "Не сконфігуровано"
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:55
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerCreateView.ts:31
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -14388,7 +14445,6 @@ msgstr "Звук сповіщення"
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
 #: db/seeds/permissions.rb:515
 msgid "Notifications"
@@ -14398,13 +14454,13 @@ msgstr "Сповіщення"
 msgid "Notifications matrix"
 msgstr "Матриця сповіщень"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Nov"
 msgstr "Лист."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "November"
 msgstr "Листопад"
 
@@ -14414,7 +14470,7 @@ msgstr "Листопад"
 msgid "Number"
 msgstr "Число"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:391
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:395
 msgid ""
 "Number of input tokens the embedding model takes at once. Filled in for a "
 "model whose limit is known."
@@ -14447,13 +14503,13 @@ msgstr "OAuth URL-адреси є такими:"
 msgid "OAuth2 token is expired!"
 msgstr "Термін дії токена відкритого протоколу авторизації 2 (OAuth2) минув!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:394
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
 msgid "OCR Model"
 msgstr "Модель OCR"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:19
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:97
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:29
 msgid "OK"
 msgstr "OK"
@@ -14536,13 +14592,13 @@ msgstr ""
 msgid "Objects"
 msgstr "Об’єкти"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Oct"
 msgstr "Жовт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "October"
 msgstr "Жовтень"
 
@@ -14678,6 +14734,7 @@ msgstr ""
 "веб-застосунку клієнтам."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:102
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:141
 msgid "Only visible to editors"
 msgstr "Видно лише редакторам"
 
@@ -15030,7 +15087,6 @@ msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr "Скільки з усіх відкритих заявок (по всій компанії) призначено вам?"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:122
 msgid "Out of office"
 msgstr "Поза Офісом"
 
@@ -15120,7 +15176,6 @@ msgstr "Огляд: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:33
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
 #: db/seeds/permissions.rb:35
@@ -15164,18 +15219,19 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
+#: app/models/audit_log/object_type_labels.rb:13
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5921
+#: db/seeds/settings.rb:5930
 msgid "PGP Recipient Alias Configuration"
 msgstr "Налаштування псевдоніма одержувача PGP"
 
-#: db/seeds/settings.rb:5879
+#: db/seeds/settings.rb:5888
 msgid "PGP config"
 msgstr "Конфігурація PGP"
 
-#: db/seeds/settings.rb:5851
+#: db/seeds/settings.rb:5860
 msgid "PGP integration"
 msgstr "Інтеграція PGP"
 
@@ -15183,7 +15239,7 @@ msgstr "Інтеграція PGP"
 msgid "PGP signature does not cover the displayed message body"
 msgstr "Підпис PGP не охоплює текст повідомлення, що відображається"
 
-#: db/seeds/settings.rb:5893
+#: db/seeds/settings.rb:5902
 msgid "PGP signing for system notifications"
 msgstr "Підписання за допомогою PGP для системних сповіщень"
 
@@ -15212,7 +15268,7 @@ msgstr "Пакет успішно оновлено."
 msgid "Packages"
 msgstr "Пакети"
 
-#: db/seeds/settings.rb:6471
+#: db/seeds/settings.rb:6480
 msgid "Packages Token"
 msgstr "Токен пакетів"
 
@@ -15271,7 +15327,6 @@ msgstr "Батьківська група"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:480
 msgid "Password"
@@ -15409,6 +15464,12 @@ msgstr "Виконати дії"
 msgid "Permanently Delete Knowledge Base"
 msgstr "Видалити базу знань назавжди"
 
+#: app/models/audit_log/object_type_labels.rb:12
+#, fuzzy
+#| msgid "Permissions"
+msgid "Permission"
+msgstr "Дозволи"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2835
 msgid "Permission level for looking up tickets"
@@ -15454,6 +15515,10 @@ msgstr "Токени персонального доступу"
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:77
 msgid "Personal overview order was reset."
 msgstr "Порядок персонального огляду було скинуто."
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
+msgid "Personal settings"
+msgstr "Особисті налаштування"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
@@ -15512,15 +15577,15 @@ msgstr "Місце для тексту, згенерованого ШІ"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5436
+#: db/seeds/settings.rb:5445
 msgid "Placetel Token"
 msgstr "Токен Placetel"
 
-#: db/seeds/settings.rb:5422
+#: db/seeds/settings.rb:5431
 msgid "Placetel config"
 msgstr "Конфігурація Placetel"
 
-#: db/seeds/settings.rb:5394
+#: db/seeds/settings.rb:5403
 msgid "Placetel integration"
 msgstr "Інтеграція з Placetel"
 
@@ -15573,7 +15638,7 @@ msgid "Please configure import source before running."
 msgstr "Будь ласка, налаштуйте джерело імпорту перед запуском."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:239
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:322
 msgid "Please contact your administrator."
 msgstr "Будь ласка, зверніться до адміністратора."
 
@@ -15938,7 +16003,7 @@ msgstr "Секретний ключ (Private Key Secret)"
 msgid "Problem"
 msgstr "Проблема"
 
-#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:14
+#: app/assets/javascripts/app/controllers/_ai/embedding_stop_confirm.coffee:6
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:15
 msgid "Proceed"
 msgstr "Продовжити"
@@ -15960,7 +16025,6 @@ msgid "Product Name"
 msgstr "Назва продукту"
 
 #: app/assets/javascripts/app/controllers/profile.coffee:24
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts:7
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts:14
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:8
@@ -15974,7 +16038,6 @@ msgstr "Параметри"
 msgid "Profile language updated successfully."
 msgstr "Мову профілю успішно оновлено."
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:442
 msgid "Profile settings"
 msgstr "Налаштування профілю"
@@ -16072,6 +16135,7 @@ msgstr "Адреса проксі-сервера"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:150
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
 msgid "Public"
 msgstr "Публічна"
@@ -16098,7 +16162,7 @@ msgstr "Публічне меню"
 msgid "Publish Article"
 msgstr "Опублікувати повідомлення"
 
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:22
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:24
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:33
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:76
@@ -16152,11 +16216,11 @@ msgstr ""
 "Доступ до REST API за допомогою імені користувача/адреси електронної пошти "
 "та пароля наразі вимкнено. Будь ласка, зверніться до вашого адміністратора."
 
-#: app/models/audit_log.rb:75
+#: app/models/audit_log.rb:87
 msgid "Rails console"
 msgstr "Консоль Rails"
 
-#: app/models/audit_log.rb:78
+#: app/models/audit_log.rb:90
 msgid "Rails runner"
 msgstr "Rails Runner"
 
@@ -16303,7 +16367,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr "Рекурсивні тригери заявок"
 
-#: db/seeds/settings.rb:6433
+#: db/seeds/settings.rb:6442
 msgid "Recursive hierarchical chunking"
 msgstr "Рекурсивне ієрархічне фрагментування"
 
@@ -16600,11 +16664,11 @@ msgstr "Перейменувати чеклист"
 msgid "Renew Access Token"
 msgstr "Поновити Токен доступу"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:224
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:192
 msgid "Renew access token"
 msgstr "Оновити токен доступу"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:109
 msgid "Renewing the access token failed."
 msgstr "Помилка під час оновлення токена доступу."
 
@@ -16740,21 +16804,21 @@ msgstr "Вимоги"
 
 #: db/seeds/settings.rb:1820
 msgid ""
-"Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) to "
-"be present and true before trusting an incoming email address for account "
-"auto-linking. Both must first be configured as optional claims on the Azure "
-"app registration. Until that is done, enabling this blocks all Microsoft 365 "
-"account auto-linking by email."
+"Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
+"to match the incoming email address, before trusting that address for "
+"account auto-linking. Both claims must first be configured as optional "
+"claims on the Azure app registration. Until that is done, enabling this "
+"blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
-"Перед тим, як довіряти вхідній адресі електронної пошти для автоматичного "
-"прив’язування облікового запису, необхідно, щоб претензія на токен "
-"ідентифікації «xms_edov» (разом із претензією «email») була присутня та мала "
-"значення «true». Обидва претензії спочатку потрібно налаштувати як "
+"Перед тим, як довіряти цій адресі для автоматичного прив’язування облікового "
+"запису, необхідно, щоб претензія на токен ідентифікації «xms_edov» мала "
+"значення «true», а претензія «email» відповідала вхідній адресі електронної "
+"пошти. Обидва заявлені параметри спочатку потрібно налаштувати як "
 "необов’язкові в реєстрації додатка в Azure. Доки це не буде зроблено, "
 "увімкнення цієї функції блокує будь-яке автоматичне прив’язування облікових "
 "записів Microsoft 365 за допомогою електронної пошти."
 
-#: db/seeds/settings.rb:6108
+#: db/seeds/settings.rb:6117
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
@@ -16959,7 +17023,7 @@ msgstr "Структура результату"
 msgid "Result:"
 msgstr "Результат:"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:615
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:609
 msgid "Results"
 msgstr "Результати"
 
@@ -16998,7 +17062,7 @@ msgstr "Повторна спроба завантажити надіслані 
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "Перепишіть складний розділ та зробіть його легким для розуміння"
 
-#: db/seeds/settings.rb:6444
+#: db/seeds/settings.rb:6453
 msgid "Richtext Bubble Menu"
 msgstr "Бульбашкове меню Richtext"
 
@@ -17091,6 +17155,7 @@ msgstr "Виконується…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "S/MIME"
 msgstr "Безпечні/багатоцільові розширення пошти Інтернету (S/MIME)"
 
@@ -17104,7 +17169,7 @@ msgstr ""
 "поширений метод (або, точніше, протокол) для надсилання зашифрованих та "
 "підписаних у цифровій формі повідомлень."
 
-#: db/seeds/settings.rb:5809
+#: db/seeds/settings.rb:5818
 msgid "S/MIME config"
 msgstr ""
 "Налаштування безпечних/багатоцільових розширень пошти Інтернету (S/MIME)"
@@ -17114,11 +17179,11 @@ msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr ""
 "S/MIME дозволяє надсилати зашифровані повідомлення з цифровим підписом."
 
-#: db/seeds/settings.rb:5781
+#: db/seeds/settings.rb:5790
 msgid "S/MIME integration"
 msgstr "Інтеграція з S/MIME"
 
-#: db/seeds/settings.rb:5823
+#: db/seeds/settings.rb:5832
 msgid "S/MIME signing for system notifications"
 msgstr "Підпис S/MIME для системних сповіщень"
 
@@ -17134,6 +17199,7 @@ msgstr "Облікові дані додатку SAML"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "SLA"
 msgstr "SLA"
 
@@ -17184,6 +17250,7 @@ msgstr "SMTP - налаштуйте власні параметри вихідн
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "SSL"
 msgstr "SSL"
 
@@ -17222,7 +17289,7 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5953
+#: db/seeds/settings.rb:5962
 msgid "SSO"
 msgstr "SSO"
 
@@ -17237,11 +17304,11 @@ msgstr "Запит SSO з неперевіреної IP-адреси."
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sat"
 msgstr "Сб."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:12
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:20
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:59
@@ -17338,6 +17405,7 @@ msgid "Saving failed."
 msgstr "Збереження не вдалося."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:182
 msgid "Schedule for"
 msgstr "Заплановано на"
 
@@ -17349,7 +17417,7 @@ msgstr "Заплановано на"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:4
-#: db/seeds/permissions.rb:95
+#: app/models/audit_log/object_type_labels.rb:9 db/seeds/permissions.rb:95
 msgid "Scheduler"
 msgstr "Планувальник"
 
@@ -17428,7 +17496,7 @@ msgstr "Прокрутити до початку"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:613
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:607
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -17456,7 +17524,7 @@ msgstr "URL-адреса пошуку небезпечна."
 msgid "Search all"
 msgstr "Шукати все"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:220
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:225
 msgid "Search entity"
 msgstr "Пошук об'єкта"
 
@@ -17566,7 +17634,7 @@ msgstr "Знайдіть або введіть електронну адресу
 msgid "Search or enter phone number…"
 msgstr "Знайдіть або введіть номер телефону…"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:667
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:661
 msgid "Search result for: %s"
 msgstr "Результат пошуку для: %s"
 
@@ -17641,6 +17709,18 @@ msgstr ""
 msgid "Search result value key \"%s\" was not found."
 msgstr "Ключ «%s» у списку результатів пошуку не знайдено."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:66
+#, fuzzy
+#| msgid "Go to knowledge base"
+msgid "Search the knowledge base"
+msgstr "Перейти до бази знань"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue:16
+#, fuzzy
+#| msgid "Search…"
+msgid "Search within %s…"
+msgstr "Пошук…"
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:35
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:160
@@ -17671,13 +17751,13 @@ msgstr "Пошук…"
 msgid "Secondary organizations"
 msgstr "Другорядні організації"
 
-#: app/models/user.rb:707
+#: app/models/user.rb:708
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr "Можна вказати додаткові організації лише після встановлення основної."
 
-#: app/models/user.rb:713
+#: app/models/user.rb:714
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Вторинні організації не можуть включати первинну організацію."
 
@@ -17694,7 +17774,7 @@ msgstr "Секрет"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:190
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:183
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
@@ -17718,7 +17798,7 @@ msgstr "Ключ безпеки"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:6014
+#: db/seeds/settings.rb:6023
 msgid "Security Keys"
 msgstr "Ключі безпеки"
 
@@ -17969,11 +18049,11 @@ msgstr ""
 msgid "Semantic search"
 msgstr "Семантичний пошук"
 
-#: lib/ai/vectordb.rb:10
+#: lib/ai/vectordb.rb:8
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "Семантичний пошук тимчасово недоступний. Спробуйте ще раз пізніше."
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:2
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -18099,11 +18179,11 @@ msgstr "Надсилання…"
 msgid "Sent successfully!"
 msgstr "Відправлено успішно!"
 
-#: db/seeds/settings.rb:6434
+#: db/seeds/settings.rb:6443
 msgid "Sentence-based chunking"
 msgstr "Розбиття на фрагменти на основі речень"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
@@ -18113,7 +18193,7 @@ msgstr "Вер."
 msgid "Separate multiple values by ;"
 msgstr "Розділяйте декілька значень символом ;"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "September"
 msgstr "Вересень"
 
@@ -18172,7 +18252,7 @@ msgstr "Налаштувати"
 msgid "Set a title for your ticket"
 msgstr "Встановіть назву для вашої заявки"
 
-#: db/seeds/settings.rb:5524
+#: db/seeds/settings.rb:5533
 msgid "Set agent limit"
 msgstr "Встановити обмеження агента"
 
@@ -18234,7 +18314,7 @@ msgstr "Встановити Caller ID (Ідентифікатор виклик�
 msgid "Set security keys as default"
 msgstr "Встановити ключі безпеки за замовчуванням"
 
-#: db/seeds/settings.rb:5686
+#: db/seeds/settings.rb:5695
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits."
@@ -18300,12 +18380,18 @@ msgstr ""
 "заголовка \"Reply-To\". Корисно для встановлення правильного клієнта, якщо "
 "електронна пошта отримана із сторонньої системи від імені клієнта."
 
+#: app/models/audit_log/object_type_labels.rb:14
+#, fuzzy
+#| msgid "Settings"
+msgid "Setting"
+msgstr "Параметри"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:26
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:49
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18394,13 +18480,10 @@ msgid "Shared organization"
 msgstr "Спільна організація"
 
 #: app/assets/javascripts/app/controllers/organization.coffee:21
+#: app/assets/javascripts/app/controllers/overview.coffee:22
 #: app/assets/javascripts/app/controllers/search.coffee:35
 msgid "Shared organizations"
 msgstr "Спільні організації"
-
-#: app/assets/javascripts/app/controllers/overview.coffee:22
-msgid "Shared with organizations"
-msgstr "Спільне з організаціями"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:28
 msgid "Sharing draft…"
@@ -18447,7 +18530,7 @@ msgstr "Показати все…"
 msgid "Show authenticator app secret"
 msgstr "Показати секрет програми-автентифікатора"
 
-#: db/seeds/settings.rb:5986
+#: db/seeds/settings.rb:5995
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Показувати календарні тижні в засобі вибору полів дати/часу"
 
@@ -19023,7 +19106,7 @@ msgstr "Статус"
 msgid "State icon"
 msgstr "Значок стану"
 
-#: db/seeds/settings.rb:5558
+#: db/seeds/settings.rb:5567
 msgid "Stats Backend"
 msgstr "Серверная часть (backend) статистики"
 
@@ -19101,11 +19184,11 @@ msgstr "Спосіб зберігання"
 msgid "Store"
 msgstr "Зберегти"
 
-#: db/seeds/settings.rb:5197
+#: db/seeds/settings.rb:5206
 msgid "Stores the GitHub configuration."
 msgstr "Зберігає конфігурацію GitHub."
 
-#: db/seeds/settings.rb:5155
+#: db/seeds/settings.rb:5164
 msgid "Stores the GitLab configuration."
 msgstr "Зберігає конфігурацію GitLab."
 
@@ -19117,7 +19200,7 @@ msgstr ""
 "Зберігає облікові дані (наприклад, ключ сайту та секретний код) обраного "
 "постачальника CAPTCHA."
 
-#: db/seeds/settings.rb:6257
+#: db/seeds/settings.rb:6266
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
@@ -19154,7 +19237,7 @@ msgstr ""
 "налаштувань за замовчуванням не було розпізнано подальших дій."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:663
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:646
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -19240,14 +19323,16 @@ msgid "Suggest matching knowledge base answers in the ticket sidebar."
 msgstr "Пропонувати відповіді з Бази знань у бічній панелі заявки."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:43
-msgid "Suggested by AI"
-msgstr "За пропозицією ШІ"
+msgid "Suggested knowledge"
+msgstr "Рекомендовані знання"
 
 #: app/assets/javascripts/app/views/generic/admin/index.jst.eco:49
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
 #: app/assets/javascripts/app/views/search/index.jst.eco:16
 #: app/assets/javascripts/app/views/search/shortcuts.jst.eco:2
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:66
 msgid "Suggested searches"
 msgstr "Пропоновані пошукові запити"
 
@@ -19277,18 +19362,18 @@ msgstr "Формується підсумок…"
 msgid "Summer holiday"
 msgstr "літні вихідні"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sun"
 msgstr "Нд."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:13
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:21
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:62
 msgid "Sunday"
 msgstr "Неділя"
 
-#: db/seeds/settings.rb:5645
+#: db/seeds/settings.rb:5654
 msgid "Support of multilingual Knowledge Base."
 msgstr "Підтримка багатомовної бази знань."
 
@@ -19378,7 +19463,7 @@ msgstr ""
 "платформі %l. Вона має дуже зручний інтерфейс користувача на основі Weblate, "
 "спробуйте!"
 
-#: db/seeds/settings.rb:5718
+#: db/seeds/settings.rb:5727
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -19418,10 +19503,11 @@ msgid "Tag assignment mode"
 msgstr "Режим призначення тегів"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:37
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:46
 msgid "Tagged %s"
 msgstr "Позначено %s"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -19430,6 +19516,7 @@ msgstr "Позначено %s"
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:25
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:76
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
@@ -19562,6 +19649,7 @@ msgstr "Тестування"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:208
 #: db/seeds/object_manager_attributes.rb:552
 msgid "Text"
@@ -19587,6 +19675,7 @@ msgid "Text missing"
 msgstr "Текст відсутній"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "Text module"
 msgstr "Текстовий модуль"
 
@@ -19673,7 +19762,7 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr "Токен API не вдалося знайти."
 
-#: lib/ai/vectordb.rb:69
+#: lib/ai/vectordb.rb:67
 msgid "The Elasticsearch index could not be created"
 msgstr "Не вдалося створити індекс Elasticsearch"
 
@@ -19789,7 +19878,7 @@ msgstr "Не вдалося обробити корисне навантажен
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "Не вдалося перевірити корисне навантаження веб-хука WhatsApp."
 
-#: app/models/ai/provider_connection.rb:444
+#: app/models/ai/provider_connection.rb:448
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -19813,6 +19902,10 @@ msgstr "Запит на згоду адміністратора надіслан
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:78
 msgid "The admin password auth email could not be sent."
 msgstr "Не вдалося надіслати електронний лист з паролем адміністратора."
+
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts:61
+msgid "The answer could not be created."
+msgstr "Відповідь не вдалося створити."
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:43
 msgid ""
@@ -20082,7 +20175,7 @@ msgstr ""
 msgid "The checklist feature is not active"
 msgstr "Функція чеклистів неактивна"
 
-#: app/models/group.rb:110
+#: app/models/group.rb:111
 msgid "The chosen parent group is part of a circular reference."
 msgstr "Обрана група батьківських елементів є частиною циклічного посилання."
 
@@ -20146,6 +20239,16 @@ msgstr "Розмір вікна контексту повинен бути до�
 msgid "The current password you provided is incorrect."
 msgstr "Поточний пароль, який ви вказали, є невірним."
 
+#: app/models/core_workflow/result.rb:61
+msgid "The current user is not allowed to access the referenced object."
+msgstr "Поточний користувач не має доступу до вказаного об’єкта."
+
+#: app/models/core_workflow/result.rb:45
+msgid "The current user is not allowed to use core workflow for this object."
+msgstr ""
+"Поточний користувач не має дозволу на використання основного робочого "
+"процесу для цього об’єкта."
+
 #: app/services/service/ai/vectordb/create_table.rb:21
 msgid "The currently selected AI provider does not support embeddings."
 msgstr "Обраний на даний момент ШІ-постачальник не підтримує вбудовування."
@@ -20182,7 +20285,7 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr "Розмір шрифту за замовчуванням – 12px."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:193
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:182
 msgid "The default provider could not be updated."
 msgstr "Не вдалося оновити постачальника за замовчуванням."
 
@@ -20284,6 +20387,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:718
 msgid "The entry could not be created."
 msgstr "Запис не вдалося створити."
+
+#: lib/sessions/event.rb:61
+msgid "The event could not be processed."
+msgstr "Подію не вдалося обробити."
 
 #: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
@@ -20423,7 +20530,7 @@ msgstr ""
 "Встановлення пакетів має наслідки для безпеки, оскільки довільний код буде "
 "виконуватися в контексті програми Zammad."
 
-#: lib/search_index_backend.rb:457
+#: lib/search_index_backend.rb:466
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -20459,7 +20566,7 @@ msgstr ""
 "Не вдається створити індекс Бази знань. Перевірте, чи доступний сервер "
 "Elasticsearch і чи на ньому встановлено підтримувану версію."
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -20471,11 +20578,11 @@ msgstr ""
 msgid "The language could not be updated."
 msgstr "Мову не вдалося оновити."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:188
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:156
 msgid "The latest internal answers in the whole knowledge base."
 msgstr "Найсвіжіші внутрішні відповіді у всій Базі знань."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:198
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:166
 msgid ""
 "The latest internal answers of the current category and its sub-categories."
 msgstr "Останні внутрішні відповіді з поточної категорії та її підкатегорій."
@@ -20507,7 +20614,7 @@ msgstr "Вхід неможливий."
 msgid "The minutes overlay"
 msgstr "Показати хвилини"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:775
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:758
 msgid "The model list could not be fetched: %s"
 msgstr "Не вдалося завантажити список моделей: %s"
 
@@ -20523,16 +20630,8 @@ msgstr "Оверлей вибору місяця"
 msgid "The new ticket number could not be generated."
 msgstr "Новий номер заявки згенерувати не вдалося."
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:6
-msgid ""
-"The number of extra AI requests will depend on the amount of indexable "
-"content."
-msgstr ""
-"Кількість додаткових запитів до системи штучного інтелекту залежатиме від "
-"обсягу контенту, що підлягає індексації."
-
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -20547,7 +20646,7 @@ msgstr "Об'єкт не вдалося створити."
 msgid "The object could not be found."
 msgstr "Об'єкт не вдалося знайти."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -20750,7 +20849,7 @@ msgstr ""
 msgid "The provider could not be updated."
 msgstr "Не вдалося оновити постачальника."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
 msgid ""
 "The provider offered no matching model for this field, so it has to be "
 "entered manually."
@@ -20758,7 +20857,7 @@ msgstr ""
 "Постачальник не запропонував відповідної моделі для цього поля, тому його "
 "потрібно ввести вручну."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
 msgid ""
 "The provider offered no models to choose from, so it has to be entered "
 "manually."
@@ -20884,7 +20983,7 @@ msgstr "Немає обов'язкового параметра «Ідентиф
 msgid "The required parameter 'id' is missing."
 msgstr "Немає обов'язкового параметра «Ідентифікатор» (id)."
 
-#: lib/search_index_backend.rb:704
+#: lib/search_index_backend.rb:713
 msgid "The required parameter 'key' is missing."
 msgstr "Відсутній обов'язковий параметр \"Ключ\" (key)."
 
@@ -20945,7 +21044,7 @@ msgstr "Немає обов'язкового параметра «номер_з�
 msgid "The required parameter 'user_id' is missing."
 msgstr "Немає обов'язкового параметра «ідентифікатор_користувача» (user_id)."
 
-#: lib/search_index_backend.rb:705
+#: lib/search_index_backend.rb:714
 msgid "The required parameter 'value' is missing."
 msgstr "Відсутня обов'язковий параметр значення (value)."
 
@@ -21005,19 +21104,17 @@ msgstr ""
 msgid "The seconds overlay"
 msgstr "Показати секунди"
 
+#: app/services/service/knowledge_base/answer/create.rb:138
+msgid "The selected category does not belong to this knowledge base."
+msgstr "Вибрана категорія не належить до цієї бази знань."
+
 #: app/frontend/shared/form/i18n/locales.ts:525
 msgid "The selected date is invalid."
 msgstr "Обрана дата є недійсною."
 
-#: app/graphql/gql/concerns/handles_knowledge_base_locale.rb:61
-#: app/services/service/knowledge_base/category/concerns/assigns_title.rb:31
-#: app/services/service/knowledge_base/update.rb:60
+#: app/services/service/knowledge_base/base.rb:32
 msgid "The selected language does not belong to this knowledge base."
 msgstr "Вибрана мова не входить до цієї бази знань."
-
-#: app/services/service/knowledge_base/category/base.rb:17
-msgid "The selected parent category does not belong to this knowledge base."
-msgstr "Вибрана батьківська категорія не належить до цієї бази знань."
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
 msgid "The server presented a certificate that could not be verified."
@@ -21058,7 +21155,7 @@ msgstr "Параметр \"номер_заявки\" (ticket_number) не був
 msgid "The setting could not be reset."
 msgstr "Не вдалося скинути налаштування."
 
-#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:120
+#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:124
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:215
 #: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
@@ -21306,9 +21403,18 @@ msgstr "Не вдалося витягти ім'я користувача 'prefe
 msgid "The username or password is incorrect."
 msgstr "Ім'я користувача або пароль неправильні."
 
-#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:133
+#: app/models/core_workflow/result.rb:40
+msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr "Значення параметра «payload->class_name» є недійсним."
+
+#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
 msgstr "Не вдалося оновити індекс вектора."
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:238
+msgid ""
+"The vector index rebuild has started and will continue in the background."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 msgid "The verification email could not be resent."
@@ -21595,10 +21701,6 @@ msgstr "Ця категорія включає канал підкатегорі
 msgid "This category is empty"
 msgstr "Ця категорія порожня"
 
-#: app/services/service/ai/provider_connection/validator/embedding_rebuild.rb:43
-msgid "This change requires the knowledge base to be indexed again."
-msgstr "Ця зміна вимагає повторної індексації Бази знань."
-
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:92
 msgid ""
 "This class gets added to the button on initialization and will be removed "
@@ -21717,6 +21819,7 @@ msgstr "Це поле не закінчується з «%s»."
 msgid "This field doesn't start with \"%s\"."
 msgstr "Це поле не починається з «%s»."
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRadioList/features/addOptionDateValidation.ts:45
 #: app/frontend/shared/form/i18n/locales.ts:472
 msgid "This field is required."
 msgstr "Це поле є обов'язковим."
@@ -21814,15 +21917,15 @@ msgstr "Це поле не повинно містити більше ніж %s 
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Це поле було сконфігуровано неправильно і не може бути надіслано."
 
-#: app/models/group.rb:83
+#: app/models/group.rb:84
 msgid "This group cannot be moved into itself."
 msgstr "Цю групу неможливо перемістити в саму себе."
 
-#: app/models/group.rb:84
+#: app/models/group.rb:85
 msgid "This group cannot be moved into one of its children."
 msgstr "Цю групу неможливо перемістити в одну з її дочірніх груп."
 
-#: app/models/group.rb:90
+#: app/models/group.rb:91
 msgid "This group exceeds the allowed nesting depth."
 msgstr "Ця Група перевищує допустиму глибину вкладення."
 
@@ -21833,7 +21936,7 @@ msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 "Ця група не має адреси електронної пошти, налаштованої для вихідного зв'язку."
 
-#: app/models/group.rb:96
+#: app/models/group.rb:97
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "Дочірні елементи цієї групи перевищать дозволену глибину вкладеності."
 
@@ -21894,6 +21997,7 @@ msgstr "Ця відповідь у Базі знань недоступна."
 msgid "This knowledge base category is not available."
 msgstr "Ця категорія бази знань недоступна."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerCreateView.ts:32
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 msgid "This knowledge base is not available in the selected language."
 msgstr "Ця база знань недоступна вибраною мовою."
@@ -22004,7 +22108,7 @@ msgid ""
 "permissions."
 msgstr "Цей рівень дозволів недоступний на основі поточних дозволів ролей."
 
-#: app/controllers/ai/provider_connections_controller.rb:57
+#: app/controllers/ai/provider_connections_controller.rb:38
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:37
 msgid "This provider does not support embeddings."
 msgstr "Цей постачальник не підтримує вбудовування."
@@ -22095,7 +22199,7 @@ msgstr ""
 "Цей сервіс показує Ваші контакти, пов’язані з вхідними дзвінками, та перелік "
 "абонентів у реальному часі."
 
-#: db/seeds/settings.rb:6474
+#: db/seeds/settings.rb:6483
 msgid ""
 "This setting defines the token to access the support.zammad.com instance for "
 "package remote commands."
@@ -22209,20 +22313,11 @@ msgstr ""
 "вихідних листів, наприклад, коли агент пише листа або тригер надсилає "
 "автовідповідь."
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:5
-msgid ""
-"This will rebuild the vector index used for the semantic search, which may "
-"result in higher AI costs."
-msgstr ""
-"Це призведе до переіндексації векторного індексу, що використовується для "
-"семантичного пошуку, що може спричинити збільшення витрат на штучний "
-"інтелект."
-
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Thu"
 msgstr "Чт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:10
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:18
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:53
@@ -22358,11 +22453,11 @@ msgstr "Збільшення кількості запитів за датами
 msgid "Ticket Number ignore system_id"
 msgstr "Номер заявки ігнорує ідентифікатор системи (system_id)"
 
-#: db/seeds/settings.rb:6130
+#: db/seeds/settings.rb:6139
 msgid "Ticket Organization Reassignment"
 msgstr "Перепризначення організації заявок"
 
-#: db/seeds/settings.rb:5715
+#: db/seeds/settings.rb:5724
 msgid "Ticket Overview Query Polling"
 msgstr "Налаштування опитування для огляду заявок"
 
@@ -22422,15 +22517,15 @@ msgstr "Відстеження заявок"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6240
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6249
 msgid "Ticket Summary"
 msgstr "Зведення за заявкою"
 
-#: db/seeds/settings.rb:6254
+#: db/seeds/settings.rb:6263
 msgid "Ticket Summary Config"
 msgstr "Конфігурація зведення за заявкою"
 
-#: db/seeds/settings.rb:6273
+#: db/seeds/settings.rb:6282
 msgid "Ticket Summary Selector"
 msgstr "Вибір резюме заявки"
 
@@ -22644,7 +22739,7 @@ msgid "Ticket update failed."
 msgstr "Не вдалося оновити заявку."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:561
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:556
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:162
 msgid "Ticket updated successfully."
 msgstr "Заявку успішно оновлено."
@@ -22847,6 +22942,12 @@ msgstr "Разом одиниць часу"
 msgid "Time accounting"
 msgstr "Облік часу"
 
+#: app/models/audit_log/object_type_labels.rb:19
+#, fuzzy
+#| msgid "Time Accounting Types"
+msgid "Time accounting type"
+msgstr "Типи обліку робочого часу"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:16
 msgid "Time accounting unit"
 msgstr "Одиниця обліку часу"
@@ -22883,6 +22984,7 @@ msgid "Timezone"
 msgstr "Часовий пояс"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:174
 msgid "Timing"
 msgstr "В певний час"
 
@@ -22899,6 +23001,7 @@ msgstr "В певний час"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:67
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:63
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
@@ -23063,7 +23166,7 @@ msgstr "Переключити заголовок рядка"
 msgid "Toggle the overlay"
 msgstr "Переключити оверлей"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:335
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:339
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -23080,7 +23183,6 @@ msgid "Token Access"
 msgstr "Доступ через токен"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:53
 msgid "Token access"
 msgstr "Доступ за допомогою токенів"
 
@@ -23088,11 +23190,11 @@ msgstr "Доступ за допомогою токенів"
 msgid "Token authorization failed."
 msgstr "Помилка авторизації токена."
 
-#: db/seeds/settings.rb:5363
+#: db/seeds/settings.rb:5372
 msgid "Token for CTI."
 msgstr "Токен для телефонії (CTI)."
 
-#: db/seeds/settings.rb:5267
+#: db/seeds/settings.rb:5276
 msgid "Token for Sipgate."
 msgstr "Токен для Sipgate."
 
@@ -23228,7 +23330,7 @@ msgstr ""
 "тоді як тригери, активовані часовими подіями, виконуються при досягненні "
 "певного часу (наприклад, час очікування, протермінування)."
 
-#: db/seeds/settings.rb:5962
+#: db/seeds/settings.rb:5971
 msgid "Trusted SSO Proxy IPs"
 msgstr "Надійні IP-адреси проксі-сервера SSO"
 
@@ -23263,11 +23365,11 @@ msgstr "Спробуйте використати свій ключ безпек
 msgid "Trying to reconnect…"
 msgstr "Намагаюся відновити з'єднання…"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Tue"
 msgstr "Вівт."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:8
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:16
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:47
@@ -23342,7 +23444,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Методи двофакторної автентифікації"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:73
+#: app/models/audit_log/object_type_labels.rb:20
 msgid "Two-factor authentication"
 msgstr "Двофакторна аутентифікація"
 
@@ -23393,7 +23495,7 @@ msgstr "Не вдалося налаштувати двофакторний ме
 msgid "Two-factor method has been configured successfully."
 msgstr "Двофакторний метод був успішно налаштований."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:521
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:525
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -23435,7 +23537,7 @@ msgstr "Имя атрибута UID"
 msgid "UID Field"
 msgstr "Поле UID"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:414
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -23452,15 +23554,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL-адреса (кінцева точка (endpoint) AJAX)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
 msgid "URL (Completions)"
 msgstr "URL (Завершення)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
 msgid "URL (Embeddings)"
 msgstr "URL (Вбудовування)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:430
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -23504,7 +23606,7 @@ msgstr "Одиниця"
 msgid "Unknown"
 msgstr "Невідомо"
 
-#: app/controllers/ai/provider_connections_controller.rb:54
+#: app/controllers/ai/provider_connections_controller.rb:35
 msgid "Unknown default purpose."
 msgstr "Невідоме призначення за замовчуванням."
 
@@ -23723,7 +23825,7 @@ msgstr "Оновити спільну чернетку"
 msgid "Update successful."
 msgstr "Оновлення успішне."
 
-#: db/seeds/settings.rb:6142
+#: db/seeds/settings.rb:6151
 msgid "Update the most recent tickets."
 msgstr "Оновити останні заявки."
 
@@ -23935,6 +24037,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
 #: app/assets/javascripts/app/controllers/search.coffee:26
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:40
 msgid "Updated within last 3 days"
 msgstr "Оновлено протягом останніх 3 днів"
 
@@ -24032,7 +24135,7 @@ msgstr "Використовувати власний параметр сорт�
 msgid "Use double click to change level of the row."
 msgstr "Використовуйте подвійне клацання, щоб змінити рівень рядка."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:115
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:114
 msgid "Use for image text recognition"
 msgstr "Використовувати для розпізнавання тексту на зображеннях"
 
@@ -24210,6 +24313,7 @@ msgid "User could not be updated."
 msgstr "Користувача не вдалося оновити."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/user-documentation.ts:7
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:27
 msgid "User documentation"
 msgstr "Документація користувача"
 
@@ -24429,19 +24533,19 @@ msgstr "Значення"
 msgid "Variables"
 msgstr "Змінні"
 
-#: db/seeds/settings.rb:6389
+#: db/seeds/settings.rb:6398
 msgid "Vector DB"
 msgstr "Векторна база даних"
 
-#: db/seeds/settings.rb:6403
+#: db/seeds/settings.rb:6412
 msgid "Vector DB indexed embedding configuration"
 msgstr "Конфігурація індексованого вбудовування Vector DB"
 
-#: db/seeds/settings.rb:6421
+#: db/seeds/settings.rb:6430
 msgid "Vector DB knowledge base chunking strategy"
 msgstr "Стратегія фрагментації бази знань векторної бази даних"
 
-#: db/seeds/settings.rb:6412
+#: db/seeds/settings.rb:6421
 msgid "Vector DB knowledge base excluded categories"
 msgstr "Виключені категорії бази знань Vector DB"
 
@@ -24546,7 +24650,7 @@ msgstr "Вигляд"
 msgid "View from user's perspective"
 msgstr "Перегляд з точки зору користувача"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:77
 msgid "View public knowledge base"
 msgstr "Переглянути публічну базу знань"
 
@@ -24571,6 +24675,7 @@ msgstr "Перегляд заявки"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:29
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:134
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
@@ -24581,10 +24686,12 @@ msgid "Visible"
 msgstr "Видимий"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:110
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:151
 msgid "Visible to everyone"
 msgstr "Видимий для всіх"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:146
 msgid "Visible to readers & editors"
 msgstr "Видимі для груп читачів та редакторів"
 
@@ -24703,11 +24810,11 @@ msgstr "Посилання"
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Wed"
 msgstr "Сер."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:9
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:17
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:50
@@ -24955,15 +25062,16 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "Ви бажаєте залишити відгук про BETA UI?"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6291
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6300
 msgid "Writing Assistant"
 msgstr "Асистент з написання текстів"
 
-#: db/seeds/settings.rb:6305
+#: db/seeds/settings.rb:6314
 msgid "Writing Assistant Fixed Instructions"
 msgstr "Асистент з написання фіксованих інструкцій"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
+#: app/models/audit_log/object_type_labels.rb:7
 msgid "Writing Assistant Tool"
 msgstr "Інструмент для написання текстів"
 
@@ -25023,7 +25131,7 @@ msgid "Yes, add attachments now"
 msgstr "Так, додати вкладення зараз"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:466
 msgid "Yes, open the checklist"
 msgstr "Так, відкрити чеклист"
 
@@ -25043,13 +25151,13 @@ msgstr "Ви перебуваєте у списку очікування <strong
 msgid "You are part of the BETA UI feedback program."
 msgstr "Ви берете участь у програмі зворотного зв'язку BETA UI."
 
-#: app/models/transaction/notification.rb:111
+#: app/models/transaction/notification.rb:124
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 "Ви отримали це повідомлення, оскільки ви є учасником групи цієї заявки."
 
-#: app/models/transaction/notification.rb:192
+#: app/models/transaction/notification.rb:197
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -25057,11 +25165,11 @@ msgstr ""
 "Ви отримали це повідомлення, тому що ви замінюєте учасника цієї заявки, який "
 "зараз поза офісом."
 
-#: app/models/transaction/notification.rb:79
+#: app/models/transaction/notification.rb:92
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Ви отримали це повідомлення, тому що ви є власником цієї заявки."
 
-#: app/models/transaction/notification.rb:73
+#: app/models/transaction/notification.rb:86
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Ви отримали це повідомлення, тому що ви були згадані в цій заявці."
 
@@ -25278,8 +25386,15 @@ msgstr ""
 "Ви можете перемикатися між наведеними нижче бекендами для нових вкладень "
 "навіть у системі, яка вже працює, без втрати даних."
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 #: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
+msgid ""
+"You can switch between the old and the New BETA UI at any moment in the "
+"Personal settings > New BETA UI section."
+msgstr ""
+"Ви можете у будь-який момент переключитися між старим та новим інтерфейсом "
+"BETA у розділі «Особисті налаштування» > «Новий інтерфейс BETA»."
+
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile settings > New BETA UI section."
@@ -25420,7 +25535,7 @@ msgstr "Ви повинні дозволити доступ до своєї ве
 msgid "You have unchecked items in the checklist."
 msgstr "У вас є непозначені пункти в чеклисті."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:466
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -25858,7 +25973,7 @@ msgstr "призначити заявки"
 msgid "at"
 msgstr "в"
 
-#: app/models/object_manager/attribute.rb:607
+#: app/models/object_manager/attribute.rb:619
 msgid "at least one letter is required"
 msgstr "принаймні одна літера потрібна"
 
@@ -25867,7 +25982,7 @@ msgstr "принаймні одна літера потрібна"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "вкладення, вкладений, прикріплений"
 
-#: app/models/object_manager/attribute.rb:640
+#: app/models/object_manager/attribute.rb:652
 msgid "attribute is not editable"
 msgstr "атрибут недоступний для редагування"
 
@@ -25901,7 +26016,7 @@ msgstr "зайнятий"
 msgid "camera,image,photo,picture"
 msgstr "камера, зображення, фото, малюнок"
 
-#: app/models/object_manager/attribute.rb:686
+#: app/models/object_manager/attribute.rb:702
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -25915,11 +26030,11 @@ msgstr "не може бути пустим"
 msgid "can't be empty"
 msgstr "не може бути порожнім"
 
-#: app/models/object_manager/attribute.rb:693
+#: app/models/object_manager/attribute.rb:709
 msgid "can't be modified"
 msgstr "не може бути змінено"
 
-#: app/models/object_manager/attribute.rb:598
+#: app/models/object_manager/attribute.rb:610
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "не може бути використано, оскільки *_id та *_ids не допускаються"
 
@@ -25945,7 +26060,7 @@ msgstr "зазначений елемент '%s' чеклиста"
 msgid "children"
 msgstr "нащадок"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:166
 msgid "clear"
 msgstr "очистити"
 
@@ -26384,11 +26499,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5112
+#: db/seeds/settings.rb:5121
 msgid "i-doit config"
 msgstr "Налаштування i-doit"
 
-#: db/seeds/settings.rb:5085
+#: db/seeds/settings.rb:5094
 msgid "i-doit integration"
 msgstr "Інтеграція з i-doit"
 
@@ -26571,7 +26686,7 @@ msgstr "не є кольором. Підтримуються лише шістн
 msgid "is not a number"
 msgstr "не є числом"
 
-#: app/models/ai/provider_connection.rb:238
+#: app/models/ai/provider_connection.rb:242
 msgid "is not a supported AI provider"
 msgstr "не є підтримуваним постачальником послуг ШІ"
 
@@ -26618,7 +26733,7 @@ msgstr "має неправильну довжину (має бути %{count} �
 msgid "is the wrong length (should be 1 character)"
 msgstr "має неправильну довжину (має бути 1 символ)"
 
-#: app/models/user.rb:906
+#: app/models/user.rb:907
 msgid "is too long"
 msgstr "занадто довгий(а)"
 
@@ -26746,7 +26861,7 @@ msgstr "місяць(і)"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr "має бути хешем з ключами \"label\" та \"value\""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:905
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:888
 msgid "must be a positive number"
 msgstr "має бути додатним числом"
 
@@ -26926,10 +27041,11 @@ msgid "notifications,tickets"
 msgstr "сповіщення,заявки"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:48
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:179
 msgid "now"
 msgstr "зараз"
 
-#: app/models/object_manager/attribute.rb:604
+#: app/models/object_manager/attribute.rb:616
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "дозволені тільки малі літери, цифри та '_'"
 
@@ -27087,7 +27203,7 @@ msgstr "рядок"
 msgid "run macro"
 msgstr "запустити макрос"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:122
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:121
 msgid "second level navigation sidebar"
 msgstr "бічна панель навігації другого рівня"
 
@@ -27161,19 +27277,19 @@ msgstr "показати більше"
 msgid "shown"
 msgstr "показано"
 
-#: db/seeds/settings.rb:5264
+#: db/seeds/settings.rb:5273
 msgid "sipgate.io Token"
 msgstr "Токен sipgate.io"
 
-#: db/seeds/settings.rb:5298
+#: db/seeds/settings.rb:5307
 msgid "sipgate.io alternative FQDN"
 msgstr "Альтернативне доменне ім'я (FQDN) sipgate.io"
 
-#: db/seeds/settings.rb:5285
+#: db/seeds/settings.rb:5294
 msgid "sipgate.io config"
 msgstr "Налаштування sipgate.io"
 
-#: db/seeds/settings.rb:5236
+#: db/seeds/settings.rb:5245
 msgid "sipgate.io integration"
 msgstr "інтеграція з Sipgate (sipgate.io)"
 
@@ -27189,7 +27305,7 @@ msgstr "Пропущено"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:601
+#: app/models/object_manager/attribute.rb:613
 msgid "spaces are not allowed"
 msgstr "пробіли не дозволені"
 
@@ -27280,10 +27396,10 @@ msgid "to go to the homepage."
 msgstr "для переходу на головну сторінку."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "сьогодні"
@@ -27484,8 +27600,35 @@ msgstr "…від усієї текстової ділянки"
 msgid "∅ Waiting time today"
 msgstr "∅ Час очікування сьогодні"
 
-#~ msgid "Add Answer"
-#~ msgstr "Додати відповідь"
+#~ msgid "Are you sure you want to change the embedding configuration?"
+#~ msgstr "Ви впевнені, що хочете змінити конфігурацію вбудовування?"
+
+#~ msgid ""
+#~ "The number of extra AI requests will depend on the amount of indexable "
+#~ "content."
+#~ msgstr ""
+#~ "Кількість додаткових запитів до системи штучного інтелекту залежатиме від "
+#~ "обсягу контенту, що підлягає індексації."
+
+#~ msgid "This change requires the knowledge base to be indexed again."
+#~ msgstr "Ця зміна вимагає повторної індексації Бази знань."
+
+#~ msgid ""
+#~ "This will rebuild the vector index used for the semantic search, which "
+#~ "may result in higher AI costs."
+#~ msgstr ""
+#~ "Це призведе до переіндексації векторного індексу, що використовується для "
+#~ "семантичного пошуку, що може спричинити збільшення витрат на штучний "
+#~ "інтелект."
+
+#~ msgid "KB Answer"
+#~ msgstr "Відповідь у базі знань"
+
+#~ msgid "Shared with organizations"
+#~ msgstr "Спільне з організаціями"
+
+#~ msgid "Suggested by AI"
+#~ msgstr "За пропозицією ШІ"
 
 #~ msgid "Add sub-category"
 #~ msgstr "Додати підкатегорію"

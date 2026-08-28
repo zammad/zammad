@@ -529,7 +529,7 @@ msgid "%s ended switch to |%s|!"
 msgstr "%s canvi finalitzat a |%s|!"
 
 #: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:10
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:199
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:204
 #, fuzzy
 #| msgid "%s folders"
 msgid "%s filter(s)"
@@ -786,11 +786,11 @@ msgstr "%s% han sigut reobertes"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} can have full or granular access to group"
 
-#: app/models/object_manager/attribute.rb:627
+#: app/models/object_manager/attribute.rb:639
 msgid "%{name} already exists"
 msgstr "%{name} ja existeix"
 
-#: app/models/object_manager/attribute.rb:611
+#: app/models/object_manager/attribute.rb:623
 msgid "%{name} is a reserved word"
 msgstr "%{name} és una paraula reservada"
 
@@ -1037,7 +1037,7 @@ msgstr ""
 "Un tiquet de test ha sigut creat, pots trobar-lo a la teva vista general "
 "\"%s\" %l."
 
-#: app/models/ticket.rb:300
+#: app/models/ticket.rb:301
 msgid "A ticket cannot be merged into itself."
 msgstr "Un tiquet no es pot fusionar en si mateix."
 
@@ -1056,7 +1056,7 @@ msgid ""
 "or customer inquiry."
 msgstr ""
 
-#: app/services/service/knowledge_base/category/create.rb:57
+#: app/services/service/knowledge_base/category/create.rb:56
 #, fuzzy
 msgid "A title is required."
 msgstr "A user is required!"
@@ -1107,17 +1107,17 @@ msgstr "Formulari de Feedback"
 msgid "AI Knowledge Base"
 msgstr "Base de coneixement"
 
-#: db/seeds/settings.rb:6333
+#: db/seeds/settings.rb:6342
 #, fuzzy
 msgid "AI Knowledge Base Answer Suggestions"
 msgstr "Knowledge Base Answer"
 
-#: db/seeds/settings.rb:6347
+#: db/seeds/settings.rb:6356
 #, fuzzy
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
 msgstr "Knowledge Base Answer"
 
-#: db/seeds/settings.rb:6319
+#: db/seeds/settings.rb:6328
 #, fuzzy
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr "Knowledge Base Answer"
@@ -1162,6 +1162,7 @@ msgstr "Waiting in %s"
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:7
 #: app/frontend/apps/mobile/components/AiAgent/AiAgentAvatar.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:44
+#: app/models/audit_log/object_type_labels.rb:5
 #, fuzzy
 #| msgid "AI Agent"
 msgid "AI agent"
@@ -1204,19 +1205,19 @@ msgstr "esborrany"
 msgid "AI error log"
 msgstr "Tanca sessió"
 
-#: db/seeds/settings.rb:6223
+#: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6232
 #, fuzzy
 #| msgid "Provider"
 msgid "AI provider"
 msgstr "Proveïdor"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:205
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "AI provider configuration disabled successfully."
 msgstr "El test s'ha executat correctament."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:203
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "AI provider configuration enabled successfully."
@@ -1249,12 +1250,6 @@ msgstr "The setting 'storage_provider' was not configured."
 #: app/services/service/ai/feature.rb:16
 msgid "AI service result is missing expected keys"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
-#, fuzzy
-#| msgid "Related Answers"
-msgid "AI suggested knowledge"
-msgstr "Respostes relacionades"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
 #, fuzzy
@@ -1410,7 +1405,7 @@ msgstr "Accés a la interfície del tiquet."
 msgid "Access token"
 msgstr "Accés a %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:155
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:130
 msgid "Access token renewed, update your RSS reader with the new feed URLs."
 msgstr ""
 
@@ -1535,7 +1530,7 @@ msgstr "Acció massiva executada!"
 msgid "Action execution"
 msgstr "Acció massiva executada!"
 
-#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:131
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:132
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Action menu button"
@@ -1616,7 +1611,7 @@ msgstr ""
 msgid "Active"
 msgstr "Actiu"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Agents actius"
@@ -1826,6 +1821,13 @@ msgstr "Afegeix una alarma als tiquets pendents"
 msgid "Add all values"
 msgstr "Add all values"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:386
+#, fuzzy
+#| msgid "Edit Answer"
+msgid "Add answer"
+msgstr "Edita la resposta"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:194
 msgid "Add attachment option to upload."
 msgstr "Afegeix l'opció d'adjuntar fitxers"
@@ -1838,7 +1840,7 @@ msgstr "Add bullet list"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:269
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:369
 #, fuzzy
 #| msgid "Category"
 msgid "Add category"
@@ -1990,7 +1992,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Canal addicional"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:108
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:127
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -2121,7 +2123,7 @@ msgstr "Compte d'administrador"
 msgid "Advance to next ticket from overview"
 msgstr "Advance to next ticket from overview"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:238
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:243
 #, fuzzy
 #| msgid "Attached Files"
 msgid "Advanced filters"
@@ -2194,7 +2196,7 @@ msgstr "Xat de l'agent"
 msgid "Agent idle timeout"
 msgstr "Temps d'espera d'inactivitat de l'agent"
 
-#: app/models/role.rb:181 app/models/user.rb:788
+#: app/models/role.rb:182 app/models/user.rb:789
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 "Límit de l'agent excedit, si us plau, comprova les configuracions del teu "
@@ -2330,7 +2332,7 @@ msgstr ""
 "Permet que l'agent d'IA seleccioni múltiples categories de tots els valors "
 "possibles."
 
-#: db/seeds/settings.rb:6208
+#: db/seeds/settings.rb:6217
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2383,7 +2385,7 @@ msgstr "Permet als usuaris afegir noves etiquetes."
 msgid "Allow users to create new tags."
 msgstr "Allow users to create new tags."
 
-#: db/seeds/settings.rb:6199
+#: db/seeds/settings.rb:6208
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 
@@ -2402,7 +2404,7 @@ msgstr "Allow websites (separated by ;)"
 msgid "Also notify via email"
 msgstr "També notifica per email"
 
-#: db/seeds/settings.rb:5301
+#: db/seeds/settings.rb:5310
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -2433,7 +2435,7 @@ msgid ""
 "account."
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:290
+#: app/models/ai/provider_connection.rb:294
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2466,6 +2468,13 @@ msgstr ""
 msgid "An error occurred: %s"
 msgstr "An error occurred: %s"
 
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee:79
+#: lib/validations/link_self_reference_validator.rb:4
+#, fuzzy
+#| msgid "A ticket cannot be merged into itself."
+msgid "An object cannot be linked to itself."
+msgstr "Un tiquet no es pot fusionar en si mateix."
+
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:60
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee:26
@@ -2488,7 +2497,7 @@ msgstr ""
 "Incapaç de verificar el correu electrònic. Si us plau contacta amb el teu "
 "administrador."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:769
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:752
 #: lib/ai/provider/concerns/handles_response.rb:22
 #, fuzzy
 msgid "An unknown error occurred"
@@ -2550,13 +2559,13 @@ msgstr "Another ticket was merged into ticket |%s|"
 msgid "Answer"
 msgstr "Answer"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:101
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:126
 #, fuzzy
 #| msgid "Answers"
 msgid "Answer actions"
 msgstr "Respostes"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:151
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
 #, fuzzy
 #| msgid "Answers"
 msgid "Answer count: %s"
@@ -2566,6 +2575,12 @@ msgstr "Respostes"
 #, fuzzy
 msgid "Answer navigation"
 msgstr "Generate Token"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:69
+#, fuzzy
+#| msgid "App Secret"
+msgid "Answer title"
+msgstr "Secret de l'aplicació"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
 msgid "Answers"
@@ -2649,7 +2664,6 @@ msgstr "Secret de l'aplicació"
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
 #: db/seeds/permissions.rb:449
 #, fuzzy
 msgid "Appearance"
@@ -2720,13 +2734,13 @@ msgstr "Plantilles"
 msgid "Approve"
 msgstr "Proveïdor"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Apr"
 msgstr "Abr."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "April"
 msgstr "Abril"
 
@@ -2753,6 +2767,12 @@ msgstr ""
 msgid "Archive emails"
 msgstr "Archived at"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:156
+#, fuzzy
+#| msgid "Previous"
+msgid "Archive this answer"
+msgstr "Previ"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:725
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:44
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:290
@@ -2763,8 +2783,9 @@ msgid "Archive ticket target state"
 msgstr "Tiquet actualitzat"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:27
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:155
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:35
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:54
@@ -2781,12 +2802,6 @@ msgstr "Archived at"
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Are you sure to remove this article?"
-msgstr "Estàs segur d'eliminar aquest objecte?"
-
-#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:16
-#, fuzzy
-#| msgid "Sure to delete this object?"
-msgid "Are you sure you want to change the embedding configuration?"
 msgstr "Estàs segur d'eliminar aquest objecte?"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:147
@@ -2815,6 +2830,12 @@ msgstr ""
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Are you sure you want to set \"%s\" as default?"
+msgstr "Estàs segur d'eliminar aquest objecte?"
+
+#: app/assets/javascripts/app/controllers/_ai/embedding_stop_confirm.coffee:8
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Are you sure you want to stop semantic search?"
 msgstr "Estàs segur d'eliminar aquest objecte?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:735
@@ -2892,7 +2913,7 @@ msgstr "Are you sure? You have changes that will get lost."
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:269
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 #, fuzzy
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -3048,7 +3069,7 @@ msgstr ""
 "Temps assignat en minuts si l'agent no està treballant amb aquesta tasca. El "
 "tiquet es mostrarà com sense assignar"
 
-#: app/models/user.rb:690
+#: app/models/user.rb:691
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -3069,7 +3090,7 @@ msgstr "At least one match rule is required, but none was provided."
 msgid "At least one object must be selected."
 msgstr "At least one object must be selected."
 
-#: app/models/role.rb:158 app/models/user.rb:767
+#: app/models/role.rb:159 app/models/user.rb:768
 #, fuzzy
 msgid "At least one user needs to have admin permissions."
 msgstr "At least one user needs to have admin permissions."
@@ -3104,7 +3125,8 @@ msgstr "Adjunta fitxers"
 msgid "Attached files"
 msgstr "Adjunta fitxers"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
 #, fuzzy
@@ -3222,13 +3244,13 @@ msgstr ""
 msgid "Audit Logs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Aug"
 msgstr "Ag."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "August"
 msgstr "Agost"
 
@@ -3283,7 +3305,7 @@ msgstr "Autentificació via %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:6046
+#: db/seeds/settings.rb:6055
 #, fuzzy
 #| msgid "Authentication"
 msgid "Authenticator App"
@@ -3347,7 +3369,7 @@ msgstr "Auto assignació"
 msgid "Auto Assignment Selector"
 msgstr "Auto assignació"
 
-#: db/seeds/settings.rb:6185
+#: db/seeds/settings.rb:6194
 msgid "Auto Shutdown"
 msgstr ""
 
@@ -3356,7 +3378,7 @@ msgstr ""
 msgid "Auto Wizard"
 msgstr "Auto Wizard"
 
-#: db/seeds/settings.rb:4624
+#: db/seeds/settings.rb:4633
 msgid "Auto close"
 msgstr "Auto tancament"
 
@@ -3365,7 +3387,7 @@ msgstr "Auto tancament"
 msgid "Auto create"
 msgstr "Auto create"
 
-#: db/seeds/settings.rb:4650
+#: db/seeds/settings.rb:4659
 #, fuzzy
 #| msgid "Auto close state"
 msgid "Auto-close state"
@@ -3485,7 +3507,6 @@ msgstr "Available types for a new ticket"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:48
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
@@ -3555,7 +3576,7 @@ msgid "BETA UI illustration"
 msgstr "Integracions"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:817
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:800
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -3581,6 +3602,7 @@ msgid "Back to previous page"
 msgstr "Retorna a la meva vista"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:122
 msgid "Back to search results"
 msgstr "Enrere per buscar resultats"
 
@@ -3876,7 +3898,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:173
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:105
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
@@ -3920,23 +3942,23 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (genèric"
 
-#: db/seeds/settings.rb:5360
+#: db/seeds/settings.rb:5369
 #, fuzzy
 msgid "CTI Token"
 msgstr "CTI Token"
 
-#: db/seeds/settings.rb:5347
+#: db/seeds/settings.rb:5356
 #, fuzzy
 #| msgid "Config"
 msgid "CTI config"
 msgstr "Configuració"
 
-#: db/seeds/settings.rb:5381
+#: db/seeds/settings.rb:5390
 #, fuzzy
 msgid "CTI customer last activity"
 msgstr "CTI customer last activity"
 
-#: db/seeds/settings.rb:5319
+#: db/seeds/settings.rb:5328
 #, fuzzy
 #| msgid "Integrations"
 msgid "CTI integration"
@@ -3951,7 +3973,6 @@ msgstr "Integracions"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:55
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:29
 #: db/seeds/permissions.rb:65
 msgid "Calendar"
 msgstr "Calendari"
@@ -4100,7 +4121,8 @@ msgstr "Tanca sessió"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:435
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:354
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 #, fuzzy
@@ -4134,7 +4156,7 @@ msgstr "Cannot delete record because a dependent %{record} exists"
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "Cannot delete record because dependent %{record} exist"
 
-#: app/models/ai/provider_connection.rb:434
+#: app/models/ai/provider_connection.rb:438
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -4143,7 +4165,7 @@ msgstr ""
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "Cannot follow-up on a closed ticket. Please create a new ticket."
 
-#: app/models/sla.rb:45
+#: app/models/sla.rb:46
 #, fuzzy
 msgid "Cannot have both response time and update time."
 msgstr "Cannot have both response time and update time."
@@ -4174,6 +4196,7 @@ msgstr "Categories"
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:193
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:58
 msgid "Category"
 msgstr "Categoria"
@@ -4184,17 +4207,17 @@ msgstr "Categoria"
 msgid "Category Attribute"
 msgstr "Nou atribut"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:163
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:167
 #, fuzzy
 msgid "Category actions"
 msgstr "Category page layout"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:135
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:139
 #, fuzzy
 msgid "Category count: %s"
 msgstr "Category page layout"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:196
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:164
 #, fuzzy
 #| msgid "Category"
 msgid "Category feed"
@@ -4274,7 +4297,7 @@ msgstr "Canvia l'ordre"
 msgid "Change icon set"
 msgstr "Canvia %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:78
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:97
 #, fuzzy
 #| msgid "Language"
 msgid "Change language"
@@ -4449,7 +4472,7 @@ msgstr "Títol del xat"
 msgid "Chat closed by %s"
 msgstr "Xat tancat per %s"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "No s'ha respost el xat, s'estableix automàticament a fora de línia."
 
@@ -4475,7 +4498,7 @@ msgstr "Connecta canals"
 msgid "Check item"
 msgstr "Checksum"
 
-#: lib/search_index_backend.rb:459
+#: lib/search_index_backend.rb:468
 #, fuzzy
 msgid "Check the response and payload for detailed information:"
 msgstr "Check the response and payload for detailed information:"
@@ -4536,7 +4559,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:353 db/seeds/settings.rb:6158
+#: db/seeds/permissions.rb:353 db/seeds/settings.rb:6167
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklists"
@@ -4547,12 +4570,12 @@ msgstr "Checksum"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4771
+#: db/seeds/settings.rb:4780
 #, fuzzy
 msgid "Checkmk integration"
 msgstr "Checkmk integration"
 
-#: db/seeds/settings.rb:4892
+#: db/seeds/settings.rb:4901
 #, fuzzy
 msgid "Checkmk token"
 msgstr "Checkmk token"
@@ -4732,18 +4755,18 @@ msgstr "Selector"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:29
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 #, fuzzy
 #| msgid "Search"
 msgid "Clear all"
 msgstr "Buscar"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
 msgid "Clear all advanced filter(s)?"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:202
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:207
 #, fuzzy
 #| msgid "Clearbit"
 msgid "Clear all filters"
@@ -4775,7 +4798,8 @@ msgstr "Buscar"
 msgid "Clear recently closed"
 msgstr "Vist recentment"
 
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:116
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:115
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchResults.vue:76
 #: app/frontend/apps/mobile/components/CommonInputSearch/CommonInputSearch.vue:73
 #, fuzzy
 #| msgid "Search"
@@ -4808,12 +4832,12 @@ msgstr "Selector"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5483
+#: db/seeds/settings.rb:5492
 #, fuzzy
 msgid "Clearbit config"
 msgstr "Clearbit config"
 
-#: db/seeds/settings.rb:5457
+#: db/seeds/settings.rb:5466
 #, fuzzy
 msgid "Clearbit integration"
 msgstr "Clearbit integration"
@@ -5017,7 +5041,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "Subscripció a tiquets"
 
-#: db/seeds/settings.rb:5965
+#: db/seeds/settings.rb:5974
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -5060,7 +5084,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6047
 #, fuzzy
 msgid "Complete the sign-in with your security key."
 msgstr "Complete the sign-in with your security key."
@@ -5346,7 +5370,7 @@ msgstr "Connexió restablerta"
 msgid "Connection test successful"
 msgstr "Connection test successful"
 
-#: lib/ai/vectordb.rb:316
+#: lib/ai/vectordb.rb:314
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
@@ -5365,7 +5389,7 @@ msgid "Content"
 msgstr "Contingut"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:111
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:92
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Content could not be loaded."
@@ -5413,7 +5437,7 @@ msgstr "Context"
 msgid "Context menu"
 msgstr "Context"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:388
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:392
 msgid "Context window size"
 msgstr ""
 
@@ -5495,14 +5519,14 @@ msgstr "Copied."
 msgid "Copy"
 msgstr "Copy"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:189
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:157
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:291
 #, fuzzy
 #| msgid "Custom URL"
 msgid "Copy URL"
 msgstr "URL personalitzada"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:133
 #, fuzzy
 #| msgid "App Secret"
 msgid "Copy answer title"
@@ -5514,7 +5538,7 @@ msgstr "Secret de l'aplicació"
 msgid "Copy article permalink"
 msgstr "Article"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:210
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:213
 #, fuzzy
 #| msgid "App Secret"
 msgid "Copy category title"
@@ -5609,6 +5633,11 @@ msgid ""
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
 msgstr ""
+
+#: app/models/audit_log/object_type_labels.rb:8
+#, fuzzy
+msgid "Core workflow"
+msgstr "Core Workflows"
 
 #: app/services/service/user/signup.rb:53
 msgid ""
@@ -5731,9 +5760,10 @@ msgstr "País"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:365
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:180
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:499
 msgid "Create"
 msgstr "Crear"
@@ -5843,7 +5873,7 @@ msgstr "Crea el meu compte"
 msgid "Create new Customer"
 msgstr "Crea un nou client"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:71
 msgid "Create new customer"
 msgstr "Crea un nou client"
@@ -6023,6 +6053,7 @@ msgstr "Creat per"
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:16
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:29
 #: app/assets/javascripts/app/controllers/search.coffee:25
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:34
 msgid "Created within last 14 days"
 msgstr ""
 
@@ -6124,7 +6155,7 @@ msgid "Currently processing this ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:161
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:161
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:160
 #, fuzzy
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
@@ -6327,6 +6358,7 @@ msgstr "Actualització de la base de dades requerida"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:183
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 msgid "Date"
 msgstr "Fecha"
@@ -6372,13 +6404,13 @@ msgstr "Dia/es"
 msgid "Days"
 msgstr "Dies"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Dec"
 msgstr "Des."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "December"
 msgstr "Desembre"
 
@@ -6436,7 +6468,7 @@ msgid "Default"
 msgstr "Per defecte"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:60
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:491
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:495
 #, fuzzy
 #| msgid "Default"
 msgid "Default (%s)"
@@ -6501,7 +6533,7 @@ msgstr "Default for follow-ups"
 msgid "Default for new tickets"
 msgstr "Crea un nou tiquet de prova"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:177
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Default provider updated successfully."
@@ -6562,7 +6594,7 @@ msgstr "Define model configuration for Elasticsearch."
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Define pipeline name for Elasticsearch."
 
-#: db/seeds/settings.rb:4443
+#: db/seeds/settings.rb:4452
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -6696,7 +6728,7 @@ msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 
-#: db/seeds/settings.rb:5561
+#: db/seeds/settings.rb:5570
 #, fuzzy
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr "Defines a dashboard stats backend that gets scheduled automatically."
@@ -6794,63 +6826,63 @@ msgid ""
 "fields."
 msgstr ""
 
-#: db/seeds/settings.rb:4774
+#: db/seeds/settings.rb:4783
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5460
+#: db/seeds/settings.rb:5469
 #, fuzzy
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 
-#: db/seeds/settings.rb:5061
+#: db/seeds/settings.rb:5070
 #, fuzzy
 msgid "Defines if Exchange is enabled or not."
 msgstr "Defines if Exchange is enabled or not."
 
-#: db/seeds/settings.rb:4578
+#: db/seeds/settings.rb:4587
 #, fuzzy
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Defines if Icinga (http://www.icinga.org) is enabled or not."
 
-#: db/seeds/settings.rb:5671
+#: db/seeds/settings.rb:5680
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
 
-#: db/seeds/settings.rb:5656
+#: db/seeds/settings.rb:5665
 #, fuzzy
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "Defines if Knowledge Base navbar button is enabled."
 
-#: db/seeds/settings.rb:5008
+#: db/seeds/settings.rb:5017
 #, fuzzy
 msgid "Defines if LDAP is enabled or not."
 msgstr "Defines if LDAP is enabled or not."
 
-#: db/seeds/settings.rb:4907
+#: db/seeds/settings.rb:4916
 #, fuzzy
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 
-#: db/seeds/settings.rb:4676
+#: db/seeds/settings.rb:4685
 #, fuzzy
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Defines if Nagios (http://www.nagios.org) is enabled or not."
 
-#: db/seeds/settings.rb:5854
+#: db/seeds/settings.rb:5863
 #, fuzzy
 #| msgid "Authentication"
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "Autenticació"
 
-#: db/seeds/settings.rb:5397
+#: db/seeds/settings.rb:5406
 #, fuzzy
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Defines if Placetel (http://www.placetel.de) is enabled or not."
 
-#: db/seeds/settings.rb:5784
+#: db/seeds/settings.rb:5793
 #, fuzzy
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "Defines if S/MIME encryption is enabled or not."
@@ -6868,56 +6900,56 @@ msgstr "Defines if application is in init mode."
 msgid "Defines if application is used as online service."
 msgstr "Defineix si l'aplicació s'utilitza com a servei en línia."
 
-#: db/seeds/settings.rb:5989
+#: db/seeds/settings.rb:5998
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
 msgstr ""
 
-#: db/seeds/settings.rb:5322
+#: db/seeds/settings.rb:5331
 #, fuzzy
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Defines if generic CTI integration is enabled or not."
 
-#: db/seeds/settings.rb:6081
+#: db/seeds/settings.rb:6090
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
 msgstr ""
 
-#: db/seeds/settings.rb:5239
+#: db/seeds/settings.rb:5248
 #, fuzzy
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 
-#: db/seeds/settings.rb:5896
+#: db/seeds/settings.rb:5905
 #, fuzzy
 #| msgid "Authentication"
 msgid "Defines if system notification emails are PGP signed."
 msgstr "Autenticació"
 
-#: db/seeds/settings.rb:5826
+#: db/seeds/settings.rb:5835
 #, fuzzy
 #| msgid "Authentication"
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr "Autenticació"
 
-#: db/seeds/settings.rb:6226
+#: db/seeds/settings.rb:6235
 #, fuzzy
 msgid "Defines if the AI provider is configured."
 msgstr "The setting 'storage_provider' was not configured."
 
-#: db/seeds/settings.rb:5170
+#: db/seeds/settings.rb:5179
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5128
+#: db/seeds/settings.rb:5137
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5924
+#: db/seeds/settings.rb:5933
 #, fuzzy
 #| msgid "Authentication"
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
@@ -6935,13 +6967,13 @@ msgid ""
 "password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6447
+#: db/seeds/settings.rb:6456
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
-#: db/seeds/settings.rb:6133
+#: db/seeds/settings.rb:6142
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6959,7 +6991,7 @@ msgid ""
 "organization widget."
 msgstr ""
 
-#: db/seeds/settings.rb:5088
+#: db/seeds/settings.rb:5097
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
@@ -6982,13 +7014,13 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr "Autenticació"
 
-#: db/seeds/settings.rb:6049
+#: db/seeds/settings.rb:6058
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
 
-#: db/seeds/settings.rb:6017
+#: db/seeds/settings.rb:6026
 #, fuzzy
 #| msgid "Authentication"
 msgid ""
@@ -7000,12 +7032,12 @@ msgstr "Autenticació"
 msgid "Defines if tickets can be created via web form."
 msgstr ""
 
-#: db/seeds/settings.rb:4627
+#: db/seeds/settings.rb:4636
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr ""
 "Defineix si els tiquets han de tancar-se si el servei ha estat restablert."
 
-#: db/seeds/settings.rb:4479
+#: db/seeds/settings.rb:4488
 #, fuzzy
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr "Defines postmaster filter for filters managed via admin interface."
@@ -7027,12 +7059,12 @@ msgstr ""
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "Defines postmaster filter to handle secure mailing."
 
-#: db/seeds/settings.rb:4542
+#: db/seeds/settings.rb:4551
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 
-#: db/seeds/settings.rb:4524
+#: db/seeds/settings.rb:4533
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -7054,25 +7086,25 @@ msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 
-#: db/seeds/settings.rb:4434
+#: db/seeds/settings.rb:4443
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
 
-#: db/seeds/settings.rb:4461
+#: db/seeds/settings.rb:4470
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
 
-#: db/seeds/settings.rb:4452
+#: db/seeds/settings.rb:4461
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:4470
+#: db/seeds/settings.rb:4479
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -7088,28 +7120,28 @@ msgstr "Defines postmaster filter to identify sender user."
 msgid "Defines postmaster filter to identify session user."
 msgstr "Defines postmaster filter to identify sender user."
 
-#: db/seeds/settings.rb:4569
+#: db/seeds/settings.rb:4578
 #, fuzzy
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "Defines postmaster filter to identify sender user."
 
-#: db/seeds/settings.rb:4506
+#: db/seeds/settings.rb:4515
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
 msgstr ""
 
-#: db/seeds/settings.rb:4488
+#: db/seeds/settings.rb:4497
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 
-#: db/seeds/settings.rb:4515
+#: db/seeds/settings.rb:4524
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 
-#: db/seeds/settings.rb:4497
+#: db/seeds/settings.rb:4506
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
@@ -7119,6 +7151,13 @@ msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
 msgstr ""
+
+#: db/seeds/settings.rb:4434
+#, fuzzy
+msgid ""
+"Defines postmaster filter to remove references to local attachments from "
+"incoming emails."
+msgstr "Define postmaster filter to import archive mailboxes."
 
 #: db/seeds/settings.rb:4362
 msgid ""
@@ -7132,7 +7171,7 @@ msgid ""
 "header."
 msgstr ""
 
-#: db/seeds/settings.rb:4560
+#: db/seeds/settings.rb:4569
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -7147,12 +7186,12 @@ msgstr "Defines postmaster filter."
 msgid "Defines pretty date format."
 msgstr "Defineix un format de data estètic"
 
-#: db/seeds/settings.rb:5550
+#: db/seeds/settings.rb:5559
 #, fuzzy
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "Defines processing timeout for the html sanitizer."
 
-#: db/seeds/settings.rb:5209
+#: db/seeds/settings.rb:5218
 #, fuzzy
 msgid "Defines sync transaction backend."
 msgstr "Defines sync transaction backend."
@@ -7164,33 +7203,33 @@ msgid ""
 "FormSpamProtection::Captcha backends."
 msgstr ""
 
-#: db/seeds/settings.rb:5538
+#: db/seeds/settings.rb:5547
 #, fuzzy
 msgid "Defines the CSS font information for HTML emails."
 msgstr "Defines the CSS font information for HTML emails."
 
-#: db/seeds/settings.rb:5350
+#: db/seeds/settings.rb:5359
 #, fuzzy
 msgid "Defines the CTI config."
 msgstr "Defines the CTI config."
 
-#: db/seeds/settings.rb:4895
+#: db/seeds/settings.rb:4904
 #, fuzzy
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "Defines the Checkmk token for allowing updates."
 
-#: db/seeds/settings.rb:5486
+#: db/seeds/settings.rb:5495
 #, fuzzy
 msgid "Defines the Clearbit config."
 msgstr "Defines the Clearbit config."
 
-#: db/seeds/settings.rb:5048
+#: db/seeds/settings.rb:5057
 #, fuzzy
 #| msgid "Defines pretty date format."
 msgid "Defines the Exchange OAuth config."
 msgstr "Defineix un format de data estètic"
 
-#: db/seeds/settings.rb:5035
+#: db/seeds/settings.rb:5044
 #, fuzzy
 msgid "Defines the Exchange config."
 msgstr "Defines the Exchange config."
@@ -7201,23 +7240,23 @@ msgstr "Defines the Exchange config."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Defineix el protocol http de la teva instància."
 
-#: db/seeds/settings.rb:5882
+#: db/seeds/settings.rb:5891
 #, fuzzy
 #| msgid "Defines pretty date format."
 msgid "Defines the PGP config."
 msgstr "Defineix un format de data estètic"
 
-#: db/seeds/settings.rb:5425
+#: db/seeds/settings.rb:5434
 #, fuzzy
 msgid "Defines the Placetel config."
 msgstr "Defines the Placetel config."
 
-#: db/seeds/settings.rb:5812
+#: db/seeds/settings.rb:5821
 #, fuzzy
 msgid "Defines the S/MIME config."
 msgstr "Defines the S/MIME config."
 
-#: db/seeds/settings.rb:5527
+#: db/seeds/settings.rb:5536
 #, fuzzy
 #| msgid "Defines pretty date format."
 msgid "Defines the agent limit."
@@ -7261,7 +7300,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr "Defines the tab behaviour after a ticket action."
 
-#: db/seeds/settings.rb:6424
+#: db/seeds/settings.rb:6433
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -7316,13 +7355,13 @@ msgstr "Defineix l'estat els tiquets autotancats."
 msgid "Defines the default visibility for new notes."
 msgstr "Visibilitat per defecte d'una nova nota."
 
-#: db/seeds/settings.rb:5384
+#: db/seeds/settings.rb:5393
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6308
+#: db/seeds/settings.rb:6317
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -7339,7 +7378,7 @@ msgstr ""
 "de missatgeria utilitzades per l'aplicació, per a construir enllaços a "
 "tiquets dins del seu sistema."
 
-#: db/seeds/settings.rb:4823
+#: db/seeds/settings.rb:4832
 msgid "Defines the group of created tickets."
 msgstr "Defineix el grup dels tiquets creats."
 
@@ -7349,7 +7388,7 @@ msgstr "Defineix el grup dels tiquets creats."
 msgid "Defines the group of tickets created via web form."
 msgstr "Defineix el grup dels tiquets creats."
 
-#: db/seeds/settings.rb:5115
+#: db/seeds/settings.rb:5124
 #, fuzzy
 msgid "Defines the i-doit config."
 msgstr "Defines the i-doit config."
@@ -7374,7 +7413,7 @@ msgid ""
 "surplus tabs when creating new tabs."
 msgstr ""
 
-#: db/seeds/settings.rb:6350
+#: db/seeds/settings.rb:6359
 msgid ""
 "Defines the minimum relevance score (in percent) a knowledge base answer "
 "must reach to be suggested in the ticket sidebar."
@@ -7409,19 +7448,19 @@ msgstr "Defines the port of the websocket server."
 msgid "Defines the random application secret."
 msgstr "Defines the random application secret."
 
-#: db/seeds/settings.rb:4604
+#: db/seeds/settings.rb:4613
 msgid "Defines the sender email address of Icinga emails."
 msgstr ""
 "Defineix l'adreça de correu electrònic del remitent dels correus electrònics "
 "d'Icinga."
 
-#: db/seeds/settings.rb:4702
+#: db/seeds/settings.rb:4711
 msgid "Defines the sender email address of Nagios emails."
 msgstr ""
 "Defineix l'adreça de correu electrònic del remitent dels correus electrònics "
 "de Nagios."
 
-#: db/seeds/settings.rb:4800
+#: db/seeds/settings.rb:4809
 msgid "Defines the sender email address of the service emails."
 msgstr ""
 "Defineix l'adreça electrònica del remitent del servei de correus electrònics."
@@ -7442,12 +7481,12 @@ msgid ""
 "permissions the highest timeout value will be used, otherwise the default."
 msgstr ""
 
-#: db/seeds/settings.rb:5288
+#: db/seeds/settings.rb:5297
 #, fuzzy
 msgid "Defines the sipgate.io config."
 msgstr "Defines the sipgate.io config."
 
-#: db/seeds/settings.rb:4653
+#: db/seeds/settings.rb:4662
 #, fuzzy
 #| msgid "Defines the state of auto closed tickets."
 msgid "Defines the state of auto-closed tickets."
@@ -7476,43 +7515,43 @@ msgid "Defines the ticket states used for lookups."
 msgstr ""
 "Defineix el back-end per a les cerques d'imatges d'usuaris i organitzacions."
 
-#: db/seeds/settings.rb:5683
+#: db/seeds/settings.rb:5692
 #, fuzzy
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr "Defines the timeframe during which a self-created note can be deleted."
 
-#: db/seeds/settings.rb:5439
+#: db/seeds/settings.rb:5448
 #, fuzzy
 #| msgid "Defines pretty date format."
 msgid "Defines the token for Placetel."
 msgstr "Defineix un format de data estètic"
 
-#: db/seeds/settings.rb:5230
+#: db/seeds/settings.rb:5239
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 
-#: db/seeds/settings.rb:5212
+#: db/seeds/settings.rb:5221
 #, fuzzy
 msgid "Defines the transaction backend to execute triggers."
 msgstr "Defines the transaction backend to execute triggers."
 
-#: db/seeds/settings.rb:5221
+#: db/seeds/settings.rb:5230
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "Defineix el backend de l'operació per a enviar notificacions d'agents."
 
-#: db/seeds/settings.rb:5508
+#: db/seeds/settings.rb:5517
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
 msgstr ""
 
-#: db/seeds/settings.rb:5517
+#: db/seeds/settings.rb:5526
 #, fuzzy
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr "Defines the transaction backend which executes time based triggers."
 
-#: db/seeds/settings.rb:5499
+#: db/seeds/settings.rb:5508
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -7534,7 +7573,7 @@ msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
 
-#: db/seeds/settings.rb:5218
+#: db/seeds/settings.rb:5227
 #, fuzzy
 msgid "Defines transaction backend."
 msgstr "Defines transaction backend."
@@ -7545,7 +7584,7 @@ msgid ""
 "tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6415
+#: db/seeds/settings.rb:6424
 msgid ""
 "Defines which knowledge base categories are excluded from the vector "
 "database. Sub-categories of an excluded category are excluded as well. Note "
@@ -7557,7 +7596,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6217
+#: db/seeds/settings.rb:6226
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
@@ -7576,7 +7615,7 @@ msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:129
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:128
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:700
@@ -7668,7 +7707,7 @@ msgstr "Elimina fitxer"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:33
-#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:20
+#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:26
 #, fuzzy
 msgid "Delete all child categories and answers, then try again."
 msgstr "Delete all child categories and answers, then try again."
@@ -7690,7 +7729,7 @@ msgid "Delete avatar"
 msgstr "Eliminar"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:72
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:165
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:168
 #, fuzzy
 msgid "Delete category"
 msgstr "Cannot delete category"
@@ -7907,16 +7946,16 @@ msgstr "Dissenyador"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: db/seeds/settings.rb:6196
+#: db/seeds/settings.rb:6205
 #, fuzzy
 msgid "Desktop BETA UI Switch"
 msgstr "New tab"
 
-#: db/seeds/settings.rb:6205
+#: db/seeds/settings.rb:6214
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr ""
 
-#: db/seeds/settings.rb:6214
+#: db/seeds/settings.rb:6223
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
@@ -7992,7 +8031,6 @@ msgstr "No s'han trobat resultats."
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
 #: db/seeds/permissions.rb:494
 msgid "Devices"
 msgstr "Dispositius"
@@ -8108,12 +8146,13 @@ msgid "Discard article"
 msgstr "Descarta els canvis"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:432
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:351
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:271
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 #, fuzzy
 #| msgid "Discard Changes"
@@ -8198,13 +8237,13 @@ msgstr "Do not encrypt email"
 msgid "Do not sign email"
 msgstr "Do not sign email"
 
-#: db/seeds/settings.rb:6143
+#: db/seeds/settings.rb:6152
 #, fuzzy
 #| msgid "You have not created a ticket yet."
 msgid "Do not update any tickets."
 msgstr "No has creat cap tiquet encara."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:122
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:121
 #, fuzzy
 #| msgid "Create your first ticket"
 msgid "Do not use for image text recognition"
@@ -8399,7 +8438,8 @@ msgstr "selecciona adjunt..."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:12
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:14
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:140
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 msgid "Draft"
 msgstr "Esborrany"
@@ -8435,6 +8475,7 @@ msgid "Drafts & macros"
 msgstr "Crea Macro"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:54
 #, fuzzy
 #| msgid "Draft"
 msgid "Drafts only"
@@ -8518,7 +8559,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Vacances de Setmana Santa"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:656
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:639
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -8584,7 +8625,7 @@ msgstr "Autenticació"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:58
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:156
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:159
 #, fuzzy
 #| msgid "Category"
 msgid "Edit category"
@@ -8610,7 +8651,7 @@ msgid "Edit item"
 msgstr "Categoria"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:147
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Edit knowledge base"
@@ -8717,12 +8758,12 @@ msgstr "Elasticsearch SSL verification"
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch Total Payload Size"
 
-#: lib/ai/vectordb.rb:334
+#: lib/ai/vectordb.rb:337
 #, fuzzy
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch Endpoint Index"
 
-#: lib/search_index_backend.rb:455
+#: lib/search_index_backend.rb:464
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -8834,7 +8875,7 @@ msgstr "Compte de correu"
 msgid "Email address"
 msgstr "Adreça de correu"
 
-#: app/models/user.rb:700
+#: app/models/user.rb:701
 #, fuzzy
 msgid "Email address '%{email}' is already used for another user."
 msgstr "Email address '%{email}' is already used for another user."
@@ -8923,11 +8964,11 @@ msgid ""
 "after the cut-off time are imported as regular tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
 msgid "Embedding Model"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:383
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:387
 msgid "Embedding dimensions"
 msgstr ""
 
@@ -8993,7 +9034,7 @@ msgid ""
 "user needs to create its own access tokens in user profile."
 msgstr ""
 
-#: db/seeds/settings.rb:6078
+#: db/seeds/settings.rb:6087
 msgid "Enable Recovery Codes"
 msgstr ""
 
@@ -9018,7 +9059,7 @@ msgstr ""
 "Habilita l'assignació automàtica el primer cop que un agent obra un nou "
 "tiquet."
 
-#: db/seeds/settings.rb:6161
+#: db/seeds/settings.rb:6170
 #, fuzzy
 #| msgid "Enable Chat"
 msgid "Enable checklists."
@@ -9052,20 +9093,20 @@ msgstr ""
 "solament desitja citar una determinada frase, simplement marqui el text i "
 "pressiona respondre (aquesta característica està sempre disponible)."
 
-#: db/seeds/settings.rb:6322
+#: db/seeds/settings.rb:6331
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
 
-#: db/seeds/settings.rb:6188
+#: db/seeds/settings.rb:6197
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
 "manager like systemd or docker supports an automatic restart policy."
 msgstr ""
 
-#: db/seeds/settings.rb:6336
+#: db/seeds/settings.rb:6345
 msgid ""
 "Enable or disable the display of AI suggested knowledge base answers in the "
 "ticket sidebar."
@@ -9088,18 +9129,18 @@ msgid ""
 "session."
 msgstr ""
 
-#: db/seeds/settings.rb:6243
+#: db/seeds/settings.rb:6252
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6392
+#: db/seeds/settings.rb:6401
 msgid ""
 "Enable or disable the vector database, which is used for storing and "
 "retrieving vectorized data. Elasticsearch is used as the vector database "
 "backend."
 msgstr ""
 
-#: db/seeds/settings.rb:6294
+#: db/seeds/settings.rb:6303
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
@@ -9112,7 +9153,7 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr "Enable ticket auto assignment."
 
-#: db/seeds/settings.rb:6276
+#: db/seeds/settings.rb:6285
 #, fuzzy
 msgid "Enable ticket summary for following matching tickets."
 msgstr "Enable auto assignment for following matching tickets."
@@ -9147,7 +9188,7 @@ msgid ""
 "ticket with the same attributes."
 msgstr ""
 
-#: db/seeds/settings.rb:5935
+#: db/seeds/settings.rb:5944
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -9331,13 +9372,13 @@ msgstr "Endpoint"
 msgid "Endpoint Settings"
 msgstr "Configuracions personals"
 
-#: db/seeds/settings.rb:6105
+#: db/seeds/settings.rb:6114
 #, fuzzy
 #| msgid "Authentication"
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "Autenticació"
 
-#: db/seeds/settings.rb:6112
+#: db/seeds/settings.rb:6121
 #, fuzzy
 #| msgid "How to use it"
 msgid "Enforced for user roles"
@@ -9805,17 +9846,17 @@ msgstr "Excepcions d'usuari"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:5045
+#: db/seeds/settings.rb:5054
 #, fuzzy
 msgid "Exchange OAuth"
 msgstr "Canviat"
 
-#: db/seeds/settings.rb:5032
+#: db/seeds/settings.rb:5041
 #, fuzzy
 msgid "Exchange config"
 msgstr "Exchange config"
 
-#: db/seeds/settings.rb:5058
+#: db/seeds/settings.rb:5067
 #, fuzzy
 msgid "Exchange integration"
 msgstr "Exchange integration"
@@ -9952,7 +9993,7 @@ msgstr "Cerca avançada"
 msgid "External data source field"
 msgstr "intern"
 
-#: lib/search_index_backend.rb:781
+#: lib/search_index_backend.rb:790
 #, fuzzy
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extract zammad-attachment information from arrays"
@@ -10111,13 +10152,13 @@ msgstr ""
 msgid "Feature not configured, please contact your admin!"
 msgstr "Feature not configured, please contact your admin!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Feb"
 msgstr "Febr."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "February"
 msgstr "Febrer"
 
@@ -10596,11 +10637,11 @@ msgstr "Freqüència"
 msgid "Freshdesk"
 msgstr "Freshdesk"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Fri"
 msgstr "Dv."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:11
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:19
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:56
@@ -10763,7 +10804,7 @@ msgstr "Get Started"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:6070
+#: db/seeds/settings.rb:6079
 #, fuzzy
 msgid "Get the security code from the authenticator app on your device."
 msgstr "Get the security code from the authenticator app on your device."
@@ -10800,12 +10841,12 @@ msgstr "Credencials de Twitter"
 msgid "GitHub OAuth Applications"
 msgstr "Aplicacions"
 
-#: db/seeds/settings.rb:5194
+#: db/seeds/settings.rb:5203
 #, fuzzy
 msgid "GitHub config"
 msgstr "GitHub config"
 
-#: db/seeds/settings.rb:5167
+#: db/seeds/settings.rb:5176
 #, fuzzy
 msgid "GitHub integration"
 msgstr "GitHub integration"
@@ -10839,12 +10880,12 @@ msgstr "GitLab App Credentials"
 msgid "GitLab Applications"
 msgstr "Aplicacions"
 
-#: db/seeds/settings.rb:5152
+#: db/seeds/settings.rb:5161
 #, fuzzy
 msgid "GitLab config"
 msgstr "GitLab config"
 
-#: db/seeds/settings.rb:5125
+#: db/seeds/settings.rb:5134
 #, fuzzy
 msgid "GitLab integration"
 msgstr "GitLab integration"
@@ -11127,12 +11168,12 @@ msgstr "Grups"
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 Signature Token"
 
-#: db/seeds/settings.rb:5535
+#: db/seeds/settings.rb:5544
 #, fuzzy
 msgid "HTML Email CSS Font"
 msgstr "HTML Email CSS Font"
 
-#: db/seeds/settings.rb:5547
+#: db/seeds/settings.rb:5556
 #, fuzzy
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "HTML Sanitizer Processing Timeout"
@@ -11483,12 +11524,12 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "Nom d'organització"
 
-#: db/seeds/settings.rb:5699
+#: db/seeds/settings.rb:5708
 #, fuzzy
 msgid "Highlights if the note a user is writing is public or private"
 msgstr "Highlights if the note a user is writing is public or private"
 
-#: db/seeds/settings.rb:5696
+#: db/seeds/settings.rb:5705
 #, fuzzy
 msgid "Hint for adding an article to an existing ticket."
 msgstr "Hint for adding an article to an existing ticket."
@@ -11655,7 +11696,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4575
+#: db/seeds/settings.rb:4584
 #, fuzzy
 msgid "Icinga integration"
 msgstr "Icinga integration"
@@ -11793,7 +11834,7 @@ msgid ""
 "action is going to invalidate previous recovery codes."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:180
 msgid ""
 "If you want to invalidate your feed URLs, renew the access token below. Make "
 "sure to update your RSS reader with new feed URLs afterwards."
@@ -12139,7 +12180,7 @@ msgstr "Includes escalated, new & open and pending tickets."
 msgid "Including private key."
 msgstr "Including private key."
 
-#: lib/ai/vectordb.rb:327
+#: lib/ai/vectordb.rb:330
 #, fuzzy
 #| msgid "Last sync"
 msgid "Incompatible Elasticsearch version"
@@ -12161,7 +12202,7 @@ msgstr "Elements de llista de comprovació incomplets"
 msgid "Incomplete credentials"
 msgstr "Incomplete credentials"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:469
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
 #, fuzzy
 msgid "Incomplete ticket checklist"
 msgstr "Incomplete Ticket Checklist"
@@ -12405,8 +12446,9 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "Integrity verification of the downloaded WhatsApp media failed."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:17
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:19
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:145
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:206
 msgid "Internal"
@@ -12418,7 +12460,7 @@ msgstr "Intern"
 msgid "Internal Knowledge Base feed:"
 msgstr "Elimina la Base de coneixement"
 
-#: app/models/object_manager/attribute.rb:697
+#: app/models/object_manager/attribute.rb:713
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Internal attributes cannot be deleted"
@@ -12430,7 +12472,7 @@ msgstr "Objecte %s han sigut creats."
 msgid "Internal error"
 msgstr "Intern"
 
-#: db/seeds/settings.rb:6406
+#: db/seeds/settings.rb:6415
 msgid ""
 "Internal record of the embedding model and vector size the knowledge base "
 "index was last built with. Used to detect a stale index by comparison, "
@@ -12518,17 +12560,17 @@ msgstr ""
 msgid "Invalid auto wizard file."
 msgstr "Invalid auto wizard file."
 
-#: app/controllers/long_polling_controller.rb:83
+#: app/controllers/long_polling_controller.rb:82
 #, fuzzy
 msgid "Invalid client_id in receive loop!"
 msgstr "Invalid client_id in receive loop!"
 
-#: app/controllers/long_polling_controller.rb:51
+#: app/controllers/long_polling_controller.rb:50
 #, fuzzy
 msgid "Invalid client_id received!"
 msgstr "Invalid client_id received!"
 
-#: app/models/user.rb:639
+#: app/models/user.rb:640
 #, fuzzy
 msgid "Invalid email '%{email}'"
 msgstr "Invalid email '%{email}'"
@@ -12767,7 +12809,7 @@ msgstr "It is not possible to delete the system user."
 msgid "It is not possible to delete your current account."
 msgstr "Estàs segur d'eliminar aquest objecte?"
 
-#: app/models/ticket.rb:298
+#: app/models/ticket.rb:299
 #, fuzzy
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "It is not possible to merge into an already merged ticket."
@@ -12782,13 +12824,13 @@ msgstr "Items"
 msgid "Items per page"
 msgstr "Elements per pàgina"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jan"
 msgstr "Gen."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "January"
 msgstr "Gener"
 
@@ -12814,23 +12856,23 @@ msgstr "Uneix-te %s"
 msgid "Join feedback program"
 msgstr "Formulari de Feedback"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jul"
 msgstr "Jul."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "July"
 msgstr "Juliol"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jun"
 msgstr "Juny"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "June"
 msgstr "Juny"
 
@@ -12847,11 +12889,6 @@ msgstr ""
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:96
 msgid "Just switch back"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:118
-#, fuzzy
-msgid "KB Answer"
-msgstr "Answer"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -12904,9 +12941,10 @@ msgstr "Paraules clau"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:67
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:67
-#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:26
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:70
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:103
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
+#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
 #: app/models/knowledge_base.rb:262 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "Base de coneixement"
@@ -12965,28 +13003,39 @@ msgstr "Base de coneixement"
 msgid "Knowledge Base Reader"
 msgstr "Knowledge Base Reader"
 
-#: db/seeds/settings.rb:5653
+#: db/seeds/settings.rb:5662
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge Base active"
 msgstr "Base de coneixement"
 
-#: db/seeds/settings.rb:5668
+#: db/seeds/settings.rb:5677
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge Base active publicly"
 msgstr "Base de coneixement"
 
-#: db/seeds/settings.rb:5642
+#: app/models/audit_log/object_type_labels.rb:10
+#, fuzzy
+msgid "Knowledge Base language"
+msgstr "Knowledge Base Answer"
+
+#: db/seeds/settings.rb:5651
 #, fuzzy
 msgid "Knowledge Base multilingual support"
 msgstr "Knowledge Base multilingual support"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:259
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:346
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base actions"
 msgstr "Base de coneixement"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:331
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
+#, fuzzy
+msgid "Knowledge base answer"
+msgstr "Knowledge Base Answer"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
 #, fuzzy
@@ -12994,7 +13043,7 @@ msgstr "Base de coneixement"
 msgid "Knowledge base articles"
 msgstr "Base de coneixement"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:60
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:61
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base controls"
@@ -13008,7 +13057,7 @@ msgstr "Base de coneixement"
 msgid "Knowledge base draft could not be generated."
 msgstr "Objecte %s han sigut creats."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:177
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:145
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base feed"
@@ -13021,13 +13070,13 @@ msgstr "Base de coneixement"
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:46
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base navigation"
 msgstr "Base de coneixement"
 
-#: db/seeds/settings.rb:6375
+#: db/seeds/settings.rb:6384
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base self-hosted video servers"
@@ -13041,7 +13090,7 @@ msgstr "The Simple Storage Service is not available."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
-#: db/seeds/settings.rb:1253
+#: app/models/audit_log/object_type_labels.rb:11 db/seeds/settings.rb:1253
 #, fuzzy
 msgid "LDAP"
 msgstr "LDAP"
@@ -13050,7 +13099,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "Host LDAP"
 
-#: db/seeds/settings.rb:5005
+#: db/seeds/settings.rb:5014
 #, fuzzy
 msgid "LDAP integration"
 msgstr "LDAP integration"
@@ -13081,7 +13130,6 @@ msgstr "Landing page layout"
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:70
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
@@ -13270,7 +13318,7 @@ msgstr "Layout Reference"
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:429
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:433
 #, fuzzy
 #| msgid "Confirm"
 msgid "Leave empty to use URL (Completions)"
@@ -13289,7 +13337,7 @@ msgstr ""
 msgid "Legal Information"
 msgstr "Information"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:386
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:390
 msgid ""
 "Length of the vectors the embedding model produces. Filled in for a model "
 "whose size is known."
@@ -13495,7 +13543,7 @@ msgid "Linked Accounts"
 msgstr "Comptes vinculats"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:49
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:196
 #, fuzzy
 #| msgid "Linked Accounts"
 msgid "Linked accounts"
@@ -13531,7 +13579,7 @@ msgstr "List of installed addons"
 msgid "List of issue labels"
 msgstr ""
 
-#: db/seeds/settings.rb:6378
+#: db/seeds/settings.rb:6387
 msgid ""
 "List of self-hosted video servers. This list is used for content security "
 "policy."
@@ -14247,13 +14295,13 @@ msgstr ""
 msgid "Mapping"
 msgstr "Mapatge"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Mar"
 msgstr "març"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "March"
 msgstr "Març"
 
@@ -14383,7 +14431,7 @@ msgstr "Maximum number of recursively executed triggers."
 msgid "Maximum number of ticket shown in overviews"
 msgstr "Maximum number of ticket shown in overviews"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
@@ -14707,19 +14755,19 @@ msgstr "Mòbil"
 msgid "Mode"
 msgstr "Mode"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:344
 #, fuzzy
 #| msgid "Mode"
 msgid "Model"
 msgstr "Mode"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:402
 msgid ""
 "Model used for image text recognition. Leave empty to use the model of this "
 "connection."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:362
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:366
 msgid ""
 "Model used for vector embedding in semantic search. Required for the "
 "provider that serves semantic search."
@@ -14731,11 +14779,11 @@ msgstr ""
 msgid "Module"
 msgstr "Module"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Mon"
 msgstr "Dl."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:7
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:15
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
@@ -14747,7 +14795,7 @@ msgstr "Dilluns"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4904
+#: db/seeds/settings.rb:4913
 #, fuzzy
 msgid "Monit integration"
 msgstr "Monit integration"
@@ -14781,7 +14829,7 @@ msgstr "Ànim"
 msgid "More information can be found here."
 msgstr "More information can be found here."
 
-#: app/models/user.rb:719
+#: app/models/user.rb:720
 #, fuzzy
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "More than 250 secondary organizations are not allowed."
@@ -14900,16 +14948,16 @@ msgstr "Els teus tiquets en procés"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4673
+#: db/seeds/settings.rb:4682
 #, fuzzy
 msgid "Nagios integration"
 msgstr "Nagios integration"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:522
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:526
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:79
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
@@ -15038,7 +15086,7 @@ msgstr "Need fingerprint param!"
 msgid "Need help? Check the Zammad Documentation for detailed guidance."
 msgstr ""
 
-#: lib/sessions/event/chat_base.rb:27
+#: lib/sessions/event/chat_base.rb:28
 #, fuzzy
 msgid "Need session_id."
 msgstr "Need session_id."
@@ -15120,7 +15168,6 @@ msgstr "Nou atribut"
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
 msgid "New BETA UI"
 msgstr ""
 
@@ -15288,6 +15335,15 @@ msgstr "Waiting in %s"
 msgid "New desktop BETA UI"
 msgstr "New tab"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerCreate.vue:30
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:230
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:111
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:90
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "New knowledge base answer"
+msgstr "Elimina la Base de coneixement"
+
 #: app/assets/javascripts/app/controllers/search.coffee:24
 #, fuzzy
 #| msgid "Open Tickets"
@@ -15329,7 +15385,7 @@ msgstr "Següent mòdul de text"
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:81
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:19
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts:11
 #, fuzzy
@@ -15390,7 +15446,7 @@ msgid "New user?"
 msgstr "Nou usuari"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:644
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:627
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -15563,7 +15619,7 @@ msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:273
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:278
 #, fuzzy
 #| msgid "No translation for this locale available"
 msgid "No advanced filters available for %s."
@@ -15638,7 +15694,7 @@ msgstr "Guarda la configuració"
 msgid "No content to show"
 msgstr "No content to show"
 
-#: app/models/group.rb:40
+#: app/models/group.rb:41
 #, fuzzy
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "No double colons (::) allowed, reserved delimiter"
@@ -15716,7 +15772,7 @@ msgstr "Els teus tiquets en procés"
 msgid "No items available"
 msgstr "Cap traducció per aquesta regió disponible"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:238
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:321
 #, fuzzy
 msgid "No knowledge base content is available yet."
 msgstr "The Simple Storage Service is not available."
@@ -15765,7 +15821,7 @@ msgid "No organizations found"
 msgstr "Organitzacions"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:158
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:158
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:157
 #, fuzzy
 #| msgid "Overviews"
 msgid "No overviews"
@@ -15830,6 +15886,7 @@ msgstr "No results found"
 msgid "No results were found."
 msgstr "No s'han trobat resultats."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchResults.vue:73
 #: app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue:27
 #, fuzzy
 msgid "No search results for this query."
@@ -15864,7 +15921,7 @@ msgid "No shared drafts yet"
 msgstr "Compartit"
 
 #: app/controllers/organizations_controller.rb:107
-#: app/controllers/text_modules_controller.rb:75
+#: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
 #: app/controllers/users_controller.rb:559
@@ -15911,12 +15968,12 @@ msgstr "No token!"
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:41
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:101
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:117
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:203
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:206
 msgid "No translation for this locale available"
 msgstr "Cap traducció per aquesta regió disponible"
 
-#: app/models/ticket.rb:423
+#: app/models/ticket.rb:432
 #, fuzzy
 msgid "No triggers active"
 msgstr "No triggers active"
@@ -15952,7 +16009,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "No x-zammad-session-user-id, no sender set!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:472
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -16048,6 +16105,7 @@ msgstr "Sense configurar"
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:55
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerCreateView.ts:31
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -16213,7 +16271,6 @@ msgstr "So de notificació"
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
 #: db/seeds/permissions.rb:515
 msgid "Notifications"
@@ -16225,13 +16282,13 @@ msgstr "Notificacions"
 msgid "Notifications matrix"
 msgstr "Remitent de la notificació"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Nov"
 msgstr "Nov."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "November"
 msgstr "Novembre"
 
@@ -16241,7 +16298,7 @@ msgstr "Novembre"
 msgid "Number"
 msgstr "Número"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:391
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:395
 msgid ""
 "Number of input tokens the embedding model takes at once. Filled in for a "
 "model whose limit is known."
@@ -16279,7 +16336,7 @@ msgstr "OAuth URLs are:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 token is expired!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:394
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
 #, fuzzy
 #| msgid "Mode"
 msgid "OCR Model"
@@ -16287,7 +16344,7 @@ msgstr "Mode"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:19
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:97
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:29
 #, fuzzy
 msgid "OK"
@@ -16390,13 +16447,13 @@ msgstr ""
 msgid "Objects"
 msgstr "Objectes"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Oct"
 msgstr "Oct."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "October"
 msgstr "Octubre"
 
@@ -16540,6 +16597,7 @@ msgstr ""
 "web als clients."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:102
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:141
 msgid "Only visible to editors"
 msgstr "Solament visible als editors"
 
@@ -16982,7 +17040,6 @@ msgstr ""
 "vostè?"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:122
 #, fuzzy
 #| msgid "Out of Office"
 msgid "Out of office"
@@ -17098,7 +17155,6 @@ msgstr "Resums"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:33
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
 #: db/seeds/permissions.rb:35
@@ -17143,22 +17199,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
+#: app/models/audit_log/object_type_labels.rb:13
 #, fuzzy
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5921
+#: db/seeds/settings.rb:5930
 #, fuzzy
 msgid "PGP Recipient Alias Configuration"
 msgstr "PGP Recipient Alias Configuration"
 
-#: db/seeds/settings.rb:5879
+#: db/seeds/settings.rb:5888
 #, fuzzy
 #| msgid "Config"
 msgid "PGP config"
 msgstr "Configuració"
 
-#: db/seeds/settings.rb:5851
+#: db/seeds/settings.rb:5860
 #, fuzzy
 #| msgid "Integrations"
 msgid "PGP integration"
@@ -17168,7 +17225,7 @@ msgstr "Integracions"
 msgid "PGP signature does not cover the displayed message body"
 msgstr ""
 
-#: db/seeds/settings.rb:5893
+#: db/seeds/settings.rb:5902
 #, fuzzy
 #| msgid "Notification"
 msgid "PGP signing for system notifications"
@@ -17204,7 +17261,7 @@ msgstr "El test s'ha executat correctament."
 msgid "Packages"
 msgstr "Paquets"
 
-#: db/seeds/settings.rb:6471
+#: db/seeds/settings.rb:6480
 #, fuzzy
 #| msgid "Packages"
 msgid "Packages Token"
@@ -17276,7 +17333,6 @@ msgstr "Pare"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:480
 msgid "Password"
@@ -17449,6 +17505,12 @@ msgstr "Escalació de tiquet"
 msgid "Permanently Delete Knowledge Base"
 msgstr "Elimina permanentment la Base de coneixement"
 
+#: app/models/audit_log/object_type_labels.rb:12
+#, fuzzy
+#| msgid "Permissions"
+msgid "Permission"
+msgstr "Permisos"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2835
 #, fuzzy
@@ -17502,6 +17564,12 @@ msgstr "Tokens d'accés personal"
 #, fuzzy
 msgid "Personal overview order was reset."
 msgstr "Personal overview order was reset."
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#, fuzzy
+#| msgid "Personal Settings"
+msgid "Personal settings"
+msgstr "Configuracions personals"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
@@ -17567,18 +17635,18 @@ msgstr ""
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5436
+#: db/seeds/settings.rb:5445
 #, fuzzy
 #| msgid "Placetel"
 msgid "Placetel Token"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5422
+#: db/seeds/settings.rb:5431
 #, fuzzy
 msgid "Placetel config"
 msgstr "Placetel config"
 
-#: db/seeds/settings.rb:5394
+#: db/seeds/settings.rb:5403
 #, fuzzy
 msgid "Placetel integration"
 msgstr "Placetel integration"
@@ -17639,7 +17707,7 @@ msgid "Please configure import source before running."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:239
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:322
 #, fuzzy
 msgid "Please contact your administrator."
 msgstr "Please contact your administrator."
@@ -18057,7 +18125,7 @@ msgstr "Private key secret"
 msgid "Problem"
 msgstr "Problem"
 
-#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:14
+#: app/assets/javascripts/app/controllers/_ai/embedding_stop_confirm.coffee:6
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:15
 msgid "Proceed"
 msgstr "Procedeix"
@@ -18084,7 +18152,6 @@ msgid "Product Name"
 msgstr "Nom del producte"
 
 #: app/assets/javascripts/app/controllers/profile.coffee:24
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts:7
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts:14
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:8
@@ -18100,7 +18167,6 @@ msgstr "Perfil"
 msgid "Profile language updated successfully."
 msgstr "El test s'ha executat correctament."
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:442
 #, fuzzy
 #| msgid "Proxy Settings"
@@ -18205,6 +18271,7 @@ msgstr "Adreça del proxy"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:150
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
 msgid "Public"
 msgstr "Públic"
@@ -18238,7 +18305,7 @@ msgstr "Menú públic"
 msgid "Publish Article"
 msgstr "Article"
 
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:22
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:24
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:33
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:76
@@ -18302,11 +18369,11 @@ msgstr ""
 "Habilita accés API REST utilitzant usuari/correu i contrasenya per "
 "l'autentificació d'usuari"
 
-#: app/models/audit_log.rb:75
+#: app/models/audit_log.rb:87
 msgid "Rails console"
 msgstr ""
 
-#: app/models/audit_log.rb:78
+#: app/models/audit_log.rb:90
 #, fuzzy
 #| msgid "Last run"
 msgid "Rails runner"
@@ -18490,7 +18557,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr "Recursive Ticket Triggers"
 
-#: db/seeds/settings.rb:6433
+#: db/seeds/settings.rb:6442
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -18864,13 +18931,13 @@ msgstr "Rename checklist"
 msgid "Renew Access Token"
 msgstr "Tokens d'accés personal"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:224
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:192
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Renew access token"
 msgstr "Tokens d'accés personal"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:109
 #, fuzzy
 #| msgid "Getting an Access Token"
 msgid "Renewing the access token failed."
@@ -19035,14 +19102,14 @@ msgstr "Requeriments"
 
 #: db/seeds/settings.rb:1820
 msgid ""
-"Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) to "
-"be present and true before trusting an incoming email address for account "
-"auto-linking. Both must first be configured as optional claims on the Azure "
-"app registration. Until that is done, enabling this blocks all Microsoft 365 "
-"account auto-linking by email."
+"Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
+"to match the incoming email address, before trusting that address for "
+"account auto-linking. Both claims must first be configured as optional "
+"claims on the Azure app registration. Until that is done, enabling this "
+"blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
 
-#: db/seeds/settings.rb:6108
+#: db/seeds/settings.rb:6117
 #, fuzzy
 #| msgid "Authentication"
 msgid ""
@@ -19238,7 +19305,7 @@ msgstr "Result:"
 msgid "Result:"
 msgstr "Result:"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:615
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:609
 #, fuzzy
 msgid "Results"
 msgstr "Result:"
@@ -19283,7 +19350,7 @@ msgstr "Retrying to download the sent media via WhatsApp failed."
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6444
+#: db/seeds/settings.rb:6453
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -19395,6 +19462,7 @@ msgstr "Executant-se..."
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
+#: app/models/audit_log/object_type_labels.rb:16
 #, fuzzy
 msgid "S/MIME"
 msgstr "S/MIME"
@@ -19406,7 +19474,7 @@ msgid ""
 "encrypted messages."
 msgstr ""
 
-#: db/seeds/settings.rb:5809
+#: db/seeds/settings.rb:5818
 #, fuzzy
 msgid "S/MIME config"
 msgstr "S/MIME config"
@@ -19416,12 +19484,12 @@ msgstr "S/MIME config"
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr "S/MIME enables you to send digitally signed and encrypted messages."
 
-#: db/seeds/settings.rb:5781
+#: db/seeds/settings.rb:5790
 #, fuzzy
 msgid "S/MIME integration"
 msgstr "S/MIME integration"
 
-#: db/seeds/settings.rb:5823
+#: db/seeds/settings.rb:5832
 msgid "S/MIME signing for system notifications"
 msgstr ""
 
@@ -19439,6 +19507,7 @@ msgstr "SAML App Credentials"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "SLA"
 msgstr "SLA"
 
@@ -19492,6 +19561,7 @@ msgstr "SMTP - configure your own outgoing SMTP settings"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
+#: app/models/audit_log/object_type_labels.rb:17
 #, fuzzy
 #| msgid "SLA"
 msgid "SSL"
@@ -19537,7 +19607,7 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5953
+#: db/seeds/settings.rb:5962
 #, fuzzy
 msgid "SSO"
 msgstr "SSO"
@@ -19554,11 +19624,11 @@ msgstr ""
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sat"
 msgstr "Ds."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:12
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:20
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:59
@@ -19677,6 +19747,7 @@ msgid "Saving failed."
 msgstr "Acció massiva executada!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:182
 msgid "Schedule for"
 msgstr "Programa per"
 
@@ -19688,7 +19759,7 @@ msgstr "Planificat per"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:4
-#: db/seeds/permissions.rb:95
+#: app/models/audit_log/object_type_labels.rb:9 db/seeds/permissions.rb:95
 msgid "Scheduler"
 msgstr "Programador"
 
@@ -19785,7 +19856,7 @@ msgstr "Mou a dalt i avall"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:613
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:607
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -19820,7 +19891,7 @@ msgstr "Search URL is invalid."
 msgid "Search all"
 msgstr "Buscar"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:220
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:225
 #, fuzzy
 #| msgid "Back to search results"
 msgid "Search entity"
@@ -19980,7 +20051,7 @@ msgstr "Introdueix el teu usuari o correu electrònic."
 msgid "Search or enter phone number…"
 msgstr "Introdueix el teu usuari o correu electrònic."
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:667
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:661
 #, fuzzy
 #| msgid "Back to search results"
 msgid "Search result for: %s"
@@ -20063,6 +20134,18 @@ msgstr "Search result value key \"%s\" is not a string, number or boolean."
 msgid "Search result value key \"%s\" was not found."
 msgstr "So de notificació"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:66
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Search the knowledge base"
+msgstr "Base de coneixement"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue:16
+#, fuzzy
+#| msgid "Search"
+msgid "Search within %s…"
+msgstr "Buscar"
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:35
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:160
@@ -20099,13 +20182,13 @@ msgstr "Buscar"
 msgid "Secondary organizations"
 msgstr "Organització compartida"
 
-#: app/models/user.rb:707
+#: app/models/user.rb:708
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
 
-#: app/models/user.rb:713
+#: app/models/user.rb:714
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -20124,7 +20207,7 @@ msgstr "Secret de l'aplicació"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:190
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:183
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
@@ -20153,7 +20236,7 @@ msgstr "Seguretat"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:6014
+#: db/seeds/settings.rb:6023
 #, fuzzy
 #| msgid "Security"
 msgid "Security Keys"
@@ -20451,12 +20534,12 @@ msgstr ""
 msgid "Semantic search"
 msgstr "Tiquet obert # %s"
 
-#: lib/ai/vectordb.rb:10
+#: lib/ai/vectordb.rb:8
 #, fuzzy
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "Loading failed, please try again later."
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:2
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -20595,11 +20678,11 @@ msgstr "S'està enviant…"
 msgid "Sent successfully!"
 msgstr "Sent successfully!"
 
-#: db/seeds/settings.rb:6434
+#: db/seeds/settings.rb:6443
 msgid "Sentence-based chunking"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
@@ -20610,7 +20693,7 @@ msgstr "Set."
 msgid "Separate multiple values by ;"
 msgstr "Separate multiple values by ;"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "September"
 msgstr "Setembre"
 
@@ -20678,7 +20761,7 @@ msgstr "Set Up"
 msgid "Set a title for your ticket"
 msgstr "Crea el teu primer tiquet"
 
-#: db/seeds/settings.rb:5524
+#: db/seeds/settings.rb:5533
 #, fuzzy
 msgid "Set agent limit"
 msgstr "Set agent limit"
@@ -20759,7 +20842,7 @@ msgstr "Estableix ID de trucades sortints"
 msgid "Set security keys as default"
 msgstr "Restableix als ajustos per defecte"
 
-#: db/seeds/settings.rb:5686
+#: db/seeds/settings.rb:5695
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits."
@@ -20843,12 +20926,18 @@ msgstr ""
 "l'encapçalament Reply-to. Útil per definir el client correcte si l'email ha "
 "estat rebut d'una tercera persona del sistema en nom d'un client."
 
+#: app/models/audit_log/object_type_labels.rb:14
+#, fuzzy
+#| msgid "Settings"
+msgid "Setting"
+msgstr "Ajustos"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:26
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:49
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -20961,16 +21050,11 @@ msgid "Shared organization"
 msgstr "Organització compartida"
 
 #: app/assets/javascripts/app/controllers/organization.coffee:21
+#: app/assets/javascripts/app/controllers/overview.coffee:22
 #: app/assets/javascripts/app/controllers/search.coffee:35
 #, fuzzy
 #| msgid "Shared organization"
 msgid "Shared organizations"
-msgstr "Organització compartida"
-
-#: app/assets/javascripts/app/controllers/overview.coffee:22
-#, fuzzy
-#| msgid "Shared organization"
-msgid "Shared with organizations"
 msgstr "Organització compartida"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:28
@@ -21028,7 +21112,7 @@ msgstr "Mostra totes..."
 msgid "Show authenticator app secret"
 msgstr "Autentificació via %s"
 
-#: db/seeds/settings.rb:5986
+#: db/seeds/settings.rb:5995
 #, fuzzy
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Show calendar weeks in the picker of date/datetime fields"
@@ -21721,7 +21805,7 @@ msgstr "Estat"
 msgid "State icon"
 msgstr "Estat"
 
-#: db/seeds/settings.rb:5558
+#: db/seeds/settings.rb:5567
 #, fuzzy
 msgid "Stats Backend"
 msgstr "Stats Backend"
@@ -21816,12 +21900,12 @@ msgstr "Mecanisme de emmagatzematge"
 msgid "Store"
 msgstr "Botiga"
 
-#: db/seeds/settings.rb:5197
+#: db/seeds/settings.rb:5206
 #, fuzzy
 msgid "Stores the GitHub configuration."
 msgstr "Stores the GitHub configuration."
 
-#: db/seeds/settings.rb:5155
+#: db/seeds/settings.rb:5164
 #, fuzzy
 msgid "Stores the GitLab configuration."
 msgstr "Stores the GitLab configuration."
@@ -21832,7 +21916,7 @@ msgid ""
 "provider."
 msgstr ""
 
-#: db/seeds/settings.rb:6257
+#: db/seeds/settings.rb:6266
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
@@ -21864,7 +21948,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:663
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:646
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -21966,16 +22050,18 @@ msgid "Suggest matching knowledge base answers in the ticket sidebar."
 msgstr "Elimina la Base de coneixement"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:43
 #, fuzzy
-#| msgid "Last sync"
-msgid "Suggested by AI"
-msgstr "Última sincronització"
+#| msgid "Related Answers"
+msgid "Suggested knowledge"
+msgstr "Respostes relacionades"
 
 #: app/assets/javascripts/app/views/generic/admin/index.jst.eco:49
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
 #: app/assets/javascripts/app/views/search/index.jst.eco:16
 #: app/assets/javascripts/app/views/search/shortcuts.jst.eco:2
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:66
 #, fuzzy
 #| msgid "Last sync"
 msgid "Suggested searches"
@@ -22013,18 +22099,18 @@ msgstr "Objecte %s han sigut creats."
 msgid "Summer holiday"
 msgstr "Vacances d'estiu"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sun"
 msgstr "Dg."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:13
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:21
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:62
 msgid "Sunday"
 msgstr "Diumenge"
 
-#: db/seeds/settings.rb:5645
+#: db/seeds/settings.rb:5654
 #, fuzzy
 msgid "Support of multilingual Knowledge Base."
 msgstr "Support of multilingual Knowledge Base."
@@ -22125,7 +22211,7 @@ msgid ""
 "Weblate, give it a try!"
 msgstr ""
 
-#: db/seeds/settings.rb:5718
+#: db/seeds/settings.rb:5727
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -22171,12 +22257,13 @@ msgid "Tag assignment mode"
 msgstr "Temps d'espera d'assignació"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:37
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:46
 #, fuzzy
 #| msgid "created"
 msgid "Tagged %s"
 msgstr "creat"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -22185,6 +22272,7 @@ msgstr "creat"
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:25
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:76
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
@@ -22321,6 +22409,7 @@ msgstr "Testejant"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:208
 #: db/seeds/object_manager_attributes.rb:552
 msgid "Text"
@@ -22349,6 +22438,7 @@ msgid "Text missing"
 msgstr "Falta el text"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
+#: app/models/audit_log/object_type_labels.rb:18
 #, fuzzy
 #| msgid "Text modules"
 msgid "Text module"
@@ -22448,7 +22538,7 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr "The API token could not be found."
 
-#: lib/ai/vectordb.rb:69
+#: lib/ai/vectordb.rb:67
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The Elasticsearch index could not be created"
@@ -22601,7 +22691,7 @@ msgstr "Objecte %s han sigut creats."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "Objecte %s han sigut creats."
 
-#: app/models/ai/provider_connection.rb:444
+#: app/models/ai/provider_connection.rb:448
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -22633,6 +22723,12 @@ msgstr ""
 #| msgid "When notification is being sent."
 msgid "The admin password auth email could not be sent."
 msgstr "Quan la notificació esta sent enviada."
+
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts:61
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The answer could not be created."
+msgstr "Objecte %s han sigut creats."
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:43
 msgid ""
@@ -22896,7 +22992,7 @@ msgstr ""
 msgid "The checklist feature is not active"
 msgstr "Control de temps"
 
-#: app/models/group.rb:110
+#: app/models/group.rb:111
 msgid "The chosen parent group is part of a circular reference."
 msgstr ""
 
@@ -22959,6 +23055,14 @@ msgstr ""
 msgid "The current password you provided is incorrect."
 msgstr "The current password you provided is incorrect."
 
+#: app/models/core_workflow/result.rb:61
+msgid "The current user is not allowed to access the referenced object."
+msgstr ""
+
+#: app/models/core_workflow/result.rb:45
+msgid "The current user is not allowed to use core workflow for this object."
+msgstr ""
+
 #: app/services/service/ai/vectordb/create_table.rb:21
 msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
@@ -22995,7 +23099,7 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr "La mida de lletra per defecte és 12px."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:193
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:182
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The default provider could not be updated."
@@ -23103,6 +23207,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:718
 msgid "The entry could not be created."
 msgstr ""
+
+#: lib/sessions/event.rb:61
+#, fuzzy
+msgid "The event could not be processed."
+msgstr "The request could not be processed."
 
 #: lib/telegram_helper.rb:694
 #, fuzzy
@@ -23264,7 +23373,7 @@ msgid ""
 "arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:457
+#: lib/search_index_backend.rb:466
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23303,7 +23412,7 @@ msgid ""
 "reachable and runs a supported version."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -23315,11 +23424,11 @@ msgstr ""
 msgid "The language could not be updated."
 msgstr "Objecte(s) %s s'han actualitzat."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:188
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:156
 msgid "The latest internal answers in the whole knowledge base."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:198
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:166
 msgid ""
 "The latest internal answers of the current category and its sub-categories."
 msgstr ""
@@ -23358,7 +23467,7 @@ msgstr "Control de temps"
 msgid "The minutes overlay"
 msgstr "Obre el bloc de notes"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:775
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:758
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The model list could not be fetched: %s"
@@ -23382,14 +23491,8 @@ msgstr "Obre el bloc de notes"
 msgid "The new ticket number could not be generated."
 msgstr "Objecte %s han sigut creats."
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:6
-msgid ""
-"The number of extra AI requests will depend on the amount of indexable "
-"content."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -23408,7 +23511,7 @@ msgstr "Objecte %s han sigut creats."
 msgid "The object could not be found."
 msgstr "Objecte(s) %s s'han actualitzat."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -23636,13 +23739,13 @@ msgstr ""
 msgid "The provider could not be updated."
 msgstr "Objecte(s) %s s'han actualitzat."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
 msgid ""
 "The provider offered no matching model for this field, so it has to be "
 "entered manually."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
 msgid ""
 "The provider offered no models to choose from, so it has to be entered "
 "manually."
@@ -23794,7 +23897,7 @@ msgstr "The required parameter 'group_id' is missing."
 msgid "The required parameter 'id' is missing."
 msgstr "The required parameter 'id' is missing."
 
-#: lib/search_index_backend.rb:704
+#: lib/search_index_backend.rb:713
 #, fuzzy
 msgid "The required parameter 'key' is missing."
 msgstr "The required parameter 'key' is missing."
@@ -23864,7 +23967,7 @@ msgstr "The required parameter 'ticket_number' is missing."
 msgid "The required parameter 'user_id' is missing."
 msgstr "The required parameter 'user_id' is missing."
 
-#: lib/search_index_backend.rb:705
+#: lib/search_index_backend.rb:714
 #, fuzzy
 msgid "The required parameter 'value' is missing."
 msgstr "The required parameter 'value' is missing."
@@ -23922,22 +24025,20 @@ msgstr ""
 msgid "The seconds overlay"
 msgstr "Obre el bloc de notes"
 
+#: app/services/service/knowledge_base/answer/create.rb:138
+#, fuzzy
+msgid "The selected category does not belong to this knowledge base."
+msgstr "The article does not belong to the specified ticket."
+
 #: app/frontend/shared/form/i18n/locales.ts:525
 #, fuzzy
 msgid "The selected date is invalid."
 msgstr "The selected date is invalid."
 
-#: app/graphql/gql/concerns/handles_knowledge_base_locale.rb:61
-#: app/services/service/knowledge_base/category/concerns/assigns_title.rb:31
-#: app/services/service/knowledge_base/update.rb:60
+#: app/services/service/knowledge_base/base.rb:32
 #, fuzzy
 msgid "The selected language does not belong to this knowledge base."
 msgstr "The file does not belong to the specified article."
-
-#: app/services/service/knowledge_base/category/base.rb:17
-#, fuzzy
-msgid "The selected parent category does not belong to this knowledge base."
-msgstr "The article does not belong to the specified ticket."
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
 #, fuzzy
@@ -23981,7 +24082,7 @@ msgstr "The setting 'ticket_number' was not configured."
 msgid "The setting could not be reset."
 msgstr "Objecte(s) %s s'han actualitzat."
 
-#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:120
+#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:124
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:215
 #: app/assets/javascripts/app/models/setting.coffee:43
 #, fuzzy
@@ -24257,11 +24358,21 @@ msgstr ""
 msgid "The username or password is incorrect."
 msgstr "The username or password is incorrect."
 
-#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:133
+#: app/models/core_workflow/result.rb:40
+#, fuzzy
+msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr "The required parameter 'payload->class_name' is missing."
+
+#: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The vector index could not be updated."
 msgstr "Objecte(s) %s s'han actualitzat."
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:238
+msgid ""
+"The vector index rebuild has started and will continue in the background."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 #, fuzzy
@@ -24593,10 +24704,6 @@ msgstr "This category including sub-categories feed:"
 msgid "This category is empty"
 msgstr "This category is empty"
 
-#: app/services/service/ai/provider_connection/validator/embedding_rebuild.rb:43
-msgid "This change requires the knowledge base to be indexed again."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:92
 #, fuzzy
 #| msgid ""
@@ -24723,6 +24830,7 @@ msgstr "This field doesn't end with \"%s\"."
 msgid "This field doesn't start with \"%s\"."
 msgstr "This field doesn't start with \"%s\"."
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRadioList/features/addOptionDateValidation.ts:45
 #: app/frontend/shared/form/i18n/locales.ts:472
 #, fuzzy
 msgid "This field is required."
@@ -24855,17 +24963,17 @@ msgstr "Contrasenya invalida, ha de tenir una longitud mínima de %s caràcters!
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "This field was configured incorrectly and can't be submitted."
 
-#: app/models/group.rb:83
+#: app/models/group.rb:84
 #, fuzzy
 #| msgid "A ticket cannot be merged into itself."
 msgid "This group cannot be moved into itself."
 msgstr "Un tiquet no es pot fusionar en si mateix."
 
-#: app/models/group.rb:84
+#: app/models/group.rb:85
 msgid "This group cannot be moved into one of its children."
 msgstr ""
 
-#: app/models/group.rb:90
+#: app/models/group.rb:91
 #, fuzzy
 msgid "This group exceeds the allowed nesting depth."
 msgstr "This group or its children exceed the allowed nesting depth."
@@ -24877,7 +24985,7 @@ msgstr "This group or its children exceed the allowed nesting depth."
 msgid "This group has no email address configured for outgoing communication."
 msgstr "This group has no email address configured for outgoing communication."
 
-#: app/models/group.rb:96
+#: app/models/group.rb:97
 #, fuzzy
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "This group or its children exceed the allowed nesting depth."
@@ -24936,6 +25044,7 @@ msgstr "The Simple Storage Service is not available."
 msgid "This knowledge base category is not available."
 msgstr "The Simple Storage Service is not available."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerCreateView.ts:32
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #, fuzzy
 #| msgid "Not available in selected language"
@@ -25043,7 +25152,7 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: app/controllers/ai/provider_connections_controller.rb:57
+#: app/controllers/ai/provider_connections_controller.rb:38
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:37
 #, fuzzy
 msgid "This provider does not support embeddings."
@@ -25124,7 +25233,7 @@ msgstr ""
 "Aquest servei mostra els teus contactes de trucades entrants i una llista de "
 "trucades en temps real."
 
-#: db/seeds/settings.rb:6474
+#: db/seeds/settings.rb:6483
 msgid ""
 "This setting defines the token to access the support.zammad.com instance for "
 "package remote commands."
@@ -25223,17 +25332,11 @@ msgid ""
 "or a trigger is sending an auto-reply."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:5
-msgid ""
-"This will rebuild the vector index used for the semantic search, which may "
-"result in higher AI costs."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Thu"
 msgstr "Dj."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:10
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:18
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:53
@@ -25372,13 +25475,13 @@ msgstr "Ticket Number Increment Date"
 msgid "Ticket Number ignore system_id"
 msgstr "Ticket Number ignore system_id"
 
-#: db/seeds/settings.rb:6130
+#: db/seeds/settings.rb:6139
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Ticket Organization Reassignment"
 msgstr "Tiquets de l'organització"
 
-#: db/seeds/settings.rb:5715
+#: db/seeds/settings.rb:5724
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview Query Polling"
@@ -25457,17 +25560,17 @@ msgstr "Subscripció a tiquets"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6240
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6249
 #, fuzzy
 msgid "Ticket Summary"
 msgstr "Event Summary"
 
-#: db/seeds/settings.rb:6254
+#: db/seeds/settings.rb:6263
 #, fuzzy
 msgid "Ticket Summary Config"
 msgstr "Ticket Count"
 
-#: db/seeds/settings.rb:6273
+#: db/seeds/settings.rb:6282
 #, fuzzy
 #| msgid "Ticket Selector"
 msgid "Ticket Summary Selector"
@@ -25715,7 +25818,7 @@ msgid "Ticket update failed."
 msgstr "Tiquet actualitzat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:561
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:556
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:162
 #, fuzzy
 #| msgid "The test run was successful."
@@ -25923,6 +26026,12 @@ msgstr "Total d'unitats de temps"
 msgid "Time accounting"
 msgstr "Control de temps"
 
+#: app/models/audit_log/object_type_labels.rb:19
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time accounting type"
+msgstr "Control de temps"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:16
 #, fuzzy
 #| msgid "Time Accounting"
@@ -25966,6 +26075,7 @@ msgid "Timezone"
 msgstr "Zona horària"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:174
 msgid "Timing"
 msgstr "Timing"
 
@@ -25982,6 +26092,7 @@ msgstr "Timing"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:67
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:63
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
@@ -26151,7 +26262,7 @@ msgstr "Obre el bloc de notes"
 msgid "Toggle the overlay"
 msgstr "Obre el bloc de notes"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:335
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:339
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -26169,7 +26280,6 @@ msgid "Token Access"
 msgstr "Accés al token"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:53
 #, fuzzy
 #| msgid "Token Access"
 msgid "Token access"
@@ -26181,12 +26291,12 @@ msgstr "Accés al token"
 msgid "Token authorization failed."
 msgstr "Autenticació"
 
-#: db/seeds/settings.rb:5363
+#: db/seeds/settings.rb:5372
 #, fuzzy
 msgid "Token for CTI."
 msgstr "Token for CTI."
 
-#: db/seeds/settings.rb:5267
+#: db/seeds/settings.rb:5276
 #, fuzzy
 msgid "Token for Sipgate."
 msgstr "Token for Sipgate."
@@ -26352,7 +26462,7 @@ msgid ""
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: db/seeds/settings.rb:5962
+#: db/seeds/settings.rb:5971
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -26394,11 +26504,11 @@ msgstr "Try using your security key again."
 msgid "Trying to reconnect…"
 msgstr "Trying to reconnect…"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Tue"
 msgstr "Dt."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:8
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:16
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:47
@@ -26480,7 +26590,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Autenticació"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:73
+#: app/models/audit_log/object_type_labels.rb:20
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor authentication"
@@ -26543,7 +26653,7 @@ msgstr "Autenticació"
 msgid "Two-factor method has been configured successfully."
 msgstr "El test s'ha executat correctament."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:521
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:525
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -26592,7 +26702,7 @@ msgstr "Nou atribut"
 msgid "UID Field"
 msgstr "Fecha i temps"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:414
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -26610,17 +26720,17 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX endpoint)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
 #, fuzzy
 #| msgid "Confirm"
 msgid "URL (Completions)"
 msgstr "Confirmar"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:430
 msgid "URL (OCR)"
 msgstr ""
 
@@ -26671,7 +26781,7 @@ msgstr "Unit"
 msgid "Unknown"
 msgstr ""
 
-#: app/controllers/ai/provider_connections_controller.rb:54
+#: app/controllers/ai/provider_connections_controller.rb:35
 msgid "Unknown default purpose."
 msgstr ""
 
@@ -26932,7 +27042,7 @@ msgstr "Compartit"
 msgid "Update successful."
 msgstr "Update successful."
 
-#: db/seeds/settings.rb:6142
+#: db/seeds/settings.rb:6151
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Update the most recent tickets."
@@ -27096,6 +27206,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
 #: app/assets/javascripts/app/controllers/search.coffee:26
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:40
 msgid "Updated within last 3 days"
 msgstr ""
 
@@ -27206,7 +27317,7 @@ msgstr "Use custom option sort"
 msgid "Use double click to change level of the row."
 msgstr "Use double click to change level of the row."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:115
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:114
 #, fuzzy
 #| msgid "Create your first ticket"
 msgid "Use for image text recognition"
@@ -27412,6 +27523,7 @@ msgid "User could not be updated."
 msgstr "Objecte %s han sigut creats."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/user-documentation.ts:7
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:27
 #, fuzzy
 #| msgid "Username / email"
 msgid "User documentation"
@@ -27661,21 +27773,21 @@ msgstr "Valor"
 msgid "Variables"
 msgstr "Variables"
 
-#: db/seeds/settings.rb:6389
+#: db/seeds/settings.rb:6398
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6403
+#: db/seeds/settings.rb:6412
 msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:6421
+#: db/seeds/settings.rb:6430
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Vector DB knowledge base chunking strategy"
 msgstr "Elimina la Base de coneixement"
 
-#: db/seeds/settings.rb:6412
+#: db/seeds/settings.rb:6421
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Vector DB knowledge base excluded categories"
@@ -27802,7 +27914,7 @@ msgstr "View"
 msgid "View from user's perspective"
 msgstr "Visualitza des de la perspectiva de l'usuari"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:77
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "View public knowledge base"
@@ -27831,6 +27943,7 @@ msgstr "Nou tiquet"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:29
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:134
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
@@ -27843,10 +27956,12 @@ msgid "Visible"
 msgstr "Visibilitat"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:110
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:151
 msgid "Visible to everyone"
 msgstr "Visible per qualsevol"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:146
 #, fuzzy
 #| msgid "Visible to agents & editors"
 msgid "Visible to readers & editors"
@@ -27972,11 +28087,11 @@ msgstr "Weblink"
 msgid "Website"
 msgstr "Pàgina web"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Wed"
 msgstr "Dc."
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:9
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:17
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:50
@@ -28250,17 +28365,18 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "Envia comentaris"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6291
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6300
 #, fuzzy
 msgid "Writing Assistant"
 msgstr "Waiting in %s"
 
-#: db/seeds/settings.rb:6305
+#: db/seeds/settings.rb:6314
 #, fuzzy
 msgid "Writing Assistant Fixed Instructions"
 msgstr "Waiting in %s"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
+#: app/models/audit_log/object_type_labels.rb:7
 #, fuzzy
 msgid "Writing Assistant Tool"
 msgstr "Waiting in %s"
@@ -28321,7 +28437,7 @@ msgid "Yes, add attachments now"
 msgstr "Afegeix l'opció d'adjuntar fitxers"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:466
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -28343,23 +28459,23 @@ msgstr "Estàs en la posició <strong>%s</strong> de la llista d'espera."
 msgid "You are part of the BETA UI feedback program."
 msgstr ""
 
-#: app/models/transaction/notification.rb:111
+#: app/models/transaction/notification.rb:124
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:192
+#: app/models/transaction/notification.rb:197
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:79
+#: app/models/transaction/notification.rb:92
 #, fuzzy
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "You are receiving this because you are the owner of this ticket."
 
-#: app/models/transaction/notification.rb:73
+#: app/models/transaction/notification.rb:86
 #, fuzzy
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "You are receiving this because you were mentioned in this ticket."
@@ -28573,8 +28689,13 @@ msgstr ""
 "Pot canviar entre els backends per als nous fitxers adjunts encara que "
 "estigui en un sistema que ja està en producció sense pedua de dades."
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 #: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
+msgid ""
+"You can switch between the old and the New BETA UI at any moment in the "
+"Personal settings > New BETA UI section."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile settings > New BETA UI section."
@@ -28716,7 +28837,7 @@ msgstr "You have to allow access to your webcam."
 msgid "You have unchecked items in the checklist."
 msgstr "You have unchecked items in the checklist."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:466
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""
@@ -29192,7 +29313,7 @@ msgstr "asigna tiquets"
 msgid "at"
 msgstr "a"
 
-#: app/models/object_manager/attribute.rb:607
+#: app/models/object_manager/attribute.rb:619
 #, fuzzy
 msgid "at least one letter is required"
 msgstr "at least one letter is required"
@@ -29203,7 +29324,7 @@ msgstr "at least one letter is required"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "attachment,attached,enclosed,enclosure"
 
-#: app/models/object_manager/attribute.rb:640
+#: app/models/object_manager/attribute.rb:652
 #, fuzzy
 msgid "attribute is not editable"
 msgstr "attribute is not editable"
@@ -29241,7 +29362,7 @@ msgstr "ocupat"
 msgid "camera,image,photo,picture"
 msgstr "camera,image,photo,picture"
 
-#: app/models/object_manager/attribute.rb:686
+#: app/models/object_manager/attribute.rb:702
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -29255,12 +29376,12 @@ msgstr "can't be blank"
 msgid "can't be empty"
 msgstr "can't be empty"
 
-#: app/models/object_manager/attribute.rb:693
+#: app/models/object_manager/attribute.rb:709
 #, fuzzy
 msgid "can't be modified"
 msgstr "can't be empty"
 
-#: app/models/object_manager/attribute.rb:598
+#: app/models/object_manager/attribute.rb:610
 #, fuzzy
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "can't be used because *_id and *_ids are not allowed"
@@ -29293,7 +29414,7 @@ msgstr "Checksum"
 msgid "children"
 msgstr "children"
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:166
 msgid "clear"
 msgstr "netejar"
 
@@ -29796,12 +29917,12 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5112
+#: db/seeds/settings.rb:5121
 #, fuzzy
 msgid "i-doit config"
 msgstr "i-doit config"
 
-#: db/seeds/settings.rb:5085
+#: db/seeds/settings.rb:5094
 #, fuzzy
 msgid "i-doit integration"
 msgstr "i-doit integration"
@@ -30026,7 +30147,7 @@ msgstr "is not a color. Only Hex, RGB and HSL colors are supported."
 msgid "is not a number"
 msgstr "Mida mínima del número"
 
-#: app/models/ai/provider_connection.rb:238
+#: app/models/ai/provider_connection.rb:242
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "is not a supported AI provider"
@@ -30086,7 +30207,7 @@ msgstr "is the wrong length (should be %{count} characters)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "is the wrong length (should be 1 character)"
 
-#: app/models/user.rb:906
+#: app/models/user.rb:907
 #, fuzzy
 msgid "is too long"
 msgstr "is too long"
@@ -30249,7 +30370,7 @@ msgstr "Mes(os)"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:905
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:888
 #, fuzzy
 msgid "must be a positive number"
 msgstr "must be an integer"
@@ -30459,12 +30580,13 @@ msgid "notifications,tickets"
 msgstr "Notificacions"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:48
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:179
 #, fuzzy
 #| msgid "no"
 msgid "now"
 msgstr "no"
 
-#: app/models/object_manager/attribute.rb:604
+#: app/models/object_manager/attribute.rb:616
 #, fuzzy
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "only lowercase letters, numbers, and '_' are allowed"
@@ -30652,7 +30774,7 @@ msgstr "row"
 msgid "run macro"
 msgstr "executa la macro"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:122
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:121
 msgid "second level navigation sidebar"
 msgstr ""
 
@@ -30741,23 +30863,23 @@ msgstr "show more"
 msgid "shown"
 msgstr "shown"
 
-#: db/seeds/settings.rb:5264
+#: db/seeds/settings.rb:5273
 #, fuzzy
 #| msgid "Placetel"
 msgid "sipgate.io Token"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5298
+#: db/seeds/settings.rb:5307
 #, fuzzy
 msgid "sipgate.io alternative FQDN"
 msgstr "sipgate.io alternative FQDN"
 
-#: db/seeds/settings.rb:5285
+#: db/seeds/settings.rb:5294
 #, fuzzy
 msgid "sipgate.io config"
 msgstr "sipgate.io config"
 
-#: db/seeds/settings.rb:5236
+#: db/seeds/settings.rb:5245
 #, fuzzy
 msgid "sipgate.io integration"
 msgstr "sipgate.io integration"
@@ -30774,7 +30896,7 @@ msgstr "saltat"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:601
+#: app/models/object_manager/attribute.rb:613
 #, fuzzy
 msgid "spaces are not allowed"
 msgstr "spaces are not allowed"
@@ -30884,10 +31006,10 @@ msgid "to go to the homepage."
 msgstr "to go to the homepage."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "avui"
@@ -31134,9 +31256,23 @@ msgid "∅ Waiting time today"
 msgstr "∅ temps d'espera avui"
 
 #, fuzzy
-#~| msgid "Edit Answer"
-#~ msgid "Add Answer"
-#~ msgstr "Edita la resposta"
+#~| msgid "Sure to delete this object?"
+#~ msgid "Are you sure you want to change the embedding configuration?"
+#~ msgstr "Estàs segur d'eliminar aquest objecte?"
+
+#, fuzzy
+#~ msgid "KB Answer"
+#~ msgstr "Answer"
+
+#, fuzzy
+#~| msgid "Shared organization"
+#~ msgid "Shared with organizations"
+#~ msgstr "Organització compartida"
+
+#, fuzzy
+#~| msgid "Last sync"
+#~ msgid "Suggested by AI"
+#~ msgstr "Última sincronització"
 
 #, fuzzy
 #~ msgid "Add sub-category"
