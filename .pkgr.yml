@@ -10,6 +10,8 @@ targets:
       - nginx
       - postgresql-server
       - epel-release
+      # jemalloc comes from the EPEL repo.
+      - jemalloc
       - imlib2
       - shared-mime-info
       - redis
@@ -24,6 +26,8 @@ targets:
       - nginx
       - postgresql-server
       - epel-release
+      # jemalloc comes from the EPEL repo.
+      - jemalloc
       - imlib2
       - shared-mime-info
       - valkey
@@ -38,6 +42,7 @@ targets:
       - nginx|apache2
       - postgresql
       - libimlib2
+      - libjemalloc2
       - shared-mime-info
       - redis-server
     build_dependencies:
@@ -51,6 +56,7 @@ targets:
       - nginx|apache2
       - postgresql
       - libimlib2
+      - libjemalloc2
       - shared-mime-info
       - redis-server
     build_dependencies:
@@ -64,6 +70,7 @@ targets:
       - nginx|apache2
       - postgresql
       - libimlib2
+      - libjemalloc2
       - shared-mime-info
       - redis-server
     build_dependencies:
@@ -77,6 +84,7 @@ targets:
       - nginx|apache2
       - postgresql
       - libimlib2
+      - libjemalloc2
       - shared-mime-info
       - redis-server
     build_dependencies:
@@ -90,6 +98,7 @@ targets:
       - nginx|apache2
       - postgresql
       - libimlib2
+      - libjemalloc2
       - shared-mime-info
       - redis-server
     build_dependencies:
@@ -103,6 +112,7 @@ targets:
       - nginx|apache2
       - postgresql
       - libimlib2
+      - libjemalloc2
       - shared-mime-info
       - redis-server
     build_dependencies:
