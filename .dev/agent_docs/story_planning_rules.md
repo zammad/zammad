@@ -44,6 +44,12 @@ that is not a story, report the definition of ready as not applicable rather tha
 - **M3** An acceptance-criteria section is present. Heading wording varies
   (`## Acceptance criteria`, `### Acceptance Criteria`); match tolerantly.
 - **M4** At least two criteria, each an assertion rather than a question.
+- **M5** No unresolved blocking item under a `Clarification needed` heading. Anything in that section
+  that is not a ticked task item (`- [x]` or `1. [x]`) counts as open. An open item is blocking
+  unless its text contains `non-blocking` or `blocks planning: no` — those two markers exactly, so
+  that two callers reading the same item reach the same verdict. Prose in the section with no list
+  items at all counts as one open blocking item, because a section that had nothing left to settle
+  would have been removed.
 
 **Judgement** — decided by reading, never by pattern matching:
 
@@ -53,7 +59,8 @@ that is not a story, report the definition of ready as not applicable rather tha
 - **J3** Criteria do not contradict each other or the user story.
 - **J4** Where the story is about UI, a design is linked and it is the current one (see Step 3).
 - **J5** Open questions are stated as questions rather than implied by vague wording.
-- **J6** No question raised in the comments is left unanswered.
+- **J6** No question anywhere on the story is left unanswered — and open questions belong under
+  `Clarification needed` in the body, not in a comment, so that answering one removes it.
 
 ### Verdicts
 
@@ -386,6 +393,12 @@ each one a verdict, months later. Rewording a criterion silently changes what ge
 Criteria may only be added, changed or removed after an explicit confirmation from a human, one
 change at a time, with the reason recorded.
 
+A story may also carry a **`Solution outline`**: a few lines on which areas and layers are affected,
+the shape of the approach, and what was ruled out. It is the only place the whole solution is visible
+without opening every task. It names areas and decisions, never files, classes or methods — those
+belong in the tasks, where they are checked against the checkout and can be corrected without
+touching product's artefact.
+
 **Everything else may be improved freely** — background information, technical notes, links, a scope
 or out-of-scope section, a clarification section. Prefer adding a section over rewriting a
 paragraph.
@@ -393,8 +406,15 @@ paragraph.
 Mechanics that apply to any write-back:
 
 - **Edit by section. Never regenerate the body.** Sections with nothing to add stay byte-identical.
-- **A body edit notifies nobody.** Always pair it with a comment saying what changed and why, so the
-  change exists in the timeline where the next reader — and the next tool — will look for it.
+- **Open questions live in the body, never in a comment.** They go under `Clarification needed`, as
+  task items, because the body is current state: answering a question removes its item, and the
+  answer becomes a criterion or background. A comment cannot do that — and comments are read
+  downstream as settled context, so a question posted there is later taken for a decision.
+- **A body edit notifies nobody, but a comment is not automatic.** Post one when the change would
+  surprise somebody who read the story before: a criterion changed or removed, scope narrowed or
+  widened, a decision that reverses an earlier one. An addition that fills a gap needs none — the
+  body shows it and the edit history keeps it. Which of the two a given change is, is a judgement for
+  the caller; this file does not try to decide it.
 - **Never delete product's words** to make room. If the existing wording is wrong, propose the
   replacement; do not apply it silently.
 - Splitting a story is a **product act**. Propose the split, never execute it.
