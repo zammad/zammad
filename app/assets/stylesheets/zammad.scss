@@ -6382,6 +6382,12 @@ a.list-group-item.active > .badge,
   }
 }
 
+.popover-notificationsActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .popover-notificationsCounter {
   color: #e25253;
 

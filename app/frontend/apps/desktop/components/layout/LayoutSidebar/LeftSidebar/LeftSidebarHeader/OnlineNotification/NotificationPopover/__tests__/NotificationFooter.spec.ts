@@ -2,11 +2,11 @@
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
-import NotificationHeader from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue'
+import NotificationFooter from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationFooter.vue'
 
-describe('NotificationHeader', () => {
-  it('displays notification header', () => {
-    const wrapper = renderComponent(NotificationHeader, {
+describe('NotificationFooter', () => {
+  it('displays notification actions', () => {
+    const wrapper = renderComponent(NotificationFooter, {
       props: {
         hasUnseenNotification: true,
         hasNotifications: true,
@@ -14,12 +14,11 @@ describe('NotificationHeader', () => {
     })
 
     expect(wrapper.getByRole('button', { name: 'mark all as read' })).toBeInTheDocument()
-    expect(wrapper.getByRole('heading', { level: 3 })).toHaveTextContent('Notifications')
     expect(wrapper.getByIconName('lightning')).toBeInTheDocument()
   })
 
   it('hides mark all as read button if prop is set to false', () => {
-    const wrapper = renderComponent(NotificationHeader, {
+    const wrapper = renderComponent(NotificationFooter, {
       props: {
         hasUnseenNotification: false,
         hasNotifications: true,
@@ -30,7 +29,7 @@ describe('NotificationHeader', () => {
   })
 
   it('emits mark-all event', async () => {
-    const wrapper = renderComponent(NotificationHeader, {
+    const wrapper = renderComponent(NotificationFooter, {
       props: {
         hasUnseenNotification: true,
         hasNotifications: true,
@@ -43,37 +42,37 @@ describe('NotificationHeader', () => {
   })
 
   it('displays clear all button when there are notifications', () => {
-    const wrapper = renderComponent(NotificationHeader, {
+    const wrapper = renderComponent(NotificationFooter, {
       props: {
         hasUnseenNotification: false,
         hasNotifications: true,
       },
     })
 
-    expect(wrapper.getByRole('button', { name: 'Clear all' })).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'clear all' })).toBeInTheDocument()
     expect(wrapper.getByIconName('trash3')).toBeInTheDocument()
   })
 
   it('hides clear all button when there are no notifications', () => {
-    const wrapper = renderComponent(NotificationHeader, {
+    const wrapper = renderComponent(NotificationFooter, {
       props: {
         hasUnseenNotification: false,
         hasNotifications: false,
       },
     })
 
-    expect(wrapper.queryByRole('button', { name: 'Clear all' })).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'clear all' })).not.toBeInTheDocument()
   })
 
   it('emits clear-all event', async () => {
-    const wrapper = renderComponent(NotificationHeader, {
+    const wrapper = renderComponent(NotificationFooter, {
       props: {
         hasUnseenNotification: false,
         hasNotifications: true,
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear all' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'clear all' }))
 
     expect(wrapper.emitted('clear-all')).toHaveLength(1)
   })

@@ -67,7 +67,7 @@ const handleLinkClick = (notification: OnlineNotification) => {
         <CommonLabel
           :id="`notification-${notification.id}`"
           tag="p"
-          class="inline! text-lg leading-5 text-black dark:text-white"
+          class="inline! text-lg leading-5 wrap-anywhere text-black dark:text-white"
           :class="{ 'group-hover/link:underline': notification.createdBy }"
           v-html="highlightedMessage"
         />

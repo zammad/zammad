@@ -281,7 +281,7 @@ describe('OnlineNotification', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
 
-    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'clear all' }))
 
     expect(waitForConfirmationMock).toHaveBeenCalled()
 
@@ -313,7 +313,7 @@ describe('OnlineNotification', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
 
-    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'clear all' }))
 
     expect(waitForConfirmationMock).toHaveBeenCalled()
 
@@ -346,7 +346,7 @@ describe('OnlineNotification', () => {
     notificationButton.focus()
     await wrapper.events.keyboard('{Enter}')
 
-    const clearAllButton = await wrapper.findByRole('button', { name: 'Clear all' })
+    const clearAllButton = await wrapper.findByRole('button', { name: 'clear all' })
 
     // The popover moves the focus into its own tab trap after opening.
     await waitUntil(() => document.activeElement !== notificationButton)
@@ -388,7 +388,7 @@ describe('OnlineNotification', () => {
     notificationButton.focus()
     await wrapper.events.keyboard('{Enter}')
 
-    const clearAllButton = await wrapper.findByRole('button', { name: 'Clear all' })
+    const clearAllButton = await wrapper.findByRole('button', { name: 'clear all' })
 
     // The popover moves the focus into its own tab trap after opening.
     await waitUntil(() => document.activeElement !== notificationButton)
@@ -398,7 +398,7 @@ describe('OnlineNotification', () => {
 
     expect(waitForConfirmationMock).toHaveBeenCalled()
 
-    expect(await wrapper.findByRole('button', { name: 'Clear all' })).toBeInTheDocument()
+    expect(await wrapper.findByRole('button', { name: 'clear all' })).toBeInTheDocument()
     expect(notificationButton).not.toHaveFocus()
   })
 
@@ -439,7 +439,7 @@ describe('OnlineNotification', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
 
-    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'clear all' }))
 
     expect(waitForConfirmationMock).toHaveBeenCalled()
 
@@ -482,7 +482,7 @@ describe('OnlineNotification', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
 
-    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'clear all' }))
 
     await waitForOnlineNotificationDeleteAllMutationCalls()
 
