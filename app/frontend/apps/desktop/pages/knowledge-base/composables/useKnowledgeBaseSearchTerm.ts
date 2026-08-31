@@ -55,14 +55,17 @@ export const useKnowledgeBaseSearchTerm = (debounceTime = SEARCH_DEBOUNCE_TIME) 
     commit()
   }
 
-  // Any navigation ends typing: our own commit landing, a back/forward, a link carrying
-  //   `?query=`, or a move to another category or locale — which is another scope
-  //   ("Search within %s"), and so another search.
+  // A foreign navigation ends typing: a back/forward, a link carrying `?query=`, or a move to
+  //   another category or locale — which is another scope ("Search within %s"), and so another
+  //   search. Our own commit landing is not one: the URL holds the trimmed term, but the field
+  //   keeps what is being typed, or a pause after `printer ` would drop the space and the next
+  //   word would run on as `printerjam`.
   watch(
     () => route.fullPath,
     () => {
       cancelCommit()
-      typedTerm.value = undefined
+
+      if (typedTerm.value?.trim() !== searchQuery.value) typedTerm.value = undefined
     },
   )
 

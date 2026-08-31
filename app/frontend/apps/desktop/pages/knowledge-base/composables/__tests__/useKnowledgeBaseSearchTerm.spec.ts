@@ -140,14 +140,43 @@ describe('useKnowledgeBaseSearchTerm', () => {
     expect(currentFullPath()).toBe(ROOT_PATH)
   })
 
-  it('commits a trimmed term, and settles the field on it', async () => {
+  it('commits a trimmed term, but keeps the field as typed', async () => {
     const { searchTerm } = await mountComposable()
 
     searchTerm.value = '  printer  '
 
     await waitFor(() => expect(currentFullPath()).toBe(`${ROOT_PATH}?query=printer`))
 
-    expect(searchTerm.value).toBe('printer')
+    expect(searchTerm.value).toBe('  printer  ')
+  })
+
+  // A pause after a word must not swallow the space the next word needs.
+  it('lets a multi-word term be typed across a commit', async () => {
+    const { searchTerm } = await mountComposable()
+
+    searchTerm.value = 'printer '
+
+    await waitFor(() => expect(currentFullPath()).toBe(`${ROOT_PATH}?query=printer`))
+
+    searchTerm.value = `${searchTerm.value}jam`
+
+    await waitFor(() => expect(getTestRouter().currentRoute.value.query.query).toBe('printer jam'))
+
+    expect(searchTerm.value).toBe('printer jam')
+  })
+
+  it('drops what was typed on a foreign navigation', async () => {
+    const { searchTerm } = await mountComposable()
+
+    searchTerm.value = '  printer  '
+
+    await waitFor(() => expect(currentFullPath()).toBe(`${ROOT_PATH}?query=printer`))
+
+    // Another scope without the term: the field follows the URL, not the typing.
+    await getTestRouter().replace(CATEGORY_PATH)
+    await flushPromises()
+
+    expect(searchTerm.value).toBe('')
   })
 
   it('searches a picked term at once, without waiting out the debounce', async () => {
