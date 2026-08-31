@@ -48,6 +48,12 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
     wait.until { page.current_url.end_with?("1/#{ERB::Util.url_encode(search_query.to_s)}") }
 
+    # Both the 'input' and the 'blur' event schedule a delayed navigation to
+    # page 1 of the search result. The URL above may already be updated by the
+    # input timer while the blur timer is still pending - wait for it to fire,
+    # otherwise it resets the pager to page 1 after a later page click.
+    wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('search' in level) })") }
+
     await_empty_ajax_queue
   end
 

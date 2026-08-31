@@ -23,10 +23,14 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   let(:first_params) { params.merge(event: 'newCall') }
   let(:second_params) { params.merge(event: 'hangup') }
 
+  # Cti::Log#push_caller_list_update delivers the `cti_list_push` events via
+  #   user-targeted Sessions.send_to - wait for the agent's authenticated
+  #   session before placing calls, otherwise the pushes are lost for good
+  #   and the caller log is never updated.
   let(:visit_cti) do
     visit 'cti'
     ensure_websocket
-    wait_for_authenticated_session
+    wait_for_authenticated_session(user: agent)
   end
 
   let(:place_call) do
@@ -42,25 +46,11 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
     agent
   end
 
-  # Cti::Log#push_caller_list_update delivers the `cti_list_push` events via
-  #   Sessions.send_to, which silently skips sessions that are not (yet) marked
-  #   as logged-in. The websocket server registers the session without a user on
-  #   connection open (WebsocketServer.onopen) and attaches the user only once
-  #   the client's `login` event was processed (Sessions::Event::Login) -
-  #   ensure_websocket can pass in between. Wait for the agent's authenticated
-  #   session before placing calls, otherwise the pushes are lost for good and
-  #   the caller log is never updated.
-  def wait_for_authenticated_session
-    wait.until do
-      Sessions.list.values.any? { |elem| elem.dig(:user, 'id').to_i == agent.id }
-    end
-  end
-
   context 'when cti integration is on' do
     it 'shows the phone menu in nav bar' do
       visit '/'
       ensure_websocket
-      wait_for_authenticated_session
+      wait_for_authenticated_session(user: agent)
 
       within '#navigation .menu' do
         place_call

@@ -16,6 +16,18 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
       wait_for_form_to_settle('ticket-create')
     end
 
+    # Clicking a toolbar button blurs the editor, and the action re-focuses it only
+    #   deferred (Tiptap's focus() waits for the next animation frame). If the next
+    #   keystrokes arrive before that, WebDriver focuses the editor itself and Chrome
+    #   places the caret at the very end of the content, so the text ends up outside
+    #   the block which was just created (e.g. in a paragraph after the empty list).
+    #   Wait for the editor to have the focus before typing on.
+    def click_editor_action(editor, label)
+      find("button[aria-label=\"#{label}\"]").click
+
+      wait.until { editor.input_element.evaluate_script('document.activeElement === this') }
+    end
+
     it 'creates a new ticket' do
       find('[role="tab"]', text: 'Send email').click
 
@@ -34,17 +46,17 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
           .type('Heading', click: false)
           .type(:enter, click: false)
 
-        find('button[aria-label="Format as bold"]').click
+        click_editor_action(text, 'Format as bold')
         text.type('Bold Text ', click: false).type(:enter, click: false)
-        find('button[aria-label="Format as bold"]').click
+        click_editor_action(text, 'Format as bold')
 
-        find('button[aria-label="Format as italic"]').click
+        click_editor_action(text, 'Format as italic')
         text.type('Italic Text ', click: false).type(:enter, click: false)
 
-        find('button[aria-label="Add bullet list"]').click
+        click_editor_action(text, 'Add bullet list')
         text.type('Bullet List ', click: false).type(:enter, click: false).type(:enter, click: false)
 
-        find('button[aria-label="Add ordered list"]').click
+        click_editor_action(text, 'Add ordered list')
         text.type('Ordered List ', click: false).type(:enter, click: false).type(:enter, click: false)
 
         find('button[aria-label="Add link"]').click

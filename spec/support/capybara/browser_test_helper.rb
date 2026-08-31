@@ -171,8 +171,20 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     # Always wait a little bit to allow for triggering of requests.
     sleep 0.1
 
-    wait(5).until do
-      page.evaluate_script('App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').eql? true
+    script_timeout_retried = false
+
+    begin
+      wait(5).until do
+        page.evaluate_script('App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').eql? true
+      end
+    rescue Selenium::WebDriver::Error::ScriptTimeoutError
+      # The main thread was blocked by long-running synchronous work (e.g. drawing a huge
+      #   inline image onto a canvas), so the check itself could not run. The browser is
+      #   responsive again once the error surfaces - check once more before giving up.
+      raise if script_timeout_retried
+
+      script_timeout_retried = true
+      retry
     end
   rescue Selenium::WebDriver::Error::TimeoutError, Selenium::WebDriver::Error::JavascriptError
     nil # Page may navigate away mid-check (e.g. SAML redirect), making App undefined.

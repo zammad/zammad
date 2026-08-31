@@ -74,6 +74,7 @@ RSpec.describe 'System > Objects', type: :system do
           #   otherwise the maintenance event is lost for good and the
           #   'Zammad requires a restart' modal never shows up.
           ensure_websocket
+          wait_for_authenticated_session
         end
 
         it 'creates and removes the field correctly' do
@@ -92,7 +93,14 @@ RSpec.describe 'System > Objects', type: :system do
           expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('Zammad requires a restart')
+
+          # refresh_with_wait only waits for the websocket connection, not for
+          #   the session to be marked as logged-in - the broadcast-driven
+          #   assertions below could still race the `login` event. Wait like
+          #   after the second reload, excluding the stale pre-reload session.
+          pre_reload_sessions = Sessions.sessions
           refresh_with_wait
+          wait_for_authenticated_session(except: pre_reload_sessions)
 
           # Update
           click 'tbody tr:last-child'
@@ -108,12 +116,18 @@ RSpec.describe 'System > Objects', type: :system do
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('please reload your browser')
 
+          # The reload replaces the websocket connection - remember the current
+          #   session ids, so the authenticated wait below cannot be satisfied by
+          #   the stale entry of the pre-reload websocket.
+          pre_reload_sessions = Sessions.sessions
+
           in_modal do
             click '.js-submit'
           end
 
           # After the reload, we must explictly wait for the app to be completely ready.
           wait_for_loading_to_complete(wait_ws: true)
+          wait_for_authenticated_session(except: pre_reload_sessions)
 
           # Delete
           click 'tbody tr:last-child .js-delete'

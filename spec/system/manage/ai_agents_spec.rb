@@ -74,6 +74,12 @@ RSpec.describe 'AI > AI Agents', type: :system do
         it 'shows AI agent with correct references' do
           visit '#ai/ai_agents'
 
+          # Reference changes reach the list via websocket pushes (AI::Agent touch).
+          #   Wait for the authenticated session before changing references,
+          #   otherwise the push is lost for good and the list is never updated.
+          ensure_websocket
+          wait_for_authenticated_session
+
           within ".js-tableBody tr.item[data-id='#{ai_agent_1.id}']" do
             expect(page).to have_text('AI Agent 1')
               .and have_text('Triggers (2)')
