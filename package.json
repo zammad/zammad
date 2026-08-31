@@ -30,7 +30,9 @@
     "cypress:install": "pnpm --dir ./.dev/cypress install --frozen-lockfile",
     "playwright:install": "playwright install chromium",
     "analyse:vite-bundle": "pnpm exec vite-bundle-visualizer",
-    "codegraph:install": "pnpm exec codegraph init && pnpm exec codegraph install --no-permissions",
+    "codegraph:install": "pnpm exec codegraph install --yes --init",
+    "codegraph:reindex": "pnpm exec codegraph index",
+    "codegraph:status": "pnpm exec codegraph status",
     "codegraph:uninstall": "pnpm exec codegraph uninstall"
   },
   "engines": {
@@ -39,7 +41,7 @@
   },
   "packageManager": "pnpm@11.24.0",
   "devDependencies": {
-    "@colbymchenry/codegraph": "^1.5.0",
+    "@colbymchenry/codegraph": "^1.6.0",
     "@faker-js/faker": "^10.6.0",
     "@graphql-codegen/add": "^7.1.0",
     "@graphql-codegen/cli": "^7.2.0",
