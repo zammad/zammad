@@ -120,9 +120,19 @@ describe('knowledge base answers infinite scroll', () => {
 
 // The ways into the create and the edit view from the browse page.
 describe('knowledge base add and edit answer entry points', () => {
+  const subcategory = {
+    id: convertToGraphQLId('KnowledgeBase::Category', 2),
+    title: 'Subcategory',
+    policy: { update: true, destroy: true, createSubcategory: true, createAnswer: true },
+  }
+
   // Both flags are always stated, never left to the automocker: an auto-generated boolean differs
   //   between an isolated and a whole-file run, which makes a test about them pass by luck.
-  const mockCategory = (createAnswer: boolean, updateAnswer = false) =>
+  const mockCategory = (
+    createAnswer: boolean,
+    updateAnswer = false,
+    subcategories: (typeof subcategory)[] = [],
+  ) =>
     mockKnowledgeBaseCategorySubcategoriesQuery({
       knowledgeBaseCategorySubcategories: {
         category: {
@@ -136,7 +146,7 @@ describe('knowledge base add and edit answer entry points', () => {
             updateAnswer,
           },
         },
-        subcategories: [],
+        subcategories,
       },
     })
 
@@ -323,5 +333,18 @@ describe('knowledge base add and edit answer entry points', () => {
     // The internal id: it is what the create form's category field works with.
     expect(query.categoryId).toBe(String(getIdFromGraphQLId(CATEGORY_ID)))
     expect(params.tabId, 'a fresh draft every time').toBeTruthy()
+  })
+
+  // The open category takes no answers here, so the only "Add answer" left on the page is the
+  //   tile's. Where the click leads is asserted in the card's own spec.
+  it('is offered on a category card the user may create answers in', async () => {
+    mockCategory(false, false, [subcategory])
+    mockAnswers([])
+
+    const view = await visitCategory()
+
+    await view.events.click(await view.findByRole('button', { name: 'Category actions' }))
+
+    expect(await view.findByText('Add answer')).toBeInTheDocument()
   })
 })

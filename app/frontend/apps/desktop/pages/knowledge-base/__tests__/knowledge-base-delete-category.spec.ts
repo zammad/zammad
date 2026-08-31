@@ -34,7 +34,7 @@ const category = (id: string, title: string, isDeletable = true) => ({
   subcategoryCount: 0,
   position: 0,
   isDeletable,
-  policy: { update: true, destroy: true, createSubcategory: true },
+  policy: { update: true, destroy: true, createSubcategory: true, createAnswer: true },
 })
 
 describe('knowledge base delete category', () => {

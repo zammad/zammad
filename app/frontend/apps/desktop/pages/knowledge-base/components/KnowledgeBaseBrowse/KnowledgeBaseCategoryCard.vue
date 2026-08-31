@@ -4,10 +4,12 @@
 import { isEqual } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import type { Link } from '#shared/types/router.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
@@ -15,7 +17,10 @@ import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { useKnowledgeBaseCategoryDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
-import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
+import {
+  knowledgeBaseAnswerCreateRoute,
+  knowledgeBaseBrowseRoute,
+} from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import KnowledgeBaseIconStatus from '#desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue'
 
 import {
@@ -31,6 +36,8 @@ const props = withDefaults(defineProps<KnowledgeBaseCategoryCompact>(), {
 })
 
 const { activeLocale, iconSet } = storeToRefs(useKnowledgeBaseStore())
+
+const router = useRouter()
 
 const link = computed<Link | undefined>((currentLink) => {
   // The category route pins the locale; without it there is no valid target
@@ -49,55 +56,52 @@ const { confirmCategoryDelete } = useKnowledgeBaseCategoryDelete()
 // Gated per record, not by the global editor permission: granular permissions can limit an
 //   editor to a part of the tree, and offering an action the mutation then refuses is worse
 //   than not offering it (the legacy stack gates per record too).
-//
-// TODO(#837): "Add answer" joins the creation group with its own slice.
-//   Adding at the browsed level does not — that stays on the add card in the grid.
-const actions = computed<MenuItem[]>(() => {
-  const items: MenuItem[] = []
+const actions = computed<MenuItem[]>(() => [
+  {
+    key: 'add-answer',
+    label: __('Add answer'),
+    icon: 'kba-add',
+    show: () => props.policy.createAnswer,
+    onClick: () => {
+      if (!activeLocale.value) return
 
-  if (props.policy.createSubcategory) {
-    items.push({
-      key: 'add-subcategory',
-      label: __('Add sub-category'),
-      icon: 'folder-plus',
-      onClick: () => openKnowledgeBaseCategoryAddFlyout({ parentId: props.id }),
-    })
-  }
-
-  if (props.policy.update) {
-    items.push({
-      key: 'edit-category',
-      label: __('Edit category'),
-      icon: 'pencil',
-      onClick: () =>
-        openKnowledgeBaseCategoryEditFlyout({
-          id: props.id,
-          title: props.title,
-          categoryIcon: props.categoryIcon,
-        }),
-    })
-  }
-
-  if (props.policy.destroy) {
-    items.push({
-      key: 'delete-category',
-      label: __('Delete category'),
-      icon: 'trash3',
-      variant: 'danger',
-      separatorTop: true,
-      // No navigation target needed: a tile is never the currently open category, so
-      //   deleting it stays on this page.
-      onClick: () =>
-        confirmCategoryDelete({
-          id: props.id,
-          title: props.title,
-          isDeletable: props.isDeletable,
-        }),
-    })
-  }
-
-  return items
-})
+      router.push(knowledgeBaseAnswerCreateRoute(activeLocale.value, getIdFromGraphQLId(props.id)))
+    },
+  },
+  {
+    key: 'add-subcategory',
+    label: __('Add sub-category'),
+    icon: 'folder-plus',
+    show: () => props.policy.createSubcategory,
+    onClick: () => openKnowledgeBaseCategoryAddFlyout({ parentId: props.id }),
+  },
+  {
+    key: 'edit-category',
+    label: __('Edit category'),
+    icon: 'pencil',
+    show: () => props.policy.update,
+    onClick: () =>
+      openKnowledgeBaseCategoryEditFlyout({
+        id: props.id,
+        title: props.title,
+        categoryIcon: props.categoryIcon,
+      }),
+  },
+  {
+    key: 'delete-category',
+    label: __('Delete category'),
+    icon: 'trash3',
+    variant: 'danger',
+    separatorTop: true,
+    show: () => props.policy.destroy,
+    onClick: () =>
+      confirmCategoryDelete({
+        id: props.id,
+        title: props.title,
+        isDeletable: props.isDeletable,
+      }),
+  },
+])
 </script>
 
 <template>

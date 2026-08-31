@@ -29,7 +29,7 @@ const category = (id: string, title: string, editor = true) => ({
   answerCount: 0,
   subcategoryCount: 0,
   position: 0,
-  policy: { update: editor, destroy: editor, createSubcategory: editor },
+  policy: { update: editor, destroy: editor, createSubcategory: editor, createAnswer: editor },
 })
 
 // The action menus are gated by each category's own policy, so the access under test is

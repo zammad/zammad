@@ -30,7 +30,7 @@ const category = (id: string, title: string) => ({
   subcategoryCount: 0,
   position: 0,
   isDeletable: true,
-  policy: { update: true, destroy: true, createSubcategory: true },
+  policy: { update: true, destroy: true, createSubcategory: true, createAnswer: true },
 })
 
 // Adding a top level category is gated by the knowledge base's own policy, so each example
@@ -347,7 +347,7 @@ describe('knowledge base add category card', () => {
           subcategories: [
             {
               ...category(CATEGORY_ID, 'Root Category'),
-              policy: { update: true, destroy: true, createSubcategory: false },
+              policy: { update: true, destroy: true, createSubcategory: false, createAnswer: true },
             },
           ],
         },
