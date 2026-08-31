@@ -1,0 +1,32 @@
+<form>
+  <h2><%- @T('Settings') %></h2>
+  <div class="settings-entry">
+    <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
+      <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+    </div>
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="20%"><%- @T('Name') %></th>
+          <th width="80%"><%- @T('Value') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Endpoint') %> *</td>
+          <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.endpoint %>" placeholder="https://snipeit.example.com" name="endpoint"></td>
+        </tr>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('API token') %> *</td>
+          <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token"></td>
+        </tr>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('SSL verification') %></td>
+          <td class="settings-list-control-cell js-sslVerify"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
+</form>

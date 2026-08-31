@@ -1,0 +1,28 @@
+<% if @items && @items.length > 0: %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th style="width: 40px"></th>
+        <th><%- @T('Name') %></th>
+        <th><%- @T('Asset Tag') %></th>
+        <th><%- @T('Serial') %></th>
+        <th><%- @T('Model') %></th>
+        <th><%- @T('Status') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for item in @items: %>
+        <tr>
+          <td><input type="checkbox" value="<%= item.id %>" name="asset_id"/></td>
+          <td title="<%= item.name %>"><%= item.name %></td>
+          <td><a href="<%= item.link %>" target="_blank" title="<%- @T('Open in Snipe-IT') %>"><%= item.asset_tag %></a></td>
+          <td title="<%= item.serial %>"><%= item.serial %></td>
+          <td title="<%= item.model?.name || '' %>"><%= item.model?.name || '' %></td>
+          <td title="<%= item.status_label?.name || '' %>"><%= item.status_label?.name || '' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else: %>
+  <p class="help-text"><%- @T('Start typing to search for assets...') %></p>
+<% end %>

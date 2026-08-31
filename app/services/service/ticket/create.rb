@@ -31,6 +31,7 @@ class Service::Ticket::Create < Service::Base
         create_article(ticket, article_data)
         assign_tags(ticket, tag_data)
         add_links(ticket, link_data)
+        log_snipeit_asset_links(ticket)
       end
     end
   end
@@ -45,6 +46,25 @@ class Service::Ticket::Create < Service::Base
     Service::Ticket::Article::Create
       .with_current_user(current_user)
       .execute(article_data: article_data, ticket: ticket)
+  end
+
+  # Assets selected while creating a ticket are stored as part of the ticket itself, not as
+  # a later change, so Service::Ticket::ExternalReferences::Snipeit::LinkAssets never sees a
+  # diff to derive the history from. Without this, unlinking such an asset would leave a
+  # 'removed' entry with no matching 'added' one.
+  #
+  # Reads the ids off the saved ticket rather than the input, so it covers both the
+  # externalReferences input used by the Vue create screen and the raw preferences the
+  # legacy sidebar appends to the create request.
+  def log_snipeit_asset_links(ticket)
+    return if !Setting.get('snipeit_integration')
+
+    asset_ids = Array(ticket.preferences.dig(:snipeit, :asset_ids)).map(&:to_i).uniq
+    return if asset_ids.blank?
+
+    asset_ids.each do |asset_id|
+      ticket.history_log('added', current_user.id, { history_attribute: 'snipeit', value_to: Snipeit.asset_label(asset_id) })
+    end
   end
 
   def assign_tags(ticket, tag_data)
@@ -135,21 +155,27 @@ class Service::Ticket::Create < Service::Base
     return if external_references.blank?
 
     %i[github gitlab].each do |key|
-      input = external_references[key]
+      next if !external_reference_enabled?(external_references, key)
 
-      next if input.blank? || !Setting.get("#{key}_integration")
-
-      ticket_data[:preferences] ||= {}
-      ticket_data[:preferences][key] = { issue_links: input.map(&:to_s) }
+      add_external_reference_preference(ticket_data, key, { issue_links: external_references[key].map(&:to_s) })
     end
 
-    # idoit
-    idoit_object_ids = external_references[:idoit]
+    if external_reference_enabled?(external_references, :idoit)
+      add_external_reference_preference(ticket_data, :idoit, { object_ids: external_references[:idoit] })
+    end
 
-    return if idoit_object_ids.blank? || !Setting.get('idoit_integration')
+    return if !external_reference_enabled?(external_references, :snipeit)
 
+    add_external_reference_preference(ticket_data, :snipeit, { asset_ids: external_references[:snipeit] })
+  end
+
+  def external_reference_enabled?(external_references, key)
+    external_references[key].present? && Setting.get("#{key}_integration")
+  end
+
+  def add_external_reference_preference(ticket_data, key, value)
     ticket_data[:preferences] ||= {}
-    ticket_data[:preferences][:idoit] = { object_ids: idoit_object_ids }
+    ticket_data[:preferences][key] = value
   end
 
   def customer?(group_id)

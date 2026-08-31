@@ -1,0 +1,8 @@
+mutation ticketExternalReferencesSnipeitAssetRemove($ticketId: ID!, $snipeitAssetId: Int!) {
+  ticketExternalReferencesSnipeitAssetRemove(ticketId: $ticketId, snipeitAssetId: $snipeitAssetId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

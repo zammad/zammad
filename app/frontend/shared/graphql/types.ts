@@ -909,6 +909,8 @@ export type AiAssistantAnalyticsMetaFragment = { __typename: 'AIAnalyticsMetadat
 
 export type IdoitObjectAttributesFragment = { __typename: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link: string | null | undefined, title: string, type: string, status: string };
 
+export type SnipeitAssetAttributesFragment = { __typename: 'TicketExternalReferencesSnipeitAsset', snipeitAssetId: number, link: string | null | undefined, name: string, assetTag: string | null | undefined, serial: string | null | undefined, model: string | null | undefined, status: string | null | undefined, category: string | null | undefined, location: string | null | undefined };
+
 export type LinkAddMutationVariables = Exact<{
   input: Types.LinkInput;
 }>;
@@ -1032,12 +1034,42 @@ export type TicketExternalReferencesIssueTrackerItemRemoveMutationVariables = Ex
 
 export type TicketExternalReferencesIssueTrackerItemRemoveMutation = { ticketExternalReferencesIssueTrackerItemRemove: { __typename: 'TicketExternalReferencesIssueTrackerItemRemovePayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
+export type TicketExternalReferencesSnipeitAssetAddMutationVariables = Exact<{
+  snipeitAssetIds: Array<number> | number;
+  ticketId?: string | number | null | undefined;
+}>;
+
+
+export type TicketExternalReferencesSnipeitAssetAddMutation = { ticketExternalReferencesSnipeitAssetAdd: { __typename: 'TicketExternalReferencesSnipeitAssetAddPayload', snipeitAssets: Array<{ __typename: 'TicketExternalReferencesSnipeitAsset', snipeitAssetId: number, link: string | null | undefined, name: string, assetTag: string | null | undefined, serial: string | null | undefined, model: string | null | undefined, status: string | null | undefined, category: string | null | undefined, location: string | null | undefined }> | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type TicketExternalReferencesSnipeitAssetRemoveMutationVariables = Exact<{
+  ticketId: string | number;
+  snipeitAssetId: number;
+}>;
+
+
+export type TicketExternalReferencesSnipeitAssetRemoveMutation = { ticketExternalReferencesSnipeitAssetRemove: { __typename: 'TicketExternalReferencesSnipeitAssetRemovePayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
 export type AutocompleteSearchIdoitObjectTypesQueryVariables = Exact<{
   input: Types.AutocompleteSearchInput;
 }>;
 
 
 export type AutocompleteSearchIdoitObjectTypesQuery = { autocompleteSearchIdoitObjectTypes: Array<{ __typename: 'AutocompleteSearchEntry', value: string, label: string }> };
+
+export type AutocompleteSearchSnipeitCategoriesQueryVariables = Exact<{
+  input: Types.AutocompleteSearchInput;
+}>;
+
+
+export type AutocompleteSearchSnipeitCategoriesQuery = { autocompleteSearchSnipeitCategories: Array<{ __typename: 'AutocompleteSearchEntry', value: string, label: string }> };
+
+export type AutocompleteSearchSnipeitModelsQueryVariables = Exact<{
+  input: Types.AutocompleteSearchSnipeitModelsInput;
+}>;
+
+
+export type AutocompleteSearchSnipeitModelsQuery = { autocompleteSearchSnipeitModels: Array<{ __typename: 'AutocompleteSearchEntry', value: string, label: string }> };
 
 export type ChecklistTemplatesQueryVariables = Exact<{
   onlyActive?: boolean | null | undefined;
@@ -1101,6 +1133,25 @@ export type TicketExternalReferencesIssueTrackerItemListQueryVariables = Exact<{
 
 
 export type TicketExternalReferencesIssueTrackerItemListQuery = { ticketExternalReferencesIssueTrackerItemList: Array<{ __typename: 'TicketExternalReferencesIssueTrackerItem', assignees: Array<string> | null | undefined, issueId: number, milestone: string | null | undefined, state: Types.EnumTicketExternalReferencesIssueTrackerItemState, title: string, url: string, issueType: { __typename: 'TicketExternalReferencesIssueTrackerItemIssueType', color: string | null | undefined, name: string } | null | undefined, labels: Array<{ __typename: 'TicketExternalReferencesIssueTrackerItemLabel', color: string, textColor: string, title: string }> | null | undefined }> };
+
+export type TicketExternalReferencesSnipeitAssetListQueryVariables = Exact<{
+  ticketId?: string | number | null | undefined;
+  snipeitAssetIds?: Array<number> | number | null | undefined;
+}>;
+
+
+export type TicketExternalReferencesSnipeitAssetListQuery = { ticketExternalReferencesSnipeitAssetList: Array<{ __typename: 'TicketExternalReferencesSnipeitAsset', snipeitAssetId: number, link: string | null | undefined, name: string, assetTag: string | null | undefined, serial: string | null | undefined, model: string | null | undefined, status: string | null | undefined, category: string | null | undefined, location: string | null | undefined }> };
+
+export type TicketExternalReferencesSnipeitAssetSearchQueryVariables = Exact<{
+  categoryId?: string | null | undefined;
+  modelId?: string | null | undefined;
+  limit: number;
+  query?: string | null | undefined;
+  customerId?: string | number | null | undefined;
+}>;
+
+
+export type TicketExternalReferencesSnipeitAssetSearchQuery = { ticketExternalReferencesSnipeitAssetSearch: Array<{ __typename: 'TicketExternalReferencesSnipeitAsset', snipeitAssetId: number, link: string | null | undefined, name: string, assetTag: string | null | undefined, serial: string | null | undefined, model: string | null | undefined, status: string | null | undefined, category: string | null | undefined, location: string | null | undefined }> };
 
 export type TicketHistoryQueryVariables = Exact<{
   ticketId: string | number;

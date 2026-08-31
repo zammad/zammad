@@ -4,8 +4,9 @@ module Gql::Types
   class TicketExternalReferencesType < BaseObject
     description 'Links attached to a ticket and pointing to external services'
 
-    field :github, [Gql::Types::UriHttpStringType], description: 'Returns exising links for the github integration'
-    field :gitlab, [Gql::Types::UriHttpStringType], description: 'Returns exising links for the gitlab integration'
-    field :idoit,  [Integer], description: 'Returns exising object ids for the idoit integration'
+    field :github,  [Gql::Types::UriHttpStringType], description: 'Returns exising links for the github integration'
+    field :gitlab,  [Gql::Types::UriHttpStringType], description: 'Returns exising links for the gitlab integration'
+    field :idoit,   [Integer], description: 'Returns exising object ids for the idoit integration'
+    field :snipeit, [Integer], description: 'Returns existing asset ids for the Snipe-IT integration'
   end
 end

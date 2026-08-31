@@ -195,6 +195,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'exchange_oauth',
           'exchange_integration',
           'idoit_integration',
+          'snipeit_integration',
           'gitlab_integration',
           'github_integration',
           '0100_trigger',

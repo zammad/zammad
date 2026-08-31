@@ -102,6 +102,7 @@ optional you can put the max oldest chat entries as argument
       'SAML'               => 'admin.security',
       'sipagte.io'         => 'admin.integration', # typo in facility name, keep for backward compatibility
       'sipgate.io'         => 'admin.integration',
+      'snipeit'            => 'admin.integration',
       'webhook'            => 'admin.webhook',
       'WhatsApp::Business' => 'admin.channel_whatsapp',
     }

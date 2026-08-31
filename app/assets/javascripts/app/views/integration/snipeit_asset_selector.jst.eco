@@ -1,0 +1,4 @@
+<form class="js-search">
+  <input type="text" name="search" value="" autocomplete="off" placeholder="<%- @Ti('Search for asset name, serial, or tag') %>" class="form-control js-input js-searchField"/>
+</form>
+<form class="js-result"></form>

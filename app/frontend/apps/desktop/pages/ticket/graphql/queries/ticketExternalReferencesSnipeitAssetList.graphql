@@ -1,0 +1,7 @@
+query ticketExternalReferencesSnipeitAssetList($ticketId: ID, $snipeitAssetIds: [Int!]) {
+  ticketExternalReferencesSnipeitAssetList(
+    input: { ticketId: $ticketId, snipeitAssetIds: $snipeitAssetIds }
+  ) {
+    ...SnipeitAssetAttributes
+  }
+}

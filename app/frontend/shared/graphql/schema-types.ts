@@ -386,6 +386,16 @@ export type AutocompleteSearchRecipientInput = {
   query: Scalars['String']['input'];
 };
 
+/** Input fields for Snipe-IT model autocomplete searches. */
+export type AutocompleteSearchSnipeitModelsInput = {
+  /** Snipe-IT category id to restrict the models to */
+  categoryId?: InputMaybe<Scalars['String']['input']>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
 /** Input fields for tag autocomplete searches. */
 export type AutocompleteSearchTagInput = {
   /** Optional tags to be filtered out from results */
@@ -2175,6 +2185,10 @@ export type Mutations = {
   ticketExternalReferencesIssueTrackerItemAdd?: Maybe<TicketExternalReferencesIssueTrackerItemAddPayload>;
   /** Removes an issue tracker link from an ticket. */
   ticketExternalReferencesIssueTrackerItemRemove?: Maybe<TicketExternalReferencesIssueTrackerItemRemovePayload>;
+  /** Add Snipe-IT assets to a ticket or just resolve them for ticket creation. */
+  ticketExternalReferencesSnipeitAssetAdd?: Maybe<TicketExternalReferencesSnipeitAssetAddPayload>;
+  /** Remove a Snipe-IT asset from a ticket. */
+  ticketExternalReferencesSnipeitAssetRemove?: Maybe<TicketExternalReferencesSnipeitAssetRemovePayload>;
   /** Deletes the desired live user entry. */
   ticketLiveUserDelete?: Maybe<TicketLiveUserDeletePayload>;
   /** Updates the current live user entry. If no matching live user entry is found, a new live user entry for the current user and ticket will be created. */
@@ -2674,6 +2688,20 @@ export type MutationsTicketExternalReferencesIssueTrackerItemAddArgs = {
 export type MutationsTicketExternalReferencesIssueTrackerItemRemoveArgs = {
   issueTrackerLink: Scalars['UriHttpString']['input'];
   issueTrackerType: EnumTicketExternalReferencesIssueTrackerType;
+  ticketId: Scalars['ID']['input'];
+};
+
+
+/** All available mutations */
+export type MutationsTicketExternalReferencesSnipeitAssetAddArgs = {
+  snipeitAssetIds: Array<Scalars['Int']['input']>;
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+/** All available mutations */
+export type MutationsTicketExternalReferencesSnipeitAssetRemoveArgs = {
+  snipeitAssetId: Scalars['Int']['input'];
   ticketId: Scalars['ID']['input'];
 };
 
@@ -3519,6 +3547,10 @@ export type Queries = {
   autocompleteSearchOrganization: Array<AutocompleteSearchOrganizationEntry>;
   /** Search for recipients */
   autocompleteSearchRecipient: Array<AutocompleteSearchRecipientEntry>;
+  /** Search for Snipe-IT categories */
+  autocompleteSearchSnipeitCategories: Array<AutocompleteSearchEntry>;
+  /** Search for Snipe-IT models */
+  autocompleteSearchSnipeitModels: Array<AutocompleteSearchEntry>;
   /** Search for tags */
   autocompleteSearchTag: Array<AutocompleteSearchEntry>;
   /** Search for tickets */
@@ -3599,6 +3631,10 @@ export type Queries = {
   ticketExternalReferencesIdoitObjectSearch: Array<TicketExternalReferencesIdoitObject>;
   /** Detailed issue tracker items for the given issue tracker links or the given ticket */
   ticketExternalReferencesIssueTrackerItemList: Array<TicketExternalReferencesIssueTrackerItem>;
+  /** Detailed Snipe-IT assets for the given asset ids or the given ticket */
+  ticketExternalReferencesSnipeitAssetList: Array<TicketExternalReferencesSnipeitAsset>;
+  /** Search for Snipe-IT assets */
+  ticketExternalReferencesSnipeitAssetSearch: Array<TicketExternalReferencesSnipeitAsset>;
   /** Fetch history of a ticket */
   ticketHistory: Array<HistoryGroup>;
   /** Ticket overviews available in the system */
@@ -3709,6 +3745,18 @@ export type QueriesAutocompleteSearchOrganizationArgs = {
 /** All available queries */
 export type QueriesAutocompleteSearchRecipientArgs = {
   input: AutocompleteSearchRecipientInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchSnipeitCategoriesArgs = {
+  input: AutocompleteSearchInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchSnipeitModelsArgs = {
+  input: AutocompleteSearchSnipeitModelsInput;
 };
 
 
@@ -3962,6 +4010,22 @@ export type QueriesTicketExternalReferencesIdoitObjectSearchArgs = {
 export type QueriesTicketExternalReferencesIssueTrackerItemListArgs = {
   input: TicketExternalReferencesIssueTrackerListInput;
   issueTrackerType: EnumTicketExternalReferencesIssueTrackerType;
+};
+
+
+/** All available queries */
+export type QueriesTicketExternalReferencesSnipeitAssetListArgs = {
+  input: TicketExternalReferencesSnipeitAssetListInput;
+};
+
+
+/** All available queries */
+export type QueriesTicketExternalReferencesSnipeitAssetSearchArgs = {
+  categoryId?: InputMaybe<Scalars['String']['input']>;
+  customerId?: InputMaybe<Scalars['ID']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  modelId?: InputMaybe<Scalars['String']['input']>;
+  query?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -5278,6 +5342,8 @@ export type TicketExternalReferences = {
   gitlab?: Maybe<Array<Scalars['UriHttpString']['output']>>;
   /** Returns exising object ids for the idoit integration */
   idoit?: Maybe<Array<Scalars['Int']['output']>>;
+  /** Returns existing asset ids for the Snipe-IT integration */
+  snipeit?: Maybe<Array<Scalars['Int']['output']>>;
 };
 
 /** Idoit object item for an external reference for a ticket */
@@ -5326,6 +5392,8 @@ export type TicketExternalReferencesInput = {
   gitlab?: InputMaybe<Array<Scalars['UriHttpString']['input']>>;
   /** Object ids for the Idoit integration */
   idoit?: InputMaybe<Array<Scalars['Int']['input']>>;
+  /** Asset ids for the Snipe-IT integration */
+  snipeit?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 /** Issue tracker item for an external reference for a ticket */
@@ -5393,6 +5461,54 @@ export type TicketExternalReferencesIssueTrackerListInput = {
   issueTrackerLinks?: InputMaybe<Array<Scalars['UriHttpString']['input']>>;
   /** The related ticket for the issue tracker items */
   ticketId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** Snipe-IT asset item for an external reference for a ticket */
+export type TicketExternalReferencesSnipeitAsset = {
+  __typename?: 'TicketExternalReferencesSnipeitAsset';
+  /** Asset tag */
+  assetTag?: Maybe<Scalars['String']['output']>;
+  /** Asset category */
+  category?: Maybe<Scalars['String']['output']>;
+  /** Link to the asset in the Snipe-IT GUI */
+  link?: Maybe<Scalars['UriHttpString']['output']>;
+  /** Asset location */
+  location?: Maybe<Scalars['String']['output']>;
+  /** Asset model name */
+  model?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  /** Serial number */
+  serial?: Maybe<Scalars['String']['output']>;
+  /** Snipe-IT asset id */
+  snipeitAssetId: Scalars['Int']['output'];
+  /** Asset status */
+  status?: Maybe<Scalars['String']['output']>;
+};
+
+/** Autogenerated return type of TicketExternalReferencesSnipeitAssetAdd. */
+export type TicketExternalReferencesSnipeitAssetAddPayload = {
+  __typename?: 'TicketExternalReferencesSnipeitAssetAddPayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** The added / resolved Snipe-IT assets */
+  snipeitAssets?: Maybe<Array<TicketExternalReferencesSnipeitAsset>>;
+};
+
+/** Input fields for retrieving Snipe-IT asset details */
+export type TicketExternalReferencesSnipeitAssetListInput = {
+  /** Snipe-IT asset IDs to fetch */
+  snipeitAssetIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+  /** The related ticket for the Snipe-IT assets */
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** Autogenerated return type of TicketExternalReferencesSnipeitAssetRemove. */
+export type TicketExternalReferencesSnipeitAssetRemovePayload = {
+  __typename?: 'TicketExternalReferencesSnipeitAssetRemovePayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** Was the mutation successful? */
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** Represents a ticket link to another object. */
