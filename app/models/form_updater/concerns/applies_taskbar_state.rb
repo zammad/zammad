@@ -58,10 +58,12 @@ module FormUpdater::Concerns::AppliesTaskbarState
 
       next if apply_state_group_keys.present? && apply_state_group_keys.any? { |group_key| current_taskbar.state[group_key]&.key?(field) }
 
-      next if !object.respond_to?(field)
-      next if object[field] == data[field]
+      next if !object_field?(field)
 
-      apply_value.perform(field: field, config: { 'value' => object[field] }, include_blank: true)
+      object_value = object_field_value(field)
+      next if object_value == data[field]
+
+      apply_value.perform(field: field, config: { 'value' => object_value }, include_blank: true)
     end
   end
 

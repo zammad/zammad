@@ -1,0 +1,24 @@
+mutation knowledgeBaseAnswerVisibilityScheduleAdd(
+  $answerId: ID!
+  $visibility: EnumKnowledgeBaseSchedulableVisibility!
+  $scheduledAt: ISO8601DateTime!
+) {
+  knowledgeBaseAnswerVisibilityScheduleAdd(
+    answerId: $answerId
+    visibility: $visibility
+    scheduledAt: $scheduledAt
+  ) {
+    # The answer's schedule as it now stands, which lands in the normalized entity the sidebar
+    # section reads from - so the new pill appears without a refetch.
+    answer {
+      id
+      visibilitySchedules {
+        visibility
+        scheduledAt
+      }
+    }
+    errors {
+      ...errors
+    }
+  }
+}

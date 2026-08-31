@@ -111,12 +111,14 @@ module FormUpdater::Concerns::StoresTaskbarState
     return true if store_state_group_keys&.include?(field)
 
     # Return always true, when field does not exists on object, because we need always to store the value.
-    return true if !object.respond_to?(field)
+    return true if !object_field?(field)
+
+    object_value = object_field_value(field)
 
     # When current object field is empty and the value is empty, then we don't need to store the value.
-    return false if object[field].blank? && value.blank?
+    return false if object_value.blank? && value.blank?
 
-    object[field] != value
+    object_field_changed?(field, value)
   end
 
   def should_store?

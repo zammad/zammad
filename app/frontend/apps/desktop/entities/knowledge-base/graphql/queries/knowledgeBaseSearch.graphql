@@ -24,7 +24,9 @@ query knowledgeBaseSearch(
           }
           ... on KnowledgeBaseCategory {
             id
-            title
+            # Aliased: an answer's title is non-null while a category's is not, and GraphQL wants
+            #   one response shape per response name across the document - union members included.
+            categoryTitle: title
             categoryIcon
             iconSet
             visibility

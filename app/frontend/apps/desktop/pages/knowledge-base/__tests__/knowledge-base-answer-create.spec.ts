@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
+import { within } from '@testing-library/vue'
+
 import { type ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import {
@@ -14,6 +16,7 @@ import {
 } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import {
   EnumFormUpdaterId,
+  EnumKnowledgeBaseAnswerScreenBehavior,
   EnumKnowledgeBaseVisibility,
   EnumTaskbarEntity,
   EnumTaskbarEntityAccess,
@@ -21,7 +24,6 @@ import {
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
-import { KnowledgeBaseAnswerAddDocument } from '#desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseAnswerAdd.api.ts'
 import {
   mockKnowledgeBaseAnswerAddMutation,
   waitForKnowledgeBaseAnswerAddMutationCalls,
@@ -31,6 +33,7 @@ import {
   mockKnowledgeBaseCategorySubcategoriesQuery,
   waitForKnowledgeBaseCategorySubcategoriesQueryCalls,
 } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
+import { waitForUserCurrentTaskbarItemDeleteMutationCalls } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemDelete.mocks.ts'
 import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 
 const mockKnowledgeBase = () =>
@@ -170,6 +173,41 @@ describe('knowledge base answer create', () => {
     ).not.toHaveLength(0)
   })
 
+  // The field is declared once (useAnswerFormSchema.ts) and teleported into the header - proof it
+  //   actually lands there, rather than in the content column it used to render in.
+  // Same column as the fields below it, like in the edit view - see its spec for what this
+  //   looked like when the header capped it at the browse view's wider measure instead.
+  it('lines the header title field up with the form column', async () => {
+    const view = await visitCreateView()
+
+    expect((await view.findByLabelText('Title')).closest('.max-w-270')).not.toBeNull()
+    expect(view.getByLabelText('Text').closest('.max-w-270')).not.toBeNull()
+  })
+
+  it('renders the title field inside the header, not the content column', async () => {
+    const view = await visitCreateView()
+
+    const header = view.getByTestId('knowledge-base-header-full')
+
+    expect(header).toContainElement(await view.findByLabelText('Title'))
+  })
+
+  // The header must be on screen from the first render, because the title field is teleported into
+  //   it and a Teleport resolves its target exactly once. A header that skeletons - which unmounts
+  //   the target - while the form comes up leaves the draft with no title field at all, for good.
+  //   So the category path must never gate it: here the query returns none for the seeded category.
+  it('renders the title field while the seeded category has no path yet', async () => {
+    mockKnowledgeBaseCategorySubcategoriesQuery(() => ({
+      knowledgeBaseCategorySubcategories: { category: null, subcategories: [] },
+    }))
+
+    const view = await visitCreateView(getUuid(), 'en-us', '?categoryId=42')
+
+    const header = view.getByTestId('knowledge-base-header-full')
+
+    expect(header).toContainElement(await view.findByLabelText('Title'))
+  })
+
   // The taskbar id is what makes the auto-save work: without it the backend stores no draft, and
   //   nothing about the rendered form would look wrong.
   it('tells the form updater which taskbar to store the draft in', async () => {
@@ -247,8 +285,8 @@ describe('knowledge base answer create', () => {
     expect(view.queryByLabelText('Title')).not.toBeInTheDocument()
   })
 
-  // Per the story's UX decision: no big title in the header, and the breadcrumb follows the
-  //   title field as it is typed.
+  // Nothing is stored for the heading to read here, so it follows the form - the opposite of the
+  //   edit view, whose breadcrumb stays on the stored answer while a new title is typed.
   it('updates the breadcrumb heading while the title is typed', async () => {
     const view = await visitCreateView()
 
@@ -260,7 +298,7 @@ describe('knowledge base answer create', () => {
 
     expect(
       view.queryByRole('heading', { name: 'New knowledge base answer' }),
-      'the static fallback is replaced, not kept alongside',
+      'the static fallback is only for a draft with no title yet',
     ).not.toBeInTheDocument()
   })
 
@@ -421,25 +459,36 @@ describe('knowledge base answer create', () => {
       expect(view.getByText('Visible to everyone')).toBeInTheDocument()
     })
 
-    it('keeps the timing group away while the answer is a draft', async () => {
+    // The 2026-08-28 clarification: the create form shows the visibility, and nothing about
+    //   scheduling one for later - no timing field, and no scheduled-visibility widget either,
+    //   both of which need an answer to schedule for.
+    it('offers the state but no way to schedule one', async () => {
       const view = await visitCreateView()
 
       await view.findByRole('radio', { name: 'Draft' })
 
+      expect(view.getByLabelText('Visibility')).toBeInTheDocument()
+
+      expect(view.queryByLabelText('Timing')).not.toBeInTheDocument()
+      expect(view.queryByText('Scheduled visibility')).not.toBeInTheDocument()
       expect(
-        view.queryByLabelText('Timing'),
-        'a draft carries no timestamp at all',
+        view.queryByRole('button', { name: 'Add scheduled visibility' }),
       ).not.toBeInTheDocument()
-      expect(view.queryByLabelText('Date')).not.toBeInTheDocument()
+    })
 
-      await view.events.click(view.getByRole('radio', { name: 'Internal' }))
+    // Per the 2026-08-26 header decision: unlike the edit header's badges, which come from the
+    //   stored answer and never change, a draft has no stored state - so this one has to be live.
+    it('shows the visibility badge live, since a draft has no stored answer to read instead', async () => {
+      const view = await visitCreateView()
 
-      expect(await view.findByLabelText('Timing')).toBeInTheDocument()
+      const header = view.getByTestId('knowledge-base-header-full')
 
-      expect(
-        view.getByRole('radio', { name: 'now' }),
-        'publishing right away is the empty value the group starts out with',
-      ).toHaveAttribute('aria-checked', 'true')
+      expect(await within(header).findByText('Draft')).toBeInTheDocument()
+
+      await view.events.click(await view.findByRole('radio', { name: 'Internal' }))
+
+      expect(await within(header).findByText('Internal')).toBeInTheDocument()
+      expect(within(header).queryByText('Draft')).not.toBeInTheDocument()
     })
 
     // The reason the fields are teleported instead of living in a form of their own: one form id
@@ -463,28 +512,6 @@ describe('knowledge base answer create', () => {
           additionalData: { taskbarId: TASKBAR_ITEM_ID },
         })
       })
-    })
-
-    it('reveals the date field only for a scheduled publication', async () => {
-      const view = await visitCreateView()
-
-      await view.findByRole('radio', { name: 'Draft' })
-
-      await view.events.click(view.getByRole('radio', { name: 'Public' }))
-
-      expect(await view.findByLabelText('Timing')).toBeInTheDocument()
-      expect(
-        view.queryByLabelText('Date'),
-        'publishing right away needs no date',
-      ).not.toBeInTheDocument()
-
-      await view.events.click(view.getByRole('radio', { name: 'Schedule for' }))
-
-      const dateField = await view.findByLabelText('Date')
-
-      // Part of the same widget rather than a field of its own, so it reads as belonging to the
-      //   option above it.
-      expect(view.getByLabelText('Timing')).toContainElement(dateField)
     })
 
     it('offers the categories the updater resolved, required and not clearable', async () => {
@@ -519,26 +546,15 @@ describe('knowledge base answer create', () => {
     const ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 42)
     const TITLE = 'How to reset a password'
 
-    // Far enough ahead to satisfy the future-only picker whenever the suite runs.
-    const SCHEDULED_DATE = '2099-12-31 12:00'
-    const SCHEDULED_TIMESTAMP = '2099-12-31T12:00:00Z'
+    // Pinned, so a choice made by an earlier example cannot decide where these ones end up.
+    beforeEach(() => {
+      mockUserCurrent({ preferences: {} })
+    })
 
-    // Publishing later than right away: a state that can be scheduled at all, and the moment it
-    //   applies at - which is picked inside the same group as the state, below its option.
-    const schedulePublication = async (
-      view: Awaited<ReturnType<typeof visitCreateView>>,
-      date: string | null,
-    ) => {
-      await view.events.click(await view.findByRole('radio', { name: 'Public' }))
-      await view.events.click(await view.findByRole('radio', { name: 'Schedule for' }))
+    // @param visibility state to pick before submitting, `undefined` to leave it on `draft`
+    const submitDraft = async (options: { visibility?: string; tabId?: string } = {}) => {
+      const tabId = options.tabId ?? getUuid()
 
-      if (!date) return
-
-      await view.events.type(await view.findByLabelText('Date'), date)
-      await view.events.keyboard('{Enter}')
-    }
-
-    const submitDraft = async (options: { scheduledAt?: string | null } = {}) => {
       mockAnswerCreateFormUpdater()
       mockKnowledgeBaseAnswerAddMutation({
         knowledgeBaseAnswerAdd: {
@@ -548,20 +564,21 @@ describe('knowledge base answer create', () => {
             visibility: EnumKnowledgeBaseVisibility.Draft,
             translationMissing: false,
             position: 1,
+            category: { id: convertToGraphQLId('KnowledgeBase::Category', 1) },
           },
           errors: null,
         },
       })
 
-      const view = await visitCreateView()
+      const view = await visitCreateView(tabId)
 
       // Both are required, so the form does not submit without them; the category comes seeded
       //   from the updater.
       await view.events.type(await view.findByLabelText('Title'), TITLE)
       await view.events.type(view.getByRole('textbox', { name: 'Text' }), 'Open the settings.')
 
-      if ('scheduledAt' in options) {
-        await schedulePublication(view, options.scheduledAt ?? null)
+      if (options.visibility) {
+        await view.events.click(await view.findByRole('radio', { name: options.visibility }))
       }
 
       await view.events.click(view.getByRole('button', { name: 'Create' }))
@@ -578,7 +595,7 @@ describe('knowledge base answer create', () => {
         input: {
           categoryId: string
           title: string
-          visibility: { state: string; scheduledAt?: string }
+          visibility: string
           formId?: string
         }
       }
@@ -590,8 +607,7 @@ describe('knowledge base answer create', () => {
           // The field works with internal ids, the input takes a GraphQL one.
           categoryId: convertToGraphQLId('KnowledgeBase::Category', 1),
           title: TITLE,
-          // The state and its date travel as one object.
-          visibility: { state: EnumKnowledgeBaseVisibility.Draft },
+          visibility: EnumKnowledgeBaseVisibility.Draft,
         },
       })
 
@@ -599,63 +615,116 @@ describe('knowledge base answer create', () => {
       expect(variables.input.formId).toBeTruthy()
     })
 
-    // Only after the answer exists - a failed create has to keep the draft.
-    it('opens the created answer and closes the draft tab', async () => {
-      await submitDraft()
-
-      await waitForKnowledgeBaseAnswerAddMutationCalls()
-
-      const router = getTestRouter()
-
-      await waitFor(() => {
-        expect(router.currentRoute.value.name).toBe('KnowledgeBaseAnswer')
-      })
-
-      expect(router.currentRoute.value.params).toEqual({
-        localeCode: 'en-us',
-        answerInternalId: '42',
-      })
-    })
-
-    // Publishing right away is the *absence* of a date inside the visibility object, not a date
-    //   of its own.
-    it('sends no date for a state that applies right away', async () => {
-      await submitDraft()
-
-      const calls = await waitForKnowledgeBaseAnswerAddMutationCalls()
-
-      expect(calls.at(-1)?.variables).not.toHaveProperty('input.visibility.scheduledAt')
-    })
-
-    it('sends the date a scheduled publication was given', async () => {
-      const view = await submitDraft({ scheduledAt: SCHEDULED_DATE })
+    // The state alone, with no date to go with it: it applies as soon as the answer is created.
+    it('sends the picked state as the visibility', async () => {
+      await submitDraft({ visibility: 'Public' })
 
       const calls = await waitForKnowledgeBaseAnswerAddMutationCalls()
 
       expect(calls.at(-1)?.variables).toMatchObject({
-        input: {
-          // The state and the moment it applies at travel as one object.
-          visibility: {
-            state: EnumKnowledgeBaseVisibility.Published,
-            scheduledAt: SCHEDULED_TIMESTAMP,
-          },
-        },
+        input: { visibility: EnumKnowledgeBaseVisibility.Published },
       })
-
-      expect(view.queryByText('This field is required.')).not.toBeInTheDocument()
     })
 
-    // The date is what answers the field, so the option alone is no answer - and the picker is
-    //   detached from the form, which leaves the reporting to the field around it.
-    it('does not submit a scheduled publication without a date', async () => {
-      const view = await submitDraft({ scheduledAt: null })
+    // The story's acceptance criteria ask for the edit view's control here as well - one choice,
+    //   one stored preference, whichever of the two views the answer was written in.
+    describe('screen behavior', () => {
+      // The create screen's own key, never the edit one - they are configured independently.
+      const setBehavior = (behavior?: EnumKnowledgeBaseAnswerScreenBehavior) =>
+        mockUserCurrent({ preferences: { knowledgeBaseAnswerCreateSecondaryAction: behavior } })
 
-      expect(await view.findByText('This field is required.')).toBeInTheDocument()
+      // The control itself - what it offers and what it stores - is covered by its own spec; this
+      //   is about the Add answer view carrying it at all, which is what the criteria ask for. Its
+      //   default is what this view did before it had a choice: leave for the answer it filed.
+      it('renders the control in the bottom bar', async () => {
+        setBehavior()
+        mockAnswerCreateFormUpdater()
 
-      expect(
-        getGraphQLMockCalls(KnowledgeBaseAnswerAddDocument),
-        'nothing to create an answer from',
-      ).toHaveLength(0)
+        const view = await visitCreateView()
+
+        expect(
+          await view.findByRole('button', { name: 'Close tab and open the answer' }),
+        ).toBeInTheDocument()
+      })
+
+      // Adding another answer: this tab is done, and a fresh form opens in the category the answer
+      //   was filed in. A tab of its own, which is what gets the next answer a clean form id - and
+      //   with it an upload cache that does not still hold the files just handed over.
+      it('closes the tab and opens a fresh form in the same category', async () => {
+        setBehavior(EnumKnowledgeBaseAnswerScreenBehavior.CloseTabAndAddAnother)
+
+        const tabId = getUuid()
+
+        await submitDraft({ tabId })
+
+        await waitFor(() => {
+          expect(getTestRouter().currentRoute.value).toMatchObject({
+            name: 'KnowledgeBaseAnswerCreate',
+            params: { localeCode: 'en-us' },
+            // The internal id, which is what the form's own category field works with.
+            query: { categoryId: '1' },
+          })
+        })
+
+        expect(getTestRouter().currentRoute.value.params.tabId).not.toBe(tabId)
+
+        const calls = await waitForUserCurrentTaskbarItemDeleteMutationCalls()
+
+        expect(calls.at(-1)?.variables).toEqual({ id: TASKBAR_ITEM_ID })
+      })
+
+      // Only after the answer exists - a failed create has to keep the draft. Also what an editor
+      //   who never touched the control gets.
+      it('closes the tab and opens the created answer', async () => {
+        setBehavior(EnumKnowledgeBaseAnswerScreenBehavior.CloseTabAndOpenAnswer)
+
+        await submitDraft()
+
+        await waitFor(() => {
+          expect(getTestRouter().currentRoute.value).toMatchObject({
+            name: 'KnowledgeBaseAnswer',
+            params: { localeCode: 'en-us', answerInternalId: '42' },
+          })
+        })
+
+        const calls = await waitForUserCurrentTaskbarItemDeleteMutationCalls()
+
+        expect(calls.at(-1)?.variables).toEqual({ id: TASKBAR_ITEM_ID })
+      })
+
+      // The edit screen's own value, which this one does not offer - a leftover or a hand-edited
+      //   preference must not leave the create view without a behavior at all.
+      it('falls back to its default for a behavior it does not offer', async () => {
+        setBehavior(EnumKnowledgeBaseAnswerScreenBehavior.StayOnTab)
+
+        await submitDraft()
+
+        await waitFor(() => {
+          expect(getTestRouter().currentRoute.value).toMatchObject({
+            name: 'KnowledgeBaseAnswer',
+            params: { localeCode: 'en-us', answerInternalId: '42' },
+          })
+        })
+      })
+
+      // The category comes from the mutation result rather than from the form, so it is the one
+      //   the answer really landed in.
+      it('closes the tab and opens the category', async () => {
+        setBehavior(EnumKnowledgeBaseAnswerScreenBehavior.CloseTabAndOpenCategory)
+
+        await submitDraft()
+
+        await waitFor(() => {
+          expect(getTestRouter().currentRoute.value).toMatchObject({
+            name: 'KnowledgeBaseCategory',
+            params: { localeCode: 'en-us', categoryInternalId: '1' },
+          })
+        })
+
+        const calls = await waitForUserCurrentTaskbarItemDeleteMutationCalls()
+
+        expect(calls.at(-1)?.variables).toEqual({ id: TASKBAR_ITEM_ID })
+      })
     })
   })
 })

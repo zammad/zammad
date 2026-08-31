@@ -6,9 +6,9 @@ import { computed } from 'vue'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import TicketSimpleTable from '#desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue'
+import type { TicketRelationAndRecentListItem } from '#desktop/components/Ticket/TicketSimpleTable/types.ts'
 import TicketRelationAndRecentListsSkeleton from '#desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentListsSkeleton.vue'
-import TicketSimpleTable from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue'
-import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 import { useTicketRelationAndRecentTicketListsQuery } from '#desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.api.ts'
 
 interface Props {

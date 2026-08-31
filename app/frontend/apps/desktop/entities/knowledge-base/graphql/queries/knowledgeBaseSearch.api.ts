@@ -26,7 +26,7 @@ export const KnowledgeBaseSearchDocument = gql`
           }
           ... on KnowledgeBaseCategory {
             id
-            title
+            categoryTitle: title
             categoryIcon
             iconSet
             visibility

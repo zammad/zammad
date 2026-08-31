@@ -7,6 +7,7 @@ import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionM
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonDropdown from '#desktop/components/CommonDropdown/CommonDropdown.vue'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
+import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 
 import KnowledgeBaseBreadcrumb from './KnowledgeBaseBreadcrumb.vue'
 import { useTopBarHeader } from './useTopBarHeader.ts'
@@ -37,7 +38,19 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
 </script>
 
 <template>
+  <!-- The same blocks as TopBarHeaderFullSkeleton's breadcrumb row, so a header that skeletons in
+       place looks like one that is skeletoned as a whole. -->
+  <div
+    v-if="loading"
+    class="flex h-6 items-center gap-1.5"
+    :class="{ grow: variant === 'compact' }"
+  >
+    <CommonSkeleton class="size-3.5 shrink-0" rounded />
+    <CommonSkeleton class="h-3 w-24" />
+  </div>
+
   <KnowledgeBaseBreadcrumb
+    v-else
     class="flex h-6"
     :class="{ grow: variant === 'compact' }"
     :items="breadcrumbs"

@@ -51,7 +51,9 @@ const link = computed(() => {
 const titleSegments = computed(() =>
   props.result.titlePreview.length
     ? props.result.titlePreview
-    : [{ text: props.result.item.title ?? '', highlight: false }],
+    : // Read off the narrowed hit: the category's title is aliased in the query, since it and an
+      //   answer's differ in nullability and so cannot share one response name.
+      [{ text: answer.value?.title ?? category.value?.categoryTitle ?? '', highlight: false }],
 )
 </script>
 

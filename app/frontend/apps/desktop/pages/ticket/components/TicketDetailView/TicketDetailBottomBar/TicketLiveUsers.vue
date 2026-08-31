@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
-import { useTicketLiveUsersDisplay } from '#shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts'
+import { useTaskbarLiveUsersDisplay } from '#shared/entities/taskbar/composables/useTaskbarLiveUsersDisplay.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
 import AiAgentPopoverWithTrigger from '#desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue'
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   liveUserList: () => [],
 })
 
-const { liveUsers } = useTicketLiveUsersDisplay(toRef(props, 'liveUserList'))
+const { liveUsers } = useTaskbarLiveUsersDisplay(toRef(props, 'liveUserList'))
 
 const LIVE_USER_LIMIT = 9
 

@@ -34,7 +34,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Add, type: :graphql do
 
   let(:title)       { 'Fresh answer' }
   let(:category_id) { gql.id(category) }
-  let(:visibility)  { { state: 'draft' } }
+  let(:visibility)  { 'draft' }
   let(:locale)      { primary_locale.system_locale.locale }
 
   let(:input)     { { categoryId: category_id, title:, tags: [], visibility:, body: '<p>Fresh body</p>' }.compact }
@@ -58,14 +58,14 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Add, type: :graphql do
       )
     end
 
-    # The nested visibility argument has to reach the service as the state and date it is made of.
-    #   What each state then does with them is the service's business.
+    # The visibility argument has to reach the service as the state it names, and take effect at
+    #   once - there is no date to schedule it for later with.
     context 'with a visibility' do
-      let(:visibility) { { state: 'published', scheduledAt: 1.week.from_now.iso8601 } }
+      let(:visibility) { 'published' }
 
-      it 'applies the state at the submitted date', :aggregate_failures do
+      it 'applies the state right away', :aggregate_failures do
         expect(gql.result.data.dig('answer', 'publishedAt')).to be_present
-        expect(gql.result.data.dig('answer', 'visibility')).to eq('draft')
+        expect(gql.result.data.dig('answer', 'visibility')).to eq('published')
       end
     end
 

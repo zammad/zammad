@@ -118,15 +118,23 @@ describe('knowledge base answers infinite scroll', () => {
   })
 })
 
-// The way into the create view from the browse page.
-describe('knowledge base add answer entry point', () => {
-  const mockCategory = (createAnswer: boolean) =>
+// The ways into the create and the edit view from the browse page.
+describe('knowledge base add and edit answer entry points', () => {
+  // Both flags are always stated, never left to the automocker: an auto-generated boolean differs
+  //   between an isolated and a whole-file run, which makes a test about them pass by luck.
+  const mockCategory = (createAnswer: boolean, updateAnswer = false) =>
     mockKnowledgeBaseCategorySubcategoriesQuery({
       knowledgeBaseCategorySubcategories: {
         category: {
           id: CATEGORY_ID,
           breadcrumb: [{ id: CATEGORY_ID, title: 'Category' }],
-          policy: { update: true, destroy: true, createSubcategory: createAnswer, createAnswer },
+          policy: {
+            update: true,
+            destroy: true,
+            createSubcategory: createAnswer,
+            createAnswer,
+            updateAnswer,
+          },
         },
         subcategories: [],
       },
@@ -250,6 +258,49 @@ describe('knowledge base add answer entry point', () => {
         name: 'Add answer',
       }),
     ).not.toBeInTheDocument()
+  })
+
+  // The edit entry on the card itself, which is what the browse page offers for an answer that
+  //   already exists - the reader's header menu and floating toolbar being the other two.
+  it('offers editing an answer on its card', async () => {
+    mockCategory(true, true)
+    mockAnswers([answer(1, 'Answer One')])
+
+    const view = await visitCategory()
+
+    const card = (await view.findByText('Answer One')).closest('li') as HTMLElement
+
+    await view.events.click(within(card).getByRole('button', { name: 'Answer actions' }))
+
+    // Asserted on the navigation rather than on the view it opens: the edit view brings its own
+    //   taskbar tab and answer query, which this browse spec does not mock - it would render into
+    //   errors that say nothing about the card.
+    const router = getTestRouter()
+    router.mockMethods()
+
+    await view.events.click(await view.findByRole('button', { name: 'Edit answer' }))
+
+    // The browsed locale, like every other way into the edit view: its taskbar tab is per answer
+    //   *and* locale.
+    expect(router.push).toHaveBeenCalledWith({
+      name: 'KnowledgeBaseAnswerEdit',
+      params: { localeCode: 'en-us', answerInternalId: 1 },
+    })
+
+    router.restoreMethods()
+  })
+
+  // Asked of the category once, not per answer: KnowledgeBase::AnswerPolicy#update? resolves the
+  //   access of the answer's category anyway, so every card here would answer the same.
+  it('hides the card edit action without edit access to the category', async () => {
+    mockCategory(true, false)
+    mockAnswers([answer(1, 'Answer One')])
+
+    const view = await visitCategory()
+
+    const card = (await view.findByText('Answer One')).closest('li') as HTMLElement
+
+    expect(within(card).queryByRole('button', { name: 'Answer actions' })).not.toBeInTheDocument()
   })
 
   it('opens a fresh draft for the category it was clicked in', async () => {

@@ -66,6 +66,9 @@ class Ticket < ApplicationModel
   taskbar_entities 'TicketZoom', 'TicketCreate'
   taskbar_ignore_state_updates_entities 'TicketZoom'
 
+  # Everyone who may see the ticket belongs in its live user list, customers included.
+  taskbar_live_user_pundit_method :show?
+
   activity_stream_attributes_ignored :organization_id, # organization_id will change automatically on user update
                                      :create_article_type_id,
                                      :create_article_sender_id,

@@ -1,14 +1,21 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { KnowledgeBaseAnswerPolicyFragmentDoc } from './knowledgeBaseAnswerPolicy.api';
 export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
+  ...knowledgeBaseAnswerPolicy
   title
   content {
     id
     bodyWithUrls
+    bodyForEditing @include(if: $withBodyForEditing)
   }
   visibility
+  visibilitySchedules {
+    visibility
+    scheduledAt
+  }
   translationId
   translationMissing
   internalAt
@@ -41,4 +48,4 @@ export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     preferences
   }
 }
-    `;
+    ${KnowledgeBaseAnswerPolicyFragmentDoc}`;

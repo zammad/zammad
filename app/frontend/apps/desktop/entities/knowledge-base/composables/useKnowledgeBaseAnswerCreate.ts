@@ -37,16 +37,13 @@ export const useKnowledgeBaseAnswerCreate = () => {
     body: data.body ?? '',
     formId,
     tags: data.tags ?? [],
-    // The state and its date travel as one, so a date can never arrive without a state to be the
-    //   date of. A moment in the future is what schedules the state, its absence is "now" - which
-    //   is the empty value the field's first option holds.
+    // The state alone, effective at once: scheduling a transition for later is an edit, so this
+    //   form carries no date to go with it.
     //
     // The field starts out on `draft` (the form updater seeds it), so the fallback only covers a
-    //   form that never resolved one.
-    visibility: {
-      state: data.visibility ?? EnumKnowledgeBaseVisibility.Draft,
-      ...(data.scheduledAt ? { scheduledAt: data.scheduledAt } : {}),
-    },
+    //   form that never resolved one - the mutation wants the state named rather than inferred
+    //   from an absent argument.
+    visibility: data.visibility ?? EnumKnowledgeBaseVisibility.Draft,
   })
 
   // @returns the created answer, or undefined when there was nothing to submit into

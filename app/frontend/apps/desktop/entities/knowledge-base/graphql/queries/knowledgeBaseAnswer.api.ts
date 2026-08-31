@@ -7,11 +7,11 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const KnowledgeBaseAnswerDocument = gql`
-    query knowledgeBaseAnswer($answerId: ID!, $locale: String) {
+    query knowledgeBaseAnswer($answerId: ID!, $locale: String, $withBodyForEditing: Boolean = false, $withNavigation: Boolean = true) {
   knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
     id
     ...knowledgeBaseAnswerAttributes
-    navigation {
+    navigation @include(if: $withNavigation) {
       index
       totalCount
       previousAnswer {

@@ -1,0 +1,12 @@
+# Which actions the current user may perform on an answer — the global `knowledge_base.editor`
+#   permission says nothing about the subtree it lives in, so every control asks per record.
+#
+# Always request the whole set, via this fragment: `policy` has no id of its own, so Apollo
+#   replaces it instead of merging, and a query selecting fewer fields would drop the others
+#   from the cached answer (which then costs a refetch to get them back).
+fragment knowledgeBaseAnswerPolicy on KnowledgeBaseAnswer {
+  policy {
+    update
+    destroy
+  }
+}

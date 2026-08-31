@@ -132,6 +132,11 @@ const browsedTitle = computed(() =>
   }),
 )
 
+// Asked of the open category, once for the whole list: KnowledgeBase::AnswerPolicy#update?
+//   resolves the access of the answer's category anyway, so every listed answer would answer the
+//   same (KnowledgeBase::CategoryPolicy#update_answer?).
+const canEditAnswer = computed(() => Boolean(categoryPolicy.value?.updateAnswer))
+
 const { openKnowledgeBaseCategoryAddFlyout } = useKnowledgeBaseCategoryFlyout()
 useKnowledgeBaseEditFlyout()
 
@@ -336,6 +341,7 @@ watch(browsedPage, scrollToStart)
           :locale="localeCode"
           :content-container-element="contentContainerElement"
           :can-add-answer="canAddAnswer"
+          :can-edit-answer="canEditAnswer"
         />
       </section>
 

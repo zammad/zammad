@@ -22,9 +22,10 @@ class FormUpdater::Updater::KnowledgeBase::Answer::Create < FormUpdater::Updater
     category_relation.selectable_categories.any?
   end
 
+  # A new answer opens on `draft`, which the editor may change before filing it. No timing to seed
+  #   alongside it: scheduling a state for later is an edit, so this form has no such field - what
+  #   it picks takes effect as soon as the answer is created.
   def initial_values
-    # No timing to seed alongside it: an answer is published right away unless a timestamp says
-    #   otherwise, which is exactly what the empty value of that field means.
     values = { 'visibility' => 'draft' }
 
     category = seeded_category

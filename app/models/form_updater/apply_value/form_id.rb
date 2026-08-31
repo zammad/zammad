@@ -20,6 +20,20 @@ class FormUpdater::ApplyValue::FormId < FormUpdater::ApplyValue::Base
       end
 
     result['attachments'] ||= {}
-    result['attachments'][:value] = attachments
+    result['attachments'][value_key(config)] = attachments
+  end
+
+  private
+
+  # A plain `value` sets the field without giving it a baseline: the form captures a field's `_init`
+  #   synchronously when the node is created, and nothing backfills it from a later round trip. So a
+  #   cache seeded *from the record* has to arrive as `initialValue`, or the file field reads as
+  #   changed before anybody touched it - and every "is this dirty" decision built on it is wrong.
+  #
+  # Opt-in per caller rather than always, because the other seeds are not baselines: a template, a
+  #   shared draft and a split article all pull in content the user then has to be able to save, so
+  #   those must stay `value` and leave the form dirty.
+  def value_key(config)
+    config['as_initial'] ? :initialValue : :value
   end
 end

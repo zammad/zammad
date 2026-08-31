@@ -1,0 +1,5 @@
+fragment knowledgeBaseAnswerTaskbarTabAttributes on KnowledgeBaseAnswer {
+  id
+  title
+  visibility
+}

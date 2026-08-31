@@ -1,0 +1,7 @@
+subscription knowledgeBaseAnswerLiveUserUpdates($key: String!, $app: EnumTaskbarApp!) {
+  knowledgeBaseAnswerLiveUserUpdates(key: $key, app: $app) {
+    liveUsers {
+      ...knowledgeBaseAnswerLiveUserAttributes
+    }
+  }
+}

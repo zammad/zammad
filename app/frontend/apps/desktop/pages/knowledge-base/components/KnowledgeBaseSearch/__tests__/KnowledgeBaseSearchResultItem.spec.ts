@@ -60,7 +60,7 @@ const categoryResult = (overrides = {}) => ({
   item: {
     __typename: 'KnowledgeBaseCategory',
     id: convertToGraphQLId('KnowledgeBase::Category', 7),
-    title: 'Printers',
+    categoryTitle: 'Printers',
     categoryIcon: 'f02f',
     iconSet: 'FontAwesome',
     visibility: EnumKnowledgeBaseVisibility.Internal,

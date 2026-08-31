@@ -49,6 +49,18 @@ export default Image.extend({
         parseHTML: (element) => getAttributeFromElement(element, 'height'),
       },
 
+      // An inline image of a stored record travels as a `cid:` reference, which the backend swaps
+      // for an attachment URL when it hands the body out - moving the cid into this attribute
+      // (HasRichText.insert_urls). On the way back HtmlSanitizer::CidToSrc turns it into
+      // `src="cid:…"` again. tiptap drops any attribute the schema does not declare, and a saved
+      // body that references no cid makes has_rich_text_cleanup_unused_attachments delete every
+      // inline image of the record - so this has to be parsed and rendered, not just tolerated.
+      cid: {
+        default: null,
+        parseHTML: (element) => element.getAttribute('cid'),
+        renderHTML: (attributes) => (attributes.cid ? { cid: attributes.cid } : {}),
+      },
+
       isDraggable: {
         default: true,
         renderHTML: () => {

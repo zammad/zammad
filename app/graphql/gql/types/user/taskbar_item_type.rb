@@ -89,8 +89,22 @@ module Gql::Types::User
         return nil
       end
 
-      entity = klass.find(id)
-      Pundit.authorize(context.current_user, entity, :show?)
+      # Not the `id` of the split above: a key may qualify the tab behind the
+      #   record id - the edit tab of a knowledge base answer carries the locale
+      #   it edits - and that qualifier is none of the record's identity.
+      entity_id = Taskbar.entity_key_id(@object.key)
+      if entity_id.nil?
+        Rails.logger.debug { "No taskbar entity id in key '#{@object.key}'." }
+
+        return nil
+      end
+
+      entity = klass.find(entity_id)
+
+      # Which query authorizes the entity depends on what the tab is for: an
+      #   edit tab is only offered to someone who may edit (see
+      #   Taskbar.entity_pundit_method).
+      Pundit.authorize(context.current_user, entity, Taskbar.entity_pundit_method(@object.callback))
 
       entity
     end

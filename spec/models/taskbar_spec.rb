@@ -488,6 +488,24 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
 
       it { is_expected.to be_relatable }
     end
+
+    # The key of an *edit* tab, which is the only one an answer's own key is used for - so the
+    #   editors of one translation see each other, and a reader (who opens no tab at all) never
+    #   appears among them.
+    context 'when it is a knowledge base answer' do
+      subject(:taskbar) { create(:taskbar, :with_knowledge_base_answer) }
+
+      it { is_expected.to be_relatable }
+    end
+
+    # Live users are opted into per model (HasTaskbars.taskbar_live_user_pundit_method), so a model
+    #   with taskbars but no list of its own must stay out - otherwise every profile tab would start
+    #   collecting the other viewers into preferences nothing reads.
+    context 'when it is an organization' do
+      subject(:taskbar) { create(:taskbar, :with_organization) }
+
+      it { is_expected.not_to be_relatable }
+    end
   end
 
   describe '#target_accessible_to_owner?' do
@@ -538,6 +556,63 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
       let(:taskbar) { create(:taskbar, :with_new_knowledge_base_answer) }
 
       it { expect(taskbar.target_accessible_to_owner?).to be_nil }
+    end
+
+    # #update?, not #show?: a reader of the category passes the latter, and an editors' live user
+    #   list is no place for somebody who cannot edit. Which also means an editor who loses access
+    #   to the subtree drops out of the others' lists on the next update.
+    context 'when taskbar is a knowledge base answer' do
+      subject(:taskbar) { create(:taskbar, :with_knowledge_base_answer, answer:, user:) }
+
+      let(:knowledge_base) { create(:knowledge_base) }
+      let(:category)       { create(:knowledge_base_category, knowledge_base:) }
+
+      # Internally visible, which is what makes the reader case below say something: a *draft*
+      #   answer fails #show? for a reader too, so it could not tell the two queries apart.
+      let(:answer) { create(:knowledge_base_answer, :internal, category:) }
+
+      context 'when owner may edit the answer' do
+        let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.editor')]) }
+
+        it { is_expected.to be_target_accessible_to_owner }
+      end
+
+      context 'when owner may only read the answer' do
+        let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
+
+        before do
+          KnowledgeBase::PermissionsUpdate
+            .new(category)
+            .update! user.roles.first => 'reader'
+        end
+
+        it { is_expected.not_to be_target_accessible_to_owner }
+      end
+
+      context 'when owner lost access to the answer subtree' do
+        let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.editor')]) }
+
+        before do
+          KnowledgeBase::PermissionsUpdate
+            .new(category)
+            .update! user.roles.first => 'none'
+        end
+
+        it { is_expected.not_to be_target_accessible_to_owner }
+      end
+
+      # A tab whose answer is gone names no record, so there is nothing to authorize - and looking
+      #   one up must not raise on the way to saying so.
+      context 'when the answer is gone' do
+        let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.editor')]) }
+
+        before do
+          taskbar
+          answer.destroy!
+        end
+
+        it { expect(taskbar.target_accessible_to_owner?).to be_nil }
+      end
     end
 
     describe '#update_last_contact' do
@@ -618,12 +693,27 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
         expect(RecentClose).not_to have_received(:upsert_closing_time!)
       end
     end
+
+    # #to_object_class has no branch for an answer, so recent closes stay ticket,
+    #   user and organization - whether answers belong there is its own topic.
+    context 'when taskbar is a knowledge base answer edit tab' do
+      let(:user)    { create(:agent) }
+      let(:taskbar) { create(:taskbar, :with_knowledge_base_answer, user:) }
+
+      it 'does not call RecentClose.upsert_closing_time!', :aggregate_failures do
+        expect(taskbar.to_object_class).to be_nil
+
+        taskbar.destroy
+
+        expect(RecentClose).not_to have_received(:upsert_closing_time!)
+      end
+    end
   end
 
   describe '.taskbar_entities' do
     it 'collects the entities of every model with taskbar support, plus the static ones' do
       expect(described_class.taskbar_entities)
-        .to include('TicketZoom', 'TicketCreate', 'UserProfile', 'OrganizationProfile', 'KnowledgeBaseAnswerCreate', 'Search')
+        .to include('TicketZoom', 'TicketCreate', 'UserProfile', 'OrganizationProfile', 'KnowledgeBaseAnswerCreate', 'KnowledgeBaseAnswerEdit', 'Search')
     end
   end
 
@@ -671,6 +761,63 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
       ticket = create(:ticket)
 
       expect(described_class.entity_key(ticket)).to eq("Ticket-#{ticket.id}")
+    end
+
+    # More than one tab per record, e.g. one per locale of a knowledge base answer.
+    it 'appends a qualifier' do
+      answer = create(:knowledge_base_answer)
+
+      expect(described_class.entity_key(answer, 'de-de')).to eq("KnowledgeBase__Answer-#{answer.id}-de-de")
+    end
+  end
+
+  describe '.entity_key_id' do
+    it 'returns the id of a record key' do
+      expect(described_class.entity_key_id('Ticket-42')).to eq('42')
+    end
+
+    it 'returns the id of a namespaced record key' do
+      expect(described_class.entity_key_id('KnowledgeBase__Answer-42')).to eq('42')
+    end
+
+    # The qualifier is not part of the record's identity, and must not reach a
+    #   lookup - where it would survive as an integer type cast.
+    it 'returns the id of a qualified record key, without the qualifier' do
+      expect(described_class.entity_key_id('KnowledgeBase__Answer-42-de-de')).to eq('42')
+    end
+
+    it 'returns nil for a static entity key' do
+      expect(described_class.entity_key_id('Search')).to be_nil
+    end
+
+    it 'returns nil for a create screen key' do
+      expect(described_class.entity_key_id('TicketCreateScreen-a1e2c3')).to be_nil
+    end
+  end
+
+  describe '.entity_pundit_method' do
+    it 'authorizes with :show? by default' do
+      expect(described_class.entity_pundit_method('TicketZoom')).to be(:show?)
+    end
+
+    it 'authorizes with :show? for an unknown entity' do
+      expect(described_class.entity_pundit_method('SomeLegacyEntityZoom')).to be(:show?)
+    end
+
+    # A reader of the category passes KnowledgeBase::AnswerPolicy#show?, but has
+    #   nothing to do with an edit tab.
+    it 'authorizes the knowledge base answer edit tab with :update?' do
+      expect(described_class.entity_pundit_method('KnowledgeBaseAnswerEdit')).to be(:update?)
+    end
+  end
+
+  describe '#assets' do
+    # Only a ticket create tab references users in its state, so it is the only
+    #   one that adds assets besides its own.
+    it 'adds nothing but the taskbar itself for a knowledge base answer edit tab' do
+      taskbar = create(:taskbar, :with_knowledge_base_answer)
+
+      expect(taskbar.assets({}).keys).to eq([described_class.to_app_model])
     end
   end
 

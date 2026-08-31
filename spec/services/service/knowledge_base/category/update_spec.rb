@@ -203,8 +203,9 @@ RSpec.describe Service::KnowledgeBase::Category::Update do
     end
   end
 
-  # Editor access to the category is what allows editing it; a *move* is additionally authorized at
-  #   the target, and only when the parent actually changes.
+  # Editor access to the category itself is not asked by the service - the mutation's `category_id`
+  #   argument gates it, and its spec covers that. A *move* is authorized at the target, which no
+  #   argument gate sees, and only when the parent actually changes.
   context 'with a granular editor of one subtree' do
     let(:granular_role) { create(:role, permission_names: 'knowledge_base.editor') }
     let(:user)          { create(:user, roles: [granular_role]) }
@@ -233,21 +234,6 @@ RSpec.describe Service::KnowledgeBase::Category::Update do
       end
     end
 
-    context 'when updating a category they only read' do
-      let(:record) { other_category }
-
-      it 'is not authorized' do
-        expect { execute }.to raise_error(Pundit::NotAuthorizedError)
-      end
-    end
-  end
-
-  context 'with a user who may only read the knowledge base' do
-    let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
-
-    it 'is not authorized' do
-      expect { execute }.to raise_error(Pundit::NotAuthorizedError)
-    end
   end
 
   context 'without a current user' do

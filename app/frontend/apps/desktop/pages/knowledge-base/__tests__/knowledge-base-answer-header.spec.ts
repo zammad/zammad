@@ -2,6 +2,7 @@
 
 import { within } from '@testing-library/vue'
 
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -78,36 +79,43 @@ const mockAnswer = (overrides: Partial<Answer> = {}) =>
     },
   } as KnowledgeBaseAnswerQuery)
 
+// `showFeedIcon` is pinned rather than left to the automocker: it decides whether the header's
+//   action menu has an entry besides the edit one, and an auto-generated boolean differs between
+//   an isolated and a whole-file run - which made a test about that menu pass or fail by luck.
+const mockKnowledgeBase = (showFeedIcon = false) =>
+  mockKnowledgeBaseQuery({
+    knowledgeBase: {
+      id: convertToGraphQLId('KnowledgeBase', 1),
+      title: 'My Knowledge Base',
+      iconset: 'default',
+      isPubliclyAvailable: true,
+      isVisiblePublicly: true,
+      showFeedIcon,
+      kbLocales: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+          primary: true,
+          systemLocale: { id: '1', locale: 'en-us', name: 'English (United States)' },
+        },
+        {
+          id: convertToGraphQLId('KnowledgeBase::Locale', 2),
+          primary: false,
+          systemLocale: { id: '2', locale: 'de-de', name: 'Deutsch' },
+        },
+      ],
+      currentLocale: {
+        id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+        systemLocale: { id: '1', locale: 'en-us' },
+      },
+    },
+  })
+
 describe('knowledge base answer header', () => {
   beforeEach(() => {
     mockApplicationConfig({ kb_active_publicly: true })
     mockPermissions(['knowledge_base.reader'])
 
-    mockKnowledgeBaseQuery({
-      knowledgeBase: {
-        id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
-        iconset: 'default',
-        isPubliclyAvailable: true,
-        isVisiblePublicly: true,
-        kbLocales: [
-          {
-            id: convertToGraphQLId('KnowledgeBase::Locale', 1),
-            primary: true,
-            systemLocale: { id: '1', locale: 'en-us', name: 'English (United States)' },
-          },
-          {
-            id: convertToGraphQLId('KnowledgeBase::Locale', 2),
-            primary: false,
-            systemLocale: { id: '2', locale: 'de-de', name: 'Deutsch' },
-          },
-        ],
-        currentLocale: {
-          id: convertToGraphQLId('KnowledgeBase::Locale', 1),
-          systemLocale: { id: '1', locale: 'en-us' },
-        },
-      },
-    })
+    mockKnowledgeBase()
 
     mockAnswer()
   })
@@ -145,6 +153,103 @@ describe('knowledge base answer header', () => {
     links.forEach((link) => {
       expect(link).toHaveAttribute('href', '/desktop/knowledge-base/locale/en-us?focus=search')
     })
+  })
+
+  // The way into the edit view - without it the view is only reachable by typing a URL.
+  describe('the edit action', () => {
+    // Per record, never on the global `knowledge_base.editor` permission: a granular setup can make
+    //   the same user editor of one subtree and reader of the next, so the global permission would
+    //   offer a button the mutation then refuses.
+    it('is offered to a user who may update the answer', async () => {
+      mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
+
+      const view = await visitView(ANSWER_PATH)
+
+      expect(await view.findByRole('button', { name: 'Edit answer' })).toBeInTheDocument()
+    })
+
+    it('is not offered to a user who may only read it', async () => {
+      mockPermissions(['knowledge_base.editor'])
+      mockAnswer({ policy: { __typename: 'PolicyDefault', update: false, destroy: false } })
+
+      const view = await visitView(ANSWER_PATH)
+
+      // Awaited through something else the header renders, so the absence is asserted on a
+      //   settled view rather than on one that has not got there yet.
+      await view.findAllByText('Published')
+
+      expect(view.queryByRole('button', { name: 'Edit answer' })).not.toBeInTheDocument()
+    })
+
+    // Editing continues in the locale being read: the edit route carries one, and its taskbar tab
+    //   is per answer *and* locale.
+    it('opens the edit view for the locale being read', async () => {
+      mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
+
+      const view = await visitView(ANSWER_PATH)
+
+      await view.events.click(await view.findByRole('button', { name: 'Edit answer' }))
+
+      const router = getTestRouter()
+
+      await waitFor(() => {
+        expect(router.currentRoute.value.name).toBe('KnowledgeBaseAnswerEdit')
+      })
+
+      expect(router.currentRoute.value.params).toMatchObject({
+        localeCode: 'en-us',
+        answerInternalId: String(getIdFromGraphQLId(ANSWER_ID)),
+      })
+    })
+  })
+
+  // The way into the edit view that is on screen at any scroll position - the reader's floating
+  //   toolbar offers the same action, but follows the scroll and hides itself.
+  it('offers editing the answer in the action menu', async () => {
+    mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
+
+    const view = await visitView(ANSWER_PATH)
+
+    // Awaited through something else the header renders, so the menu is looked for on a settled
+    //   view rather than on one that has not got there yet.
+    await view.findAllByText('Published')
+
+    const header = view.getByTestId('knowledge-base-header-full')
+
+    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
+
+    const menu = await view.findByRole('menu')
+
+    // Scoped to the menu: the floating toolbar's pencil carries the very same label.
+    await view.events.click(within(menu).getByRole('button', { name: 'Edit answer' }))
+
+    await waitFor(() => {
+      expect(getTestRouter().currentRoute.value.name).toBe('KnowledgeBaseAnswerEdit')
+    })
+  })
+
+  // Gated per record: the global editor permission says nothing about the subtree the answer
+  //   lives in, and a control the mutation refuses is worse than none.
+  it('does not offer editing an answer the user may not update', async () => {
+    // With the feed entry on, so there is still a menu to look into: an answer offering no action
+    //   at all gets no menu button.
+    mockKnowledgeBase(true)
+    mockAnswer({ policy: { __typename: 'PolicyDefault', update: false, destroy: false } })
+
+    const view = await visitView(ANSWER_PATH)
+
+    await view.findAllByText('Published')
+
+    const header = view.getByTestId('knowledge-base-header-full')
+
+    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
+
+    const menu = await view.findByRole('menu')
+
+    // The feed entry is still on offer, so the menu is genuinely open and merely has no edit
+    //   entry in it.
+    expect(within(menu).getByRole('button', { name: 'Set up RSS feed' })).toBeInTheDocument()
+    expect(within(menu).queryByRole('button', { name: 'Edit answer' })).not.toBeInTheDocument()
   })
 
   it('links the public knowledge base button to the answer preview endpoint', async () => {

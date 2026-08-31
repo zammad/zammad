@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { toRef } from 'vue'
 
-import { useTicketLiveUsersDisplay } from '#shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts'
+import { useTaskbarLiveUsersDisplay } from '#shared/entities/taskbar/composables/useTaskbarLiveUsersDisplay.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
 import AiAgentAvatar from '#mobile/components/AiAgent/AiAgentAvatar.vue'
@@ -20,7 +20,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(toRef(() => props.liveUsers))
+const { viewingUsers, idleUsers } = useTaskbarLiveUsersDisplay(toRef(() => props.liveUsers))
 </script>
 
 <template>

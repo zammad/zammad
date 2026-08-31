@@ -14,12 +14,12 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import {
   mockLinkRemoveMutation,
   waitForLinkRemoveMutationCalls,
-} from '#desktop/pages/ticket/graphql/mutations/linkRemove.mocks.ts'
+} from '#desktop/entities/link/graphql/mutations/linkRemove.mocks.ts'
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 
 import TicketRelatedKnowledge, {
   type Props,

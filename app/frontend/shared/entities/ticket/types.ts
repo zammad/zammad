@@ -3,14 +3,13 @@
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
+import type { TaskbarLiveAppUser } from '#shared/entities/taskbar/types.ts'
 import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import {
   type EnumSecurityOption,
-  type EnumTaskbarApp,
   type EnumTicketStateColorCode,
   type ReferencingTicketFragment,
   type TicketArticlesQuery,
-  type TicketLiveUser,
   type TicketQuery,
   type TicketsCachedByOverviewQuery,
 } from '#shared/graphql/types.ts'
@@ -32,13 +31,9 @@ export enum TicketCreateArticleType {
 
 export type TicketView = 'agent' | 'customer'
 
-export interface TicketLiveAppUser {
-  user: TicketLiveUser['user']
-  editing: boolean
-  lastInteraction?: string
-  app: EnumTaskbarApp
-  isIdle?: boolean
-}
+// Aliased rather than renamed at its 12 call sites, several of which are generic already (the user
+//   popovers render whatever live users they are handed). New code should use the shared name.
+export type TicketLiveAppUser = TaskbarLiveAppUser
 
 export type TicketById = TicketQuery['ticket']
 export type TicketByList = NonNullable<

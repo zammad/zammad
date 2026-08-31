@@ -1,10 +1,22 @@
 fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
+  ...knowledgeBaseAnswerPolicy
   title
   content {
     id
     bodyWithUrls
+    # Only for the edit view: what the editor has to load, as opposed to the rendered
+    # `bodyWithUrls` a reader gets. Requested through a variable so the reader does not pay for
+    # rendering the body twice - every operation using this fragment declares it.
+    bodyForEditing @include(if: $withBodyForEditing)
   }
   visibility
+  # The changes still ahead, beside the state the answer is in now - both are derived from the same
+  # three dates, and the sidebar shows them next to each other. Null for a *reader* of the category:
+  # what an answer is going to become is editorial planning, and only an editor may act on it.
+  visibilitySchedules {
+    visibility
+    scheduledAt
+  }
   translationId
   translationMissing
   internalAt

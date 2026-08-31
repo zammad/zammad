@@ -1,0 +1,11 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+module Gql::Types::KnowledgeBase::Answer::LiveUser
+  class AppType < Gql::Types::BaseObject
+    description 'Knowledge base answer live user app information'
+
+    field :name, Gql::Types::Enum::TaskbarAppType, null: false
+    field :editing, Boolean, null: false
+    field :last_interaction, GraphQL::Types::ISO8601DateTime, null: false, description: 'Last interaction time from the user in the frontend'
+  end
+end

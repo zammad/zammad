@@ -358,6 +358,12 @@ class MockLink extends ApolloLink {
           closed: () => observer.closed,
         }
         mockSubscriptionHanlders.set(queryKey, handler)
+
+        // Recorded like a query's, so a spec can assert what a subscription was started *with* -
+        //   a subscription keyed off the wrong thing delivers nothing and looks like silence.
+        calls.push({ document: query, result: { data: null }, variables })
+        mockCalls.set(queryKey, calls)
+
         return noop
       }
       try {

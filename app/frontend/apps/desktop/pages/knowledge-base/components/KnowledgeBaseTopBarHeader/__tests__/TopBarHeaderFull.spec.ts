@@ -159,4 +159,20 @@ describe('TopBarHeaderFull', () => {
     //   header's own padding, not stacked on top of it.
     expect(title.parentElement).toHaveClass('-mx-5.5')
   })
+
+  // The create and edit views put their title field up here, above the form column it belongs
+  //   to - so it is the field, not a title, that has to line up with the fields below it.
+  it('caps the teleport target for the title field at the form column width', () => {
+    const view = renderHeader({
+      title: undefined,
+      titleFieldTarget: 'knowledgeBaseAnswerTitleField',
+      contentWidth: 'form',
+    })
+
+    const target = view.baseElement.querySelector('#knowledgeBaseAnswerTitleField')
+
+    // Same class the create/edit form column uses, so the two stay aligned at any width.
+    expect(target).toHaveClass('max-w-270', 'px-5.5')
+    expect(target?.parentElement).toHaveClass('-mx-5.5')
+  })
 })

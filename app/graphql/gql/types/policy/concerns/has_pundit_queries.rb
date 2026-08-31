@@ -14,10 +14,20 @@ module Gql::Types::Policy::Concerns::HasPunditQueries
 
   # A policy question the user is not allowed to ask is not an error here, it is a `false` — the
   #   whole point of the field is to let the client hide an action instead of running into it.
+  #
+  # Asked of one instance per object rather than through `Pundit.authorize`, which builds a fresh
+  #   policy per question: whatever a policy memoizes is then shared by every field of the same
+  #   `policy` selection. KnowledgeBase::CategoryPolicy resolves the effective permission of a
+  #   category once per instance, so its five fields used to resolve it five times - per category
+  #   in a browse grid.
   def pundit(query)
-    Pundit.authorize(user, record, query)
+    pundit_policy.public_send(query)
   rescue Pundit::NotAuthorizedError
     false
+  end
+
+  def pundit_policy
+    @pundit_policy ||= Pundit.policy!(user, record)
   end
 
   def record

@@ -42,6 +42,14 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
     access_editor?
   end
 
+  # Whether the answers in this category may be edited. The same access as KnowledgeBase::
+  #   AnswerPolicy#update?, which resolves it through the answer's category — so every answer
+  #   listed under this category gives the same result, and asking the category once saves asking
+  #   it once per row.
+  def update_answer?
+    access_editor?
+  end
+
   def destroy?
     parent_editor?
   end

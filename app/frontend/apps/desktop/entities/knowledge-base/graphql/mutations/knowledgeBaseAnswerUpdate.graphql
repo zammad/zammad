@@ -1,0 +1,21 @@
+mutation knowledgeBaseAnswerUpdate(
+  $answerId: ID!
+  $input: KnowledgeBaseUpdateAnswerInput!
+  $locale: String!
+  $meta: KnowledgeBaseAnswerUpdateMetaInput
+  $withBodyForEditing: Boolean = false
+) {
+  knowledgeBaseAnswerUpdate(answerId: $answerId, input: $input, locale: $locale, meta: $meta) {
+    # The same field set the edit view's own query reads (knowledgeBaseAnswerAttributes), so the
+    #   response normalizes straight into the cache entity that view is already rendering from -
+    #   the header's status badge, its "edited by" chip and the breadcrumb category all pick up the
+    #   save without a refetch of their own.
+    answer {
+      id
+      ...knowledgeBaseAnswerAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

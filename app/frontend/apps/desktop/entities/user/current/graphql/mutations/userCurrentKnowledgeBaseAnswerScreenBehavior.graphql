@@ -1,0 +1,11 @@
+mutation userCurrentKnowledgeBaseAnswerScreenBehavior(
+  $screen: EnumKnowledgeBaseAnswerScreen!
+  $behavior: EnumKnowledgeBaseAnswerScreenBehavior!
+) {
+  userCurrentKnowledgeBaseAnswerScreenBehavior(screen: $screen, behavior: $behavior) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

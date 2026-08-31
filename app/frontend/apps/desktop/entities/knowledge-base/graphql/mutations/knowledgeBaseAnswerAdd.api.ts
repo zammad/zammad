@@ -15,6 +15,9 @@ export const KnowledgeBaseAnswerAddDocument = gql`
       visibility
       translationMissing
       position
+      category {
+        id
+      }
     }
     errors {
       ...errors

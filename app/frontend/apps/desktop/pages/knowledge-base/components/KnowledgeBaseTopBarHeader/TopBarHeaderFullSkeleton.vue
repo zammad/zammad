@@ -11,7 +11,10 @@ import { type HeaderContentWidth } from './types.ts'
 // Mirrors the detail row of the answer header, so the skeleton has the same
 //   height as the header it stands in for.
 const props = withDefaults(
-  defineProps<{ withDetails?: boolean; contentWidth?: HeaderContentWidth }>(),
+  defineProps<{
+    withDetails?: boolean
+    contentWidth?: HeaderContentWidth
+  }>(),
   {
     contentWidth: 'wide',
   },

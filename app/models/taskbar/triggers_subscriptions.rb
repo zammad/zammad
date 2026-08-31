@@ -24,7 +24,10 @@ module Taskbar::TriggersSubscriptions
   def trigger_live_user_subscriptions
     return if !saved_change_to_attribute?('preferences')
 
-    Gql::Subscriptions::Ticket::LiveUserUpdates.trigger(
+    subscription = live_user_subscription_class
+    return if !subscription
+
+    subscription.trigger(
       self,
       arguments: {
         key: key,
@@ -32,6 +35,22 @@ module Taskbar::TriggersSubscriptions
       },
       scope:     user_id,
     )
+  end
+
+  # The subscription that pushes the live user list of this taskbar, by the model its key names.
+  #   Each model brings its own, because each needs the permission of *its* users - a knowledge base
+  #   editor may hold no ticket permission at all, and the other way round.
+  #
+  # Derived from the model rather than looked up in a table here: the model comes from the known
+  #   taskbar classes (never from constantizing the client-provided key), and both subscriptions
+  #   already sit where their model's name puts them. Missing for a model that declared live users
+  #   is a developer error, so it raises instead of quietly pushing nothing.
+  def live_user_subscription_class
+    return if !relatable?
+
+    model = self.class.entity_class_for_key_prefix(key_match[:model])
+
+    "Gql::Subscriptions::#{model.name}::LiveUserUpdates".constantize
   end
 
   def trigger_taskbar_item_create_subscriptions

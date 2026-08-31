@@ -31,6 +31,9 @@ const props = defineProps<{
   //   global editor permission: granular permissions routinely make someone editor of one subtree
   //   and reader elsewhere, so that would offer a button the mutation refuses.
   canAddAnswer?: boolean
+  // Whether the answers listed here may be edited, from the open category's `policy.updateAnswer`
+  //   - one flag for every row, see KnowledgeBaseAnswerCard's own `canEdit`.
+  canEditAnswer?: boolean
 }>()
 
 const router = useRouter()
@@ -89,7 +92,12 @@ defineExpose({ addAnswer })
 <template>
   <CommonLoader :loading="loading">
     <ol class="mt-4 flex flex-col gap-4">
-      <KnowledgeBaseAnswerCard v-for="answer in answers" :key="answer.id" v-bind="answer" />
+      <KnowledgeBaseAnswerCard
+        v-for="answer in answers"
+        :key="answer.id"
+        v-bind="answer"
+        :can-edit="canEditAnswer"
+      />
       <!-- Also shown without answers: the only way to create the first one in a category. -->
       <KnowledgeBaseAddAnswerCard v-if="showAddAnswer" ref="add-answer-card" @add="addAnswer" />
       <template v-if="debouncedLoading">

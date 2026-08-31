@@ -1,0 +1,19 @@
+mutation knowledgeBaseAnswerVisibilityScheduleRemove(
+  $answerId: ID!
+  $visibility: EnumKnowledgeBaseSchedulableVisibility!
+) {
+  knowledgeBaseAnswerVisibilityScheduleRemove(answerId: $answerId, visibility: $visibility) {
+    # The remaining schedule of the answer, which lands in the normalized entity the section reads
+    # from - so nothing has to write the removal into the cache by hand.
+    answer {
+      id
+      visibilitySchedules {
+        visibility
+        scheduledAt
+      }
+    }
+    errors {
+      ...errors
+    }
+  }
+}

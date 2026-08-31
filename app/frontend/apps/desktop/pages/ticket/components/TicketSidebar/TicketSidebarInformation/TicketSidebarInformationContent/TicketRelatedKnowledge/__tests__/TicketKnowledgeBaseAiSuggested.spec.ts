@@ -8,15 +8,15 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import {
+  mockLinkAddMutation,
+  waitForLinkAddMutationCalls,
+} from '#desktop/entities/link/graphql/mutations/linkAdd.mocks.ts'
 import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import TicketKnowledgeBaseAiSuggested, {
   type Props,
 } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import {
-  mockLinkAddMutation,
-  waitForLinkAddMutationCalls,
-} from '#desktop/pages/ticket/graphql/mutations/linkAdd.mocks.ts'
 
 import type { RelatedAnswer } from '../types.ts'
 

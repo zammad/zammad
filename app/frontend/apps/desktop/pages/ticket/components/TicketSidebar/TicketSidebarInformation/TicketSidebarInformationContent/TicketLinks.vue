@@ -14,9 +14,9 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import TicketPopoverWithTrigger from '#desktop/components/Ticket/TicketPopoverWithTrigger.vue'
 import { useObjectLinks } from '#desktop/entities/link/composables/useObjectLinks.ts'
+import { useLinkRemoveMutation } from '#desktop/entities/link/graphql/mutations/linkRemove.api.ts'
 import { LinkListDocument } from '#desktop/entities/link/graphql/queries/linkList.api.ts'
 import TicketLinksSkeleton from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinksSkeleton.vue'
-import { useLinkRemoveMutation } from '#desktop/pages/ticket/graphql/mutations/linkRemove.api.ts'
 
 export interface Props {
   ticket?: TicketById

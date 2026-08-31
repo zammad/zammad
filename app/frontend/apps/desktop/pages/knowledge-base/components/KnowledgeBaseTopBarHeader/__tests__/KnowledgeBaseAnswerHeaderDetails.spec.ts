@@ -11,6 +11,10 @@ import KnowledgeBaseAnswerHeaderDetails from '../KnowledgeBaseAnswerHeaderDetail
 import type { KnowledgeBaseAnswerHeader } from '../../../types.ts'
 
 const CURRENT_USER_ID = convertToGraphQLId('User', 1)
+
+// A date still ahead of the moment the test runs, which is what a scheduled change looks like on
+//   the record: the same three columns, only not reached yet.
+const inDays = (days: number) => new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
 const OTHER_USER_ID = convertToGraphQLId('User', 2)
 
 const answer = (overrides: Partial<KnowledgeBaseAnswerHeader> = {}): KnowledgeBaseAnswerHeader =>
@@ -28,9 +32,12 @@ const answer = (overrides: Partial<KnowledgeBaseAnswerHeader> = {}): KnowledgeBa
     ...overrides,
   }) as KnowledgeBaseAnswerHeader
 
-const renderDetails = (overrides: Partial<KnowledgeBaseAnswerHeader> = {}) =>
+const renderDetails = (
+  overrides: Partial<KnowledgeBaseAnswerHeader> = {},
+  withTranslationWarning = false,
+) =>
   renderComponent(KnowledgeBaseAnswerHeaderDetails, {
-    props: { answer: answer(overrides) },
+    props: { answer: answer(overrides), withTranslationWarning },
     store: true,
     router: true,
   })
@@ -45,6 +52,32 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
     const view = renderDetails({ visibility })
 
     expect(view.getByText(label)).toBeInTheDocument()
+  })
+
+  // The badge carries no text of its own, so its accessible name is the whole warning - and the
+  //   only thing a view spec could see it by.
+  it('warns about a missing translation when asked to', () => {
+    const view = renderDetails({ translationMissing: true }, true)
+
+    expect(view.getByLabelText('No translation for this locale available')).toBeInTheDocument()
+  })
+
+  // The reader's header docks the same warning as an alert bar instead, and two of them would be
+  //   one too many.
+  it('leaves the warning out unless it is asked for', () => {
+    const view = renderDetails({ translationMissing: true })
+
+    expect(
+      view.queryByLabelText('No translation for this locale available'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('does not warn about a translation that is there', () => {
+    const view = renderDetails({ translationMissing: false }, true)
+
+    expect(
+      view.queryByLabelText('No translation for this locale available'),
+    ).not.toBeInTheDocument()
   })
 
   it('shows only the publication dates the answer actually carries', () => {
@@ -68,8 +101,34 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
     expect(view.getAllByText('Archived')).toHaveLength(2)
   })
 
-  // What a user without knowledge base permission receives: the backend nulls
-  //   the internal lifecycle, leaving the badge and the publication date.
+  // A publication state is stored as the date it is reached at, so a date still ahead is a
+  //   *scheduled* change. This strip says what the answer is - what it is going to become belongs
+  //   to the editor's sidebar section, and to nobody else's view.
+  it('leaves out a date the answer has not reached yet', () => {
+    const view = renderDetails({
+      visibility: EnumKnowledgeBaseVisibility.Draft,
+      publishedAt: inDays(7),
+    })
+
+    expect(view.getByText('Draft')).toBeInTheDocument()
+    expect(view.queryByText('Published')).not.toBeInTheDocument()
+  })
+
+  it('keeps the dates it has reached beside the ones it has not', () => {
+    const view = renderDetails({
+      internalAt: '2026-07-01T10:00:00Z',
+      publishedAt: '2026-08-01T10:00:00Z',
+      archivedAt: inDays(21),
+    })
+
+    expect(view.getByText('Internally published')).toBeInTheDocument()
+    // Twice: the visibility badge and the publication date badge.
+    expect(view.getAllByText('Published')).toHaveLength(2)
+    expect(view.queryByText('Archived')).not.toBeInTheDocument()
+  })
+
+  // What a user without knowledge base permission receives: the backend nulls the internal
+  //   lifecycle, leaving the badge and the publication date - which it only ever has reached.
   it('shows only the publication date for a public reader', () => {
     const view = renderDetails({
       publishedAt: '2026-08-01T10:00:00Z',

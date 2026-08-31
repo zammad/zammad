@@ -129,11 +129,10 @@ RSpec.describe(FormUpdater::Updater::KnowledgeBase::Answer::Create) do
       end
     end
 
-    # Nothing seeds a timing alongside it: an answer without a timestamp is published right away,
-    #   which is what the empty value of that field says.
-    it 'starts as a draft to be published now', :aggregate_failures do
+    # The state the editor may change before filing it. No timing seeded alongside it: scheduling a
+    #   state for later is an edit, so this form has no such field.
+    it 'starts as a draft' do
       expect(fields['visibility']).to eq(initialValue: 'draft')
-      expect(fields).not_to include('scheduledAt')
     end
 
     # Without a category to start from the field stays empty for the user to pick — an

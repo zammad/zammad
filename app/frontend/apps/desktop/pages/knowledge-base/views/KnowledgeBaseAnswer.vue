@@ -25,6 +25,7 @@ import KnowledgeBaseAnswerSidebarContent from '../components/KnowledgeBaseAnswer
 import { READING_COLUMN_CLASS } from '../components/KnowledgeBaseTopBarHeader/headerClasses.ts'
 import KnowledgeBaseAnswerTopBarHeader from '../components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue'
 import { useKnowledgeBaseAnswer } from '../composables/useKnowledgeBaseAnswer.ts'
+import { useKnowledgeBaseAnswerEditAction } from '../composables/useKnowledgeBaseAnswerEditAction.ts'
 import { knowledgeBaseSearchReturnRoute } from '../utils/knowledgeBaseSearchReturn.ts'
 
 const props = defineProps<{
@@ -53,6 +54,13 @@ const { localeData } = storeToRefs(useLocaleStore())
 const searchReturnRoute = computed(() =>
   knowledgeBaseSearchReturnRoute(props.localeCode, route.query),
 )
+
+// Offered here as the toolbar's primary action, and in the header's action menu - one gate for
+//   both (useKnowledgeBaseAnswerEditAction).
+const { canEdit, editAnswer } = useKnowledgeBaseAnswerEditAction({
+  answer,
+  localeCode: toRef(props, 'localeCode'),
+})
 
 const { isIntersecting: isReachingBottom } = useIndicator()
 const { isIntersecting: isReachingTop } = useIndicator()
@@ -110,10 +118,19 @@ const scrollToEnd = () => {
 
       <CommonIndicator v-model="isReachingBottom" />
 
-      <div class="sticky bottom-3 mt-auto h-0 w-full print:hidden">
+      <!-- Three states, in one box: `mt-auto` takes the free space of the column, so an answer
+           too short to scroll leaves the toolbar at the bottom of the content area rather than
+           hanging right under its last line; with more content than fits there is no free space
+           left and `sticky bottom-3` floats it above the fold instead; and being in the flow
+           rather than in a zero-height wrapper, it no longer covers the end of the answer at
+           full scroll. `pointer-events-none` on the wrapper, since its box spans the column
+           while it sticks. -->
+      <div
+        class="pointer-events-none sticky bottom-3 mt-auto flex w-full justify-end px-3 pt-3 print:hidden"
+      >
         <CommonButton
           v-if="searchReturnRoute"
-          class="absolute inset-s-3 bottom-0"
+          class="pointer-events-auto me-auto"
           size="medium"
           variant="tertiary"
           :prefix-icon="localeData?.dir === 'rtl' ? 'chevron-right' : 'chevron-left'"
@@ -126,13 +143,25 @@ const scrollToEnd = () => {
           :label="$t('Answer actions')"
           :is-reaching-bottom="isReachingBottom"
           :is-reaching-top="isReachingTop"
-          class="absolute inset-e-3 bottom-0"
+          :hide-primary-action="!canEdit"
+          class="pointer-events-auto"
           @scroll-to-start="scrollToStart"
           @scroll-to-end="scrollToEnd"
         >
-          <!-- TODO <template #action>
-            <CommonButton/>
-          </template> -->
+          <!-- `primary-action` rather than the default slot: filling the default one sets the
+               toolbar's `hasGenericActions` and takes its scroll buttons away. -->
+          <template v-if="canEdit" #primary-action>
+            <div class="flex min-h-0">
+              <CommonButton
+                v-tooltip="$t('Edit answer')"
+                size="medium"
+                variant="secondary"
+                icon="pencil"
+                class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 dark:border-gray-900"
+                @click="editAnswer"
+              />
+            </div>
+          </template>
         </CommonFloatingToolbar>
       </div>
     </div>

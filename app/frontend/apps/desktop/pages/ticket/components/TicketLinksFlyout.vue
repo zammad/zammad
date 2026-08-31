@@ -18,10 +18,10 @@ import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import type { ActionFooterOptions } from '#desktop/components/CommonFlyout/types.ts'
 import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useObjectLinkTypes } from '#desktop/entities/link/composables/useObjectLinkTypes.ts'
+import { useLinkAddMutation } from '#desktop/entities/link/graphql/mutations/linkAdd.api.ts'
 import { LinkListDocument } from '#desktop/entities/link/graphql/queries/linkList.api.ts'
+import { useTargetTicketOptions } from '#desktop/entities/ticket/composables/useTargetTicketOptions.ts'
 import TicketRelationAndRecentLists from '#desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue'
-import { useTargetTicketOptions } from '#desktop/pages/ticket/composables/useTargetTicketOptions.ts'
-import { useLinkAddMutation } from '#desktop/pages/ticket/graphql/mutations/linkAdd.api.ts'
 
 interface Props {
   sourceTicket: TicketById

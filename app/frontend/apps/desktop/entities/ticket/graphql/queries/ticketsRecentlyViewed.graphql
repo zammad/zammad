@@ -1,0 +1,5 @@
+query ticketsRecentlyViewed($limit: Int) {
+  ticketsRecentlyViewed(limit: $limit) {
+    ...simpleTicketAttribute
+  }
+}

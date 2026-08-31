@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/concerns/has_tags_examples'
+require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_translations_examples'
 require 'models/contexts/factory_context'
 require 'models/concerns/can_lookup_search_index_attributes_with_attachments_examples'
@@ -11,6 +12,7 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
   subject(:kb_answer) { create(:knowledge_base_answer) }
 
   it_behaves_like 'HasTags'
+  it_behaves_like 'HasTaskbars'
   it_behaves_like 'CanLookupSearchIndexAttributesWithAttachments'
 
   include_context 'factory'
@@ -80,6 +82,57 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
         it { expect(assets).to include_assets_of internal_answer }
         it { expect(assets).to include_assets_of category }
       end
+    end
+  end
+
+  # CanBePublished stores a publication state as the date it is reached at, so the dates still ahead
+  #   are the changes the answer is scheduled to make - the counterpart of #visibility, which is
+  #   derived from the dates that have passed.
+  describe '#visibility_schedules' do
+    subject(:kb_answer) { create(:knowledge_base_answer, :published, archived_at: scheduled) }
+
+    let(:scheduled) { 1.week.from_now.change(sec: 0) }
+
+    it 'lists the state that is still ahead' do
+      expect(kb_answer.visibility_schedules).to eq([{ visibility: :archived, scheduled_at: scheduled }])
+    end
+
+    context 'with nothing ahead' do
+      subject(:kb_answer) { create(:knowledge_base_answer, :published) }
+
+      it { expect(kb_answer.visibility_schedules).to be_empty }
+    end
+
+    context 'with several states ahead' do
+      subject(:kb_answer) { create(:knowledge_base_answer, internal_at: 1.day.from_now, published_at: scheduled) }
+
+      it 'lists them in the order they take effect' do
+        expect(kb_answer.visibility_schedules.pluck(:visibility)).to eq(%i[internal published])
+      end
+    end
+  end
+
+  describe '#visibility_scheduled_at' do
+    subject(:kb_answer) { create(:knowledge_base_answer, :published, archived_at: scheduled) }
+
+    let(:scheduled) { 1.week.from_now.change(sec: 0) }
+
+    it 'returns the date a state is still to be reached at' do
+      expect(kb_answer.visibility_scheduled_at(:archived)).to eq(scheduled)
+    end
+
+    # A date that has passed is how the answer got where it is, not a schedule.
+    it 'returns nothing for a state it has already reached' do
+      expect(kb_answer.visibility_scheduled_at(:published)).to be_nil
+    end
+
+    it 'returns nothing for a state it is not scheduled to reach' do
+      expect(kb_answer.visibility_scheduled_at(:internal)).to be_nil
+    end
+
+    # `draft` is what no date at all means, so it has no column to look at.
+    it 'raises for the state that stores no date' do
+      expect { kb_answer.visibility_scheduled_at(:draft) }.to raise_error(KeyError)
     end
   end
 
@@ -470,6 +523,39 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
 
       expect(translation).to have_received(:vector_index_destroy)
       expect(Service::AI::VectorDB::Document::Upsert).not_to have_received(:execute)
+    end
+  end
+
+  # A state scheduled for the future is stored as its date; the job that touches the answer at that
+  #   date is what makes the open views and `kb_active_publicly` catch up with it.
+  describe 'scheduling the touch of a future state', performs_jobs: true do
+    let(:answer) { create(:knowledge_base_answer) }
+
+    let(:tomorrow) { 1.day.from_now }
+    let(:in_two_days) { 2.days.from_now }
+
+    it 'queues a touch for a scheduled publication' do
+      expect { answer.update!(published_at: tomorrow) }
+        .to have_enqueued_job(ScheduledTouchJob)
+        .with('KnowledgeBase::Answer', answer.id, 'published_at')
+    end
+
+    # `internal` can be scheduled just like the other two states, and its date has to reach the
+    #   open views the same way.
+    it 'queues a touch for a scheduled internal publication' do
+      expect { answer.update!(internal_at: tomorrow) }
+        .to have_enqueued_job(ScheduledTouchJob)
+        .with('KnowledgeBase::Answer', answer.id, 'internal_at')
+    end
+
+    # The touches of one answer used to share a single lock, so a second date was simply dismissed
+    #   and never fired.
+    it 'queues a touch per scheduled state' do
+      answer.update!(internal_at: tomorrow, published_at: in_two_days)
+
+      expect(ScheduledTouchJob)
+        .to have_been_enqueued.with('KnowledgeBase::Answer', answer.id, 'internal_at')
+        .and(have_been_enqueued.with('KnowledgeBase::Answer', answer.id, 'published_at'))
     end
   end
 

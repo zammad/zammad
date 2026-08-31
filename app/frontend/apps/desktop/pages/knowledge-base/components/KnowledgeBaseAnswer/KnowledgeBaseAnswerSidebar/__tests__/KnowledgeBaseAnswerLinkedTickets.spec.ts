@@ -12,6 +12,10 @@ import {
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import {
+  mockLinkRemoveMutation,
+  waitForLinkRemoveMutationCalls,
+} from '#desktop/entities/link/graphql/mutations/linkRemove.mocks.ts'
+import {
   mockLinkListQuery,
   waitForLinkListQueryCalls,
 } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
@@ -27,6 +31,7 @@ const answer = {
   id: convertToGraphQLId('KnowledgeBase::Answer', 1),
   title: 'Some Answer',
   visibility: EnumKnowledgeBaseVisibility.Published,
+  visibilitySchedules: [],
   translationId,
   translationMissing: false,
   internalAt: null,
@@ -47,6 +52,7 @@ const answer = {
   },
   tags: [],
   attachments: [],
+  policy: { __typename: 'PolicyDefault', update: true, destroy: true },
 } as KnowledgeBaseAnswerHeader
 
 const linkedTicket = (
@@ -64,11 +70,14 @@ const linkedTicket = (
   type: EnumLinkType.Normal,
 })
 
-const renderLinkedTickets = (props: { answer: KnowledgeBaseAnswerHeader } = { answer }) =>
+const renderLinkedTickets = (
+  props: { answer: KnowledgeBaseAnswerHeader; editable?: boolean } = { answer },
+) =>
   renderComponent(KnowledgeBaseAnswerLinkedTickets, {
     props,
     store: true,
     router: true,
+    form: true,
   })
 
 describe('KnowledgeBaseAnswerLinkedTickets', () => {
@@ -150,6 +159,89 @@ describe('KnowledgeBaseAnswerLinkedTickets', () => {
 
     await waitFor(() => {
       expect(view.queryAllByRole('link')).toHaveLength(0)
+    })
+  })
+
+  // The reader's sidebar renders the same section, so nothing may be actionable unless asked for.
+  describe('when it is not editable', () => {
+    it('offers no way to link or unlink', async () => {
+      const view = renderLinkedTickets()
+
+      await view.findAllByRole('link')
+
+      expect(view.queryByRole('button', { name: 'Link ticket' })).not.toBeInTheDocument()
+      expect(view.queryByRole('button', { name: 'Unlink ticket' })).not.toBeInTheDocument()
+    })
+  })
+
+  describe('when it is editable', () => {
+    // Both link mutations require `ticket.agent`, so an editor without any ticket permission is
+    //   offered no way in rather than a button the mutation refuses - they still see what is linked.
+    it('offers nothing to an editor without ticket permissions', async () => {
+      mockPermissions(['knowledge_base.editor'])
+
+      const view = renderLinkedTickets({ answer, editable: true })
+
+      await view.findAllByRole('link')
+
+      expect(view.queryByRole('button', { name: 'Link ticket' })).not.toBeInTheDocument()
+      expect(view.queryByRole('button', { name: 'Unlink ticket' })).not.toBeInTheDocument()
+    })
+
+    it('offers linking and unlinking to an agent', async () => {
+      const view = renderLinkedTickets({ answer, editable: true })
+
+      expect(await view.findByRole('button', { name: 'Link ticket' })).toBeInTheDocument()
+      expect(view.getAllByRole('button', { name: 'Unlink ticket' })).toHaveLength(2)
+    })
+
+    // Source and target are swapped on the way out, to stay consistent with what the old interface
+    //   writes - and the object whose list this is has to be the *target*.
+    it('unlinks a ticket from the answer translation', async () => {
+      mockLinkRemoveMutation({ linkRemove: { success: true, errors: null } })
+
+      const view = renderLinkedTickets({ answer, editable: true })
+
+      await view.events.click((await view.findAllByRole('button', { name: 'Unlink ticket' }))[0])
+
+      const calls = await waitForLinkRemoveMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({
+        input: {
+          sourceId: convertToGraphQLId('Ticket', 1),
+          targetId: translationId,
+          type: EnumLinkType.Normal,
+        },
+      })
+
+      // And it leaves the list at once, which is the `linkList` cache write rather than a refetch.
+      await waitFor(() => {
+        expect(
+          view.queryByText('Printer on the second floor jams every other page'),
+        ).not.toBeInTheDocument()
+      })
+
+      expect(
+        view.getByText('VPN disconnects after roughly ten minutes'),
+        'the other link is untouched',
+      ).toBeInTheDocument()
+    })
+
+    // A locale the answer has no translation in yet has nothing to hang a link off, and an empty
+    //   section with no add button would look broken rather than explained.
+    describe('with a locale that has no translation yet', () => {
+      it('says so instead of offering to link', async () => {
+        const view = renderLinkedTickets({
+          answer: { ...answer, translationId: null } as KnowledgeBaseAnswerHeader,
+          editable: true,
+        })
+
+        expect(
+          await view.findByText('Save the answer in this language before linking tickets to it.'),
+        ).toBeInTheDocument()
+
+        expect(view.queryByRole('button', { name: 'Link ticket' })).not.toBeInTheDocument()
+      })
     })
   })
 })

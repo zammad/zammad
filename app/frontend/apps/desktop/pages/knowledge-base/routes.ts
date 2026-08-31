@@ -98,6 +98,35 @@ const route: RouteRecordRaw[] = [
       level: 2,
     },
   },
+  {
+    // The edit view is a taskbar tab of its own, for the same reasons as the create route above
+    //   (its own layout, KeepAlive, nav meta and locale reconciliation would otherwise leak in
+    //   from the section) — and one tab per answer *and* locale, since an answer is edited one
+    //   translation at a time (see Taskbar.entity_key / KnowledgeBase::Answer#taskbar_entities).
+    //
+    // `/edit` behind the answer id rather than a sibling of the section's read route: it keeps
+    //   the read URL exactly as it is (readers link to it, it is what the legacy `/edit` action
+    //   below redirects away from) while still reading as "the same answer, in edit mode".
+    path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId(\\d+)/edit',
+    name: 'KnowledgeBaseAnswerEdit',
+    component: () => import('./views/KnowledgeBaseAnswerEdit.vue'),
+    props: true,
+    meta: {
+      title: __('Edit knowledge base answer'),
+      requiresAuth: true,
+      requiredPermission: ['knowledge_base.editor'],
+      // More than the permission `requiredPermission` states: an editor of a *deactivated*
+      //   knowledge base has nothing to edit in either.
+      canAccess: () => useKnowledgeBaseAccess().canEdit.value,
+      taskbarTabEntity: EnumTaskbarEntity.KnowledgeBaseAnswerEdit,
+      isTaskbarTabPossible: (route) => !!route.params.answerInternalId && !!route.params.localeCode,
+      messageForbidden: __('You have insufficient rights to edit this knowledge base answer.'),
+      messageNotFound: __(
+        'Knowledge base answer with specified ID was not found. Try checking the URL for errors.',
+      ),
+      level: 2,
+    },
+  },
   // The legacy stack addresses knowledge base nodes as
   //   `#knowledge_base/<kb id>/locale/<locale>[/category|answer/<id>][/edit]`, and links in
   //   those shapes still arrive here: from answer bodies going through useHtmlLinks(), and
@@ -107,14 +136,15 @@ const route: RouteRecordRaw[] = [
   //
   //   Redirects rather than aliases on the routes above: an alias must declare the exact same
   //   params, and these shapes carry the knowledge base id — which is not needed here (there
-  //   is only ever one) and is dropped on the way to the canonical URL. The `/edit` action is
-  //   matched and dropped as well: the new interface has no separate editing routes, so those
-  //   links open the node itself.
+  //   is only ever one) and is dropped on the way to the canonical URL.
   {
     path: `${LEGACY_PATH_PREFIX}/answer/:answerInternalId(\\d+)/:action(edit)?`,
     name: 'KnowledgeBaseAnswerLegacyUrl',
     redirect: (to) => ({
-      name: 'KnowledgeBaseAnswer',
+      // The `/edit` action is the one shape that does not collapse onto the plain answer route:
+      //   the public help site's edit button and the old interface's feed links both use it, and
+      //   the new interface's answer for that is this route, not the reader.
+      name: to.params.action === 'edit' ? 'KnowledgeBaseAnswerEdit' : 'KnowledgeBaseAnswer',
       params: {
         localeCode: to.params.localeCode,
         answerInternalId: to.params.answerInternalId,

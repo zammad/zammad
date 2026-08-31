@@ -23,7 +23,7 @@ class FormUpdater::ApplyValue::Tags < FormUpdater::ApplyValue::Base
 
   def map_value(field:, config:)
     selected_tags = data['tags'].presence || []
-    template_tags = config['value'].split(%r{,\s*}).presence || []
+    template_tags = template_tags_from(config['value'])
 
     tag_values = if config['operator'] == 'add'
                    if dirty_fields&.include?('tags')
@@ -39,5 +39,17 @@ class FormUpdater::ApplyValue::Tags < FormUpdater::ApplyValue::Base
 
     result['tags'][:value] = tag_values
     result['tags'][:options] = tag_values.map { |tag| { value: tag, label: tag } }
+  end
+
+  private
+
+  # A taskbar state carries the tags as the comma separated string they were stored as, while an
+  # object's own tag list arrives as the list it is (FormUpdater::Concerns::AppliesTaskbarState#
+  # apply_taskbar_object_defaults hands over what the record holds). Array#split — which
+  # ActiveSupport defines — would quietly nest that one into a single bogus tag instead of raising.
+  def template_tags_from(value)
+    tags = value.is_a?(String) ? value.split(%r{,\s*}) : Array.wrap(value)
+
+    tags.presence || []
   end
 end

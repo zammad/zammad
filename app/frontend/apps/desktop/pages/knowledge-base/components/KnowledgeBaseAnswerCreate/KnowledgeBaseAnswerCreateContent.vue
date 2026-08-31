@@ -1,30 +1,34 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, markRaw, Teleport, useTemplateRef, type Component } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, markRaw, Teleport, toRef, useTemplateRef, type Component } from 'vue'
+import { useRoute } from 'vue-router'
 
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { EnumFormUpdaterId, EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import {
+  EnumFormUpdaterId,
+  EnumKnowledgeBaseAnswerScreen,
+  type EnumKnowledgeBaseVisibility,
+} from '#shared/graphql/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { SidebarName } from '#desktop/components/layout/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
+import { useAnswerFormSchema } from '#desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts'
 import { useKnowledgeBaseAnswerCreate } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts'
 import type { KnowledgeBaseAnswerCreateFormData } from '#desktop/entities/knowledge-base/types.ts'
-import { ANSWER_EDITOR_TOOLS } from '#desktop/entities/knowledge-base/utils/answerEditorTools.ts'
-import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabContext } from '#desktop/entities/user/current/composables/useTaskbarTabContext.ts'
 import { useTaskbarTabDiscard } from '#desktop/entities/user/current/composables/useTaskbarTabDiscard.ts'
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 
 import KnowledgeBaseAnswerSidebar from '../KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue'
+import KnowledgeBaseAnswerScreenBehavior from '../KnowledgeBaseAnswerScreenBehavior/KnowledgeBaseAnswerScreenBehavior.vue'
+import { useKnowledgeBaseAnswerScreenBehavior } from '../KnowledgeBaseAnswerScreenBehavior/useKnowledgeBaseAnswerScreenBehavior.ts'
+import { FORM_COLUMN_CLASS } from '../KnowledgeBaseTopBarHeader/headerClasses.ts'
 
 import KnowledgeBaseAnswerCreateHeader from './KnowledgeBaseAnswerCreateHeader.vue'
 
@@ -36,172 +40,31 @@ interface Props {
 const props = defineProps<Props>()
 
 const route = useRoute()
-const router = useRouter()
 
 const contentContainerElement = useTemplateRef('content-container')
-
-const application = useApplicationStore()
-
-const canCreateTags = computed(() => Boolean(application.config.tag_new))
 
 const { form, formNodeId, isDirty, isDisabled, isInitialSettled, values, triggerFormUpdater } =
   useForm()
 
-// Declared by hand: KnowledgeBase::Answer is not an object manager object, so there is no
-//   screen/object block to lean on (same as the category form).
-//
-// The content column and the sidebar are two regions of **one** form: the sidebar fields are
-//   teleported out of it, so the form id - and with it the auto-save and the upload cache - stays
-//   a single one. Both groups are declared by hand, because `defineFormSchema` only wraps fields
-//   in a `FormGroup` of its own while no node is a layout node, and the `Teleport` is one.
-//
-// No `triggerFormUpdater: false` on any of these (unlike the category form): the updater of this
-//   form is what stores the draft, so a field that does not trigger it never gets auto-saved.
-//   The text and editor fields already debounce their round trip (`formUpdaterTrigger('delayed')`).
-const formSchema = defineFormSchema([
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    children: [
-      {
-        name: 'title',
-        label: __('Title'),
-        type: 'text',
-        placeholder: __('Answer title'),
-        required: true,
-      },
-      {
-        name: 'body',
-        label: __('Text'),
-        type: 'editor',
-        required: true,
-        props: {
-          meta: ANSWER_EDITOR_TOOLS,
-        },
-      },
-      {
-        // The files live in the upload cache under this form's id, which is the taskbar's - so they
-        //   stay with the draft, and the form updater plays them back through
-        //   FormUpdater::ApplyValue::FormId once it is wired up.
-        name: 'attachments',
-        label: __('Attachment'),
-        labelSrOnly: true,
-        type: 'file',
-        props: {
-          multiple: true,
-        },
-      },
-      {
-        // In the content column, as the design has it. Creating new tags follows the `tag_new`
-        //   setting, like the object attribute resolver does for ticket forms. On submit the values
-        //   ride the mutation's `tags` input - `tagAssignmentUpdate` needs a persisted record.
-        name: 'tags',
-        label: __('Tags'),
-        type: 'tags',
-        props: {
-          canCreate: canCreateTags,
-        },
-      },
-    ],
-  },
-  {
-    // The same mechanism the ticket detail view uses to render the attributes of its edit form
-    //   into the sidebar (TicketDetailViewContent.vue): a layout node that teleports its children
-    //   out of the form's DOM, while they stay part of the form.
-    isLayout: true,
-    component: 'Teleport',
-    props: {
-      to: '#knowledgeBaseAnswerCreateSidebarFields',
-      // The sidebar renders after the content column, so its container does not exist yet when
-      //   the form mounts. Deferring resolves the target at the end of the render cycle, by which
-      //   time it does - and it never goes away again: collapsing the sidebar only hides it
-      //   (`v-show`).
-      defer: true,
-    },
-    children: [
-      {
-        isLayout: true,
-        component: 'FormGroup',
-        children: [
-          {
-            // The state the answer is created in. The labels and the three published-state notes
-            //   are the ones the legacy form shows (App.KnowledgeBaseContentCanBePublishedForm),
-            //   so the existing translations apply; the archived note is new copy from the design,
-            //   which the legacy form has no note for. `Draft` is the default, which the updater
-            //   sends as an initial value - nothing to enforce here.
-            name: 'visibility',
-            label: __('Visibility'),
-            type: 'radioList',
-            props: {
-              options: [
-                {
-                  value: EnumKnowledgeBaseVisibility.Draft,
-                  label: __('Draft'),
-                  description: __('Only visible to editors'),
-                },
-                {
-                  value: EnumKnowledgeBaseVisibility.Internal,
-                  label: __('Internal'),
-                  description: __('Visible to readers & editors'),
-                },
-                {
-                  value: EnumKnowledgeBaseVisibility.Published,
-                  label: __('Public'),
-                  description: __('Visible to everyone'),
-                },
-                {
-                  value: EnumKnowledgeBaseVisibility.Archived,
-                  label: __('Archived'),
-                  description: __('Archive this answer'),
-                },
-              ],
-            },
-          },
-          {
-            // When that state applies, as one field: publishing right away is the *absence* of a
-            //   timestamp, which is what the empty value of the first option says - so there is
-            //   nothing for the form to carry besides the date itself. The picker belongs to the
-            //   second option and is rendered below it, indented, instead of being a field of its
-            //   own; it is future only, like the legacy date picker (`setStartDate(new Date())`),
-            //   and required as long as its option is picked (the field enforces that itself).
-            //
-            // Gone for a draft, which carries no timestamp at all - a field's own `if` replaces
-            //   the show/hide the form updater would drive, which none of the sidebar fields
-            //   needs. The truthiness check keeps the group away while no state is picked at all,
-            //   instead of reading "not a draft" into an empty field.
-            name: 'scheduledAt',
-            label: __('Timing'),
-            type: 'radioList',
-            if: `$values.visibility && $values.visibility !== "${EnumKnowledgeBaseVisibility.Draft}"`,
-            props: {
-              options: [
-                { value: null, label: __('now') },
-                {
-                  value: 'scheduled',
-                  label: __('Schedule for'),
-                  dateField: { label: __('Date'), futureOnly: true },
-                },
-              ],
-            },
-          },
-          {
-            // Options, `required` and the preselection all come from the updater. Not clearable:
-            //   an answer always belongs to a category, and there is no top level to fall back
-            //   on (unlike the parent field of a category).
-            name: 'categoryId',
-            label: __('Category'),
-            type: 'treeselect',
-            props: {
-              clearable: false,
-              // The labels are category titles, i.e. user data, not UI copy.
-              noOptionsLabelTranslation: true,
-            },
-          },
-        ],
-      },
-    ],
-  },
-])
+// Bare id, not a CSS selector: it doubles as the target `<div>`'s `id` attribute in the header's
+//   own template (KnowledgeBaseAnswerCreateHeader.vue), so the `#` is added only below, where the
+//   schema needs an actual selector.
+const TITLE_FIELD_TARGET_ID = 'knowledgeBaseAnswerCreateTitleField'
+
+// Written once for the same reason, and used the same two ways - as the container's `id` in this
+//   view's own sidebar below, and as the schema's selector.
+const SIDEBAR_FIELDS_TARGET_ID = 'knowledgeBaseAnswerCreateSidebarFields'
+
+// Shared with the edit form (useAnswerFormSchema.ts), which is also where the comments explaining
+//   this shape live: the content/sidebar split via `Teleport`, and why every field triggers the
+//   form updater.
+const formSchema = useAnswerFormSchema({
+  titleFieldTarget: `#${TITLE_FIELD_TARGET_ID}`,
+  sidebarFieldsTarget: `#${SIDEBAR_FIELDS_TARGET_ID}`,
+  // Which brings the tags field along. The visibility field is in both forms; what this one has
+  //   no part of is scheduling a state for later, which is the edit sidebar's own widget.
+  edit: false,
+})
 
 // The category the draft goes into. Until the form has answered, the seed the view was opened
 //   with is all there is, and rendering the breadcrumb from it beats waiting for the round trip.
@@ -228,6 +91,13 @@ const currentTitle = computed(() => values.value.title as string | undefined)
 usePage({
   metaTitle: computed(() => currentTitle.value || __('New knowledge base answer')),
 })
+
+// Live, for the header's badge row: a draft has no stored answer for it to read instead, unlike
+//   the edit header's. Undefined until the first form updater round trip has resolved a value, so
+//   the header shows no badge rather than one for a state nothing has picked yet.
+const visibility = computed(() =>
+  isInitialSettled.value ? (values.value.visibility as EnumKnowledgeBaseVisibility) : undefined,
+)
 
 // What the taskbar tab renders itself from, so the tab title follows the title being typed
 //   before anything is stored.
@@ -269,8 +139,19 @@ const { goBack, discardChanges } = useTaskbarTabDiscard(currentTaskbarTabDelete)
 
 const { createAnswer } = useKnowledgeBaseAnswerCreate()
 
+// What happens once the answer is created - the same control the edit view carries, per the story's
+//   acceptance criteria, with a preference of its own and one option of its own: adding another
+//   answer, which is this tab closing and a fresh form opening in the same category.
+const { handleScreenBehavior } = useKnowledgeBaseAnswerScreenBehavior({
+  currentTaskbarTabId,
+  localeCode: toRef(props, 'localeCode'),
+  screen: EnumKnowledgeBaseAnswerScreen.Create,
+})
+
 // The draft's tab goes only after the answer exists: a failed create has to keep it, or the work
-//   is gone. Its files are already the answer's by then, so the tab has nothing left to carry.
+//   is gone. Its files are already the answer's by then, so the tab has nothing left to carry -
+//   and closing it is `handleScreenBehavior`'s job, whichever of its destinations it leaves for,
+//   the fresh form for the next answer included.
 const submitCreateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerCreateFormData>) => {
   const answer = await createAnswer(
     { ...data, locale: props.localeCode },
@@ -279,9 +160,7 @@ const submitCreateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerCreate
 
   if (!answer) return
 
-  await router.replace(knowledgeBaseAnswerRoute(props.localeCode, answer.id))
-
-  currentTaskbarTabDelete()
+  await handleScreenBehavior(answer)
 }
 </script>
 
@@ -303,9 +182,11 @@ const submitCreateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerCreate
         :content-container-element="contentContainerElement"
         :category-id="categoryId"
         :title="currentTitle"
+        :title-field-target="TITLE_FIELD_TARGET_ID"
+        :visibility="visibility"
       />
 
-      <div class="w-full max-w-270 shrink-0 px-5.5 py-7.5">
+      <div class="w-full shrink-0 py-7.5" :class="FORM_COLUMN_CLASS">
         <Form
           id="knowledge-base-answer-create"
           ref="form"
@@ -334,7 +215,7 @@ const submitCreateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerCreate
              without this the sidebar would show an empty radio list and an option-less category
              field while the content column is still blank. `v-show`, like the sidebar's own
              collapsing: the teleport target has to stay mounted. -->
-        <div v-show="isInitialSettled" id="knowledgeBaseAnswerCreateSidebarFields" class="p-3" />
+        <div v-show="isInitialSettled" :id="SIDEBAR_FIELDS_TARGET_ID" class="p-3" />
       </KnowledgeBaseAnswerSidebar>
     </template>
 
@@ -353,6 +234,9 @@ const submitCreateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerCreate
           {{ $t('Cancel & go back') }}
         </CommonButton>
       </template>
+
+      <!-- The same control the edit view carries, with a preference and a "stay" of its own. -->
+      <KnowledgeBaseAnswerScreenBehavior :screen="EnumKnowledgeBaseAnswerScreen.Create" />
 
       <CommonButton
         size="large"

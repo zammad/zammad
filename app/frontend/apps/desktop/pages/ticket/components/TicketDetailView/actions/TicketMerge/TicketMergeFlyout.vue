@@ -19,9 +19,9 @@ import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import type { ActionFooterOptions } from '#desktop/components/CommonFlyout/types.ts'
 import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import { useTargetTicketOptions } from '#desktop/entities/ticket/composables/useTargetTicketOptions.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 import TicketRelationAndRecentLists from '#desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue'
-import { useTargetTicketOptions } from '#desktop/pages/ticket/composables/useTargetTicketOptions.ts'
 
 interface Props {
   ticket: TicketById

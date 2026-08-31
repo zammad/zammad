@@ -128,10 +128,11 @@ describe('useKnowledgeBaseSearch', () => {
       pageSize: 30,
     })
 
-    expect(api.results.value.map((result) => result.item.title)).toEqual([
-      'Result One',
-      'Result Two',
-    ])
+    expect(
+      api.results.value.map((result) =>
+        result.item.__typename === 'KnowledgeBaseAnswer' ? result.item.title : undefined,
+      ),
+    ).toEqual(['Result One', 'Result Two'])
     expect(api.totalCount.value).toBe(2)
   })
 

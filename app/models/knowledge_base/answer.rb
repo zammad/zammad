@@ -19,7 +19,23 @@ class KnowledgeBase::Answer < ApplicationModel
   # The create view of the new interface lives in its own taskbar tab, holding the draft until it
   #   is saved. There is no record behind such a tab, so its key carries a UUID instead of an id
   #   (see Gql::Types::User::TaskbarItemType#object_entity!).
-  taskbar_entities 'KnowledgeBaseAnswerCreate'
+  #
+  # The edit view is one tab per answer *and* locale, just like its URL: an answer is edited one
+  #   translation at a time. The answer is the tab's entity all the same, with the locale as the
+  #   qualifier of its key ('KnowledgeBase__Answer-42-de-de', see Taskbar.entity_key) — a
+  #   translation could not be, because a locale that has none yet is exactly where an answer gets
+  #   its next one, and there would be no record to key that tab on.
+  taskbar_entities 'KnowledgeBaseAnswerCreate', 'KnowledgeBaseAnswerEdit'
+
+  # An answer is offered for reading to a reader of its category, so #show? would grant an edit tab
+  #   the edit view then refuses.
+  taskbar_entity_pundit_methods 'KnowledgeBaseAnswerEdit' => :update?
+
+  # Only the edit tab carries the answer's own key ('KnowledgeBase__Answer-42-de-de'): a create tab
+  #   has no record to key on, and reading an answer opens no tab at all. So an entry under this key
+  #   is always somebody editing, and #update? is what decides whether they still may — an editor
+  #   who lost access to the subtree drops out of the others' lists on the next update.
+  taskbar_live_user_pundit_method :update?
 
   belongs_to :category, class_name: 'KnowledgeBase::Category', inverse_of: :answers, touch: true
 

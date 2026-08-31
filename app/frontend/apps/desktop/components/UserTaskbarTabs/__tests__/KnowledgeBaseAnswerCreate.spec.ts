@@ -68,6 +68,8 @@ describe('KnowledgeBaseAnswerCreate taskbar tab', () => {
     expect(view.getByIconName('kb-published')).toBeInTheDocument()
   })
 
+  // Like the title: the create form has a visibility field, so the state being picked is what the
+  //   tab shows - ahead of whatever the last round trip stored.
   it('prefers the visibility picked in the form', () => {
     const view = renderTab({
       taskbarTab: taskbarTab({

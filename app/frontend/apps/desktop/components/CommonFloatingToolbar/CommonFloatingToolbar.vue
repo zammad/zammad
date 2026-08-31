@@ -42,9 +42,19 @@ const hasGenericActions = computed(() =>
   Boolean(slots.default?.().some((vnode) => vnode.type !== Comment)),
 )
 
+// A primary action is not a scroll affordance, so it must not disappear with them: it is the
+//   only entry point some views offer - the knowledge base reader's edit button is the way into
+//   the edit view - and content short enough to need no scrolling is exactly when they vanished.
+const hasPrimaryAction = computed(
+  () =>
+    !props.hidePrimaryAction &&
+    Boolean(slots['primary-action']?.().some((vnode) => vnode.type !== Comment)),
+)
+
 const showElement = computed(
   () =>
     hasGenericActions.value ||
+    hasPrimaryAction.value ||
     !props.isReachingBottom ||
     !props.isReachingTop ||
     showUnreadCount.value,
@@ -65,7 +75,7 @@ const { transitions } = useTransitionConfig()
     <slot />
 
     <Transition v-if="!hasGenericActions" :name="transitions.collapseHeight">
-      <div v-if="!hidePrimaryAction && slots['primary-action']" class="flex">
+      <div v-if="hasPrimaryAction" class="flex">
         <slot name="primary-action" />
       </div>
     </Transition>

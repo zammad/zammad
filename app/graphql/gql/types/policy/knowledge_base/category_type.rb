@@ -6,6 +6,7 @@ module Gql::Types
 
     field :create_answer, Boolean, null: false, description: 'Is the user allowed to create an answer in this category?'
     field :create_subcategory, Boolean, null: false, description: 'Is the user allowed to add a category under this category?'
+    field :update_answer, Boolean, null: false, description: 'Is the user allowed to edit the answers in this category?'
     field :permissions, Boolean, null: false, description: 'Is the user allowed to see and change the permissions of this category?'
 
     # Not the inherited `update`/`destroy` pair: `destroy` is CategoryPolicy#destroy?, which asks
@@ -17,6 +18,10 @@ module Gql::Types
 
     def create_subcategory
       pundit(:create_subcategory?)
+    end
+
+    def update_answer
+      pundit(:update_answer?)
     end
 
     def permissions

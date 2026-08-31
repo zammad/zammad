@@ -57,5 +57,18 @@ FactoryBot.define do
       add_attribute(:callback) { 'KnowledgeBaseAnswerCreate' }
       params                   { { id: tab_id, locale: kb_locale } }
     end
+
+    # An answer is edited one translation at a time, so its edit tab carries the locale as the
+    #   qualifier of the answer's key - the answer stays the entity of the tab.
+    trait :with_knowledge_base_answer do
+      transient do
+        answer    { create(:knowledge_base_answer) } # rubocop:disable FactoryBot/FactoryAssociationWithStrategy
+        kb_locale { 'en-us' }
+      end
+
+      key                      { Taskbar.entity_key(answer, kb_locale) }
+      add_attribute(:callback) { 'KnowledgeBaseAnswerEdit' }
+      params                   { { answer_id: answer.id, locale: kb_locale } }
+    end
   end
 end

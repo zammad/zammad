@@ -1,8 +1,16 @@
-query knowledgeBaseAnswer($answerId: ID!, $locale: String) {
+query knowledgeBaseAnswer(
+  $answerId: ID!
+  $locale: String
+  $withBodyForEditing: Boolean = false
+  $withNavigation: Boolean = true
+) {
   knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
     id
     ...knowledgeBaseAnswerAttributes
-    navigation {
+    # Only for the reader, which steps through the answers of a category. The edit view has no
+    # stepper - stepping away from a tab with unsaved work is not a thing to offer - so it does not
+    # pay for the neighbour lookup, nor for the two prefetches the stepper's links warm.
+    navigation @include(if: $withNavigation) {
       index
       totalCount
       previousAnswer {

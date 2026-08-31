@@ -16,7 +16,7 @@ RSpec.describe Service::KnowledgeBase::Answer::Create do
   let(:title)      { 'Fresh answer' }
   let(:body)       { '<p>Fresh body</p>' }
   let(:tags)       { [] }
-  let(:visibility) { { state: :draft } }
+  let(:visibility) { :draft }
 
   # Everything the input type requires — the service takes it as given, so every case starts out
   #   with it and overrides what it is about. Only the form id is genuinely optional.
@@ -120,15 +120,14 @@ RSpec.describe Service::KnowledgeBase::Answer::Create do
   end
 
   describe 'visibility' do
-    let(:visibility) { { state: state, scheduled_at: scheduled_at }.compact }
+    let(:visibility) { state }
 
-    let(:state)        { :draft }
-    let(:scheduled_at) { nil }
+    let(:state) { :draft }
 
     # The timestamp per state is mapped rather than derived from its name, so a state the schema
     #   offers but the map does not know would only surface when someone picks it.
     it 'maps every state the schema offers, except the one that stores no timestamp' do
-      expect(described_class::VISIBILITY_TIMESTAMPS.keys)
+      expect(CanBePublished::SCHEDULABLE_VISIBILITIES.keys)
         .to match_array(Gql::Types::Enum::KnowledgeBase::VisibilityType.values.values.map(&:value) - [:draft])
     end
 
@@ -154,16 +153,6 @@ RSpec.describe Service::KnowledgeBase::Answer::Create do
       it 'publishes it right away', :aggregate_failures do
         expect(create_answer.published_at).to be_present
         expect(create_answer.visibility).to eq(:published)
-      end
-
-      context 'when it is scheduled for later' do
-        let(:scheduled_at) { 1.week.from_now }
-
-        # The state is derived from the timestamp, so the answer stays a draft until it is reached.
-        it 'keeps it a draft until then', :aggregate_failures do
-          expect(create_answer.published_at).to be_future
-          expect(create_answer.visibility).to eq(:draft)
-        end
       end
     end
 

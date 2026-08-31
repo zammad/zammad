@@ -9,6 +9,9 @@ fragment userCurrentTaskbarItemAttributes on UserTaskbarItem {
     ... on Ticket {
       ...ticketTaskbarTabAttributes
     }
+    ... on KnowledgeBaseAnswer {
+      ...knowledgeBaseAnswerTaskbarTabAttributes
+    }
     ... on UserTaskbarItemEntityTicketCreate {
       uid
       title

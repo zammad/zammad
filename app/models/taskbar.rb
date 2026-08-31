@@ -114,6 +114,14 @@ class Taskbar < ApplicationModel
     end
   end
 
+  # The model part is a key prefix as built by .entity_key_prefix, which may
+  #   contain digits and the encoded namespace separator ('Sso2__Session-1').
+  #
+  # The optional qualifier behind the id is what makes more than one tab per
+  #   record possible (see .entity_key); it has to start with a letter, so that
+  #   a create screen's UUID is not read as an id plus a qualifier.
+  KEY_REGEXP = %r{^(?<model>\p{Lu}[\p{L}\p{N}_]+)-(?<id>\d+)(?:-(?<qualifier>\p{L}[\p{L}\p{N}_-]*))?$}
+
   # Key prefix used for taskbar entries of a model, e.g. 'Ticket' for
   #   'Ticket-123' and 'ProjectBaller__Project' for a namespaced one (see
   #   IdentifierName).
@@ -124,8 +132,27 @@ class Taskbar < ApplicationModel
   # Key of the taskbar entries for a record, e.g. 'Ticket-123'. Both stacks
   #   build their keys this way, so an object opened in one of them shows up as
   #   the same tab in the other.
-  def self.entity_key(record)
-    "#{entity_key_prefix(record.class)}-#{record.id}"
+  #
+  # A qualifier narrows a tab down to a part of the record, so that one record
+  #   can have more than one tab: an answer is edited per locale, and its edit
+  #   tab is keyed 'KnowledgeBase__Answer-42-de-de'. The record stays the tab's
+  #   entity, which is what keeps its authorization (see
+  #   Gql::Types::User::TaskbarItemType#object_entity!) and its cleanup (see
+  #   HasTaskbars#destroy_taskbars) working.
+  def self.entity_key(record, qualifier = nil)
+    [entity_key_prefix(record.class), record.id, qualifier].compact.join('-')
+  end
+
+  # Record id in a taskbar key, or nil for a key that names none - a create
+  #   screen's UUID, a static entity like 'Search', or a legacy key format.
+  #
+  # Parsed rather than split off at the first '-', so that a qualifier behind
+  #   the id cannot reach a record lookup, where it would survive as nothing
+  #   but an integer type cast.
+  def self.entity_key_id(key)
+    match = key.match(KEY_REGEXP)
+
+    match[:id] if match
   end
 
   # Model for a taskbar key prefix, or nil for an unknown one. Resolved via the
@@ -152,6 +179,37 @@ class Taskbar < ApplicationModel
         end
       end
     end
+  end
+
+  # Pundit queries the entities of the taskbar entries are authorized with,
+  #   per entity. Collected from the models the way .taskbar_entities is, so an
+  #   addon can bring a tab of its own along with the query it needs.
+  def self.taskbar_entity_pundit_methods
+    @taskbar_entity_pundit_methods ||= entity_classes.each_with_object({}) do |model, result|
+      result.merge!(model.taskbar_entity_pundit_methods)
+    end
+  end
+
+  # Key prefixes of the models whose taskbar entries relate to each other -
+  #   their owners appear in one another's live user list - mapped to the Pundit
+  #   query that decides who belongs in it (see
+  #   HasTaskbars.taskbar_live_user_pundit_method).
+  def self.taskbar_live_user_pundit_methods
+    @taskbar_live_user_pundit_methods ||= entity_classes.each_with_object({}) do |model, result|
+      method = model.taskbar_live_user_pundit_method
+      next if method.blank?
+
+      result[entity_key_prefix(model)] = method
+    end
+  end
+
+  # Pundit query for one entity, :show? for every entity that names none.
+  #
+  # An *edit* tab needs more than that: a reader of a knowledge base category
+  #   passes KnowledgeBase::AnswerPolicy#show?, so the tab list would report the
+  #   entity of an edit tab as accessible while the view refuses it.
+  def self.entity_pundit_method(entity)
+    taskbar_entity_pundit_methods.fetch(entity, :show?)
   end
 
   def state_changed?
@@ -227,34 +285,53 @@ class Taskbar < ApplicationModel
       .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
   end
 
-  # Checks if taskbar's owner has access to the target object (Ticket, User, Organization...)
+  # Checks if taskbar's owner has access to the target object (Ticket, KnowledgeBase::Answer...)
+  #   with the Pundit query that model's live user list is gated by.
   # @return [Boolean, nil] true if the target is accessible, false if not accessible and nil for non-relatable items
-  # The model part is a key prefix as built by .entity_key_prefix, which may
-  #   contain digits and the encoded namespace separator ('Sso2__Session-1').
-  KEY_REGEXP = %r{^(?<model>\p{Lu}[\p{L}\p{N}_]+)-(?<id>\d+)$}
+  # rubocop:disable Style/ReturnNilInPredicateMethodDefinition -- nil and false mean different
+  #   things here, as the doc above says: nil is "no live user list at all", false is "this owner
+  #   may not see it". Callers treat both as falsy, the specs tell them apart.
   def target_accessible_to_owner?
-    case key.match(KEY_REGEXP)
-    in model: 'Ticket', id:
-      record = Ticket.find_by(id:)
+    return if !relatable?
 
-      TicketPolicy.new(user, record).show? if record
-    else
-    end
+    record = live_user_entity
+    return if !record
+
+    query = self.class.taskbar_live_user_pundit_methods.fetch(key_match[:model])
+
+    # Bang: a model that opted into live users without having a policy is a bug, not a state.
+    Pundit.policy!(user, record).public_send(query)
   end
+  # rubocop:enable Style/ReturnNilInPredicateMethodDefinition
 
   # Checks if taskbar should update related taskbars
   # to make sure each taskbar includes siblings
   # for displaying active users in frontend
   def relatable?
-    case key.match(KEY_REGEXP)
-    in model: 'Ticket'
-      true
-    else
-      false
-    end
+    return false if !key_match
+
+    self.class.taskbar_live_user_pundit_methods.key?(key_match[:model])
+  end
+
+  # The record the live user list of this taskbar belongs to, or nil for a key that names none -
+  #   a deleted record, a create screen's UUID, a legacy key format.
+  #
+  # The class comes from the known taskbar models rather than from constantizing the
+  #   (client-provided) key, and so does the id: KEY_REGEXP keeps a qualifier behind it out of the
+  #   lookup, where it would survive as nothing but an integer type cast.
+  def live_user_entity
+    return if !relatable?
+
+    self.class.entity_class_for_key_prefix(key_match[:model])&.find_by(id: key_match[:id])
   end
 
   private
+
+  # Not memoized: a taskbar is saved with the key it was built with, and a stale match would be a
+  #   silent one. The regexp runs a handful of times per save.
+  def key_match
+    key.match(KEY_REGEXP)
+  end
 
   def update_last_contact
     return if local_update

@@ -73,6 +73,7 @@ export type SearchTaskbarItemStateUpdatesSubscriptionVariables = Exact<{
 
 
 export type SearchTaskbarItemStateUpdatesSubscription = { userCurrentTaskbarItemStateUpdates: { __typename: 'UserCurrentTaskbarItemStateUpdatesPayload', stateUpdateType: Types.EnumTaskbarStateUpdate | null | undefined, taskbarItem: { __typename: 'UserTaskbarItem', id: string, entity:
+        | { __typename: 'KnowledgeBaseAnswer' }
         | { __typename: 'Organization' }
         | { __typename: 'Ticket' }
         | { __typename: 'User' }
@@ -157,11 +158,17 @@ export type EmailAddressesQueryVariables = Exact<{
 
 export type EmailAddressesQuery = { emailAddresses: Array<{ __typename: 'EmailAddress', name: string, email: string, active: boolean }> };
 
-export type KnowledgeBaseAnswerAttributesFragment = { __typename: 'KnowledgeBaseAnswer', title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined } | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }> };
+export type KnowledgeBaseAnswerAttributesFragment = { __typename: 'KnowledgeBaseAnswer', title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined, bodyForEditing?: string | null | undefined } | null | undefined, visibilitySchedules: Array<{ __typename: 'KnowledgeBaseAnswerVisibilitySchedule', visibility: Types.EnumKnowledgeBaseSchedulableVisibility, scheduledAt: string }> | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }>, policy: { __typename: 'PolicyDefault', update: boolean, destroy: boolean } };
+
+export type KnowledgeBaseAnswerLiveUserAttributesFragment = { __typename: 'KnowledgeBaseAnswerLiveUser', user: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, vip: boolean | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined, image: string | null | undefined }, apps: Array<{ __typename: 'KnowledgeBaseAnswerLiveUserApp', name: Types.EnumTaskbarApp, editing: boolean, lastInteraction: string }> };
+
+export type KnowledgeBaseAnswerPolicyFragment = { __typename: 'KnowledgeBaseAnswer', policy: { __typename: 'PolicyDefault', update: boolean, destroy: boolean } };
+
+export type KnowledgeBaseAnswerTaskbarTabAttributesFragment = { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility };
 
 export type KnowledgeBaseAnswerTranslationFragment = { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, categoryTreeTranslation: Array<{ __typename: 'KnowledgeBaseCategoryTranslation', id: string, title: string }>, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, internalAt: string | null | undefined, tags: Array<string> | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } };
 
-export type KnowledgeBaseCategoryPolicyFragment = { __typename: 'KnowledgeBaseCategory', policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean } };
+export type KnowledgeBaseCategoryPolicyFragment = { __typename: 'KnowledgeBaseCategory', policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean } };
 
 export type KnowledgeBaseCategoryPreInfoFragment = { __typename: 'KnowledgeBaseCategory', directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> };
 
@@ -173,7 +180,35 @@ export type KnowledgeBaseAnswerAddMutationVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseAnswerAddMutation = { knowledgeBaseAnswerAdd: { __typename: 'KnowledgeBaseAnswerAddPayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type KnowledgeBaseAnswerAddMutation = { knowledgeBaseAnswerAdd: { __typename: 'KnowledgeBaseAnswerAddPayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number, category: { __typename: 'KnowledgeBaseCategory', id: string } } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type KnowledgeBaseAnswerUpdateMutationVariables = Exact<{
+  answerId: string | number;
+  input: Types.KnowledgeBaseUpdateAnswerInput;
+  locale: string;
+  meta?: Types.KnowledgeBaseAnswerUpdateMetaInput | null | undefined;
+  withBodyForEditing?: boolean | null | undefined;
+}>;
+
+
+export type KnowledgeBaseAnswerUpdateMutation = { knowledgeBaseAnswerUpdate: { __typename: 'KnowledgeBaseAnswerUpdatePayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined, bodyForEditing?: string | null | undefined } | null | undefined, visibilitySchedules: Array<{ __typename: 'KnowledgeBaseAnswerVisibilitySchedule', visibility: Types.EnumKnowledgeBaseSchedulableVisibility, scheduledAt: string }> | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }>, policy: { __typename: 'PolicyDefault', update: boolean, destroy: boolean } } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables = Exact<{
+  answerId: string | number;
+  visibility: Types.EnumKnowledgeBaseSchedulableVisibility;
+  scheduledAt: string;
+}>;
+
+
+export type KnowledgeBaseAnswerVisibilityScheduleAddMutation = { knowledgeBaseAnswerVisibilityScheduleAdd: { __typename: 'KnowledgeBaseAnswerVisibilityScheduleAddPayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, visibilitySchedules: Array<{ __typename: 'KnowledgeBaseAnswerVisibilitySchedule', visibility: Types.EnumKnowledgeBaseSchedulableVisibility, scheduledAt: string }> | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type KnowledgeBaseAnswerVisibilityScheduleRemoveMutationVariables = Exact<{
+  answerId: string | number;
+  visibility: Types.EnumKnowledgeBaseSchedulableVisibility;
+}>;
+
+
+export type KnowledgeBaseAnswerVisibilityScheduleRemoveMutation = { knowledgeBaseAnswerVisibilityScheduleRemove: { __typename: 'KnowledgeBaseAnswerVisibilityScheduleRemovePayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, visibilitySchedules: Array<{ __typename: 'KnowledgeBaseAnswerVisibilitySchedule', visibility: Types.EnumKnowledgeBaseSchedulableVisibility, scheduledAt: string }> | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type KnowledgeBaseCategoryAddMutationVariables = Exact<{
   input: Types.KnowledgeBaseCategoryInput;
@@ -181,7 +216,7 @@ export type KnowledgeBaseCategoryAddMutationVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseCategoryAddMutation = { knowledgeBaseCategoryAdd: { __typename: 'KnowledgeBaseCategoryAddPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type KnowledgeBaseCategoryAddMutation = { knowledgeBaseCategoryAdd: { __typename: 'KnowledgeBaseCategoryAddPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type KnowledgeBaseCategoryDeleteMutationVariables = Exact<{
   categoryId: string | number;
@@ -197,7 +232,7 @@ export type KnowledgeBaseCategoryUpdateMutationVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseCategoryUpdateMutation = { knowledgeBaseCategoryUpdate: { __typename: 'KnowledgeBaseCategoryUpdatePayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type KnowledgeBaseCategoryUpdateMutation = { knowledgeBaseCategoryUpdate: { __typename: 'KnowledgeBaseCategoryUpdatePayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type KnowledgeBaseFeedTokenRenewMutationVariables = Exact<{
   categoryId?: string | number | null | undefined;
@@ -239,10 +274,12 @@ export type KnowledgeBaseQuery = { knowledgeBase: { __typename: 'KnowledgeBase',
 export type KnowledgeBaseAnswerQueryVariables = Exact<{
   answerId: string | number;
   locale?: string | null | undefined;
+  withBodyForEditing?: boolean | null | undefined;
+  withNavigation?: boolean | null | undefined;
 }>;
 
 
-export type KnowledgeBaseAnswerQuery = { knowledgeBaseAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, navigation: { __typename: 'KnowledgeBaseAnswerNavigation', index: number, totalCount: number, previousAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined }, nextAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined } } | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined } | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }> } };
+export type KnowledgeBaseAnswerQuery = { knowledgeBaseAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, navigation?: { __typename: 'KnowledgeBaseAnswerNavigation', index: number, totalCount: number, previousAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string }, nextAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string } } | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined, bodyForEditing?: string | null | undefined } | null | undefined, visibilitySchedules: Array<{ __typename: 'KnowledgeBaseAnswerVisibilitySchedule', visibility: Types.EnumKnowledgeBaseSchedulableVisibility, scheduledAt: string }> | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }>, policy: { __typename: 'PolicyDefault', update: boolean, destroy: boolean } } };
 
 export type KnowledgeBaseAnswersQueryVariables = Exact<{
   categoryId: string | number;
@@ -252,7 +289,7 @@ export type KnowledgeBaseAnswersQueryVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseAnswersQuery = { knowledgeBaseAnswers: { __typename: 'KnowledgeBaseAnswerConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseAnswerEdge', node: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
+export type KnowledgeBaseAnswersQuery = { knowledgeBaseAnswers: { __typename: 'KnowledgeBaseAnswerConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseAnswerEdge', node: { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
 
 export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
   categoryId?: string | number | null | undefined;
@@ -260,7 +297,7 @@ export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
+export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
 
 export type KnowledgeBaseFeedQueryVariables = Exact<{
   categoryId?: string | number | null | undefined;
@@ -280,23 +317,49 @@ export type KnowledgeBaseSearchQueryVariables = Exact<{
 
 
 export type KnowledgeBaseSearchQuery = { knowledgeBaseSearch: { __typename: 'KnowledgeBaseSearchResultConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseSearchResultEdge', node: { __typename: 'KnowledgeBaseSearchResult', item:
-          | { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean }
-          | { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }
+          | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean }
+          | { __typename: 'KnowledgeBaseCategory', id: string, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility, categoryTitle: string | null | undefined }
         , titlePreview: Array<{ __typename: 'KnowledgeBaseSearchPreviewSegment', text: string, highlight: boolean }>, bodyPreview: Array<{ __typename: 'KnowledgeBaseSearchPreviewSegment', text: string, highlight: boolean }>, categoryPath: Array<{ __typename: 'KnowledgeBaseSearchPathSegment', id: string, title: string | null | undefined }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
+
+export type KnowledgeBaseAnswerLiveUserUpdatesSubscriptionVariables = Exact<{
+  key: string;
+  app: Types.EnumTaskbarApp;
+}>;
+
+
+export type KnowledgeBaseAnswerLiveUserUpdatesSubscription = { knowledgeBaseAnswerLiveUserUpdates: { __typename: 'KnowledgeBaseAnswerLiveUserUpdatesPayload', liveUsers: Array<{ __typename: 'KnowledgeBaseAnswerLiveUser', user: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, vip: boolean | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined, image: string | null | undefined }, apps: Array<{ __typename: 'KnowledgeBaseAnswerLiveUserApp', name: Types.EnumTaskbarApp, editing: boolean, lastInteraction: string }> }> | null | undefined } };
 
 export type KnowledgeBaseAnswerUpdatesSubscriptionVariables = Exact<{
   answerId: string | number;
   locale?: string | null | undefined;
   initial?: boolean | null | undefined;
+  withBodyForEditing?: boolean | null | undefined;
 }>;
 
 
-export type KnowledgeBaseAnswerUpdatesSubscription = { knowledgeBaseAnswerUpdates: { __typename: 'KnowledgeBaseAnswerUpdatesPayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined } | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }> } | null | undefined } };
+export type KnowledgeBaseAnswerUpdatesSubscription = { knowledgeBaseAnswerUpdates: { __typename: 'KnowledgeBaseAnswerUpdatesPayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, translationId: string | null | undefined, translationMissing: boolean, internalAt: string | null | undefined, publishedAt: string | null | undefined, archivedAt: string | null | undefined, editedAt: string | null | undefined, tags: Array<string> | null | undefined, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', id: string, bodyWithUrls: string | null | undefined, bodyForEditing?: string | null | undefined } | null | undefined, visibilitySchedules: Array<{ __typename: 'KnowledgeBaseAnswerVisibilitySchedule', visibility: Types.EnumKnowledgeBaseSchedulableVisibility, scheduledAt: string }> | null | undefined, editedBy: { __typename: 'User', id: string, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined } | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined, preferences: any }>, policy: { __typename: 'PolicyDefault', update: boolean, destroy: boolean } } | null | undefined } };
 
 export type KnowledgeBaseContentUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type KnowledgeBaseContentUpdatesSubscription = { knowledgeBaseContentUpdates: { __typename: 'KnowledgeBaseContentUpdatesPayload', affectedCategoryIds: Array<string> | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } | null | undefined } };
+
+export type LinkAddMutationVariables = Exact<{
+  input: Types.LinkInput;
+}>;
+
+
+export type LinkAddMutation = { linkAdd: { __typename: 'LinkAddPayload', link: { __typename: 'Link', type: Types.EnumLinkType, item:
+        | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, categoryTreeTranslation: Array<{ __typename: 'KnowledgeBaseCategoryTranslation', id: string, title: string }>, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, internalAt: string | null | undefined, tags: Array<string> | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } }
+        | { __typename: 'Ticket', id: string, internalId: number, title: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
+       } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, field: string | null | undefined }> | null | undefined } | null | undefined };
+
+export type LinkRemoveMutationVariables = Exact<{
+  input: Types.LinkInput;
+}>;
+
+
+export type LinkRemoveMutation = { linkRemove: { __typename: 'LinkRemovePayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, field: string | null | undefined }> | null | undefined } | null | undefined };
 
 export type LinkListQueryVariables = Exact<{
   objectId: string | number;
@@ -413,6 +476,13 @@ export type TicketsCachedByOverviewQueryVariables = Exact<{
 
 export type TicketsCachedByOverviewQuery = { ticketsCachedByOverview: { __typename: 'CachedTicketConnection', totalCount: number, collectionSignature: string, edges: Array<{ __typename: 'TicketEdge', cursor: string, node: { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: string, updatedAt: string, aiAgentRunning: boolean | null | undefined, pendingTime: string | null | undefined, articleCount: number | null | undefined, stateColorCode: Types.EnumTicketStateColorCode, escalationAt: string | null | undefined, firstResponseEscalationAt: string | null | undefined, updateEscalationAt: string | null | undefined, closeEscalationAt: string | null | undefined, firstResponseAt: string | null | undefined, closeAt: string | null | undefined, timeUnit: number | null | undefined, lastCloseAt: string | null | undefined, lastContactAt: string | null | undefined, lastContactAgentAt: string | null | undefined, lastContactCustomerAt: string | null | undefined, createdBy: { __typename: 'User', id: string, fullname: string | null | undefined } | null | undefined, updatedBy: { __typename: 'User', id: string, fullname: string | null | undefined } | null | undefined, owner: { __typename: 'User', id: string, fullname: string | null | undefined }, customer: { __typename: 'User', id: string, fullname: string | null | undefined }, organization: { __typename: 'Organization', id: string, name: string | null | undefined } | null | undefined, state: { __typename: 'TicketState', id: string, name: string, stateType: { __typename: 'TicketStateType', id: string, name: string } }, group: { __typename: 'Group', id: string, name: string | null | undefined }, priority: { __typename: 'TicketPriority', id: string, name: string, uiColor: string | null | undefined }, objectAttributeValues: Array<{ __typename: 'ObjectAttributeValue', value: any, renderedLink: string | null | undefined, attribute: { __typename: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null | undefined, policy: { __typename: 'PolicyTicket', update: boolean } } }> | null | undefined, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
 
+export type TicketsRecentlyViewedQueryVariables = Exact<{
+  limit?: number | null | undefined;
+}>;
+
+
+export type TicketsRecentlyViewedQuery = { ticketsRecentlyViewed: Array<{ __typename: 'Ticket', number: string, internalId: number, id: string, title: string, createdAt: string, stateColorCode: Types.EnumTicketStateColorCode, customer: { __typename: 'User', id: string, fullname: string | null | undefined }, organization: { __typename: 'Organization', id: string, name: string | null | undefined } | null | undefined, group: { __typename: 'Group', id: string, name: string | null | undefined }, state: { __typename: 'TicketState', id: string, name: string } }> };
+
 export type TicketsStatsMonthlyByCustomerQueryVariables = Exact<{
   customerId: string | number;
 }>;
@@ -493,13 +563,22 @@ export type UserCurrentTicketOverviewUpdatesSubscriptionVariables = Exact<{
 export type UserCurrentTicketOverviewUpdatesSubscription = { userCurrentTicketOverviewUpdates: { __typename: 'UserCurrentTicketOverviewUpdatesPayload', ticketOverviews: Array<{ __typename: 'Overview', id: string, name: string }> | null | undefined } };
 
 export type UserCurrentTaskbarItemAttributesFragment = { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+    | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
     | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
     | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
     | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-    | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+    | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
     | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
     | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
    | null | undefined };
+
+export type UserCurrentKnowledgeBaseAnswerScreenBehaviorMutationVariables = Exact<{
+  screen: Types.EnumKnowledgeBaseAnswerScreen;
+  behavior: Types.EnumKnowledgeBaseAnswerScreenBehavior;
+}>;
+
+
+export type UserCurrentKnowledgeBaseAnswerScreenBehaviorMutation = { userCurrentKnowledgeBaseAnswerScreenBehavior: { __typename: 'UserCurrentKnowledgeBaseAnswerScreenBehaviorPayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type UserCurrentPasswordCheckMutationVariables = Exact<{
   password: string;
@@ -519,10 +598,11 @@ export type UserCurrentTaskbarItemAddMutationVariables = Exact<{
 
 
 export type UserCurrentTaskbarItemAddMutation = { userCurrentTaskbarItemAdd: { __typename: 'UserCurrentTaskbarItemAddPayload', taskbarItem: { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+        | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
@@ -547,10 +627,11 @@ export type UserCurrentTaskbarItemTouchLastContactMutationVariables = Exact<{
 
 
 export type UserCurrentTaskbarItemTouchLastContactMutation = { userCurrentTaskbarItemTouchLastContact: { __typename: 'UserCurrentTaskbarItemTouchLastContactPayload', taskbarItem: { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+        | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
@@ -562,10 +643,11 @@ export type UserCurrentTaskbarItemUpdateMutationVariables = Exact<{
 
 
 export type UserCurrentTaskbarItemUpdateMutation = { userCurrentTaskbarItemUpdate: { __typename: 'UserCurrentTaskbarItemUpdatePayload', taskbarItem: { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+        | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
@@ -594,10 +676,11 @@ export type UserCurrentTaskbarItemListQueryVariables = Exact<{
 
 
 export type UserCurrentTaskbarItemListQuery = { userCurrentTaskbarItemList: Array<{ __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+      | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
       | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
       | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
       | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-      | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+      | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
       | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
       | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
      | null | undefined }> | null | undefined };
@@ -627,17 +710,19 @@ export type UserCurrentTaskbarItemUpdatesSubscriptionVariables = Exact<{
 
 
 export type UserCurrentTaskbarItemUpdatesSubscription = { userCurrentTaskbarItemUpdates: { __typename: 'UserCurrentTaskbarItemUpdatesPayload', removeItem: string | null | undefined, addItem: { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+        | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, updateItem: { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
+        | { __typename: 'KnowledgeBaseAnswer', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined } };
@@ -908,23 +993,6 @@ export type UserCurrentDevicesUpdatesSubscription = { userCurrentDevicesUpdates:
 export type AiAssistantAnalyticsMetaFragment = { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined };
 
 export type IdoitObjectAttributesFragment = { __typename: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link: string | null | undefined, title: string, type: string, status: string };
-
-export type LinkAddMutationVariables = Exact<{
-  input: Types.LinkInput;
-}>;
-
-
-export type LinkAddMutation = { linkAdd: { __typename: 'LinkAddPayload', link: { __typename: 'Link', type: Types.EnumLinkType, item:
-        | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, categoryTreeTranslation: Array<{ __typename: 'KnowledgeBaseCategoryTranslation', id: string, title: string }>, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, internalAt: string | null | undefined, tags: Array<string> | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } }
-        | { __typename: 'Ticket', id: string, internalId: number, title: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
-       } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, field: string | null | undefined }> | null | undefined } | null | undefined };
-
-export type LinkRemoveMutationVariables = Exact<{
-  input: Types.LinkInput;
-}>;
-
-
-export type LinkRemoveMutation = { linkRemove: { __typename: 'LinkRemovePayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, field: string | null | undefined }> | null | undefined } | null | undefined };
 
 export type TicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationVariables = Exact<{
   ticketId: string | number;

@@ -61,6 +61,12 @@ describe KnowledgeBase::CategoryPolicy do
     include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :create_answer?
   end
 
+  describe '#update_answer?' do
+    # The same access KnowledgeBase::AnswerPolicy#update? resolves through the answer's category,
+    #   asked of the category alone — so a list of answers asks it once instead of once per row.
+    include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :update_answer?
+  end
+
   describe '#create?' do
     include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :create?, access_method: :parent_access
   end

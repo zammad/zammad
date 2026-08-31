@@ -28,7 +28,10 @@ describe('knowledge base legacy URLs', () => {
     ['/knowledge_base/1/locale/en-us/category/2', '/knowledge-base/locale/en-us/category/2'],
     ['/knowledge_base/1/locale/en-us/category/2/edit', '/knowledge-base/locale/en-us/category/2'],
     ['/knowledge_base/1/locale/en-us/answer/3', '/knowledge-base/locale/en-us/answer/3'],
-    ['/knowledge_base/1/locale/en-us/answer/3/edit', '/knowledge-base/locale/en-us/answer/3'],
+    // Unlike the two rows above, this `/edit` does not collapse onto the plain node: it is the
+    //   one shape the public help site's edit button and the old interface's feed links use, and
+    //   it lands on the new interface's edit route rather than the reader.
+    ['/knowledge_base/1/locale/en-us/answer/3/edit', '/knowledge-base/locale/en-us/answer/3/edit'],
   ])('opens %s at %s', async (legacyPath, expectedPath) => {
     await router.push(legacyPath)
 
@@ -80,5 +83,43 @@ describe('knowledge base answer create route', () => {
     await router.push(path)
 
     expect(router.currentRoute.value.name).toBe(expectedName)
+  })
+})
+
+// The edit view is a top-level record for the same reason the create view is: it brings its own
+//   taskbar tab layout, and must not inherit the section's KeepAlive, nav meta or locale
+//   reconciliation.
+describe('knowledge base answer edit route', () => {
+  const router = createRouter({
+    history: createWebHistory('/desktop'),
+    routes: withStubbedViews(knowledgeBaseRoutes),
+  })
+
+  it('matches the edit route with a locale and an answer id', async () => {
+    await router.push('/knowledge-base/locale/en-us/answer/3/edit')
+
+    expect(router.currentRoute.value.name).toBe('KnowledgeBaseAnswerEdit')
+    expect(router.currentRoute.value.params).toEqual({
+      localeCode: 'en-us',
+      answerInternalId: '3',
+    })
+  })
+
+  // Editing is editorial, and an inactive knowledge base has nothing to edit.
+  it('is gated by the editor permission and the section access', async () => {
+    await router.push('/knowledge-base/locale/en-us/answer/3/edit')
+
+    const { meta } = router.currentRoute.value
+
+    expect(meta.requiredPermission).toEqual(['knowledge_base.editor'])
+    expect(meta.canAccess).toBeTypeOf('function')
+  })
+
+  // The `(\d+)` constraint on the section's own reader route is what keeps `/3/edit` from
+  //   matching it instead (it has no further segment to match `edit` against).
+  it('does not collide with the reader route of the same answer', async () => {
+    await router.push('/knowledge-base/locale/en-us/answer/3')
+
+    expect(router.currentRoute.value.name).toBe('KnowledgeBaseAnswer')
   })
 })

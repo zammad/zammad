@@ -57,10 +57,26 @@ describe('CommonFloatingToolbar', () => {
     expect(wrapper.getByRole('button', { name: 'Scroll to start' })).toBeVisible()
   })
 
+  // With nothing but the scroll controls left to offer: an action of its own keeps it up, see
+  //   below.
   it('hides the toolbar entirely once both ends are reached and nothing is unread', () => {
-    const wrapper = renderToolbar({ isReachingBottom: true, isReachingTop: true })
+    const wrapper = renderToolbar({
+      isReachingBottom: true,
+      isReachingTop: true,
+      hidePrimaryAction: true,
+    })
 
     expect(wrapper.queryByRole('toolbar')).not.toBeInTheDocument()
+  })
+
+  // The action is not a scroll affordance: content short enough to need no scrolling is still
+  //   content the user has to be able to act on - and for the knowledge base reader that action
+  //   is the only way into the edit view.
+  it('keeps the toolbar visible for a primary action even at both ends', () => {
+    const wrapper = renderToolbar({ isReachingBottom: true, isReachingTop: true })
+
+    expect(wrapper.getByRole('toolbar')).toBeVisible()
+    expect(wrapper.getByRole('button', { name: 'Primary action' })).toBeVisible()
   })
 
   it('shows an unread count badge and tooltip on the scroll to end action', () => {

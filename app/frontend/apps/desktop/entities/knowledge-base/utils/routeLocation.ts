@@ -57,3 +57,13 @@ export const knowledgeBaseAnswerCreateRoute = (
   params: { localeCode, tabId: getUuid() },
   query: categoryId ? { categoryId } : {},
 })
+
+// One tab per answer *and* locale (Taskbar.entity_key): switching the language of an open edit
+//   tab does not retitle it, it opens the edit tab of that other translation instead.
+export const knowledgeBaseAnswerEditRoute = (
+  localeCode: string,
+  answerId: string,
+): RouteLocationNamedRaw => ({
+  name: 'KnowledgeBaseAnswerEdit',
+  params: { localeCode, answerInternalId: getIdFromGraphQLId(answerId) },
+})

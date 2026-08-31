@@ -11,7 +11,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
         knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
           id
           title
-          content { id bodyWithUrls }
+          content { id bodyWithUrls bodyForEditing }
           visibility
           translationId
           translationMissing
@@ -19,6 +19,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
           publishedAt
           archivedAt
           editedAt
+          visibilitySchedules {
+            visibility
+            scheduledAt
+          }
           editedBy { id fullname }
           tags
           attachments { id internalId name size type preferences }
@@ -62,6 +66,20 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
       expect(gql.result.data['content']).to include('id' => gql.id(content))
       expect(gql.result.data['content']).to include('bodyWithUrls' => KnowledgeBaseRichText.prepare(content.body_with_urls, &:desktop_url))
+    end
+
+    # What a reader gets rendered is not what an editor may load: `bodyWithUrls` expands the video
+    #   widget marker into an `<iframe>`, and an editor saving that back would store the rendering in
+    #   place of the marker and lose the widget for good. `bodyForEditing` is the stored body, with
+    #   only the inline image URLs resolved.
+    context 'with a body containing a video widget' do
+      let(:answer) { create(:knowledge_base_answer, :with_video, :published, category: category) }
+
+      it 'renders the widget for reading and hands the editor the marker', :aggregate_failures do
+        expect(gql.result.data.dig('content', 'bodyWithUrls')).to include('<iframe')
+        expect(gql.result.data.dig('content', 'bodyForEditing')).to include('widget: video')
+        expect(gql.result.data.dig('content', 'bodyForEditing')).not_to include('<iframe')
+      end
     end
 
     # The editor stores a link to another answer as a marker (`data-target-type`/`data-target-id`
@@ -148,6 +166,24 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
     it 'exposes the publication date of a published answer' do
       expect(gql.result.data['publishedAt']).to be_present
+    end
+
+    # The dates still ahead, as opposed to `visibility`, which is the state the answer is in now -
+    #   both are derived from the very same columns.
+    context 'with an answer scheduled to be archived' do
+      let(:answer) { create(:knowledge_base_answer, :published, category:, archived_at: 1.week.from_now.change(sec: 0)) }
+
+      it 'exposes the schedule beside the state it is in', :aggregate_failures do
+        expect(gql.result.data).to include('visibility' => 'published')
+        expect(gql.result.data['visibilitySchedules'].sole)
+          .to eq('visibility' => 'archived', 'scheduledAt' => answer.archived_at.iso8601)
+      end
+
+      # Unfiltered for an editor, unlike for everybody else: their views show what is in effect
+      #   beside what is scheduled, and both come off this column.
+      it 'exposes the raw date as well' do
+        expect(gql.result.data['archivedAt']).to eq(answer.archived_at.iso8601)
+      end
     end
 
     context 'with tags assigned to the answer' do
@@ -241,6 +277,24 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
         expect(gql.result.data['publishedAt']).to be_present
         expect(gql.result.data['editedAt']).to be_present
         expect(gql.result.data['editedBy']).to be_present
+      end
+    end
+
+    # The one editorial field internal access does *not* buy: acting on a scheduled change takes
+    #   editor access, so being told about one does too - and that has to hold for the date it is
+    #   derived from as well, or the schedule would just be read off `archivedAt` instead.
+    context 'when the answer is scheduled to be archived' do
+      let(:answer) { create(:knowledge_base_answer, :internal, :published, category:, archived_at: 1.week.from_now) }
+
+      it 'exposes neither the schedule nor the date it is derived from', :aggregate_failures do
+        expect(gql.result.data).to include('visibilitySchedules' => nil)
+        expect(gql.result.data['archivedAt']).to be_nil
+      end
+
+      # Only the dates still ahead are withheld: how the answer got where it is stays theirs to see.
+      it 'exposes the dates the answer has reached', :aggregate_failures do
+        expect(gql.result.data['internalAt']).to be_present
+        expect(gql.result.data['publishedAt']).to be_present
       end
     end
 
@@ -339,6 +393,16 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
         expect(gql.result.data).to include('archivedAt' => nil)
         expect(gql.result.data).to include('editedAt' => nil)
         expect(gql.result.data).to include('editedBy' => nil)
+      end
+
+      # Nor what it is going to become: acting on a scheduled change takes editor access, so being
+      #   told about one does too - and a schedule is nothing but a date that has not been reached.
+      context 'when it is scheduled to be archived' do
+        let(:answer) { create(:knowledge_base_answer, :internal, :published, category:, archived_at: 1.week.from_now) }
+
+        it 'exposes no schedule' do
+          expect(gql.result.data).to include('visibilitySchedules' => nil)
+        end
       end
     end
 
