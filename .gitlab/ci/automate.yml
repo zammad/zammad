@@ -53,6 +53,48 @@
   after_script: []
 
 
+# Posts a digest of merged dependency updates (incl. release note highlights and
+# transitive lockfile changes) via webhook.
+#
+# Schedule variable (set on the pipeline schedule / manual web run):
+#   JOB_FILTER="dependency digest"  - required; selects this job and suppresses all others
+#
+# Required CI/CD variables:
+#   WEBHOOK_URL                     - incoming webhook of the target chat channel (masked)
+#
+# Required for the AI summary (without both, a mechanical digest is posted):
+#   LLM_API_URL                     - Ollama base URL
+#   LLM_MODEL                       - model family and size; the newest installed model
+#                                     of that family is picked automatically
+#
+# Optional CI/CD variables:
+#   LLM_MODEL_FALLBACKS             - comma-separated models to try if nothing of the family is installed
+#   LLM_MODEL_PATTERN               - regex overriding the derived family pattern
+#   LLM_API_KEY                     - bearer token, if the LLM endpoint is put behind auth
+#   LLM_NUM_CTX / LLM_TIMEOUT       - context window (default 65536) / request timeout in s (default 900)
+#   GITHUB_TOKEN                    - raises the GitHub API rate limit for release note fetching
+#   GITLAB_API_TOKEN                - read_api token for the MR query (defaults to RENOVATE_TOKEN)
+'dependency digest':
+  stage: automate
+  cache: []
+  rules:
+    - if: $BROWSER_TEST_FILTER
+      when: never
+    - if: $JOB_FILTER == $CI_JOB_NAME && ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME == "develop"
+    - when: never
+  variables:
+    GIT_DEPTH: '500'
+  # Exit code 2 means the digest was posted, but without the configured LLM (endpoint down, model missing) - show the job as "passed with warnings".
+  allow_failure:
+    exit_codes: [2]
+  # The script is stdlib-only, so no bundle_install - but Ruby comes from RVM
+  #   in the default CI image and has to be put on PATH.
+  before_script:
+    - !reference [.scripts, source_rvm]
+  script:
+    - ruby .gitlab/dependency_digest.rb --since 7
+  after_script: []
+
 # Checks updatecli configuration and creates merge request if there are changes.
 'updatecli':
   stage: automate
@@ -61,6 +103,10 @@
     entrypoint: ['']
   cache: []
   rules:
+    - if: $BROWSER_TEST_FILTER
+      when: never
+    - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
+      when: never
     - if: ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME == "develop"
     - when: never
   before_script: []
