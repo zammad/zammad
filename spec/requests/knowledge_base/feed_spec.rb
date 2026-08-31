@@ -31,6 +31,24 @@ RSpec.describe 'KnowledgeBase feed', authenticated_as: :user, type: :request do
 
   end
 
+  # A feed reader keeps polling with a token that stays valid, so switching the knowledge base off
+  #   has to cut the content off here too. https://github.com/zammad/zammad/issues/6338
+  describe '#root, when the knowledge base is inactive' do
+    before do
+      knowledge_base.update! active: false
+
+      get feed_knowledge_base_path(knowledge_base, locale_name)
+    end
+
+    it 'returns 404' do
+      expect(response).to have_http_status :not_found
+    end
+
+    it 'serves no content' do
+      expect(response.body).not_to include(published_answer.translations.first.title)
+    end
+  end
+
   describe '#category' do
     context 'when using existing category' do
       before do
@@ -54,6 +72,23 @@ RSpec.describe 'KnowledgeBase feed', authenticated_as: :user, type: :request do
 
       it 'returns 404' do
         expect(response).to have_http_status :not_found
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/6338
+    context 'when the knowledge base is inactive' do
+      before do
+        knowledge_base.update! active: false
+
+        get feed_knowledge_base_category_path(knowledge_base, category.id, locale_name)
+      end
+
+      it 'returns 404' do
+        expect(response).to have_http_status :not_found
+      end
+
+      it 'serves no content' do
+        expect(response.body).not_to include(published_answer.translations.first.title)
       end
     end
 

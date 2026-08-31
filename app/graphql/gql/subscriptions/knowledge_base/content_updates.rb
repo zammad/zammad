@@ -27,6 +27,14 @@ module Gql::Subscriptions
 
       categories = object.is_a?(Hash) ? Array(object[:categories]) : []
 
+      # The categories arrive deserialized, one by one, so their knowledge base is not loaded — and
+      #   the policy below asks each of them whether it is active. Preloaded together rather than
+      #   left to the policy, which would take one SELECT per category, for every subscriber on
+      #   every broadcast.
+      if categories.present?
+        ActiveRecord::Associations::Preloader.new(records: categories, associations: :knowledge_base).call
+      end
+
       # The same gate the browse queries apply to a category via `loads:`
       #   (Gql::Types::KnowledgeBase::CategoryType.direct_access_pundit_method), so a
       #   category the client can display is never filtered out here. Deliberately not

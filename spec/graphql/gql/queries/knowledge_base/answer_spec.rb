@@ -484,8 +484,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       gql.execute(query, variables:)
     end
 
-    it 'is not found' do
-      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+    # Denied by KnowledgeBase::AnswerPolicy, which gates the read on the knowledge base being
+    #   active — the argument is authorized before the resolver gets to look one up.
+    it 'is rejected' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
   end
 

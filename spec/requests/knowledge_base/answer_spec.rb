@@ -87,4 +87,30 @@ RSpec.describe 'KnowledgeBase answer', authenticated_as: :editor, type: :request
       end
     end
   end
+
+  describe '#recent_answers' do
+    before do
+      published_answer
+
+      get '/api/v1/knowledge_bases/recent_answers', as: :json
+    end
+
+    it 'lists the published answer' do
+      expect(json_response['answer_ids_recent_viewed']).to include(published_answer.id)
+    end
+
+    # https://github.com/zammad/zammad/issues/6338
+    context 'when the knowledge base is inactive' do
+      before do
+        knowledge_base.update! active: false
+
+        get '/api/v1/knowledge_bases/recent_answers', as: :json
+      end
+
+      it 'lists nothing', :aggregate_failures do
+        expect(json_response['answer_ids_recent_viewed']).to be_empty
+        expect(json_response['assets']).to be_empty
+      end
+    end
+  end
 end

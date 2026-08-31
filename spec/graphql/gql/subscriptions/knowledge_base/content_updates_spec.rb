@@ -115,6 +115,47 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::ContentUpdates, type: :graphql
     end
   end
 
+  # The preload in #update: the policy asks every category on the broadcast whether its knowledge
+  #   base is active, and the categories arrive deserialized, so without it that is a SELECT per
+  #   category — for every subscriber, on every broadcast. Unlike a request, a broadcast has no
+  #   query cache to absorb the repeats: they are all round trips.
+  context 'with several categories on the broadcast', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    def knowledge_base_query_count(categories)
+      queries = 0
+
+      subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+        next if payload[:cached] || payload[:name] == 'SCHEMA'
+
+        queries += 1 if payload[:sql].include?('"knowledge_bases"')
+      end
+
+      described_class.trigger({ categories: })
+
+      queries
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
+
+    # The affected categories a change carries are the changed category and its ancestors, so a
+    #   deeper nesting is what puts more of them on one broadcast.
+    def nested_category_path(depth)
+      deepest = depth.times.reduce(nil) { |parent, _| create(:knowledge_base_category, knowledge_base: knowledge_base, parent: parent) }
+
+      deepest.self_with_parents
+    end
+
+    it 'looks the knowledge base up a constant number of times as the category path grows' do
+      shallow = nested_category_path(2)
+      deep    = nested_category_path(5)
+
+      baseline = knowledge_base_query_count(shallow)
+
+      expect(knowledge_base_query_count(deep)).to eq(baseline)
+    end
+  end
+
   # Deactivating is the one change subscribers cannot notice any other way: the browse queries
   #   answer not-found from then on, so they have to be told to ask again.
   context 'when the knowledge base is deactivated', authenticated_as: :agent do

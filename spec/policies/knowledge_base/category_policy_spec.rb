@@ -13,6 +13,23 @@ describe KnowledgeBase::CategoryPolicy do
     include_examples 'with KB policy check', editor: true, reader: true, none: false, method: :show?
   end
 
+  # https://github.com/zammad/zammad/issues/6338
+  describe 'with an inactive knowledge base' do
+    before { record.knowledge_base.update! active: false }
+
+    describe '#show?' do
+      include_examples 'with KB policy check', editor: false, reader: false, none: false, method: :show?
+    end
+
+    describe '#show_public?' do
+      include_examples 'with KB policy check', editor: false, reader: false, none: false, method: :show_public?
+    end
+
+    describe '#show_any?' do
+      include_examples 'with KB policy check', editor: false, reader: false, none: false, method: :show_any?
+    end
+  end
+
   describe '#show_public?' do
     context 'when category has public content' do
       before { allow(record).to receive(:public_content?).and_return(true) }

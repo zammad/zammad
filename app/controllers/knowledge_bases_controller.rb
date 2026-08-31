@@ -29,7 +29,12 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
 
   private
 
+  # A deactivated knowledge base has nothing to hand out, to nobody — an editor included. There is
+  #   only ever one, so with it switched off the agent app is preloaded with no knowledge base at
+  #   all rather than an empty one. See https://github.com/zammad/zammad/issues/6338
   def assets(answer_translation_content_ids = nil)
+    return {} if !KnowledgeBase.active.exists?
+
     case KnowledgeBase.access_for_user(current_user)
     when :granular
       granular_assets(answer_translation_content_ids)
@@ -42,7 +47,10 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
     end
   end
 
+  # Same gate as #assets, for the same reason.
   def calculate_visible_ids
+    return {} if !KnowledgeBase.active.exists?
+
     case KnowledgeBase.access_for_user(current_user)
     when :granular
       KnowledgeBase::InternalAssets.new(current_user).visible_ids

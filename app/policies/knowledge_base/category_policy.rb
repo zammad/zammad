@@ -4,10 +4,14 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
   USER_REQUIRED = false
 
   def show?
+    return false if !knowledge_base_active?
+
     access_editor? || access_reader?
   end
 
   def show_public?
+    return false if !knowledge_base_active?
+
     access_editor? || record.public_content?
   end
 
@@ -55,6 +59,15 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
   end
 
   private
+
+  # Same gate as KnowledgeBase::AnswerPolicy#knowledge_base_active?, and for the same reason: a
+  #   deactivated knowledge base has no readable content, for nobody. Only the reads are gated —
+  #   the editing methods are left alone, so nothing about administering a deactivated knowledge
+  #   base changes.
+  #   See https://github.com/zammad/zammad/issues/6338
+  def knowledge_base_active?
+    record.knowledge_base.active?
+  end
 
   def access
     @access ||= KnowledgeBase::EffectivePermission.new(user, record).access_effective

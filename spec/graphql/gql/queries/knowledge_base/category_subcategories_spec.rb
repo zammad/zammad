@@ -284,8 +284,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
     context 'with a customer (public)', authenticated_as: :customer do
       let(:customer) { create(:customer) }
 
-      it 'is not found' do
-        expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+      it 'is rejected' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
   end

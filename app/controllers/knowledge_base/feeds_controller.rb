@@ -85,8 +85,11 @@ class KnowledgeBase::FeedsController < ApplicationController
     request.format = :atom
   end
 
+  # Scoped to active knowledge bases, so a feed reader holding a still valid token stops getting
+  #   content the moment the knowledge base is switched off — the id of a deactivated one is simply
+  #   not found. See https://github.com/zammad/zammad/issues/6338
   def fetch_knowledge_base
-    @knowledge_base = KnowledgeBase.find params[:knowledge_base_id] || params[:id]
+    @knowledge_base = KnowledgeBase.active.find params[:knowledge_base_id] || params[:id]
     @locale = Locale.find_by(locale: params[:locale])
   end
 

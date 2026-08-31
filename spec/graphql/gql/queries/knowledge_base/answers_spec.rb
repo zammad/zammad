@@ -124,8 +124,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
       gql.execute(query, variables:)
     end
 
-    it 'is not found' do
-      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+    it 'is rejected' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
   end
 

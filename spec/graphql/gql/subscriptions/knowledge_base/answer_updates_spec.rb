@@ -71,11 +71,11 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::AnswerUpdates, type: :graphql 
 
     include_examples 'subscribes and receives updates'
 
-    it 'reports not found when the knowledge base becomes inactive' do
+    it 'stops the updates when the knowledge base becomes inactive' do
       knowledge_base.update!(active: false)
       answer.touch
 
-      expect(mock_channel.mock_broadcasted_first.error_type).to eq(ActiveRecord::RecordNotFound)
+      expect(mock_channel.mock_broadcasted_first.error_type).to eq(Exceptions::Forbidden)
     end
 
     context 'with a draft answer' do
@@ -87,13 +87,16 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::AnswerUpdates, type: :graphql 
     end
   end
 
+  # Denied by KnowledgeBase::AnswerPolicy, which gates the read on the knowledge base being active
+  #   — the answer argument is authorized before the resolver looks a knowledge base up.
+  #   https://github.com/zammad/zammad/issues/6338
   context 'when the knowledge base is inactive', authenticated_as: :customer do
     let(:customer)       { create(:customer) }
     let(:knowledge_base) { create(:knowledge_base, active: false) }
     let(:variables)      { { answerId: gql.id(answer), initial: true } }
 
-    it 'is not found' do
-      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+    it 'is rejected' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
   end
 

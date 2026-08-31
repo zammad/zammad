@@ -50,6 +50,28 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
         get help_answer_path(locale_name, category, published_answer)
         expect(response.body).to include(CGI.escapeHTML("This page doesn't exist."))
       end
+
+      # https://github.com/zammad/zammad/issues/6338
+      context 'when visitor is an editor' do
+        before do
+          authenticated_as(create(:admin), via: :browser)
+        end
+
+        it 'returns route not found error for published answer' do
+          get help_answer_path(locale_name, category, published_answer)
+          expect(response.body).to include(CGI.escapeHTML("This page doesn't exist."))
+        end
+
+        it 'returns route not found error for draft answer' do
+          get help_answer_path(locale_name, category, draft_answer)
+          expect(response.body).to include(CGI.escapeHTML("This page doesn't exist."))
+        end
+
+        it 'returns route not found error for the start page' do
+          get help_root_path(locale: locale_name)
+          expect(response.body).to include(CGI.escapeHTML("This page doesn't exist."))
+        end
+      end
     end
   end
 

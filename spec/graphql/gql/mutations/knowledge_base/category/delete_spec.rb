@@ -72,7 +72,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Delete, type: :graphql d
     let(:setup) { knowledge_base.update!(active: false) }
 
     it 'raises an error' do
-      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
 
     it 'deletes nothing' do

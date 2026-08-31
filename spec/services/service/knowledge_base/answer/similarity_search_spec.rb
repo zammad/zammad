@@ -170,6 +170,22 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
       expect(service).to eq([])
       expect(Service::AI::VectorDB::SimilaritySearch).not_to have_received(:execute)
     end
+
+    # Neither entry point requires knowledge base access, so this is the only thing keeping a
+    #   deactivated knowledge base out of the suggestions — its documents stay in the index.
+    #   https://github.com/zammad/zammad/issues/6338
+    context 'when the knowledge base is inactive' do
+      # The factories create a knowledge base per answer, where production only ever has one — so
+      #   switch them all off to express "the knowledge base is deactivated".
+      before { KnowledgeBase.find_each { |knowledge_base| knowledge_base.update! active: false } }
+
+      it 'does not search at all' do
+        allow(Service::AI::VectorDB::SimilaritySearch).to receive(:execute)
+
+        expect(service).to eq([])
+        expect(Service::AI::VectorDB::SimilaritySearch).not_to have_received(:execute)
+      end
+    end
   end
 
   context 'when drafts and archived answers exist' do

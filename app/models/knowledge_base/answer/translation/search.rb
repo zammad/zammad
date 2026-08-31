@@ -22,7 +22,10 @@ class KnowledgeBase::Answer::Translation
 
     class_methods do
       def search_preferences(current_user)
-        return false if !KnowledgeBase.exists? || !current_user.permissions?('knowledge_base.*')
+        # `active` rather than any knowledge base: a deactivated one contributes no searchable
+        #   content, so with only that one around the global search has no reason to ask at all.
+        #   See https://github.com/zammad/zammad/issues/6338
+        return false if !KnowledgeBase.active.exists? || !current_user.permissions?('knowledge_base.*')
 
         {
           prio:                1209,

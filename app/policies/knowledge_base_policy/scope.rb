@@ -4,18 +4,16 @@ class KnowledgeBasePolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     USER_REQUIRED = false
 
-    # The same exemption as KnowledgeBasePolicy#show_any?, in scope form: an editor gets the
-    #   inactive knowledge base too, so the public help site can preview it. Everyone else
-    #   only ever sees an active one.
+    # How the public help site resolves its knowledge base. A deactivated one is off the air
+    #   for everyone — editors included: preview mode is about unpublished *content* in a live
+    #   knowledge base, not about a knowledge base that is switched off.
+    #   See https://github.com/zammad/zammad/issues/6338
     #
-    # Narrower than the policy on purpose: that one grants any effective access to the record
-    #   (a reader included), while this one asks for the 'knowledge_base.editor' permission.
+    # Deliberately stricter than KnowledgeBasePolicy#show_any?, which still admits an editor or
+    #   reader of an inactive knowledge base — that check answers for the internal stack, this
+    #   scope for the public one.
     def resolve
-      if user&.permissions?('knowledge_base.editor')
-        scope
-      else
-        scope.active
-      end
+      scope.active
     end
   end
 end

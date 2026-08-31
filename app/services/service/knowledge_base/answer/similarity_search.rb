@@ -40,6 +40,14 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
   def execute
     return [] if embedding.blank?
 
+    # There is only ever one knowledge base, and a deactivated one has no content to suggest — for
+    #   anybody, an editor included. This is the only gate the suggestions have: neither entry point
+    #   (Gql::Queries::Ticket::AI::RelatedKnowledgeBaseAnswers and
+    #   Ticket::RelatedKnowledgeBaseAnswersController#fetch) requires knowledge base access, by
+    #   design, and deactivating does not clear the vector index.
+    #   See https://github.com/zammad/zammad/issues/6338
+    return [] if !::KnowledgeBase.active.exists?
+
     visible_answer_ids = visible_answer_ids_for_user
     return [] if visible_answer_ids.blank?
 

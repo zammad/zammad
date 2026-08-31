@@ -30,6 +30,19 @@ RSpec.describe 'KnowledgeBase loading initial data', authenticated_as: :current_
     it 'returns assets for all KB objects' do
       expect(json_response).to include_assets_of(knowledge_base, category, draft_answer, internal_answer, published_answer)
     end
+
+    # https://github.com/zammad/zammad/issues/6338
+    context 'when the knowledge base is inactive' do
+      before do
+        knowledge_base.update! active: false
+
+        post '/api/v1/knowledge_bases/init'
+      end
+
+      it 'returns no assets at all' do
+        expect(json_response).to be_empty
+      end
+    end
   end
 
   describe 'for agent' do

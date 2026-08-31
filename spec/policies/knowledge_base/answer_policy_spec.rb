@@ -58,6 +58,19 @@ describe KnowledgeBase::AnswerPolicy do
     end
   end
 
+  # https://github.com/zammad/zammad/issues/6338
+  describe 'with an inactive knowledge base' do
+    before { record.category.knowledge_base.update! active: false }
+
+    describe '#show?' do
+      include_examples 'with KB policy check', editor: false, reader: false, none: false, method: :show?
+    end
+
+    describe '#show_public?' do
+      include_examples 'with KB policy check', editor: false, reader: false, none: false, method: :show_public?
+    end
+  end
+
   describe '#show_public?' do
     context 'when visible and visible internally' do
       include_examples 'with answer visibility', visible: true, visible_internally: true

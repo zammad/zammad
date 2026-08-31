@@ -6,6 +6,10 @@ class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
   # accessible outside of specific Knowledge Base
   # /api/v1/knowledge_bases/recent_answers
   def recent_answers
+    # There is only ever one knowledge base, and a deactivated one has nothing to recommend — for
+    #   anybody, an editor included. See https://github.com/zammad/zammad/issues/6338
+    return render json: { assets: {}, answer_ids_recent_viewed: [] } if !KnowledgeBase.active.exists?
+
     answers = KnowledgeBase::Answer.published.limit(10)
 
     render json: {

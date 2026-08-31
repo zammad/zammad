@@ -26,6 +26,33 @@ RSpec.describe AttachmentsController, type: :request do
 
       expect(response).to have_http_status(:ok)
     end
+
+    # A published answer's attachment is downloadable without any session at all, so a deactivated
+    #   knowledge base has to stop it here as well.
+    #   https://github.com/zammad/zammad/issues/6338
+    context 'when the knowledge base is inactive' do
+      let(:object) { create(:knowledge_base_answer, :published, :with_attachment, category: category) }
+
+      before { knowledge_base.update! active: false }
+
+      it 'returns 404 for a guest' do
+        get "/api/v1/attachments/#{attachment_id}"
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns 404 for a customer', authenticated_as: -> { create(:customer) } do
+        get "/api/v1/attachments/#{attachment_id}"
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns 404 for an editor', authenticated_as: -> { create(:admin) } do
+        get "/api/v1/attachments/#{attachment_id}"
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
   describe '#show (Ticket::Article)', authenticated_as: -> { agent } do

@@ -34,13 +34,14 @@ RSpec.describe KnowledgeBasePolicy::Scope do
       end
     end
 
+    # https://github.com/zammad/zammad/issues/6338
     context 'with "knowledge_base.editor" permissions' do
       let(:user) { create(:user) }
 
       before { roles.first.permissions << permission }
 
-      it 'returns the given collection (unfiltered)' do
-        expect(scope.resolve).to eq(original_collection)
+      it 'removes inactive knowledge bases too' do
+        expect(scope.resolve).to eq(original_collection.where(active: true))
       end
     end
   end
