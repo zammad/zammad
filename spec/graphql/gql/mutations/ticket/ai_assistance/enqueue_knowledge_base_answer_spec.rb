@@ -24,7 +24,8 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::EnqueueKnowledgeBaseAnswer,
     let(:variables) { { ticketId: gql.id(ticket) } }
 
     before do
-      allow(KnowledgeBase).to receive(:first).and_return(knowledge_base)
+      # The mutation resolves the single knowledge base itself, so it has to exist before the call.
+      knowledge_base
 
       create(:knowledge_base_category, knowledge_base:) if with_category && knowledge_base.present?
 

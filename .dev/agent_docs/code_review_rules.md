@@ -28,15 +28,17 @@ Before reviewing, identify which areas the diff touches and read **only** the ap
 docs. Do not read them all upfront, and do not review conventions from memory — these files are the
 authority, and they change.
 
-| The diff touches…                                     | Read                                     |
-| ----------------------------------------------------- | ---------------------------------------- |
-| GraphQL types, mutations, queries, subscriptions       | `graphql_patterns.md`     |
-| Vue components, composables, routing, the form system  | `frontend_patterns.md`    |
-| Addon extensions to the Vue frontend                   | `frontend_addon_layer.md` |
-| New models used by the legacy CoffeeScript stack       | `legacy_model_patterns.md`|
-| Specs, test setup, test helpers                        | `testing.md`              |
-| Service objects (`app/services/service/`)              | `service_patterns.md`     |
-| Migrations or seeds                                    | `database_migrations.md`  |
+| The diff touches…                                     | Read                              |
+| ----------------------------------------------------- | --------------------------------- |
+| GraphQL types, mutations, queries, subscriptions      | `graphql_patterns.md`             |
+| Knowledge base code in the new stack                  | `knowledge_base_patterns.md`      |
+| Vue components, composables, routing, the form system | `frontend_patterns.md`            |
+| Addon extensions to the Vue frontend                  | `frontend_addon_layer.md`         |
+| New models used by the legacy CoffeeScript stack      | `legacy_model_patterns.md`        |
+| Specs, test setup, test helpers                       | `testing.md`                      |
+| Specs for a service or its GraphQL caller             | `testing_services_and_graphql.md` |
+| Service objects (`app/services/service/`)             | `service_patterns.md`             |
+| Migrations or seeds                                   | `database_migrations.md`          |
 
 A convention violation is a finding. "The surrounding code doesn't follow it either" is not a
 defence — if the doc says it, the change should do it.

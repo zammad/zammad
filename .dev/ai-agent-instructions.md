@@ -98,7 +98,13 @@ You MUST read the relevant file(s) below before responding when working on that 
   used in the legacy stack: REST assets (one-to-one relations only) and
   client notifications
 - `.dev/agent_docs/testing.md` — How to write and run backend and frontend tests
+- `.dev/agent_docs/testing_services_and_graphql.md` — How to split spec
+  coverage between a service and the query, mutation or subscription that
+  calls it
 - `.dev/agent_docs/service_patterns.md` — Service object conventions and structure
+- `.dev/agent_docs/knowledge_base_patterns.md` — Knowledge base rules for the
+  new stack (Vue/GraphQL/services) only: the single active knowledge base and
+  the deliberate exceptions to it
 - `.dev/agent_docs/database_migrations.md` — How to write migrations and work
   with seeds
 

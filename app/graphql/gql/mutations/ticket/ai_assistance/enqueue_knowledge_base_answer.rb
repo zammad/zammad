@@ -12,10 +12,13 @@ module Gql::Mutations
       Service::CheckFeatureEnabled.execute(name: 'ai_assistance_kb_answer_from_ticket_generation')
       Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
-      knowledge_base = ::KnowledgeBase.first
+      # The single knowledge base the system supports, and only while it is active — same as the rest
+      #   of the stack. Having a category is this feature's own precondition: a draft is filed under
+      #   one, so there is nothing to generate without it.
+      knowledge_base = ::KnowledgeBase.active.first
 
-      if knowledge_base.blank? || !knowledge_base.visible? || !knowledge_base.categories.exists?
-        raise Exceptions::UnprocessableContent, __('Knowledge base is unavailable or not properly configured.')
+      if knowledge_base.blank? || !knowledge_base.categories.exists?
+        raise ActiveRecord::RecordNotFound, __('Knowledge base is unavailable or not properly configured.')
       end
 
       editable_categories = ::KnowledgeBase::AccessibleCategories

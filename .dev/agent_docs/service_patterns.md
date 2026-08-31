@@ -11,5 +11,10 @@ They are used e.g. by GraphQL resolvers and REST controllers.
 - Current user is supplied automatically and available as current_user instance method
 - Services expecting current user should have requires_current_user! in their class body
 - In specs, Service.execute class method should be stubbed when needed
+- The service spec owns the behavior of everything the service decides — the
+  GraphQL spec around it only tests the GraphQL layer, see
+  `.dev/agent_docs/testing_services_and_graphql.md`
+- Knowledge base services follow extra rules, see
+  `.dev/agent_docs/knowledge_base_patterns.md`
 - Add attr_reader for all arguments passed to the initializer, so they are available in instance methods
 - Service initializer should not have super() call, as Service::Base does not have an initializer

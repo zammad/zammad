@@ -5,6 +5,8 @@
 - Test at the **lowest level** possible — unit over request over E2E
 - Focus on the object under test, mock dependencies where it makes sense
 - Only important user stories get E2E/system tests (Capybara + Selenium)
+- Service specs cover behavior, GraphQL specs only the GraphQL layer —
+  see `.dev/agent_docs/testing_services_and_graphql.md`
 
 ## Backend (RSpec)
 

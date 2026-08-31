@@ -1,5 +1,8 @@
 # GraphQL Patterns
 
+Knowledge base queries, mutations and subscriptions follow extra rules on top of
+these, see `.dev/agent_docs/knowledge_base_patterns.md`.
+
 ## Resolver Structure
 
 Resolvers are thin wrappers. Business logic lives in `app/services/service/`:
@@ -9,6 +12,10 @@ def resolve(...)
   Service::SomeAction.new(...).execute
 end
 ```
+
+Their specs follow the same split: the behavior is covered by the service
+spec, the GraphQL spec only covers the GraphQL surface — see
+`.dev/agent_docs/testing_services_and_graphql.md`.
 
 ## Authorization
 
