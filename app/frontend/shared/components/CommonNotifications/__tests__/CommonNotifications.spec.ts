@@ -209,6 +209,32 @@ describe('CommonNotifications.vue', () => {
     expect(wrapper.getAllByTestId('notification')).toHaveLength(2)
   })
 
+  it('only removes the matching duplicate id when its timeout expires', async () => {
+    const { notify } = useNotifications()
+
+    notify({
+      id: 'same-id',
+      message: `${message} - first`,
+      type: NotificationTypes.Warn,
+      durationMS: 10,
+      unique: false,
+    })
+
+    notify({
+      id: 'same-id',
+      message: `${message} - second`,
+      type: NotificationTypes.Success,
+      persistent: true,
+      unique: false,
+    })
+
+    vi.advanceTimersByTime(10)
+    await nextTick()
+
+    expect(wrapper.getAllByTestId('notification')).toHaveLength(1)
+    expect(wrapper.getByText(`${message} - second`)).toBeInTheDocument()
+  })
+
   it('clears all notifications and state', async () => {
     const { notify, notifications, clearAllNotifications, hasErrors } = useNotifications()
 
@@ -236,6 +262,56 @@ describe('CommonNotifications.vue', () => {
     expect(notifications.value).toHaveLength(0)
     expect(hasErrors()).toBe(false)
     expect(wrapper.queryAllByTestId('notification')).toHaveLength(0)
+  })
+
+  it('cancels the pending timeout when all notifications are cleared', async () => {
+    const { notify, notifications, clearAllNotifications } = useNotifications()
+
+    notify({
+      id: 'reused-id',
+      message,
+      type: NotificationTypes.Warn,
+      durationMS: 10,
+    })
+
+    clearAllNotifications()
+
+    notify({
+      id: 'reused-id',
+      message,
+      type: NotificationTypes.Error,
+      persistent: true,
+    })
+
+    await vi.advanceTimersByTimeAsync(11)
+
+    expect(notifications.value).toHaveLength(1)
+    expect(wrapper.getByTestId('notification')).toBeInTheDocument()
+  })
+
+  it('cancels the pending timeout when a notification is removed manually', async () => {
+    const { notify, notifications, removeNotification } = useNotifications()
+
+    notify({
+      id: 'reused-id',
+      message,
+      type: NotificationTypes.Warn,
+      durationMS: 10,
+    })
+
+    removeNotification('reused-id')
+
+    notify({
+      id: 'reused-id',
+      message,
+      type: NotificationTypes.Error,
+      persistent: true,
+    })
+
+    await vi.advanceTimersByTimeAsync(11)
+
+    expect(notifications.value).toHaveLength(1)
+    expect(wrapper.getByTestId('notification')).toBeInTheDocument()
   })
 
   it('renders notification icon', async () => {

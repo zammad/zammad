@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
 
 import getUuid from '#shared/utils/getUuid.ts'
 
@@ -11,13 +11,23 @@ import type { NewNotification, Notification } from './types.ts'
 const notifications = ref<Notification[]>([])
 const defaultNotificationDurationMS = 3000
 
+// Pending auto-dismiss timers must be cancelled whenever a notification goes away, otherwise a
+// leftover timer would later remove an unrelated notification that reuses the same id.
+const cancelNotificationTimeout = (notification: Notification) => {
+  window.clearTimeout(notification.timeout)
+}
+
 const removeNotification = (id: string) => {
-  notifications.value = notifications.value.filter(
-    (notification: Notification) => notification.id !== id,
-  )
+  notifications.value = notifications.value.filter((notification: Notification) => {
+    if (notification.id !== id) return true
+
+    cancelNotificationTimeout(notification)
+    return false
+  })
 }
 
 const clearAllNotifications = () => {
+  notifications.value.forEach(cancelNotificationTimeout)
   notifications.value = []
 }
 
@@ -45,7 +55,7 @@ const useNotifications = () => {
       notifications.value = notifications.value.filter((notification: Notification) => {
         const isSame = notification.id === id
         if (isSame) {
-          window.clearTimeout(notification.timeout)
+          cancelNotificationTimeout(notification)
         }
         return !isSame
       })
@@ -55,7 +65,9 @@ const useNotifications = () => {
 
     if (!newNotification.persistent) {
       newNotification.timeout = window.setTimeout(() => {
-        removeNotification(newNotification.id)
+        notifications.value = notifications.value.filter(
+          (notification) => toRaw(notification) !== newNotification,
+        )
       }, newNotification.durationMS || defaultNotificationDurationMS)
     }
 
