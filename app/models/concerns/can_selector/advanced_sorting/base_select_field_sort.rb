@@ -17,7 +17,7 @@ module CanSelector
                   end
 
         {
-          order:  "#{meta_value_name} #{input[:direction]}",
+          order:  "#{meta_value_name} #{direction}",
           select: "#{command} as #{meta_value_name}",
         }
       end

@@ -131,6 +131,26 @@ RSpec.describe Overview, type: :model do
     end
   end
 
+  describe 'order direction validation', :aggregate_failures do
+    it 'accepts ASC and DESC (case-insensitive)' do
+      expect(build(:overview, order: { by: 'created_at', direction: 'ASC' }, group_direction: 'desc')).to be_valid
+    end
+
+    it 'rejects a malicious order direction' do
+      overview = build(:overview, order: { by: 'created_at', direction: "DESC, (SELECT CAST('x' AS integer))" })
+
+      expect(overview).not_to be_valid
+      expect(overview.errors.full_messages.join).to include('Invalid order direction')
+    end
+
+    it 'rejects a malicious group direction' do
+      overview = build(:overview, group_direction: 'ASC; DROP TABLE tickets')
+
+      expect(overview).not_to be_valid
+      expect(overview.errors.full_messages.join).to include('Invalid order direction')
+    end
+  end
+
   describe '#attribute_to_references_hash' do
     it 'returns a hash with the overview name' do
       create(:object_manager_attribute_text, object_name: 'Ticket', name: 'custom_textfield')

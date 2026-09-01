@@ -40,7 +40,7 @@ module CanSelector
       end
 
       def direction
-        input[:direction]
+        input[:direction].to_s.casecmp('DESC').zero? ? 'DESC' : 'ASC'
       end
 
       def raw_selectors_quoted_column(column)

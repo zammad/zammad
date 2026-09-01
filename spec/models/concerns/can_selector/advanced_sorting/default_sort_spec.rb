@@ -48,5 +48,15 @@ RSpec.describe CanSelector::AdvancedSorting::DefaultSort do
           .to eq('"tickets"."created_at" ASC')
       end
     end
+
+    context 'when a malicious direction is given' do
+      let(:column) { 'article_count' }
+      let(:input)  { { column:, direction: "DESC, (SELECT CAST('x' AS integer))" } }
+
+      it 'falls back to a safe ASC direction' do
+        expect(instance.calculate_sorting)
+          .to eq('"tickets"."article_count" ASC')
+      end
+    end
   end
 end

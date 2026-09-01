@@ -26,8 +26,21 @@ class Overview < ApplicationModel
   has_many :overview_sortings, class_name: 'User::OverviewSorting', dependent: :destroy
   association_attributes_ignored :overview_sortings
 
+  validate :validate_order_directions
+
   before_create :fill_link_on_create
   before_update :fill_link_on_update
+
+  VALID_ORDER_DIRECTIONS = %w[ASC DESC].freeze
+
+  def validate_order_directions
+    [order&.dig('direction'), group_direction].each do |direction|
+      next if direction.blank?
+      next if VALID_ORDER_DIRECTIONS.include?(direction.to_s.upcase)
+
+      errors.add(:base, "Invalid order direction '#{direction}', only ASC or DESC are allowed.")
+    end
+  end
 
   def self.attribute_to_references_hash
     deletable_attributes = ObjectManager::Attribute.where(editable: true, object_lookup_id: ObjectLookup.by_name('Ticket')).pluck(:name)

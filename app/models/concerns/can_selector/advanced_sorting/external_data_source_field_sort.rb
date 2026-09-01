@@ -8,7 +8,7 @@ module CanSelector
       data_type 'autocompletion_ajax_external_data_source'
 
       def calculate_sorting
-        { order: "#{meta_value_name}->>'value' #{input[:direction]}" }
+        { order: "#{meta_value_name}->>'value' #{direction}" }
       end
 
       private
