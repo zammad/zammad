@@ -15,6 +15,8 @@ import Image from '#shared/components/Form/fields/FieldEditor/extensions/Image.t
 import { IndentExtension } from '#shared/components/Form/fields/FieldEditor/extensions/Indent.ts'
 import KnowledgeBaseSuggestion from '#shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts'
 import Link from '#shared/components/Form/fields/FieldEditor/extensions/Link.ts'
+import OrderedList from '#shared/components/Form/fields/FieldEditor/extensions/OrderedList.ts'
+import OrderedListContinuation from '#shared/components/Form/fields/FieldEditor/extensions/OrderedListContinuation.ts'
 import { PasteHandler } from '#shared/components/Form/fields/FieldEditor/extensions/PasteHandler.ts'
 import Signature from '#shared/components/Form/fields/FieldEditor/extensions/Signature.ts'
 import {
@@ -121,6 +123,7 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
     paragraph: false,
     codeBlock: false,
     link: false,
+    orderedList: false,
   }),
   Blockquote.extend({
     addAttributes() {
@@ -163,6 +166,8 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
     },
   }),
   Link,
+  OrderedList,
+  OrderedListContinuation,
   TextStyle,
   VideoEmbed,
   UserLink,
