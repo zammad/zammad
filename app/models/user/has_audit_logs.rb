@@ -18,12 +18,22 @@ module User::HasAuditLogs
 
   private
 
-  # changes of customers are not audit logged - the permissions of a
-  # destroyed user are captured before its roles are removed
+  # role/group permission changes of customers are not audit logged - the
+  # permissions of a destroyed user are captured before its roles are removed
   def audit_log_permissions?
     return @audit_log_destroy_snapshot.present? if destroyed?
 
     permissions?(%w[ticket.agent admin.*])
+  end
+
+  # password changes of customers are audit logged too, but only when someone
+  # else changes them - a user resetting their own password is not logged
+  def audit_log_condition_met?
+    super || audit_log_password_changed_by_other?
+  end
+
+  def audit_log_password_changed_by_other?
+    saved_change_to_password? && UserInfo.current_user_id != id
   end
 
   def audit_log_destroy

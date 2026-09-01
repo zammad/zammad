@@ -93,10 +93,18 @@ RSpec.describe User, type: :model do
         .to change(audit_logs.where(action_type: 'update', auditable_id: admin.id), :count).by(1)
     end
 
-    it 'does not log password changes of customers' do
+    it 'does not log a customer changing their own password' do
       customer = create(:customer)
 
-      expect { customer.update!(password: 'someSecurePass123!') }.not_to change(audit_logs, :count)
+      expect { UserInfo.with_user_id(customer.id) { customer.update!(password: 'someSecurePass123!') } }
+        .not_to change(audit_logs, :count)
+    end
+
+    it 'logs a customer password change made by someone else' do
+      customer = create(:customer)
+
+      expect { UserInfo.with_user_id(admin.id) { customer.update!(password: 'someSecurePass123!') } }
+        .to change(audit_logs.where(action_type: 'update', auditable_id: customer.id), :count).by(1)
     end
   end
 
