@@ -33,15 +33,6 @@ class Overview < ApplicationModel
 
   VALID_ORDER_DIRECTIONS = %w[ASC DESC].freeze
 
-  def validate_order_directions
-    [order&.dig('direction'), group_direction].each do |direction|
-      next if direction.blank?
-      next if VALID_ORDER_DIRECTIONS.include?(direction.to_s.upcase)
-
-      errors.add(:base, "Invalid order direction '#{direction}', only ASC or DESC are allowed.")
-    end
-  end
-
   def self.attribute_to_references_hash
     deletable_attributes = ObjectManager::Attribute.where(editable: true, object_lookup_id: ObjectLookup.by_name('Ticket')).pluck(:name)
 
@@ -61,6 +52,15 @@ class Overview < ApplicationModel
   end
 
   private
+
+  def validate_order_directions
+    [order&.dig('direction'), group_direction].each do |direction|
+      next if direction.blank?
+      next if VALID_ORDER_DIRECTIONS.include?(direction.to_s.upcase)
+
+      errors.add(:base, format(__("Invalid order direction '%s', only ASC or DESC are allowed."), direction))
+    end
+  end
 
   def fill_link_on_create
     self.link = if link.present?

@@ -49,6 +49,16 @@ RSpec.describe CanSelector::AdvancedSorting::DefaultSort do
       end
     end
 
+    context 'when a lowercase descending direction is given' do
+      let(:column) { 'article_count' }
+      let(:input)  { { column:, direction: 'desc' } }
+
+      it 'keeps the descending direction' do
+        expect(instance.calculate_sorting)
+          .to eq('"tickets"."article_count" DESC')
+      end
+    end
+
     context 'when a malicious direction is given' do
       let(:column) { 'article_count' }
       let(:input)  { { column:, direction: "DESC, (SELECT CAST('x' AS integer))" } }
