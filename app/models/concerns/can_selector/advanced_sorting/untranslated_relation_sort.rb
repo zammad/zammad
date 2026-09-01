@@ -18,7 +18,7 @@ module CanSelector
           calculate_user_sorting
         else
           {
-            order: "#{assoc.klass.quoted_table_name}.#{quote_column('name')} #{collate} #{input[:direction]}",
+            order: "#{assoc.klass.quoted_table_name}.#{quote_column('name')} #{collate} #{direction}",
             joins: assoc.name,
             group: "#{assoc.klass.quoted_table_name}.#{quote_column('name')}",
           }
@@ -34,7 +34,7 @@ module CanSelector
         select      = calculate_sorting_select(table_name, column_name)
 
         {
-          order:  "#{quote_column(column_name)} #{input[:direction]}",
+          order:  "#{quote_column(column_name)} #{direction}",
           select: select,
           joins:  join,
           group:  "#{quote_table_column(table_name, 'firstname')}, #{quote_table_column(table_name, 'lastname')}, #{quote_table_column(table_name, 'email')}, #{quote_table_column(table_name, 'phone')}, #{quote_table_column(table_name, 'mobile')}, #{quote_table_column(table_name, 'login')}",
