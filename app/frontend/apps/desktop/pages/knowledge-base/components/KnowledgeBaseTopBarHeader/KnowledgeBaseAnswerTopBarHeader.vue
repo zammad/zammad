@@ -11,6 +11,7 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseAnswerDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import {
   knowledgeBaseAnswerRoute,
@@ -82,7 +83,11 @@ const { canEdit: canEditAnswer, editAnswer } = useKnowledgeBaseAnswerEditAction(
   localeCode: activeLocale,
 })
 
+const { confirmAnswerDelete } = useKnowledgeBaseAnswerDelete()
+
 const actions = computed<MenuItem[]>(() => {
+  const { answer } = props
+
   const items: MenuItem[] = [...feedActions.value]
 
   if (canEditAnswer.value) {
@@ -91,6 +96,18 @@ const actions = computed<MenuItem[]>(() => {
       label: __('Edit answer'),
       icon: 'pencil',
       onClick: () => editAnswer(),
+    })
+  }
+
+  if (answer?.policy.destroy) {
+    items.push({
+      key: 'delete-answer',
+      label: __('Delete answer'),
+      icon: 'trash3',
+      variant: 'danger',
+      separatorTop: true,
+      // Deleting the page being read, so it hands over where to go instead.
+      onClick: () => confirmAnswerDelete(answer, { categoryId: answer.category.id }),
     })
   }
 

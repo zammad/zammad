@@ -46,6 +46,17 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
     access_editor?
   end
 
+  # Whether the answers in this category may be deleted. Aliases #update? today, but is
+  #   deliberately its own method, for the same reason #create_subcategory? is: keeping the
+  #   questions separate lets them diverge without silently changing what the UI offers.
+  #
+  # KnowledgeBase::AnswerPolicy#destroy? resolves the very same access through the answer's
+  #   category, so every answer in one listing gives the same result — asking the category once is
+  #   what lets the browse view gate its per-row delete action without asking per row.
+  def destroy_answer?
+    access_editor?
+  end
+
   # Whether the answers in this category may be edited. The same access as KnowledgeBase::
   #   AnswerPolicy#update?, which resolves it through the answer's category — so every answer
   #   listed under this category gives the same result, and asking the category once saves asking

@@ -28,9 +28,13 @@ import {
   EnumUserErrorException,
   type KnowledgeBaseAnswerQuery,
 } from '#shared/graphql/types.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
+import {
+  mockKnowledgeBaseAnswerDeleteMutation,
+  waitForKnowledgeBaseAnswerDeleteMutationCalls,
+} from '#desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseAnswerDelete.mocks.ts'
 import { KnowledgeBaseAnswerUpdateDocument } from '#desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseAnswerUpdate.api.ts'
 import {
   mockKnowledgeBaseAnswerUpdateMutation,
@@ -549,6 +553,82 @@ describe('knowledge base answer edit', () => {
     expect(router.push).toHaveBeenCalledWith('/')
 
     router.restoreMethods()
+  })
+
+  describe('deleting the answer', () => {
+    it('offers deleting when the policy grants it', async () => {
+      mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
+
+      const view = await visitEditView()
+
+      const sidebar = await view.findByRole('complementary', { name: 'Content sidebar' })
+
+      await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
+
+      expect(
+        within(await view.findByRole('menu')).getByRole('button', { name: 'Delete answer' }),
+      ).toBeInTheDocument()
+    })
+
+    it('does not offer deleting when the policy denies it', async () => {
+      mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: false } })
+
+      const view = await visitEditView()
+
+      await view.findByDisplayValue(TITLE)
+
+      const sidebar = await view.findByRole('complementary', { name: 'Content sidebar' })
+
+      expect(
+        within(sidebar).queryByRole('button', { name: 'Action menu button' }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('deletes the answer and returns to its category', async () => {
+      mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
+      mockKnowledgeBaseAnswerDeleteMutation(() => ({
+        knowledgeBaseAnswerDelete: { success: true, errors: null },
+      }))
+
+      const view = await visitEditView()
+
+      const sidebar = await view.findByRole('complementary', { name: 'Content sidebar' })
+
+      const router = getTestRouter()
+      router.mockMethods()
+
+      await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
+      await view.events.click(
+        within(await view.findByRole('menu')).getByRole('button', { name: 'Delete answer' }),
+      )
+
+      const dialog = await view.findByRole('dialog')
+
+      expect(
+        within(dialog).getByText(`Do you really want to delete "${TITLE}"?`),
+      ).toBeInTheDocument()
+
+      await view.events.click(within(dialog).getByRole('button', { name: 'Delete object' }))
+
+      const deleteCalls = await waitForKnowledgeBaseAnswerDeleteMutationCalls()
+      expect(deleteCalls.at(-1)?.variables).toEqual({ answerId: ANSWER_ID })
+
+      expect(
+        await view.findByText('Knowledge base answer deleted successfully.'),
+      ).toBeInTheDocument()
+
+      expect(router.replace).toHaveBeenCalledWith({
+        name: 'KnowledgeBaseCategory',
+        params: { localeCode: LOCALE, categoryInternalId: getIdFromGraphQLId(CATEGORY_ID) },
+      })
+
+      // The tab is not closed from here: `HasTaskbars` destroyed it inside the delete, and its
+      //   removal arrives as the taskbar list subscription's `removeItem`. Asking the backend to
+      //   delete it a second time would only earn a not-found behind the success notification.
+      expect(getGraphQLMockCalls(UserCurrentTaskbarItemDeleteDocument)).toHaveLength(0)
+
+      router.restoreMethods()
+    })
   })
 
   // A publication scheduled for later is *not* what this form deals with: it carries the state the

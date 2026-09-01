@@ -78,6 +78,13 @@ describe KnowledgeBase::CategoryPolicy do
     include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :create_answer?
   end
 
+  describe '#destroy_answer?' do
+    # The same access KnowledgeBase::AnswerPolicy#destroy? resolves through the answer's category,
+    #   asked of the category alone — so the browse listing can gate its per-row delete action
+    #   without asking per row.
+    include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :destroy_answer?
+  end
+
   describe '#update_answer?' do
     # The same access KnowledgeBase::AnswerPolicy#update? resolves through the answer's category,
     #   asked of the category alone — so a list of answers asks it once instead of once per row.

@@ -49,6 +49,13 @@ export const useKnowledgeBaseAnswers = (options: {
 
   const pagination = usePagination(answersQuery, 'knowledgeBaseAnswers', ANSWERS_PAGE_SIZE)
 
+  // How much to ask for when the whole listing has to be re-read. Refetching a single page would
+  //   collapse an already scrolled list back to its first one — throwing the reader to the top of
+  //   the category — so a refetch covers every page loaded so far and replaces the loaded window
+  //   one for one instead.
+  const loadedPageSize = () =>
+    Math.max(Math.ceil(answers.value.length / ANSWERS_PAGE_SIZE), 1) * ANSWERS_PAGE_SIZE
+
   // Refetch the answers only when the change happened directly in the open
   //   category (the payload lists the changed record's category first, then its
   //   ancestors) or on a knowledge-base-wide change — a change in a descendant
@@ -70,7 +77,7 @@ export const useKnowledgeBaseAnswers = (options: {
       answersQuery.refetch({
         categoryId: categoryId.value,
         locale: locale?.value,
-        pageSize: ANSWERS_PAGE_SIZE,
+        pageSize: loadedPageSize(),
       })
     }
   })

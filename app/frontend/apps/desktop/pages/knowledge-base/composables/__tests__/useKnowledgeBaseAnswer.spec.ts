@@ -3,7 +3,7 @@
 import '#tests/graphql/builders/mocks.ts'
 
 import { flushPromises } from '@vue/test-utils'
-import { defineComponent, toRef } from 'vue'
+import { defineComponent, h, KeepAlive, ref, toRef } from 'vue'
 
 import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
@@ -77,6 +77,28 @@ const mountComposable = (
     withNavigation?: boolean
   } = {},
 ) => renderComponent(TestComponent, { props, router: true, routerRoutes })
+
+// The same, but inside a KeepAlive the way the layout mounts the knowledge base, so an example
+//   can put the reader in the background the user leaving it does.
+const mountKeptAlive = (props: { answerId?: string; locale?: string } = {}) => {
+  const shown = ref(true)
+
+  renderComponent(
+    { setup: () => () => h(KeepAlive, null, [shown.value ? h(TestComponent, props) : null]) },
+    { router: true, routerRoutes },
+  )
+
+  return {
+    sendToBackground: async () => {
+      shown.value = false
+      await flushPromises()
+    },
+    bringToForeground: async () => {
+      shown.value = true
+      await flushPromises()
+    },
+  }
+}
 
 // The content-updates subscription is only active while a locale is browsed, so
 //   put the router on a localized knowledge base route before emitting a ping.
@@ -379,5 +401,52 @@ describe('useKnowledgeBaseAnswer', () => {
     await flushPromises()
 
     expect(store.previousPath).toBe('/knowledge-base/locale/en-us/answer/5')
+  })
+
+  // The knowledge base is a permanent page, so a reader stays mounted in the layout's KeepAlive
+  //   while the user is elsewhere. Redirecting from there pulls the page they are actually on to
+  //   the error page - which is what a content update about a deleted answer would otherwise do.
+  //   Checked through the remembered path for the reason the example above gives.
+  it('does not redirect while it sits in the background', async () => {
+    const store = useKnowledgeBaseStore()
+    store.rememberPath('/knowledge-base/locale/en-us/answer/5')
+
+    const { sendToBackground } = mountKeptAlive({ answerId: ANSWER_ID, locale: 'en-us' })
+    await flushPromises()
+
+    await sendToBackground()
+
+    mockKnowledgeBaseAnswerQueryError('Record not found', {
+      type: GraphQLErrorTypes.RecordNotFound,
+    })
+    await triggerContentUpdate([CATEGORY_ID])
+    await flushPromises()
+
+    expect(store.previousPath).toBe('/knowledge-base/locale/en-us/answer/5')
+  })
+
+  // The other half of that: the redirect is deferred rather than dropped, and nothing re-runs the
+  //   query when the view comes back to find the answer gone a second time.
+  it('redirects once it returns to the foreground', async () => {
+    const store = useKnowledgeBaseStore()
+    store.rememberPath('/knowledge-base/locale/en-us/answer/5')
+
+    const { sendToBackground, bringToForeground } = mountKeptAlive({
+      answerId: ANSWER_ID,
+      locale: 'en-us',
+    })
+    await flushPromises()
+
+    await sendToBackground()
+
+    mockKnowledgeBaseAnswerQueryError('Record not found', {
+      type: GraphQLErrorTypes.RecordNotFound,
+    })
+    await triggerContentUpdate([CATEGORY_ID])
+    await flushPromises()
+
+    await bringToForeground()
+
+    expect(store.previousPath).toBe('')
   })
 })

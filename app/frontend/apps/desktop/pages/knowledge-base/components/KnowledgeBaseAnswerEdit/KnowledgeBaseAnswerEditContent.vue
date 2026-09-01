@@ -17,10 +17,12 @@ import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { SidebarName } from '#desktop/components/layout/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useAnswerFormSchema } from '#desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts'
+import { useKnowledgeBaseAnswerDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts'
 import { useKnowledgeBaseAnswerLiveUserList } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerLiveUserList.ts'
 import { useKnowledgeBaseAnswerUpdate } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerUpdate.ts'
 import type { KnowledgeBaseAnswerEditFormData } from '#desktop/entities/knowledge-base/types.ts'
@@ -171,6 +173,23 @@ const {
   currentTaskbarEntityKey,
   currentTaskbarTabDelete,
 } = useTaskbarTab(tabContext)
+
+const { confirmAnswerDelete } = useKnowledgeBaseAnswerDelete()
+
+const sidebarActions = computed<MenuItem[]>(() => {
+  const currentAnswer = answer.value
+  if (!currentAnswer?.policy.destroy) return []
+
+  return [
+    {
+      key: 'delete-answer',
+      label: __('Delete answer'),
+      icon: 'trash3',
+      variant: 'danger',
+      onClick: () => confirmAnswerDelete(currentAnswer, { categoryId: currentAnswer.category.id }),
+    },
+  ]
+})
 
 // The other editors of this translation. Keyed off the tab's own key, which is what the backend
 //   collected them under - and which only an edit tab has, so a reader never appears in the list.
@@ -369,6 +388,7 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
         :name="SidebarName.KnowledgeBaseAnswerEdit"
         :title="__('Knowledge base answer')"
         icon="file-richtext"
+        :actions="sidebarActions"
       >
         <!-- Teleported nodes escape the loading gate the form applies to its own wrapper, so
              without this the sidebar would show an empty radio list and an option-less category

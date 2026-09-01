@@ -12,6 +12,7 @@ import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
+import { useKnowledgeBaseAnswerDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import {
   knowledgeBaseAnswerEditRoute,
@@ -27,6 +28,10 @@ const props = defineProps<
     //   gives the same result - and a per-answer policy would ask the same question once per row
     //   (KnowledgeBase::CategoryPolicy#update_answer?).
     canEdit?: boolean
+    // Likewise from the category, via its `policy.destroyAnswer`.
+    canDelete?: boolean
+    // The category this card is listed under, for the delete's cache scope - see the action below.
+    categoryId?: string
   }
 >()
 
@@ -39,21 +44,40 @@ const link = computed(() =>
   activeLocale.value ? knowledgeBaseAnswerRoute(activeLocale.value, props.id) : undefined,
 )
 
-// Editing continues in the browsed locale, like the reader's own edit action - the edit route
-//   carries one, and its taskbar tab is per answer *and* locale.
+const { confirmAnswerDelete } = useKnowledgeBaseAnswerDelete()
+
 const actions = computed<MenuItem[]>(() => {
   const localeCode = activeLocale.value
 
-  if (!props.canEdit || !localeCode) return []
+  const items: MenuItem[] = []
 
-  return [
-    {
+  // Editing continues in the browsed locale, like the reader's own edit action - the edit route
+  //   carries one, and its taskbar tab is per answer *and* locale.
+  if (props.canEdit && localeCode) {
+    items.push({
       key: 'edit-answer',
       label: __('Edit answer'),
       icon: 'pencil',
       onClick: () => router.push(knowledgeBaseAnswerEditRoute(localeCode, props.id)),
-    },
-  ]
+    })
+  }
+
+  if (props.canDelete) {
+    items.push({
+      key: 'delete-answer',
+      label: __('Delete answer'),
+      icon: 'trash3',
+      variant: 'danger',
+      separatorTop: true,
+      // The category is handed over for the cache scope, not to navigate: a card is never the
+      //   answer being read, so this page stays. It is what lowers the count of a *cached* listing
+      //   of this same category - another locale's - whose loaded window never held this answer.
+      onClick: () =>
+        confirmAnswerDelete({ id: props.id, title: props.title }, { categoryId: props.categoryId }),
+    })
+  }
+
+  return items
 })
 </script>
 

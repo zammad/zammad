@@ -3,6 +3,7 @@
 import { within } from '@testing-library/vue'
 import { ref } from 'vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -12,8 +13,10 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockKnowledgeBaseQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
+import { KnowledgeBaseAnswersDocument } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.api.ts'
 import { mockKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts'
 import { mockKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
+import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
 
 const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 
@@ -116,6 +119,72 @@ describe('knowledge base answers infinite scroll', () => {
     expect(await view.findByText('Answer Three')).toBeInTheDocument()
     expect(view.getByText('Answer One')).toBeInTheDocument()
   })
+
+  // A content update refreshes the whole listing. Refetching its first page only would drop
+  //   everything scrolled to so far and put the reader back at the top of the category, so the
+  //   refetch asks for as many pages as are loaded.
+  it('keeps every loaded page when a content update refreshes the listing', async () => {
+    // One full page of answers plus a bit — the composable's own page size decides where the
+    //   second one starts, so a listing this long is what it takes to have two of them.
+    //
+    // Their attachments are pinned empty although this listing never asks for them: the mocker
+    //   generates every field of a type it builds, and a random handful of files per answer
+    //   trips its cap on generated ids for one type well before the 35th.
+    const serverAnswers = Array.from({ length: 35 }, (_, index) => ({
+      node: { ...answer(index + 1, `Answer ${index + 1}`).node, attachments: [] },
+    }))
+
+    // A server that honours both pagination arguments, unlike the fixed pages above: what the
+    //   refetch asks for is the whole point here.
+    mockKnowledgeBaseAnswersQuery(({ cursor, pageSize }) => {
+      // The cursor is simply the offset it points behind.
+      const offset = cursor ? Number(cursor) : 0
+      const edges = serverAnswers.slice(offset, offset + (pageSize ?? 0))
+
+      return {
+        knowledgeBaseAnswers: {
+          totalCount: serverAnswers.length,
+          edges,
+          pageInfo: {
+            endCursor: String(offset + edges.length),
+            hasNextPage: offset + edges.length < serverAnswers.length,
+          },
+        },
+      }
+    })
+
+    const view = await visitView(
+      `/knowledge-base/locale/en-us/category/${getIdFromGraphQLId(CATEGORY_ID)}`,
+    )
+
+    expect(await view.findByText('Answer 1')).toBeInTheDocument()
+    expect(view.queryByText('Answer 35')).not.toBeInTheDocument()
+
+    await triggerLoadMore?.()
+
+    expect(await view.findByText('Answer 35')).toBeInTheDocument()
+
+    await getKnowledgeBaseContentUpdatesSubscriptionHandler().trigger({
+      knowledgeBaseContentUpdates: {
+        knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) },
+        affectedCategoryIds: [CATEGORY_ID],
+      },
+    })
+
+    await waitFor(() => {
+      // Both loaded pages in one request from the start of the listing, rather than the first
+      //   page alone.
+      expect(getGraphQLMockCalls(KnowledgeBaseAnswersDocument).at(-1)?.variables).toEqual({
+        categoryId: CATEGORY_ID,
+        locale: 'en-us',
+        pageSize: 60,
+      })
+    })
+
+    // Still the whole loaded window, so the list has not moved under the reader.
+    expect(view.getByText('Answer 1')).toBeInTheDocument()
+    expect(view.getByText('Answer 35')).toBeInTheDocument()
+  })
 })
 
 // The ways into the create and the edit view from the browse page.
@@ -144,6 +213,9 @@ describe('knowledge base add and edit answer entry points', () => {
             createSubcategory: createAnswer,
             createAnswer,
             updateAnswer,
+            // Off throughout: this describe is about the create and edit entry points, and an
+            //   auto-generated flag would decide whether a card has an action menu at all.
+            destroyAnswer: false,
           },
         },
         subcategories,

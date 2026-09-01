@@ -34,6 +34,8 @@ const props = defineProps<{
   // Whether the answers listed here may be edited, from the open category's `policy.updateAnswer`
   //   - one flag for every row, see KnowledgeBaseAnswerCard's own `canEdit`.
   canEditAnswer?: boolean
+  // Likewise for deleting them, from the open category's `policy.destroyAnswer`.
+  canDeleteAnswer?: boolean
 }>()
 
 const router = useRouter()
@@ -97,6 +99,8 @@ defineExpose({ addAnswer })
         :key="answer.id"
         v-bind="answer"
         :can-edit="canEditAnswer"
+        :can-delete="canDeleteAnswer"
+        :category-id="categoryId"
       />
       <!-- Also shown without answers: the only way to create the first one in a category. -->
       <KnowledgeBaseAddAnswerCard v-if="showAddAnswer" ref="add-answer-card" @add="addAnswer" />

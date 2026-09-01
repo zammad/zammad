@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, onScopeDispose, type Ref } from 'vue'
+import { computed, onScopeDispose, shallowRef, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { useReactivate } from '#shared/composables/useReactivate.ts'
 import type {
   KnowledgeBaseAnswerUpdatesSubscription,
   KnowledgeBaseAnswerUpdatesSubscriptionVariables,
@@ -45,6 +46,12 @@ export const useKnowledgeBaseAnswer = (
   const router = useRouter()
   const store = useKnowledgeBaseStore()
 
+  // Only the view on screen may replace the route. The knowledge base is a permanent page, so a
+  //   reader of an answer stays mounted in the layout's KeepAlive while the user is elsewhere -
+  //   and a content update about that answer (someone deleting it, this user included) would
+  //   otherwise redirect whatever they are actually looking at.
+  const onScreen = shallowRef(true)
+
   const knowledgeBaseAnswerQuery = new QueryHandler(
     useKnowledgeBaseAnswerQuery(
       () => ({
@@ -65,7 +72,7 @@ export const useKnowledgeBaseAnswer = (
           error.type === GraphQLErrorTypes.Forbidden ||
           error.type === GraphQLErrorTypes.RecordNotFound
         ) {
-          if (!redirectOnAccessError) return false
+          if (!redirectOnAccessError || !onScreen.value) return false
 
           // Forget this path first: it is the last visited one, so without
           //   clearing it the section's locale-less entry would send us straight
@@ -88,6 +95,28 @@ export const useKnowledgeBaseAnswer = (
         }
         return true
       },
+    },
+  )
+
+  // Nothing else re-runs the query when the view comes back, and a 403/404 that landed while it
+  //   was in the background had its redirect skipped - so ask again now that it is on screen.
+  useReactivate(
+    () => {
+      onScreen.value = true
+      // Pinned to the current reactive args, for the same reason the content-update refetch below
+      //   is: Vue pushes a changed `answerId`/`locale` into the underlying query only on its next
+      //   flush, while this runs in the current one. The section keeps a single reader alive
+      //   across answers, so an unpinned refetch would ask for the one being navigated away from -
+      //   and a 404 for *that* answer would redirect away from the one being opened.
+      knowledgeBaseAnswerQuery
+        .refetch({
+          answerId: answerId?.value as string,
+          locale: locale?.value,
+        })
+        .catch(() => {})
+    },
+    () => {
+      onScreen.value = false
     },
   )
 

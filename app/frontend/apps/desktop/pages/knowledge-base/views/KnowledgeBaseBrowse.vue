@@ -137,6 +137,9 @@ const browsedTitle = computed(() =>
 //   same (KnowledgeBase::CategoryPolicy#update_answer?).
 const canEditAnswer = computed(() => Boolean(categoryPolicy.value?.updateAnswer))
 
+// The same, for deleting them (KnowledgeBase::CategoryPolicy#destroy_answer?).
+const canDeleteAnswer = computed(() => Boolean(categoryPolicy.value?.destroyAnswer))
+
 const { openKnowledgeBaseCategoryAddFlyout } = useKnowledgeBaseCategoryFlyout()
 useKnowledgeBaseEditFlyout()
 
@@ -342,6 +345,7 @@ watch(browsedPage, scrollToStart)
           :content-container-element="contentContainerElement"
           :can-add-answer="canAddAnswer"
           :can-edit-answer="canEditAnswer"
+          :can-delete-answer="canDeleteAnswer"
         />
       </section>
 

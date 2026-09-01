@@ -1,0 +1,8 @@
+mutation knowledgeBaseAnswerDelete($answerId: ID!) {
+  knowledgeBaseAnswerDelete(answerId: $answerId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}
