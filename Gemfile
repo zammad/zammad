@@ -267,6 +267,14 @@ group :development, :test do
 
   # Debugging and profiling
   gem 'pry-doc' # This gem is very large, so don't include it in production.
+
+  # editor support - language server
+  # Listed here so that the Ruby LSP uses the project bundle directly instead of
+  #   generating and maintaining its own custom bundle in .ruby-lsp/.
+  gem 'debug', require: false, platforms: :mri
+  gem 'ruby-lsp', require: false
+  gem 'ruby-lsp-rails', require: false
+  gem 'ruby-lsp-rspec', require: false
 end
 
 # Pin Minitest to V5 to avoid issues with Minitest V6.
