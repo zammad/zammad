@@ -20,7 +20,7 @@ module CanSelector
         command = "array_position(ARRAY[#{cached_sorted_ids}]::bigint[], #{adjusted_column}::bigint)"
 
         {
-          order:  "#{meta_value_name} #{input[:direction]}",
+          order:  "#{meta_value_name} #{direction}",
           select: "#{command} as #{meta_value_name}",
         }
       end

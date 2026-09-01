@@ -1594,7 +1594,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:801
+#: app/models/user.rb:806
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2270,7 +2270,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:703
+#: app/models/user.rb:708
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2287,7 +2287,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:780
+#: app/models/user.rb:785
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -4491,7 +4491,7 @@ msgstr ""
 msgid "Create a shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:223
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:247
 msgid "Create a translation"
 msgstr ""
 
@@ -6860,7 +6860,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:713
+#: app/models/user.rb:718
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -9704,7 +9704,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:652
+#: app/models/user.rb:657
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9730,6 +9730,10 @@ msgstr ""
 
 #: app/models/concerns/checks_condition_validation.rb:12
 msgid "Invalid object selector conditions"
+msgstr ""
+
+#: app/models/overview.rb:61
+msgid "Invalid order direction '%s', only ASC or DESC are allowed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:102
@@ -11508,7 +11512,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:732
+#: app/models/user.rb:737
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12528,7 +12532,7 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:221
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:245
 msgid "Not available in selected language"
 msgstr ""
 
@@ -12827,7 +12831,7 @@ msgid "Ollama"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:496
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr ""
 
@@ -15762,11 +15766,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:720
+#: app/models/user.rb:725
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:726
+#: app/models/user.rb:731
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -23518,7 +23522,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:919
+#: app/models/user.rb:924
 msgid "is too long"
 msgstr ""
 
