@@ -36,7 +36,7 @@ class Overview < ApplicationModel
   def validate_order_directions
     [order&.dig('direction'), group_direction].each do |direction|
       next if direction.blank?
-      next if VALID_ORDER_DIRECTIONS.include?(direction.to_s.strip.upcase)
+      next if VALID_ORDER_DIRECTIONS.include?(direction.to_s.upcase)
 
       errors.add(:base, "Invalid order direction '#{direction}', only ASC or DESC are allowed.")
     end

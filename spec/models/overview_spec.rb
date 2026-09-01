@@ -136,10 +136,6 @@ RSpec.describe Overview, type: :model do
       expect(build(:overview, order: { by: 'created_at', direction: 'ASC' }, group_direction: 'desc')).to be_valid
     end
 
-    it 'accepts a whitespace-padded direction' do
-      expect(build(:overview, order: { by: 'created_at', direction: '  DESC  ' })).to be_valid
-    end
-
     it 'rejects a malicious order direction' do
       overview = build(:overview, order: { by: 'created_at', direction: "DESC, (SELECT CAST('x' AS integer))" })
 

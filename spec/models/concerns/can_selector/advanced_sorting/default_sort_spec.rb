@@ -58,15 +58,5 @@ RSpec.describe CanSelector::AdvancedSorting::DefaultSort do
           .to eq('"tickets"."article_count" ASC')
       end
     end
-
-    context 'when a whitespace-padded direction is given' do
-      let(:column) { 'article_count' }
-      let(:input)  { { column:, direction: '  DESC  ' } }
-
-      it 'preserves the descending direction' do
-        expect(instance.calculate_sorting)
-          .to eq('"tickets"."article_count" DESC')
-      end
-    end
   end
 end
