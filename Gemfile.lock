@@ -221,6 +221,9 @@ GEM
       railties (>= 6.0.0)
       sass-embedded (~> 1.63)
     date (3.5.1)
+    debug (1.11.1)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     debug_inspector (1.2.0)
     deprecation_toolkit (2.4.0)
       activesupport (>= 7.0)
@@ -727,6 +730,14 @@ GEM
     ruby-keycloak-admin (26.5.2)
       hashie (>= 5.0.0)
       httparty (>= 0.21, < 0.25)
+    ruby-lsp (0.26.11)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 1.2, < 2.0)
+      rbs (>= 3, < 5)
+    ruby-lsp-rails (0.4.8)
+      ruby-lsp (>= 0.26.0, < 0.27.0)
+    ruby-lsp-rspec (0.1.29)
+      ruby-lsp (~> 0.26.0)
     ruby-progressbar (1.13.0)
     ruby-saml (1.18.1)
       nokogiri (>= 1.13.10)
@@ -904,6 +915,7 @@ DEPENDENCIES
   daemons
   dalli
   dartsass-rails
+  debug
   delayed_job!
   delayed_job_active_record!
   deprecation_toolkit
@@ -983,6 +995,9 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   ruby-keycloak-admin
+  ruby-lsp
+  ruby-lsp-rails
+  ruby-lsp-rspec
   selenium-webdriver
   shoulda-matchers
   simpleidn
