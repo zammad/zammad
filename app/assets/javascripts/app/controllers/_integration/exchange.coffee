@@ -260,8 +260,9 @@ class Form extends App.Controller
           container: @el.closest('.content')
           config: job.payload.params
           start: 'tryLoop'
-          callback: (config) =>
+          closeCallback: =>
             @wizardButton.prop('disabled', false)
+          callback: (config) =>
             @setConfig(config)
         )
         @wizardButton.prop('disabled', true)
@@ -317,6 +318,8 @@ class ConnectionWizard extends App.ControllerWizardModal
         @onShown()
       'hidden.bs.modal': =>
         @el.remove()
+        if @closeCallback
+          @closeCallback()
 
     if @slide
       @showSlide(@slide)

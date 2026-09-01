@@ -108,6 +108,19 @@ RSpec.describe ImportJob do
       }
     end
 
+    it 'queues if only an unfinished dry run exists' do
+      create(:import_job, :interrupted, dry_run: true)
+
+      allow(Setting).to receive(:get)
+      allow(Setting).to receive(:get).with('import_backends').and_return([test_backend_name])
+
+      expect do
+        described_class.queue_registered
+      end.to change {
+        described_class.exists?(name: test_backend_name, dry_run: false)
+      }
+    end
+
     it 'logs errors for invalid registered backends' do
       allow(Setting).to receive(:get)
       allow(Setting).to receive(:get).with('import_backends').and_return(['InvalidBackend'])
@@ -117,6 +130,86 @@ RSpec.describe ImportJob do
       expect(described_class.logger).to have_received(:error)
     end
 
+  end
+
+  describe '#sync_pending?' do
+    it 'is true for a queued sync' do
+      create(:import_job, name: test_backend_name)
+
+      expect(described_class).to be_sync_pending(test_backend_name)
+    end
+
+    it 'is true for an unfinished sync' do
+      create(:import_job, :interrupted, name: test_backend_name)
+
+      expect(described_class).to be_sync_pending(test_backend_name)
+    end
+
+    it 'is false for a finished sync' do
+      create(:import_job, name: test_backend_name, started_at: 1.hour.ago, finished_at: 1.hour.ago)
+
+      expect(described_class).not_to be_sync_pending(test_backend_name)
+    end
+
+    it 'is false for an unfinished dry run' do
+      create(:import_job, :interrupted, name: test_backend_name, dry_run: true)
+
+      expect(described_class).not_to be_sync_pending(test_backend_name)
+    end
+  end
+
+  describe '#cleanup_import_jobs' do
+    let(:cleanup_started_at) { Time.zone.now }
+
+    it 'marks interrupted import jobs as finished' do
+      job = create(:import_job, :interrupted)
+
+      expect { described_class.cleanup_import_jobs(cleanup_started_at) }
+        .to change { job.reload.finished_at }.from(nil)
+    end
+
+    it 'marks interrupted dry runs as finished' do
+      job = create(:import_job, :interrupted, dry_run: true)
+
+      expect { described_class.cleanup_import_jobs(cleanup_started_at) }
+        .to change { job.reload.finished_at }.from(nil)
+    end
+
+    it 'stores the interruption as an error in the result' do
+      job = create(:import_job, :interrupted, dry_run: true)
+
+      described_class.cleanup_import_jobs(cleanup_started_at)
+
+      expect(job.reload.result[:error]).to be_present
+    end
+
+    it "doesn't touch jobs that were updated since the cleanup started" do
+      job = create(:import_job, :interrupted, updated_at: cleanup_started_at + 1.second)
+
+      expect { described_class.cleanup_import_jobs(cleanup_started_at) }
+        .not_to change { job.reload.finished_at }
+    end
+
+    it "doesn't touch jobs that were not started yet" do
+      job = create(:import_job, updated_at: 2.days.ago)
+
+      expect { described_class.cleanup_import_jobs(cleanup_started_at) }
+        .not_to change { job.reload.finished_at }
+    end
+  end
+
+  describe '#running' do
+    it "doesn't contain dry runs" do
+      create(:import_job, :interrupted, dry_run: true)
+
+      expect(described_class.running).to be_empty
+    end
+
+    it 'contains unfinished import jobs' do
+      job = create(:import_job, :interrupted)
+
+      expect(described_class.running).to contain_exactly(job)
+    end
   end
 
   describe '#start' do

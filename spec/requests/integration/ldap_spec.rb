@@ -76,6 +76,33 @@ RSpec.describe 'Ldap', type: :request do
     end
   end
 
+  describe 'job_start' do
+    before { authenticated_as(admin) }
+
+    it 'queues a sync' do
+      expect { post '/api/v1/integration/ldap/job_start', as: :json }
+        .to change { ImportJob.exists?(name: 'Import::Ldap', dry_run: false) }.to(true)
+    end
+
+    context 'with an interrupted dry run' do
+      before { create(:import_job, :interrupted, name: 'Import::Ldap', dry_run: true) }
+
+      it 'still queues a sync' do
+        expect { post '/api/v1/integration/ldap/job_start', as: :json }
+          .to change { ImportJob.exists?(name: 'Import::Ldap', dry_run: false) }.to(true)
+      end
+    end
+
+    context 'with an unfinished sync' do
+      before { create(:import_job, :interrupted, name: 'Import::Ldap') }
+
+      it "doesn't queue another sync" do
+        expect { post '/api/v1/integration/ldap/job_start', as: :json }
+          .not_to change(ImportJob, :count)
+      end
+    end
+  end
+
   describe 'bind' do
     let(:params) { { bind_pw: 'test' } }
 

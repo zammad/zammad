@@ -250,8 +250,9 @@ class Form extends App.Controller
           container: @el.closest('.content')
           config: job.payload
           start: 'tryLoop'
-          callback: (config) =>
+          closeCallback: ->
             App.Event.trigger('LDAP::ImportJob::WizardState', false)
+          callback: (config) =>
             @setConfig(config)
         )
         App.Event.trigger('LDAP::ImportJob::WizardState', true)
@@ -310,6 +311,8 @@ class ConnectionWizard extends App.ControllerWizardModal
         @el.addClass('modal--ready')
       'hidden.bs.modal': =>
         @el.remove()
+        if @closeCallback
+          @closeCallback()
 
     if @slide
       @showSlide(@slide)

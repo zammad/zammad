@@ -7,7 +7,10 @@ class ImportJob < ApplicationModel
   store :result
 
   default_scope { order(started_at: :desc, id: :desc) }
-  scope :running, -> { where(finished_at: nil, dry_run: false).where.not(started_at: nil) }
+  # unfinished: all started jobs that never ended, dry runs included
+  # running:    started syncs only, since a dry run is no sync
+  scope :unfinished, -> { where(finished_at: nil).where.not(started_at: nil) }
+  scope :running,    -> { unfinished.where(dry_run: false) }
 
   attr_accessor :start_after_creation
 
@@ -129,12 +132,25 @@ class ImportJob < ApplicationModel
       # skip backends that are not "ready" yet
       next if !backend.constantize.queueable?
 
-      # skip if no entry exists
-      # skip if a not finished entry exists
-      next if ImportJob.exists?(name: backend, finished_at: nil)
+      # skip if a queued or unfinished sync exists
+      next if ImportJob.sync_pending?(backend)
 
       ImportJob.create(name: backend)
     end
+  end
+
+  # Checks if a sync of the given import backend is already queued or still running.
+  # Dry runs are ignored on purpose: an unfinished dry run must never block a sync,
+  # otherwise a dry run interrupted by a restart of the background worker process
+  # would block all further syncs of this backend.
+  #
+  # @example
+  #  ImportJob.sync_pending?('Import::Ldap')
+  #  # => true
+  #
+  # return [Boolean]
+  def self.sync_pending?(backend)
+    exists?(name: backend, dry_run: false, finished_at: nil)
   end
 
   # Checks if the given import backend is valid.
@@ -173,7 +189,8 @@ class ImportJob < ApplicationModel
     end || []
   end
 
-  # Checks for killed import jobs and marks them as finished and adds a note.
+  # Checks for killed import jobs (including dry runs) and marks them as
+  # finished and adds a note.
   #
   # @param [ActiveSupport::TimeWithZone] after the time the cleanup was started
   #
@@ -188,7 +205,7 @@ class ImportJob < ApplicationModel
       # we need to exclude jobs that were updated at or since we started
       # cleaning up (via the #reschedule? call) because they might
       # were started `.delay`-ed and are flagged for restart
-      running
+      unfinished
         .where(updated_at: ...after)
         .each do |job|
           job.update!(

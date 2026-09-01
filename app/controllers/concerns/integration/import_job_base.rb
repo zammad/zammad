@@ -24,7 +24,7 @@ module Integration::ImportJobBase
   end
 
   def job_start_create
-    if !ImportJob.exists?(name: backend, finished_at: nil)
+    if !ImportJob.sync_pending?(backend)
       ImportJob.create!(name: backend, start_after_creation: true)
     end
 
