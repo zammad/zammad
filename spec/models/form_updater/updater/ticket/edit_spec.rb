@@ -394,6 +394,26 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
         include_examples 'stores the form value of the field'
       end
+
+      # What clearing the owner in the detail view sends. The stored state holds only what differs
+      #   from the ticket, so the cleared field is all there is - and the tab has to report as
+      #   changed, or the state update tells it to reset and restores the owner it just cleared.
+      context 'when a field was cleared' do
+        let(:id)     { Gql::ZammadSchema.id_from_object(create(:ticket, group: group, state_id: 1, owner: user)) }
+        let(:data)   { { 'owner_id' => nil } }
+        let(:result) { { 'ticket' => { 'owner_id' => nil } } }
+
+        include_examples 'stores the form value of the field'
+
+        it 'reports the tab as changed' do
+          # Trigger first object authorization check.
+          resolved_result.authorized?
+
+          resolved_result.resolve
+
+          expect(taskbar.reload).to be_state_changed
+        end
+      end
     end
   end
 

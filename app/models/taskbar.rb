@@ -212,25 +212,18 @@ class Taskbar < ApplicationModel
     taskbar_entity_pundit_methods.fetch(entity, :show?)
   end
 
+  # Whether the tab holds unsaved changes.
+  #
+  # Two levels, because that is how deep a form state goes: its fields, optionally grouped once
+  #   (the ticket zoom's `ticket` and `article`).
   def state_changed?
     return false if state.blank?
 
-    state.each do |key, value|
-      if value.is_a? Hash
-        value.each do |key1, value1|
-          next if value1.blank?
-          next if key1 == 'form_id'
+    state.any? do |key, value|
+      next value.any? { |group_key, group_value| state_field_changed?(group_key, group_value) } if value.is_a?(Hash)
 
-          return true
-        end
-      else
-        next if value.blank?
-        next if key == 'form_id'
-
-        return true
-      end
+      state_field_changed?(key, value)
     end
-    false
   end
 
   def attributes_with_association_names(empty_keys: false)
@@ -326,6 +319,30 @@ class Taskbar < ApplicationModel
   end
 
   private
+
+  # Whether one stored field means the user changed something.
+  #
+  # That a field is stored at all is enough - clearing a value stores it as an explicit nil, empty
+  #   string or empty list, and clearing is a change like any other. The exceptions are the keys a
+  #   tab writes whether it was touched or not.
+  def state_field_changed?(key, value)
+    case key
+    when 'form_id'
+      # Written by every tab, touched or not. The ticket zoom nests it inside its article group.
+      false
+    when 'attachments'
+      # The ticket zoom mirrors the upload cache into its article group, an empty list included, so
+      #   only a filled one is a change. The new stack keeps attachments out of the state entirely
+      #   (FormUpdater::StoreValue::Ignore).
+      value.present?
+    when 'editing'
+      # The mobile app brings no form state along: Ticket::LiveUser::Upsert writes this flag as the
+      #   whole state, so here it is the value that says whether the viewer is editing.
+      value == true
+    else
+      true
+    end
+  end
 
   # Not memoized: a taskbar is saved with the key it was built with, and a stale match would be a
   #   silent one. The regexp runs a handful of times per save.

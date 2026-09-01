@@ -36,10 +36,22 @@ RSpec.describe Gql::Mutations::Ticket::LiveUser::Upsert, :aggregate_failures, ty
       create(:taskbar, key: "Ticket-#{ticket.id}", user_id: customer.id, app: 'mobile')
     end
 
+    def own_live_user_entry
+      Taskbar.find_by(key: "Ticket-#{ticket.id}", user_id: agent.id, app: 'mobile')
+    end
+
     context 'without own live user entry' do
       context 'without editing the ticket' do
         it 'adds the live user entry' do
           expect { gql.execute(query, variables: variables) }.to change(Taskbar, :count).by(1)
+        end
+
+        # The flag is the whole state of a mobile live user entry, and Taskbar#state_changed? reads
+        #   its value rather than counting it as a stored field.
+        it 'does not report the live user entry as changed' do
+          gql.execute(query, variables: variables)
+
+          expect(own_live_user_entry).not_to be_state_changed
         end
       end
 
@@ -48,6 +60,12 @@ RSpec.describe Gql::Mutations::Ticket::LiveUser::Upsert, :aggregate_failures, ty
 
         it 'adds the live user entry' do
           expect { gql.execute(query, variables: variables) }.to change(Taskbar, :count).by(1)
+        end
+
+        it 'reports the live user entry as changed' do
+          gql.execute(query, variables: variables)
+
+          expect(own_live_user_entry).to be_state_changed
         end
       end
     end

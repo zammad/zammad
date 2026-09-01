@@ -84,6 +84,30 @@ RSpec.describe Taskbar::TriggersSubscriptions, :aggregate_failures, performs_job
       end
     end
 
+    # The tab tells the desktop app apart from a draft it should keep and one that is gone: a reset
+    #   makes the tab throw its form changes away.
+    context 'with a state that only clears a field' do
+      it 'reports a change' do
+        taskbar.state = { 'form_id' => SecureRandom.uuid, 'ticket' => { 'owner_id' => nil } }
+        taskbar.save!
+        perform_enqueued_jobs
+        expect(Gql::Subscriptions::User::Current::TaskbarItemStateUpdates)
+          .to have_received(:trigger).with({ state_update_type: 'changed' }, any_args)
+      end
+    end
+
+    context 'with a state that was emptied' do
+      let(:taskbar) { create(:taskbar, :with_ticket, ticket:, user:, state: { 'ticket' => { 'title' => 'Draft title' } }) }
+
+      it 'reports a reset' do
+        taskbar.state = {}
+        taskbar.save!
+        perform_enqueued_jobs
+        expect(Gql::Subscriptions::User::Current::TaskbarItemStateUpdates)
+          .to have_received(:trigger).with({ state_update_type: 'reset' }, any_args)
+      end
+    end
+
     context 'with mobile app' do
       let(:taskbar) { create(:taskbar, :with_ticket, ticket:, user:, app: 'mobile') }
 

@@ -70,6 +70,33 @@ RSpec.describe Gql::Subscriptions::User::Current::TaskbarItemStateUpdates, type:
         end
       end
 
+      # An edit screen stores only what differs from the object, so a field the user cleared arrives
+      #   as an explicit nil. The tab still holds a draft and must not be told to reset - which is
+      #   what would restore the value it just cleared.
+      context 'with a state that only clears a field' do
+        it 'triggers with a changed update type' do
+          gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+
+          taskbar.update!(state: { 'form_id' => SecureRandom.uuid, 'ticket' => { 'owner_id' => nil } })
+
+          result = mock_channel.mock_broadcasted_messages.first[:result]['data']['userCurrentTaskbarItemStateUpdates']
+          expect(result).to eq({ 'stateUpdateType' => 'changed' })
+        end
+      end
+
+      context 'with a state that was emptied' do
+        before { taskbar.update!(state: { 'ticket' => { 'title' => 'Draft title' } }) }
+
+        it 'triggers with a reset update type' do
+          gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+
+          taskbar.update!(state: {})
+
+          result = mock_channel.mock_broadcasted_messages.first[:result]['data']['userCurrentTaskbarItemStateUpdates']
+          expect(result).to eq({ 'stateUpdateType' => 'reset' })
+        end
+      end
+
       context 'with params' do
         it 'does not trigger' do
           gql.execute(subscription, variables: variables, context: { channel: mock_channel })

@@ -18,6 +18,68 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     end
   end
 
+  describe '#state_changed?' do
+    it 'reports no change for an empty state' do
+      expect(build(:taskbar, state: {})).not_to be_state_changed
+    end
+
+    it 'looks past the form ID a tab writes whether it was touched or not' do
+      expect(build(:taskbar, state: { form_id: SecureRandom.uuid })).not_to be_state_changed
+    end
+
+    # What an untouched ticket zoom tab autosaves: empty field groups, the form ID nested inside the
+    #   article group, and the attachment list echoed from the upload cache.
+    it 'looks past the bookkeeping of an untouched ticket zoom tab' do
+      state = { ticket: {}, article: { form_id: SecureRandom.uuid, attachments: [] } }
+
+      expect(build(:taskbar, state:)).not_to be_state_changed
+    end
+
+    # Only the empty list is bookkeeping. The ticket zoom mirrors its uploads into the same key
+    #   (#taskGet), so a draft whose only content is an attached file is a draft.
+    it 'reports a change for an attached file' do
+      state = {
+        ticket:  {},
+        article: { form_id: SecureRandom.uuid, attachments: [{ 'name' => 'squares.png', 'size' => 22_198 }] },
+      }
+
+      expect(build(:taskbar, state:)).to be_state_changed
+    end
+
+    # The state of an edit screen holds only what differs from the object, so a field the user
+    #   cleared arrives as an explicit nil - and clearing a value is a change like any other.
+    it 'reports a change for a cleared field' do
+      state = { form_id: SecureRandom.uuid, ticket: { owner_id: nil } }
+
+      expect(build(:taskbar, state:)).to be_state_changed
+    end
+
+    it 'reports a change for a field cleared to an empty string' do
+      state = { form_id: SecureRandom.uuid, title: '' }
+
+      expect(build(:taskbar, state:)).to be_state_changed
+    end
+
+    it 'reports a change for a cleared list field' do
+      state = { form_id: SecureRandom.uuid, tags: [] }
+
+      expect(build(:taskbar, state:)).to be_state_changed
+    end
+
+    it 'reports a change for a typed value' do
+      state = { form_id: SecureRandom.uuid, title: 'Typed title' }
+
+      expect(build(:taskbar, state:)).to be_state_changed
+    end
+
+    # The mobile app brings no form state along, so its live user entry means the opposite of a
+    #   form field: the value of the flag decides, not that it is stored at all.
+    it 'reads the value of the live user editing flag' do
+      expect(build(:taskbar, app: 'mobile', state: { editing: false })).not_to be_state_changed
+      expect(build(:taskbar, app: 'mobile', state: { editing: true })).to be_state_changed
+    end
+  end
+
   describe '#preferences_task_info' do
     it 'returns task info for an existing taskbar without changes' do
       taskbar = create(:taskbar)
