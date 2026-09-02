@@ -6,10 +6,15 @@ import { computed } from 'vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
-import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
+import {
+  EnumKnowledgeBaseVisibility,
+  type KnowledgeBaseAnswerTranslationFragment,
+} from '#shared/graphql/types.ts'
 
 import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
 import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
+import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
+import { useKnowledgeBaseAnswerReachedDates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import { tagSearchRoute } from '#desktop/entities/tags/utils/routeLocation.ts'
 
@@ -20,6 +25,12 @@ interface Props {
 const props = defineProps<Props>()
 
 const answer = computed(() => props.translation.answer)
+
+// The three publication columns carry the answer's history and its scheduled changes at once, so
+//   the rows below read the clock-filtered dates rather than the fields as they arrived: an
+//   archival scheduled for next week is not something this panel may date as "Archived".
+const { reachedDates } = useKnowledgeBaseAnswerReachedDates(answer)
+
 const category = computed(() => answer.value.category)
 const systemLocale = computed(() => props.translation.kbLocale.systemLocale)
 const tags = computed(() => answer.value.tags ?? [])
@@ -43,16 +54,25 @@ const categoryPath = computed(() => {
   <CommonObjectAttributeContainer
     class="grid-cols-1! *:col-span-1 @lg:grid-cols-2! @3xl:grid-cols-3!"
   >
-    <CommonObjectAttribute v-if="answer.internalAt" :label="__('Internally published')">
-      <CommonDateTime :date-time="answer.internalAt" type="relative" />
+    <CommonObjectAttribute
+      v-if="reachedDates.internalAt"
+      :label="visibilityMeta[EnumKnowledgeBaseVisibility.Internal].timestampLabel"
+    >
+      <CommonDateTime :date-time="reachedDates.internalAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="answer.publishedAt" :label="__('Published')">
-      <CommonDateTime :date-time="answer.publishedAt" type="relative" />
+    <CommonObjectAttribute
+      v-if="reachedDates.publishedAt"
+      :label="visibilityMeta[EnumKnowledgeBaseVisibility.Published].timestampLabel"
+    >
+      <CommonDateTime :date-time="reachedDates.publishedAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="answer.archivedAt" :label="__('Archived')">
-      <CommonDateTime :date-time="answer.archivedAt" type="relative" />
+    <CommonObjectAttribute
+      v-if="reachedDates.archivedAt"
+      :label="visibilityMeta[EnumKnowledgeBaseVisibility.Archived].timestampLabel"
+    >
+      <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" />
     </CommonObjectAttribute>
 
     <CommonObjectAttribute v-if="category.title" :label="__('Category')">

@@ -10,10 +10,14 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import CommonPopoverWithTrigger from '#desktop/components/CommonPopover/CommonPopoverWithTrigger.vue'
 import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
+import { useKnowledgeBaseAnswerReachedDates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts'
 
-import { useKnowledgeBaseAnswerReachedDates } from '../../composables/useKnowledgeBaseAnswerReachedDates.ts'
+import { useKnowledgeBaseAnswerNextVisibilitySchedule } from '../../composables/useKnowledgeBaseAnswerNextVisibilitySchedule.ts'
+
+import KnowledgeBaseAnswerScheduledVisibilityPopover from './KnowledgeBaseAnswerScheduledVisibilityPopover.vue'
 
 import type { KnowledgeBaseAnswerHeaderDetailsAnswer } from './types.ts'
 
@@ -39,12 +43,64 @@ const badgeVariants: Record<EnumKnowledgeBaseVisibility, BadgeVariant> = {
   [EnumKnowledgeBaseVisibility.Archived]: 'tertiary',
 }
 
-const visibility = computed(() => props.answer.visibility)
+// The state the badge names and the date it was reached at, both off the *reached* dates rather
+//   than the raw fields: a publication scheduled for next week can neither date nor rename a badge
+//   that still says "DRAFT". What is still ahead belongs to the scheduled badge below, and to
+//   nobody who may not edit the answer.
+const { reachedDate, reachedVisibility } = useKnowledgeBaseAnswerReachedDates(() => props.answer)
 
-// Only the dates the answer has actually reached: this strip says what the answer is, not what it is
-//   going to become - without the filter a draft whose publication is scheduled for next week would
-//   claim "PUBLISHED IN 1 WEEK" here, in the reader's header as much as in the editor's.
-const { reachedDates } = useKnowledgeBaseAnswerReachedDates(() => props.answer)
+// The clock rather than `answer.visibility`, which the server derives once per request and which
+//   therefore keeps naming the state the answer was in when the page loaded - so a schedule falling
+//   due while it stays open would leave a green "PUBLISHED" badge dated with the archival it has
+//   just reached. Both halves move together now.
+//
+// Falling back to the field for an answer that has reached no date at all, which is the one case
+//   the dates cannot name: that is a draft for a stored answer, but the create header has no stored
+//   answer at all and passes the visibility being picked in the form (see its `visibility` prop).
+const visibility = computed(() => reachedVisibility.value ?? props.answer.visibility)
+
+// The bare timestamp, the way the edit chip at the foot of the strip and `CommonDateTime` itself
+//   render theirs: the badge already names the state in its own text, so repeating the state here
+//   would say it twice.
+const reachedTooltip = computed(() =>
+  reachedDate.value ? i18n.dateTime(reachedDate.value) : undefined,
+)
+
+// And the other half of the same clock: the next state the answer is going to reach. Absent for
+//   anybody who may not edit it, which is the whole of the permission check here - see the
+//   composable for why this component has none of its own.
+const { nextVisibilitySchedule, pendingVisibilitySchedules } =
+  useKnowledgeBaseAnswerNextVisibilitySchedule(() => props.answer)
+
+// Bridged once here rather than at both lookups below: the two enums name the same states
+//   with identical values - the schedulable one is the answer's visibility without `draft`, which
+//   stores no date and can therefore not be scheduled - and TypeScript keeps them apart all the
+//   same.
+const nextSchedule = computed(() => {
+  const schedule = nextVisibilitySchedule.value
+
+  if (!schedule) return undefined
+
+  return {
+    scheduledAt: schedule.scheduledAt,
+    visibility: schedule.visibility,
+  }
+})
+
+// What the badge says, for whoever cannot see it. `role="button"` makes the trigger's children
+//   presentational, so the badge's own text is dropped from the accessibility tree rather than just
+//   outranked - without this the announced name would be the popover's title alone, and the state
+//   and its timing would only be reachable by opening the popover.
+const nextScheduleLabel = computed(() => {
+  const schedule = nextSchedule.value
+
+  if (!schedule) return undefined
+
+  return i18n.t(
+    'Scheduled visibility: %s',
+    `${i18n.t(visibilityMeta[schedule.visibility].label)} ${i18n.relativeDateTime(schedule.scheduledAt)}`,
+  )
+})
 
 // Deliberately a fixed value: the chip is rendered once per answer load, so it
 //   does not track elapsed time the way the CommonDateTime badges above do.
@@ -73,7 +129,15 @@ const editedTooltip = computed(() => {
 
 <template>
   <div class="flex max-w-full flex-wrap items-center gap-2.5 text-nowrap *:h-7">
-    <CommonBadge :variant="badgeVariants[visibility]" class="gap-1 uppercase">
+    <!-- `.supportive`, so the date lands in `aria-description` beside the badge's own text rather
+         than replacing it as an `aria-label`: the badge visibly reads "INTERNAL" where the
+         timestamp label is "Internally published", and a plain tooltip would make the two
+         disagree. Same choice as the edit chip at the foot of the strip. -->
+    <CommonBadge
+      v-tooltip.supportive="reachedTooltip"
+      :variant="badgeVariants[visibility]"
+      class="gap-1 uppercase"
+    >
       <KnowledgeBaseAnswerIcon decorative :visibility="visibility" size="tiny" />
       {{ $t(visibilityMeta[visibility].label) }}
     </CommonBadge>
@@ -90,29 +154,39 @@ const editedTooltip = computed(() => {
       <CommonIcon name="translate" size="xs" decorative />
     </CommonBadge>
 
-    <CommonBadge v-if="reachedDates.internalAt" variant="tertiary" class="uppercase">
-      <CommonDateTime :date-time="reachedDates.internalAt" type="relative" class="ms-1">
-        <template #prefix>
-          {{ $t('Internally published') }}
-        </template>
-      </CommonDateTime>
-    </CommonBadge>
+    <CommonPopoverWithTrigger
+      v-if="nextSchedule"
+      class="flex rounded-md outline-offset-1 focus-visible:outline-2"
+      placement="arrowStart"
+      orientation="bottom"
+      trigger-link-active-class="outline-blue-800! outline-2!"
+      :aria-label="nextScheduleLabel"
+    >
+      <!-- The clock-filtered list rather than the field as it arrived, so the rows and the badge
+           in front of them agree about what has already happened. -->
+      <template #popover-content="{ popoverId }">
+        <KnowledgeBaseAnswerScheduledVisibilityPopover
+          :id="popoverId"
+          :schedules="pendingVisibilitySchedules"
+        />
+      </template>
 
-    <CommonBadge v-if="reachedDates.publishedAt" variant="tertiary" class="uppercase">
-      <CommonDateTime :date-time="reachedDates.publishedAt" type="relative" class="ms-1">
-        <template #prefix>
-          {{ $t('Published') }}
-        </template>
-      </CommonDateTime>
-    </CommonBadge>
-
-    <CommonBadge v-if="reachedDates.archivedAt" variant="tertiary" class="uppercase">
-      <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" class="ms-1">
-        <template #prefix>
-          {{ $t('Archived') }}
-        </template>
-      </CommonDateTime>
-    </CommonBadge>
+      <!-- The forward-looking visibility badge: the next date the answer is going to reach,
+           which is why it carries the target state's own color where they share a neutral grey
+           - the same `badgeVariants` the visibility badge resolves, so a scheduled state is tinted
+           here exactly as it will be once it arrives. -->
+      <CommonBadge
+        class="cursor-pointer gap-1 uppercase"
+        :variant="badgeVariants[nextSchedule.visibility]"
+      >
+        <CommonIcon name="eye" size="tiny" decorative />
+        <CommonDateTime :date-time="nextSchedule.scheduledAt" type="relative">
+          <template #prefix>
+            {{ $t(visibilityMeta[nextSchedule.visibility].label) }}
+          </template>
+        </CommonDateTime>
+      </CommonBadge>
+    </CommonPopoverWithTrigger>
 
     <CommonBadge
       v-if="editedLabel"

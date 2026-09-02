@@ -129,6 +129,18 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
     expect(wrapper.getByText('Archived')).toBeInTheDocument()
   })
 
+  // A publication state is stored as the date it is reached at, so a date still ahead is a
+  //   *scheduled* change rather than the answer's history. Dating a row "Archived" from it would
+  //   have this panel claim an answer is archived a week before it is.
+  it('leaves out a date the answer has not reached yet', () => {
+    const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+
+    const wrapper = renderPopover(buildTranslation({ answer: { archivedAt: nextWeek } }))
+
+    expect(wrapper.getByText('Published')).toBeInTheDocument()
+    expect(wrapper.queryByText('Archived')).not.toBeInTheDocument()
+  })
+
   it('hides the category row when the category has no title in the requested locale', () => {
     const wrapper = renderPopover(buildTranslation({ answer: { category: { title: null } } }))
 

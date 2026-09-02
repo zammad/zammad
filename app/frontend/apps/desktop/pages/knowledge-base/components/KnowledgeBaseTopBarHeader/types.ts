@@ -44,6 +44,12 @@ export type KnowledgeBaseAnswerHeaderDetailsAnswer = Pick<KnowledgeBaseAnswerHea
   Partial<
     Pick<
       KnowledgeBaseAnswerHeader,
-      'translationMissing' | 'internalAt' | 'publishedAt' | 'archivedAt' | 'editedAt' | 'editedBy'
+      | 'translationMissing'
+      | 'internalAt'
+      | 'publishedAt'
+      | 'archivedAt'
+      | 'editedAt'
+      | 'editedBy'
+      | 'visibilitySchedules'
     >
   >

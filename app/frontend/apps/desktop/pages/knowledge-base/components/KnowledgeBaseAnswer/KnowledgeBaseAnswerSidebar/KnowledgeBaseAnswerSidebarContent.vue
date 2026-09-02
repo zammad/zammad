@@ -5,12 +5,12 @@ import { computed } from 'vue'
 
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
+import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
 import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
 import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
 import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
-
-import { useKnowledgeBaseAnswerReachedDates } from '../../../composables/useKnowledgeBaseAnswerReachedDates.ts'
+import { useKnowledgeBaseAnswerReachedDates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts'
 
 import KnowledgeBaseAnswerLinkedTickets from './KnowledgeBaseAnswerLinkedTickets.vue'
 import KnowledgeBaseAnswerScheduledVisibility from './KnowledgeBaseAnswerScheduledVisibility.vue'
@@ -38,15 +38,24 @@ const editedByLabel = computed(() => {
       {{ $t(visibilityMeta[answer.visibility].label) }}
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="reachedDates.internalAt" :label="__('Internally published')">
+    <CommonObjectAttribute
+      v-if="reachedDates.internalAt"
+      :label="visibilityMeta[EnumKnowledgeBaseVisibility.Internal].timestampLabel"
+    >
       <CommonDateTime :date-time="reachedDates.internalAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="reachedDates.publishedAt" :label="__('Published')">
+    <CommonObjectAttribute
+      v-if="reachedDates.publishedAt"
+      :label="visibilityMeta[EnumKnowledgeBaseVisibility.Published].timestampLabel"
+    >
       <CommonDateTime :date-time="reachedDates.publishedAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="reachedDates.archivedAt" :label="__('Archived')">
+    <CommonObjectAttribute
+      v-if="reachedDates.archivedAt"
+      :label="visibilityMeta[EnumKnowledgeBaseVisibility.Archived].timestampLabel"
+    >
       <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" />
     </CommonObjectAttribute>
 

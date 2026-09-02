@@ -17,7 +17,7 @@ export const knowledgeBaseVisibilityMeta = {
   [EnumKnowledgeBaseVisibility.Published]: { icon: 'unlock-fill', class: 'text-green-400!' },
   [EnumKnowledgeBaseVisibility.Archived]: {
     icon: 'archive-fill',
-    class: 'text-neutral-400! dark:text-neutral-600!',
+    class: 'text-gray-100! dark:text-neutral-400!',
   },
 } as const
 

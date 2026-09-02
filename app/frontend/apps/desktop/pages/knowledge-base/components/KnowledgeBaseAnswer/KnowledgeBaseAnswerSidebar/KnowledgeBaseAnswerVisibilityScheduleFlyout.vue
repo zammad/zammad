@@ -37,32 +37,38 @@ const { form } = useForm()
 
 const formSchema = [
   {
-    // The same states the answer's own visibility field offers, minus `draft`: a state is stored as
-    //   the date it is reached at, and `draft` is what no date at all means - there is nothing to
-    //   put in the future for it. Which is also what the mutation's enum says.
-    name: 'visibility',
-    label: __('Visibility'),
-    type: 'radioList',
-    required: true,
-    props: {
-      options: answerSchedulableVisibilityOptions,
-    },
-  },
-  {
-    // A date that is not ahead is not a schedule: it would change the state at once, which is the
-    //   edit form's business. The service refuses one either way, so this is about where the
-    //   complaint lands - `futureOnly` only limits what the *picker* offers, and a date typed into
-    //   the field's text input sails past it, so the rule is what actually holds. It puts the
-    //   message on the field rather than at the top of the flyout, and saves the round trip.
-    name: 'scheduledAt',
-    label: __('Schedule for'),
-    type: 'datetime',
-    required: true,
-    validation: 'date_after',
-    props: {
-      futureOnly: true,
-      clearable: false,
-    },
+    isLayout: true,
+    component: 'FormGroup',
+    children: [
+      {
+        // The same states the answer's own visibility field offers, minus `draft`: a state is stored as
+        //   the date it is reached at, and `draft` is what no date at all means - there is nothing to
+        //   put in the future for it. Which is also what the mutation's enum says.
+        name: 'visibility',
+        label: __('Visibility'),
+        type: 'radioList',
+        required: true,
+        props: {
+          options: answerSchedulableVisibilityOptions,
+        },
+      },
+      {
+        // A date that is not ahead is not a schedule: it would change the state at once, which is the
+        //   edit form's business. The service refuses one either way, so this is about where the
+        //   complaint lands - `futureOnly` only limits what the *picker* offers, and a date typed into
+        //   the field's text input sails past it, so the rule is what actually holds. It puts the
+        //   message on the field rather than at the top of the flyout, and saves the round trip.
+        name: 'scheduledAt',
+        label: __('Schedule for'),
+        type: 'datetime',
+        required: true,
+        validation: 'date_after',
+        props: {
+          futureOnly: true,
+          clearable: false,
+        },
+      },
+    ],
   },
 ]
 
