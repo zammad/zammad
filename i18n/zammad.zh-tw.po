@@ -1524,7 +1524,7 @@ msgstr "為使用者啟用忘記密碼功能。此設定僅在啟用密碼登入
 msgid "Active"
 msgstr "啟用"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "可供指派的客服專員"
@@ -2541,7 +2541,7 @@ msgstr "文章"
 msgid "Article - visibility confirmation dialog"
 msgstr "文章 - 可見性確認對話框"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "文章 > 文字(HTML)"
 
@@ -3748,7 +3748,7 @@ msgstr "文字對談標題"
 msgid "Chat closed by %s"
 msgstr "%s 已關閉文字對談"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "文字對談沒有回覆，自動設定為離線狀態。"
 
@@ -4252,7 +4252,7 @@ msgstr "受影響物件的條件"
 msgid "Conditions for shown tickets"
 msgstr "呈現工單的條件"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "配置"
 
@@ -4929,7 +4929,7 @@ msgstr "建立："
 msgid "Created"
 msgstr "建立於"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "已建立的文章"
 
@@ -4940,11 +4940,11 @@ msgstr "已建立的文章"
 msgid "Created At"
 msgstr "已建立在"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "已建立的外部文章"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "已建立的內部文章"
 
@@ -8374,15 +8374,15 @@ msgstr "完成"
 msgid "Finish setup"
 msgstr "完成設定"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "第一篇文章"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "第一篇外部文章"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "第一篇內部文章"
 
@@ -10645,7 +10645,7 @@ msgstr "語言偵測服務"
 msgid "Languages"
 msgstr "語言"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "上一篇文章"
 
@@ -10665,7 +10665,7 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr ""
 
@@ -10673,7 +10673,7 @@ msgstr ""
 msgid "Last Feedback Reset"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr ""
 
@@ -12041,7 +12041,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -16689,7 +16689,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -17790,7 +17790,7 @@ msgstr "Tag \"%s\" 已經存在。"
 msgid "Tag assignment mode"
 msgstr "指派逾時"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -25286,7 +25286,7 @@ msgstr "返回首頁。"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "今天"

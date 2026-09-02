@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-09 22:07+0000\n"
-"Last-Translator: WKobes <github@wouterkobes.nl>\n"
+"PO-Revision-Date: 2026-08-31 17:12+0000\n"
+"Last-Translator: Joris Drenth <joris@jorisdrenth.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "stable/nl/>\n"
 "Language: nl-nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1640,7 +1640,7 @@ msgstr ""
 msgid "Active"
 msgstr "Actief"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Actieve Behandelaren"
@@ -2731,7 +2731,7 @@ msgstr "Notitie"
 msgid "Article - visibility confirmation dialog"
 msgstr "Notitie - zichtbaarheid bevestigingsdialoog"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Notitie > Tekst (HTML)"
 
@@ -4010,7 +4010,7 @@ msgstr "Chat-titel"
 msgid "Chat closed by %s"
 msgstr "Chat gesloten door %s"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "Chat niet beanwoord, automatisch offline gegaan."
 
@@ -4544,7 +4544,7 @@ msgstr "Voorwaarden voor getroffen objecten"
 msgid "Conditions for shown tickets"
 msgstr "Voorwaarden voor getoonde tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Configuratie"
 
@@ -5281,7 +5281,7 @@ msgstr "Maak:"
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Notitie aangemaakt"
 
@@ -5292,11 +5292,11 @@ msgstr "Notitie aangemaakt"
 msgid "Created At"
 msgstr "Gemaakt op"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Externe Notitie aangemaakt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Interne Notitie aangemaakt"
 
@@ -9119,19 +9119,19 @@ msgstr "Voltooien"
 msgid "Finish setup"
 msgstr "Setup voltooien"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 #, fuzzy
 #| msgid "Last Article"
 msgid "First Article"
 msgstr "Laatste Notitie"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Last External Article"
 msgid "First External Article"
 msgstr "Laatste Externe Notitie"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 #, fuzzy
 #| msgid "Last Internal Article"
 msgid "First Internal Article"
@@ -11533,7 +11533,7 @@ msgstr "Taaldetectieservice"
 msgid "Languages"
 msgstr "Talen"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Laatste Notitie"
 
@@ -11553,7 +11553,7 @@ msgstr "Laatste contact op"
 msgid "Last Contact Customer At"
 msgstr "Laatste contact met klant op"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Laatste Externe Notitie"
 
@@ -11561,7 +11561,7 @@ msgstr "Laatste Externe Notitie"
 msgid "Last Feedback Reset"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Laatste Interne Notitie"
 
@@ -12994,7 +12994,7 @@ msgstr "Nagios integratie"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -17979,7 +17979,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18393,8 +18393,8 @@ msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> was closed."
 msgstr ""
-"Je chat met <strong>%s</strong> is afgesloten omdat je niet hebt gereageerd "
-"in de laatste %s minuten."
+"Omdat je niet hebt gereageerd in de laatste %s minuten is je chat met "
+"<strong>%s</strong> afgesloten."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:57
 msgid "Single selection field"
@@ -19064,7 +19064,7 @@ msgstr "Tag \"%s\" bestaat al."
 msgid "Tag assignment mode"
 msgstr "Time-out toewijzing"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -26606,7 +26606,7 @@ msgstr "om naar de startpagina te gaan."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "Vandaag"

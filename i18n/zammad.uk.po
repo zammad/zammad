@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-26 22:12+0000\n"
+"PO-Revision-Date: 2026-09-01 22:12+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1496,7 +1496,7 @@ msgstr ""
 msgid "Active"
 msgstr "Активний"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Активні Агенти"
@@ -2548,7 +2548,7 @@ msgstr "Повідомлення"
 msgid "Article - visibility confirmation dialog"
 msgstr "Повідомлення - діалогове вікно підтвердження видимості"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Повідомлення > Текст (HTML)"
 
@@ -3778,7 +3778,7 @@ msgstr "Заголовок чату"
 msgid "Chat closed by %s"
 msgstr "Чат закрито %s"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr ""
 "У чаті немає відповіді, він автоматично переводиться в автономний режим."
@@ -4321,7 +4321,7 @@ msgstr "Умови відбору об'єктів"
 msgid "Conditions for shown tickets"
 msgstr "Умови відображення заявок"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Конфігурування"
 
@@ -5036,7 +5036,7 @@ msgstr "Створити:"
 msgid "Created"
 msgstr "Створено"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Створено повідомлення"
 
@@ -5047,11 +5047,11 @@ msgstr "Створено повідомлення"
 msgid "Created At"
 msgstr "Створено о"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Створено зовнішнє повідомлення"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Створено внутрішнє повідомлення"
 
@@ -8739,15 +8739,15 @@ msgstr "Закінчити"
 msgid "Finish setup"
 msgstr "Завершити налаштування"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "Перша повідомлення"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "Перше зовнішнє повідомлення"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "Перше внутрішнє повідомлення"
 
@@ -11091,7 +11091,7 @@ msgstr "Служба розпізнавання мови"
 msgid "Languages"
 msgstr "Мови"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Останнє повідомлення"
 
@@ -11111,7 +11111,7 @@ msgstr "Останній контакт був у"
 msgid "Last Contact Customer At"
 msgstr "Останній контакт з клієнтом був у"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Останнє зовнішнє повідомлення"
 
@@ -11119,7 +11119,7 @@ msgstr "Останнє зовнішнє повідомлення"
 msgid "Last Feedback Reset"
 msgstr "Скинути останній відгук"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Останнє внутрішнє повідомлення"
 
@@ -12503,7 +12503,7 @@ msgstr "Інтеграція з Nagios"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -17190,7 +17190,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18223,7 +18223,7 @@ msgstr "Тег \"%s\" вже існує."
 msgid "Tag assignment mode"
 msgstr "Режим призначення тегів"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -22502,8 +22502,8 @@ msgid ""
 "Use subject field for emails. If disabled, the ticket title will be used as "
 "subject."
 msgstr ""
-"Використовувати поле теми для повідомлень електронної пошти. Якщо вимкнено, "
-"у темі зазначатиметься заголовок заявки."
+"Використовуйте поле «Тема» для електронних листів. Якщо ця опція вимкнена, "
+"як тему буде використано назву заявки."
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:145
 msgid "Use the camera to take a photo for the avatar."
@@ -25585,7 +25585,7 @@ msgstr "для переходу на головну сторінку."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "сьогодні"

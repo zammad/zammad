@@ -1596,7 +1596,7 @@ msgstr ""
 msgid "Active"
 msgstr "Aktif"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Agen Aktif"
@@ -2664,7 +2664,7 @@ msgstr "Artikel"
 msgid "Article - visibility confirmation dialog"
 msgstr "Artikel - dialog konfirmasi visibilitas"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Artikel > Teks (HTML)"
 
@@ -3920,7 +3920,7 @@ msgstr "Judul Obrolan"
 msgid "Chat closed by %s"
 msgstr "Obrolan ditutup oleh %s"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "Obrolan tidak dijawab, secara otomatis diatur ke offline."
 
@@ -4473,7 +4473,7 @@ msgstr "Kondisi untuk objek yang terpengaruh"
 msgid "Conditions for shown tickets"
 msgstr "Kondisi untuk tiket yang ditampilkan"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Konfigurasi"
 
@@ -5202,7 +5202,7 @@ msgstr "Dibuat:"
 msgid "Created"
 msgstr "Dibuat"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Artikel yang Dibuat"
 
@@ -5213,11 +5213,11 @@ msgstr "Artikel yang Dibuat"
 msgid "Created At"
 msgstr "Dibuat Pada"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Artikel Eksternal yang Dibuat"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Artikel Internal yang Dibuat"
 
@@ -9006,15 +9006,15 @@ msgstr "Selesai"
 msgid "Finish setup"
 msgstr "Selesaikan Pengaturan"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "Artikel Pertama"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "Artikel Eksternal Pertama"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "Artikel Internal Pertama"
 
@@ -11384,7 +11384,7 @@ msgstr "Layanan Deteksi Bahasa"
 msgid "Languages"
 msgstr "Bahasa"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Artikel Terakhir"
 
@@ -11404,7 +11404,7 @@ msgstr "Kontak Terakhir Pada"
 msgid "Last Contact Customer At"
 msgstr "Kontak Pelanggan Terakhir Pada"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Artikel Eksternal Terakhir"
 
@@ -11412,7 +11412,7 @@ msgstr "Artikel Eksternal Terakhir"
 msgid "Last Feedback Reset"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Artikel Internal Terakhir"
 
@@ -12820,7 +12820,7 @@ msgstr "Integrasi Nagios"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -17651,7 +17651,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18730,7 +18730,7 @@ msgstr "Tag \"%s\" sudah ada."
 msgid "Tag assignment mode"
 msgstr "Waktu Tunggu Penugasan"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -26139,7 +26139,7 @@ msgstr "untuk ke halaman beranda."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "hari ini"

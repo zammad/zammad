@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-03-20 07:59+0000\n"
-"Last-Translator: Florian Liebe <dev@florianlie.be>\n"
+"PO-Revision-Date: 2026-09-02 07:24+0000\n"
+"Last-Translator: Bobby Zhang <my@minthe.cn>\n"
 "Language-Team: Chinese (Simplified Han script) <https://"
-"translations.zammad.org/projects/zammad/zammad-development/zh_Hans/>\n"
+"translations.zammad.org/projects/zammad/zammad-stable/zh_Hans/>\n"
 "Language: zh-cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1130,10 +1130,8 @@ msgstr "提供的令牌无效。"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:26
 #: lib/excel_sheet/ai/analytics/with_usage.rb:26
-#, fuzzy
-#| msgid "Image Service"
 msgid "AI Service Name"
-msgstr "圖像服務"
+msgstr "AI 服务名称"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:122
 #, fuzzy
@@ -1582,7 +1580,7 @@ msgstr "为用户激活丢失密码功能。只有在启用密码登录时，此
 msgid "Active"
 msgstr "激活"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "有空的服务人员"
@@ -2658,7 +2656,7 @@ msgstr "文章"
 msgid "Article - visibility confirmation dialog"
 msgstr "文章 - 确认可见对话框"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "文章 > 文本 (HTML)"
 
@@ -2937,7 +2935,7 @@ msgstr "需要认证"
 
 #: db/seeds/settings.rb:1186
 msgid "Authentication via %s"
-msgstr "通过 s% 认证"
+msgstr "通过 %s 认证"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
@@ -3920,7 +3918,7 @@ msgstr "对话标题"
 msgid "Chat closed by %s"
 msgstr "对话已被 %s 关闭"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "对话没有回复，已自动设置为离线。"
 
@@ -4464,7 +4462,7 @@ msgstr "受影响对象的情况"
 msgid "Conditions for shown tickets"
 msgstr "显示满足以下条件的工单"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "配置"
 
@@ -5199,7 +5197,7 @@ msgstr "创建:"
 msgid "Created"
 msgstr "创建于"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "创建文章"
 
@@ -5210,11 +5208,11 @@ msgstr "创建文章"
 msgid "Created At"
 msgstr "创建时间"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "创建外部文章"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "创建外部工单"
 
@@ -8863,19 +8861,19 @@ msgstr "完成"
 msgid "Finish setup"
 msgstr "完成设置"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 #, fuzzy
 #| msgid "Last Article"
 msgid "First Article"
 msgstr "上一篇"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Last External Article"
 msgid "First External Article"
 msgstr "最后一个外部文章"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 #, fuzzy
 #| msgid "Last Internal Article"
 msgid "First Internal Article"
@@ -11250,7 +11248,7 @@ msgstr "Geo 地理位置 服務"
 msgid "Languages"
 msgstr "語言"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "上一篇"
 
@@ -11272,7 +11270,7 @@ msgstr "上次联系"
 msgid "Last Contact Customer At"
 msgstr "上次联系客户"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "最后一个外部文章"
 
@@ -11280,7 +11278,7 @@ msgstr "最后一个外部文章"
 msgid "Last Feedback Reset"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "最后的内部文章"
 
@@ -12840,7 +12838,7 @@ msgstr "纳吉奥斯整合"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -18004,7 +18002,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -19103,7 +19101,7 @@ msgstr "标签“%s”已存在。"
 msgid "Tag assignment mode"
 msgstr "分配超時"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -27106,7 +27104,7 @@ msgstr "转到主页。"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "今天"

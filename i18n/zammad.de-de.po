@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-19 22:12+0000\n"
+"PO-Revision-Date: 2026-08-31 17:12+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1496,7 +1496,7 @@ msgstr ""
 msgid "Active"
 msgstr "Aktiv"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Aktive Agenten"
@@ -2558,7 +2558,7 @@ msgstr "Artikel"
 msgid "Article - visibility confirmation dialog"
 msgstr "Artikel - Bestätigungsdialog zur Sichtbarkeit"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Artikel > Text (HTML)"
 
@@ -3794,7 +3794,7 @@ msgstr "Chat-Titel"
 msgid "Chat closed by %s"
 msgstr "Chat von %s geschlossen"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "Chat nicht beantwortet, automatisch offline gesetzt."
 
@@ -4342,7 +4342,7 @@ msgstr "Bedingungen für zu verarbeitende Objekte"
 msgid "Conditions for shown tickets"
 msgstr "Bedingungen für angezeigte Tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Konfiguration"
 
@@ -5060,7 +5060,7 @@ msgstr "Erstellen:"
 msgid "Created"
 msgstr "Erstellt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Artikel erstellt"
 
@@ -5071,11 +5071,11 @@ msgstr "Artikel erstellt"
 msgid "Created At"
 msgstr "Erstellt am"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Externer Artikel erstellt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Interner Artikel erstellt"
 
@@ -6178,16 +6178,12 @@ msgstr ""
 "vertrauenswürdigen Quellen."
 
 #: db/seeds/settings.rb:4356
-#, fuzzy
-#| msgid ""
-#| "Defines postmaster filter to identify auto responses to prevent auto "
-#| "replies from Zammad."
 msgid ""
 "Defines postmaster filter to remove references to local attachments from "
 "incoming emails."
 msgstr ""
-"Definiert den Postmaster-Filter zur Erkennung von automatischen Antworten, "
-"um weitere automatische Antworten von Zammad zu verhindern."
+"Definiert einen Postmaster-Filter, um Verweise auf lokale Anhänge aus "
+"eingehenden E-Mails zu entfernen."
 
 #: db/seeds/settings.rb:4284
 msgid ""
@@ -8818,15 +8814,15 @@ msgstr "Abschließen"
 msgid "Finish setup"
 msgstr "Einrichtung abschließen"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "Erster Artikel"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "Erster externer Artikel"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "Erster interner Artikel"
 
@@ -11177,7 +11173,7 @@ msgstr "Dienst zur Erkennung der Sprache"
 msgid "Languages"
 msgstr "Sprachen"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Letzter Artikel"
 
@@ -11197,7 +11193,7 @@ msgstr "Letzter Kontakt am"
 msgid "Last Contact Customer At"
 msgstr "Letzter Kontakt (Kunde) um"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Letzter externer Artikel"
 
@@ -11205,7 +11201,7 @@ msgstr "Letzter externer Artikel"
 msgid "Last Feedback Reset"
 msgstr "Letztes Zurücksetzen des Feedbacks"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Letzter interner Artikel"
 
@@ -12589,7 +12585,7 @@ msgstr "Nagios-Integration"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -15845,13 +15841,6 @@ msgid "Requirements"
 msgstr "Voraussetzungen"
 
 #: db/seeds/settings.rb:1790
-#, fuzzy
-#| msgid ""
-#| "Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) "
-#| "to be present and true before trusting an incoming email address for "
-#| "account auto-linking. Both must first be configured as optional claims on "
-#| "the Azure app registration. Until that is done, enabling this blocks all "
-#| "Microsoft 365 account auto-linking by email."
 msgid ""
 "Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
 "to match the incoming email address, before trusting that address for "
@@ -15859,13 +15848,13 @@ msgid ""
 "claims on the Azure app registration. Until that is done, enabling this "
 "blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
-"Erfordert, dass der ID-Token-Claim \"xms_edov\" (zusammen mit dem Claim "
-"\"email\") vorhanden und wahr ist, bevor eine eingehende E-Mail-Adresse als "
-"vertrauenswürdig für die automatische Konto-Verknüpfung eingestuft wird. "
-"Beide müssen zunächst als optionale Claims in der Azure-App-Registrierung "
-"konfiguriert werden. Solange dies nicht geschehen ist, blockiert die "
-"Aktivierung dieser Option jegliche automatische Verknüpfung von Microsoft "
-"365-Konten per E-Mail."
+"Erfordert, dass der ID-Token-Claim \"xms_edov\" wahr ist und der Claim "
+"\"email\" mit der eingehenden E-Mail-Adresse übereinstimmt, bevor diese "
+"Adresse für die automatische Verknüpfung von Konten als vertrauenswürdig "
+"eingestuft wird. Beides muss zunächst als optionale Claims in der Azure-App-"
+"Registrierung konfiguriert werden. Solange dies nicht geschehen ist, "
+"blockiert die Aktivierung dieser Option jegliche automatische Verknüpfung "
+"von Microsoft 365-Konten per E-Mail."
 
 #: db/seeds/settings.rb:5983
 msgid ""
@@ -17323,7 +17312,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18363,7 +18352,7 @@ msgstr "Tag \"%s\" existiert bereits."
 msgid "Tag assignment mode"
 msgstr "Tag-Zuweisungsmodus"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -19027,10 +19016,14 @@ msgstr "Das aktuelle Passwort, das Sie angegeben haben, ist falsch."
 #: app/models/core_workflow/result.rb:61
 msgid "The current user is not allowed to access the referenced object."
 msgstr ""
+"Der aktuelle Benutzer hat keine Zugriffsberechtigung für das referenzierte "
+"Objekt."
 
 #: app/models/core_workflow/result.rb:45
 msgid "The current user is not allowed to use core workflow for this object."
 msgstr ""
+"Der aktuelle Benutzer ist nicht berechtigt, den Core Workflow für dieses "
+"Objekt zu nutzen."
 
 #: app/services/service/ai/vectordb/create_table.rb:18
 msgid "The currently selected AI provider does not support embeddings."
@@ -20071,10 +20064,8 @@ msgid "The username or password is incorrect."
 msgstr "Benutzername oder Passwort ist ungültig."
 
 #: app/models/core_workflow/result.rb:40
-#, fuzzy
-#| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The value of the parameter 'payload->class_name' is invalid."
-msgstr "Der erforderliche Parameter 'payload->class_name' fehlt."
+msgstr "Der Wert des Parameters 'payload->class_name' ist ungültig."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 msgid "The verification email could not be resent."
@@ -25815,7 +25806,7 @@ msgstr "um zur Homepage zu gelangen."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "heute"

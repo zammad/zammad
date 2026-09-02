@@ -1495,7 +1495,7 @@ msgstr ""
 msgid "Active"
 msgstr "Aktív"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Aktív ügyintézők"
@@ -2555,7 +2555,7 @@ msgstr "Bejegyzés"
 msgid "Article - visibility confirmation dialog"
 msgstr "Bejegyzés – láthatóság megerősítése párbeszédablak"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Bejegyzés > Szöveg (HTML)"
 
@@ -3790,7 +3790,7 @@ msgstr "Csevegés címe"
 msgid "Chat closed by %s"
 msgstr "A csevegés %s által lezárva"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr ""
 "A csevegésre nem érkezett válasz, automatikusan kapcsolat nélkülire állítva."
@@ -4346,7 +4346,7 @@ msgstr "Az érintett objektumok feltételei"
 msgid "Conditions for shown tickets"
 msgstr "A megjelenített jegyek feltételei"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Beállítás"
 
@@ -5067,7 +5067,7 @@ msgstr "Létrehozás:"
 msgid "Created"
 msgstr "Létrehozva"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Létrehozott bejegyzés"
 
@@ -5078,11 +5078,11 @@ msgstr "Létrehozott bejegyzés"
 msgid "Created At"
 msgstr "Létrehozva:"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Létrehozott külső bejegyzés"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Létrehozott belső bejegyzés"
 
@@ -8848,15 +8848,15 @@ msgstr "Befejezés"
 msgid "Finish setup"
 msgstr "Beállítás befejezése"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "Első bejegyzés"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "Első külső bejegyzés"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "Első belső bejegyzés"
 
@@ -11194,7 +11194,7 @@ msgstr "Nyelvfelismerési szolgáltatás"
 msgid "Languages"
 msgstr "Nyelvek"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Utolsó bejegyzés"
 
@@ -11214,7 +11214,7 @@ msgstr "Utolsó kapcsolatfelvétel ekkor"
 msgid "Last Contact Customer At"
 msgstr "Utolsó kapcsolatfelvétel ügyféltől ekkor"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Utolsó külső bejegyzés"
 
@@ -11222,7 +11222,7 @@ msgstr "Utolsó külső bejegyzés"
 msgid "Last Feedback Reset"
 msgstr "Utolsó visszajelzés-visszaállítás"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Utolsó belső bejegyzés"
 
@@ -12607,7 +12607,7 @@ msgstr "Nagios-integráció"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -17314,7 +17314,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18356,7 +18356,7 @@ msgstr "A(z) „%s” címke már létezik."
 msgid "Tag assignment mode"
 msgstr "Címke-hozzárendelési mód"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -25730,7 +25730,7 @@ msgstr "a kezdőlapra való lépéshez."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "ma"

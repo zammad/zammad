@@ -1560,7 +1560,7 @@ msgstr ""
 msgid "Active"
 msgstr "Aktyvus"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:310
+#: app/assets/javascripts/app/controllers/chat.coffee:311
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr "Aktyvūs agentai"
@@ -2607,7 +2607,7 @@ msgstr "Įrašas"
 msgid "Article - visibility confirmation dialog"
 msgstr "Įrašas - matomumo patvirtinimo dialogas"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Įrašas > Tekstas (HTML)"
 
@@ -3835,7 +3835,7 @@ msgstr "Pokalbio pavadinimas"
 msgid "Chat closed by %s"
 msgstr "%s uždarė pokalbį"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:371
+#: app/assets/javascripts/app/controllers/chat.coffee:372
 msgid "Chat not answered, automatically set to offline."
 msgstr "Į pokalbį neatsakyta, automatiškai perjungta į atsijungusį."
 
@@ -4374,7 +4374,7 @@ msgstr "Sąlygos paveiktiems objektams"
 msgid "Conditions for shown tickets"
 msgstr "Sąlygos rodomoms triktims"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Konfigūracija"
 
@@ -5083,7 +5083,7 @@ msgstr "Sukurta:"
 msgid "Created"
 msgstr "Sukurta"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Pridėjo įrašą"
 
@@ -5094,11 +5094,11 @@ msgstr "Pridėjo įrašą"
 msgid "Created At"
 msgstr "Sukurta"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Sukūrė išorinį įrašą"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Sukūrė vidinį įrašą"
 
@@ -8734,15 +8734,15 @@ msgstr "Baigti"
 msgid "Finish setup"
 msgstr "Baigti konfigūravimą"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "Pirmas įrašas"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "Pirmas išorinis įrašas"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "Pirmas vidinis įrašas"
 
@@ -11073,7 +11073,7 @@ msgstr "Kalbos aptikimo paslauga"
 msgid "Languages"
 msgstr "Kalbos"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Paskutinis įrašas"
 
@@ -11093,7 +11093,7 @@ msgstr "Paskutinis kontaktas"
 msgid "Last Contact Customer At"
 msgstr "Paskutinis kliento kontaktas"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Paskutinis išorinis įrašas"
 
@@ -11101,7 +11101,7 @@ msgstr "Paskutinis išorinis įrašas"
 msgid "Last Feedback Reset"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Paskutinis vidinis įrašas"
 
@@ -12491,7 +12491,7 @@ msgstr "Nagios integracija"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -17187,7 +17187,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:869
+#: app/assets/javascripts/app/controllers/chat.coffee:870
 #: app/assets/javascripts/app/controllers/manage.coffee:44
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -18221,7 +18221,7 @@ msgstr "Žyma „%s“ jau egzistuoja."
 msgid "Tag assignment mode"
 msgstr "Priskyrimo laiko limitas"
 
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:561
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -25543,7 +25543,7 @@ msgstr "norėdami grįžti į pradinį puslapį."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:757
+#: app/assets/javascripts/app/controllers/chat.coffee:758
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr "šiandien"
