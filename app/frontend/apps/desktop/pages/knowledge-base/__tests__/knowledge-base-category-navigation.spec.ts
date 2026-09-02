@@ -461,7 +461,7 @@ describe('knowledge base category navigation', () => {
     )
 
     // The alert is docked below both the full and the compact header.
-    expect(await view.findAllByText('No translation for this locale available')).not.toHaveLength(0)
+    expect(await view.findAllByText('No translation available for this locale')).not.toHaveLength(0)
   })
 
   it('shows no translation warning when the opened category is translated', async () => {
@@ -497,7 +497,7 @@ describe('knowledge base category navigation', () => {
       )
     })
 
-    expect(view.queryAllByText('No translation for this locale available')).toHaveLength(0)
+    expect(view.queryAllByText('No translation available for this locale')).toHaveLength(0)
   })
 
   it('shows a not-found error for a locale the knowledge base does not offer', async () => {

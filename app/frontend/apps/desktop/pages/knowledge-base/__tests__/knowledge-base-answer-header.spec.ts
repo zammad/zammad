@@ -319,7 +319,7 @@ describe('knowledge base answer header', () => {
 
     // One alert per header, so the warning survives the scroll swap.
     await waitFor(() => {
-      expect(view.getAllByText('No translation for this locale available')).toHaveLength(2)
+      expect(view.getAllByText('No translation available for this locale')).toHaveLength(2)
     })
   })
 
@@ -328,6 +328,6 @@ describe('knowledge base answer header', () => {
 
     // Both headers are mounted, so the answer title appears more than once.
     expect(await view.findAllByText('Some Knowledge Base Answer')).not.toHaveLength(0)
-    expect(view.queryAllByText('No translation for this locale available')).toHaveLength(0)
+    expect(view.queryAllByText('No translation available for this locale')).toHaveLength(0)
   })
 })

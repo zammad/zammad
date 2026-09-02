@@ -169,7 +169,7 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
     :content-container-element="contentContainerElement"
     :loading="loading"
     :alert-message="
-      answer?.translationMissing ? $t('No translation for this locale available') : undefined
+      answer?.translationMissing ? $t('No translation available for this locale') : undefined
     "
     content-width="reading"
   >

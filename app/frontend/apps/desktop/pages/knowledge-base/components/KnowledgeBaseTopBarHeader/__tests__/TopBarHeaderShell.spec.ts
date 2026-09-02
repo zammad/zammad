@@ -80,14 +80,14 @@ describe('TopBarHeaderShell', () => {
   })
 
   it('docks the alert below the full and the compact header alike', () => {
-    const view = renderShell({ alertMessage: 'No translation for this locale available' })
+    const view = renderShell({ alertMessage: 'No translation available for this locale' })
 
     // One per header, so the message stays visible across the scroll swap.
-    expect(view.getAllByText('No translation for this locale available')).toHaveLength(2)
+    expect(view.getAllByText('No translation available for this locale')).toHaveLength(2)
   })
 
   it('tints the docked alert translucently over the blurred content', () => {
-    const view = renderShell({ alertMessage: 'No translation for this locale available' })
+    const view = renderShell({ alertMessage: 'No translation available for this locale' })
 
     // The tint comes from the translucent variant on the alert's wrapper, so that the blur is not
     //   faded along with it - as it would be with an `opacity` on the alert itself.
@@ -104,10 +104,10 @@ describe('TopBarHeaderShell', () => {
   it('withholds the alert while loading, when there is nothing settled to warn about', () => {
     const view = renderShell({
       loading: true,
-      alertMessage: 'No translation for this locale available',
+      alertMessage: 'No translation available for this locale',
     })
 
-    expect(view.queryByText('No translation for this locale available')).not.toBeInTheDocument()
+    expect(view.queryByText('No translation available for this locale')).not.toBeInTheDocument()
   })
 
   it('exposes only the full header to interaction while at the top of the page', () => {
@@ -121,7 +121,7 @@ describe('TopBarHeaderShell', () => {
   // The compact header's background is translucent, so anything left of the full
   //   header — most visibly its docked alert — would show through it.
   it('hides the full header once the compact one has taken over', async () => {
-    const view = renderShell({ alertMessage: 'No translation for this locale available' })
+    const view = renderShell({ alertMessage: 'No translation available for this locale' })
 
     scrollPastFullHeader()
     await view.rerender({})
@@ -130,7 +130,7 @@ describe('TopBarHeaderShell', () => {
   })
 
   it('slides the full header entirely out of view, alert included', async () => {
-    const view = renderShell({ alertMessage: 'No translation for this locale available' })
+    const view = renderShell({ alertMessage: 'No translation available for this locale' })
 
     scrollPastFullHeader()
     await view.rerender({})
@@ -156,7 +156,7 @@ describe('TopBarHeaderShell', () => {
   })
 
   it('caps the docked alert at the wide content width by default', () => {
-    const view = renderShell({ alertMessage: 'No translation for this locale available' })
+    const view = renderShell({ alertMessage: 'No translation available for this locale' })
 
     expect(
       view.container.querySelector('.max-w-\\[calc\\(var\\(--container-7xl\\)-2\\.750rem\\)\\]'),
@@ -165,7 +165,7 @@ describe('TopBarHeaderShell', () => {
 
   it('caps the docked alert at the article reading width when asked for it', () => {
     const view = renderShell({
-      alertMessage: 'No translation for this locale available',
+      alertMessage: 'No translation available for this locale',
       contentWidth: 'reading',
     })
 

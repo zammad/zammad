@@ -1,5 +1,5 @@
 <% if @missingTranslation(): %>
-  <div class="js-alert alert alert--warning alert--square"><%- @T('No translation for this locale available') %></div>
+  <div class="js-alert alert alert--warning alert--square"><%- @T('No translation available for this locale') %></div>
 <% end %>
 
 <div class="main flex vertical end">

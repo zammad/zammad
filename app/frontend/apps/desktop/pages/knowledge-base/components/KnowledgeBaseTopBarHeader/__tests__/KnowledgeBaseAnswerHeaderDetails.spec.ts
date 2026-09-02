@@ -59,7 +59,7 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
   it('warns about a missing translation when asked to', () => {
     const view = renderDetails({ translationMissing: true }, true)
 
-    expect(view.getByLabelText('No translation for this locale available')).toBeInTheDocument()
+    expect(view.getByLabelText('No translation available for this locale')).toBeInTheDocument()
   })
 
   // The reader's header docks the same warning as an alert bar instead, and two of them would be
@@ -68,7 +68,7 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
     const view = renderDetails({ translationMissing: true })
 
     expect(
-      view.queryByLabelText('No translation for this locale available'),
+      view.queryByLabelText('No translation available for this locale'),
     ).not.toBeInTheDocument()
   })
 
@@ -76,7 +76,7 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
     const view = renderDetails({ translationMissing: false }, true)
 
     expect(
-      view.queryByLabelText('No translation for this locale available'),
+      view.queryByLabelText('No translation available for this locale'),
     ).not.toBeInTheDocument()
   })
 

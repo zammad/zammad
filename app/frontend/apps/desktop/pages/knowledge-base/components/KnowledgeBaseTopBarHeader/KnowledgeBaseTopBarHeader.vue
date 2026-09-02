@@ -203,7 +203,7 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
     :content-container-element="contentContainerElement"
     :loading="loading"
     :alert-message="
-      categoryTranslationMissing ? $t('No translation for this locale available') : undefined
+      categoryTranslationMissing ? $t('No translation available for this locale') : undefined
     "
   >
     <template #compact="{ inert }">

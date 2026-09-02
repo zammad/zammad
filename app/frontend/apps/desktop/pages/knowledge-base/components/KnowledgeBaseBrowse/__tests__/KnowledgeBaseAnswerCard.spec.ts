@@ -80,7 +80,7 @@ describe('KnowledgeBaseAnswerCard', () => {
     const wrapper = await renderCard({ translationMissing: true })
 
     expect(wrapper.getByIconName('translate')).toBeInTheDocument()
-    expect(wrapper.getByLabelText('No translation for this locale available')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('No translation available for this locale')).toBeInTheDocument()
   })
 
   it('shows no translation warning when a translation exists', async () => {

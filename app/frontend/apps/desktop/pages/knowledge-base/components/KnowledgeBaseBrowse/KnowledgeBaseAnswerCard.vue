@@ -95,7 +95,7 @@ const actions = computed<MenuItem[]>(() => {
       </CommonLabel>
       <CommonBadge
         v-if="translationMissing"
-        v-tooltip="$t('No translation for this locale available')"
+        v-tooltip="$t('No translation available for this locale')"
         variant="warning"
         size="xs"
         rounded

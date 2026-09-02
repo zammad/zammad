@@ -81,7 +81,7 @@ const editedTooltip = computed(() => {
     <!-- Same warning the browse view's answer card carries next to an untranslated title. -->
     <CommonBadge
       v-if="withTranslationWarning && answer.translationMissing"
-      v-tooltip="$t('No translation for this locale available')"
+      v-tooltip="$t('No translation available for this locale')"
       variant="warning"
       size="xs"
       rounded
