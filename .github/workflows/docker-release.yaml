@@ -16,6 +16,7 @@ on:
 
 jobs:
   docker-build-image:
+    if: github.repository == 'zammad/zammad'
     strategy:
       matrix:
         runs-on:
@@ -81,6 +82,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
 
   docker-create-multiarch-manifest:
+    if: github.repository == 'zammad/zammad'
     runs-on: ubuntu-24.04
     needs:
       - docker-build-image
