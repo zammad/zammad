@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-28 08:51+0000\n"
+"PO-Revision-Date: 2026-09-02 07:25+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -524,6 +524,11 @@ msgstr "%s фолдер(а)"
 msgid "%s groups to %s roles assignments"
 msgstr "%s групе су додељене за %s улоге"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:31
+msgid "%s has updated this answer. Submitting will replace their changes."
+msgstr ""
+"%s је освежио/ла овај чланак. Уколико наставите, преснимићете њихове промене."
+
 #: app/frontend/shared/i18n/dates.ts:110
 msgid "%s hours ago"
 msgstr "пре %s сат/а/и"
@@ -711,6 +716,10 @@ msgstr "%s корисник ка %s кориснику"
 #: lib/whatsapp/webhook/message.rb:53
 msgid "%s via WhatsApp"
 msgstr "%s преко WhatsApp"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts:36
+msgid "%s video"
+msgstr "%s видео"
 
 #: app/frontend/shared/i18n/dates.ts:96
 msgid "%s weeks ago"
@@ -938,7 +947,7 @@ msgstr "Изглед који користи елементе тамне бој�
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr "Изглед који користи елементе светле боје на тамној позадини."
 
-#: db/seeds/object_manager_attributes.rb:2286
+#: db/seeds/object_manager_attributes.rb:2285
 msgid ""
 "A group's email address determines which address should be used for outgoing "
 "mails, e.g. when an agent is composing an email or a trigger is sending an "
@@ -995,7 +1004,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "Отворен је пробни тикет, можете га пронаћи у вашем „%s” прегледу %l."
 
-#: app/models/ticket.rb:301
+#: app/models/ticket.rb:303
 msgid "A ticket cannot be merged into itself."
 msgstr "Није могуће спојити тикет са самим собом."
 
@@ -1015,6 +1024,7 @@ msgstr ""
 "Стање тикета се користи за категоризацију и управљање животним циклусом "
 "тикета или упита клијента."
 
+#: app/services/service/knowledge_base/answer/base.rb:58
 #: app/services/service/knowledge_base/category/create.rb:56
 msgid "A title is required."
 msgstr "Наслов је обавезан."
@@ -1022,6 +1032,11 @@ msgstr "Наслов је обавезан."
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:216
 msgid "A user is required!"
 msgstr "Корисник је обавезан!"
+
+#: app/services/service/knowledge_base/answer/visibility_schedule/add.rb:50
+msgid ""
+"A visibility change can only be scheduled for a point in time in the future."
+msgstr "Промена видљивости може бити заказана само у будућности."
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:12
 msgid ""
@@ -1189,7 +1204,7 @@ msgstr "Дневник AI коришћења и мишљења"
 msgid "AI writing assistant"
 msgstr "AI помоћник за писање"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:74
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 msgid "AI writing assistant tools"
 msgstr "Алатке AI помоћника за писање"
@@ -1350,14 +1365,17 @@ msgstr "Обрачунај време"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:28
 #: app/assets/javascripts/app/models/ticket.coffee:16
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:181
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/graphql/gql/types/overview_type.rb:101
 msgid "Accounted Time"
 msgstr "Обрачунато време"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:133
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:185
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:128
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr "Обрачунато време"
@@ -1458,7 +1476,7 @@ msgstr ""
 "Укључује функцију изгубљене лозинке за кориснике. Ово подешавање је "
 "делотворно само уколико је укључено пријављивање лозинком."
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:326
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:329
 #: app/assets/javascripts/app/models/ai_agent.coffee:10
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:30
 #: app/assets/javascripts/app/models/chat.coffee:257
@@ -1490,7 +1508,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:29
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:70
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:217
-#: db/seeds/object_manager_attributes.rb:1705
+#: db/seeds/object_manager_attributes.rb:1704
 msgid "Active"
 msgstr "Активно"
 
@@ -1674,7 +1692,8 @@ msgid "Add all values"
 msgstr "Додај све вредности"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:386
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:62
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:396
 msgid "Add answer"
 msgstr "Додај чланак"
 
@@ -1682,14 +1701,14 @@ msgstr "Додај чланак"
 msgid "Add attachment option to upload."
 msgstr "Додај опцију прилога за отпремање."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:257
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr "Додај листу са тачкама"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:369
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:379
 msgid "Add category"
 msgstr "Додај категорију"
 
@@ -1720,12 +1739,12 @@ msgstr "Додај филтер"
 msgid "Add from a template"
 msgstr "Додај по шаблону"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr "Додај наслов"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:287
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr "Додај слику"
@@ -1735,9 +1754,9 @@ msgstr "Додај слику"
 msgid "Add internal note"
 msgstr "Додај интерну напомену"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:331
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:177
 msgid "Add link"
 msgstr "Додај везу"
 
@@ -1751,7 +1770,7 @@ msgid "Add note"
 msgstr "Додај напомену"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:244
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr "Додај листу са бројевима"
@@ -1767,15 +1786,24 @@ msgstr "Додај позив"
 msgid "Add reply"
 msgstr "Додај одговор"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:71
+msgid "Add schedule"
+msgstr "Закажи"
+
 #: app/frontend/shared/form/i18n/locales.ts:77
 msgid "Add selected values"
 msgstr "Додај одабране вредности"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:73
+msgid "Add sub-category"
+msgstr "Додај подкатегорију"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
 msgid "Add subclause"
 msgstr "Додај потклаузулу"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:172
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
 msgid "Add tag"
 msgstr "Додај ознаку"
@@ -1792,6 +1820,10 @@ msgstr "Додај постојећим ознакама"
 msgid "Add unordered list"
 msgstr "Додај листу са тачкама"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:106
+msgid "Add visibility schedule"
+msgstr "Закажи видљивост"
+
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:4
 msgid ""
 "Add your video server address here so it can be included in the Content "
@@ -1805,7 +1837,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Додатни канали"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:127
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:140
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -1829,7 +1861,7 @@ msgstr "Додатне информације и линкови"
 msgid "Additional notes for ticket create types."
 msgstr "Додатне напомене за типове тикета приликом отварања."
 
-#: db/seeds/object_manager_attributes.rb:1439
+#: db/seeds/object_manager_attributes.rb:1438
 msgid "Address"
 msgstr "Адреса"
 
@@ -2163,7 +2195,7 @@ msgstr "Дозволи у прошлости"
 msgid "Allow past dates toggle value is required."
 msgstr "Дозвола датума у прошлости захтева вредност."
 
-#: db/seeds/object_manager_attributes.rb:2217
+#: db/seeds/object_manager_attributes.rb:2216
 msgid "Allow reopening of tickets within a certain time."
 msgstr "Дозволи поновно отварање тикета унутар одређеног времена."
 
@@ -2335,15 +2367,17 @@ msgid "Another ticket was merged into ticket |%s|"
 msgstr "Тикет је спојен са тикетом |%s|"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee:11
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:181
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerContent.vue:61
 msgid "Answer"
 msgstr "Одговор"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:126
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:112
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
 msgid "Answer actions"
 msgstr "Радње чланка"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:171
 msgid "Answer count: %s"
 msgstr "Број чланака: %s"
 
@@ -2351,7 +2385,7 @@ msgstr "Број чланака: %s"
 msgid "Answer navigation"
 msgstr "Навигација чланака"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:69
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:90
 msgid "Answer title"
 msgstr "Наслов чланка"
 
@@ -2407,7 +2441,7 @@ msgstr "Верзија апликације"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:254
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:264
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:166
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:723
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:726
 msgid "App could not be verified."
 msgstr "Није било могуће потврдити апликацију."
 
@@ -2514,7 +2548,7 @@ msgstr "Време престанка архивирања"
 msgid "Archive emails"
 msgstr "Архивирај имејл поруке"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:156
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:33
 msgid "Archive this answer"
 msgstr "Архивирај чланак"
 
@@ -2527,10 +2561,10 @@ msgstr "Циљно стање архивираног тикета"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
 #: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:29
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:155
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:32
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:49
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:112
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:54
 msgid "Archived"
 msgstr "Архивирано"
@@ -2674,7 +2708,7 @@ msgstr "Чланак"
 msgid "Article - visibility confirmation dialog"
 msgstr "Чланак - дијалог потврде видљивости"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
 msgid "Article > Text (HTML)"
 msgstr "Чланак > Текст (HTML)"
 
@@ -2713,12 +2747,12 @@ msgstr "Article#"
 msgid "Article(s) to analyze"
 msgstr "Чланак/ци за анализу"
 
-#: db/seeds/object_manager_attributes.rb:2240
+#: db/seeds/object_manager_attributes.rb:2239
 msgid "Assign Follow-Ups"
 msgstr "Додели наставке"
 
 #: app/assets/javascripts/app/models/group.coffee:11
-#: db/seeds/object_manager_attributes.rb:2249
+#: db/seeds/object_manager_attributes.rb:2248
 msgid "Assign follow-up to latest agent again."
 msgstr "Додели поново наставак на последњег оператера."
 
@@ -2726,7 +2760,7 @@ msgstr "Додели поново наставак на последњег оп�
 msgid "Assign follow-ups"
 msgstr "Додели наставке"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:613
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:616
 msgid "Assign signup roles"
 msgstr "Додели улоге приликом регистрације"
 
@@ -2735,7 +2769,7 @@ msgstr "Додели улоге приликом регистрације"
 msgid "Assign tickets"
 msgstr "Додели тикете"
 
-#: db/seeds/object_manager_attributes.rb:1838
+#: db/seeds/object_manager_attributes.rb:1837
 msgid "Assign users based on user domain."
 msgstr "Додели кориснике на основу корисничког домена."
 
@@ -2752,7 +2786,7 @@ msgstr "Одговорни"
 msgid "Assignees"
 msgstr "Одговорни"
 
-#: db/seeds/object_manager_attributes.rb:2138
+#: db/seeds/object_manager_attributes.rb:2137
 msgid "Assignment Timeout"
 msgstr "Време истека доделе"
 
@@ -2762,7 +2796,7 @@ msgid "Assignment timeout"
 msgstr "Време истека доделе"
 
 #: app/assets/javascripts/app/models/group.coffee:8
-#: db/seeds/object_manager_attributes.rb:2143
+#: db/seeds/object_manager_attributes.rb:2142
 msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
@@ -2817,7 +2851,7 @@ msgstr "Attached Files"
 msgid "Attached files"
 msgstr "Прилози"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:88
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
@@ -2883,7 +2917,7 @@ msgstr ""
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:640
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:643
 msgid "Attribute '%s' is required in the mapping"
 msgstr "Неопходно је да атрибут ’%s’ постоји у мапирању"
 
@@ -2912,11 +2946,11 @@ msgstr "Атрибути за поређење"
 msgid "Audio file"
 msgstr "Аудио датотека"
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:25
+#: app/assets/javascripts/app/controllers/audit_log.coffee:30
 msgid "Audit Log"
 msgstr "Дневник ревизије"
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:25
+#: app/assets/javascripts/app/controllers/audit_log.coffee:30
 #: db/seeds/permissions.rb:341
 msgid "Audit Logs"
 msgstr "Дневник ревизија"
@@ -2944,19 +2978,19 @@ msgstr "Аутентификација"
 msgid "Authentication Token"
 msgstr "Аутентификациони кључ"
 
-#: lib/email_helper/probe.rb:276
+#: lib/email_helper/probe.rb:275
 msgid "Authentication failed due to incorrect credentials."
 msgstr "Неуспела аутентификација због погрешних креденцијала."
 
-#: lib/email_helper/probe.rb:274
+#: lib/email_helper/probe.rb:273
 msgid "Authentication failed due to incorrect username."
 msgstr "Неуспела аутентификација због погрешног корисничког имена."
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:272
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:271
 msgid "Authentication failed."
 msgstr "Неуспела аутентификација."
 
-#: lib/email_helper/probe.rb:277
+#: lib/email_helper/probe.rb:276
 msgid "Authentication not possible (not offered by the service)"
 msgstr "Аутентификација није могућа (сервис је не подржава)"
 
@@ -3217,7 +3251,7 @@ msgid "Back to previous page"
 msgstr "Иди на претходну страну"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:122
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:139
 msgid "Back to search results"
 msgstr "Иди назад на резултате претраге"
 
@@ -3255,7 +3289,7 @@ msgstr ""
 msgid "Base"
 msgstr "Основа"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:510
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:513
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:35
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:91
 msgid "Base DN"
@@ -3495,8 +3529,8 @@ msgstr "Опције CAPTCHA провајдера"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:173
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:105
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
@@ -3650,6 +3684,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue:24
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:209
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:201
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:30
@@ -3659,7 +3694,8 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:68
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:46
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:169
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:140
 msgid "Cancel"
 msgstr "Откажи"
 
@@ -3690,7 +3726,9 @@ msgstr "Откажи и одјави се"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:354
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:72
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:438
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3753,7 +3791,7 @@ msgstr "Категорије"
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:193
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:186
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:58
 msgid "Category"
 msgstr "Категорија"
@@ -3762,11 +3800,11 @@ msgstr "Категорија"
 msgid "Category Attribute"
 msgstr "Атрибут категорије"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:167
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:183
 msgid "Category actions"
 msgstr "Радње категорије"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
 msgid "Category count: %s"
 msgstr "Број категорија: %s"
 
@@ -3832,7 +3870,7 @@ msgstr "Измени датум"
 msgid "Change icon set"
 msgstr "Промени сет иконица"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:110
 msgid "Change language"
 msgstr "Промени језик"
 
@@ -3849,7 +3887,7 @@ msgstr "Промени лозинку"
 msgid "Change personal account password."
 msgstr "Измена личне лозинке налога."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:192
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr "Измени боју текста"
@@ -3925,9 +3963,9 @@ msgstr "Направљене измене захтевају освежење б
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:68
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:163
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:123
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:124
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:162
 msgid "Channel"
 msgstr "Канал"
@@ -4179,7 +4217,7 @@ msgstr "Изабери свој пожељни метод двофакторск
 msgid "Christmas holiday"
 msgstr "Божићни празници"
 
-#: db/seeds/object_manager_attributes.rb:1357
+#: db/seeds/object_manager_attributes.rb:1356
 msgid "City"
 msgstr "Град"
 
@@ -4231,8 +4269,7 @@ msgstr "Чисти радне траке мобилних уређаја."
 msgid "Clear Selection"
 msgstr "Очисти избор"
 
-#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:29
+#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:6
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 msgid "Clear all"
@@ -4308,7 +4345,7 @@ msgstr "Кликни овде"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Кликни овде за поставку метода двофакторске аутентификације."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
 msgid "Click to edit…"
 msgstr "Кликни за уређивање…"
 
@@ -4396,6 +4433,18 @@ msgstr "Затвори бочни панел"
 #: db/seeds/settings.rb:3069
 msgid "Close tab"
 msgstr "Затвори прозор"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:15
+msgid "Close tab and add another answer"
+msgstr "Затвори прозор и додај нови чланак"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:13
+msgid "Close tab and open the answer"
+msgstr "Затвори прозор и отвори чланак"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:14
+msgid "Close tab and open the category"
+msgstr "Затвори прозор и отвори категорију"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:46
@@ -4544,7 +4593,7 @@ msgstr "Услови за захваћене објекте"
 msgid "Conditions for shown tickets"
 msgstr "Услови за приказане тикете"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:138
 msgid "Config"
 msgstr "Конфигурација"
 
@@ -4717,7 +4766,7 @@ msgstr "Повежи"
 msgid "Connect Channels"
 msgstr "Повежи канале"
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:679
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:682
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:8
 msgid "Connect Exchange App"
 msgstr "Повежи Exchange апликацију"
@@ -4780,7 +4829,7 @@ msgstr "Веза је поново успостављена"
 msgid "Connection test successful"
 msgstr "Проба везе је успела"
 
-#: lib/ai/vectordb.rb:314
+#: lib/ai/vectordb.rb:324
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr "Неуспешно повезивање са Elasticsearch векторском базом података"
 
@@ -4910,7 +4959,7 @@ msgstr "Копирај"
 msgid "Copy URL"
 msgstr "Копирај URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:133
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:181
 msgid "Copy answer title"
 msgstr "Ископирај наслов чланка"
 
@@ -4930,7 +4979,7 @@ msgstr "Ископирај шифре"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Копирај број тренутног објекта (нпр. Ticket#) у привремену меморију"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:28
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:29
 msgid "Copy knowledge base name"
 msgstr "Ископирај назив базе знања"
 
@@ -5099,7 +5148,7 @@ msgstr "Број неуспешно обрађених имејл порука"
 msgid "Counting entries. This may take a while."
 msgstr "Бројање уноса. Ово може потрајати."
 
-#: db/seeds/object_manager_attributes.rb:1398
+#: db/seeds/object_manager_attributes.rb:1397
 msgid "Country"
 msgstr "Земља"
 
@@ -5115,8 +5164,8 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:365
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:180
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:248
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:499
@@ -5317,12 +5366,12 @@ msgstr "Додај:"
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:94
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList.vue:35
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:145
 #: app/models/report.rb:22
 msgid "Created"
 msgstr "Додато"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
 msgid "Created Article"
 msgstr "Додат чланак"
 
@@ -5333,11 +5382,11 @@ msgstr "Додат чланак"
 msgid "Created At"
 msgstr "Додато у"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:114
 msgid "Created External Article"
 msgstr "Додат екстерни чланак"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:112
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:113
 msgid "Created Internal Article"
 msgstr "Додат интерни чланак"
 
@@ -5355,9 +5404,9 @@ msgstr "Додат интерни чланак"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:22
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:72
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:25
@@ -5398,7 +5447,7 @@ msgstr "Додато од стране"
 msgid "Created within last 14 days"
 msgstr "Додато у последњих 14 дана"
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:40
+#: app/assets/javascripts/app/controllers/audit_log.coffee:53
 msgid "Created within last 24 hours"
 msgstr "Додато у последњих 24 часа"
 
@@ -5545,7 +5594,7 @@ msgstr "Прилагођене инструкције"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:89
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:85
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:35
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:93
@@ -5597,7 +5646,7 @@ msgstr ""
 "Тикети клијент корисника ће бити неповратно обрисани по извршавању захтева."
 
 #: app/assets/javascripts/app/models/organization.coffee:7
-#: db/seeds/object_manager_attributes.rb:1791
+#: db/seeds/object_manager_attributes.rb:1790
 msgid "Customers in the organization can view each other's items."
 msgstr "Клијенти у организацији могу да виде ставке једни других."
 
@@ -5664,7 +5713,6 @@ msgstr "Неопходно ажурирање базе података"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:183
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 msgid "Date"
 msgstr "Датум"
@@ -5724,7 +5772,7 @@ msgstr "Умањи вредност минута"
 msgid "Decrement seconds value"
 msgstr "Умањи вредност секунди"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:354
 msgid "Decryption failed!"
 msgstr "Неуспело дешифровање!"
 
@@ -5733,7 +5781,7 @@ msgstr "Неуспело дешифровање!"
 msgid "Decryption failed! %s"
 msgstr "Неуспело дешифровање! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:352
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6981,6 +7029,14 @@ msgstr "Избриши све подкатегорије и чланке, па �
 msgid "Delete all existing records first."
 msgstr "Најпре избриши све постојеће записе."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:186
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:105
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete answer"
+msgstr "Брисање корисника"
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:77
 msgid "Delete article"
 msgstr "Избриши чланак"
@@ -6989,7 +7045,7 @@ msgstr "Избриши чланак"
 msgid "Delete avatar"
 msgstr "Избриши аватар"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:72
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:92
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:168
 msgid "Delete category"
 msgstr "Обриши категорију"
@@ -7102,7 +7158,7 @@ msgstr "Захтев за брисање"
 msgid "Deletion failed."
 msgstr "Неуспело брисање."
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:38
+#: app/assets/javascripts/app/controllers/audit_log.coffee:51
 msgid "Deletions only"
 msgstr "Само брисано"
 
@@ -7115,7 +7171,7 @@ msgstr "Неуспела испорука:"
 msgid "Delivery failed: \"%s\""
 msgstr "Неуспела испорука: \"%s\""
 
-#: db/seeds/object_manager_attributes.rb:1235
+#: db/seeds/object_manager_attributes.rb:1234
 msgid "Department"
 msgstr "Одељење"
 
@@ -7207,12 +7263,12 @@ msgid "Detect Duplicate Ticket Creation"
 msgstr "Откривање дупликата тикета приликом отварања"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:158
-#: db/seeds/object_manager_attributes.rb:752
+#: db/seeds/object_manager_attributes.rb:751
 msgid "Detected Language"
 msgstr "Откривени језик"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:116
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:94
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:117
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
 msgid "Detected language"
 msgstr "Откривени језик"
 
@@ -7351,7 +7407,8 @@ msgid "Discard article"
 msgstr "Откажи чланак"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:351
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:231
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:434
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
@@ -7440,6 +7497,7 @@ msgstr "Не користи за семантичку претрагу"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:24
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:123
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts:43
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:103
 msgid "Do you really want to delete \"%s\"?"
 msgstr "Да ли сте сигурни да желите да обришете „%s”?"
@@ -7456,6 +7514,10 @@ msgstr "Да ли сте сигурни да желите да обришете 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:152
 msgid "Do you really want to delete your current avatar?"
 msgstr "Да ли сте сигурни да желите да обришете ваш тренутан аватар?"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:83
+msgid "Do you really want to remove the scheduled change to %s?"
+msgstr "Да ли сте сигурни да желите да обришете заказану видљивост за %s?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
 msgid "Do you really want to set the visibility of this article to \"public\"?"
@@ -7476,7 +7538,7 @@ msgstr "Да ли желите да их обрадите пре него што
 msgid "Document file"
 msgstr "Документ датотека"
 
-#: db/seeds/object_manager_attributes.rb:1833
+#: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain"
 msgstr "Домен"
 
@@ -7485,7 +7547,7 @@ msgstr "Домен"
 msgid "Domain Alias"
 msgstr "Алиас домена"
 
-#: db/seeds/object_manager_attributes.rb:1833
+#: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain based assignment"
 msgstr "Додела на основу домена"
 
@@ -7496,7 +7558,7 @@ msgstr ""
 "Без учитавања CSS за форму. Биће неопходно да генеришете сопствени CSS за "
 "форму."
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:614
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:617
 msgid "Don't synchronize"
 msgstr "Без синхронизације"
 
@@ -7582,14 +7644,14 @@ msgstr "Преузми оригинални имејл"
 msgid "Download raw email"
 msgstr "Преузми изворни имејл"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:380
 msgid "Downloading attachments…"
 msgstr "Преузимање прилога…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
 #: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:14
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:140
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 msgid "Draft"
 msgstr "Нацрт"
@@ -7737,12 +7799,18 @@ msgstr "Измени организацију"
 msgid "Edit Video Server"
 msgstr "Уредите видео сервер"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:59
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:96
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:156
+msgid "Edit answer"
+msgstr "Уреди чланак"
+
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:20
 msgid "Edit authenticator app"
 msgstr "Уреди апликацију за аутентификацију"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:58
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:80
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:159
 msgid "Edit category"
 msgstr "Уреди категорију"
@@ -7764,6 +7832,10 @@ msgstr "Уреди задатак"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:147
 msgid "Edit knowledge base"
 msgstr "Уреди базу знања"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:115
+msgid "Edit knowledge base answer"
+msgstr "Уреди чланак базе знања"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:63
 msgid "Edit mask"
@@ -7842,7 +7914,7 @@ msgstr "Elasticsearch SSL провера"
 msgid "Elasticsearch Total Payload Size"
 msgstr "Укупна величина Elasticsearch података"
 
-#: lib/ai/vectordb.rb:337
+#: lib/ai/vectordb.rb:347
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch индекса не постоји"
 
@@ -7878,7 +7950,7 @@ msgstr "Elasticsearch верзија"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
-#: db/seeds/object_manager_attributes.rb:924 db/seeds/permissions.rb:131
+#: db/seeds/object_manager_attributes.rb:923 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
 msgstr "Имејл"
@@ -8021,6 +8093,11 @@ msgid ""
 msgstr ""
 "Имејл поруке пре времена престанка биће увежене као архивирани тикети. Имејл "
 "поруке након времена престанка биће увежене као редовни тикети."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:310
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:144
+msgid "Embed video"
+msgstr "Убаци видео"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
 msgid "Embedding Model"
@@ -8543,6 +8620,7 @@ msgid "Enter time zone"
 msgstr "Унеси временску зону"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:128
 msgid "Enter video URL"
 msgstr "Унеси видео URL адресу"
 
@@ -8855,7 +8933,7 @@ msgstr "Exchange конфигурација"
 msgid "Exchange integration"
 msgstr "Exchange интеграција"
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:731
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:734
 msgid "Exchange integration for contacts management."
 msgstr "Exchange интеграција управљања контактима."
 
@@ -9067,7 +9145,7 @@ msgid "Failed to upload."
 msgstr "Неуспешно отпремање."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/fax.ts:7
-#: db/seeds/object_manager_attributes.rb:1100
+#: db/seeds/object_manager_attributes.rb:1099
 msgid "Fax"
 msgstr "Факс"
 
@@ -9181,15 +9259,15 @@ msgstr "Заврши"
 msgid "Finish setup"
 msgstr "Заврши поставку"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "First Article"
 msgstr "Први чланак"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "First External Article"
 msgstr "Први екстерни чланак"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "First Internal Article"
 msgstr "Први интерни чланак"
 
@@ -9229,7 +9307,7 @@ msgstr "Први чланак (најстарији)"
 
 #: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
-#: db/seeds/object_manager_attributes.rb:818
+#: db/seeds/object_manager_attributes.rb:817
 msgid "First name"
 msgstr "Име"
 
@@ -9297,12 +9375,12 @@ msgid "Follow up to all"
 msgstr "Настави свима"
 
 #: app/assets/javascripts/app/models/group.coffee:9
-#: db/seeds/object_manager_attributes.rb:2182
+#: db/seeds/object_manager_attributes.rb:2181
 msgid "Follow-up for closed ticket possible or not."
 msgstr "Омогућавање наставка затворених тикета."
 
 #: app/assets/javascripts/app/models/group.coffee:9
-#: db/seeds/object_manager_attributes.rb:2172
+#: db/seeds/object_manager_attributes.rb:2171
 msgid "Follow-up possible"
 msgstr "Могућ наставак"
 
@@ -9423,7 +9501,7 @@ msgid "Format as _underlined_"
 msgstr "Форматирај као _подвучено_"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:160
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr "Форматирај као подебљано"
@@ -9441,7 +9519,7 @@ msgid "Format as h3 heading"
 msgstr "Форматирај као h3 заглавље"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:168
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr "Форматирај као курзив"
@@ -9450,19 +9528,19 @@ msgstr "Форматирај као курзив"
 msgid "Format as ordered list"
 msgstr "Форматирај као листу са бројевима"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:200
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 msgid "Format as quoted text"
 msgstr "Форматирај као цитиран текст"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:184
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr "Форматирај као прецртано"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:176
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr "Форматирај као подвучено"
@@ -9523,8 +9601,8 @@ msgstr "Friendly Captcha"
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:83
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:95
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "From"
 msgstr "Од"
@@ -9771,7 +9849,7 @@ msgstr "Иди на почетну"
 msgid "Go inside group"
 msgstr "Иди унутар групе"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:61
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:55
 msgid "Go to knowledge base"
 msgstr "Иди на базу знања"
@@ -9858,7 +9936,7 @@ msgstr "Поздрав"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:31
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:36
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:36
 #: app/graphql/gql/types/overview_type.rb:95
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -9893,7 +9971,7 @@ msgstr "Група (читање)"
 msgid "Group Filter"
 msgstr "Филтер групе"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:557
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:560
 msgid ""
 "Group information could not be retrieved, please check your bind user "
 "permissions."
@@ -9911,7 +9989,7 @@ msgstr "Неопходна група у подешавању канала!"
 
 #: app/assets/javascripts/app/models/role.coffee:8
 #: app/assets/javascripts/app/models/user.coffee:22
-#: db/seeds/object_manager_attributes.rb:1661
+#: db/seeds/object_manager_attributes.rb:1660
 msgid "Group permissions"
 msgstr "Групне дозволе"
 
@@ -10053,19 +10131,19 @@ msgid "Header Menu"
 msgstr "Мени у заглављу"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:122
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 msgid "Heading 1"
 msgstr "Наслов 1"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:134
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 msgid "Heading 2"
 msgstr "Наслов 2"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:146
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 msgid "Heading 3"
 msgstr "Наслов 3"
@@ -10306,7 +10384,7 @@ msgid "Honeypot spam protection"
 msgstr "Honeypot заштита од непожељних поднесака"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:331
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:67
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
@@ -10421,7 +10499,7 @@ msgid "Icinga integration"
 msgstr "Icinga интеграција"
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:63
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:56
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:58
 msgid "Icon"
 msgstr "Иконица"
 
@@ -10839,7 +10917,7 @@ msgstr "Укључује ескалиране, нове и отворене и �
 msgid "Including private key."
 msgstr "Укључује и тајни кључ."
 
-#: lib/ai/vectordb.rb:330
+#: lib/ai/vectordb.rb:340
 msgid "Incompatible Elasticsearch version"
 msgstr "Некомпатибилна верзија Elasticsearch"
 
@@ -10877,7 +10955,7 @@ msgstr "Увећај вредност минута"
 msgid "Increment seconds value"
 msgstr "Увећај вредност секунди"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:270
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr "Увуци текст"
@@ -10926,7 +11004,7 @@ msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 "Поље уноса мора бити типа текста, лозинке, телефона, факса, имејла или URL-а."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:227
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr "Додај блок кôда"
@@ -10939,7 +11017,7 @@ msgstr "Додај колону после"
 msgid "Insert column before"
 msgstr "Додај колону пре"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:235
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Додај разделник"
@@ -10949,7 +11027,7 @@ msgstr "Додај разделник"
 msgid "Insert element"
 msgstr "Додај елемент"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:216
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr "Додај уметнути кôд"
@@ -10962,17 +11040,17 @@ msgstr "Додај ред изнад"
 msgid "Insert row below"
 msgstr "Додај ред испод"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:342
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr "Додај табелу"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:96
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 msgid "Insert text from knowledge base answer"
 msgstr "Убацује чланак базе знања"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:105
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr "Убаци текст из текстуалног исечка"
@@ -11055,7 +11133,7 @@ msgstr "Неуспела провера интегритета преузето�
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:19
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:145
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:22
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:206
 msgid "Internal"
@@ -11083,8 +11161,8 @@ msgstr ""
 "векторског индексирања базе знања. Користи се за откривање застарелости "
 "индекса, без Elasticsearch упита."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:33
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:96
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:46
 msgid "Internally published"
 msgstr "Интерно објављен"
@@ -11094,7 +11172,7 @@ msgstr "Интерно објављен"
 msgid "Internally published at"
 msgstr "Интерно објављен у"
 
-#: app/models/import_job.rb:172
+#: app/models/import_job.rb:188
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
 "manually or wait until the next execution time."
@@ -11265,6 +11343,7 @@ msgid "Invalid values in step %s"
 msgstr "Неисправне вредности у кораку %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:78
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:123
 msgid "Invalid video URL"
 msgstr "Неисправан видео URL"
 
@@ -11382,7 +11461,7 @@ msgstr "Није могуће обрисати системског корисн
 msgid "It is not possible to delete your current account."
 msgstr "Није могуће обрисати ваш тренутни налог."
 
-#: app/models/ticket.rb:299
+#: app/models/ticket.rb:301
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Није могуће спојити већ спојени тикет."
 
@@ -11496,7 +11575,7 @@ msgstr "Кључне речи"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:70
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:118
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:103
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
@@ -11561,20 +11640,50 @@ msgstr "Језик базе знања"
 msgid "Knowledge Base multilingual support"
 msgstr "Мултијезичка подршка базе знања"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:346
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:356
 msgid "Knowledge base actions"
 msgstr "Радње базе знања"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:331
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:28
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:211
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:172
 msgid "Knowledge base answer"
 msgstr "Чланак базе знања"
+
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts:128
+#, fuzzy
+#| msgid "Profile appearance updated successfully."
+msgid "Knowledge base answer deleted successfully."
+msgstr "Изглед профила је успешно освежен."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/KnowledgeBaseAnswerScreenBehavior.vue:71
+#, fuzzy
+#| msgid "Ticket screen behavior updated successfully"
+msgid "Knowledge base answer screen behavior updated successfully."
+msgstr "Понашање екрана тикета је успешно освежено"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
+#, fuzzy
+#| msgid "Profile appearance updated successfully."
+msgid "Knowledge base answer updated successfully."
+msgstr "Изглед профила је успешно освежен."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:125
+#, fuzzy
+#| msgid ""
+#| "User with specified ID was not found. Try checking the URL for errors."
+msgid ""
+"Knowledge base answer with specified ID was not found. Try checking the URL "
+"for errors."
+msgstr ""
+"Није пронађен корисник под траженим ID. Проверите URL путању на грешке."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
 msgid "Knowledge base articles"
 msgstr "Чланци базе знања"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:74
 msgid "Knowledge base controls"
 msgstr "Контроле базе знања"
 
@@ -11590,12 +11699,12 @@ msgstr "Извор чланака базе знања"
 
 #: app/assets/javascripts/app/views/ai/missing_knowledge_base_alert.jst.eco:2
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:14
-#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:18
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:20
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:45
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr "База знања је недоступна или није исправно подешена."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:46
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:59
 msgid "Knowledge base navigation"
 msgstr "Навигација базе знања"
 
@@ -11622,7 +11731,7 @@ msgstr "LDAP сервер"
 msgid "LDAP integration"
 msgstr "LDAP интеграција"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:861
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:864
 msgid "LDAP integration for user management."
 msgstr "LDAP интеграција за управљање корисницима."
 
@@ -11660,7 +11769,7 @@ msgstr "Сервис откривања језика"
 msgid "Languages"
 msgstr "Језици"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Article"
 msgstr "Последњи чланак"
 
@@ -11680,7 +11789,7 @@ msgstr "Последњи одговор у"
 msgid "Last Contact Customer At"
 msgstr "Последњи одговор клијента у"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:111
 msgid "Last External Article"
 msgstr "Последњи екстерни чланак"
 
@@ -11688,7 +11797,7 @@ msgstr "Последњи екстерни чланак"
 msgid "Last Feedback Reset"
 msgstr "Последње ресетовање мишљења"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Last Internal Article"
 msgstr "Последњи интерни чланак"
 
@@ -11745,7 +11854,7 @@ msgstr "Последња пријава"
 
 #: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
-#: db/seeds/object_manager_attributes.rb:871
+#: db/seeds/object_manager_attributes.rb:870
 msgid "Last name"
 msgstr "Презиме"
 
@@ -11770,7 +11879,7 @@ msgstr "Последња синхронизација"
 msgid "Last sync at:"
 msgstr "Последња синхронизација у:"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:53
 msgid "Last updated"
 msgstr "Последње освежено"
 
@@ -11888,8 +11997,9 @@ msgstr "Ограничена видљивост"
 #: app/assets/javascripts/app/models/public_link.coffee:6
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:28
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:61
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#: app/frontend/shared/components/Form/FormFieldLink.vue:21
+#: app/frontend/shared/components/Form/FormFieldLink.vue:24
 msgid "Link"
 msgstr "Повежи"
 
@@ -11918,7 +12028,7 @@ msgstr "Повежите GitHub извештаје са тикетима."
 msgid "Link GitLab issues to your tickets."
 msgstr "Повежите GitLab извештаје са тикетима."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:147
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:151
 msgid "Link URL"
 msgstr "URL адреса линка"
 
@@ -11933,6 +12043,11 @@ msgstr "Веза тикета је успешно додата"
 #: lib/validations/link_uniqueness_validator.rb:9
 msgid "Link already exists"
 msgstr "Веза већ постоји"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:213
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:321
+msgid "Link answer"
+msgstr "Повежи чланак"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:43
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:69
@@ -11956,10 +12071,12 @@ msgstr "Повежи објекте"
 msgid "Link template"
 msgstr "Шаблон везе"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:149
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:153
 msgid "Link text"
 msgstr "Текст линка"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:129
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Link ticket"
@@ -12127,7 +12244,7 @@ msgstr "Евидентирано у последњих 7 дана"
 #: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
-#: db/seeds/object_manager_attributes.rb:785
+#: db/seeds/object_manager_attributes.rb:784
 msgid "Login"
 msgstr "Пријава"
 
@@ -12595,7 +12712,7 @@ msgstr "мар"
 msgid "March"
 msgstr "март"
 
-#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
+#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:126
 msgid "Mark all as read"
 msgstr "Обележи све као прочитано"
@@ -12745,7 +12862,7 @@ msgstr "Чланови"
 msgid "Mention for"
 msgstr "Поменути корисник"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:87
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr "Помени корисника"
@@ -12805,7 +12922,7 @@ msgid "Message for login page."
 msgstr "Порука за страну пријављивања."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:16
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:141
 msgid "Message status"
 msgstr "Статус поруке"
 
@@ -12814,19 +12931,19 @@ msgstr "Статус поруке"
 msgid "Messages"
 msgstr "Поруке"
 
-#: app/models/webhook/pre_defined/mattermost.rb:38
+#: app/models/webhook/pre_defined/mattermost.rb:37
 msgid "Messaging Channel"
 msgstr "Канал за поруке"
 
-#: app/models/webhook/pre_defined/mattermost.rb:45
+#: app/models/webhook/pre_defined/mattermost.rb:44
 msgid "Messaging Icon URL"
 msgstr "URL иконице за поруке"
 
-#: app/models/webhook/pre_defined/mattermost.rb:31
+#: app/models/webhook/pre_defined/mattermost.rb:30
 msgid "Messaging Username"
 msgstr "Корисничко име за поруке"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:93
 msgid "Meta data"
 msgstr "Мета подаци"
 
@@ -12953,7 +13070,7 @@ msgid "Mistral AI"
 msgstr "Mistral AI"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:23
-#: db/seeds/object_manager_attributes.rb:1059
+#: db/seeds/object_manager_attributes.rb:1058
 msgid "Mobile"
 msgstr "Мобилни"
 
@@ -13134,7 +13251,7 @@ msgstr "Nagios интеграција"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:526
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:328
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:79
@@ -13203,7 +13320,7 @@ msgstr "Nagios интеграција"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:180
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:163
-#: db/seeds/object_manager_attributes.rb:1745 public/assets/form/form.js:24
+#: db/seeds/object_manager_attributes.rb:1744 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Назив"
 
@@ -13469,8 +13586,8 @@ msgid "New desktop BETA UI"
 msgstr "Нови основни BETA интерфејс"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerCreate.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:230
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:111
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:92
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:107
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:90
 msgid "New knowledge base answer"
 msgstr "Нови чланак базе знања"
@@ -13798,7 +13915,7 @@ msgid "No drafts"
 msgstr "Нема нацрта"
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:25
-#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:26
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:28
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:96
 msgid "No editable knowledge base categories available."
 msgstr "Нема доступних категорија базе знања за уређивање."
@@ -13852,7 +13969,7 @@ msgstr "Тренутно нема увоза."
 msgid "No items available"
 msgstr "Нема доступних ставки"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:321
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:329
 msgid "No knowledge base content is available yet."
 msgstr "Нема доступног садржаја базе знања за приказ."
 
@@ -13865,7 +13982,7 @@ msgstr "Није подешен језик базе знања."
 msgid "No linked issues"
 msgstr "Нема повезаних извештаја"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr "Нема додатих веза."
@@ -13992,7 +14109,7 @@ msgstr ""
 "Нису пронађени одговарајући атрибути, молимо додајте један од подржаних "
 "типова: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
 msgstr "Нема додатих ознака."
@@ -14010,18 +14127,19 @@ msgid "No token!"
 msgstr "Нема кључа!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:41
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:101
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:125
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:98
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:172
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:206
 msgid "No translation for this locale available"
 msgstr "Нема превода за овај локал"
 
-#: app/models/ticket.rb:432
+#: app/models/ticket.rb:434
 msgid "No triggers active"
 msgstr "Нема активних окидача"
 
-#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:9
+#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:11
 msgid "No unread notifications for you. :)"
 msgstr "Немате непрочитаних обавештења. :)"
 
@@ -14036,6 +14154,10 @@ msgstr "Без отварања налога по пријави"
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:59
 msgid "No valid knowledge base category provided."
 msgstr "Недостаје исправна категорија базе знања."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:164
+msgid "No visibility changes scheduled yet."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -14111,7 +14233,7 @@ msgstr "Недодељени"
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
 #: app/controllers/application_controller/handles_errors.rb:61
-#: app/services/service/ticket/article/create.rb:131
+#: app/services/service/ticket/article/create.rb:136
 msgid "Not authorized"
 msgstr "Без ауторизације"
 
@@ -14133,9 +14255,9 @@ msgstr "Није подешено"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:55
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerCreateView.ts:31
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:84
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
@@ -14171,7 +14293,7 @@ msgstr "Није пронађено – није пронађен ресурс"
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:104
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:14
-#: db/seeds/object_manager_attributes.rb:1569
+#: db/seeds/object_manager_attributes.rb:1568
 msgid "Note"
 msgstr "Напомена"
 
@@ -14200,7 +14322,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee:15
 #: app/assets/javascripts/app/models/role.coffee:10
 #: app/assets/javascripts/app/models/signature.coffee:26
-#: db/seeds/object_manager_attributes.rb:1576
+#: db/seeds/object_manager_attributes.rb:1575
 msgid "Notes are visible to agents only, never to customers."
 msgstr "Напомене су видљиве оператерима, али не и клијентима."
 
@@ -14273,7 +14395,7 @@ msgstr "Звук обавештења"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:22
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
 #: db/seeds/permissions.rb:515
@@ -14448,12 +14570,12 @@ msgid "On %s, %s wrote:"
 msgstr "У %s, %s је написао/ла:"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
-#: db/seeds/object_manager_attributes.rb:2471
+#: db/seeds/object_manager_attributes.rb:2470
 msgid "On ticket detail opening"
 msgstr "По учитавању детаљног приказа тикета"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
-#: db/seeds/object_manager_attributes.rb:2475
+#: db/seeds/object_manager_attributes.rb:2474
 msgid "On ticket summary sidebar activation"
 msgstr "По активацији бочне траке сажетог описа тикета"
 
@@ -14559,7 +14681,7 @@ msgstr ""
 "корисницима."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:102
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:141
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:18
 msgid "Only visible to editors"
 msgstr "Видљиво само уредницима"
 
@@ -14873,7 +14995,7 @@ msgstr "Организатор"
 msgid "Origin By"
 msgstr "Потиче од"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:128
 msgid "Original Formatting"
 msgstr "Оригиналан формат"
 
@@ -14882,7 +15004,7 @@ msgid "Original Translation"
 msgstr "Оригиналан превод"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:41
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:58
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:60
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original formatting"
 msgstr "Оригиналан формат"
@@ -14959,7 +15081,7 @@ msgstr "Одлазнo:"
 msgid "Outdated Browser"
 msgstr "Застарео претраживач"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:278
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr "Развуци текст"
@@ -15119,11 +15241,11 @@ msgstr "Неопходан ’private_key’ или ’file’ парамета�
 msgid "Parent"
 msgstr "Надређени"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:74
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:76
 msgid "Parent category"
 msgstr "Надређена категорија"
 
-#: db/seeds/object_manager_attributes.rb:2104
+#: db/seeds/object_manager_attributes.rb:2103
 msgid "Parent group"
 msgstr "Надређена група"
 
@@ -15149,7 +15271,7 @@ msgstr "Надређена група"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
-#: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:480
+#: db/seeds/object_manager_attributes.rb:1480 db/seeds/permissions.rb:480
 msgid "Password"
 msgstr "Лозинка"
 
@@ -15301,7 +15423,7 @@ msgstr "Ниво дозвола при претраживању тикета"
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:89
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
@@ -15342,7 +15464,7 @@ msgstr "Лична подешавања"
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:1018 db/seeds/permissions.rb:374
+#: db/seeds/object_manager_attributes.rb:1017 db/seeds/permissions.rb:374
 msgid "Phone"
 msgstr "Позив"
 
@@ -15457,7 +15579,7 @@ msgid "Please configure import source before running."
 msgstr "Молимо подесите извор увоза пре почетка."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:322
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:330
 msgid "Please contact your administrator."
 msgstr "Молимо контактирајте администратора."
 
@@ -15950,7 +16072,7 @@ msgstr "Прокси адреса"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:150
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
 msgid "Public"
 msgstr "Јавно"
@@ -15978,9 +16100,9 @@ msgid "Publish Article"
 msgstr "Објави чланак"
 
 #: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:24
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:45
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:33
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:76
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:104
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:50
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
 msgid "Published"
@@ -16046,8 +16168,8 @@ msgstr "Премашено ограничење коришћења - сачек�
 msgid "Rating can only be set once"
 msgstr "Резултат може бити оцењен само једанпут"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:43
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:107
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:45
 msgid "Raw"
 msgstr "Сирово"
 
@@ -16137,6 +16259,7 @@ msgstr "Недавно затворене ставке су успешно ук�
 msgid "Recently viewed"
 msgstr "Недавно виђени"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:125
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:69
 msgid "Recently viewed tickets"
 msgstr "Недавно виђени тикети"
@@ -16257,13 +16380,13 @@ msgid ""
 msgstr ""
 "Генерисање повезаног чланка базе знања је већ започето за тренутни тикет."
 
-#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:31
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:33
 msgid ""
 "Related knowledge base answer creation has already been started for given "
 "ticket."
 msgstr "Генерисање повезаног чланка базе знања је већ започето за дати тикет."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:43
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:84
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
@@ -16337,6 +16460,7 @@ msgstr "Удаљено"
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:85
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
@@ -16392,7 +16516,7 @@ msgid "Remove filter"
 msgstr "Уклони филтер"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:208
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
@@ -16411,7 +16535,8 @@ msgstr "Уклони слику"
 msgid "Remove item"
 msgstr "Уклони задатак"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:159
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:163
 msgid "Remove link"
 msgstr "Уклони линк"
 
@@ -16423,6 +16548,10 @@ msgstr "Уклони метод"
 msgid "Remove notification"
 msgstr "Уклони обавештење"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:85
+msgid "Remove scheduled visibility change"
+msgstr ""
+
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:22
 msgid "Remove security keys"
 msgstr "Уклони безбедносне кључеве"
@@ -16431,6 +16560,11 @@ msgstr "Уклони безбедносне кључеве"
 msgid "Remove selected values"
 msgstr "Уклони одабране вредности"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:152
+msgid "Remove this scheduled visibility change"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
 msgid "Remove this tag"
 msgstr "Уклони ову ознаку"
@@ -16442,6 +16576,10 @@ msgstr "Уклони двофакторску аутентификацију"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:39
 msgid "Remove two-factor authentication: %s"
 msgstr "Уклањање двофакторске аутентификације: %s"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts:60
+msgid "Remove video"
+msgstr "Уклони видео"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 msgid "Removed reaction from message %s from %s"
@@ -16493,7 +16631,7 @@ msgid "Reopening rate"
 msgstr "Стопа поново отворених"
 
 #: app/assets/javascripts/app/models/group.coffee:10
-#: db/seeds/object_manager_attributes.rb:2210
+#: db/seeds/object_manager_attributes.rb:2209
 msgid "Reopening time in days"
 msgstr "Време поновног отварања у данима"
 
@@ -16542,7 +16680,7 @@ msgid "Reply to last article"
 msgstr "Одговори на последњи чланак"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:88
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
 msgid "Reply-To"
 msgstr "Reply-To"
 
@@ -16897,7 +17035,7 @@ msgstr "Опис улоге"
 
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
-#: db/seeds/object_manager_attributes.rb:1615 db/seeds/permissions.rb:23
+#: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
 msgid "Roles"
 msgstr "Улоге"
 
@@ -17199,6 +17337,10 @@ msgstr "Сачувај обавештења"
 msgid "Save out of office"
 msgstr "Сачувај ван канцеларије"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:120
+msgid "Save the answer in this language before linking tickets to it."
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee:10
 msgid "Saved conditions"
 msgstr "Сачувани услови"
@@ -17206,19 +17348,35 @@ msgstr "Сачувани услови"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1212
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1214
 msgid "Saving failed."
 msgstr "Неуспешно снимање."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:182
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:58
 msgid "Schedule for"
 msgstr "Планер за"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:171
+msgid "Schedule visibility change"
+msgstr ""
 
 #: app/assets/javascripts/app/models/job.coffee:20
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:2
 msgid "Scheduled for"
 msgstr "Планирано за"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:109
+#, fuzzy
+#| msgid "Limited visibility"
+msgid "Scheduled visibility"
+msgstr "Ограничена видљивост"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:109
+#, fuzzy
+#| msgid "Ticket tag removed successfully."
+msgid "Scheduled visibility change removed successfully."
+msgstr "Ознака тикета је успешно уклоњена."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
@@ -17271,12 +17429,12 @@ msgstr "Скролуј на доле за %s нов(их) одговор(а)"
 msgid "Scroll down to see new messages"
 msgstr "Скролујте на доле за нове поруке"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:94
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:104
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 msgid "Scroll to end"
 msgstr "Скролуј до краја"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:78
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:88
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 msgid "Scroll to start"
 msgstr "Скролуј на почетак"
@@ -17347,7 +17505,7 @@ msgstr "Претражи LDAP изворе"
 msgid "Search for activity types"
 msgstr "Претражи врсте активности"
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:46
+#: app/assets/javascripts/app/controllers/audit_log.coffee:59
 msgid "Search for audit logs"
 msgstr "Претражи дневник ревизија"
 
@@ -17516,7 +17674,7 @@ msgstr ""
 msgid "Search result value key \"%s\" was not found."
 msgstr "Кључ вредности резулата претраге „%s” није пронађен."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:66
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:79
 msgid "Search the knowledge base"
 msgstr "Претражи базу знања"
 
@@ -17550,7 +17708,7 @@ msgstr "Тражи…"
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:149
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
-#: db/seeds/object_manager_attributes.rb:1187
+#: db/seeds/object_manager_attributes.rb:1186
 msgid "Secondary organizations"
 msgstr "Додатне организације"
 
@@ -17580,7 +17738,7 @@ msgstr "Шифра"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:183
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:148
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:296
 #: db/seeds/permissions.rb:209
@@ -17666,7 +17824,7 @@ msgid "See HTTPLog for details."
 msgstr "Погледајте HTTPLog за детаље."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
@@ -17674,7 +17832,7 @@ msgid "See less"
 msgstr "Прикажи мање"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:504
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -17964,7 +18122,7 @@ msgstr "Пошиљалац на основу Reply-To заглавља"
 msgid "Sender of last article"
 msgstr "Пошиљалац последњег чланка"
 
-#: db/seeds/object_manager_attributes.rb:2277
+#: db/seeds/object_manager_attributes.rb:2276
 msgid "Sending Email Address"
 msgstr "Имејл адреса за слање"
 
@@ -18006,8 +18164,8 @@ msgstr "септембар"
 msgid "Sequencer log level"
 msgstr "Ниво дневника секвенцера"
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:409
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:499
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:412
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:502
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:257
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:220
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:78
@@ -18225,7 +18383,7 @@ msgstr "Заједнички"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: db/seeds/object_manager_attributes.rb:2348
+#: db/seeds/object_manager_attributes.rb:2347
 msgid "Shared Drafts"
 msgstr "Заједнички нацрти"
 
@@ -18274,7 +18432,7 @@ msgid "Shared mailbox"
 msgstr "Заједничко поштанско сандуче"
 
 #: app/assets/javascripts/app/models/organization.coffee:7
-#: db/seeds/object_manager_attributes.rb:1786
+#: db/seeds/object_manager_attributes.rb:1785
 msgid "Shared organization"
 msgstr "Заједничка организација"
 
@@ -18529,11 +18687,11 @@ msgstr "Потпис:"
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:174
 #: app/assets/javascripts/app/models/group.coffee:13
 #: app/controllers/integration/smime_controller.rb:123
-#: db/seeds/object_manager_attributes.rb:2313
+#: db/seeds/object_manager_attributes.rb:2312
 msgid "Signature"
 msgstr "Потпис"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:343
 msgid "Signature verification failed!"
 msgstr "Неуспела потврда потписа!"
 
@@ -18934,6 +19092,7 @@ msgstr "Статус:"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
 #: db/seeds/settings.rb:3072
 msgid "Stay on tab"
@@ -19001,7 +19160,7 @@ msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr "Чува подешавања сажетог описа тикета (нпр. који садржај је видљив)."
 
-#: db/seeds/object_manager_attributes.rb:1276
+#: db/seeds/object_manager_attributes.rb:1275
 msgid "Street"
 msgstr "Улица"
 
@@ -19014,7 +19173,7 @@ msgstr "Улица"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
@@ -19056,6 +19215,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:128
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:50
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
 #: app/frontend/shared/form/i18n/locales.ts:41
 msgid "Submit"
 msgstr "Пошаљи"
@@ -19067,6 +19227,12 @@ msgstr "Пошаљи коментар"
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
 msgid "Submit comment"
 msgstr "Пошаљи коментар"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
+#, fuzzy
+#| msgid "No changes."
+msgid "Submit your changes"
+msgstr "Без измена."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:147
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
@@ -19134,7 +19300,7 @@ msgid "Summarize section to about half its current size"
 msgstr "Сажми одељак на отприлике половину његове тренутне величине"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:53
-#: db/seeds/object_manager_attributes.rb:2461
+#: db/seeds/object_manager_attributes.rb:2460
 msgid "Summary Generation"
 msgstr "Генерисање сажетог описа"
 
@@ -19290,9 +19456,21 @@ msgstr "Ознака"
 msgid "Tag \"%s\" already exists."
 msgstr "Ознака „%s” већ постоји."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
+#, fuzzy
+#| msgid "Ticket tag added successfully."
+msgid "Tag added successfully."
+msgstr "Ознака тикета је успешно додата."
+
 #: app/models/ai/agent/type/ticket_tagger.rb:165
 msgid "Tag assignment mode"
 msgstr "Режим доделе ознака"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
+#, fuzzy
+#| msgid "Ticket tag removed successfully."
+msgid "Tag removed successfully."
+msgstr "Ознака тикета је успешно уклоњена."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:37
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:46
@@ -19307,8 +19485,8 @@ msgstr "Означено %s"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:100
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:133
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:76
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
@@ -19441,7 +19619,7 @@ msgstr "Тестирање"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:79
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:106
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:208
 #: db/seeds/object_manager_attributes.rb:552
 msgid "Text"
@@ -19554,7 +19732,7 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr "Није било могуће пронаћи API кључ."
 
-#: lib/ai/vectordb.rb:67
+#: lib/ai/vectordb.rb:77
 msgid "The Elasticsearch index could not be created"
 msgstr "Није било могуће генерисати Elasticsearch индекс"
 
@@ -19698,9 +19876,15 @@ msgid "The admin password auth email could not be sent."
 msgstr ""
 "Није било могуће послати имејл поруку са привременом лозинком администратора."
 
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts:61
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts:58
 msgid "The answer could not be created."
 msgstr "Није било могуће додати чланак."
+
+#: app/services/service/knowledge_base/answer/visibility_schedule/add.rb:60
+msgid ""
+"The answer has already reached this visibility state, so a change to it "
+"cannot be scheduled."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:43
 msgid ""
@@ -19737,6 +19921,11 @@ msgstr "Није било могуће поставити чланак на ја
 #: app/controllers/ticket_articles_controller.rb:162
 msgid "The article does not belong to the specified ticket."
 msgstr "Чланак не припада наведеном тикету."
+
+#: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
+msgid ""
+"The attachments of this answer were changed by someone else in the meantime."
+msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee
 msgid ""
@@ -19995,7 +20184,7 @@ msgstr "Изгубљена је веза са сервером."
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:282
+#: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
 msgstr "Веза је одбијена."
 
@@ -20166,7 +20355,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:250
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:260
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:718
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee:721
 msgid "The entry could not be created."
 msgstr "Није било могуће додати унос."
 
@@ -20256,7 +20445,7 @@ msgstr "Дати метод двофакторске аутентификаци�
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:278
+#: lib/email_helper/probe.rb:277
 msgid "The hostname could not be found."
 msgstr "Није пронађен сервер."
 
@@ -20333,7 +20522,7 @@ msgstr "Референца извештаја већ постоји."
 msgid "The issue reference could not be found."
 msgstr "Није пронађена референца извештаја."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:148
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:152
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:96
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 msgid "The knowledge base could not be loaded."
@@ -20832,7 +21021,7 @@ msgstr "Није било могуће обрадити одговор."
 msgid "The retried attachment download failed."
 msgstr "Неуспешно поновно преузимање прилога."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:363
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -20870,11 +21059,17 @@ msgstr ""
 "Правила упућују AI агента када да генерише нове ознаке и када да употребљава "
 "ознаке из постојеће листе."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:65
+#, fuzzy
+#| msgid "Ticket tag could not be removed."
+msgid "The scheduled visibility change could not be removed."
+msgstr "Није било могуће уклонити ознаку тикета."
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "The seconds overlay"
 msgstr "Одабир секунди"
 
-#: app/services/service/knowledge_base/answer/create.rb:138
+#: app/services/service/knowledge_base/answer/base.rb:176
 msgid "The selected category does not belong to this knowledge base."
 msgstr "Одабрана категорија не припада овој бази знања."
 
@@ -20951,7 +21146,7 @@ msgstr ""
 "Део потписа ове PGP имејл поруке недостаје или има погрешан тип садржаја "
 "према RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -21046,6 +21241,18 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:68
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Систем је успешно постављен. Преусмеравамо вас на почетну страницу."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
+#, fuzzy
+#| msgid "Ticket tag could not be added."
+msgid "The tag could not be added."
+msgstr "Није било могуће додати ознаку тикета."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
+#, fuzzy
+#| msgid "Ticket tag could not be removed."
+msgid "The tag could not be removed."
+msgstr "Није било могуће уклонити ознаку тикета."
 
 #: app/controllers/tickets_controller.rb:363
 msgid "The target ticket number could not be found."
@@ -21323,7 +21530,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:279
 msgid "There is no route to this host."
 msgstr "Не постоји рута до овог сервера."
 
@@ -21443,6 +21650,10 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr ""
 "Ова алатка помоћника за писање преводи одабрани текст на енглески језик."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:35
+msgid "This answer has been updated. Submitting will replace those changes."
+msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:198
 msgid "This article does not have a raw copy available."
@@ -21701,7 +21912,7 @@ msgstr "Ова група нема постављену имејл адресу 
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "Број подређених група прекорачује максималну дозвољену дубину."
 
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:280
 msgid "This host cannot be reached."
 msgstr "Није било могуће остварити везу са овим сервером."
 
@@ -21746,7 +21957,7 @@ msgstr "Ово није важећи X509 сертификат. Молимо п�
 msgid "This item expands to show more options"
 msgstr "Овај елемент се проширује да прикаже додатне опције"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:56
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
 msgid "This knowledge base answer is not available."
 msgstr "Овај чланак базе знања није доступан."
 
@@ -21754,7 +21965,7 @@ msgstr "Овај чланак базе знања није доступан."
 msgid "This knowledge base category is not available."
 msgstr "Ова категорија базе знања није доступна."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerCreateView.ts:32
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:31
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 msgid "This knowledge base is not available in the selected language."
 msgstr "Ова база знања није доступна у одабраном језику."
@@ -22086,6 +22297,7 @@ msgstr "четвртак"
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
 #: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:15
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:52
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts:10
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
@@ -22356,6 +22568,12 @@ msgstr "Информације тикета"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:70
 msgid "Ticket information"
 msgstr "Информације тикета"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:96
+#, fuzzy
+#| msgid "Ticket updated successfully."
+msgid "Ticket linked successfully."
+msgstr "Тикет је успешно освежен."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:74
 msgid "Ticket merged successfully"
@@ -22725,7 +22943,6 @@ msgid "Timezone"
 msgstr "Временска зона"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:117
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:174
 msgid "Timing"
 msgstr "Прорачун времена"
 
@@ -22742,10 +22959,10 @@ msgstr "Прорачун времена"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:67
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:63
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:34
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:87
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:65
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:151
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34 lib/excel_sheet/ticket.rb:24
@@ -22761,8 +22978,8 @@ msgstr "Наслов форме"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:94
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:97
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
@@ -23382,6 +23599,7 @@ msgstr "Развежи чланак базе знања"
 msgid "Unlink object"
 msgstr "Развежи објекат"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:108
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
 msgid "Unlink ticket"
 msgstr "Развежи тикет"
@@ -23394,7 +23612,7 @@ msgstr "Откључај"
 msgid "Unpin this panel"
 msgstr "Откачи овај панел"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:108
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:118
 msgid "Unread messages count"
 msgstr "Број непрочитаних порука"
 
@@ -23478,7 +23696,8 @@ msgstr "Предстојећи догађаји"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:180
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:450
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
@@ -23639,7 +23858,7 @@ msgstr "Освежено у"
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:49
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:57
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -23877,7 +24096,7 @@ msgstr "Користи за препознавање текста на слик�
 msgid "Use for semantic search"
 msgstr "Користи за семантичку претрагу"
 
-#: db/seeds/object_manager_attributes.rb:2467
+#: db/seeds/object_manager_attributes.rb:2466
 msgid "Use global default"
 msgstr "Користи глобално понашање"
 
@@ -24027,7 +24246,7 @@ msgstr "Избор услова организације корисника - и
 msgid "User authorization failed."
 msgstr "Неуспела ауторизација корисника."
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:39
+#: app/assets/javascripts/app/controllers/audit_log.coffee:52
 msgid "User changes only"
 msgstr "Само промене корисника"
 
@@ -24064,7 +24283,7 @@ msgstr "Филтер корисника"
 msgid "User has no access"
 msgstr "Корисник нема приступ"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:552
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:555
 msgid ""
 "User information could not be retrieved, please check your bind user "
 "permissions."
@@ -24222,7 +24441,7 @@ msgstr ""
 "„заједничку”, што је могуће одредити по свакој организацији)."
 
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:117
-#: db/seeds/object_manager_attributes.rb:1526
+#: db/seeds/object_manager_attributes.rb:1525
 msgid "VIP"
 msgstr "VIP"
 
@@ -24359,6 +24578,10 @@ msgstr "Видео сервер"
 msgid "Video Servers"
 msgstr "Видео сервери"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:127
+msgid "Video URL"
+msgstr "Видео URL адреса"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:34
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
@@ -24366,6 +24589,7 @@ msgid "Video file"
 msgstr "Видео датотека"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:87
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:125
 msgid ""
 "Video server not allowed. Please add to the list of allowed video servers."
 msgstr ""
@@ -24376,11 +24600,16 @@ msgstr ""
 msgid "View"
 msgstr "Преглед"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:347
+msgid "View answer"
+msgstr "Прикажи чланак"
+
 #: app/assets/javascripts/app/controllers/user.coffee:69
 msgid "View from user's perspective"
 msgstr "Погледај из перспективе корисника"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:77
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:90
 msgid "View public knowledge base"
 msgstr "Погледај јавну базу знања"
 
@@ -24404,24 +24633,37 @@ msgstr "Гледају тикета"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:29
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:134
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:174
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:44
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr "Видљивост"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:96
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Visibility change scheduled successfully."
+msgstr "Успешно промењена лозинка."
+
+#: app/services/service/knowledge_base/answer/visibility_schedule/add.rb:77
+msgid ""
+"Visibility changes take effect in the order internal, published, archived, "
+"and can only be scheduled in that order."
+msgstr ""
 
 #: app/helpers/knowledge_base_top_bar_helper.rb:32
 msgid "Visible"
 msgstr "Видљив"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:110
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:151
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:28
 msgid "Visible to everyone"
 msgstr "Видљиво свима"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:106
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:146
+#: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:23
 msgid "Visible to readers & editors"
 msgstr "Видљиво читаоцима и уредницима"
 
@@ -24472,7 +24714,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/web.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:12
-#: db/seeds/object_manager_attributes.rb:977 db/seeds/permissions.rb:89
+#: db/seeds/object_manager_attributes.rb:976 db/seeds/permissions.rb:89
 msgid "Web"
 msgstr "Веб"
 
@@ -25181,6 +25423,12 @@ msgstr "Прекорачили сте дозвољени број знакова
 msgid "You have insufficient permissions to mention other users."
 msgstr "Немате одговарајуће дозволе за помињање других корисника."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:123
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient rights to edit this knowledge base answer."
+msgstr "Немате дозволу за приступ овом кориснику."
+
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:19
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:65
 msgid "You have insufficient rights to view this object."
@@ -25546,7 +25794,7 @@ msgstr "Zammad верзија"
 msgid "Zendesk"
 msgstr "Zendesk"
 
-#: db/seeds/object_manager_attributes.rb:1316
+#: db/seeds/object_manager_attributes.rb:1315
 msgid "Zip"
 msgstr "Поштански број"
 
@@ -25774,6 +26022,12 @@ msgstr "подређени"
 msgid "clear"
 msgstr "обриши"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationFooter.vue:43
+#, fuzzy
+#| msgid "Clear all"
+msgid "clear all"
+msgstr "Уклони све"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:16
 #: app/assets/javascripts/app/views/widget/task_item.jst.eco:15
 msgid "close"
@@ -25887,11 +26141,11 @@ msgstr "прилагођена јединица"
 msgid "d"
 msgstr "д"
 
-#: app/models/concerns/can_be_published.rb:149
+#: app/models/concerns/can_be_published.rb:191
 msgid "date must be no earlier than internal date"
 msgstr "датум не може бити пре интерног"
 
-#: app/models/concerns/can_be_published.rb:155
+#: app/models/concerns/can_be_published.rb:197
 msgid "date must be no earlier than published date"
 msgstr "датум не може бити пре објављеног"
 
@@ -25927,7 +26181,7 @@ msgstr "избриши"
 msgid "delete object"
 msgstr "брисање објекта"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:210
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "испоручено клијенту"
@@ -25955,12 +26209,12 @@ msgid "disconnect"
 msgstr "искључи"
 
 #: app/assets/javascripts/app/models/group.coffee:9
-#: db/seeds/object_manager_attributes.rb:2179
+#: db/seeds/object_manager_attributes.rb:2178
 msgid "do not reopen ticket after certain time but create new ticket"
 msgstr "уместо поновног отварања након извесног времена отвори нови тикет"
 
 #: app/assets/javascripts/app/models/group.coffee:9
-#: db/seeds/object_manager_attributes.rb:2178
+#: db/seeds/object_manager_attributes.rb:2177
 msgid "do not reopen ticket but create new ticket"
 msgstr "уместо поновног отварања отвори нови тикет"
 
@@ -26022,17 +26276,17 @@ msgstr "нпр. Ускршњи празници"
 msgid "edit"
 msgstr "измени"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:44
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:60
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s"
 msgstr "измењено %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:48
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:64
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:44
 msgid "edited %s by %s"
 msgstr "измењено %s од стране %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:46
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:62
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s by me"
 msgstr "измењено %s од стране мене"
@@ -26112,6 +26366,11 @@ msgstr "попуни"
 msgid "fill in empty"
 msgstr "попуни празно"
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:190
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:62
+msgid "for activity type |%s|"
+msgstr "за врсту активности |%s|"
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:50
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
 msgid "for an agent to respond"
@@ -26182,7 +26441,7 @@ msgstr "сат"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:47
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:16
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:18
 msgid "hour(s)"
 msgstr "сат(а)"
 
@@ -26487,7 +26746,7 @@ msgstr "повезани налози,facebook,github,gitlab,google,linkedin,mic
 msgid "m"
 msgstr "м"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:26
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationFooter.vue:33
 msgid "mark all as read"
 msgstr "обележи све као прочитано"
 
@@ -26553,7 +26812,7 @@ msgstr "минут"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:51
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:20
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:22
 msgid "minute(s)"
 msgstr "минут(а)"
 
@@ -26747,7 +27006,6 @@ msgid "notifications,tickets"
 msgstr "обавештења,тикети"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:48
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:179
 msgid "now"
 msgstr "сад"
 
@@ -26821,7 +27079,7 @@ msgstr "објављено"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:49
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:18
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:20
 msgid "quarter-hour(s)"
 msgstr "четврт сат(а)"
 
@@ -26833,7 +27091,7 @@ msgstr "достигнуто"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "је реаговао(ла) са %s на поруку од %s '%s'"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:207
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "прочитано од стране клијента"
@@ -26931,7 +27189,7 @@ msgstr "изабери прилог…"
 msgid "select visible options"
 msgstr "изабери видљиве опције"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:213
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "послато клијенту"
@@ -27262,7 +27520,7 @@ msgstr "година(е)"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:12
-#: db/seeds/object_manager_attributes.rb:1534 db/seeds/settings.rb:643
+#: db/seeds/object_manager_attributes.rb:1533 db/seeds/settings.rb:643
 msgid "yes"
 msgstr "да"
 
@@ -27333,9 +27591,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Suggested by AI"
 #~ msgstr "AI предлог"
-
-#~ msgid "Add sub-category"
-#~ msgstr "Додај подкатегорију"
 
 #~ msgid "Invalid permissions, do not lock yourself out."
 #~ msgstr "Неисправне дозволе, будите пажљиви да се не закључате."
@@ -27728,9 +27983,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Ticket History"
 #~ msgstr "Историјат тикета"
-
-#~ msgid "%s schedulers"
-#~ msgstr "%s планер(а)"
 
 #~ msgid "%s triggers"
 #~ msgstr "%s окидач(а)"
@@ -28469,9 +28721,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Whatsapp"
 #~ msgstr "WhatsАpp"
-
-#~ msgid "Profile appearance updated successfully."
-#~ msgstr "Изглед профила је успешно освежен."
 
 #~ msgid "customer"
 #~ msgstr "клијент"
