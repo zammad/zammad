@@ -6312,6 +6312,12 @@
               "deprecationReason": null
             },
             {
+              "name": "jira",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "kayako",
               "description": null,
               "isDeprecated": false,
@@ -24987,6 +24993,16 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "projectKey",
+              "description": "Third-party system project key (e.g. Jira project to import)",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "defaultValue": null
