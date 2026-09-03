@@ -3,6 +3,8 @@
 import { useLocalStorage } from '@vueuse/core'
 import { readonly } from 'vue'
 
+import { navigateTo } from '#shared/utils/navigation.ts'
+
 export const MOBILE_SLUG = '/mobile'
 
 export const useMobileNavigation = () => {
@@ -19,7 +21,7 @@ export const useMobileNavigation = () => {
   }
 
   const continueToMobile = () => {
-    window.location.href = MOBILE_SLUG
+    navigateTo(MOBILE_SLUG)
   }
 
   return {

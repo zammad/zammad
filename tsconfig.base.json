@@ -22,7 +22,7 @@
       "#tests/*": ["./app/frontend/tests/*"],
       "#cy/*": ["./.dev/cypress/*"],
     },
-    "types": ["vitest/globals", "vite/client", "vite-plugin-pwa/client"],
+    "types": ["vitest/globals", "vitest/jsdom", "vite/client", "vite-plugin-pwa/client"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,

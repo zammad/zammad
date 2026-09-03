@@ -46,7 +46,7 @@ describe('useTicketArticleRetryMediaDownload', () => {
         },
       })
 
-      await expect(tryAgain()).rejects.toThrow('')
+      await expect(tryAgain()).rejects.toMatchObject({ message: '' })
 
       const calls = await waitForTicketArticleRetryMediaDownloadMutationCalls()
 

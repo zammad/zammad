@@ -5,7 +5,7 @@ import { setup as setupA11y, toBeAccessible } from '@sa11y/vitest'
 import * as domMatchers from '@testing-library/jest-dom/matchers'
 import { toBeDisabled } from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
-import { expect, vi } from 'vitest'
+import { expect, vi, type MatchersObject } from 'vitest'
 
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 
@@ -282,13 +282,13 @@ afterEach((context) => {
 })
 
 setupA11y()
-// There is a problem that sa11y uses still vitest v3
+// @sa11y/vitest still depends on older Vitest APIs, so keep explicit registration
+// until it officially supports Vitest 5.
 // https://github.com/salesforce/sa11y/blob/master/packages/vitest/package.json
-// In vitest v.4 we still need to manually provide the assertion api
 expect.extend({ toBeAccessible })
 
-expect.extend(assertions)
-expect.extend(domMatchers)
+expect.extend(assertions as unknown as MatchersObject)
+expect.extend(domMatchers as unknown as MatchersObject)
 
 expect.extend({
   // allow aria-disabled in toBeDisabled
@@ -313,19 +313,15 @@ declare module 'vitest' {
     skipConsole: boolean
   }
 
-  interface Assertion<T = any> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {
+  interface Matchers<
+    R extends void | Promise<void> = void | Promise<void>,
+    T = unknown,
+  > extends TestingLibraryMatchers<R, T> {
     /**
      * @param options - Allow passing custom rulesets
      * @sa11y/preset-rule base, extend, full
      */
-    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): Promise<void>
-  }
-  interface AsymmetricMatchersContaining extends TestingLibraryMatchers<any, any> {
-    /**
-     * @param options - Allow passing custom rulesets
-     * @sa11y/preset-rule base, extend, full
-     */
-    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): Promise<void>
+    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): R
   }
 }
 

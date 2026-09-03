@@ -11,8 +11,11 @@ import { useNotifications } from '#shared/components/CommonNotifications/index.t
 import { ApplicationBuildChecksumDocument } from '#shared/graphql/queries/applicationBuildChecksum.api.ts'
 import { AppMaintenanceDocument } from '#shared/graphql/subscriptions/appMaintenance.api.ts'
 import { EnumAppMaintenanceType } from '#shared/graphql/types.ts'
+import { reloadPage } from '#shared/utils/navigation.ts'
 
 import useAppMaintenanceCheck from '../useAppMaintenanceCheck.ts'
+
+vi.mock('#shared/utils/navigation.ts')
 
 let subscriptionAppMaintenance: ExtendedIMockSubscription
 
@@ -110,9 +113,6 @@ describe('useAppMaintenanceCheck', () => {
   })
 
   it('reacts to force_refresh message by reloading without showing a notification', async () => {
-    const reloadMock = vi.fn()
-    vi.stubGlobal('location', { ...window.location, reload: reloadMock })
-
     await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
@@ -121,7 +121,7 @@ describe('useAppMaintenanceCheck', () => {
       },
     })
 
-    expect(reloadMock).toHaveBeenCalledOnce()
+    expect(reloadPage).toHaveBeenCalledOnce()
     expect(useNotifications().notifications.value).toHaveLength(0)
   })
 

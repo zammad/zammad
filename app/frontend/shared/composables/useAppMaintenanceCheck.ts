@@ -18,6 +18,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { EnumAppMaintenanceType } from '#shared/graphql/types.ts'
 import { QueryHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
+import { reloadPage } from '#shared/utils/navigation.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 import { useQueryPolling } from './useQueryPolling.ts'
@@ -96,7 +97,7 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
         actionLabel: __('Reload now'),
         actionCallback: () => {
           maintenanceOptions.onNeedRefresh?.()
-          window.location.reload()
+          reloadPage()
         },
       })
     })
@@ -122,7 +123,7 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
           break
         case EnumAppMaintenanceType.ForceRefresh:
           maintenanceOptions.onNeedRefresh?.()
-          window.location.reload()
+          reloadPage()
           return
         default:
           break
@@ -131,7 +132,7 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
       notify({
         message,
         actionLabel: __('Reload now'),
-        actionCallback: () => window.location.reload(),
+        actionCallback: reloadPage,
       })
     })
   })

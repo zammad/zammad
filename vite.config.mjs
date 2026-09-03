@@ -192,6 +192,7 @@ export default defineConfig(async ({ mode, command }) => {
       root: './app/frontend',
       setupFiles: ['./tests/vitest.setup.ts'],
       environment: 'jsdom',
+      pool: 'vmForks',
       env: {
         SA11Y_RULESET: 'full',
       },
@@ -199,6 +200,12 @@ export default defineConfig(async ({ mode, command }) => {
       css: false,
       testTimeout: isEnvBooleanSet(process.env.CI) ? 30_000 : 5_000,
       unstubGlobals: true,
+      // Persistent cache between reruns, invalidates if any dependency is updated.
+      // Vitest doesn't cache files with `import.meta.glob` inside, so it might be a good
+      // idea to put them all inside as few files as possible just for a small perf boost.
+      // The perf difference is noticeable when running a single/few tests, but has
+      // negligible impact when running the whole suite due to parallelisation.
+      fsModuleCache: true,
       // Node v25+ enables experimental webstorage by default (stability: release candidate).
       // Without --localstorage-file, Node provides localStorage as an empty object (no methods).
       // This conflicts with jsdom's full localStorage implementation needed for tests.
@@ -227,14 +234,6 @@ export default defineConfig(async ({ mode, command }) => {
           replacement: join(dirname(require.resolve('date-fns/package.json')), 'index.cjs'),
         },
       ],
-      experimental: {
-        // persistent cache between reruns, invalidates if any dependency is updated
-        // vitest doesn't cache files with `import.meta.glob` inside, so it might be a good
-        // idea to put them all inside as few files as possible just for a small perf boost
-        // the perf difference is noticible when running a single/a few tests, but has
-        // negligible impact when running the whole suite due to parallelisation
-        fsModuleCache: true,
-      },
     },
     plugins,
   }

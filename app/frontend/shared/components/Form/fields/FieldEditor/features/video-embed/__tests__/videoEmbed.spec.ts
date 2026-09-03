@@ -194,6 +194,13 @@ describe('newVideoRowAt', () => {
   const renderEditor = (content: string) =>
     new Editor({ extensions: [Document, Paragraph, Text], content })
 
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.runAllTimers()
+    vi.useRealTimers()
+  })
+
   it('gives an empty row to the video', () => {
     const editor = renderEditor('<p></p>')
 
