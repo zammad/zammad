@@ -35,6 +35,7 @@ const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
 const SIBLING_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 3)
 
 const ANSWER_TITLE = 'Some Knowledge Base Answer'
+const ANSWER_TRANSLATION_ID = convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)
 
 const ANSWER_PATH: `/${string}` = `/knowledge-base/locale/en-us/answer/${getIdFromGraphQLId(ANSWER_ID)}`
 const CATEGORY_PATH: `/${string}` = `/knowledge-base/locale/en-us/category/${getIdFromGraphQLId(CATEGORY_ID)}`
@@ -43,16 +44,18 @@ const mockAnswer = (policy: { update: boolean; destroy: boolean }) =>
   mockKnowledgeBaseAnswerQuery({
     knowledgeBaseAnswer: {
       id: ANSWER_ID,
-      title: ANSWER_TITLE,
       visibility: EnumKnowledgeBaseVisibility.Published,
-      translationMissing: false,
+      translation: {
+        id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+        title: ANSWER_TITLE,
+      },
       policy: { __typename: 'PolicyDefault', ...policy },
       category: {
         id: CATEGORY_ID,
         breadcrumb: [
           {
             id: CATEGORY_ID,
-            title: 'Child Category',
+            translation: { title: 'Child Category' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
           },
@@ -62,18 +65,28 @@ const mockAnswer = (policy: { update: boolean; destroy: boolean }) =>
   } as KnowledgeBaseAnswerQuery)
 
 describe('knowledge base delete answer', () => {
-  let listedAnswers: { node: { id: string; title: string; position: number } }[]
+  let listedAnswers: {
+    node: { id: string; position: number; translation: { id: string; title: string } }
+  }[]
 
   beforeEach(() => {
     mockApplicationConfig({ kb_active_publicly: true })
     mockPermissions(['knowledge_base.editor'])
 
-    listedAnswers = [{ node: { id: ANSWER_ID, title: ANSWER_TITLE, position: 1 } }]
+    listedAnswers = [
+      {
+        node: {
+          id: ANSWER_ID,
+          position: 1,
+          translation: { id: ANSWER_TRANSLATION_ID, title: ANSWER_TITLE },
+        },
+      },
+    ]
 
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: KNOWLEDGE_BASE_ID,
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -109,7 +122,9 @@ describe('knowledge base delete answer', () => {
       knowledgeBaseCategorySubcategories: {
         category: {
           id: CATEGORY_ID,
-          breadcrumb: [{ id: CATEGORY_ID, title: 'Child Category', categoryIcon: 'folder' }],
+          breadcrumb: [
+            { id: CATEGORY_ID, translation: { title: 'Child Category' }, categoryIcon: 'folder' },
+          ],
           policy: {
             __typename: 'PolicyKnowledgeBaseCategory',
             update: true,
@@ -153,14 +168,13 @@ describe('knowledge base delete answer', () => {
   }
 
   describe('from the answer view', () => {
+    // The answer's actions sit in the sidebar's header, not in the top bar. The menu button is
+    //   awaited rather than looked up right away: it only exists once the answer has resolved and
+    //   put an entry into the menu.
     const openHeaderMenu = async (view: Awaited<ReturnType<typeof visitView>>) => {
-      // Awaited through something else the header renders, so the menu is looked for on a
-      //   settled view rather than on one that has not got there yet.
-      await view.findAllByText('Published')
+      const sidebar = within(await view.findByRole('complementary', { name: 'Content sidebar' }))
 
-      const header = view.getByTestId('knowledge-base-header-full')
-
-      await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
+      await view.events.click(await sidebar.findByRole('button', { name: 'Additional actions' }))
 
       return within(await view.findByRole('menu'))
     }
@@ -258,8 +272,11 @@ describe('knowledge base delete answer', () => {
             {
               node: {
                 id: convertToGraphQLId('KnowledgeBase::Answer', 6),
-                title: 'Another Knowledge Base Answer',
                 position: 1,
+                translation: {
+                  id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 6),
+                  title: 'Another Knowledge Base Answer',
+                },
               },
             },
           ],

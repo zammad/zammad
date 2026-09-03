@@ -5,40 +5,58 @@ import { computed, toRef } from 'vue'
 
 import {
   EnumKnowledgeBaseVisibility,
-  type KnowledgeBaseAnswerTaskbarTabAttributesFragment,
+  type KnowledgeBaseAnswerTranslation,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
+import { taskbarTabLocaleCode } from '#desktop/entities/knowledge-base/utils/taskbarTabKey.ts'
+import { isTranslationMissing } from '#desktop/entities/knowledge-base/utils/translationLocale.ts'
 
 import type { UserTaskbarTabEntityProps } from '../types.ts'
 
-const props =
-  defineProps<UserTaskbarTabEntityProps<KnowledgeBaseAnswerTaskbarTabAttributesFragment>>()
+// The entity of an answer edit tab is the *translation* it edits, in the tab's own locale
+//   (Gql::Types::User::TaskbarItemType#answer_translation): the answer is one object for every
+//   locale's tab, and its title would be whichever locale loaded last. The schema type rather than
+//   the tab's fragment, like the sibling tabs - a narrowed fragment is not assignable to
+//   `UserTaskbarTabEntity`.
+const props = defineProps<UserTaskbarTabEntityProps<KnowledgeBaseAnswerTranslation>>()
 
 const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTab(toRef(props, 'taskbarTab'))
 
-// The stored title, not the one being typed: this tab belongs to the answer, and a label that
-//   followed the form would rename the tab while somebody is still deciding whether to save at
-//   all. It is what the taskbar query resolves for the answer (primary-locale, since that query
-//   sets no locale). The static fallback covers the moment before it is available - and an answer
-//   without a single translation, which has no name of its own to show.
-const currentViewTitle = computed(
-  () => props.taskbarTab.entity?.title || i18n.t('Knowledge base answer'),
-)
+// The locale this tab edits, out of its own key: one answer has a tab per translation.
+const localeCode = computed(() => taskbarTabLocaleCode(props.taskbarTab.tabEntityKey))
 
-// The same status icon the reader and the create draft show, so the state carries over between
-//   all three. What is picked in the form wins over what was last stored; before either has
-//   resolved there is nothing to show but a neutral placeholder.
-const currentVisibility = computed(
+// A translation that does not exist yet: the title this tab was handed belongs to the locale it
+//   falls back to. Only once the entity is there - otherwise every tab in the list reads as missing
+//   while its query is out.
+const translationMissing = computed(
   () =>
-    ((props.context?.formValues?.visibility as EnumKnowledgeBaseVisibility | undefined) ??
-      props.taskbarTab.entity?.visibility) ||
-    EnumKnowledgeBaseVisibility.Draft,
+    Boolean(props.taskbarTab.entity) &&
+    isTranslationMissing(props.taskbarTab.entity, localeCode.value),
 )
 
-// The state's own colour while the tab sits in the list, so the states are scannable there - and
+// The stored title, not the one being typed: a label following the form would rename the tab while
+//   somebody is still deciding whether to save.
+//
+// Except while the translation is missing - there is no stored title in this locale, and the tab
+//   would be labelled in another language. Then it follows the form like a create tab does, and
+//   falls back to a name for a tab waiting in the list, which has no live form values.
+const currentViewTitle = computed(() => {
+  if (translationMissing.value)
+    return (props.context?.formValues?.title as string | undefined) || i18n.t('Missing translation')
+
+  return props.taskbarTab.entity?.title || i18n.t('Knowledge base answer')
+})
+
+// The stored visibility, not the one being updated: an icon following the form would mislead the
+//   user that the change has already taken place, even though it's just a personal draft.
+const currentVisibility = computed(
+  () => props.taskbarTab.entity?.visibility || EnumKnowledgeBaseVisibility.Draft,
+)
+
+// The state's own color while the tab sits in the list, so the states are scannable there - and
 //   the active tab's white, which its blue background needs, once it is the one open.
 const currentVisibilityIcon = computed(() => visibilityMeta[currentVisibility.value])
 </script>

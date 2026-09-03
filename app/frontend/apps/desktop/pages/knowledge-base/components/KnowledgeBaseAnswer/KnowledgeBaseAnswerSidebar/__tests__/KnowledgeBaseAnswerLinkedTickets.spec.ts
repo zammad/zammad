@@ -29,21 +29,28 @@ const translationId = convertToGraphQLId('KnowledgeBase::Answer::Translation', 1
 const answer = {
   __typename: 'KnowledgeBaseAnswer',
   id: convertToGraphQLId('KnowledgeBase::Answer', 1),
-  title: 'Some Answer',
   visibility: EnumKnowledgeBaseVisibility.Published,
   visibilitySchedules: [],
-  translationId,
-  translationMissing: false,
   internalAt: null,
   publishedAt: null,
   archivedAt: null,
-  editedAt: null,
-  editedBy: null,
-  navigation: null,
-  content: {
-    __typename: 'KnowledgeBaseAnswerTranslationContent',
-    bodyWithUrls: 'Et non omnis. Iste rerum ut. Reiciendis officia cumque.',
-    id: convertToGraphQLId('KnowledgeBase::AnswerTranslationContent', 1),
+  translation: {
+    __typename: 'KnowledgeBaseAnswerTranslation',
+    id: translationId,
+    title: 'Some Answer',
+    editedAt: null,
+    editedBy: null,
+    navigation: null,
+    content: {
+      __typename: 'KnowledgeBaseAnswerTranslationContent',
+      bodyWithUrls: 'Et non omnis. Iste rerum ut. Reiciendis officia cumque.',
+      id: convertToGraphQLId('KnowledgeBase::AnswerTranslationContent', 1),
+    },
+    kbLocale: {
+      __typename: 'KnowledgeBaseLocale',
+      id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+      systemLocale: { __typename: 'Locale', locale: 'en-us' },
+    },
   },
   category: {
     __typename: 'KnowledgeBaseCategory',
@@ -152,7 +159,7 @@ describe('KnowledgeBaseAnswerLinkedTickets', () => {
   //   lookup never runs and the section stays empty.
   it('lists no ticket for an answer without a translation', async () => {
     const view = renderLinkedTickets({
-      answer: { ...answer, translationId: null } as KnowledgeBaseAnswerHeader,
+      answer: { ...answer, translation: null } as KnowledgeBaseAnswerHeader,
     })
 
     expect(await view.findByText('No links added yet.')).toBeInTheDocument()
@@ -232,7 +239,7 @@ describe('KnowledgeBaseAnswerLinkedTickets', () => {
     describe('with a locale that has no translation yet', () => {
       it('says so instead of offering to link', async () => {
         const view = renderLinkedTickets({
-          answer: { ...answer, translationId: null } as KnowledgeBaseAnswerHeader,
+          answer: { ...answer, translation: null } as KnowledgeBaseAnswerHeader,
           editable: true,
         })
 

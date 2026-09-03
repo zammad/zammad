@@ -11,18 +11,6 @@ export const KnowledgeBaseAnswerDocument = gql`
   knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
     id
     ...knowledgeBaseAnswerAttributes
-    navigation @include(if: $withNavigation) {
-      index
-      totalCount
-      previousAnswer {
-        id
-        title
-      }
-      nextAnswer {
-        id
-        title
-      }
-    }
   }
 }
     ${KnowledgeBaseAnswerAttributesFragmentDoc}`;

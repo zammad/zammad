@@ -24,8 +24,12 @@ import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts
 import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
 import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
 import { knowledgeBaseAnswerCreateRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
+import { isTranslationMissing } from '#desktop/entities/knowledge-base/utils/translationLocale.ts'
 
-import { useKnowledgeBaseAnswers } from '../../composables/useKnowledgeBaseAnswers.ts'
+import {
+  ANSWERS_PAGE_SIZE,
+  useKnowledgeBaseAnswers,
+} from '../../composables/useKnowledgeBaseAnswers.ts'
 import { useKnowledgeBaseSorting } from '../../composables/useKnowledgeBaseSorting.ts'
 
 import { ADD_CARD_VISIBILITY_THRESHOLD } from './addCardVisibility.ts'
@@ -54,6 +58,10 @@ const props = defineProps<{
   // Likewise for deleting them, from the open category's `policy.destroyAnswer`.
   canDeleteAnswer?: boolean
   isSorting?: boolean
+  // How many answers this category holds at its own level, from the cached entry the page it was
+  //   opened from wrote (`knowledgeBaseCategoryPreInfo`). Sizes the skeleton below: the listing's
+  //   own `totalCount` cannot, arriving with the very query the skeleton waits for.
+  answerCount?: number
 }>()
 
 const router = useRouter()
@@ -90,7 +98,7 @@ const {
 // Only while the answers are the list being arranged - the categories have their own turn.
 const isRearranging = isScopeRearranging('answers')
 
-const { answers, pagination, loading, totalAnswerCount } = useKnowledgeBaseAnswers({
+const { answers, pagination, loading } = useKnowledgeBaseAnswers({
   categoryId: toRef(props, 'categoryId'),
   locale: toRef(props, 'locale'),
   sortingMode: previewSortingMode('answers'),
@@ -152,12 +160,25 @@ const isDraggable = computed(
   () => isRearranging.value && !pagination.hasNextPage && !isLoadingAllAnswers.value,
 )
 
+// The card renders one answer as this locale has it, so the translation is unwrapped once here
+//   rather than in the card: whether the title is this locale's own or a fallback is a question
+//   only the caller can answer, and the list is where the locale is known.
+const listedAnswers = computed(() =>
+  answers.value.map((answer) => ({
+    id: answer.id,
+    visibility: answer.visibility,
+    position: answer.position,
+    title: answer.translation?.title,
+    translationMissing: isTranslationMissing(answer.translation, props.locale),
+  })),
+)
+
 // The list @formkit/drag-and-drop owns and reorders in place. Kept apart from `answers`, which is
 //   the query result and must not be mutated, and synced back from it whenever it delivers.
 const dndAnswers = shallowRef<KnowledgeBaseAnswerCompact[]>([])
 
 watch(
-  answers,
+  listedAnswers,
   (newAnswers) => {
     if (isEqual(dndAnswers.value, newAnswers)) return
 
@@ -241,7 +262,16 @@ watch([dndParentElement, isDraggable], async ([, draggable]) => {
 
 // Only inside a category: an answer always belongs to one, so there is nothing to add at the
 //   knowledge base root.
-const showAddAnswer = computed(() => Boolean(props.categoryId) && Boolean(props.canAddAnswer))
+const canAddAnswerHere = computed(() => Boolean(props.categoryId) && Boolean(props.canAddAnswer))
+
+// The card closes the list, so it may only appear once the list is actually closed: with pages
+//   still to come - or coming in - it would sit between the answers and the paging skeletons and
+//   read as the end of a list that then keeps growing. Nothing is lost while it is away: the
+//   page's floating toolbar offers its add-answer shortcut exactly while this card is not on
+//   screen, and an absent card reports itself as not visible just like an off-screen one.
+const showAddAnswerCard = computed(
+  () => canAddAnswerHere.value && !pagination.hasNextPage && !debouncedLoading.value,
+)
 
 // While sorting, the add card that otherwise stands in for an empty list is gone, so the list has
 //   to say for itself that there is nothing to arrange yet - the mode picked in the bar still
@@ -302,7 +332,7 @@ defineExpose({ addAnswer })
         <!-- Also shown without answers: the only way to create the first one in a category. Not
              while rearranging: it is no answer, so it must not take part in the order. -->
         <KnowledgeBaseAddAnswerCard
-          v-if="showAddAnswer && !isSortingArmed"
+          v-if="showAddAnswerCard && !isSortingArmed"
           ref="add-answer-card"
           @add="addAnswer"
         />
@@ -340,8 +370,15 @@ defineExpose({ addAnswer })
       </ol>
     </div>
 
+    <!-- The count comes from the category, not from this listing: `totalCount` arrives with the
+         very query this is waiting for. The skeleton caps it at one page, which is all the first
+         load asks for. -->
     <template #skeleton>
-      <KnowledgeBaseAnswerListSkeleton :count="totalAnswerCount" :with-add-answer="showAddAnswer" />
+      <KnowledgeBaseAnswerListSkeleton
+        :count="answerCount"
+        :page-size="ANSWERS_PAGE_SIZE"
+        :with-add-answer="canAddAnswerHere"
+      />
     </template>
   </CommonLoader>
 </template>

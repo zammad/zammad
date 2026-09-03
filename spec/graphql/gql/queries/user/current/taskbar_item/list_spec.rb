@@ -168,8 +168,9 @@ RSpec.describe Gql::Queries::User::Current::TaskbarItem::List, type: :graphql do
             key
             entityAccess
             entity {
-              ... on KnowledgeBaseAnswer {
+              ... on KnowledgeBaseAnswerTranslation {
                 id
+                title
                 visibility
               }
             }
@@ -183,13 +184,110 @@ RSpec.describe Gql::Queries::User::Current::TaskbarItem::List, type: :graphql do
       gql.execute(query)
     end
 
+    # One answer can have a tab per translation, and one list query resolves them all - so the
+    #   locale each entity is rendered in has to come from its own item, not from the reader's
+    #   preferences (Gql::Types::User::TaskbarItemType#store_answer_locale).
+    context 'with a tab per locale of one answer', authenticated_as: :editor do
+      let(:alternative_locale) do
+        create(:knowledge_base_locale,
+               knowledge_base: answer.category.knowledge_base,
+               system_locale:  Locale.find_by(locale: 'de-de'))
+      end
+      let(:query) do
+        <<~QUERY
+          query userCurrentTaskbarItemList($app: EnumTaskbarApp) {
+            userCurrentTaskbarItemList(app: $app) {
+              key
+              entity {
+                ... on KnowledgeBaseAnswerTranslation {
+                  id
+                  title
+                  kbLocale { systemLocale { locale } }
+                }
+              }
+            }
+          }
+        QUERY
+      end
+
+      let(:german_translation) do
+        create(:knowledge_base_answer_translation, answer:, kb_locale: alternative_locale, title: 'Titel auf Deutsch')
+      end
+
+      let(:taskbar) do
+        german_translation
+
+        create(:taskbar, :with_knowledge_base_answer, answer:, kb_locale: 'de-de', user_id: user.id)
+      end
+
+      before do
+        create(:taskbar, :with_knowledge_base_answer, answer:, kb_locale: 'en-us', user_id: user.id)
+
+        gql.execute(query)
+      end
+
+      it 'renders each tab in the locale of its own key', :aggregate_failures do
+        by_key = gql.result.data.index_by { |item| item['key'] }
+
+        expect(by_key["KnowledgeBase__Answer-#{answer.id}-de-de"]['entity'])
+          .to include('title' => 'Titel auf Deutsch')
+        expect(by_key["KnowledgeBase__Answer-#{answer.id}-en-us"]['entity'])
+          .to include('title' => answer.translation_primary.title)
+      end
+    end
+
+    # `entity` and `entity_access` both resolve the item, and resolving an answer edit tab reaches
+    #   for its translation - so the two fields together must not cost more than one of them alone
+    #   (Gql::Types::User::TaskbarItemType#object_entity!).
+    context 'with both the entity and its access selected', authenticated_as: :editor do
+      let(:entity_only) do
+        <<~QUERY
+          query userCurrentTaskbarItemList($app: EnumTaskbarApp) {
+            userCurrentTaskbarItemList(app: $app) {
+              entity {
+                ... on KnowledgeBaseAnswerTranslation { id title }
+              }
+            }
+          }
+        QUERY
+      end
+      let(:entity_and_access) do
+        <<~QUERY
+          query userCurrentTaskbarItemList($app: EnumTaskbarApp) {
+            userCurrentTaskbarItemList(app: $app) {
+              entityAccess
+              entity {
+                ... on KnowledgeBaseAnswerTranslation { id title }
+              }
+            }
+          }
+        QUERY
+      end
+
+      def translation_query_count(document)
+        queries = 0
+        subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+          queries += 1 if payload[:sql].include?('knowledge_base_answer_translations')
+        end
+
+        gql.execute(document)
+        queries
+      ensure
+        ActiveSupport::Notifications.unsubscribe(subscriber)
+      end
+
+      it 'resolves the item once for both of them' do
+        expect(translation_query_count(entity_and_access)).to eq(translation_query_count(entity_only))
+      end
+    end
+
     context 'when the user may edit the answer', authenticated_as: :editor do
       it 'resolves the answer of the key, its locale qualifier notwithstanding' do
         expect(gql.result.data.first).to include(
           'callback'     => 'KnowledgeBaseAnswerEdit',
           'key'          => "KnowledgeBase__Answer-#{answer.id}-de-de",
           'entityAccess' => 'Granted',
-          'entity'       => include('id' => Gql::ZammadSchema.id_from_object(answer)),
+          'entity'       => include('id' => Gql::ZammadSchema.id_from_object(answer.translation_primary)),
         )
       end
 

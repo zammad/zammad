@@ -32,11 +32,9 @@ const props = withDefaults(defineProps<Props>(), { editable: false })
 // Links belong to the answer *translation* of the browsed locale, not to the
 //   answer: they differ per locale, and `linkList` only takes a translation ID.
 //   An answer without any translation has none to link to, hence the gate.
-const translation = computed(() =>
-  props.answer.translationId ? { id: props.answer.translationId } : undefined,
-)
+const translation = computed(() => props.answer.translation ?? undefined)
 
-const enabled = computed(() => Boolean(props.answer.translationId))
+const enabled = computed(() => Boolean(translation.value))
 
 const { links, linkListIsLoading } = useObjectLinks(translation, 'Ticket', { enabled })
 
@@ -55,18 +53,15 @@ const session = useSessionStore()
 //   editor without any ticket permission is offered no way in rather than a button the mutation
 //   refuses. They still see the tickets already linked.
 const canLink = computed(
-  () =>
-    props.editable &&
-    Boolean(props.answer.translationId) &&
-    session.hasPermission(['ticket.agent']),
+  () => props.editable && Boolean(translation.value) && session.hasPermission(['ticket.agent']),
 )
 
 // A locale the answer has no translation in yet has nothing to hang a link off. Saying so beats an
 //   empty section that looks like "none yet" while the add button is missing for a reason nobody
 //   can see.
-const isUntranslated = computed(() => props.editable && !props.answer.translationId)
+const isUntranslated = computed(() => props.editable && !translation.value)
 
-const { removeLink } = useObjectLinkMutations(() => props.answer.translationId, 'Ticket')
+const { removeLink } = useObjectLinkMutations(() => translation.value?.id, 'Ticket')
 
 const linkFlyout = useFlyout({
   name: 'knowledge-base-answer-link-ticket',
@@ -74,9 +69,9 @@ const linkFlyout = useFlyout({
 })
 
 const openLinkFlyout = () => {
-  if (!props.answer.translationId) return
+  if (!translation.value) return
 
-  linkFlyout.open({ translationId: props.answer.translationId })
+  linkFlyout.open({ translationId: translation.value.id })
 }
 </script>
 

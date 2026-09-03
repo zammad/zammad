@@ -26,8 +26,7 @@ describe('knowledge base edit knowledge base', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: KNOWLEDGE_BASE_ID,
-        title: 'My Knowledge Base',
-        footerNote: 'Footer',
+        translation: { title: 'My Knowledge Base', footerNote: 'Footer' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,

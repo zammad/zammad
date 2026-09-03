@@ -10,31 +10,33 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       query knowledgeBaseAnswer($answerId: ID!, $locale: String) {
         knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
           id
-          title
-          content { id bodyWithUrls bodyForEditing }
           visibility
-          translationId
-          translationMissing
           internalAt
           publishedAt
           archivedAt
-          editedAt
           visibilitySchedules {
             visibility
             scheduledAt
           }
-          editedBy { id fullname }
           tags
           attachments { id internalId name size type preferences }
-          navigation {
-            index
-            totalCount
-            previousAnswer { id title }
-            nextAnswer { id title }
+          translation {
+            id
+            title
+            content { id bodyWithUrls bodyForEditing }
+            editedAt
+            editedBy { id fullname }
+            kbLocale { id systemLocale { locale } }
+            navigation {
+              index
+              totalCount
+              previousAnswer { id translation { id title } }
+              nextAnswer { id translation { id title } }
+            }
           }
           category {
             id
-            breadcrumb { id title }
+            breadcrumb { id translation { title } }
           }
         }
       }
@@ -50,6 +52,61 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     gql.execute(query, variables:)
   end
 
+  # The locale of the field's own argument, which is what keeps one locale's translation from
+  #   standing in for another's in a client that caches by object identity.
+  context 'with a translation asked for in a specific locale', authenticated_as: :admin do
+    let(:admin) { create(:admin) }
+    let(:query) do
+      <<~GQL
+        query knowledgeBaseAnswer($answerId: ID!, $locale: String, $fieldLocale: String) {
+          knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
+            id
+            translation(locale: $fieldLocale) {
+              id
+              title
+              kbLocale { id systemLocale { locale } }
+            }
+          }
+        }
+      GQL
+    end
+
+    let(:alternative_title)                { 'Titel in der anderen Sprache' }
+    let(:translated_in_alternative_locale) { true }
+
+    before do
+      if translated_in_alternative_locale
+        create(:knowledge_base_answer_translation,
+               answer:    answer,
+               kb_locale: alternative_locale,
+               title:     alternative_title)
+      end
+
+      gql.execute(query, variables: { answerId: answer_id, locale: primary_locale.system_locale.locale, fieldLocale: field_locale })
+    end
+
+    context 'when it names another locale than the query' do
+      let(:field_locale) { alternative_locale.system_locale.locale }
+
+      it 'answers with the locale of the argument, not the query', :aggregate_failures do
+        expect(gql.result.data['translation']).to include('title' => alternative_title)
+        expect(gql.result.data.dig('translation', 'kbLocale', 'systemLocale'))
+          .to include('locale' => alternative_locale.system_locale.locale)
+      end
+    end
+
+    context 'when it names a locale the answer has no translation in' do
+      let(:translated_in_alternative_locale) { false }
+      let(:field_locale)                     { alternative_locale.system_locale.locale }
+
+      it 'falls back to the primary locale, which the caller sees on the translation', :aggregate_failures do
+        expect(gql.result.data['translation']).to include('title' => answer.translation_primary.title)
+        expect(gql.result.data.dig('translation', 'kbLocale', 'systemLocale'))
+          .to include('locale' => primary_locale.system_locale.locale)
+      end
+    end
+  end
+
   context 'with an admin (editor)', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
@@ -58,14 +115,14 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     end
 
     it 'resolves the title from the answer translation' do
-      expect(gql.result.data).to include('title' => answer.translation_primary.title)
+      expect(gql.result.data['translation']).to include('title' => answer.translation_primary.title)
     end
 
     it 'resolves the body from the answer translation content', :aggregate_failures do
       content = answer.translation_primary.content
 
-      expect(gql.result.data['content']).to include('id' => gql.id(content))
-      expect(gql.result.data['content']).to include('bodyWithUrls' => KnowledgeBaseRichText.prepare(content.body_with_urls, &:desktop_url))
+      expect(gql.result.data.dig('translation', 'content')).to include('id' => gql.id(content))
+      expect(gql.result.data.dig('translation', 'content')).to include('bodyWithUrls' => KnowledgeBaseRichText.prepare(content.body_with_urls, &:desktop_url))
     end
 
     # What a reader gets rendered is not what an editor may load: `bodyWithUrls` expands the video
@@ -76,9 +133,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       let(:answer) { create(:knowledge_base_answer, :with_video, :published, category: category) }
 
       it 'renders the widget for reading and hands the editor the marker', :aggregate_failures do
-        expect(gql.result.data.dig('content', 'bodyWithUrls')).to include('<iframe')
-        expect(gql.result.data.dig('content', 'bodyForEditing')).to include('widget: video')
-        expect(gql.result.data.dig('content', 'bodyForEditing')).not_to include('<iframe')
+        expect(gql.result.data.dig('translation', 'content', 'bodyWithUrls')).to include('<iframe')
+        expect(gql.result.data.dig('translation', 'content', 'bodyForEditing')).to include('widget: video')
+        expect(gql.result.data.dig('translation', 'content', 'bodyForEditing')).not_to include('<iframe')
       end
     end
 
@@ -97,7 +154,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
       it 'resolves the link to the desktop answer route', :aggregate_failures do
         expect(gql.result.payload['errors']).to be_nil
-        expect(gql.result.data.dig('content', 'bodyWithUrls'))
+        expect(gql.result.data.dig('translation', 'content', 'bodyWithUrls'))
           .to include(%(href="/desktop/knowledge-base/locale/#{locale_name}/answer/#{linked_answer.id}"))
       end
     end
@@ -112,7 +169,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
       it 'resolves the link to a placeholder', :aggregate_failures do
         expect(gql.result.payload['errors']).to be_nil
-        expect(gql.result.data.dig('content', 'bodyWithUrls')).to include('href="#"')
+        expect(gql.result.data.dig('translation', 'content', 'bodyWithUrls')).to include('href="#"')
       end
     end
 
@@ -123,19 +180,19 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       end
 
       it 'returns no content instead of erroring', :aggregate_failures do
-        expect(gql.result.data).to include('content' => nil)
+        expect(gql.result.data.dig('translation', 'content')).to be_nil
         expect(gql.result.payload['errors']).to be_nil
       end
 
       it 'returns no translation ID' do
-        expect(gql.result.data).to include('translationId' => nil)
+        expect(gql.result.data['translation']).to be_nil
       end
     end
 
     # Records that hang off a translation rather than the answer — links, for one —
     #   are addressed by this ID.
     it 'exposes the ID of the answer translation' do
-      expect(gql.result.data).to include('translationId' => gql.id(answer.translation_primary))
+      expect(gql.result.data['translation']).to include('id' => gql.id(answer.translation_primary))
     end
 
     context 'with a draft answer' do
@@ -246,8 +303,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     it 'exposes the edit metadata of the answer translation', :aggregate_failures do
       translation = answer.translation_primary
 
-      expect(gql.result.data['editedAt']).to eq(translation.edited_at.iso8601)
-      expect(gql.result.data['editedBy']).to include('id' => gql.id(translation.updated_by))
+      expect(gql.result.data.dig('translation', 'editedAt')).to eq(translation.edited_at.iso8601)
+      expect(gql.result.data.dig('translation', 'editedBy'))
+        .to include('id' => gql.id(translation.updated_by))
     end
 
     context 'with an answer in a subcategory' do
@@ -275,8 +333,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       it 'exposes the internal date and the editor', :aggregate_failures do
         expect(gql.result.data['internalAt']).to be_present
         expect(gql.result.data['publishedAt']).to be_present
-        expect(gql.result.data['editedAt']).to be_present
-        expect(gql.result.data['editedBy']).to be_present
+        expect(gql.result.data.dig('translation', 'editedAt')).to be_present
+        expect(gql.result.data.dig('translation', 'editedBy')).to be_present
       end
     end
 
@@ -340,9 +398,11 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       let(:admin) { create(:admin) }
 
       it 'includes every visible sibling and returns their localized titles', :aggregate_failures do
-        expect(gql.result.data['navigation']).to include('index' => 1, 'totalCount' => 3)
-        expect(gql.result.data.dig('navigation', 'previousAnswer')).to include('id' => gql.id(next_answer), 'title' => next_answer.translation_primary.title)
-        expect(gql.result.data.dig('navigation', 'nextAnswer')).to include('id' => gql.id(unpublished_answer), 'title' => unpublished_answer.translation_primary.title)
+        expect(gql.result.data.dig('translation', 'navigation')).to include('index' => 1, 'totalCount' => 3)
+        expect(gql.result.data.dig('translation', 'navigation', 'previousAnswer'))
+          .to include('id' => gql.id(next_answer), 'translation' => include('title' => next_answer.translation_primary.title))
+        expect(gql.result.data.dig('translation', 'navigation', 'nextAnswer'))
+          .to include('id' => gql.id(unpublished_answer), 'translation' => include('title' => unpublished_answer.translation_primary.title))
       end
     end
 
@@ -350,9 +410,90 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       let(:customer) { create(:customer) }
 
       it 'only counts and navigates among published siblings', :aggregate_failures do
-        expect(gql.result.data['navigation']).to include('index' => 1, 'totalCount' => 2)
-        expect(gql.result.data.dig('navigation', 'previousAnswer')).to include('id' => gql.id(next_answer))
-        expect(gql.result.data.dig('navigation', 'nextAnswer')).to include('id' => gql.id(next_answer))
+        expect(gql.result.data.dig('translation', 'navigation')).to include('index' => 1, 'totalCount' => 2)
+        expect(gql.result.data.dig('translation', 'navigation', 'previousAnswer')).to include('id' => gql.id(next_answer))
+        expect(gql.result.data.dig('translation', 'navigation', 'nextAnswer')).to include('id' => gql.id(next_answer))
+      end
+    end
+
+    # Opening an answer in a locale it is not translated to: the translation that answers is
+    #   another locale's, and `navigation` resolves against the locale of the translation it sits
+    #   on - so this is where the stepper could come to describe a listing the reader never saw.
+    #
+    # It cannot, and this pins why: a fallback translation is only ever handed out to somebody with
+    #   editor access to the category (a reader does not see untranslated content at all, and the
+    #   query refuses the answer before any field resolves), and an editor's listing is not gated
+    #   by locale - `all` for a full editor, `all.where(category: editor)` for a granular one
+    #   (CanBePublished). Both locales therefore hold the same siblings in the same order.
+    #
+    # Guard rather than description: should an editor's listing ever become locale-gated, the
+    #   stepper would start counting the fallback locale's listing and this fails.
+    context 'when the answer is not translated to the browsed locale', authenticated_as: :editor do
+      let(:editor) { create(:admin) }
+      let(:locale) { alternative_locale.system_locale.locale }
+
+      before do
+        # A sibling that exists in the browsed locale only, so the two listings would differ for
+        #   anybody they are gated for.
+        create(:knowledge_base_answer, :published, category:               category,
+                                                   translation_attributes: { kb_locale: alternative_locale })
+
+        gql.execute(query, variables: { answerId: answer_id, locale: })
+      end
+
+      it 'steps through the listing of the locale being browsed', :aggregate_failures do
+        expect(gql.result.data.dig('translation', 'kbLocale', 'systemLocale', 'locale'))
+          .to eq(primary_locale.system_locale.locale)
+
+        expect(gql.result.data.dig('translation', 'navigation')).to include('totalCount' => 4)
+      end
+    end
+
+    # The listing a reader steps through is the answers of one locale, so a field asked for another
+    #   locale than the query has to be resolved in that one - the siblings it counts and the
+    #   neighbours it names included. Both are selected here, because a document may hold the field
+    #   for two locales at once and neither may be answered with the other's listing.
+    context 'when asked for another locale than the query', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:query) do
+        <<~GQL
+          query knowledgeBaseAnswer($answerId: ID!, $locale: String, $fieldLocale: String) {
+            knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
+              id
+              queryLocale: translation(locale: $locale) {
+                id
+                navigation {
+                  index
+                  totalCount
+                  nextAnswer { id }
+                }
+              }
+              otherLocale: translation(locale: $fieldLocale) {
+                id
+                navigation {
+                  index
+                  totalCount
+                  nextAnswer { id }
+                }
+              }
+            }
+          }
+        GQL
+      end
+
+      before do
+        create(:knowledge_base_answer_translation, answer: answer, kb_locale: alternative_locale)
+
+        gql.execute(query, variables: { answerId: answer_id, locale: locale_name, fieldLocale: alternative_locale.system_locale.locale })
+      end
+
+      # Only the answer itself is translated to the alternative locale, so it is alone in that
+      #   listing and its neighbour in both directions is itself.
+      it 'counts and steps through the listing of that locale', :aggregate_failures do
+        expect(gql.result.data.dig('queryLocale', 'navigation'))
+          .to include('index' => 1, 'totalCount' => 2, 'nextAnswer' => { 'id' => gql.id(next_answer) })
+        expect(gql.result.data.dig('otherLocale', 'navigation'))
+          .to include('index' => 1, 'totalCount' => 1, 'nextAnswer' => { 'id' => gql.id(answer) })
       end
     end
   end
@@ -383,9 +524,13 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     end
 
     it 'counts and navigates the siblings by title', :aggregate_failures do
-      expect(gql.result.data['navigation']).to include('index' => 2, 'totalCount' => 3)
-      expect(gql.result.data.dig('navigation', 'previousAnswer')).to include('id' => gql.id(alpha), 'title' => 'Alpha')
-      expect(gql.result.data.dig('navigation', 'nextAnswer')).to include('id' => gql.id(zulu), 'title' => 'Zulu')
+      navigation = gql.result.data.dig('translation', 'navigation')
+
+      expect(navigation).to include('index' => 2, 'totalCount' => 3)
+      expect(navigation['previousAnswer'])
+        .to include('id' => gql.id(alpha), 'translation' => include('title' => 'Alpha'))
+      expect(navigation['nextAnswer'])
+        .to include('id' => gql.id(zulu), 'translation' => include('title' => 'Zulu'))
     end
   end
 
@@ -406,7 +551,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     # The body is the content the public help site renders, so unlike the editorial
     #   metadata it is not withheld from a public reader.
     it 'returns the body of a published answer' do
-      expect(gql.result.data.dig('content', 'bodyWithUrls'))
+      expect(gql.result.data.dig('translation', 'content', 'bodyWithUrls'))
         .to eq(KnowledgeBaseRichText.prepare(answer.translation_primary.content.body_with_urls, &:desktop_url))
     end
 
@@ -423,8 +568,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       it 'exposes no other date and no editor', :aggregate_failures do
         expect(gql.result.data).to include('internalAt' => nil)
         expect(gql.result.data).to include('archivedAt' => nil)
-        expect(gql.result.data).to include('editedAt' => nil)
-        expect(gql.result.data).to include('editedBy' => nil)
+        expect(gql.result.data['translation']).to include('editedAt' => nil)
+        expect(gql.result.data['translation']).to include('editedBy' => nil)
       end
 
       # Nor what it is going to become: acting on a scheduled change takes editor access, so being
@@ -485,8 +630,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       # The denial makes them a public reader here, so they get the public view
       #   of it — and never an error, which would make the answer unreadable.
       it 'hides the editorial information without erroring', :aggregate_failures do
-        expect(gql.result.data).to include('editedAt' => nil)
-        expect(gql.result.data).to include('editedBy' => nil)
+        expect(gql.result.data['translation']).to include('editedAt' => nil)
+        expect(gql.result.data['translation']).to include('editedBy' => nil)
         expect(gql.result.payload['errors']).to be_nil
       end
     end
@@ -537,14 +682,15 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
       let(:admin) { create(:admin) }
 
       it 'returns the answer with a fallback title and body', :aggregate_failures do
-        expect(gql.result.data).to include('translationMissing' => true)
-        expect(gql.result.data['title']).to eq(answer.translation_primary.title)
-        expect(gql.result.data.dig('content', 'bodyWithUrls'))
+        expect(gql.result.data.dig('translation', 'kbLocale', 'systemLocale'))
+          .to include('locale' => primary_locale.system_locale.locale)
+        expect(gql.result.data.dig('translation', 'title')).to eq(answer.translation_primary.title)
+        expect(gql.result.data.dig('translation', 'content', 'bodyWithUrls'))
           .to eq(KnowledgeBaseRichText.prepare(answer.translation_primary.content.body_with_urls, &:desktop_url))
       end
 
       it 'returns the ID of the fallback translation, the one it is showing' do
-        expect(gql.result.data).to include('translationId' => gql.id(answer.translation_primary))
+        expect(gql.result.data['translation']).to include('id' => gql.id(answer.translation_primary))
       end
     end
 

@@ -57,6 +57,7 @@ const translatedTitle = computed(() => i18n.t(props.title))
           class="text-gray-100 dark:text-neutral-400"
           no-single-action-mode
           placement="arrowEnd"
+          :custom-menu-button-label="$t('Additional actions')"
           :entity="entity"
           :actions="actions"
         />

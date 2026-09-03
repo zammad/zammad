@@ -96,5 +96,8 @@ export const useKnowledgeBaseAnswerUpdate = () => {
     return result?.knowledgeBaseAnswerUpdate?.answer ?? undefined
   }
 
-  return { updateAnswer }
+  // Whether this editor's own save is in flight, for a view that reacts to the answer changing:
+  //   the mutation's own result re-baselines the form, and a refresh in between would hand the
+  //   values it is about to replace to the form updater (the same guard the ticket edit keeps).
+  return { updateAnswer, updateRunning: answerUpdateMutation.loading() }
 }

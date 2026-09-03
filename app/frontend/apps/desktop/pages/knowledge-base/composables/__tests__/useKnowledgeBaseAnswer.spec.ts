@@ -126,13 +126,31 @@ const mockAnswerWithNavigation = (totalCount: number) =>
   mockKnowledgeBaseAnswerQuery({
     knowledgeBaseAnswer: {
       id: ANSWER_ID,
-      title: 'Some Answer',
-      category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Support' }] },
-      navigation: {
-        index: 2,
-        totalCount,
-        previousAnswer: { id: PREVIOUS_ANSWER_ID, title: 'Previous Answer' },
-        nextAnswer: { id: NEXT_ANSWER_ID, title: 'Next Answer' },
+      category: {
+        id: CATEGORY_ID,
+        breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Support' } }],
+      },
+      translation: {
+        id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+        title: 'Some Answer',
+        navigation: {
+          index: 2,
+          totalCount,
+          previousAnswer: {
+            id: PREVIOUS_ANSWER_ID,
+            translation: {
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 4),
+              title: 'Previous Answer',
+            },
+          },
+          nextAnswer: {
+            id: NEXT_ANSWER_ID,
+            translation: {
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 6),
+              title: 'Next Answer',
+            },
+          },
+        },
       },
     },
   })
@@ -142,8 +160,14 @@ describe('useKnowledgeBaseAnswer', () => {
     mockKnowledgeBaseAnswerQuery({
       knowledgeBaseAnswer: {
         id: ANSWER_ID,
-        title: 'Some Answer',
-        category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Support' }] },
+        category: {
+          id: CATEGORY_ID,
+          breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Support' } }],
+        },
+        translation: {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'Some Answer',
+        },
       },
     })
   })
@@ -152,7 +176,7 @@ describe('useKnowledgeBaseAnswer', () => {
     mountComposable({ answerId: ANSWER_ID, locale: 'en-us' })
     await flushPromises()
 
-    expect(api.answer.value?.title).toBe('Some Answer')
+    expect(api.answer.value?.translation?.title).toBe('Some Answer')
   })
 
   // The baseline useKnowledgeBaseAnswerConcurrentChange measures a foreign change against, so it
@@ -188,7 +212,9 @@ describe('useKnowledgeBaseAnswer', () => {
       await triggerContentUpdate([CATEGORY_ID])
       await flushPromises()
 
-      expect(api.answer.value?.title, 'still served from the cache').toBe('Some Answer')
+      expect(api.answer.value?.translation?.title, 'still served from the cache').toBe(
+        'Some Answer',
+      )
       expect(api.knowledgeBaseAnswerQuery.operationError().value?.message).toBe('Nope')
       expect(api.answerConfirmed.value).toBe(false)
     })
@@ -295,12 +321,15 @@ describe('useKnowledgeBaseAnswer', () => {
     mockKnowledgeBaseAnswerQuery({
       knowledgeBaseAnswer: {
         id: ANSWER_ID,
-        title: 'Some Answer',
+        translation: {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'Some Answer',
+        },
         category: {
           id: CATEGORY_ID,
           breadcrumb: [
-            { id: ANCESTOR_CATEGORY_ID, title: 'Parent' },
-            { id: CATEGORY_ID, title: 'Support' },
+            { id: ANCESTOR_CATEGORY_ID, translation: { title: 'Parent' } },
+            { id: CATEGORY_ID, translation: { title: 'Support' } },
           ],
         },
       },
@@ -349,11 +378,17 @@ describe('useKnowledgeBaseAnswer', () => {
 
     await handler.trigger({
       knowledgeBaseAnswerUpdates: {
-        answer: { id: ANSWER_ID, title: 'Edited Title' },
+        answer: {
+          id: ANSWER_ID,
+          translation: {
+            id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+            title: 'Edited Title',
+          },
+        },
       },
     })
 
-    expect(api.answer.value?.title).toBe('Edited Title')
+    expect(api.answer.value?.translation?.title).toBe('Edited Title')
     expect(await waitForKnowledgeBaseAnswerQueryCalls()).toHaveLength(1)
   })
 

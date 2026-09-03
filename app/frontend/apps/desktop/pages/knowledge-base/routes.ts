@@ -6,9 +6,10 @@ import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composa
 
 import type { RouteRecordRaw } from 'vue-router'
 
-// Both browse routes render the same view; sharing one component reference (not
-//   two inline `() => import()`) keeps the section's single KeepAlive instance
-//   alive across root ↔ category, so its state survives the switch.
+// Both browse routes below render the same view (three paths, counting the root's empty alias), so
+//   stepping between the locale root and a category reuses the one instance and its state survives
+//   the switch - plain patching of the same component, rather than the section's page cache (see
+//   KnowledgeBase.vue).
 const KnowledgeBaseBrowse = () => import('./views/KnowledgeBaseBrowse.vue')
 
 const LEGACY_PATH_PREFIX = '/knowledge_base/:knowledgeBaseInternalId(\\d+)/locale/:localeCode'
@@ -17,7 +18,7 @@ const route: RouteRecordRaw[] = [
   {
     // The single "root entry" for the knowledge base section. It owns the
     //   shared concerns — authentication, the dynamic access gate, and the
-    //   section-level nav/KeepAlive meta — which are inherited by every child
+    //   section-level nav and permanent-item meta — which are inherited by every child
     //   page via the merged `route.meta` (and by the sidebar via this first-
     //   level record). New pages (e.g. the answer detail view) are added as
     //   children and pick these up automatically.
@@ -48,10 +49,10 @@ const route: RouteRecordRaw[] = [
         props: true,
       },
       {
-        // The category browse page: the same view scoped to one category,
-        //   showing its child categories and answers. The category lives behind
-        //   `category/` as its own segment so the upcoming `/answer/:id` route
-        //   slots in beside it (and both stay off the locale root).
+        // The category browse page: the same view scoped to one category, showing
+        //   its child categories and answers. The category lives behind `category/`
+        //   as its own segment so the `/answer/:id` route slots in beside it (and
+        //   both stay off the locale root).
         path: 'locale/:localeCode/category/:categoryInternalId(\\d+)',
         name: 'KnowledgeBaseCategory',
         component: KnowledgeBaseBrowse,
@@ -67,14 +68,13 @@ const route: RouteRecordRaw[] = [
   },
   {
     // Creating an answer is a taskbar tab of its own, so it must not be a child of the section
-    //   above: it brings its own layout (LayoutTaskbarTabContent), and would otherwise inherit
-    //   the section's single KeepAlive instance, its navigation meta, and the locale
-    //   reconciliation of KnowledgeBase.vue - which would send a create URL to the remembered
-    //   browse path.
+    //   above: it brings its own layout (LayoutTaskbarTabContent), and would otherwise inherit the
+    //   section's page cache, its navigation meta and the locale reconciliation of
+    //   KnowledgeBase.vue - which would send a create URL to the remembered browse path.
     //
     // The path follows the grammar of every other knowledge base URL all the same - the locale
     //   comes right after the section - because being a top-level *record* is what keeps the
-    //   guards, the KeepAlive and the nav meta away, not the shape of the path. The locale has to
+    //   guards, the cache and the nav meta away, not the shape of the path. The locale has to
     //   be in there: it is what the knowledge base store derives the active locale from, and one
     //   draft is one translation, so switching the language opens another draft rather than
     //   retitling this one.
@@ -100,7 +100,7 @@ const route: RouteRecordRaw[] = [
   },
   {
     // The edit view is a taskbar tab of its own, for the same reasons as the create route above
-    //   (its own layout, KeepAlive, nav meta and locale reconciliation would otherwise leak in
+    //   (its own layout, page cache, nav meta and locale reconciliation would otherwise leak in
     //   from the section) — and one tab per answer *and* locale, since an answer is edited one
     //   translation at a time (see Taskbar.entity_key / KnowledgeBase::Answer#taskbar_entities).
     //

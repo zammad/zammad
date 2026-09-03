@@ -12,8 +12,18 @@ query knowledgeBaseCategorySubcategories(
   ) {
     category {
       id
-      isVisiblePublicly
-      translationMissing
+      isVisiblePublicly(locale: $locale)
+      # Its name in this locale; the locale that answered says whether that is a fallback.
+      translation(locale: $locale) {
+        id
+        title
+        kbLocale {
+          id
+          systemLocale {
+            locale
+          }
+        }
+      }
       # Whether the category holds no children or answers at all — deliberately not derived
       #   from the user-visible counts, which can read zero on a category the backend will
       #   still refuse to delete.
@@ -26,17 +36,7 @@ query knowledgeBaseCategorySubcategories(
       ...knowledgeBaseCategoryPreInfo
     }
     subcategories {
-      id
-      title
-      categoryIcon
-      visibility
-      translationMissing
-      answerCount
-      subcategoryCount
-      position
-      isDeletable
-      ...knowledgeBaseCategoryPolicy
-      ...knowledgeBaseCategoryPreInfo
+      ...knowledgeBaseCategoryGridAttributes
     }
   }
 }

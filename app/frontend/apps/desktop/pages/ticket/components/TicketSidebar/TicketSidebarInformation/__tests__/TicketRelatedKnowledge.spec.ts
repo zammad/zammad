@@ -76,7 +76,6 @@ const buildLinkedAnswer = (
     category: {
       __typename: 'KnowledgeBaseCategory',
       id: convertToGraphQLId('KnowledgeBase::Category', id),
-      title: 'Account',
     },
   },
   kbLocale: {

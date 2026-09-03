@@ -39,9 +39,12 @@ const answerResult = (overrides = {}) => ({
   item: {
     __typename: 'KnowledgeBaseAnswer',
     id: convertToGraphQLId('KnowledgeBase::Answer', 42),
-    title: 'Printer setup',
     visibility: EnumKnowledgeBaseVisibility.Published,
-    translationMissing: false,
+    translation: {
+      __typename: 'KnowledgeBaseAnswerTranslation',
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 42),
+      title: 'Printer setup',
+    },
   },
   titlePreview: [
     { text: 'Printer', highlight: true },
@@ -60,7 +63,7 @@ const categoryResult = (overrides = {}) => ({
   item: {
     __typename: 'KnowledgeBaseCategory',
     id: convertToGraphQLId('KnowledgeBase::Category', 7),
-    categoryTitle: 'Printers',
+    title: 'Printers',
     categoryIcon: 'f02f',
     iconSet: 'FontAwesome',
     visibility: EnumKnowledgeBaseVisibility.Internal,

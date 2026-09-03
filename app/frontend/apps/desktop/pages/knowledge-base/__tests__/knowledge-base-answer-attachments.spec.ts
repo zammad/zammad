@@ -38,27 +38,29 @@ const mockAnswer = (attachments: Answer['attachments']) =>
   mockKnowledgeBaseAnswerQuery({
     knowledgeBaseAnswer: {
       id: ANSWER_ID,
-      title: 'Some Knowledge Base Answer',
-      content: {
-        __typename: 'KnowledgeBaseAnswerTranslationContent',
-        id: CONTENT_ID,
-        bodyWithUrls: '<p>Some answer body.</p>',
+      translation: {
+        id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+        title: 'Some Knowledge Base Answer',
+        content: {
+          __typename: 'KnowledgeBaseAnswerTranslationContent',
+          id: CONTENT_ID,
+          bodyWithUrls: '<p>Some answer body.</p>',
+        },
+        editedAt: null,
+        editedBy: null,
+        navigation: null,
       },
       visibility: EnumKnowledgeBaseVisibility.Published,
-      translationMissing: false,
       internalAt: null,
       publishedAt: '2026-08-01T10:00:00Z',
       archivedAt: null,
-      editedAt: null,
-      editedBy: null,
-      navigation: null,
       attachments,
       category: {
         id: CATEGORY_ID,
         breadcrumb: [
           {
             id: CATEGORY_ID,
-            title: 'Root Category',
+            translation: { title: 'Root Category' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
           },
@@ -79,7 +81,7 @@ describe('knowledge base answer attachments', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,

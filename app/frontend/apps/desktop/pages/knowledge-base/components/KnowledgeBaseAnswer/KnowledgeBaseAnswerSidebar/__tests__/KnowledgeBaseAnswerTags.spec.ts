@@ -27,21 +27,28 @@ const answer = (tags: string[] | null): KnowledgeBaseAnswerHeader =>
   ({
     __typename: 'KnowledgeBaseAnswer',
     id: convertToGraphQLId('KnowledgeBase::Answer', 1),
-    title: 'Some Answer',
     visibility: EnumKnowledgeBaseVisibility.Published,
     visibilitySchedules: [],
-    translationId: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
-    translationMissing: false,
     internalAt: null,
     publishedAt: null,
     archivedAt: null,
-    editedAt: null,
-    editedBy: null,
-    navigation: null,
-    content: {
-      __typename: 'KnowledgeBaseAnswerTranslationContent',
-      bodyWithUrls: 'Et non omnis. Iste rerum ut. Reiciendis officia cumque.',
-      id: convertToGraphQLId('KnowledgeBase::AnswerTranslationContent', 1),
+    translation: {
+      __typename: 'KnowledgeBaseAnswerTranslation',
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+      title: 'Some Answer',
+      editedAt: null,
+      editedBy: null,
+      navigation: null,
+      content: {
+        __typename: 'KnowledgeBaseAnswerTranslationContent',
+        bodyWithUrls: 'Et non omnis. Iste rerum ut. Reiciendis officia cumque.',
+        id: convertToGraphQLId('KnowledgeBase::AnswerTranslationContent', 1),
+      },
+      kbLocale: {
+        __typename: 'KnowledgeBaseLocale',
+        id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+        systemLocale: { __typename: 'Locale', locale: 'en-us' },
+      },
     },
     category: {
       __typename: 'KnowledgeBaseCategory',

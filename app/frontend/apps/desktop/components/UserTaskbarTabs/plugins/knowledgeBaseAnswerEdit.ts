@@ -6,7 +6,7 @@ import {
 } from '#shared/graphql/types.ts'
 
 import type { UserTaskbarTabPlugin } from '#desktop/components/UserTaskbarTabs/types.ts'
-import { KnowledgeBaseAnswerTaskbarTabAttributesFragmentDoc } from '#desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTaskbarTabAttributes.api.ts'
+import { answerTaskbarTabKeyParts } from '#desktop/entities/knowledge-base/utils/taskbarTabKey.ts'
 
 import KnowledgeBaseAnswerEdit from '../KnowledgeBase/KnowledgeBaseAnswerEdit.vue'
 
@@ -16,7 +16,10 @@ export default <UserTaskbarTabPlugin>{
   type: EnumTaskbarEntity.KnowledgeBaseAnswerEdit,
   component: KnowledgeBaseAnswerEdit,
   entityType,
-  entityDocument: KnowledgeBaseAnswerTaskbarTabAttributesFragmentDoc,
+  // No `entityDocument`, so no entity is pre-filled from the cache while the tab is being created:
+  //   that lookup addresses the entity by *its* id, and the entity of this tab is the translation
+  //   of one locale - which the route names only by the answer's id and a locale code. The tab
+  //   carries its static label for the one round trip until the taskbar list answers.
   // Must match Taskbar.entity_key(answer, locale) byte for byte, which is what the backend
   //   resolves the tab's entity from. `entityType.replaceAll` mirrors IdentifierName.encode - the
   //   locale is the qualifier that lets one answer have more than one tab, one per translation.
@@ -35,15 +38,11 @@ export default <UserTaskbarTabPlugin>{
     _entity?: KnowledgeBaseAnswerTaskbarTabAttributesFragment,
     entityKey?: string,
   ) => {
-    if (!entityKey) return undefined
+    const parts = answerTaskbarTabKeyParts(entityKey)
 
-    // 'KnowledgeBase__Answer-42-de-de': the id segment never contains a '-', the locale after it
-    //   always does (e.g. 'de-de'), so taking everything past the id is unambiguous.
-    const [, answerInternalId, ...localeParts] = entityKey.split('-')
+    if (!parts) return undefined
 
-    if (!answerInternalId || localeParts.length === 0) return undefined
-
-    return `/knowledge-base/locale/${localeParts.join('-')}/answer/${answerInternalId}/edit`
+    return `/knowledge-base/locale/${parts.localeCode}/answer/${parts.answerInternalId}/edit`
   },
   confirmTabRemove: true,
   touchExistingTab: true,

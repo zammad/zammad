@@ -39,9 +39,12 @@ vi.mock('@vueuse/core', async (importOriginal) => {
 const answer = (id: number, title: string) => ({
   node: {
     id: convertToGraphQLId('KnowledgeBase::Answer', id),
-    title,
     visibility: EnumKnowledgeBaseVisibility.Published,
     position: id,
+    translation: {
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
+      title,
+    },
   },
 })
 
@@ -54,7 +57,7 @@ describe('knowledge base answers infinite scroll', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -78,7 +81,10 @@ describe('knowledge base answers infinite scroll', () => {
 
     mockKnowledgeBaseCategorySubcategoriesQuery({
       knowledgeBaseCategorySubcategories: {
-        category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Category' }] },
+        category: {
+          id: CATEGORY_ID,
+          breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Category' } }],
+        },
         subcategories: [],
       },
     })
@@ -126,13 +132,9 @@ describe('knowledge base answers infinite scroll', () => {
   it('keeps every loaded page when a content update refreshes the listing', async () => {
     // One full page of answers plus a bit — the composable's own page size decides where the
     //   second one starts, so a listing this long is what it takes to have two of them.
-    //
-    // Their attachments are pinned empty although this listing never asks for them: the mocker
-    //   generates every field of a type it builds, and a random handful of files per answer
-    //   trips its cap on generated ids for one type well before the 35th.
-    const serverAnswers = Array.from({ length: 35 }, (_, index) => ({
-      node: { ...answer(index + 1, `Answer ${index + 1}`).node, attachments: [] },
-    }))
+    const serverAnswers = Array.from({ length: 35 }, (_, index) =>
+      answer(index + 1, `Answer ${index + 1}`),
+    )
 
     // A server that honours both pagination arguments, unlike the fixed pages above: what the
     //   refetch asks for is the whole point here.
@@ -206,7 +208,7 @@ describe('knowledge base add and edit answer entry points', () => {
       knowledgeBaseCategorySubcategories: {
         category: {
           id: CATEGORY_ID,
-          breadcrumb: [{ id: CATEGORY_ID, title: 'Category' }],
+          breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Category' } }],
           policy: {
             update: true,
             destroy: true,
@@ -240,7 +242,7 @@ describe('knowledge base add and edit answer entry points', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,

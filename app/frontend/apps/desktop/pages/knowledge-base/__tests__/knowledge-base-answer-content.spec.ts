@@ -23,27 +23,30 @@ const CONTENT_ID = convertToGraphQLId('KnowledgeBase::Answer::Translation::Conte
 const ANSWER_PATH: `/${string}` = `/knowledge-base/locale/en-us/answer/${getIdFromGraphQLId(ANSWER_ID)}`
 
 type Answer = NonNullable<KnowledgeBaseAnswerQuery['knowledgeBaseAnswer']>
+type AnswerContent = NonNullable<Answer['translation']>['content']
 
-const mockAnswer = (content: Answer['content']) =>
+const mockAnswer = (content: AnswerContent) =>
   mockKnowledgeBaseAnswerQuery({
     knowledgeBaseAnswer: {
       id: ANSWER_ID,
-      title: 'Some Knowledge Base Answer',
-      content,
       visibility: EnumKnowledgeBaseVisibility.Published,
-      translationMissing: false,
       internalAt: null,
       publishedAt: '2026-08-01T10:00:00Z',
       archivedAt: null,
-      editedAt: null,
-      editedBy: null,
-      navigation: null,
+      translation: {
+        id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+        title: 'Some Knowledge Base Answer',
+        content,
+        editedAt: null,
+        editedBy: null,
+        navigation: null,
+      },
       category: {
         id: CATEGORY_ID,
         breadcrumb: [
           {
             id: CATEGORY_ID,
-            title: 'Root Category',
+            translation: { title: 'Root Category' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
           },
@@ -57,7 +60,7 @@ const mockBody = (bodyWithUrls: string) =>
     __typename: 'KnowledgeBaseAnswerTranslationContent',
     id: CONTENT_ID,
     bodyWithUrls,
-  } as Answer['content'])
+  } as AnswerContent)
 
 describe('knowledge base answer content', () => {
   beforeEach(() => {
@@ -71,7 +74,7 @@ describe('knowledge base answer content', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -116,7 +119,7 @@ describe('knowledge base answer content', () => {
   })
 
   it('renders no body when the answer has no content', async () => {
-    mockAnswer(null)
+    mockAnswer(null as unknown as AnswerContent)
 
     const view = await visitView(ANSWER_PATH)
 

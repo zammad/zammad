@@ -40,7 +40,7 @@ export const knowledgeBaseBreadcrumbItems = ({
     const isLast = index === categoryBreadcrumb.length - 1 && !trailingItem
 
     items.push({
-      label: category.title ?? '',
+      label: category.translation?.title ?? '',
       icon: category.categoryIcon,
       iconSet: category.iconSet,
       visibility: category.visibility,

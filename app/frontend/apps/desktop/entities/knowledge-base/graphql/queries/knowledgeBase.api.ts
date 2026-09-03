@@ -9,11 +9,14 @@ export const KnowledgeBaseDocument = gql`
     query knowledgeBase($locale: String) {
   knowledgeBase(locale: $locale) {
     id
-    title
-    footerNote
+    translation(locale: $locale) {
+      id
+      title
+      footerNote
+    }
     iconset
     isPubliclyAvailable
-    isVisiblePublicly
+    isVisiblePublicly(locale: $locale)
     categorySortingMode
     policy {
       update
@@ -28,7 +31,7 @@ export const KnowledgeBaseDocument = gql`
         name
       }
     }
-    currentLocale {
+    currentLocale(locale: $locale) {
       id
       systemLocale {
         id

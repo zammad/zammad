@@ -7,17 +7,17 @@ const addRequired = (
   validation: string | Array<[rule: string, ...args: any]>,
 ) => {
   if (Array.isArray(validation)) {
-    if (!validation.includes(['required'])) validation.push(['required'])
+    if (!validation.some(([rule]) => rule === 'required')) validation.push(['required', 'trim'])
 
     return validation
   }
 
   if (!validation) {
-    return 'required'
+    return 'required:trim'
   }
 
   if (!validation.includes('required')) {
-    return `${validation}|required`
+    return `${validation}|required:trim`
   }
 
   return validation
@@ -29,14 +29,12 @@ const removeRequired = (
 ) => {
   if (!validation) return validation
 
-  if (Array.isArray(validation)) {
-    return validation.filter(([rule]) => rule !== 'required')
-  }
+  if (Array.isArray(validation)) return validation.filter(([rule]) => rule !== 'required')
 
   if (validation.includes('required')) {
     return validation
       .split('|')
-      .filter((rule: string) => !rule.includes('required'))
+      .filter((rule: string) => !rule.startsWith('required'))
       .join('|')
   }
 

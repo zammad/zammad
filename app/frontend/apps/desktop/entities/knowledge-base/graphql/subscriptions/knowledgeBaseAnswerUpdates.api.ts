@@ -7,7 +7,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const KnowledgeBaseAnswerUpdatesDocument = gql`
-    subscription knowledgeBaseAnswerUpdates($answerId: ID!, $locale: String, $initial: Boolean = false, $withBodyForEditing: Boolean = false) {
+    subscription knowledgeBaseAnswerUpdates($answerId: ID!, $locale: String, $initial: Boolean = false, $withBodyForEditing: Boolean = false, $withNavigation: Boolean = false) {
   knowledgeBaseAnswerUpdates(
     answerId: $answerId
     locale: $locale

@@ -17,8 +17,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Add, type: :graphql do
         knowledgeBaseAnswerAdd(input: $input, locale: $locale) {
           answer {
             id
-            title
-            content { body }
+            translation { id title content { body } }
             category { id }
             visibility
             publishedAt
@@ -50,11 +49,11 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Add, type: :graphql do
   end
 
   context 'with an editor', authenticated_as: :editor do
-    it 'returns the created answer' do
-      expect(gql.result.data['answer']).to include(
-        'title'    => title,
-        'content'  => { 'body' => '<p>Fresh body</p>' },
-        'category' => { 'id' => gql.id(category) },
+    it 'returns the created answer', :aggregate_failures do
+      expect(gql.result.data['answer']).to include('category' => { 'id' => gql.id(category) })
+      expect(gql.result.data.dig('answer', 'translation')).to include(
+        'title'   => title,
+        'content' => { 'body' => '<p>Fresh body</p>' },
       )
     end
 
@@ -75,7 +74,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Add, type: :graphql do
       let(:locale) { alternative_locale.system_locale.locale }
 
       it 'renders the answer in that locale' do
-        expect(gql.result.data.dig('answer', 'title')).to eq(title)
+        expect(gql.result.data.dig('answer', 'translation', 'title')).to eq(title)
       end
     end
 

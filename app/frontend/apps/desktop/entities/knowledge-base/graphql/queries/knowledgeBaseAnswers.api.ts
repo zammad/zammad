@@ -18,10 +18,18 @@ export const KnowledgeBaseAnswersDocument = gql`
     edges {
       node {
         id
-        title
         visibility
-        translationMissing
         position
+        translation(locale: $locale) {
+          id
+          title
+          kbLocale {
+            id
+            systemLocale {
+              locale
+            }
+          }
+        }
       }
     }
     pageInfo {

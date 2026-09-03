@@ -4,6 +4,7 @@ import type {
   EnumKnowledgeBaseSortingMode,
   EnumKnowledgeBaseVisibility,
   KnowledgeBaseCategory,
+  KnowledgeBaseCategoryTranslation,
 } from '#shared/graphql/schema-types.ts'
 import type {
   KnowledgeBaseAnswerQuery,
@@ -51,7 +52,7 @@ export interface KnowledgeBaseCompact {
 
 export interface KnowledgeBaseCategoryCompact {
   id: string
-  title: string | null | undefined
+  title: string
   categoryIcon: string
   visibility: EnumKnowledgeBaseVisibility
   translationMissing: boolean
@@ -67,11 +68,11 @@ export interface KnowledgeBaseCategoryCompact {
 
 // What the category flyout needs to edit a category: the id addresses it, the other
 //   two prefill the fields the form updater does not resolve. Spelled out rather than
-//   picked from one of the two sources that satisfy it — the browse cards and the
-//   header breadcrumb differ on how optional the title is.
+//   picked from one of the two sources that satisfy it - the browse cards and the header
+//   breadcrumb select different field sets around these three.
 export interface EditableKnowledgeBaseCategory {
   id: string
-  title?: Maybe<string>
+  title: string
   categoryIcon: string
 }
 
@@ -83,10 +84,12 @@ export interface KnowledgeBaseAnswerCompact {
   title?: string | null
 }
 
-export type CategoryBreadcrumb = Pick<
+// The translation is named by what the breadcrumb renders of it rather than picked whole: the
+//   answer header and the browse pre-info select different parts of it.
+export type CategoryBreadcrumb = (Pick<
   KnowledgeBaseCategory,
-  'id' | 'title' | 'categoryIcon' | 'iconSet' | 'visibility'
->[]
+  'id' | 'categoryIcon' | 'iconSet' | 'visibility'
+> & { translation?: Maybe<Pick<KnowledgeBaseCategoryTranslation, 'title'>> })[]
 
 // Derived from the query document, so the answer header cannot drift from what
 //   it actually fetches.

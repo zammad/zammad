@@ -76,7 +76,10 @@ export const useKnowledgeBaseStore = defineStore('knowledgeBase', () => {
     //   changed route locale into the underlying query on its next reactivity
     //   flush, so a ping arriving in the same tick as a locale switch would
     //   otherwise refetch with the locale being navigated away from.
-    knowledgeBaseQuery.refetch({ locale: activeLocale.value })
+    // Caught, because QueryHandler.refetch rejects on failure and nothing awaits this one: a
+    //   ping arriving while offline would otherwise raise an unhandled rejection. The handler
+    //   itself reports the failure (`operationError`), so there is nothing to do here.
+    knowledgeBaseQuery.refetch({ locale: activeLocale.value }).catch(() => {})
   })
 
   const iconSet = computed(

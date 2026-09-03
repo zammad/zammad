@@ -5,37 +5,65 @@ import { KnowledgeBaseAnswerPolicyFragmentDoc } from './knowledgeBaseAnswerPolic
 export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
   ...knowledgeBaseAnswerPolicy
-  title
-  content {
-    id
-    bodyWithUrls
-    bodyForEditing @include(if: $withBodyForEditing)
-  }
   visibility
   visibilitySchedules {
     visibility
     scheduledAt
   }
-  translationId
-  translationMissing
   internalAt
   publishedAt
   archivedAt
-  editedAt
-  editedBy {
+  translation(locale: $locale) {
     id
-    firstname
-    lastname
-    fullname
+    title
+    content {
+      id
+      bodyWithUrls
+      bodyForEditing @include(if: $withBodyForEditing)
+    }
+    editedAt
+    editedBy {
+      id
+      firstname
+      lastname
+      fullname
+    }
+    navigation @include(if: $withNavigation) {
+      index
+      totalCount
+      previousAnswer {
+        id
+        translation(locale: $locale) {
+          id
+          title
+        }
+      }
+      nextAnswer {
+        id
+        translation(locale: $locale) {
+          id
+          title
+        }
+      }
+    }
+    kbLocale {
+      id
+      systemLocale {
+        locale
+      }
+    }
   }
   category {
     id
     breadcrumb {
       id
-      title
+      translation(locale: $locale) {
+        id
+        title
+      }
       categoryIcon
       iconSet
-      visibility
+      visibility(locale: $locale)
     }
   }
   tags

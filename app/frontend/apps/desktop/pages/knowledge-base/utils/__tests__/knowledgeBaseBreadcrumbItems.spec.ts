@@ -13,14 +13,14 @@ const CHILD_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
 const categoryBreadcrumb: CategoryBreadcrumb = [
   {
     id: ROOT_CATEGORY_ID,
-    title: 'Root Category',
+    translation: { title: 'Root Category' },
     categoryIcon: 'f115',
     iconSet: 'FontAwesome',
     visibility: EnumKnowledgeBaseVisibility.Published,
   },
   {
     id: CHILD_CATEGORY_ID,
-    title: 'Child Category',
+    translation: { title: 'Child Category' },
     categoryIcon: 'f114',
     iconSet: 'FontAwesome',
     visibility: EnumKnowledgeBaseVisibility.Internal,

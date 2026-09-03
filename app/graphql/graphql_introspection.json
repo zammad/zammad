@@ -8467,8 +8467,19 @@
             },
             {
               "name": "currentLocale",
-              "description": "Locale the content resolved to (requested, else user-preferred, else primary)",
-              "args": [],
+              "description": "Locale the content resolved to (given, else user-preferred, else primary)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "OBJECT",
                 "name": "KnowledgeBaseLocale",
@@ -8480,18 +8491,6 @@
             {
               "name": "customAddress",
               "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "footerNote",
-              "description": "Footer note in the requested locale (falls back to the primary locale)",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -8567,8 +8566,19 @@
             },
             {
               "name": "isVisiblePublicly",
-              "description": "Whether the public help site shows content in the requested locale (drives the \"view public knowledge base\" link)",
-              "args": [],
+              "description": "Whether the public help site shows content in the given locale (drives the \"view public knowledge base\" link)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -8638,12 +8648,23 @@
               "deprecationReason": null
             },
             {
-              "name": "title",
-              "description": "Title in the requested locale (falls back to the primary locale)",
-              "args": [],
+              "name": "translation",
+              "description": "The knowledge base in the given locale (falls back to the primary locale)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve the translation for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseTranslation",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -8741,18 +8762,6 @@
               "deprecationReason": null
             },
             {
-              "name": "content",
-              "description": "Body of the translation in the requested locale (falls back to the primary locale, like the title)",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "KnowledgeBaseAnswerTranslationContent",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "createdAt",
               "description": "Create date/time of the record",
               "args": [],
@@ -8771,30 +8780,6 @@
             {
               "name": "createdBy",
               "description": "User that created this record",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "User",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "editedAt",
-              "description": "When the translation in the requested locale was last edited; only for users with internal access to the category",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "ISO8601DateTime",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "editedBy",
-              "description": "Last user that edited the translation in the requested locale; only for users with internal access to the category",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -8839,18 +8824,6 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "User",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "navigation",
-              "description": "Position and neighbours of this answer within its category listing",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "KnowledgeBaseAnswerNavigation",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -8933,45 +8906,24 @@
               "deprecationReason": null
             },
             {
-              "name": "title",
-              "description": "Title in the requested locale (falls back to the primary locale)",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+              "name": "translation",
+              "description": "The answer in the given locale (falls back to the primary locale)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve the translation for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "translationId",
-              "description": "ID of the translation in the requested locale (falls back to the primary locale, like the title)",
-              "args": [],
+              ],
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseAnswerTranslation",
                 "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "translationMissing",
-              "description": "Whether the requested locale has no own translation for this answer (its title is shown from a fallback locale)",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -9651,16 +9603,24 @@
             },
             {
               "name": "editedAt",
-              "description": null,
+              "description": "When this translation was last edited; only for users with internal access to the category",
               "args": [],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ISO8601DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "ISO8601DateTime",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "editedBy",
+              "description": "Last user that edited this translation; only for users with internal access to the category",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -9704,6 +9664,18 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "navigation",
+              "description": "Position and neighbours of this answer within its category listing in this locale",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseAnswerNavigation",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -10147,8 +10119,19 @@
           "fields": [
             {
               "name": "answerCount",
-              "description": "Number of answers visible to the current user in this category and its whole subtree",
-              "args": [],
+              "description": "Number of answers visible to the current user in this category and its whole subtree, in the given locale",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to count in; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -10251,8 +10234,19 @@
             },
             {
               "name": "directAnswerCount",
-              "description": "Number of answers visible to the current user directly in this category (its immediate level only)",
-              "args": [],
+              "description": "Number of answers visible to the current user directly in this category (its immediate level only), in the given locale",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to count in; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -10267,8 +10261,19 @@
             },
             {
               "name": "directSubcategoryCount",
-              "description": "Number of immediate child categories visible to the current user (its next level only)",
-              "args": [],
+              "description": "Number of immediate child categories visible to the current user (its next level only), in the given locale",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to count in; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -10343,8 +10348,19 @@
             },
             {
               "name": "isVisiblePublicly",
-              "description": "Whether this category shows published content in the requested locale on the public help site (drives the \"view public knowledge base\" link)",
-              "args": [],
+              "description": "Whether this category shows published content in the given locale on the public help site (drives the \"view public knowledge base\" link)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -10419,8 +10435,19 @@
             },
             {
               "name": "subcategoryCount",
-              "description": "Number of categories visible to the current user in this category and its whole subtree",
-              "args": [],
+              "description": "Number of categories visible to the current user in this category and its whole subtree, in the given locale",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to count in; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -10434,29 +10461,24 @@
               "deprecationReason": null
             },
             {
-              "name": "title",
-              "description": "Title in the requested locale (falls back to the primary locale)",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "translationMissing",
-              "description": "Whether the requested locale has no own translation for this category (its title is shown from a fallback locale)",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
+              "name": "translation",
+              "description": "The category in the given locale (falls back to the primary locale)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve the translation for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseCategoryTranslation",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -10503,8 +10525,19 @@
             },
             {
               "name": "visibility",
-              "description": "Highest visibility of the content in this category and its subtree, in the requested locale (untranslated content counts as draft)",
-              "args": [],
+              "description": "Highest visibility of the content in this category and its subtree, in the given locale (untranslated content counts as draft)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -11495,8 +11528,19 @@
             },
             {
               "name": "title",
-              "description": "Title in the requested locale (falls back to the primary locale)",
-              "args": [],
+              "description": "Title in the given locale (falls back to the primary locale)",
+              "args": [
+                {
+                  "name": "locale",
+                  "description": "System locale code to resolve the title for; defaults to the locale the query was resolved in",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -11751,6 +11795,93 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "KnowledgeBaseSearchResult",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "KnowledgeBaseTranslation",
+          "description": "Knowledge Base Translation",
+          "fields": [
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "footerNote",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "title",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
                   "ofType": null
                 }
               },
@@ -25929,7 +26060,7 @@
           "possibleTypes": [
             {
               "kind": "OBJECT",
-              "name": "KnowledgeBaseAnswer",
+              "name": "KnowledgeBaseAnswerTranslation",
               "ofType": null
             },
             {

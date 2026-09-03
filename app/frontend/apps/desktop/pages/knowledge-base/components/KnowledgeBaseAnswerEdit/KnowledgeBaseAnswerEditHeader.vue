@@ -6,13 +6,9 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
-
-import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseAnswerEditRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
-import { knowledgeBasePreviewUrl } from '../../composables/useKnowledgeBasePreviewUrl.ts'
 import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrumbItems.ts'
 import KnowledgeBaseAnswerHeaderDetails from '../KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue'
 import TopBarHeaderCompact from '../KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue'
@@ -24,9 +20,10 @@ import type { KnowledgeBaseAnswerHeader } from '../../types.ts'
 import type { TopBarHeaderProps } from '../KnowledgeBaseTopBarHeader/types.ts'
 
 // The header of the edit view: the create header's shape (no big title row, see
-//   TopBarHeaderFull's titleFieldTarget) plus the edit-only bits it has nothing to show yet - the
-//   badge row and the public preview link - but not its stepper: stepping to the neighbouring
-//   answer from a tab that holds unsaved work is not something to offer. Not KnowledgeBaseAnswerTopBarHeader
+//   TopBarHeaderFull's titleFieldTarget) plus the badge row it has nothing to show yet, but
+//   neither the reader's stepper nor its public preview link: stepping to the neighbouring answer
+//   from a tab that holds unsaved work is not something to offer, and a preview would open the
+//   stored answer rather than the work in the form. Not KnowledgeBaseAnswerTopBarHeader
 //   (the reader's): that one renders a big title row, which the story's UX decision replaces with
 //   the title field for as long as it lives in the header (provisional, see the plan) - so this
 //   stays its own component rather than a variant of it.
@@ -45,6 +42,10 @@ interface Props {
   //   TopBarHeaderFull's own titleFieldTarget prop for why this container has to be a bare id
   //   rather than a CSS selector.
   titleFieldTarget: string
+  // Whether this locale has no translation of its own, decided by the view for its own tab rather
+  //   than read off the active locale here: a tab in the background outlives being looked at, and
+  //   the active locale is then the one of whichever tab is open.
+  translationMissing?: boolean
 }
 
 const props = defineProps<Props>()
@@ -52,8 +53,6 @@ const props = defineProps<Props>()
 const router = useRouter()
 
 const { activeLocale } = storeToRefs(useKnowledgeBaseStore())
-
-const { canEdit, canRead } = useKnowledgeBaseAccess()
 
 // Everything the header shows is fed from the stored answer, so its rows skeleton until the
 //   answer is there - the reader's header does the same, and without this one rendered a
@@ -70,19 +69,6 @@ const { canEdit, canRead } = useKnowledgeBaseAccess()
 //   guard awaits it before this view is created (useKnowledgeBaseLocaleGuard), so it is settled
 //   by the time anything here renders.
 const loading = computed(() => !props.answer)
-
-// Only for a stored answer, and only for an internal user who may see unpublished content at all
-//   (an editor previewing their own draft) or the content that is already public.
-const previewUrl = computed(() => {
-  const locale = activeLocale.value
-  const { answer } = props
-
-  if (!locale || !answer || !canRead.value) return undefined
-  if (answer.visibility !== EnumKnowledgeBaseVisibility.Published && !canEdit.value)
-    return undefined
-
-  return knowledgeBasePreviewUrl('KnowledgeBaseAnswer', answer.id, locale)
-})
 
 // One tab is one translation, so switching the language here opens the edit tab of that other
 //   translation rather than retitling this one.
@@ -102,7 +88,7 @@ const breadcrumbs = computed(() =>
     localeCode: activeLocale.value,
     categoryBreadcrumb: props.answer?.category?.breadcrumb,
     trailingItem: props.answer
-      ? { label: props.answer.title ?? '', noOptionLabelTranslation: true }
+      ? { label: props.answer.translation?.title ?? '', noOptionLabelTranslation: true }
       : undefined,
   }),
 )
@@ -112,7 +98,6 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
     locales: localeItems.value,
     breadcrumbs: breadcrumbs.value,
     localeCode: selectedLocaleCode.value,
-    previewUrl: previewUrl.value,
     // Nothing rendered as the header's own title (the field carries it, and the breadcrumb above
     //   reads the stored one instead of it), so there is nothing for the copy button to copy.
     noCopyButton: true,
@@ -126,7 +111,11 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
 </script>
 
 <template>
-  <TopBarHeaderShell :content-container-element="contentContainerElement" no-title>
+  <TopBarHeaderShell
+    :content-container-element="contentContainerElement"
+    :alert-message="translationMissing ? $t('No translation available for this locale') : undefined"
+    no-title
+  >
     <template #compact="{ inert }">
       <TopBarHeaderCompact
         v-model:selected-locale="selectedLocaleItem"
@@ -144,7 +133,7 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
         content-width="form"
       >
         <template v-if="answer" #details>
-          <KnowledgeBaseAnswerHeaderDetails :answer="answer" with-translation-warning />
+          <KnowledgeBaseAnswerHeaderDetails :answer="answer" />
         </template>
       </TopBarHeaderFull>
     </template>

@@ -15,9 +15,10 @@ fragment knowledgeBaseAnswerTranslation on KnowledgeBaseAnswerTranslation {
     publishedAt
     internalAt
     tags
+    # Only the id: the title comes from `categoryTreeTranslation` above, which has it in this
+    # translation's locale rather than in the one the query was made in.
     category {
       id
-      title
     }
   }
   kbLocale {

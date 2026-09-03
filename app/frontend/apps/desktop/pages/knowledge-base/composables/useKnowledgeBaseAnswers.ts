@@ -12,7 +12,9 @@ import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/k
 
 import type { KnowledgeBaseSortingMode } from '../types.ts'
 
-const ANSWERS_PAGE_SIZE = 30
+// Exported: the answer list's skeleton caps its row count at one page, and a second constant
+//   would let the two drift apart.
+export const ANSWERS_PAGE_SIZE = 30
 
 export const useKnowledgeBaseAnswers = (options: {
   categoryId: Ref<string | undefined>
@@ -54,7 +56,6 @@ export const useKnowledgeBaseAnswers = (options: {
   //   with — a different list is a different instance.
   const connection = computed(() => normalizeEdges(result.value?.knowledgeBaseAnswers))
   const answers = computed(() => connection.value.array)
-  const totalAnswerCount = computed(() => connection.value.totalCount)
 
   const pagination = usePagination(answersQuery, 'knowledgeBaseAnswers', ANSWERS_PAGE_SIZE)
 
@@ -98,7 +99,6 @@ export const useKnowledgeBaseAnswers = (options: {
 
   return {
     answers,
-    totalAnswerCount,
     pagination,
     loading,
   }

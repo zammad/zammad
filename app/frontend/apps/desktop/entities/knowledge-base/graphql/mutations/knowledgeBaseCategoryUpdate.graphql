@@ -4,20 +4,8 @@ mutation knowledgeBaseCategoryUpdate(
   $locale: String!
 ) {
   knowledgeBaseCategoryUpdate(categoryId: $categoryId, input: $input, locale: $locale) {
-    # The same field set the browse grid lists, so the updated category refreshes the
-    #   cached record completely instead of leaving parts of it stale.
     category {
-      id
-      title
-      categoryIcon
-      visibility
-      translationMissing
-      answerCount
-      subcategoryCount
-      position
-      isDeletable
-      ...knowledgeBaseCategoryPolicy
-      ...knowledgeBaseCategoryPreInfo
+      ...knowledgeBaseCategoryGridAttributes
     }
     errors {
       ...errors

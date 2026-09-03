@@ -21,11 +21,10 @@ const NEW_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
 
 const category = (id: string, title: string) => ({
   id,
-  title,
+  translation: { title },
   categoryIcon: 'folder',
   iconSet: 'FontAwesome',
   visibility: EnumKnowledgeBaseVisibility.Published,
-  translationMissing: false,
   answerCount: 0,
   subcategoryCount: 0,
   position: 0,
@@ -39,7 +38,7 @@ const mockKnowledgeBaseEditorAccess = (editor = true) =>
   mockKnowledgeBaseQuery({
     knowledgeBase: {
       id: convertToGraphQLId('KnowledgeBase', 1),
-      title: 'My Knowledge Base',
+      translation: { title: 'My Knowledge Base' },
       iconset: 'default',
       isPubliclyAvailable: true,
       isVisiblePublicly: true,
@@ -86,7 +85,9 @@ describe('knowledge base add category card', () => {
         knowledgeBaseCategorySubcategories: {
           category: {
             ...category(CATEGORY_ID, 'Root Category'),
-            breadcrumb: [{ id: CATEGORY_ID, title: 'Root Category', categoryIcon: 'folder' }],
+            breadcrumb: [
+              { id: CATEGORY_ID, translation: { title: 'Root Category' }, categoryIcon: 'folder' },
+            ],
           },
           subcategories: rootChildren,
         },

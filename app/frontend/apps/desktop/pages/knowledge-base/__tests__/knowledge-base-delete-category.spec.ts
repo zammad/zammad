@@ -25,11 +25,10 @@ const CHILD_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
 
 const category = (id: string, title: string, isDeletable = true) => ({
   id,
-  title,
+  translation: { title },
   categoryIcon: 'f115',
   iconSet: 'FontAwesome',
   visibility: EnumKnowledgeBaseVisibility.Published,
-  translationMissing: false,
   answerCount: 0,
   subcategoryCount: 0,
   position: 0,
@@ -45,7 +44,7 @@ describe('knowledge base delete category', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -80,7 +79,13 @@ describe('knowledge base delete category', () => {
           knowledgeBaseCategorySubcategories: {
             category: {
               ...category(ROOT_CATEGORY_ID, 'Root Category', rootDeletable),
-              breadcrumb: [{ id: ROOT_CATEGORY_ID, title: 'Root Category', categoryIcon: 'f115' }],
+              breadcrumb: [
+                {
+                  id: ROOT_CATEGORY_ID,
+                  translation: { title: 'Root Category' },
+                  categoryIcon: 'f115',
+                },
+              ],
             },
             subcategories: [category(CHILD_CATEGORY_ID, 'Child Category')],
           },
@@ -93,8 +98,16 @@ describe('knowledge base delete category', () => {
             category: {
               ...category(CHILD_CATEGORY_ID, 'Child Category'),
               breadcrumb: [
-                { id: ROOT_CATEGORY_ID, title: 'Root Category', categoryIcon: 'f115' },
-                { id: CHILD_CATEGORY_ID, title: 'Child Category', categoryIcon: 'f115' },
+                {
+                  id: ROOT_CATEGORY_ID,
+                  translation: { title: 'Root Category' },
+                  categoryIcon: 'f115',
+                },
+                {
+                  id: CHILD_CATEGORY_ID,
+                  translation: { title: 'Child Category' },
+                  categoryIcon: 'f115',
+                },
               ],
             },
             subcategories: [],

@@ -40,9 +40,12 @@ const routerRoutes = [
 const answer = (id: number, title: string) => ({
   node: {
     id: convertToGraphQLId('KnowledgeBase::Answer', id),
-    title,
     visibility: EnumKnowledgeBaseVisibility.Published,
     position: id,
+    translation: {
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
+      title,
+    },
   },
 })
 
@@ -96,12 +99,14 @@ describe('useKnowledgeBaseAnswers', () => {
     })
   })
 
-  it('exposes the answers and total count of the open category', async () => {
+  it('exposes the answers of the open category', async () => {
     mountComposable({ categoryId: CATEGORY_ID, locale: 'en-us' })
     await flushPromises()
 
-    expect(api.answers.value.map((entry) => entry.title)).toEqual(['Answer One', 'Answer Two'])
-    expect(api.totalAnswerCount.value).toBe(2)
+    expect(api.answers.value.map((entry) => entry.translation?.title)).toEqual([
+      'Answer One',
+      'Answer Two',
+    ])
   })
 
   it('refetches when the change happened directly in the open category', async () => {

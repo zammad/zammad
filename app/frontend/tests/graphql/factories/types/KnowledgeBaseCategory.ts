@@ -14,6 +14,10 @@ export default (): DeepPartial<KnowledgeBaseCategory> => {
       id: convertToGraphQLId('KnowledgeBase', 999),
     },
     translations: [],
+    // Breaks the translation cycle (category -> translation -> category -> ...).
+    // Each turn also builds `kbLocale`, so the mocker's id budget for `Locale`
+    // runs out first and the loop guard blames `Locale`, not the category.
+    translation: null,
     // Breaks the self-referential breadcrumb cycle (breadcrumb -> category ->
     // breadcrumb -> ...), which otherwise lets the auto-mocker recurse until it
     // overflows the stack.

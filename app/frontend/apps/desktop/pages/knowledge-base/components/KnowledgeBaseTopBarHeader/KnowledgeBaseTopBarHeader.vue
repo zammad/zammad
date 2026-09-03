@@ -75,7 +75,7 @@ const loading = computed(() => baseLoading.value || Boolean(props.loading))
 const title = computed(() =>
   knowledgeBaseBrowsedTitle({
     categoryBreadcrumb: props.categoryBreadcrumb,
-    knowledgeBaseTitle: knowledgeBase.value?.title,
+    knowledgeBaseTitle: knowledgeBase.value?.translation?.title,
   }),
 )
 
@@ -107,9 +107,9 @@ const openedCategoryId = computed(() => props.categoryBreadcrumb?.at(-1)?.id)
 const { feedActions } = useKnowledgeBaseFeedAction(openedCategoryId)
 
 const metaTitle = computed(() => {
-  const categoryTitle = props.categoryBreadcrumb?.at(-1)?.title
+  const categoryTitle = props.categoryBreadcrumb?.at(-1)?.translation?.title
 
-  const kbTitle = knowledgeBase.value?.title ?? __('Knowledge Base')
+  const kbTitle = knowledgeBase.value?.translation?.title ?? __('Knowledge Base')
 
   return categoryTitle ? `${kbTitle} - ${categoryTitle}` : kbTitle
 })
@@ -154,7 +154,14 @@ const sortContentAction: MenuItem = {
 }
 
 const actions = computed<MenuItem[]>(() => {
-  const openedCategory = props.categoryBreadcrumb?.at(-1)
+  const breadcrumbCategory = props.categoryBreadcrumb?.at(-1)
+
+  // Flattened for the two dialogs, which prefill a form rather than read the graph.
+  const openedCategory = breadcrumbCategory && {
+    id: breadcrumbCategory.id,
+    title: breadcrumbCategory.translation?.title ?? '',
+    categoryIcon: breadcrumbCategory.categoryIcon,
+  }
 
   const items: MenuItem[] = [...feedActions.value]
 

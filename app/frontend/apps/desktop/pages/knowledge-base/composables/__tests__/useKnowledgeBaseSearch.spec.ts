@@ -45,9 +45,11 @@ const searchResult = (id: number, title: string) => ({
     item: {
       __typename: 'KnowledgeBaseAnswer' as const,
       id: convertToGraphQLId('KnowledgeBase::Answer', id),
-      title,
       visibility: EnumKnowledgeBaseVisibility.Published,
-      translationMissing: false,
+      translation: {
+        id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
+        title,
+      },
     },
     titlePreview: [{ text: title, highlight: true }],
     bodyPreview: [{ text: 'Some body text', highlight: false }],
@@ -128,11 +130,10 @@ describe('useKnowledgeBaseSearch', () => {
       pageSize: 30,
     })
 
-    expect(
-      api.results.value.map((result) =>
-        result.item.__typename === 'KnowledgeBaseAnswer' ? result.item.title : undefined,
-      ),
-    ).toEqual(['Result One', 'Result Two'])
+    expect(api.results.value.map((result) => result.item.translation?.title)).toEqual([
+      'Result One',
+      'Result Two',
+    ])
     expect(api.totalCount.value).toBe(2)
   })
 

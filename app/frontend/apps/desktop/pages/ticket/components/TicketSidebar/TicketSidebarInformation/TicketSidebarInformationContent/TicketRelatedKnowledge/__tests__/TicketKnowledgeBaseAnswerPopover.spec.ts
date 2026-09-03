@@ -46,7 +46,6 @@ const buildTranslation = (
         category: {
           __typename: 'KnowledgeBaseCategory',
           id: CATEGORY_ID,
-          title: 'Account',
         },
       },
       kbLocale: {
@@ -141,8 +140,10 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
     expect(wrapper.queryByText('Archived')).not.toBeInTheDocument()
   })
 
-  it('hides the category row when the category has no title in the requested locale', () => {
-    const wrapper = renderPopover(buildTranslation({ answer: { category: { title: null } } }))
+  // Spread rather than an override: the builder merges, and a merged empty list leaves the
+  //   builder's own entry in place.
+  it('hides the category row when there is no category to name', () => {
+    const wrapper = renderPopover({ ...buildTranslation(), categoryTreeTranslation: [] })
 
     expect(wrapper.queryByText('Category')).not.toBeInTheDocument()
   })

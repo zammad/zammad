@@ -40,7 +40,7 @@ describe('requiredValidation', () => {
 
     requiredValidation(inputNode)
 
-    expect(inputNode.props.validation).toBe('required')
+    expect(inputNode.props.validation).toBe('required:trim')
   })
 
   it('appends validation rule to string', () => {
@@ -51,7 +51,7 @@ describe('requiredValidation', () => {
 
     requiredValidation(inputNode)
 
-    expect(inputNode.props.validation).toBe('number|required')
+    expect(inputNode.props.validation).toBe('number|required:trim')
   })
 
   it('change initial validation prop value', () => {
@@ -62,13 +62,13 @@ describe('requiredValidation', () => {
 
     requiredValidation(inputNode)
 
-    expect(inputNode.props.validation).toBe('number|required')
+    expect(inputNode.props.validation).toBe('number|required:trim')
 
     // Change prop value
 
     inputNode.props.validation = 'email'
 
-    expect(inputNode.props.validation).toBe('email|required')
+    expect(inputNode.props.validation).toBe('email|required:trim')
   })
 
   it('appends validation rule to array', () => {
@@ -79,7 +79,7 @@ describe('requiredValidation', () => {
 
     requiredValidation(inputNode)
 
-    expect(inputNode.props.validation).toEqual([['number'], ['required']])
+    expect(inputNode.props.validation).toEqual([['number'], ['required', 'trim']])
   })
 
   it('required prop removed from input', () => {

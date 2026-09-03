@@ -25,7 +25,13 @@ module Gql::Types::User
     field :dirty, Boolean, null: false
 
     def entity
-      object_entity!
+      entity = object_entity!
+
+      # The translation only here, not in `object_entity!`: `entity_access` asks that one too, and
+      #   it needs the record authorized, not rendered.
+      return answer_translation(entity) if entity.is_a?(::KnowledgeBase::Answer)
+
+      entity
     rescue
       nil
     end
@@ -107,6 +113,33 @@ module Gql::Types::User
       Pundit.authorize(context.current_user, entity, Taskbar.entity_pundit_method(@object.callback))
 
       entity
+    end
+
+    # The translation of the tab's own locale, not the answer: one answer is one object for every
+    #   locale's tab, so a client caching by object identity would hold a single title for all of
+    #   them. Authorization stays on the answer above - this only decides what is rendered.
+    def answer_translation(answer)
+      answer.translation_preferred(tab_locale(answer))
+    end
+
+    # Looked up once per code and response: a list holding several tabs of one locale would
+    #   otherwise walk to the knowledge base and query the locale once per tab.
+    #
+    # Cached apart from the localized fields of the other knowledge base types
+    #   (`Gql::Types::Concerns::ResolvesKnowledgeBaseLocale`) although the lookup is the same,
+    #   because a miss does not mean the same thing on both sides: a field falls back to the locale
+    #   its query resolved, while a tab whose locale is no longer configured has no query locale to
+    #   fall back to - it renders the primary translation, which is what `nil` asks
+    #   `#translation_preferred` for. One shared entry would let whichever resolved first decide
+    #   for the other.
+    def tab_locale(answer)
+      code = @object.params&.dig('locale')
+      return if code.blank?
+
+      cache = (context[:knowledge_base_taskbar_locales_by_code] ||= {})
+      return cache[code] if cache.key?(code)
+
+      cache[code] = answer.category.knowledge_base.kb_locales.joins(:system_locale).find_by(locales: { locale: code })
     end
   end
 end

@@ -43,6 +43,64 @@ RSpec.describe Gql::Types::KnowledgeBase::CategoryType, type: :graphql do
     gql.execute(query, variables:)
   end
 
+  # The locale of the field's own argument, which is what lets one document read a category in a
+  #   locale other than the one the query resolved.
+  context 'with a translation asked for in a specific locale', authenticated_as: :editor do
+    let(:editor) { create(:admin) }
+    let(:query) do
+      <<~GQL
+        query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String, $titleLocale: String) {
+          knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale) {
+            subcategories {
+              id
+              translation(locale: $titleLocale) {
+                title
+                kbLocale { systemLocale { locale } }
+              }
+            }
+          }
+        }
+      GQL
+    end
+
+    let(:alternative_title) { 'Titel in der anderen Sprache' }
+    let(:subcategory)       { gql.result.data['subcategories'].first }
+
+    let(:translated_in_alternative_locale) { true }
+
+    before do
+      if translated_in_alternative_locale
+        create(:knowledge_base_category_translation,
+               category:  category,
+               kb_locale: alternative_locale,
+               title:     alternative_title)
+      end
+
+      gql.execute(query, variables: { locale: primary_locale.system_locale.locale, titleLocale: title_locale })
+    end
+
+    context 'when it names another locale than the query' do
+      let(:title_locale) { alternative_locale.system_locale.locale }
+
+      it 'answers with the locale of the argument, not the query', :aggregate_failures do
+        expect(subcategory['translation']).to include('title' => alternative_title)
+        expect(subcategory.dig('translation', 'kbLocale', 'systemLocale', 'locale'))
+          .to eq(alternative_locale.system_locale.locale)
+      end
+    end
+
+    context 'when it names a locale the category has no translation in' do
+      let(:translated_in_alternative_locale) { false }
+      let(:title_locale)                     { alternative_locale.system_locale.locale }
+
+      it 'falls back to the primary locale, and says so', :aggregate_failures do
+        expect(subcategory['translation']).to include('title' => category.translation_primary.title)
+        expect(subcategory.dig('translation', 'kbLocale', 'systemLocale', 'locale'))
+          .to eq(primary_locale.system_locale.locale)
+      end
+    end
+  end
+
   context 'with an editor', authenticated_as: :editor do
     let(:editor) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.editor')]) }
 
@@ -65,8 +123,8 @@ RSpec.describe Gql::Types::KnowledgeBase::CategoryType, type: :graphql do
     context 'with an answer in the category' do
       let(:setup) { draft_answer }
 
-      # `directAnswerCount` cannot answer this: it counts what the current user may see, so it can
-      #   read 0 for a category `destroy!` still refuses to delete.
+      # The visible counts cannot answer this: they count what the current user may see, so they
+      #   can read 0 for a category `destroy!` still refuses to delete.
       it 'reports the category as not deletable' do
         expect(category_result).to include('isDeletable' => false)
       end

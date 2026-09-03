@@ -22,6 +22,12 @@ export interface ConcurrentChange {
   //   permission, so a knowledge base editor without either gets a null `editedBy`), or the change
   //   is one nobody is recorded for - see the attribution note in `concurrentChange`.
   editorName?: string
+  // This editor's own save from somewhere else - another tab, another device, the old interface.
+  //   Being warned about "somebody" and then reading one's own name there is a puzzle.
+  byCurrentUser: boolean
+  // Something outside the translation moved: the category, the state, or the files. None of them
+  //   records an editor, and the files are the half a save can silently delete.
+  answerChanged: boolean
 }
 
 // One message for the banner and for the confirmation on submit: it says the same thing in both
@@ -33,6 +39,12 @@ export const CONCURRENT_CHANGE_MESSAGE = __(
 
 export const CONCURRENT_CHANGE_MESSAGE_WITHOUT_EDITOR = __(
   'This answer has been updated. Submitting will replace those changes.',
+)
+
+// Their own save, from another session or the old interface. Still a warning - the tab holds values
+//   from before it - but not a mystery about who did it.
+export const CONCURRENT_CHANGE_MESSAGE_BY_CURRENT_USER = __(
+  'You have updated this answer elsewhere. Submitting will replace those changes.',
 )
 
 export const attachmentIdentities = (
@@ -53,17 +65,18 @@ export const attachmentIdentities = (
 //   comparison - it is what the banner's link to the stored answer needs.
 export type ComparableAnswer = Pick<
   KnowledgeBaseAnswerHeader,
-  'id' | 'editedAt' | 'editedBy' | 'attachments' | 'category' | 'visibility'
+  'id' | 'translation' | 'attachments' | 'category' | 'visibility'
 >
 
 export const concurrentChange = (
   answer: ComparableAnswer | undefined,
   openedWith: OpenedWith | undefined,
+  currentUserId?: string,
 ): ConcurrentChange | undefined => {
   if (!answer || !openedWith) return undefined
 
   // The two halves are kept apart because only the first one has an editor recorded for it.
-  const translationChanged = answer.editedAt !== openedWith.editedAt
+  const translationChanged = answer.translation?.editedAt !== openedWith.editedAt
 
   const answerChanged =
     answer.category.id !== openedWith.categoryId ||
@@ -77,7 +90,13 @@ export const concurrentChange = (
   //   A change to the category, the state or the attachments leaves both untouched: naming that
   //   editor there would credit somebody who may have had nothing to do with it, and who may even
   //   be the editor reading the warning. Then the message that names nobody is the honest one.
+  // Only the translation records who edited it; a category, state or attachment change records
+  //   nobody.
+  const editor = translationChanged ? answer.translation?.editedBy : undefined
+
   return {
-    editorName: translationChanged ? (answer.editedBy?.fullname ?? undefined) : undefined,
+    editorName: editor?.fullname ?? undefined,
+    byCurrentUser: Boolean(editor?.id && currentUserId && editor.id === currentUserId),
+    answerChanged,
   }
 }

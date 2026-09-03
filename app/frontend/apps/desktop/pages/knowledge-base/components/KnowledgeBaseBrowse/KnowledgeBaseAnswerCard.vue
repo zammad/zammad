@@ -118,7 +118,7 @@ const actions = computed<MenuItem[]>(() => {
         class="shrink-0 fill-stone-200 dark:fill-neutral-500"
       />
 
-      <KnowledgeBaseAnswerIcon :visibility="visibility" size="small" />
+      <KnowledgeBaseAnswerIcon :visibility="visibility" size="tiny" />
 
       <CommonLabel size="medium" tag="h3" class="line-clamp-1! grow text-black! dark:text-white!">
         {{ title }}
@@ -139,7 +139,8 @@ const actions = computed<MenuItem[]>(() => {
            answer, and opening the menu must not follow it. -->
       <CommonActionMenu
         v-if="actions.length"
-        button-size="small"
+        class="inline-flex! items-center"
+        button-size="medium"
         :custom-menu-button-label="$t('Answer actions')"
         no-single-action-mode
         :actions="actions"

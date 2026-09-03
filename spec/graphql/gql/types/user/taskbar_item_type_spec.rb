@@ -80,14 +80,16 @@ RSpec.describe Gql::Types::User::TaskbarItemType, :aggregate_failures do
 
     # The key of an answer *record*, which the edit view will use, must keep resolving to the
     #   model - the create screen key above must not swallow it.
+    # An answer edit tab is a tab of one translation - the locale is the qualifier in its key - so
+    #   that is what it renders, while the answer is what it is authorized by.
     context 'when entity is a knowledge base answer' do
       let(:editor_role) { create(:role, permission_names: 'knowledge_base.editor') }
       let(:user)        { create(:user, roles: [editor_role]) }
       let(:answer)      { create(:knowledge_base_answer) }
       let(:key)         { "KnowledgeBase__Answer-#{answer.id}" }
 
-      it 'returns the answer' do
-        expect(instance.entity).to eq(answer)
+      it 'returns the translation of the answer' do
+        expect(instance.entity).to eq(answer.translation_primary)
         expect(instance.entity_access).to eq('Granted')
       end
     end

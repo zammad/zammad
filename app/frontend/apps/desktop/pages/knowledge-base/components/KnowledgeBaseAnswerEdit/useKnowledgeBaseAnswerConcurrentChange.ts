@@ -3,6 +3,7 @@
 import { computed, ref, toValue, watch } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
@@ -10,6 +11,7 @@ import {
   attachmentIdentities,
   concurrentChange,
   CONCURRENT_CHANGE_MESSAGE,
+  CONCURRENT_CHANGE_MESSAGE_BY_CURRENT_USER,
   CONCURRENT_CHANGE_MESSAGE_WITHOUT_EDITOR,
   type ComparableAnswer,
   type OpenedWith,
@@ -31,6 +33,7 @@ export const useKnowledgeBaseAnswerConcurrentChange = (options: {
   localeCode: MaybeRefOrGetter<string>
 }) => {
   const { waitForConfirmation } = useConfirmation()
+  const session = useSessionStore()
 
   // The answer as this tab opened it. Captured once and moved only by this editor's own save (see
   //   `snapshotAnswer`): the answer is live-updated by its subscription, so comparing it against
@@ -45,7 +48,7 @@ export const useKnowledgeBaseAnswerConcurrentChange = (options: {
     if (!loaded) return
 
     openedWith.value = {
-      editedAt: loaded.editedAt,
+      editedAt: loaded.translation?.editedAt,
       attachments: attachmentIdentities(loaded.attachments),
       categoryId: loaded.category.id,
       visibility: loaded.visibility,
@@ -70,13 +73,32 @@ export const useKnowledgeBaseAnswerConcurrentChange = (options: {
     { immediate: true },
   )
 
-  const foreignChange = computed(() => concurrentChange(toValue(options.answer), openedWith.value))
-
-  const foreignChangeMessage = computed(() =>
-    foreignChange.value?.editorName
-      ? CONCURRENT_CHANGE_MESSAGE
-      : CONCURRENT_CHANGE_MESSAGE_WITHOUT_EDITOR,
+  const foreignChange = computed(() =>
+    concurrentChange(toValue(options.answer), openedWith.value, session.user?.id),
   )
+
+  // What the banner announces, which is less than the submit asks about: the editor's own save from
+  //   another session has nobody to warn them about, while the confirmation below still asks before
+  //   their unsaved work replaces it.
+  //
+  // Only when nothing outside the translation moved: those changes record no editor, so this cannot
+  //   know it was them - and the attachment set among them is the one a save can silently delete.
+  const announcedChange = computed(() => {
+    const change = foreignChange.value
+
+    if (!change) return undefined
+    if (change.byCurrentUser && !change.answerChanged) return undefined
+
+    return change
+  })
+
+  const foreignChangeMessage = computed(() => {
+    if (foreignChange.value?.byCurrentUser) return CONCURRENT_CHANGE_MESSAGE_BY_CURRENT_USER
+
+    return foreignChange.value?.editorName
+      ? CONCURRENT_CHANGE_MESSAGE
+      : CONCURRENT_CHANGE_MESSAGE_WITHOUT_EDITOR
+  })
 
   // The answer as it is stored now, for the banner to link to - the reader's own view of it, in the
   //   locale being edited.
@@ -100,9 +122,10 @@ export const useKnowledgeBaseAnswerConcurrentChange = (options: {
     if (!foreignChange.value) return true
 
     return waitForConfirmation(foreignChangeMessage.value, {
-      textPlaceholder: foreignChange.value.editorName
-        ? [foreignChange.value.editorName]
-        : undefined,
+      textPlaceholder:
+        !foreignChange.value.byCurrentUser && foreignChange.value.editorName
+          ? [foreignChange.value.editorName]
+          : undefined,
       headerTitle: __('Submit your changes'),
       buttonLabel: __('Submit'),
       buttonVariant: 'danger',
@@ -111,6 +134,7 @@ export const useKnowledgeBaseAnswerConcurrentChange = (options: {
 
   return {
     foreignChange,
+    announcedChange,
     foreignChangeMessage,
     storedAnswerLink,
     knownAttachments,

@@ -186,10 +186,6 @@
     > .formkit-outer[data-dirty]
     > .formkit-block
     > .formkit-wrapper
-    > .formkit-inner,
-  .form-group.form-group-mark-dirty
-    > .formkit-outer[data-dirty]
-    > .formkit-wrapper
     > .formkit-inner {
     @apply relative;
 
@@ -198,8 +194,8 @@
 
       background: repeating-linear-gradient(
           45deg,
-          var(--color-blue-300),
-          var(--color-blue-300) 5px,
+          var(--color-alpha-800),
+          var(--color-alpha-800) 5px,
           transparent 5px,
           transparent 10px
         )
@@ -219,16 +215,12 @@
       > .formkit-outer[data-dirty]
       > .formkit-block
       > .formkit-wrapper
-      > .formkit-inner,
-    .form-group.form-group-mark-dirty
-      > .formkit-outer[data-dirty]
-      > .formkit-wrapper
       > .formkit-inner {
       &::before {
         background: repeating-linear-gradient(
             45deg,
-            var(--color-gray-200),
-            var(--color-gray-200) 5px,
+            var(--color-alpha-100),
+            var(--color-alpha-100) 5px,
             transparent 5px,
             transparent 10px
           )

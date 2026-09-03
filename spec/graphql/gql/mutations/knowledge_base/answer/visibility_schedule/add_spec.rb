@@ -21,7 +21,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::VisibilitySchedule::Add, t
         knowledgeBaseAnswerVisibilityScheduleAdd(answerId: $answerId, visibility: $visibility, scheduledAt: $scheduledAt) {
           answer {
             id
-            title
+            translation { id title }
             visibility
             visibilitySchedules {
               visibility
@@ -72,7 +72,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::VisibilitySchedule::Add, t
     #   client cache. They are localized like every knowledge base read without an explicit locale:
     #   in the current user's preferred locale, which here is the only one there is.
     it 'renders the answer in the preferred locale' do
-      expect(gql.result.data.dig('answer', 'title')).to eq('Stored title')
+      expect(gql.result.data.dig('answer', 'translation', 'title')).to eq('Stored title')
     end
 
     # Whatever the service refuses has to reach the client as a user error rather than as a failed

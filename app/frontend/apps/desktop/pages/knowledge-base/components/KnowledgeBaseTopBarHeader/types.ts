@@ -31,7 +31,9 @@ export interface TopBarHeaderProps {
 //   answer body's article column, `form` the create/edit form's column.
 export type HeaderContentWidth = 'wide' | 'reading' | 'form'
 
-export type Navigation = NonNullable<KnowledgeBaseAnswerHeader['navigation']>
+export type Navigation = NonNullable<
+  NonNullable<KnowledgeBaseAnswerHeader['translation']>['navigation']
+>
 export interface AnswerNavigationEntry {
   link: Link
   label: string
@@ -44,12 +46,6 @@ export type KnowledgeBaseAnswerHeaderDetailsAnswer = Pick<KnowledgeBaseAnswerHea
   Partial<
     Pick<
       KnowledgeBaseAnswerHeader,
-      | 'translationMissing'
-      | 'internalAt'
-      | 'publishedAt'
-      | 'archivedAt'
-      | 'editedAt'
-      | 'editedBy'
-      | 'visibilitySchedules'
+      'internalAt' | 'publishedAt' | 'archivedAt' | 'visibilitySchedules' | 'translation'
     >
   >

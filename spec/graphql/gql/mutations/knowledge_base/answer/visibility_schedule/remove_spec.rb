@@ -25,7 +25,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::VisibilitySchedule::Remove
         knowledgeBaseAnswerVisibilityScheduleRemove(answerId: $answerId, visibility: $visibility) {
           answer {
             id
-            title
+            translation { id title }
             visibility
             visibilitySchedules {
               visibility
@@ -66,7 +66,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::VisibilitySchedule::Remove
     # No locale is asked of the caller, for the reason given on the add mutation - the answer is
     #   rendered in the current user's preferred locale, which here is the only one there is.
     it 'renders the answer in the preferred locale' do
-      expect(gql.result.data.dig('answer', 'title')).to eq('Stored title')
+      expect(gql.result.data.dig('answer', 'translation', 'title')).to eq('Stored title')
     end
 
     # The entry the client removes may not be there any more, which the service passes over quietly -

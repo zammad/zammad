@@ -36,8 +36,7 @@ module Gql::Queries
       #   call), and the visibility of a category hit without walking its subtree per publication
       #   state (#content_visibility does). Same handover as
       #   Gql::Queries::KnowledgeBase::CategorySubcategories.
-      context.scoped_set!(:knowledge_base_category_titles, output.category_titles)
-      context.scoped_set!(:knowledge_base_category_translation_missing, output.category_translation_missing)
+      context.scoped_set!(:knowledge_base_category_translations, output.category_translations)
       context.scoped_set!(:knowledge_base_category_visibility, output.category_visibility)
 
       output.results

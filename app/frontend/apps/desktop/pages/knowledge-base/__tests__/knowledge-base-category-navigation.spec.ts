@@ -43,11 +43,10 @@ const category = (
   counts: { answerCount?: number; subcategoryCount?: number } = {},
 ) => ({
   id,
-  title,
+  translation: { title },
   categoryIcon: 'f115',
   iconSet: 'FontAwesome',
   visibility: EnumKnowledgeBaseVisibility.Published,
-  translationMissing: false,
   answerCount: counts.answerCount ?? 0,
   subcategoryCount: counts.subcategoryCount ?? 0,
   position: 0,
@@ -55,10 +54,9 @@ const category = (
 
 const answer = (id: string, title: string) => ({
   id,
-  title,
   visibility: EnumKnowledgeBaseVisibility.Published,
-  translationMissing: false,
   position: 0,
+  translation: { id: `${id}-translation`, title },
 })
 
 describe('knowledge base category navigation', () => {
@@ -68,7 +66,7 @@ describe('knowledge base category navigation', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -99,8 +97,7 @@ describe('knowledge base category navigation', () => {
           knowledgeBaseCategorySubcategories: {
             category: {
               id: ROOT_CATEGORY_ID,
-              translationMissing: false,
-              breadcrumb: [{ id: ROOT_CATEGORY_ID, title: 'Root Category' }],
+              breadcrumb: [{ id: ROOT_CATEGORY_ID, translation: { title: 'Root Category' } }],
             },
             subcategories: [category(CHILD_CATEGORY_ID, 'Child Category')],
           },
@@ -252,8 +249,7 @@ describe('knowledge base category navigation', () => {
       knowledgeBaseCategorySubcategories: {
         category: {
           id: CHILD_CATEGORY_ID,
-          translationMissing: false,
-          breadcrumb: [{ id: CHILD_CATEGORY_ID, title: 'Child Category' }],
+          breadcrumb: [{ id: CHILD_CATEGORY_ID, translation: { title: 'Child Category' } }],
           policy: { update: false, destroy: false, createSubcategory: false },
         },
         subcategories: [],
@@ -276,7 +272,7 @@ describe('knowledge base category navigation', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         // No add card for a visitor who may not create a top level category.
         policy: { update: false },
@@ -438,10 +434,21 @@ describe('knowledge base category navigation', () => {
       if (categoryId === ROOT_CATEGORY_ID) {
         return {
           knowledgeBaseCategorySubcategories: {
+            // No translation of its own in the browsed locale: the title comes from the
+            //   primary one, which is what its `kbLocale` says.
             category: {
               id: ROOT_CATEGORY_ID,
-              translationMissing: true,
-              breadcrumb: [{ id: ROOT_CATEGORY_ID, title: 'Root Category' }],
+              translation: {
+                title: 'Root Category',
+                kbLocale: {
+                  __typename: 'KnowledgeBaseLocale' as const,
+                  // Its own id, or the mocked locale of the browsed page (one record for every
+                  //   KnowledgeBaseLocale) would answer this one too.
+                  id: convertToGraphQLId('KnowledgeBase::Locale', 2),
+                  systemLocale: { __typename: 'Locale' as const, locale: 'de-de' },
+                },
+              },
+              breadcrumb: [{ id: ROOT_CATEGORY_ID, translation: { title: 'Root Category' } }],
             },
             subcategories: [],
           },
@@ -471,8 +478,7 @@ describe('knowledge base category navigation', () => {
           knowledgeBaseCategorySubcategories: {
             category: {
               id: ROOT_CATEGORY_ID,
-              translationMissing: false,
-              breadcrumb: [{ id: ROOT_CATEGORY_ID, title: 'Root Category' }],
+              breadcrumb: [{ id: ROOT_CATEGORY_ID, translation: { title: 'Root Category' } }],
             },
             subcategories: [],
           },

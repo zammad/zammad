@@ -4,6 +4,7 @@
 import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import { ErrorStatusCodes } from '#shared/types/error.ts'
 
+import { useSectionPageCache } from '#desktop/composables/useSectionPageCache.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
@@ -85,13 +86,16 @@ defineOptions({
   beforeRouteEnter: resolveEntry,
   beforeRouteUpdate: rememberEntry,
 })
+
+const cacheOnlyCurrentPage = useSectionPageCache()
 </script>
 
-<!-- The browse view is the only child; keep it alive so its state (scroll,
-     loaded data) survives leaving and returning. -->
+<!-- The page you were on is still there when you come back to the tab, and only that one page is
+     kept - see useSectionPageCache, which also records why this is not a `max="1"` cache. A page off
+     screen still holds its queries, which useKnowledgeBaseContentUpdates is for. -->
 <template>
   <RouterView #default="{ Component }">
-    <KeepAlive :max="1">
+    <KeepAlive :include="cacheOnlyCurrentPage(Component)">
       <component :is="Component" />
     </KeepAlive>
   </RouterView>

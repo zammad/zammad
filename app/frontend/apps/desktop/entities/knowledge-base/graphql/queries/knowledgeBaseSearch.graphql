@@ -18,18 +18,27 @@ query knowledgeBaseSearch(
         item {
           ... on KnowledgeBaseAnswer {
             id
-            title
             visibility
-            translationMissing
+            translation(locale: $locale) {
+              id
+              title
+              kbLocale {
+                id
+                systemLocale {
+                  locale
+                }
+              }
+            }
           }
           ... on KnowledgeBaseCategory {
             id
-            # Aliased: an answer's title is non-null while a category's is not, and GraphQL wants
-            #   one response shape per response name across the document - union members included.
-            categoryTitle: title
+            translation(locale: $locale) {
+              id
+              title
+            }
             categoryIcon
             iconSet
-            visibility
+            visibility(locale: $locale)
           }
         }
         titlePreview {
@@ -42,7 +51,7 @@ query knowledgeBaseSearch(
         }
         categoryPath {
           id
-          title
+          title(locale: $locale)
         }
       }
     }

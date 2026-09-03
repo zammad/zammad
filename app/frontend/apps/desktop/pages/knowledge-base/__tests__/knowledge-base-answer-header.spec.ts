@@ -25,51 +25,69 @@ const ANSWER_PATH = `/knowledge-base/locale/en-us/answer/${getIdFromGraphQLId(AN
 
 type Answer = NonNullable<KnowledgeBaseAnswerQuery['knowledgeBaseAnswer']>
 
-const mockAnswer = (overrides: Partial<Answer> = {}) =>
+type AnswerOverrides = Omit<Partial<Answer>, 'translation'> & {
+  translation?: Partial<NonNullable<Answer['translation']>> | null
+}
+
+const mockAnswer = ({ translation, ...overrides }: AnswerOverrides = {}) =>
   mockKnowledgeBaseAnswerQuery({
     knowledgeBaseAnswer: {
       id: ANSWER_ID,
-      title: 'Some Knowledge Base Answer',
       visibility: EnumKnowledgeBaseVisibility.Published,
-      translationMissing: false,
       internalAt: null,
       publishedAt: '2026-08-01T10:00:00Z',
       archivedAt: null,
-      editedAt: '2026-08-03T10:00:00Z',
-      editedBy: {
-        id: convertToGraphQLId('User', 3),
-        firstname: 'Erika',
-        lastname: 'Mustermann',
-        fullname: 'Erika Mustermann',
-        organization: null,
-      },
-      navigation: {
-        __typename: 'KnowledgeBaseAnswerNavigation',
-        index: 2,
-        totalCount: 3,
-        previousAnswer: {
-          __typename: 'KnowledgeBaseAnswer',
-          id: PREVIOUS_ANSWER_ID,
-          title: 'Previous Knowledge Base Answer',
-        },
-        nextAnswer: {
-          __typename: 'KnowledgeBaseAnswer',
-          id: NEXT_ANSWER_ID,
-          title: 'Next Knowledge Base Answer',
-        },
-      },
+      // Spread apart from the rest, so an example states only the part of the translation it is
+      //   about - the locale it belongs to, say, which is what the header warns about.
+      translation:
+        translation === null
+          ? null
+          : {
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+              title: 'Some Knowledge Base Answer',
+              editedAt: '2026-08-03T10:00:00Z',
+              editedBy: {
+                id: convertToGraphQLId('User', 3),
+                firstname: 'Erika',
+                lastname: 'Mustermann',
+                fullname: 'Erika Mustermann',
+                organization: null,
+              },
+              navigation: {
+                __typename: 'KnowledgeBaseAnswerNavigation',
+                index: 2,
+                totalCount: 3,
+                previousAnswer: {
+                  __typename: 'KnowledgeBaseAnswer',
+                  id: PREVIOUS_ANSWER_ID,
+                  translation: {
+                    id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 4),
+                    title: 'Previous Knowledge Base Answer',
+                  },
+                },
+                nextAnswer: {
+                  __typename: 'KnowledgeBaseAnswer',
+                  id: NEXT_ANSWER_ID,
+                  translation: {
+                    id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 6),
+                    title: 'Next Knowledge Base Answer',
+                  },
+                },
+              },
+              ...translation,
+            },
       category: {
         id: CHILD_CATEGORY_ID,
         breadcrumb: [
           {
             id: ROOT_CATEGORY_ID,
-            title: 'Root Category',
+            translation: { title: 'Root Category' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
           },
           {
             id: CHILD_CATEGORY_ID,
-            title: 'Child Category',
+            translation: { title: 'Child Category' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
           },
@@ -86,7 +104,7 @@ const mockKnowledgeBase = (showFeedIcon = false) =>
   mockKnowledgeBaseQuery({
     knowledgeBase: {
       id: convertToGraphQLId('KnowledgeBase', 1),
-      title: 'My Knowledge Base',
+      translation: { title: 'My Knowledge Base' },
       iconset: 'default',
       isPubliclyAvailable: true,
       isVisiblePublicly: true,
@@ -165,7 +183,7 @@ describe('knowledge base answer header', () => {
 
       const view = await visitView(ANSWER_PATH)
 
-      expect(await view.findByRole('button', { name: 'Edit answer' })).toBeInTheDocument()
+      expect((await view.findAllByRole('button', { name: 'Edit answer' }))[1]).toBeInTheDocument()
     })
 
     it('is not offered to a user who may only read it', async () => {
@@ -188,7 +206,7 @@ describe('knowledge base answer header', () => {
 
       const view = await visitView(ANSWER_PATH)
 
-      await view.events.click(await view.findByRole('button', { name: 'Edit answer' }))
+      await view.events.click((await view.findAllByRole('button', { name: 'Edit answer' }))[0])
 
       const router = getTestRouter()
 
@@ -201,55 +219,6 @@ describe('knowledge base answer header', () => {
         answerInternalId: String(getIdFromGraphQLId(ANSWER_ID)),
       })
     })
-  })
-
-  // The way into the edit view that is on screen at any scroll position - the reader's floating
-  //   toolbar offers the same action, but follows the scroll and hides itself.
-  it('offers editing the answer in the action menu', async () => {
-    mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
-
-    const view = await visitView(ANSWER_PATH)
-
-    // Awaited through something else the header renders, so the menu is looked for on a settled
-    //   view rather than on one that has not got there yet.
-    await view.findAllByText('Published')
-
-    const header = view.getByTestId('knowledge-base-header-full')
-
-    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
-
-    const menu = await view.findByRole('menu')
-
-    // Scoped to the menu: the floating toolbar's pencil carries the very same label.
-    await view.events.click(within(menu).getByRole('button', { name: 'Edit answer' }))
-
-    await waitFor(() => {
-      expect(getTestRouter().currentRoute.value.name).toBe('KnowledgeBaseAnswerEdit')
-    })
-  })
-
-  // Gated per record: the global editor permission says nothing about the subtree the answer
-  //   lives in, and a control the mutation refuses is worse than none.
-  it('does not offer editing an answer the user may not update', async () => {
-    // With the feed entry on, so there is still a menu to look into: an answer offering no action
-    //   at all gets no menu button.
-    mockKnowledgeBase(true)
-    mockAnswer({ policy: { __typename: 'PolicyDefault', update: false, destroy: false } })
-
-    const view = await visitView(ANSWER_PATH)
-
-    await view.findAllByText('Published')
-
-    const header = view.getByTestId('knowledge-base-header-full')
-
-    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
-
-    const menu = await view.findByRole('menu')
-
-    // The feed entry is still on offer, so the menu is genuinely open and merely has no edit
-    //   entry in it.
-    expect(within(menu).getByRole('button', { name: 'Set up RSS feed' })).toBeInTheDocument()
-    expect(within(menu).queryByRole('button', { name: 'Edit answer' })).not.toBeInTheDocument()
   })
 
   it('links the public knowledge base button to the answer preview endpoint', async () => {
@@ -297,6 +266,58 @@ describe('knowledge base answer header', () => {
     })
   })
 
+  // Reading the same answer in two locales and coming back: the answer is one record, and a client
+  //   caching by object identity would hold one translation for both locales unless the field
+  //   carries the locale it was asked for (Gql::Types::KnowledgeBase::AnswerType#translation). The
+  //   way back is what shows it - the second locale looks right either way, it is the return that
+  //   reads the other's title.
+  it('keeps each locale reading its own title', async () => {
+    mockKnowledgeBaseAnswerQuery(({ locale }) => {
+      const german = locale === 'de-de'
+
+      return {
+        knowledgeBaseAnswer: {
+          id: ANSWER_ID,
+          translation: {
+            id: convertToGraphQLId('KnowledgeBase::Answer::Translation', german ? 2 : 1),
+            title: german ? 'Titel auf Deutsch' : 'Some Knowledge Base Answer',
+            navigation: null,
+            kbLocale: {
+              __typename: 'KnowledgeBaseLocale' as const,
+              id: convertToGraphQLId('KnowledgeBase::Locale', german ? 2 : 1),
+              systemLocale: { __typename: 'Locale' as const, locale: locale ?? 'en-us' },
+            },
+          },
+          category: {
+            id: ROOT_CATEGORY_ID,
+            breadcrumb: [{ id: ROOT_CATEGORY_ID, translation: { title: 'Root Category' } }],
+          },
+        },
+      }
+    })
+
+    const view = await visitView(ANSWER_PATH)
+
+    expect(
+      await view.findAllByRole('heading', { name: 'Some Knowledge Base Answer' }),
+    ).not.toHaveLength(0)
+
+    const router = getTestRouter()
+
+    await router.push(`/knowledge-base/locale/de-de/answer/${getIdFromGraphQLId(ANSWER_ID)}`)
+
+    expect(await view.findAllByRole('heading', { name: 'Titel auf Deutsch' })).not.toHaveLength(0)
+
+    await router.push(ANSWER_PATH)
+
+    await waitFor(() => {
+      expect(
+        view.getAllByRole('heading', { name: 'Some Knowledge Base Answer' }),
+        'back in the first locale, with its own title',
+      ).not.toHaveLength(0)
+    })
+  })
+
   it('navigates to the next answer in the route locale', async () => {
     const view = await visitView(ANSWER_PATH)
 
@@ -313,7 +334,16 @@ describe('knowledge base answer header', () => {
   })
 
   it('warns when the answer has no translation in the browsed locale', async () => {
-    mockAnswer({ translationMissing: true })
+    mockAnswer({
+      translation: {
+        id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 2),
+        kbLocale: {
+          __typename: 'KnowledgeBaseLocale' as const,
+          id: convertToGraphQLId('KnowledgeBase::Locale', 2),
+          systemLocale: { __typename: 'Locale', locale: 'de-de' },
+        },
+      },
+    })
 
     const view = await visitView(ANSWER_PATH)
 

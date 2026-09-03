@@ -21,7 +21,6 @@ export const KnowledgeBaseAnswerTranslationFragmentDoc = gql`
     tags
     category {
       id
-      title
     }
   }
   kbLocale {

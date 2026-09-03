@@ -16,7 +16,7 @@ describe KnowledgeBase::AnswerPolicy do
   end
 
   describe '#show?' do
-    let(:editorial_fields) { %i[internal_at archived_at edited_at edited_by] }
+    let(:editorial_fields) { %i[internal_at archived_at edited_at edited_by created_by updated_by] }
 
     def mock_access(access)
       allow(policy).to receive(:access).and_return(access)

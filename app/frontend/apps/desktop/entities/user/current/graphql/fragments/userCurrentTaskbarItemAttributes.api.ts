@@ -15,7 +15,7 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
     ... on Ticket {
       ...ticketTaskbarTabAttributes
     }
-    ... on KnowledgeBaseAnswer {
+    ... on KnowledgeBaseAnswerTranslation {
       ...knowledgeBaseAnswerTaskbarTabAttributes
     }
     ... on UserTaskbarItemEntityTicketCreate {

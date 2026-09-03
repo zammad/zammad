@@ -40,7 +40,7 @@ const mockKnowledgeBase = () =>
   mockKnowledgeBaseQuery({
     knowledgeBase: {
       id: convertToGraphQLId('KnowledgeBase', 1),
-      title: 'My Knowledge Base',
+      translation: { title: 'My Knowledge Base' },
       iconset: 'default',
       isPubliclyAvailable: false,
       isVisiblePublicly: false,
@@ -124,8 +124,11 @@ const mockCategoryPaths = () =>
               breadcrumb: [
                 {
                   id,
-                  title: CATEGORY_OPTIONS.find((option) => option.value === getIdFromGraphQLId(id))
-                    ?.label,
+                  translation: {
+                    title: CATEGORY_OPTIONS.find(
+                      (option) => option.value === getIdFromGraphQLId(id),
+                    )?.label,
+                  },
                 },
               ],
             }
@@ -341,7 +344,10 @@ describe('knowledge base answer create', () => {
       knowledgeBaseCategorySubcategories: {
         category:
           categoryId === hardwareId
-            ? { id: hardwareId, breadcrumb: [{ id: hardwareId, title: 'Hardware' }] }
+            ? {
+                id: hardwareId,
+                breadcrumb: [{ id: hardwareId, translation: { title: 'Hardware' } }],
+              }
             : null,
         subcategories: [],
       },
@@ -560,10 +566,12 @@ describe('knowledge base answer create', () => {
         knowledgeBaseAnswerAdd: {
           answer: {
             id: ANSWER_ID,
-            title: TITLE,
             visibility: EnumKnowledgeBaseVisibility.Draft,
-            translationMissing: false,
             position: 1,
+            translation: {
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+              title: TITLE,
+            },
             category: { id: convertToGraphQLId('KnowledgeBase::Category', 1) },
           },
           errors: null,

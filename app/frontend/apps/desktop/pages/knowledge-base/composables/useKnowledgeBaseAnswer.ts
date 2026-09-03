@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, onScopeDispose, shallowRef, type Ref } from 'vue'
+import { computed, shallowRef, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useReactivate } from '#shared/composables/useReactivate.ts'
@@ -12,6 +12,7 @@ import { redirectToError, ErrorRouteType } from '#shared/router/error.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 
+import { useKnowledgeBaseContentUpdates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseContentUpdates.ts'
 import { useKnowledgeBaseAnswerQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.api.ts'
 import { KnowledgeBaseAnswerUpdatesDocument } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseAnswerUpdates.api.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
@@ -169,16 +170,22 @@ export const useKnowledgeBaseAnswer = (
     variables: {
       answerId: answerId?.value as string,
       locale: locale?.value,
-      // The same field set the query asked for: a subscription result that left `bodyForEditing`
-      //   out would overwrite the cache entity without it, and the open editor would lose the
-      //   only body it can load.
+      // The same field set the query asked for. Not to keep the cached body - Apollo merges a
+      //   normalized entity field by field, so an omitted field is left alone - but to deliver the
+      //   new one: without it a foreign save never carries the changed text into the cache, and the
+      //   edit view's takeover puts the body the tab opened with back into the fields (covered by
+      //   'takes over a foreign change to the body alone').
+      //
+      // `withNavigation` is deliberately not forwarded: the stepper describes the category's
+      //   listing, which this answer's own save cannot change - a new or removed sibling arrives as
+      //   a content update, which refetches.
       withBodyForEditing,
     },
   }))
 
   const answer = computed(() => result.value?.knowledgeBaseAnswer ?? undefined)
 
-  const navigation = computed(() => answer.value?.navigation)
+  const navigation = computed(() => answer.value?.translation?.navigation)
 
   // A single-answer category wraps both neighbours back to the answer itself —
   //   nothing to warm there.
@@ -232,10 +239,11 @@ export const useKnowledgeBaseAnswer = (
   //   too, with its own category among the affected ids, so an ordinary edit both pushes and
   //   refetches. Telling the two apart would need the ping to say which record changed, it being
   //   content-free by design.
-  const { contentUpdates } = store
-
-  const { off: stopContentUpdates } = contentUpdates.onResult(({ data }) => {
-    const affected = data?.knowledgeBaseContentUpdates?.affectedCategoryIds ?? []
+  //
+  // Handed over by useKnowledgeBaseContentUpdates rather than taken from the store directly, so a
+  //   view that is kept alive off screen (the reader) or parked in the taskbar (the edit tab) does
+  //   not refetch until it is looked at again.
+  useKnowledgeBaseContentUpdates((affected) => {
     const breadcrumbIds = answer.value?.category.breadcrumb.map((category) => category.id) ?? []
 
     if (affected.length === 0 || breadcrumbIds.some((id) => affected.includes(id))) {
@@ -255,8 +263,6 @@ export const useKnowledgeBaseAnswer = (
         .catch(() => {})
     }
   })
-
-  onScopeDispose(stopContentUpdates)
 
   return { knowledgeBaseAnswerQuery, answer, answerConfirmed, loading }
 }

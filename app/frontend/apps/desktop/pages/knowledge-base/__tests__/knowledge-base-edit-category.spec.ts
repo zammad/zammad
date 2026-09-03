@@ -21,11 +21,10 @@ const CHILD_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
 
 const category = (id: string, title: string, editor = true) => ({
   id,
-  title,
+  translation: { title },
   categoryIcon: 'f115',
   iconSet: 'FontAwesome',
   visibility: EnumKnowledgeBaseVisibility.Published,
-  translationMissing: false,
   answerCount: 0,
   subcategoryCount: 0,
   position: 0,
@@ -41,7 +40,13 @@ const mockCategoryAccess = (editor = true) =>
         knowledgeBaseCategorySubcategories: {
           category: {
             ...category(ROOT_CATEGORY_ID, 'Root Category', editor),
-            breadcrumb: [{ id: ROOT_CATEGORY_ID, title: 'Root Category', categoryIcon: 'f115' }],
+            breadcrumb: [
+              {
+                id: ROOT_CATEGORY_ID,
+                translation: { title: 'Root Category' },
+                categoryIcon: 'f115',
+              },
+            ],
           },
           subcategories: [category(CHILD_CATEGORY_ID, 'Child Category', editor)],
         },
@@ -63,8 +68,7 @@ describe('knowledge base edit category', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
-        footerNote: 'Footer',
+        translation: { title: 'My Knowledge Base', footerNote: 'Footer' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -214,8 +218,7 @@ describe('knowledge base edit category', () => {
       mockKnowledgeBaseQuery({
         knowledgeBase: {
           id: convertToGraphQLId('KnowledgeBase', 1),
-          title: 'My Knowledge Base',
-          footerNote: 'Footer',
+          translation: { title: 'My Knowledge Base', footerNote: 'Footer' },
           iconset: 'default',
           isPubliclyAvailable: true,
           isVisiblePublicly: true,

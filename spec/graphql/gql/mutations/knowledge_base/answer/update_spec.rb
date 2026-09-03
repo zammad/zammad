@@ -21,8 +21,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
         knowledgeBaseAnswerUpdate(answerId: $answerId, input: $input, locale: $locale) {
           answer {
             id
-            title
-            content { body }
+            translation { id title content { body } }
             category { id }
             visibility
             policy {
@@ -52,11 +51,9 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
   end
 
   context 'with an editor', authenticated_as: :editor do
-    it 'returns the updated answer' do
-      expect(gql.result.data['answer']).to include(
-        'id'    => gql.id(answer),
-        'title' => 'New title',
-      )
+    it 'returns the updated answer', :aggregate_failures do
+      expect(gql.result.data['answer']).to include('id' => gql.id(answer))
+      expect(gql.result.data.dig('answer', 'translation')).to include('title' => 'New title')
     end
 
     # Every attribute is optional, and the schema is what says so - a partial save must not be
@@ -65,7 +62,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
       let(:input) { {} }
 
       it 'returns the answer unchanged' do
-        expect(gql.result.data.dig('answer', 'title')).to eq('Stored title')
+        expect(gql.result.data.dig('answer', 'translation', 'title')).to eq('Stored title')
       end
     end
 
@@ -100,8 +97,8 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
       let(:input)  { { title: 'Alternative title', body: '<p>Alternative body</p>' } }
 
       it 'writes and renders the answer in that locale', :aggregate_failures do
-        expect(gql.result.data.dig('answer', 'title')).to eq('Alternative title')
-        expect(gql.result.data.dig('answer', 'content')).to eq('body' => '<p>Alternative body</p>')
+        expect(gql.result.data.dig('answer', 'translation', 'title')).to eq('Alternative title')
+        expect(gql.result.data.dig('answer', 'translation', 'content')).to eq('body' => '<p>Alternative body</p>')
         expect(answer.translation_to(primary_locale).title).to eq('Stored title')
       end
     end
@@ -150,7 +147,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
 
     context 'when the answer is in the permitted category', authenticated_as: :granular_editor do
       it 'returns the updated answer' do
-        expect(gql.result.data.dig('answer', 'title')).to eq('New title')
+        expect(gql.result.data.dig('answer', 'translation', 'title')).to eq('New title')
       end
     end
 
@@ -194,7 +191,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
       <<~QUERY
         mutation knowledgeBaseAnswerUpdate($answerId: ID!, $input: KnowledgeBaseUpdateAnswerInput!, $locale: String!, $meta: KnowledgeBaseAnswerUpdateMetaInput) {
           knowledgeBaseAnswerUpdate(answerId: $answerId, input: $input, locale: $locale, meta: $meta) {
-            answer { id title }
+            answer { id translation { id title } }
             errors {
               message
               exception
@@ -240,7 +237,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
         end
 
         it 'saves' do
-          expect(gql.result.data['answer']).to include('title' => 'New title')
+          expect(gql.result.data.dig('answer', 'translation')).to include('title' => 'New title')
         end
       end
 
@@ -248,7 +245,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
         let(:meta) { { knownAttachments: [{ name: 'theirs.txt', size: 6 }] } }
 
         it 'saves' do
-          expect(gql.result.data['answer']).to include('title' => 'New title')
+          expect(gql.result.data.dig('answer', 'translation')).to include('title' => 'New title')
         end
       end
     end

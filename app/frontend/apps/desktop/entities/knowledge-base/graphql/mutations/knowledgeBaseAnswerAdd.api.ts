@@ -11,10 +11,18 @@ export const KnowledgeBaseAnswerAddDocument = gql`
   knowledgeBaseAnswerAdd(input: $input, locale: $locale) {
     answer {
       id
-      title
       visibility
-      translationMissing
       position
+      translation(locale: $locale) {
+        id
+        title
+        kbLocale {
+          id
+          systemLocale {
+            locale
+          }
+        }
+      }
       category {
         id
       }

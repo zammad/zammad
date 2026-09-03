@@ -12,7 +12,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
     <<~GQL
       query knowledgeBaseAnswers($categoryId: ID!, $locale: String, $first: Int, $sortingMode: EnumKnowledgeBaseSortingMode) {
         knowledgeBaseAnswers(categoryId: $categoryId, locale: $locale, first: $first, sortingMode: $sortingMode) {
-          edges { node { id title visibility translationMissing tags } }
+          edges { node { id visibility tags translation { id title kbLocale { id } } } }
           pageInfo { hasNextPage }
         }
       }
@@ -47,7 +47,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
     it 'resolves the answer title from its translation' do
       by_id = gql.result.nodes.index_by { |node| node['id'] }
 
-      expect(by_id[gql.id(published_answer)]['title']).to eq(published_answer.translation_primary.title)
+      expect(by_id[gql.id(published_answer)].dig('translation', 'title')).to eq(published_answer.translation_primary.title)
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
     let(:sorting_mode) { 'alphabetical' }
 
     it 'lists in the previewed mode' do
-      titles = gql.result.nodes.pluck('title')
+      titles = gql.result.nodes.map { |node| node.dig('translation', 'title') }
 
       expect(titles).to eq(titles.sort_by(&:downcase))
     end
@@ -111,8 +111,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
     it 'flags answers whose title falls back from a missing translation', :aggregate_failures do
       by_id = gql.result.nodes.index_by { |node| node['id'] }
 
-      expect(by_id[gql.id(published_answer)]).to include('translationMissing' => true)
-      expect(by_id[gql.id(untranslated_answer)]).to include('translationMissing' => false)
+      expect(by_id[gql.id(published_answer)].dig('translation', 'kbLocale', 'id')).to eq(gql.id(primary_locale))
+      expect(by_id[gql.id(untranslated_answer)].dig('translation', 'kbLocale', 'id')).to eq(gql.id(alternative_locale))
     end
   end
 

@@ -15,6 +15,25 @@ import '#tests/graphql/builders/mocks.ts'
 const ANSWER_INTERNAL_ID = '42'
 const LOCALE_CODE = 'en-us'
 
+// The tab's entity: the translation the backend resolves for its own locale (Gql::Types::User
+//   ::TaskbarItemType#answer_translation) - or, with another locale code, the fallback served for
+//   a locale that has no translation of its own.
+const translation = (
+  title: string,
+  locale = LOCALE_CODE,
+  visibility = EnumKnowledgeBaseVisibility.Internal,
+) => ({
+  __typename: 'KnowledgeBaseAnswerTranslation',
+  id: convertToGraphQLId('KnowledgeBase::Answer::Translation', ANSWER_INTERNAL_ID),
+  title,
+  visibility,
+  kbLocale: {
+    __typename: 'KnowledgeBaseLocale',
+    id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+    systemLocale: { __typename: 'Locale', id: '1', locale },
+  },
+})
+
 const taskbarTab = (entity: Record<string, unknown> | null = null): UserTaskbarTab => ({
   type: EnumTaskbarEntity.KnowledgeBaseAnswerEdit,
   tabEntityKey: `KnowledgeBase__Answer-${ANSWER_INTERNAL_ID}-${LOCALE_CODE}`,
@@ -43,12 +62,7 @@ describe('KnowledgeBaseAnswerEdit taskbar tab', () => {
 
   it('renders the stored title of the answer', () => {
     const view = renderTab({
-      taskbarTab: taskbarTab({
-        __typename: 'KnowledgeBaseAnswer',
-        id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID),
-        title: 'Stored answer title',
-        visibility: EnumKnowledgeBaseVisibility.Internal,
-      }),
+      taskbarTab: taskbarTab(translation('Stored answer title')),
     })
 
     expect(view.getByText('Stored answer title')).toBeInTheDocument()
@@ -57,15 +71,36 @@ describe('KnowledgeBaseAnswerEdit taskbar tab', () => {
   // The same status icon the reader and the create draft show, so a tab in edit is recognizable.
   it('shows the status icon of the stored visibility', () => {
     const view = renderTab({
-      taskbarTab: taskbarTab({
-        __typename: 'KnowledgeBaseAnswer',
-        id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID),
-        title: 'Stored answer title',
-        visibility: EnumKnowledgeBaseVisibility.Published,
-      }),
+      taskbarTab: taskbarTab(
+        translation('Stored answer title', LOCALE_CODE, EnumKnowledgeBaseVisibility.Published),
+      ),
     })
 
     expect(view.getByIconName('kb-published')).toBeInTheDocument()
+  })
+
+  // A locale without a translation of its own has no stored title to show: the one the backend
+  //   served belongs to the locale it fell back to, and labelling the tab in that language would
+  //   name it after a text it is not editing.
+  it('says the translation is missing when this locale has none of its own', () => {
+    const view = renderTab({
+      taskbarTab: taskbarTab(translation('Titel auf Deutsch', 'de-de')),
+    })
+
+    expect(view.getByText('Missing translation')).toBeInTheDocument()
+    expect(view.queryByText('Titel auf Deutsch')).not.toBeInTheDocument()
+  })
+
+  // Writing the first translation of a locale is a create in all but name, so the label follows
+  //   the form the way a create tab's does - there is no stored title of this locale to keep.
+  it('follows the typed title while the translation is missing', () => {
+    const view = renderTab({
+      taskbarTab: taskbarTab(translation('Titel auf Deutsch', 'de-de')),
+      context: { formValues: { title: 'Being typed' } },
+    })
+
+    expect(view.getByText('Being typed')).toBeInTheDocument()
+    expect(view.queryByText('Missing translation')).not.toBeInTheDocument()
   })
 
   // The label stays on the stored answer while the form is being changed - the tab belongs to the
@@ -73,20 +108,18 @@ describe('KnowledgeBaseAnswerEdit taskbar tab', () => {
   //   and the icon is what says which one is about to be saved.
   it('keeps the stored title but follows the visibility picked in the form', () => {
     const view = renderTab({
-      taskbarTab: taskbarTab({
-        __typename: 'KnowledgeBaseAnswer',
-        id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID),
-        title: 'Stored answer title',
-        visibility: EnumKnowledgeBaseVisibility.Published,
-      }),
+      taskbarTab: taskbarTab(
+        translation('Stored answer title', LOCALE_CODE, EnumKnowledgeBaseVisibility.Published),
+      ),
       context: {
         formValues: { title: 'Being typed', visibility: EnumKnowledgeBaseVisibility.Internal },
       },
     })
 
     expect(view.getByText('Stored answer title')).toBeInTheDocument()
+    expect(view.getByIconName('kb-published')).toBeInTheDocument()
     expect(view.queryByText('Being typed')).not.toBeInTheDocument()
-    expect(view.getByIconName('kb-internal')).toBeInTheDocument()
+    expect(view.queryByIconName('kb-internal')).not.toBeInTheDocument()
   })
 })
 

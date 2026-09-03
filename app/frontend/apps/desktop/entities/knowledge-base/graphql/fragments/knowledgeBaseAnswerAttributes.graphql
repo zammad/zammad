@@ -1,14 +1,5 @@
 fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
   ...knowledgeBaseAnswerPolicy
-  title
-  content {
-    id
-    bodyWithUrls
-    # Only for the edit view: what the editor has to load, as opposed to the rendered
-    # `bodyWithUrls` a reader gets. Requested through a variable so the reader does not pay for
-    # rendering the body twice - every operation using this fragment declares it.
-    bodyForEditing @include(if: $withBodyForEditing)
-  }
   visibility
   # The changes still ahead, beside the state the answer is in now - both are derived from the same
   # three dates, and the sidebar shows them next to each other. Null for a *reader* of the category:
@@ -17,26 +8,71 @@ fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
     visibility
     scheduledAt
   }
-  translationId
-  translationMissing
   internalAt
   publishedAt
   archivedAt
-  editedAt
-  editedBy {
+  # Everything the locale decides, in one place: the requested locale keys this field, so an answer
+  # holds one translation per locale asked for rather than whichever arrived last.
+  translation(locale: $locale) {
     id
-    firstname
-    lastname
-    fullname
+    title
+    content {
+      id
+      bodyWithUrls
+      # Only for the edit view: what the editor has to load, as opposed to the rendered
+      # `bodyWithUrls` a reader gets. Requested through a variable so the reader does not pay for
+      # rendering the body twice - every operation using this fragment declares it.
+      bodyForEditing @include(if: $withBodyForEditing)
+    }
+    editedAt
+    editedBy {
+      id
+      firstname
+      lastname
+      fullname
+    }
+    # Only for the reader, which steps through the answers of a category: the edit view has no
+    # stepper - stepping away from a tab with unsaved work is not a thing to offer - so it does not
+    # pay for the neighbour lookup, nor for the two prefetches the stepper's links warm. Requested
+    # through a variable like `bodyForEditing`, so every operation using this fragment declares it.
+    navigation @include(if: $withNavigation) {
+      index
+      totalCount
+      previousAnswer {
+        id
+        translation(locale: $locale) {
+          id
+          title
+        }
+      }
+      nextAnswer {
+        id
+        translation(locale: $locale) {
+          id
+          title
+        }
+      }
+    }
+    # Which locale this text is actually in. A locale without its own translation is answered with
+    # the fallback, and comparing this with what was asked for is how the client tells the two apart.
+    kbLocale {
+      id
+      systemLocale {
+        locale
+      }
+    }
   }
   category {
     id
     breadcrumb {
       id
-      title
+      translation(locale: $locale) {
+        id
+        title
+      }
       categoryIcon
       iconSet
-      visibility
+      visibility(locale: $locale)
     }
   }
   tags

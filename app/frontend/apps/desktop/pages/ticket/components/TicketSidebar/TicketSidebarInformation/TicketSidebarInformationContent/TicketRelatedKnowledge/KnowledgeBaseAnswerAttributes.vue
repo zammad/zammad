@@ -31,22 +31,29 @@ const answer = computed(() => props.translation.answer)
 //   archival scheduled for next week is not something this panel may date as "Archived".
 const { reachedDates } = useKnowledgeBaseAnswerReachedDates(answer)
 
-const category = computed(() => answer.value.category)
 const systemLocale = computed(() => props.translation.kbLocale.systemLocale)
 const tags = computed(() => answer.value.tags ?? [])
 
 const categoryRoute = computed(() =>
-  knowledgeBaseBrowseRoute(systemLocale.value.locale, category.value.id),
+  knowledgeBaseBrowseRoute(systemLocale.value.locale, answer.value.category.id),
 )
+
+// Root first, ending with the category the answer sits in - each in this suggestion's own locale
+//   (Gql::Types::KnowledgeBase::Answer::TranslationType#category_tree_translation resolves them
+//   with the translation's, falling back like any other title).
+const categoryTree = computed(() => props.translation.categoryTreeTranslation)
+
+// From the tree, not from the answer's category: `title` on the category resolves in the locale the
+//   query was made in, and this one is made from a ticket - so it named the primary locale for
+//   every suggestion, whatever language the suggestion itself was in.
+const categoryTitle = computed(() => categoryTree.value.at(-1)?.title)
 
 // The link only shows the direct category, so the full path goes into a tooltip. Skipped for
 //   top-level categories, where it would just repeat the visible title.
 const categoryPath = computed(() => {
-  const tree = props.translation.categoryTreeTranslation
+  if (categoryTree.value.length < 2) return undefined
 
-  if (tree.length < 2) return undefined
-
-  return tree.map((categoryTranslation) => categoryTranslation.title).join(' › ')
+  return categoryTree.value.map((categoryTranslation) => categoryTranslation.title).join(' › ')
 })
 </script>
 
@@ -75,7 +82,7 @@ const categoryPath = computed(() => {
       <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="category.title" :label="__('Category')">
+    <CommonObjectAttribute v-if="categoryTitle" :label="__('Category')">
       <CommonLink
         v-tooltip.supportive="categoryPath"
         :link="categoryRoute"
@@ -83,7 +90,7 @@ const categoryPath = computed(() => {
         open-in-new-tab
         class="line-clamp-1"
       >
-        {{ category.title }}
+        {{ categoryTitle }}
       </CommonLink>
     </CommonObjectAttribute>
 

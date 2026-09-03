@@ -11,8 +11,11 @@ export const KnowledgeBaseUpdateDocument = gql`
   knowledgeBaseUpdate(input: $input, locale: $locale) {
     knowledgeBase {
       id
-      title
-      footerNote
+      translation(locale: $locale) {
+        id
+        title
+        footerNote
+      }
       policy {
         update
       }

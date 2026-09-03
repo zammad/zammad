@@ -26,7 +26,7 @@ const props = defineProps<{ answer: KnowledgeBaseAnswerHeader }>()
 const { reachedDates } = useKnowledgeBaseAnswerReachedDates(() => props.answer)
 
 const editedByLabel = computed(() => {
-  const editedBy = props.answer?.editedBy
+  const editedBy = props.answer?.translation?.editedBy
 
   return editedBy ? userDisplayName(editedBy) : undefined
 })
@@ -59,8 +59,8 @@ const editedByLabel = computed(() => {
       <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="answer.editedAt" :label="__('Last updated')">
-      <CommonDateTime :date-time="answer.editedAt" type="relative" />
+    <CommonObjectAttribute v-if="answer.translation?.editedAt" :label="__('Last updated')">
+      <CommonDateTime :date-time="answer.translation!.editedAt" type="relative" />
     </CommonObjectAttribute>
 
     <CommonObjectAttribute v-if="editedByLabel" :label="__('Updated by')">

@@ -2,9 +2,9 @@
 
 # Returns the browsable content of a single node in the knowledge base tree:
 #   the breadcrumb path, the visible child categories, and their per-category
-#   details (subtree answer/subcategory counts and content visibility), all
-#   batched here and keyed by category id so the GraphQL type does not query
-#   per category.
+#   details (subtree answer/subcategory counts and content visibility) and
+#   translations, all batched here and keyed by category id so the GraphQL type
+#   does not query per category.
 #
 # `category` nil means the knowledge base root (only categories, no answers).
 class Service::KnowledgeBase::CategoryContent < Service::Base
@@ -26,13 +26,11 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
 
   def execute
     {
-      category:                     category,
-      subcategories:                visible_child_categories,
-      category_details:             category_details,
-      category_titles:              category_titles,
-      category_edited_at:           category_edited_at,
-      category_translation_missing: category_translation_missing,
-      category_breadcrumbs:         category_breadcrumbs,
+      category:              category,
+      subcategories:         visible_child_categories,
+      category_details:      category_details,
+      category_translations: category_translations,
+      category_breadcrumbs:  category_breadcrumbs,
     }
   end
 
@@ -85,52 +83,21 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
     (category || knowledge_base).category_sorting_mode
   end
 
-  # Categories shown in the payload (breadcrumb + children), whose titles and
-  #   translation state are resolved from a single translation load.
+  # Categories shown in the payload (breadcrumb + children), whose titles are resolved from a
+  #   single translation load.
   def localized_categories
     @localized_categories ||= (breadcrumb + visible_child_categories).uniq
   end
 
-  # Translations of every shown category, keyed by category id, loaded once and
-  #   reused for both the localized titles and the missing-translation flags.
-  def translations_by_category
-    @translations_by_category ||= ::KnowledgeBase::Category::Translation
-      .where(category_id: localized_categories.map(&:id))
-      .group_by(&:category_id)
-  end
+  # Preferred translation of every shown category, keyed by category id: the browsed locale, then
+  #   the primary locale, then any - resolved in one query for all of them.
+  def category_translations
+    locale_id = locale&.id || primary_kb_locale_id
+    return {} if locale_id.nil?
 
-  # Localized titles for every category shown in the payload (breadcrumb +
-  #   children), keyed by category id, mirroring
-  #   KnowledgeBase::Category#translation_preferred.
-  def category_titles
-    localized_categories.to_h { |cat| [cat.id, preferred_translation(translations_by_category[cat.id] || [])&.title] }
-  end
-
-  # Editorial timestamp of the same translation each category is shown under, keyed by category id,
-  #   so the listing does not cost one query per category to date its cards. Nil for a category
-  #   without a single translation, exactly as its title is.
-  def category_edited_at
-    localized_categories.to_h { |cat| [cat.id, preferred_translation(translations_by_category[cat.id] || [])&.edited_at] }
-  end
-
-  # Whether each shown category lacks its own translation in the browsed locale
-  #   (so its title falls back to the primary/any locale), keyed by category id.
-  #   With no locale requested nothing counts as missing.
-  def category_translation_missing
-    localized_categories.to_h do |cat|
-      translations = translations_by_category[cat.id] || []
-      [cat.id, locale.present? && translations.none? { |t| t.kb_locale_id == locale.id }]
-    end
-  end
-
-  # The translation a category is shown under: requested locale, then the primary locale, then any.
-  #   Mirrors KnowledgeBase::Category#translation_preferred, resolved from the single load above —
-  #   and the fallback chain KnowledgeBase::Category.preferred_translation_sql expresses for the
-  #   listing's own ORDER BY, so what dates a card and what orders it are the same row.
-  def preferred_translation(translations)
-    (locale && translations.find { |t| t.kb_locale_id == locale.id }) ||
-      translations.find { |t| t.kb_locale_id == primary_kb_locale_id } ||
-      translations.first
+    ::KnowledgeBase::Category
+      .preferred_translations_for(localized_categories.map { |cat| [cat.id, locale_id] })
+      .transform_keys(&:first)
   end
 
   def primary_kb_locale_id

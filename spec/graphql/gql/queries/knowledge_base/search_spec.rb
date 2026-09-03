@@ -13,8 +13,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
           edges {
             node {
               item {
-                ... on KnowledgeBaseAnswer { id title }
-                ... on KnowledgeBaseCategory { id title visibility }
+                ... on KnowledgeBaseAnswer { id translation { title } }
+                ... on KnowledgeBaseCategory { id translation { title } visibility }
               }
               titlePreview { text highlight }
               bodyPreview { text highlight }
@@ -104,7 +104,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
     end
 
     it 'never returns the knowledge base node itself' do
-      expect(gql.result.nodes.pluck('item')).to all(include('title'))
+      expect(gql.result.nodes.pluck('item')).to all(include('translation'))
     end
 
     it 'marks the matched run of the title' do

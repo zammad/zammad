@@ -67,6 +67,10 @@ class KnowledgeBase::AnswerPolicy < ApplicationPolicy
   # Who edited an answer, and when it went internal or was archived, is editorial
   #   information — the public site knows publication only.
   def public_field_scope
-    @public_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[internal_at archived_at edited_at edited_by])
+    # `created_by`/`updated_by` among them, and not only the editorial fields of the answer itself:
+    #   a translation's `updated_by` is who last wrote its text, which is exactly what `edited_by`
+    #   withholds - Answer::TranslationPolicy delegates here, so denying it in one place closes both
+    #   routes.
+    @public_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[internal_at archived_at edited_at edited_by created_by updated_by])
   end
 end

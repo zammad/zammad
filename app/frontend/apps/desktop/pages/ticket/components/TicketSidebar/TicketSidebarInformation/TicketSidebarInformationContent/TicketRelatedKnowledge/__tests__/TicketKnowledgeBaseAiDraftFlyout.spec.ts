@@ -42,13 +42,20 @@ const relatedAnswer = (
     title,
     visibility,
     content: { bodyExcerpt: 'Steps to solve the issue.' },
+    // The category as this suggestion's own locale names it, which is where the panel reads it
+    //   from - the answer itself only carries the id the link is built from.
+    categoryTreeTranslation: [
+      {
+        id: convertToGraphQLId('KnowledgeBase::Category::Translation', 1),
+        title: 'Account',
+      },
+    ],
     answer: {
       id: convertToGraphQLId('KnowledgeBase::Answer', id),
       archivedAt: null,
       publishedAt: '2024-01-01T00:00:00Z',
       category: {
         id: convertToGraphQLId('KnowledgeBase::Category', 1),
-        title: 'Account',
       },
     },
     kbLocale: { systemLocale: { locale: 'en-us', name: 'English' } },

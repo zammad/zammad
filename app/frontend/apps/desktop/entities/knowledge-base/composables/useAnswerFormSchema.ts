@@ -104,6 +104,7 @@ export const useAnswerFormSchema = ({
         {
           name: 'body',
           label: __('Text'),
+          labelSrOnly: true,
           type: 'editor',
           required: true,
           props: {

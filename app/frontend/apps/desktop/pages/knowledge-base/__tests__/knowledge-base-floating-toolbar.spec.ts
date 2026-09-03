@@ -30,7 +30,7 @@ describe('knowledge base floating toolbar', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
@@ -55,11 +55,14 @@ describe('knowledge base floating toolbar', () => {
 
     mockKnowledgeBaseCategorySubcategoriesQuery({
       knowledgeBaseCategorySubcategories: {
-        category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Category' }] },
+        category: {
+          id: CATEGORY_ID,
+          breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Category' } }],
+        },
         subcategories: [
           {
             id: CATEGORY_ID,
-            title: 'Root Category',
+            translation: { title: 'Root Category' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
             answerCount: 0,

@@ -4,6 +4,7 @@ import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import {
   EnumKnowledgeBaseSchedulableVisibility,
@@ -32,36 +33,90 @@ const IN_TWO_DAYS = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 10
 const sidebarOf = async (view: Awaited<ReturnType<typeof visitView>>) =>
   within(await view.findByRole('complementary', { name: 'Content sidebar' }))
 
+// `showFeedIcon`, because the sidebar's action menu offers the feed like the old interface did -
+//   and an answer the user may not edit needs it to have a menu at all.
+const mockKnowledgeBase = (showFeedIcon = false) =>
+  mockKnowledgeBaseQuery({
+    knowledgeBase: {
+      id: convertToGraphQLId('KnowledgeBase', 1),
+      translation: { title: 'My Knowledge Base' },
+      iconset: 'default',
+      isPubliclyAvailable: true,
+      isVisiblePublicly: true,
+      kbLocales: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+          primary: true,
+          systemLocale: { id: '1', locale: 'en-us', name: 'English (United States)' },
+        },
+      ],
+      currentLocale: {
+        id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+        systemLocale: { id: '1', locale: 'en-us' },
+      },
+      showFeedIcon,
+    },
+  })
+
 describe('knowledge base answer sidebar', () => {
   beforeEach(() => {
     mockApplicationConfig({ kb_active_publicly: true })
-
-    mockKnowledgeBaseQuery({
-      knowledgeBase: {
-        id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
-        iconset: 'default',
-        isPubliclyAvailable: true,
-        isVisiblePublicly: true,
-        kbLocales: [
-          {
-            id: convertToGraphQLId('KnowledgeBase::Locale', 1),
-            primary: true,
-            systemLocale: { id: '1', locale: 'en-us', name: 'English (United States)' },
-          },
-        ],
-        currentLocale: {
-          id: convertToGraphQLId('KnowledgeBase::Locale', 1),
-          systemLocale: { id: '1', locale: 'en-us' },
-        },
-      },
-    })
+    mockKnowledgeBase()
   })
 
   it('renders the content sidebar', async () => {
     const view = await visitView(ANSWER_PATH)
 
     expect(await view.findByRole('complementary', { name: 'Content sidebar' })).toBeInTheDocument()
+  })
+
+  // The answer's actions sit in the sidebar's header rather than in the top bar, per the design.
+  //   That the edit action actually opens the edit view is covered where the reader's floating
+  //   toolbar offers the same one (knowledge-base-answer-header.spec.ts) - here it is about which
+  //   entries the menu holds.
+  describe('the action menu', () => {
+    const openMenu = async (view: Awaited<ReturnType<typeof visitView>>) => {
+      const sidebar = await sidebarOf(view)
+
+      await view.events.click(sidebar.getByRole('button', { name: 'Additional actions' }))
+
+      return within(await view.findByRole('menu'))
+    }
+
+    it('offers editing an answer the user may update', async () => {
+      mockPermissions(['knowledge_base.editor'])
+      mockKnowledgeBaseAnswerQuery({
+        // Schedules explicitly, like every other example here: two auto-mocked ones can share a
+        //   visibility, which the sidebar's list keys by.
+        knowledgeBaseAnswer: { policy: { update: true, destroy: true }, visibilitySchedules: [] },
+      })
+
+      const view = await visitView(ANSWER_PATH)
+
+      expect(
+        (await openMenu(view)).getByRole('button', { name: 'Edit answer' }),
+      ).toBeInTheDocument()
+    })
+
+    // Gated per record: the global editor permission says nothing about the subtree the answer
+    //   lives in, and a control the mutation refuses is worse than none.
+    it('does not offer editing an answer the user may not update', async () => {
+      mockPermissions(['knowledge_base.editor'])
+      // With the feed entry on, so there is still a menu to look into: an answer offering no action
+      //   at all gets no menu button.
+      mockKnowledgeBase(true)
+      mockKnowledgeBaseAnswerQuery({
+        knowledgeBaseAnswer: { policy: { update: false, destroy: false }, visibilitySchedules: [] },
+      })
+
+      const view = await visitView(ANSWER_PATH)
+      const menu = await openMenu(view)
+
+      // The feed entry is still on offer, so the menu is genuinely open and merely has no edit
+      //   entry in it.
+      expect(menu.getByRole('button', { name: 'Set up RSS feed' })).toBeInTheDocument()
+      expect(menu.queryByRole('button', { name: 'Edit answer' })).not.toBeInTheDocument()
+    })
   })
 
   // The three publication dates are the ones the answer has *reached*. A date still ahead is a
@@ -175,7 +230,7 @@ describe('knowledge base answer sidebar', () => {
 
   it('lists the tickets linked to the answer translation', async () => {
     mockKnowledgeBaseAnswerQuery({
-      knowledgeBaseAnswer: { translationId: ANSWER_TRANSLATION_ID },
+      knowledgeBaseAnswer: { translation: { id: ANSWER_TRANSLATION_ID } },
     })
 
     mockLinkListQuery({

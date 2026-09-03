@@ -10,14 +10,14 @@ import type { CategoryBreadcrumb } from '../../types.ts'
 const categoryBreadcrumb: CategoryBreadcrumb = [
   {
     id: convertToGraphQLId('KnowledgeBase::Category', 1),
-    title: 'Root Category',
+    translation: { title: 'Root Category' },
     categoryIcon: 'f115',
     iconSet: 'FontAwesome',
     visibility: EnumKnowledgeBaseVisibility.Published,
   },
   {
     id: convertToGraphQLId('KnowledgeBase::Category', 2),
-    title: 'Child Category',
+    translation: { title: 'Child Category' },
     categoryIcon: 'f114',
     iconSet: 'FontAwesome',
     visibility: EnumKnowledgeBaseVisibility.Internal,

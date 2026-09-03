@@ -53,18 +53,18 @@ const formSchema = defineFormSchema([
   {
     // Only `parentId` changes what the updater resolves (the matrix inherits from it), so
     //   every other field opts out of triggering it.
-    // No `iconSet`: the field falls back to the browsed knowledge base's one.
-    name: 'categoryIcon',
-    label: __('Icon'),
-    type: 'kbCategoryIcon',
-    required: true,
-    triggerFormUpdater: false,
-  },
-  {
     name: 'title',
     label: __('Title'),
     type: 'text',
     required: true,
+    triggerFormUpdater: false,
+  },
+  {
+    // No `iconSet`: the field falls back to the browsed knowledge base's one.
+    //   No `required`: has default value and is not clearable.
+    name: 'categoryIcon',
+    label: __('Icon'),
+    type: 'kbCategoryIcon',
     triggerFormUpdater: false,
   },
   {

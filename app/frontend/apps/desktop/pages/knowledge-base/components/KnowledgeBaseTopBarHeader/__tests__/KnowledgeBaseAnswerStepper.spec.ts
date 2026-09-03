@@ -15,7 +15,7 @@ import type { KnowledgeBaseAnswerHeader } from '../../../types.ts'
 const PREVIOUS_ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 4)
 const NEXT_ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 6)
 
-type Navigation = NonNullable<KnowledgeBaseAnswerHeader['navigation']>
+type Navigation = NonNullable<NonNullable<KnowledgeBaseAnswerHeader['translation']>['navigation']>
 
 const navigation: Navigation = {
   __typename: 'KnowledgeBaseAnswerNavigation',
@@ -24,12 +24,20 @@ const navigation: Navigation = {
   previousAnswer: {
     __typename: 'KnowledgeBaseAnswer',
     id: PREVIOUS_ANSWER_ID,
-    title: 'Previous answer',
+    translation: {
+      __typename: 'KnowledgeBaseAnswerTranslation',
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 4),
+      title: 'Previous answer',
+    },
   },
   nextAnswer: {
     __typename: 'KnowledgeBaseAnswer',
     id: NEXT_ANSWER_ID,
-    title: 'Next answer',
+    translation: {
+      __typename: 'KnowledgeBaseAnswerTranslation',
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 6),
+      title: 'Next answer',
+    },
   },
 }
 

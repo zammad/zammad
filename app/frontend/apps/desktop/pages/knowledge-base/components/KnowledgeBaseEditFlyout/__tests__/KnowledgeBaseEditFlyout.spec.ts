@@ -47,8 +47,7 @@ const mockKnowledgeBase = () => {
   mockKnowledgeBaseQuery({
     knowledgeBase: {
       id: KNOWLEDGE_BASE_ID,
-      title: 'Support Center',
-      footerNote: 'Friendly footer',
+      translation: { title: 'Support Center', footerNote: 'Friendly footer' },
       iconset: 'FontAwesome',
       isPubliclyAvailable: true,
       isVisiblePublicly: true,

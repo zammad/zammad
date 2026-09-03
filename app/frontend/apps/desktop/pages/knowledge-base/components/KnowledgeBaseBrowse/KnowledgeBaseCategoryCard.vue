@@ -196,7 +196,7 @@ const actions = computed<MenuItem[]>(() => {
         <div class="flex items-center gap-1">
           <CommonIcon
             name="folder"
-            size="xs"
+            size="tiny"
             decorative
             class="text-stone-200 dark:text-neutral-500"
           />
@@ -212,7 +212,7 @@ const actions = computed<MenuItem[]>(() => {
         <div class="flex items-center gap-1">
           <CommonIcon
             name="file-richtext"
-            size="xs"
+            size="tiny"
             decorative
             class="text-stone-200 dark:text-neutral-500"
           />
@@ -228,7 +228,7 @@ const actions = computed<MenuItem[]>(() => {
         <CommonActionMenu
           v-if="actions.length"
           class="ms-auto"
-          button-size="small"
+          button-size="medium"
           :custom-menu-button-label="$t('Category actions')"
           no-single-action-mode
           :actions="actions"

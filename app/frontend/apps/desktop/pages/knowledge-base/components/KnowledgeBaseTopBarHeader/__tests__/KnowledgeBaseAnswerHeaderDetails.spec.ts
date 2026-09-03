@@ -71,28 +71,36 @@ const badgeFor = (view: ReturnType<typeof renderDetails>, scheduledAt: string) =
     .querySelector(`[datetime="${scheduledAt}"]`)
     ?.closest<HTMLElement>('[data-test-id="common-badge"]') ?? null
 
-const answer = (overrides: Partial<KnowledgeBaseAnswerHeader> = {}): KnowledgeBaseAnswerHeader =>
+type AnswerOverrides = Omit<Partial<KnowledgeBaseAnswerHeader>, 'translation'> & {
+  translation?: Partial<NonNullable<KnowledgeBaseAnswerHeader['translation']>> | null
+}
+
+const answer = ({ translation, ...overrides }: AnswerOverrides = {}): KnowledgeBaseAnswerHeader =>
   ({
     id: convertToGraphQLId('KnowledgeBase::Answer', 1),
-    title: 'Some Answer',
     visibility: EnumKnowledgeBaseVisibility.Published,
-    translationMissing: false,
     internalAt: null,
     publishedAt: null,
     archivedAt: null,
-    editedAt: null,
-    editedBy: null,
     visibilitySchedules: null,
     category: { id: convertToGraphQLId('KnowledgeBase::Category', 1), breadcrumb: [] },
+    // Spread apart from the rest, so an example states only the part of the translation it is about.
+    translation:
+      translation === null
+        ? null
+        : {
+            id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+            title: 'Some Answer',
+            editedAt: null,
+            editedBy: null,
+            ...translation,
+          },
     ...overrides,
   }) as KnowledgeBaseAnswerHeader
 
-const renderDetails = (
-  overrides: Partial<KnowledgeBaseAnswerHeader> = {},
-  withTranslationWarning = false,
-) =>
+const renderDetails = (overrides: AnswerOverrides = {}) =>
   renderComponent(KnowledgeBaseAnswerHeaderDetails, {
-    props: { answer: answer(overrides), withTranslationWarning },
+    props: { answer: answer(overrides) },
     store: true,
     router: true,
   })
@@ -202,32 +210,6 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
     })
   })
 
-  // The badge carries no text of its own, so its accessible name is the whole warning - and the
-  //   only thing a view spec could see it by.
-  it('warns about a missing translation when asked to', () => {
-    const view = renderDetails({ translationMissing: true }, true)
-
-    expect(view.getByLabelText('No translation available for this locale')).toBeInTheDocument()
-  })
-
-  // The reader's header docks the same warning as an alert bar instead, and two of them would be
-  //   one too many.
-  it('leaves the warning out unless it is asked for', () => {
-    const view = renderDetails({ translationMissing: true })
-
-    expect(
-      view.queryByLabelText('No translation available for this locale'),
-    ).not.toBeInTheDocument()
-  })
-
-  it('does not warn about a translation that is there', () => {
-    const view = renderDetails({ translationMissing: false }, true)
-
-    expect(
-      view.queryByLabelText('No translation available for this locale'),
-    ).not.toBeInTheDocument()
-  })
-
   // The strip carries no badge per reached date any more: the answer's own history sits in a
   //   tooltip on the visibility badge, saying when the state that badge names was reached.
   describe('reached date tooltip', () => {
@@ -310,8 +292,7 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
         publishedAt: PUBLISHED_AT,
         internalAt: null,
         archivedAt: null,
-        editedAt: null,
-        editedBy: null,
+        translation: { editedAt: null, editedBy: null },
       })
 
       expect(tooltipOf(view)).toBe(i18n.dateTime(PUBLISHED_AT))
@@ -342,13 +323,15 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
 
   it('names the editor of the answer translation', () => {
     const view = renderDetails({
-      editedAt: '2026-08-01T10:00:00Z',
-      editedBy: {
-        __typename: 'User',
-        id: OTHER_USER_ID,
-        firstname: 'Erika',
-        lastname: 'Mustermann',
-        fullname: 'Erika Mustermann',
+      translation: {
+        editedAt: '2026-08-01T10:00:00Z',
+        editedBy: {
+          __typename: 'User',
+          id: OTHER_USER_ID,
+          firstname: 'Erika',
+          lastname: 'Mustermann',
+          fullname: 'Erika Mustermann',
+        },
       },
     })
 
@@ -359,13 +342,15 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
     mockUserCurrent({ id: CURRENT_USER_ID })
 
     const view = renderDetails({
-      editedAt: '2026-08-01T10:00:00Z',
-      editedBy: {
-        __typename: 'User',
-        id: CURRENT_USER_ID,
-        firstname: 'Nicole',
-        lastname: 'Braun',
-        fullname: 'Nicole Braun',
+      translation: {
+        editedAt: '2026-08-01T10:00:00Z',
+        editedBy: {
+          __typename: 'User',
+          id: CURRENT_USER_ID,
+          firstname: 'Nicole',
+          lastname: 'Braun',
+          fullname: 'Nicole Braun',
+        },
       },
     })
 
@@ -373,7 +358,9 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
   })
 
   it('falls back to the bare date when the editor is not disclosed', () => {
-    const view = renderDetails({ editedAt: '2026-08-01T10:00:00Z', editedBy: null })
+    const view = renderDetails({
+      translation: { editedAt: '2026-08-01T10:00:00Z', editedBy: null },
+    })
 
     expect(view.getByText(/^edited /)).toBeInTheDocument()
     expect(view.queryByText(/ by /)).not.toBeInTheDocument()

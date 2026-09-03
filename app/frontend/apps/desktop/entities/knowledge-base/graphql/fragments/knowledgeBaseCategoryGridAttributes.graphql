@@ -1,0 +1,29 @@
+# One category as the browse grid lists it. Shared by the grid's own query and by the two
+#   mutations that write a category, so a created or updated one normalizes into the cache as a
+#   complete record instead of leaving parts of it stale - which only holds while all three ask
+#   for the same fields, hence one fragment rather than three copies.
+fragment knowledgeBaseCategoryGridAttributes on KnowledgeBaseCategory {
+  id
+  # The name in this locale, and - through the locale of the translation that answered - whether
+  # it is this locale's own or a fallback.
+  translation(locale: $locale) {
+    id
+    title
+    kbLocale {
+      id
+      systemLocale {
+        locale
+      }
+    }
+  }
+  categoryIcon
+  # State and counts stay on the category: they describe its content in the browsed locale, which
+  # the translation above may not be (see Gql::Types::KnowledgeBase::CategoryType).
+  visibility(locale: $locale)
+  answerCount(locale: $locale)
+  subcategoryCount(locale: $locale)
+  position
+  isDeletable
+  ...knowledgeBaseCategoryPolicy
+  ...knowledgeBaseCategoryPreInfo
+}

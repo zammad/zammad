@@ -10,7 +10,7 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
       query knowledgeBase($locale: String) {
         knowledgeBase(locale: $locale) {
           id
-          title
+          translation { title }
           active
           categorySortingMode
           isPubliclyAvailable
@@ -37,9 +37,9 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
   shared_examples 'returning the active knowledge base' do
     it 'returns the knowledge base with the primary-locale title' do
       expect(gql.result.data).to include(
-        'id'     => gql.id(knowledge_base),
-        'title'  => knowledge_base.translation_primary.title,
-        'active' => true,
+        'id'          => gql.id(knowledge_base),
+        'translation' => include('title' => knowledge_base.translation_primary.title),
+        'active'      => true,
       )
     end
 
@@ -146,6 +146,45 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
 
     it 'is not found' do
       expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  # The client hands the same `$locale` to the query and to every localized field of the result
+  #   (knowledgeBase.graphql), so a code this knowledge base has no locale for must resolve the
+  #   same way in both places. The query falls it back deliberately
+  #   (Gql::Concerns::HandlesKnowledgeBaseLocale), and a field that answered `nil` instead would
+  #   mix the locale the query settled on with another locale's texts - and hand back no
+  #   `currentLocale` at all, which is what the section entry redirects on.
+  context 'with a locale code the knowledge base has no locale for' do
+    let(:query) do
+      <<~GQL
+        query knowledgeBase($locale: String) {
+          knowledgeBase(locale: $locale) {
+            translation(locale: $locale) { title }
+            currentLocale(locale: $locale) { systemLocale { locale } }
+          }
+        }
+      GQL
+    end
+
+    let(:variables) { { locale: 'not-configured' } }
+
+    context 'with a user preferring one of its locales', authenticated_as: :agent do
+      let(:agent) do
+        create(:agent, preferences: { locale: alternative_locale.system_locale.locale })
+      end
+
+      before do
+        create(:knowledge_base_translation, knowledge_base:, kb_locale: alternative_locale,
+                                            title: 'Pavadinimas lietuviškai')
+        gql.execute(query, variables:)
+      end
+
+      it 'answers in the locale the query fell back to', :aggregate_failures do
+        expect(gql.result.data.dig('currentLocale', 'systemLocale', 'locale'))
+          .to eq(alternative_locale.system_locale.locale)
+        expect(gql.result.data.dig('translation', 'title')).to eq('Pavadinimas lietuviškai')
+      end
     end
   end
 end

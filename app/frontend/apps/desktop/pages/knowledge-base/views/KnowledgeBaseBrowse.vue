@@ -29,8 +29,10 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
 import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
+import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
+import { isTranslationMissing } from '#desktop/entities/knowledge-base/utils/translationLocale.ts'
 
 import { ADD_CARD_VISIBILITY_THRESHOLD } from '../components/KnowledgeBaseBrowse/addCardVisibility.ts'
 import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue'
@@ -102,6 +104,8 @@ const {
   locale: toRef(props, 'localeCode'),
   sortingMode: previewSortingMode('categories'),
 })
+
+useScrollPosition(contentContainerElement)
 
 // What is browsed: a different category or locale is a different page. It keys the answer list, so
 //   a switch drops that instance with its query and pagination state — reusing the handler would
@@ -182,7 +186,7 @@ onMounted(() => {
 const browsedTitle = computed(() =>
   knowledgeBaseBrowsedTitle({
     categoryBreadcrumb: breadcrumb.value,
-    knowledgeBaseTitle: knowledgeBase.value?.title,
+    knowledgeBaseTitle: knowledgeBase.value?.translation?.title,
   }),
 )
 
@@ -273,11 +277,22 @@ watch(isSortingArmed, (armed) => {
   sortingScope.value = 'answers'
 })
 
+// The card renders one category as this locale has it, so the translation is unwrapped once
+//   here rather than in the card - whether the title is this locale's own or a fallback is a
+//   question only the caller can answer, and the view is where the locale is known.
+const listedCategories = computed(() =>
+  subcategories.value.map(({ translation, ...category }) => ({
+    ...category,
+    title: translation?.title ?? '',
+    translationMissing: isTranslationMissing(translation, props.localeCode),
+  })),
+)
+
 // The grid @formkit/drag-and-drop owns and reorders in place, kept apart from the query result.
 const dndSubcategories = shallowRef<KnowledgeBaseCategoryCompact[]>([])
 
 watch(
-  subcategories,
+  listedCategories,
   (newSubcategories) => {
     if (isEqual(dndSubcategories.value, newSubcategories)) return
 
@@ -603,6 +618,7 @@ watch(browsedPage, () => {
           :content-container-element="contentContainerElement"
           :can-add-answer="canAddAnswer"
           :can-edit-answer="canEditAnswer"
+          :answer-count="directAnswerCount"
           :can-delete-answer="canDeleteAnswer"
           :is-sorting="isSortingArmed"
         />

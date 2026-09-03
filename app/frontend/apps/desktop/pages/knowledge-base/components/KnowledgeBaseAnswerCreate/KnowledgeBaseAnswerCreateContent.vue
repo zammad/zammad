@@ -17,6 +17,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { SidebarName } from '#desktop/components/layout/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
+import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useAnswerFormSchema } from '#desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts'
 import { useKnowledgeBaseAnswerCreate } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts'
 import type { KnowledgeBaseAnswerCreateFormData } from '#desktop/entities/knowledge-base/types.ts'
@@ -91,6 +92,8 @@ const currentTitle = computed(() => values.value.title as string | undefined)
 usePage({
   metaTitle: computed(() => currentTitle.value || __('New knowledge base answer')),
 })
+
+useScrollPosition(contentContainerElement)
 
 // Live, for the header's badge row: a draft has no stored answer for it to read instead, unlike
 //   the edit header's. Undefined until the first form updater round trip has resolved a value, so

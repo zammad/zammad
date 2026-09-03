@@ -20,16 +20,27 @@ export const KnowledgeBaseSearchDocument = gql`
         item {
           ... on KnowledgeBaseAnswer {
             id
-            title
             visibility
-            translationMissing
+            translation(locale: $locale) {
+              id
+              title
+              kbLocale {
+                id
+                systemLocale {
+                  locale
+                }
+              }
+            }
           }
           ... on KnowledgeBaseCategory {
             id
-            categoryTitle: title
+            translation(locale: $locale) {
+              id
+              title
+            }
             categoryIcon
             iconSet
-            visibility
+            visibility(locale: $locale)
           }
         }
         titlePreview {
@@ -42,7 +53,7 @@ export const KnowledgeBaseSearchDocument = gql`
         }
         categoryPath {
           id
-          title
+          title(locale: $locale)
         }
       }
     }

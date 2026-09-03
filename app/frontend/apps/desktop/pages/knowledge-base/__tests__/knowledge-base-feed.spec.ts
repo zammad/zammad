@@ -31,7 +31,7 @@ describe('knowledge base feed', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         showFeedIcon: true,
         kbLocales: [
           {
@@ -53,8 +53,7 @@ describe('knowledge base feed', () => {
           knowledgeBaseCategorySubcategories: {
             category: {
               id: CATEGORY_ID,
-              translationMissing: false,
-              breadcrumb: [{ id: CATEGORY_ID, title: 'Some Category' }],
+              breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Some Category' } }],
             },
             subcategories: [],
           },
@@ -71,7 +70,6 @@ describe('knowledge base feed', () => {
               categoryIcon: 'f115',
               iconSet: 'FontAwesome',
               visibility: EnumKnowledgeBaseVisibility.Published,
-              translationMissing: false,
               answerCount: 0,
               subcategoryCount: 0,
               position: 0,
@@ -127,12 +125,13 @@ describe('knowledge base feed', () => {
     mockKnowledgeBaseAnswerQuery({
       knowledgeBaseAnswer: {
         id: convertToGraphQLId('KnowledgeBase::Answer', 5),
-        title: 'Some Knowledge Base Answer',
+        translation: {
+          title: 'Some Knowledge Base Answer',
+        },
         visibility: EnumKnowledgeBaseVisibility.Published,
-        translationMissing: false,
         category: {
           id: CATEGORY_ID,
-          breadcrumb: [{ id: CATEGORY_ID, title: 'Some Category' }],
+          breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Some Category' } }],
         },
       },
     } as KnowledgeBaseAnswerQuery)

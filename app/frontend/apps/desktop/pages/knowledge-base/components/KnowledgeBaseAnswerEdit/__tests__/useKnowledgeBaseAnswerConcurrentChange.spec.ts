@@ -83,7 +83,11 @@ describe('useKnowledgeBaseAnswerConcurrentChange', () => {
     answer.value = answerWith({ visibility: EnumKnowledgeBaseVisibility.Internal })
     await nextTick()
 
-    expect(foreignChange.value).toEqual({ editorName: undefined })
+    expect(foreignChange.value).toEqual({
+      editorName: undefined,
+      byCurrentUser: false,
+      answerChanged: true,
+    })
   })
 
   // A network result equal to what the cache held may not move `answer` at all, so the flag has to

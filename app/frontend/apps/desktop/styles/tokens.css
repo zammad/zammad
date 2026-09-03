@@ -2,6 +2,8 @@
 
 /* stylelint-disable custom-property-empty-line-before */
 @theme {
+  --color-alpha-100: #ffffff1a;
+  --color-alpha-800: #0000001a;
   --color-alpha-900: #000a;
   --color-black: #000;
   --color-white: #fff;

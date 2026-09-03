@@ -8,15 +8,14 @@ import { useRouter } from 'vue-router'
 
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
-import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
-import { useKnowledgeBaseAnswerDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import {
   knowledgeBaseAnswerRoute,
   knowledgeBaseBrowseRoute,
 } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
+import { isTranslationMissing } from '#desktop/entities/knowledge-base/utils/translationLocale.ts'
 import KnowledgeBaseAnswerHeaderDetails from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue'
 import KnowledgeBaseAnswerStepper from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue'
 import TopBarHeaderCompact from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue'
@@ -24,8 +23,6 @@ import TopBarHeaderFull from '#desktop/pages/knowledge-base/components/Knowledge
 import TopBarHeaderFullSkeleton from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFullSkeleton.vue'
 import TopBarHeaderShell from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderShell.vue'
 
-import { useKnowledgeBaseAnswerEditAction } from '../../composables/useKnowledgeBaseAnswerEditAction.ts'
-import { useKnowledgeBaseFeedAction } from '../../composables/useKnowledgeBaseFeedAction.ts'
 import { knowledgeBasePreviewUrl } from '../../composables/useKnowledgeBasePreviewUrl.ts'
 import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrumbItems.ts'
 
@@ -66,58 +63,22 @@ const previewUrl = computed(() => {
   return knowledgeBasePreviewUrl('KnowledgeBaseAnswer', answer.id, locale)
 })
 
-// The answer's own category, so its feed is offered like in the old interface.
-const { feedActions } = useKnowledgeBaseFeedAction(computed(() => props.answer?.category?.id))
+// No action menu here: the answer's actions live in the sidebar's header, beside the section title
+//   (see KnowledgeBaseAnswer.vue). This header keeps what acts on the *page* - the breadcrumb, the
+//   locale, the title copy and the public preview link.
 
-// The header acts on the answer currently open - the same action the reader's floating toolbar
-//   offers as its primary one, and through the same gate (useKnowledgeBaseAnswerEditAction). Here
-//   because the toolbar is a scroll-side shortcut, while this menu is on screen at any scroll
-//   position.
-//
-// Kept out of `headerProps` below: that computed caches on deep equality, which menu items -
-//   carrying callbacks - would defeat.
-// `canEditAnswer`, not `canEdit` above: that one is the *global* editor permission, which decides
-//   whether unpublished content may be previewed at all - this one is this answer's own policy.
-const { canEdit: canEditAnswer, editAnswer } = useKnowledgeBaseAnswerEditAction({
-  answer: computed(() => props.answer),
-  localeCode: activeLocale,
-})
+// The answer as this locale has it: its title, and whether that title is this locale's own or the
+//   fallback served for one that has none.
+const translation = computed(() => props.answer?.translation)
 
-const { confirmAnswerDelete } = useKnowledgeBaseAnswerDelete()
-
-const actions = computed<MenuItem[]>(() => {
-  const { answer } = props
-
-  const items: MenuItem[] = [...feedActions.value]
-
-  if (canEditAnswer.value) {
-    items.unshift({
-      key: 'edit-answer',
-      label: __('Edit answer'),
-      icon: 'pencil',
-      onClick: () => editAnswer(),
-    })
-  }
-
-  if (answer?.policy.destroy) {
-    items.push({
-      key: 'delete-answer',
-      label: __('Delete answer'),
-      icon: 'trash3',
-      variant: 'danger',
-      separatorTop: true,
-      // Deleting the page being read, so it hands over where to go instead.
-      onClick: () => confirmAnswerDelete(answer, { categoryId: answer.category.id }),
-    })
-  }
-
-  return items
-})
+const translationMissing = computed(
+  () => Boolean(props.answer) && isTranslationMissing(translation.value, activeLocale.value),
+)
 
 const metaTitle = computed(() => {
-  const kbTitle = knowledgeBase.value?.title ?? __('Knowledge Base')
+  const kbTitle = knowledgeBase.value?.translation?.title ?? __('Knowledge Base')
 
-  return props.answer?.title ? `${kbTitle} - ${props.answer.title}` : kbTitle
+  return translation.value?.title ? `${kbTitle} - ${translation.value.title}` : kbTitle
 })
 
 usePage({
@@ -129,7 +90,7 @@ const breadcrumbItems = computed(() =>
     localeCode: activeLocale.value,
     categoryBreadcrumb: props.answer?.category?.breadcrumb,
     trailingItem: props.answer
-      ? { label: props.answer.title ?? '', noOptionLabelTranslation: true }
+      ? { label: translation.value?.title ?? '', noOptionLabelTranslation: true }
       : undefined,
   }),
 )
@@ -146,7 +107,7 @@ const { localeItems, selectedLocaleItem, selectedLocaleCode } = useKnowledgeBase
 
 const headerProps = computed<TopBarHeaderProps>((currentProps) => {
   const updatedProps = {
-    title: props.answer?.title,
+    title: translation.value?.title,
     locales: localeItems.value,
     breadcrumbs: breadcrumbItems.value,
     localeCode: selectedLocaleCode.value,
@@ -168,21 +129,21 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
   <TopBarHeaderShell
     :content-container-element="contentContainerElement"
     :loading="loading"
-    :alert-message="
-      answer?.translationMissing ? $t('No translation available for this locale') : undefined
-    "
+    :alert-message="translationMissing ? $t('No translation available for this locale') : undefined"
     content-width="reading"
   >
     <template #compact="{ inert }">
       <TopBarHeaderCompact
         v-model:selected-locale="selectedLocaleItem"
         v-bind="headerProps"
-        :actions="actions"
         :copy-label="__('Copy answer title')"
         :inert="inert"
       >
-        <template v-if="answer?.navigation && activeLocale" #stepper>
-          <KnowledgeBaseAnswerStepper :navigation="answer.navigation" :locale-code="activeLocale" />
+        <template v-if="translation?.navigation && activeLocale" #stepper>
+          <KnowledgeBaseAnswerStepper
+            :navigation="translation.navigation"
+            :locale-code="activeLocale"
+          />
         </template>
       </TopBarHeaderCompact>
     </template>
@@ -191,13 +152,15 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
       <TopBarHeaderFull
         v-model:selected-locale="selectedLocaleItem"
         v-bind="headerProps"
-        :actions="actions"
         :copy-label="__('Copy answer title')"
         :inert="inert"
         content-width="reading"
       >
-        <template v-if="answer?.navigation && activeLocale" #stepper>
-          <KnowledgeBaseAnswerStepper :navigation="answer.navigation" :locale-code="activeLocale" />
+        <template v-if="translation?.navigation && activeLocale" #stepper>
+          <KnowledgeBaseAnswerStepper
+            :navigation="translation.navigation"
+            :locale-code="activeLocale"
+          />
         </template>
 
         <template v-if="answer" #details>

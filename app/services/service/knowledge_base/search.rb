@@ -43,7 +43,7 @@ class Service::KnowledgeBase::Search < Service::Base
     no_match_size:       200,
   }.freeze
 
-  Output  = Struct.new(:results, :category_titles, :category_translation_missing, :category_visibility, keyword_init: true)
+  Output  = Struct.new(:results, :category_translations, :category_visibility, keyword_init: true)
   Result  = Struct.new(:item, :title_preview, :body_preview, :category_path, keyword_init: true)
   Segment = Struct.new(:text, :highlight, keyword_init: true)
 
@@ -69,17 +69,16 @@ class Service::KnowledgeBase::Search < Service::Base
     results = hits.filter_map { |hit| result_for(hit) }
 
     Output.new(
-      results:                      results,
-      category_titles:              category_titles(results),
-      category_translation_missing: category_translation_missing(results),
-      category_visibility:          category_visibility(results),
+      results:               results,
+      category_translations: category_translations(results),
+      category_visibility:   category_visibility(results),
     )
   end
 
   private
 
   def empty
-    Output.new(results: [], category_titles: {}, category_translation_missing: {}, category_visibility: {})
+    Output.new(results: [], category_translations: {}, category_visibility: {})
   end
 
   def backend
@@ -121,8 +120,8 @@ class Service::KnowledgeBase::Search < Service::Base
   end
 
   # Everything the result page needs, in a fixed number of queries rather than a few per hit. The
-  #   answer's own translations are included because AnswerType resolves title, content and
-  #   translationMissing from that collection (not from the translation the hit came from).
+  #   answer's own translations are included because AnswerType resolves its `translation` from
+  #   that collection, not from the translation the hit came from.
   def preheat(hits)
     grouped = hits.group_by { |hit| hit[:type] }.transform_values { |group| group.pluck(:id) }
 
@@ -185,25 +184,15 @@ class Service::KnowledgeBase::Search < Service::Base
     @hit_categories ||= results.map(&:item).grep(::KnowledgeBase::Category).uniq(&:id)
   end
 
-  def translations_by_category(results)
-    @translations_by_category ||= ::KnowledgeBase::Category::Translation
-      .where(category_id: localized_categories(results).map(&:id))
-      .group_by(&:category_id)
-  end
+  # Preferred translation of every rendered category, keyed by category id: the browsed locale,
+  #   then the primary locale, then any - resolved in one query for all of them.
+  def category_translations(results)
+    locale_id = locale&.id || primary_kb_locale_id
+    return {} if locale_id.nil?
 
-  def category_titles(results)
-    localized_categories(results)
-      .to_h { |category| [category.id, preferred_title(translations_by_category(results)[category.id] || [])] }
-  end
-
-  # Whether a rendered category lacks its own translation in the browsed locale, so its title falls
-  #   back. With no locale requested nothing counts as missing.
-  def category_translation_missing(results)
-    localized_categories(results).to_h do |category|
-      translations = translations_by_category(results)[category.id] || []
-
-      [category.id, locale.present? && translations.none? { |elem| elem.kb_locale_id == locale.id }]
-    end
+    ::KnowledgeBase::Category
+      .preferred_translations_for(localized_categories(results).map { |category| [category.id, locale_id] })
+      .transform_keys(&:first)
   end
 
   # Highest content visibility of the subtree of each category hit, in the browsed locale. Batched
@@ -213,16 +202,6 @@ class Service::KnowledgeBase::Search < Service::Base
   #   alone (Gql::Types::KnowledgeBase::Search::PathSegmentType).
   def category_visibility(results)
     hit_categories(results).to_h { |category| [category.id, content_visibility(category.id)] }
-  end
-
-  # Requested locale, then the primary locale, then any translation - mirrors
-  #   KnowledgeBase::Category#translation_preferred.
-  def preferred_title(translations)
-    translation = (locale && translations.find { |elem| elem.kb_locale_id == locale.id }) ||
-                  translations.find { |elem| elem.kb_locale_id == primary_kb_locale_id } ||
-                  translations.first
-
-    translation&.title
   end
 
   def primary_kb_locale_id

@@ -62,7 +62,14 @@ const formSchema = defineFormSchema([
 
 const knowledgeBase = toRef(useKnowledgeBaseStore(), 'knowledgeBase')
 
-const initialEntityObject = computed(() => knowledgeBase.value)
+// The form edits the texts of one locale, which the translation owns - flattened onto the fields
+//   that carry them, `title` and `footerNote`.
+const initialEntityObject = computed(() => {
+  const base = knowledgeBase.value
+  if (!base) return undefined
+
+  return { ...base, title: base.translation?.title, footerNote: base.translation?.footerNote }
+})
 
 const { notify } = useNotifications()
 

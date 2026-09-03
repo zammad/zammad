@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
 
 import { getGraphQLMockCalls, waitForGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
@@ -69,7 +70,7 @@ const mockKnowledgeBase = () =>
   mockKnowledgeBaseQuery({
     knowledgeBase: {
       id: convertToGraphQLId('KnowledgeBase', 1),
-      title: 'My Knowledge Base',
+      translation: { title: 'My Knowledge Base' },
       iconset: 'default',
       isPubliclyAvailable: false,
       isVisiblePublicly: false,
@@ -108,32 +109,57 @@ const mockTaskbarTab = () =>
     ],
   })
 
-const mockAnswer = (overrides: Partial<Answer> = {}) =>
+const ANSWER_TRANSLATION_ID = convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)
+
+// A translation of another locale than the tab was routed to, which is what the fallback for a
+//   locale without its own translation looks like on the wire.
+const FOREIGN_LOCALE_TRANSLATION = {
+  id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 2),
+  kbLocale: {
+    __typename: 'KnowledgeBaseLocale' as const,
+    id: convertToGraphQLId('KnowledgeBase::Locale', 2),
+    systemLocale: { __typename: 'Locale' as const, locale: 'de-de' },
+  },
+}
+
+type AnswerOverrides = Omit<Partial<Answer>, 'translation'> & {
+  translation?: Partial<NonNullable<Answer['translation']>> | null
+}
+
+const mockAnswer = ({ translation, ...overrides }: AnswerOverrides = {}) =>
   mockKnowledgeBaseAnswerQuery({
     knowledgeBaseAnswer: {
       id: ANSWER_ID,
-      title: TITLE,
-      content: {
-        __typename: 'KnowledgeBaseAnswerTranslationContent',
-        id: CONTENT_ID,
-        bodyWithUrls: '<p>Some text.</p>',
-      },
       visibility: EnumKnowledgeBaseVisibility.Published,
-      translationMissing: false,
       internalAt: null,
       publishedAt: '2026-08-01T10:00:00Z',
       archivedAt: null,
-      editedAt: null,
-      editedBy: null,
-      navigation: null,
       tags: [],
       attachments: [],
+      // Spread apart from the rest, so an example states only the part of the translation it is
+      //   about - the locale it belongs to, say, which is what makes a tab read as untranslated.
+      translation:
+        translation === null
+          ? null
+          : {
+              id: ANSWER_TRANSLATION_ID,
+              title: TITLE,
+              content: {
+                __typename: 'KnowledgeBaseAnswerTranslationContent',
+                id: CONTENT_ID,
+                bodyWithUrls: '<p>Some text.</p>',
+              },
+              editedAt: null,
+              editedBy: null,
+              navigation: null,
+              ...translation,
+            },
       category: {
         id: CATEGORY_ID,
         breadcrumb: [
           {
             id: CATEGORY_ID,
-            title: 'Hardware',
+            translation: { title: 'Hardware' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
           },
@@ -142,6 +168,8 @@ const mockAnswer = (overrides: Partial<Answer> = {}) =>
       ...overrides,
     },
   } as KnowledgeBaseAnswerQuery)
+
+const CURRENT_USER_ID = convertToGraphQLId('User', 1)
 
 const CATEGORY_OPTIONS = [
   { value: 1, label: 'Hardware' },
@@ -164,6 +192,31 @@ const mockAnswerEditFormUpdater = () =>
           ? {
               title: { initialValue: TITLE },
               body: { initialValue: '<p>Some text.</p>' },
+              visibility: { initialValue: EnumKnowledgeBaseVisibility.Published },
+            }
+          : {}),
+      },
+    },
+  }))
+
+// What the real updater answers for a locale that has no translation yet: empty, not absent
+//   (`stored_title`/`stored_body` of FormUpdater::Updater::KnowledgeBase::Answer::Edit) - and only
+//   for a name the form did not already send a value for, which is the rule that makes a seeded
+//   fallback win over it (FormUpdater::Concerns::ProvidesInitialValues: `next if
+//   data[name].present?`).
+const mockMissingTranslationFormUpdater = () =>
+  mockFormUpdaterQuery(({ meta, data }) => ({
+    formUpdater: {
+      fields: {
+        categoryId: {
+          options: CATEGORY_OPTIONS,
+          required: true,
+          ...(meta.initial ? { initialValue: 1 } : {}),
+        },
+        ...(meta.initial
+          ? {
+              ...(data.title ? {} : { title: { initialValue: '' } }),
+              ...(data.body ? {} : { body: { initialValue: '' } }),
               visibility: { initialValue: EnumKnowledgeBaseVisibility.Published },
             }
           : {}),
@@ -203,31 +256,9 @@ describe('knowledge base answer edit', () => {
   //   translation, and the tab would count as changed - draft stored, editor listed as editing -
   //   before anybody typed a word.
   it('opens a locale without its own translation on empty fields', async () => {
-    mockAnswer({ translationMissing: true })
+    mockAnswer({ translation: FOREIGN_LOCALE_TRANSLATION })
 
-    // What the real updater answers for a locale that has no translation yet: empty, not absent
-    //   (`stored_title`/`stored_body` of FormUpdater::Updater::KnowledgeBase::Answer::Edit) - and
-    //   only for a name the form did not already send a value for, which is the rule that makes a
-    //   seeded fallback win over it (FormUpdater::Concerns::ProvidesInitialValues: `next if
-    //   data[name].present?`).
-    mockFormUpdaterQuery(({ meta, data }) => ({
-      formUpdater: {
-        fields: {
-          categoryId: {
-            options: CATEGORY_OPTIONS,
-            required: true,
-            ...(meta.initial ? { initialValue: 1 } : {}),
-          },
-          ...(meta.initial
-            ? {
-                ...(data.title ? {} : { title: { initialValue: '' } }),
-                ...(data.body ? {} : { body: { initialValue: '' } }),
-                visibility: { initialValue: EnumKnowledgeBaseVisibility.Published },
-              }
-            : {}),
-        },
-      },
-    }))
+    mockMissingTranslationFormUpdater()
 
     const view = await visitEditView()
 
@@ -236,7 +267,30 @@ describe('knowledge base answer edit', () => {
 
     expect(view.getByLabelText('Title')).toHaveValue('')
     expect(view.queryByDisplayValue(TITLE)).not.toBeInTheDocument()
-    expect(view.queryByRole('button', { name: 'Discard changes' })).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('button', { name: 'Discard your unsaved changes' }),
+    ).not.toBeInTheDocument()
+  })
+
+  // Said in the header's alert band, the way the reader's header says it - not as the small badge
+  //   beside the state, which is easy to miss for a form that opens deliberately empty.
+  it('announces a locale without its own translation in the header', async () => {
+    mockAnswer({ translation: FOREIGN_LOCALE_TRANSLATION })
+
+    const view = await visitEditView()
+
+    // One per header, so the warning survives the scroll swap between the two.
+    await waitFor(() => {
+      expect(view.getAllByText('No translation available for this locale')).not.toHaveLength(0)
+    })
+  })
+
+  it('says nothing about a translation this locale has', async () => {
+    const view = await visitEditView()
+
+    await view.findByRole('radio', { name: 'Public' })
+
+    expect(view.queryAllByText('No translation available for this locale')).toHaveLength(0)
   })
 
   // The whole breadcrumb - category path and title alike - comes from the stored answer, not the
@@ -278,19 +332,29 @@ describe('knowledge base answer edit', () => {
   //   two prefetches their links warm (useKnowledgeBaseAnswer.ts).
   it('does not offer the answer stepper, and does not ask for the neighbours', async () => {
     mockAnswer({
-      navigation: {
-        __typename: 'KnowledgeBaseAnswerNavigation',
-        index: 1,
-        totalCount: 3,
-        previousAnswer: {
-          __typename: 'KnowledgeBaseAnswer',
-          id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID - 1),
-          title: 'The one before',
-        },
-        nextAnswer: {
-          __typename: 'KnowledgeBaseAnswer',
-          id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID + 1),
-          title: 'The one after',
+      translation: {
+        navigation: {
+          __typename: 'KnowledgeBaseAnswerNavigation',
+          index: 1,
+          totalCount: 3,
+          previousAnswer: {
+            __typename: 'KnowledgeBaseAnswer',
+            id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID - 1),
+            translation: {
+              __typename: 'KnowledgeBaseAnswerTranslation' as const,
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 4),
+              title: 'The one before',
+            },
+          },
+          nextAnswer: {
+            __typename: 'KnowledgeBaseAnswer',
+            id: convertToGraphQLId('KnowledgeBase::Answer', ANSWER_INTERNAL_ID + 1),
+            translation: {
+              __typename: 'KnowledgeBaseAnswerTranslation' as const,
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 6),
+              title: 'The one after',
+            },
+          },
         },
       },
     })
@@ -304,6 +368,19 @@ describe('knowledge base answer edit', () => {
     const calls = await waitForKnowledgeBaseAnswerQueryCalls()
 
     expect(calls.at(-1)?.variables).toEqual(expect.objectContaining({ withNavigation: false }))
+  })
+
+  // The reader's header deep-links to the public preview of the *stored* answer. From an edit tab
+  //   that link is misleading - it opens the saved state, not the work in the form - and it is a
+  //   way out of the tab that the tab cannot warn about, so the edit header drops it entirely.
+  it('does not offer the public preview link', async () => {
+    const view = await visitEditView()
+
+    await view.findByDisplayValue(TITLE)
+
+    // Queried across all matches: both header variants carry the toolbar, so the link used to
+    //   render twice.
+    expect(view.queryAllByRole('link', { name: 'View public knowledge base' })).toHaveLength(0)
   })
 
   // Everything the header shows comes from the stored answer, so it has to skeleton until the
@@ -403,7 +480,7 @@ describe('knowledge base answer edit', () => {
   })
 
   // Not a form field: tags are written straight onto the answer, so they are neither part of the
-  //   auto-saved draft nor of "Discard changes" - the same as the linked tickets.
+  //   auto-saved draft nor of "Discard your unsaved changes" - the same as the linked tickets.
   it('manages the tags from the sidebar rather than from the form', async () => {
     const view = await visitEditView()
 
@@ -502,7 +579,9 @@ describe('knowledge base answer edit', () => {
     const files = view.getByRole('list', { name: 'Attached files' })
     expect(within(files).getAllByRole('listitem')).toHaveLength(1)
 
-    expect(view.queryByRole('button', { name: 'Discard changes' })).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('button', { name: 'Discard your unsaved changes' }),
+    ).not.toBeInTheDocument()
   })
 
   // The create view's own pair: with nothing to give up on, leaving needs no question asked.
@@ -512,33 +591,31 @@ describe('knowledge base answer edit', () => {
     await view.findByDisplayValue(TITLE)
 
     expect(view.getByRole('button', { name: 'Cancel & go back' })).toBeInTheDocument()
-    expect(view.queryByRole('button', { name: 'Discard changes' })).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('button', { name: 'Discard your unsaved changes' }),
+    ).not.toBeInTheDocument()
     expect(view.getByRole('button', { name: 'Update' })).toBeInTheDocument()
 
     await view.events.type(view.getByDisplayValue(TITLE), '!')
 
-    expect(await view.findByRole('button', { name: 'Discard changes' })).toBeInTheDocument()
+    expect(
+      await view.findByRole('button', { name: 'Discard your unsaved changes' }),
+    ).toBeInTheDocument()
     expect(view.queryByRole('button', { name: 'Cancel & go back' })).not.toBeInTheDocument()
   })
 
-  // Giving up on the changes closes the tab, like in the create view - the stored answer is
-  //   untouched, it is read in its own view, and an edit tab for it can be opened again at any
-  //   time.
-  it('closes the tab when the changes are discarded', async () => {
+  // Leaving closes the tab, like in the create view - the stored answer is untouched, it is read
+  //   in its own view, and an edit tab for it can be opened again at any time.
+  it('closes the tab when going back', async () => {
     const view = await visitEditView()
 
-    // Settled, so the discard is not racing the initial round trip.
+    // Settled, so leaving is not racing the initial round trip.
     await view.findByRole('radio', { name: 'Public' })
-
-    await view.events.type(view.getByDisplayValue(TITLE), '!')
 
     const router = getTestRouter()
     router.mockMethods()
 
-    await view.events.click(await view.findByRole('button', { name: 'Discard changes' }))
-
-    const dialog = await view.findByRole('dialog', { name: 'Unsaved changes' })
-    await view.events.click(within(dialog).getByRole('button', { name: 'Discard changes' }))
+    await view.events.click(view.getByRole('button', { name: 'Cancel & go back' }))
 
     const calls = await waitForUserCurrentTaskbarItemDeleteMutationCalls()
 
@@ -555,6 +632,46 @@ describe('knowledge base answer edit', () => {
     router.restoreMethods()
   })
 
+  // Giving up on the changes, on the other hand, stays: the fields go back to what is stored and
+  //   the tab is kept for the next edit, like the ticket detail view's own discard button.
+  it('restores the stored answer and stays when the changes are discarded', async () => {
+    const view = await visitEditView()
+
+    await view.findByRole('radio', { name: 'Public' })
+
+    const title = view.getByDisplayValue(TITLE)
+
+    await view.events.type(title, '!')
+    await view.events.click(view.getByRole('radio', { name: 'Internal' }))
+
+    expect(title).toHaveDisplayValue(`${TITLE}!`)
+
+    const router = getTestRouter()
+    router.mockMethods()
+
+    await view.events.click(
+      await view.findByRole('button', { name: 'Discard your unsaved changes' }),
+    )
+
+    const dialog = await view.findByRole('dialog', { name: 'Unsaved changes' })
+    await view.events.click(within(dialog).getByRole('button', { name: 'Discard changes' }))
+
+    await waitFor(() => expect(title).toHaveDisplayValue(TITLE))
+    expect(view.getByRole('radio', { name: 'Public' })).toBeChecked()
+
+    // Nothing to give up on any more, so the pair flips back ...
+    expect(await view.findByRole('button', { name: 'Cancel & go back' })).toBeInTheDocument()
+    expect(
+      view.queryByRole('button', { name: 'Discard your unsaved changes' }),
+    ).not.toBeInTheDocument()
+
+    // ... and the tab is still here, with the form in it.
+    expect(router.push).not.toHaveBeenCalled()
+    expect(getGraphQLMockCalls(UserCurrentTaskbarItemDeleteDocument)).toHaveLength(0)
+
+    router.restoreMethods()
+  })
+
   describe('deleting the answer', () => {
     it('offers deleting when the policy grants it', async () => {
       mockAnswer({ policy: { __typename: 'PolicyDefault', update: true, destroy: true } })
@@ -563,7 +680,7 @@ describe('knowledge base answer edit', () => {
 
       const sidebar = await view.findByRole('complementary', { name: 'Content sidebar' })
 
-      await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
+      await view.events.click(within(sidebar).getByRole('button', { name: 'Additional actions' }))
 
       expect(
         within(await view.findByRole('menu')).getByRole('button', { name: 'Delete answer' }),
@@ -580,7 +697,7 @@ describe('knowledge base answer edit', () => {
       const sidebar = await view.findByRole('complementary', { name: 'Content sidebar' })
 
       expect(
-        within(sidebar).queryByRole('button', { name: 'Action menu button' }),
+        within(sidebar).queryByRole('button', { name: 'Additional actions' }),
       ).not.toBeInTheDocument()
     })
 
@@ -597,7 +714,7 @@ describe('knowledge base answer edit', () => {
       const router = getTestRouter()
       router.mockMethods()
 
-      await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
+      await view.events.click(within(sidebar).getByRole('button', { name: 'Additional actions' }))
       await view.events.click(
         within(await view.findByRole('menu')).getByRole('button', { name: 'Delete answer' }),
       )
@@ -636,6 +753,251 @@ describe('knowledge base answer edit', () => {
   //   therefore neither offer a date nor send one - sending the current state together with a
   //   timestamp is what would cancel the schedule
   //   (Service::KnowledgeBase::Answer::Base#scheduled_publication?).
+  describe('when somebody else changes the answer', () => {
+    const triggerForeignChange = (overrides: Record<string, unknown> = {}) =>
+      getKnowledgeBaseAnswerUpdatesSubscriptionHandler().trigger({
+        knowledgeBaseAnswerUpdates: {
+          answer: {
+            id: ANSWER_ID,
+            visibility: EnumKnowledgeBaseVisibility.Published,
+            attachments: [],
+            translation: {
+              id: ANSWER_TRANSLATION_ID,
+              title: 'Their title',
+              content: {
+                __typename: 'KnowledgeBaseAnswerTranslationContent',
+                id: CONTENT_ID,
+                bodyForEditing: '<p>Their text.</p>',
+              },
+              editedAt: '2026-09-01T10:00:00Z',
+              editedBy: {
+                __typename: 'User',
+                id: convertToGraphQLId('User', 2),
+                firstname: 'Other',
+                lastname: 'Editor',
+                fullname: 'Other Editor',
+              },
+            },
+            category: {
+              id: CATEGORY_ID,
+              breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Hardware' } }],
+            },
+            ...overrides,
+          },
+        },
+      } as never)
+
+    // The tab shows the stored answer, so a change nobody here has typed over belongs on screen -
+    //   otherwise the fields keep what the tab opened with for as long as it stays open, and a save
+    //   silently replaces the other editor's work with values from before it.
+    // A foreign save that touched only the text: the fields a takeover compares by - title,
+    //   category, visibility - all still match, so nothing about them says the stored body moved.
+    //   An untouched editor must receive it all the same, or the tab keeps rendering the body it
+    //   opened with and a submit puts that back over their work, warning or not.
+    it('takes over a foreign change to the body alone', async () => {
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      await triggerForeignChange({
+        translation: {
+          id: ANSWER_TRANSLATION_ID,
+          title: TITLE,
+          content: {
+            __typename: 'KnowledgeBaseAnswerTranslationContent',
+            id: CONTENT_ID,
+            bodyForEditing: '<p>Their new text.</p>',
+          },
+          editedAt: '2026-09-01T10:00:00Z',
+        },
+      })
+
+      const body = getNode('knowledge-base-answer-edit')?.children.find(
+        (child) => child.name === 'body',
+      )
+
+      await waitFor(() => {
+        expect(body?._value).toBe('<p>Their new text.</p>')
+      })
+    })
+
+    // An upload lands in the field, and a foreign change arrives before FormKit has committed the
+    //   field's dirty flag. The takeover has to leave the file alone: it is not part of the stored
+    //   answer, so resetting from that answer drops it from the form while it stays in the upload
+    //   cache under this form's id - invisible on screen, and submitted by the next save.
+    it('keeps an attachment that landed just before a foreign change', async () => {
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      const formNode = getNode('knowledge-base-answer-edit')
+      const attachments = formNode?.children.find((child) => child.name === 'attachments')
+
+      // Not awaited on purpose: FormKit commits a tick later, which is the window this guards.
+      attachments?.input([{ name: 'mine.pdf', size: 10, type: 'application/pdf' }])
+
+      await triggerForeignChange({ visibility: EnumKnowledgeBaseVisibility.Internal })
+
+      expect(attachments?._value).toEqual([expect.objectContaining({ name: 'mine.pdf' })])
+    })
+
+    it('pulls the change into the fields nobody has typed in', async () => {
+      const view = await visitEditView()
+
+      // Settled, which is when the tab takes the baseline it measures its own edits against.
+      await view.findByRole('radio', { name: 'Public' })
+
+      expect(await view.findByDisplayValue(TITLE)).toBeInTheDocument()
+
+      await triggerForeignChange()
+
+      expect(await view.findByDisplayValue('Their title')).toBeInTheDocument()
+    })
+
+    it('keeps what the editor has already typed, and keeps warning about it', async () => {
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      const title = await view.findByDisplayValue(TITLE)
+
+      await view.events.clear(title)
+      await view.events.type(title, 'My title')
+
+      // The tab counts as changed - otherwise the reset below has no dirty field to protect and
+      //   this asserts nothing.
+      expect(
+        await view.findByRole('button', { name: 'Discard your unsaved changes' }),
+      ).toBeInTheDocument()
+      expect(title, 'the typing landed in the title field').toHaveDisplayValue('My title')
+
+      await triggerForeignChange()
+
+      expect(title, 'the typed title is left alone').toHaveDisplayValue('My title')
+
+      expect(
+        await view.findByText(
+          'Other Editor has updated this answer. Submitting will replace their changes.',
+        ),
+        'the warning stays, because submitting would replace their change',
+      ).toBeInTheDocument()
+    })
+
+    // The other side of the takeover above: a text-only change now reaches the fields, so the one
+    //   field it would land in has to be protected like the title already is. What the editor typed
+    //   stays, and the banner does the talking.
+    it('keeps what the editor has typed in the body', async () => {
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      // The editor's value is read from the form node: its content does not surface as the text of
+      //   the element that carries the role.
+      const bodyNode = () =>
+        getNode('knowledge-base-answer-edit')?.children.find((child) => child.name === 'body')
+
+      await view.events.type(view.getByRole('textbox', { name: 'Text' }), 'My own paragraph.')
+
+      expect(bodyNode()?._value, 'the typing landed in the body').toContain('My own paragraph.')
+
+      await triggerForeignChange({
+        translation: {
+          id: ANSWER_TRANSLATION_ID,
+          title: TITLE,
+          content: {
+            __typename: 'KnowledgeBaseAnswerTranslationContent',
+            id: CONTENT_ID,
+            bodyForEditing: '<p>Their new text.</p>',
+          },
+          editedAt: '2026-09-01T10:00:00Z',
+          editedBy: {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 2),
+            firstname: 'Other',
+            lastname: 'Editor',
+            fullname: 'Other Editor',
+          },
+        },
+      })
+
+      expect(bodyNode()?._value, 'the typed body is left alone').toContain('My own paragraph.')
+
+      expect(
+        await view.findByText(
+          'Other Editor has updated this answer. Submitting will replace their changes.',
+        ),
+        'the warning stays, because submitting would replace their change',
+      ).toBeInTheDocument()
+    })
+
+    // A locale whose translation is being written from scratch: `storedFormValues` carries no
+    //   title there (it would be another locale's), so a takeover has nothing to compare the typed
+    //   one with - and the reset would hand the field back the nothing the tab opened with.
+    it('keeps the title of a translation being written from scratch', async () => {
+      mockAnswer({ translation: FOREIGN_LOCALE_TRANSLATION })
+      mockMissingTranslationFormUpdater()
+
+      const view = await visitEditView()
+
+      // Settled, so the empty fields are what the tab opened with.
+      await view.findByRole('radio', { name: 'Public' })
+
+      const title = view.getByLabelText('Title')
+      await view.events.type(title, 'Mein neuer Titel')
+
+      // Somebody else moves the answer to another category, leaving the translation missing.
+      await triggerForeignChange({
+        title: TITLE,
+        category: {
+          id: convertToGraphQLId('KnowledgeBase::Category', 2),
+          breadcrumb: [
+            {
+              id: convertToGraphQLId('KnowledgeBase::Category', 2),
+              translation: { title: 'Software' },
+            },
+          ],
+        },
+      })
+
+      expect(title, 'the typed title is left alone').toHaveDisplayValue('Mein neuer Titel')
+    })
+
+    // Typing in the editor is typing like typing in the title is. The body is the one field a
+    //   takeover cannot compare with the stored one (see `storedFormValues`) and would replace all
+    //   the same: `initialEntityObject` carries it, and a reset fills every field the values do not
+    //   name from that object.
+    it('keeps a body only this editor has typed in, and the fields beside it', async () => {
+      mockKnowledgeBaseAnswerUpdateMutation({
+        knowledgeBaseAnswerUpdate: { answer: null, errors: null },
+      })
+
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      await view.events.type(view.getByRole('textbox', { name: 'Text' }), 'My own text.')
+
+      await triggerForeignChange()
+
+      expect(
+        await view.findByDisplayValue(TITLE),
+        'the whole set is left alone, not only what was typed in',
+      ).toBeInTheDocument()
+
+      // What the editor holds, read from a save: TipTap renders no content under JSDOM, so the
+      //   body is nowhere in the DOM to assert on.
+      await view.events.click(view.getByRole('button', { name: 'Update' }))
+
+      const dialog = await view.findByRole('dialog', { name: 'Submit your changes' })
+      await view.events.click(within(dialog).getByRole('button', { name: 'Submit' }))
+
+      const calls = await waitForKnowledgeBaseAnswerUpdateMutationCalls()
+      const variables = calls.at(-1)?.variables as { input: Record<string, unknown> }
+
+      expect(variables.input.body).toContain('My own text.')
+    })
+  })
+
   describe('with a publication scheduled for later', () => {
     beforeEach(() => {
       // Still a draft: `publishedAt` lies in the future, so CanBePublished has not reached it yet.
@@ -708,24 +1070,26 @@ describe('knowledge base answer edit', () => {
         knowledgeBaseAnswerUpdate: {
           answer: {
             id: ANSWER_ID,
-            title: 'Updated title',
-            content: {
-              __typename: 'KnowledgeBaseAnswerTranslationContent',
-              id: CONTENT_ID,
-              bodyWithUrls: '<p>Some text.</p>',
-            },
             visibility: EnumKnowledgeBaseVisibility.Published,
-            translationMissing: false,
             internalAt: null,
             publishedAt: '2026-08-01T10:00:00Z',
             archivedAt: null,
-            editedAt: '2026-08-26T10:00:00Z',
-            editedBy: null,
             tags: [],
             attachments: [],
+            translation: {
+              id: ANSWER_TRANSLATION_ID,
+              title: 'Updated title',
+              content: {
+                __typename: 'KnowledgeBaseAnswerTranslationContent',
+                id: CONTENT_ID,
+                bodyWithUrls: '<p>Some text.</p>',
+              },
+              editedAt: '2026-08-26T10:00:00Z',
+              editedBy: null,
+            },
             category: {
               id: CATEGORY_ID,
-              breadcrumb: [{ id: CATEGORY_ID, title: 'Hardware' }],
+              breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Hardware' } }],
             },
           },
           errors: null,
@@ -786,15 +1150,21 @@ describe('knowledge base answer edit', () => {
         knowledgeBaseAnswerUpdates: {
           answer: {
             id: ANSWER_ID,
-            title: TITLE,
-            content: {
-              __typename: 'KnowledgeBaseAnswerTranslationContent',
-              id: CONTENT_ID,
-              bodyForEditing: '<p>Some text.</p>',
-            },
             visibility: EnumKnowledgeBaseVisibility.Published,
             attachments: [],
-            category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Hardware' }] },
+            category: {
+              id: CATEGORY_ID,
+              breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Hardware' } }],
+            },
+            translation: {
+              id: ANSWER_TRANSLATION_ID,
+              title: TITLE,
+              content: {
+                __typename: 'KnowledgeBaseAnswerTranslationContent',
+                id: CONTENT_ID,
+                bodyForEditing: '<p>Some text.</p>',
+              },
+            },
           },
         },
       } as never)
@@ -953,28 +1323,38 @@ describe('knowledge base answer edit', () => {
   //   the banner and by the confirmation on submit, so being asked says no more than what has been
   //   on screen all along.
   describe('a concurrent change', () => {
-    const foreignSave = (overrides: Record<string, unknown> = {}) =>
+    const foreignSave = ({
+      translation,
+      ...overrides
+    }: { translation?: Record<string, unknown> } & Record<string, unknown> = {}) =>
       getKnowledgeBaseAnswerUpdatesSubscriptionHandler().trigger({
         knowledgeBaseAnswerUpdates: {
           answer: {
             id: ANSWER_ID,
-            title: TITLE,
-            content: {
-              __typename: 'KnowledgeBaseAnswerTranslationContent',
-              id: CONTENT_ID,
-              bodyForEditing: '<p>Some text.</p>',
-            },
             visibility: EnumKnowledgeBaseVisibility.Published,
             attachments: [],
-            editedAt: '2026-08-27T10:00:00Z',
-            editedBy: {
-              __typename: 'User',
-              id: convertToGraphQLId('User', 42),
-              firstname: 'Second',
-              lastname: 'Editor',
-              fullname: 'Second Editor',
+            category: {
+              id: CATEGORY_ID,
+              breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Hardware' } }],
             },
-            category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Hardware' }] },
+            translation: {
+              id: ANSWER_TRANSLATION_ID,
+              title: TITLE,
+              content: {
+                __typename: 'KnowledgeBaseAnswerTranslationContent',
+                id: CONTENT_ID,
+                bodyForEditing: '<p>Some text.</p>',
+              },
+              editedAt: '2026-08-27T10:00:00Z',
+              editedBy: {
+                __typename: 'User',
+                id: convertToGraphQLId('User', 42),
+                firstname: 'Second',
+                lastname: 'Editor',
+                fullname: 'Second Editor',
+              },
+              ...translation,
+            },
             ...overrides,
           },
         },
@@ -986,6 +1366,83 @@ describe('knowledge base answer edit', () => {
       await view.findByRole('radio', { name: 'Public' })
 
       expect(view.queryByText(/Submitting will replace/)).not.toBeInTheDocument()
+    })
+
+    // Their own save from another session, another browser tab or the old interface: still worth a
+    //   word while this tab holds unsaved work, but not one that reads their own name back at them
+    //   as if a stranger had been in the answer.
+    const ownSaveElsewhere = () =>
+      foreignSave({
+        translation: {
+          title: 'Saved in my other tab',
+          editedBy: {
+            __typename: 'User',
+            id: CURRENT_USER_ID,
+            firstname: 'Nicole',
+            lastname: 'Braun',
+            fullname: 'Nicole Braun',
+          },
+        },
+      })
+
+    it('says nothing about an own save this tab has taken over', async () => {
+      mockUserCurrent({ id: CURRENT_USER_ID })
+      mockPermissions(['knowledge_base.editor'])
+
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+      await view.findByDisplayValue(TITLE)
+
+      await ownSaveElsewhere()
+
+      expect(
+        await view.findByDisplayValue('Saved in my other tab'),
+        'the fields follow the save',
+      ).toBeInTheDocument()
+
+      expect(
+        view.queryByText(/Submitting will replace/),
+        'nothing of theirs is left to replace',
+      ).not.toBeInTheDocument()
+    })
+
+    // No banner even here - it was them, and being told about oneself while typing is noise. The
+    //   submit still asks, because their unsaved work would replace what they saved elsewhere.
+    it('asks before unsaved work replaces an own save, without a banner about it', async () => {
+      mockUserCurrent({ id: CURRENT_USER_ID })
+      mockPermissions(['knowledge_base.editor'])
+
+      const view = await visitEditView()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      const title = await view.findByDisplayValue(TITLE)
+
+      await view.events.clear(title)
+      await view.events.type(title, 'My unsaved title')
+
+      await ownSaveElsewhere()
+
+      expect(title, 'the typed title is left alone').toHaveDisplayValue('My unsaved title')
+      expect(
+        view.queryByText(/updated this answer/),
+        'nothing on the banner',
+      ).not.toBeInTheDocument()
+
+      mockKnowledgeBaseAnswerUpdateMutation({
+        knowledgeBaseAnswerUpdate: { answer: null, errors: null },
+      })
+
+      await view.events.click(view.getByRole('button', { name: 'Update' }))
+
+      const dialog = await view.findByRole('dialog', { name: 'Submit your changes' })
+
+      expect(
+        within(dialog).getByText(
+          'You have updated this answer elsewhere. Submitting will replace those changes.',
+        ),
+      ).toBeInTheDocument()
     })
 
     it('names who changed it', async () => {
@@ -1027,7 +1484,7 @@ describe('knowledge base answer edit', () => {
 
       await view.findByRole('radio', { name: 'Public' })
 
-      await foreignSave({ editedBy: null })
+      await foreignSave({ translation: { editedBy: null } })
 
       expect(
         await view.findByText(
@@ -1039,14 +1496,14 @@ describe('knowledge base answer edit', () => {
     // An attachment change moves no timestamp at all (measured), and it is the one that would
     //   silently delete somebody's file - so it must not be the one that goes unmentioned.
     it('warns about an attachment change, which moves no timestamp', async () => {
-      mockAnswer({ attachments: [], editedAt: '2026-08-01T10:00:00Z' } as never)
+      mockAnswer({ attachments: [], translation: { editedAt: '2026-08-01T10:00:00Z' } })
 
       const view = await visitEditView()
 
       await view.findByRole('radio', { name: 'Public' })
 
       await foreignSave({
-        editedAt: '2026-08-01T10:00:00Z',
+        translation: { editedAt: '2026-08-01T10:00:00Z' },
         attachments: [
           {
             __typename: 'StoredFile',
@@ -1087,23 +1544,28 @@ describe('knowledge base answer edit', () => {
         knowledgeBaseAnswerUpdate: {
           answer: {
             id: ANSWER_ID,
-            title: TITLE,
-            content: {
-              __typename: 'KnowledgeBaseAnswerTranslationContent',
-              id: CONTENT_ID,
-              bodyWithUrls: '<p>Some text.</p>',
-            },
             visibility: EnumKnowledgeBaseVisibility.Published,
-            translationMissing: false,
             internalAt: null,
             publishedAt: '2026-08-01T10:00:00Z',
             archivedAt: null,
             // Later than the foreign save below, as this one stored last.
-            editedAt: '2026-08-27T11:00:00Z',
-            editedBy: null,
             tags: [],
             attachments: [],
-            category: { id: CATEGORY_ID, breadcrumb: [{ id: CATEGORY_ID, title: 'Hardware' }] },
+            category: {
+              id: CATEGORY_ID,
+              breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Hardware' } }],
+            },
+            translation: {
+              id: ANSWER_TRANSLATION_ID,
+              title: TITLE,
+              content: {
+                __typename: 'KnowledgeBaseAnswerTranslationContent',
+                id: CONTENT_ID,
+                bodyWithUrls: '<p>Some text.</p>',
+              },
+              editedAt: '2026-08-27T11:00:00Z',
+              editedBy: null,
+            },
           },
           errors: null,
         },
@@ -1144,10 +1606,15 @@ describe('knowledge base answer edit', () => {
       await view.findByRole('radio', { name: 'Public' })
 
       await foreignSave({
-        editedAt: null,
+        translation: { editedAt: null },
         category: {
           id: convertToGraphQLId('KnowledgeBase::Category', 2),
-          breadcrumb: [{ id: convertToGraphQLId('KnowledgeBase::Category', 2), title: 'Software' }],
+          breadcrumb: [
+            {
+              id: convertToGraphQLId('KnowledgeBase::Category', 2),
+              translation: { title: 'Software' },
+            },
+          ],
         },
       })
 
@@ -1165,7 +1632,10 @@ describe('knowledge base answer edit', () => {
 
       await view.findByRole('radio', { name: 'Public' })
 
-      await foreignSave({ editedAt: null, visibility: EnumKnowledgeBaseVisibility.Internal })
+      await foreignSave({
+        translation: { editedAt: null },
+        visibility: EnumKnowledgeBaseVisibility.Internal,
+      })
 
       expect(
         await view.findByText(

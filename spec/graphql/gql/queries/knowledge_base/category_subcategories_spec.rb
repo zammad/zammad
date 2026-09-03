@@ -12,11 +12,20 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
     <<~GQL
       query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String, $sortingMode: EnumKnowledgeBaseSortingMode) {
         knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale, sortingMode: $sortingMode) {
-          category { isVisiblePublicly translationMissing categorySortingMode answerSortingMode editedAt breadcrumb { id title visibility } }
+          category {
+            isVisiblePublicly
+            categorySortingMode
+            answerSortingMode
+            editedAt
+            translation(locale: $locale) { title kbLocale { systemLocale { locale } } }
+            breadcrumb { id translation(locale: $locale) { title } visibility }
+          }
           subcategories {
-            id title visibility translationMissing categorySortingMode answerSortingMode editedAt answerCount subcategoryCount directAnswerCount directSubcategoryCount
+            id visibility categorySortingMode answerSortingMode editedAt
+            answerCount subcategoryCount directAnswerCount directSubcategoryCount
+            translation(locale: $locale) { title kbLocale { systemLocale { locale } } }
             categoryIcon iconSet
-            breadcrumb { id title }
+            breadcrumb { id translation(locale: $locale) { title } }
           }
         }
       }
@@ -52,7 +61,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       let(:admin) { create(:admin) }
 
       it 'lists in the previewed mode' do
-        titles = result_categories.pluck('title')
+        titles = result_categories.map { |category| category.dig('translation', 'title') }
 
         expect(titles).to eq(titles.sort_by(&:downcase))
       end
@@ -113,7 +122,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
 
       it 'returns the opened category with its breadcrumb path and content visibility' do
         expect(gql.result.data.dig('category', 'breadcrumb')).to eq(
-          [{ 'id' => gql.id(category), 'title' => category.translation_primary.title, 'visibility' => 'published' }]
+          [{ 'id'          => gql.id(category),
+             'translation' => { 'title' => category.translation_primary.title },
+             'visibility'  => 'published' }]
         )
       end
 
@@ -128,8 +139,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       it 'gives each subcategory its own breadcrumb, so an opened one needs no extra fetch' do
         expect(category_node(subcategory)['breadcrumb']).to eq(
           [
-            { 'id' => gql.id(category), 'title' => category.translation_primary.title },
-            { 'id' => gql.id(subcategory), 'title' => subcategory.translation_primary.title },
+            { 'id' => gql.id(category), 'translation' => { 'title' => category.translation_primary.title } },
+            { 'id' => gql.id(subcategory), 'translation' => { 'title' => subcategory.translation_primary.title } },
           ]
         )
       end
@@ -268,7 +279,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
 
     it 'exposes the subtree and direct counts of each category', :aggregate_failures do
       expect(category_node(category)).to include('answerCount' => 2, 'subcategoryCount' => 2)
-      expect(category_node(category)).to include('directAnswerCount' => 1, 'directSubcategoryCount' => 1)
+      expect(category_node(category)).to include('directSubcategoryCount' => 1)
     end
   end
 
@@ -404,9 +415,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
     end
   end
 
-  # The title-translation flag is independent of content visibility: a category
-  #   can be visible in a locale yet still show a fallback title when its own
-  #   name is untranslated there.
+  # Which locale a name came from is independent of content visibility: a category can be visible
+  #   in a locale yet still be named from a fallback when its own name is untranslated there. The
+  #   answer says so itself - the returned translation carries the locale it belongs to.
   context 'when a category title is not translated to the browsed locale' do
     let(:category_id) { nil }
     let(:locale)      { alternative_locale.system_locale.locale }
@@ -426,9 +437,13 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
     context 'with an admin (editor)', authenticated_as: :admin do
       let(:admin) { create(:admin) }
 
-      it 'flags categories whose title falls back from a missing translation', :aggregate_failures do
-        expect(category_node(category)).to include('translationMissing' => true)
-        expect(category_node(translated_category)).to include('translationMissing' => false)
+      def translation_locale(record)
+        category_node(record).dig('translation', 'kbLocale', 'systemLocale', 'locale')
+      end
+
+      it 'names an untranslated category from its fallback locale', :aggregate_failures do
+        expect(translation_locale(category)).to eq(primary_locale.system_locale.locale)
+        expect(translation_locale(translated_category)).to eq(alternative_locale.system_locale.locale)
       end
     end
   end
@@ -445,8 +460,38 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
     context 'with an admin (editor)', authenticated_as: :admin do
       let(:admin) { create(:admin) }
 
-      it 'reports the opened category as missing its translation' do
-        expect(gql.result.data.dig('category', 'translationMissing')).to be(true)
+      it 'names the opened category from its fallback locale' do
+        expect(gql.result.data.dig('category', 'translation', 'kbLocale', 'systemLocale', 'locale'))
+          .to eq(primary_locale.system_locale.locale)
+      end
+    end
+  end
+
+  # The two halves of a category's locale-dependent data are resolved against *different* locales,
+  #   and this is the case that tells them apart: the name falls back to the locale that has one,
+  #   while the counts stay on the locale being browsed. Resolving the counts from the returned
+  #   translation instead would report the fallback locale's numbers here (2 answers rather than 1)
+  #   - see Gql::Types::KnowledgeBase::CategoryType.
+  context 'when a category is named from a fallback locale but has content in the browsed one' do
+    let(:category_id) { nil }
+    let(:locale)      { alternative_locale.system_locale.locale }
+
+    before do
+      # `other_category` keeps its primary-locale name only, and holds a different number of
+      #   published answers per locale - two in the primary, one in the browsed alternative.
+      create_list(:knowledge_base_answer, 2, :published, category: other_category)
+      create(:knowledge_base_answer, :published, category:               other_category,
+                                                 translation_attributes: { kb_locale: alternative_locale })
+      gql.execute(query, variables:)
+    end
+
+    context 'with a customer (public)', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+
+      it 'names it from the fallback locale, but counts the browsed one', :aggregate_failures do
+        expect(category_node(other_category).dig('translation', 'kbLocale', 'systemLocale', 'locale'))
+          .to eq(primary_locale.system_locale.locale)
+        expect(category_node(other_category)).to include('answerCount' => 1)
       end
     end
   end

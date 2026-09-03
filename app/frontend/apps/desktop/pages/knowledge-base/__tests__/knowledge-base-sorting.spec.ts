@@ -32,11 +32,10 @@ const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 
 const category = (id: number, title: string) => ({
   id: convertToGraphQLId('KnowledgeBase::Category', id),
-  title,
+  translation: { title },
   categoryIcon: 'folder',
   iconSet: 'FontAwesome',
   visibility: EnumKnowledgeBaseVisibility.Published,
-  translationMissing: false,
   answerCount: 0,
   subcategoryCount: 0,
   position: id,
@@ -47,9 +46,10 @@ const category = (id: number, title: string) => ({
 const answer = (id: number, title: string) => ({
   node: {
     id: convertToGraphQLId('KnowledgeBase::Answer', id),
-    title,
+    // Its own id: the factory pins one for every translation, so two answers sharing it would
+    //   normalize into a single cache entity and both read whichever title was written last.
+    translation: { id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id), title },
     visibility: EnumKnowledgeBaseVisibility.Published,
-    translationMissing: false,
     position: id,
   },
 })
@@ -81,7 +81,9 @@ const mockCategoryContent = ({
         },
         directSubcategoryCount: subcategories.length,
         directAnswerCount: answers.length,
-        breadcrumb: [{ id: CATEGORY_ID, title: 'Category', categoryIcon: 'folder' }],
+        breadcrumb: [
+          { id: CATEGORY_ID, translation: { title: 'Category' }, categoryIcon: 'folder' },
+        ],
       },
       subcategories,
     },
@@ -151,7 +153,7 @@ describe('knowledge base sorting', () => {
     mockKnowledgeBaseQuery({
       knowledgeBase: {
         id: convertToGraphQLId('KnowledgeBase', 1),
-        title: 'My Knowledge Base',
+        translation: { title: 'My Knowledge Base' },
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,

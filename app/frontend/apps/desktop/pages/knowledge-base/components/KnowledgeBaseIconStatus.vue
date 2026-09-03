@@ -53,18 +53,13 @@ const metaContainerClass = computed(() => {
     'absolute',
     'inset-e-0',
     'bottom-0',
-    'rounded-full',
-    'translate-y-1',
-    'ltr:translate-x-2', // eslint-disable-line zammad/zammad-tailwind-ltr
-    'rtl:-translate-x-2', // eslint-disable-line zammad/zammad-tailwind-ltr
+    'rounded-sm',
+    'translate-y-2',
+    'ltr:translate-x-1.5', // eslint-disable-line zammad/zammad-tailwind-ltr
+    'rtl:-translate-x-1.5', // eslint-disable-line zammad/zammad-tailwind-ltr
     'bg-blue-200',
     'dark:bg-gray-500',
   ]
-})
-
-const metaIconSize = computed(() => {
-  if (props.horizontal) return { width: 8, height: 8 }
-  return { width: 12, height: 12 }
 })
 </script>
 
@@ -72,12 +67,7 @@ const metaIconSize = computed(() => {
   <div v-tooltip="$t(tooltipText)" role="img" :class="containerClass">
     <KnowledgeBaseCategoryIcon :name="name" :set="set" :size="size" :class="currentMetaClass" />
     <div v-if="currentMetaIcon" :class="metaContainerClass">
-      <CommonIcon
-        :name="currentMetaIcon"
-        decorative
-        :fixed-size="metaIconSize"
-        :class="currentMetaClass"
-      />
+      <CommonIcon :class="currentMetaClass" :name="currentMetaIcon" decorative size="xs" />
     </div>
   </div>
 </template>

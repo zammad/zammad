@@ -17,7 +17,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
         knowledgeBaseUpdate(input: $input, locale: $locale) {
           knowledgeBase {
             id
-            title
+            translation(locale: $locale) { title }
           }
           errors {
             message
@@ -42,7 +42,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
 
   context 'with an editor', authenticated_as: :editor do
     it 'returns the updated knowledge base' do
-      expect(gql.result.data['knowledgeBase']).to include('title' => title)
+      expect(gql.result.data.dig('knowledgeBase', 'translation')).to include('title' => title)
     end
 
     # The payload is normalized straight into the client cache, so it has to come back in the
@@ -52,7 +52,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
       let(:setup)  { alternative_locale }
 
       it 'returns the title in that locale' do
-        expect(gql.result.data['knowledgeBase']).to include('title' => title)
+        expect(gql.result.data.dig('knowledgeBase', 'translation')).to include('title' => title)
       end
     end
 

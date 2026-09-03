@@ -8,7 +8,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const KnowledgeBaseAnswerUpdateDocument = gql`
-    mutation knowledgeBaseAnswerUpdate($answerId: ID!, $input: KnowledgeBaseUpdateAnswerInput!, $locale: String!, $meta: KnowledgeBaseAnswerUpdateMetaInput, $withBodyForEditing: Boolean = false) {
+    mutation knowledgeBaseAnswerUpdate($answerId: ID!, $input: KnowledgeBaseUpdateAnswerInput!, $locale: String!, $meta: KnowledgeBaseAnswerUpdateMetaInput, $withBodyForEditing: Boolean = false, $withNavigation: Boolean = false) {
   knowledgeBaseAnswerUpdate(
     answerId: $answerId
     input: $input

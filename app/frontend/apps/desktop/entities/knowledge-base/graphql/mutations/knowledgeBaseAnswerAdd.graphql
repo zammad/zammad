@@ -6,10 +6,18 @@ mutation knowledgeBaseAnswerAdd($input: KnowledgeBaseCreateAnswerInput!, $locale
     #   from this one (knowledgeBaseAnswerRoute).
     answer {
       id
-      title
       visibility
-      translationMissing
       position
+      translation(locale: $locale) {
+        id
+        title
+        kbLocale {
+          id
+          systemLocale {
+            locale
+          }
+        }
+      }
       # Where the create view leaves for when the screen behavior says to open the category
       #   rather than the answer. From the response rather than from the form, so it is the
       #   category the answer really landed in.

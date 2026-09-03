@@ -227,7 +227,7 @@ msgstr ""
 msgid "%s days ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:141
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:149
 msgid "%s deselected."
 msgstr ""
 
@@ -258,7 +258,7 @@ msgstr ""
 msgid "%s groups to %s roles assignments"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:37
 msgid "%s has updated this answer. Submitting will replace their changes."
 msgstr ""
 
@@ -360,7 +360,7 @@ msgstr ""
 msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:134
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:142
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 
@@ -1304,9 +1304,9 @@ msgstr ""
 msgid "Add all values"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:653
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:673
 msgid "Add answer"
 msgstr ""
 
@@ -1319,9 +1319,9 @@ msgstr ""
 msgid "Add bullet list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:636
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:656
 msgid "Add category"
 msgstr ""
 
@@ -1445,6 +1445,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:60
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:140
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
@@ -1862,8 +1863,8 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:143
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Answer actions"
 msgstr ""
 
@@ -1875,7 +1876,7 @@ msgstr ""
 msgid "Answer navigation"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:274
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:307
 msgid "Answer order list"
 msgstr ""
 
@@ -2312,7 +2313,7 @@ msgstr ""
 msgid "Attached files"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:118
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
@@ -2688,7 +2689,7 @@ msgid "Back to previous page"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
 msgid "Back to search results"
 msgstr ""
 
@@ -3120,8 +3121,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:438
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3185,8 +3186,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:186
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:78
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:187
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:85
 msgid "Category"
 msgstr ""
 
@@ -3206,7 +3207,7 @@ msgstr ""
 msgid "Category feed"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:511
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:530
 msgid "Category order list"
 msgstr ""
 
@@ -3841,7 +3842,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:193
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:85
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:94
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:71
 msgid "Collapse sidebar"
 msgstr ""
@@ -4133,7 +4134,7 @@ msgid "Content"
 msgstr ""
 
 #: app/controllers/knowledge_base/categories_controller.rb:79
-#: app/services/service/knowledge_base/reorder/base.rb:107
+#: app/services/service/knowledge_base/reorder/base.rb:117
 msgid "Content can only be rearranged while its sorting mode is manual."
 msgstr ""
 
@@ -4253,7 +4254,7 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:181
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
 msgid "Copy answer title"
 msgstr ""
 
@@ -4261,7 +4262,7 @@ msgstr ""
 msgid "Copy article permalink"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:242
 msgid "Copy category title"
 msgstr ""
 
@@ -4436,7 +4437,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:248
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:251
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
@@ -5927,9 +5928,9 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:186
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:105
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 msgid "Delete answer"
 msgstr ""
 
@@ -5942,7 +5943,7 @@ msgid "Delete avatar"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:121
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:190
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:197
 msgid "Delete category"
 msgstr ""
 
@@ -6273,8 +6274,7 @@ msgid "Discard article"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:231
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:434
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
@@ -6293,6 +6293,7 @@ msgstr ""
 msgid "Discard unsaved reply"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -6642,8 +6643,7 @@ msgid "Edit Video Server"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:79
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:96
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:156
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:91
 msgid "Edit answer"
 msgstr ""
 
@@ -6653,7 +6653,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:109
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:179
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:186
 msgid "Edit category"
 msgstr ""
 
@@ -6670,8 +6670,8 @@ msgstr ""
 msgid "Edit item"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:165
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:127
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:172
 msgid "Edit knowledge base"
 msgstr ""
 
@@ -7405,7 +7405,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:132
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:37
 #: lib/excel_sheet/ai/analytics/errors.rb:36
 msgid "Error"
@@ -7484,7 +7484,7 @@ msgstr ""
 msgid "Escalation times"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:222
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:230
 msgid "Escape pressed. No item selected."
 msgstr ""
 
@@ -7607,7 +7607,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:194
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:86
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:96
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:72
 msgid "Expand sidebar"
 msgstr ""
@@ -7966,7 +7966,7 @@ msgstr ""
 msgid "Flat Design"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:105
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:113
 msgid "Focus on %s"
 msgstr ""
 
@@ -8458,8 +8458,8 @@ msgstr ""
 msgid "Go inside group"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
 msgid "Go to knowledge base"
 msgstr ""
 
@@ -9042,7 +9042,7 @@ msgid "Icinga integration"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:63
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:66
 msgid "Icon"
 msgstr ""
 
@@ -9981,11 +9981,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:118
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
-#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
-#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
-#: app/models/knowledge_base.rb:273
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
+#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
+#: app/models/knowledge_base.rb:283
 #: db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr ""
@@ -10047,14 +10047,14 @@ msgstr ""
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:613
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:633
 msgid "Knowledge base actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:28
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:211
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:172
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
 msgid "Knowledge base answer"
 msgstr ""
 
@@ -10066,7 +10066,7 @@ msgstr ""
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
 msgid "Knowledge base answer updated successfully."
 msgstr ""
 
@@ -10150,7 +10150,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:97
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
 msgid "Language"
@@ -10465,7 +10465,7 @@ msgid "Link text"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:106
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Link ticket"
@@ -11416,6 +11416,10 @@ msgstr ""
 msgid "Missing embedding model in the provider configuration"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:48
+msgid "Missing translation"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/ai_provider/mistral.coffee:3
 msgid "Mistral AI"
 msgstr ""
@@ -11930,7 +11934,7 @@ msgid "New desktop BETA UI"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerCreate.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:92
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:93
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:107
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:90
 msgid "New knowledge base answer"
@@ -12248,7 +12252,7 @@ msgstr ""
 msgid "No items available"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:580
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:599
 msgid "No knowledge base content is available yet."
 msgstr ""
 
@@ -12261,7 +12265,7 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr ""
@@ -12397,11 +12401,11 @@ msgid "No token!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:148
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:172
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:228
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 msgid "No translation available for this locale"
 msgstr ""
 
@@ -12521,10 +12525,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:84
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:57
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
 msgid "Not found"
@@ -13790,7 +13794,7 @@ msgid "Please configure import source before running."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:583
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:602
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -14195,7 +14199,7 @@ msgid "Provide an assessment of the customer sentiment based on the conversation
 msgstr ""
 
 #: app/controllers/knowledge_base/categories_controller.rb:70
-#: app/services/service/knowledge_base/reorder/base.rb:99
+#: app/services/service/knowledge_base/reorder/base.rb:109
 #: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr ""
@@ -14530,7 +14534,7 @@ msgstr ""
 msgid "Related knowledge base answer creation has already been started for given ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:84
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
@@ -15386,7 +15390,7 @@ msgstr ""
 msgid "Save out of office"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:120
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:115
 msgid "Save the answer in this language before linking tickets to it."
 msgstr ""
 
@@ -15424,7 +15428,7 @@ msgstr ""
 msgid "Scheduled visibility change removed successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:100
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:91
 msgid "Scheduled visibility: %s"
 msgstr ""
 
@@ -15970,7 +15974,7 @@ msgstr ""
 msgid "Selected tickets do not match any macros."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:219
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:227
 msgid "Selection cancelled for %s."
 msgstr ""
 
@@ -16839,11 +16843,11 @@ msgstr ""
 msgid "Sort content"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:239
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:247
 msgid "Sortable grid focused. Use the arrow keys to navigate items. Press Space to select an item and again on another item to swap them."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:242
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:250
 msgid "Sortable list focused. Use up and down arrows to navigate items. Press Space to select an item and again on another item to swap them."
 msgstr ""
 
@@ -17184,7 +17188,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:128
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:50
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:129
 #: app/frontend/shared/form/i18n/locales.ts:41
 msgid "Submit"
 msgstr ""
@@ -17197,7 +17201,7 @@ msgstr ""
 msgid "Submit comment"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:129
 msgid "Submit your changes"
 msgstr ""
 
@@ -17303,7 +17307,7 @@ msgstr ""
 msgid "Support of multilingual Knowledge Base."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:159
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:167
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr ""
 
@@ -17372,7 +17376,7 @@ msgstr ""
 msgid "System information"
 msgstr ""
 
-#: app/models/knowledge_base.rb:42
+#: app/models/knowledge_base.rb:52
 msgid "System supports only one locale for knowledge base. Upgrade your plan to use more locales."
 msgstr ""
 
@@ -17437,10 +17441,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:133
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:96
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -18250,8 +18254,8 @@ msgid "The issue reference could not be found."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:152
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:96
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:103
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:43
 msgid "The knowledge base could not be loaded."
 msgstr ""
 
@@ -18807,11 +18811,11 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:328
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:361
 msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:564
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:583
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
@@ -19047,7 +19051,7 @@ msgstr ""
 msgid "There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions, Zammad can't get the exact number of tickets yet and has to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:325
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:358
 msgid "There are no answers to arrange yet."
 msgstr ""
 
@@ -19055,7 +19059,7 @@ msgstr ""
 msgid "There are no business hours configured."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:561
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:580
 msgid "There are no categories to arrange yet."
 msgstr ""
 
@@ -19212,7 +19216,7 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:41
 msgid "This answer has been updated. Submitting will replace those changes."
 msgstr ""
 
@@ -19471,16 +19475,16 @@ msgstr ""
 msgid "This item expands to show more options"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
 msgid "This knowledge base answer is not available."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:58
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
 msgid "This knowledge base category is not available."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:31
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
 msgid "This knowledge base is not available in the selected language."
 msgstr ""
 
@@ -20240,7 +20244,7 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:34
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:57
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:151
 #: app/graphql/gql/types/overview_type.rb:92
@@ -20824,7 +20828,7 @@ msgstr ""
 msgid "Unlink object"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:108
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:103
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
 msgid "Unlink ticket"
 msgstr ""
@@ -20917,9 +20921,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:450
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:124
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
 msgid "Update"
@@ -21673,7 +21677,7 @@ msgid "View"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:347
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
 msgid "View answer"
 msgstr ""
 
@@ -21705,7 +21709,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:174
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:175
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:48
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
@@ -22392,6 +22396,10 @@ msgstr ""
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:47
+msgid "You have updated this answer elsewhere. Submitting will replace those changes."
+msgstr ""
+
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:37
 msgid "You must protect your account with two-factor authentication."
@@ -22782,7 +22790,7 @@ msgstr ""
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:349
+#: app/models/knowledge_base/category.rb:389
 msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
@@ -23057,17 +23065,17 @@ msgstr ""
 msgid "edit"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:107
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:120
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:111
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:44
 msgid "edited %s by %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:118
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:109
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s by me"
 msgstr ""
@@ -23447,7 +23455,7 @@ msgstr ""
 msgid "is not included in the list"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:367
+#: app/models/knowledge_base/category.rb:407
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -23614,7 +23622,7 @@ msgstr ""
 msgid "must be a valid HTTP(S) URL"
 msgstr ""
 
-#: app/models/knowledge_base.rb:299
+#: app/models/knowledge_base.rb:309
 msgid "must be a valid path or domain"
 msgstr ""
 
@@ -23654,7 +23662,7 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
-#: app/models/knowledge_base.rb:287
+#: app/models/knowledge_base.rb:297
 msgid "must begin with a slash (\"/\")"
 msgstr ""
 
@@ -23665,11 +23673,11 @@ msgstr ""
 msgid "must have a year between 1 and 9999"
 msgstr ""
 
-#: app/models/knowledge_base.rb:295
+#: app/models/knowledge_base.rb:305
 msgid "must not end with a slash (\"/\")"
 msgstr ""
 
-#: app/models/knowledge_base.rb:291
+#: app/models/knowledge_base.rb:301
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr ""
 
@@ -24272,11 +24280,11 @@ msgstr ""
 msgid "within next (relative)"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:380
+#: app/models/knowledge_base/category.rb:420
 msgid "would exceed the allowed nesting depth"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:385
+#: app/models/knowledge_base/category.rb:425
 msgid "would push this category's children beyond the allowed nesting depth"
 msgstr ""
 

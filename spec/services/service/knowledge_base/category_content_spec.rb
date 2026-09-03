@@ -319,14 +319,14 @@ RSpec.describe Service::KnowledgeBase::CategoryContent do
 
     # Deletability is the one detail that must not follow the current user's view of the tree:
     #   `destroy!` is refused by any answer below the category, including the ones this user may
-    #   not see. A draft answer is exactly that case for a reader — it is not counted in
-    #   `direct_answer_count`, yet it still blocks the delete.
+    #   not see. A draft answer is exactly that case for a reader — it is not counted among the
+    #   visible answers, yet it still blocks the delete.
     context 'with an answer the current user cannot see' do
       before { draft_answer }
 
       it 'reports the category as not deletable', :aggregate_failures do
         expect(details_of(category)).to include(deletable: false)
-        expect(details_of(category)).to include(direct_answer_count: 0)
+        expect(details_of(category)).to include(answer_count: 0)
       end
     end
 
@@ -360,31 +360,29 @@ RSpec.describe Service::KnowledgeBase::CategoryContent do
     end
   end
 
-  describe 'titles' do
+  describe 'translations' do
     before { published_answer }
 
-    it 'resolves the title of the browsed locale' do
-      expect(content[:category_titles][category.id]).to eq(category.translation_primary.title)
+    it 'resolves the translation of the browsed locale' do
+      expect(content[:category_translations][category.id]).to eq(category.translation_primary)
     end
 
-    # Content only counts in a locale it is translated to, but a title falls back — so a category
-    #   can be shown with a title from another locale, flagged as missing its own.
+    # Content only counts in a locale it is translated to, but a name falls back — so a category
+    #   can be shown named from another locale, which the translation it is named by says itself.
     context 'with a locale the title is not translated to' do
       let(:locale) { alternative_locale }
 
-      it 'falls back to the primary title' do
-        expect(content[:category_titles][category.id]).to eq(category.translation_primary.title)
-      end
-
-      it 'flags the missing translation' do
-        expect(content[:category_translation_missing][category.id]).to be(true)
+      it 'falls back to the primary translation' do
+        expect(content[:category_translations][category.id]).to eq(category.translation_primary)
       end
 
       context 'when the title is translated there' do
-        before { create(:knowledge_base_category_translation, category:, kb_locale: alternative_locale) }
+        let!(:alternative_translation) do
+          create(:knowledge_base_category_translation, category:, kb_locale: alternative_locale)
+        end
 
-        it 'does not flag it' do
-          expect(content[:category_translation_missing][category.id]).to be(false)
+        it 'resolves that one' do
+          expect(content[:category_translations][category.id]).to eq(alternative_translation)
         end
       end
     end

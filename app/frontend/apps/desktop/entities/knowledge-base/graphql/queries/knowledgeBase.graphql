@@ -1,11 +1,15 @@
 query knowledgeBase($locale: String) {
   knowledgeBase(locale: $locale) {
     id
-    title
-    footerNote
+    # Its texts in this locale, resolved from the translation that owns them.
+    translation(locale: $locale) {
+      id
+      title
+      footerNote
+    }
     iconset
     isPubliclyAvailable
-    isVisiblePublicly
+    isVisiblePublicly(locale: $locale)
     # The root lists categories and nothing else, so it carries this one mode — the order its
     #   top level categories are browsed in, and what the sorting bar starts from there.
     categorySortingMode
@@ -24,7 +28,7 @@ query knowledgeBase($locale: String) {
         name
       }
     }
-    currentLocale {
+    currentLocale(locale: $locale) {
       id
       systemLocale {
         id

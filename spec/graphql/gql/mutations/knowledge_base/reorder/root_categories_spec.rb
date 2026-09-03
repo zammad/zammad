@@ -21,7 +21,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::RootCategories, type: :gr
         knowledgeBaseReorderRootCategories(sortingMode: $sortingMode, categoryIds: $categoryIds) {
           knowledgeBase {
             id
-            title
+            translation { title }
             categorySortingMode
           }
           errors {
@@ -54,7 +54,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::RootCategories, type: :gr
     # No locale is asked of the caller, so the payload is rendered in the current user's preferred
     #   one — here the only one there is.
     it 'renders the knowledge base in the preferred locale' do
-      expect(gql.result.data.dig('knowledgeBase', 'title')).to eq(knowledge_base.translation_primary.title)
+      expect(gql.result.data.dig('knowledgeBase', 'translation', 'title')).to eq(knowledge_base.translation_primary.title)
     end
 
     context 'with a hand-made order' do

@@ -97,7 +97,6 @@ const relatedAnswer = (id: number, title: string, score = 90): RelatedAnswer => 
       category: {
         __typename: 'KnowledgeBaseCategory',
         id: convertToGraphQLId('KnowledgeBase::Category', 1),
-        title: 'Account',
       },
     },
     kbLocale: {

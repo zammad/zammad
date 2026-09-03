@@ -13,7 +13,7 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::AnswerUpdates, type: :graphql 
       subscription knowledgeBaseAnswerUpdates($answerId: ID!, $locale: String, $initial: Boolean = false) {
         knowledgeBaseAnswerUpdates(answerId: $answerId, locale: $locale, initial: $initial) {
           answer {
-            title
+            translation(locale: $locale) { title }
           }
         }
       }
@@ -33,14 +33,15 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::AnswerUpdates, type: :graphql 
       let(:variables) { { answerId: gql.id(answer), initial: true } }
 
       it 'subscribes with initial data' do
-        expect(gql.result.data[:answer][:title]).to eq(answer.translation_primary.title)
+        expect(gql.result.data.dig(:answer, :translation, :title)).to eq(answer.translation_primary.title)
       end
     end
 
     it 'receives updates when the answer translation is edited' do
       answer.translation_primary.update!(title: 'A brand new title')
 
-      expect(mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'knowledgeBaseAnswerUpdates', 'answer', 'title')).to eq('A brand new title')
+      expect(mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'knowledgeBaseAnswerUpdates', 'answer', 'translation', 'title'))
+        .to eq('A brand new title')
     end
   end
 
@@ -113,7 +114,7 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::AnswerUpdates, type: :graphql 
       let(:admin) { create(:admin) }
 
       it 'subscribes with the fallback translation' do
-        expect(gql.result.data[:answer][:title]).to eq(answer.translation_primary.title)
+        expect(gql.result.data.dig(:answer, :translation, :title)).to eq(answer.translation_primary.title)
       end
     end
 

@@ -20,7 +20,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::Categories, type: :graphq
         knowledgeBaseReorderCategories(parentCategoryId: $parentCategoryId, sortingMode: $sortingMode, categoryIds: $categoryIds) {
           category {
             id
-            title
+            translation { title }
             categorySortingMode
             answerSortingMode
           }
@@ -62,7 +62,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::Categories, type: :graphq
     # No locale is asked of the caller, so the payload is rendered in the current user's preferred
     #   one — here the only one there is.
     it 'renders the category in the preferred locale' do
-      expect(gql.result.data.dig('category', 'title')).to eq(category.translation_to(primary_locale).title)
+      expect(gql.result.data.dig('category', 'translation', 'title')).to eq(category.translation_to(primary_locale).title)
     end
 
     context 'with a hand-made order' do

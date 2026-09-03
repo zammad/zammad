@@ -21,16 +21,7 @@ import KnowledgeBaseAnswerScheduledVisibilityPopover from './KnowledgeBaseAnswer
 
 import type { KnowledgeBaseAnswerHeaderDetailsAnswer } from './types.ts'
 
-const props = withDefaults(
-  defineProps<{
-    answer: KnowledgeBaseAnswerHeaderDetailsAnswer
-    // Off by default: the reader's header docks the very same warning as an alert bar
-    //   (KnowledgeBaseAnswerTopBarHeader's `alertMessage`), and showing both would say it twice.
-    //   The edit header has no alert of its own, so there it is this badge or nothing.
-    withTranslationWarning?: boolean
-  }>(),
-  { withTranslationWarning: false },
-)
+const props = defineProps<{ answer: KnowledgeBaseAnswerHeaderDetailsAnswer }>()
 
 const session = useSessionStore()
 
@@ -105,7 +96,7 @@ const nextScheduleLabel = computed(() => {
 // Deliberately a fixed value: the chip is rendered once per answer load, so it
 //   does not track elapsed time the way the CommonDateTime badges above do.
 const editedLabel = computed(() => {
-  const { editedAt, editedBy } = props.answer
+  const { editedAt, editedBy } = props.answer.translation ?? {}
 
   if (!editedAt) return undefined
 
@@ -121,7 +112,7 @@ const editedLabel = computed(() => {
 })
 
 const editedTooltip = computed(() => {
-  const { editedAt } = props.answer
+  const editedAt = props.answer.translation?.editedAt
 
   return editedAt ? i18n.dateTime(editedAt) : undefined
 })
@@ -140,18 +131,6 @@ const editedTooltip = computed(() => {
     >
       <KnowledgeBaseAnswerIcon decorative :visibility="visibility" size="tiny" />
       {{ $t(visibilityMeta[visibility].label) }}
-    </CommonBadge>
-
-    <!-- Same warning the browse view's answer card carries next to an untranslated title. -->
-    <CommonBadge
-      v-if="withTranslationWarning && answer.translationMissing"
-      v-tooltip="$t('No translation available for this locale')"
-      variant="warning"
-      size="xs"
-      rounded
-      class="flex items-center justify-center p-1!"
-    >
-      <CommonIcon name="translate" size="xs" decorative />
     </CommonBadge>
 
     <CommonPopoverWithTrigger

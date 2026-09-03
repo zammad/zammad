@@ -17,9 +17,8 @@ RSpec.describe 'Desktop > Knowledge Base > Delete answer', app: :desktop_view, a
   it 'deletes the opened answer after confirmation' do
     visit "/knowledge-base/locale/#{locale}/answer/#{answer.id}"
 
-    # The compact header duplicates this button off-screen until scrolled into
-    #   place, so the click is scoped to the full header to stay unambiguous.
-    within '[data-test-id="knowledge-base-header-full"]' do
+    # The answer's actions sit in the sidebar's header, not in the top bar.
+    within '#content-sidebar' do
       click_on 'Additional actions'
     end
 

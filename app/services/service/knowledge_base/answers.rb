@@ -32,8 +32,8 @@ class Service::KnowledgeBase::Answers < Service::Base
       #   interface; the public help site orders the same content through the same scope, but
       #   dates an answer by its publication alone (see KnowledgeBase::Public::BaseController).
       .sorted_by_mode(sorting_mode || category.answer_sorting_mode, system_locale_or_id: locale&.system_locale_id, internal: true)
-      # Eager-load so AnswerType resolves title/translation_missing per page
-      #   without a per-answer query (kb_locale drives the primary fallback).
+      # Eager-load so AnswerType resolves the translation of each listed answer without a query
+      #   per answer (kb_locale drives the primary fallback).
       .includes(translations: :kb_locale)
   end
 end

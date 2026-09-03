@@ -1,7 +1,17 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, markRaw, Teleport, toRef, useTemplateRef, type Component } from 'vue'
+import { isEqual } from 'lodash-es'
+import {
+  computed,
+  markRaw,
+  nextTick,
+  Teleport,
+  toRef,
+  useTemplateRef,
+  watch,
+  type Component,
+} from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import {
@@ -9,8 +19,9 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type { FormSubmitData, FormValues } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { EnumFormUpdaterId, EnumKnowledgeBaseAnswerScreen } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
@@ -20,12 +31,15 @@ import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
+import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useAnswerFormSchema } from '#desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts'
 import { useKnowledgeBaseAnswerDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts'
 import { useKnowledgeBaseAnswerLiveUserList } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerLiveUserList.ts'
 import { useKnowledgeBaseAnswerUpdate } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerUpdate.ts'
 import type { KnowledgeBaseAnswerEditFormData } from '#desktop/entities/knowledge-base/types.ts'
+import { isTranslationMissing } from '#desktop/entities/knowledge-base/utils/translationLocale.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabContext } from '#desktop/entities/user/current/composables/useTaskbarTabContext.ts'
 import { useTaskbarTabDiscard } from '#desktop/entities/user/current/composables/useTaskbarTabDiscard.ts'
@@ -76,6 +90,14 @@ const { answer, answerConfirmed } = useKnowledgeBaseAnswer({
   withNavigation: false,
 })
 
+// The translation this tab edits, and whether the tab is writing one that does not exist yet - then
+//   the text it was handed belongs to the locale it falls back to (see `isTranslationMissing`).
+const translation = computed(() => answer.value?.translation)
+
+const translationMissing = computed(
+  () => Boolean(answer.value) && isTranslationMissing(translation.value, props.localeCode),
+)
+
 const {
   form,
   formNodeId,
@@ -117,28 +139,31 @@ const formSchema = useAnswerFormSchema({
 const initialEntityObject = computed(() => {
   if (!answer.value) return undefined
 
-  const { title, ...answerValues } = answer.value
+  const { translation: answerTranslation, ...answerValues } = answer.value
 
   const seeded = {
     ...answerValues,
     categoryId: Number(getIdFromGraphQLId(answer.value.category.id)),
   }
 
-  // A locale the answer has no translation in yet - the case the header badges as
-  //   `translationMissing` - opens on empty fields instead: `title` and `content` both fall back to
-  //   the primary locale (Gql::Types::KnowledgeBase::AnswerType), so seeding either would put
-  //   another locale's text into this translation and save it as its own. It would also cost the
-  //   updater's deliberately empty initial values, which
-  //   FormUpdater::Concerns::ProvidesInitialValues skips for every name the form already sent a
-  //   value for - so the untouched tab would count as changed at once, which is what the
-  //   OBJECT_VALUES table of ::Edit exists to prevent.
-  if (answer.value.translationMissing) return seeded
+  // A locale the answer has no translation in yet - the case the header announces - opens on empty
+  //   fields instead: the translation it was handed is another locale's, so seeding from it would
+  //   put that text into this one and save it as its own. It would also cost the updater's
+  //   deliberately empty initial values, which FormUpdater::Concerns::ProvidesInitialValues skips
+  //   for every name the form already sent a value for - so the untouched tab would count as
+  //   changed at once, which is what the OBJECT_VALUES table of ::Edit exists to prevent.
+  if (translationMissing.value) return seeded
 
-  return { ...seeded, title, body: answer.value.content?.bodyForEditing }
+  return {
+    ...seeded,
+    title: answerTranslation?.title,
+    body: answerTranslation?.content?.bodyForEditing,
+  }
 })
 
 const {
   foreignChange,
+  announcedChange,
   foreignChangeMessage,
   storedAnswerLink,
   knownAttachments,
@@ -151,12 +176,13 @@ const {
 })
 
 // The stored answer, never what is being typed - the same rule the header's heading follows. No
-//   fallback label either: `title` is non-null and already falls back to the primary locale
-//   (Gql::Types::KnowledgeBase::AnswerType), so it is empty only for an answer that has no
-//   translation at all, and then the answer genuinely has no name to show.
+//   fallback label either: a title is empty only for an answer with no translation at all, and then
+//   the answer genuinely has no name to show.
 usePage({
-  metaTitle: computed(() => (answer.value?.title ?? '') as string),
+  metaTitle: computed(() => translation.value?.title ?? ''),
 })
+
+useScrollPosition(contentContainerElement)
 
 const tabContext = useTaskbarTabContext(
   () => ({
@@ -186,7 +212,11 @@ const sidebarActions = computed<MenuItem[]>(() => {
       label: __('Delete answer'),
       icon: 'trash3',
       variant: 'danger',
-      onClick: () => confirmAnswerDelete(currentAnswer, { categoryId: currentAnswer.category.id }),
+      onClick: () =>
+        confirmAnswerDelete(
+          { id: currentAnswer.id, title: currentAnswer.translation?.title },
+          { categoryId: currentAnswer.category.id },
+        ),
     },
   ]
 })
@@ -218,13 +248,208 @@ useTaskbarTabStateUpdates(currentTaskbarTabId, form, triggerFormUpdater)
 
 const { notify } = useNotifications()
 
-const { updateAnswer } = useKnowledgeBaseAnswerUpdate()
+const { updateAnswer, updateRunning } = useKnowledgeBaseAnswerUpdate()
 
-// Giving up on the changes closes the tab, exactly like in the create view: an answer that is not
-//   being edited any more is read in its own view, and its edit tab can be opened again at any
-//   time. Same composable, so both views ask the same question and leave in the same order (back
-//   first, then drop the tab - the other way round navigates away from under the walker).
-const { goBack, discardChanges } = useTaskbarTabDiscard(currentTaskbarTabDelete)
+// The stored values this form follows, kept identity-stable: the answer is a new object on every
+//   push, and a change that leaves these alone - a tag, a schedule, a sibling locale - is no reason
+//   to touch the fields.
+//
+// The body is not among them: the editor re-serializes what it loads, so its value never compares
+//   equal to the stored one and a takeover cannot tell an edit from a reformat. Whether it was typed
+//   in is asked separately - see `EDITED_FIELD_NAMES`.
+const storedFormValues = computed<FormValues>((previous) => {
+  if (!answer.value) return {}
+
+  const stored: FormValues = {
+    categoryId: Number(getIdFromGraphQLId(answer.value.category.id)),
+    visibility: answer.value.visibility,
+  }
+
+  // The rule the initial seeding follows, for the same reason (see `initialEntityObject`): in a
+  //   locale without its own translation this is another locale's text, and pulling it in would
+  //   offer it up as this translation's own.
+  if (!translationMissing.value) stored.title = translation.value?.title
+
+  return previous && isEqual(stored, previous) ? previous : stored
+})
+
+// Every field a takeover writes - a reset fills what its values do not name from
+//   `initialEntityObject`, and empties a field neither carries. Not derived from
+//   `storedFormValues`, which omits the body always and the title while a translation is being
+//   written from scratch: the two most likely to hold unsaved work.
+//
+// `attachments` is among them although no takeover value names it: it is a form field
+//   (`useAnswerFormSchema`), so a reset restores the stored answer's list over an upload that has
+//   landed in the field but is not saved yet - gone from the form while it stays in the upload
+//   cache under this form's id, and submitted by the next save. Tags are not a field of the edit
+//   form.
+const EDITED_FIELD_NAMES = ['title', 'body', 'categoryId', 'visibility', 'attachments']
+
+// The fields as they are this instant. Not `values`, which FormKit commits a tick after the
+//   keystroke, and not the dirty marks, set on that same commit: a change arriving in that window
+//   would find both still showing what was there before it.
+//
+// Compared with what the form last held, never with the stored answer: the editor re-serializes the
+//   body it loads, and a translation being written has no stored title to compare with.
+const currentFieldValues = () =>
+  Object.fromEntries(
+    EDITED_FIELD_NAMES.map((name) => [
+      name,
+      (form.value?.findNodeByName(name) as { _value?: unknown } | undefined)?._value,
+    ]),
+  )
+
+// What the fields held when the stored answer was last taken over. Read from the form rather than
+//   from the answer, because a field may hold a stored value in another shape - the editor
+//   re-serializes the body it loads - and comparing against the answer would report an edit nobody
+//   made.
+let lastTakenOver: Record<string, unknown> | undefined
+
+// A change to the text alone leaves every field a takeover compares by untouched, and the body
+//   cannot stand in for it: the editor re-serializes what it loads, so the form's value never
+//   equals the stored one. `editedAt` is what moves when the stored text does, so it is what says
+//   a takeover is due.
+const storedEditedAt = computed(() => translation.value?.editedAt)
+
+let lastTakenOverEditedAt: string | null | undefined
+
+const rememberTakenOver = () => {
+  lastTakenOver = currentFieldValues()
+  lastTakenOverEditedAt = storedEditedAt.value
+}
+
+const editorChangedSomething = () => {
+  // No baseline yet, so nothing can be told apart: leave the fields alone rather than guess, and
+  //   take the baseline now so the next change can be.
+  if (!lastTakenOver) {
+    rememberTakenOver()
+
+    return true
+  }
+
+  const current = currentFieldValues()
+
+  return Object.entries(lastTakenOver).some(([name, taken]) => !isEqual(current[name], taken))
+}
+
+// Somebody else's save - or this user's own from another session or the old interface - pulled into
+//   the fields, so an open tab shows what is stored rather than what it happened to open with.
+//   Without this they never move again: `initial-entity-object` is read once (Form.vue), and the
+//   banner below would be the only sign that anything happened at all.
+const applyStoredValues = (stored: FormValues) => {
+  if (!answer.value || !isInitialSettled.value) return
+
+  // This editor's own save: its response re-baselines the form (see `reset` below), and a refresh
+  //   in between would hand the values it is about to replace to the form updater.
+  if (updateRunning.value) return
+
+  // The fields already hold what is stored, so there is nothing to take over - somebody else's save
+  //   reached them by another route, which is what happens when the taskbar state of another
+  //   session is applied (the draft it stored is that save). Only the baseline is behind, and
+  //   leaving it behind is what would keep the banner up over values that already match.
+  const current = currentFieldValues()
+  const storedTextMoved = storedEditedAt.value !== lastTakenOverEditedAt
+
+  if (
+    !storedTextMoved &&
+    Object.entries(stored).every(([name, value]) => isEqual(current[name], value))
+  ) {
+    rememberTakenOver()
+
+    return
+  }
+
+  // Not over unsaved work. The tab then keeps every value it has and the banner does the talking -
+  //   which is also what makes it safe to take the whole set over below rather than field by field.
+  if (editorChangedSomething()) return
+
+  formReset(
+    { values: stored, object: initialEntityObject.value },
+    { resetDirty: false, resetFlags: false },
+  )
+
+  nextTick(rememberTakenOver)
+}
+
+// The baseline the comparison above starts from: what the form settled on, which is the answer as
+//   the tab opened it.
+watch(
+  isInitialSettled,
+  (settled) => {
+    if (settled && !lastTakenOver) rememberTakenOver()
+  },
+  { immediate: true },
+)
+
+// Not while the tab is in the background: a parked taskbar tab lives in a detached container (see
+//   LayoutPage's cache), where the form's teleported fields - the title and the whole sidebar
+//   column - cannot find their targets, and re-creating them there mounts them nowhere at all
+//   ("Failed to locate Teleport target", reproduced). The change is held and applied when the tab
+//   is looked at again, the rule the content update ping already follows
+//   (useKnowledgeBaseContentUpdates).
+let onScreen = true
+let missedStoredChange = false
+
+watch([storedFormValues, storedEditedAt], ([stored]) => {
+  if (!onScreen) {
+    missedStoredChange = true
+    return
+  }
+
+  applyStoredValues(stored)
+})
+
+useKeepAliveHooks({
+  onDeactivated: () => {
+    onScreen = false
+  },
+  onReactivated: () => {
+    onScreen = true
+
+    if (!missedStoredChange) return
+
+    missedStoredChange = false
+    applyStoredValues(storedFormValues.value)
+  },
+})
+
+// Cancelling closes the tab: an answer that is not being edited any more is read in its own view,
+//   and its edit tab can be opened again at any time. Same composable as the create view, so both
+//   leave in the same order (back first, then drop the tab - the other way round navigates away
+//   from under the walker). Only offered while nothing is changed, so it asks no question.
+const { closeTab } = useTaskbarTabDiscard(currentTaskbarTabDelete)
+
+const { waitForVariantConfirmation } = useConfirmation()
+
+// Discarding, on the other hand, stays: the fields go back to the stored answer and the tab stays
+//   open for the next edit, the way the ticket detail view's own discard button behaves. Not the
+//   create view's discard, which has no stored state to go back to and closes the tab instead.
+//
+// The text is named explicitly, with the stored value or an empty one - a translation being
+//   written from scratch has no stored title or body, and `initialEntityObject` leaves both out
+//   for that reason (see there). `attachments` is not named and does not need to be: the reset
+//   fills it from `initialEntityObject`, which carries the answer's stored set - which is exactly
+//   what giving up on the changes means for an upload that was never saved.
+const discardChanges = async () => {
+  if (!answer.value) return
+
+  const confirm = await waitForVariantConfirmation('unsaved')
+  if (!confirm) return
+
+  formReset({
+    values: {
+      title: translationMissing.value ? '' : (translation.value?.title ?? ''),
+      body: translationMissing.value ? '' : (translation.value?.content?.bodyForEditing ?? ''),
+      categoryId: Number(getIdFromGraphQLId(answer.value.category.id)),
+      visibility: answer.value.visibility,
+    },
+    object: initialEntityObject.value,
+  })
+
+  // The fields now hold the stored answer again, and a later stored change has to be told apart
+  //   from that rather than from the edit just given up on.
+  nextTick(rememberTakenOver)
+}
 
 const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFormData>) => {
   if (!answer.value) return
@@ -277,8 +502,8 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
     reset: () => {
       formReset({
         values: {
-          title: updated.title,
-          body: updated.content?.bodyForEditing ?? '',
+          title: updated.translation?.title,
+          body: updated.translation?.content?.bodyForEditing ?? '',
           categoryId: data.categoryId,
           visibility: data.visibility,
         },
@@ -287,6 +512,11 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
       // This editor's own save is not a foreign change: re-snapshot, or the banner and the dialog
       //   would keep reporting the change that was just stored - their own.
       snapshotAnswer()
+
+      // The same for what the stored values are compared against: the form has just been
+      //   re-baselined from the response, and a comparison still pointing at the values from before
+      //   the save would read as unsaved work and keep every later change out.
+      nextTick(rememberTakenOver)
 
       // After the reset, so a tab about to be closed is no longer dirty, and its final form-updater
       //   round trip is on its way before the taskbar entry it names is gone.
@@ -317,6 +547,7 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
         :content-container-element="contentContainerElement"
         :answer="answer"
         :title-field-target="TITLE_FIELD_TARGET_ID"
+        :translation-missing="translationMissing"
       />
 
       <!-- A band across the whole content area, with the message itself on the form column - the
@@ -324,28 +555,33 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
            `alertBaseClasses`): the background spans the view while the text lines up with the
            column below it. Not dismissible: it states what saving will do, and that stays true
            until the tab is saved or closed. -->
-      <div v-if="foreignChange" class="w-full shrink-0" :class="ALERT_BAND_CLASS">
+      <div v-if="announcedChange" class="w-full shrink-0" :class="ALERT_BAND_CLASS">
         <div class="mx-auto w-full" :class="FORM_COLUMN_CLASS">
           <CommonAlert class="w-full! rounded-none bg-transparent! px-0!" variant="warning">
-            {{
-              $t(
-                foreignChangeMessage,
-                ...(foreignChange.editorName ? [foreignChange.editorName] : []),
-              )
-            }}
+            <div>
+              {{
+                $t(
+                  foreignChangeMessage,
+                  ...(!announcedChange.byCurrentUser && announcedChange.editorName
+                    ? [announcedChange.editorName]
+                    : []),
+                )
+              }}
 
-            <!-- Their version, to read before deciding what to do with it. The edit tab stays in
-                 the taskbar with everything typed in it, so following the link loses nothing.
-                 In the alert's own colour rather than the link blue, which is what carries the
-                 warning across (`!`, because the base link classes set one too). -->
-            <CommonLink
-              v-if="storedAnswerLink"
-              :link="storedAnswerLink"
-              internal
-              class="text-current! underline hover:text-current!"
-            >
-              {{ $t('View answer') }}
-            </CommonLink>
+              <!-- Their version, to read before deciding what to do with it. The edit tab stays in
+                  the taskbar with everything typed in it, so following the link loses nothing.
+                  In the alert's own colour rather than the link blue, which is what carries the
+                  warning across (`!`, because the base link classes set one too). -->
+              <CommonLink
+                v-if="storedAnswerLink"
+                :link="storedAnswerLink"
+                internal
+                class="text-current! underline hover:text-current!"
+                size="medium"
+              >
+                {{ $t('View answer') }}
+              </CommonLink>
+            </div>
           </CommonAlert>
         </div>
       </div>
@@ -422,8 +658,9 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
         class="ltr:mr-auto rtl:ml-auto"
       />
 
-      <!-- Like the create view's own pair: with changes to give up on it asks first, without them
-           leaving needs no question. -->
+      <!-- With changes to give up on it asks first and then restores the stored answer in place,
+           the ticket detail view's own discard; without them leaving needs no question, and closes
+           the tab. -->
       <CommonButton
         v-if="isInitialSettled && isDirty"
         size="large"
@@ -431,10 +668,10 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
         :disabled="isDisabled"
         @click="discardChanges"
       >
-        {{ $t('Discard changes') }}
+        {{ $t('Discard your unsaved changes') }}
       </CommonButton>
 
-      <CommonButton v-else size="large" variant="secondary" @click="goBack">
+      <CommonButton v-else size="large" variant="secondary" @click="closeTab">
         {{ $t('Cancel & go back') }}
       </CommonButton>
 

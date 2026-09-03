@@ -23,8 +23,8 @@ const localeData = toRef(useLocaleStore(), 'localeData')
 const previousAnswer = computed<AnswerNavigationEntry>((currentAnswer) => {
   const answer = {
     link: knowledgeBaseAnswerRoute(props.localeCode, props.navigation.previousAnswer.id),
-    label: props.navigation.previousAnswer.title
-      ? i18n.t('Previous answer: %s', props.navigation.previousAnswer.title)
+    label: props.navigation.previousAnswer.translation?.title
+      ? i18n.t('Previous answer: %s', props.navigation.previousAnswer.translation.title)
       : i18n.t('Previous answer'),
   }
 
@@ -36,8 +36,8 @@ const previousAnswer = computed<AnswerNavigationEntry>((currentAnswer) => {
 const nextAnswer = computed<AnswerNavigationEntry>((currentAnswer) => {
   const answer = {
     link: knowledgeBaseAnswerRoute(props.localeCode, props.navigation.nextAnswer.id),
-    label: props.navigation.nextAnswer.title
-      ? i18n.t('Next answer: %s', props.navigation.nextAnswer.title)
+    label: props.navigation.nextAnswer.translation?.title
+      ? i18n.t('Next answer: %s', props.navigation.nextAnswer.translation.title)
       : i18n.t('Next answer'),
   }
 

@@ -40,12 +40,10 @@ module Gql::Queries
         .execute(knowledge_base:, category:, locale: context[:knowledge_base_locale], sorting_mode:)
 
       # Hand the batched per-category data to the category type so it resolves
-      #   counts, visibility, titles, and breadcrumbs without querying per
+      #   counts, visibility, translations, and breadcrumbs without querying per
       #   category. Scoped to this query's subtree (see store_knowledge_base_locale).
       context.scoped_set!(:knowledge_base_category_details, result[:category_details])
-      context.scoped_set!(:knowledge_base_category_titles, result[:category_titles])
-      context.scoped_set!(:knowledge_base_category_edited_at, result[:category_edited_at])
-      context.scoped_set!(:knowledge_base_category_translation_missing, result[:category_translation_missing])
+      context.scoped_set!(:knowledge_base_category_translations, result[:category_translations])
       context.scoped_set!(:knowledge_base_category_breadcrumbs, result[:category_breadcrumbs])
 
       result.slice(:category, :subcategories)

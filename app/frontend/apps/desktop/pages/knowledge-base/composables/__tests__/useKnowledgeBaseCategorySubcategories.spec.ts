@@ -88,12 +88,14 @@ describe('useKnowledgeBaseCategorySubcategories', () => {
       knowledgeBaseCategorySubcategories: {
         category: {
           id: CATEGORY_ID,
-          breadcrumb: [{ id: CATEGORY_ID, title: 'Support', categoryIcon: 'folder' }],
+          breadcrumb: [
+            { id: CATEGORY_ID, translation: { title: 'Support' }, categoryIcon: 'folder' },
+          ],
         },
         subcategories: [
           {
             id: CHILD_CATEGORY_ID,
-            title: 'Billing',
+            translation: { title: 'Billing' },
             categoryIcon: 'folder',
             visibility: EnumKnowledgeBaseVisibility.Published,
             answerCount: 0,
@@ -109,8 +111,51 @@ describe('useKnowledgeBaseCategorySubcategories', () => {
     mountComposable({ categoryId: CATEGORY_ID, locale: 'en-us' })
     await flushPromises()
 
-    expect(api.breadcrumb.value.map((item) => item.title)).toEqual(['Support'])
-    expect(api.subcategories.value.map((category) => category.title)).toEqual(['Billing'])
+    expect(api.breadcrumb.value.map((item) => item.translation?.title)).toEqual(['Support'])
+    expect(api.subcategories.value.map((category) => category.translation?.title)).toEqual([
+      'Billing',
+    ])
+  })
+
+  // The header of a category opened from the page that listed it renders before its own query
+  //   resolves: the listed entry is already in the cache, read back by id. That read has to ask in
+  //   the same locale the list wrote it under, or it finds nothing and the header skeletons.
+  it('renders the opened category from the cache while its own query is out', async () => {
+    mockKnowledgeBaseCategorySubcategoriesQuery({
+      knowledgeBaseCategorySubcategories: {
+        category: null,
+        subcategories: [
+          {
+            id: CHILD_CATEGORY_ID,
+            translation: { title: 'Billing' },
+            categoryIcon: 'folder',
+            visibility: EnumKnowledgeBaseVisibility.Published,
+            answerCount: 0,
+            subcategoryCount: 0,
+            position: 0,
+            directAnswerCount: 7,
+            directSubcategoryCount: 2,
+            breadcrumb: [
+              { id: CHILD_CATEGORY_ID, translation: { title: 'Billing' }, categoryIcon: 'folder' },
+            ],
+          },
+        ],
+      },
+    })
+
+    mountComposable({ categoryId: undefined, locale: 'en-us' })
+    await flushPromises()
+
+    // Its own query is still out, so what shows now can only come from the cache.
+    mountComposable({ categoryId: CHILD_CATEGORY_ID, locale: 'en-us' })
+
+    expect(api.breadcrumb.value.map((item) => item.translation?.title)).toEqual(['Billing'])
+
+    // The same cached entry sizes both skeletons while the opened category's own query is out.
+    //   The answer listing's `totalCount` cannot do it: it arrives with the query the skeleton is
+    //   waiting for.
+    expect(api.directAnswerCount.value).toBe(7)
+    expect(api.directSubcategoryCount.value).toBe(2)
   })
 
   it('refetches when a content update affects a shown category', async () => {

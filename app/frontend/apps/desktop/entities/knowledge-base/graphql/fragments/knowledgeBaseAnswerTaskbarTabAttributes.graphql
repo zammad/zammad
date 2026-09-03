@@ -1,5 +1,16 @@
-fragment knowledgeBaseAnswerTaskbarTabAttributes on KnowledgeBaseAnswer {
+fragment knowledgeBaseAnswerTaskbarTabAttributes on KnowledgeBaseAnswerTranslation {
   id
   title
+  # Whether the tab labels a translation of its own locale or the fallback served for one that has
+  # none - compared against the locale in the tab's key, since the list carries tabs of many
+  # locales and no argument can single one out.
+  kbLocale {
+    id
+    systemLocale {
+      locale
+    }
+  }
+  # The state of the translation's answer, so an edit tab carries the same status icon as the
+  # reader and a create draft.
   visibility
 }

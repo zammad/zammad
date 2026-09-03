@@ -4,6 +4,7 @@ mutation knowledgeBaseAnswerUpdate(
   $locale: String!
   $meta: KnowledgeBaseAnswerUpdateMetaInput
   $withBodyForEditing: Boolean = false
+  $withNavigation: Boolean = false
 ) {
   knowledgeBaseAnswerUpdate(answerId: $answerId, input: $input, locale: $locale, meta: $meta) {
     # The same field set the edit view's own query reads (knowledgeBaseAnswerAttributes), so the

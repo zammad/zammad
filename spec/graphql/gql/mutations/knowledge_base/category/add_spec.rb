@@ -17,7 +17,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Add, type: :graphql do
         knowledgeBaseCategoryAdd(input: $input, locale: $locale) {
           category {
             id
-            title
+            translation(locale: $locale) { title }
             categoryIcon
             parent { id }
           }
@@ -50,7 +50,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Add, type: :graphql do
   context 'with an editor', authenticated_as: :editor do
     it 'returns the created category' do
       expect(gql.result.data['category']).to include(
-        'title'        => title,
+        'translation'  => include('title' => title),
         'categoryIcon' => category_icon,
         'parent'       => nil,
       )
@@ -72,7 +72,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Add, type: :graphql do
       let(:setup)  { alternative_locale }
 
       it 'returns the title in that locale' do
-        expect(gql.result.data['category']).to include('title' => title)
+        expect(gql.result.data.dig('category', 'translation')).to include('title' => title)
       end
     end
 

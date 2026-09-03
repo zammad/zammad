@@ -18,4 +18,6 @@ export const knowledgeBaseBrowsedTitle = ({
   categoryBreadcrumb,
   knowledgeBaseTitle,
 }: KnowledgeBaseBrowsedTitleOptions): string =>
-  categoryBreadcrumb?.at(-1)?.title ?? knowledgeBaseTitle ?? i18n.t(__('Knowledge Base'))
+  categoryBreadcrumb?.at(-1)?.translation?.title ??
+  knowledgeBaseTitle ??
+  i18n.t(__('Knowledge Base'))

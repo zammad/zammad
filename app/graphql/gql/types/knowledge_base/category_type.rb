@@ -4,6 +4,7 @@ module Gql::Types::KnowledgeBase
   class CategoryType < Gql::Types::BaseObject
     include Gql::Types::Concerns::HasDefaultModelFields
     include Gql::Types::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::ResolvesKnowledgeBaseLocale
 
     description 'Knowledge Base Category'
 
@@ -18,14 +19,43 @@ module Gql::Types::KnowledgeBase
 
     field :translations, [Gql::Types::KnowledgeBase::Category::TranslationType], null: false
 
-    field :title, String, null: true, description: 'Title in the requested locale (falls back to the primary locale)'
-    field :translation_missing, Boolean, null: false, description: 'Whether the requested locale has no own translation for this category (its title is shown from a fallback locale)'
-    field :visibility, Gql::Types::Enum::KnowledgeBase::VisibilityType, null: false, description: 'Highest visibility of the content in this category and its subtree, in the requested locale (untranslated content counts as draft)'
-    field :is_visible_publicly, Boolean, null: false, description: 'Whether this category shows published content in the requested locale on the public help site (drives the "view public knowledge base" link)'
-    field :answer_count, Integer, null: false, description: 'Number of answers visible to the current user in this category and its whole subtree'
-    field :subcategory_count, Integer, null: false, description: 'Number of categories visible to the current user in this category and its whole subtree'
-    field :direct_answer_count, Integer, null: false, description: 'Number of answers visible to the current user directly in this category (its immediate level only)'
-    field :direct_subcategory_count, Integer, null: false, description: 'Number of immediate child categories visible to the current user (its next level only)'
+    # The category's name in one locale is the translation's own data, so it is read from the
+    #   translation rather than through a `title(locale:)` of this type: a client caching by object
+    #   identity then holds a record per locale instead of one field per argument, and the returned
+    #   `kbLocale` says whether the name is this locale's own or a fallback.
+    field :translation, Gql::Types::KnowledgeBase::Category::TranslationType, null: true, description: 'The category in the given locale (falls back to the primary locale)' do
+      argument :locale, String, required: false, description: 'System locale code to resolve the translation for; defaults to the locale the query was resolved in'
+    end
+
+    # Not moved to the translation with the title, although these resolve from a locale too: they
+    #   describe the category's content in the *browsed* locale, while the translation above may be
+    #   a fallback from another one - a category whose answers are translated but whose own name is
+    #   not would then report the fallback locale's state and counts.
+    #   The argument is what keeps them apart in a client's cache, one entry per locale asked for.
+    field :visibility, Gql::Types::Enum::KnowledgeBase::VisibilityType, null: false, description: 'Highest visibility of the content in this category and its subtree, in the given locale (untranslated content counts as draft)' do
+      argument :locale, String, required: false, description: 'System locale code to resolve for; defaults to the locale the query was resolved in'
+    end
+
+    field :is_visible_publicly, Boolean, null: false, description: 'Whether this category shows published content in the given locale on the public help site (drives the "view public knowledge base" link)' do
+      argument :locale, String, required: false, description: 'System locale code to resolve for; defaults to the locale the query was resolved in'
+    end
+
+    field :answer_count, Integer, null: false, description: 'Number of answers visible to the current user in this category and its whole subtree, in the given locale' do
+      argument :locale, String, required: false, description: 'System locale code to count in; defaults to the locale the query was resolved in'
+    end
+
+    field :subcategory_count, Integer, null: false, description: 'Number of categories visible to the current user in this category and its whole subtree, in the given locale' do
+      argument :locale, String, required: false, description: 'System locale code to count in; defaults to the locale the query was resolved in'
+    end
+
+    field :direct_answer_count, Integer, null: false, description: 'Number of answers visible to the current user directly in this category (its immediate level only), in the given locale' do
+      argument :locale, String, required: false, description: 'System locale code to count in; defaults to the locale the query was resolved in'
+    end
+
+    field :direct_subcategory_count, Integer, null: false, description: 'Number of immediate child categories visible to the current user (its next level only), in the given locale' do
+      argument :locale, String, required: false, description: 'System locale code to count in; defaults to the locale the query was resolved in'
+    end
+
     field :breadcrumb, [Gql::Types::KnowledgeBase::CategoryType], null: false, description: 'Ancestors of this category, root first, including itself'
     field :is_deletable, Boolean, null: false, description: 'Whether this category is empty, i.e. whether deleting it would be refused because of subcategories or answers below it'
 
@@ -49,75 +79,89 @@ module Gql::Types::KnowledgeBase
         .then(&:iconset)
     end
 
-    def title
-      titles = context[:knowledge_base_category_titles]
-      return titles[object.id] if titles&.key?(object.id)
+    # Null only for a category with no translation at all; a locale that has none of its own is
+    #   answered from the primary locale, like the public help site does.
+    #
+    # Batched by the browse and search queries, which ask this of every category they render; the
+    #   fallback only runs where the type is resolved outside those flows (#translation_preferred
+    #   queries per call).
+    def translation(locale: nil)
+      requested = requested_locale(locale)
+      batched   = context[:knowledge_base_category_translations] if requested == query_locale
 
-      object.translation_preferred(context[:knowledge_base_locale])&.title
+      return batched[object.id] if batched&.key?(object.id)
+
+      object.translation_preferred(requested)
     end
 
-    # Batched by the browse query alongside the title, and off the same translation — otherwise
-    #   dating a listing of categories would cost one query per card.
+    # The date is the preferred translation's own column, which the batch above already carries -
+    #   so this reads it from there rather than through a batch of its own. Without one, dating a
+    #   listing of categories would cost a query per card.
     def edited_at
-      timestamps = context[:knowledge_base_category_edited_at]
-      return timestamps[object.id] if timestamps&.key?(object.id)
+      batched = context[:knowledge_base_category_translations]
+      return batched[object.id]&.edited_at if batched&.key?(object.id)
 
-      object.translation_preferred(context[:knowledge_base_locale])&.edited_at
-    end
-
-    def translation_missing
-      missing = context[:knowledge_base_category_translation_missing]
-      return missing[object.id] if missing&.key?(object.id)
-
-      kb_locale.present? && object.translation_to(kb_locale).nil?
+      object.translation_preferred(query_locale)&.edited_at
     end
 
     # The search query batches this through a map of its own rather than through `category_details`:
     #   it needs the visibility of its category hits but none of the counts, and a details entry
     #   holding only this key would make the non-null count fields below resolve to nil.
-    def visibility
-      visibilities = context[:knowledge_base_category_visibility]
+    def visibility(locale: nil)
+      requested    = requested_locale(locale)
+      visibilities = context[:knowledge_base_category_visibility] if requested == query_locale
+
       return visibilities[object.id] if visibilities&.key?(object.id)
 
-      precomputed_detail&.dig(:visibility) || object.content_visibility(kb_locale)
+      detail = precomputed_detail if requested == query_locale
+
+      detail&.dig(:visibility) || object.content_visibility(requested)
     end
 
-    def answer_count
-      detail = precomputed_detail
+    def answer_count(locale: nil)
+      requested = requested_locale(locale)
+      detail    = precomputed_detail if requested == query_locale
+
       return detail[:answer_count] if detail
 
       ::KnowledgeBase::Answer
-        .visible_to_user(context.current_user, kb_locale:)
+        .visible_to_user(context.current_user, kb_locale: requested)
         .where(category_id: object.self_with_children_ids)
         .count
     end
 
-    def subcategory_count
-      detail = precomputed_detail
+    def subcategory_count(locale: nil)
+      requested = requested_locale(locale)
+      detail    = precomputed_detail if requested == query_locale
+
       return detail[:subcategory_count] if detail
 
       user = context.current_user
 
-      (object.self_with_children - [object]).count { |category| category.visible_to_user?(user, kb_locale) }
+      (object.self_with_children - [object]).count { |category| category.visible_to_user?(user, requested) }
     end
 
-    def direct_answer_count
-      detail = precomputed_detail
+    def direct_answer_count(locale: nil)
+      requested = requested_locale(locale)
+      detail    = precomputed_detail if requested == query_locale
+
       return detail[:direct_answer_count] if detail
 
       ::KnowledgeBase::Answer
-        .visible_to_user(context.current_user, kb_locale:)
+        .visible_to_user(context.current_user, kb_locale: requested)
         .where(category_id: object.id)
         .count
     end
 
-    def direct_subcategory_count
-      detail = precomputed_detail
+    def direct_subcategory_count(locale: nil)
+      requested = requested_locale(locale)
+      detail    = precomputed_detail if requested == query_locale
+
       return detail[:direct_subcategory_count] if detail
 
       user = context.current_user
 
-      object.children.count { |category| category.visible_to_user?(user, kb_locale) }
+      object.children.count { |category| category.visible_to_user?(user, requested) }
     end
 
     def breadcrumb
@@ -133,12 +177,12 @@ module Gql::Types::KnowledgeBase
       context[:knowledge_base_category_details]&.dig(object.id)
     end
 
-    def is_visible_publicly
-      object.public_content?(kb_locale)
+    def is_visible_publicly(locale: nil)
+      object.public_content?(requested_locale(locale))
     end
 
-    # Deliberately not derived from `directAnswerCount` / `directSubcategoryCount`: those are counts
-    #   of what the *current user* may see, so they can read `0` for a category that `destroy!` will
+    # Deliberately not derived from `directSubcategoryCount` / `answerCount`: those are counts of
+    #   what the *current user* may see, so they can read `0` for a category that `destroy!` will
     #   still refuse to delete. It is also kept orthogonal to `policy.destroy` — the action is shown
     #   when the user may delete, and explained when the category is not empty.
     #
@@ -165,9 +209,9 @@ module Gql::Types::KnowledgeBase
 
     private
 
-    # The browsed locale, resolved by the query; content checks are scoped to it.
-    def kb_locale
-      context[:knowledge_base_locale]
+    # The knowledge base a `locale` argument's code is looked up in.
+    def locale_knowledge_base
+      object.knowledge_base
     end
   end
 end

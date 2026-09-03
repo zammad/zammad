@@ -9,9 +9,9 @@ const FLYOUT_NAME = 'knowledge-base-category'
 // Split like `useUserEdit`: registering the flyout needs a setup scope, opening it does
 //   not. `useKnowledgeBaseCategoryFlyout` is therefore called exactly once — in
 //   KnowledgeBaseBrowse.vue, which renders both browse routes and survives the root ↔
-//   category switch inside the section's KeepAlive — while the entry points scattered
-//   below it (the add card, the floating toolbar, the header and card menus) just call
-//   the functions below.
+//   category switch by being the same component either side of it — while the entry points
+//   scattered below it (the add card, the floating toolbar, the header and card menus) just
+//   call the functions below.
 export const openKnowledgeBaseCategoryAddFlyout = (options: { parentId?: string } = {}) =>
   openFlyout(FLYOUT_NAME, {
     name: FLYOUT_NAME,

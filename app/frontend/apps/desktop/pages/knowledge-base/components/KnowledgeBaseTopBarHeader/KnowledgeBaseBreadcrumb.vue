@@ -58,23 +58,23 @@ const displayItems = computed(() =>
           :name="item.icon"
           :set="item.iconSet"
           :status="item.visibility"
-          size="xs"
-          class="me-1 shrink-0"
+          size="tiny"
+          class="m-1 me-1.5 shrink-0"
           :class="item.iconClass"
           horizontal
         />
         <CommonIcon
           v-else-if="!item.route && item.icon"
           :name="item.icon"
-          size="xs"
-          class="me-1 shrink-0"
+          size="tiny"
+          class="m-1 me-1.5 shrink-0"
           :class="item.iconClass"
         />
 
         <CommonLink
           v-if="item.route && item.iconOnly"
           v-tooltip="item.displayLabel"
-          class="inline-flex items-center text-gray-100 focus-visible-app-default hover:text-black dark:text-neutral-400 hover:dark:text-white"
+          class="inline-flex items-center p-1 text-gray-100 focus-visible-app-default hover:text-black dark:text-neutral-400 hover:dark:text-white"
           :link="item.route"
           internal
         >
@@ -83,7 +83,7 @@ const displayItems = computed(() =>
             :name="item.icon"
             :set="item.iconSet"
             :status="item.visibility"
-            size="xs"
+            size="tiny"
             class="shrink-0"
             :class="item.iconClass"
             horizontal
@@ -91,7 +91,7 @@ const displayItems = computed(() =>
           <CommonIcon
             v-else-if="item.icon"
             :name="item.icon"
-            size="xs"
+            size="tiny"
             class="shrink-0"
             :class="item.iconClass"
           />
@@ -100,7 +100,7 @@ const displayItems = computed(() =>
         <CommonLink
           v-else-if="item.route"
           v-tooltip.supportive="item.displayLabel"
-          class="inline-flex items-center gap-1 focus-visible-app-default"
+          class="inline-flex items-center gap-1.5 p-1 focus-visible-app-default"
           :link="item.route"
           internal
         >
@@ -109,7 +109,7 @@ const displayItems = computed(() =>
             :name="item.icon"
             :set="item.iconSet"
             :status="item.visibility"
-            size="xs"
+            size="tiny"
             class="shrink-0"
             :class="item.iconClass"
             horizontal
@@ -117,7 +117,7 @@ const displayItems = computed(() =>
           <CommonIcon
             v-else-if="item.icon"
             :name="item.icon"
-            size="xs"
+            size="tiny"
             class="shrink-0"
             :class="item.iconClass"
           />
@@ -157,7 +157,7 @@ const displayItems = computed(() =>
           v-if="idx !== displayItems.length - 1"
           :name="locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'"
           size="xs"
-          class="mx-1 inline-flex shrink-0 text-stone-200 dark:text-neutral-500"
+          class="mx-0.5 inline-flex shrink-0 text-stone-200 dark:text-neutral-500"
         />
 
         <!-- Add a slot at the end of the last item. -->

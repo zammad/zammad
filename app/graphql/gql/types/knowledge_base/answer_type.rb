@@ -5,6 +5,7 @@ module Gql::Types::KnowledgeBase
     include Gql::Types::Concerns::HasDefaultModelFields
     include Gql::Types::Concerns::HasScopedModelUserRelations
     include Gql::Types::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::ResolvesKnowledgeBaseLocale
 
     description 'Knowledge Base Answer'
 
@@ -16,16 +17,22 @@ module Gql::Types::KnowledgeBase
     #   reach a published answer only once its date has passed.
     field :published_at, GraphQL::Types::ISO8601DateTime, description: 'When the answer was published; only once reached unless the user may edit it'
 
-    # Non-null, like every other `title` of the taskbar item entity union
-    #   (Gql::Types::User::TaskbarItemEntityType) — GraphQL requires one response name to have one
-    #   response shape across a document, disjoint union members included, and an answer's tab
-    #   selects this field beside a ticket's. Blank only for an answer without a single translation,
-    #   which the client renders its own fallback label for; a *missing* translation in the requested
-    #   locale is `translationMissing`, not an absent title.
-    field :title, String, null: false, description: 'Title in the requested locale (falls back to the primary locale)'
-    field :content, Gql::Types::KnowledgeBase::Answer::Translation::ContentType, null: true, description: 'Body of the translation in the requested locale (falls back to the primary locale, like the title)'
-    field :translation_id, GraphQL::Types::ID, description: 'ID of the translation in the requested locale (falls back to the primary locale, like the title)'
-    field :translation_missing, Boolean, null: false, description: 'Whether the requested locale has no own translation for this answer (its title is shown from a fallback locale)'
+    # Everything that depends on the locale lives on the translation this returns - its title, its
+    #   body, its editorial metadata and its place in the listing. What stays on the answer is
+    #   language-independent: the state, the dates, the tags, the files, the category.
+    #
+    # The locale is an argument of this field, not only of the query it sits in: a client that
+    #   caches by object identity keys a field by the arguments it was asked with, so without one an
+    #   answer would point at a single translation - whichever locale was fetched last. Optional, so
+    #   that callers asking for none share the reader's preferred locale coherently.
+    #
+    # Null only for an answer with no translation at all. A locale that has none of its own is
+    #   answered with the fallback (primary, then any), which a caller tells apart by comparing the
+    #   returned `kbLocale` with the one it asked for.
+    field :translation, Gql::Types::KnowledgeBase::Answer::TranslationType, null: true, description: 'The answer in the given locale (falls back to the primary locale)' do
+      argument :locale, String, required: false, description: 'System locale code to resolve the translation for; defaults to the locale the query was resolved in'
+    end
+
     field :visibility, Gql::Types::Enum::KnowledgeBase::VisibilityType, null: false, description: 'Publication state, used for color-coding'
 
     # Derived from the same three dates as `visibility` rather than left to the client: which change
@@ -37,9 +44,6 @@ module Gql::Types::KnowledgeBase
     #   dates follow: whoever may see a date that has not been reached is told what it means, and
     #   that is an editor. Its resolver says so - see #visibility_schedules.
     field :visibility_schedules, [Gql::Types::KnowledgeBase::Answer::VisibilityScheduleType, { null: false }], description: 'Visibility changes the answer is going to make, in the order they take effect; only for users who may edit the answer'
-
-    field :navigation, Gql::Types::KnowledgeBase::Answer::NavigationType, null:        true,
-                                                                          description: 'Position and neighbours of this answer within its category listing'
 
     field :tags, [String, { null: false }], method: :tag_list, description: 'Assigned tags'
 
@@ -65,11 +69,6 @@ module Gql::Types::KnowledgeBase
     scoped_fields do
       field :archived_at, GraphQL::Types::ISO8601DateTime, description: 'Only for users with internal access to the category; the public site knows publication only. Only once reached unless the user may edit the answer'
       field :internal_at, GraphQL::Types::ISO8601DateTime, description: 'Only for users with internal access to the category; the public site knows publication only. Only once reached unless the user may edit the answer'
-      field :edited_at, GraphQL::Types::ISO8601DateTime, description: 'When the translation in the requested locale was last edited; only for users with internal access to the category'
-
-      # Resolved from the translation instead of an own foreign key, so it cannot use
-      #   `belongs_to` — but it is a nested member of the authorized answer all the same.
-      field :edited_by, Gql::Types::UserType, is_dependent_field: true, description: 'Last user that edited the translation in the requested locale; only for users with internal access to the category'
     end
 
     belongs_to :category, Gql::Types::KnowledgeBase::CategoryType, null: false
@@ -77,19 +76,8 @@ module Gql::Types::KnowledgeBase
     belongs_to :internal_by, Gql::Types::UserType, null: true
     belongs_to :published_by, Gql::Types::UserType, null: true
 
-    def title
-      preferred_translation&.title.to_s
-    end
-
-    def content
-      preferred_translation&.content
-    end
-
-    def translation_id
-      translation = preferred_translation
-      return if translation.nil?
-
-      Gql::ZammadSchema.id_from_object(translation)
+    def translation(locale: nil)
+      preferred_translation(requested_locale(locale))
     end
 
     # The publication dates, filtered for anybody but an editor of the category: a date still ahead is
@@ -118,43 +106,6 @@ module Gql::Types::KnowledgeBase
       object.visibility_schedules if editor?
     end
 
-    def translation_missing
-      locale = context[:knowledge_base_locale]
-      locale.present? && loaded_translations.none? { |translation| translation.kb_locale_id == locale.id }
-    end
-
-    def navigation
-      navigation = navigation_result
-      return if navigation.nil?
-
-      answers = navigation_answers(navigation)
-
-      {
-        index:           navigation.index,
-        total_count:     navigation.total_count,
-        previous_answer: answers.fetch(navigation.previous_answer_id),
-        next_answer:     answers.fetch(navigation.next_answer_id),
-      }
-    end
-
-    # The answer's own `updated_at`/`updated_by` are unreliable here: a translation
-    #   `touch`es its answer without running callbacks, so the timestamp moves while
-    #   `updated_by_id` stays behind. The translation's own edit metadata is what the
-    #   reader shows, and it is locale-aware.
-    def edited_at
-      preferred_translation&.edited_at
-    end
-
-    # Nulled rather than returned unauthorized: a role may grant knowledge base access
-    #   without any ticket permission, and UserType would then raise on this nested
-    #   user — turning a readable answer into a failed query.
-    def edited_by
-      user = preferred_translation&.updated_by
-      return if user.nil?
-
-      Pundit.policy(context.current_user, user).nested_show? ? user : nil
-    end
-
     private
 
     # @param state [Symbol] one of CanBePublished::SCHEDULABLE_VISIBILITIES' keys
@@ -176,51 +127,20 @@ module Gql::Types::KnowledgeBase
       @editor = Pundit.policy(context.current_user, object).update?
     end
 
-    def navigation_result
-      return @navigation_result if defined?(@navigation_result)
-
-      @navigation_result = Service::KnowledgeBase::AnswerNavigation
-        .with_current_user(context.current_user)
-        .execute(answer: object, locale: kb_locale, ids: navigation_sibling_ids)
-    end
-
-    # Takes the already-resolved navigation rather than fetching it again: reaching
-    #   back to #navigation from here would recurse endlessly.
-    def navigation_answers(navigation)
-      @navigation_answers ||= ::KnowledgeBase::Answer
-        .where(id: [navigation.previous_answer_id, navigation.next_answer_id])
-        .includes(translations: :kb_locale)
-        .index_by(&:id)
-    end
-
-    def navigation_sibling_ids
-      cache = (context[:knowledge_base_answer_navigation_ids] ||= {})
-      key = [object.category_id, kb_locale&.id]
-
-      cache.fetch(key) do
-        cache[key] = Service::KnowledgeBase::Answers
-          .with_current_user(context.current_user)
-          .execute(category: object.category, locale: kb_locale)
-          .except(:includes)
-          .pluck(:id)
-      end
-    end
-
-    def kb_locale
-      context[:knowledge_base_locale]
-    end
-
-    # Eager-loaded by Service::KnowledgeBase::Answers, so title/translation_missing
-    #   iterate in memory instead of querying per answer.
+    # Eager-loaded by Service::KnowledgeBase::Answers, so resolving the translation of a listed
+    #   answer iterates in memory instead of querying per answer.
     def loaded_translations
       object.translations
     end
 
+    # The knowledge base a `locale` argument's code is looked up in.
+    def locale_knowledge_base
+      object.category.knowledge_base
+    end
+
     # Mirrors KnowledgeBase::Answer#translation_preferred (requested locale, then
     #   the primary locale, then any), resolved from the eager-loaded set.
-    def preferred_translation
-      locale = context[:knowledge_base_locale]
-
+    def preferred_translation(locale = query_locale)
       (locale && loaded_translations.find { |translation| translation.kb_locale_id == locale.id }) ||
         loaded_translations.find { |translation| translation.kb_locale.primary? } ||
         loaded_translations.first

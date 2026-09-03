@@ -17,7 +17,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Update, type: :graphql d
         knowledgeBaseCategoryUpdate(categoryId: $categoryId, input: $input, locale: $locale) {
           category {
             id
-            title
+            translation(locale: $locale) { title }
             categoryIcon
             position
             parent { id }
@@ -48,7 +48,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Update, type: :graphql d
 
   context 'with an editor', authenticated_as: :editor do
     it 'returns the updated category' do
-      expect(gql.result.data['category']).to include('title' => title)
+      expect(gql.result.data.dig('category', 'translation')).to include('title' => title)
     end
 
     context 'with an icon' do
@@ -65,7 +65,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Update, type: :graphql d
       let(:locale) { alternative_locale.system_locale.locale }
 
       it 'returns the title in that locale' do
-        expect(gql.result.data['category']).to include('title' => title)
+        expect(gql.result.data.dig('category', 'translation')).to include('title' => title)
       end
     end
 

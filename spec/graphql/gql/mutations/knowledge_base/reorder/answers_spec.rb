@@ -21,7 +21,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::Answers, type: :graphql d
         knowledgeBaseReorderAnswers(categoryId: $categoryId, sortingMode: $sortingMode, answerIds: $answerIds) {
           category {
             id
-            title
+            translation { title }
             answerSortingMode
             categorySortingMode
           }
@@ -62,7 +62,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::Answers, type: :graphql d
     end
 
     it 'renders the category in the preferred locale' do
-      expect(gql.result.data.dig('category', 'title')).to eq(category.translation_to(primary_locale).title)
+      expect(gql.result.data.dig('category', 'translation', 'title')).to eq(category.translation_to(primary_locale).title)
     end
 
     context 'with a hand-made order' do
