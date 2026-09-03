@@ -8,11 +8,17 @@ module Gql::Queries
 
     argument :category_id, GraphQL::Types::ID, required: false, loads: Gql::Types::KnowledgeBase::CategoryType, description: 'Category to open; omit for the knowledge base root'
     argument :locale, String, required: false, description: 'System locale code used to resolve titles'
+    # Ordering only: the listing holds the same categories either way, so this needs no gate of its
+    #   own beyond the ones already deciding which of them this user may see. What it is for is the
+    #   sorting bar, which previews a mode on the real listing before it is saved — asking here
+    #   rather than sorting client-side keeps KnowledgeBase::Category.sorted_by_mode the one place
+    #   the order of a listing is decided, for the desktop view and the public help site alike.
+    argument :sorting_mode, Gql::Types::Enum::KnowledgeBase::SortingModeType, required: false, description: 'Order the subcategories in this mode instead of the node\'s stored `categorySortingMode`'
 
     field :category, Gql::Types::KnowledgeBase::CategoryType, null: true, description: 'The opened category (null at the knowledge base root); read its `breadcrumb` field for the header'
     field :subcategories, [Gql::Types::KnowledgeBase::CategoryType], null: false, description: 'Child categories visible to the current user, each carrying its own breadcrumb'
 
-    def resolve(category: nil, locale: nil)
+    def resolve(category: nil, locale: nil, sorting_mode: nil)
       # Only the active knowledge base is browsable — a category loaded by GID
       #   must not expose content from an inactive knowledge base, like it must
       #   not expose its answers or feeds.
@@ -31,13 +37,14 @@ module Gql::Queries
 
       result = ::Service::KnowledgeBase::CategoryContent
         .with_current_user(context.current_user)
-        .execute(knowledge_base:, category:, locale: context[:knowledge_base_locale])
+        .execute(knowledge_base:, category:, locale: context[:knowledge_base_locale], sorting_mode:)
 
       # Hand the batched per-category data to the category type so it resolves
       #   counts, visibility, titles, and breadcrumbs without querying per
       #   category. Scoped to this query's subtree (see store_knowledge_base_locale).
       context.scoped_set!(:knowledge_base_category_details, result[:category_details])
       context.scoped_set!(:knowledge_base_category_titles, result[:category_titles])
+      context.scoped_set!(:knowledge_base_category_edited_at, result[:category_edited_at])
       context.scoped_set!(:knowledge_base_category_translation_missing, result[:category_translation_missing])
       context.scoped_set!(:knowledge_base_category_breadcrumbs, result[:category_breadcrumbs])
 

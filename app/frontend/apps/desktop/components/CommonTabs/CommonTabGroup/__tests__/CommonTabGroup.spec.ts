@@ -119,6 +119,60 @@ describe('CommonTabGroup', () => {
       expect(wrapper.getByText('Tab 2')).toHaveClass('sr-only', '@lg:not-sr-only')
       expect(wrapper.getByText('Tab 3')).toHaveClass('sr-only', '@lg:not-sr-only')
     })
+
+    // A tab that renders as a bare icon has nothing else to name it, so the tooltip carries the
+    //   label - the same thing every other icon-only control here does.
+    it('names an icon-only tab by its label', () => {
+      const wrapper = renderComponent(CommonTabGroup, {
+        props: {
+          tabs: [
+            { label: 'Tab 1', key: 'tab-1', icon: 'search' },
+            { label: 'Tab 2', key: 'tab-2', icon: 'check', tooltip: 'Explains tab 2' },
+          ],
+        },
+      })
+
+      expect(wrapper.getByRole('tab', { name: 'Tab 1' })).toHaveAttribute('aria-label', 'Tab 1')
+
+      // A tab that brought its own keeps it: the label is only the fallback.
+      expect(wrapper.getByRole('tab', { name: 'Explains tab 2' })).toHaveAttribute(
+        'aria-label',
+        'Explains tab 2',
+      )
+    })
+
+    // Without an icon on every tab there is nothing to fall back to, so the label stays put and
+    //   needs no tooltip repeating it.
+    it('leaves a tab that never goes icon-only unnamed', () => {
+      const wrapper = renderComponent(CommonTabGroup, {
+        props: {
+          tabs: [
+            { label: 'Tab 1', key: 'tab-1', icon: 'search' },
+            { label: 'Tab 2', key: 'tab-2' },
+          ],
+        },
+      })
+
+      expect(wrapper.getByRole('tab', { name: 'Tab 1' })).not.toHaveAttribute('aria-label')
+    })
+
+    it('takes the width the labels need from the caller', () => {
+      const wrapper = renderComponent(CommonTabGroup, {
+        props: {
+          labelBreakpoint: '4xl',
+          tabs: [
+            { label: 'Tab 1', key: 'tab-1', icon: 'search' },
+            { label: 'Tab 2', key: 'tab-2', icon: 'check' },
+          ],
+        },
+      })
+
+      expect(wrapper.getByText('Tab 1')).toHaveClass('sr-only', '@4xl:not-sr-only')
+      expect(wrapper.getByRole('tab', { name: 'Tab 1' })).toHaveClass(
+        '@4xl:w-auto',
+        '@4xl:justify-start',
+      )
+    })
   })
 
   describe('filter mode', () => {

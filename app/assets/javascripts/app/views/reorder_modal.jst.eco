@@ -1,4 +1,14 @@
 <div>
   <div class='alert alert--danger hidden'></div>
+  <% if @modes: %>
+    <ul class="tabs type-tabs">
+      <% for mode in @modes: %>
+        <li class="tab js-sortingMode u-textTruncate <%= 'active' if mode.key is @mode %>" data-mode="<%= mode.key %>">
+          <%- @Icon(mode.icon, 'tab-icon') %>
+          <%- @T(mode.label) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
   <div class='js-table-container'></div>
 </div>

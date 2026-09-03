@@ -42,6 +42,8 @@ const renderCard = (props = {}) =>
       position: 0,
       isDeletable: true,
       policy: { update: true, destroy: true, createSubcategory: true, createAnswer: true },
+      isFocused: false,
+      isSelected: false,
       ...props,
     },
   })

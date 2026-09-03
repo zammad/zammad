@@ -12,6 +12,12 @@ FactoryBot.define do
     homepage_layout { 'grid' }
     category_layout { 'list' }
 
+    # Pinned against the product default (KnowledgeBase::DEFAULT_SORTING_MODE), the way the layouts
+    # and colors above are: the suite is full of examples about hand-arranged order, and they read
+    # as what they are only when the list they set up is actually in `manual`. Examples about the
+    # default itself build their records without the factory.
+    category_sorting_mode { 'manual' }
+
     before :create do |kb, context|
       if context.given_kb_locale.present?
         kb.kb_locales << context.given_kb_locale

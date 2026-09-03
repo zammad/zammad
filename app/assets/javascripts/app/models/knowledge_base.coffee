@@ -45,10 +45,22 @@ class App.KnowledgeBase extends App.Model
   categories: ->
     App.KnowledgeBaseCategory.all().filter (item) => item.knowledge_base_id == @id
 
-  rootCategories: ->
-    @categories()
-      .filter (item) -> item.parent_id is null
-      .sort (a, b) -> a.position - b.position
+  # Ordered in the knowledge base's own `category_sorting_mode`: the top level lists categories only
+  #   and so carries the category mode alone, under the same name a category keeps it under.
+  #
+  # @param kb_locale [App.KnowledgeBaseLocale, undefined] the locale being browsed, which the
+  #   alphabetical and last-update modes read a title and a date from. Undefined falls back to the
+  #   primary locale, exactly as the displayed title does.
+  rootCategories: (kb_locale) ->
+    App.KnowledgeBaseSorting.categories(
+      @unsortedRootCategories()
+      @category_sorting_mode
+      kb_locale
+    )
+
+  # See App.KnowledgeBaseCategory#unsortedChildren.
+  unsortedRootCategories: ->
+    @categories().filter (item) -> item.parent_id is null
 
   kb_locales: ->
     App.KnowledgeBaseLocale.findAll(@kb_locale_ids)
@@ -60,14 +72,14 @@ class App.KnowledgeBase extends App.Model
     @
 
   isEmpty: ->
-    @rootCategories().length is 0
+    @unsortedRootCategories().length is 0
 
   @translatableClass: -> App.KnowledgeBaseTranslation
   @translatableForeignKey: -> 'knowledge_base_id'
   @extend App.KnowledgeBaseTranslatable
 
   remove: (options = {}) ->
-    @rootCategories().forEach (elem) -> elem.remove(options)
+    @unsortedRootCategories().forEach (elem) -> elem.remove(options)
     @removeTranslations(options)
     super
 
@@ -84,7 +96,7 @@ class App.KnowledgeBase extends App.Model
                        else
                          0
 
-    @rootCategories().reduce (memo, elem) ->
+    @rootCategories(options.kb_locale).reduce (memo, elem) ->
       memo.concat elem.categoriesForDropdown(nested: initialNestLevel, kb_locale: options.kb_locale)
     , initial
 

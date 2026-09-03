@@ -1,0 +1,19 @@
+mutation knowledgeBaseReorderAnswers(
+  $categoryId: ID!
+  $sortingMode: EnumKnowledgeBaseSortingMode!
+  $answerIds: [ID!]
+) {
+  knowledgeBaseReorderAnswers(
+    categoryId: $categoryId
+    sortingMode: $sortingMode
+    answerIds: $answerIds
+  ) {
+    category {
+      id
+      answerSortingMode
+    }
+    errors {
+      ...errors
+    }
+  }
+}

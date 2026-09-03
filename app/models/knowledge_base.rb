@@ -10,6 +10,27 @@ class KnowledgeBase < ApplicationModel
 
   LAYOUTS = %w[grid list].freeze
 
+  # How one list of content is ordered when browsed: by hand (`acts_as_list` positions, which is
+  # what every installation had before this existed and what content predating it kept), by title
+  # in the browsed locale, or most recently updated first.
+  #
+  # Stored per list rather than per node, so a category orders its subcategories and its answers
+  # independently (`category_sorting_mode` / `answer_sorting_mode`) — an editor can keep the
+  # subcategories alphabetical while arranging the answers by hand. The knowledge base root lists
+  # categories only and therefore carries the category mode alone, under the same name.
+  SORTING_MODES = %w[manual alphabetical last_update].freeze
+
+  # What a list sorts by before anyone chooses: new content is ordered by title, not by the
+  # creation sequence a `manual` list would fall back to with no hand-made order behind it.
+  #
+  # The knowledge base root takes it from the column default, so every create path fills it without
+  # asking — `InitializeKnowledgeBase` on a fresh install, `KnowledgeBaseSortingMode` on an upgraded
+  # one, where it takes over from the `manual` those columns are backfilled with. A category reads
+  # this constant itself, for the one list it has nothing above it to inherit from (see
+  # KnowledgeBase::Category#inherit_sorting_modes) — so the two have to agree, and a fresh record
+  # compared against this in the model specs is what pins them together.
+  DEFAULT_SORTING_MODE = 'alphabetical'.freeze
+
   # Folder icon of each supported icon set: the default a new category starts with (see
   # #default_category_icon) and what every existing category is reset to whenever the icon set is
   # switched (see #reset_category_icons). Kept in sync with
@@ -52,6 +73,8 @@ class KnowledgeBase < ApplicationModel
   validates :color_header_link, presence: true, 'validations/color': true
 
   validates :iconset, inclusion: { in: KnowledgeBase::ICONSETS }
+
+  validates :category_sorting_mode, inclusion: { in: KnowledgeBase::SORTING_MODES }
 
   validate :validate_custom_address
 

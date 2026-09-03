@@ -14,6 +14,7 @@ export const KnowledgeBaseDocument = gql`
     iconset
     isPubliclyAvailable
     isVisiblePublicly
+    categorySortingMode
     policy {
       update
     }

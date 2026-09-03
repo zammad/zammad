@@ -15,6 +15,8 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
     access_editor? || record.public_content?
   end
 
+  # A user without internal access still reaches a category that has published content below it —
+  #   that is the public help site.
   def show_any?
     show? || show_public?
   end

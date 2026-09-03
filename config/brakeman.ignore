@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "0303f30fb66551fa12dfe8bec3bb308ae203ab9e1ba6ef8584f4859a88c780f7",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/knowledge_base/category.rb",
+      "line": 70,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"LOWER(#{preferred_translation_sql(:title, nil)}) ASC, knowledge_base_categories.id ASC\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "KnowledgeBase::Category",
+        "method": null
+      },
+      "user_input": "preferred_translation_sql(:title, nil)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Ordering SQL assembled from constants only: the column is a literal symbol at every call site, quoted with quote_column_name, and the locale ids are bound through sanitize_sql_array in .preferred_translation_sql. The sorting mode selects a branch, it is never interpolated."
+    },
+    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "0fcd117fd53301f531142fc075ee8d30219c1239affce9322f9939ac0572ba3b",
@@ -135,6 +158,29 @@
         601
       ],
       "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "340c6ea40c9694c0dffe06a63d5ebda106985eebbd1bf5f24ef546c7eb73a0e5",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/knowledge_base/answer.rb",
+      "line": 77,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"GREATEST(#{publication_timestamp_sql(true)}, #{preferred_translation_sql(:edited_at, nil)}) DESC NULLS LAST, knowledge_base_answers.id ASC\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "KnowledgeBase::Answer",
+        "method": null
+      },
+      "user_input": "publication_timestamp_sql(true)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Ordering SQL assembled from constants only: .publication_timestamp_sql returns one of two hard-coded strings, and .preferred_translation_sql binds the locale ids through sanitize_sql_array. The sorting mode selects a branch, it is never interpolated."
     },
     {
       "warning_type": "Denial of Service",
@@ -414,6 +460,29 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "fc15ab95fde722292582b08fa6a3a8f858d030496cef1252e8118cd59603ca46",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/knowledge_base/category.rb",
+      "line": 77,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"#{preferred_translation_sql(:edited_at, nil)} DESC NULLS LAST, knowledge_base_categories.id ASC\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "KnowledgeBase::Category",
+        "method": null
+      },
+      "user_input": "preferred_translation_sql(:edited_at, nil)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Ordering SQL assembled from constants only: the column is a literal symbol at every call site, quoted with quote_column_name, and the locale ids are bound through sanitize_sql_array in .preferred_translation_sql. The sorting mode selects a branch, it is never interpolated."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "7f248c60e38d8f73ba5f3ae896d1c9ac18e8f961c4d34a6c308deba5bf51430c",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -433,6 +502,29 @@
         89
       ],
       "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "8390ba4d776d9c6adcc963bc54c459c0998ae8af70a446530014ea5566fb61a8",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/knowledge_base/answer.rb",
+      "line": 72,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"LOWER(#{preferred_translation_sql(:title, nil)}) ASC, knowledge_base_answers.id ASC\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "KnowledgeBase::Answer",
+        "method": null
+      },
+      "user_input": "preferred_translation_sql(:title, nil)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Ordering SQL assembled from constants only: the column is a literal symbol at every call site, quoted with quote_column_name, and the locale ids are bound through sanitize_sql_array in .preferred_translation_sql. The sorting mode selects a branch, it is never interpolated."
     },
     {
       "warning_type": "Remote Code Execution",

@@ -14,6 +14,11 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import {
+  DEFAULT_TABS_LABEL_BREAKPOINT,
+  tabsLabelBreakpointClasses,
+  type TabsLabelBreakpoint,
+} from '#desktop/components/CommonTabs/tabsClasses.ts'
 import type { Tab, NavigationTab, MarkerStyle } from '#desktop/components/CommonTabs/types.ts'
 import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
@@ -24,9 +29,16 @@ interface Props {
   label?: string
   containerRole?: string
   listItemRole?: string
+  // How much room the strip needs before its tabs show their labels; see
+  //   `tabsLabelBreakpointClasses`.
+  labelBreakpoint?: TabsLabelBreakpoint
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  labelBreakpoint: DEFAULT_TABS_LABEL_BREAKPOINT,
+})
+
+const breakpointClasses = computed(() => tabsLabelBreakpointClasses[props.labelBreakpoint])
 
 defineOptions({
   inheritAttrs: false,
@@ -240,7 +252,8 @@ const everyTabHasIcon = computed(() => props.tabs.every((tab) => tab.icon))
       ref="tabs"
       data-tab
       :role="listItemRole"
-      class="flex grow @lg:grow-0"
+      class="flex grow"
+      :class="breakpointClasses.listItem"
     >
       <slot
         :tab="tab"

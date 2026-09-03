@@ -227,7 +227,7 @@ msgstr ""
 msgid "%s days ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:141
 msgid "%s deselected."
 msgstr ""
 
@@ -360,7 +360,7 @@ msgstr ""
 msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:134
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 
@@ -1305,8 +1305,8 @@ msgid "Add all values"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:396
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:653
 msgid "Add answer"
 msgstr ""
 
@@ -1321,7 +1321,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:379
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:636
 msgid "Add category"
 msgstr ""
 
@@ -1399,7 +1399,7 @@ msgstr ""
 msgid "Add reply"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:71
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:77
 msgid "Add schedule"
 msgstr ""
 
@@ -1407,7 +1407,7 @@ msgstr ""
 msgid "Add selected values"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:73
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:102
 msgid "Add sub-category"
 msgstr ""
 
@@ -1433,7 +1433,7 @@ msgstr ""
 msgid "Add unordered list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:112
 msgid "Add visibility schedule"
 msgstr ""
 
@@ -1862,12 +1862,12 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:112
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:143
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
 msgid "Answer actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:171
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
 msgid "Answer count: %s"
 msgstr ""
 
@@ -1875,11 +1875,16 @@ msgstr ""
 msgid "Answer navigation"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:274
+msgid "Answer order list"
+msgstr ""
+
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:90
 msgid "Answer title"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:28
 msgid "Answers"
 msgstr ""
 
@@ -3072,6 +3077,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue:24
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:209
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:77
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:201
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:30
@@ -3113,7 +3119,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:72
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:438
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
@@ -3172,6 +3178,7 @@ msgid "Capture from camera"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:3
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:27
 msgid "Categories"
 msgstr ""
 
@@ -3187,11 +3194,11 @@ msgstr ""
 msgid "Category Attribute"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:183
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
 msgid "Category actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
 msgid "Category count: %s"
 msgstr ""
 
@@ -3199,7 +3206,11 @@ msgstr ""
 msgid "Category feed"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:246
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:511
+msgid "Category order list"
+msgstr ""
+
+#: app/assets/javascripts/app/models/knowledge_base.coffee:258
 msgid "Category page layout"
 msgstr ""
 
@@ -3261,6 +3272,7 @@ msgstr ""
 msgid "Change language"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:9
 #: app/assets/javascripts/app/views/generic/history.jst.eco:2
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco:10
 msgid "Change order"
@@ -4120,6 +4132,11 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
+#: app/controllers/knowledge_base/categories_controller.rb:79
+#: app/services/service/knowledge_base/reorder/base.rb:107
+msgid "Content can only be rearranged while its sorting mode is manual."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:92
 msgid "Content could not be loaded."
@@ -4135,6 +4152,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutContent.vue:195
 msgid "Content sidebar"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:44
+msgid "Content type"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
@@ -4240,7 +4261,7 @@ msgstr ""
 msgid "Copy article permalink"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:213
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 msgid "Copy category title"
 msgstr ""
 
@@ -4764,7 +4785,7 @@ msgid "Custom Translation"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:139
-#: app/assets/javascripts/app/models/knowledge_base.coffee:290
+#: app/assets/javascripts/app/models/knowledge_base.coffee:302
 msgid "Custom URL"
 msgstr ""
 
@@ -5907,7 +5928,7 @@ msgid "Delete all existing records first."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:105
 msgid "Delete answer"
 msgstr ""
@@ -5920,8 +5941,8 @@ msgstr ""
 msgid "Delete avatar"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:92
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:168
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:121
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:190
 msgid "Delete category"
 msgstr ""
 
@@ -6519,16 +6540,12 @@ msgstr ""
 msgid "Drafts only"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:145
 msgid "Drag ended for %s."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:115
 msgid "Drag here to cancel"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
-msgid "Drag to reorder"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
@@ -6624,7 +6641,7 @@ msgstr ""
 msgid "Edit Video Server"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:59
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:79
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:96
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:156
 msgid "Edit answer"
@@ -6634,9 +6651,9 @@ msgstr ""
 msgid "Edit authenticator app"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:80
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:109
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:159
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:179
 msgid "Edit category"
 msgstr ""
 
@@ -6654,7 +6671,7 @@ msgid "Edit item"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:147
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:165
 msgid "Edit knowledge base"
 msgstr ""
 
@@ -7467,7 +7484,7 @@ msgstr ""
 msgid "Escalation times"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:222
 msgid "Escape pressed. No item selected."
 msgstr ""
 
@@ -7487,7 +7504,7 @@ msgstr ""
 msgid "Event summary"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:271
+#: app/assets/javascripts/app/models/knowledge_base.coffee:283
 msgid "Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can't mix and match different icons from different sets. Switching the set later resets all category icons to the default icon of the new set, so choose carefully!"
 msgstr ""
 
@@ -7949,7 +7966,7 @@ msgstr ""
 msgid "Flat Design"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:105
 msgid "Focus on %s"
 msgstr ""
 
@@ -8003,7 +8020,7 @@ msgstr ""
 msgid "Footer Menu"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:171
+#: app/assets/javascripts/app/models/knowledge_base.coffee:183
 msgid "Footer Note"
 msgstr ""
 
@@ -8442,7 +8459,7 @@ msgid "Go inside group"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:55
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 msgid "Go to knowledge base"
 msgstr ""
 
@@ -8704,11 +8721,11 @@ msgstr ""
 msgid "Header"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:190
+#: app/assets/javascripts/app/models/knowledge_base.coffee:202
 msgid "Header Color"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:201
+#: app/assets/javascripts/app/models/knowledge_base.coffee:213
 msgid "Header Link Color"
 msgstr ""
 
@@ -9029,11 +9046,11 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:179
+#: app/assets/javascripts/app/models/knowledge_base.coffee:191
 msgid "Icon & Link Color"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:268
+#: app/assets/javascripts/app/models/knowledge_base.coffee:280
 msgid "Icon Set"
 msgstr ""
 
@@ -9963,12 +9980,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
-#: app/assets/javascripts/app/models/knowledge_base.coffee:75
+#: app/assets/javascripts/app/models/knowledge_base.coffee:87
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:118
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:103
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
-#: app/models/knowledge_base.rb:262
+#: app/models/knowledge_base.rb:273
 #: db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr ""
@@ -10030,7 +10047,7 @@ msgstr ""
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:356
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:613
 msgid "Knowledge base actions"
 msgstr ""
 
@@ -10123,7 +10140,7 @@ msgstr ""
 msgid "Labels"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:224
+#: app/assets/javascripts/app/models/knowledge_base.coffee:236
 msgid "Landing page layout"
 msgstr ""
 
@@ -10144,7 +10161,7 @@ msgid "Language Detection Service"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:115
-#: app/assets/javascripts/app/models/knowledge_base.coffee:278
+#: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Languages"
 msgstr ""
 
@@ -10272,7 +10289,7 @@ msgstr ""
 msgid "Lastname, Firstname"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:152
+#: app/assets/javascripts/app/models/knowledge_base.coffee:164
 msgid "Layout"
 msgstr ""
 
@@ -11508,6 +11525,10 @@ msgstr ""
 msgid "Move up and down"
 msgstr ""
 
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:133
+msgid "Moved %s to position %s in the target list."
+msgstr ""
+
 #: app/models/report.rb:59
 msgid "Moved in"
 msgstr ""
@@ -11576,7 +11597,7 @@ msgid "Nagios integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:526
-#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
+#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:42
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:328
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:560
@@ -12227,7 +12248,7 @@ msgstr ""
 msgid "No items available"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:329
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:580
 msgid "No knowledge base content is available yet."
 msgstr ""
 
@@ -12376,11 +12397,11 @@ msgid "No token!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:98
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:148
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:172
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:206
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:228
 msgid "No translation available for this locale"
 msgstr ""
 
@@ -12501,7 +12522,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:84
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:57
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -13769,7 +13790,7 @@ msgid "Please configure import source before running."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:330
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:583
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -14173,7 +14194,8 @@ msgstr ""
 msgid "Provide an assessment of the customer sentiment based on the conversation."
 msgstr ""
 
-#: app/controllers/knowledge_base/categories_controller.rb:23
+#: app/controllers/knowledge_base/categories_controller.rb:70
+#: app/services/service/knowledge_base/reorder/base.rb:99
 #: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr ""
@@ -15303,6 +15325,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:86
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:117
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:225
@@ -15379,7 +15402,7 @@ msgid "Saving failed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:62
 msgid "Schedule for"
 msgstr ""
 
@@ -15470,11 +15493,11 @@ msgstr ""
 msgid "Scroll to unread item"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:272
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:285
 msgid "Scroll towards end"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:221
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:233
 msgid "Scroll towards start"
 msgstr ""
 
@@ -15947,7 +15970,7 @@ msgstr ""
 msgid "Selected tickets do not match any macros."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:219
 msgid "Selection cancelled for %s."
 msgstr ""
 
@@ -16426,7 +16449,7 @@ msgstr ""
 msgid "Show Draft"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:212
+#: app/assets/javascripts/app/models/knowledge_base.coffee:224
 msgid "Show Feed Icon"
 msgstr ""
 
@@ -16789,6 +16812,11 @@ msgstr ""
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:13
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:33
+msgid "Sort alphabetically"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
 msgid "Sort by %s ascending"
 msgstr ""
@@ -16797,17 +16825,39 @@ msgstr ""
 msgid "Sort by %s descending"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:14
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:36
+msgid "Sort by drag & drop"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:15
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:39
+msgid "Sort by latest updates"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:151
+msgid "Sort content"
+msgstr ""
+
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:239
+msgid "Sortable grid focused. Use the arrow keys to navigate items. Press Space to select an item and again on another item to swap them."
+msgstr ""
+
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:242
 msgid "Sortable list focused. Use up and down arrows to navigate items. Press Space to select an item and again on another item to swap them."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
-msgid "Sorted %s in user taskbar list to position %s."
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:124
+msgid "Sorted %s to position %s."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
 #: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:69
+msgid "Sorting mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
@@ -17253,7 +17303,7 @@ msgstr ""
 msgid "Support of multilingual Knowledge Base."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:159
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr ""
 
@@ -17322,7 +17372,7 @@ msgstr ""
 msgid "System information"
 msgstr ""
 
-#: app/models/knowledge_base.rb:33
+#: app/models/knowledge_base.rb:42
 msgid "System supports only one locale for knowledge base. Upgrade your plan to use more locales."
 msgstr ""
 
@@ -17891,6 +17941,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:143
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseSortingSave.ts:100
 msgid "The changes could not be saved."
 msgstr ""
 
@@ -17980,7 +18031,7 @@ msgstr ""
 msgid "The data we need to collect consists of:"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:294
+#: app/assets/javascripts/app/models/knowledge_base.coffee:306
 msgid "The default URL for your knowledge base is e.g. example.com or example.com/help. To serve it from a custom URL instead, enter the destination below (e.g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
 
@@ -18629,6 +18680,10 @@ msgstr ""
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
+#: app/controllers/knowledge_base/categories_controller.rb:62
+msgid "The required parameter 'sorting_mode' is missing."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:72
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
@@ -18683,10 +18738,6 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "The seconds overlay"
-msgstr ""
-
-#: app/services/service/knowledge_base/answer/base.rb:176
-msgid "The selected category does not belong to this knowledge base."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:525
@@ -18754,6 +18805,14 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:328
+msgid "The sorting mode you save here will apply to answers added later."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:564
+msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:372
@@ -18988,8 +19047,16 @@ msgstr ""
 msgid "There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions, Zammad can't get the exact number of tickets yet and has to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:325
+msgid "There are no answers to arrange yet."
+msgstr ""
+
 #: app/models/calendar.rb:313
 msgid "There are no business hours configured."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:561
+msgid "There are no categories to arrange yet."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:40
@@ -19408,7 +19475,7 @@ msgstr ""
 msgid "This knowledge base answer is not available."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:58
 msgid "This knowledge base category is not available."
 msgstr ""
 
@@ -20158,7 +20225,7 @@ msgstr ""
 msgid "Timing"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:143
+#: app/assets/javascripts/app/models/knowledge_base.coffee:155
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:29
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:76
 #: app/assets/javascripts/app/models/knowledge_base_translation.coffee:7
@@ -20388,10 +20455,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
 msgid "Transfer conversation to another chat:"
-msgstr ""
-
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
-msgid "Transferred %s from user taskbar list %s at position %s."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
@@ -21644,13 +21707,13 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:174
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:44
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:48
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:96
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:102
 msgid "Visibility change scheduled successfully."
 msgstr ""
 
@@ -22184,7 +22247,7 @@ msgstr ""
 msgid "You can overwrite this setting for specific groups in the group manager. %l"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:282
+#: app/assets/javascripts/app/models/knowledge_base.coffee:294
 msgid "You can provide different versions of your knowledge base for different locales. Add a language below, then select it in the Knowledge Base Editor to add your translations."
 msgstr ""
 
@@ -22719,7 +22782,7 @@ msgstr ""
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:277
+#: app/models/knowledge_base/category.rb:349
 msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
@@ -23384,7 +23447,7 @@ msgstr ""
 msgid "is not included in the list"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:295
+#: app/models/knowledge_base/category.rb:367
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -23551,7 +23614,7 @@ msgstr ""
 msgid "must be a valid HTTP(S) URL"
 msgstr ""
 
-#: app/models/knowledge_base.rb:288
+#: app/models/knowledge_base.rb:299
 msgid "must be a valid path or domain"
 msgstr ""
 
@@ -23591,7 +23654,7 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
-#: app/models/knowledge_base.rb:276
+#: app/models/knowledge_base.rb:287
 msgid "must begin with a slash (\"/\")"
 msgstr ""
 
@@ -23602,11 +23665,11 @@ msgstr ""
 msgid "must have a year between 1 and 9999"
 msgstr ""
 
-#: app/models/knowledge_base.rb:284
+#: app/models/knowledge_base.rb:295
 msgid "must not end with a slash (\"/\")"
 msgstr ""
 
-#: app/models/knowledge_base.rb:280
+#: app/models/knowledge_base.rb:291
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr ""
 
@@ -24209,11 +24272,11 @@ msgstr ""
 msgid "within next (relative)"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:308
+#: app/models/knowledge_base/category.rb:380
 msgid "would exceed the allowed nesting depth"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:313
+#: app/models/knowledge_base/category.rb:385
 msgid "would push this category's children beyond the allowed nesting depth"
 msgstr ""
 

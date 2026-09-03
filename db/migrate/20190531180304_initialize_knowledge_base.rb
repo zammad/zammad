@@ -15,6 +15,11 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
       t.string :homepage_layout, null: false
       t.string :category_layout, null: false
 
+      # New content sorts alphabetically (KnowledgeBase::DEFAULT_SORTING_MODE); an editor who wants
+      # a hand-made order switches the list to `manual` and arranges it. Upgraded installations
+      # reach the same default by a longer road, see KnowledgeBaseSortingMode.
+      t.string :category_sorting_mode, null: false, limit: 30, default: 'alphabetical'
+
       t.boolean :active, null: false, default: true
       t.boolean :show_feed_icon, default: false, null: false
 
@@ -49,6 +54,8 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
       t.string  :category_icon, null: false, limit: 30
       t.integer :position,      null: false, index: true
+      t.string  :category_sorting_mode, null: false, limit: 30, default: 'alphabetical'
+      t.string  :answer_sorting_mode,   null: false, limit: 30, default: 'alphabetical'
 
       t.timestamps limit: 3, null: false
     end
@@ -58,6 +65,8 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
       t.references :kb_locale, null: false, foreign_key: { to_table: :knowledge_base_locales }
       t.references :category,  null: false, foreign_key: { to_table: :knowledge_base_categories, on_delete: :cascade }
+
+      t.timestamp :edited_at, limit: 3, null: false
 
       t.timestamps limit: 3, null: false
     end

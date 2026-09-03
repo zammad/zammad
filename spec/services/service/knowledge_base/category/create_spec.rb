@@ -40,6 +40,24 @@ RSpec.describe Service::KnowledgeBase::Category::Create do
 
       expect(execute.position).to eq(2)
     end
+
+    # This path submits no sorting mode, so the model's create-time inheritance is what fills the
+    #   two columns (KnowledgeBase::Category#inherit_sorting_modes) and the GraphQL input needs no
+    #   argument for them.
+    it 'follows the sorting modes of the parent, per list' do
+      parent.update!(category_sorting_mode: 'last_update', answer_sorting_mode: 'manual')
+
+      expect(execute).to have_attributes(category_sorting_mode: 'last_update', answer_sorting_mode: 'manual')
+    end
+  end
+
+  # The root lists categories only, so there is no answer mode above a top level category to
+  #   inherit — see KnowledgeBase::Category#inherit_sorting_modes.
+  it 'takes the knowledge base category mode and the default answer mode at the top level' do
+    knowledge_base.update!(category_sorting_mode: 'last_update')
+
+    expect(execute)
+      .to have_attributes(category_sorting_mode: 'last_update', answer_sorting_mode: KnowledgeBase::DEFAULT_SORTING_MODE)
   end
 
   context 'without an icon' do

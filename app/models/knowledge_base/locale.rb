@@ -54,4 +54,26 @@ class KnowledgeBase::Locale < ApplicationModel
   end
 
   scope :available_for, ->(object) { where(id: object.translations.select(:kb_locale_id)) }
+
+  # The ids a listing prefers when picking the translation a record is *shown* under: those of the
+  #   browsed system locale first, then the primary ones. Resolved in one query per listing so the
+  #   ORDER BY subqueries of KnowledgeBase::Answer.preferred_translation_sql and its category
+  #   counterpart can compare ids directly instead of joining this table once per row — worth about
+  #   40% of the ordering cost on a large category.
+  #
+  # Sets rather than single ids because several knowledge bases can share a system locale, and this
+  #   deliberately does not take one: every translation of a given record belongs to one knowledge
+  #   base, so at most one id from either set can match a row.
+  #
+  # @param system_locale_or_id [Locale, Integer, nil] the browsed locale, as in HasTranslations.localed
+  # @return [Hash{Symbol => Array<Integer>}] `:browsed` and `:primary` kb_locale ids
+  def self.translation_preference_ids(system_locale_or_id)
+    system_locale_id = system_locale_or_id.try(:id) || system_locale_or_id
+    locales          = select(:id, :system_locale_id, :primary).to_a
+
+    {
+      browsed: locales.select { |locale| system_locale_id.present? && locale.system_locale_id == system_locale_id }.map(&:id),
+      primary: locales.select(&:primary?).map(&:id),
+    }
+  end
 end

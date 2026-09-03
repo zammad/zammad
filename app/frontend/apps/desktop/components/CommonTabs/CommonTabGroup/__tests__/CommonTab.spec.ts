@@ -64,6 +64,43 @@ describe('CommonTab', () => {
     expect(wrapper.getByText('foo')).toHaveClass('sr-only', '@lg:not-sr-only')
   })
 
+  // `not-sr-only` resets `white-space` to `normal`, so without this the label wraps over the icon
+  //   the moment it is revealed - the tab button's own `text-nowrap` is inherited and loses to it.
+  it('keeps a revealed label on one line', () => {
+    const wrapper = renderComponent(CommonTab, {
+      props: {
+        label: 'A label long enough to wrap',
+        size: 'medium',
+        tabId: 'foo',
+        activeKeys: ['foo'],
+        icon: 'search',
+        canDisplayIconOnly: true,
+      },
+    })
+
+    expect(wrapper.getByText('A label long enough to wrap')).toHaveClass('whitespace-nowrap')
+  })
+
+  // A strip with long labels, or one sharing its row with something else, stays on icons for
+  //   longer than one that has a row to itself.
+  it('takes the width its label needs from the caller', () => {
+    const wrapper = renderComponent(CommonTab, {
+      props: {
+        label: 'foo',
+        size: 'medium',
+        tabId: 'foo',
+        activeKeys: ['foo'],
+        icon: 'search',
+        canDisplayIconOnly: true,
+        labelBreakpoint: '4xl',
+      },
+    })
+
+    expect(wrapper.getByText('foo')).toHaveClass('sr-only', '@4xl:not-sr-only')
+    expect(wrapper.getByText('foo')).not.toHaveClass('@lg:not-sr-only')
+    expect(wrapper.getByRole('tab')).toHaveClass('@4xl:w-auto')
+  })
+
   describe('button mode', () => {
     it('renders a tab by default', () => {
       const wrapper = renderComponent(CommonTab, {

@@ -4,7 +4,7 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
   skip_before_action :load_kb, only: :forward_root
 
   def index
-    @categories     = categories_filter(@knowledge_base.categories.root)
+    @categories     = categories_filter(@knowledge_base.categories.root, @knowledge_base)
     @object_locales = find_locales(@knowledge_base)
 
     authorize(@categories, policy_class: Controllers::KnowledgeBase::Public::CategoriesControllerPolicy)
@@ -17,9 +17,9 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
 
     render_alternatives && return if @object.nil? || !policy(@object).show_public?
 
-    @categories     = categories_filter(@object.children)
+    @categories     = categories_filter(@object.children, @object)
     @object_locales = find_locales(@object)
-    @answers        = answers_filter(@object.answers)
+    @answers        = answers_filter(@object.answers, @object)
 
     render :index
   end

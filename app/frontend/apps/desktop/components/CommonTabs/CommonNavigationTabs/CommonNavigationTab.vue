@@ -6,10 +6,12 @@ import { computed } from 'vue'
 import type { NavigationTab, TabBaseProps } from '#desktop/components/CommonTabs/types.ts'
 
 import {
+  DEFAULT_TABS_LABEL_BREAKPOINT,
   tabItemClasses,
   tabItemColorClasses,
   tabItemFontSize,
   tabItemIconSize,
+  tabsLabelBreakpointClasses,
 } from '../tabsClasses.ts'
 
 const props = defineProps<TabBaseProps<NavigationTab>>()
@@ -29,7 +31,12 @@ const colorClasses = computed(() => tabItemColorClasses(isActive.value, props.di
     :disabled="disabled"
     :aria-current="isActive ? 'page' : undefined"
     class="relative z-10 snap-center"
-    :class="[tabItemClasses, colorClasses, tabItemFontSize[size]]"
+    :class="[
+      tabItemClasses,
+      tabsLabelBreakpointClasses[DEFAULT_TABS_LABEL_BREAKPOINT].item,
+      colorClasses,
+      tabItemFontSize[size],
+    ]"
     @click="emit('select')"
   >
     <CommonIcon v-if="icon" :name="icon" :size="tabItemIconSize[size]" decorative />

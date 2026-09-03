@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
+  EnumKnowledgeBaseSortingMode,
   EnumKnowledgeBaseVisibility,
   KnowledgeBaseCategory,
 } from '#shared/graphql/schema-types.ts'
@@ -12,6 +13,22 @@ import type {
 
 import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
 import type { KnowledgeBaseIconSet } from '#desktop/entities/knowledge-base/types.ts'
+
+// The schema's own enum, built from KnowledgeBase::SORTING_MODES — so a mode the picker offers is
+//   always one the reorder mutations accept. Aliased rather than used directly, because the
+//   sorting state talks about a node's lists, not about the schema.
+export type KnowledgeBaseSortingMode = EnumKnowledgeBaseSortingMode
+
+// The two independently rearrangeable lists on a browse page. A category holds both, the
+//   knowledge base root only categories. Each carries its own sorting mode, so an editor arranges
+//   one of them at a time.
+export type KnowledgeBaseSortingScope = 'categories' | 'answers'
+
+// The modes a browsed node is stored with, one per list. The knowledge base root has no answers,
+//   so it fills the `categories` entry alone.
+export type KnowledgeBaseSortingModes = Partial<
+  Record<KnowledgeBaseSortingScope, KnowledgeBaseSortingMode>
+>
 
 export interface KnowledgeBaseLocaleCompact {
   id: string

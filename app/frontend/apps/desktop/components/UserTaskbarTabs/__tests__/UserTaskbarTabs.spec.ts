@@ -518,26 +518,29 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(list.getAttribute('aria-describedby')).toBe(messageNodeId)
 
-    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(
+    // The announcer writes its message a moment after the region was touched, so that
+    //   a repeated or freshly inserted message still reaches the screen reader.
+    const expectAnnouncement = (message: string) =>
+      waitFor(() => expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(message))
+
+    await expectAnnouncement(
       'Sortable list focused. Use up and down arrows to navigate items. Press Space to select an item and again on another item to swap them.',
     )
 
     await wrapper.events.keyboard('{Space}') // select first
 
-    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(
+    await expectAnnouncement(
       'Ticket-41 selected. Use arrow keys to choose drop position, then press Space.',
     )
 
     // Move to second item and confirm swap
     await wrapper.events.keyboard('{ArrowDown}')
 
-    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent('Focus on Ticket-42')
+    await expectAnnouncement('Focus on Ticket-42')
 
     await wrapper.events.keyboard('{Space}') // swap first <-> second
 
-    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(
-      'Swapped Ticket-41 with Ticket-42. Ticket-41 moved to position 2.',
-    )
+    await expectAnnouncement('Swapped Ticket-41 with Ticket-42. Ticket-41 moved to position 2.')
 
     const calls = await waitForUserCurrentTaskbarItemListPrioMutationCalls()
 

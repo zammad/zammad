@@ -8,13 +8,19 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const KnowledgeBaseCategorySubcategoriesDocument = gql`
-    query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
-  knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale) {
+    query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String, $sortingMode: EnumKnowledgeBaseSortingMode) {
+  knowledgeBaseCategorySubcategories(
+    categoryId: $categoryId
+    locale: $locale
+    sortingMode: $sortingMode
+  ) {
     category {
       id
       isVisiblePublicly
       translationMissing
       isDeletable
+      categorySortingMode
+      answerSortingMode
       ...knowledgeBaseCategoryPolicy
       ...knowledgeBaseCategoryPreInfo
     }

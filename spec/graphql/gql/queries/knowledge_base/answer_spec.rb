@@ -357,6 +357,38 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     end
   end
 
+  # The path a client actually takes, and the one the service spec cannot cover: the sibling ids
+  #   come from AnswerType#navigation_sibling_ids and are passed in as `ids:`, so
+  #   Service::KnowledgeBase::AnswerNavigation#sibling_ids is never reached here. Rebuilding that
+  #   list by `position` would leave the whole navigation suite above green.
+  context 'with answer navigation in a sorting mode', authenticated_as: :admin do
+    let(:admin) { create(:admin) }
+
+    let(:zulu)  { answer_titled('Zulu') }
+    let(:mike)  { answer_titled('Mike') }
+    let(:alpha) { answer_titled('Alpha') }
+
+    let(:answer) { mike }
+
+    def answer_titled(title)
+      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: })
+    end
+
+    # Positions handed out against the alphabetical order, so navigating by `position` returns
+    #   exactly the opposite neighbours.
+    before do
+      [zulu, mike, alpha].each.with_index(1) { |sibling, position| sibling.update_column(:position, position) }
+      category.update!(answer_sorting_mode: 'alphabetical')
+      gql.execute(query, variables:)
+    end
+
+    it 'counts and navigates the siblings by title', :aggregate_failures do
+      expect(gql.result.data['navigation']).to include('index' => 2, 'totalCount' => 3)
+      expect(gql.result.data.dig('navigation', 'previousAnswer')).to include('id' => gql.id(alpha), 'title' => 'Alpha')
+      expect(gql.result.data.dig('navigation', 'nextAnswer')).to include('id' => gql.id(zulu), 'title' => 'Zulu')
+    end
+  end
+
   # A customer has no knowledge base permission at all, so this covers every user
   #   without one: they reach published content — the public knowledge base — and
   #   nothing else. Mirrors `knowledgeBaseAnswers` and the public help site.

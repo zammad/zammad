@@ -6,6 +6,9 @@ query knowledgeBase($locale: String) {
     iconset
     isPubliclyAvailable
     isVisiblePublicly
+    # The root lists categories and nothing else, so it carries this one mode — the order its
+    #   top level categories are browsed in, and what the sorting bar starts from there.
+    categorySortingMode
     # Editor access to the knowledge base itself, which is what gates adding a top level
     #   category (its parent is the knowledge base).
     policy {

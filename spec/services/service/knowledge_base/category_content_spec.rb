@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Service::KnowledgeBase::CategoryContent do
   subject(:content) do
-    described_class.with_current_user(user).execute(knowledge_base:, category: opened_category, locale:)
+    described_class.with_current_user(user).execute(knowledge_base:, category: opened_category, locale:, sorting_mode:)
   end
 
   include_context 'basic Knowledge Base'
@@ -12,6 +12,7 @@ RSpec.describe Service::KnowledgeBase::CategoryContent do
   let(:user)            { create(:admin) }
   let(:opened_category) { nil }
   let(:locale)          { primary_locale }
+  let(:sorting_mode)    { nil }
 
   let(:editor)   { create(:admin) }
   let(:reader)   { create(:agent) }
@@ -89,6 +90,163 @@ RSpec.describe Service::KnowledgeBase::CategoryContent do
       it 'returns the opened category itself' do
         expect(content[:category]).to eq(category)
       end
+    end
+  end
+
+  describe 'sorting mode' do
+    # The mode belongs to the node whose content is listed: the knowledge base at the root, the
+    #   opened category below it.
+    let(:sorting_node)    { opened_category || knowledge_base }
+    let(:first_category)  { titled(category, 'Alpha') }
+    let(:second_category) { titled(sibling_of(first_category), 'beta') }
+    let(:third_category)  { titled(sibling_of(first_category), 'Gamma') }
+
+    def titled(record, title)
+      record.translation_primary.update!(title:)
+      record
+    end
+
+    def sibling_of(record)
+      create(:knowledge_base_category, knowledge_base:, parent: record.parent)
+    end
+
+    def order_of(*records)
+      subcategory_ids & records.map(&:id)
+    end
+
+    before do
+      third_category
+      first_category
+      second_category
+    end
+
+    shared_examples 'ordering the listed categories' do
+      it 'keeps the hand-arranged positions in the manual mode' do
+        third_category.move_to_top
+
+        expect(order_of(first_category, second_category, third_category).first).to eq(third_category.id)
+      end
+
+      context 'with the alphabetical mode' do
+        before { sorting_node.update!(category_sorting_mode: 'alphabetical') }
+
+        it 'orders by title, ignoring case' do
+          expect(order_of(first_category, second_category, third_category))
+            .to eq([first_category.id, second_category.id, third_category.id])
+        end
+
+        # Comparing titles in Ruby would order these by codepoint and file every accented one
+        #   after "Zebra"; the database folds them onto their base letter. The listing has to
+        #   follow the database, since that is what the help site renders.
+        context 'with non-ASCII titles' do
+          before do
+            titled(first_category, 'Ähre')
+            titled(second_category, 'Šalis')
+            titled(third_category, 'Zebra')
+          end
+
+          it 'folds accented titles onto their base letter' do
+            expect(order_of(first_category, second_category, third_category))
+              .to eq([first_category.id, second_category.id, third_category.id])
+          end
+        end
+
+        # A category is shown under its fallback title when untranslated, so that is the title it
+        #   has to sort under too.
+        context 'with a category untranslated in the browsed locale' do
+          let(:locale) { alternative_locale }
+
+          before { create(:knowledge_base_category_translation, category: third_category, kb_locale: alternative_locale, title: 'Aardvark') }
+
+          it 'sorts the untranslated ones under their fallback title' do
+            expect(order_of(first_category, second_category, third_category))
+              .to eq([third_category.id, first_category.id, second_category.id])
+          end
+        end
+      end
+
+      # What the sorting bar previews with: the listing is fetched in the mode the editor picked, so
+      #   what they see before saving is the very order saving produces.
+      context 'with a previewed sorting mode' do
+        context 'when it differs from the stored one' do
+          let(:sorting_mode) { 'alphabetical' }
+
+          before { third_category.move_to_top }
+
+          it 'lists in the previewed mode' do
+            expect(order_of(first_category, second_category, third_category))
+              .to eq([first_category.id, second_category.id, third_category.id])
+          end
+
+          it 'leaves the stored mode alone' do
+            content
+
+            expect(sorting_node.reload.category_sorting_mode).to eq('manual')
+          end
+        end
+
+        # Nothing to preview is the ordinary case, and it is what every browse without the bar up
+        #   passes.
+        context 'when none is given' do
+          before do
+            sorting_node.update!(category_sorting_mode: 'alphabetical')
+            third_category.move_to_top
+          end
+
+          it 'lists in the stored mode' do
+            expect(order_of(first_category, second_category, third_category))
+              .to eq([first_category.id, second_category.id, third_category.id])
+          end
+        end
+      end
+
+      context 'with the last update mode' do
+        before do
+          sorting_node.update!(category_sorting_mode: 'last_update')
+
+          travel_to(1.hour.from_now)  { second_category.translation_primary.update!(title: 'beta, edited') }
+          travel_to(2.hours.from_now) { first_category.translation_primary.update!(title: 'Alpha, edited') }
+        end
+
+        it 'orders by the most recently edited first' do
+          expect(order_of(first_category, second_category, third_category))
+            .to eq([first_category.id, second_category.id, third_category.id])
+        end
+
+        # A category is dated by the content below it, not only by its own title.
+        it 'counts an edit to an answer filed in the category' do
+          answer = create(:knowledge_base_answer, category: third_category)
+
+          travel_to(3.hours.from_now) { answer.translation.update!(title: 'Answer, edited') }
+
+          expect(order_of(first_category, second_category, third_category).first).to eq(third_category.id)
+        end
+
+        # The `updated_at` proxy this mode used to read moved for both of these, floating a category
+        #   to the top of the listing for a change nobody made to its content.
+        it 'is unmoved by a reorder or a sorting-mode switch' do
+          travel_to(3.hours.from_now) do
+            third_category.move_to_top
+            third_category.update!(answer_sorting_mode: 'alphabetical')
+          end
+
+          expect(order_of(first_category, second_category, third_category))
+            .to eq([first_category.id, second_category.id, third_category.id])
+        end
+      end
+    end
+
+    context 'when browsing the knowledge base root' do
+      let(:opened_category) { nil }
+
+      include_examples 'ordering the listed categories'
+    end
+
+    context 'when browsing inside a category' do
+      let(:opened_category) { create(:knowledge_base_category, knowledge_base:) }
+      let(:first_category)  { titled(create(:knowledge_base_category, knowledge_base:, parent: opened_category), 'Alpha') }
+
+      include_examples 'ordering the listed categories'
     end
   end
 

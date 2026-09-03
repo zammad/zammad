@@ -9,6 +9,12 @@ FactoryBot.define do
     knowledge_base { parent&.knowledge_base || create(:knowledge_base) }
     category_icon  { 'f04b' }
 
+    # Both lists pinned to `manual`, for the reason the knowledge base factory pins its own — and
+    # assigned rather than inherited so a category created at the top level lands there too
+    # (KnowledgeBase::Category#inherit_sorting_modes gives its answers the product default).
+    category_sorting_mode { 'manual' }
+    answer_sorting_mode   { 'manual' }
+
     before(:create) do |category|
       next if category.translations.present?
 

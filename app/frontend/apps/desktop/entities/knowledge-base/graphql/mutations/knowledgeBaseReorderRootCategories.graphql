@@ -1,0 +1,14 @@
+mutation knowledgeBaseReorderRootCategories(
+  $sortingMode: EnumKnowledgeBaseSortingMode!
+  $categoryIds: [ID!]
+) {
+  knowledgeBaseReorderRootCategories(sortingMode: $sortingMode, categoryIds: $categoryIds) {
+    knowledgeBase {
+      id
+      categorySortingMode
+    }
+    errors {
+      ...errors
+    }
+  }
+}

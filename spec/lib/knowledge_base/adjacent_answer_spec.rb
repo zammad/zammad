@@ -262,4 +262,138 @@ RSpec.describe KnowledgeBase::AdjacentAnswer do
       end
     end
   end
+
+  # The listing a visitor reaches an answer from is ordered by the mode of the node above it
+  #   (KnowledgeBase::Public::BaseController#answers_filter / #categories_filter), so these links
+  #   have to walk the same order — which the `position` order they used to walk is not.
+  describe 'with a sorting mode' do
+    def category_titled(title, parent: nil)
+      create(:knowledge_base_category, knowledge_base:, parent:)
+        .tap { |category| category.translations.first.update!(title:) }
+    end
+
+    def answer_titled(title, category:)
+      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: })
+    end
+
+    context 'with the alphabetical mode' do
+      let(:sorted_parent) { category_titled('Sorted parent') }
+
+      # Both levels are created against their alphabetical order, so a walk by `position` disagrees
+      #   with the order the site renders — which is what these examples are about.
+      let!(:yankee) { category_titled('Yankee', parent: sorted_parent) }
+      let!(:bravo)  { category_titled('Bravo', parent: sorted_parent) }
+
+      let!(:zulu)  { answer_titled('Zulu', category: bravo) }
+      let!(:mike)  { answer_titled('Mike', category: bravo) }
+      let!(:alpha) { answer_titled('Alpha', category: bravo) }
+
+      let!(:yankee_answer) { answer_titled('Only answer', category: yankee) }
+
+      before do
+        sorted_parent.update!(category_sorting_mode: 'alphabetical')
+        bravo.update!(answer_sorting_mode: 'alphabetical')
+      end
+
+      context 'when the answer is in between other answers' do
+        let(:answer) { mike }
+
+        it 'returns the next answer by title' do
+          expect(adjacent_answer.next).to eq(zulu)
+        end
+
+        it 'returns the previous answer by title' do
+          expect(adjacent_answer.previous).to eq(alpha)
+        end
+      end
+
+      context 'when the answer is the last of its category by title' do
+        let(:answer) { zulu }
+
+        it 'enters the next sibling category by title' do
+          expect(adjacent_answer.next).to eq(yankee_answer)
+        end
+      end
+
+      # Both reversals at once: back into the sibling category the parent lists first, and to the
+      #   answer that category lists last — each of them the mode's order reversed, not the
+      #   positions'. By position `bravo` ends on its last-created answer, `alpha`. It is also the
+      #   inverse of the step above, which is what makes the two links agree.
+      context 'when the answer is the first of the tree by title' do
+        let(:answer) { yankee_answer }
+
+        it 'returns the last answer of the previous sibling category by title' do
+          expect(adjacent_answer.previous).to eq(zulu)
+        end
+      end
+    end
+
+    # The top level is the one list whose mode is stored on the knowledge base rather than on a
+    #   category, the way KnowledgeBase::Public::CategoriesController#index reads it.
+    context 'with an alphabetically sorted top level' do
+      # Created in reverse, so the hand-arranged order disagrees. One title being a prefix of the
+      #   other, only a title extending that prefix can sort between them — which the factory's
+      #   generated ones ("<appliance brand> #<n>") never do, so the tree above cannot wander in.
+      let!(:root_second) { category_titled('Root Alpha Two') }
+      let!(:root_first)  { category_titled('Root Alpha') }
+
+      let!(:first_answer)  { answer_titled('Only answer', category: root_first) }
+      let!(:second_answer) { answer_titled('Only answer', category: root_second) }
+
+      before { knowledge_base.update!(category_sorting_mode: 'alphabetical') }
+
+      context 'when the answer ends the alphabetically first top level category' do
+        let(:answer) { first_answer }
+
+        it 'enters the next top level category by title' do
+          expect(adjacent_answer.next).to eq(second_answer)
+        end
+      end
+
+      context 'when the answer starts the alphabetically second top level category' do
+        let(:answer) { second_answer }
+
+        it 'returns the last answer of the previous top level category by title' do
+          expect(adjacent_answer.previous).to eq(first_answer)
+        end
+      end
+    end
+
+    context 'with the last update mode' do
+      let(:sorted_category) { category_titled('Sorted') }
+
+      # Created against the wanted order again: by position this reads newest, oldest, middle, so
+      #   neither neighbour of `middle` is the one the edit dates give it.
+      let!(:newest) { answer_titled('Newest', category: sorted_category) }
+      let!(:oldest) { answer_titled('Oldest', category: sorted_category) }
+      let!(:middle) { answer_titled('Middle', category: sorted_category) }
+
+      before do
+        sorted_category.update!(answer_sorting_mode: 'last_update')
+
+        travel_to(1.hour.from_now)  { middle.translation.update!(title: 'Middle, edited') }
+        travel_to(2.hours.from_now) { newest.translation.update!(title: 'Newest, edited') }
+      end
+
+      context 'when the answer is in between other answers' do
+        let(:answer) { middle }
+
+        it 'returns the answer edited before it' do
+          expect(adjacent_answer.next).to eq(oldest)
+        end
+
+        it 'returns the answer edited after it' do
+          expect(adjacent_answer.previous).to eq(newest)
+        end
+      end
+
+      context 'when the answer is the least recently edited' do
+        let(:answer) { oldest }
+
+        it 'returns the answer edited after it' do
+          expect(adjacent_answer.previous).to eq(middle)
+        end
+      end
+    end
+  end
 end

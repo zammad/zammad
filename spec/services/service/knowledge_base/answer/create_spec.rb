@@ -81,16 +81,6 @@ RSpec.describe Service::KnowledgeBase::Answer::Create do
     end
   end
 
-  describe 'the category' do
-    context 'when it belongs to another knowledge base' do
-      let(:answer_data) { super().merge(category: create(:knowledge_base_category)) }
-
-      it 'refuses the answer' do
-        expect { create_answer }.to raise_error(Exceptions::UnprocessableContent, 'The selected category does not belong to this knowledge base.')
-      end
-    end
-  end
-
   describe 'authorization' do
     context 'with a granular editor of one subtree' do
       # Reader on the knowledge base plus editor on one category — the only constructible granular

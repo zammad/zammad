@@ -37,7 +37,7 @@ class App.KnowledgeBaseReaderListContainer.Answers extends App.KnowledgeBaseRead
     if !(@parent instanceof App.KnowledgeBaseCategory)
       return []
 
-    answers = @parent.answers()
+    answers = @parent.answers(@kb_locale)
 
     if !@isEditor
       answers = answers.filter (elem) => elem.is_internally_published(@kb_locale)
@@ -54,9 +54,9 @@ class App.KnowledgeBaseReaderListContainer.Categories extends App.KnowledgeBaseR
   children: ->
     # coffeelint: disable=indentation
     items = if @parent instanceof App.KnowledgeBase
-              @parent.rootCategories()
+              @parent.rootCategories(@kb_locale)
             else if @parent instanceof App.KnowledgeBaseCategory
-              @parent.children()
+              @parent.children(@kb_locale)
             else
               []
 

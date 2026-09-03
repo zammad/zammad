@@ -22,6 +22,11 @@ module Service::KnowledgeBase::Concerns::WalksCategoryTree
 
   private
 
+  # Deliberately unordered: everything here looks a category up by id, and a service that renders a
+  #   listing orders that listing itself (Service::KnowledgeBase::CategoryContent#
+  #   ordered_child_ids). Ordering the whole tree to arrange one node's children would sort every
+  #   category in the knowledge base — and, for the alphabetical mode, run its title subquery once
+  #   per category — to place a handful.
   def all_categories
     @all_categories ||= knowledge_base.categories.to_a
   end

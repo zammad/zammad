@@ -6,12 +6,13 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const KnowledgeBaseAnswersDocument = gql`
-    query knowledgeBaseAnswers($categoryId: ID!, $locale: String, $pageSize: Int = 30, $cursor: String) {
+    query knowledgeBaseAnswers($categoryId: ID!, $locale: String, $pageSize: Int = 30, $cursor: String, $sortingMode: EnumKnowledgeBaseSortingMode) {
   knowledgeBaseAnswers(
     categoryId: $categoryId
     locale: $locale
     first: $pageSize
     after: $cursor
+    sortingMode: $sortingMode
   ) {
     totalCount
     edges {

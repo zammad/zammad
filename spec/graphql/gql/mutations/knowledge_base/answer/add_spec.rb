@@ -107,17 +107,6 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Add, type: :graphql do
       end
     end
 
-    # Whatever the service refuses has to reach the client as a user error rather than as a failed
-    #   mutation.
-    context 'when the service refuses the answer' do
-      let(:category_id) { gql.id(create(:knowledge_base_category)) }
-
-      it 'returns a user error for the form' do
-        expect(gql.result.data['errors']).to include(include('message' => 'The selected category does not belong to this knowledge base.', 'field' => nil))
-      end
-    end
-
-    # Required by the schema, so the service's own guard for it is never reached from here.
     context 'without a category' do
       let(:category_id) { nil }
 

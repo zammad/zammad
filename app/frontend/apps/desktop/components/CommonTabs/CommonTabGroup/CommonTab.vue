@@ -4,19 +4,29 @@
 import { computed } from 'vue'
 
 import {
+  DEFAULT_TABS_LABEL_BREAKPOINT,
   tabItemClasses,
   tabItemColorClasses,
   tabItemFontSize,
   tabItemIconSize,
+  tabsLabelBreakpointClasses,
+  type TabsLabelBreakpoint,
 } from '#desktop/components/CommonTabs/tabsClasses.ts'
 import type { Tab, TabBaseProps } from '#desktop/components/CommonTabs/types.ts'
 
 type Props = {
   multiple?: boolean
   canDisplayIconOnly?: boolean
+  // How much room the strip needs before this tab shows its label beside the icon; see
+  //   `tabsLabelBreakpointClasses`.
+  labelBreakpoint?: TabsLabelBreakpoint
 } & TabBaseProps<Tab>
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  labelBreakpoint: DEFAULT_TABS_LABEL_BREAKPOINT,
+})
+
+const breakpointClasses = computed(() => tabsLabelBreakpointClasses[props.labelBreakpoint])
 
 const isTabMode = computed(() => !props.multiple)
 
@@ -41,12 +51,12 @@ const colorClasses = computed(() =>
     :aria-selected="isActive"
     class="relative z-10 snap-center"
     :aria-controls="isTabMode ? `tab-panel-${tabId}` : undefined"
-    :class="[tabItemClasses, colorClasses, tabItemFontSize[size]]"
+    :class="[tabItemClasses, breakpointClasses.item, colorClasses, tabItemFontSize[size]]"
     @click="emit('select')"
   >
     <CommonIcon v-if="icon" :name="icon" :size="tabItemIconSize[size]" decorative />
 
-    <span v-if="label" :class="{ 'sr-only @lg:not-sr-only': canDisplayIconOnly }">
+    <span v-if="label" :class="{ [breakpointClasses.label]: canDisplayIconOnly }">
       {{ $t(label) }}
     </span>
 

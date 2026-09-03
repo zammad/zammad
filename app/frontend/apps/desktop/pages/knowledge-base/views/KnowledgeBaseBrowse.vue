@@ -1,12 +1,16 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { parents } from '@formkit/drag-and-drop'
 import { useElementVisibility } from '@vueuse/core'
 import { useRouteQuery } from '@vueuse/router'
+import { isEqual } from 'lodash-es'
 import {
   computed,
+  nextTick,
   onMounted,
   ref,
+  shallowRef,
   toRef,
   useTemplateRef,
   watch,
@@ -22,6 +26,9 @@ import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator
 import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
+import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
@@ -30,6 +37,8 @@ import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/Know
 import KnowledgeBaseAnswerList from '../components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue'
 import KnowledgeBaseCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue'
 import KnowledgeBaseCategoryCardSkeleton from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCardSkeleton.vue'
+import KnowledgeBaseSortingBar from '../components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue'
+import KnowledgeBaseContentTabs from '../components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue'
 import KnowledgeBaseSearchBar from '../components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue'
 import KnowledgeBaseSearchResults from '../components/KnowledgeBaseSearch/KnowledgeBaseSearchResults.vue'
 import KnowledgeBaseSearchShortcuts from '../components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue'
@@ -38,7 +47,11 @@ import { useKnowledgeBaseCategoryFlyout } from '../composables/useKnowledgeBaseC
 import { useKnowledgeBaseCategorySubcategories } from '../composables/useKnowledgeBaseCategorySubcategories.ts'
 import { useKnowledgeBaseEditFlyout } from '../composables/useKnowledgeBaseEditFlyout.ts'
 import { useKnowledgeBaseSearchTerm } from '../composables/useKnowledgeBaseSearchTerm.ts'
+import { useKnowledgeBaseSorting } from '../composables/useKnowledgeBaseSorting.ts'
+import { useKnowledgeBaseSortingSave } from '../composables/useKnowledgeBaseSortingSave.ts'
 import { knowledgeBaseBrowsedTitle } from '../utils/knowledgeBaseBrowsedTitle.ts'
+
+import type { KnowledgeBaseCategoryCompact, KnowledgeBaseSortingModes } from '../types.ts'
 
 // The browsed locale and category come from the URL as route props (see
 //   routes.ts). Both are absent on the locale-less entry until the section
@@ -56,6 +69,22 @@ const categoryId = computed(() =>
     : undefined,
 )
 
+// Pulled up in front of the listing query below: the mode the bar is previewing is one of that
+//   query's arguments, so the categories arrive already ordered the way saving would order them.
+const {
+  isArmed: isSortingArmed,
+  activeScope: sortingScope,
+  isScopeRearranging,
+  isDirty: isSortingDirty,
+  sortingMode,
+  previewSortingMode,
+  registerBaselineOrder,
+  stageOrder,
+  resetKnowledgeBaseSorting,
+} = useKnowledgeBaseSorting()
+
+const isRearranging = isScopeRearranging('categories')
+
 const {
   subcategories,
   breadcrumb,
@@ -65,9 +94,13 @@ const {
   translationMissing: categoryTranslationMissing,
   deletable: categoryDeletable,
   policy: categoryPolicy,
+  directAnswerCount,
+  categorySortingMode,
+  answerSortingMode,
 } = useKnowledgeBaseCategorySubcategories({
   categoryId,
   locale: toRef(props, 'localeCode'),
+  sortingMode: previewSortingMode('categories'),
 })
 
 // What is browsed: a different category or locale is a different page. It keys the answer list, so
@@ -105,6 +138,27 @@ const canAddCategory = computed(() =>
 // Per record, like adding a category: a granular editor may write to one subtree and only read
 //   elsewhere. There is nothing to add at the root, where no category is open.
 const canAddAnswer = computed(() => Boolean(categoryPolicy.value?.createAnswer))
+
+// Arranging the content of a node is editing that node, so it is gated like adding to it - and on
+//   nothing else. Deliberately not on what the node currently holds: a mode is stored on the node
+//   and applies to everything that arrives under it later, so it stays on offer for an empty or
+//   single-item list, where it decides where the next categories and answers will land. Each list
+//   then says for itself that it is empty (see below and KnowledgeBaseAnswerList.vue).
+const canSortContent = computed(() =>
+  categoryId.value
+    ? Boolean(categoryPolicy.value?.update)
+    : Boolean(knowledgeBase.value?.policy.update),
+)
+
+// Where the sorting bar starts: the opened category's two modes, or the knowledge base's one at
+//   the root, which lists categories and nothing else. Undefined entries leave that list on the
+//   default until its query resolves — the header cannot be reached before that in practice, the
+//   sort entry being gated on the same query's policy.
+const storedSortingModes = computed<KnowledgeBaseSortingModes>(() =>
+  categoryId.value
+    ? { categories: categorySortingMode.value, answers: answerSortingMode.value }
+    : { categories: knowledgeBase.value?.categorySortingMode },
+)
 
 const { searchTerm, searchQuery, searchNow } = useKnowledgeBaseSearchTerm()
 
@@ -196,13 +250,137 @@ const GRID_BREAKPOINTS = [
   },
 ] as const
 
-// The add card occupies a grid cell too, so it counts towards the row fill.
-const tileCount = computed(() => subcategories.value.length + (canAddCategory.value ? 1 : 0))
+// Only one of the two lists is arranged at a time, so only that one is on screen. Hidden rather
+//   than dropped: an order staged in the other list has to survive switching back and forth, and
+//   remounting it would re-register its baseline and discard it.
+const showsCategories = computed(() => !isSortingArmed.value || sortingScope.value === 'categories')
+const showsAnswers = computed(() => !isSortingArmed.value || sortingScope.value === 'answers')
+
+// Both entries are offered inside a category, an empty one included - it is what says where
+//   content of that kind will go. Never at the knowledge base root, which holds no answers at
+//   all: a zero there would promise something that can never arrive, and one entry is nothing to
+//   pick between.
+const showsContentTabs = computed(() => isSortingArmed.value && Boolean(categoryId.value))
+
+// Which list the bar starts on. The categories, following the page order - unless the opened
+//   category has none and does have answers, where the answers are the only list there is to
+//   arrange: starting on the empty categories tab would hide the whole job behind a tab switch.
+//   Only on arming, never afterwards: from then on the tabs are the editor's to pick.
+watch(isSortingArmed, (armed) => {
+  if (!armed || !categoryId.value) return
+  if (subcategories.value.length || !directAnswerCount.value) return
+
+  sortingScope.value = 'answers'
+})
+
+// The grid @formkit/drag-and-drop owns and reorders in place, kept apart from the query result.
+const dndSubcategories = shallowRef<KnowledgeBaseCategoryCompact[]>([])
+
+watch(
+  subcategories,
+  (newSubcategories) => {
+    if (isEqual(dndSubcategories.value, newSubcategories)) return
+
+    dndSubcategories.value = [...newSubcategories]
+    registerBaselineOrder(
+      'categories',
+      newSubcategories.map((category) => category.id),
+    )
+  },
+  { immediate: true },
+)
+
+const dndParentElement = useTemplateRef('dnd-parent')
+
+const { announce, messageNodeId } = useAnnouncer()
+
+const categoryValue = (category: KnowledgeBaseCategoryCompact) => category.title || category.id
+
+// After a pointer drag the library has already rewritten the DOM, so its own values are the truth.
+const dndEndCallback = (parent: HTMLElement) => {
+  const parentData = parents.get(parent)
+  if (!parentData) return
+
+  dndSubcategories.value = [...(parentData.getValues(parent) as KnowledgeBaseCategoryCompact[])]
+  stageOrder(
+    'categories',
+    dndSubcategories.value.map((category) => category.id),
+  )
+}
+
+// Set up only once the grid is actually rearranged, never on mount: until then it also holds the
+//   add card and the row-filler tile, and @formkit/drag-and-drop warns whenever the children it
+//   sees outnumber the values it was given.
+const applyDragAndDrop = (disabled: boolean) => {
+  useAccessibleDragAndDrop<HTMLElement, KnowledgeBaseCategoryCompact>(
+    dndParentElement,
+    dndSubcategories,
+    announce,
+    { dndEndCallback, getValue: categoryValue, disabled },
+  )
+}
+
+const {
+  focusedItemIndex,
+  selectedItemIndex,
+  focusedItemId,
+  handleKeydown,
+  handleFocus,
+  handleBlur,
+} = useKeyboardKeysForDragAndDrop<KnowledgeBaseCategoryCompact>({
+  items: dndSubcategories,
+  // A grid, so its arrow keys move by row as much as by tile - the composable takes the column
+  //   count off the element, which is the only place the container query has resolved it.
+  parent: dndParentElement,
+  getValue: categoryValue,
+  // The rendered card's id is always built from the category id, never its (possibly missing or
+  //   duplicate) title, so aria-activedescendant must match that rather than categoryValue.
+  getId: (category) => category.id,
+  onReorder: (newOrder) => {
+    stageOrder(
+      'categories',
+      newOrder.map((category) => category.id),
+    )
+  },
+})
+
+// `nextTick`, so the tiles that are no category have left the grid before it is handed over.
+//
+// The whole configuration is re-applied on every switch rather than the `disabled` flag alone: the
+//   library's `updateConfig` would throw the rest of it away (see the composable).
+//
+// On the element as much as on the flag, because the two come apart: previewing a sorting mode
+//   refetches the listing, and a result that is not in the cache yet puts the loader back up -
+//   which unmounts this <ol> and mounts a new one, leaving the drag engine attached to an element
+//   that is no longer on the page.
+watch([dndParentElement, isRearranging], async ([, rearranging]) => {
+  if (rearranging) await nextTick()
+
+  if (!dndParentElement.value) return
+
+  applyDragAndDrop(!rearranging)
+})
+
+const { isSaving: isSavingSorting, saveSorting } = useKnowledgeBaseSortingSave(categoryId)
+
+// The add card occupies a grid cell too, so it counts towards the row fill - but not while sorting,
+//   where it is hidden so it cannot take part in the order (the same condition it renders under).
+const tileCount = computed(
+  () => subcategories.value.length + (canAddCategory.value && !isSortingArmed.value ? 1 : 0),
+)
 
 // Only the knowledge base root fills the page when it has no tiles: there its empty state is the
 //   entire content. A category without subcategories — a reader sees no add card either — still
-//   has its answers below, so the grid must not stretch above them.
-const showsEmptyState = computed(() => !tileCount.value && !categoryId.value)
+//   has its answers below, so the grid must not stretch above them. Never while sorting, which
+//   brings an empty state of its own for the list being arranged.
+const showsEmptyState = computed(
+  () => !tileCount.value && !categoryId.value && !isSortingArmed.value,
+)
+
+// While sorting, the add card that otherwise stands in for an empty grid is gone, so the grid has
+//   to say for itself that there is nothing to arrange yet - the mode picked in the bar still
+//   applies to the categories that arrive later.
+const showsSortingEmptyState = computed(() => isSortingArmed.value && !subcategories.value.length)
 
 // For each breakpoint, reveal as many of the three filler tiles as there are
 // empty cells in the last row ([0] = shown class, [1] = hidden class).
@@ -238,7 +416,13 @@ const scrollToEnd = () => {
 //   only shows when the new page is tall from its first frame — an answer list served from the
 //   cache — because then the previous scroll position survives and the category section is
 //   left out of view.
-watch(browsedPage, scrollToStart)
+watch(browsedPage, () => {
+  scrollToStart()
+
+  // A mode picked for one category must not be carried into the next, and a staged order belongs
+  //   to the list it was made in.
+  resetKnowledgeBaseSorting()
+})
 </script>
 
 <template>
@@ -261,6 +445,8 @@ watch(browsedPage, scrollToStart)
         :category-translation-missing="categoryTranslationMissing"
         :category-deletable="categoryDeletable"
         :category-policy="categoryPolicy"
+        :can-sort-content="canSortContent"
+        :sorting-modes="storedSortingModes"
         :loading="headerLoading"
       />
 
@@ -270,11 +456,27 @@ watch(browsedPage, scrollToStart)
         class="w-full max-w-7xl shrink-0 px-5.5 pt-4 pb-6"
         :class="{ 'flex grow flex-col': showsEmptyState || searchActive }"
       >
-        <KnowledgeBaseSearchBar ref="search-bar" v-model="searchTerm" :title="browsedTitle">
+        <!-- Not while sorting: searching would replace the very content being arranged. -->
+        <KnowledgeBaseSearchBar
+          v-if="!isSortingArmed"
+          ref="search-bar"
+          v-model="searchTerm"
+          :title="browsedTitle"
+        >
           <template #controls>
             <KnowledgeBaseSearchShortcuts @search="searchNow" />
           </template>
         </KnowledgeBaseSearchBar>
+
+        <!-- Takes the search bar's place while sorting: it is the same slot on the page, and the
+             two are never both useful - searching would replace the content being arranged. -->
+        <KnowledgeBaseContentTabs
+          v-if="showsContentTabs"
+          v-model="sortingScope"
+          class="mb-4"
+          :category-count="subcategories.length"
+          :answer-count="directAnswerCount ?? 0"
+        />
 
         <!-- Keyed like the answer list: a scope or locale switch must drop the results with
              their query and pagination state rather than page the new scope with the old cursor.
@@ -296,24 +498,50 @@ watch(browsedPage, scrollToStart)
 
           <!-- One root element: the loader renders its slot inside a <Transition>. -->
           <div
-            v-if="tileCount || showsEmptyState"
+            v-if="tileCount || showsEmptyState || showsSortingEmptyState"
+            v-show="showsCategories"
             :class="{ 'flex grow flex-col': showsEmptyState }"
           >
-            <ol class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            <!-- Dropped while the empty state below takes its place: everything else in it is
+                 hidden while sorting anyway, and an empty grid that still takes focus would
+                 announce itself as one to arrange. -->
+            <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
+            <ol
+              v-if="!showsSortingEmptyState"
+              ref="dnd-parent"
+              class="group focus-visible:outline-offset-0.5! grid grid-cols-1 gap-4 rounded-xl focus-visible-app-default sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+              :tabindex="isRearranging ? 0 : undefined"
+              :aria-label="isRearranging ? $t('Category order list') : undefined"
+              :aria-activedescendant="isRearranging ? focusedItemId : undefined"
+              :aria-describedby="isRearranging ? messageNodeId : undefined"
+              @focus="handleFocus"
+              @blur="handleBlur"
+              @keydown="handleKeydown"
+            >
               <KnowledgeBaseCategoryCard
-                v-for="category in subcategories"
+                v-for="(category, index) in dndSubcategories"
                 :key="category.id"
+                :list-item-id="`item-${category.id}`"
                 v-bind="category"
+                :is-sorting="isSortingArmed"
+                :is-rearranging="isRearranging"
+                :is-focused="index === focusedItemIndex"
+                :is-selected="index === selectedItemIndex"
+                :class="{
+                  draggable: isRearranging,
+                }"
+                :draggable="isRearranging ? 'true' : undefined"
               />
-              <!-- Also shown without subcategories: the only way to create the first one. -->
+              <!-- Also shown without subcategories: the only way to create the first one. Not
+                   while rearranging: it is no category, so it must not take part in the order. -->
               <KnowledgeBaseAddCategoryCard
-                v-if="canAddCategory"
+                v-if="canAddCategory && !isSortingArmed"
                 ref="add-category-card"
                 @add="addCategory"
               />
 
               <li
-                v-if="tileCount"
+                v-if="tileCount && !isSortingArmed"
                 aria-hidden="true"
                 class="relative rounded-xl bg-blue-75 before:absolute before:inset-y-0 before:left-[calc(100%+1rem)] before:w-full before:rounded-xl before:bg-blue-75 after:absolute after:inset-y-0 after:left-[calc(200%+2rem)] after:w-full after:rounded-xl after:bg-blue-75 dark:bg-gray-700 dark:before:bg-gray-700 dark:after:bg-gray-700"
                 :class="placeholderClasses"
@@ -321,14 +549,43 @@ watch(browsedPage, scrollToStart)
             </ol>
 
             <div
+              v-if="showsSortingEmptyState"
+              class="flex flex-col items-center justify-center gap-4 py-8"
+              role="status"
+            >
+              <CommonIcon
+                decorative
+                name="folder"
+                size="medium"
+                class="text-stone-200! dark:text-neutral-500!"
+              />
+              <div class="flex max-w-prose flex-col items-center">
+                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                  {{ $t('There are no categories to arrange yet.') }}
+                </CommonLabel>
+                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                  {{ $t('The sorting mode you save here will apply to categories added later.') }}
+                </CommonLabel>
+              </div>
+            </div>
+
+            <div
               v-if="showsEmptyState"
               class="flex grow flex-col items-center justify-center gap-2"
             >
-              <CommonIcon name="book" size="medium" class="dark:text-neutral-500" />
-              <CommonLabel tag="p" class="flex-col dark:text-neutral-500">
-                <span>{{ $t('No knowledge base content is available yet.') }}</span>
-                <span>{{ $t('Please contact your administrator.') }}</span>
-              </CommonLabel>
+              <CommonIcon
+                name="book"
+                size="medium"
+                class="text-stone-200! dark:text-neutral-500!"
+              />
+              <div class="flex flex-col">
+                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                  {{ $t('No knowledge base content is available yet.') }}
+                </CommonLabel>
+                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                  {{ $t('Please contact your administrator.') }}
+                </CommonLabel>
+              </div>
             </div>
           </div>
         </CommonLoader>
@@ -337,6 +594,7 @@ watch(browsedPage, scrollToStart)
              them would remount the list on every category switch. -->
         <KnowledgeBaseAnswerList
           v-if="!searchActive"
+          v-show="showsAnswers"
           ref="answer-list"
           :key="browsedPage"
           v-model:add-answer-card-visible="isAddAnswerCardVisible"
@@ -346,12 +604,14 @@ watch(browsedPage, scrollToStart)
           :can-add-answer="canAddAnswer"
           :can-edit-answer="canEditAnswer"
           :can-delete-answer="canDeleteAnswer"
+          :is-sorting="isSortingArmed"
         />
       </section>
 
       <CommonIndicator v-model="isReachingBottom" />
 
-      <div class="pointer-none sticky bottom-3 h-0 w-full print:hidden">
+      <!-- Not while sorting: the bottom bar takes over there, and adding is not on offer. -->
+      <div v-if="!isSortingArmed" class="pointer-none sticky bottom-3 h-0 w-full print:hidden">
         <CommonFloatingToolbar
           :label="$t('Knowledge base actions')"
           :is-reaching-bottom="isReachingBottom"
@@ -408,5 +668,18 @@ watch(browsedPage, scrollToStart)
         </CommonFloatingToolbar>
       </div>
     </div>
+
+    <!-- The condition belongs on the slot, not on the component inside it: the layout reserves
+         the row for as long as the slot is passed at all, so an empty one would shorten the
+         content by a bar that is not there. -->
+    <template v-if="isSortingArmed" #bottomBar>
+      <KnowledgeBaseSortingBar
+        v-model="sortingMode"
+        :dirty="isSortingDirty"
+        :saving="isSavingSorting"
+        @cancel="resetKnowledgeBaseSorting"
+        @save="saveSorting"
+      />
+    </template>
   </LayoutContent>
 </template>

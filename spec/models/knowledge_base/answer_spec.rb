@@ -177,6 +177,41 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
     end
   end
 
+  describe '#sorted_by_mode' do
+    # The internal and the public listing date the same answer differently, which is the one thing
+    #   neither Service::KnowledgeBase::Answers nor the public controller can show on its own.
+    context 'with the last update mode' do
+      let(:knowledge_base) { create(:knowledge_base) }
+      let(:system_locale)  { knowledge_base.kb_locales.first.system_locale }
+
+      # Internally published long ago, made public just now.
+      let(:internal_first) do
+        create(:knowledge_base_answer, knowledge_base:, internal_at: 10.days.ago, published_at: 1.minute.ago)
+          .tap { |answer| answer.translation.update!(edited_at: 10.days.ago) }
+      end
+
+      let(:public_only) do
+        create(:knowledge_base_answer, knowledge_base:, published_at: 1.hour.ago)
+          .tap { |answer| answer.translation.update!(edited_at: 1.hour.ago) }
+      end
+
+      def sorted_ids(internal:)
+        described_class
+          .where(id: [internal_first.id, public_only.id])
+          .sorted_by_mode('last_update', system_locale_or_id: system_locale, internal:)
+          .pluck(:id)
+      end
+
+      it 'dates an answer by its internal publication for the internal listing' do
+        expect(sorted_ids(internal: true)).to eq([public_only.id, internal_first.id])
+      end
+
+      it 'dates the same answer by its public publication for the help site' do
+        expect(sorted_ids(internal: false)).to eq([internal_first.id, public_only.id])
+      end
+    end
+  end
+
   describe '.visible_by_categories' do
     include_context 'basic Knowledge Base'
     let(:struct) { KnowledgeBase::AccessibleCategories::CategoriesStruct.new }
@@ -531,7 +566,7 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
   describe 'scheduling the touch of a future state', performs_jobs: true do
     let(:answer) { create(:knowledge_base_answer) }
 
-    let(:tomorrow) { 1.day.from_now }
+    let(:tomorrow)    { 1.day.from_now }
     let(:in_two_days) { 2.days.from_now }
 
     it 'queues a touch for a scheduled publication' do

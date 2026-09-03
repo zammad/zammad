@@ -10,18 +10,19 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
 
   let(:query) do
     <<~GQL
-      query knowledgeBaseAnswers($categoryId: ID!, $locale: String, $first: Int) {
-        knowledgeBaseAnswers(categoryId: $categoryId, locale: $locale, first: $first) {
+      query knowledgeBaseAnswers($categoryId: ID!, $locale: String, $first: Int, $sortingMode: EnumKnowledgeBaseSortingMode) {
+        knowledgeBaseAnswers(categoryId: $categoryId, locale: $locale, first: $first, sortingMode: $sortingMode) {
           edges { node { id title visibility translationMissing tags } }
           pageInfo { hasNextPage }
         }
       }
     GQL
   end
-  let(:category_id) { gql.id(category) }
-  let(:locale)      { nil }
-  let(:first)       { nil }
-  let(:variables)   { { categoryId: category_id, locale:, first: }.compact }
+  let(:category_id)  { gql.id(category) }
+  let(:locale)       { nil }
+  let(:first)        { nil }
+  let(:sorting_mode) { nil }
+  let(:variables)    { { categoryId: category_id, locale:, first:, sortingMode: sorting_mode }.compact }
 
   before do
     published_answer
@@ -47,6 +48,23 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
       by_id = gql.result.nodes.index_by { |node| node['id'] }
 
       expect(by_id[gql.id(published_answer)]['title']).to eq(published_answer.translation_primary.title)
+    end
+  end
+
+  # Which order each mode produces is Service::KnowledgeBase::Answers' business; this covers that
+  #   the argument reaches it, so the sorting bar can preview a mode without saving it first.
+  context 'with a previewed sorting mode', authenticated_as: :admin do
+    let(:admin)        { create(:admin) }
+    let(:sorting_mode) { 'alphabetical' }
+
+    it 'lists in the previewed mode' do
+      titles = gql.result.nodes.pluck('title')
+
+      expect(titles).to eq(titles.sort_by(&:downcase))
+    end
+
+    it 'leaves the category on the mode it is stored with' do
+      expect(category.reload.answer_sorting_mode).to eq('manual')
     end
   end
 

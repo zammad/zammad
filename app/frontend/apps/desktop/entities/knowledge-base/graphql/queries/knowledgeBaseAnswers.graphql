@@ -3,8 +3,16 @@ query knowledgeBaseAnswers(
   $locale: String
   $pageSize: Int = 30
   $cursor: String
+  # Set only while the sorting bar previews a mode, like the category listing's own argument.
+  $sortingMode: EnumKnowledgeBaseSortingMode
 ) {
-  knowledgeBaseAnswers(categoryId: $categoryId, locale: $locale, first: $pageSize, after: $cursor) {
+  knowledgeBaseAnswers(
+    categoryId: $categoryId
+    locale: $locale
+    first: $pageSize
+    after: $cursor
+    sortingMode: $sortingMode
+  ) {
     totalCount
     edges {
       node {

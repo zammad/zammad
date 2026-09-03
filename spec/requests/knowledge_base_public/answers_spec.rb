@@ -109,4 +109,36 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
       end
     end
   end
+
+  # The previous/next links under an answer walk the whole tree, and have to walk it in the order the
+  #   listing they were reached from renders — so a node that is not sorted manually moves them too.
+  describe 'previous/next navigation' do
+    def answer_titled(title)
+      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: "SortingCanary #{title}" })
+    end
+
+    # The titles the two links point at, as the rendered page offers them.
+    def adjacent_titles(answer)
+      get help_answer_path(locale_name, category, answer)
+
+      %w[previous next].map { |direction| response.parsed_body.at_css(".article-nav-adjacent-#{direction} a")&.attr('title') }
+    end
+
+    # Created against their alphabetical order, so the hand-arranged order disagrees with it.
+    let!(:zulu)  { answer_titled('Zulu') }
+    let!(:mike)  { answer_titled('Mike') }
+    let!(:alpha) { answer_titled('Alpha') }
+
+    it 'walks the hand-arranged order in the manual mode' do
+      expect(adjacent_titles(mike)).to eq([zulu.translation.title, alpha.translation.title])
+    end
+
+    context 'with the alphabetical mode' do
+      before { category.update!(answer_sorting_mode: 'alphabetical') }
+
+      it 'walks the order the listing renders' do
+        expect(adjacent_titles(mike)).to eq([alpha.translation.title, zulu.translation.title])
+      end
+    end
+  end
 end

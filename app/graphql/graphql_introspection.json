@@ -5961,6 +5961,35 @@
         },
         {
           "kind": "ENUM",
+          "name": "EnumKnowledgeBaseSortingMode",
+          "description": "How the content of a knowledge base node — its root or a single category — is ordered when browsed",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "manual",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "alphabetical",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "last_update",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
           "name": "EnumKnowledgeBaseVisibility",
           "description": "Publication state used for color-coding knowledge base content",
           "fields": null,
@@ -8357,6 +8386,22 @@
               "deprecationReason": null
             },
             {
+              "name": "categorySortingMode",
+              "description": "How the top level categories of the knowledge base are ordered when browsed",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumKnowledgeBaseSortingMode",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "colorHeader",
               "description": null,
               "args": [],
@@ -10117,6 +10162,22 @@
               "deprecationReason": null
             },
             {
+              "name": "answerSortingMode",
+              "description": "How the answers of this category are ordered when browsed",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumKnowledgeBaseSortingMode",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "breadcrumb",
               "description": "Ancestors of this category, root first, including itself",
               "args": [],
@@ -10150,6 +10211,22 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "categorySortingMode",
+              "description": "How the subcategories of this category are ordered when browsed",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumKnowledgeBaseSortingMode",
                   "ofType": null
                 }
               },
@@ -10200,6 +10277,18 @@
                   "name": "Int",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "editedAt",
+              "description": "When the category was last edited in the requested locale, counting edits to the content below it",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "ISO8601DateTime",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -10650,6 +10739,22 @@
             {
               "name": "createdAt",
               "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "editedAt",
+              "description": null,
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -11168,6 +11273,135 @@
                   "name": "ISO8601DateTime",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "KnowledgeBaseReorderAnswersPayload",
+          "description": "Autogenerated return type of KnowledgeBaseReorderAnswers.",
+          "fields": [
+            {
+              "name": "category",
+              "description": "The category with its updated `answerSortingMode`.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseCategory",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "KnowledgeBaseReorderCategoriesPayload",
+          "description": "Autogenerated return type of KnowledgeBaseReorderCategories.",
+          "fields": [
+            {
+              "name": "category",
+              "description": "The category with its updated `categorySortingMode`.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseCategory",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "KnowledgeBaseReorderRootCategoriesPayload",
+          "description": "Autogenerated return type of KnowledgeBaseReorderRootCategories.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "knowledgeBase",
+              "description": "The knowledge base with its updated `categorySortingMode`.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBase",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -13684,6 +13918,169 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "KnowledgeBaseFeedTokenRenewPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "knowledgeBaseReorderAnswers",
+              "description": "Set how the answers of a knowledge base category are ordered, and store their hand-made order. The subcategories of that category are a list of their own, unaffected by this (see KnowledgeBaseReorderCategories).",
+              "args": [
+                {
+                  "name": "categoryId",
+                  "description": "Category whose answers are reordered.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "sortingMode",
+                  "description": "How the answers of that category are to be ordered from now on.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumKnowledgeBaseSortingMode",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "answerIds",
+                  "description": "All answers of that category, in the wanted order. Required with `manual`, refused with any other mode, and always complete.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "ID",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseReorderAnswersPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "knowledgeBaseReorderCategories",
+              "description": "Set how the subcategories of a knowledge base category are ordered, and store their hand-made order. The answers of that category are a list of their own, unaffected by this (see KnowledgeBaseReorderAnswers).",
+              "args": [
+                {
+                  "name": "parentCategoryId",
+                  "description": "Category whose subcategories are reordered.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "sortingMode",
+                  "description": "How the subcategories of that category are to be ordered from now on.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumKnowledgeBaseSortingMode",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "categoryIds",
+                  "description": "All subcategories of that category, in the wanted order. Required with `manual`, refused with any other mode, and always complete.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "ID",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseReorderCategoriesPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "knowledgeBaseReorderRootCategories",
+              "description": "Set how the top level categories of the knowledge base are ordered, and store their hand-made order.",
+              "args": [
+                {
+                  "name": "sortingMode",
+                  "description": "How the top level categories are to be ordered from now on.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumKnowledgeBaseSortingMode",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "categoryIds",
+                  "description": "All top level categories, in the wanted order. Required with `manual`, refused with any other mode, and always complete.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "ID",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseReorderRootCategoriesPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -20872,6 +21269,16 @@
                   "defaultValue": null
                 },
                 {
+                  "name": "sortingMode",
+                  "description": "Order the answers in this mode instead of the category's stored `answerSortingMode`",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "EnumKnowledgeBaseSortingMode",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
                   "name": "after",
                   "description": "Returns the elements in the list that come after the specified cursor.",
                   "type": {
@@ -20944,6 +21351,16 @@
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "sortingMode",
+                  "description": "Order the subcategories in this mode instead of the node's stored `categorySortingMode`",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "EnumKnowledgeBaseSortingMode",
                     "ofType": null
                   },
                   "defaultValue": null

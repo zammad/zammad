@@ -12,6 +12,7 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
           id
           title
           active
+          categorySortingMode
           isPubliclyAvailable
           isVisiblePublicly
           showFeedIcon
@@ -40,6 +41,16 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
         'title'  => knowledge_base.translation_primary.title,
         'active' => true,
       )
+    end
+
+    # How the top level categories are ordered is stored on the knowledge base itself, which is what
+    #   the browse header reads to show the picker. The root lists categories only, so there is this
+    #   one mode where a category has one per list.
+    it 'exposes the sorting mode of the top level' do
+      knowledge_base.update!(category_sorting_mode: 'last_update')
+      gql.execute(query, variables:)
+
+      expect(gql.result.data['categorySortingMode']).to eq('last_update')
     end
 
     it 'exposes the available locales for the language selector' do

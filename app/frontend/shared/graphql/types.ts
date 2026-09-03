@@ -249,6 +249,32 @@ export type KnowledgeBaseFeedTokenRenewMutationVariables = Exact<{
 
 export type KnowledgeBaseFeedTokenRenewMutation = { knowledgeBaseFeedTokenRenew: { __typename: 'KnowledgeBaseFeedTokenRenewPayload', feed: { __typename: 'KnowledgeBaseFeed', knowledgeBasePath: string, categoryPath: string | null | undefined }, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
+export type KnowledgeBaseReorderAnswersMutationVariables = Exact<{
+  categoryId: string | number;
+  sortingMode: Types.EnumKnowledgeBaseSortingMode;
+  answerIds?: Array<string | number> | string | number | null | undefined;
+}>;
+
+
+export type KnowledgeBaseReorderAnswersMutation = { knowledgeBaseReorderAnswers: { __typename: 'KnowledgeBaseReorderAnswersPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, answerSortingMode: Types.EnumKnowledgeBaseSortingMode } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type KnowledgeBaseReorderCategoriesMutationVariables = Exact<{
+  parentCategoryId: string | number;
+  sortingMode: Types.EnumKnowledgeBaseSortingMode;
+  categoryIds?: Array<string | number> | string | number | null | undefined;
+}>;
+
+
+export type KnowledgeBaseReorderCategoriesMutation = { knowledgeBaseReorderCategories: { __typename: 'KnowledgeBaseReorderCategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, categorySortingMode: Types.EnumKnowledgeBaseSortingMode } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type KnowledgeBaseReorderRootCategoriesMutationVariables = Exact<{
+  sortingMode: Types.EnumKnowledgeBaseSortingMode;
+  categoryIds?: Array<string | number> | string | number | null | undefined;
+}>;
+
+
+export type KnowledgeBaseReorderRootCategoriesMutation = { knowledgeBaseReorderRootCategories: { __typename: 'KnowledgeBaseReorderRootCategoriesPayload', knowledgeBase: { __typename: 'KnowledgeBase', id: string, categorySortingMode: Types.EnumKnowledgeBaseSortingMode } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
 export type KnowledgeBaseUpdateMutationVariables = Exact<{
   input: Types.KnowledgeBaseInput;
   locale: string;
@@ -276,7 +302,7 @@ export type KnowledgeBaseQueryVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseQuery = { knowledgeBase: { __typename: 'KnowledgeBase', id: string, title: string | null | undefined, footerNote: string | null | undefined, iconset: string, isPubliclyAvailable: boolean, isVisiblePublicly: boolean, showFeedIcon: boolean, policy: { __typename: 'PolicyKnowledgeBase', update: boolean }, kbLocales: Array<{ __typename: 'KnowledgeBaseLocale', id: string, primary: boolean, systemLocale: { __typename: 'Locale', id: string, locale: string, name: string } }>, currentLocale: { __typename: 'KnowledgeBaseLocale', id: string, systemLocale: { __typename: 'Locale', id: string, locale: string } } | null | undefined } | null | undefined };
+export type KnowledgeBaseQuery = { knowledgeBase: { __typename: 'KnowledgeBase', id: string, title: string | null | undefined, footerNote: string | null | undefined, iconset: string, isPubliclyAvailable: boolean, isVisiblePublicly: boolean, categorySortingMode: Types.EnumKnowledgeBaseSortingMode, showFeedIcon: boolean, policy: { __typename: 'PolicyKnowledgeBase', update: boolean }, kbLocales: Array<{ __typename: 'KnowledgeBaseLocale', id: string, primary: boolean, systemLocale: { __typename: 'Locale', id: string, locale: string, name: string } }>, currentLocale: { __typename: 'KnowledgeBaseLocale', id: string, systemLocale: { __typename: 'Locale', id: string, locale: string } } | null | undefined } | null | undefined };
 
 export type KnowledgeBaseAnswerQueryVariables = Exact<{
   answerId: string | number;
@@ -293,6 +319,7 @@ export type KnowledgeBaseAnswersQueryVariables = Exact<{
   locale?: string | null | undefined;
   pageSize?: number | null | undefined;
   cursor?: string | null | undefined;
+  sortingMode?: Types.EnumKnowledgeBaseSortingMode | null | undefined;
 }>;
 
 
@@ -301,10 +328,11 @@ export type KnowledgeBaseAnswersQuery = { knowledgeBaseAnswers: { __typename: 'K
 export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
   categoryId?: string | number | null | undefined;
   locale?: string | null | undefined;
+  sortingMode?: Types.EnumKnowledgeBaseSortingMode | null | undefined;
 }>;
 
 
-export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean, destroyAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean, destroyAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
+export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, isDeletable: boolean, categorySortingMode: Types.EnumKnowledgeBaseSortingMode, answerSortingMode: Types.EnumKnowledgeBaseSortingMode, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean, destroyAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean, updateAnswer: boolean, destroyAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
 
 export type KnowledgeBaseFeedQueryVariables = Exact<{
   categoryId?: string | number | null | undefined;

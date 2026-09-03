@@ -57,6 +57,7 @@
 - `assets/filter.svg`
 - `assets/forward.svg`
 - `assets/globe.svg`
+- `assets/grid.svg`
 - `assets/grip-vertical.svg`
 - `assets/image.svg`
 - `assets/info-circle.svg`
@@ -88,6 +89,7 @@
 - `assets/search.svg`
 - `assets/shield-lock.svg`
 - `assets/sms.svg`
+- `assets/sort-alpha-down.svg`
 - `assets/speedometer2.svg`
 - `assets/spinner.svg`
 - `assets/square.svg`

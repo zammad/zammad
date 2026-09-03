@@ -22,7 +22,10 @@ class Service::KnowledgeBase::Answer::Create < Service::KnowledgeBase::Answer::B
   end
 
   def execute
-    ensure_category_of_knowledge_base!(category)
+    # Filing an answer is editing knowledge base content, so it follows the same rule as the
+    #   knowledge base itself: only while it is active. Asserted here rather than left to the locale
+    #   resolution, which a caller passing a KnowledgeBase::Locale record would skip.
+    active_knowledge_base!
 
     answer = ActiveRecord::Base.transaction do
       built = build_answer

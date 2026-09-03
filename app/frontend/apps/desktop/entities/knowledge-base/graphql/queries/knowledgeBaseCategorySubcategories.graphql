@@ -1,5 +1,15 @@
-query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
-  knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale) {
+query knowledgeBaseCategorySubcategories(
+  $categoryId: ID
+  $locale: String
+  # Set only while the sorting bar previews a mode: it orders this listing instead of the node's
+  #   stored one, so the preview is the very order saving would produce.
+  $sortingMode: EnumKnowledgeBaseSortingMode
+) {
+  knowledgeBaseCategorySubcategories(
+    categoryId: $categoryId
+    locale: $locale
+    sortingMode: $sortingMode
+  ) {
     category {
       id
       isVisiblePublicly
@@ -8,6 +18,10 @@ query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
       #   from the user-visible counts, which can read zero on a category the backend will
       #   still refuse to delete.
       isDeletable
+      # One mode per list: the opened category's subcategories and its answers are sorted
+      #   independently, so the sorting bar starts each of its two scopes from its own.
+      categorySortingMode
+      answerSortingMode
       ...knowledgeBaseCategoryPolicy
       ...knowledgeBaseCategoryPreInfo
     }

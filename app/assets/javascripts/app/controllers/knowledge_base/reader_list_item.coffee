@@ -11,6 +11,10 @@ class App.KnowledgeBaseReaderListItem extends App.Controller
   className: 'section'
 
   render: ->
+    # A hand-made order changing under this item, which asks the list around it to re-check itself.
+    #   Only that one: an automatic mode derives the order from the title or the date instead, and
+    #   leaves `position` where it was. Those are caught by the list itself, which recomputes its
+    #   order on every content change (App.KnowledgeBaseReaderListContainer#parentRefreshed).
     if @sort_order != null && @sort_order != @item.position
       App.Delay.set(=>
         @parentController.parentRefreshed()

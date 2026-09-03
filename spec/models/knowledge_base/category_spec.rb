@@ -14,6 +14,85 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
 
   it { is_expected.to validate_presence_of(:category_icon) }
   it { is_expected.not_to validate_presence_of(:parent_id) }
+  it { is_expected.to validate_inclusion_of(:category_sorting_mode).in_array(KnowledgeBase::SORTING_MODES) }
+  it { is_expected.to validate_inclusion_of(:answer_sorting_mode).in_array(KnowledgeBase::SORTING_MODES) }
+
+  # What both lists hold before anything is inherited into them, and what the factory's `manual`
+  #   pins are measured against: the guards in #inherit_sorting_modes can see those pins only
+  #   because they differ from this, so a default back on `manual` would quietly turn every pinned
+  #   factory category into an inheriting one — and the order-dependent examples all over the suite
+  #   would change meaning without one of them failing.
+  it 'starts both of its lists on the default mode', :aggregate_failures do
+    expect(described_class.new).to have_attributes(
+      category_sorting_mode: KnowledgeBase::DEFAULT_SORTING_MODE,
+      answer_sorting_mode:   KnowledgeBase::DEFAULT_SORTING_MODE
+    )
+  end
+
+  describe 'sorting mode inheritance' do
+    # The factory pins both lists to `manual` for the suite's order-dependent examples, so every
+    #   example here says out loud what the node above it is set to — and the inheriting category
+    #   is built without the factory, whose pins would stand in for the modes under test.
+    let(:knowledge_base) { create(:knowledge_base, category_sorting_mode: 'last_update') }
+
+    def inheriting_category(**attributes)
+      described_class.create!(knowledge_base:, category_icon: 'f04b', **attributes)
+    end
+
+    context 'when created under a parent category' do
+      let(:parent) do
+        create(:knowledge_base_category, knowledge_base:, category_sorting_mode: 'manual', answer_sorting_mode: 'last_update')
+      end
+
+      # The parent's category mode differs from the knowledge base's, so the child taking it proves
+      #   it inherited from the list it landed in rather than from the root.
+      it 'follows the list it lands in, per list' do
+        expect(inheriting_category(parent:))
+          .to have_attributes(category_sorting_mode: 'manual', answer_sorting_mode: 'last_update')
+      end
+    end
+
+    context 'when created at the top level' do
+      it 'takes its category mode from the knowledge base' do
+        expect(inheriting_category.category_sorting_mode).to eq('last_update')
+      end
+
+      # The root lists categories only, so there is no answer mode above it to inherit — deriving
+      #   one from its *category* mode would conflate two lists the model keeps apart.
+      it 'takes the default mode for its answers' do
+        expect(inheriting_category.answer_sorting_mode).to eq(KnowledgeBase::DEFAULT_SORTING_MODE)
+      end
+    end
+
+    it 'keeps modes it was created with' do
+      parent = create(:knowledge_base_category, knowledge_base:, category_sorting_mode: 'manual', answer_sorting_mode: 'manual')
+
+      expect(inheriting_category(parent:, category_sorting_mode: 'last_update', answer_sorting_mode: 'last_update'))
+        .to have_attributes(category_sorting_mode: 'last_update', answer_sorting_mode: 'last_update')
+    end
+
+    # #inherit_sorting_modes tracks whether the caller assigned the attribute itself, separately
+    #   from dirty tracking, so an explicit assignment equal to the column default
+    #   (KnowledgeBase::DEFAULT_SORTING_MODE) is still distinguishable from no assignment at all —
+    #   and wins over the inherited mode, the same as any other explicit value.
+    it 'keeps an explicitly assigned default mode instead of inheriting' do
+      parent = create(:knowledge_base_category, knowledge_base:, category_sorting_mode: 'manual')
+
+      expect(inheriting_category(parent:, category_sorting_mode: KnowledgeBase::DEFAULT_SORTING_MODE).category_sorting_mode)
+        .to eq(KnowledgeBase::DEFAULT_SORTING_MODE)
+    end
+
+    # Inheritance is a create-time default: an editor either chose the modes or accepted them, and
+    #   re-deriving on a move would silently rewrite that.
+    it 'keeps its modes when moved under a different parent' do
+      category   = create(:knowledge_base_category, knowledge_base:, category_sorting_mode: 'manual', answer_sorting_mode: 'manual')
+      new_parent = create(:knowledge_base_category, knowledge_base:, category_sorting_mode: 'last_update', answer_sorting_mode: 'last_update')
+
+      category.update!(parent: new_parent)
+
+      expect(category.reload).to have_attributes(category_sorting_mode: 'manual', answer_sorting_mode: 'manual')
+    end
+  end
 
   it { is_expected.to have_many(:answers) }
   it { is_expected.to have_many(:children) }
@@ -594,6 +673,65 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
 
       expect { moved_category.update!(parent: nil) }
         .not_to have_enqueued_job(VectorIndexKnowledgeBaseCategoryResyncJob)
+    end
+  end
+
+  describe '.sorted_by_mode' do
+    # `last_update` is the only mode that reads a timestamp, and the one thing it may read is the
+    #   editorial one of the translation the category is *shown* under — see the note on the scope.
+    context 'with the last update mode' do
+      let(:knowledge_base)   { create(:knowledge_base) }
+      let(:primary_locale)   { knowledge_base.translation_primary.kb_locale }
+      let(:secondary_locale) { create(:knowledge_base_locale, knowledge_base:, system_locale: Locale.find_by(locale: 'lt')) }
+
+      let(:older) { create(:knowledge_base_category, knowledge_base:) }
+      let(:newer) { create(:knowledge_base_category, knowledge_base:) }
+
+      # No translation at all, so the correlated subquery is null for it — the one case `NULLS LAST`
+      #   is there for.
+      let(:untranslated) do
+        create(:knowledge_base_category, knowledge_base:).tap { |cat| cat.translations.destroy_all }
+      end
+
+      def sorted_ids(system_locale_or_id: primary_locale.system_locale_id)
+        described_class
+          .where(id: [older.id, newer.id, untranslated.id])
+          .sorted_by_mode('last_update', system_locale_or_id:)
+          .pluck(:id)
+      end
+
+      before do
+        older.translation_primary.update!(edited_at: 1.week.ago)
+        newer.translation_primary.update!(edited_at: 1.hour.ago)
+      end
+
+      it 'orders by the edit date of the shown translation, most recent first' do
+        expect(sorted_ids).to eq([newer.id, older.id, untranslated.id])
+      end
+
+      # The browsed locale decides which translation is shown, so it decides which date is read —
+      #   and where the browsed locale has none, the primary one it falls back to does.
+      it 'reads the translation of the browsed locale' do
+        create(:knowledge_base_category_translation, category: older, kb_locale: secondary_locale)
+          .update!(edited_at: 1.minute.ago)
+
+        expect(sorted_ids(system_locale_or_id: secondary_locale.system_locale_id))
+          .to eq([older.id, newer.id, untranslated.id])
+      end
+
+      # What the `updated_at` proxy this replaced could not tell apart: neither of these is an edit
+      #   of anything the category shows.
+      it 'is unaffected by a reorder or a sorting-mode switch' do
+        older.update!(position: 0, category_sorting_mode: 'alphabetical')
+
+        expect(sorted_ids).to eq([newer.id, older.id, untranslated.id])
+      end
+
+      it 'files a category without any translation last' do
+        older.translation_primary.update!(edited_at: 10.years.ago)
+
+        expect(sorted_ids.last).to eq(untranslated.id)
+      end
     end
   end
 

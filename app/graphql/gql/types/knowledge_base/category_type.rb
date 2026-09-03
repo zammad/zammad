@@ -11,6 +11,10 @@ module Gql::Types::KnowledgeBase
     field :icon_set, Gql::Types::KnowledgeBase::IconSetType, null: false, description: 'Icon font of the knowledge base this category belongs to, needed to render `categoryIcon`'
 
     field :position, Integer, null: false
+    # A mode per list, so the subcategories can be alphabetical while the answers are arranged by
+    #   hand (see KnowledgeBase::SORTING_MODES).
+    field :category_sorting_mode, Gql::Types::Enum::KnowledgeBase::SortingModeType, null: false, description: 'How the subcategories of this category are ordered when browsed'
+    field :answer_sorting_mode, Gql::Types::Enum::KnowledgeBase::SortingModeType, null: false, description: 'How the answers of this category are ordered when browsed'
 
     field :translations, [Gql::Types::KnowledgeBase::Category::TranslationType], null: false
 
@@ -26,6 +30,8 @@ module Gql::Types::KnowledgeBase
     field :is_deletable, Boolean, null: false, description: 'Whether this category is empty, i.e. whether deleting it would be refused because of subcategories or answers below it'
 
     field :policy, Gql::Types::Policy::KnowledgeBase::CategoryType, null: false, method: :itself, description: 'Which actions the current user may perform on this category'
+
+    field :edited_at, GraphQL::Types::ISO8601DateTime, description: 'When the category was last edited in the requested locale, counting edits to the content below it'
 
     belongs_to :parent, Gql::Types::KnowledgeBase::CategoryType
     belongs_to :knowledge_base, Gql::Types::KnowledgeBaseType, null: false
@@ -48,6 +54,15 @@ module Gql::Types::KnowledgeBase
       return titles[object.id] if titles&.key?(object.id)
 
       object.translation_preferred(context[:knowledge_base_locale])&.title
+    end
+
+    # Batched by the browse query alongside the title, and off the same translation — otherwise
+    #   dating a listing of categories would cost one query per card.
+    def edited_at
+      timestamps = context[:knowledge_base_category_edited_at]
+      return timestamps[object.id] if timestamps&.key?(object.id)
+
+      object.translation_preferred(context[:knowledge_base_locale])&.edited_at
     end
 
     def translation_missing

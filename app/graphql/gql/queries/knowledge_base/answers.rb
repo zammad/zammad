@@ -8,10 +8,14 @@ module Gql::Queries
 
     argument :category_id, GraphQL::Types::ID, loads: Gql::Types::KnowledgeBase::CategoryType, description: 'Category whose answers to list'
     argument :locale, String, required: false, description: 'System locale code used to resolve titles'
+    # Ordering only, like the sibling argument on Gql::Queries::KnowledgeBase::CategorySubcategories:
+    #   the connection holds the same answers either way, and asking the backend rather than sorting
+    #   a page client-side is also the only way to preview a mode without paging wrongly.
+    argument :sorting_mode, Gql::Types::Enum::KnowledgeBase::SortingModeType, required: false, description: 'Order the answers in this mode instead of the category\'s stored `answerSortingMode`'
 
     type Gql::Types::KnowledgeBase::AnswerType.connection_type, null: false
 
-    def resolve(category:, locale: nil)
+    def resolve(category:, locale: nil, sorting_mode: nil)
       # Only the active knowledge base is browsable — a category loaded by GID
       #   must not expose answers from an inactive knowledge base, like it must
       #   not expose the answer itself or its feeds.
@@ -28,7 +32,7 @@ module Gql::Queries
 
       ::Service::KnowledgeBase::Answers
         .with_current_user(context.current_user)
-        .execute(category:, locale: context[:knowledge_base_locale])
+        .execute(category:, locale: context[:knowledge_base_locale], sorting_mode:)
     end
   end
 end

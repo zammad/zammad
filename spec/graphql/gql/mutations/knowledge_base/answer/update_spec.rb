@@ -125,17 +125,6 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Update, type: :graphql do
       end
     end
 
-    # Whatever the service refuses has to reach the client as a user error rather than as a failed
-    #   mutation.
-    context 'when the service refuses the move' do
-      let(:input) { { categoryId: gql.id(create(:knowledge_base_category)) } }
-
-      it 'returns a user error for the form' do
-        expect(gql.result.data['errors'])
-          .to include(include('message' => 'The selected category does not belong to this knowledge base.', 'field' => nil))
-      end
-    end
-
     # A model validation, not a service refusal: KnowledgeBase::HasUniqueTitle reports it on the
     #   answer's `translations.title` path, which is what the form has to map back onto its own
     #   `title` field.

@@ -55,24 +55,32 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     all_locales.select { |locale| system_locale_ids.include? locale.id }
   end
 
-  def categories_filter(list)
+  # `sorting_node` is the knowledge base or category whose categories are being listed, and
+  #   therefore the one holding their sorting mode. Nil where the listing spans categories and no
+  #   single mode applies (the tag page), which leaves it on the hand-arranged order.
+  def categories_filter(list, sorting_node = nil)
     list
       .localed(system_locale_via_uri)
-      .sorted
+      .sorted_by_mode(sorting_node&.category_sorting_mode, system_locale_or_id: system_locale_via_uri)
       .select { |category| policy(category).show_public? }
   end
 
+  # `sorting_node` is the category whose answers are being listed, holding their own sorting mode —
+  #   not the one its subcategories are listed in. Nil on the tag page, as above.
+  #
   # The category is preloaded for the tag listing: `KnowledgeBase::Answer.tag_objects` is a bare
   #   `where`, so nothing presets the answer's category there the way `category.answers` does
   #   (`inverse_of: :answers`), and the link the view builds per answer
   #   (`answer.category.translation`) then fetches it one answer at a time. Measured on a tag page
   #   listing ten answers from ten categories: ten queries saved, for anonymous visitors as much as
   #   for editors. On a category page the preload is a no-op, the association already being loaded.
-  def answers_filter(list)
+  def answers_filter(list, sorting_node = nil)
     answers = list
                 .includes(:category)
                 .localed(system_locale_via_uri)
-                .sorted
+                # Not `internal`: this site never shows the internal publication date, so it must
+                #   not order by it either.
+                .sorted_by_mode(sorting_node&.answer_sorting_mode, system_locale_or_id: system_locale_via_uri, internal: false)
 
     if current_user&.permissions?('knowledge_base.editor')
       answers.filter { |answer| policy(answer).show_public? }

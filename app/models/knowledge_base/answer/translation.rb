@@ -28,6 +28,18 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   before_save :set_edited_at, if: :edited?
 
+  # A category is dated by the content below it, so an edit of this translation is an edit of its
+  #   answer's category and of every category above that one.
+  #
+  # `saved_change_to_edited_at?` *is* the editorial contract: the column moves for a title change
+  #   (in `before_save` above), for a body change (through
+  #   KnowledgeBase::Answer::Translation::Content#bump_translation_edited_at, which saves rather
+  #   than touches), and on creation. Everything else that reaches this row does so through `touch`
+  #   — KnowledgeBase::Answer#touch_translations and the non-body branch of that same content hook —
+  #   which runs no callbacks, so tags, attachments and publication changes stay out by
+  #   construction.
+  after_save :bump_category_edited_at, if: :saved_change_to_edited_at?
+
   scope :neighbours_of, ->(translation) { joins(:answer).where(knowledge_base_answers: { category_id: translation.answer&.category_id }) }
 
   alias assets_essential assets
@@ -168,6 +180,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   def set_edited_at
     self.edited_at = Time.zone.now
+  end
+
+  def bump_category_edited_at
+    ::KnowledgeBase::Category::Translation.bump_edited_at(answer&.category, [kb_locale_id])
   end
 
   def answer_publication_state

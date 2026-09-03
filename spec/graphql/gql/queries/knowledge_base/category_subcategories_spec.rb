@@ -10,11 +10,11 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
 
   let(:query) do
     <<~GQL
-      query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
-        knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale) {
-          category { isVisiblePublicly translationMissing breadcrumb { id title visibility } }
+      query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String, $sortingMode: EnumKnowledgeBaseSortingMode) {
+        knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale, sortingMode: $sortingMode) {
+          category { isVisiblePublicly translationMissing categorySortingMode answerSortingMode editedAt breadcrumb { id title visibility } }
           subcategories {
-            id title visibility translationMissing answerCount subcategoryCount directAnswerCount directSubcategoryCount
+            id title visibility translationMissing categorySortingMode answerSortingMode editedAt answerCount subcategoryCount directAnswerCount directSubcategoryCount
             categoryIcon iconSet
             breadcrumb { id title }
           }
@@ -22,9 +22,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       }
     GQL
   end
-  let(:category_id) { nil }
-  let(:locale)      { nil }
-  let(:variables)   { { categoryId: category_id, locale: }.compact }
+  let(:category_id)  { nil }
+  let(:locale)       { nil }
+  let(:sorting_mode) { nil }
+  let(:variables)    { { categoryId: category_id, locale:, sortingMode: sorting_mode }.compact }
 
   def result_categories
     gql.result.data['subcategories']
@@ -32,6 +33,34 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
 
   def category_node(record)
     result_categories.find { |c| c['id'] == gql.id(record) }
+  end
+
+  # Which order each mode produces is Service::KnowledgeBase::CategoryContent's business; this
+  #   covers that the argument reaches it, so the sorting bar can preview a mode without saving it
+  #   first — and that the node keeps reporting the mode it is actually stored with, which is what
+  #   the bar compares a picked one against.
+  context 'with a previewed sorting mode' do
+    let(:sorting_mode) { 'alphabetical' }
+
+    before do
+      published_answer
+      draft_answer_in_other_category
+      gql.execute(query, variables:)
+    end
+
+    context 'with an admin (editor)', authenticated_as: :admin do
+      let(:admin) { create(:admin) }
+
+      it 'lists in the previewed mode' do
+        titles = result_categories.pluck('title')
+
+        expect(titles).to eq(titles.sort_by(&:downcase))
+      end
+
+      it 'still reports the stored mode' do
+        expect(knowledge_base.reload.category_sorting_mode).to eq('manual')
+      end
+    end
   end
 
   context 'when at the knowledge base root' do
@@ -103,6 +132,27 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
             { 'id' => gql.id(subcategory), 'title' => subcategory.translation_primary.title },
           ]
         )
+      end
+
+      # Every listed category carries the modes its own content is ordered by, so the browse view can
+      #   show the pickers of the opened category and of each card without a second fetch.
+      it 'gives the opened category and each subcategory their sorting modes', :aggregate_failures do
+        category.update!(category_sorting_mode: 'alphabetical')
+        subcategory.update!(category_sorting_mode: 'last_update')
+        gql.execute(query, variables:)
+
+        expect(gql.result.data.dig('category', 'categorySortingMode')).to eq('alphabetical')
+        expect(category_node(subcategory)['categorySortingMode']).to eq('last_update')
+      end
+
+      # The combination a single column could not express: one category, its two lists in
+      #   different modes.
+      it 'gives a category the two modes of its two lists independently', :aggregate_failures do
+        category.update!(category_sorting_mode: 'alphabetical', answer_sorting_mode: 'manual')
+        gql.execute(query, variables:)
+
+        expect(gql.result.data.dig('category', 'categorySortingMode')).to eq('alphabetical')
+        expect(gql.result.data.dig('category', 'answerSortingMode')).to eq('manual')
       end
     end
   end
@@ -249,6 +299,70 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       end
 
       expect(answer_table_query_count).to eq(baseline)
+    end
+  end
+
+  # The editorial timestamp the `last_update` mode orders by, resolved off the same translation the
+  #   title comes from — so a card can show why it sits where it does.
+  describe 'the editorial timestamp' do
+    let(:category_id) { gql.id(category) }
+
+    before { published_answer_in_subcategory } # category => subcategory => public content
+
+    context 'with an admin (editor)', authenticated_as: :admin do
+      let(:admin) { create(:admin) }
+
+      it 'is given for the opened category and for each listed one', :aggregate_failures do
+        edited_at = 3.days.ago
+        subcategory.translation_primary.update!(edited_at:)
+
+        gql.execute(query, variables:)
+        expect(gql.result.data.dig('category', 'editedAt')).to eq(category.translation_primary.reload.edited_at.iso8601)
+        expect(category_node(subcategory)['editedAt']).to eq(edited_at.iso8601)
+      end
+
+      def translation_query_count
+        queries = []
+        subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+          queries << payload[:sql] if payload[:sql].include?('knowledge_base_category_translations')
+        end
+        gql.execute(query, variables:)
+        queries.size
+      ensure
+        ActiveSupport::Notifications.unsubscribe(subscriber)
+      end
+
+      # Batched with the titles, so dating a listing does not add a query per card.
+      it 'costs no extra query per listed category' do
+        baseline = translation_query_count
+
+        create_list(:knowledge_base_category, 5, knowledge_base:, parent: category).each do |extra|
+          create(:knowledge_base_answer, :published, category: extra)
+        end
+
+        expect(translation_query_count).to eq(baseline)
+      end
+    end
+
+    context 'with a customer (public)', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+
+      before { gql.execute(query, variables:) }
+
+      it 'is given for a publicly readable category', :aggregate_failures do
+        expect(gql.result.data.dig('category', 'editedAt')).to be_present
+        expect(gql.result.data.dig('category', 'isVisiblePublicly')).to be(true)
+      end
+    end
+
+    context 'with an agent (reader)', authenticated_as: :agent do
+      let(:agent) { create(:agent) }
+
+      before { gql.execute(query, variables:) }
+
+      it 'is given to a reader' do
+        expect(gql.result.data.dig('category', 'editedAt')).to be_present
+      end
     end
   end
 

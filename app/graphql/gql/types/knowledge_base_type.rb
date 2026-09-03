@@ -13,6 +13,9 @@ module Gql::Types
     field :color_header_link, String, null: false
     field :homepage_layout, String, null: false
     field :category_layout, String, null: false
+    # The root lists categories and nothing else, so it has this one mode where a category has one
+    #   per list (see KnowledgeBase::SORTING_MODES).
+    field :category_sorting_mode, Gql::Types::Enum::KnowledgeBase::SortingModeType, null: false, description: 'How the top level categories of the knowledge base are ordered when browsed'
     field :active, Boolean, null: false
     field :custom_address, String
 

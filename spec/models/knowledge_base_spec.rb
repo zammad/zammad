@@ -20,6 +20,18 @@ RSpec.describe KnowledgeBase, type: :model do
   it { is_expected.to validate_inclusion_of(:iconset).in_array(KnowledgeBase::ICONSETS) }
   it { is_expected.to validate_inclusion_of(:category_layout).in_array(KnowledgeBase::LAYOUTS) }
   it { is_expected.to validate_inclusion_of(:homepage_layout).in_array(KnowledgeBase::LAYOUTS) }
+  it { is_expected.to validate_inclusion_of(:category_sorting_mode).in_array(KnowledgeBase::SORTING_MODES) }
+
+  # The root lists categories only, so it carries that one mode — a category has one per list.
+  #   Built without the factory, which pins `manual` for the suite's order-dependent examples.
+  it 'starts out sorting its categories by the default mode' do
+    expect(described_class.new.category_sorting_mode).to eq(KnowledgeBase::DEFAULT_SORTING_MODE)
+  end
+
+  it 'keeps a sorting mode it was created with' do
+    expect(create(:knowledge_base, category_sorting_mode: 'last_update').category_sorting_mode)
+      .to eq('last_update')
+  end
 
   describe 'audit log' do
     before { Setting.set('system_init_done', true) }

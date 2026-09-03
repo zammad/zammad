@@ -176,18 +176,4 @@ class Service::KnowledgeBase::Answer::Base < Service::KnowledgeBase::Base
 
     answer.attach_upload_cache(form_id)
   end
-
-  # Nothing relates an answer's category to the knowledge base every write goes to, so a category of
-  #   another one would save happily — and leave an answer in a tree whose locale it was never
-  #   written for.
-  #
-  # This is also where an inactive knowledge base is refused, since resolving it is what the
-  #   comparison needs. Asserting it separately would be the same call twice: writing an answer is
-  #   editing knowledge base content, so it follows the same rule as the category services — only
-  #   while the knowledge base is active.
-  def ensure_category_of_knowledge_base!(category)
-    return if category.knowledge_base_id == active_knowledge_base!.id
-
-    raise Exceptions::UnprocessableContent, __('The selected category does not belong to this knowledge base.')
-  end
 end

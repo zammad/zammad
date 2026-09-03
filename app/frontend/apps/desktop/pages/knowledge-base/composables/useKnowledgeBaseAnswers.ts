@@ -10,21 +10,30 @@ import { normalizeEdges } from '#shared/utils/helpers.ts'
 import { useKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.api.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
+import type { KnowledgeBaseSortingMode } from '../types.ts'
+
 const ANSWERS_PAGE_SIZE = 30
 
 export const useKnowledgeBaseAnswers = (options: {
   categoryId: Ref<string | undefined>
   locale?: Ref<string | undefined>
+  // The mode the sorting bar is previewing, if any; undefined lists in the category's stored one.
+  sortingMode?: Ref<KnowledgeBaseSortingMode | undefined>
 }) => {
-  const { categoryId, locale } = options
+  const { categoryId, locale, sortingMode } = options
+
+  // Every argument this query is sent with, in one place: the reactive query function below reads
+  //   it, and so does the explicit refetch on a content update.
+  const queryVariables = () => ({
+    categoryId: categoryId.value as string,
+    locale: locale?.value,
+    pageSize: ANSWERS_PAGE_SIZE,
+    sortingMode: sortingMode?.value,
+  })
 
   const answersQuery = new QueryHandler(
     useKnowledgeBaseAnswersQuery(
-      () => ({
-        categoryId: categoryId.value as string,
-        locale: locale?.value,
-        pageSize: ANSWERS_PAGE_SIZE,
-      }),
+      queryVariables,
       // Answers exist only below a specific category; the knowledge base root
       //   has none, so the query stays disabled until a category is opened.
       () => ({ enabled: Boolean(categoryId.value) }),
@@ -73,11 +82,14 @@ export const useKnowledgeBaseAnswers = (options: {
     //   descendant (this category only as an ancestor) does not match.
     if (affected.length === 0 || affected[0] === categoryId.value) {
       // Pin the refetch to the current args explicitly, like the sibling composables do, rather
-      //   than relying on what the reactive query function last pushed into the query.
+      //   than relying on what the reactive query function last pushed into the query. The
+      //   previewed sorting mode is one of them, so a content update does not drop the listing
+      //   back into the stored order.
       answersQuery.refetch({
         categoryId: categoryId.value,
         locale: locale?.value,
         pageSize: loadedPageSize(),
+        sortingMode: sortingMode?.value,
       })
     }
   })

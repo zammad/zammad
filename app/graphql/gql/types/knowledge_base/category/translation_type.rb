@@ -8,6 +8,7 @@ module Gql::Types::KnowledgeBase::Category
     description 'Knowledge Base Category Translation'
 
     field :title, String, null: false
+    field :edited_at, GraphQL::Types::ISO8601DateTime, null: false
 
     belongs_to :kb_locale, Gql::Types::KnowledgeBase::LocaleType, null: false
     belongs_to :category, Gql::Types::KnowledgeBase::CategoryType, null: false

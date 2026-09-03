@@ -6,13 +6,19 @@ class App.KnowledgeBaseSidebarAnswers extends App.KnowledgeBaseSidebarGenericLis
   urlNew: ->
     "#knowledge_base/#{@object.knowledge_base().id}/category/#{@object.id}/answers/new"
 
-  answers: ->
-    @object.answers()
+  # Its own column, independent of the mode the same category lists its subcategories in.
+  sortingMode: ->
+    @object.answer_sorting_mode
 
-  items: ->
-    @answers()
-      .sort (a, b) ->
-        a.position - b.position
+  # See App.KnowledgeBaseSidebarCategories for what these three are and why they are separate.
+  answers: ->
+    @answersForMode(@sortingMode())
+
+  answersForMode: (mode) ->
+    App.KnowledgeBaseSorting.answers(@object.unsortedAnswers(), mode, @kb_locale)
+
+  itemsForMode: (mode) ->
+    @answersForMode(mode)
       .map (elem) =>
         elem.attributesForRendering(@kb_locale, action: 'edit', isEditor: true)
 

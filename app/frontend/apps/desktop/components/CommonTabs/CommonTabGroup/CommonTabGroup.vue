@@ -4,6 +4,11 @@
 import { computed, ref, watch } from 'vue'
 
 import CommonTab from '#desktop/components/CommonTabs/CommonTabGroup/CommonTab.vue'
+import {
+  DEFAULT_TABS_LABEL_BREAKPOINT,
+  tabsLabelBreakpointClasses,
+  type TabsLabelBreakpoint,
+} from '#desktop/components/CommonTabs/tabsClasses.ts'
 import TabsOverflowMenu from '#desktop/components/CommonTabs/TabsOverflowMenu.vue'
 import TabsScrollList from '#desktop/components/CommonTabs/TabsScrollList.vue'
 import type { Tab } from '#desktop/components/CommonTabs/types.ts'
@@ -21,12 +26,21 @@ interface Props {
    * selection (e.g. toggle-button form fields).
    */
   selectFirstByDefault?: boolean
+  /**
+   * How much room the strip needs before its tabs show their labels beside their icons - a group
+   * with long labels, or one sharing its row with something else, wants a larger one and stays on
+   * icons for longer. See `tabsLabelBreakpointClasses`.
+   */
+  labelBreakpoint?: TabsLabelBreakpoint
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'large',
   mode: 'scroll',
+  labelBreakpoint: DEFAULT_TABS_LABEL_BREAKPOINT,
 })
+
+const breakpointClasses = computed(() => tabsLabelBreakpointClasses[props.labelBreakpoint])
 
 const emit = defineEmits<{
   'update:modelValue': [value: Tab['key'] | Tab['key'][] | undefined]
@@ -71,10 +85,7 @@ const activeTabs = computed<Tab['key'][]>(() => {
 const updateModelValue = (tab: Tab) => {
   if (tab.disabled) return
 
-  if (!props.multiple) {
-    setSelection(tab.key)
-    return
-  }
+  if (!props.multiple) return setSelection(tab.key)
 
   const updatedTabs = activeTabs.value.includes(tab.key)
     ? activeTabs.value.filter((activeTab) => activeTab !== tab.key)
@@ -102,8 +113,8 @@ const appearanceStyling = computed(() => (isOverflowMode.value ? 'rounded-lg' : 
 
 <template>
   <div
-    class="relative flex w-full max-w-full min-w-0 bg-blue-200 p-1 @lg:w-fit dark:bg-gray-700"
-    :class="appearanceStyling"
+    class="relative flex w-full max-w-full min-w-0 bg-blue-200 p-1 dark:bg-gray-700"
+    :class="[appearanceStyling, breakpointClasses.group]"
   >
     <TabsOverflowMenu
       v-if="isOverflowMode"
@@ -155,18 +166,20 @@ const appearanceStyling = computed(() => (isOverflowMode.value ? 'rounded-lg' : 
       :multiple="multiple"
       :label="label"
       :container-role="role"
+      :label-breakpoint="labelBreakpoint"
       list-item-role="presentation"
     >
       <template #default="{ tab, tabClass, canDisplayIconOnly }">
         <CommonTab
           :id="multiple ? undefined : `tab-label-${tab.key}`"
-          v-tooltip="tab.tooltip"
-          class="flex justify-center @lg:justify-start"
+          v-tooltip="tab.tooltip || (canDisplayIconOnly ? $t(tab.label) : undefined)"
+          class="flex justify-center"
           v-bind="tab"
-          :class="tabClass"
+          :class="[tabClass, breakpointClasses.align]"
           :tab-id="tab.key"
           :size="size"
           :can-display-icon-only="canDisplayIconOnly"
+          :label-breakpoint="labelBreakpoint"
           :active-keys="activeTabs"
           :multiple="multiple"
           @select="updateModelValue(tab)"

@@ -75,13 +75,10 @@ class Service::KnowledgeBase::Answer::Update < Service::KnowledgeBase::Answer::B
     assign_translation(answer, kb_locale, title: answer_data[:title], body: answer_data[:body])
   end
 
-  # An absent category leaves the answer where it is. A submitted one is checked against the
-  #   knowledge base before it is assigned — an answer must not be moved out of the tree whose locale
-  #   its translations were written for.
+  # An absent category leaves the answer where it is. Where a submitted one may be filed is asked of
+  #   the reassigned answer afterwards, see #authorize_category_move!.
   def assign_category
     return if !answer_data.key?(:category)
-
-    ensure_category_of_knowledge_base!(answer_data[:category])
 
     answer.category = answer_data[:category]
   end

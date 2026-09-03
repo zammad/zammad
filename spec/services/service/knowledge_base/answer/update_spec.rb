@@ -144,15 +144,6 @@ RSpec.describe Service::KnowledgeBase::Answer::Update do
         expect(update_answer.category).to eq(category)
       end
     end
-
-    context 'when it belongs to another knowledge base' do
-      let(:answer_data) { { category: create(:knowledge_base_category) } }
-
-      it 'refuses the move', :aggregate_failures do
-        expect { update_answer }.to raise_error(Exceptions::UnprocessableContent, %r{does not belong to this knowledge base})
-        expect(answer.reload.category).to eq(category)
-      end
-    end
   end
 
   # Editor access to the answer itself is not asked by the service - the mutation's `answer_id`

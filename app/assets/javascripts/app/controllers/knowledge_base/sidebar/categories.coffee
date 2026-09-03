@@ -19,20 +19,37 @@ class App.KnowledgeBaseSidebarCategories extends App.KnowledgeBaseSidebarGeneric
     else if @object instanceof App.KnowledgeBase
       prefix + 'category/new'
 
-  categories: ->
-    if @object instanceof App.KnowledgeBaseCategory
-      @object.children()
-    else if @object instanceof App.KnowledgeBase
-      @object.rootCategories()
-    else
-      []
+  # The same column name on a category and on the knowledge base: the top level lists categories
+  #   only, so it carries the category mode alone.
+  sortingMode: ->
+    @object.category_sorting_mode
 
-  items: ->
-    @categories()
-      .sort (a, b) ->
-        a.position - b.position
+  # The list as it is stored - the records themselves, so the order can be read without the
+  #   rendering stack behind #itemsForMode.
+  categories: ->
+    @categoriesForMode(@sortingMode())
+
+  # Sorted here rather than through #children / #rootCategories, which only ever answer in the stored
+  #   mode - the modal previews one that is not stored yet. The same ordering either way
+  #   (App.KnowledgeBaseSorting is what those two call), so the block and the preview cannot
+  #   disagree.
+  categoriesForMode: (mode) ->
+    App.KnowledgeBaseSorting.categories(@unsortedCategories(), mode, @kb_locale)
+
+  # Re-sorted rather than mapped in order, because #attributesForRendering yields a flat hash with
+  #   neither a position nor a timestamp left to sort by.
+  itemsForMode: (mode) ->
+    @categoriesForMode(mode)
       .map (elem) =>
         elem.attributesForRendering(@kb_locale, action: 'edit', isEditor: true)
+
+  unsortedCategories: ->
+    if @object instanceof App.KnowledgeBaseCategory
+      @object.unsortedChildren()
+    else if @object instanceof App.KnowledgeBase
+      @object.unsortedRootCategories()
+    else
+      []
 
   reorderSaveUrl: ->
     if @object instanceof App.KnowledgeBaseCategory

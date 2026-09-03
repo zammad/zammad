@@ -17,12 +17,12 @@ class App.KnowledgeBaseCategory extends App.Model
     App.KnowledgeBase.find(@knowledge_base_id)
 
   isEmpty: ->
-    @children().length is 0 and @answers().length is 0
+    @unsortedChildren().length is 0 and @unsortedAnswers().length is 0
 
   remove: (options = {}) ->
     @removeTranslations(options)
-    @children().forEach (elem) -> elem.remove(options)
-    @answers().forEach  (elem) -> elem.remove(options)
+    @unsortedChildren().forEach (elem) -> elem.remove(options)
+    @unsortedAnswers().forEach  (elem) -> elem.remove(options)
     super
 
   categoriesForDropdown: (options) ->
@@ -35,7 +35,7 @@ class App.KnowledgeBaseCategory extends App.Model
       }
     ]
 
-    @children().reduce (memo, elem) ->
+    @children(options.kb_locale).reduce (memo, elem) ->
       memo.concat elem.categoriesForDropdown(nested: options.nested + 1, kb_locale: options.kb_locale)
     , initial
 
@@ -122,15 +122,28 @@ class App.KnowledgeBaseCategory extends App.Model
   baseParams: ->
     { parent_id: @parent_id }
 
-  children: ->
+  # Ordered in this category's `category_sorting_mode`, which says nothing about the mode its answers
+  #   are listed in - the two lists have a column each.
+  #
+  # @param kb_locale [App.KnowledgeBaseLocale, undefined] see App.KnowledgeBase#rootCategories
+  children: (kb_locale) ->
+    App.KnowledgeBaseSorting.categories(
+      @unsortedChildren()
+      @category_sorting_mode
+      kb_locale
+    )
+
+  # For the callers that want the set rather than the list: counting, deleting and the emptiness
+  #   check. Working out an automatic order means reading the title or the date off the translation
+  #   each record is shown under, which is real work on a large knowledge base and wasted on a caller
+  #   that never looks at the order - #deepChildrenIds walks the whole subtree.
+  unsortedChildren: ->
     return [] if @id == undefined
 
-    App.KnowledgeBaseCategory
-      .findAllByAttribute('parent_id', @id)
-      .sort (a, b) -> a.position - b.position
+    App.KnowledgeBaseCategory.findAllByAttribute('parent_id', @id)
 
   deepChildrenIds: ->
-    children = @children()
+    children = @unsortedChildren()
 
     ids = children.map (elem) -> elem.deepChildrenIds()
     ids.push children.map (elem) -> elem.id
@@ -140,10 +153,19 @@ class App.KnowledgeBaseCategory extends App.Model
   parent: ->
     App.KnowledgeBaseCategory.find(@parent_id)
 
-  answers: ->
-    App.KnowledgeBaseAnswer
-      .findAllByAttribute('category_id', @id)
-      .sort (a, b) -> a.position - b.position
+  # Ordered in this category's `answer_sorting_mode`, independently of its subcategories.
+  #
+  # @param kb_locale [App.KnowledgeBaseLocale, undefined] see App.KnowledgeBase#rootCategories
+  answers: (kb_locale) ->
+    App.KnowledgeBaseSorting.answers(
+      @unsortedAnswers()
+      @answer_sorting_mode
+      kb_locale
+    )
+
+  # See #unsortedChildren.
+  unsortedAnswers: ->
+    App.KnowledgeBaseAnswer.findAllByAttribute('category_id', @id)
 
   countDeepAnswers: ->
     category_ids = @deepChildrenIds()
