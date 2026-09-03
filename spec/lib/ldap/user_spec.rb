@@ -16,7 +16,7 @@ RSpec.describe Ldap::User do
       expect(described_class).to respond_to(:uid_attribute)
     end
 
-    it 'returns uid attribute string from given attribute strucutre' do
+    it 'returns uid attribute string from given attribute structure' do
       attributes = {
         objectguid: 'TEST',
         custom:     'value',
