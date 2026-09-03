@@ -360,6 +360,87 @@ RSpec.describe 'Sessions endpoints', type: :request do
       end
     end
 
+    context 'with optional return_to parameter' do
+      let(:user)    { create(:agent) }
+      let(:headers) { { 'X-Forwarded-User' => user.login } }
+
+      it 'redirects to "/#" when no return_to is given' do
+        get '/auth/sso', as: :json, headers: headers
+
+        expect(response).to redirect_to('/#')
+      end
+
+      it 'redirects to the given relative return_to path' do
+        get '/auth/sso', params: { return_to: '/#ticket/zoom/57' }, as: :json, headers: headers
+
+        expect(response).to redirect_to('/#ticket/zoom/57')
+      end
+
+      it 'preserves URL fragments' do
+        get '/auth/sso', params: { return_to: '/#dashboard' }, as: :json, headers: headers
+
+        expect(response).to redirect_to('/#dashboard')
+      end
+
+      it 'accepts deeper relative paths without a fragment' do
+        get '/auth/sso', params: { return_to: '/some/path' }, as: :json, headers: headers
+
+        expect(response).to redirect_to('/some/path')
+      end
+
+      it 'falls back to "/#" when return_to is empty' do
+        get '/auth/sso', params: { return_to: '' }, as: :json, headers: headers
+
+        expect(response).to redirect_to('/#')
+      end
+
+      it 'rejects absolute http/https URLs' do
+        %w[https://evil.example.com/ http://evil.example.com/path].each do |bad|
+          get '/auth/sso', params: { return_to: bad }, as: :json, headers: headers
+
+          expect(response).to redirect_to('/#')
+        end
+      end
+
+      it 'rejects protocol-relative URLs (//evil.example.com)' do
+        get '/auth/sso', params: { return_to: '//evil.example.com/' }, as: :json, headers: headers
+
+        expect(response).to redirect_to('/#')
+      end
+
+      it 'rejects javascript: and data: URLs' do
+        ['javascript:alert(1)', 'data:text/html,<script>alert(1)</script>'].each do |bad|
+          get '/auth/sso', params: { return_to: bad }, as: :json, headers: headers
+
+          expect(response).to redirect_to('/#')
+        end
+      end
+
+      it 'rejects URLs containing backslashes or control characters' do
+        ['/foo\bar', "/foo\nbar", "/foo\x00bar"].each do |bad|
+          get '/auth/sso', params: { return_to: bad }, as: :json, headers: headers
+
+          expect(response).to redirect_to('/#')
+        end
+      end
+
+      it 'rejects return_to longer than 1024 characters' do
+        long = "/#{'a' * 1100}"
+
+        get '/auth/sso', params: { return_to: long }, as: :json, headers: headers
+
+        expect(response).to redirect_to('/#')
+      end
+
+      it 'rejects paths that do not start with "/"' do
+        ['evil.example.com/', 'no-leading-slash', '?evil=1'].each do |bad|
+          get '/auth/sso', params: { return_to: bad }, as: :json, headers: headers
+
+          expect(response).to redirect_to('/#')
+        end
+      end
+    end
+
     context 'with trusted proxy IPs configured' do
       before do
         Setting.set('auth_sso_trusted_ips', '192.168.1.1, 10.0.0.0/8')
