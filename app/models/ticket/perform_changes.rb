@@ -13,7 +13,8 @@ module Ticket::PerformChanges
                                      :notification_sms,
                                      :notification_webhook,
                                      :article_note,
-                                     :ai_agent
+                                     :ai_agent,
+                                     :close_taskbars
   end
 
   def pre_execute(perform_changes_data)
