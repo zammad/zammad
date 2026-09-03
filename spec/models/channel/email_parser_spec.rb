@@ -310,6 +310,29 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
 
+      context 'with one unrecognized email address and matching ignore postmaster filter' do
+        let!(:postmaster_filter) do
+          create(
+            :postmaster_filter,
+            match:   { 'subject' => { 'operator' => 'contains', 'value' => 'Test' } },
+            perform: { 'x-zammad-ignore' => { 'value' => true } }
+          )
+        end
+
+        it 'does not create a ticket, article or user', :aggregate_failures do
+          expect do
+            described_class.new.process({}, <<~RAW)
+              From: #{Faker::Internet.unique.email}
+              Subject: Test
+
+              Lorem ipsum dolor
+            RAW
+          end.to not_change(Ticket, :count)
+            .and not_change(Ticket::Article, :count)
+            .and not_change(User, :count)
+        end
+      end
+
       context 'with a large number of unrecognized recipient addresses' do
         it 'never creates more than 40 users' do
           expect { described_class.new.process({}, <<~RAW) }.to change(User, :count).by(40)
