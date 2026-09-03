@@ -103,5 +103,18 @@ RSpec.describe BackgroundServices::Service::BaseDelayedJobs::CleanupAction do
       instance.cleanup
       expect(latest_job).to be_destroyed
     end
+
+    context 'when the payload responds to args (legacy Delayed::PerformableMethod)' do
+      let(:latest_job) { Delayed::Job.enqueue(Delayed::PerformableMethod.new(Kernel, :puts, ['sample-arg'])) }
+
+      it 'includes the payload args in the logged job name' do
+        latest_job.update! locked_at: 1.year.ago
+
+        allow(Rails.logger).to receive(:warn)
+        instance.cleanup
+
+        expect(Rails.logger).to have_received(:warn).with(a_string_including('ARGS: ["sample-arg"]'))
+      end
+    end
   end
 end
