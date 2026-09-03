@@ -77,6 +77,11 @@ export default defineConfig(async ({ mode, command }) => {
     )
   }
 
+  if (isTesting) {
+    // make sure timezone is always correct - in CLI and in the extension
+    process.env.TZ = 'utc'
+  }
+
   let https = false
 
   // vite-ruby controlls this variable, it's either "true" or "false"

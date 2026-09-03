@@ -313,10 +313,7 @@ declare module 'vitest' {
     skipConsole: boolean
   }
 
-  interface Matchers<
-    R extends void | Promise<void> = void | Promise<void>,
-    T = unknown,
-  > extends TestingLibraryMatchers<R, T> {
+  interface Matchers<R, T> extends TestingLibraryMatchers<R, T> {
     /**
      * @param options - Allow passing custom rulesets
      * @sa11y/preset-rule base, extend, full
