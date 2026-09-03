@@ -171,7 +171,18 @@ class Ldap
     attr_reader :config
 
     def login_attribute
-      @login_attribute ||= config[:user_attributes]&.key('login') || uid_attribute
+      @login_attribute ||= mapped_login_attribute || uid_attribute
+    end
+
+    # Looks up the LDAP attribute which is mapped to the Zammad 'login' attribute.
+    # A mapping value can be a single Zammad attribute or a list of them.
+    # Only 'keys' and '[]' are used here, because the config may also be an
+    # ActionController::Parameters instance, which is not a Hash.
+    def mapped_login_attribute
+      user_attributes = config[:user_attributes]
+      return if user_attributes.blank?
+
+      user_attributes.keys.find { |source| Array.wrap(user_attributes[source]).include?('login') }
     end
 
     def handle_config
