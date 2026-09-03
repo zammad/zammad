@@ -565,8 +565,8 @@
   }
 
   Collection.renderResults = function(textmodule, term) {
-    var reg     = new RegExp(term, 'i')
-    var regFull = new RegExp('\\b' + term + '\\b', 'i')
+    var reg     = new RegExp(escapeRegExp(term), 'i')
+    var regFull = new RegExp('\\b' + escapeRegExp(term) + '\\b', 'i')
     var result  = textmodule.collection.filter(function(item) {
       return matchItemWithRegExp(item, reg) && !matchItemWithRegExp(item, regFull)
     })
