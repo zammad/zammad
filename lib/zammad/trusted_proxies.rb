@@ -19,12 +19,12 @@ module Zammad
       end
 
       def resolve(entry)
-        entry if IPAddr.new(entry)
+        IPAddr.new(entry)
       rescue IPAddr::InvalidAddressError
         Resolv.getaddresses(entry).tap do |resolved|
           # Rails.logger may not be available here, so we use warn directly.
           warn "Error: ignoring trusted proxy '#{entry}' because it cannot be resolved." if resolved.empty?
-        end
+        end.map { |ip| IPAddr.new(ip) }
       end
 
       def parse_env
