@@ -138,7 +138,7 @@ module HasGroups
     # check indirect access through roles if possible
     return ids if !respond_to?(:role_ids)
 
-    role_group_ids = RoleGroup.eager_load(:group).where(role_id: role_ids, access: access, groups: { active: true }).pluck(:group_id)
+    role_group_ids = RoleGroup.eager_load(:group, :role).where(role_id: role_ids, access: access, groups: { active: true }, roles: { active: true }).pluck(:group_id)
 
     # combines and removes duplicates
     # and returns them in one statement

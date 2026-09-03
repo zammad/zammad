@@ -39,6 +39,6 @@ class OverviewPolicy < ApplicationPolicy
   end
 
   def user_has_assigned_role?
-    !user.role_ids.to_set.intersect?(record.role_ids.to_set)
+    !user.roles.where(active: true).pluck(:id).to_set.intersect?(record.role_ids.to_set)
   end
 end
