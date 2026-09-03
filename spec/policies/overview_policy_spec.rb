@@ -60,6 +60,13 @@ describe OverviewPolicy do
       it { is_expected.to forbid_actions(%i[use show create update destroy]) }
     end
 
+    context 'with user assigned via inactive role' do
+      let(:user_role) { create(:role, active: false) }
+      let(:record)    { create(:overview, roles: [user_role]) }
+
+      it { is_expected.to forbid_actions(%i[use show create update destroy]) }
+    end
+
   end
 
 end

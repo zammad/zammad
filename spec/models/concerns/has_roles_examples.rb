@@ -59,6 +59,32 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
       end
     end
 
+    describe '#group_ids_access' do
+
+      it 'lists Group IDs of active Role' do
+        role.group_names_access_map = {
+          group_role.name => 'read',
+        }
+
+        subject.roles.push(role)
+        subject.save
+
+        expect(subject.group_ids_access('read')).to include(group_role.id)
+      end
+
+      it 'prevents inactive Role' do
+        role_inactive = create(:role, active: false)
+        role_inactive.group_names_access_map = {
+          group_role.name => 'read',
+        }
+
+        subject.roles.push(role_inactive)
+        subject.save
+
+        expect(subject.group_ids_access('read')).not_to include(group_role.id)
+      end
+    end
+
     describe '.role_access_ids' do
 
       before do
