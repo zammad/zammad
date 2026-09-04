@@ -151,7 +151,7 @@ describe('Organization Detail View - History Flyout', () => {
 
       const flyout = await view.findByRole('complementary', { name: 'History' })
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(within(flyout).getByText('Test Admin Agent')).toBeVisible()
         expect(within(flyout).getByText('2025-11-24 08:32')).toBeVisible()
       })

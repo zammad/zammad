@@ -45,7 +45,7 @@ describe('useBetaUiFeedbackConsent', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Agree & join' }))
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(localStorage.getItem('beta-ui-feedback-consent')).toBe('true')
     })
   })

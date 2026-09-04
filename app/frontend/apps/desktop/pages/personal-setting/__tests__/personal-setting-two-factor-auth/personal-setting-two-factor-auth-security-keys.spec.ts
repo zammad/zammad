@@ -317,7 +317,7 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Retry' }))
 
-    waitFor(() =>
+    await waitFor(() =>
       expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Save codes'),
     )
   })

@@ -510,7 +510,7 @@ describe('Organization Detail View', () => {
           }),
         ).not.toBeInTheDocument()
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(
             within(organizationTicketsSection).queryByRole('heading', {
               name: `${state === 'open' ? 'Closed tickets' : 'Open tickets'}`,
