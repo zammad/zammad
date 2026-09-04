@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia'
 import { computed, ref, toRef, useTemplateRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { scrollIntoView } from '#shared/utils/dom.ts'
@@ -52,6 +53,17 @@ const { answer, loading } = useKnowledgeBaseAnswer({
 })
 
 useScrollPosition(contentContainerElement)
+
+// An online notification about an answer is about one of its translations, and opening that
+//   translation is what marks the notification as read - the same way the mobile ticket, user and
+//   organization views do it. It has to happen here rather than in the notification list: the
+//   mobile app has no answer view, so its list links into this app, and that full page load drops
+//   any mutation the list itself started.
+const answerTranslation = computed(() =>
+  answer.value?.translation?.id ? { id: answer.value.translation.id } : undefined,
+)
+
+useOnlineNotificationSeen(answerTranslation)
 
 const route = useRoute()
 const router = useRouter()

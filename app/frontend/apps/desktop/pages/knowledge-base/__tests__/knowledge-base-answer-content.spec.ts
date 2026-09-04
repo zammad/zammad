@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
+import { OnlineNotificationSeenDocument } from '#shared/entities/online-notification/graphql/mutations/seen.api.ts'
+import { waitForOnlineNotificationSeenMutationCalls } from '#shared/entities/online-notification/graphql/mutations/seen.mocks.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import type { KnowledgeBaseAnswerQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
@@ -19,6 +22,7 @@ import {
 const ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 5)
 const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 const CONTENT_ID = convertToGraphQLId('KnowledgeBase::Answer::Translation::Content', 5)
+const TRANSLATION_ID = convertToGraphQLId('KnowledgeBase::Answer::Translation', 7)
 
 const ANSWER_PATH: `/${string}` = `/knowledge-base/locale/en-us/answer/${getIdFromGraphQLId(ANSWER_ID)}`
 
@@ -182,5 +186,30 @@ describe('knowledge base answer content', () => {
     expect(imageViewerOptions.value.images.at(0)).toEqual(
       expect.objectContaining({ title: 'inline.png' }),
     )
+  })
+
+  // Opening a translation is what marks a notification about it as read, and it has to happen in
+  //   this view rather than in the notification list: the mobile app has no answer view, so its
+  //   list links in here - a full page load that drops a mutation the list itself started.
+  it('marks a notification about the opened translation as seen', async () => {
+    mockKnowledgeBaseAnswerQuery({
+      knowledgeBaseAnswer: { translation: { id: TRANSLATION_ID } },
+    })
+
+    await visitView(ANSWER_PATH)
+
+    const calls = await waitForOnlineNotificationSeenMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({ objectId: TRANSLATION_ID })
+  })
+
+  it('marks nothing as seen when the answer has no translation in this locale', async () => {
+    mockKnowledgeBaseAnswerQuery({ knowledgeBaseAnswer: { translation: null } })
+
+    await visitView(ANSWER_PATH)
+
+    await waitForKnowledgeBaseAnswerQueryCalls()
+
+    expect(getGraphQLMockCalls(OnlineNotificationSeenDocument)).toHaveLength(0)
   })
 })

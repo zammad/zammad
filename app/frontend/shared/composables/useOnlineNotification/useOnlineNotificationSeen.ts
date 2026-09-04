@@ -17,5 +17,7 @@ export const useOnlineNotificationSeen = (object: Ref<ObjectWithId | undefined>)
     await seenMutation.send({ objectId: object.value.id })
   }
 
-  watch(() => object.value?.id, setAsSeen)
+  // Immediate, because the object can already be there when this runs - a cached query answers
+  //   synchronously, and a plain watcher would never see that first value.
+  watch(() => object.value?.id, setAsSeen, { immediate: true })
 }

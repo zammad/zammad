@@ -23,4 +23,17 @@ describe('useOnlineNotificationSeen', () => {
       objectId: '2',
     })
   })
+
+  it('calls mutation when the object is already there', async () => {
+    const mockSeen = mockOnlineNotificationSeenGql()
+    const object = ref<ObjectWithId | undefined>({ id: '3' })
+
+    useOnlineNotificationSeen(object)
+
+    await waitUntil(() => mockSeen.calls.resolve)
+
+    expect(mockSeen.spies.resolve).toHaveBeenCalledWith({
+      objectId: '3',
+    })
+  })
 })

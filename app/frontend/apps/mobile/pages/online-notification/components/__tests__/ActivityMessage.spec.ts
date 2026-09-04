@@ -2,8 +2,13 @@
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import type { OnlineNotification, Ticket } from '#shared/graphql/types.ts'
+import type {
+  KnowledgeBaseAnswerTranslation,
+  OnlineNotification,
+  Ticket,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ActivityMessage from '../ActivityMessage.vue'
@@ -79,7 +84,7 @@ describe('NotificationItem.vue', () => {
     const view = renderActivityMessage()
 
     const link = view.getByRole('link')
-    expect(link).toHaveAttribute('href', 'tickets/1')
+    expect(link).toHaveAttribute('href', '/tickets/1')
   })
 
   it('check that create date exists', () => {
@@ -110,6 +115,43 @@ describe('NotificationItem.vue', () => {
     await view.events.click(item)
 
     expect(view.emitted().seen).toBeTruthy()
+  })
+
+  const renderKnowledgeBaseAnswerMessage = () =>
+    renderActivityMessage({
+      objectName: 'KnowledgeBase::Answer::Translation',
+      typeName: 'create',
+      metaObject: generateObjectData<KnowledgeBaseAnswerTranslation>(
+        'KnowledgeBaseAnswerTranslation',
+        {
+          title: 'Reset your password',
+          kbLocale: { systemLocale: { locale: 'en-us' } },
+          answer: {
+            id: convertToGraphQLId('KnowledgeBase::Answer', '1'),
+            category: { id: convertToGraphQLId('KnowledgeBase::Category', '1') },
+          },
+        },
+      ),
+    })
+
+  // Both answer pages live outside of the mobile app, so their links must be absolute. A relative
+  //   one would be resolved against the mobile base and end up on the error page.
+  it('links a knowledge base answer into the desktop view, which has an answer view', () => {
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+
+    expect(renderKnowledgeBaseAnswerMessage().getByRole('link')).toHaveAttribute(
+      'href',
+      '/desktop/knowledge-base/locale/en-us/answer/1',
+    )
+  })
+
+  it('links to the public answer page for a user without knowledge base permission', () => {
+    mockPermissions(['ticket.agent'])
+
+    expect(renderKnowledgeBaseAnswerMessage().getByRole('link')).toHaveAttribute(
+      'href',
+      '/help/en-us/1/1',
+    )
   })
 
   it('no output for not existing builder', (context) => {

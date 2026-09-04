@@ -30,7 +30,7 @@ defineEmits<{
     :class="{
       'cursor-pointer': !activity.seen,
     }"
-    :link="link ? link : undefined"
+    :link="link ? `/${link}` : undefined"
     :aria-label="!link ? $t('Mark as read') : undefined"
     @click="!link && !activity.seen && $emit('seen')"
   >
