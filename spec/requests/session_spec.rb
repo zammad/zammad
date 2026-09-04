@@ -121,6 +121,50 @@ RSpec.describe 'Sessions endpoints', type: :request do
           expect(response.header['Set-Cookie']).to include(session_key).and include('; secure;')
         end
       end
+
+      # Rack decides which forwarded header wins; these examples pin that order down, because
+      #   our proxy configuration relies on it (see https://github.com/zammad/zammad/issues/6305).
+      context "when a proxy sends contradicting 'X-Forwarded-Proto' and 'X-Forwarded-Scheme' headers" do
+
+        let(:headers) do
+          {
+            'X-Forwarded-Proto'  => 'http',
+            'X-Forwarded-Scheme' => 'https'
+          }
+        end
+
+        it "sets no Cookie, because 'X-Forwarded-Proto' takes precedence" do
+          expect(response.header['Set-Cookie']).to be_nil
+        end
+      end
+
+      context "when a proxy sends an 'X-Forwarded-Ssl' header" do
+
+        let(:headers) do
+          {
+            'X-Forwarded-Proto' => 'http',
+            'X-Forwarded-Ssl'   => 'on'
+          }
+        end
+
+        it "sets Cookie with 'secure' flag, because 'X-Forwarded-Ssl' takes precedence" do
+          expect(response.header['Set-Cookie']).to include(session_key).and include('; secure;')
+        end
+      end
+
+      context "when a proxy sends a 'Forwarded' header" do
+
+        let(:headers) do
+          {
+            'X-Forwarded-Proto' => 'http',
+            'Forwarded'         => 'proto=https'
+          }
+        end
+
+        it "sets Cookie with 'secure' flag, because 'Forwarded' takes precedence" do
+          expect(response.header['Set-Cookie']).to include(session_key).and include('; secure;')
+        end
+      end
     end
 
     context "when Setting 'http_type' is set to 'http'" do
