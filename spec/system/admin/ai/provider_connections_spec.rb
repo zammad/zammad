@@ -1045,12 +1045,25 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         # Simulates the platform provisioning this connection outside the admin API.
         let(:connection_two) { build(:ai_provider_connection, name: 'zammad-ai', provider: 'zammad_ai').tap { |c| c.save(validate: false) } }
 
-        it 'hides the delete action' do
+        it 'keeps it editable but neither removable nor replaceable', :aggregate_failures do
           row = find('tr', text: 'zammad-ai')
           row.find('.js-action').click
 
           expect(row).to have_no_css('[data-table-action="delete"]')
           expect(row).to have_css('[data-table-action="set-default-chat"]')
+
+          find('td', text: 'zammad-ai').click
+
+          in_modal disappears: false do
+            # Switching this connection to another provider is what the platform does not allow, so
+            # the dialog says so instead of offering a selection the save would only reject. What
+            # the admin does own - the name - stays theirs to change.
+            expect(page)
+              .to have_css('.alert--warning',
+                           text: 'The Zammad AI provider is managed by the platform and cannot be fully edited here.')
+              .and(have_field('name', with: 'zammad-ai', readonly: false))
+              .and(have_no_select('provider'))
+          end
         end
       end
     end
