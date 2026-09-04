@@ -140,6 +140,6 @@ schema.graphql
 /.claude/skills
 /.claude/settings.local.json
 
-# Codegraph
+# CodeGraph
 /.codegraph/
 /.mcp.json

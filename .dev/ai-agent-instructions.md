@@ -120,14 +120,9 @@ or locate code:
   in the query to read its current line-numbered source. If it's listed but
   deferred, load it by name via tool search.
 - **Shell** (always works): `pnpm exec codegraph explore "<symbol names or question>"`
-  prints the same output — `codegraph` is a local dev dependency, so the bare
-  command is not on `PATH`.
+  prints the same output using the repository-pinned CodeGraph version.
 
-Setup is per developer: `pnpm codegraph:install` indexes this checkout and registers
-the server with the agent harnesses it finds (Claude Code, Cursor, Codex CLI,
-opencode, …). Say yes when it offers to put the CLI on `PATH`: that is how they
-launch it. `pnpm codegraph:uninstall` reverts it. Nothing lands in a commit —
-`.codegraph/` and `.mcp.json` are gitignored, and the harness registration lives in
-each tool's own config outside the repo.
-
-If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the user's decision.
+If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the
+user's decision. If they ask to initialize it, run `pnpm codegraph:init`. Developer
+setup and removal are documented in
+`doc/developer_manual/development_environment/codegraph-setup.md`.

@@ -13,9 +13,9 @@ pnpm config set store-dir "$(pwd)/.pnpm-store" --global
 
 bin/setup --skip-server
 
-echo "== Install CodeGraph index =="
+echo "== Initialize CodeGraph index =="
 
-pnpm run codegraph:install
+pnpm run codegraph:init
 
 echo "== Precompile Ruby cache =="
 

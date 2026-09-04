@@ -30,9 +30,11 @@
     "cypress:install": "pnpm --dir ./.dev/cypress install --frozen-lockfile",
     "playwright:install": "playwright install chromium",
     "analyse:vite-bundle": "pnpm exec vite-bundle-visualizer",
-    "codegraph:install": "pnpm exec codegraph install --yes --init",
+    "codegraph:install": "pnpm exec codegraph install",
+    "codegraph:init": "pnpm exec codegraph init --yes",
     "codegraph:reindex": "pnpm exec codegraph index",
     "codegraph:status": "pnpm exec codegraph status",
+    "codegraph:uninit": "pnpm exec codegraph uninit",
     "codegraph:uninstall": "pnpm exec codegraph uninstall"
   },
   "engines": {
