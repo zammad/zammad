@@ -2,6 +2,8 @@
 
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
+import { navigateTo } from '#shared/utils/navigation.ts'
+
 import { MOBILE_SLUG } from '#desktop/composables/responsiveness/useMobileNavigation.ts'
 
 import continueToMobileItem from '../continue-to-mobile.ts'
@@ -23,20 +25,12 @@ vi.mock('#shared/utils/browser.ts', () => ({
   },
 }))
 
+vi.mock('#shared/utils/navigation.ts')
+
 describe('avatar menu continue-to-mobile plugin', () => {
   beforeEach(() => {
     setIsMobile(false)
     localStorage.removeItem('forceDesktopApp')
-
-    Object.defineProperty(window, 'location', {
-      configurable: true,
-      writable: true,
-      value: {
-        ...window.location,
-        pathname: '/desktop',
-        href: '/desktop',
-      },
-    })
   })
 
   it('is hidden by default on non-mobile devices', () => {
@@ -69,8 +63,6 @@ describe('avatar menu continue-to-mobile plugin', () => {
       expect(localStorage.getItem('forceDesktopApp')).toBeNull()
     })
 
-    await waitFor(() => {
-      expect(window.location.href).toBe(MOBILE_SLUG)
-    })
+    await waitFor(() => expect(navigateTo).toHaveBeenCalledWith(MOBILE_SLUG))
   })
 })

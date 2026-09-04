@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import UserError from '#shared/errors/UserError.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { useTicketArticleRetryMediaDownload } from '../composables/useTicketArticleRetryMediaDownload.ts'
@@ -34,7 +35,7 @@ describe('useTicketArticleRetryMediaDownload', () => {
       })
     })
 
-    it('rejects on error', async () => {
+    it('rejects with the user error on error', async () => {
       mockTicketArticleRetryMediaDownloadMutation({
         ticketArticleRetryMediaDownload: {
           success: false,
@@ -46,7 +47,26 @@ describe('useTicketArticleRetryMediaDownload', () => {
         },
       })
 
-      await expect(tryAgain()).rejects.toThrow('')
+      await expect(tryAgain()).rejects.toSatisfy(
+        (error: UserError) =>
+          error instanceof UserError && error.getFirstErrorMessage() === 'Something went wrong',
+      )
+
+      const calls = await waitForTicketArticleRetryMediaDownloadMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({
+        articleId: testArticleId.value,
+      })
+    })
+
+    it('rejects with a generic failure message on unsuccessful download', async () => {
+      mockTicketArticleRetryMediaDownloadMutation({
+        ticketArticleRetryMediaDownload: {
+          success: false,
+        },
+      })
+
+      await expect(tryAgain()).rejects.toThrow('Media download failed.')
 
       const calls = await waitForTicketArticleRetryMediaDownloadMutationCalls()
 

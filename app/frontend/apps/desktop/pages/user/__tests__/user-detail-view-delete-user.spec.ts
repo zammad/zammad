@@ -7,6 +7,9 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockUserQuery } from '#shared/entities/user/graphql/queries/user.mocks.ts'
 import type { User } from '#shared/graphql/types.ts'
+import { navigateTo } from '#shared/utils/navigation.ts'
+
+vi.mock('#shared/utils/navigation.ts')
 
 const user: User = {
   __typename: 'User',
@@ -59,14 +62,6 @@ describe('User detail view: Delete user', () => {
   beforeEach(() => {
     mockPermissions(['admin.user'])
     mockUserQuery({ user })
-
-    Object.defineProperty(window, 'location', {
-      value: {
-        ...window.location,
-        pathname: '/desktop',
-        href: '/desktop',
-      },
-    })
   })
 
   it('redirects to admin data privacy panel with customer pre-population', async () => {
@@ -81,6 +76,6 @@ describe('User detail view: Delete user', () => {
 
     await view.events.click(within(popover).getByRole('button', { name: 'Delete' }))
 
-    expect(window.location.href).toBe('/#system/data_privacy/2')
+    expect(navigateTo).toHaveBeenCalledWith('/#system/data_privacy/2')
   })
 })

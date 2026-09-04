@@ -14,8 +14,6 @@ import {
 
 import { getTicketOverviewStorage } from '#mobile/entities/ticket/helpers/ticketOverviewStorage.ts'
 
-const actualLocalStorage = window.localStorage
-
 describe('playing with overviews', () => {
   beforeEach(() => {
     mockUserCurrent({ id: '666' })
@@ -23,7 +21,7 @@ describe('playing with overviews', () => {
   })
 
   afterEach(() => {
-    window.localStorage = actualLocalStorage
+    vi.unstubAllGlobals()
     const { saveOverviews } = getTicketOverviewStorage()
     saveOverviews([])
   })

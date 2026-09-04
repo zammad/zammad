@@ -7,6 +7,8 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
+import { navigateTo } from '#shared/utils/navigation.ts'
+
 import { useBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
 import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
@@ -17,6 +19,8 @@ vi.mock('#shared/composables/useConfirmation.ts', () => ({
     waitForConfirmation: waitForConfirmationMock,
   }),
 }))
+
+vi.mock('#shared/utils/navigation.ts')
 
 vi.mock(
   '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts',
@@ -94,13 +98,6 @@ describe('useNewBetaUi', () => {
       setActivePinia(createPinia())
 
       vi.doMock('#shared/utils/pwa.ts')
-      Object.defineProperty(window, 'location', {
-        value: {
-          ...window.location,
-          pathname: '/desktop',
-          href: '/desktop',
-        },
-      })
     })
 
     it('sets switchValue and hasFeedbackConsent to null', () => {
@@ -130,11 +127,9 @@ describe('useNewBetaUi', () => {
     it('redirects to root URL', () => {
       const { toggleBetaUiSwitch } = useBetaUi()
 
-      expect(window.location.href).toBe('/desktop')
-
       toggleBetaUiSwitch()
 
-      expect(window.location.href).toBe('/')
+      expect(navigateTo).toHaveBeenCalledWith('/')
     })
 
     it('does not re-trigger milestone dialog after switching back to old UI', async () => {

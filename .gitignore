@@ -107,6 +107,7 @@
 
 # Node
 **/node_modules
+/.vitest
 yarn-error.log
 .yarn/cache
 /.pnpm-store

@@ -410,12 +410,7 @@ describe('links handling', () => {
   beforeEach(() => {
     vi.mocked(isStandalone).mockReturnValue(false)
     window.open = open
-    Object.defineProperty(window, 'location', {
-      value: {
-        ...window.location,
-        pathname: '/mobile',
-      },
-    })
+    jsdom.reconfigure({ url: 'http://localhost:3000/mobile' })
   })
 
   const clickLink = async (href: string, target = '') => {

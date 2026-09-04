@@ -5,6 +5,7 @@ import { computed, toRef } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { navigateTo } from '#shared/utils/navigation.ts'
 
 import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
@@ -27,7 +28,7 @@ export const initializeBetaUi = () => {
   const clearSwitchAndRedirect = (redirectTo: string) => {
     clearSwitch()
 
-    window.location.href = redirectTo
+    navigateTo(redirectTo)
   }
 
   return { switchValue, clearSwitch, clearSwitchAndRedirect, betaUiSwitchAvailable }

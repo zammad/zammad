@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { User } from '#shared/graphql/types.ts'
+import { navigateTo } from '#shared/utils/navigation.ts'
 
 import { initializeBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
 import type { DetailViewActionPlugin } from '#desktop/types/actions.ts'
@@ -19,7 +20,7 @@ export default <DetailViewActionPlugin>{
     const url = `/#system/data_privacy/${user.internalId}`
 
     if (!switchValue.value) {
-      window.location.href = url
+      navigateTo(url)
       return
     }
 

@@ -7,6 +7,8 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { navigateTo } from '#shared/utils/navigation.ts'
+
 import LayoutPage from '#desktop/components/layout/LayoutPage.vue'
 
 import '#tests/graphql/builders/mocks.ts'
@@ -19,6 +21,8 @@ vi.mock('#shared/server/apollo/client.ts', () => ({
     },
   }),
 }))
+
+vi.mock('#shared/utils/navigation.ts')
 
 vi.mock(
   '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts',
@@ -77,16 +81,6 @@ describe('LayoutPage', () => {
   })
 
   describe('Feature: Beta UI Switch', () => {
-    beforeAll(() => {
-      Object.defineProperty(window, 'location', {
-        value: {
-          ...window.location,
-          pathname: '/desktop',
-          href: '/desktop',
-        },
-      })
-    })
-
     beforeEach(() => {
       mockApplicationConfig({
         ui_desktop_beta_switch: true,
@@ -107,11 +101,9 @@ describe('LayoutPage', () => {
 
       expect(toggle).toBeChecked()
 
-      expect(window.location.href).toBe('/desktop')
-
       await wrapper.events.click(toggle)
 
-      await waitFor(() => expect(window.location.href).toBe('/'))
+      await waitFor(() => expect(navigateTo).toHaveBeenCalledWith('/'))
     })
 
     it('hides the switch if the feature is disabled', async () => {

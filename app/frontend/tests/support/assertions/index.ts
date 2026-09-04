@@ -18,5 +18,5 @@ interface CustomMatchers<R = unknown> {
 
 declare module 'vitest' {
   // oxlint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface Assertion<T = any> extends CustomMatchers<T> {}
+  interface Matchers<R, T> extends CustomMatchers<R> {}
 }
