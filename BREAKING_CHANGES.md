@@ -73,6 +73,34 @@ instead.
 
 ## 7.2
 
+### Zammad's reverse proxy configuration is authoritative for the request scheme
+
+**Who is affected?** Admins running the Docker images or a newly installed nginx behind a proxy
+that reports the request scheme via the `Forwarded` or `X-Forwarded-Ssl` header, and admins of a
+newly installed Apache behind any TLS-terminating proxy.
+
+Rack evaluates `X-Forwarded-Ssl` and `Forwarded` with a higher priority than `X-Forwarded-Proto`, so
+an outer proxy could silently override the scheme that Zammad's own web server configuration had set.
+The nginx and Apache configurations shipped with Zammad therefore now clear `Forwarded`,
+`X-Forwarded-Scheme` and `X-Forwarded-Ssl`, which leaves `X-Forwarded-Proto` as the only place where
+the scheme is decided.
+
+The Apache configurations did not set `X-Forwarded-Proto` at all before, so an instance behind an
+SSL-terminating Apache was never seen as HTTPS. They now set it explicitly, to `http` in the non-SSL
+and to `https` in the SSL virtual host, which also means an outer proxy's value is no longer passed
+through.
+
+The Docker images rebuild their nginx configuration from the shipped one on every start, so the change
+applies to them automatically. Package installations keep the web server configuration they already
+have; only newly installed ones receive the updated files.
+
+⚠️ If Zammad was reachable over HTTPS only because the proxy in front of it sent `Forwarded` or
+`X-Forwarded-Ssl` — or, on Apache, `X-Forwarded-Proto` — configure the scheme in Zammad's own web
+server instead: set `NGINX_SERVER_SCHEME=https` for the Docker images, or the `X-Forwarded-Proto` line
+in the nginx respectively Apache configuration file.
+
+**Related issue:** [#6305](https://github.com/zammad/zammad/issues/6305)
+
 ### Links between an object and itself are rejected, and failed link creations answer `422`
 
 **Who is affected?** Integrations that create links via `POST /api/v1/links/add`.
@@ -201,6 +229,29 @@ reverse proxy are blocked again by it.
 **Related issue:** [#6087](https://github.com/zammad/zammad/issues/6087)
 
 ## 7.1
+
+### `X-Forwarded-Proto` takes precedence over `X-Forwarded-Scheme`
+
+**Who is affected?** Admins running Zammad behind a reverse proxy that terminates TLS and reports the
+request scheme via the `X-Forwarded-Scheme` header only, such as Nginx Proxy Manager.
+
+Zammad was updated from Rack 2 to Rack 3, which changed which header decides whether a request is
+seen as HTTPS: Rack 2 evaluated `X-Forwarded-Scheme` first, Rack 3 evaluates `X-Forwarded-Proto`
+first. Zammad's own nginx configuration sets `X-Forwarded-Proto` from the scheme of the connection it
+receives, in the Docker images via the `NGINX_SERVER_SCHEME` variable, which defaults to `$scheme`.
+Behind a proxy that terminates TLS and forwards plain HTTP, that value is `http`, so such requests
+are now seen as plain HTTP even though the proxy reported `X-Forwarded-Scheme: https`.
+
+With the `http_type` setting set to `https`, the session cookie is marked `Secure`, and a `Secure`
+cookie is not written on a request that is seen as plain HTTP. No session is created at all, and
+logging in fails with "CSRF token verification failed!". Sessions that already hold a cookie keep
+working, so the problem only surfaces after a logout.
+
+⚠️ Configure the scheme in Zammad's own web server rather than in the proxy in front of it, whose
+`X-Forwarded-Proto` header is overwritten: set `NGINX_SERVER_SCHEME=https` for the Docker images, or
+the `X-Forwarded-Proto` line in the nginx configuration file.
+
+**Related issue:** [#6305](https://github.com/zammad/zammad/issues/6305)
 
 ### Elasticsearch 7 was deprecated
 
