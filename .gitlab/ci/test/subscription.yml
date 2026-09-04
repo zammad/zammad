@@ -4,6 +4,7 @@ addon:subscription:
   extends:
     - .job_rules_default
   rules:
+    - !reference [.job_rules, main_repository_only]
     - !reference [.job_rules, variable_filters]
     - if: $CI_COMMIT_REF_NAME == 'develop'
       when: on_success

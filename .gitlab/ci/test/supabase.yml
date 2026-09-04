@@ -11,6 +11,7 @@ supabase:translation_stats:
   extends:
     - .template_supabase
   rules:
+   - !reference [.job_rules, main_repository_only]
    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME =~ /^(develop|stable)$/
      when: always
    - when: never
@@ -21,6 +22,7 @@ supabase:github_stats:
   extends:
     - .template_supabase
   rules:
+    - !reference [.job_rules, main_repository_only]
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "develop"
       when: always
     - when: never

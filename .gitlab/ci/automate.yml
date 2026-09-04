@@ -5,6 +5,7 @@
     entrypoint: ['']
   cache: []
   rules:
+    - !reference [.job_rules, main_repository_only]
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /weblate-merge$/ && $CI_MERGE_REQUEST_SQUASH_ON_MERGE == "true"'
   before_script: []
   script:
@@ -20,6 +21,7 @@
 'push translations update commit':
   stage: automate
   rules:
+    - !reference [.job_rules, main_repository_only]
     # Don't apply job filter here.
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_MESSAGE =~ /Translations update from translations[.]zammad[.]org/
       when: always
@@ -78,6 +80,7 @@
   stage: automate
   cache: []
   rules:
+    - !reference [.job_rules, main_repository_only]
     - if: $BROWSER_TEST_FILTER
       when: never
     - if: $JOB_FILTER == $CI_JOB_NAME && ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME == "develop"
@@ -103,6 +106,7 @@
     entrypoint: ['']
   cache: []
   rules:
+    - !reference [.job_rules, main_repository_only]
     - if: $BROWSER_TEST_FILTER
       when: never
     - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME

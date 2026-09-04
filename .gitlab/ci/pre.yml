@@ -20,6 +20,7 @@
   stage: pre
   cache: []
   rules:
+    - !reference [.job_rules, main_repository_only]
     # Don't apply job filter here.
     - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|revert-|renovate|dependabot)/
       when: never
@@ -41,6 +42,7 @@
     - push-to-ftp
   cache: []
   rules:
+    - !reference [.job_rules, main_repository_only]
     # Don't apply job filter here.
     - if: $CI_COMMIT_TAG
       when: always

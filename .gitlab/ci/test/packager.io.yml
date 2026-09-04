@@ -5,6 +5,7 @@
   allow_failure: true
   retry: 2
   rules:
+    - !reference [.job_rules, main_repository_only]
     # Don't apply job filter here.
     # These jobs can only run for a) published paths and b) when triggered after the packager.io build is complete.
     - if: ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME =~ /^(stable|develop)/

@@ -3,6 +3,7 @@ docker:
   stage: test
   interruptible: false
   rules:
+    - !reference [.job_rules, main_repository_only]
     - !reference [.job_rules, variable_filters]
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|revert-|renovate|dependabot)/
       when: manual

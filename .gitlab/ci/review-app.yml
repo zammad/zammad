@@ -243,6 +243,7 @@
     name: ${APP_NAME}
     url: https://${APP_FQDN}#getting_started/auto_wizard
   rules:
+    - !reference [.job_rules, main_repository_only]
     - if: $CI_MERGE_REQUEST_ID
       when: manual
       allow_failure: true
