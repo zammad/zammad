@@ -163,6 +163,19 @@ export const useAnswerFormSchema = ({
           },
           children: [
             {
+              // Options, `required` and the preselection all come from the updater. Not clearable:
+              //   an answer always belongs to a category, and there is no top level to fall back
+              //   on (unlike the parent field of a category).
+              name: 'categoryId',
+              label: __('Category'),
+              type: 'treeselect',
+              props: {
+                clearable: false,
+                // The labels are category titles, i.e. user data, not UI copy.
+                noOptionsLabelTranslation: true,
+              },
+            },
+            {
               // The state the answer is in, which takes effect as soon as it is saved - the form
               //   carries no date to go with it, and a transition scheduled for later is managed
               //   apart from it (edit only, so a create form shows this field and nothing about
@@ -177,19 +190,6 @@ export const useAnswerFormSchema = ({
               props: {
                 // Shared with the schedule flyout, which offers the same set minus `draft`.
                 options: answerVisibilityOptions,
-              },
-            },
-            {
-              // Options, `required` and the preselection all come from the updater. Not clearable:
-              //   an answer always belongs to a category, and there is no top level to fall back
-              //   on (unlike the parent field of a category).
-              name: 'categoryId',
-              label: __('Category'),
-              type: 'treeselect',
-              props: {
-                clearable: false,
-                // The labels are category titles, i.e. user data, not UI copy.
-                noOptionsLabelTranslation: true,
               },
             },
           ],
