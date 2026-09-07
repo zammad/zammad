@@ -1,9 +1,13 @@
 capybara:integration:other:
   extends:
     - .template_browser-core_capybara_chrome
-    - .job_rules_manual_in_mr
     - .variables_idoit
     - .variables_proxy
+  # These tests need third party service containers and are slow, so they are
+  #   advisory in merge requests.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
@@ -18,8 +22,12 @@ capybara:integration:other:
 capybara:integration:saml:
   extends:
     - .template_browser-core_capybara_chrome
-    - .job_rules_manual_in_mr
     - .variables_auth
+  # These tests need third party service containers and are slow, so they are
+  #   advisory in merge requests.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
@@ -32,7 +40,11 @@ capybara:integration:saml:
 .template_capybara_integration_otrs:
   extends:
     - .template_browser-core_capybara_chrome
-    - .job_rules_manual_in_mr
+  # These tests need third party service containers and are slow, so they are
+  #   advisory in merge requests.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   variables:
     IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
   services:

@@ -23,8 +23,5 @@
         --config .devcontainer/$VARIANT/devcontainer.json
         --frozen-lockfile
   rules:
-    - !reference [.job_rules, variable_filters]
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: on_success
-    - when: manual
-      allow_failure: true
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_unless_scheduled]

@@ -19,8 +19,11 @@
 .template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
-    - .job_rules_manual_in_mr
     - .variables_selenium_firefox
+  # Chrome covers the same specs, so the Firefox lane is advisory in merge requests.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-firefox]

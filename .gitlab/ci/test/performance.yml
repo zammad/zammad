@@ -1,14 +1,18 @@
 performance:
   stage: test
   rules:
-    - !reference [.job_rules, variable_filters]
+    - !reference [.rule_fragments, variable_filters]
     - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+      when: on_success
       allow_failure: true
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
         - .gitlab/ci/test/performance.yml
         - .gitlab/performance/**/*
+      when: on_success
       allow_failure: true
+    # No manual start: the job runs for a long time and needs an exclusive runner.
+    - when: never
   # Make sure this gets executed exclusively on a runner.
   tags: ['no_concurrency']
   services:

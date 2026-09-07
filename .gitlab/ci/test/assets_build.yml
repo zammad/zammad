@@ -1,5 +1,8 @@
 assets:build:
   stage: test
+  # No `rules:` on purpose: the browser jobs of a filtered pipeline ($JOB_FILTER,
+  #   $BROWSER_TEST_FILTER) still need the assets built here, as the specs
+  #   themselves skip the compilation ($CI_SKIP_ASSETS_PRECOMPILE).
   services:
     - !reference [.services, postgresql]
   artifacts:

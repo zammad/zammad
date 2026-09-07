@@ -1,4 +1,6 @@
 # Write CI cache once for faster runs
+# No `rules:` on purpose: filtered pipelines ($JOB_FILTER, $BROWSER_TEST_FILTER)
+#   need the cache, too.
 'write cache: ruby':
   stage: pre
   cache: !reference [.cache, read_write_ruby]
@@ -8,6 +10,7 @@
     - !reference [.scripts, bundle_install]
   after_script: []
 
+# No `rules:` on purpose, see above.
 'write cache: nodejs':
   stage: pre
   cache: !reference [.cache, read_write_nodejs]
@@ -20,9 +23,9 @@
   stage: pre
   cache: []
   rules:
-    - !reference [.job_rules, main_repository_only]
+    - !reference [.rule_fragments, main_repository_only]
     # Don't apply job filter here.
-    - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|revert-|renovate|dependabot)/
+    - if: $CI_COMMIT_REF_NAME =~ $CI_ZAMMAD_MR_ONLY_BRANCH_PATTERN
       when: never
     - when: always
   before_script:
@@ -42,7 +45,7 @@
     - push-to-ftp
   cache: []
   rules:
-    - !reference [.job_rules, main_repository_only]
+    - !reference [.rule_fragments, main_repository_only]
     # Don't apply job filter here.
     - if: $CI_COMMIT_TAG
       when: always

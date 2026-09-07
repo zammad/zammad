@@ -11,10 +11,10 @@ supabase:translation_stats:
   extends:
     - .template_supabase
   rules:
-   - !reference [.job_rules, main_repository_only]
-   - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME =~ /^(develop|stable)$/
-     when: always
-   - when: never
+    - !reference [.rule_fragments, main_repository_only]
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME =~ /^(develop|stable)$/
+      when: always
+    - when: never
   script:
     - bundle exec rails runner .gitlab/supabase/translation_stats.rb
 
@@ -22,7 +22,7 @@ supabase:github_stats:
   extends:
     - .template_supabase
   rules:
-    - !reference [.job_rules, main_repository_only]
+    - !reference [.rule_fragments, main_repository_only]
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "develop"
       when: always
     - when: never

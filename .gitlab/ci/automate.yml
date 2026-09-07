@@ -5,8 +5,11 @@
     entrypoint: ['']
   cache: []
   rules:
-    - !reference [.job_rules, main_repository_only]
+    - !reference [.rule_fragments, main_repository_only]
+    # Don't apply job filter here.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /weblate-merge$/ && $CI_MERGE_REQUEST_SQUASH_ON_MERGE == "true"'
+      when: on_success
+    - when: never
   before_script: []
   script:
     - echo "⚠️ Disabling squash option for this MR..."
@@ -21,7 +24,7 @@
 'push translations update commit':
   stage: automate
   rules:
-    - !reference [.job_rules, main_repository_only]
+    - !reference [.rule_fragments, main_repository_only]
     # Don't apply job filter here.
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_MESSAGE =~ /Translations update from translations[.]zammad[.]org/
       when: always
@@ -80,10 +83,11 @@
   stage: automate
   cache: []
   rules:
-    - !reference [.job_rules, main_repository_only]
-    - if: $BROWSER_TEST_FILTER
-      when: never
+    - !reference [.rule_fragments, main_repository_only]
+    - !reference [.rule_fragments, variable_filters_without_force]
+    # Runs only when explicitly selected via JOB_FILTER, see the comment above.
     - if: $JOB_FILTER == $CI_JOB_NAME && ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME == "develop"
+      when: on_success
     - when: never
   variables:
     GIT_DEPTH: '500'
@@ -106,12 +110,10 @@
     entrypoint: ['']
   cache: []
   rules:
-    - !reference [.job_rules, main_repository_only]
-    - if: $BROWSER_TEST_FILTER
-      when: never
-    - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
-      when: never
+    - !reference [.rule_fragments, main_repository_only]
+    - !reference [.rule_fragments, variable_filters_without_force]
     - if: ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME == "develop"
+      when: on_success
     - when: never
   before_script: []
   script:

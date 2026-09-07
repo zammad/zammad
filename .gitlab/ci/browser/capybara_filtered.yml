@@ -1,8 +1,9 @@
 .template_capybara_filtered:
+  # This template has to be listed *after* the browser template in `extends:`: its
+  #   `rules:` and `script:` deliberately replace the inherited ones (lists are
+  #   replaced, not merged).
   rules:
-    - if: $BROWSER_TEST_FILTER
-      when: always
-    - when: never
+    - !reference [.rule_fragments, then_browser_test_filter_only]
   variables:
     BROWSER_TEST_FILTER_LOOP_COUNT: 50
   script:

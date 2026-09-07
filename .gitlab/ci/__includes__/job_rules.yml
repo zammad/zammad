@@ -1,5 +1,65 @@
-.job_rules:
-  # Allow filtering CI pipelines with JOB_FILTER and BROWSER_TEST_FILTER push variabales.
+# Rules decide whether a job is added to a pipeline at all, and if so, whether it
+#   starts automatically, waits for a manual start, and may fail. Entries are
+#   evaluated from top to bottom, the first matching one wins.
+#
+# This file provides two kinds of building blocks, which must not be confused:
+#
+#   1. Fragments below `.rule_fragments` - *partial* rules lists, spliced into the
+#      list of a job with `!reference`:
+#
+#        rules:
+#          - !reference [.rule_fragments, main_repository_only]
+#          - !reference [.rule_fragments, variable_filters]
+#          - if: $SOMETHING
+#            when: on_success
+#          - !reference [.rule_fragments, then_manual]
+#
+#      Fragments have no `rules:` key of their own, so using one in `extends:` splices
+#      its keys into the job and GitLab rejects it - never use them there.
+#
+#   2. Rule sets named `.job_rules_*` - a *complete* rules list, used with
+#      `extends:`. There is deliberately only one of them, see below.
+#
+# Conventions:
+#
+#   * A `.job_rules_*` set must end in an unconditional entry whose `when` is not
+#     `never`, so that extending it always yields a job that runs somewhere.
+#     Anything that only ever excludes (like `main_repository_only`), or that ends
+#     in `when: never`, has to be a fragment. This is the mistake to worry about:
+#     unlike a fragment in `extends:`, which GitLab rejects, a set that can only
+#     exclude is accepted without error or warning and the job is simply never
+#     created in any pipeline.
+#   * A job's own `rules:` replaces every inherited list rather than merging with
+#     it. Never add a rule set to a job or template that already inherits one -
+#     the reader cannot see which of the two wins. Write the deviating list at the
+#     job as `rules:` instead.
+#   * `then_*` fragments contain the closing, unconditional entry of a list and
+#     therefore appear last and exactly once. Every other fragment contributes
+#     only conditional entries and can be placed anywhere before that.
+#   * Order within a list: guards (`main_repository_only`) first, then the pipeline
+#     filters (`variable_filters`), then the job's own conditions, then the closing
+#     entry. A guard placed further down is dead code.
+#   * Spell out `when:` in every entry, including `when: on_success`. An entry
+#     without it reads as if it would not start the job.
+#   * `$JOB_FILTER` is matched against `$CI_JOB_NAME`, which for `parallel` and
+#     `matrix` jobs contains the shard suffix (e.g. `rspec 1/8`), so those jobs can
+#     only be selected with their full name.
+#
+# Every job needs rules of its own to honour $JOB_FILTER: `default:` cannot carry
+#   `rules:`, and a job without any `rules:` runs unconditionally. The few jobs that
+#   want exactly that - because filtered pipelines still need their cache or their
+#   artifacts - say so in a comment.
+
+.rule_fragments:
+
+  # Never run in forks, e.g. because project specific secrets or runners are needed.
+  main_repository_only:
+    - if: $CI_PROJECT_PATH != "zammad/zammad"
+      when: never
+
+  # Honour the JOB_FILTER and BROWSER_TEST_FILTER push variables, which reduce a
+  #   pipeline to a single job (see workflow.yml). A matching JOB_FILTER *forces*
+  #   the job to run, whatever its own conditions say.
   variable_filters:
     - if: $BROWSER_TEST_FILTER
       when: never
@@ -7,27 +67,52 @@
       when: always
     - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
       when: never
-  # Never run in forks, e.g. because project specific secrets or runners are needed.
-  main_repository_only:
-    - if: $CI_PROJECT_PATH != "zammad/zammad"
+
+  # Like variable_filters, but without forcing: JOB_FILTER can only *select* the
+  #   job, its own conditions still have to match as well. For jobs that must not
+  #   become startable outside of the pipelines they were written for.
+  variable_filters_without_force:
+    - if: $BROWSER_TEST_FILTER
+      when: never
+    - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
       when: never
 
-.job_rules_default:
-  rules:
-    - !reference [.job_rules, variable_filters]
-    - when: on_success
+  # Closing entry: offer a manual start and never block the pipeline. `allow_failure`
+  #   has to be spelled out for manual jobs - in `rules:` it defaults to `false`,
+  #   which would turn the manual job into a blocking one.
+  then_manual:
+    - when: manual
+      allow_failure: true
 
-.job_rules_manual_in_mr:
-  rules:
-    - !reference [.job_rules, variable_filters]
+  # Closing entry for jobs whose signal is wanted regularly, but which are too slow
+  #   or too dependent on third parties to gate every commit: they run in the
+  #   scheduled pipelines and can be started manually everywhere else.
+  then_manual_unless_scheduled:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - when: manual
+      allow_failure: true
+
+  # Closing entry for secondary test lanes that cover the same specs as a primary
+  #   lane (e.g. Firefox next to Chrome): in merge requests they are advisory and
+  #   only started on demand, on branches they run automatically.
+  then_manual_in_mr:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: manual
       allow_failure: true
     - when: on_success
 
-.job_rules_integration:
+  # Closing entry for the capybara:filtered:* jobs, which exist only to loop a
+  #   single spec selected with BROWSER_TEST_FILTER. JOB_FILTER is deliberately not
+  #   honoured here, BROWSER_TEST_FILTER is the selector for these jobs.
+  then_browser_test_filter_only:
+    - if: $BROWSER_TEST_FILTER
+      when: always
+    - when: never
+
+# The one and only rule set: for jobs that just have to honour the pipeline filters.
+#   Everything else writes its own `rules:`, see the header.
+.job_rules_default:
   rules:
-    - !reference [.job_rules, variable_filters]
-    - if: $CI_COMMIT_REF_NAME =~ /^private/
-      allow_failure: true
+    - !reference [.rule_fragments, variable_filters]
     - when: on_success

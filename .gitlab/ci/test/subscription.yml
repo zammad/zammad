@@ -1,16 +1,14 @@
 # Run back-end subscription add-on tests to check if it is still compatible.
 addon:subscription:
   stage: test
-  extends:
-    - .job_rules_default
   rules:
-    - !reference [.job_rules, main_repository_only]
-    - !reference [.job_rules, variable_filters]
+    - !reference [.rule_fragments, main_repository_only]
+    - !reference [.rule_fragments, variable_filters]
     - if: $CI_COMMIT_REF_NAME == 'develop'
       when: on_success
       # Complain if breaking changes were merged and subscription is not ported.
       allow_failure: false
-    - if: $CI_COMMIT_REF_NAME =~ /^(private|develop)/
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
       when: on_success
       # It could happen that in a branch we need to make breaking changes, so
       #   only hint at the situation but don't block the pipeline.

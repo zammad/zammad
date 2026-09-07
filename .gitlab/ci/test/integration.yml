@@ -2,8 +2,14 @@ include:
   - '.gitlab/ci/test/integration/*.yml'
 
 .template_integration:
-  extends:
-    - .job_rules_integration
+  # These tests partly talk to live third party services. On private branches their
+  #   signal is advisory only, so a failure does not block the pipeline.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
+      when: on_success
+      allow_failure: true
+    - when: on_success
   services:
     - !reference [.services, postgresql]
     - !reference [.services, imap]

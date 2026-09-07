@@ -19,8 +19,8 @@ rspec:es:
     matrix:
       - ELASTICSEARCH_TAG: [stable, latest]
   rules:
-    - !reference [.job_rules, variable_filters]
+    - !reference [.rule_fragments, variable_filters]
+    # The lowest supported version is covered in every pipeline.
     - if: $ELASTICSEARCH_TAG == "stable"
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-    - when: manual
-      allow_failure: true
+      when: on_success
+    - !reference [.rule_fragments, then_manual_unless_scheduled]

@@ -29,6 +29,12 @@ variables:
   # Record the runtime of each test file, used to keep .gitlab/ci/timings/ up to date.
   CI_TEST_TIMINGS_PATH: 'tmp/test_timings/timings.yml'
 
+  # Branches that are only ever built through their merge request: feature branches of
+  #   developers (private/*) and branches created by automation (cherry-picks, reverts,
+  #   dependency updates). Used in rules with `=~`, which requires the pattern to be
+  #   enclosed in forward slashes.
+  CI_ZAMMAD_MR_ONLY_BRANCH_PATTERN: '/^(private|cherry-pick-|revert-|renovate|dependabot)/'
+
   # Compile assets only once.
   CI_SKIP_ASSETS_PRECOMPILE: 'true'
   # Avoid unnecessary DB resets.
