@@ -762,7 +762,7 @@ GEM
     shoulda-matchers (8.0.1)
       activesupport (>= 7.2)
     simple_po_parser (1.1.6)
-    simpleidn (0.2.3)
+    simpleidn (0.3.0)
     slack-ruby-client (3.2.0)
       faraday (>= 2.0.1)
       faraday-mashify
