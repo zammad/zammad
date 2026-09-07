@@ -20,7 +20,14 @@ export default defineConfig({
   downloadsFolder: '.dev/cypress/downloads',
   screenshotsFolder: '.dev/cypress/screenshots',
   videoCompression: false,
-  env: {
+  // Cypress 16 defaults to `0`, which types faster than the rich text editor can
+  // process input events.
+  keystrokeDelay: 10,
+  // Cypress 16 defaults to `modern`, which relies on `Element.checkVisibility()`
+  // and therefore reports elements moved out of the viewport via `transform` as
+  // visible.
+  visibilityStrategy: 'legacy',
+  expose: {
     CY_CI: isCYCI,
     pluginVisualRegressionDiffConfig: {
       threshold: 0.02,

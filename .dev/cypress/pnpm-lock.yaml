@@ -10,16 +10,16 @@ importers:
     devDependencies:
       '@frsource/cypress-plugin-visual-regression-diff':
         specifier: ^4.1.1
-        version: 4.1.1(cypress@15.21.1)
+        version: 4.1.1(cypress@16.0.0)
       '@testing-library/cypress':
         specifier: ^10.1.3
-        version: 10.1.3(cypress@15.21.1)
+        version: 10.1.3(cypress@16.0.0)
       cypress:
-        specifier: ^15.21.1
-        version: 15.21.1
+        specifier: ^16.0.0
+        version: 16.0.0
       cypress-real-events:
         specifier: ^1.15.0
-        version: 1.15.0(cypress@15.21.1)
+        version: 1.15.0(cypress@16.0.0)
 
 packages:
 
@@ -391,17 +391,17 @@ packages:
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x
 
-  cypress@15.21.1:
-    resolution: {integrity: sha512-ogHpHMj0XNlZA5MGzjg8SWHf0eMw9lTwVQRKjpcT1GzNTxNUjwnHA8YCG6nOJ8ThU+XZaUxJgpMYZnJ//8aDaw==}
-    engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
+  cypress@16.0.0:
+    resolution: {integrity: sha512-/H3zsayGwIGboFIiLWaXxy6ADmCdWy5QjjDBZgslCvjIgYAf1DkZerwAM7wXMPSpfpQ4w+lGjFlmwneRBpg27g==}
+    engines: {node: ^22.0.0 || ^24.0.0 || >=26.0.0}
     hasBin: true
 
   dashdash@1.14.1:
     resolution: {integrity: sha512-jRFi8UDGo6j+odZiEpjazZaWqEal3w/basFjQHQEwVtZJGDpxbH1MeYluwCS8Xq5wmLJooDlMgvVarmWfGM44g==}
     engines: {node: '>=0.10'}
 
-  dayjs@1.11.21:
-    resolution: {integrity: sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA==}
+  dayjs@1.11.23:
+    resolution: {integrity: sha512-QDTCU0M0MxR3hQfnlDJfwekQiaanm1ubOD231u73WBckQ/fsamwRLiE2GBz6D3a/xF1NgfiDLJjXBa1hYOYTtQ==}
 
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -1006,10 +1006,10 @@ snapshots:
 
   '@frsource/base64@1.0.213': {}
 
-  '@frsource/cypress-plugin-visual-regression-diff@4.1.1(cypress@15.21.1)':
+  '@frsource/cypress-plugin-visual-regression-diff@4.1.1(cypress@16.0.0)':
     dependencies:
       '@frsource/base64': 1.0.213
-      cypress: 15.21.1
+      cypress: 16.0.0
       glob: 13.0.6
       meta-png: 1.0.6
       move-file: 4.1.0
@@ -1125,11 +1125,11 @@ snapshots:
   '@img/sharp-win32-x64@0.35.3':
     optional: true
 
-  '@testing-library/cypress@10.1.3(cypress@15.21.1)':
+  '@testing-library/cypress@10.1.3(cypress@16.0.0)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@testing-library/dom': 10.4.1
-      cypress: 15.21.1
+      cypress: 16.0.0
 
   '@testing-library/dom@10.4.1':
     dependencies:
@@ -1280,11 +1280,11 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress-real-events@1.15.0(cypress@15.21.1):
+  cypress-real-events@1.15.0(cypress@16.0.0):
     dependencies:
-      cypress: 15.21.1
+      cypress: 16.0.0
 
-  cypress@15.21.1:
+  cypress@16.0.0:
     dependencies:
       '@cypress/request': 4.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
@@ -1302,7 +1302,7 @@ snapshots:
       cli-table3: 0.6.1
       commander: 6.2.1
       common-tags: 1.8.2
-      dayjs: 1.11.21
+      dayjs: 1.11.23
       debug: 4.4.3(supports-color@8.1.1)
       eventemitter2: 6.4.7
       execa: 4.1.0
@@ -1333,7 +1333,7 @@ snapshots:
     dependencies:
       assert-plus: 1.0.0
 
-  dayjs@1.11.21: {}
+  dayjs@1.11.23: {}
 
   debug@3.2.7(supports-color@8.1.1):
     dependencies:

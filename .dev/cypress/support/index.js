@@ -16,7 +16,7 @@ globalThis.process.env = {
 
 Cypress.Screenshot.defaults({ capture: 'viewport' })
 
-if (Cypress.env('CY_CI')) {
+if (Cypress.expose('CY_CI')) {
   Cypress.config('defaultCommandTimeout', 20000)
 }
 
