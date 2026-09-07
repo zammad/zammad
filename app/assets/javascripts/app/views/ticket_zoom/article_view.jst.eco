@@ -54,7 +54,7 @@
         <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T('Security') %></div>
           <div class="article-meta-value flex contain-text">
-            <%- securityPreferences.type %>:
+            <%= securityPreferences.type %>:
             <% if encryptionSuccess || encryptionWarning: %>
               <span title="<%- @Ti(encryptionComment) %>">
                 <% if encryptionSuccess: %>
@@ -171,7 +171,7 @@
             <% count = 0 %>
             <% for link in @links: %>
               <% if count > 0: %>|<% end %>
-              <a class="text-muted" href="<%- link.url %>" target="<%- link.target %>"><%- @T(link.name) %></a>
+              <a class="text-muted" href="<%= App.Utils.safeUrl(link.url) %>" target="<%= link.target %>"><%- @T(link.name) %></a>
               <% count =+ 1 %>
             <% end %>
           <% end %>

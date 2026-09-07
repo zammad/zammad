@@ -335,6 +335,25 @@ class App.Utils
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;')
 
+  # safe = App.Utils.safeUrl(url)
+  # Returns the url only if it uses a scheme safe to put in an href, otherwise ''.
+  #   Relative/scheme-less urls are kept; javascript:, data: etc. are dropped.
+  # Intentionally stricter than the shared `safeUrl` of the Vue apps: its only caller
+  #   renders article preference links, which are only ever web links, so an allowlist
+  #   is used here instead of just rejecting the script-executing schemes.
+  @safeUrl: (url) ->
+    return '' if !url
+    return '' if !url.replace
+
+    # Strip control characters (incl. tab/newline) that browsers ignore when
+    #   parsing a scheme, e.g. `java<TAB>script:` would otherwise slip through.
+    stripped = url.replace(/[\x00-\x1F\x7F]/g, '')
+
+    scheme = stripped.match(/^\s*([a-z][a-z0-9+.\-]*):/i)
+    return stripped if !scheme
+    return stripped if _.contains(['http', 'https', 'mailto', 'tel'], scheme[1].toLowerCase())
+    ''
+
   # App.Utils.htmlStrip(element)
   @htmlStrip: (element) ->
     loop

@@ -42,6 +42,9 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
       end
       clean_params.delete(:type)
       clean_params[:internal] = false
+
+      # Article preferences are internal metadata; only trusted (agent) callers may set them.
+      clean_params.delete(:preferences)
     end
 
     if Ticket::Article::Type.lookup(id: clean_params[:type_id])&.name == 'email' && ticket.group.email_address.blank?

@@ -81,6 +81,9 @@ class Service::Ticket::Article::Create < Service::Base
     article_data.delete :origin_by_id
 
     article_data[:internal] = false
+
+    # Article preferences are internal metadata; only trusted (agent) callers may set them.
+    article_data.delete :preferences
   end
 
   def transform_article(article, attachments_raw, subtype)

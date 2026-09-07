@@ -923,6 +923,44 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       end
     end
 
+    describe 'article preferences write filtering' do
+      let(:preferences) do
+        {
+          links:    [{ url: 'javascript:alert(1)//', target: '_blank', name: 'x' }],
+          security: { type: '<img src=x onerror=alert(1)>' },
+        }
+      end
+      let(:params) do
+        {
+          ticket_id:   ticket.id,
+          body:        'some body',
+          type:        'note',
+          preferences:,
+        }
+      end
+
+      context 'when user is customer' do
+        let(:ticket) { create(:ticket, customer: user, group:) }
+        let(:user)   { create(:customer) }
+
+        it 'drops the client-supplied preferences' do
+          post '/api/v1/ticket_articles', params: params, as: :json
+          expect(response).to have_http_status(:created)
+          expect(ticket.articles.last.preferences).not_to include('links', 'security')
+        end
+      end
+
+      context 'when user is agent' do
+        let(:user) { create(:agent, groups: [group]) }
+
+        it 'keeps the preferences' do
+          post '/api/v1/ticket_articles', params: params, as: :json
+          expect(response).to have_http_status(:created)
+          expect(ticket.articles.last.preferences).to include('links', 'security')
+        end
+      end
+    end
+
   end
 
   describe 'POST /api/v1/ticket_articles (full response)', authenticated_as: :customer do

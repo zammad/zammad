@@ -91,6 +91,11 @@ RSpec.describe AttachmentsController, type: :request do
       get "/api/v1/attachments/#{internal_store.id}"
       expect(response).to have_http_status(:ok)
     end
+
+    it 'sends X-Content-Type-Options: nosniff on download' do
+      get "/api/v1/attachments/#{public_store.id}"
+      expect(response.headers['X-Content-Type-Options']).to eq('nosniff')
+    end
   end
 
   describe '#destroy' do

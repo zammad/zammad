@@ -6,11 +6,13 @@ module ApplicationController::HasDownload
   def send_data(...)
     super
     set_null_csp
+    set_no_sniff
   end
 
   def send_file(...)
     super
     set_null_csp
+    set_no_sniff
   end
 
   private
@@ -33,5 +35,10 @@ module ApplicationController::HasDownload
 
   def set_null_csp
     request.content_security_policy = ActionDispatch::ContentSecurityPolicy.new.tap { |p| p.default_src :none }
+  end
+
+  # Ask the browser to honor the sent content type instead of MIME-sniffing it.
+  def set_no_sniff
+    response.set_header('X-Content-Type-Options', 'nosniff')
   end
 end

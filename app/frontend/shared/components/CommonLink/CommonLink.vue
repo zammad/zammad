@@ -8,6 +8,7 @@ import { getLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { Link } from '#shared/types/router.ts'
 import stopEvent from '#shared/utils/events.ts'
+import { safeUrl } from '#shared/utils/url.ts'
 
 import type { Sizes } from './types.ts'
 
@@ -87,7 +88,9 @@ const path = computed(() => {
     return `${app.config.api_path}${props.link}`
   }
 
-  return props.link as string
+  // External links may carry caller-supplied urls (e.g. article preferences),
+  //   so drop unsafe schemes like javascript: before they reach the href.
+  return safeUrl(props.link as string)
 })
 
 const onClick = (event: MouseEvent) => {
