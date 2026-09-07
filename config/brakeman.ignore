@@ -95,25 +95,6 @@
       "note": "ObjectLookup.by_id works as designed"
     },
     {
-      "warning_type": "Unmaintained Dependency",
-      "warning_code": 122,
-      "fingerprint": "21ab0fe00fdd5899ffc405cff75aadb91b805ee996a614f7e27b08a287e9062d",
-      "check_name": "EOLRails",
-      "message": "Support for Rails 8.0.5.1 ends on 2026-10-07",
-      "file": "Gemfile.lock",
-      "line": 594,
-      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "Weak",
-      "cwe_id": [
-        1104
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "2ebd9f5e35ae11122d5561fdbbef7432eeef6b34d7c61249365be7dc34cbfb82",
@@ -418,7 +399,7 @@
       "check_name": "Deserialize",
       "message": "Use of `Marshal.load` may be dangerous",
       "file": "app/models/core_workflow/result.rb",
-      "line": 20,
+      "line": 21,
       "link": "https://brakemanscanner.org/docs/warning_types/unsafe_deserialization",
       "code": "Marshal.load(Marshal.dump(payload.permit!.to_h))",
       "render_path": null,
@@ -503,6 +484,25 @@
         185
       ],
       "note": "Admin configured RegExp"
+    },
+    {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 122,
+      "fingerprint": "98b26f60d776fd41ee6f088c833725145be9aac2d7c5b33780241c273622db42",
+      "check_name": "EOLRails",
+      "message": "Support for Rails 8.0.5.1 ends on 2026-10-07",
+      "file": "Gemfile.lock",
+      "line": 597,
+      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        1104
+      ],
+      "note": ""
     },
     {
       "warning_type": "Remote Code Execution",
@@ -730,7 +730,7 @@
       "check_name": "Deserialize",
       "message": "Use of `Marshal.load` may be dangerous",
       "file": "app/models/core_workflow/result.rb",
-      "line": 221,
+      "line": 256,
       "link": "https://brakemanscanner.org/docs/warning_types/unsafe_deserialization",
       "code": "Marshal.load(Marshal.dump(@result.except(:rerun_count)))",
       "render_path": null,

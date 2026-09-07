@@ -310,7 +310,7 @@ GEM
     google-protobuf (4.34.1)
       bigdecimal
       rake (~> 13.3)
-    graphql (2.6.7)
+    graphql (2.6.10)
       base64
       fiber-storage
       logger
@@ -739,7 +739,7 @@ GEM
       rexml
     rubyntlm (0.6.5)
       base64
-    rubyzip (3.3.0)
+    rubyzip (3.6.0)
     safety_net_attestation (0.5.0)
       jwt (>= 2.0, < 4.0)
     samovar (2.4.1)
