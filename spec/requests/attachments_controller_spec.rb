@@ -151,6 +151,11 @@ RSpec.describe AttachmentsController, type: :request do
         include_examples 'responding with not found'
       end
     end
+
+    it 'sends X-Content-Type-Options: nosniff on download' do
+      get "/api/v1/attachments/#{public_store.id}"
+      expect(response.headers['X-Content-Type-Options']).to eq('nosniff')
+    end
   end
 
   describe '#destroy' do

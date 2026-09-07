@@ -146,4 +146,14 @@ describe('CommonLink.vue', () => {
     })
     expect(getLink()).toHaveAttribute('href', '/api/example')
   })
+
+  it('drops an unsafe javascript: href', () => {
+    const { getLink } = renderCommonLink({
+      props: {
+        link: 'javascript:alert(1)',
+        external: true,
+      },
+    })
+    expect(getLink()).toHaveAttribute('href', '')
+  })
 })
