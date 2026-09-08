@@ -362,70 +362,19 @@ describe('SearchContent', () => {
     expect(wrapper.queryByRole('button', { name: 'Bulk actions' })).not.toBeInTheDocument()
   })
 
-  // The quicksearch group for knowledge base answers ships in this story, its detailed-search tab
-  //   in zammad/coordination-desktop-view#874 - so the plugin is registered and visible to
-  //   quicksearch, but opts out of the detailed search with `detailSearchDisabled`. The config and
-  //   permission below are what make it visible, so the suppression is genuinely exercised rather
-  //   than trivially true.
-  describe('with an entity that opts out of the detailed search', () => {
-    beforeEach(() => {
-      mockPermissions(['ticket.agent', 'knowledge_base.reader'])
-      mockApplicationConfig({ kb_active: true })
-    })
+  // The counts query behind the tab badges asks for every registered plugin, knowledge base answers
+  //   included - that request is what the answers tab's counter reads.
+  it('asks for the knowledge base answer count behind its tab badge', async () => {
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+    mockApplicationConfig({ kb_active: true })
 
-    it('shows no tab for it', async () => {
-      mockTicketSearchResult(0, [])
+    mockTicketSearchResult(0, [])
+    mockSearchCountsQuery({ searchCounts: [] })
 
-      const wrapper = renderSearchContent({ searchTerm: '123' })
+    renderSearchContent({ searchTerm: '123' })
 
-      await wrapper.findByRole('tab', { name: 'Ticket' })
+    const calls = await waitForSearchCountsQueryCalls()
 
-      expect(wrapper.queryByRole('tab', { name: 'Knowledge base answer' })).not.toBeInTheDocument()
-    })
-
-    it('leaves it out of the tab-count query', async () => {
-      mockTicketSearchResult(0, [])
-      mockSearchCountsQuery({ searchCounts: [] })
-
-      renderSearchContent({ searchTerm: '123' })
-
-      const calls = await waitForSearchCountsQueryCalls()
-
-      expect(calls[0].variables.onlyIn).not.toContain(
-        EnumSearchableModels.KnowledgeBaseAnswerTranslation,
-      )
-    })
-
-    // The riskiest branch of the change: before `routeEntity`, an `?entity=` naming a plugin
-    //   without a table resolved to that plugin and then died dereferencing its absent
-    //   `detailSearchHeaders`. Both of its branches are covered - a registered entity without a
-    //   tab, and a model that is not a plugin at all.
-    it.each([
-      ['an entity whose tab does not exist', EnumSearchableModels.KnowledgeBaseAnswerTranslation],
-      ['a model that is no plugin at all', 'Nonsense'],
-    ])('falls back to the ticket tab for %s', async (_name, entity) => {
-      mockTicketSearchResult(1, [createSampleTicket(469, 'Foo ticket title')])
-
-      await getTestRouter().push({ path: '/search/123', query: { entity } })
-
-      const wrapper = renderSearchContent({ searchTerm: '123' })
-
-      expect(
-        await wrapper.findByRole('table', { name: 'Search result for: Ticket' }),
-      ).toBeInTheDocument()
-    })
-
-    it('still asks for the counts of the entities that do have a tab', async () => {
-      mockTicketSearchResult(0, [])
-      mockSearchCountsQuery({ searchCounts: [] })
-
-      renderSearchContent({ searchTerm: '123' })
-
-      const calls = await waitForSearchCountsQueryCalls()
-
-      expect(calls[0].variables.onlyIn).toEqual(
-        expect.arrayContaining([EnumSearchableModels.User, EnumSearchableModels.Organization]),
-      )
-    })
+    expect(calls[0].variables.onlyIn).toContain(EnumSearchableModels.KnowledgeBaseAnswerTranslation)
   })
 })

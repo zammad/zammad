@@ -52,10 +52,9 @@ module Gql::Queries
     #   unchanged.
     #
     # `order_by`, `order_direction` and `filter` have no meaning here and are ignored: the knowledge
-    #   base's backend ranks by relevance, and it knows no selector conditions. Nothing sends them
-    #   today (the search plugin sets `filtersDisabled` and the detail tab is disabled), but
-    #   zammad/coordination-desktop-view#874 has to decide what a sortable answers table does about
-    #   it before it enables that tab.
+    #   base's backend ranks by relevance, and it knows no selector conditions. Nothing sends them:
+    #   the search plugin sets `filtersDisabled`, and its detail table declares every column
+    #   `noSorting`, so the answers tab offers no control that could produce an order.
     def knowledge_base_answer_result(search, offset:, limit:)
       hits = knowledge_base_answer_hits(search)
 

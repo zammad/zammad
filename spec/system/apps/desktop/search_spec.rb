@@ -159,12 +159,31 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
       end
     end
 
-    # AC9 and AC10: the group is capped at ten items and links to the detailed search for the rest.
-    #   That link deliberately carries no entity while the answers tab is still to come
-    #   (zammad/coordination-desktop-view#874), so following it must land on a working page rather
-    #   than on a tab that does not exist - which is what QuickSearchResultList's omission of the
-    #   entity, and SearchContent's `routeEntity` fallback behind it, are for. Followed by clicking,
-    #   deliberately: visiting a /search URL directly does not establish the taskbar tab.
+    # The detailed search tab. Reached by clicking rather
+    #   than by visiting the URL, because visiting a /search URL directly does not establish the
+    #   taskbar tab.
+    it 'lists the answer in its own detailed search tab and opens it' do
+      within 'aside[aria-label="Main sidebar"]' do
+        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+
+        expect(page).to have_text('Found knowledge base answers')
+
+        click_on 'detailed search'
+      end
+
+      within 'main' do
+        find('[role="tab"]', text: 'Knowledge base answer').click
+
+        expect(page).to have_css('th', text: 'Name')
+          .and have_css('th', text: 'Updated at')
+          .and have_css('th', text: 'Visibility')
+
+        click_on answer_title
+      end
+
+      wait.until { current_url.include?("/knowledge-base/locale/#{primary_locale.system_locale.locale}/answer/#{kb_answer.id}") }
+    end
+
     context 'with more answers than the group shows' do
       let(:extra_answers) do
         Array.new(11) do |index|
@@ -190,8 +209,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
         end
 
         within 'main' do
-          expect(page).to have_css('[role="tab"]', text: 'Ticket')
-          expect(page).to have_no_css('[role="tab"]', text: 'Knowledge base answer')
+          expect(page).to have_css('[role="tab"][aria-selected="true"]', text: 'Knowledge base answer')
         end
       end
     end

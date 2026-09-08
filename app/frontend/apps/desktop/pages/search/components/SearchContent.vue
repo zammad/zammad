@@ -64,17 +64,15 @@ const props = defineProps<{
 const route = useRoute()
 const router = useRouter()
 
-const { sortedByNameDetailSearchPlugins, detailSearchPluginNames } = useSearchPlugins()
+const { sortedByNamePlugins, searchPluginNames } = useSearchPlugins()
 
-// The entity a /search URL asks for, or Ticket. An `?entity=` naming something the detailed search
-//   cannot show falls back instead of resolving to a plugin with no table behind it: either an
-//   unknown model, or one whose plugin is `detailSearchDisabled` because its table is still to
-//   come. The quicksearch group's "%s more" link produces exactly the latter for an entity whose
-//   tab has not shipped yet (zammad/coordination-desktop-view#874).
+// The entity a /search URL asks for, or Ticket. An `?entity=` naming something that is no plugin —
+//   an unknown model, or one this user may not search — falls back instead of selecting a tab with
+//   nothing behind it.
 const routeEntity = () => {
   const requested = route.query.entity as EnumSearchableModels | undefined
 
-  if (requested && detailSearchPluginNames.value.includes(requested)) return requested
+  if (requested && searchPluginNames.value.includes(requested)) return requested
 
   return EnumSearchableModels.Ticket
 }
@@ -175,7 +173,7 @@ const modelSearchTerm = computed({
 const currentSearchTerm = computed(() => modelSearchTerm.value ?? '')
 
 const notVisibleSearchEntities = computed(() =>
-  detailSearchPluginNames.value.filter(
+  searchPluginNames.value.filter(
     (name) =>
       name !== selectedEntity.value &&
       (!!filtersByEntity[name]?.length || !!currentSearchTerm.value),
@@ -375,10 +373,10 @@ const refetchQueries = () => {
   searchCountsQuery.refetch()
 }
 
-// Always a plugin the detailed search can render: `routeEntity` never lets `selectedEntity` hold an
-//   entity without a table. The optional chaining and the empty-list default are the belt to that
-//   braces - `detailSearchHeaders` and `detailSearchComponent` are optional on SearchPlugin, so a
-//   future `detailSearchDisabled` entity slipping through must render nothing rather than throw.
+// Always a registered plugin: `routeEntity` never lets `selectedEntity` hold anything else. The
+//   optional chaining and the empty-list default are the belt to that braces - `detailSearchHeaders`
+//   and `detailSearchComponent` are optional on SearchPlugin, so a plugin that omits them must
+//   render nothing rather than throw.
 const searchPlugin = computed(() => searchPluginByName[selectedEntity.value])
 
 const { config } = storeToRefs(useApplicationStore())
@@ -425,7 +423,7 @@ const isLoading = computed(
 const searchResultTotalCount = computed(() => currentSearchResult.value?.search.totalCount ?? 0)
 
 const searchTabs = computed(() =>
-  sortedByNameDetailSearchPlugins.value.map((plugin) => ({
+  sortedByNamePlugins.value.map((plugin) => ({
     label: plugin.label,
     key: plugin.name,
     count: searchEntityCurrentCounts.value[plugin.name] ?? '-',
@@ -537,7 +535,7 @@ const setNewSearchState = (searchTerm: string) => {
 const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
 const shouldCountsRun = computed(
   () =>
-    detailSearchPluginNames.value.length > 1 &&
+    searchPluginNames.value.length > 1 &&
     (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
 )
 

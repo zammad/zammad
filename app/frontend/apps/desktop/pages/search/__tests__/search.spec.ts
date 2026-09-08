@@ -88,6 +88,16 @@ describe('search view', () => {
       expect(view.getByRole('tablist', { name: 'Search entity' })).toBeInTheDocument()
     })
 
+    // `routeEntity` resolves an `?entity=` only when a registered plugin backs it; anything else
+    //   falls back to tickets rather than selecting a tab with nothing behind it.
+    it('falls back to the ticket tab for a model that is no plugin at all', async () => {
+      const view = await visitView('/search/123?entity=Nonsense')
+
+      expect(
+        await view.findByRole('table', { name: 'Search result for: Ticket' }),
+      ).toBeInTheDocument()
+    })
+
     it('write quick search input correctly to the search view input', async () => {
       const { searchContainer, view } = await visitSearchView()
 
@@ -539,6 +549,63 @@ describe('search view', () => {
 
       await waitFor(() => expect(taskbarTab).toHaveTextContent(searchTerm))
       await waitFor(() => expect(document.title).toEqual(`Zammad - ${searchTerm}`))
+    })
+  })
+
+  // The knowledge base answer tab. Its plugin is gated by
+  //   `show` rather than by `permissions`, so `kb_active` plus a knowledge base permission is what
+  //   puts the tab on screen at all.
+  describe('knowledge base answers', () => {
+    beforeEach(() => {
+      mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+      mockApplicationConfig({
+        ui_task_mananger_max_task_count: 30,
+        kb_active: true,
+      })
+
+      // Empty on purpose: this file checks the tab, the query and the controls around it. Rendering
+      //   the rows is `KnowledgeBaseAnswerTable.spec.ts`'s job, and one detail-search mock answers
+      //   every entity — so rows would arrive at whichever table is not theirs.
+      mockDetailSearchQuery({
+        search: {
+          totalCount: 0,
+          items: [],
+        },
+      })
+    })
+
+    it('offers a tab for them', async () => {
+      const { view } = await visitSearchView()
+
+      expect(await view.findByRole('tab', { name: /Knowledge base answer/ })).toBeInTheDocument()
+    })
+
+    it('searches that entity when its tab is selected', async () => {
+      const { view } = await visitSearchView()
+
+      await view.events.click(await view.findByRole('tab', { name: /Knowledge base answer/ }))
+
+      await waitFor(async () => {
+        const calls = await waitForDetailSearchQueryCalls()
+
+        expect(calls.at(-1)?.variables.onlyIn).toBe(
+          EnumSearchableModels.KnowledgeBaseAnswerTranslation,
+        )
+      })
+    })
+
+    // `filtersDisabled` on the plugin: knowledge base answers are no object manager object, so
+    //   there is no attribute set the filter UI could build itself from.
+    it('hides the advanced filter controls on that tab', async () => {
+      const { view } = await visitSearchView()
+
+      expect(view.getByRole('button', { name: 'Advanced filters' })).toBeInTheDocument()
+
+      await view.events.click(await view.findByRole('tab', { name: /Knowledge base answer/ }))
+
+      await waitFor(() =>
+        expect(view.queryByRole('button', { name: 'Advanced filters' })).not.toBeInTheDocument(),
+      )
     })
   })
 
