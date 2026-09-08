@@ -3,6 +3,7 @@
 module Gql::Types
   class TemplateType < Gql::Types::BaseObject
     include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Ticket template'
 

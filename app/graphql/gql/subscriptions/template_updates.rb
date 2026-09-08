@@ -3,20 +3,22 @@
 module Gql::Subscriptions
   class TemplateUpdates < BaseSubscription
 
-    description 'Updates to ticket templates'
+    # This subscription must not be broadcastable as it sends different data depending on
+    #   the templates the subscriber is allowed to see (see TemplatePolicy::Scope).
 
-    broadcastable true
+    description 'Updates to ticket templates'
 
     argument :only_active, Boolean, required: false, default_value: false, description: 'Fetch only active templates'
 
     field :templates, [Gql::Types::TemplateType, { null: false }], description: 'Current ticket templates'
 
-    requires_permission 'ticket.agent', 'ticket.customer'
+    requires_permission 'ticket.agent'
 
     def update(only_active:)
-      {
-        templates: only_active ? Template.active : Template.all
-      }
+      templates = Pundit.policy_scope!(context.current_user, Template)
+      templates = templates.active if only_active
+
+      { templates: templates }
     end
   end
 end
