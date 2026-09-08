@@ -22,8 +22,7 @@ class Service::KnowledgeBase::Search < Service::Base
 
   # The whole permission-filtered list is materialised in Ruby and the connection pages over it in
   # memory, so the search needs a bound. At the frontend's page size of 30 this is roughly seven
-  # pages — far past where anyone keeps paging — and a truncation is logged rather than silently
-  # reported as a complete total.
+  # pages — far past where anyone keeps paging.
   MAX_RESULTS = 200
 
   # Private Use Area code points. Elasticsearch's default is <em>…</em>, which cannot be told apart
@@ -76,7 +75,6 @@ class Service::KnowledgeBase::Search < Service::Base
 
     hits = backend.search(query, user: current_user)
 
-    log_truncation(hits)
     preheat(hits)
 
     results = hits.filter_map { |hit| result_for(hit) }
@@ -124,14 +122,6 @@ class Service::KnowledgeBase::Search < Service::Base
   #   public help site's ranking stays untouched.
   def flavor
     ::KnowledgeBase.access_for_user(current_user) == :public ? :public : :agent
-  end
-
-  # Permission filtering happens after the cap, so a search that was truncated can still come back
-  #   shorter than the cap — this reports the cases it can see rather than none at all.
-  def log_truncation(hits)
-    return if hits.size < limit
-
-    Rails.logger.info { "Knowledge base search for #{query.inspect} hit the result cap of #{limit}; totalCount is a lower bound." }
   end
 
   # Everything the result page needs, in a fixed number of queries rather than a few per hit. The
