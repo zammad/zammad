@@ -38,17 +38,34 @@ class Sessions::Event::Base
       ActiveRecord::Base.establish_connection
     end
 
-    session_user_info
+    restore_session_user
   end
 
-  def session_user_info
+  # A session of the legacy web socket transport is restored once, when the login event is
+  #   handled, and is then kept in the web socket server process for the lifetime of the
+  #   connection. Its user therefore has to be re-checked for every event: an account that was
+  #   deactivated or deleted, or locked out by maintenance mode, in the meantime must no longer
+  #   be authorized here, just like it is no longer authorized over HTTP (see
+  #   ApplicationController::Authenticates#authentication_check_prerequesits).
+  def restore_session_user
     return if !@session
     return if !@session['id']
 
     user = User.lookup(id: @session['id'])
-    return if user.blank?
+
+    if !session_user_allowed?(user)
+      @session = @session.except('id')
+      return
+    end
 
     UserInfo.current_user_id = user.id
+  end
+
+  def session_user_allowed?(user)
+    return false if !user&.active?
+    return false if Auth::SwitchedSession.revoked?(@session['switched_from_user_id'])
+
+    !Auth::MaintenanceMode.blocks?(user, switched_from_user_id: @session['switched_from_user_id'])
   end
 
   def self.inherited(subclass)

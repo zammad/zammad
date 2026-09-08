@@ -65,4 +65,76 @@ RSpec.describe 'GraphQL', type: :request do
       )
     end
   end
+
+  describe 'session based authentication' do
+    let(:user) { create(:agent, :with_valid_password) }
+
+    before do
+      authenticated_as(user, via: :browser)
+    end
+
+    it 'accepts a session of an active user' do
+      post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    # Bypasses the callback that drops the user's sessions (see User::TerminatesSessions), so
+    #   that this covers the prerequisite itself: a session that outlives a deactivation - one
+    #   written by a code path that skips callbacks, or re-persisted by the request in which the
+    #   account deactivated itself - must still be rejected.
+    it 'rejects a session that was retained across a deactivation' do
+      user.update_columns(active: false)
+
+      post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'no longer authenticates once deactivation dropped the session' do
+      user.update!(active: false)
+
+      post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
+
+      expect(json_response).to include('errors' => include(include('message' => 'Authentication required')))
+    end
+
+    # A session an admin switched into another user from authenticates as that user, so it stays
+    #   a working session of a revoked admin unless the account that holds it is checked as well
+    #   (see Auth::SwitchedSession) - switching back is not required to keep using it.
+    context 'with a session switched into another user' do
+      let(:user)  { create(:admin, :with_valid_password) }
+      let(:agent) { create(:agent) }
+
+      # Deactivating the last account with admin permissions is refused.
+      before do
+        create(:admin)
+
+        get "/api/v1/sessions/switch/#{agent.id}", as: :json
+      end
+
+      it 'accepts it while the admin is active' do
+        post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      # Bypasses the callback that drops the admin's sessions, as above.
+      it 'rejects it once the admin was deactivated' do
+        user.update_columns(active: false)
+
+        post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it 'no longer authenticates once the deactivation dropped the session' do
+        user.update!(active: false)
+
+        post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
+
+        expect(json_response).to include('errors' => include(include('message' => 'Authentication required')))
+      end
+    end
+  end
 end

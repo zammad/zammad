@@ -3,7 +3,13 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
-    identified_by :sid
+
+    # The session id is deliberately not a connection identifier: 'where' requires a value for
+    #   every identifier, and the public session id of an established connection cannot be
+    #   looked up anywhere, since only its hashed private id is stored. Keeping current_user as
+    #   the only identifier is what allows all connections of a user to be terminated via
+    #   'ActionCable.server.remote_connections.where(current_user: user).disconnect'.
+    attr_accessor :sid
 
     # current_user is stored in the context of GraphQL which is persistent
     #   for the scope of a subscription and cannot be changed from within
@@ -25,7 +31,16 @@ module ApplicationCable
       session = ActiveRecord::SessionStore::Session.find_by(session_id: private_id)
       return if !session
 
-      User.find_by(id: session.data['user_id'])
+      user = User.find_by(id: session.data['user_id'])
+
+      # The prerequisites of the HTTP transport must be applied here as well (see
+      #   ApplicationController::Authenticates#authentication_check_prerequesits), otherwise a
+      #   session that was retained across a deactivation would stay authorized on this transport.
+      return if !user&.active?
+      return if Auth::SwitchedSession.revoked?(session.data['switched_from_user_id'])
+      return if Auth::MaintenanceMode.blocks?(user, switched_from_user_id: session.data['switched_from_user_id'])
+
+      user
     end
 
     def session_id

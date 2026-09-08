@@ -10,6 +10,96 @@ RSpec.describe Sessions::Event::Base do
     end
   end
 
+  describe 'restoring the session user' do
+    # The session of a web socket connection is restored once, at login time, so it has to be
+    #   re-checked for every event that is handled for it.
+    let(:event_class) do
+      Class.new(described_class) do
+        database_connection_required
+
+        def run
+          @session
+        end
+      end
+    end
+
+    let(:session)   { { 'id' => user.id } }
+    let(:event)     { event_class.new(session: session, client_id: 'sess_id', client: {}) }
+
+    context 'with an active user' do
+      let(:user) { create(:agent) }
+
+      it 'keeps the user in the session' do
+        expect(event.run).to eq({ 'id' => user.id })
+      end
+    end
+
+    context 'with an inactive user' do
+      let(:user) { create(:agent, active: false) }
+
+      it 'removes the user from the session' do
+        expect(event.run).to eq({})
+      end
+    end
+
+    context 'with a deleted user' do
+      let(:user) { create(:agent).tap(&:destroy!) }
+
+      it 'removes the user from the session' do
+        expect(event.run).to eq({})
+      end
+    end
+
+    context 'with maintenance mode enabled' do
+      let(:user) { create(:agent) }
+
+      before { Setting.set('maintenance_mode', true) }
+
+      it 'removes the user from the session' do
+        expect(event.run).to eq({})
+      end
+
+      context 'when the user has maintenance permissions' do
+        let(:user) { create(:admin) }
+
+        it 'keeps the user in the session' do
+          expect(event.run).to eq({ 'id' => user.id })
+        end
+      end
+
+      context 'when an admin switched to the user' do
+        let(:session) { { 'id' => user.id, 'switched_from_user_id' => create(:admin).id } }
+
+        it 'keeps the user in the session' do
+          expect(event.run).to eq(session)
+        end
+      end
+    end
+
+    # Such a session belongs to the admin and is served as the user, so the admin's own state
+    #   has to be re-checked here as well (see Auth::SwitchedSession).
+    context 'with an admin switched to the user' do
+      let(:user)    { create(:agent) }
+      let(:admin)   { create(:admin) }
+      let(:session) { { 'id' => user.id, 'switched_from_user_id' => admin.id } }
+
+      it 'keeps the user in the session' do
+        expect(event.run).to eq(session)
+      end
+
+      # Bypasses the callback that drops the admin's sessions (see User::TerminatesSessions), so
+      #   that this covers the prerequisite itself - the legacy transport serves a copy of the
+      #   session anyway, which no destroyed record reaches.
+      context 'when the admin is deactivated' do
+        before { admin.update_columns(active: false) }
+
+        it 'removes the user from the session' do
+          expect(event.run).to eq({ 'switched_from_user_id' => admin.id })
+        end
+      end
+    end
+  end
+
   describe '#remote_ip' do
     let(:instance) { described_class.new(headers:) }
 

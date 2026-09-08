@@ -130,7 +130,10 @@ module ApplicationController::Authenticates
   def authentication_check_prerequesits(user, auth_type)
     raise Exceptions::Forbidden, __('Maintenance mode enabled!') if in_maintenance_mode?(user)
 
-    raise Exceptions::NotAuthorized, Auth::Error::AuthenticationFailed::MESSAGE if !user.active
+    # The second condition covers a session an admin switched into another user from: it is
+    #   served as that user, so the account that holds it is not the one checked above (see
+    #   Auth::SwitchedSession).
+    raise Exceptions::NotAuthorized, Auth::Error::AuthenticationFailed::MESSAGE if !user.active || Auth::SwitchedSession.revoked?(session[:switched_from_user_id])
 
     current_user_set(user, auth_type)
     user_device_log(user, auth_type)
