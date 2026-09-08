@@ -154,6 +154,24 @@ RSpec.describe KnowledgeBase::AccessibleCategories do
 
       expect(described_class).to have_received(:cache_key).with(user, categories_filter: [category])
     end
+
+    # The cached result, not #calculate: filtering KnowledgeBase::EffectivePermission alone would
+    #   still serve the access the role granted while it was active, for as long as the entry
+    #   lives.
+    context 'when a granting role is deactivated' do
+      let(:granting_role) { create(:role, permission_names: 'knowledge_base.editor') }
+      let(:user)          { create(:user, roles: [granting_role]) }
+
+      it 'drops the categories the role granted', :aggregate_failures do
+        category
+
+        expect(described_class.for_user(user).editor).to include(category)
+
+        granting_role.update!(active: false)
+
+        expect(described_class.for_user(user.reload).editor).not_to include(category)
+      end
+    end
   end
 
   describe '.cache_key' do
@@ -221,6 +239,31 @@ RSpec.describe KnowledgeBase::AccessibleCategories do
 
       expect { category.permissions.create!(role: user.roles.first, access: 'reader') }
         .to change { described_class.cache_key(user) }
+    end
+
+    # Deactivating a role revokes the access it granted, but it changes neither the full role list
+    #   nor any category or permission row — so the key has to be built from the active roles for
+    #   the revocation to reach the cached struct at all.
+    it 'bumps cache key on role deactivation' do
+      role = create(:role, permission_names: 'knowledge_base.editor')
+      user = create(:user, roles: [role])
+
+      expect { role.update!(active: false) }
+        .to change { described_class.cache_key(user.reload) }
+    end
+
+    # Revoking the permission from the role leaves the role list and, without granular permissions
+    #   in use, every permission row untouched — so Role#cache_remove_kb_permission bumping the
+    #   categories is the only thing that reaches the cached struct. The cache is consulted whether
+    #   or not granular permissions are in use.
+    it 'bumps cache key on revoking a knowledge base permission from a role' do
+      role = create(:role, permission_names: 'knowledge_base.editor')
+      user = create(:user, roles: [role])
+
+      category
+
+      expect { role.permission_revoke('knowledge_base.editor') }
+        .to change { described_class.cache_key(user.reload) }
     end
   end
 end

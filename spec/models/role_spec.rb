@@ -523,4 +523,113 @@ RSpec.describe Role do
       expect(kb_permission.reload).to have_attributes(access: 'reader')
     end
   end
+
+  # The sweep exists only to move KnowledgeBase::AccessibleCategories.cache_key. It edits no
+  #   category, so it must not reach the clients as one edit per category — see
+  #   Role#touch_knowledge_base_categories.
+  describe 'Bumping the knowledge base categories on a permission change', performs_jobs: true do
+    let(:knowledge_base) { create(:knowledge_base) }
+    let(:role)           { create(:role, permission_names: 'knowledge_base.editor') }
+
+    before do
+      knowledge_base
+      3.times { create(:knowledge_base_category, knowledge_base:) }
+      role
+      clear_jobs
+    end
+
+    it 'bumps every category so the cached struct is recalculated' do
+      expect { role.permission_revoke('knowledge_base.editor') }
+        .to change { KnowledgeBase::Category.all.cache_version }
+    end
+
+    it 'asks the clients to re-check what they can see, once' do
+      role.permission_revoke('knowledge_base.editor')
+
+      expect(ChecksKbClientVisibilityJob).to have_been_enqueued.exactly(:once)
+    end
+
+    it 'does not claim the categories were edited' do
+      role.permission_revoke('knowledge_base.editor')
+
+      expect(ChecksKbClientNotificationJob).not_to have_been_enqueued
+    end
+
+    # The desktop view refetches on this rather than on the legacy broadcast. No categories, which
+    #   the subscription reads as knowledge-base-wide and delivers to every subscriber.
+    it 'pings the browse subscription broadly, once' do
+      allow(Gql::Subscriptions::KnowledgeBase::ContentUpdates).to receive(:trigger)
+
+      role.permission_revoke('knowledge_base.editor')
+
+      expect(Gql::Subscriptions::KnowledgeBase::ContentUpdates)
+        .to have_received(:trigger).with({ categories: [] }).once
+    end
+
+    # The legacy client resolves the access of a category no granular permission applies to from
+    #   the permissions of the role itself, so this push is what applies the change there — see
+    #   App.KnowledgeBaseAgentController#accessMayHaveChanged.
+    it 'pushes the role collection, so the clients recompute the access' do
+      role.update!(permission_ids: [])
+
+      expect(CollectionUpdateJob).to have_been_enqueued.with('Role')
+    end
+
+    # The suppression is `touch_all` skipping the callbacks, not a suspended switch, so an
+    #   ordinary edit right after must still notify.
+    it 'leaves the per-category notifications working afterwards' do
+      role.permission_revoke('knowledge_base.editor')
+      clear_jobs
+
+      category = KnowledgeBase::Category.first
+      category.touch
+
+      expect(ChecksKbClientNotificationJob)
+        .to have_been_enqueued.with('KnowledgeBase::Category', category.id)
+    end
+
+    # The permissions association fires its callbacks for every single permission, while the sweep
+    #   and what it announces are about the role's knowledge base access as a whole.
+    context 'when one save changes more than one knowledge base permission' do
+      let(:role) { create(:role, permission_names: %w[knowledge_base.editor knowledge_base.reader]) }
+
+      it 'bumps the categories once' do
+        allow(KnowledgeBase::Category).to receive(:touch_all).and_call_original
+
+        role.update!(permission_ids: [])
+
+        expect(KnowledgeBase::Category).to have_received(:touch_all).once
+      end
+
+      it 'asks the clients to re-check what they can see, once' do
+        role.update!(permission_ids: [])
+
+        expect(ChecksKbClientVisibilityJob).to have_been_enqueued.exactly(:once)
+      end
+
+      it 'pings the browse subscription once' do
+        allow(Gql::Subscriptions::KnowledgeBase::ContentUpdates).to receive(:trigger)
+
+        role.update!(permission_ids: [])
+
+        expect(Gql::Subscriptions::KnowledgeBase::ContentUpdates)
+          .to have_received(:trigger).with({ categories: [] }).once
+      end
+    end
+
+    # Whatever a rollback dropped has to be swept again, and the block that would have released the
+    #   guard is dropped with it.
+    it 'bumps the categories again after a rolled back change' do
+      ActiveRecord::Base.transaction do
+        role.permission_revoke('knowledge_base.editor')
+
+        raise ActiveRecord::Rollback
+      end
+
+      role.reload
+
+      expect { role.permission_revoke('knowledge_base.editor') }
+        .to change { KnowledgeBase::Category.all.cache_version }
+    end
+  end
 end

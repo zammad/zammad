@@ -12,6 +12,12 @@ InstanceMethods =
     access = 'none'
 
     for role_id in App.User.current().role_ids
+      role = App.Role.find(role_id)
+
+      # A deactivated role grants nothing, its granular permissions included, the same way
+      #   KnowledgeBase::EffectivePermission#access_effective and App.User#permission read it.
+      continue if !role?.active
+
       kb_permission = _.findWhere(permissions_effective, { role_id: role_id })
 
       if kb_permission
@@ -22,7 +28,7 @@ InstanceMethods =
             access = 'reader'
           when 'none'
             access = 'reader' if kb_locale && @visiblePublicly(kb_locale)
-      else if role = App.Role.find(role_id)
+      else
         if role.permission_ids.indexOf(permission_editor.id) > -1
           return 'editor'
         if role.permission_ids.indexOf(permission_reader.id) > -1

@@ -15,6 +15,10 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
     App.Event.bind 'kb_visibility_may_have_changed', @visibilityMayHaveChanged
 
+    # The role collection push is the only signal a role's knowledge base permissions or its active
+    #   flag changed, both of which App.KnowledgeBaseAccess resolves the access from.
+    @listenTo App.Role, 'refresh', @accessMayHaveChanged
+
     if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
       @updateNavMenu()
     else if App.Config.get('kb_active_publicly')
@@ -190,6 +194,9 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
   renderControllers: (params) ->
     object = @constructor.pickObjectUsing(params, @)
+
+    # What the screen below is being built against — see #accessMayHaveChanged.
+    @renderedAccessSignature = @roleAccessSignature()
 
     if !object || (!@isEditor() && !object.visibleInternally(@kb_locale()))
       @renderNotFound()
@@ -416,6 +423,48 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
         if didRemove
           @notifyVisibilityChangeLoaded()
+
+  # A role losing a knowledge base permission, or being deactivated, changes what the user may do
+  #   with categories and answers that did not change themselves: nothing sends `kb_data_changed`
+  #   for any of them, and the id sets #visibilityMayHaveChanged diffs stay equal whenever the
+  #   access only drops from editor to reader. Building the screen again is what applies the new
+  #   access — the content controller reads it once, when it is built, and hands it down to the
+  #   items it renders.
+  accessMayHaveChanged: =>
+    return if !@renderedAccessSignature?
+    return if @renderedAccessSignature is @roleAccessSignature()
+
+    @updateNavMenu()
+
+    # Refetched either way, because which categories and answers the user may see grows with a
+    #   raised access and shrinks with a lowered one, and no assets accompany a role change.
+    #
+    # Built again only while on display: #show leaves an edit route the access no longer allows,
+    #   which must not happen behind the back of a user working elsewhere. Dropping the url of the
+    #   content controller is what defers the rebuild to their return.
+    @contentController?.url = null
+    @pendingParams = @lastParams if @active()
+
+    @fetch(false, @active())
+
+  # The knowledge base access every role of the current user grants, as App.KnowledgeBaseAccess
+  #   reads it: the granular permissions arrive as ordinary asset changes, the role's own
+  #   permissions and its active flag do not.
+  roleAccessSignature: ->
+    kb_permission_ids = ['knowledge_base.reader', 'knowledge_base.editor']
+      .map (name) -> App.Permission.findByAttribute('name', name)?.id
+
+    App.User
+      .current()
+      .role_ids
+      .map (role_id) ->
+        role = App.Role.find(role_id)
+
+        return "#{role_id}:inactive" if !role?.active
+
+        "#{role_id}:#{_.intersection(role.permission_ids, kb_permission_ids).sort().join(',')}"
+      .sort()
+      .join('|')
 
   @pickObjectUsing: (params, parentController) ->
     kb = parentController.getKnowledgeBase()

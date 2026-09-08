@@ -19,10 +19,23 @@ class KnowledgeBase
       end
     end
 
+    # Only the active roles grant anything: a deactivated role must contribute nothing, the same
+    #   rule User::Permissions applies with `where(roles: { active: true })`, and what makes
+    #   `user.permissions?('knowledge_base.editor')` and KnowledgeBase.access_for_user already
+    #   agree that such a user has no knowledge base access.
+    #
+    # Deliberately not pushed down into Role#with_permission?: that is a predicate about the role
+    #   itself, and callers like Service::KnowledgeBase::Concerns::AppliesPermissions legitimately
+    #   ask it of an inactive role while rendering the admin interface. The filter belongs here,
+    #   where the role list becomes a user-level authorization decision.
+    #
+    # KnowledgeBase::AccessibleCategories.cache_key fingerprints the same list, so the two have to
+    #   be kept in step: keying on anything wider would keep serving the access a role granted
+    #   while it was still active.
     def access_effective
       return 'none' if !@user
 
-      @user.roles.reduce('none') do |memo, role|
+      @user.roles.where(active: true).reduce('none') do |memo, role|
         access = access_role_effective(role)
 
         return 'editor' if access == 'editor'

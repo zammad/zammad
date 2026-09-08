@@ -193,8 +193,12 @@ RSpec.describe Service::KnowledgeBase::Reorder::Categories do
     context 'when a record already sits at its index' do
       let(:ordered_ids) { [first.id, third.id, second.id] }
 
+      # `user` is realized alongside `first`, not left to `execute`: creating a role that carries a
+      #   knowledge base permission touches every category (Role#cache_add_kb_permission, which
+      #   bumps the accessible-categories cache key), so leaving it to the subject would count that
+      #   setup write as a change made by the reorder.
       it 'leaves it untouched' do
-        first
+        first && user
 
         expect { execute }.not_to change { first.reload.updated_at }
       end
@@ -296,7 +300,13 @@ RSpec.describe Service::KnowledgeBase::Reorder::Categories do
   describe 'the content update ping' do
     let(:sorting_mode) { 'alphabetical' }
 
+    # `user` is realized before the stub, not left to `execute`, for the same reason it is above:
+    #   creating a role that carries a knowledge base permission bumps the accessible-categories
+    #   cache key and pings the browse views itself (Role#touch_knowledge_base_categories), which
+    #   would otherwise be counted as a ping fired by the reorder.
     it 'notifies the subscribers' do
+      user
+
       allow(Gql::Subscriptions::KnowledgeBase::ContentUpdates).to receive(:trigger)
 
       execute
