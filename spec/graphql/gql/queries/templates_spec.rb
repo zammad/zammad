@@ -5,7 +5,9 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Templates, type: :graphql do
 
   context 'when fetching templates' do
+    let(:admin)     { create(:admin) }
     let(:agent)     { create(:agent) }
+    let(:customer)  { create(:customer) }
     let(:query)     do
       <<~QUERY
         query templates($onlyActive: Boolean) {
@@ -29,12 +31,15 @@ RSpec.describe Gql::Queries::Templates, type: :graphql do
       gql.execute(query, variables: variables)
     end
 
-    context 'with authenticated session', authenticated_as: :agent do
+    context 'with admin.template permission', authenticated_as: :admin do
+
+      it 'returns active and inactive templates' do
+        expect(gql.result.data).to contain_exactly(template_response, inactive_template_response)
+      end
 
       it 'returns templates in alphabetical order' do
         actual_names = gql.result.data.pluck('name')
-        sorted_names = actual_names.sort
-        expect(actual_names).to eq(sorted_names)
+        expect(actual_names).to eq(actual_names.sort)
       end
 
       context 'when fetching only active templates' do
@@ -43,6 +48,28 @@ RSpec.describe Gql::Queries::Templates, type: :graphql do
         it 'does not include inactive templates' do
           expect(gql.result.data).to eq([template_response])
         end
+      end
+    end
+
+    context 'with ticket.agent permission only', authenticated_as: :agent do
+
+      it 'does not include inactive templates' do
+        expect(gql.result.data).to eq([template_response])
+      end
+
+      context 'when fetching only active templates' do
+        let(:only_active) { true }
+
+        it 'does not include inactive templates' do
+          expect(gql.result.data).to eq([template_response])
+        end
+      end
+    end
+
+    context 'with ticket.customer permission only', authenticated_as: :customer do
+
+      it 'fails with an authorization error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
 

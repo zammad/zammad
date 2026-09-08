@@ -12,7 +12,9 @@ module Gql::Queries
     requires_permission 'admin.template', 'ticket.agent'
 
     def resolve(only_active:)
-      templates = only_active ? Template.active : Template.all
+      templates = Pundit.policy_scope!(context.current_user, Template)
+      templates = templates.active if only_active
+
       templates.sorted
     end
   end
