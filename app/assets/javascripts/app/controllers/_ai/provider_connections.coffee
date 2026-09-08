@@ -513,18 +513,27 @@ ProviderConnectionFormMixin =
   # Type and name head the credential step, and only it: the provider is picked before anything
   # is fetched with it, and the model step must not offer to change it behind the fetched list.
   providerSelectionAttributes: (providerKey, excludeProviders) ->
-    sortedOptions = {}
-    Object
-      .entries(App.Config.get('AIProviders'))
-      .filter(([key, _]) -> key not in excludeProviders)
-      .sort(([_, a], [__, b]) -> a.prio - b.prio)
-      .forEach(([key, { label }]) -> sortedOptions[key] = label)
+    attributes = []
 
-    # Provider comes first: selecting it pre-fills the name below.
-    [
-      { name: 'provider', display: __('Type'), tag: 'select', options: sortedOptions, null: false, nulloption: true, value: providerKey, customsort: 'on' }
+    if providerKey isnt 'zammad_ai' or not App.Config.get('system_online_service')
+      sortedOptions = {}
+
+      Object
+        .entries(App.Config.get('AIProviders'))
+        .filter(([key, _]) -> key not in excludeProviders)
+        .sort(([_, a], [__, b]) -> a.prio - b.prio)
+        .forEach(([key, { label }]) -> sortedOptions[key] = label)
+
+      # Provider comes first: selecting it pre-fills the name below.
+      attributes.push(
+        { name: 'provider', display: __('Type'), tag: 'select', options: sortedOptions, null: false, nulloption: true, value: providerKey, customsort: 'on' }
+      )
+
+    attributes.push(
       { name: 'name', display: __('Name'), tag: 'input', type: 'text', null: false, limit: 100, autocomplete: 'one-time-code' }
-    ]
+    )
+
+    attributes
 
   # The provider fields are built dynamically ('config.token', ...), so they are not part of
   # App.AIProviderConnection.configure_attributes — App.Model#validate resolves the attributes
@@ -646,8 +655,8 @@ class ProviderConnectionCredentials extends App.ControllerModal
     @buttonSubmit = if lastStep then __('Submit') else __('Next')
     @buttonClass  = if lastStep then 'btn--success' else 'btn--primary'
 
-    # Only when creating: an existing Zammad AI connection stays editable on SaaS.
-    excludeProviders = if !@id and App.Config.get('system_online_service') then ['zammad_ai'] else []
+    # Provider dropdown: hide Zammad AI from the list in SaaS.
+    excludeProviders = if App.Config.get('system_online_service') then ['zammad_ai'] else []
 
     # Merge unsaved edits (captured on a provider change, and on the way back from the model step)
     # over the persisted values, so switching the provider keeps them for all compatible fields.
@@ -679,6 +688,13 @@ class ProviderConnectionCredentials extends App.ControllerModal
         @savedParams.provider = @providerKey
         @update()
         @$('[name=name]').focus()
+
+    if @providerKey is 'zammad_ai' and App.Config.get('system_online_service')
+      $('<div />')
+        .addClass('alert alert--warning')
+        .attr('role', 'alert')
+        .text(App.i18n.translatePlain('The Zammad AI provider is managed by the platform and cannot be fully edited here.'))
+        .prependTo(@controller.form)
 
     @controller.form
 
