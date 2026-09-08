@@ -2,6 +2,7 @@
 
 import { EnumSearchableModels } from '#shared/graphql/types.ts'
 
+import KnowledgeBaseAnswerTable from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerTable.vue'
 import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 
 import KnowledgeBaseAnswer from '../QuickSearch/entities/KnowledgeBaseAnswer.vue'
@@ -25,11 +26,6 @@ export default <SearchPlugin>{
 
   // No object manager attributes for this entity, so no advanced-filter UI either.
   filtersDisabled: true,
-
-  // The detailed-search tab for answers is its own story
-  //   (zammad/coordination-desktop-view#874), which is why this plugin has no
-  //   `detailSearchHeaders` and no `detailSearchComponent`. Registering a plugin otherwise adds a
-  //   tab and a count entry on its own, so the tab is suppressed until that story builds it - at
-  //   which point this flag goes away rather than being switched off.
-  detailSearchDisabled: true,
+  detailSearchHeaders: ['title', 'visibility', 'updated_at'],
+  detailSearchComponent: KnowledgeBaseAnswerTable,
 }

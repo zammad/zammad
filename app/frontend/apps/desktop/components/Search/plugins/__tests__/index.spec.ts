@@ -49,53 +49,17 @@ describe('useSearchPlugins', () => {
     })
   })
 
-  // An entity whose quicksearch group ships before its detailed-search table does has to stay out
-  //   of the tab list and out of the searchCounts query behind the tab counters, while remaining
-  //   available to quicksearch.
-  describe('detailSearchDisabled', () => {
-    beforeEach(() => {
-      mockPermissions(['ticket.agent', 'admin.user', 'admin.organization', 'knowledge_base.reader'])
-      mockApplicationConfig({ kb_active: true })
-    })
+  // Every plugin gets a detailed-search tab, so every plugin must be renderable - or SearchContent
+  //   has nothing to put in the tab panel it just created. `detailSearchComponent` and
+  //   `detailSearchHeaders` are optional on SearchPlugin, so nothing but this asserts it.
+  it('leaves every plugin with a table to render', () => {
+    mockPermissions(['ticket.agent', 'admin.user', 'admin.organization', 'knowledge_base.reader'])
+    mockApplicationConfig({ kb_active: true })
 
-    it('keeps the entity out of the detail-search plugins', () => {
-      const { detailSearchPluginNames } = useSearchPlugins()
+    const { plugins } = useSearchPlugins()
 
-      expect(detailSearchPluginNames.value).not.toContain(
-        EnumSearchableModels.KnowledgeBaseAnswerTranslation,
-      )
-    })
-
-    it('leaves the other entities in the detail-search plugins', () => {
-      const { detailSearchPluginNames } = useSearchPlugins()
-
-      expect(detailSearchPluginNames.value).toEqual(
-        expect.arrayContaining([
-          EnumSearchableModels.Ticket,
-          EnumSearchableModels.User,
-          EnumSearchableModels.Organization,
-        ]),
-      )
-    })
-
-    it('still offers the entity to quicksearch', () => {
-      const { sortedByPriorityPlugins } = useSearchPlugins()
-
-      expect(sortedByPriorityPlugins.value.map((plugin) => plugin.name)).toContain(
-        EnumSearchableModels.KnowledgeBaseAnswerTranslation,
-      )
-    })
-
-    // Every detail-search plugin must be renderable, or SearchContent has nothing to put in the
-    //   tab panel it just created.
-    it('leaves every detail-search plugin with a table to render', () => {
-      const { detailSearchPlugins } = useSearchPlugins()
-
-      expect(
-        detailSearchPlugins.value.every(
-          (plugin) => plugin.detailSearchComponent && plugin.detailSearchHeaders,
-        ),
-      ).toBe(true)
-    })
+    expect(
+      plugins.value.every((plugin) => plugin.detailSearchComponent && plugin.detailSearchHeaders),
+    ).toBe(true)
   })
 })

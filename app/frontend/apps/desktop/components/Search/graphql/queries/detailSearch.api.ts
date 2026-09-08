@@ -79,6 +79,23 @@ export const DetailSearchDocument = gql`
         shared
         active
       }
+      ... on KnowledgeBaseAnswerTranslation {
+        id
+        title
+        updatedAt
+        visibility
+        answer {
+          id
+          category {
+            id
+          }
+        }
+        kbLocale {
+          systemLocale {
+            locale
+          }
+        }
+      }
     }
   }
 }

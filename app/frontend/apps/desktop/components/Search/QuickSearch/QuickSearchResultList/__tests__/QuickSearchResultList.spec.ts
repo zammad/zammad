@@ -9,7 +9,11 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { EnumKnowledgeBaseVisibility, EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import {
+  EnumKnowledgeBaseVisibility,
+  EnumSearchableModels,
+  EnumTicketStateColorCode,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import {
@@ -430,10 +434,7 @@ describe('QuickSearchResultList knowledge base answers', () => {
     expect(wrapper.queryByText('Found knowledge base answers')).not.toBeInTheDocument()
   })
 
-  // AC9's link to the detailed search for the rest. It carries no `entity`, unlike the other three
-  //   groups: this entity has no tab to select yet (zammad/coordination-desktop-view#874), and
-  //   Search.vue's beforeRouteEnter normalises a missing one - so the link opens the detailed
-  //   search without writing an unselectable entity into the URL and the search taskbar tab.
+  // AC9's link to the detailed search for the rest.
   it('links to the detailed search for the answers it does not show', async () => {
     mockPermissions(['ticket.agent', 'knowledge_base.reader'])
     mockApplicationConfig({ kb_active: true })
@@ -450,10 +451,12 @@ describe('QuickSearchResultList knowledge base answers', () => {
     await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: 'ocarina' })
-    expect(router.currentRoute.value.query).toEqual({})
+    expect(router.currentRoute.value.query).toEqual({
+      entity: EnumSearchableModels.KnowledgeBaseAnswerTranslation,
+    })
   })
 
-  // The control on the case above: the groups that do have a tab still name their entity.
+  // The same for one of the groups that had a tab all along.
   it('keeps the entity on the link of a group that has a detailed-search tab', async () => {
     mockPermissions(['ticket.agent', 'knowledge_base.reader'])
     mockApplicationConfig({ kb_active: true })
