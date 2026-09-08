@@ -283,15 +283,23 @@ returns
 
   def cache_add_kb_permission(permission)
     return if !permission.name.starts_with? 'knowledge_base.'
-    return if !KnowledgeBase.granular_permissions?
 
-    KnowledgeBase::Category.all.each(&:touch)
+    touch_knowledge_base_categories
   end
 
   def cache_remove_kb_permission(permission)
     return if !permission.name.starts_with? 'knowledge_base.'
-    return if !KnowledgeBase.granular_permissions?
 
+    downgrade_granular_kb_permissions if KnowledgeBase.granular_permissions?
+
+    touch_knowledge_base_categories
+  end
+
+  # A granular selection may not outlive the role permission it was stored against: without any
+  #   knowledge base permission left the rows go, and an editor row falls back to reader when only
+  #   the reader permission remains. Nothing to do without granular permissions, since there are
+  #   no rows.
+  def downgrade_granular_kb_permissions
     has_editor = permissions.where(name: 'knowledge_base.editor').any?
     has_reader = permissions.where(name: 'knowledge_base.reader').any?
 
@@ -305,8 +313,74 @@ returns
         end
 
       end
+  end
 
-    KnowledgeBase::Category.all.each(&:touch)
+  # What reaches the accessible-categories cache: KnowledgeBase::AccessibleCategories.cache_key is
+  #   fingerprinted on the category cache version, and a role's permission grants appear nowhere in
+  #   that key, so the categories have to be bumped for the change to take effect at all.
+  #
+  # Deliberately not gated on KnowledgeBase.granular_permissions? — the cache is consulted either
+  #   way (KnowledgeBase::InternalAssets#accessible_categories resolves through .for_user
+  #   unconditionally), and without granular rows the effective access comes straight off the
+  #   role's own permission, so revoking it is exactly when the cached struct goes wrong.
+  #
+  # Written with `touch_all` — one UPDATE, no per-record callbacks — because the sweep edits no
+  #   category, it only moves the cache key. Left to `each(&:touch)` every category would enqueue a
+  #   ChecksKbClientNotificationJob claiming its content changed (each authorizing that category
+  #   against every open session), a ChecksKbClientVisibilityJob and a knowledgeBaseContentUpdates
+  #   ping — categories × sessions of work for a change that edited nothing. The same trade-off
+  #   KnowledgeBase::Category::Translation.bump_edited_at takes.
+  #
+  # Suspending those callbacks instead cannot work here, however it is written: this runs inside
+  #   the transaction the permissions association write opens, so the after_commit hooks fire when
+  #   that commits — after any `ensure` here has lifted the suspension again.
+  #   (KnowledgeBase#full_destroy! gets away with it only because its `ensure` sits outside its own
+  #   `transaction` block.) The switch is a process-wide class_attribute besides, so holding it
+  #   across a request would silence knowledge base notifications for every concurrent one.
+  #
+  # What the operation does mean — re-check what you can see — is sent once per stack. The legacy
+  #   broadcast is also the only signal that reaches the user who just lost access:
+  #   ChecksKbClientNotificationJob#notify skips a session no longer holding `knowledge_base.*`.
+  #   The subscription ping carries no categories on purpose, which is what
+  #   Gql::Subscriptions::KnowledgeBase::ContentUpdates reads as knowledge-base-wide and delivers
+  #   to every subscriber — no category changed, but who may browse which of them did.
+  #
+  # What neither broadcast carries is the new access itself: the legacy client diffs the visible
+  #   ids against what it holds, and a downgrade from editor to reader leaves every one of them in
+  #   place. It applies the change from the role collection push instead, see
+  #   App.KnowledgeBaseAgentController#accessMayHaveChanged.
+  #
+  # Guarded to run once per transaction, which is what "once per stack" above rests on: the
+  #   permissions association fires its callbacks for every single permission added and removed,
+  #   while both the sweep and what it announces are about the role's knowledge base access as a
+  #   whole. A save swapping the reader permission for the editor one would otherwise sweep the
+  #   whole table twice and ping every subscriber twice, each ping making it refetch its browse
+  #   queries. The transaction is also the right boundary in the other direction: #permission_grant
+  #   and #permission_revoke write the association without saving the role, one transaction each,
+  #   and each of those changes does have to reach the clients.
+  def touch_knowledge_base_categories
+    return if @knowledge_base_categories_swept
+
+    @knowledge_base_categories_swept = true
+
+    KnowledgeBase::Category.touch_all # rubocop:disable Rails/SkipsModelValidations
+
+    transaction = ApplicationModel.current_transaction
+
+    # Both handlers run in other processes, which cannot see the touched categories before this
+    #   transaction commits.
+    transaction.after_commit do
+      @knowledge_base_categories_swept = false
+
+      ChecksKbClientVisibilityJob.perform_later
+      Gql::Subscriptions::KnowledgeBase::ContentUpdates.trigger({ categories: [] })
+    end
+
+    # A rolled back sweep touched nothing after all, so a later one on the same instance has to
+    #   run again — the block that would have cleared the flag is dropped with the rollback.
+    transaction.after_rollback do
+      @knowledge_base_categories_swept = false
+    end
   end
 
   def cleanup_groups_if_not_agent

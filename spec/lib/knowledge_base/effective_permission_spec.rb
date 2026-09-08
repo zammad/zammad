@@ -83,6 +83,37 @@ RSpec.describe KnowledgeBase::EffectivePermission do
     it 'retuns none when user not given' do
       expect(described_class.new(nil, category).access_effective).to eq 'none'
     end
+
+    # A deactivated role must not grant knowledge base access, just as it grants no user
+    #   permission and no group access.
+    context 'with an inactive role' do
+      let(:role_editor_inactive) { create(:role, permission_names: 'knowledge_base.editor', active: false) }
+
+      it 'returns none when the only knowledge base role is inactive' do
+        user = create(:user, roles: [role_editor_inactive, role_non_kb])
+
+        expect(described_class.new(user, category).access_effective).to eq 'none'
+      end
+
+      # The reducer returns from the block as soon as one role resolves to editor, so an active
+      #   role next to the inactive one is what proves the inactive one is skipped rather than
+      #   merely outvoted.
+      it 'returns reader when an active reader role sits next to an inactive editor role' do
+        user = create(:user, roles: [role_editor_inactive, role_reader])
+
+        expect(described_class.new(user, category).access_effective).to eq 'reader'
+      end
+
+      # Not covered by the case above: with a permission row stored for the role, access resolves
+      #   through #calculate_role instead of #default_role_access.
+      it 'returns none with a granular editor permission stored for the inactive role' do
+        create_permission(role_editor_inactive, 'editor')
+
+        user = create(:user, roles: [role_editor_inactive, role_non_kb])
+
+        expect(described_class.new(user, category).access_effective).to eq 'none'
+      end
+    end
   end
 
   def create_permission(role, access, permissionable: category)

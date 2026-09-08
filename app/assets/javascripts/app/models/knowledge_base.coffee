@@ -126,7 +126,7 @@ class App.KnowledgeBase extends App.Model
 
   removeAssetsIfNeeded: (data) =>
     removeAnswers    = _.difference @loadedAnswerIds(), data.answer_ids
-    removeCategories = _.difference @loadedAnswerIds(), data.category_ids
+    removeCategories = _.difference @loadedCategoryIds(), data.category_ids
 
     for answer_id in removeAnswers
       App.KnowledgeBaseAnswer.find(answer_id)?.remove(clear: true)

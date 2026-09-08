@@ -43,9 +43,15 @@ class KnowledgeBase
 
     # Cache key is bumped even if changes are outside filtered tree
     # It would be much slower to calculate the fingerprint for filtered tree
+    #
+    # Only the active roles go into the fingerprint, because only those grant access. Deactivating
+    #   a role changes neither the full role list nor any category or permission row, so keying on
+    #   all of them would keep serving the access the role granted while it was still active.
+    #   Mirrors the role list KnowledgeBase::EffectivePermission#access_effective reduces over —
+    #   the two have to stay in step.
     def self.cache_key(user, categories_filter: nil)
       fingerprint = Digest::MD5.hexdigest({
-        role_ids:                 user.role_ids.sort,
+        active_role_ids:          user.roles.where(active: true).pluck(:id).sort,
         categories_filter:        Array(categories_filter).map(&:id).sort,
         category_cache_version:   KnowledgeBase::Category.all.cache_version,
         permission_cache_version: KnowledgeBase::Permission.all.cache_version,
