@@ -1,10 +1,9 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
-
-import KnowledgeBaseAnswerAttributes from './KnowledgeBaseAnswerAttributes.vue'
-import { getKnowledgeBaseAnswerLink } from './utils/knowledgeBaseAnswerLink.ts'
+import KnowledgeBaseAnswerAttributes from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue'
+import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
+import { getKnowledgeBaseAnswerLink } from '#desktop/entities/knowledge-base/utils/knowledgeBaseAnswerLink.ts'
 
 import type { RelatedAnswer } from './types.ts'
 

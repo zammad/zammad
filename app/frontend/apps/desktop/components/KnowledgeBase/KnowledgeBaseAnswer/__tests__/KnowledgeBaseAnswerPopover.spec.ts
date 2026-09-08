@@ -11,7 +11,7 @@ import {
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
 
-import TicketKnowledgeBaseAnswerPopover from '../TicketKnowledgeBaseAnswerPopover.vue'
+import KnowledgeBaseAnswerPopover from '../KnowledgeBaseAnswerPopover.vue'
 
 const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 42)
 const LOCALE = 'en-gb'
@@ -57,7 +57,7 @@ const buildTranslation = (
   )
 
 const renderPopover = (translation = buildTranslation()) =>
-  renderComponent(TicketKnowledgeBaseAnswerPopover, {
+  renderComponent(KnowledgeBaseAnswerPopover, {
     props: { translation },
     router: true,
     routerRoutes: [
@@ -73,7 +73,7 @@ const renderPopover = (translation = buildTranslation()) =>
     store: true,
   })
 
-describe('TicketKnowledgeBaseAnswerPopover', () => {
+describe('KnowledgeBaseAnswerPopover', () => {
   it('shows the answer title and its content excerpt', () => {
     const wrapper = renderPopover()
 

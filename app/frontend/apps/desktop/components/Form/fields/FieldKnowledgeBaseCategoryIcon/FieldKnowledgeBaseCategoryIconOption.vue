@@ -7,7 +7,7 @@ import type {
   CommonSelectOptionEmits,
   CommonSelectOptionProps,
 } from '#desktop/components/CommonSelect/types.ts'
-import KnowledgeBaseCategoryIcon from '#desktop/components/KnowledgeBaseCategoryIcon/KnowledgeBaseCategoryIcon.vue'
+import KnowledgeBaseCategoryIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseCategoryIcon/KnowledgeBaseCategoryIcon.vue'
 
 import type { AutoCompleteKnowledgeBaseCategoryIconOption } from './types.ts'
 

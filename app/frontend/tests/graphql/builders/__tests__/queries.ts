@@ -2,7 +2,12 @@
 
 import gql from 'graphql-tag'
 
-import type { UserError, UserInput, UserSignupInput } from '#shared/graphql/types.ts'
+import type {
+  EnumSearchableModels,
+  UserError,
+  UserInput,
+  UserSignupInput,
+} from '#shared/graphql/types.ts'
 
 export interface TestAvatarQuery {
   userCurrentAvatarActive: {
@@ -219,3 +224,73 @@ export interface TestUserSignupMutationQuery {
 export interface TestUserSignupArgs {
   input: UserSignupInput
 }
+
+export interface TestSearchQuery {
+  search: {
+    totalCount: number
+    items: (
+      | {
+          __typename: 'User'
+          id: string
+          fullname: string
+        }
+      | {
+          __typename: 'Ticket'
+          id: string
+          title: string
+        }
+      | {
+          __typename: 'KnowledgeBaseAnswerTranslation'
+        }
+      | {
+          __typename: 'Organization'
+        }
+    )[]
+  }
+}
+
+export interface TestSearchQueryVariables {
+  search: string
+  onlyIn: EnumSearchableModels
+}
+
+// Deliberately without an inline fragment for every possible `Item` type, mirroring
+//   `detailSearch.graphql`: types the mocker generates but the operation does not select are
+//   stripped down to their `__typename`.
+export const TestSearchDocument = gql`
+  query search($search: String!, $onlyIn: EnumSearchableModels!) {
+    search(search: $search, onlyIn: $onlyIn) {
+      totalCount
+      items {
+        __typename
+        ... on User {
+          id
+          fullname
+        }
+        ... on Ticket {
+          id
+          title
+        }
+      }
+    }
+  }
+`
+
+export const TestSearchWithoutVariablesDocument = gql`
+  query search {
+    search(search: "test", onlyIn: User) {
+      totalCount
+      items {
+        __typename
+        ... on User {
+          id
+          fullname
+        }
+        ... on Ticket {
+          id
+          title
+        }
+      }
+    }
+  }
+`

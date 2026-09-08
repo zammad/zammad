@@ -8,9 +8,8 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import type { Link } from '#shared/types/router.ts'
 
 import CommonPopoverWithTrigger from '#desktop/components/CommonPopover/CommonPopoverWithTrigger.vue'
-import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
-
-import TicketKnowledgeBaseAnswerPopover from './TicketKnowledgeBaseAnswerPopover.vue'
+import KnowledgeBaseAnswerPopover from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerPopover.vue'
+import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 
 interface Props {
   translation: KnowledgeBaseAnswerTranslationFragment
@@ -42,7 +41,7 @@ const hasOpenedViaLongPress = computed(
       trigger-link-active-class="outline-2! outline-blue-800! text-blue-850! dark:text-blue-600!"
     >
       <template #popover-content>
-        <TicketKnowledgeBaseAnswerPopover :translation="translation" />
+        <KnowledgeBaseAnswerPopover :translation="translation" />
       </template>
 
       <KnowledgeBaseAnswerIcon show-tooltip :visibility="translation.visibility" size="tiny" />

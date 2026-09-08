@@ -6,7 +6,7 @@ import { computed, toRef } from 'vue'
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
-import KnowledgeBaseCategoryIcon from '#desktop/components/KnowledgeBaseCategoryIcon/KnowledgeBaseCategoryIcon.vue'
+import KnowledgeBaseCategoryIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseCategoryIcon/KnowledgeBaseCategoryIcon.vue'
 import type { KnowledgeBaseIconSet } from '#desktop/entities/knowledge-base/types.ts'
 
 import { useKnowledgeBaseVisibility } from '../composables/useKnowledgeBaseVisibility.ts'

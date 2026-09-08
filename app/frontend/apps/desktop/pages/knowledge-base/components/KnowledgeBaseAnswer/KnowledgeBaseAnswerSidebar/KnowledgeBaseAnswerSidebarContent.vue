@@ -9,7 +9,7 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
 import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
 import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
-import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
+import { visibilityMeta } from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 import { useKnowledgeBaseAnswerReachedDates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts'
 
 import KnowledgeBaseAnswerLinkedTickets from './KnowledgeBaseAnswerLinkedTickets.vue'

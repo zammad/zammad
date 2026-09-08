@@ -77,6 +77,7 @@ const mappedQuickSearchResults = computed(() => {
       label: plugin.quickSearchResultLabel,
       remainingItemCount: searchResult.totalCount - searchResult.items.length,
       totalCount: searchResult.totalCount,
+      detailSearchDisabled: plugin.detailSearchDisabled,
     })
   })
 
@@ -127,13 +128,17 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
             </li>
           </ol>
 
+          <!-- The entity is left off for a group whose detailed-search tab does not exist yet: the
+               link still opens the detailed search (Search.vue's beforeRouteEnter normalises a
+               missing entity to Ticket) without writing an entity nothing can select into the URL
+               and into the search taskbar tab. -->
           <CommonLink
             v-if="searchResult.remainingItemCount > 0"
             class="group/link my-1.5 ms-auto"
             :link="{
               name: 'Search',
               params: { searchTerm: search },
-              query: { entity: searchResult.name },
+              query: searchResult.detailSearchDisabled ? {} : { entity: searchResult.name },
             }"
             @click="resetQuickSearchInputField"
             @keydown.enter="$event.target.click()"

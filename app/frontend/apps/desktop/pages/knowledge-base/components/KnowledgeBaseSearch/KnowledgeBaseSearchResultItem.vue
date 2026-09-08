@@ -6,7 +6,7 @@ import { computed, toRef } from 'vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 
 import CommonHighlightedText from '#desktop/components/CommonHighlightedText/CommonHighlightedText.vue'
-import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
+import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 

@@ -9,7 +9,7 @@ import {
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
+import { visibilityMeta } from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
 
 import type { UserTaskbarTabEntityProps } from '../types.ts'

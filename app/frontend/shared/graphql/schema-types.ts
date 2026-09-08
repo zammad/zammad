@@ -1072,6 +1072,7 @@ export enum EnumPublicLinksScreen {
 
 /** All searchable models */
 export enum EnumSearchableModels {
+  KnowledgeBaseAnswerTranslation = 'KnowledgeBase__Answer__Translation',
   Organization = 'Organization',
   Ticket = 'Ticket',
   User = 'User'
@@ -1433,7 +1434,7 @@ export type ImportJob = {
 };
 
 /** Objects found by search */
-export type Item = Organization | Ticket | User;
+export type Item = KnowledgeBaseAnswerTranslation | Organization | Ticket | User;
 
 /** Jobs */
 export type Job = {

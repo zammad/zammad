@@ -2,6 +2,7 @@
 
 import {
   EnumObjectManagerObjects,
+  EnumSearchableModels,
   type AutocompleteSearchObjectAttributeExternalDataSourceInput,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -11,6 +12,8 @@ import { getGraphQLMockCalls, mockGraphQLResult, mockedApolloClient } from '../m
 import {
   TestAutocompleteArrayFirstLevel,
   TestAvatarDocument,
+  TestSearchDocument,
+  TestSearchWithoutVariablesDocument,
   TestTicketArticlesMultiple,
   TestUserDocument,
 } from './queries.ts'
@@ -19,6 +22,8 @@ import { getQueryHandler } from './utils.ts'
 import type {
   TestAutocompleteArrayFirstLevelQuery,
   TestAvatarQuery,
+  TestSearchQuery,
+  TestSearchQueryVariables,
   TestTicketArticlesMultipleQuery,
   TestUserQuery,
   TestUserQueryVariables,
@@ -204,5 +209,37 @@ describe('calling queries with mocked data works correctly', () => {
       'articles.edges.0.node.bodyWithUrls',
       mock.articles.edges[0].node.bodyWithUrls,
     )
+  })
+})
+
+describe('unions are generated based on the operation', () => {
+  it('generates search items of the searched entity', async () => {
+    const handler = getQueryHandler<TestSearchQuery, TestSearchQueryVariables>(TestSearchDocument)
+
+    const { data } = await handler.query({
+      variables: {
+        search: 'test',
+        onlyIn: EnumSearchableModels.User,
+      },
+    })
+
+    expect(data?.search.items.length).toBeGreaterThan(0)
+
+    // Without the `Item` factory the mocker picks a random union member. The operation has no
+    //   inline fragment for e.g. `KnowledgeBaseAnswerTranslation`, so such an item would arrive
+    //   with nothing but its `__typename` and break any consumer reading its `id`.
+    data?.search.items.forEach((item) => {
+      expect(item).toHaveProperty('__typename', 'User')
+      expect(item).toHaveProperty('id', expect.any(String))
+    })
+  })
+
+  it('generates search items when the operation has no "onlyIn" variable', async () => {
+    const handler = getQueryHandler<TestSearchQuery>(TestSearchWithoutVariablesDocument)
+
+    const { data, error } = await handler.query()
+
+    expect(error).toBeUndefined()
+    expect(data?.search.items.length).toBeGreaterThan(0)
   })
 })

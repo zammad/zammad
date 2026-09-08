@@ -13,6 +13,14 @@ export type BetaUiSendFeedbackMutationVariables = Exact<{
 
 export type BetaUiSendFeedbackMutation = { betaUiSendFeedback: { __typename: 'BetaUiSendFeedbackPayload', success: boolean } | null | undefined };
 
+export type KnowledgeBaseAnswerInfoForPopoverQueryVariables = Exact<{
+  answerId: string | number;
+  locale?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseAnswerInfoForPopoverQuery = { knowledgeBaseAnswer: { __typename: 'KnowledgeBaseAnswer', id: string, translation: { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, categoryTreeTranslation: Array<{ __typename: 'KnowledgeBaseCategoryTranslation', id: string, title: string }>, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, internalAt: string | null | undefined, tags: Array<string> | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } } | null | undefined } };
+
 export type OrganizationInfoForPopoverQueryVariables = Exact<{
   organizationId: string | number;
   membersCount?: number | null | undefined;
@@ -33,6 +41,7 @@ export type DetailSearchQueryVariables = Exact<{
 
 
 export type DetailSearchQuery = { search: { __typename: 'SearchResult', totalCount: number, items: Array<
+      | { __typename: 'KnowledgeBaseAnswerTranslation' }
       | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, shared: boolean | null | undefined, active: boolean | null | undefined }
       | { __typename: 'Ticket', id: string, internalId: number, title: string, number: string, stateColorCode: Types.EnumTicketStateColorCode, createdAt: string, customer: { __typename: 'User', id: string, fullname: string | null | undefined }, owner: { __typename: 'User', id: string, fullname: string | null | undefined }, group: { __typename: 'Group', id: string, name: string | null | undefined }, state: { __typename: 'TicketState', id: string, name: string }, priority: { __typename: 'TicketPriority', id: string, name: string, uiColor: string | null | undefined }, policy: { __typename: 'PolicyTicket', update: boolean } }
       | { __typename: 'User', id: string, internalId: number, login: string | null | undefined, firstname: string | null | undefined, lastname: string | null | undefined, active: boolean | null | undefined, organization: { __typename: 'Organization', id: string, name: string | null | undefined } | null | undefined, secondaryOrganizations: { __typename: 'OrganizationConnection', totalCount: number, edges: Array<{ __typename: 'OrganizationEdge', node: { __typename: 'Organization', id: string, name: string | null | undefined } }> } | null | undefined }
@@ -45,14 +54,22 @@ export type QuickSearchQueryVariables = Exact<{
 
 
 export type QuickSearchQuery = { quickSearchOrganizations: { __typename: 'SearchResult', totalCount: number, items: Array<
+      | { __typename: 'KnowledgeBaseAnswerTranslation' }
       | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
       | { __typename: 'Ticket' }
       | { __typename: 'User' }
     > }, quickSearchTickets: { __typename: 'SearchResult', totalCount: number, items: Array<
+      | { __typename: 'KnowledgeBaseAnswerTranslation' }
       | { __typename: 'Organization' }
       | { __typename: 'Ticket', id: string, internalId: number, title: string, number: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
       | { __typename: 'User' }
+    > }, quickSearchKnowledgeBaseAnswers: { __typename: 'SearchResult', totalCount: number, items: Array<
+      | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string } }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, category: { __typename: 'KnowledgeBaseCategory', id: string } } }
+      | { __typename: 'Organization' }
+      | { __typename: 'Ticket' }
+      | { __typename: 'User' }
     > }, quickSearchUsers: { __typename: 'SearchResult', totalCount: number, items: Array<
+      | { __typename: 'KnowledgeBaseAnswerTranslation' }
       | { __typename: 'Organization' }
       | { __typename: 'Ticket' }
       | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
@@ -1330,6 +1347,7 @@ export type SearchQueryVariables = Exact<{
 
 
 export type SearchQuery = { search: { __typename: 'SearchResult', totalCount: number, items: Array<
+      | { __typename: 'KnowledgeBaseAnswerTranslation' }
       | { __typename: 'Organization', id: string, internalId: number, active: boolean | null | undefined, name: string | null | undefined, vip: boolean | null | undefined, updatedAt: string, members: { __typename: 'UserConnection', totalCount: number, edges: Array<{ __typename: 'UserEdge', node: { __typename: 'User', id: string, fullname: string | null | undefined } }> } | null | undefined, updatedBy: { __typename: 'User', id: string, fullname: string | null | undefined } | null | undefined, ticketsCount: { __typename: 'TicketCount', open: number, closed: number } | null | undefined }
       | { __typename: 'Ticket', id: string, internalId: number, title: string, number: string, updatedAt: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string }, priority: { __typename: 'TicketPriority', name: string, defaultCreate: boolean, uiColor: string | null | undefined }, customer: { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined }, updatedBy: { __typename: 'User', id: string, fullname: string | null | undefined } | null | undefined }
       | { __typename: 'User', id: string, internalId: number, firstname: string | null | undefined, lastname: string | null | undefined, image: string | null | undefined, active: boolean | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, vip: boolean | null | undefined, updatedAt: string, organization: { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined } | null | undefined, updatedBy: { __typename: 'User', id: string, fullname: string | null | undefined } | null | undefined, ticketsCount: { __typename: 'TicketCount', open: number, closed: number } | null | undefined }
@@ -1380,6 +1398,7 @@ export type AutocompleteSearchGenericQueryVariables = Exact<{
 
 
 export type AutocompleteSearchGenericQuery = { autocompleteSearchGeneric: Array<{ __typename: 'AutocompleteSearchGenericEntry', value: number, label: string, labelPlaceholder: Array<string> | null | undefined, heading: string | null | undefined, headingPlaceholder: Array<string> | null | undefined, disabled: boolean | null | undefined, object:
+      | { __typename: 'KnowledgeBaseAnswerTranslation' }
       | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined, vip: boolean | null | undefined, allMembers: { __typename: 'UserConnection', edges: Array<{ __typename: 'UserEdge', node: { __typename: 'User', id: string, internalId: number, login: string | null | undefined, image: string | null | undefined, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, phone: string | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined, vip: boolean | null | undefined, hasSecondaryOrganizations: boolean | null | undefined } }> } | null | undefined }
       | { __typename: 'Ticket' }
       | { __typename: 'User', id: string, internalId: number, login: string | null | undefined, image: string | null | undefined, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, phone: string | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined, vip: boolean | null | undefined, hasSecondaryOrganizations: boolean | null | undefined, organization: { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined, vip: boolean | null | undefined, ticketsCount: { __typename: 'TicketCount', open: number, closed: number } | null | undefined } | null | undefined }

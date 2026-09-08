@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import KnowledgeBaseCategoryIcon from '#desktop/components/KnowledgeBaseCategoryIcon/KnowledgeBaseCategoryIcon.vue'
+import KnowledgeBaseCategoryIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseCategoryIcon/KnowledgeBaseCategoryIcon.vue'
 
 import type { AutoCompleteKnowledgeBaseCategoryIconOption } from './types.ts'
 
