@@ -24,6 +24,7 @@ class User < ApplicationModel
   include User::HasAuditLogs
   include User::Search
   include User::SearchIndex
+  include User::TerminatesSessions
   include User::TouchesOrganization
   include User::TriggersSubscriptions
   include User::PerformsGeoLookup

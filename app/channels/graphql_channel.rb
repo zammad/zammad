@@ -13,7 +13,7 @@ class GraphqlChannel < ApplicationCable::Channel
     # context must be kept in sync with GraphqlController!
     # Channels use session auth only (no token auth), so we set the token to nil here.
     context = {
-      sid:             sid,
+      sid:             connection.sid,
       current_user:    current_user && UserContext.new(current_user, nil),
       current_user_id: current_user&.id,
       # :channel is required for ActionCableSubscriptions and MUST NOT be used otherwise.

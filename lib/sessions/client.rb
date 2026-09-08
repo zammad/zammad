@@ -38,7 +38,14 @@ class Sessions::Client
       return if !session_data[:user]['id']
 
       user = User.lookup(id: session_data[:user]['id'])
-      return if !user
+
+      # Stops the back ends below from pushing any further data for a session that is no longer
+      #   allowed - its account was deactivated or deleted, or maintenance mode was switched on
+      #   in the meantime. These are the prerequisites the HTTP transport applies as well (see
+      #   ApplicationController::Authenticates#authentication_check_prerequesits).
+      return if !user&.active?
+      return if Auth::SwitchedSession.revoked?(session_data[:user]['switched_from_user_id'])
+      return if Auth::MaintenanceMode.blocks?(user, switched_from_user_id: session_data[:user]['switched_from_user_id'])
 
       UserInfo.current_user_id = user.id
 

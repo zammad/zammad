@@ -26,10 +26,17 @@ To execute this manually, just paste the following into the browser console
     end
 
     new_session_data = {}
-    if session&.data && session.data['user_id']
+    if (user = session_user(session))
       new_session_data = {
-        'id' => session.data['user_id'],
+        'id' => user.id,
       }
+
+      # Carried along because the prerequisites are re-checked while the session is served, and
+      #   the session record this was read from is not available there: a session an admin
+      #   switched to is exempt from maintenance mode, and nothing else tells it apart later.
+      if session.data['switched_from_user_id'].present?
+        new_session_data['switched_from_user_id'] = session.data['switched_from_user_id']
+      end
     end
 
     # create new session
@@ -44,6 +51,23 @@ To execute this manually, just paste the following into the browser console
     Sessions.send(@client_id, app_version)
 
     false
+  end
+
+  private
+
+  # The prerequisites of the HTTP transport must be applied here as well (see
+  #   ApplicationController::Authenticates#authentication_check_prerequesits), otherwise a
+  #   session that was retained across a deactivation would stay authorized on this transport.
+  def session_user(session)
+    return if session&.data.blank?
+    return if session.data['user_id'].blank?
+
+    user = User.find_by(id: session.data['user_id'])
+    return if !user&.active?
+    return if Auth::SwitchedSession.revoked?(session.data['switched_from_user_id'])
+    return if Auth::MaintenanceMode.blocks?(user, switched_from_user_id: session.data['switched_from_user_id'])
+
+    user
   end
 
 end
