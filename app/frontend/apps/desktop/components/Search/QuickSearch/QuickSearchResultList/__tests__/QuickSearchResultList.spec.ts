@@ -48,6 +48,18 @@ const renderQuickSearchResultList = async (search: string) => {
   return wrapper
 }
 
+const answerTranslation = (id: number, title: string) => ({
+  __typename: 'KnowledgeBaseAnswerTranslation' as const,
+  id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
+  title,
+  visibility: EnumKnowledgeBaseVisibility.Published,
+  kbLocale: { systemLocale: { locale: 'en-us' } },
+  answer: {
+    id: convertToGraphQLId('KnowledgeBase::Answer', id),
+    category: { id: convertToGraphQLId('KnowledgeBase::Category', 1) },
+  },
+})
+
 describe('QuickSearchResultList', () => {
   it('renders by default the sections with an empty state', async () => {
     mockQuickSearchQuery({
@@ -355,18 +367,6 @@ describe('QuickSearchResultList', () => {
 // The fourth result group, and the first one gated by `show` rather than by `permissions` - see
 //   plugins/knowledgeBaseAnswer.ts for why it has to be.
 describe('QuickSearchResultList knowledge base answers', () => {
-  const answerTranslation = (id: number, title: string) => ({
-    __typename: 'KnowledgeBaseAnswerTranslation' as const,
-    id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
-    title,
-    visibility: EnumKnowledgeBaseVisibility.Published,
-    kbLocale: { systemLocale: { locale: 'en-us' } },
-    answer: {
-      id: convertToGraphQLId('KnowledgeBase::Answer', id),
-      category: { id: convertToGraphQLId('KnowledgeBase::Category', 1) },
-    },
-  })
-
   const mockAnswers = (totalCount: number, ...titles: string[]) => {
     mockQuickSearchQuery({
       quickSearchOrganizations: { totalCount: 0, items: [] },
@@ -487,6 +487,168 @@ describe('QuickSearchResultList knowledge base answers', () => {
 
     await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
+    expect(router.currentRoute.value.query).toEqual({ entity: 'Ticket' })
+  })
+})
+
+// The panel shows at most 10 items per group, but drops to 5 as soon as three or more entity types
+//   match at once - see zammad/coordination-desktop-view#901.
+describe('QuickSearchResultList per entity type limit', () => {
+  const tickets = (count: number) =>
+    Array.from({ length: count }, (_, index) => ({
+      __typename: 'Ticket' as const,
+      id: convertToGraphQLId('Ticket', index + 1),
+      internalId: index + 1,
+      title: `Ticket ${index + 1}`,
+      number: `${index + 1}`,
+      state: { id: convertToGraphQLId('Ticket::State', 1), name: 'open' },
+      stateColorCode: EnumTicketStateColorCode.Open,
+    }))
+
+  const users = (count: number) =>
+    Array.from({ length: count }, (_, index) => ({
+      __typename: 'User' as const,
+      id: convertToGraphQLId('User', index + 1),
+      internalId: index + 1,
+      fullname: `User ${index + 1}`,
+    }))
+
+  const organizations = (count: number) =>
+    Array.from({ length: count }, (_, index) => ({
+      __typename: 'Organization' as const,
+      id: convertToGraphQLId('Organization', index + 1),
+      internalId: index + 1,
+      name: `Organization ${index + 1}`,
+    }))
+
+  const answers = (count: number) =>
+    Array.from({ length: count }, (_, index) => answerTranslation(index + 1, `Answer ${index + 1}`))
+
+  it('shows five results per group when three entity types match', async () => {
+    mockPermissions(['ticket.agent'])
+    mockApplicationConfig({ kb_active: false, kb_active_publicly: false })
+
+    mockQuickSearchQuery({
+      quickSearchTickets: { totalCount: 10, items: tickets(10) },
+      quickSearchUsers: { totalCount: 10, items: users(10) },
+      quickSearchOrganizations: { totalCount: 10, items: organizations(10) },
+      quickSearchKnowledgeBaseAnswers: { totalCount: 0, items: [] },
+    })
+
+    const wrapper = await renderQuickSearchResultList('1')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(await wrapper.findByText('#5 - Ticket 5')).toBeInTheDocument()
+    expect(wrapper.queryByText('#6 - Ticket 6')).not.toBeInTheDocument()
+
+    expect(wrapper.getByText('User 5')).toBeInTheDocument()
+    expect(wrapper.queryByText('User 6')).not.toBeInTheDocument()
+
+    expect(wrapper.getByText('Organization 5')).toBeInTheDocument()
+    expect(wrapper.queryByText('Organization 6')).not.toBeInTheDocument()
+  })
+
+  it('shows five results per group when all four entity types match', async () => {
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+    mockApplicationConfig({ kb_active: true })
+
+    mockQuickSearchQuery({
+      quickSearchTickets: { totalCount: 10, items: tickets(10) },
+      quickSearchUsers: { totalCount: 10, items: users(10) },
+      quickSearchOrganizations: { totalCount: 10, items: organizations(10) },
+      quickSearchKnowledgeBaseAnswers: { totalCount: 10, items: answers(10) },
+    })
+
+    const wrapper = await renderQuickSearchResultList('1')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(await wrapper.findByText('#5 - Ticket 5')).toBeInTheDocument()
+    expect(wrapper.queryByText('#6 - Ticket 6')).not.toBeInTheDocument()
+
+    expect(wrapper.getByText('Answer 5')).toBeInTheDocument()
+    expect(wrapper.queryByText('Answer 6')).not.toBeInTheDocument()
+  })
+
+  // Also the sub-bullet of the first criterion: the two groups the panel drops for having no result
+  //   at all do not push it over the threshold.
+  it('shows ten results per group when two entity types match', async () => {
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+    mockApplicationConfig({ kb_active: true })
+
+    mockQuickSearchQuery({
+      quickSearchTickets: { totalCount: 10, items: tickets(10) },
+      quickSearchUsers: { totalCount: 10, items: users(10) },
+      quickSearchOrganizations: { totalCount: 0, items: [] },
+      quickSearchKnowledgeBaseAnswers: { totalCount: 0, items: [] },
+    })
+
+    const wrapper = await renderQuickSearchResultList('1')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(await wrapper.findByText('#10 - Ticket 10')).toBeInTheDocument()
+    expect(wrapper.getByText('User 10')).toBeInTheDocument()
+
+    expect(wrapper.queryByText('Found organizations')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Found knowledge base answers')).not.toBeInTheDocument()
+  })
+
+  // A group the user is not shown can still carry results from the backend - cutting the two
+  //   visible groups down for it would shorten the panel for a group nobody sees.
+  it('does not count a group hidden from the user towards the threshold', async () => {
+    mockPermissions(['ticket.agent'])
+    mockApplicationConfig({ kb_active: false, kb_active_publicly: false })
+
+    mockQuickSearchQuery({
+      quickSearchTickets: { totalCount: 10, items: tickets(10) },
+      quickSearchUsers: { totalCount: 10, items: users(10) },
+      quickSearchOrganizations: { totalCount: 0, items: [] },
+      quickSearchKnowledgeBaseAnswers: { totalCount: 10, items: answers(10) },
+    })
+
+    const wrapper = await renderQuickSearchResultList('1')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(wrapper.queryByText('Found knowledge base answers')).not.toBeInTheDocument()
+
+    expect(await wrapper.findByText('#10 - Ticket 10')).toBeInTheDocument()
+    expect(wrapper.getByText('User 10')).toBeInTheDocument()
+  })
+
+  // The reduced limit withholds items the query already returned, so the link has to count them
+  //   too - against what the group displays, not against what came back.
+  it('counts the results the reduced limit withholds into the link to the detailed search', async () => {
+    mockPermissions(['ticket.agent'])
+    mockApplicationConfig({ kb_active: false, kb_active_publicly: false })
+
+    mockQuickSearchQuery({
+      quickSearchTickets: { totalCount: 8, items: tickets(8) },
+      quickSearchUsers: { totalCount: 5, items: users(5) },
+      quickSearchOrganizations: { totalCount: 6, items: organizations(6) },
+      quickSearchKnowledgeBaseAnswers: { totalCount: 0, items: [] },
+    })
+
+    const wrapper = await renderQuickSearchResultList('1')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(await wrapper.findByRole('link', { name: '3 more' })).toBeInTheDocument()
+    expect(wrapper.getByRole('link', { name: '1 more' })).toBeInTheDocument()
+
+    // The group whose five results the reduced limit takes in full keeps no link at all, so the two
+    //   above are the only ones the panel shows.
+    expect(wrapper.getAllByRole('link', { name: /more$/ })).toHaveLength(2)
+
+    await wrapper.events.click(wrapper.getByRole('link', { name: '3 more' }))
+
+    const router = getTestRouter()
+
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
+
+    expect(router.currentRoute.value.params).toEqual({ searchTerm: '1' })
     expect(router.currentRoute.value.query).toEqual({ entity: 'Ticket' })
   })
 })

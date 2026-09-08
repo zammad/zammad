@@ -17,6 +17,12 @@ import { useQuickSearchInput } from '../useQuickSearchInput.ts'
 
 const RESULT_LIMIT = 10
 
+// A search matching three or four entity types turns the panel into a stack of long lists and
+//   stops being scannable, so from that point on every group is cut down to a shorter list. Both
+//   limits and the threshold are fixed in code on purpose - there is no admin setting for them.
+const REDUCED_RESULT_LIMIT = 5
+const REDUCED_RESULT_LIMIT_TYPE_THRESHOLD = 2
+
 interface Props {
   search: string
   debounceTime: number
@@ -57,31 +63,44 @@ whenever(
   { once: true, immediate: true },
 )
 
-const mappedQuickSearchResults = computed(() => {
+const mappedQuickSearchResults = computed<QuickSearchResultData[] | undefined>(() => {
   const currentResult = quickSearchResult.value
 
   if (!currentResult) return
 
-  const searchResults: QuickSearchResultData[] = []
-
-  sortedByPriorityPlugins.value.forEach((plugin) => {
-    if (!currentResult[plugin.quickSearchResultKey]) return
-
+  const matchedPlugins = sortedByPriorityPlugins.value.flatMap((plugin) => {
     const searchResult = currentResult[plugin.quickSearchResultKey]
-    if (!searchResult || searchResult.totalCount === 0) return
 
-    searchResults.push({
-      name: plugin.name,
-      component: plugin.quickSearchComponent,
-      items: searchResult.items,
-      label: plugin.quickSearchResultLabel,
-      remainingItemCount: searchResult.totalCount - searchResult.items.length,
-      totalCount: searchResult.totalCount,
-      detailSearchDisabled: plugin.detailSearchDisabled,
-    })
+    if (!searchResult || searchResult.totalCount === 0) return []
+
+    return [{ plugin, searchResult }]
   })
 
-  return searchResults
+  // The threshold counts the entity types the current user is shown, which is why the groups have
+  //   to be collected before it can be applied: a plugin left out by its permissions or its
+  //   `show()` - knowledge base answers without an active knowledge base - can still carry results
+  //   from the backend, and shortening the visible groups for a group nobody sees would be wrong.
+  const itemLimit =
+    matchedPlugins.length > REDUCED_RESULT_LIMIT_TYPE_THRESHOLD
+      ? REDUCED_RESULT_LIMIT
+      : RESULT_LIMIT
+
+  return matchedPlugins.map(({ plugin, searchResult }) => {
+    const items = searchResult.items.slice(0, itemLimit)
+
+    return {
+      name: plugin.name,
+      component: plugin.quickSearchComponent,
+      items,
+      label: plugin.quickSearchResultLabel,
+      // Counted against what the group displays, not against what the query returned - under the
+      //   reduced limit the group withholds items it already has in hand, and they belong in the
+      //   count the "%s more" link shows.
+      remainingItemCount: searchResult.totalCount - items.length,
+      totalCount: searchResult.totalCount,
+      detailSearchDisabled: plugin.detailSearchDisabled,
+    }
+  })
 })
 
 const isLoadingSearchResults = quickSearchQuery.loadingWithoutCachedResult()
