@@ -4,9 +4,9 @@ import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { getKnowledgeBaseAnswerLink } from '#desktop/entities/knowledge-base/utils/knowledgeBaseAnswerLink.ts'
 
 import TicketKnowledgeBaseAnswer from './TicketKnowledgeBaseAnswer.vue'
-import { getKnowledgeBaseAnswerLink } from './utils/knowledgeBaseAnswerLink.ts'
 
 interface Props {
   linkedAnswers: KnowledgeBaseAnswerTranslationFragment[]

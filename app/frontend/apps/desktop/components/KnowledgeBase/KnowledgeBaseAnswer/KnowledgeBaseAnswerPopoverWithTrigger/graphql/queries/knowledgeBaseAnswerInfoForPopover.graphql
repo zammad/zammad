@@ -1,0 +1,22 @@
+# Deliberately much lighter than `knowledgeBaseAnswer`, which selects
+# `knowledgeBaseAnswerAttributes` - the full body, the navigation, the attachments, the breadcrumb
+# and the policy. A popover shows a title, an excerpt and a handful of attributes, and it is opened
+# from a list of ten, so it asks for the translation fragment alone.
+#
+# `locale` is the locale of the translation the caller is showing, so the popover describes that
+# translation rather than the reader's preferred one - they differ when a search hit came from
+# another locale.
+#
+# Passed twice on purpose. The query-level argument is what the server resolves titles in; the one
+# on `translation` is what keys the field in the Apollo cache, so an answer opened in two locales
+# holds one translation per locale rather than whichever arrived last (see
+# Gql::Types::KnowledgeBase::AnswerType#translation and knowledgeBaseAnswerAttributes, which say the
+# same).
+query knowledgeBaseAnswerInfoForPopover($answerId: ID!, $locale: String) {
+  knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
+    id
+    translation(locale: $locale) {
+      ...knowledgeBaseAnswerTranslation
+    }
+  }
+}

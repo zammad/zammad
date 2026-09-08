@@ -97,4 +97,103 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
 
     expect(new_ticket.reload.articles.last.body).to include(answer)
   end
+
+  # The quicksearch group for knowledge base answers. `kb_active` needs no setting up - creating an
+  #   active knowledge base sets it through KnowledgeBase#set_kb_active_setting - and the agent
+  #   holds knowledge_base.reader through the default Agent role, so `canBrowse` is satisfied and
+  #   the group's plugin is offered.
+  context 'with a knowledge base' do
+    include_context 'basic Knowledge Base'
+
+    let(:answer_title) { 'Ocarina tuning guide' }
+
+    let(:kb_answer) do
+      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: answer_title })
+    end
+
+    def authenticate
+      kb_answer
+      searchindex_model_reload([Ticket, Organization, User, KnowledgeBase::Answer::Translation])
+      agent
+    end
+
+    it 'finds a knowledge base answer and opens it' do
+      within 'aside[aria-label="Main sidebar"]' do
+        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+
+        expect(page).to have_text('Found knowledge base answers').and have_link(answer_title)
+
+        click_on answer_title
+      end
+
+      wait.until { current_url.include?("/knowledge-base/locale/#{primary_locale.system_locale.locale}/answer/#{kb_answer.id}") }
+    end
+
+    # The details popover, loaded only when it opens - so this is also the one check that the new
+    #   light query works against the real backend rather than a mock.
+    it 'shows the answer details in a popover' do
+      within 'aside[aria-label="Main sidebar"]' do
+        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+
+        expect(page).to have_link(answer_title)
+
+        find('a', text: answer_title).hover
+      end
+
+      within '[role="region"]' do
+        expect(page).to have_text(answer_title)
+          .and have_text('Language')
+          .and have_text('Published')
+      end
+    end
+
+    it 'omits the group when the knowledge base is deactivated' do
+      knowledge_base.update!(active: false)
+
+      refresh
+
+      within 'aside[aria-label="Main sidebar"]' do
+        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+
+        expect(page).to have_no_text('Found knowledge base answers')
+      end
+    end
+
+    # AC9 and AC10: the group is capped at ten items and links to the detailed search for the rest.
+    #   That link deliberately carries no entity while the answers tab is still to come
+    #   (zammad/coordination-desktop-view#874), so following it must land on a working page rather
+    #   than on a tab that does not exist - which is what QuickSearchResultList's omission of the
+    #   entity, and SearchContent's `routeEntity` fallback behind it, are for. Followed by clicking,
+    #   deliberately: visiting a /search URL directly does not establish the taskbar tab.
+    context 'with more answers than the group shows' do
+      let(:extra_answers) do
+        Array.new(11) do |index|
+          create(:knowledge_base_answer, :published, category:,
+                                                     translation_attributes: { title: "Ocarina note #{index}" })
+        end
+      end
+
+      def authenticate
+        kb_answer
+        extra_answers
+        searchindex_model_reload([Ticket, Organization, User, KnowledgeBase::Answer::Translation])
+        agent
+      end
+
+      it 'caps the group and links to the detailed search for the rest' do
+        within 'aside[aria-label="Main sidebar"]' do
+          find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+
+          expect(page).to have_text('Found knowledge base answers')
+
+          click_on '2 more'
+        end
+
+        within 'main' do
+          expect(page).to have_css('[role="tab"]', text: 'Ticket')
+          expect(page).to have_no_css('[role="tab"]', text: 'Knowledge base answer')
+        end
+      end
+    end
+  end
 end

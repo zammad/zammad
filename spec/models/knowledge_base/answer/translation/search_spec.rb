@@ -76,6 +76,12 @@ RSpec.describe KnowledgeBase::Answer::Translation, '.search', current_user_id: -
 
     # An agent has 'knowledge_base.reader' through the default role, so this takes a user who has no
     #   knowledge base permission at all.
+    #
+    # Deliberately still false, and not to be "fixed": this gate is what keeps the knowledge base out
+    #   of the legacy interface's generic search, and it is meant to stay there
+    #   (zammad/coordination-desktop-view#873). The desktop search reaches these answers through
+    #   Gql::Concerns::SearchesKnowledgeBaseAnswers instead, precisely so that widening this - a
+    #   breaking change for the legacy search - is not needed.
     context 'without any knowledge base permission' do
       let(:knowledge_base) { create(:knowledge_base) }
       let(:user)           { create(:customer) }

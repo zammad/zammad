@@ -46,10 +46,29 @@ export const useSearchPlugins = () => {
 
   const searchPluginNames = computed(() => plugins.value.map((plugin) => plugin.name))
 
+  // The plugins the detailed search may show a tab for. An entity whose quicksearch group ships
+  //   before its detailed-search table does opts out with `detailSearchDisabled`, and then has to
+  //   stay out of the tab list *and* out of the `searchCounts` query feeding the tab counters —
+  //   asking for a count nobody can display would be a wasted round trip per keystroke.
+  const detailSearchPlugins = computed(() =>
+    plugins.value.filter((plugin) => !plugin.detailSearchDisabled),
+  )
+
+  const sortedByNameDetailSearchPlugins = computed(() =>
+    detailSearchPlugins.value.toSorted((a, b) => a.name.localeCompare(b.name)),
+  )
+
+  const detailSearchPluginNames = computed(() =>
+    detailSearchPlugins.value.map((plugin) => plugin.name),
+  )
+
   return {
     plugins,
     sortedByPriorityPlugins,
     sortedByNamePlugins,
     searchPluginNames,
+    detailSearchPlugins,
+    sortedByNameDetailSearchPlugins,
+    detailSearchPluginNames,
   }
 }

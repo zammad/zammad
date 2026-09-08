@@ -500,6 +500,10 @@ const getUnionDefinition = (name: string) => {
   return definition
 }
 
+export const getUnionPossibleTypeNames = (name: string) => {
+  return getUnionDefinition(name).possibleTypes.map((possibleType) => possibleType.name)
+}
+
 const getEnumDefinition = (name: string) => {
   const definition = schemaTypes.find(
     (type) => type.kind === 'ENUM' && type.name === name,

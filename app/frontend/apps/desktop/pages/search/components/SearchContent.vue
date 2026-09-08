@@ -64,9 +64,22 @@ const props = defineProps<{
 const route = useRoute()
 const router = useRouter()
 
-const selectedEntity = ref(
-  (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket,
-)
+const { sortedByNameDetailSearchPlugins, detailSearchPluginNames } = useSearchPlugins()
+
+// The entity a /search URL asks for, or Ticket. An `?entity=` naming something the detailed search
+//   cannot show falls back instead of resolving to a plugin with no table behind it: either an
+//   unknown model, or one whose plugin is `detailSearchDisabled` because its table is still to
+//   come. The quicksearch group's "%s more" link produces exactly the latter for an entity whose
+//   tab has not shipped yet (zammad/coordination-desktop-view#874).
+const routeEntity = () => {
+  const requested = route.query.entity as EnumSearchableModels | undefined
+
+  if (requested && detailSearchPluginNames.value.includes(requested)) return requested
+
+  return EnumSearchableModels.Ticket
+}
+
+const selectedEntity = ref(routeEntity())
 
 const {
   filtersByEntity,
@@ -85,8 +98,6 @@ const {
 } = useSearchAdvancedFilters(selectedEntity)
 
 const offset = ref(0)
-
-const { sortedByNamePlugins, searchPluginNames } = useSearchPlugins()
 
 const scrollContainerElement = useTemplateRef('scroll-container')
 const searchControlsInstance = useTemplateRef('search-controls')
@@ -110,7 +121,7 @@ watch([selectedEntity, currentFiltersQueryParams], ([entity]) => {
 const syncFiltersFromRoute = () => {
   if (!selectedEntityHasFiltersEnabled.value) return
 
-  const queryEntity = (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
+  const queryEntity = routeEntity()
 
   // Static attributes alone (e.g. ticket.created_by_id) don't form a usable
   // validation schema for deep-link decoding — they'd drop legitimate route
@@ -136,8 +147,7 @@ onBeforeMount(syncFiltersFromRoute)
 // On a fresh deep-link the object-attribute schema may still be loading, so
 // onBeforeMount's decode runs against an incomplete schema — re-sync once it's
 // ready. Later reactivations already see a populated schema.
-const initialQueryEntity =
-  (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
+const initialQueryEntity = routeEntity()
 if (entityFieldsLoadingByEntity.value[initialQueryEntity]) {
   watch(
     () => entityFieldsLoadingByEntity.value[initialQueryEntity],
@@ -165,7 +175,7 @@ const modelSearchTerm = computed({
 const currentSearchTerm = computed(() => modelSearchTerm.value ?? '')
 
 const notVisibleSearchEntities = computed(() =>
-  searchPluginNames.value.filter(
+  detailSearchPluginNames.value.filter(
     (name) =>
       name !== selectedEntity.value &&
       (!!filtersByEntity[name]?.length || !!currentSearchTerm.value),
@@ -365,15 +375,19 @@ const refetchQueries = () => {
   searchCountsQuery.refetch()
 }
 
+// Always a plugin the detailed search can render: `routeEntity` never lets `selectedEntity` hold an
+//   entity without a table. The optional chaining and the empty-list default are the belt to that
+//   braces - `detailSearchHeaders` and `detailSearchComponent` are optional on SearchPlugin, so a
+//   future `detailSearchDisabled` entity slipping through must render nothing rather than throw.
 const searchPlugin = computed(() => searchPluginByName[selectedEntity.value])
 
 const { config } = storeToRefs(useApplicationStore())
 
-const detailSearchHeaders = computed(() =>
-  typeof searchPlugin.value.detailSearchHeaders === 'function'
-    ? searchPlugin.value.detailSearchHeaders(config.value)
-    : searchPlugin.value.detailSearchHeaders,
-)
+const detailSearchHeaders = computed(() => {
+  const headers = searchPlugin.value?.detailSearchHeaders
+
+  return typeof headers === 'function' ? headers(config.value) : (headers ?? [])
+})
 
 // Per-entity counts, accumulated from both queries. Keeping previous entries
 // across an entity switch / refetch is what prevents tab badges from briefly
@@ -411,7 +425,7 @@ const isLoading = computed(
 const searchResultTotalCount = computed(() => currentSearchResult.value?.search.totalCount ?? 0)
 
 const searchTabs = computed(() =>
-  sortedByNamePlugins.value.map((plugin) => ({
+  sortedByNameDetailSearchPlugins.value.map((plugin) => ({
     label: plugin.label,
     key: plugin.name,
     count: searchEntityCurrentCounts.value[plugin.name] ?? '-',
@@ -523,7 +537,7 @@ const setNewSearchState = (searchTerm: string) => {
 const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
 const shouldCountsRun = computed(
   () =>
-    searchPluginNames.value.length > 1 &&
+    detailSearchPluginNames.value.length > 1 &&
     (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
 )
 
@@ -655,10 +669,10 @@ setOnSuccessCallback(() => {
         class="relative grow overflow-y-auto px-4 pb-4"
       >
         <component
-          :is="searchPlugin.detailSearchComponent"
+          :is="searchPlugin?.detailSearchComponent"
           :key="selectedEntity"
           :table-id="`search-${selectedEntity}-table`"
-          :caption="$t('Search result for: %s', searchPlugin.label)"
+          :caption="$t('Search result for: %s', searchPlugin?.label)"
           :items="searchResultItems"
           :headers="detailSearchHeaders"
           :total-count="searchResultTotalCount"

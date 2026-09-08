@@ -6276,6 +6276,12 @@
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "KnowledgeBase__Answer__Translation",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "possibleTypes": null
@@ -8128,6 +8134,11 @@
           "interfaces": null,
           "enumValues": null,
           "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "KnowledgeBaseAnswerTranslation",
+              "ofType": null
+            },
             {
               "kind": "OBJECT",
               "name": "Organization",

@@ -60,6 +60,96 @@ RSpec.describe Service::KnowledgeBase::Search do
     segments.select(&:highlight).map(&:text)
   end
 
+  # The mode the quicksearch group asks for: answers alone, and none of the enrichment the search
+  #   page's result list renders. Covered against both backends, because a hit means something
+  #   different in each (Elasticsearch narrows to the browsed locale, the SQL fallback does not).
+  def quick_search_output(query = search_term, limit: described_class::MAX_RESULTS)
+    described_class
+      .with_current_user(user)
+      .execute(
+        query:          query,
+        knowledge_base: knowledge_base,
+        locale:         primary_locale,
+        indexes:        [KnowledgeBase::Answer::Translation.name],
+        limit:          limit,
+        enriched:       false,
+      )
+  end
+
+  def quick_search(query = search_term, limit: described_class::MAX_RESULTS)
+    quick_search_output(query, limit: limit).results
+  end
+
+  shared_examples 'an answers-only, unenriched search' do
+    it 'still finds answers' do
+      expect(quick_search.map(&:item)).to include(matching_answer)
+    end
+
+    it 'returns answers alone, never a category' do
+      expect(quick_search.map(&:item)).to all(be_a(KnowledgeBase::Answer))
+    end
+
+    # The searchable unit, and what Gql::Types::SearchResult::ItemType exposes for this model - so
+    #   the quicksearch group is a list of these rather than of their answers.
+    it 'carries the hit translation next to the answer' do
+      result = quick_search.find { |elem| elem.item == matching_answer }
+
+      expect(result.translation).to eq(matching_answer.translations.first)
+    end
+
+    it 'builds no title preview' do
+      expect(quick_search.map(&:title_preview)).to all(be_empty)
+    end
+
+    it 'builds no body preview' do
+      expect(quick_search.map(&:body_preview)).to all(be_empty)
+    end
+
+    # The preview being empty does not prove the body was never fetched: reading it loads the
+    #   translation's content row and runs the whole HTML body through html2text. That is why the
+    #   fallback is passed to #preview as a block rather than as an argument.
+    it 'never loads the answer bodies' do
+      expect(quick_search.map { |result| result.translation.association(:content).loaded? }).to all(be(false))
+    end
+
+    it 'builds no category path' do
+      expect(quick_search.map(&:category_path)).to all(be_empty)
+    end
+
+    it 'hands out no batched category data' do
+      output = quick_search_output
+
+      expect([output.category_translations, output.category_visibility]).to all(be_empty)
+    end
+
+    # The two costs the mode exists to avoid, and the reason it exists at all: quicksearch fires on
+    #   every debounced keystroke. Pinned on the calls rather than only on the empty output, because
+    #   an output can be empty while the work was still done.
+    it 'does not ask the backend for highlights' do
+      allow(SearchKnowledgeBaseBackend).to receive(:new).and_call_original
+
+      quick_search
+
+      expect(SearchKnowledgeBaseBackend).to have_received(:new).with(hash_including(highlight_enabled: false))
+    end
+
+    it 'never loads the category tree' do
+      allow(knowledge_base).to receive(:categories).and_call_original
+
+      quick_search
+
+      expect(knowledge_base).not_to have_received(:categories)
+    end
+
+    it 'honours a limit below the default cap' do
+      expect(quick_search(limit: 1).size).to eq(1)
+    end
+
+    it 'returns nothing for a blank query' do
+      expect(quick_search('')).to be_empty
+    end
+  end
+
   before do
     matching_answer
     subcategory_answer
@@ -218,6 +308,8 @@ RSpec.describe Service::KnowledgeBase::Search do
         expect(search.map(&:item)).to include(matching_answer)
       end
     end
+
+    it_behaves_like 'an answers-only, unenriched search'
   end
 
   context 'without Elasticsearch' do
@@ -237,5 +329,7 @@ RSpec.describe Service::KnowledgeBase::Search do
 
       expect(preview.map(&:highlight)).to eq([false])
     end
+
+    it_behaves_like 'an answers-only, unenriched search'
   end
 end

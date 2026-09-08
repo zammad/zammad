@@ -45,8 +45,17 @@ export type SearchPlugin = {
    */
   filtersDisabled?: boolean
   filterPermissions?: string[]
-  detailSearchHeaders: string[] | ((config: ConfigList) => string[])
-  detailSearchComponent: Component
+  /**
+   * Opts the entity out of the detailed search entirely: no tab, and no entry in the
+   * `searchCounts` query behind the tab counters. Quicksearch is unaffected.
+   *
+   * For an entity whose quicksearch group ships before its detailed-search table does. The two
+   * fields below are optional for the same reason — such a plugin has neither, and consumers
+   * therefore have to tolerate their absence.
+   */
+  detailSearchDisabled?: boolean
+  detailSearchHeaders?: string[] | ((config: ConfigList) => string[])
+  detailSearchComponent?: Component
   // Either a static list or — for config-derived overrides such as the
   // accounted-time unit label — a function of the application config,
   // resolved reactively by the consumer (mirrors `detailSearchHeaders`).
@@ -67,4 +76,7 @@ export interface QuickSearchResultData {
   label: string
   items: PartialDeep<Item>[]
   totalCount: number
+  /** Mirrors the plugin's flag, so the group's link to the detailed search can leave out an
+   * `?entity=` the detailed search has no tab for. */
+  detailSearchDisabled?: boolean
 }

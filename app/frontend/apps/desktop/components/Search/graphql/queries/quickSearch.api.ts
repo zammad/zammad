@@ -40,6 +40,32 @@ export const QuickSearchDocument = gql`
       }
     }
   }
+  quickSearchKnowledgeBaseAnswers: search(
+    search: $search
+    onlyIn: KnowledgeBase__Answer__Translation
+    limit: $limit
+  ) {
+    totalCount
+    items {
+      __typename
+      ... on KnowledgeBaseAnswerTranslation {
+        id
+        title
+        visibility
+        kbLocale {
+          systemLocale {
+            locale
+          }
+        }
+        answer {
+          id
+          category {
+            id
+          }
+        }
+      }
+    }
+  }
   quickSearchUsers: search(search: $search, onlyIn: User, limit: $limit) {
     totalCount
     items {

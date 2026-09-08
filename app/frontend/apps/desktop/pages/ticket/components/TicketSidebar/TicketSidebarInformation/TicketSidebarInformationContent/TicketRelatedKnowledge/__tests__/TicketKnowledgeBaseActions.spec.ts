@@ -104,6 +104,9 @@ describe('TicketKnowledgeBaseActions', () => {
       mockApplicationConfig({
         ai_provider: true,
         ai_assistance_kb_answer_suggestions: true,
+        // An answer link only reaches the knowledge base in Zammad while one is browsable - see
+        //   getKnowledgeBaseAnswerLink.
+        kb_active: true,
       })
     })
 

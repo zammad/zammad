@@ -2,7 +2,7 @@
 
 import { EnumKnowledgeBaseSchedulableVisibility } from '#shared/graphql/types.ts'
 
-import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
+import { visibilityMeta } from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 
 // The two enums name the same states, and their generated values are identical: the schedulable one
 //   is the answer's own visibility without `draft`, which stores no date and can therefore not be

@@ -2,6 +2,7 @@
 
 module Gql::Queries
   class Search < BaseQuery
+    include Gql::Concerns::SearchesKnowledgeBaseAnswers
 
     description 'Generic object search'
 
@@ -19,6 +20,8 @@ module Gql::Queries
     type Gql::Types::SearchResultType, null: false
 
     def resolve(only_in:, search: nil, order_by: nil, order_direction: nil, offset: 0, limit: 10, filter: nil)
+      return knowledge_base_answer_result(search, offset:, limit:) if knowledge_base_answers?(only_in)
+
       search_result = Service::Search
         .with_current_user(context.current_user)
         .execute(
@@ -39,6 +42,28 @@ module Gql::Queries
       {
         total_count: search_result[:total_count],
         items:       search_result[:objects],
+      }
+    end
+
+    private
+
+    # `total_count` is the whole permitted result set, `items` the requested window of it — the same
+    #   contract Service::Search answers with, so the quicksearch group's "%s more" arithmetic works
+    #   unchanged.
+    #
+    # `order_by`, `order_direction` and `filter` have no meaning here and are ignored: the knowledge
+    #   base's backend ranks by relevance, and it knows no selector conditions. Nothing sends them
+    #   today (the search plugin sets `filtersDisabled` and the detail tab is disabled), but
+    #   zammad/coordination-desktop-view#874 has to decide what a sortable answers table does about
+    #   it before it enables that tab.
+    def knowledge_base_answer_result(search, offset:, limit:)
+      hits = knowledge_base_answer_hits(search)
+
+      return { total_count: 0, items: [] } if hits.nil?
+
+      {
+        total_count: hits.size,
+        items:       hits.slice(offset.clamp(0, hits.size), limit) || [],
       }
     end
   end

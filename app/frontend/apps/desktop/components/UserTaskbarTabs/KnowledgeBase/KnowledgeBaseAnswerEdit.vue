@@ -9,7 +9,7 @@ import {
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import { visibilityMeta } from '#desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
+import { visibilityMeta } from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
 import { taskbarTabLocaleCode } from '#desktop/entities/knowledge-base/utils/taskbarTabKey.ts'
 import { isTranslationMissing } from '#desktop/entities/knowledge-base/utils/translationLocale.ts'

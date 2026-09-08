@@ -5,12 +5,12 @@ import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import { getKnowledgeBaseAnswerLink } from '#desktop/entities/knowledge-base/utils/knowledgeBaseAnswerLink.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import { useKnowledgeBaseAnswerLinks } from './composables/useKnowledgeBaseAnswerLinks.ts'
 import TicketKnowledgeBaseAnswer from './TicketKnowledgeBaseAnswer.vue'
 import TicketKnowledgeBaseAnswerSkeleton from './TicketKnowledgeBaseAnswerSkeleton.vue'
-import { getKnowledgeBaseAnswerLink } from './utils/knowledgeBaseAnswerLink.ts'
 
 import type { RelatedAnswer } from './types.ts'
 

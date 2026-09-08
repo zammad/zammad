@@ -255,4 +255,135 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
+
+  # The one searchable model this query does not serve through Service::Search - see
+  #   Gql::Concerns::SearchesKnowledgeBaseAnswers for why. What is covered here is the routing and
+  #   the payload it produces; the search mode behind it belongs to Service::KnowledgeBase::Search
+  #   and is covered in spec/services/service/knowledge_base/search_spec.rb.
+  context 'when searching knowledge base answers' do
+    include_context 'basic Knowledge Base'
+
+    let(:query) do
+      <<~QUERY
+        query search($search: String, $onlyIn: EnumSearchableModels!, $limit: Int = 10, $offset: Int = 0) {
+          search(search: $search, onlyIn: $onlyIn, limit: $limit, offset: $offset) {
+            totalCount
+            items {
+              ... on KnowledgeBaseAnswerTranslation {
+                __typename
+                title
+                visibility
+                answer {
+                  id
+                }
+              }
+            }
+          }
+        }
+      QUERY
+    end
+
+    let(:search)     { 'ocarina' }
+    let(:variables)  { { search: search, onlyIn: 'KnowledgeBase__Answer__Translation' } }
+    let(:es_setup)   { Setting.set('es_url', nil) }
+    let(:kb_setup)   { nil }
+
+    let(:ocarina_published) do
+      create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Ocarina tuning' })
+    end
+
+    let(:ocarina_internal) do
+      create(:knowledge_base_answer, :internal, category: category, translation_attributes: { title: 'Ocarina repair' })
+    end
+
+    def titles
+      gql.result.data['items'].pluck('title')
+    end
+
+    before do
+      es_setup
+      ocarina_published
+      ocarina_internal
+      kb_setup
+      gql.execute(query, variables: variables)
+    end
+
+    context 'with an agent (reader)', authenticated_as: :agent do
+      let(:agent) { create(:agent) }
+
+      # The searchable unit is the translation, so the union member is the translation type - which
+      #   is what the quicksearch group renders and what its popover is keyed on.
+      it 'returns the hits as answer translations' do
+        expect(gql.result.data['items']).to all(include('__typename' => 'KnowledgeBaseAnswerTranslation'))
+      end
+
+      it 'resolves the answer behind each translation' do
+        expect(gql.result.data['items']).to all(include('answer' => include('id')))
+      end
+
+      it 'reports a total count next to the items' do
+        expect(gql.result.data['totalCount']).to eq(2)
+      end
+
+      it 'includes internal answers' do
+        expect(titles).to include('Ocarina repair')
+      end
+
+      context 'with a term nothing matches' do
+        let(:search) { 'sackbut' }
+
+        it 'reports an empty result' do
+          expect(gql.result.data).to eq({ 'items' => [], 'totalCount' => 0 })
+        end
+      end
+
+      # The one thing this resolver does that the service does not, and what the quicksearch group's
+      #   "%s more" count and the story's AC9/AC10 rest on: `items` is the requested window while
+      #   `totalCount` stays the whole permitted set.
+      context 'with a limit below the number of hits' do
+        let(:variables) { { search: search, onlyIn: 'KnowledgeBase__Answer__Translation', limit: 1 } }
+
+        it 'returns the window' do
+          expect(gql.result.data['items'].size).to eq(1)
+        end
+
+        it 'still reports the whole permitted total' do
+          expect(gql.result.data['totalCount']).to eq(2)
+        end
+      end
+
+      context 'with an offset past the end' do
+        let(:variables) { { search: search, onlyIn: 'KnowledgeBase__Answer__Translation', limit: 10, offset: 10 } }
+
+        it 'returns no items but keeps the total' do
+          expect(gql.result.data).to eq({ 'items' => [], 'totalCount' => 2 })
+        end
+      end
+
+      # Quicksearch asks for every searchable entity in one document, so this branch must answer
+      #   rather than raise - raising would take the ticket, user and organization groups down with
+      #   it on every instance that has no knowledge base.
+      context 'without an active knowledge base' do
+        let(:kb_setup) { knowledge_base.update!(active: false) }
+
+        it 'reports an empty result instead of an error' do
+          expect(gql.result.data).to eq({ 'items' => [], 'totalCount' => 0 })
+        end
+      end
+    end
+
+    context 'with a customer (public)', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+
+      it 'returns published answers' do
+        expect(titles).to include('Ocarina tuning')
+      end
+
+      it 'hides internal answers' do
+        expect(titles).not_to include('Ocarina repair')
+      end
+    end
+
+    it_behaves_like 'graphql responds with error if unauthenticated'
+  end
 end

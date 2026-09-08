@@ -3,6 +3,7 @@
 import { computed } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
@@ -113,6 +114,9 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
 
     // Knowledge base access decides where an answer link points to.
     mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+    // An answer link only reaches the knowledge base in Zammad while one is browsable, so the
+    //   setting is as load-bearing as the permission - see getKnowledgeBaseAnswerLink.
+    mockApplicationConfig({ kb_active: true })
   })
 
   it('renders the given answers as links', async () => {
@@ -130,7 +134,7 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
     )
   })
 
-  it('links to the public answer page for a user without knowledge base permission', async () => {
+  it('links to the public answer page when no knowledge base is browsable', async () => {
     mockPermissions(['ticket.agent'])
 
     const wrapper = renderSuggestions({
@@ -142,6 +146,23 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
     expect((await wrapper.findByText('Reset your password')).closest('a')).toHaveAttribute(
       'href',
       '/help/en-us/1/1',
+    )
+  })
+
+  // The permission is not what decides this: a public knowledge base is browsable by anyone, so the
+  //   answer route takes this agent just as it takes a customer. Sending them to the help site
+  //   instead would push them out of Zammad for an answer they can read in it.
+  it('links an agent without knowledge base permission to the answer inside Zammad while the knowledge base is public', async () => {
+    mockPermissions(['ticket.agent'])
+    mockApplicationConfig({ kb_active_publicly: true })
+
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password')],
+    })
+
+    expect((await wrapper.findByText('Reset your password')).closest('a')).toHaveAttribute(
+      'href',
+      '/desktop/knowledge-base/locale/en-us/answer/1',
     )
   })
 

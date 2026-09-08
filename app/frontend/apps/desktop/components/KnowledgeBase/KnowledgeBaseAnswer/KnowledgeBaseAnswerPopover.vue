@@ -4,7 +4,7 @@
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
 
-import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
+import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 
 import KnowledgeBaseAnswerAttributes from './KnowledgeBaseAnswerAttributes.vue'
 
