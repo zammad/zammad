@@ -52,6 +52,7 @@ import { useKnowledgeBaseSearchTerm } from '../composables/useKnowledgeBaseSearc
 import { useKnowledgeBaseSorting } from '../composables/useKnowledgeBaseSorting.ts'
 import { useKnowledgeBaseSortingSave } from '../composables/useKnowledgeBaseSortingSave.ts'
 import { knowledgeBaseBrowsedTitle } from '../utils/knowledgeBaseBrowsedTitle.ts'
+import { CATEGORY_GRID_CLASSES } from '../utils/knowledgeBaseCategoryGrid.ts'
 
 import type { KnowledgeBaseCategoryCompact, KnowledgeBaseSortingModes } from '../types.ts'
 
@@ -164,7 +165,7 @@ const storedSortingModes = computed<KnowledgeBaseSortingModes>(() =>
     : { categories: knowledgeBase.value?.categorySortingMode },
 )
 
-const { searchTerm, searchQuery, searchNow } = useKnowledgeBaseSearchTerm()
+const { searchTerm, searchQuery, searchEntity, searchNow } = useKnowledgeBaseSearchTerm()
 
 // While a term is committed to the URL, the results take the place of the browse content —
 //   the category grid and the answer list alike.
@@ -226,7 +227,7 @@ const answerList = useTemplateRef<{ addAnswer: () => void }>('answer-list')
 const addAnswer = () => answerList.value?.addAnswer()
 
 // Fill the trailing gap in the last grid row with placeholder tiles so the row
-//   always looks complete. Must mirror the `grid-cols-*` breakpoints below.
+//   always looks complete. Must mirror the columns of CATEGORY_GRID_CLASSES.
 const GRID_BREAKPOINTS = [
   {
     columns: 1,
@@ -499,6 +500,7 @@ watch(browsedPage, () => {
         <KnowledgeBaseSearchResults
           v-if="searchActive"
           :key="browsedPage"
+          v-model:entity="searchEntity"
           :query="searchQuery"
           :category-id="categoryId"
           :locale="localeCode"
@@ -524,7 +526,8 @@ watch(browsedPage, () => {
             <ol
               v-if="!showsSortingEmptyState"
               ref="dnd-parent"
-              class="group focus-visible:outline-offset-0.5! grid grid-cols-1 gap-4 rounded-xl focus-visible-app-default sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+              class="group focus-visible:outline-offset-0.5! rounded-xl focus-visible-app-default"
+              :class="CATEGORY_GRID_CLASSES"
               :tabindex="isRearranging ? 0 : undefined"
               :aria-label="isRearranging ? $t('Category order list') : undefined"
               :aria-activedescendant="isRearranging ? focusedItemId : undefined"

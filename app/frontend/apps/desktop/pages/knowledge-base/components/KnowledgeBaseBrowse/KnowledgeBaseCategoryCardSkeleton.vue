@@ -4,6 +4,11 @@
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 
+import {
+  CATEGORY_GRID_CLASSES,
+  CATEGORY_GRID_REVEAL,
+} from '../../utils/knowledgeBaseCategoryGrid.ts'
+
 interface Props {
   count: number
 }
@@ -16,16 +21,12 @@ const props = defineProps<Props>()
 <template>
   <!-- w-full: the loader centers its skeleton in a flex column, where a bare grid would
        otherwise shrink to its content width. -->
-  <ol class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+  <ol :class="CATEGORY_GRID_CLASSES" class="w-full">
     <li
       v-for="i in props.count"
       :key="i"
       class="flex min-h-42 flex-col items-center justify-center rounded-xl bg-blue-200 px-3 pt-6 dark:bg-gray-500"
-      :class="{
-        'hidden sm:flex': i === 2,
-        'hidden lg:flex': i === 3,
-        'hidden 2xl:flex': i === 4,
-      }"
+      :class="CATEGORY_GRID_REVEAL[i as keyof typeof CATEGORY_GRID_REVEAL]"
     >
       <div class="flex w-full flex-col items-center gap-3">
         <CommonSkeleton class="size-8" rounded alternative-background />

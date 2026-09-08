@@ -20,10 +20,15 @@ import type { KnowledgeBaseIconSet } from '#desktop/entities/knowledge-base/type
 //   sorting state talks about a node's lists, not about the schema.
 export type KnowledgeBaseSortingMode = EnumKnowledgeBaseSortingMode
 
+// The two kinds of content the knowledge base holds. Whatever lists one of them - the browse
+//   page's two listings, the split search results - is keyed by these, and so is the tab control
+//   above either of them (KnowledgeBaseContentTabs).
+export type KnowledgeBaseContentScope = 'categories' | 'answers'
+
 // The two independently rearrangeable lists on a browse page. A category holds both, the
 //   knowledge base root only categories. Each carries its own sorting mode, so an editor arranges
 //   one of them at a time.
-export type KnowledgeBaseSortingScope = 'categories' | 'answers'
+export type KnowledgeBaseSortingScope = KnowledgeBaseContentScope
 
 // The modes a browsed node is stored with, one per list. The knowledge base root has no answers,
 //   so it fills the `categories` entry alone.

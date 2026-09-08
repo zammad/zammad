@@ -6,11 +6,13 @@ import { computed } from 'vue'
 import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 import type { Tab } from '#desktop/components/CommonTabs/types.ts'
 
-import type { KnowledgeBaseSortingScope } from '../../types'
+import type { KnowledgeBaseContentScope } from '../../types'
 
 export interface Props {
-  categoryCount: number
-  answerCount: number
+  // A string passes straight through to the badge, which is how a count that is not in yet reads
+  //   as `-` instead of as a momentary zero - the same placeholder SearchContent.vue uses.
+  categoryCount: number | string
+  answerCount: number | string
   // Puts the answers entry first. The page order - categories above answers - is what the entries
   //   follow by default; a listing that leads with the answers wants them led with here too.
   reverseOrder?: boolean
@@ -18,7 +20,7 @@ export interface Props {
 
 const props = defineProps<Props>()
 
-const activeTab = defineModel<KnowledgeBaseSortingScope>({ required: true })
+const activeTab = defineModel<KnowledgeBaseContentScope>({ required: true })
 
 // Counts are passed through as they are, zero included: an empty entry is what tells an editor
 //   that content of that kind belongs here, and where the next one will land.

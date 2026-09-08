@@ -64,12 +64,13 @@ Do not "fix" these without a decision:
   inactive knowledge base that way — the policy for anyone with effective access
   to the record (a reader included), the scope for the `knowledge_base.editor`
   permission.
-- `Gql::Concerns::SearchesKnowledgeBaseAnswers` and
-  `Gql::Queries::KnowledgeBase::Search` answer with an **empty result** instead of
-  raising when no knowledge base is active. Both are reached from a document that
-  asks for more than the knowledge base — the desktop quicksearch requests every
-  searchable entity in one query — and the search field is `null: false`, so a
-  raise would null the root and take the ticket, user and organization groups down
-  with it on every instance that has no knowledge base.
+- `Gql::Concerns::SearchesKnowledgeBaseAnswers` answers with an **empty result**
+  instead of raising when no knowledge base is active. It is reached from a
+  document that asks for more than the knowledge base — the desktop quicksearch
+  requests every searchable entity in one query — and the search field is
+  `null: false`, so a raise would null the root and take the ticket, user and
+  organization groups down with it on every instance that has no knowledge base.
+  The knowledge base's own queries, `Gql::Queries::KnowledgeBase::Search`
+  included, do raise: they are asked for on their own.
 
 Each of these carries the reasoning in a code comment; keep the two in sync.

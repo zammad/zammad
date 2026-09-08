@@ -38,6 +38,14 @@ describe('KnowledgeBaseContentTabs', () => {
     expect(view.getByRole('tab', { name: 'Answers' })).toHaveTextContent('0')
   })
 
+  // A count that has not been answered yet arrives as a string, which is what reads as `-`
+  //   instead of as a momentary zero.
+  it('passes a placeholder count through', () => {
+    const view = renderContentTabs({ answerCount: '-' })
+
+    expect(view.getByRole('tab', { name: 'Answers' })).toHaveTextContent('-')
+  })
+
   it('marks the picked kind', () => {
     const view = renderContentTabs({ modelValue: 'answers' })
 

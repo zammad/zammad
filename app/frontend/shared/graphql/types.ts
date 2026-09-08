@@ -364,6 +364,7 @@ export type KnowledgeBaseFeedQuery = { knowledgeBaseFeed: { __typename: 'Knowled
 
 export type KnowledgeBaseSearchQueryVariables = Exact<{
   query: string;
+  entity: Types.EnumKnowledgeBaseSearchEntity;
   categoryId?: string | number | null | undefined;
   locale?: string | null | undefined;
   pageSize?: number | null | undefined;

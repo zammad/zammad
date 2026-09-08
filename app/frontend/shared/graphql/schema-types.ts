@@ -995,6 +995,14 @@ export enum EnumKnowledgeBaseSchedulableVisibility {
   Published = 'published'
 }
 
+/** Kind of knowledge base content to search for */
+export enum EnumKnowledgeBaseSearchEntity {
+  /** Answers, matched in their title, body, attachments and tags. */
+  Answer = 'answer',
+  /** Categories, matched in their title. */
+  Category = 'category'
+}
+
 /** How the content of a knowledge base node — its root or a single category — is ordered when browsed */
 export enum EnumKnowledgeBaseSortingMode {
   Alphabetical = 'alphabetical',
@@ -3875,7 +3883,7 @@ export type Queries = {
   knowledgeBaseCategorySubcategories?: Maybe<KnowledgeBaseCategorySubcategoriesPayload>;
   /** Fetch the feed paths of the internal knowledge base for the current user */
   knowledgeBaseFeed: KnowledgeBaseFeed;
-  /** Search the knowledge base for answers and categories */
+  /** Search the knowledge base for answers or categories */
   knowledgeBaseSearch: KnowledgeBaseSearchResultConnection;
   /** List linked objects */
   linkList?: Maybe<Array<Link>>;
@@ -4137,6 +4145,7 @@ export type QueriesKnowledgeBaseSearchArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   categoryId?: InputMaybe<Scalars['ID']['input']>;
+  entity?: EnumKnowledgeBaseSearchEntity;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;

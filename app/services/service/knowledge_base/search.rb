@@ -1,11 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-# Searches the knowledge base for the desktop view: answers and categories of one knowledge base,
-# optionally narrowed to a category subtree, each with a preview of where the term was found.
+# Searches the knowledge base for the desktop view: the answers *or* the categories of one
+# knowledge base, optionally narrowed to a category subtree, each with a preview of where the term
+# was found.
 #
-# Only answers and categories are searched. The knowledge base node itself is deliberately left
-# out — it is not something the result list offers to open. (A scoped search already drops it,
-# because KnowledgeBase::Translation.apply_kb_scope returns none, but an unscoped one would not.)
+# One kind of content per run, because the result list is split by kind and each list pages on its
+# own. The desktop view runs one search per kind and shows one of them, so each tab has a real
+# count of its own and switching to the other kind already has its results.
+#
+# The knowledge base node itself is not searchable at all — it is not something the result list
+# offers to open. (A scoped search already dropped it, because KnowledgeBase::Translation.
+# apply_kb_scope returns none, but an unscoped one would not.)
 #
 # Returns the hits plus the batched per-category data the GraphQL types need to render them, in the
 # same shape as Service::KnowledgeBase::CategoryContent — see Gql::Queries::KnowledgeBase::Search
@@ -15,14 +20,19 @@ class Service::KnowledgeBase::Search < Service::Base
 
   requires_current_user!
 
-  INDEXES = [
-    ::KnowledgeBase::Answer::Translation.name,
-    ::KnowledgeBase::Category::Translation.name,
-  ].freeze
+  # The translation model behind each searchable kind of content. Its class name is also the name
+  #   of the search index that holds it, which is what SearchKnowledgeBaseBackend takes.
+  ENTITY_MODELS = {
+    answer:   ::KnowledgeBase::Answer::Translation,
+    category: ::KnowledgeBase::Category::Translation,
+  }.freeze
 
   # The whole permission-filtered list is materialised in Ruby and the connection pages over it in
   # memory, so the search needs a bound. At the frontend's page size of 30 this is roughly seven
   # pages — far past where anyone keeps paging.
+  #
+  # It bounds one kind of content, because one run searches one index: a term with 200 answer hits
+  # cannot crowd the categories out of their own count.
   MAX_RESULTS = 200
 
   # Private Use Area code points. Elasticsearch's default is <em>…</em>, which cannot be told apart
@@ -49,23 +59,23 @@ class Service::KnowledgeBase::Search < Service::Base
   Result  = Struct.new(:item, :translation, :title_preview, :body_preview, :category_path, keyword_init: true)
   Segment = Struct.new(:text, :highlight, keyword_init: true)
 
-  attr_reader :query, :knowledge_base, :scope, :locale, :indexes, :limit, :enriched
+  attr_reader :query, :knowledge_base, :entity, :scope, :locale, :limit, :enriched
 
-  # `scope` is the category to search within (its whole subtree), `locale` the resolved
-  #   KnowledgeBase::Locale being browsed.
+  # `entity` is the kind of content to search, one of ENTITY_MODELS' keys. `scope` is the category
+  #   to search within (its whole subtree), `locale` the resolved KnowledgeBase::Locale being
+  #   browsed.
   #
-  # The last three are the search page's behaviour by default, and what the quicksearch group
-  #   narrows: `indexes` to answers alone, and `enriched` to false, because it renders neither the
-  #   previews nor the category trail and fires on every debounced keystroke — paying for 200
-  #   highlighted fragments and a category tree per keystroke is the cost that has to go. `limit`
-  #   stays at MAX_RESULTS there on purpose, so its total count keeps meaning the same lower bound
-  #   as the search page's.
-  def initialize(query:, knowledge_base:, scope: nil, locale: nil, indexes: INDEXES, limit: MAX_RESULTS, enriched: true)
+  # The last two are the search page's behaviour by default, and what the quicksearch group
+  #   narrows: `enriched` to false, because it renders neither the previews nor the category trail
+  #   and fires on every debounced keystroke — paying for 200 highlighted fragments and a category
+  #   tree per keystroke is the cost that has to go. `limit` stays at MAX_RESULTS there on purpose,
+  #   so its total count keeps meaning the same lower bound as the search page's.
+  def initialize(query:, knowledge_base:, entity:, scope: nil, locale: nil, limit: MAX_RESULTS, enriched: true)
     @query          = query
     @knowledge_base = knowledge_base
+    @entity         = entity
     @scope          = scope
     @locale         = locale
-    @indexes        = indexes
     @limit          = limit
     @enriched       = enriched
   end
@@ -92,13 +102,17 @@ class Service::KnowledgeBase::Search < Service::Base
     Output.new(results: [], category_translations: {}, category_visibility: {})
   end
 
+  def translation_model
+    ENTITY_MODELS.fetch(entity)
+  end
+
   def backend
     SearchKnowledgeBaseBackend.new(
       knowledge_base:    knowledge_base,
       locale:            locale,
       scope:             scope,
       flavor:            flavor,
-      index:             indexes,
+      index:             translation_model.name,
       # Both are needed: SearchKnowledgeBaseBackend#options_apply_pagination only forwards a limit
       #   to Elasticsearch when an offset is given too, and without one Elasticsearch answers with
       #   its own default of ten hits.
@@ -124,21 +138,21 @@ class Service::KnowledgeBase::Search < Service::Base
     ::KnowledgeBase.access_for_user(current_user) == :public ? :public : :agent
   end
 
-  # Everything the result page needs, in a fixed number of queries rather than a few per hit. The
-  #   answer's own translations are included because AnswerType resolves its `translation` from
-  #   that collection, not from the translation the hit came from.
+  # Everything the result page needs, in a fixed number of queries rather than a few per hit. Only
+  #   the searched kind of content is loaded — a run never holds both.
   def preheat(hits)
-    grouped = hits.group_by { |hit| hit[:type] }.transform_values { |group| group.pluck(:id) }
+    @hit_translations = preheat_scope(hits.pluck(:id)).index_by(&:id)
+  end
 
-    @answer_translations = ::KnowledgeBase::Answer::Translation
-      .where(id: grouped[::KnowledgeBase::Answer::Translation.name])
-      .includes(answer_translation_associations)
-      .index_by(&:id)
+  def preheat_scope(ids)
+    relation = translation_model.where(id: ids)
 
-    @category_translations = ::KnowledgeBase::Category::Translation
-      .where(id: grouped[::KnowledgeBase::Category::Translation.name])
-      .includes(category: %i[parent knowledge_base])
-      .index_by(&:id)
+    case entity
+    when :answer
+      relation.includes(answer_translation_associations)
+    when :category
+      relation.includes(category: %i[parent knowledge_base])
+    end
   end
 
   # The result page renders the body excerpt and the category path, and AnswerType resolves its
@@ -155,14 +169,10 @@ class Service::KnowledgeBase::Search < Service::Base
 
   # nil for a hit whose record is gone: the search index can lag behind a deletion.
   def result_for(hit)
-    case hit[:type]
-    when ::KnowledgeBase::Answer::Translation.name
-      translation = @answer_translations[hit[:id]]
-      translation && answer_result(hit, translation)
-    when ::KnowledgeBase::Category::Translation.name
-      translation = @category_translations[hit[:id]]
-      translation && category_result(hit, translation)
-    end
+    translation = @hit_translations[hit[:id]]
+    return if translation.nil?
+
+    entity == :answer ? answer_result(hit, translation) : category_result(hit, translation)
   end
 
   def answer_result(hit, translation)
@@ -221,7 +231,8 @@ class Service::KnowledgeBase::Search < Service::Base
   #   for the same reason as the titles above: CategoryType#visibility falls back to
   #   KnowledgeBase::Category#content_visibility, which walks the subtree with a recursive CTE once
   #   per publication state, per category. Only the hits need it — a path segment renders its title
-  #   alone (Gql::Types::KnowledgeBase::Search::PathSegmentType).
+  #   alone (Gql::Types::KnowledgeBase::Search::PathSegmentType). Empty for an answer search, which
+  #   has no category hits.
   def category_visibility(results)
     return {} if !enriched
 

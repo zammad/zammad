@@ -5,8 +5,12 @@ import { useRouteQuery } from '@vueuse/router'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { EnumKnowledgeBaseSearchEntity } from '#shared/graphql/types.ts'
+
 // search_field_widget.coffee:82
 export const SEARCH_DEBOUNCE_TIME = 500
+
+const SEARCH_ENTITIES: string[] = Object.values(EnumKnowledgeBaseSearchEntity)
 
 // The browsed search term. The URL owns it — as it owns the browsed locale
 //   (knowledgeBase.ts) — so a deep link, a back/forward and a shared link all restore the
@@ -21,10 +25,36 @@ export const useKnowledgeBaseSearchTerm = (debounceTime = SEARCH_DEBOUNCE_TIME) 
     transform: (value) => ((Array.isArray(value) ? value.at(-1) : value) ?? '').trim(),
   })
 
+  // The kind of content the result list shows, under the same parameter name the global detail
+  //   search keeps its entity under (pages/search/views/Search.vue). The URL owns it as it owns
+  //   the term, so a shared link and a back/forward restore the tab that was open. A value the
+  //   schema does not know reads as the default rather than failing the query.
+  const searchEntity = useRouteQuery<string | string[] | null, EnumKnowledgeBaseSearchEntity>(
+    'entity',
+    EnumKnowledgeBaseSearchEntity.Answer,
+    {
+      transform: (value) => {
+        const entity = (Array.isArray(value) ? value.at(-1) : value) ?? ''
+
+        return SEARCH_ENTITIES.includes(entity)
+          ? (entity as EnumKnowledgeBaseSearchEntity)
+          : EnumKnowledgeBaseSearchEntity.Answer
+      },
+    },
+  )
+
   const typedTerm = ref<string>()
 
   const commit = () => {
-    searchQuery.value = typedTerm.value?.trim() ?? ''
+    const term = typedTerm.value?.trim() ?? ''
+
+    searchQuery.value = term
+
+    // Clearing the term ends the search, so the kind it was showing goes with it: the next search
+    //   starts on the answers again, and no stale `?entity=` is left on a plain browse URL that is
+    //   then shared or bookmarked. Here rather than in a handler of its own, because the field's
+    //   clear icon and the empty state's button both arrive through this one place.
+    if (!term) searchEntity.value = EnumKnowledgeBaseSearchEntity.Answer
   }
 
   const { start: commitLater, stop: cancelCommit } = useTimeoutFn(commit, debounceTime, {
@@ -60,14 +90,15 @@ export const useKnowledgeBaseSearchTerm = (debounceTime = SEARCH_DEBOUNCE_TIME) 
   //   search. Our own commit landing is not one: the URL holds the trimmed term, but the field
   //   keeps what is being typed, or a pause after `printer ` would drop the space and the next
   //   word would run on as `printerjam`.
-  watch(
-    () => route.fullPath,
-    () => {
-      cancelCommit()
+  //
+  // Watched as the path and the term rather than the whole `fullPath`, because switching the tab
+  //   writes `?entity=` — a change to this very page that must not abort the pending commit and
+  //   discard what is half typed. The browsed category and locale are both in the path.
+  watch([() => route.path, () => searchQuery.value], () => {
+    cancelCommit()
 
-      if (typedTerm.value?.trim() !== searchQuery.value) typedTerm.value = undefined
-    },
-  )
+    if (typedTerm.value?.trim() !== searchQuery.value) typedTerm.value = undefined
+  })
 
-  return { searchTerm, searchQuery, searchNow }
+  return { searchTerm, searchQuery, searchEntity, searchNow }
 }

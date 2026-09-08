@@ -5961,6 +5961,29 @@
         },
         {
           "kind": "ENUM",
+          "name": "EnumKnowledgeBaseSearchEntity",
+          "description": "Kind of knowledge base content to search for",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "answer",
+              "description": "Answers, matched in their title, body, attachments and tags.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "category",
+              "description": "Categories, matched in their title.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
           "name": "EnumKnowledgeBaseSortingMode",
           "description": "How the content of a knowledge base node — its root or a single category — is ordered when browsed",
           "fields": null,
@@ -21555,7 +21578,7 @@
             },
             {
               "name": "knowledgeBaseSearch",
-              "description": "Search the knowledge base for answers and categories",
+              "description": "Search the knowledge base for answers or categories",
               "args": [
                 {
                   "name": "query",
@@ -21570,6 +21593,20 @@
                     }
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "entity",
+                  "description": "Which kind of content to search for; the result list holds that kind alone",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumKnowledgeBaseSearchEntity",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": "answer"
                 },
                 {
                   "name": "categoryId",

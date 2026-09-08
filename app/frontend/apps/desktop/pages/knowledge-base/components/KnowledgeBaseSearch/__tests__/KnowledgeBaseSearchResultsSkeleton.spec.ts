@@ -17,6 +17,21 @@ describe('KnowledgeBaseSearchResultsSkeleton', () => {
     expect(view.container.querySelectorAll('li')).toHaveLength(5)
   })
 
+  // The answers stand in as a list, the categories as the card grid the browse view uses.
+  it('stands in for a list by default', () => {
+    const view = renderComponent(KnowledgeBaseSearchResultsSkeleton)
+
+    expect(view.container.querySelector('ol')).toHaveClass('flex-col')
+  })
+
+  it('stands in for the card grid when the categories are loading', () => {
+    const view = renderComponent(KnowledgeBaseSearchResultsSkeleton, {
+      props: { scope: 'categories' },
+    })
+
+    expect(view.container.querySelector('ol')).toHaveClass('grid')
+  })
+
   it('is hidden from assistive technology', () => {
     const view = renderComponent(KnowledgeBaseSearchResultsSkeleton)
 

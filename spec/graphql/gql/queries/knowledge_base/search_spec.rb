@@ -7,8 +7,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
 
   let(:gql_query) do
     <<~GQL
-      query knowledgeBaseSearch($query: String!, $categoryId: ID, $locale: String, $first: Int) {
-        knowledgeBaseSearch(query: $query, categoryId: $categoryId, locale: $locale, first: $first) {
+      query knowledgeBaseSearch($query: String!, $entity: EnumKnowledgeBaseSearchEntity!, $categoryId: ID, $locale: String, $first: Int) {
+        knowledgeBaseSearch(query: $query, entity: $entity, categoryId: $categoryId, locale: $locale, first: $first) {
           totalCount
           edges {
             node {
@@ -28,10 +28,13 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
   end
 
   let(:search)      { 'ocarina' }
+  # Always passed, so a context only has to switch it; that the argument may be *omitted* is
+  #   covered on its own, with a document that leaves it out.
+  let(:entity)      { 'answer' }
   let(:category_id) { nil }
   let(:locale)      { nil }
   let(:first)       { nil }
-  let(:variables)   { { query: search, categoryId: category_id, locale:, first: }.compact }
+  let(:variables)   { { query: search, entity:, categoryId: category_id, locale:, first: }.compact }
 
   let(:published_ocarina) do
     create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Ocarina tuning' })
@@ -99,8 +102,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
       expect(item_ids).to include(gql.id(published_ocarina), gql.id(internal_ocarina), gql.id(draft_ocarina))
     end
 
-    it 'finds categories alongside answers' do
-      expect(item_ids).to include(gql.id(ocarina_category))
+    it 'returns answers alone, the kind that was asked for' do
+      expect(item_ids).to be_present.and(not_include(gql.id(ocarina_category)))
     end
 
     it 'never returns the knowledge base node itself' do
@@ -121,10 +124,6 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
       expect(node_for(published_ocarina)['bodyPreview']).to be_present
     end
 
-    it 'leaves a category without a body preview' do
-      expect(node_for(ocarina_category)['bodyPreview']).to be_empty
-    end
-
     it 'reports the category path root first' do
       expect(node_for(subcategory_ocarina)['categoryPath'].pluck('title'))
         .to eq([category, subcategory].map { |elem| elem.translation_primary.title })
@@ -139,12 +138,60 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
       expect(gql.result.data['totalCount']).to eq(gql.result.nodes.size)
     end
 
-    it 'reports the subtree visibility of a category hit' do
-      expect(node_for(ocarina_category_with_content)['item']).to include('visibility' => 'published')
+    context 'when searching for categories' do
+      let(:entity) { 'category' }
+
+      it 'finds categories' do
+        expect(item_ids).to include(gql.id(ocarina_category))
+      end
+
+      it 'returns categories alone' do
+        expect(item_ids).to be_present.and(not_include(gql.id(published_ocarina)))
+      end
+
+      it 'counts the categories it returns' do
+        expect(gql.result.data['totalCount']).to eq(gql.result.nodes.size)
+      end
+
+      it 'leaves a category without a body preview' do
+        expect(node_for(ocarina_category)['bodyPreview']).to be_empty
+      end
+
+      it 'reports the subtree visibility of a category hit' do
+        expect(node_for(ocarina_category_with_content)['item']).to include('visibility' => 'published')
+      end
+
+      it 'reads a category hit with no content as draft' do
+        expect(node_for(ocarina_category)['item']).to include('visibility' => 'draft')
+      end
     end
 
-    it 'reads a category hit with no content as draft' do
-      expect(node_for(ocarina_category)['item']).to include('visibility' => 'draft')
+    # Omitting the argument is what the schema's default is for, and the tab control starts on the
+    #   answers.
+    context 'without a kind of content given' do
+      let(:gql_query) do
+        <<~GQL
+          query knowledgeBaseSearch($query: String!) {
+            knowledgeBaseSearch(query: $query) {
+              edges { node { item { ... on KnowledgeBaseAnswer { id } ... on KnowledgeBaseCategory { id } } } }
+            }
+          }
+        GQL
+      end
+
+      let(:variables) { { query: search } }
+
+      it 'searches the answers' do
+        expect(item_ids).to include(gql.id(published_ocarina)).and(not_include(gql.id(ocarina_category)))
+      end
+    end
+
+    context 'with a kind of content the schema does not know' do
+      let(:entity) { 'knowledge_base' }
+
+      it 'is rejected by the enum' do
+        expect(gql.result.error_message).to match(%r{entity}i)
+      end
     end
   end
 
@@ -152,7 +199,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
   #   CategoryType#visibility walks the subtree with a recursive query once per publication state,
   #   for every category on the page.
   context 'when many categories match', authenticated_as: :admin do
-    let(:admin) { create(:admin) }
+    let(:admin)  { create(:admin) }
+    let(:entity) { 'category' }
 
     let(:extra_ocarina_categories) do
       create_list(:knowledge_base_category, 5, knowledge_base:, parent: category).each_with_index.map do |elem, index|
@@ -254,8 +302,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
       gql.execute(gql_query, variables:)
     end
 
-    it 'exposes nothing' do
-      expect(gql.result.data['edges']).to be_empty
+    # As every other knowledge base query answers it: there is at most one, and the new stack
+    #   works on it only while it is active.
+    it 'is rejected' do
+      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
     end
   end
 

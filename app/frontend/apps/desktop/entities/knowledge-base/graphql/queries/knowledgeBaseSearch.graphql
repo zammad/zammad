@@ -1,5 +1,6 @@
 query knowledgeBaseSearch(
   $query: String!
+  $entity: EnumKnowledgeBaseSearchEntity!
   $categoryId: ID
   $locale: String
   $pageSize: Int = 30
@@ -7,6 +8,7 @@ query knowledgeBaseSearch(
 ) {
   knowledgeBaseSearch(
     query: $query
+    entity: $entity
     categoryId: $categoryId
     locale: $locale
     first: $pageSize

@@ -53,7 +53,7 @@ module Gql::Concerns::SearchesKnowledgeBaseAnswers
         query:          query,
         knowledge_base: knowledge_base,
         locale:         context[:knowledge_base_locale],
-        indexes:        [MODEL.name],
+        entity:         :answer,
         enriched:       false,
       )
       .results
