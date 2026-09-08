@@ -359,8 +359,16 @@ class Taskbar < ApplicationModel
     self.last_contact = Time.zone.now
   end
 
+  # Supplies the acting user as the owner of a new taskbar that names none, and never overwrites an
+  #   owner that is already set. Deliberately not guarded by local_update: assigning the acting user
+  #   on every save handed a taskbar of somebody else - the ones the taskbar jobs iterate over - to
+  #   whoever happened to be acting, silently and without a failing spec.
+  #
+  # Transferring an entry explicitly stays possible, which is what User#merge does with the taskbars
+  #   of a merged duplicate.
   def set_user
-    return if local_update
+    return if !new_record?
+    return if user_id.present?
     return if !UserInfo.current_user_id
 
     self.user_id = UserInfo.current_user_id

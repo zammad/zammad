@@ -127,6 +127,54 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     end
   end
 
+  describe '#set_user' do
+    let(:owner)       { create(:agent) }
+    let(:acting_user) { create(:agent) }
+
+    it 'assigns the acting user to a new taskbar that names no owner', current_user_id: -> { acting_user.id } do
+      taskbar = create(:taskbar, user_id: nil)
+
+      expect(taskbar.user_id).to eq(acting_user.id)
+    end
+
+    it 'keeps the owner a new taskbar was created for', current_user_id: -> { acting_user.id } do
+      taskbar = create(:taskbar, user: owner)
+
+      expect(taskbar.user_id).to eq(owner.id)
+    end
+
+    # The regression this guard exists for: the taskbar jobs iterate over entries of other users by
+    #   design, and before the guard every save that did not pass local_update handed the entry to
+    #   whoever was acting - its owner stopped receiving updates for it.
+    it 'keeps the owner when another user saves the taskbar' do
+      taskbar = create(:taskbar, user: owner)
+
+      UserInfo.current_user_id = acting_user.id
+      taskbar.update!(state: { a: 'b' })
+
+      expect(taskbar.reload.user_id).to eq(owner.id)
+    end
+
+    # Guarding the callback does not lock the column down: User#merge moves the taskbars of a merged
+    #   duplicate to the surviving user this way.
+    it 'leaves an explicit transfer of the owner alone' do
+      taskbar = create(:taskbar, user: owner)
+
+      taskbar.update!(user_id: acting_user.id)
+
+      expect(taskbar.reload.user_id).to eq(acting_user.id)
+    end
+
+    it 'keeps the owner without the local_update flag, as TaskbarUpdateTriggerSubscriptionsJob saves it' do
+      taskbar = create(:taskbar, user: owner)
+
+      UserInfo.current_user_id = acting_user.id
+      taskbar.update!(notify: true)
+
+      expect(taskbar.reload.user_id).to eq(owner.id)
+    end
+  end
+
   describe '#update_preferences_infos' do
     it 'do not process search taskbars' do
       taskbar = build(:taskbar, key: 'Search')
