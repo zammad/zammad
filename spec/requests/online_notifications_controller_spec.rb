@@ -329,4 +329,112 @@ RSpec.describe OnlineNotificationsController, type: :request do
       it_behaves_like 'getting a different online notification'
     end
   end
+
+  describe 'without permission for the related ticket' do
+    let(:group_with_access)    { create(:group) }
+    let(:group_without_access) { create(:group) }
+    let(:notified_agent)       { create(:agent, groups: [group_with_access]) }
+    let(:acting_agent)         { create(:agent, groups: [group_with_access]) }
+    let(:ticket)               { create(:ticket, group: group_with_access, owner: notified_agent) }
+
+    let(:online_notification) do
+      OnlineNotification.add(
+        type:          'update',
+        object:        'Ticket',
+        o_id:          ticket.id,
+        seen:          false,
+        user_id:       notified_agent.id,
+        created_by_id: acting_agent.id,
+      )
+    end
+
+    before { online_notification && authenticated_as(notified_agent) }
+
+    # Hidden entirely in every render mode, like the index action already does.
+    shared_examples 'forbidding all render modes' do
+      it 'is forbidden' do
+        submit_request
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'is forbidden with expand param' do
+        submit_request(expand: true)
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'is forbidden with full param' do
+        submit_request(full: true)
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'exposes nothing but the error' do
+        submit_request(full: true)
+
+        expect(json_response.keys).to match_array(%w[error error_human])
+      end
+    end
+
+    shared_examples 'hiding the notification' do
+      context 'when fetching the notification' do
+        def submit_request(query = {})
+          get "/api/v1/online_notifications/#{online_notification.id}?#{query.to_query}", as: :json
+        end
+
+        include_examples 'forbidding all render modes'
+      end
+
+      context 'when updating the notification' do
+        def submit_request(query = {})
+          put "/api/v1/online_notifications/#{online_notification.id}?#{query.to_query}", params: { seen: true }, as: :json
+        end
+
+        include_examples 'forbidding all render modes'
+      end
+
+      it 'is not listed in the index' do
+        get '/api/v1/online_notifications', as: :json
+
+        expect(json_response.pluck('id')).not_to include(online_notification.id)
+      end
+
+      it 'can still be deleted by its owner', :aggregate_failures do
+        delete "/api/v1/online_notifications/#{online_notification.id}", as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(OnlineNotification.exists?(online_notification.id)).to be(false)
+      end
+    end
+
+    context 'when the ticket was moved to an inaccessible group' do
+      before { ticket.update!(group: group_without_access) }
+
+      include_examples 'hiding the notification'
+    end
+
+    context 'when the group permissions were revoked' do
+      before do
+        notified_agent.group_ids = []
+        notified_agent.save!
+      end
+
+      include_examples 'hiding the notification'
+    end
+
+    context 'when the related ticket is still accessible' do
+      it 'returns the complete record' do
+        get "/api/v1/online_notifications/#{online_notification.id}", as: :json
+
+        expect(json_response).to include('o_id' => ticket.id, 'user_id' => notified_agent.id, 'created_by_id' => acting_agent.id)
+      end
+
+      it 'ships the assets of the related ticket with full param' do
+        get "/api/v1/online_notifications/#{online_notification.id}?full=true", as: :json
+
+        expect(json_response.dig('assets', 'Ticket', ticket.id.to_s)).to include('title' => ticket.title)
+      end
+    end
+  end
 end

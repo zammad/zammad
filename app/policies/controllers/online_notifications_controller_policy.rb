@@ -3,11 +3,11 @@
 class Controllers::OnlineNotificationsControllerPolicy < Controllers::ApplicationControllerPolicy
 
   def show?
-    own?
+    accessible?
   end
 
   def update?
-    own?
+    accessible?
   end
 
   def destroy?
@@ -15,6 +15,11 @@ class Controllers::OnlineNotificationsControllerPolicy < Controllers::Applicatio
   end
 
   private
+
+  # Same rule as the index action: own notification, related object still accessible.
+  def accessible?
+    OnlineNotification.list(user, limit: nil).exists?(id: record.params[:id])
+  end
 
   def own?
     notification = OnlineNotification.find(record.params[:id])
