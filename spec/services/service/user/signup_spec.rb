@@ -120,6 +120,37 @@ RSpec.describe Service::User::Signup do
       end
     end
 
+    context 'with additional user data' do
+      let(:organization) { create(:organization) }
+      let(:user_data) do
+        {
+          email:            'bender@futurama.fiction',
+          firstname:        'Bender',
+          lastname:         'Rodriguez',
+          password:         'IloveBender1337',
+          login:            'fry@futurama.fiction',
+          verified:         true,
+          organization_id:  organization.id,
+          organization_ids: [organization.id],
+        }
+      end
+
+      it 'assigns only the permitted attributes', :aggregate_failures do
+        service_result
+
+        user = User.find_by(email: 'bender@futurama.fiction')
+
+        expect(user).to have_attributes(
+          firstname:    'Bender',
+          lastname:     'Rodriguez',
+          login:        'bender@futurama.fiction',
+          verified:     false,
+          organization: nil,
+        )
+        expect(user.organizations).to be_empty
+      end
+    end
+
     context 'with invalid user data' do
       let(:password) { 'IloveBender1337' }
       let(:user_data) do

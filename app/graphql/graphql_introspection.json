@@ -40232,34 +40232,6 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "objectAttributeValues",
-              "description": "Additional custom attributes (names + values)",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "ObjectAttributeValueInput",
-                    "ofType": null
-                  }
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "login",
-              "description": "The user login",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "firstname",
               "description": "The user first name",
               "type": {
@@ -40935,24 +40907,6 @@
           "description": "The taskbar item fields.",
           "fields": null,
           "inputFields": [
-            {
-              "name": "objectAttributeValues",
-              "description": "Additional custom attributes (names + values)",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "ObjectAttributeValueInput",
-                    "ofType": null
-                  }
-                }
-              },
-              "defaultValue": null
-            },
             {
               "name": "key",
               "description": "The itaskbar item related object key identifier",

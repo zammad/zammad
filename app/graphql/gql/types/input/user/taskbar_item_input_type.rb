@@ -2,8 +2,6 @@
 
 module Gql::Types::Input::User
   class TaskbarItemInputType < Gql::Types::BaseInputObject
-    include Gql::Types::Input::Concerns::ProvidesObjectAttributeValues
-
     description 'The taskbar item fields.'
 
     argument :key, String, required: true, description: 'The itaskbar item related object key identifier'

@@ -368,6 +368,28 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
         end
       end
 
+      context 'when trying to inject internal attributes via objectAttributeValues' do
+        let(:other_customer) { create(:customer) }
+        let(:input_payload) do
+          input_base_payload
+            .tap { |h| h.delete(:ownerId) }
+            .tap { |h| h.delete(:customer) }
+            .tap do |h|
+              h[:objectAttributeValues] = [
+                { name: 'customer_id', value: other_customer.id },
+                { name: 'number',      value: '99999' },
+              ]
+            end
+        end
+
+        it 'ignores them and keeps the stored values' do
+          expect { gql.execute(query, variables:) }
+            .not_to change { ticket.reload.slice(:customer_id, :number) }
+
+          expect(gql.result.data[:ticket]).to eq(expected_response)
+        end
+      end
+
       context 'when trying to change the group_id' do
         let(:other_group)   { create(:group) }
         let(:input_payload) do

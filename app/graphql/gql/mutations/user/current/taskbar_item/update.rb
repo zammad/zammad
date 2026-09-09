@@ -14,9 +14,7 @@ module Gql::Mutations
       preferences = taskbar_item.preferences || {}
       preferences[:dirty] = input[:dirty].presence || false
 
-      input.delete(:dirty)
-
-      hash = input.to_h.merge(
+      hash = input.to_h.except(:dirty).merge(
         preferences: preferences
       )
 

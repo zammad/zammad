@@ -641,6 +641,26 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
 
+      context 'when trying to inject internal attributes via objectAttributeValues' do
+        let(:other_customer) { create(:customer) }
+        let(:input_payload) do
+          input_base_payload
+            .tap { |h| h.delete(:customer) }
+            .tap { |h| h.delete(:ownerId) }
+            .tap do |h|
+              h[:objectAttributeValues] = [
+                { name: 'customer_id', value: other_customer.id },
+                { name: 'note',        value: 'injected' },
+              ]
+            end
+        end
+
+        it 'ignores them and keeps the customer of the requesting user' do
+          it_creates_ticket
+          expect(Ticket.last).to have_attributes(customer_id: customer.id, note: nil)
+        end
+      end
+
       context 'with links' do
         let!(:other_ticket) { create(:ticket, customer: customer) }
         let(:links) do

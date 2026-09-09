@@ -46,6 +46,45 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
         expect(ticket1.reload).to have_attributes(title: 'Ticket Bulk Update Mutation Test')
       end
 
+      context 'with object attribute values' do
+        let(:input_payload) do
+          { title: 'Ticket Bulk Update Mutation Test', objectAttributeValues: [] }
+        end
+
+        it 'updates the attributes' do
+          gql.execute(query, variables: variables)
+          expect(gql.result.data).to eq(expected_response)
+          expect(ticket1.reload).to have_attributes(title: 'Ticket Bulk Update Mutation Test')
+        end
+
+        context 'with a custom object attribute', db_strategy: :reset do
+          let(:other_customer) { create(:customer) }
+          let(:object_attribute) do
+            screens = { create: { 'admin.organization': { shown: true, required: false } } }
+            create(:object_manager_attribute_text, object_name: 'Ticket', screens: screens).tap do |_oa|
+              ObjectManager::Attribute.migration_execute
+            end
+          end
+          let(:input_payload) do
+            {
+              title:                 'Ticket Bulk Update Mutation Test',
+              objectAttributeValues: [
+                { name: object_attribute.name, value: 'object_attribute_value' },
+                { name: 'customer_id',         value: other_customer.id },
+              ],
+            }
+          end
+
+          it 'applies the custom attribute and drops the internal one' do
+            gql.execute(query, variables: variables)
+
+            expect(gql.result.data).to eq(expected_response)
+            expect(ticket1.reload.public_send(object_attribute.name)).to eq('object_attribute_value')
+            expect(ticket1.reload.customer_id).to eq(customer.id)
+          end
+        end
+      end
+
       context 'when a ticket update fails' do
         before do
           allow(Service::Ticket::Update).to receive(:execute).and_wrap_original do |m, *args, **kwargs|

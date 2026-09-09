@@ -7368,10 +7368,6 @@ export type UserSignupInput = {
   firstname?: InputMaybe<Scalars['String']['input']>;
   /** The user last name */
   lastname?: InputMaybe<Scalars['String']['input']>;
-  /** The user login */
-  login?: InputMaybe<Scalars['String']['input']>;
-  /** Additional custom attributes (names + values) */
-  objectAttributeValues?: InputMaybe<Array<ObjectAttributeValueInput>>;
   /** The user password */
   password: Scalars['String']['input'];
 };
@@ -7470,8 +7466,6 @@ export type UserTaskbarItemInput = {
   key: Scalars['String']['input'];
   /** The taskbar item notification about changes */
   notify: Scalars['Boolean']['input'];
-  /** Additional custom attributes (names + values) */
-  objectAttributeValues?: InputMaybe<Array<ObjectAttributeValueInput>>;
   /** The taskbar item related object parameters */
   params?: InputMaybe<Scalars['JSON']['input']>;
   /** The taskbar item sorting priority */

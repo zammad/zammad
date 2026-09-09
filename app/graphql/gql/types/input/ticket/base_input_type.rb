@@ -13,8 +13,14 @@ module Gql::Types::Input::Ticket
 
     argument :article, Gql::Types::Input::Ticket::ArticleInputType, required: false, description: 'The article data.'
 
+    def self.object_attribute_values_object
+      'Ticket'
+    end
+
+    # `customer` is the declared argument name. `customer_id` is listed defensively, for the
+    # case that the column name ever ends up as a key in the input hash again.
     def self.agent_only_fields
-      %w[owner_id customer priority_id pending_time]
+      %w[owner_id customer customer_id priority_id pending_time]
     end
 
     def self.agent_only_fields_access
