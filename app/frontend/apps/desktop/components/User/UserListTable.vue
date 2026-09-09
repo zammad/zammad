@@ -48,6 +48,7 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
         :caption="caption"
         :object="EnumObjectManagerObjects.User"
         :headers="headers"
+        :disable-relation-sorting="disableRelationSorting"
         :order-by="orderBy"
         :order-direction="orderDirection"
         :group-by="groupBy"

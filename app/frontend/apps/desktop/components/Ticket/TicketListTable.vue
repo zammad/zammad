@@ -112,6 +112,7 @@ const skeletonColumns = computed(() => columnWidths.value.length)
         :caption="caption"
         :object="EnumObjectManagerObjects.Ticket"
         :headers="headers"
+        :disable-relation-sorting="disableRelationSorting"
         :order-by="orderBy"
         :order-direction="orderDirection"
         :group-by="groupBy"

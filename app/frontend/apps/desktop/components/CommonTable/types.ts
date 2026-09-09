@@ -104,6 +104,12 @@ export interface AdvancedTableProps extends BaseTableProps {
 
   attributes?: TableAttribute[]
   attributeExtensions?: Record<string, Partial<TableAttribute>>
+  /**
+   * Do not offer sorting for columns which display the value of a related record.
+   * Needed for the Elasticsearch-based search, which can only sort them by the raw
+   * reference (e.g. `customer_id`) and not by the displayed value.
+   */
+  disableRelationSorting?: boolean
   object?: EnumObjectManagerObjects
   /**
    * Used to set a default selected row
@@ -143,6 +149,10 @@ export interface AdvancedTableProps extends BaseTableProps {
 export interface ListTableProps<T> {
   tableId: string
   headers: string[]
+  /**
+   * Do not offer sorting for columns which display the value of a related record.
+   */
+  disableRelationSorting?: boolean
   orderDirection?: EnumOrderDirection
   orderBy?: string
   groupBy?: string

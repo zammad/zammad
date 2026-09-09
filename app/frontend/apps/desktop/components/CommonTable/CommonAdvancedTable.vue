@@ -92,6 +92,11 @@ const addLocalHeaders = (table: TableAttribute[]) =>
         ) as TableAttribute)
       : (localAttribute as TableAttribute)
 
+    if (props.disableRelationSorting && objectAttribute?.dataOption?.relation) {
+      mergedAttribute.headerPreferences ||= {}
+      mergedAttribute.headerPreferences.noSorting = true
+    }
+
     // Set default alignment for right-aligned data types.
     if (
       rightAlignedDataTypes.has(mergedAttribute.dataType) &&

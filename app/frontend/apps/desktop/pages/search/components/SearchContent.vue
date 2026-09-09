@@ -712,6 +712,7 @@ setOnSuccessCallback(() => {
           :caption="$t('Search result for: %s', searchPlugin?.label)"
           :items="searchResultItems"
           :headers="detailSearchHeaders"
+          disable-relation-sorting
           :total-count="searchResultTotalCount"
           :order-by="orderBy"
           :order-direction="orderDirection"

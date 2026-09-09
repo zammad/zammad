@@ -111,6 +111,9 @@ class App.TicketList extends App.Controller
       callbackHeader = [ callbackIconHeader, callbackIconPriorityHeader ]
       callbackAttributes.icon_priority = [ callbackIconPriority ]
 
+    if @callbackHeader
+      callbackHeader = callbackHeader.concat(@callbackHeader)
+
     list = []
     for ticket_id in @ticket_ids
       ticketItem = App.Ticket.fullLocal(ticket_id)

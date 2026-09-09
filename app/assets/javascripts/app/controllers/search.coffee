@@ -357,6 +357,7 @@ class App.Search extends App.Controller
             'click': callbackCheckbox
           select_all: callbackCheckbox
         sortClickCallback: @saveOrderBy
+        callbackHeader: [ @markRelationHeadersUnsortable ]
         pagerAjax:    true
       )
 
@@ -419,6 +420,7 @@ class App.Search extends App.Controller
           events:
             'click': openObject
         sortClickCallback: @saveOrderBy
+        callbackHeader: [ @markRelationHeadersUnsortable ]
         pagerEnabled: false
         orderEnabled: false
         pagerAjax: true
@@ -464,9 +466,11 @@ class App.Search extends App.Controller
     newColumn = $(e.currentTarget).closest('[data-column-key]').attr('data-column-key')
 
     config = _.find App[@model].configure_attributes, (elem) -> elem.name == newColumn
+    return if !config
 
-    # There's no reliable way to sort to-many relations. Sorry.
-    return if config.multiple && config.relation
+    # Search results are sorted by Elasticsearch, which can only sort a relation by
+    # its raw reference (e.g. customer_id) and not by the displayed name.
+    return if config.relation
 
     current = @getSavedOrderBy()
 
@@ -529,6 +533,11 @@ class App.Search extends App.Controller
 
   getSavedOrderBy: =>
     @savedOrderBy[@model]
+
+  markRelationHeadersUnsortable: (headers) ->
+    for header in headers when header.relation
+      header.unsortable = true
+    headers
 
   saveOrderBy: (table) =>
     return if !table

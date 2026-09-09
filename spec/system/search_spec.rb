@@ -342,8 +342,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     end
   end
 
-  # https://github.com/zammad/zammad/issues/5505
-  context 'when tickets are ordered by grroups' do
+  context 'when tickets are ordered by title' do
     let(:agent) { create(:agent, groups: Group.all) }
     let(:authenticate_user) { agent }
 
@@ -363,19 +362,25 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     end
 
     it 'sorts correctly' do
-      # bug is most visible in descending order
-      find('.table-column-title', text: 'GROUP').click
-      find('.table-column-title', text: 'GROUP').click
+      # sort descending
+      find('.table-column-title', text: 'TITLE').click
+      find('.table-column-title', text: 'TITLE').click
 
       actual_ids = all('.js-tableBody tr.item').map { |row| row['data-id'].to_i }
 
-      # Elasticsearch does not guarantee a stable tie-break order for tickets sharing the
-      # same group, so only assert that the groups themselves are ordered correctly (all
-      # group_2 tickets before all group_1 tickets), not the exact order within a group.
-      expect(actual_ids.first(3)).to match_array([ticket_6, ticket_4, ticket_2].map(&:id))
-      expect(actual_ids.last(3)).to match_array([ticket_3, ticket_5, ticket_1].map(&:id))
+      expect(actual_ids).to eq([ticket_6, ticket_5, ticket_4, ticket_3, ticket_2, ticket_1].map(&:id))
     end
 
+    # Elasticsearch can only sort relations by their raw reference (e.g. customer_id)
+    # and not by the displayed value, so those columns are rendered without sorting.
+    it 'does not offer sorting for relation columns' do
+      expect(page).to have_css('th[data-column-key=title] .js-sort')
+
+      %w[customer_id owner_id group_id].each do |column|
+        expect(page).to have_css("th[data-column-key=#{column}]")
+        expect(page).to have_no_css("th[data-column-key=#{column}] .js-sort")
+      end
+    end
   end
 
   context 'Organization members' do

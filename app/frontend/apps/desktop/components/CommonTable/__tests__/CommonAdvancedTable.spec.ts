@@ -763,6 +763,23 @@ describe('CommonAdvancedTable', () => {
     expect(wrapper.emitted('sort').at(-1)).toEqual(['title', 'ASCENDING'])
   })
 
+  it('does not offer sorting for relation columns with disabled relation sorting', async () => {
+    const wrapper = await renderTable({
+      headers: ['title', 'owner'],
+      disableRelationSorting: true,
+      items: tableItems,
+      totalItemsCount: 1,
+      caption: 'Table caption',
+    })
+
+    expect(
+      await wrapper.findByRole('button', { name: 'Sort by Title ascending' }),
+    ).toBeInTheDocument()
+
+    expect(wrapper.getByRole('columnheader', { name: 'Owner' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Sort by Owner ascending' })).toBeNull()
+  })
+
   it('supports disabling checkbox for specific rows', async () => {
     const checkedItemIds = ref(new Set())
 

@@ -328,6 +328,27 @@ describe('search view', () => {
       )
     })
 
+    it('does not offer sorting for relation columns', async () => {
+      mockObjectManagerFrontendAttributesQuery({
+        objectManagerFrontendAttributes: ticketObjectAttributes(),
+      })
+
+      const { view } = await visitSearchView()
+
+      expect(
+        await view.findByRole('button', { name: 'Sort by Title ascending' }),
+      ).toBeInTheDocument()
+
+      // The columns are rendered, they just don't offer sorting: Elasticsearch can
+      // only sort them by the raw reference and not by the displayed value.
+      const relationColumns = ['Customer', 'Group', 'Owner']
+
+      relationColumns.forEach((column) => {
+        expect(view.getByRole('columnheader', { name: column })).toBeInTheDocument()
+        expect(view.queryByRole('button', { name: `Sort by ${column} ascending` })).toBeNull()
+      })
+    })
+
     describe('advanced search filters', () => {
       it('switches entity tab and updates URL entity query param', async () => {
         const { view } = await visitSearchView()
