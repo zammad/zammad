@@ -37,15 +37,15 @@ returns
       # loops, will be updated with lookup attributes later
       data[ app_model_organization ][ id ] = local_attributes
 
-      # support primary and secodary members
-      local_attributes['member_ids'] = Array(local_attributes['member_ids']) | Array(local_attributes['secondary_member_ids'])
+      # support primary and secodary members, only set the key when there is something to set
+      member_ids = Array(local_attributes['member_ids']) | Array(local_attributes['secondary_member_ids'])
 
       app_model_user = User.to_app_model
-      if local_attributes['member_ids'].present?
+      if member_ids.present?
 
         # only provide assets for the first 10 organization users
         # rest will be loaded optionally by the frontend
-        local_attributes['member_ids'] = local_attributes['member_ids'].sort
+        local_attributes['member_ids'] = member_ids.sort
         local_attributes['member_ids'][0, 10].each do |local_user_id|
           next if data[ app_model_user ] && data[ app_model_user ][ local_user_id ]
 

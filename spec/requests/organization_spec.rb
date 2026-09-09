@@ -556,4 +556,72 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       expect(organization2.active).to be(false)
     end
   end
+
+  describe 'customer field scope', :aggregate_failures, authenticated_as: :customer_of_scope_organization do
+    let(:scope_organization)             { create(:organization, name: 'Field Scope Org') }
+    let(:foreign_organization)           { create(:organization, name: 'Field Scope Foreign Org') }
+    let(:customer_of_scope_organization) { create(:customer, organization: scope_organization) }
+    let(:secondary_member) do
+      create(:customer,
+             organization:  foreign_organization,
+             organizations: [scope_organization])
+    end
+
+    # Enforced on REST by Organization::Assets#filter_unauthorized_attributes. The same allow-list
+    # is kept in parallel by OrganizationPolicy#customer_field_scope, which is what GraphQL uses.
+    let(:permitted_attributes) { %w[id name active] }
+
+    before { secondary_member }
+
+    it 'returns only the permitted attributes on show' do
+      get "/api/v1/organizations/#{scope_organization.id}", as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.keys).to match_array(permitted_attributes)
+    end
+
+    it 'returns only the permitted attributes on index' do
+      get '/api/v1/organizations', as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.find { |elem| elem['id'] == scope_organization.id }.keys).to match_array(permitted_attributes)
+    end
+
+    it 'returns only the permitted attributes on expand' do
+      get "/api/v1/organizations/#{scope_organization.id}?expand=true", as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.keys).to match_array(permitted_attributes)
+    end
+
+    it 'returns only the permitted attributes in the organization asset on full' do
+      get "/api/v1/organizations/#{scope_organization.id}?full=true", as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.dig('assets', 'Organization', scope_organization.id.to_s).keys).to match_array(permitted_attributes)
+    end
+
+    it 'does not ship a user asset for a member of a foreign organization on full' do
+      get "/api/v1/organizations/#{scope_organization.id}?full=true", as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.dig('assets', 'User') || {}).not_to include(secondary_member.id.to_s)
+    end
+
+    # There is no OrganizationPolicy#search?, so authorize! rejects the request.
+    it 'does not grant access to the organization search at all' do
+      get "/api/v1/organizations/search?query=#{CGI.escape('Field Scope Org')}", as: :json
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    context 'when requested by an agent', authenticated_as: :agent do
+      it 'still returns the secondary member ids' do
+        get "/api/v1/organizations/#{scope_organization.id}", as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response['secondary_member_ids']).to eq([secondary_member.id])
+      end
+    end
+  end
 end

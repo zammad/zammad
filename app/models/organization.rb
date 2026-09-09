@@ -82,7 +82,9 @@ class Organization < ApplicationModel
   def attributes_with_association_ids
     attributes = super
     attributes['secondary_member_ids'] = secondary_member_ids
-    attributes
+
+    # `super` filters before this attribute is merged in, so run the filter over the result again.
+    filter_unauthorized_attributes(attributes)
   end
 
   private
