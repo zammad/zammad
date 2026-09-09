@@ -23,9 +23,13 @@ import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotifica
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
+import { buildTimeAccountingArticleData } from '#shared/entities/ticket/composables/useTicketTimeAccountingForm.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
-import type { TicketUpdateFormData } from '#shared/entities/ticket/types.ts'
+import type {
+  TicketArticleTimeAccountingFormData,
+  TicketUpdateFormData,
+} from '#shared/entities/ticket/types.ts'
 import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
@@ -39,7 +43,7 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
-import { getOpenedDialogs } from '#mobile/composables/useDialog.ts'
+import { getOpenedDialogs, useDialog } from '#mobile/composables/useDialog.ts'
 import { useTicketWithMentionLimitQuery } from '#mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.api.ts'
 import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 
@@ -144,18 +148,71 @@ const { isTicketAgent } = useTicketView(ticket)
 
 const { notify } = useNotifications()
 
+// The mobile view has no UI for the other validator exceptions, so those stay skipped.
+const unsupportedValidators = Object.values(EnumUserErrorException).filter(
+  (exception) =>
+    exception !== EnumUserErrorException.ServiceTicketUpdateValidatorTimeAccountingError,
+)
+
+const timeAccountingData = ref<TicketArticleTimeAccountingFormData>()
+const skipValidators = ref<EnumUserErrorException[]>([])
+
+const resetTimeAccounting = () => {
+  timeAccountingData.value = undefined
+  skipValidators.value = []
+}
+
+const timeAccountingDialog = useDialog({
+  name: 'ticket-time-accounting',
+  component: () =>
+    import('#mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue'),
+})
+
+// The ticket update is submitted again afterwards, either with the accounted time or with the
+//   validator skipped, so the form must keep its values instead of being reset.
+const handleTimeAccounting = (error: UserError) => {
+  timeAccountingDialog.open({
+    name: timeAccountingDialog.name,
+    onAccountTime: (data: TicketArticleTimeAccountingFormData) => {
+      timeAccountingData.value = data
+      formSubmit()
+    },
+    onSkip: () => {
+      const exception = error.getFirstErrorException()
+
+      if (exception) skipValidators.value.push(exception)
+
+      formSubmit()
+    },
+    // Dismissing the dialog abandons the update, the form keeps its values for another attempt.
+    onCancel: () => {
+      resetTimeAccounting()
+    },
+  })
+
+  return false
+}
+
 const saveTicketForm = async (formData: FormSubmitData<TicketUpdateFormData>) => {
   let data = cloneDeep(formData)
 
   if (currentArticleType.value?.updateForm) data = currentArticleType.value.updateForm(formData)
 
+  if (data.article && timeAccountingData.value) {
+    data.article = {
+      ...data.article,
+      ...buildTimeAccountingArticleData(timeAccountingData.value),
+    }
+  }
+
   try {
-    const result = await editTicket(
-      data,
-      { skipValidators: Object.values(EnumUserErrorException) }, // skip all validators, they are irrelevant for mobile view
-    )
+    const result = await editTicket(data, {
+      skipValidators: [...unsupportedValidators, ...skipValidators.value],
+    })
 
     if (result?.ticketUpdate?.ticket) {
+      resetTimeAccounting()
+
       notify({
         id: 'ticket-update',
         type: NotificationTypes.Success,
@@ -181,6 +238,13 @@ const saveTicketForm = async (formData: FormSubmitData<TicketUpdateFormData>) =>
     }
   } catch (errors) {
     if (errors instanceof UserError) {
+      if (
+        errors.getFirstErrorException() ===
+        EnumUserErrorException.ServiceTicketUpdateValidatorTimeAccountingError
+      ) {
+        return handleTimeAccounting(errors)
+      }
+
       notify({
         id: 'ticket-update-error',
         message: errors.getFirstErrorMessage(),
@@ -188,6 +252,8 @@ const saveTicketForm = async (formData: FormSubmitData<TicketUpdateFormData>) =>
       })
     }
   }
+
+  resetTimeAccounting()
 }
 
 const updateFormLocation = (newLocation: string) => {

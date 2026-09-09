@@ -37,6 +37,7 @@ import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
 import { useTicketLiveUserList } from '#shared/entities/ticket/composables/useTicketLiveUserList.ts'
 import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
+import { buildTimeAccountingArticleData } from '#shared/entities/ticket/composables/useTicketTimeAccountingForm.ts'
 import type {
   TicketArticleTimeAccountingFormData,
   TicketUpdateFormData,
@@ -531,16 +532,7 @@ const submitEditTicket = async (formData: FormSubmitData<TicketUpdateFormData>) 
   if (data.article && timeAccountingData.value) {
     data.article = {
       ...data.article,
-      timeUnit:
-        timeAccountingData.value.time_unit !== undefined
-          ? parseFloat(timeAccountingData.value.time_unit)
-          : undefined,
-      accountedTimeTypeId: timeAccountingData.value.accounted_time_type_id
-        ? convertToGraphQLId(
-            'Ticket::TimeAccounting::Type',
-            timeAccountingData.value.accounted_time_type_id,
-          )
-        : undefined,
+      ...buildTimeAccountingArticleData(timeAccountingData.value),
     }
   }
 
