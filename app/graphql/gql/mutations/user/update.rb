@@ -16,7 +16,7 @@ module Gql::Mutations
     private
 
     def update(user, input)
-      user_data = input.to_h
+      user_data = Gql::Types::Input::UserInputType.merge_object_attribute_values!(input.to_h)
 
       set_core_workflow_information(user_data, ::User, 'edit')
       Service::User::FilterPermissionAssignments.with_current_user(context.current_user).execute(user_data: user_data)

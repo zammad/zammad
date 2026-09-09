@@ -2,6 +2,11 @@
 
 class Service::User::Signup < Service::Base
 
+  # Signup is unauthenticated, so only these attributes may ever be assigned. Anything
+  # else - like `verified`, `login` or `organization_id` - would let an anonymous caller
+  # bypass the email verification or join an arbitrary organization.
+  PERMITTED_ATTRIBUTES = %i[firstname lastname email password].freeze
+
   attr_reader :user_data, :resend
 
   def initialize(user_data:, resend: false)
@@ -83,7 +88,7 @@ class Service::User::Signup < Service::Base
   end
 
   def create_user
-    user = User.new(user_data)
+    user = User.new(user_data.symbolize_keys.slice(*PERMITTED_ATTRIBUTES))
 
     user.role_ids = Role.signup_role_ids
     user.source = 'signup'

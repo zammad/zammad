@@ -18,7 +18,7 @@ module Gql::Mutations
     private
 
     def update(current_organization, input)
-      params = input.to_h
+      params = Gql::Types::Input::OrganizationInputType.merge_object_attribute_values!(input.to_h)
 
       set_core_workflow_information(params, ::Organization, 'edit')
 

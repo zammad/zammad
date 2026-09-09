@@ -26,6 +26,10 @@ module Gql::Types::Input
 
     argument :group_ids, [User::GroupPermissionEntryType], required: false, description: 'User group access levels'
 
+    def self.object_attribute_values_object
+      'User'
+    end
+
     transform :transform_group_access_map
 
     def transform_group_access_map(payload)

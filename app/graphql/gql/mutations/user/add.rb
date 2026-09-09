@@ -12,9 +12,11 @@ module Gql::Mutations
     requires_permission 'ticket.agent', 'admin.user'
 
     def resolve(input:, send_invite: false)
+      user_data = Gql::Types::Input::UserInputType.merge_object_attribute_values!(input.to_h)
+
       user = Service::User::AddInternal
         .with_current_user(context.current_user)
-        .execute(user_data: input.to_h, send_invite:)
+        .execute(user_data:, send_invite:)
 
       { user: }
     end

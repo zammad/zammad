@@ -19,6 +19,10 @@ module Gql::Mutations
     requires_permission 'ticket.agent'
 
     def resolve(selector:, perform:)
+      if perform[:input]
+        Gql::Types::Input::Ticket::UpdateInputType.merge_object_attribute_values!(perform[:input])
+      end
+
       return group_has_no_email_error if !group_has_email?(input: perform[:input])
 
       result = Service::Ticket::Bulk::DispatchUpdate

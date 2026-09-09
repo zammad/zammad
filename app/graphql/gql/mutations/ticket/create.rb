@@ -13,6 +13,8 @@ module Gql::Mutations
     requires_permission 'ticket.agent', 'ticket.customer'
 
     def resolve(input:)
+      Gql::Types::Input::Ticket::CreateInputType.merge_object_attribute_values!(input)
+
       Gql::Types::Input::Ticket::CreateInputType.sanitize_agent_only_fields!(
         input,
         user:     context.current_user,
