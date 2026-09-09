@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { watchThrottled } from '@vueuse/core'
-import { isEqual } from 'lodash-es'
+import { debounce, isEqual } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 import {
   computed,
@@ -56,6 +56,7 @@ import { decodeFilters, getSearchQueryWithoutFilters } from '../utils/searchFilt
 
 const MAX_ITEMS = 2000
 const PAGE_SIZE = 30
+const SEARCH_TERM_DEBOUNCE_TIME = 500
 
 const props = defineProps<{
   searchTerm?: string
@@ -156,21 +157,57 @@ if (entityFieldsLoadingByEntity.value[initialQueryEntity]) {
   )
 }
 
-const modelSearchTerm = computed({
-  get: () => props.searchTerm,
-  set: (searchTerm) => {
-    const url = buildSearchDeepLink({
+// The search input holds its own immediate value, so typing stays responsive
+// while the route — the single source of truth for the queries, the taskbar
+// state and the page title — only follows once the user pauses. Writing the
+// term to the route on every keystroke meant a history entry, a detail search
+// and a counts request per character.
+const searchInputTerm = ref(props.searchTerm ?? '')
+
+const pushSearchTerm = (searchTerm: string) => {
+  if (searchTerm === (props.searchTerm ?? '')) return
+
+  router.push(
+    buildSearchDeepLink({
       searchTerm,
       entity: selectedEntity.value,
       filters: currentFilters.value,
       baseQuery: getSearchQueryWithoutFilters(router.currentRoute.value.query),
-    })
+    }),
+  )
+}
 
-    router.push(url)
+const debouncedPushSearchTerm = debounce(pushSearchTerm, SEARCH_TERM_DEBOUNCE_TIME)
+
+// Route → input: deep links, browser history and cross-tab sync all arrive here.
+watch(
+  () => props.searchTerm,
+  (searchTerm) => {
+    debouncedPushSearchTerm.cancel()
+    searchInputTerm.value = searchTerm ?? ''
+  },
+)
+
+const modelSearchTerm = computed({
+  get: () => searchInputTerm.value,
+  set: (searchTerm) => {
+    const value = searchTerm ?? ''
+
+    searchInputTerm.value = value
+
+    // Clearing the input is an explicit action rather than typing: apply it
+    // right away and drop any term that was still pending.
+    if (!value) {
+      debouncedPushSearchTerm.cancel()
+      pushSearchTerm(value)
+      return
+    }
+
+    debouncedPushSearchTerm(value)
   },
 })
 
-const currentSearchTerm = computed(() => modelSearchTerm.value ?? '')
+const currentSearchTerm = computed(() => props.searchTerm ?? '')
 
 const notVisibleSearchEntities = computed(() =>
   searchPluginNames.value.filter(
@@ -309,6 +346,8 @@ const { pageActive } = usePage({
   },
   onDeactivated: () => {
     searchTaskbarSubscriptionActive.value = false
+    // A pending term must not navigate once another taskbar tab is on screen.
+    debouncedPushSearchTerm.cancel()
   },
 })
 
