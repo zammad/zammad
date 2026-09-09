@@ -133,6 +133,37 @@ describe('search view', () => {
       expect(view.getByRole('table')).toBeInTheDocument()
     })
 
+    it('debounces the search term before it reaches the route and the queries', async () => {
+      const { searchContainer, view } = await visitSearchView()
+
+      await waitForDetailSearchQueryCalls()
+
+      const searchInput = within(searchContainer).getByRole('searchbox', { name: 'Search…' })
+      const router = getTestRouter()
+
+      await view.events.type(searchInput, 'ing')
+
+      // The input reflects every keystroke, the route (and with it the queries)
+      // must not move until the typing settles.
+      expect(searchInput).toHaveDisplayValue('testing')
+      expect(router.currentRoute.value.fullPath).toBe('/search/test?entity=Ticket')
+
+      await waitFor(() =>
+        expect(router.currentRoute.value.fullPath).toBe('/search/testing?entity=Ticket'),
+      )
+
+      const mocks = await waitForDetailSearchQueryCalls()
+
+      // One request for the initial term, one for the settled term - not one per keystroke.
+      expect(mocks).toHaveLength(2)
+      expect(mocks.at(-1)?.variables).toEqual({
+        filter: null,
+        limit: 30,
+        onlyIn: 'Ticket',
+        search: 'testing',
+      })
+    })
+
     it('selects a ticket for bulk edit', async () => {
       mockFormUpdaterQuery({
         formUpdater: {

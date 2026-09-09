@@ -56,7 +56,7 @@ const tableItems = [
       systemLocale: { __typename: 'Locale', locale: 'en-us' },
     },
   },
-] as unknown as KnowledgeBaseAnswerTranslation[]
+] as KnowledgeBaseAnswerTranslation[]
 
 const renderListTable = async (props: Partial<ListTableProps<KnowledgeBaseAnswerTranslation>>) => {
   const wrapper = renderComponent(KnowledgeBaseAnswerTable, {
