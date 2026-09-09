@@ -188,6 +188,9 @@ get assets of object list
         record = item['object'].constantize.lookup(id: item['o_id'])
         next if record.blank?
 
+        # Ticket#assets carries no authorization guard, unlike the default implementation.
+        next if !record.authorized_asset?
+
         assets = record.assets(assets)
         if item['created_by_id'].present?
           user = User.find(item['created_by_id'])
