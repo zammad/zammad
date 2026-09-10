@@ -1,6 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPolicy
+  def index?
+    object_show?
+  end
+
   def add?
     object_target_update? && object_source_show?
   end
@@ -11,23 +15,32 @@ class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPol
 
   private
 
+  def object_show?
+    policy = object_policy(record.params[:link_object], id: record.params[:link_object_value])
+
+    object_access?(policy, :agent_read_access?)
+  rescue ActiveRecord::RecordNotFound, NoMatchingPatternError
+    # A missing or unsupported object must deny like an unauthorized one. Letting the
+    #   404 through would turn the endpoint into an existence oracle for every ticket id.
+    false
+  end
+
   def object_target_update?
     policy = object_policy(record.params[:link_object_target], id: record.params[:link_object_target_value])
 
-    case policy
-    when TicketPolicy
-      policy.agent_update_access?
-    when KnowledgeBase::AnswerPolicy
-      policy.show?
-    end
+    object_access?(policy, :agent_update_access?)
   end
 
   def object_source_show?
     policy = object_policy(record.params[:link_object_source], number: record.params[:link_object_source_number])
 
+    object_access?(policy, :agent_read_access?)
+  end
+
+  def object_access?(policy, ticket_access)
     case policy
     when TicketPolicy
-      policy.agent_read_access?
+      policy.public_send(ticket_access)
     when KnowledgeBase::AnswerPolicy
       policy.show?
     end

@@ -16,6 +16,97 @@ describe Controllers::LinksControllerPolicy do
     rec
   end
 
+  describe '#index' do
+    let(:action_name) { :index }
+    let(:params) do
+      {
+        link_object:       link_object,
+        link_object_value: link_object_value,
+        action:            action_name.to_s
+      }
+    end
+
+    context 'with ticket' do
+      let(:ticket)            { create(:ticket) }
+      let(:link_object)       { 'Ticket' }
+      let(:link_object_value) { ticket.id }
+
+      context 'when user has read access on the queried ticket' do
+        let(:user) { create(:agent, groups: [ticket.group]) }
+
+        it { is_expected.to permit_action(action_name) }
+      end
+
+      context 'when user has no access on the queried ticket' do
+        let(:user) { create(:agent) }
+
+        it { is_expected.to forbid_action(action_name) }
+      end
+
+      context 'when user is the customer of the queried ticket' do
+        let(:user)   { create(:customer) }
+        let(:ticket) { create(:ticket, customer: user) }
+
+        it { is_expected.to forbid_action(action_name) }
+      end
+
+      context 'when user is the customer of an unrelated ticket' do
+        let(:user) { create(:customer) }
+
+        before { create(:link, from: ticket, to: create(:ticket, customer: user)) }
+
+        it { is_expected.to forbid_action(action_name) }
+      end
+
+      context 'when the queried ticket does not exist' do
+        let(:user)              { create(:agent) }
+        let(:link_object_value) { 99_999_999 }
+
+        it { is_expected.to forbid_action(action_name) }
+      end
+    end
+
+    context 'with knowledge base answer' do
+      let(:link_object)       { 'KnowledgeBase::Answer::Translation' }
+      let(:link_object_value) { kb_answer.id }
+      let(:role)              { create(:role, permission_names: %w[knowledge_base.reader]) }
+      let(:user)              { create(:agent, roles: [role]) }
+
+      context 'when the answer is visible to the user' do
+        let(:kb_answer) { published_answer.translations.first }
+
+        it { is_expected.to permit_action(action_name) }
+      end
+
+      context 'when the answer is not visible to the user' do
+        let(:kb_answer) { archived_answer.translations.first }
+
+        it { is_expected.to forbid_action(action_name) }
+      end
+
+      context 'when the answer translation does not exist' do
+        let(:link_object_value) { 99_999_999 }
+
+        it { is_expected.to forbid_action(action_name) }
+      end
+    end
+
+    context 'with an unsupported link object' do
+      let(:user)              { create(:admin) }
+      let(:link_object)       { 'Announcement' }
+      let(:link_object_value) { 1 }
+
+      it { is_expected.to forbid_action(action_name) }
+    end
+
+    context 'without a link object' do
+      let(:user)   { create(:admin) }
+      let(:params) { { action: action_name.to_s } }
+
+      it { is_expected.to forbid_action(action_name) }
+    end
+  end
+
   describe '#add' do
     context 'with target ticket and source ticket' do
       let(:ticket_source) { create(:ticket) }
