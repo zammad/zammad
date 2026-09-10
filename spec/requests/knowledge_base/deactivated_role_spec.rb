@@ -4,9 +4,12 @@ require 'rails_helper'
 
 # Deactivating a role revokes the knowledge base access it granted. The REST endpoints below are
 #   gated by the object policies alone: Controllers::KnowledgeBase::AnswersControllerPolicy and
-#   CategoriesControllerPolicy define these actions explicitly, so they never reach
-#   Controllers::ApplicationControllerPolicy#method_missing and the `knowledge_base.editor` gate
-#   of Controllers::KnowledgeBase::BaseControllerPolicy never runs.
+#   CategoriesControllerPolicy give every one of these actions its own predicate, and each of those
+#   predicates resolves access through KnowledgeBasePolicy, KnowledgeBase::CategoryPolicy or
+#   KnowledgeBase::AnswerPolicy. No permission name stands behind them either — neither controller
+#   policy declares a `default_permit!`, so an action without a predicate would find nothing in
+#   Controllers::ApplicationControllerPolicy#method_missing and raise rather than fall through to a
+#   permissive default.
 #
 # Covers the whole of that surface rather than the reported case alone — reads, writes, deletes,
 #   list ordering and publication state changes, across all three object policies
