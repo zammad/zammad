@@ -55,14 +55,14 @@ class ChecklistItemsController < ApplicationController
 
   def new_item_params
     @new_item_params ||= begin
-      safe_params = params.permit(:text, :checklist_id, :ticket_id)
+      safe_params = params.permit(:text, :checked, :checklist_id, :ticket_id)
       replace_ticket_param_with_checklist(safe_params)
     end
   end
 
   def create_bulk_params
     @create_bulk_params ||= begin
-      safe_params = params.permit(:checklist_id, :ticket_id, items: %i[text])
+      safe_params = params.permit(:checklist_id, :ticket_id, items: %i[text checked])
       replace_ticket_param_with_checklist(safe_params)
     end
   end
