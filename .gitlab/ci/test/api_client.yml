@@ -15,10 +15,15 @@ api_client:php:
   extends:
     - .template_api_client
   variables:
+    COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.cache/composer"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://localhost:3000"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "admin@example.com"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_DEBUG: 0
+  cache:
+    key: "composer-api-client-php"
+    paths:
+      - .cache/composer/
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
@@ -35,6 +40,10 @@ api_client:php:
 api_client:ruby:
   extends:
     - .template_api_client
+  cache:
+    key: "bundle-api-client-ruby"
+    paths:
+      - .cache/bundle/
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
@@ -43,6 +52,7 @@ api_client:ruby:
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - git clone https://github.com/zammad/zammad-api-client-ruby.git
     - cd zammad-api-client-ruby
+    - export BUNDLE_PATH="$CI_PROJECT_DIR/.cache/bundle"
     - bundle update --bundler
     - bundle install -j $(nproc)
     - bundle exec rspec
