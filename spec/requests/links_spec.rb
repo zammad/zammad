@@ -45,6 +45,46 @@ RSpec.describe 'Link', type: :request do
         end
       end
     end
+
+    context 'when a customer requests links of a foreign Ticket', authenticated_as: -> { customer } do
+      let(:ticket)   { create(:ticket) }
+      let(:customer) { create(:customer) }
+      let(:linked)   { create(:ticket, customer: customer) }
+
+      before do
+        create(:link, from: ticket, to: linked)
+
+        get '/api/v1/links', params: { link_object: 'Ticket', link_object_value: ticket.id }, as: :json
+      end
+
+      it 'is forbidden' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'when requesting links of a non-existing object', authenticated_as: -> { agent } do
+      let(:agent) { create(:agent) }
+
+      before do
+        get '/api/v1/links', params: { link_object: 'Ticket', link_object_value: 99_999_999 }, as: :json
+      end
+
+      it 'is forbidden and does not reveal the missing object' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'when requesting links of an unsupported object', authenticated_as: -> { agent } do
+      let(:agent) { create(:agent) }
+
+      before do
+        get '/api/v1/links', params: { link_object: 'Announcement', link_object_value: 1 }, as: :json
+      end
+
+      it 'is forbidden and does not raise' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   describe 'POST /api/v1/links/add', authenticated_as: -> { agent } do
