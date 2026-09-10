@@ -18,6 +18,8 @@ module Tasks
         ARGUMENT_COUNT = 1
 
         def self.task_handler
+          abort_in_container_environment!
+
           filename = ArgvHelper.argv[1]
           if filename.blank?
             abort "Error: Please provide a valid filename: #{usage}"

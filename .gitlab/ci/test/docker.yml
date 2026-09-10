@@ -1,4 +1,4 @@
-docker:
+.template_docker:
   image: docker
   stage: test
   interruptible: false
@@ -13,37 +13,57 @@ docker:
   cache: []
   variables:
     ZAMMAD_IMAGE_TAG: "ci-${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
-    ZAMMAD_IMAGE_REPO: "$CI_REGISTRY/zammad/zammad"
+    ZAMMAD_IMAGE_REPO: "zammad"
     ZAMMAD_IMAGE: "${ZAMMAD_IMAGE_REPO}:${ZAMMAD_IMAGE_TAG}"
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} --pull -t $ZAMMAD_IMAGE .
-    - docker push $ZAMMAD_IMAGE
-  script: |
-    git clone --depth=1 https://github.com/zammad/zammad-docker-compose.git
-    cd zammad-docker-compose
-
+    - git clone --depth=1 https://github.com/zammad/zammad-docker-compose.git
     # Make the stack use the image that was just built.
-    echo "IMAGE_REPO=${ZAMMAD_IMAGE_REPO}" > .env
-    echo "VERSION=${ZAMMAD_IMAGE_TAG}" >> .env
-    cat .env
-
+    - echo "IMAGE_REPO=${ZAMMAD_IMAGE_REPO}" > zammad-docker-compose/.env
+    - echo "VERSION=${ZAMMAD_IMAGE_TAG}" >> zammad-docker-compose/.env
+    - cat zammad-docker-compose/.env
     # Use dynamic stack name and no exposed port to avoid conflicts.
-    cat - > docker-compose.override.yml <<COMPOSE_OVERRIDE_FILE
-    ---
-    name: zammad-docker-ci-${ZAMMAD_IMAGE_TAG}
-    services:
-      zammad-nginx:
-        ports: !reset []
-    COMPOSE_OVERRIDE_FILE
-
-    .github/tests/setup/default.sh
-    DISABLE_EXTERNAL_TESTS=1 .github/tests/default.sh
-
-    docker compose ps
-    # Ensure we are running with the correct image
-    docker compose ps | grep ${ZAMMAD_IMAGE}
+    - |
+      cat - > zammad-docker-compose/docker-compose.override.yml <<COMPOSE_OVERRIDE_FILE
+      ---
+      name: zammad-docker-ci-${ZAMMAD_IMAGE_TAG}
+      services:
+        zammad-nginx:
+          ports: !reset []
+      COMPOSE_OVERRIDE_FILE
   after_script:
     - cd zammad-docker-compose
     - docker compose down --timeout 0 --volumes
     - docker image rm ${ZAMMAD_IMAGE}
+
+docker base tests:
+  extends: .template_docker
+  script:
+    - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} --pull -t $ZAMMAD_IMAGE .
+    - cd zammad-docker-compose
+    - .github/tests/setup/default.sh
+    - DISABLE_EXTERNAL_TESTS=1 .github/tests/default.sh
+    - docker compose ps
+    # Ensure we are running with the correct image
+    - docker compose ps | grep ${ZAMMAD_IMAGE}
+
+docker addon management:
+  extends: .template_docker
+  script:
+    - mkdir -p packages/install packages/uninstall
+    # part 1: test package installation
+    - cp .gitlab/docker/*.zpm packages/install/
+    - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} --pull -t $ZAMMAD_IMAGE .
+    - cd zammad-docker-compose
+    - echo "ELASTICSEARCH_ENABLED=false" >> .env
+    - docker compose run --rm zammad-init
+    - |
+      docker compose run --rm zammad-railsserver bundle exec rails r "Setting.where(name: ['zammad_test_a_addon_up', 'zammad_test_b_addon_up']).count == 2 || raise('Setting not found')"
+    - cd ..
+    # part 2: test package uninstallation
+    - mv packages/install/*.zpm packages/uninstall
+    - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} --pull -t $ZAMMAD_IMAGE .
+    - cd zammad-docker-compose
+    - docker compose run --rm zammad-init
+    - |
+      docker compose run --rm zammad-railsserver bundle exec rails r "Setting.where(name: ['zammad_test_a_addon_down', 'zammad_test_b_addon_down']).count == 2 || raise('Setting not found')"

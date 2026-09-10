@@ -2,6 +2,7 @@
 
 class PackagesController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
+  before_action :prevent_container_environment, only: %i[install uninstall install_api update_api]
 
   # GET /api/v1/packages
   def index
@@ -55,6 +56,12 @@ class PackagesController < ApplicationController
   end
 
   private
+
+  def prevent_container_environment
+    return if !Zammad::Deployment.container?
+
+    raise Exceptions::UnprocessableContent, __('Installing, updating or uninstalling packages is not possible in container environments.')
+  end
 
   def api_packages
     @api_packages ||= Package.api_packages_hash({ version_name: Package.api_version_name })

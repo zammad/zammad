@@ -124,6 +124,8 @@ schema.graphql
 
 # Packages
 *.zpm
+!.gitlab/docker/*.zpm
+/packages/
 
 # Devcontainer
 /.devcontainer/with-mailserver/certs/*

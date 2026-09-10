@@ -137,24 +137,190 @@ RSpec.describe Package, type: :model do
       end
     end
 
-    context 'when auto installing' do
+    context 'when installing a package without writing files' do
       before do
-        FileUtils.mkdir_p(Rails.root.join('auto_install'))
+        Rails.root.join('example.rb').delete if Rails.root.join('example.rb').exist?
+      end
 
-        location = Rails.root.join('auto_install/unittest.zpm')
-        file = File.new(location, 'wb')
-        file.write(package_zpm_json)
-        file.close
+      it 'does install the package without touching the file system' do
+        expect { described_class.install(string: package_zpm_json, write_files: false) }
+          .to change(described_class, :count)
+          .and change(Store, :count)
+          .and not_change { Rails.root.join('example.rb').exist? }
+      end
+    end
+
+    context 'when uninstalling a package without removing files' do
+      before do
+        described_class.install(string: package_zpm_json)
+      end
+
+      it 'does uninstall the package without touching the file system' do
+        expect { described_class.uninstall(string: package_zpm_json, remove_files: false) }
+          .to change(described_class, :count).by(-1)
+          .and not_change { Rails.root.join('example.rb').exist? }
+      end
+    end
+
+    context 'when installing packages from a directory' do
+      let(:install_dir)                { Rails.root.join('tmp/spec_package_install_dir') }
+      let(:dependent_package_zpm_json) { get_package_structure('UnitTestSampleDependent', '[]', '1.0.1', "{ \"#{package_name}\": \">= 1.0.1\" }") }
+
+      before do
+        FileUtils.mkdir_p(install_dir)
+
+        # File names are chosen so that plain glob order would install the dependent package first.
+        File.write(install_dir.join('01_dependent.zpm'), dependent_package_zpm_json)
+        File.write(install_dir.join('02_dependency.zpm'), package_zpm_json)
       end
 
       after do
-        Rails.root.join('auto_install/unittest.zpm').delete
+        FileUtils.rm_rf(install_dir)
+        Rails.root.join('example.rb.save').delete if Rails.root.join('example.rb.save').exist?
       end
 
-      it 'does install package' do
-        expect { described_class.auto_install }
-          .to change(described_class, :count)
-          .and change(Store, :count)
+      it 'does install all packages in dependency order' do
+        expect { described_class.install_dir(install_dir.to_s) }
+          .to change(described_class, :count).by(2)
+      end
+
+      it 'does not install already installed packages again' do
+        described_class.install_dir(install_dir.to_s)
+
+        expect { described_class.install_dir(install_dir.to_s) }
+          .to not_change(described_class, :count)
+      end
+
+      it 'does install packages without touching the file system' do
+        Rails.root.join('example.rb').delete if Rails.root.join('example.rb').exist?
+
+        expect { described_class.install_dir(install_dir.to_s, write_files: false) }
+          .to change(described_class, :count).by(2)
+          .and not_change { Rails.root.join('example.rb').exist? }
+      end
+
+      context 'with a chain of dependencies' do
+        let(:chained_package_zpm_json) { get_package_structure('UnitTestSampleChained', '[]', '1.0.1', '{ "UnitTestSampleDependent": ">= 1.0.1" }') }
+
+        before do
+          File.write(install_dir.join('00_chained.zpm'), chained_package_zpm_json)
+        end
+
+        it 'does install all packages in dependency order' do
+          expect { described_class.install_dir(install_dir.to_s) }
+            .to change(described_class, :count).by(3)
+        end
+      end
+
+      context 'when upgrading a package another installed package depends on' do
+        before do
+          described_class.install_dir(install_dir.to_s)
+          Auth::RequestCache.clear
+
+          File.write(install_dir.join('02_dependency.zpm'), new_package_zpm_json)
+        end
+
+        it 'does upgrade the package' do
+          expect { described_class.install_dir(install_dir.to_s) }
+            .to not_change(described_class, :count)
+            .and change { described_class.find_by(name: package_name).version }.to('1.0.2')
+        end
+      end
+    end
+
+    context 'when uninstalling packages from a directory' do
+      let(:uninstall_dir)              { Rails.root.join('tmp/spec_package_uninstall_dir') }
+      let(:dependent_package_zpm_json) { get_package_structure('UnitTestSampleDependent', '[]', '1.0.1', "{ \"#{package_name}\": \">= 1.0.1\" }") }
+
+      before do
+        FileUtils.mkdir_p(uninstall_dir)
+
+        # File names are chosen so that plain glob order would uninstall the dependency first, which must fail.
+        File.write(uninstall_dir.join('01_dependency.zpm'), package_zpm_json)
+        File.write(uninstall_dir.join('02_dependent.zpm'), dependent_package_zpm_json)
+
+        described_class.install(string: package_zpm_json)
+        Auth::RequestCache.clear
+        described_class.install(string: dependent_package_zpm_json)
+        Auth::RequestCache.clear
+      end
+
+      after do
+        FileUtils.rm_rf(uninstall_dir)
+      end
+
+      it 'does uninstall all packages in reverse dependency order' do
+        expect { described_class.uninstall_dir(uninstall_dir.to_s) }
+          .to change(described_class, :count).by(-2)
+      end
+
+      it 'does skip packages which are not installed' do
+        described_class.uninstall_dir(uninstall_dir.to_s)
+
+        expect { described_class.uninstall_dir(uninstall_dir.to_s) }
+          .to not_change(described_class, :count)
+      end
+
+      it 'does uninstall packages without touching the file system' do
+        expect { described_class.uninstall_dir(uninstall_dir.to_s, remove_files: false) }
+          .to change(described_class, :count).by(-2)
+          .and not_change { Rails.root.join('example.rb').exist? }
+      end
+
+      it 'does uninstall the installed version regardless of the staged version' do
+        File.write(uninstall_dir.join('01_dependency.zpm'), get_package_structure(package_name, package_zpm_files_json, '9.9.9'))
+
+        expect { described_class.uninstall_dir(uninstall_dir.to_s) }
+          .to change(described_class, :count).by(-2)
+      end
+
+      context 'when an installed package outside the directory depends on a staged package' do
+        before do
+          uninstall_dir.join('02_dependent.zpm').delete
+        end
+
+        it 'does raise an error and keep the packages' do
+          expect { described_class.uninstall_dir(uninstall_dir.to_s) }
+            .to raise_error(%r{required dependencies})
+            .and not_change(described_class, :count)
+        end
+      end
+
+      context 'with package migrations' do
+        let(:migration_root) { Dir.mktmpdir('package-uninstall-dir', Rails.root.join('tmp')) }
+        let(:migration_dir)  { File.join(migration_root, 'db/addon', package_name.underscore) }
+        let(:role)           { create(:role) }
+
+        before do
+          FileUtils.mkdir_p(migration_dir)
+          File.write(File.join(migration_dir, '20260101000000_uninstall_dir_package_test.rb'), <<~MIGRATION)
+            class UninstallDirPackageTest < ActiveRecord::Migration[8.0]
+              def self.up
+                Role.find(#{role.id}).update!(name: 'Package Migrated')
+              end
+
+              def self.down
+                Role.find(#{role.id}).update!(name: 'Package Reverted')
+              end
+            end
+          MIGRATION
+
+          allow(Package::Migration).to receive(:root).and_return(migration_root)
+          Package::Migration.migrate(package_name)
+        end
+
+        after do
+          FileUtils.remove_entry(migration_root)
+        end
+
+        it 'does execute the down migrations of the uninstalled packages', :aggregate_failures do
+          expect(role.reload.name).to eq('Package Migrated')
+
+          expect { described_class.uninstall_dir(uninstall_dir.to_s) }
+            .to change { Package::Migration.where(name: package_name.underscore).count }.by(-1)
+
+          expect(role.reload.name).to eq('Package Reverted')
+        end
       end
     end
 

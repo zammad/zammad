@@ -9572,6 +9572,10 @@ msgstr ""
 msgid "Installed packages"
 msgstr ""
 
+#: app/controllers/packages_controller.rb:58
+msgid "Installing, updating or uninstalling packages is not possible in container environments."
+msgstr ""
+
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
 msgstr ""

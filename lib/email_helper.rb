@@ -25,7 +25,7 @@ returns
 
   def self.available_driver
     # Sendmail is unsupported in Docker and SaaS environments, so we hide it in those cases.
-    if ENV['ZAMMAD_DOCKER'].present? || Setting.get('system_online_service')
+    if Zammad::Deployment.container? || Setting.get('system_online_service')
       return {
         inbound:  {
           imap: __('IMAP'),

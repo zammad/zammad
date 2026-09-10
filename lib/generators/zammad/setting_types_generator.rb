@@ -40,6 +40,7 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
         'auth_openid_connect_credentials.display_name'?: string
         es_enabled?: boolean
       #{fields.join("\n")}
+        // This is also required for packages (addons) in docker environments, as their settings cannot be part of this generated file (no database at image build time).
         [key: string]: unknown
       }
     MSG

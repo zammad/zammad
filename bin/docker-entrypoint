@@ -87,6 +87,19 @@ if [ "$1" = 'zammad-init' ]; then
     bundle exec rails r "Locale.sync; Translation.sync"
   fi
 
+  # uninstall addon packages staged in packages/uninstall/ (runs their down migrations)
+  if compgen -G "packages/uninstall/*.zpm" > /dev/null; then
+    echo "uninstalling addon packages..."
+    bundle exec rake zammad:package:uninstall_dir packages/uninstall
+  fi
+
+  # install / update addon packages staged in packages/install/
+  if compgen -G "packages/install/*.zpm" > /dev/null; then
+    echo "installing / updating addon packages..."
+    bundle exec rake zammad:package:install_dir packages/install
+    bundle exec rake zammad:package:migrate
+  fi
+
   # es config
   echo "changing settings..."
   if [ "${ELASTICSEARCH_ENABLED}" == "false" ]; then

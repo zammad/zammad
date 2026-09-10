@@ -11,6 +11,8 @@ module Tasks
         end
 
         def self.task_handler
+          abort_in_container_environment!
+
           ::Package.pluck(:name, :version).each do |name, version|
             puts "Removing files of Package '#{name}'..."
 

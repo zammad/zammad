@@ -54,30 +54,6 @@ returns:
 
 =begin
 
-install all packages located under auto_install/*.zpm
-
-  Package.auto_install
-
-=end
-
-  def self.auto_install
-    path = "#{@@root}/auto_install/"
-    return if !File.exist?(path)
-
-    data = []
-    Dir.foreach(path) do |entry|
-      if entry.include?('.zpm') && entry !~ %r{^\.}
-        data.push entry
-      end
-    end
-    data.each do |file|
-      install(file: "#{path}/#{file}")
-    end
-    data
-  end
-
-=begin
-
 remove all linked files in application
 
 note: will not take down package migrations, use Package.unlink instead
@@ -216,6 +192,11 @@ or
 
   package = Package.install(string: zpm_as_string)
 
+Optionally, writing the package files to the file system can be skipped, e.g. in
+container environments where the files are already part of the image:
+
+  package = Package.install(file: '/path/to/package.zpm', write_files: false)
+
 returns
 
   package # record of newly created package
@@ -227,6 +208,8 @@ subsequently in a separate step.
 =end
 
   def self.install(data)
+    write_files = data.fetch(:write_files, true)
+
     if data[:file]
       json    = _read_file(data[:file], true)
       package = JSON.parse(json)
@@ -265,6 +248,8 @@ subsequently in a separate step.
         version:            package_db.version,
         migration_not_down: true,
         reinstall:          data[:reinstall],
+        replacement:        true,
+        remove_files:       write_files,
       )
     end
 
@@ -283,17 +268,7 @@ subsequently in a separate step.
       end
 
       # write files
-      package['files'].each do |file|
-        if !allowed_file_path?(file['location'])
-          raise "Can't create file, because of not allowed file location: #{file['location']}!"
-        end
-
-        ensure_no_duplicate_files!(package_db.name, file['location'])
-
-        permission = file['permission'] || '644'
-        content    = Base64.decode64(file['content'])
-        _write_file(file['location'], permission, content)
-      end
+      _install_files(package_db, package['files'], write_files)
 
       # update package state
       package_db.reload
@@ -302,6 +277,113 @@ subsequently in a separate step.
     end
 
     package_db
+  end
+
+  def self._install_files(package_db, files, write_files)
+    files.each do |file|
+      if !allowed_file_path?(file['location'])
+        raise "Can't create file, because of not allowed file location: #{file['location']}!"
+      end
+
+      ensure_no_duplicate_files!(package_db.name, file['location'])
+
+      next if !write_files
+
+      permission = file['permission'] || '644'
+      content    = Base64.decode64(file['content'])
+      _write_file(file['location'], permission, content)
+    end
+  end
+
+=begin
+
+install or update all packages located in the given directory, in dependency order
+
+  Package.install_dir('packages/install')
+
+Optionally without writing the package files to the file system (see Package.install):
+
+  Package.install_dir('packages/install', write_files: false)
+
+Already installed packages with the same or a newer version are skipped.
+Migrations will not be executed (see Package.install).
+
+=end
+
+  def self.install_dir(directory, write_files: true)
+    _sort_by_dependencies(_packages_in_dir(directory)).each do |package|
+      installed = Package.find_by(name: package['name'])
+
+      if installed && Gem::Version.new(installed.version) >= Gem::Version.new(package['version'])
+        logger.info "Package #{package['name']}-#{package['version']} is already installed."
+        next
+      end
+
+      logger.info "Installing package #{package['name']}-#{package['version']}..."
+      install(file: package['zpm_file'], write_files: write_files)
+
+      # Dependency and duplicate file checks of subsequent packages must see this package.
+      Auth::RequestCache.clear
+    end
+  end
+
+=begin
+
+uninstall all packages located in the given directory, in reverse dependency order
+
+  Package.uninstall_dir('packages/uninstall')
+
+Optionally without removing the package files from the file system (see Package.uninstall):
+
+  Package.uninstall_dir('packages/uninstall', remove_files: false)
+
+Packages which are not installed are skipped. The installed version is uninstalled,
+regardless of the version of the .zpm file in the directory.
+Down migrations are executed (see Package.uninstall).
+
+=end
+
+  def self.uninstall_dir(directory, remove_files: true)
+    _sort_by_dependencies(_packages_in_dir(directory)).reverse_each do |package|
+      installed = Package.find_by(name: package['name'])
+
+      if !installed
+        logger.info "Package #{package['name']} is not installed."
+        next
+      end
+
+      logger.info "Uninstalling package #{installed.name}-#{installed.version}..."
+      uninstall(name: installed.name, version: installed.version, remove_files: remove_files)
+
+      # Dependency checks of subsequent packages must no longer see this package.
+      Auth::RequestCache.clear
+    end
+  end
+
+  def self._packages_in_dir(directory)
+    Rails.root.join(directory).glob('*.zpm').map do |zpm_file|
+      JSON.parse(File.read(zpm_file)).merge('zpm_file' => zpm_file.to_s)
+    end
+  end
+
+  def self._sort_by_dependencies(packages)
+    sorted_packages    = []
+    remaining_packages = packages
+
+    while remaining_packages.any?
+      ready_packages = remaining_packages.select do |package|
+        (package['dependencies'] || {}).keys.none? do |dependency_name|
+          remaining_packages.any? { |candidate| candidate['name'] == dependency_name }
+        end
+      end
+
+      raise "Circular dependencies between packages: #{remaining_packages.pluck('name').join(', ')}!" if ready_packages.empty?
+
+      sorted_packages    += ready_packages
+      remaining_packages -= ready_packages
+    end
+
+    sorted_packages
   end
 
   def self.ensure_dependencies_install!(dependencies)
@@ -446,6 +528,11 @@ or
 
   package = Package.uninstall(string: zpm_as_string)
 
+Optionally, removing the package files from the file system can be skipped, e.g. in
+container environments where the files are part of the image:
+
+  package = Package.uninstall(name: 'package', version: '0.1.1', remove_files: false)
+
 returns
 
   package # record of newly created package
@@ -461,7 +548,8 @@ returns
       package   = JSON.parse(json_file)
     end
 
-    ensure_dependencies_uninstall!(package['name']) if !data[:reinstall]
+    # on reinstall/replacement the package stays available to dependent packages
+    ensure_dependencies_uninstall!(package['name']) if !data[:reinstall] && !data[:replacement]
 
     # down migrations
     if !data[:migration_not_down]
@@ -473,7 +561,7 @@ returns
       version: package['version'],
     )
 
-    if record.state == 'installed'
+    if record.state == 'installed' && data.fetch(:remove_files, true)
       package['files'].each do |file|
         permission = file['permission'] || '644'
         content    = Base64.decode64(file['content'])
