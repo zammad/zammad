@@ -47,6 +47,22 @@ RSpec.describe 'Checklist Item', authenticated_as: :agent_1, current_user_id: 1,
       expect(response).to have_http_status(:forbidden)
     end
 
+    it 'does create checked checklist items', :aggregate_failures do
+      post '/api/v1/checklist_items', params: { checklist_id: checklist_1.id, text: SecureRandom.uuid, checked: true }, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to include('checked' => true)
+      expect(Checklist::Item.last).to be_checked
+    end
+
+    it 'does derive checked from the ticket state when the text references a ticket', :aggregate_failures do
+      referenced_ticket = create(:ticket, group: group_1, state: Ticket::State.find_by(name: 'closed'))
+      reference = "#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{referenced_ticket.number}"
+
+      post '/api/v1/checklist_items', params: { checklist_id: checklist_1.id, text: reference, checked: false }, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to include('checked' => true, 'ticket_id' => referenced_ticket.id)
+    end
+
     it 'creates checklist item with ticket id without pre-existig checklist', :aggregate_failures do
       ticket = create(:ticket, group: group_1)
 
@@ -78,6 +94,12 @@ RSpec.describe 'Checklist Item', authenticated_as: :agent_1, current_user_id: 1,
     it 'does not bulk create checklist items' do
       post '/api/v1/checklist_items/create_bulk', params: { checklist_id: checklist_2.id, items: [{ text: SecureRandom.uuid }] }, as: :json
       expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'does bulk create checked checklist items', :aggregate_failures do
+      post '/api/v1/checklist_items/create_bulk', params: { checklist_id: checklist_1.id, items: [{ text: SecureRandom.uuid, checked: true }] }, as: :json
+      expect(response).to have_http_status(:created)
+      expect(Checklist::Item.last).to be_checked
     end
 
     it 'creates checklist item with ticket id without pre-existig checklist', :aggregate_failures do
