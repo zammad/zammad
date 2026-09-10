@@ -8,32 +8,10 @@ class ChecklistItemsController < ApplicationController
   end
 
   def create
-    if new_item_params[:ticket_id].present?
-      ticket = Ticket.find(new_item_params[:ticket_id])
-
-      ticket.with_lock do
-        checklist = ticket.checklist || Checklist.create!(ticket:)
-        new_item_params[:checklist_id] = checklist.id
-      end
-
-      new_item_params.delete(:ticket_id)
-    end
-
     model_create_render(Checklist::Item, new_item_params)
   end
 
   def create_bulk
-    if create_bulk_params[:ticket_id].present?
-      ticket = Ticket.find(create_bulk_params[:ticket_id])
-
-      ticket.with_lock do
-        checklist = ticket.checklist || Checklist.create!(ticket:)
-        create_bulk_params[:checklist_id] = checklist.id
-      end
-
-      create_bulk_params.delete(:ticket_id)
-    end
-
     checklist = Checklist.find(create_bulk_params[:checklist_id])
 
     created_items = create_bulk_params[:items].map do |item|
