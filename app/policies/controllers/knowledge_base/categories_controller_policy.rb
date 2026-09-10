@@ -1,6 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::KnowledgeBase::BaseControllerPolicy
+# Every action this controller answers has its own predicate below, so nothing here relies on a
+#   `default_permit!`. `resources :categories, except: %i[new edit]` also routes `index`, which
+#   KnowledgeBase::CategoriesController does not implement - Rails answers that 404 before the
+#   authorization callback runs, so the action never reaches this policy and is deliberately given
+#   no gate.
+class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::ApplicationControllerPolicy
   def show?
     access(__method__)
   end
@@ -27,9 +32,8 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
   #
   # The same question the desktop view asks of the same node (`Pundit.authorize current_user, node,
   #   :update?` in Service::KnowledgeBase::Reorder::Base#execute), so both stacks agree on who may
-  #   order a list. Without these the actions fall through to #method_missing and the
-  #   `knowledge_base.*` default of Controllers::KnowledgeBase::BaseControllerPolicy, which lets a
-  #   reader reorder.
+  #   order a list. Without these the actions have no gate at all - this policy declares no
+  #   `default_permit!`, so #method_missing would find nothing for them and raise.
   def reorder_categories?
     access(:update?)
   end

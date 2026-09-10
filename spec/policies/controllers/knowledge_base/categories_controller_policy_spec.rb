@@ -121,4 +121,19 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
       end
     end
   end
+
+  # This policy used to inherit `default_permit!('knowledge_base.*')` from a shared base policy, so
+  #   an action added here without a predicate was reader-accessible by default - which is how the
+  #   reordering actions came to be reachable by a reader. It now answers every action it has with
+  #   a predicate and carries no map at all, so the next such action has no gate to fall back on
+  #   and has to be given one.
+  describe 'the permission map' do
+    it 'has no default' do
+      expect(described_class.action_permissions_map.default).to be_nil
+    end
+
+    it 'names no action' do
+      expect(described_class.action_permissions_map).to be_empty
+    end
+  end
 end
