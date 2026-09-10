@@ -4970,6 +4970,53 @@
         },
         {
           "kind": "OBJECT",
+          "name": "ContentTranslation",
+          "description": "The translation of the content of an object",
+          "fields": [
+            {
+              "name": "backend",
+              "description": "The service that produced the translation, e.g. \"ai\"",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "content",
+              "description": "The translated content, in the format of the original",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "translated",
+              "description": "False if the content was returned as it is, because there was nothing to translate",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "DataPrivacyTask",
           "description": "Data privacy task type",
           "fields": [
@@ -15138,6 +15185,57 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketArticleTranslate",
+              "description": "Return a stored translation of an article or trigger its generation in the background",
+              "args": [
+                {
+                  "name": "articleId",
+                  "description": "The article to translate",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "targetLocale",
+                  "description": "The locale to translate into, e.g. \"de-de\".",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "force",
+                  "description": "Translate even when the article is already in the target locale.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketArticleTranslatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketChecklistAdd",
               "description": "Create an empty checklist or a checklist based on a template for a ticket.",
               "args": [
@@ -24946,6 +25044,51 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketArticleTranslationUpdates",
+              "description": "Updates to triggered translations of the articles of a ticket",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The ticket whose article translations are subscribed to",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "targetLocale",
+                  "description": "The locale to translate into, e.g. \"de-de\".",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketArticleTranslationUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketArticleUpdates",
               "description": "Changes to the list of ticket articles",
               "args": [
@@ -29121,6 +29264,120 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketArticleTranslatePayload",
+          "description": "Autogenerated return type of TicketArticleTranslate.",
+          "fields": [
+            {
+              "name": "analytics",
+              "description": "Analytics metadata",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsMetadata",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "translation",
+              "description": "The translation, if one is available already",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ContentTranslation",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketArticleTranslationUpdatesPayload",
+          "description": "Autogenerated return type of TicketArticleTranslationUpdates.",
+          "fields": [
+            {
+              "name": "analytics",
+              "description": "Analytics metadata",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsMetadata",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "article",
+              "description": "The article the translation belongs to",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketArticle",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "error",
+              "description": "Error that occurred during the execution of the async job",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AsyncExecutionError",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "translation",
+              "description": "The translation",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ContentTranslation",
                 "ofType": null
               },
               "isDeprecated": false,

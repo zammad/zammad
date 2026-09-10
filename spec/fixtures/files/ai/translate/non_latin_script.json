@@ -1,0 +1,7 @@
+{
+  "input": "<p>Thank you for contacting our support team. We have received your request and created a ticket for it. One of our agents will get back to you within one business day.</p><p>If you have additional information, simply reply to this email and it will be added to the same ticket.</p>",
+  "html": true,
+  "source_language": "en",
+  "target_locales": ["ja"],
+  "min_length_ratio": 0.2
+}

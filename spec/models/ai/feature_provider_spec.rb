@@ -19,6 +19,6 @@ RSpec.describe AI::FeatureProvider, type: :model do
 
   it 'derives the routable identifiers from the registered AI services, excluding the OCR capability' do
     expect(described_class.available_identifiers)
-      .to contain_exactly('ticket_summarize', 'text_tool', 'knowledge_base_answer_from_ticket', 'ai_agent')
+      .to contain_exactly('ticket_summarize', 'text_tool', 'knowledge_base_answer_from_ticket', 'ai_agent', 'translate')
   end
 end

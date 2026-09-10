@@ -159,7 +159,7 @@ class Service::AI::Feature < Service::Base
       .tap do |record|
         record.update!(
           version:          lookup_version,
-          metadata:         provider.metadata,
+          metadata:         provider.metadata.merge(result_metadata),
           content:          result,
           ai_analytics_run:
         )
@@ -203,6 +203,12 @@ class Service::AI::Feature < Service::Base
 
   def lookup_version
     self.class.lookup_version(context_data, locale)
+  end
+
+  # What a feature wants to record about how the result was produced, on top of what the provider
+  # reports about itself.
+  def result_metadata
+    {}
   end
 
   def validate_result!(_result); end

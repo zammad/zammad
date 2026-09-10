@@ -1,0 +1,11 @@
+{
+  "input": "<p>Der Kunde meldet, dass die Anmeldung an der Weboberfläche nicht mehr funktioniert. The error message says: Your session has expired. Please log in again.</p><p>Wir haben die Sitzungsdauer im Admin-Bereich geprüft und auf 8 Stunden gesetzt. Der Kunde testet die Anmeldung erneut und meldet sich danach bei uns.</p>",
+  "html": true,
+  "source_language": "de",
+  "target_locales": [
+    "en-us"
+  ],
+  "expected_translation": {
+    "en-us": "<p>The customer reports that logging in to the web interface no longer works. The error message says: Your session has expired. Please log in again.</p><p>We checked the session duration in the admin area and set it to 8 hours. The customer will test the login again and get back to us afterwards.</p>"
+  }
+}

@@ -8,6 +8,12 @@ class Ticket::ArticlePolicy < ApplicationPolicy
     ticket_policy.show?
   end
 
+  # For callers that must not fall through to customer access: TicketPolicy#access?, and with it
+  #   #show?, grants either agent or customer access.
+  def agent_read_access?
+    ticket_policy.agent_read_access?
+  end
+
   def create?
     ticket_policy.follow_up?
   end

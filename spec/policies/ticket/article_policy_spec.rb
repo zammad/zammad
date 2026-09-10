@@ -90,6 +90,8 @@ describe Ticket::ArticlePolicy do
     let(:user)            { ticket_customer }
     let(:ticket_customer) { create(:agent_and_customer) }
 
-    it { is_expected.to forbid_only_actions(:update, :destroy) }
+    # #show? is permitted through customer access, #agent_read_access? is not - callers that must
+    #   not fall through to customer access ask for the latter.
+    it { is_expected.to forbid_only_actions(:update, :destroy, :agent_read_access) }
   end
 end

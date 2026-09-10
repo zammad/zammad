@@ -1,0 +1,15 @@
+{
+  "input": "<p>The synchronization failed because the <code>zammad-web</code> service could not read its configuration. Check the file <code>/opt/zammad/config/database.yml</code> and make sure that the environment variable <code>DATABASE_URL</code> is not set. Further details are documented at <a href=\"https://docs.zammad.org/en/latest/appendix/configure-database.html\">Configure database</a>.</p><p>After the change, restart the service and confirm that the queue is empty again.</p>",
+  "html": true,
+  "source_language": "en",
+  "target_locales": ["de-de"],
+  "preserve": [
+    "zammad-web",
+    "/opt/zammad/config/database.yml",
+    "DATABASE_URL",
+    "https://docs.zammad.org/en/latest/appendix/configure-database.html"
+  ],
+  "expected_translation": {
+    "de-de": "<p>Die Synchronisierung ist fehlgeschlagen, weil der Dienst <code>zammad-web</code> seine Konfiguration nicht lesen konnte. Prüfen Sie die Datei <code>/opt/zammad/config/database.yml</code> und stellen Sie sicher, dass die Umgebungsvariable <code>DATABASE_URL</code> nicht gesetzt ist. Weitere Details sind unter <a href=\"https://docs.zammad.org/en/latest/appendix/configure-database.html\">Configure database</a> dokumentiert.</p><p>Starten Sie den Dienst nach der Änderung neu und prüfen Sie, ob die Warteschlange wieder leer ist.</p>"
+  }
+}

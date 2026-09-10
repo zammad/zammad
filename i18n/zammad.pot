@@ -802,6 +802,7 @@ msgstr ""
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
+#: app/services/service/content_translation/backend/ai.rb:9
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
@@ -18306,6 +18307,10 @@ msgstr ""
 
 #: app/services/service/user/remove_linked_account.rb:19
 msgid "The linked account could not be found."
+msgstr ""
+
+#: app/services/service/content_translation/base.rb:14
+msgid "The locale '%s' is not active."
 msgstr ""
 
 #: app/services/service/auth/verify_admin_token.rb:16

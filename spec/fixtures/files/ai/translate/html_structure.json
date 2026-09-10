@@ -1,0 +1,6 @@
+{
+  "input": "<h2>Zugriff auf das gemeinsame Postfach</h2><p>Das gemeinsame Postfach steht allen Mitgliedern des Support-Teams zur Verfügung. Bitte beachten Sie, dass Änderungen an den Berechtigungen ausschließlich von der IT-Abteilung vorgenommen werden können.</p><ul><li>Öffnen Sie die Einstellungen Ihres Mail-Programms.<ol><li>Wählen Sie dort den Punkt für weitere Konten aus.</li></ol></li><li>Tragen Sie anschließend die Adresse des gemeinsamen Postfachs ein.</li></ul><blockquote><p>Ohne eine Freigabe durch die IT-Abteilung ist kein Zugriff auf das Postfach möglich.</p></blockquote><table><thead><tr><th>Postfach</th><th>Berechtigung</th></tr></thead><tbody><tr><td>Support</td><td>Lesen und Schreiben</td></tr></tbody></table>",
+  "html": true,
+  "source_language": "de",
+  "target_locales": ["en-us"]
+}

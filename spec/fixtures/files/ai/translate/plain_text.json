@@ -1,0 +1,9 @@
+{
+  "input": "Guten Tag,\n\nvielen Dank für Ihre Anfrage zum Export Ihrer Instanz. Ein kostenfreier Export steht Ihnen zweimal pro Jahr zur Verfügung.\n\nBitte teilen Sie uns mit, für welchen Zeitraum Sie die Daten benötigen.\n\nMit freundlichen Grüßen",
+  "html": false,
+  "source_language": "de",
+  "target_locales": ["en-us"],
+  "expected_translation": {
+    "en-us": "Hello,\n\nthank you for your request regarding the export of your instance. A free export is available to you twice per year.\n\nPlease let us know which period you need the data for.\n\nKind regards"
+  }
+}
