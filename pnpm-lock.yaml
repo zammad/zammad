@@ -234,8 +234,8 @@ importers:
         specifier: 1.19.0
         version: 1.19.0(vue@3.5.42(typescript@6.0.3))
       vue-echarts:
-        specifier: ^8.2.0
-        version: 8.2.0(echarts@6.1.0)(vue@3.5.42(typescript@6.0.3))
+        specifier: ^8.3.0
+        version: 8.3.0(echarts@6.1.0)(vue@3.5.42(typescript@6.0.3))
       vue-imask:
         specifier: ^7.6.1
         version: 7.6.1(vue@3.5.42(typescript@6.0.3))
@@ -6258,8 +6258,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-echarts@8.2.0:
-    resolution: {integrity: sha512-oUc4HgWYrUUac9AipF4Aas2R7CpGyZtSJk+pF/eFCZ47GkTmAly4mK2wx8lDg/q9Sd4gcLaoRGdGFXyXQUnjDQ==}
+  vue-echarts@8.3.0:
+    resolution: {integrity: sha512-gqOZ5uuBF4x4KTXQpTmgH5BuAwUSO+y9U7L1pHCIESQvgnTitXtnyjrfePH+9YXMRhmTLjchEx3EnsPhoiIX/A==}
     peerDependencies:
       echarts: ^6.0.0
       vue: ^3.3.0
@@ -12704,7 +12704,7 @@ snapshots:
     dependencies:
       vue: 3.5.42(typescript@6.0.3)
 
-  vue-echarts@8.2.0(echarts@6.1.0)(vue@3.5.42(typescript@6.0.3)):
+  vue-echarts@8.3.0(echarts@6.1.0)(vue@3.5.42(typescript@6.0.3)):
     dependencies:
       echarts: 6.1.0
       vue: 3.5.42(typescript@6.0.3)
