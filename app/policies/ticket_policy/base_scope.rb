@@ -22,7 +22,7 @@ class TicketPolicy < ApplicationPolicy
       bind = []
 
       if user.permissions?('ticket.agent')
-        sql.push('group_id IN (?)')
+        sql.push('tickets.group_id IN (?)')
         bind.push(user.group_ids_access(self.class::ACCESS_TYPE))
       end
 
