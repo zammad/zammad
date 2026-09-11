@@ -17,6 +17,35 @@ RSpec.describe UserInfo do
     end
   end
 
+  describe '#current_user' do
+
+    it 'is nil by default' do
+      expect(described_class.current_user).to be_nil
+    end
+
+    # Callers like Group::Assets#authorized_asset? ask for this once per record, so a lookup of
+    #   "no user" must not cost a query per record.
+    it 'does not query the database when no user is set' do
+      queries = []
+      subscription = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+        queries.push(payload[:sql]) if payload[:name].to_s == 'User Load'
+      end
+
+      described_class.current_user
+
+      expect(queries).to be_empty
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscription)
+    end
+
+    it 'returns the set user' do
+      user = create(:agent)
+      described_class.current_user_id = user.id
+
+      expect(described_class.current_user).to eq(user)
+    end
+  end
+
   describe '#ensure_current_user_id' do
 
     let(:return_value) { 'Hello World' }
@@ -206,6 +235,88 @@ RSpec.describe UserInfo do
       end
 
       expect(received).to eq(return_value)
+    end
+  end
+
+  describe '#with_assets_level' do
+
+    let(:return_value) { 'Hello World' }
+    let(:level)        { UserInfo::Assets::LEVEL_CUSTOMER }
+
+    it 'uses given level in the given block' do
+      described_class.with_assets_level(level) do
+        expect(described_class.assets).to have_attributes(level: level, user: nil, current_user_id: nil)
+      end
+    end
+
+    it 'applies the level to the asset checks' do
+      described_class.with_assets_level(level) do
+        expect(described_class.assets).to have_attributes(customer?: true, agent?: false, admin?: false)
+      end
+    end
+
+    # The whole point for a job, which always runs in a system context.
+    it 'keeps the level inside a system context' do
+      described_class.with_system_context do
+        described_class.with_assets_level(level) do
+          expect(described_class.assets).not_to be_agent
+        end
+      end
+    end
+
+    it 'resets to the surrounding assets' do
+      described_class.current_user_id = 666
+      surrounding = described_class.assets
+
+      described_class.with_assets_level(level) do
+        expect(described_class.assets).not_to eq(surrounding)
+      end
+
+      expect(described_class.assets).to eq(surrounding)
+    end
+
+    it 'resets the assets in case of an exception' do
+      surrounding = described_class.assets
+
+      begin
+        described_class.with_assets_level(level) do
+          raise 'error'
+        end
+      rescue # rubocop:disable Lint/SuppressedException
+      end
+
+      expect(described_class.assets).to eq(surrounding)
+    end
+
+    it 'passes return value of given block' do
+      received = described_class.with_assets_level(level) do
+        return_value
+      end
+
+      expect(received).to eq(return_value)
+    end
+
+    it 'leaves the current user unset, so per-user asset checks stay untouched' do
+      described_class.with_assets_level(level) do
+        expect(described_class.current_user_id).to be_nil
+      end
+    end
+
+    it 'refuses a blank level, which would fall back to the surrounding context' do
+      expect { described_class.with_assets_level(nil) { nil } }.to raise_error(ArgumentError)
+    end
+
+    # The refusal must not cost the caller its context: it never switched away from it.
+    it 'keeps the surrounding assets when it refuses a blank level' do
+      described_class.current_user_id = 666
+      surrounding = described_class.assets
+
+      begin
+        described_class.with_assets_level(nil) { nil }
+      rescue ArgumentError # rubocop:disable Lint/SuppressedException
+      end
+
+      expect(described_class.assets).to eq(surrounding)
     end
   end
 
