@@ -220,6 +220,12 @@ RSpec.describe 'Sessions endpoints', type: :request do
         expect(json_response['session']).not_to include('password')
       end
 
+      it 'does not expose the session id' do
+        get '/api/v1/signshow', params: { fingerprint: fingerprint }, as: :json
+
+        expect(json_response['config']).not_to include('session_id')
+      end
+
       context 'when after auth modules are triggered' do
         subject(:user) { create(:customer, roles: [role], password: password) }
 

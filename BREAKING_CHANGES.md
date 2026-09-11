@@ -153,6 +153,27 @@ requires `admin.organization`, and agent tokens receive `403 Forbidden`.
 
 ## 7.2
 
+### The legacy WebSocket login is authenticated from the session cookie and `signshow` no longer returns `session_id`
+
+**Who is affected?** Developers of custom clients that connect to the legacy WebSocket server and
+authenticate with a `session_id` in the `login` event, integrations that read `session_id` from the
+`GET /api/v1/signshow` response, and admins whose `http_type` and `fqdn` settings do not match the URL
+users open Zammad with.
+
+The `GET /api/v1/signshow` response contained the ID of the current session for logged-in users, and the
+legacy frontend sent that ID in the `login` event of the WebSocket connection to authenticate it. Exposing
+the session ID to page scripts was unnecessary and made it easier to steal a session. The `session_id`
+key was removed from the response, and the WebSocket server now ignores any `session_id` in the `login`
+payload. Instead it resolves the user from the session cookie sent with the WebSocket handshake, in the
+same way ActionCable already does for the new frontend, and only if the handshake `Origin` header matches
+`<http_type>://<fqdn>` or a localhost origin. A `login` event without a matching cookie and origin creates
+an unauthenticated WebSocket session that receives no user-specific data.
+
+⚠️ Send the session cookie with the WebSocket handshake instead of a `session_id` in the `login` payload,
+and make sure the `http_type` and `fqdn` settings match the origin users open Zammad with.
+
+**Related advisory:** [GHSA-23hj-h8w6-rgm3](https://github.com/zammad/zammad/security/advisories/GHSA-23hj-h8w6-rgm3)
+
 ### Zammad's reverse proxy configuration is authoritative for the request scheme
 
 **Who is affected?** Admins running the Docker images or a newly installed nginx behind a proxy

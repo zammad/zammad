@@ -380,11 +380,6 @@ class SessionsController < ApplicationController
       config['switch_back_to_possible'] = true
     end
 
-    # remember session_id for websocket logon
-    if current_user
-      config['session_id'] = session.id.public_id
-    end
-
     # In development, prefer this process's own websocket port over the stored setting.
     if Rails.env.development? && ENV['ZAMMAD_WEBSOCKET_PORT'].present?
       config['websocket_port'] = ENV['ZAMMAD_WEBSOCKET_PORT']
