@@ -11,6 +11,11 @@ module UserInfo
   end
 
   def self.current_user
+    # Without this guard every caller that runs without a user context — e.g. Group::Assets and
+    #   Ticket::Assets check #authorized_asset? once per record — pays a "WHERE id IS NULL" query
+    #   just to be told nil, which find_by would return anyway.
+    return if Thread.current[:user_id].blank?
+
     User.find_by(id: Thread.current[:user_id])
   end
 
@@ -81,6 +86,26 @@ module UserInfo
 
   def self.system_context?
     !!Thread.current[:system_context]
+  end
+
+  # Renders assets for an audience (see UserInfo::Assets::LEVEL_*) instead of for a concrete user.
+  #   A broadcast has no single recipient to derive a level from, so it builds one payload per
+  #   level rather than handing everyone the system context's unredacted one. Since no user is
+  #   set, per-user checks (Group::Assets#authorized_asset?) keep answering as they did.
+  def self.with_assets_level(level)
+    # A blank level would fall back to the surrounding context, which for a job is the system
+    #   context — filtering nothing, the opposite of what every caller of this method wants.
+    raise ArgumentError, 'requires an assets level' if level.blank?
+
+    old_assets = Thread.current[:assets]
+
+    begin
+      Thread.current[:assets] = UserInfo::Assets.new(nil, level:)
+
+      yield
+    ensure
+      Thread.current[:assets] = old_assets
+    end
   end
 
   def self.ensure_current_user_id
