@@ -81,6 +81,40 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
           expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
         end
       end
+
+      # Routing is configuration, so it can be prepared while the switch is off.
+      it 'still offers the provider routing' do
+        within(:active_content) do
+          expect(page).to have_css('.js-featureProviderButton', text: 'Provider')
+        end
+      end
+    end
+
+    context 'when routing the feature to a connection' do
+      let(:other_connection) { create(:ai_provider_connection, name: 'Other connection') }
+
+      before do
+        create(:ai_provider_connection, :default_chat, name: 'Default connection')
+        other_connection
+        Setting.set('ai_provider', true)
+
+        visit '/#ai/ticket_summary'
+      end
+
+      it 'writes the routing row from the provider modal' do
+        within(:active_content) do
+          click '.js-featureProviderButton'
+        end
+
+        in_modal do
+          expect(page).to have_select('provider_connection_id', options: ['Default (Default connection)', 'Default connection', 'Other connection'])
+
+          select 'Other connection', from: 'provider_connection_id'
+          click_on 'Submit'
+        end
+
+        wait.until { AI::FeatureProvider.find_by(identifier: 'ticket_summarize')&.provider_connection_id == other_connection.id }
+      end
     end
   end
 end

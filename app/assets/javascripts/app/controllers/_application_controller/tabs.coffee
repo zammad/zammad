@@ -35,6 +35,7 @@ class App.ControllerTabs extends App.Controller
 
     @html App.view('generic/tabs')(
       header: @header
+      description: @description
       subHeader: @subHeader
       tabs: displayTabs
       addTab: @addTab

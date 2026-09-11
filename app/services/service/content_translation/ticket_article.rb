@@ -7,6 +7,12 @@ class Service::ContentTranslation::TicketArticle < Service::ContentTranslation::
 
   private
 
+  def ensure_feature_enabled!
+    super
+
+    Service::CheckFeatureEnabled.execute(name: 'content_translation_ticket_article', custom_error_message: __('Ticket article translation is not enabled.'))
+  end
+
   def content
     object.body
   end

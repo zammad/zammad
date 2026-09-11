@@ -1,0 +1,26 @@
+<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
+<div class="page-header-title">
+  <div class="zammad-switch zammad-switch--small js-ticketArticleSetting">
+    <input name="content_translation_ticket_article" type="checkbox" id="content-translation-ticket-article" <% if @ticketArticle: %>checked<% end %>>
+    <label for="content-translation-ticket-article"></label>
+  </div>
+  <h2><%- @T('Ticket articles translation') %></h2>
+</div>
+<p><%- @T('This service allows agents to translate articles to their configured UI language or other languages of their choice.') %></p>
+<div class="alert alert--warning js-languageDetectionAlert hide"><%- @alert %></div>
+
+<div class="page-header-title">
+  <div class="zammad-switch zammad-switch--small js-ticketArticleAutoSetting">
+    <input name="content_translation_ticket_article_auto" type="checkbox" id="content-translation-ticket-article-auto" <% if @ticketArticleAuto: %>checked<% end %>>
+    <label for="content-translation-ticket-article-auto"></label>
+  </div>
+  <label class="label" for="content-translation-ticket-article-auto"><%- @T('Allow global translation') %></label>
+</div>
+<p class="help-text"><%- @T('Allow specific roles to translate all articles at once. Be careful, this can result in a lot of translation calls and might be cost related.') %></p>
+
+<form class="settings-entry">
+  <div class="horizontal end">
+    <div class="form-item flex js-form"></div>
+    <button type="submit" class="btn btn--primary js-submit"><%- @T('Submit') %></button>
+  </div>
+</form>

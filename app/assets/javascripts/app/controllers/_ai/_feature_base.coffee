@@ -39,10 +39,10 @@ class App.ControllerAIFeatureBase extends App.ControllerSubContent
 
   # Injects a provider modal into .page-header-meta for the given feature identifier;
   # selecting the default entry deletes the feature's routing row. Shown only to provider
-  # administrators — the backing APIs require admin.ai_provider.
+  # administrators — the backing APIs require admin.ai_provider. The AI provider switch does not
+  # matter here: routing is configuration and may be prepared while the switch is off.
   renderProviderModal: (identifier) =>
     return unless identifier
-    return unless App.Config.get('ai_provider')
     return unless @permissionCheck('admin.ai_provider')
 
     @el.find('.js-featureProviderButton').remove()

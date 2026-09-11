@@ -33,6 +33,7 @@ class App.HttpLog extends App.Controller
 
     @html App.view('widget/http_log')(
       records: @records
+      header: @header # false when the embedding screen draws the heading itself
       description: @description
       relatedObjects: relatedObjects
       hasRelatedObjects: !_.isEmpty(relatedObjects)

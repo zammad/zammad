@@ -21,6 +21,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
   before do
     setup_ai_provider('zammad_ai')
+    setup_content_translation
 
     allow_any_instance_of(AI::Provider::ZammadAI).to receive(:ask) do |_provider, **prompts|
       provider_calls << prompts
@@ -71,6 +72,118 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     it 'raises an error' do
       expect { translate }
         .to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'AI provider is not configured.')
+    end
+  end
+
+  describe 'honouring the feature toggles' do
+    # A translation is stored first: a switched-off feature must not serve it either.
+    before { translate }
+
+    context 'when no translation service is configured' do
+      before { Setting.set('content_translation_service', false) }
+
+      it 'refuses although a translation is stored' do
+        expect { translate }
+          .to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'No translation service is configured.')
+      end
+
+      it 'asks no provider' do
+        expect { translate }
+          .to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError)
+          .and not_change(provider_calls, :size)
+      end
+
+      it 'consults no store' do
+        allow(Service::AI::Feature::Translate).to receive(:execute)
+
+        suppress(Service::CheckFeatureEnabled::FeatureDisabledError) { translate }
+
+        expect(Service::AI::Feature::Translate).not_to have_received(:execute)
+      end
+    end
+
+    context 'when article translation is switched off' do
+      before { Setting.set('content_translation_ticket_article', false) }
+
+      it 'refuses although a translation is stored' do
+        expect { translate }
+          .to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'Ticket article translation is not enabled.')
+      end
+
+      it 'asks no provider' do
+        expect { translate }
+          .to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError)
+          .and not_change(provider_calls, :size)
+      end
+
+      it 'consults no store' do
+        allow(Service::AI::Feature::Translate).to receive(:execute)
+
+        suppress(Service::CheckFeatureEnabled::FeatureDisabledError) { translate }
+
+        expect(Service::AI::Feature::Translate).not_to have_received(:execute)
+      end
+    end
+  end
+
+  describe 'resolving the configured translation service' do
+    # The config validation refuses such a service; a backend removed later leaves the same state
+    # behind, which is exactly the one that must not fall back to another service.
+    context 'with an unknown service' do
+      before { Setting.set('content_translation_service_config', { 'provider' => 'nope' }, validate: false) }
+
+      it 'rejects instead of falling back' do
+        expect { translate }
+          .to raise_error(described_class::UnknownBackendError, 'The configured translation service is not available.')
+          .and not_change(provider_calls, :size)
+      end
+    end
+
+    context 'with a blank service' do
+      before { Setting.set('content_translation_service_config', {}) }
+
+      it 'rejects instead of falling back' do
+        expect { translate }
+          .to raise_error(described_class::UnknownBackendError)
+          .and not_change(provider_calls, :size)
+      end
+    end
+
+    context 'with a key that names something else in the namespace' do
+      before { Setting.set('content_translation_service_config', { 'provider' => 'base' }, validate: false) }
+
+      it 'rejects it' do
+        expect { translate }.to raise_error(described_class::UnknownBackendError)
+      end
+    end
+
+    context 'with another service configured' do
+      let(:echo_backend) do
+        Class.new(Service::ContentTranslation::Backend::Base) do
+          def self.backend_name = 'echo'
+
+          def initialize(content:, **) = @content = content # rubocop:disable Lint/MissingSuper
+
+          def execute
+            { content: "echo: #{@content}", backend: self.class.backend_name, fresh: true, analytics_run: nil }
+          end
+        end
+      end
+
+      before do
+        stub_const('Service::ContentTranslation::Backend::Echo', echo_backend)
+        Setting.set('content_translation_service_config', { 'provider' => 'echo' })
+      end
+
+      it 'is the one that answers' do
+        expect(translate).to have_attributes(content: "echo: #{body}", backend: 'echo', translated: true)
+      end
+
+      it 'asks no AI provider' do
+        translate
+
+        expect(provider_calls).to be_empty
+      end
     end
   end
 

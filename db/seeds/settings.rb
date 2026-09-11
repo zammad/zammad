@@ -5945,6 +5945,78 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Translation Service'),
+  name:        'content_translation_service',
+  area:        'Integration::Translation',
+  description: __('Defines if a translation service is configured.'),
+  options:     {},
+  state:       false,
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration'],
+    validations:    ['Setting::Validation::ContentTranslationService'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Translation Service Config'),
+  name:        'content_translation_service_config',
+  area:        'Integration::Translation',
+  description: __('Stores the translation service configuration.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration'],
+    validations:    ['Setting::Validation::ContentTranslationServiceConfig'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Article Translation'),
+  name:        'content_translation_ticket_article',
+  area:        'Integration::Translation::TicketArticle',
+  description: __('Enable or disable the translation of ticket articles.'),
+  options:     {},
+  state:       false,
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Automatic Article Translation'),
+  name:        'content_translation_ticket_article_auto',
+  area:        'Integration::Translation::TicketArticle',
+  description: __('Enable or disable the automatic translation of ticket articles when an agent opens a ticket.'),
+  options:     {},
+  state:       false,
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Automatic Article Translation Roles'),
+  name:        'content_translation_ticket_article_auto_role_ids',
+  area:        'Integration::Translation::TicketArticle',
+  description: __('Defines which user roles automatic article translation applies to.'),
+  options:     {},
+  state:       [],
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
   title:       __('Authentication via %s'),
   name:        'auth_sso',
   area:        'Security::ThirdPartyAuthentication',

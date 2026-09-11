@@ -16,6 +16,12 @@ class Service::ContentTranslation::Base < Service::Base
     end
   end
 
+  class UnknownBackendError < StandardError
+    def initialize
+      super(__('The configured translation service is not available.'))
+    end
+  end
+
   # The subscription a deferred translation of this kind of object is published to.
   def self.subscription
     raise NotImplementedError
@@ -44,6 +50,11 @@ class Service::ContentTranslation::Base < Service::Base
   # @return [Result, NilClass] the translation; nil only when it was deferred to the background, or
   #   when the caller asked for a stored translation and there is none.
   def execute
+    # Before the stored translation is looked up: a switched-off feature means nobody may
+    # translate, not even what is stored. A switched-off service is different - translations are
+    # reused across services, so a stored one still counts - which is why #translate checks that later.
+    ensure_feature_enabled!
+
     locale # rejects an unknown or inactive target before any content is touched
 
     return untranslated_result if content.blank?
@@ -53,6 +64,11 @@ class Service::ContentTranslation::Base < Service::Base
   end
 
   private
+
+  # A subclass adds the toggle of its own feature on top of the service-level one.
+  def ensure_feature_enabled!
+    Service::CheckFeatureEnabled.execute(name: 'content_translation_service', custom_error_message: __('No translation service is configured.'))
+  end
 
   def content
     raise NotImplementedError
@@ -107,8 +123,7 @@ class Service::ContentTranslation::Base < Service::Base
 
   # A stored translation is served whatever the backend is; only producing a new one needs the
   # translation service to be usable, and only then may it be worth deferring - which is the
-  # backend's own answer. Whether the translation feature is available at all is a per-feature
-  # toggle that does not exist yet and belongs here once it does.
+  # backend's own answer. The feature gate sits in #execute instead, see there.
   def translate
     stored = dispatch(:stored_only) if persistence_strategy != :request_only
 
@@ -152,9 +167,8 @@ class Service::ContentTranslation::Base < Service::Base
     Result.new(translated: true, **data)
   end
 
-  # Only one translation service exists today; picking between several of them comes with the
-  # setting that configures them.
+  # A blank or unknown key is an error, not a fallback: the admin chose a service that is not there.
   def backend_class
-    Service::ContentTranslation::Backend::AI
+    @backend_class ||= Service::ContentTranslation::Backend.configured || raise(UnknownBackendError)
   end
 end

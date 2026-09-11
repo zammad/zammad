@@ -1,0 +1,5 @@
+<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
+<h2><%- @T('Recent Logs') %></h2>
+<p class="js-aiHint hide"><%- @hint %></p>
+
+<div class="js-log"></div>

@@ -29,6 +29,9 @@ export interface ConfigList {
   chat?: boolean | null
   chat_agent_idle_timeout: string
   checklist?: boolean | null
+  content_translation_service: boolean
+  content_translation_ticket_article: boolean
+  content_translation_ticket_article_auto: boolean
   core_workflow_ajax_mode?: boolean | null
   cti_integration?: boolean | null
   customer_ticket_create?: boolean | null

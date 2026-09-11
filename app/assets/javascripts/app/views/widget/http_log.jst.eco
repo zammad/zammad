@@ -1,5 +1,7 @@
+<% if @header isnt false: %>
 <hr>
 <h2><%- @T('Recent Logs') %></h2>
+<% end %>
 <% if @description: %>
   <% for item in @description: %>
     <p><%- @T(item...) %></p>

@@ -249,7 +249,11 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'vectordb_knowledge_base_chunking_strategy',
           'form_ticket_create_honeypot',
           'form_ticket_create_captcha_provider',
-          'kb_self_hosted_video_servers'
+          'kb_self_hosted_video_servers',
+          'content_translation_service',
+          'content_translation_ticket_article',
+          'content_translation_ticket_article_auto',
+          'content_translation_ticket_article_auto_role_ids'
         ]
       end
 

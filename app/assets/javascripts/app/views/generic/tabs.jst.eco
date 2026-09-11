@@ -16,6 +16,9 @@
   </div>
   <% end %>
 </div>
+<% if @description: %>
+<p class="help-text"><%- @T(@description) %></p>
+<% end %>
 <% if @alert: %>
 <div class="alert alert--<%= @alert.variant %>">
   <%- @alert.message %>

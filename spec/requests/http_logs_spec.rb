@@ -109,6 +109,37 @@ RSpec.describe 'HTTP Logs endpoints', aggregate_failures: true, type: :request d
       end
     end
 
+    context 'when admin has integration permissions', authenticated_as: :admin do
+      let(:admin_role) { create(:role, permission_names: ['admin.integration']) }
+      let(:admin)      { create(:user, roles: [admin_role]) }
+
+      before do
+        create(:http_log, facility: 'content_translation')
+      end
+
+      it 'returns the translation facility items' do
+        get '/api/v1/http_logs/content_translation', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response.pluck('facility').uniq).to eq(['content_translation'])
+      end
+    end
+
+    context 'when admin has no integration permissions', authenticated_as: :admin do
+      let(:admin_role) { create(:role, permission_names: ['admin.webhook']) }
+      let(:admin)      { create(:user, roles: [admin_role]) }
+
+      before do
+        create(:http_log, facility: 'content_translation')
+      end
+
+      it 'forbids listing the translation facility' do
+        get '/api/v1/http_logs/content_translation', as: :json
+
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
     context 'when customer', authenticated_as: :customer do
       it 'forbids listing without facility' do
         get '/api/v1/http_logs', as: :json

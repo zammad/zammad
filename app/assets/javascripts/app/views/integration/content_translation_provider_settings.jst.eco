@@ -1,0 +1,28 @@
+<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
+<form>
+  <div class="settings-entry js-serviceForm no-margin"></div>
+
+  <% if @attributes.length: %>
+    <div class="formGroup-label">
+      <label><%- @T('Provider configuration') %></label>
+    </div>
+    <div class="settings-entry">
+      <table class="settings-list" style="width: 100%;">
+        <thead>
+          <tr>
+            <th width="20%"><%- @T('Name') %>
+            <th width="80%"><%- @T('Value') %>
+        </thead>
+        <tbody>
+  <% for attribute in @attributes: %>
+          <tr>
+            <td><%- @T(attribute.display) %><% if attribute.null is false: %> *<% end %>
+            <td class="settings-list-control-cell" data-name="<%= attribute.name %>">
+  <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
+</form>

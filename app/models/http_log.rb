@@ -86,24 +86,25 @@ optional you can put the max oldest chat entries as argument
   # Provide a mapping of facilities to required permissions as a function to be easily extendable in custom devs.
   def self.facilities_permission_lookup
     {
-      'AI::Provider'       => 'admin.ai_feedback_logs',
-      'check_mk'           => 'admin.integration',
-      'clearbit'           => 'admin.integration',
-      'cti'                => 'admin.integration',
-      'EWS'                => 'admin.integration',
-      'GitHub'             => 'admin.integration',
-      'GitLab'             => 'admin.integration',
-      'idoit'              => 'admin.integration',
-      'ldap'               => 'admin.integration',
-      'MicrosoftGraph'     => 'admin.channel_microsoft_graph',
-      'PGP'                => 'admin.integration',
-      'placetel'           => 'admin.integration',
-      'S/MIME'             => 'admin.integration',
-      'SAML'               => 'admin.security',
-      'sipagte.io'         => 'admin.integration', # typo in facility name, keep for backward compatibility
-      'sipgate.io'         => 'admin.integration',
-      'webhook'            => 'admin.webhook',
-      'WhatsApp::Business' => 'admin.channel_whatsapp',
+      'AI::Provider'        => 'admin.ai_feedback_logs',
+      'check_mk'            => 'admin.integration',
+      'clearbit'            => 'admin.integration',
+      'cti'                 => 'admin.integration',
+      'EWS'                 => 'admin.integration',
+      'GitHub'              => 'admin.integration',
+      'GitLab'              => 'admin.integration',
+      'idoit'               => 'admin.integration',
+      'ldap'                => 'admin.integration',
+      'MicrosoftGraph'      => 'admin.channel_microsoft_graph',
+      'PGP'                 => 'admin.integration',
+      'placetel'            => 'admin.integration',
+      'S/MIME'              => 'admin.integration',
+      'SAML'                => 'admin.security',
+      'sipagte.io'          => 'admin.integration', # typo in facility name, keep for backward compatibility
+      'sipgate.io'          => 'admin.integration',
+      'content_translation' => 'admin.integration',
+      'webhook'             => 'admin.webhook',
+      'WhatsApp::Business'  => 'admin.channel_whatsapp',
     }
   end
 

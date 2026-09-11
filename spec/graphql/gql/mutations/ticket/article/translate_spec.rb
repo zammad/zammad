@@ -47,7 +47,10 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
   end
 
   context 'when logged in as an agent', authenticated_as: :agent do
-    before { setup_ai_provider }
+    before do
+      setup_ai_provider
+      setup_content_translation
+    end
 
     context 'with a stored translation' do
       before { store_translation('<p>Hallo Welt.</p>') }
