@@ -597,4 +597,25 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       expect { attribute.public_data_option }.not_to change(attribute, :data_option)
     end
   end
+
+  describe 'changing an existing multiselect attribute', db_strategy: :reset do
+    let(:attribute) { create(:object_manager_attribute_multiselect) }
+
+    before do
+      attribute
+      described_class.migration_execute
+    end
+
+    # Changing the maxlength of an attribute whose column is already in place
+    #   flags it for migration, so this goes through change_column rather than
+    #   add_column - the path an admin takes editing an existing attribute.
+    it 'migrates the already added column' do
+      changed = attribute.attributes.deep_symbolize_keys.except(:data_option_new)
+      changed[:data_option] = attribute.data_option.merge('maxlength' => 100)
+
+      described_class.add(changed)
+
+      expect { described_class.migration_execute }.not_to raise_error
+    end
+  end
 end

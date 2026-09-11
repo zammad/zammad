@@ -700,16 +700,12 @@ to send no browser reload event, pass false
             null:  true
           )
         when %r{^(multiselect|multi_tree_select)$}
-          options = {
-            null:  true,
-            array: true,
-          }
-
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
             data_type,
-            options,
+            null:  true,
+            array: true
           )
         when 'autocompletion_ajax_external_data_source'
           ActiveRecord::Migration.change_column(
@@ -752,16 +748,12 @@ to send no browser reload event, pass false
           null:  true
         )
       when %r{^(multiselect|multi_tree_select)$}
-        options = {
-          null:  true,
-          array: true,
-        }
-
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
           data_type,
-          **options,
+          null:  true,
+          array: true
         )
       when 'autocompletion_ajax_external_data_source'
         ActiveRecord::Migration.add_column(
