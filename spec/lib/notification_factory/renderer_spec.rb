@@ -850,6 +850,48 @@ RSpec.describe NotificationFactory::Renderer do
           expect(render_result(template: template, objects: { ticket: ticket })).to eq("\#{ticket.title.chomp(`cat/etc/passwd`) / not allowed}")
         end
       end
+
+      context 'with an attempt to break out of the generated string literal' do
+        # A placeholder value is embedded into a `"…"` Ruby literal in the
+        # compiled ERB. An already-escaped backslash before a quote (`\\"`) must
+        # not smuggle a real closing quote past the escaping, which would turn the
+        # rest of the placeholder into executable Ruby.
+        it 'keeps an escaped backslash and quote inside the dt argument' do
+          template = "\#{dt(a\\\\\"+INJECTED+?)}"
+          expect(render_result(template: template, objects: { ticket: ticket }))
+            .to eq("\#{a\\\\\"+INJECTED+? / invalid parameter}")
+        end
+
+        it 'keeps an escaped backslash and quote inside the t argument' do
+          template = "\#{t('a\\\\\"+INJECTED+?')}"
+          expect(render_result(template: template, objects: { ticket: ticket }))
+            .to eq('a\\\\&quot;+INJECTED+?')
+        end
+
+        it 'does not execute a command injection smuggled through dt' do
+          template = "\#{dt(a\\\\\"+`echo pwned`+?)}"
+          expect(render_result(template: template, objects: { ticket: ticket }))
+            .to eq("\#{a\\\\\"+`echo pwned`+? / invalid parameter}")
+        end
+
+        it 'escapes a bare double quote in the dt argument' do
+          template = "\#{dt(a\"+INJECTED+?)}"
+          expect(render_result(template: template, objects: { ticket: ticket }))
+            .to eq("\#{a\"+INJECTED+? / invalid parameter}")
+        end
+
+        it 'escapes an even run of backslashes before the quote in the dt argument' do
+          template = "\#{dt(a\\\\\\\\\"+INJECTED+?)}"
+          expect(render_result(template: template, objects: { ticket: ticket }))
+            .to eq("\#{a\\\\\\\\\"+INJECTED+? / invalid parameter}")
+        end
+
+        it 'strips backslash and quote from a plain object placeholder' do
+          template = "\#{a\\\\\"+`echo pwned`+?}"
+          expect(render_result(template: template, objects: { ticket: ticket }))
+            .to eq("\#{a+`echopwned`+? / not allowed}")
+        end
+      end
     end
   end
 

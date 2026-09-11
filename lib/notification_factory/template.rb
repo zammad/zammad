@@ -45,12 +45,18 @@ examples how to use
   end
 
   def sanitize_text(string)
+    # Escape backslashes and double quotes so the value cannot break out of the
+    # generated `"…"` Ruby string literal. Backslashes must be escaped first,
+    # otherwise an already-escaped backslash (`\\"`) would smuggle a real closing
+    # quote past the escaping and turn the rest of the template into executable Ruby.
     string&.tr("\t\r\n", '')
-          &.gsub(%r{(?<!\\)(?=")}, '\\')
+          &.gsub(%r{[\\"]}) { |char| "\\#{char}" }
   end
 
   def sanitize_object_name(string)
-    string&.tr("\t\r\n\f \"'§;", '')
+    # `tr` applies its own backslash escaping on top of Ruby's, so the four
+    # backslashes in the source are needed to add a single literal `\` to the set.
+    string&.tr("\t\r\n\f \\\\\"'§;", '')
   end
 
 end
