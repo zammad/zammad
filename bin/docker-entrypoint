@@ -71,6 +71,13 @@ if [ "$1" = 'zammad-init' ]; then
       bundle exec rake db:migrate db:seed
     fi
 
+    # Connections between containers of the same stack are not external, so exclude Elasticsearch
+    #   from proxy routing. Only done on first install, so that admins can change the value later.
+    if [ "${ELASTICSEARCH_ENABLED}" != "false" ]; then
+      echo "Excluding ${ELASTICSEARCH_HOST} from proxy routing..."
+      bundle exec rails r "Setting.set('proxy_no', '${ELASTICSEARCH_HOST}')"
+    fi
+
     # create autowizard.json on first install
     if base64 -d <<< "${AUTOWIZARD_JSON}" &>> /dev/null; then
       echo "Saving autowizard json payload..."
