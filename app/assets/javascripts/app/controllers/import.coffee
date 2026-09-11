@@ -2,6 +2,12 @@ class Import extends App.ControllerWizardFullScreen
   constructor: ->
     super
     @title __('Import')
+
+    # redirect to login if admin user already exists
+    if @Config.get('system_init_done')
+      @navigate '#login'
+      return
+
     @fetch()
 
   fetch: ->
@@ -13,11 +19,6 @@ class Import extends App.ControllerWizardFullScreen
       url:   @apiPath + '/getting_started',
       processData: true,
       success: (data, status, xhr) =>
-
-        # redirect to login if admin user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
 
         if data.import_mode == true
           @navigate '#import/' + data.import_backend, { emptyEl: true }

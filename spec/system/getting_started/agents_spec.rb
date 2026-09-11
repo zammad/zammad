@@ -81,4 +81,12 @@ RSpec.describe 'Getting Started > Agents', type: :system do
       )
     end
   end
+
+  context 'when authenticated as agent', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    it 'redirects away from the wizard' do
+      expect_current_route 'dashboard'
+    end
+  end
 end

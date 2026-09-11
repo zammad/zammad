@@ -6,6 +6,11 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
     super
     @authenticateCheckRedirect()
 
+    # redirect if we are not admin
+    if !@permissionCheck('admin.wizard')
+      @navigate '#'
+      return
+
     # set title
     @title __('Invite Agents')
     @fetch()
