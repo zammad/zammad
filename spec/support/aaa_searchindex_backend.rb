@@ -37,13 +37,13 @@ module SearchindexBackendHelper
     Rake::Task['zammad:searchindex:create'].execute
   end
 
-  # Remove all existing data of all indexes.
-  #   WARNING: don't use in scenarios with shared ES instances.
+  # Remove all existing data of the indices of this run. Deliberately not
+  #   '_all': a development instance on the same Elasticsearch keeps its data.
   def drop_es_content
     # Ensure consistent state before + after dropping data.
     SearchIndexBackend.refresh
 
-    url = "#{Setting.get('es_url')}/_all/_delete_by_query"
+    url = "#{Setting.get('es_url')}/#{SearchIndexBackend.build_index_name}_*/_delete_by_query"
     SearchIndexBackend.make_request_and_validate(url, data: { query: { match_all: {} }, }, method: :post)
 
     # We need to recreate the pipeline.

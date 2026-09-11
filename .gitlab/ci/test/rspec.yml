@@ -23,6 +23,13 @@ rspec:integration:
     - .variables_mattermost
     - .variables_s3
   allow_failure: true
+  # Squid permits CONNECT to 443, 8443 and 3001 only (configs/squid-ci.conf in
+  #   docker/zammad-proxies), so the SSL server of spec/lib/user_agent_spec.rb
+  #   has to stay on 3001 for the examples that go through the proxy service.
+  #   Safe here, and only here: this is the one job that runs that spec, and it
+  #   excludes spec/system, so Capybara never serves on that port alongside it.
+  variables:
+    ZAMMAD_TEST_WEB_SSL_PORT: '3001'
   rules:
     - !reference [.rule_fragments, variable_filters]
     - if: $CI_PIPELINE_SOURCE == "schedule"

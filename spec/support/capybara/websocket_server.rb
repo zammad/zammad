@@ -1,9 +1,13 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+# The hostname and the port of this run are resolved there - recomputing them
+#   here would let the two files disagree (e.g. for CAPYBARA_HOSTNAME setups
+#   like .devcontainer/with-selenium).
+require_relative 'driven_by'
+
 RSpec.configure do |config|
 
-  hostname = ENV['CI'].present? ? 'build' : 'localhost'
-  localhost_authority = Localhost::Authority.new(hostname, issuer: nil)
+  localhost_authority = Localhost::Authority.new(CAPYBARA_HOSTNAME, issuer: nil)
   localhost_authority.save # make sure the certificate is created
 
   config.around(:each, type: :system) do |example|
@@ -11,13 +15,11 @@ RSpec.configure do |config|
     server_required = example.metadata.fetch(:websocket, true)
 
     if server_required
-      port = ENV['WS_PORT'] || 6042
-
-      ensure_port_available!(port)
+      ensure_port_available!(WS_PORT)
 
       ws_thread = Thread.new do
         WebsocketServer.run(
-          p:           port,
+          p:           WS_PORT,
           b:           '0.0.0.0',
           s:           true,
           v:           false,
@@ -32,7 +34,7 @@ RSpec.configure do |config|
       # The EventMachine reactor above needs a moment to actually bind the port.
       #   Wait for it to become reachable before running the example, otherwise the
       #   browser's very first chat connection attempt may race the server startup.
-      wait_for_websocket_server!(port)
+      wait_for_websocket_server!(WS_PORT)
     end
 
     example.run
@@ -66,7 +68,7 @@ RSpec.configure do |config|
       TCPServer.new(host, port).close # release port immediately
     end
   rescue Errno::EADDRINUSE
-    raise "Couldn't start WebSocket server. Maybe another websocket server process is already running?"
+    raise "Couldn't start WebSocket server on port #{port}. Maybe another websocket server process is already running? Set WS_PORT to a free port to run this suite alongside it."
   end
 
   def wait_for_websocket_server!(port, timeout: 10)

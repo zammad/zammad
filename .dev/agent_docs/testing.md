@@ -40,6 +40,19 @@ Selenium opens a real, visible browser window.
 SELENIUM_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb
 ```
 
+### Ports of a test run
+
+The suite serves Capybara on `CAPYBARA_PORT` (default `3001`) and its websocket
+server on `WS_PORT` (default `6043`) — next to, never on, the ports of the
+development stack, so a run does not collide with a stack of the same checkout.
+Set both to run two suites side by side; they still share the `test` database,
+the Redis keys and the Elasticsearch indices, so those (`DATABASE_URL`,
+`REDIS_URL`, `ES_INDEX`) need separating as well.
+
+```bash
+CAPYBARA_PORT=3101 WS_PORT=6143 bundle exec rspec spec/system/path/to/file_spec.rb
+```
+
 ### Capybara form helpers (new frontend stack)
 
 System tests for the Vue frontend use custom helpers to interact

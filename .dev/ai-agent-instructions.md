@@ -68,6 +68,32 @@ pnpm generate-graphql-api                   # Regenerate GraphQL types after sch
 pnpm generate-setting-types                 # Regenerate Config types after setting changes
 ```
 
+### Development stack
+
+A browser-clickable instance for this checkout. Start it via `bin/dev` rather
+than `forego` directly, and wait for it to answer before using it.
+
+```bash
+RAILS_ENV=development bundle exec rake db:create zammad:bootstrap:reset  # once per checkout
+bin/dev                                                                  # does not exit; run it in the background
+```
+
+It serves on `localhost:3000`, with the websocket server on `6042` and Vite on
+`3036`. Export `ZAMMAD_RAILS_PORT`, `ZAMMAD_WEBSOCKET_PORT` and
+`VITE_RUBY_PORT` before `bin/dev` to move them — the whole stack has to agree
+on them, so export, do not set them per process.
+
+`zammad:bootstrap:reset` migrates, seeds and runs the auto wizard, which creates
+`admin@example.com` / `test`. Plain `zammad:db:init` skips the wizard and leaves
+the browser on the getting-started screen. Never run `zammad:bootstrap:init` or
+`zammad:setup:db_config`: they overwrite `config/database.yml` and prompt on
+stdin, which hangs a non-interactive session.
+
+The test suite uses its own ports (`3001` and `6043`) and its own database, so
+it can run while the stack is up. Several checkouts, however, share the
+development database and Redis — only one stack per machine unless
+`DATABASE_URL` and `REDIS_URL` say otherwise.
+
 ## Development Lifecycle
 
 Issues are tracked on **GitHub**, code is developed on a self-hosted **GitLab**.

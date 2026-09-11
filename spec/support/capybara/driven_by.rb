@@ -2,8 +2,13 @@
 
 require_relative 'set_up'
 
-CAPYBARA_PORT = ENV['CAPYBARA_PORT'] || 3001
+# The endpoints of this test run. The defaults are deliberately next to, but
+#   never on, the ports of a development stack (3000 and 6042), so that a suite
+#   can run while the app of this checkout is up. Set the variables to run two
+#   suites side by side.
+CAPYBARA_PORT = ENV.fetch('CAPYBARA_PORT', 3001).to_i
 CAPYBARA_HOSTNAME = ENV['CAPYBARA_HOSTNAME'] || (ENV['CI'].present? ? 'build' : 'localhost')
+WS_PORT = ENV.fetch('WS_PORT', 6043).to_i
 
 RSpec.configure do |config|
 
@@ -29,6 +34,11 @@ RSpec.configure do |config|
 
     Setting.set('http_type', 'https')
     Setting.set('fqdn', "#{CAPYBARA_HOSTNAME}:#{CAPYBARA_PORT}")
+
+    # Outside of production 'websocket_backend' is 'websocketPort', so the legacy
+    #   frontend takes the websocket port from this setting - it has to follow the
+    #   port websocket_server.rb actually listens on.
+    Setting.set('websocket_port', WS_PORT.to_s)
 
     browser_name = ENV.fetch('SELENIUM_BROWSER', 'firefox')
 

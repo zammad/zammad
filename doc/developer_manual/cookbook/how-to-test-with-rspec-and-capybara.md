@@ -45,6 +45,35 @@ Also running failed tests only is possible with the option `--only-failures`.
 bundle exec rspec --only-failures spec/system/ticket/zoom_spec.rb
 ```
 
+## Ports Used by a Test Run
+
+A run claims two ports, both taken from the environment. Their defaults sit
+next to - never on - the ports of the development stack, so a suite and the app
+of the same checkout can run at the same time:
+
+| Server | Variable | Default | Dev stack |
+| --- | --- | --- | --- |
+| Capybara / Puma | `CAPYBARA_PORT` | `3001` | `3000` |
+| WebSocket server | `WS_PORT` | `6043` | `6042` |
+
+Set both to run two suites side by side:
+
+```sh
+CAPYBARA_PORT=3101 WS_PORT=6143 bundle exec rspec spec/system/ticket/zoom_spec.rb
+```
+
+Without that, the second run fails on the port the first one holds:
+
+```text
+Couldn't start WebSocket server on port 6043. Maybe another websocket server
+process is already running? Set WS_PORT to a free port to run this suite
+alongside it.
+```
+
+Note that the two runs still share the `test` database, the Redis keys and the
+Elasticsearch indices, so give the second one its own `DATABASE_URL`,
+`REDIS_URL` and `ES_INDEX` as well.
+
 ## Default RSpec Environment
 
 RSpec will populate the database at startup. These users are available in any test right away:

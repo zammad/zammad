@@ -19,12 +19,24 @@ RSpec.describe UserAgent, :aggregate_failures do
     'localhost'
   end
 
+  # The ports of the Puma this spec starts. Dedicated ones: 3000 belongs to a
+  #   development stack and 3001 to Capybara's own server
+  #   (spec/support/capybara/driven_by.rb), which a full-suite run in random
+  #   order would collide with.
+  def http_port
+    ENV.fetch('ZAMMAD_TEST_WEB_PORT', 3010).to_i
+  end
+
+  def https_port
+    ENV.fetch('ZAMMAD_TEST_WEB_SSL_PORT', 3011).to_i
+  end
+
   def host
-    "http://#{base_host}:3000"
+    "http://#{base_host}:#{http_port}"
   end
 
   def ssl_host
-    "https://#{base_host}:3001"
+    "https://#{base_host}:#{https_port}"
   end
 
   def start_server(with_ssl: nil)
@@ -35,7 +47,7 @@ RSpec.describe UserAgent, :aggregate_failures do
       puma_host = "ssl://0.0.0.0?key=#{localhost_authority.key_path}&cert=#{localhost_authority.certificate_path}"
     end
 
-    port = with_ssl.present? ? 3001 : 3000
+    server_port = with_ssl.present? ? https_port : http_port
 
     @puma_thread = Thread.new do
       app = Rack::Builder.new do
@@ -44,7 +56,7 @@ RSpec.describe UserAgent, :aggregate_failures do
         end
       end.to_app
 
-      Rack::Handler::Puma.run app, Port: port, Host: puma_host do |s|
+      Rack::Handler::Puma.run app, Port: server_port, Host: puma_host do |s|
         @puma_server = s
       end
     end
@@ -835,6 +847,10 @@ RSpec.describe UserAgent, :aggregate_failures do
 
   # Tests connectivity via a proxy.
   # Proxy is available in integration pipeline only.
+  #   A proxy also restricts which ports it will CONNECT to: the CI one permits
+  #   443, 8443 and 3001, so the pipeline pins ZAMMAD_TEST_WEB_SSL_PORT to 3001
+  #   for this job (see .gitlab/ci/test/rspec.yml). Set it accordingly when
+  #   running these examples against a proxy of your own.
   describe 'testing with proxy', integration: true, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
     # Localhost does not work with proxy.
     # build works in Zammad integration pipeline only.

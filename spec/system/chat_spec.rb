@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Chat Handling', type: :system do
   let(:agent_chat_switch_selector) { '#navigation .js-chatMenuItem .js-switch' }
-  let(:chat_url)                   { "/assets/chat/#{chat_url_type}.html?port=#{ENV['WS_PORT']}" }
+  let(:chat_url)                   { "/assets/chat/#{chat_url_type}.html?port=#{WS_PORT}" }
   let(:chat_url_type)              { 'znuny' }
 
   def authenticate

@@ -1,10 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Store::Redis
-  SESSIONS_KEY = 'sessions'.freeze
-  MESSAGES_KEY = 'messages'.freeze
-  SPOOL_KEY = 'spool'.freeze
-  NODES_KEY = 'nodes'.freeze
+  # Scoped per environment, so that a development stack and a test run do not
+  #   share their session bookkeeping - the same reason Sessions::Store::File
+  #   keeps its directories apart. Production keeps the plain keys, so that an
+  #   upgrade does not orphan the existing ones.
+  KEY_SUFFIX = (Rails.env.production? ? '' : "_#{Rails.env}").freeze
+
+  SESSIONS_KEY = "sessions#{KEY_SUFFIX}".freeze
+  MESSAGES_KEY = "messages#{KEY_SUFFIX}".freeze
+  SPOOL_KEY = "spool#{KEY_SUFFIX}".freeze
+  NODES_KEY = "nodes#{KEY_SUFFIX}".freeze
 
   def initialize
     @redis = Zammad::Service::Redis.new
