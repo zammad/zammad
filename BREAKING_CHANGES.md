@@ -151,6 +151,38 @@ requires `admin.organization`, and agent tokens receive `403 Forbidden`.
 
 **Related issue:** [#6315](https://github.com/zammad/zammad/issues/6315)
 
+## 7.2.1
+
+The following breaking change occurred due to a security fix.
+
+### The getting started endpoints require `admin.wizard` once the system is set up
+
+**Who is affected?** Integrations that read `GET /api/v1/getting_started` or
+`GET /api/v1/getting_started/auto_wizard` while authenticated as a user without the `admin.wizard`
+permission, and any integration that reads them while a migration is running.
+
+On a system that is set up, both endpoints returned the list of active groups and of active email
+addresses, the branding config and the available email channel drivers to every authenticated user,
+customers included. That data is only of use to a user who may run the setup wizard, and it is
+restricted on its own endpoints: `GET /api/v1/email_addresses` answers a customer with `403`, and
+`GET /api/v1/groups/:id` field-scopes its response. Both endpoints now answer a user without
+`admin.wizard` with `403 Forbidden` instead.
+
+Before the setup, and while a migration is running, the endpoints stay reachable without
+authentication: a migration is started anonymously from the installer, and its progress screens have
+no user to authenticate as. While a migration is running the response is now reduced to the setup and
+migration state — `setup_done`, `import_mode`, `import_backend` and `system_online_service` — which
+is all those screens read; the group and email address list, the branding config and the email
+channel drivers are no longer part of it, for any caller. A migration only clears its import mode
+when it succeeds, so a failed one would otherwise keep that data readable without authentication
+indefinitely. Outside a migration the response is unchanged for users with `admin.wizard`.
+
+⚠️ Switch integrations that read the group or email address list from these endpoints to an account
+with the `admin.wizard` permission — an API token needs that permission in its scope as well — or to
+`GET /api/v1/groups` respectively `GET /api/v1/email_addresses`.
+
+**Related advisory:** [GHSA-x3fm-p95w-xj7v](https://github.com/zammad/zammad/security/advisories/GHSA-x3fm-p95w-xj7v)
+
 ## 7.2
 
 ### The legacy WebSocket login is authenticated from the session cookie and `signshow` no longer returns `session_id`

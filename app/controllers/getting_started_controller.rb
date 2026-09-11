@@ -29,26 +29,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 =end
 
   def index
+    return render json: authorized_setup_response if setup_done?
 
-    # check if first user already exists
-    return if setup_done_response
+    return render json: { auto_wizard: true } if AutoWizard.enabled?
 
-    # check it auto wizard is already done
-    return if auto_wizard_enabled_response
-
-    # return result
-    render json: {
-      setup_done:            setup_done,
-      import_mode:           Setting.get('import_mode'),
-      import_backend:        Setting.get('import_backend'),
-      system_online_service: Setting.get('system_online_service'),
-    }
+    render json: setup_pending_payload
   end
 
   def auto_wizard_admin
-
-    # check if system setup is already done
-    return if setup_done_response
+    return render json: authorized_setup_response if setup_done?
 
     begin
       auto_wizard_admin = Service::System::RunAutoWizard.execute(token: params[:token])
@@ -106,44 +95,77 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
   private
 
-  def auto_wizard_enabled_response
-    return false if !AutoWizard.enabled?
-
-    render json: {
-      auto_wizard: true
-    }
-    true
+  # The system counts as set up once there is a user besides the system user and
+  # the first admin.
+  def setup_done?
+    User.count > 2
   end
 
-  def setup_done
-    # return false
-    count = User.count
-    done = true
-    if count <= 2
-      done = false
-    end
-    done
+  # Both actions answer a set-up system from here, so the migration window and the
+  # authorization live in one place and cannot diverge between them.
+  def authorized_setup_response
+    return migration_payload if import_running?
+
+    authorize_wizard_payload!
+
+    setup_done_payload
   end
 
-  def setup_done_response
-    return false if !setup_done || !authentication_check
+  # The setup done payload carries the group configuration and the complete list
+  # of sender addresses, which the dedicated endpoints field-scope respectively
+  # deny, so it belongs to a user who may run the wizard.
+  def authorize_wizard_payload!
+    authentication_check
+    current_user.permissions!('admin.wizard')
+  end
 
-    groups = Group.where(active: true)
-    addresses = EmailAddress.where(active: true)
+  # Import mode is on from the start of a migration until it succeeds, and an
+  # import refuses to start once the setup is done (Import::Helper), so the window
+  # covers a whole migration and does not open on an installed system. It is not
+  # bounded in time, though: import mode survives a failure -- Import::OTRS::Async
+  # rescues and returns, and the sequencer backends unset it as their final step
+  # only -- so an installation can stay in it indefinitely.
+  #
+  # The admin count deliberately plays no part here: the importers assign the
+  # Admin role to imported users, so a migration acquires admins while it runs.
+  # Neither does system_init_done alone, which is not monotonic -- it is reset by
+  # Service::System::CheckSetup when it is set without an admin being present.
+  def import_running?
+    Setting.get('import_mode') && !Setting.get('system_init_done')
+  end
 
-    render json: {
+  # A migration is started anonymously from the installer and imports users, which
+  # pushes the user count past the setup_done? threshold while it runs, so the
+  # progress screens have to keep working without a user. They read nothing but
+  # import_mode and import_backend, so this window carries no wizard data at all,
+  # for any caller: it cannot be relied on to close, and a user who needs the
+  # group or email address list has the dedicated endpoints for it.
+  def migration_payload
+    setup_pending_payload.merge(setup_done: true)
+  end
+
+  def setup_done_payload
+    {
       setup_done:            true,
       import_mode:           Setting.get('import_mode'),
       import_backend:        Setting.get('import_backend'),
       system_online_service: Setting.get('system_online_service'),
-      addresses:             addresses,
-      groups:                groups,
+      addresses:             EmailAddress.where(active: true),
+      groups:                Group.where(active: true),
       config:                config_to_update,
       channel_driver:        {
         email: EmailHelper.available_driver,
       },
     }
-    true
+  end
+
+  def setup_pending_payload
+    {
+      setup_done:            false,
+      import_mode:           Setting.get('import_mode'),
+      import_backend:        Setting.get('import_backend'),
+      system_online_service: Setting.get('system_online_service'),
+    }
   end
 
   def config_to_update
