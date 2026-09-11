@@ -30,7 +30,7 @@ api_client:php:
     - ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
     - cd zammad-api-client-php
     - composer install
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit --no-coverage
 
 api_client:ruby:
   extends:
