@@ -364,8 +364,8 @@ importers:
         specifier: ^4.17.1
         version: 4.17.1(@typescript-eslint/utils@8.69.0(eslint@10.10.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.10.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)
       eslint-plugin-oxlint:
-        specifier: ^1.81.0
-        version: 1.81.0(oxlint@1.81.0)
+        specifier: ^1.82.0
+        version: 1.82.0(oxlint@1.81.0)
       eslint-plugin-security:
         specifier: ^4.0.1
         version: 4.0.1
@@ -3797,10 +3797,10 @@ packages:
       eslint-import-resolver-node:
         optional: true
 
-  eslint-plugin-oxlint@1.81.0:
-    resolution: {integrity: sha512-yoig+eqijGmt+09wBOi71H8teCXFuDnOePWOiU1ynrME1WiOkw7zEFtkQwbacPYGjrbqhd5XXU4lQDzRWojW0g==}
+  eslint-plugin-oxlint@1.82.0:
+    resolution: {integrity: sha512-El97zhbwvf2wAzx0zBHxxlo2CurWeUZiUKEmKX6JOgSKqA362v+iqZ5xP5BLRjAqJichh6ZMMKrsPFvOdipOpA==}
     peerDependencies:
-      oxlint: ~1.81.0
+      oxlint: ~1.82.0
 
   eslint-plugin-security@4.0.1:
     resolution: {integrity: sha512-/lZCkOxPOWaf1jXAqgICrS8St3BMBccIPvhOSUYuV6VCr1o5nFVG998FnTLt6w2Nxb8Uo0nM8fzmnhp+GY/aEg==}
@@ -10112,7 +10112,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-oxlint@1.81.0(oxlint@1.81.0):
+  eslint-plugin-oxlint@1.82.0(oxlint@1.81.0):
     dependencies:
       jsonc-parser: 3.3.1
       oxlint: 1.81.0
