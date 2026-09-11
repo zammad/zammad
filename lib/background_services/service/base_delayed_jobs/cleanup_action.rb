@@ -55,7 +55,7 @@ class BackgroundServices
           end
 
           if job.payload_object.respond_to?(:args)
-            job_name += " - ARGS: #{payload_object.args.inspect}"
+            job_name += " - ARGS: #{job.payload_object.args.inspect}"
           end
 
           job_name
