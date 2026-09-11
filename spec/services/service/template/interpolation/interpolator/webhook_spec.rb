@@ -248,6 +248,16 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       end
     end
 
+    context 'when the replacement value contains backslashes' do
+      let(:ticket)    { create(:ticket, title: 'C:\dir and "quote"') }
+      let(:template)  { { 'ticket.title' => '#{ticket.title}' }.to_json }
+      let(:json_data) { { 'ticket.title' => 'C:\dir and "quote"' } }
+
+      it 'escapes them into valid JSON and round-trips the value' do
+        expect(service_result).to eq(json_data)
+      end
+    end
+
     context 'when object attributes are used in the placeholder', db_strategy: :reset do
       let(:ticket) { create(:ticket, object_manager_attribute_name => object_manager_attribute_value) }
 
