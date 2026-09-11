@@ -21,6 +21,11 @@ export const PasteHandler = Extension.create({
             const { clipboardData } = event
             if (!clipboardData) return false
 
+            // Inside a code block ProseMirror inserts the clipboard as plain text and keeps the
+            //   line breaks, which is what we want there - our HTML cleanup would instead produce
+            //   block level nodes a code block cannot hold, and the content would land after it.
+            if (view.state.selection.$from.parent.type.spec.code) return false
+
             const content = clipboardData.getData('text/html')
 
             // If no HTML content, let ProseMirror handle plain text.
