@@ -279,6 +279,9 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
       mail[:mail_instance].cc.each { |cc| certs += ::SMIMECertificate.find_by_email_address(cc, filter: { key: 'private', usage: :encryption }) }
     end
 
-    certs
+    delivered_to = mail[:mail_instance]['Delivered-To']&.value
+    certs += ::SMIMECertificate.find_by_email_address(delivered_to, filter: { key: 'private', usage: :encryption }) if delivered_to.present?
+
+    certs.uniq
   end
 end
