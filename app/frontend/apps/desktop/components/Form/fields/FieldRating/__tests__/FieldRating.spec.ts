@@ -86,7 +86,7 @@ describe('Form - Field - Rating', () => {
     locale.localeData = { dir } as any
 
     const previousValue = star === 1 ? '' : (star - 1).toString()
-    const newValue = (star - 1).toString()
+    const newValue = star.toString()
 
     const view = renderRatingField({
       value: previousValue,
@@ -102,7 +102,7 @@ describe('Form - Field - Rating', () => {
     // Increase rating.
     await view.events.type(input, `{Arrow${dir === EnumTextDirection.Ltr ? 'Right' : 'Left'}}`)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(node.context?.value).toBe(newValue)
       expect(starIcon).toHaveClasses(['text-black', 'dark:text-white', 'icon-star-fill'])
     })
@@ -110,7 +110,7 @@ describe('Form - Field - Rating', () => {
     // Decrease rating.
     await view.events.type(input, `{Arrow${dir === EnumTextDirection.Ltr ? 'Left' : 'Right'}}`)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(node.context?.value).toBe(previousValue)
       expect(starIcon).toHaveClass('icon-star')
     })
@@ -118,7 +118,7 @@ describe('Form - Field - Rating', () => {
 
   it.each([1, 2, 3, 4, 5])('supports vertical keyboard control (%s)', async (star) => {
     const previousValue = star === 1 ? '' : (star - 1).toString()
-    const newValue = (star - 1).toString()
+    const newValue = star.toString()
 
     const view = renderRatingField({
       value: previousValue,
@@ -134,7 +134,7 @@ describe('Form - Field - Rating', () => {
     // Increase rating.
     await view.events.type(input, '{ArrowUp}')
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(node.context?.value).toBe(newValue)
       expect(starIcon).toHaveClasses(['text-black', 'dark:text-white', 'icon-star-fill'])
     })
@@ -142,7 +142,7 @@ describe('Form - Field - Rating', () => {
     // Decrease rating.
     await view.events.type(input, '{ArrowDown}')
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(node.context?.value).toBe(previousValue)
       expect(starIcon).toHaveClass('icon-star')
     })
@@ -162,9 +162,9 @@ describe('Form - Field - Rating', () => {
 
     await view.events.type(numberInput, value)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(node.context?.value).toBe(value)
-      expect(numberInput).toHaveValue(value)
+      expect(numberInput).toHaveValue(star)
     })
   })
 })
