@@ -1,0 +1,5 @@
+# Certain jobs use no artifacts of the earlier stages. Without this, GitLab downloads all of
+#   them, and retrying such a job after the database dumps expired fails it with
+#   `missing_dependency_failure`.
+.no_artifact_dependencies:
+  dependencies: []

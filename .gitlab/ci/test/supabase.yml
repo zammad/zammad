@@ -1,5 +1,7 @@
 .template_supabase:
   stage: test
+  extends:
+    - .no_artifact_dependencies
   tags:
     - push-to-ftp # use only allow-listed ci runners
   services:

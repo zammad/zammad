@@ -3,6 +3,8 @@ assets:build:
   # No `rules:` on purpose: the browser jobs of a filtered pipeline ($JOB_FILTER,
   #   $BROWSER_TEST_FILTER) still need the assets built here, as the specs
   #   themselves skip the compilation ($CI_SKIP_ASSETS_PRECOMPILE).
+  extends:
+    - .no_artifact_dependencies
   services:
     - !reference [.services, postgresql]
   artifacts:
@@ -32,6 +34,7 @@ assets:build:pwa:
   stage: test
   extends:
     - .job_rules_default
+    - .no_artifact_dependencies
   services:
     - !reference [.services, postgresql]
   cache: !reference [.cache, read_only_full]

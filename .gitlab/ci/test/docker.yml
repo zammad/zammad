@@ -1,6 +1,8 @@
 .template_docker:
   image: docker
   stage: test
+  extends:
+    - .no_artifact_dependencies
   interruptible: false
   rules:
     - !reference [.rule_fragments, main_repository_only]

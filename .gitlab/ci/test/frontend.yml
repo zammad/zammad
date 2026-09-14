@@ -2,6 +2,7 @@
   stage: test
   extends:
     - .job_rules_default
+    - .no_artifact_dependencies
   cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, pnpm_install]
@@ -25,6 +26,7 @@ frontend:cypress:
   extends:
     - .job_rules_default
     - .tags_docker_low_concurrency
+    - .no_artifact_dependencies
   cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, pnpm_install_cypress]
