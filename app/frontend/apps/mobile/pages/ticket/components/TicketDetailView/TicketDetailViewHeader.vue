@@ -63,7 +63,7 @@ const showActions = () => {
       class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
       data-test-id="header-content"
     >
-      <div class="font-bold">
+      <div class="line-clamp-1 font-bold break-all">
         {{ ticket && `#${ticket.number}` }}
       </div>
       <div class="text-gray">

@@ -57,7 +57,7 @@ const headerClass = computed(() => {
     :is="containerTag"
     v-if="title || backUrl || (onAction && actionTitle) || hasSlots"
     ref="header"
-    class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
+    class="grid h-16 shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">
