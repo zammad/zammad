@@ -1467,14 +1467,14 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     it 'sends email verification notifications' do
       allow(NotificationFactory::Mailer).to receive(:notification)
-      make_request successful_params
+      perform_enqueued_jobs(only: NotificationMailerJob) { make_request successful_params }
       expect(NotificationFactory::Mailer).to have_received(:notification) { |arguments| arguments[:template] == 'signup' }
     end
 
     it 'sends password reset notification when email already used' do
       create(:customer, email: successful_params[:email])
       allow(NotificationFactory::Mailer).to receive(:notification)
-      make_request successful_params
+      perform_enqueued_jobs(only: NotificationMailerJob) { make_request successful_params }
       expect(NotificationFactory::Mailer).to have_received(:notification) { |arguments| arguments[:template] == 'signup_taken_reset' }
     end
 

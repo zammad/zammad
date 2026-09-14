@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::PasswordReset::Send < Service::Base
+  include Service::Concerns::HoldsResponseDeadline
 
   attr_reader :username
 
@@ -16,20 +17,23 @@ class Service::User::PasswordReset::Send < Service::Base
 
     Service::CheckFeatureEnabled.execute(name: 'user_lost_password')
 
-    result = ::User.password_reset_new_token(username)
+    # Answers after a fixed duration, whatever the part below has to do.
+    with_response_deadline do
+      result = ::User.password_reset_new_token(username)
 
-    # Result is always positive to avoid leaking of existing user accounts.
-    return true if !result || !result[:token]
+      # Result is always positive to avoid leaking of existing user accounts.
+      next true if !result || !result[:token]
 
-    result[:url] = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#{@path[:reset]}#{result[:token].token}"
+      # Delivered in the background, so that the request does not wait for the SMTP server.
+      NotificationMailerJob.perform_later(
+        template: 'password_reset',
+        user:     result[:user],
+        objects:  result,
+        url_path: @path[:reset],
+      )
 
-    NotificationFactory::Mailer.notification(
-      template: 'password_reset',
-      user:     result[:user],
-      objects:  result,
-    )
-
-    true
+      true
+    end
   end
 
   private

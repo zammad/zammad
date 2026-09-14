@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Signup', authenticated_as: false, type: :system do
+RSpec.describe 'Signup', authenticated_as: false, performs_jobs: true, type: :system do
 
   notification_url = ''
 
@@ -23,6 +23,10 @@ RSpec.describe 'Signup', authenticated_as: false, type: :system do
     click '.js-submit'
 
     expect(page).to have_css '.signup', text: 'Registration successful!'
+
+    # The verification mail is delivered in the background.
+    perform_enqueued_jobs only: NotificationMailerJob
+
     expect(notification_url).to be_present
 
     visit notification_url
