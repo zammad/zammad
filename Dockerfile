@@ -74,6 +74,14 @@ RUN if [ -z "${COMMIT_SHA}" ]; then \
     echo "Error: the required build argument \$COMMIT_SHA is missing."; \
     exit 1; \
   fi; \
+  if ! [[ "${COMMIT_SHA}" =~ ^[0-9a-fA-F]{8,40}$ ]]; then \
+    echo "Error: the build argument \$COMMIT_SHA must match [0-9a-fA-F]{8,40}, got '${COMMIT_SHA}'."; \
+    exit 1; \
+  fi; \
+  if [ -n "${BUILD_LABEL}" ] && ! [[ "${BUILD_LABEL}" =~ ^[0-9a-zA-Z_.-]{1,35}$ ]]; then \
+    echo "Error: the build argument \$BUILD_LABEL must match [0-9a-zA-Z_.-]{1,35}, got '${BUILD_LABEL}'."; \
+    exit 1; \
+  fi; \
   COMMIT_SHA_SHORT=$(echo "${COMMIT_SHA}" | cut -c 1-8); \
   echo "$(tr -d '\n' < VERSION)-${COMMIT_SHA_SHORT}${BUILD_LABEL:+.${BUILD_LABEL}}.docker" > VERSION; \
   echo 'Updated build information in VERSION:'; \
