@@ -39,6 +39,26 @@ The CoffeeScript frontend uses REST controllers.
 - Never edit translation files (`i18n/*.po`) directly —
   translations are managed via translations.zammad.org.
 
+### Code Comments
+
+Comment only what the code cannot say itself: a non-obvious _why_, a
+workaround with its reason, a spec/protocol quirk, or a deliberate
+deviation from a pattern. Otherwise add no comment — clear naming and
+small methods are preferred over explanation.
+
+- One or two short lines, in the style of the surrounding file.
+- Never restate what the next line does, summarise a block, label
+  sections (`# --- setup ---`), or narrate a change (`# new`, `# was …`,
+  `# fixed`).
+- Keep out reasoning that belongs in the commit message, the issue or
+  the MR description.
+- Never reference an issue from an internal repository (`coordination-*`) —
+  this repository is publicly mirrored. Reference a public `zammad/zammad`
+  issue, or state the reason without a link.
+- Never mark a fix for a security vulnerability as such — this repository
+  is publicly mirrored, and the comment points at the vulnerable code in
+  installations that are not updated yet.
+
 ### UI Principles
 
 - Icon-only buttons need `v-tooltip` supplying the accessible name.

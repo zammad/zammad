@@ -2,8 +2,7 @@
 
 require 'rails_helper'
 
-# Regression tests for the SSO auto-link account takeover (CWE-287 / CWE-345,
-# GitHub coordination-security#91).
+# Regression tests for the SSO auto-link account takeover (CWE-287 / CWE-345).
 #
 # An attacker controlling an identity at a configured provider could set that
 # identity's email to a victim's address. Because Zammad linked to an existing
