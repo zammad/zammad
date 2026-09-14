@@ -279,6 +279,20 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
       mail[:mail_instance].cc.each { |cc| certs += ::SMIMECertificate.find_by_email_address(cc, filter: { key: 'private', usage: :encryption }) }
     end
 
-    certs
+    Array.wrap(mail[:mail_instance]['Delivered-To']).each do |delivered_to|
+      address = delivered_to_address(delivered_to.value)
+      next if address.blank?
+
+      certs += ::SMIMECertificate.find_by_email_address(address, filter: { key: 'private', usage: :encryption })
+    end
+
+    certs.uniq
+  end
+
+  # Delivered-To is an unstructured header, so its value may carry angle brackets or a display name.
+  def delivered_to_address(value)
+    Mail::Address.new(value).address
+  rescue Mail::Field::ParseError
+    nil
   end
 end
