@@ -846,6 +846,70 @@ RSpec.describe SecureMailing::SMIME do
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq(recipient_certificate_subject)
         end
 
+        context 'when recipient is only present in Delivered-To (#6357)' do
+          let(:mail) do
+            smime_mail = build_mail
+
+            smime_mail.to = 'forwarding-address@example.com'
+            smime_mail.cc = nil
+            smime_mail['Delivered-To'] = recipient_email_address
+
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'decrypts' do
+            expect(mail[:body]).to include(raw_body)
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq(recipient_certificate_subject)
+          end
+
+          context 'when the address is wrapped in angle brackets' do
+            let(:mail) do
+              smime_mail = build_mail
+
+              smime_mail.to = 'forwarding-address@example.com'
+              smime_mail.cc = nil
+              smime_mail['Delivered-To'] = "<#{recipient_email_address}>"
+
+              mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+              SecureMailing.incoming(mail)
+
+              mail
+            end
+
+            it 'decrypts' do
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq(recipient_certificate_subject)
+            end
+          end
+
+          context 'when the mail was forwarded over multiple hops' do
+            let(:mail) do
+              smime_mail = build_mail
+
+              smime_mail.to = 'forwarding-address@example.com'
+              smime_mail.cc = nil
+              smime_mail['Delivered-To'] = 'forwarding-address@example.com'
+              smime_mail['Delivered-To'] = recipient_email_address
+
+              mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+              SecureMailing.incoming(mail)
+
+              mail
+            end
+
+            it 'decrypts' do
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq(recipient_certificate_subject)
+            end
+          end
+        end
+
         it_behaves_like 'HttpLog writer', 'success'
 
         context 'expired allowed' do
