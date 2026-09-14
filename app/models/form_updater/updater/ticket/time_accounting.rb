@@ -19,9 +19,17 @@ class FormUpdater::Updater::Ticket::TimeAccounting < FormUpdater::Updater
   end
 
   def accounted_time_type_options
+    active_types = ::Ticket::TimeAccounting::Type.where(active: true).to_a
+
+    # An empty type list would only render an empty select, so the field stays hidden until
+    #   there is at least one active type to pick from. The configured default may have been
+    #   deactivated in the meantime, in which case nothing gets pre-selected.
+    default_type = active_types.find { |type| type.id == Setting.get('time_accounting_type_default') }
+
     {
-      value:   Setting.get('time_accounting_type_default'),
-      options: ::Ticket::TimeAccounting::Type.where(active: true).map do |type|
+      show:    Setting.get('time_accounting_types').present? && active_types.any?,
+      value:   default_type&.id,
+      options: active_types.map do |type|
         {
           value: type.id,
           label: type.name,

@@ -148,6 +148,18 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         end
       end
 
+      # Deactivating the otherwise active type leaves the instance without any active one.
+      context 'without any active type' do
+        let(:active_type) { create(:ticket_time_accounting_type, active: false) }
+
+        it 'does not show types dropdown', :aggregate_failures do
+          in_modal do
+            expect(page).to have_field 'time_unit'
+            expect(page).to have_no_text %r{Activity Type}i
+          end
+        end
+      end
+
       context 'when more than three types are used', authenticated_as: :authenticate do
         let(:create_new_article)          { false }
         let(:types)                       { create_list(:ticket_time_accounting_type, 4) }

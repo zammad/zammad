@@ -145,6 +145,7 @@ describe('time accounting in the ticket detail view', () => {
           formUpdater: {
             fields: {
               accounted_time_type_id: {
+                show: true,
                 options: [
                   { value: 1, label: 'None' },
                   { value: 2, label: 'Finance' },

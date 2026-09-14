@@ -25,31 +25,37 @@ const renderTimeAccountingFlyout = async () => {
   return result
 }
 
-describe('TimeAccountingFlyout.vue', () => {
-  beforeEach(() => {
-    mockFormUpdaterQuery({
-      formUpdater: {
-        fields: {
-          accounted_time_type_id: {
-            value: 1,
-            options: [
-              {
-                value: 1,
-                label: 'test type 1',
-              },
-              {
-                value: 2,
-                label: 'test type 2',
-              },
-              {
-                value: 3,
-                label: 'test type 3',
-              },
-            ],
-          },
+// The activity type field is hidden in the schema and only revealed by the initial form
+//   updater, so `show` is what decides whether it is rendered.
+const mockTimeAccountingTypesFormUpdater = (show?: boolean) =>
+  mockFormUpdaterQuery({
+    formUpdater: {
+      fields: {
+        accounted_time_type_id: {
+          show,
+          value: 1,
+          options: [
+            {
+              value: 1,
+              label: 'test type 1',
+            },
+            {
+              value: 2,
+              label: 'test type 2',
+            },
+            {
+              value: 3,
+              label: 'test type 3',
+            },
+          ],
         },
       },
-    })
+    },
+  })
+
+describe('TimeAccountingFlyout.vue', () => {
+  beforeEach(() => {
+    mockTimeAccountingTypesFormUpdater()
   })
 
   it('renders time accounting flyout', async () => {
@@ -122,10 +128,16 @@ describe('TimeAccountingFlyout.vue', () => {
     expect(wrapper.queryByText('hour(s)')).toBeInTheDocument()
   })
 
+  it('does not render the time accounting type selection if the form updater hides it', async () => {
+    mockTimeAccountingTypesFormUpdater(false)
+
+    const wrapper = await renderTimeAccountingFlyout()
+
+    expect(wrapper.queryByLabelText('Activity type')).not.toBeInTheDocument()
+  })
+
   it('supports optional time accounting type selection', async () => {
-    mockApplicationConfig({
-      time_accounting_types: true,
-    })
+    mockTimeAccountingTypesFormUpdater(true)
 
     const wrapper = await renderTimeAccountingFlyout()
 
@@ -186,13 +198,12 @@ describe('TimeAccountingFlyout.vue', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Account time' }))
 
-    expect(wrapper.emitted('account-time')[0]).toEqual(
-      expect.arrayContaining([
-        {
-          time_unit: '1.5',
-          accounted_time_type_id: 1,
-        },
-      ]),
-    )
+    // The hidden activity type field contributes no value, even though the form updater
+    //   provided a default one.
+    expect(wrapper.emitted('account-time')[0]).toEqual([
+      {
+        time_unit: '1.5',
+      },
+    ])
   })
 })

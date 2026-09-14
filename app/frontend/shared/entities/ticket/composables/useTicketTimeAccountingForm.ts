@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, reactive } from 'vue'
-
 import type { FormSchemaField, FormSchemaNode } from '#shared/components/Form/types.ts'
 import { useTicketAccountedTime } from '#shared/entities/ticket/composables/useTicketAccountedTime.ts'
 import type { TicketArticleTimeAccountingFormData } from '#shared/entities/ticket/types.ts'
@@ -33,7 +31,7 @@ const validateTimeAccountingUnit = (node: FormKitNode<string>) => {
 }
 
 export const useTicketTimeAccountingForm = () => {
-  const { timeAccountingDisplayUnit, timeAccountingConfig } = useTicketAccountedTime()
+  const { timeAccountingDisplayUnit } = useTicketAccountedTime()
 
   // Both apps show the configured unit next to the input, but with their own markup, so the
   //   additional props of the time unit field are passed in by the caller.
@@ -60,7 +58,9 @@ export const useTicketTimeAccountingForm = () => {
             ...timeUnitFieldProps,
           },
           {
-            if: '$timeAccountingTypes === true',
+            // The field is only useful with at least one active activity type, so the initial
+            //   form updater decides whether it gets revealed.
+            show: false,
             id: 'accountedTimeTypeId',
             name: 'accounted_time_type_id',
             label: __('Activity type'),
@@ -73,13 +73,8 @@ export const useTicketTimeAccountingForm = () => {
       },
     ] as FormSchemaNode[]
 
-  const timeAccountingSchemaData = reactive({
-    timeAccountingTypes: computed(() => timeAccountingConfig.value.time_accounting_types),
-  })
-
   return {
     timeAccountingDisplayUnit,
-    timeAccountingSchemaData,
     buildTimeAccountingFormSchema,
   }
 }

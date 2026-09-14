@@ -37,12 +37,14 @@ class App.TicketZoomTimeAccountingModal extends App.ControllerModal
       { name: 'time_unit', display: __('Accounted Time'), tag: 'input', type: 'text', null: false, placeholder: __('Enter the time you want to record'), appendText: @timeAccountingDisplayUnit() }
     ]
 
-    if @Config.get('time_accounting_types')
+    activeTypes = App.TicketTimeAccountingType.search(filter: { active: true })
 
-      # Pre-select the default activity type, but only if it's active.
-      if @Config.get('time_accounting_type_default')
-        defaultType   = App.TicketTimeAccountingType.find(@Config.get('time_accounting_type_default'))
-        defaultTypeId = defaultType.active and defaultType.id
+    # An empty type list would only render an empty select, so the field needs an active type
+    #   next to the enabled setting.
+    if @Config.get('time_accounting_types') and _.isEmpty(activeTypes) is false
+
+      # Pre-select the default activity type, but only if it's still active.
+      defaultTypeId = _.findWhere(activeTypes, { id: @Config.get('time_accounting_type_default') })?.id
 
       configure_attributes.push
         name: 'accounted_time_type_id'

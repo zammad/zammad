@@ -40,8 +40,7 @@ const onClose = (isCancel?: boolean) => {
   emit('skip')
 }
 
-const { timeAccountingDisplayUnit, timeAccountingSchemaData, buildTimeAccountingFormSchema } =
-  useTicketTimeAccountingForm()
+const { timeAccountingDisplayUnit, buildTimeAccountingFormSchema } = useTicketTimeAccountingForm()
 
 const formSchema = buildTimeAccountingFormSchema(
   timeAccountingDisplayUnit.value
@@ -82,7 +81,6 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
         id="form-ticket-time-accounting"
         ref="form"
         :schema="formSchema"
-        :schema-data="timeAccountingSchemaData"
         should-autofocus
         :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketTimeAccounting"
         form-updater-initial-only

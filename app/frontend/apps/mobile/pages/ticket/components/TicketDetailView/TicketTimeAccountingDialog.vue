@@ -30,8 +30,7 @@ const emit = defineEmits<{
 
 const { form, canSubmit } = useForm()
 
-const { timeAccountingDisplayUnit, timeAccountingSchemaData, buildTimeAccountingFormSchema } =
-  useTicketTimeAccountingForm()
+const { timeAccountingDisplayUnit, buildTimeAccountingFormSchema } = useTicketTimeAccountingForm()
 
 // The configured unit is not part of the value, it only tells the agent what to enter.
 const formSchema = buildTimeAccountingFormSchema(
@@ -97,7 +96,6 @@ const cancelTimeAccounting = () => {
       class="w-full p-4"
       should-autofocus
       :schema="formSchema"
-      :schema-data="timeAccountingSchemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketTimeAccounting"
       form-updater-initial-only
       @submit="submitForm($event as FormSubmitData<TicketArticleTimeAccountingFormData>)"
