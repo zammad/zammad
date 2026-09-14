@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-# encoding: utf-8
-
 class Channel::EmailParser
   include Channel::EmailHelper
 
