@@ -22,7 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - debian:11
           - debian:12
           - debian:13
           - el:9

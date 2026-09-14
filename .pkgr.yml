@@ -35,20 +35,6 @@ targets:
       # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
       - epel-release
       - shared-mime-info
-  debian-11:
-    dependencies:
-      - curl
-      - elasticsearch|elasticsearch-oss
-      - nginx|apache2
-      - postgresql
-      - libimlib2
-      - libjemalloc2
-      - shared-mime-info
-      - redis-server
-    build_dependencies:
-      - libimlib2
-      - libimlib2-dev
-      - shared-mime-info
   debian-12:
     dependencies:
       - curl

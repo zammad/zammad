@@ -2,6 +2,20 @@
 
 ## Upcoming releases
 
+### Debian 11 will no longer be supported
+
+**Who is affected?** Admins of instances installed from the Zammad package repository on Debian 11
+("bullseye").
+
+Debian 11 reached its LTS end of life on 2026-08-31 and no longer receives security updates. A future
+release will therefore no longer be built for it, and the package repository will provide no Debian 11
+packages for that release and later ones. Zammad 7.1 keeps receiving Debian 11 packages until it goes
+out of maintenance.
+
+⚠️ Upgrade the operating system to a supported Debian release before updating.
+
+**Related issue:** [#6360](https://github.com/zammad/zammad/issues/6360)
+
 ### Inline attachments will be listed separately in ticket article API responses
 
 **Who is affected?** Integrations that read inline images from the `attachments` list of ticket article
