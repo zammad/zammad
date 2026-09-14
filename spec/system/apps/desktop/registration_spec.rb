@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: false, type: :system do
+RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: false, performs_jobs: true, type: :system do
 
   notification_url = ''
 
@@ -25,6 +25,10 @@ RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: f
     click_on 'Create my account'
 
     expect(page).to have_text('Thanks for joining. Email sent to "john.doe@example.com".')
+
+    # The verification mail is delivered in the background.
+    perform_enqueued_jobs only: NotificationMailerJob
+
     expect(notification_url).to be_present
 
     visit notification_url.sub(%r{.*/desktop/}, '')

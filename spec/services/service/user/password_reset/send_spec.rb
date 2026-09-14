@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::User::PasswordReset::Send do
+RSpec.describe Service::User::PasswordReset::Send, performs_jobs: true do
   subject(:service_result) { described_class.execute(username:) }
 
   let(:user)     { create(:user) }
@@ -23,6 +23,24 @@ RSpec.describe Service::User::PasswordReset::Send do
       expect { service_result }.to change(Token, :count)
     end
 
+    it 'defers the delivery to a background job' do
+      expect { service_result }.to have_enqueued_job(NotificationMailerJob)
+    end
+
+    it 'does not deliver the email within the request' do
+      allow(NotificationFactory::Mailer).to receive(:deliver)
+
+      service_result
+
+      expect(NotificationFactory::Mailer).not_to have_received(:deliver)
+    end
+
+    it 'keeps the token out of the job arguments' do
+      service_result
+
+      expect(enqueued_jobs.to_s).not_to include(Token.last.token)
+    end
+
     it 'sends a valid password reset link' do
       message = nil
 
@@ -30,7 +48,7 @@ RSpec.describe Service::User::PasswordReset::Send do
         message = params[:body]
       end
 
-      service_result
+      perform_enqueued_jobs { service_result }
 
       expect(message).to include "<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last.token}\">"
     end
@@ -43,6 +61,22 @@ RSpec.describe Service::User::PasswordReset::Send do
 
     it 'does not generate a new token' do
       expect { service_result }.to not_change(Token, :count)
+    end
+
+    it 'does not enqueue a delivery' do
+      expect { service_result }.not_to have_enqueued_job(NotificationMailerJob)
+    end
+  end
+
+  shared_examples 'holding the response deadline' do
+    it 'holds the response until the deadline' do
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      service_result
+
+      elapsed = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - started).seconds
+
+      expect(elapsed).to be >= Service::Concerns::HoldsResponseDeadline::RESPONSE_DEADLINE
     end
   end
 
@@ -72,6 +106,20 @@ RSpec.describe Service::User::PasswordReset::Send do
     end
   end
 
+  # The tolerance covers scheduler jitter only; both calls are held to the same deadline.
+  def expect_indistinguishable(first, second)
+    durations = [first, second].map do |username|
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      described_class.execute(username:)
+
+      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - started).seconds
+    end
+
+    expect((durations.first - durations.last).abs)
+      .to be < (Service::Concerns::HoldsResponseDeadline::RESPONSE_DEADLINE / 10)
+  end
+
   describe '#execute' do
     context 'with disabled lost password feature' do
       before do
@@ -84,6 +132,7 @@ RSpec.describe Service::User::PasswordReset::Send do
 
     context 'with a valid user login' do
       it_behaves_like 'sending the token'
+      it_behaves_like 'holding the response deadline'
       it_behaves_like 'raising error if import mode is on'
     end
 
@@ -94,10 +143,15 @@ RSpec.describe Service::User::PasswordReset::Send do
       it_behaves_like 'raising error if import mode is on'
     end
 
+    it 'takes the same time for a known and an unknown user name' do
+      expect_indistinguishable(user.login, 'foobar')
+    end
+
     context 'with an invalid user login' do
       let(:username) { 'foobar' }
 
       it_behaves_like 'returning success'
+      it_behaves_like 'holding the response deadline'
       it_behaves_like 'raising error if import mode is on'
     end
   end

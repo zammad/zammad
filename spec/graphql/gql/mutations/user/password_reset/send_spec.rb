@@ -52,7 +52,7 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Send, type: :graphql do
       end
     end
 
-    context 'with existing user' do
+    context 'with existing user', performs_jobs: true do
       it 'sends a password reset link', :aggregate_failures do
         message = nil
 
@@ -60,7 +60,7 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Send, type: :graphql do
           message = params[:body]
         end
 
-        expect { gql.execute(query, variables: variables) }.to change(Token, :count)
+        expect { perform_enqueued_jobs { gql.execute(query, variables: variables) } }.to change(Token, :count)
         expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
         expect(message).to include("<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last[:token]}\">")
       end

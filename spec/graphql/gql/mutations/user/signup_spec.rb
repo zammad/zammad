@@ -41,7 +41,7 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
       end
     end
 
-    context 'with enabled user signup' do
+    context 'with enabled user signup', performs_jobs: true do
       before do
         Setting.set('user_create_account', true)
       end
@@ -53,7 +53,7 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
           message = params[:body]
         end
 
-        gql.execute(query, variables: variables)
+        perform_enqueued_jobs { gql.execute(query, variables: variables) }
         expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
         expect(User.find_by(email: 'bender@futurama.fiction')).to be_present
         expect(message).to include("<a href=\"http://zammad.example.com/desktop/signup/verify/#{Token.last[:token]}\">")
@@ -114,7 +114,7 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
           allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
             message = params[:body]
           end
-          gql.execute(query, variables: variables)
+          perform_enqueued_jobs { gql.execute(query, variables: variables) }
 
           expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
           expect(message).to include('You or someone else tried to sign up with this email address.')

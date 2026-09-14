@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::User::Signup do
+RSpec.describe Service::User::Signup, performs_jobs: true do
   subject(:service_result) { described_class.execute(user_data:, resend:) }
 
   let(:resend) { false }
@@ -44,6 +44,22 @@ RSpec.describe Service::User::Signup do
       expect(User.find_by(email: 'bender@futurama.fiction')).to be_present.and have_attributes(verified: false)
     end
 
+    it 'defers the delivery to a background job', if: with_new_user || (with_existing_user != with_resend) do
+      expect { service_result }.to have_enqueued_job(NotificationMailerJob)
+    end
+
+    it 'does not enqueue a delivery', if: !with_new_user && with_existing_user && with_resend do
+      expect { service_result }.not_to have_enqueued_job(NotificationMailerJob)
+    end
+
+    it 'does not deliver an email within the request' do
+      allow(NotificationFactory::Mailer).to receive(:deliver)
+
+      service_result
+
+      expect(NotificationFactory::Mailer).not_to have_received(:deliver)
+    end
+
     it 'sends an email with the verification link', if: with_new_user || (!with_existing_user && with_resend) do
       message = nil
 
@@ -51,7 +67,7 @@ RSpec.describe Service::User::Signup do
         message = params[:body]
       end
 
-      service_result
+      perform_enqueued_jobs { service_result }
 
       expect(message).to include("<a href=\"http://zammad.example.com/desktop/signup/verify/#{Token.last[:token]}\">")
     end
@@ -63,7 +79,7 @@ RSpec.describe Service::User::Signup do
         message = params[:body]
       end
 
-      service_result
+      perform_enqueued_jobs { service_result }
 
       expect(message).to include("<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last[:token]}\">")
     end
@@ -75,11 +91,23 @@ RSpec.describe Service::User::Signup do
         message = params[:body]
       end
 
-      service_result
+      perform_enqueued_jobs { service_result }
 
       expect(message).to be_nil
     end
 
+  end
+
+  shared_examples 'holding the response deadline' do
+    it 'holds the response until the deadline' do
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      service_result
+
+      elapsed = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - started).seconds
+
+      expect(elapsed).to be >= Service::Concerns::HoldsResponseDeadline::RESPONSE_DEADLINE
+    end
   end
 
   shared_examples 'raising error if import mode is on' do
@@ -101,6 +129,20 @@ RSpec.describe Service::User::Signup do
           .with(message)
       end
     end
+  end
+
+  # The tolerance covers scheduler jitter only; both calls are held to the same deadline.
+  def expect_indistinguishable(first, second)
+    durations = [first, second].map do |email|
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      described_class.execute(user_data: { email: }, resend: true)
+
+      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - started).seconds
+    end
+
+    expect((durations.first - durations.last).abs)
+      .to be < (Service::Concerns::HoldsResponseDeadline::RESPONSE_DEADLINE / 10)
   end
 
   describe '#execute' do
@@ -196,11 +238,23 @@ RSpec.describe Service::User::Signup do
       end
 
       it_behaves_like 'returning success', with_resend: true
+      it_behaves_like 'holding the response deadline'
+
+      it 'takes the same time for a known and an unknown email address' do
+        expect_indistinguishable('bender@futurama.fiction', 'leela@futurama.fiction')
+      end
 
       context 'when user is already verified' do
         let(:verified) { true }
 
         it_behaves_like 'returning success', with_existing_user: true, with_resend: true
+        it_behaves_like 'holding the response deadline'
+      end
+
+      context 'when no account exists for the email address' do
+        let(:user_data) { { email: 'leela@futurama.fiction' } }
+
+        it_behaves_like 'holding the response deadline'
       end
 
       it_behaves_like 'raising error if import mode is on' do
