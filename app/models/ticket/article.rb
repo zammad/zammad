@@ -100,19 +100,19 @@ class Ticket::Article < ApplicationModel
   end
 
   # Replaces cid: references to images in HTML articles.
-  # Returns the modified body and the remaining attachments (without inline attachments ).
+  # Returns the modified body, the remaining attachments (without inline attachments) and the inline attachments.
   # If the article does not need modification, the original body and attachments are returned.
   #
   # @param article [Ticket::Article] the article for which to replace the URLs
-  # @return [Array(String, Array<Attachment>)] the modified body and the remaining attachments
+  # @return [Array(String, Array<Attachment>, Array<Attachment>)] the modified body, the remaining attachments and the inline attachments
   #
   # Example usage:
-  # body, attachments = Ticket::Article.insert_urls(article)
+  # body, attachments, inline_attachments = Ticket::Article.insert_urls(article)
   def self.insert_urls(article)
     if article.attachments.blank? ||
        !article.content_type.match?(%r{text/html}i) ||
        article.body !~ %r{<img}i
-      return [article.body, article.attachments]
+      return [article.body, article.attachments, []]
     end
 
     inline_attachments = {}
@@ -136,9 +136,9 @@ class Ticket::Article < ApplicationModel
       replace
     end
 
-    new_attachments = article.attachments.reject { inline_attachments[it.id] }
+    new_attachments, inline = article.attachments.partition { !inline_attachments[it.id] }
 
-    [new_body, new_attachments]
+    [new_body, new_attachments, inline]
   end
 
 =begin
@@ -308,11 +308,12 @@ returns
     attributes = super
     add_time_unit_to_attributes(attributes)
 
-    new_body, _new_attachments = Ticket::Article.insert_urls(self)
+    new_body, new_attachments, inline_attachments = Ticket::Article.insert_urls(self)
     attributes['body'] = new_body
+    attributes['attachments'] = new_attachments.map(&:attributes_for_display)
 
-    # REST API clients rely on inline attachments being listed here, keep them (#6254)
-    attributes['attachments'] = attachments.map(&:attributes_for_display)
+    # REST API clients rely on inline attachments being listed, keep them in a dedicated key (#6254)
+    attributes['inline_attachments'] = inline_attachments.map(&:attributes_for_display)
     attributes['body_rendering_error'] = body_rendering_error
 
     attributes
@@ -334,10 +335,13 @@ returns
   def attributes_with_association_ids
     attributes = super
 
-    new_body, new_attachments = Ticket::Article.insert_urls(self)
+    new_body, new_attachments, inline_attachments = Ticket::Article.insert_urls(self)
 
     attributes['body'] = new_body
     attributes['attachments'] = new_attachments.map(&:attributes_for_display)
+
+    # REST API clients rely on inline attachments being listed, keep them in a dedicated key (#6254)
+    attributes['inline_attachments'] = inline_attachments.map(&:attributes_for_display)
     attributes['body_rendering_error'] = body_rendering_error
 
     attributes

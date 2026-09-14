@@ -822,13 +822,24 @@ RSpec.describe Ticket::Article, type: :model do
              })
     end
 
-    describe '#attributes_with_association_names' do
-      it 'keeps inline attachments in the attachments list' do
-        attributes = article.attributes_with_association_names
+    shared_examples 'listing inline attachments separately' do |method|
+      it 'excludes inline attachments from the attachments list' do
+        attributes = article.public_send(method)
 
         expect(attributes['attachments'].pluck('filename'))
-          .to contain_exactly('some_file1.jpg', 'some_file2.pdf')
+          .to contain_exactly('some_file2.pdf')
       end
+
+      it 'lists inline attachments under inline_attachments' do
+        attributes = article.public_send(method)
+
+        expect(attributes['inline_attachments'].pluck('filename'))
+          .to contain_exactly('some_file1.jpg')
+      end
+    end
+
+    describe '#attributes_with_association_names' do
+      it_behaves_like 'listing inline attachments separately', :attributes_with_association_names
 
       it 'replaces cid references in the body' do
         attributes = article.attributes_with_association_names
@@ -838,12 +849,7 @@ RSpec.describe Ticket::Article, type: :model do
     end
 
     describe '#attributes_with_association_ids' do
-      it 'excludes inline attachments from the attachments list' do
-        attributes = article.attributes_with_association_ids
-
-        expect(attributes['attachments'].pluck('filename'))
-          .to contain_exactly('some_file2.pdf')
-      end
+      it_behaves_like 'listing inline attachments separately', :attributes_with_association_ids
     end
   end
 
