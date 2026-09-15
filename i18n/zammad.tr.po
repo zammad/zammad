@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-13 09:20+0000\n"
-"Last-Translator: Ozan Şahin <efarduos@outlook.com>\n"
+"PO-Revision-Date: 2026-09-08 08:12+0000\n"
+"Last-Translator: Murat Duman <mduman@metu.edu.tr>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
-"zammad-development/tr/>\n"
+"zammad-stable/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -496,7 +496,7 @@ msgstr "%s kimlik bilgileri"
 msgid "%s days ago"
 msgstr "%s gün önce"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:149
 msgid "%s deselected."
 msgstr "%s seçili değil."
 
@@ -533,9 +533,11 @@ msgstr "%s klasörler"
 msgid "%s groups to %s roles assignments"
 msgstr "%s gruplarından %s rollerine atamalar"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:37
 msgid "%s has updated this answer. Submitting will replace their changes."
 msgstr ""
+"%s bu yanıtı güncelledi. Gönderirseniz onun yaptığı değişikliklerin üzerine "
+"yazılır."
 
 #: app/frontend/shared/i18n/dates.ts:110
 msgid "%s hours ago"
@@ -641,7 +643,7 @@ msgstr "%s sonuç seçildi"
 msgid "%s result(s) selected, selection limit reached"
 msgstr "%s sonuç seçildi, seçim sınırına ulaşıldı"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:142
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s seçildi. Bırakma konumunu seçmek için ok tuşlarını kullanın, ardından "
@@ -1002,7 +1004,7 @@ msgstr ""
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "Zammad'ın yeni bir sürümü mevcuttur, lütfen tarayıcınızı yenileyin."
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:80
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:81
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
@@ -1022,6 +1024,8 @@ msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
 msgstr ""
+"Konuyla ilgili bir bilgi tabanı yanıtı hazırlanıyor. Taslak hazır olduğunda "
+"size bildirim gönderilecektir."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
@@ -1066,6 +1070,8 @@ msgstr "Kullanıcı gerekli!"
 msgid ""
 "A visibility change can only be scheduled for a point in time in the future."
 msgstr ""
+"Görünürlük değişikliği yalnızca gelecekteki bir zaman dilimi için "
+"planlanabilir."
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:12
 msgid ""
@@ -1376,6 +1382,8 @@ msgstr "Erişim belirteci"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:130
 msgid "Access token renewed, update your RSS reader with the new feed URLs."
 msgstr ""
+"Erişim belirteçi yenilendi, RSS okuyucunuzu yeni besleme URL’leriyle "
+"güncelleyin."
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:152
 msgid "Accessing your camera is forbidden. Please check your settings."
@@ -1749,9 +1757,9 @@ msgstr "Bekleyen hatırlatıcı ve yükseltilmiş destek taleplerine alarm ekley
 msgid "Add all values"
 msgstr "Tüm değerleri ekle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:396
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
 #, fuzzy
 #| msgid "Edit Answer"
 msgid "Add answer"
@@ -1766,9 +1774,9 @@ msgstr "Yüklemek için ek seçeneği ekleyin."
 msgid "Add bullet list"
 msgstr "Madde işareti listesi ekle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:379
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
 #, fuzzy
 #| msgid "Edit Category"
 msgid "Add category"
@@ -1850,7 +1858,7 @@ msgstr "Telefon görüşmesi ekle"
 msgid "Add reply"
 msgstr "Yanıt ekle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:71
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:77
 #, fuzzy
 #| msgid "%s schedulers"
 msgid "Add schedule"
@@ -1860,7 +1868,7 @@ msgstr "%s zamanlayıcı"
 msgid "Add selected values"
 msgstr "Seçilen değerleri ekle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:73
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:102
 #, fuzzy
 #| msgid "Add subclause"
 msgid "Add sub-category"
@@ -1890,9 +1898,9 @@ msgstr "Mevcut kayıtları güncelleyin"
 msgid "Add unordered list"
 msgstr "Sırasız liste ekle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:112
 msgid "Add visibility schedule"
-msgstr ""
+msgstr "Görünürlük zamanlaması ekle"
 
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:4
 msgid ""
@@ -1900,11 +1908,15 @@ msgid ""
 "Security Policy exceptions. Currently supported solutions are MediaCMS and "
 "PeerTube."
 msgstr ""
+"Video sunucunuzun adresini buraya ekleyin; böylece bu adres, İçerik Güvenlik "
+"Politikası istisnalarına dahil edilebilsin. Şu anda desteklenen çözümler "
+"MediaCMS ve PeerTube’dur."
 
 #: app/controllers/first_steps_controller.rb:105
 msgid "Additional Channels"
 msgstr "İlave Kanallar"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:60
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:140
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
@@ -1944,6 +1956,8 @@ msgid ""
 "Adds an invisible field to the web form and rejects submissions that fill it "
 "in, which automated clients tend to do."
 msgstr ""
+"Web formuna görünmez bir alan ekler ve bu alanı dolduran gönderimleri "
+"reddeder; otomatikleştirilmiş istemciler ve botlar genellikle bunu yapar."
 
 #: db/seeds/roles.rb:5
 msgid "Admin"
@@ -2041,7 +2055,7 @@ msgstr "Dosyaları ekle"
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 #: app/assets/javascripts/app/controllers/trigger.coffee:19
 msgid "Affects group field"
-msgstr ""
+msgstr "Grup alanını etkiler"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:63
 msgid "Affects only notifications for not assigned and all tickets."
@@ -2204,7 +2218,7 @@ msgstr "Tüm gruplar destek taleplerinin dağıtımı için dikkate alınacaktı
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:103
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
 msgid "All notifications will be deleted. This action cannot be undone."
-msgstr ""
+msgstr "Tüm bildirimler silinecektir. Bu işlem geri alınamaz."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:29
 msgid "All priorities will be considered for prioritizing tickets."
@@ -2343,6 +2357,8 @@ msgstr ""
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
+"Gömme (embedding) işlemleri için kullanılan bağlantı için bir gömme modeli "
+"yapılandırılmalıdır."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee:50
 msgid "An error has occurred"
@@ -2384,7 +2400,7 @@ msgstr "Beklenmeyen bir hata oluştu."
 msgid "An unexpected error occurred during system setup."
 msgstr "Sistem kurulumu sırasında beklenmeyen bir hata oluştu."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:752
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:768
 #: lib/ai/provider/concerns/handles_response.rb:22
 msgid "An unknown error occurred"
 msgstr "Bilinmeyen bir hata oluştu"
@@ -2454,14 +2470,14 @@ msgstr "Başka bir destek talebi |%s| destek talebiyle birleştirildi"
 msgid "Answer"
 msgstr "Cevapla"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:112
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:231
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer actions"
 msgstr "Cevaplar: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:171
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer count: %s"
@@ -2473,6 +2489,12 @@ msgstr "Cevaplar: %s"
 msgid "Answer navigation"
 msgstr "Bilgi Tabanı Cevap Oluşturma"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:307
+#, fuzzy
+#| msgid "Add ordered list"
+msgid "Answer order list"
+msgstr "Sıralı liste ekle"
+
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:90
 #, fuzzy
 #| msgid "Copy secret"
@@ -2480,6 +2502,7 @@ msgid "Answer title"
 msgstr "Gizli anahtarı kopyala"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:28
 msgid "Answers"
 msgstr "Cevaplar"
 
@@ -2652,12 +2675,9 @@ msgid "Archive ticket target state"
 msgstr "Destek talebi hedef durumunu arşivle"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:29
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:37
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:32
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:49
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:112
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:54
 msgid "Archived"
 msgstr "Arşivlenmiş"
 
@@ -2953,7 +2973,7 @@ msgstr "Eklenmiş Dosyalar"
 msgid "Attached files"
 msgstr "Eklenmiş Dosyalar"
 
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:118
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
@@ -3052,12 +3072,12 @@ msgstr "Ses dosyası"
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:30
 msgid "Audit Log"
-msgstr ""
+msgstr "Denetim Günlüğü"
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:30
 #: db/seeds/permissions.rb:341
 msgid "Audit Logs"
-msgstr ""
+msgstr "Denetim Günlükleri"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -3262,6 +3282,8 @@ msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
 msgstr ""
+"Kullanılabilir etiketler, “Etiketleri Yönet” bölümünde bulunanlarla "
+"sınırlıdır. AI temsilcisi yeni etiketler oluşturamayacaktır. %l"
 
 #: db/seeds/settings.rb:919
 msgid "Available types for a new ticket"
@@ -3309,7 +3331,7 @@ msgstr "Ortalama: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
 msgid "Azure AI (legacy deployment-based endpoints)"
-msgstr ""
+msgstr "Azure AI (eski dağıtım tabanlı uç noktalar)"
 
 #: db/seeds/settings.rb:3585
 msgid "BCC address for all outgoing emails"
@@ -3333,7 +3355,7 @@ msgid "BETA UI illustration"
 msgstr "BETA UI illüstrasyonu"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:800
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:816
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -3355,7 +3377,7 @@ msgid "Back to previous page"
 msgstr "Önceki sayfaya geri dön"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:227
 msgid "Back to search results"
 msgstr "Arama sonuçlarına geri dön"
 
@@ -3637,7 +3659,7 @@ msgstr "Yapay zeka sağlayıcısı"
 
 #: db/seeds/settings.rb:3243
 msgid "CAPTCHA provider options"
-msgstr ""
+msgstr "CAPTCHA sağlayıcı seçenekleri"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:18
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:501
@@ -3800,6 +3822,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue:24
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:209
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:77
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:201
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:30
@@ -3841,9 +3864,9 @@ msgstr "İptal Et ve Çıkış Yap"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:72
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:438
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3873,7 +3896,7 @@ msgstr "Kayıt silinemiyor çünkü bağımlı %{record} mevcut"
 
 #: app/models/ai/provider_connection.rb:438
 msgid "Cannot delete the Zammad AI connection on this system."
-msgstr ""
+msgstr "Bu sistemde Zammad AI bağlantısı silinemez."
 
 #: app/policies/ticket_policy.rb:47
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -3902,14 +3925,15 @@ msgid "Capture from camera"
 msgstr "Kameradan görüntü yakala"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:3
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:27
 msgid "Categories"
 msgstr "Kategoriler"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:186
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:58
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:170
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:85
 msgid "Category"
 msgstr "Kategori"
 
@@ -3917,13 +3941,13 @@ msgstr "Kategori"
 msgid "Category Attribute"
 msgstr "Kategori Özniteliği"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:183
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category actions"
 msgstr "Kategori sayfa düzeni"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category count: %s"
@@ -3935,7 +3959,13 @@ msgstr "Kategori sayfa düzeni"
 msgid "Category feed"
 msgstr "Kategori"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:246
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#, fuzzy
+#| msgid "Overview order list"
+msgid "Category order list"
+msgstr "Genel bakış sıralama listesi"
+
+#: app/assets/javascripts/app/models/knowledge_base.coffee:258
 msgid "Category page layout"
 msgstr "Kategori sayfa düzeni"
 
@@ -4003,6 +4033,7 @@ msgstr "%s olarak değiştir"
 msgid "Change language"
 msgstr "Hedef Dil"
 
+#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:9
 #: app/assets/javascripts/app/views/generic/history.jst.eco:2
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco:10
 msgid "Change order"
@@ -4277,6 +4308,8 @@ msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
 msgstr ""
+"Önerilen etiketlerin destek talebi üzerindeki mevcut etiketlere eklenmesini "
+"mi, yoksa bunların yerini almasını mı istediğinizi seçin."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:43
 msgid ""
@@ -4416,7 +4449,7 @@ msgstr "Tümünü ara"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
 msgid "Clear all advanced filter(s)?"
-msgstr ""
+msgstr "Tüm gelişmiş filtreleri temizlemek ister misiniz?"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:207
 #, fuzzy
@@ -4582,7 +4615,7 @@ msgstr "Sekmeyi kapat"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:15
 msgid "Close tab and add another answer"
-msgstr ""
+msgstr "Sekmeyi kapat ve başka bir cevap ekle"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:13
 #, fuzzy
@@ -4641,11 +4674,11 @@ msgstr "Kapanış zamanı"
 
 #: lib/form_spam_protection/captcha/turnstile.rb:11
 msgid "Cloudflare Turnstile"
-msgstr ""
+msgstr "Cloudflare Turnstile"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:193
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:85
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:94
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:71
 msgid "Collapse sidebar"
 msgstr "Kenar çubuğunu daralt"
@@ -4664,7 +4697,7 @@ msgstr "Kenar çubuğundaki açık destek talebi göstergesinin renk temsili."
 
 #: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
 msgid "Column width: %s pixels"
-msgstr ""
+msgstr "Sütun genişliği: %s piksel"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:290
 msgid "Combined subscription URL"
@@ -4800,12 +4833,25 @@ msgid ""
 "being used for OCR tasks, while still allowing it to be used for other AI "
 "features."
 msgstr ""
+"AI sağlayıcılarını yapılandırın ve yönetin. Her sağlayıcı, bir sağlayıcı uç "
+"noktası için bir dizi Kimlik Bilgileri içerir.\n"
+"\n"
+"Tüm AI özellikleri bu sağlayıcıları paylaşır: Siz belirli bir özelliğe özel "
+"bir sağlayıcı atamaya karar vermediğiniz sürece, varsayılan sağlayıcı tüm "
+"özelliklere hizmet eder.\n"
+"\n"
+"AI maliyetlerinden tasarruf etmek için, ilgili AI sağlayıcısında \"Görüntü "
+"metin tanıma için kullanma\" eylemini çalıştırın. Bu, sağlayıcının OCR "
+"görevleri için kullanılmasını engellerken, diğer AI özellikleri için "
+"kullanılmaya devam etmesine izin verir."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
 msgstr ""
+"Destek talebi etiketleri listesine gerekli sayıda sonuç etiketinin nasıl "
+"ekleneceğini veya değiştirileceğini ayarlayın."
 
 #: db/seeds/permissions.rb:6
 msgid "Configure your system."
@@ -4993,6 +5039,13 @@ msgstr ""
 msgid "Content"
 msgstr "İçerik"
 
+#: app/controllers/knowledge_base/categories_controller.rb:79
+#: app/services/service/knowledge_base/reorder/base.rb:117
+msgid "Content can only be rearranged while its sorting mode is manual."
+msgstr ""
+"İçerik, yalnızca sıralama modu “manuel” olarak ayarlıyken yeniden "
+"düzenlenebilir."
+
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:92
 msgid "Content could not be loaded."
@@ -5009,6 +5062,12 @@ msgstr "İçerik önizlemesi oluşturulamadı."
 #: app/frontend/apps/desktop/components/layout/LayoutContent.vue:195
 msgid "Content sidebar"
 msgstr "İçerik kenar çubuğu"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:44
+#, fuzzy
+#| msgid "Content"
+msgid "Content type"
+msgstr "İçerik"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
@@ -5031,7 +5090,7 @@ msgstr "Bağlam menüsü"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:392
 msgid "Context window size"
-msgstr ""
+msgstr "Bağlam penceresinin boyutu"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
@@ -5105,7 +5164,7 @@ msgstr "Kopyala"
 msgid "Copy URL"
 msgstr "URL'yi kopyala"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:181
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
 #, fuzzy
 #| msgid "Copy secret"
 msgid "Copy answer title"
@@ -5115,7 +5174,7 @@ msgstr "Gizli anahtarı kopyala"
 msgid "Copy article permalink"
 msgstr "Yazı kalıcı bağlantısını kopyala"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:213
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:242
 #, fuzzy
 #| msgid "Copy secret"
 msgid "Copy category title"
@@ -5312,7 +5371,7 @@ msgstr "Ülke"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:248
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:251
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
@@ -5595,11 +5654,11 @@ msgstr "Oluşturan"
 #: app/assets/javascripts/app/controllers/search.coffee:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:34
 msgid "Created within last 14 days"
-msgstr ""
+msgstr "Son 14 gün içinde oluşturulmuş"
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:53
 msgid "Created within last 24 hours"
-msgstr ""
+msgstr "Son 24 saat içinde oluşturulmuş"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:57
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
@@ -5716,7 +5775,7 @@ msgid "Custom Translation"
 msgstr "Özel Çeviri"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:139
-#: app/assets/javascripts/app/models/knowledge_base.coffee:290
+#: app/assets/javascripts/app/models/knowledge_base.coffee:302
 msgid "Custom URL"
 msgstr "Özel URL"
 
@@ -6093,7 +6152,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
-msgstr ""
+msgstr "Sistemde etiket eklemeye ilişkin kuralları belirleyin."
 
 #: db/seeds/settings.rb:2660
 msgid "Define the default agent notifications for new users."
@@ -6317,6 +6376,8 @@ msgid ""
 "Defines how user names are displayed in dropdowns, overviews and selection "
 "fields."
 msgstr ""
+"Kullanıcı adlarının açılır menülerde, genel bakışlarda ve seçim alanlarında "
+"nasıl görüntüleneceğini belirler."
 
 #: db/seeds/settings.rb:4783
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
@@ -6755,6 +6816,9 @@ msgid ""
 "disable. The list of available providers is derived from the registered "
 "FormSpamProtection::Captcha backends."
 msgstr ""
+"Web formunu korumak için kullanılan CAPTCHA sağlayıcısını tanımlar. Devre "
+"dışı bırakmak için boş bırakın. Kullanılabilir sağlayıcıların listesi, "
+"kayıtlı FormSpamProtection::Captcha arka uçlarından alınır."
 
 #: db/seeds/settings.rb:5547
 msgid "Defines the CSS font information for HTML emails."
@@ -6834,7 +6898,7 @@ msgstr "Destek talebi yazı dil tespiti için arka uç hizmetini tanımlar."
 
 #: db/seeds/settings.rb:6433
 msgid "Defines the chunking strategy for the knowledge base vector database."
-msgstr ""
+msgstr "Bilgi Tabanı vektör veritabanı için parçalama stratejisini tanımlar."
 
 #: db/seeds/settings.rb:2944
 msgid ""
@@ -6946,6 +7010,8 @@ msgid ""
 "Defines the minimum relevance score (in percent) a knowledge base answer "
 "must reach to be suggested in the ticket sidebar."
 msgstr ""
+"Bir Bilgi Tabanı yanıtının, destek talebi kenar çubuğunda önerilebilmesi "
+"için ulaşması gereken minimum alaka puanını (yüzde olarak) belirler."
 
 #: db/seeds/settings.rb:97
 msgid ""
@@ -7108,6 +7174,11 @@ msgid ""
 "that the vector database has to be rebuilt after removing a category from "
 "this list, so that its answers get indexed."
 msgstr ""
+"Vektör veritabanından hangi bilgi tabanı kategorilerinin hariç tutulacağını "
+"belirler. Hariç tutulan bir kategorinin alt kategorileri de hariç tutulur. "
+"Bu listeden bir kategori kaldırıldıktan sonra, o kategoriye ait cevapların "
+"indekslenebilmesi için vektör veritabanının yeniden oluşturulması "
+"gerektiğine dikkat edin."
 
 #: db/seeds/settings.rb:3258
 msgid "Defines which parameters are allowed to be submitted via the form API."
@@ -7177,7 +7248,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:45
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:221
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:10
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:11
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:149
 msgid "Delete"
@@ -7233,9 +7304,9 @@ msgstr "Tüm alt kategorileri ve yanıtları silin, ardından tekrar deneyin."
 msgid "Delete all existing records first."
 msgstr "Önce mevcut tüm kayıtları silin."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:68
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:105
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:112
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete answer"
@@ -7249,8 +7320,8 @@ msgstr "Yazıyı sil"
 msgid "Delete avatar"
 msgstr "Avatarı sil"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:92
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:168
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:121
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:197
 #, fuzzy
 #| msgid "Cannot delete category"
 msgid "Delete category"
@@ -7618,8 +7689,7 @@ msgid "Discard article"
 msgstr "Yazıyı sil"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:231
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:434
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
@@ -7638,6 +7708,7 @@ msgstr "Anlık görüntüyü at"
 msgid "Discard unsaved reply"
 msgstr "Kaydedilmemiş yanıtı sil"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -7730,7 +7801,7 @@ msgstr "Bu nesneyi gerçekten silmek istiyor musunuz ?"
 msgid "Do you really want to delete your current avatar?"
 msgstr "Mevcut avatarınızı gerçekten silmek istiyor musunuz ?"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:83
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:67
 #, fuzzy
 #| msgid "Do you really want to delete this draft?"
 msgid "Do you really want to remove the scheduled change to %s?"
@@ -7874,7 +7945,7 @@ msgstr "Ekler indiriliyor…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:14
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:20
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 msgid "Draft"
@@ -7910,7 +7981,7 @@ msgstr "Makrolar Oluştur"
 msgid "Drafts only"
 msgstr "Taslaklar"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:145
 msgid "Drag ended for %s."
 msgstr "Sürükleme %s için sona erdi."
 
@@ -7919,10 +7990,6 @@ msgstr "Sürükleme %s için sona erdi."
 #| msgid "drag here to cancel"
 msgid "Drag here to cancel"
 msgstr "drag here to cancel"
-
-#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
-msgid "Drag to reorder"
-msgstr "Drag to reorder"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
@@ -7978,7 +8045,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Paskalya bayramı"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:639
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:648
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -8030,11 +8097,10 @@ msgstr "Edit Organization"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:41
 msgid "Edit Video Server"
-msgstr ""
+msgstr "Video Sunucusunu Düzenle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:59
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:96
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:156
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:103
 #, fuzzy
 #| msgid "Edit Answer"
 msgid "Edit answer"
@@ -8044,9 +8110,9 @@ msgstr "Edit Answer"
 msgid "Edit authenticator app"
 msgstr "Kimlik doğrulayıcı uygulamasını düzenle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:80
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:109
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:159
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:186
 #, fuzzy
 #| msgid "Edit Category"
 msgid "Edit category"
@@ -8065,8 +8131,8 @@ msgstr "Kullanıcı düzenle"
 msgid "Edit item"
 msgstr "Öğeyi düzenle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:147
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:127
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:172
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Edit knowledge base"
@@ -8345,15 +8411,15 @@ msgstr "Bağlantı URL'sini girin"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
 msgid "Embedding Model"
-msgstr ""
+msgstr "Gömme Modeli"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:387
 msgid "Embedding dimensions"
-msgstr ""
+msgstr "Gömme boyutları"
 
 #: app/services/service/ai/vectordb/embedding.rb:36
 msgid "Embedding provider returned no usable vector"
-msgstr ""
+msgstr "Gömme sağlayıcısı kullanılabilir bir vektör döndürmedi"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -8448,6 +8514,8 @@ msgid ""
 "Enable honeypot protection (an invisible field that traps automated "
 "submissions)."
 msgstr ""
+"Honeypot korumasını etkinleştirin (otomatik gönderimleri yakalayan görünmez "
+"bir alan)."
 
 #: db/seeds/settings.rb:796
 msgid ""
@@ -8530,6 +8598,9 @@ msgid ""
 "retrieving vectorized data. Elasticsearch is used as the vector database "
 "backend."
 msgstr ""
+"Vektörleştirilmiş verilerin depolanması ve geri getirilmesi için kullanılan "
+"vektör veritabanını etkinleştirin veya devre dışı bırakın. Vektör veritabanı "
+"arka ucu olarak Elasticsearch kullanılır."
 
 #: db/seeds/settings.rb:6303
 msgid "Enable or disable the writing assistant text tools."
@@ -8958,7 +9029,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:132
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:37
 #: lib/excel_sheet/ai/analytics/errors.rb:36
 msgid "Error"
@@ -9082,7 +9153,7 @@ msgstr "Kademe atlama (Güncelleme zamanı)"
 msgid "Escalation times"
 msgstr "Eskalasyon süreleri"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:230
 msgid "Escape pressed. No item selected."
 msgstr "Escape tuşuna basıldı. Seçili öğe yok."
 
@@ -9102,7 +9173,7 @@ msgstr "Etkinlik başlangıcı"
 msgid "Event summary"
 msgstr "Etkinlik özeti"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:271
+#: app/assets/javascripts/app/models/knowledge_base.coffee:283
 #, fuzzy
 #| msgid ""
 #| "Every category in your knowledge base should be given a unique icon for "
@@ -9249,7 +9320,7 @@ msgstr "Taslağı iyi yazılmış bir bölüm olarak genişletin"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:194
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:86
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:96
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:72
 msgid "Expand sidebar"
 msgstr "Kenar çubuğunu genişlet"
@@ -9598,7 +9669,7 @@ msgstr "İlk isim"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:44
 msgid "Fit to screen"
-msgstr ""
+msgstr "Ekrana sığdır"
 
 #: db/seeds/ai/text_tools.rb:4
 msgid "Fix spelling and grammar"
@@ -9612,7 +9683,7 @@ msgstr "Fixed Email Accounts"
 msgid "Flat Design"
 msgstr "Flat Design"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:113
 msgid "Focus on %s"
 msgstr "%s'ye odaklan"
 
@@ -9670,7 +9741,7 @@ msgstr "Font size"
 msgid "Footer Menu"
 msgstr "Altbilgi Menüsü"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:171
+#: app/assets/javascripts/app/models/knowledge_base.coffee:183
 msgid "Footer Note"
 msgstr "Footer Note"
 
@@ -9839,6 +9910,12 @@ msgstr "Format as ||italic||"
 msgid "Forward"
 msgstr "İleri"
 
+#: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:15
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Found knowledge base answers"
+msgstr "Bilgi tabanı yanıtını ekler"
+
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:16
 msgid "Found organizations"
 msgstr "Bulunan organizasyonlar"
@@ -9873,7 +9950,7 @@ msgstr "Cuma"
 
 #: lib/form_spam_protection/captcha/friendly_captcha.rb:13
 msgid "Friendly Captcha"
-msgstr ""
+msgstr "Kullanıcı Dostu Captcha"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:10
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
@@ -9926,7 +10003,7 @@ msgstr "Genel iletişim hatası, belki internet mevcut değildir!"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
-msgstr ""
+msgstr "Genel etiketleme ilkeleri"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/knowledge_base_ai_draft_modal.coffee:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:61
@@ -10133,10 +10210,10 @@ msgstr "Ana sayfaya git"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkEntityCard.vue:122
 msgid "Go inside group"
-msgstr ""
+msgstr "Grup içine girin"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:55
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Go to knowledge base"
@@ -10189,15 +10266,15 @@ msgstr "Google Eposta"
 
 #: lib/form_spam_protection/captcha/recaptcha.rb:18
 msgid "Google reCAPTCHA"
-msgstr ""
+msgstr "Google reCAPTCHA"
 
 #: lib/form_spam_protection/captcha/recaptcha_enterprise.rb:17
 msgid "Google reCAPTCHA Enterprise"
-msgstr ""
+msgstr "Google reCAPTCHA Enterprise"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:83
 msgid "Got it"
 msgstr "Anladım"
 
@@ -10408,11 +10485,11 @@ msgstr "Sorun mu yaşıyorsunuz?"
 msgid "Header"
 msgstr "Başlık"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:190
+#: app/assets/javascripts/app/models/knowledge_base.coffee:202
 msgid "Header Color"
 msgstr "Header Color"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:201
+#: app/assets/javascripts/app/models/knowledge_base.coffee:213
 msgid "Header Link Color"
 msgstr "Başlık Bağlantı Rengi"
 
@@ -10465,7 +10542,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:81
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -10588,7 +10665,7 @@ msgstr "Yeni destek talebi: %s"
 
 #: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
 msgid "Hide"
-msgstr ""
+msgstr "Gizle"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:68
 msgid "Hide BETA UI switch"
@@ -10677,7 +10754,7 @@ msgstr "Anasayfa"
 
 #: db/seeds/settings.rb:3207
 msgid "Honeypot spam protection"
-msgstr ""
+msgstr "Honeypot spam koruması"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
@@ -10796,15 +10873,15 @@ msgid "Icinga integration"
 msgstr "Icinga entegrasyonu"
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:63
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:66
 msgid "Icon"
 msgstr "Simge"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:179
+#: app/assets/javascripts/app/models/knowledge_base.coffee:191
 msgid "Icon & Link Color"
 msgstr "Simge ve Bağlantı Rengi"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:268
+#: app/assets/javascripts/app/models/knowledge_base.coffee:280
 msgid "Icon Set"
 msgstr "Simge Seti"
 
@@ -10814,6 +10891,10 @@ msgid ""
 "therefore reset all category icons to the default icon of the new set, and "
 "your current selections will be lost. Do you want to continue?"
 msgstr ""
+"Simgeler, simge kümeleri arasında aktarılamaz. Bu nedenle, kümeyi "
+"değiştirdiğinizde tüm kategori simgeleri yeni kümenin varsayılan simgesine "
+"sıfırlanacak ve mevcut seçimleriniz kaybolacaktır. Devam etmek istiyor "
+"musunuz?"
 
 #: db/seeds/settings.rb:2103 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
@@ -10872,7 +10953,9 @@ msgstr ""
 "olarak ayarlayın."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+#, fuzzy
+#| msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr "If this regex matches, no notification will be sent by the sender."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179
@@ -10925,6 +11008,9 @@ msgid ""
 "If you want to invalidate your feed URLs, renew the access token below. Make "
 "sure to update your RSS reader with new feed URLs afterwards."
 msgstr ""
+"Besleme URL'lerinizi geçersiz kılmak istiyorsanız, aşağıdaki erişim "
+"belirteçini yenileyin. Ardından RSS okuyucunuzu yeni besleme URL'leriyle "
+"güncellediğinizden emin olun."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
 msgid ""
@@ -11425,6 +11511,18 @@ msgstr "Installed"
 msgid "Installed packages"
 msgstr "Paketi yükle"
 
+#: app/controllers/packages_controller.rb:58
+#, fuzzy
+#| msgid ""
+#| "After installing, updating, or uninstalling packages the following "
+#| "commands need to be executed on the server:"
+msgid ""
+"Installing, updating or uninstalling packages is not possible in container "
+"environments."
+msgstr ""
+"Paketleri kurduktan, güncelledikten veya kaldırdıktan sonra sunucuda "
+"aşağıdaki komutların çalıştırılması gerekir:"
+
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
 msgstr "Talimat"
@@ -11451,7 +11549,7 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "İndirilen WhatsApp medyasının bütünlük doğrulaması başarısız oldu."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:19
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:25
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:22
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
@@ -11477,10 +11575,11 @@ msgid ""
 "index was last built with. Used to detect a stale index by comparison, "
 "without probing Elasticsearch."
 msgstr ""
+"Gömme modelinin ve Bilgi Tabanı dizininin en son oluşturulduğu vektör "
+"boyutuna ilişkin dahili kayıt. Elasticsearch’e sorgu göndermeden, "
+"karşılaştırma yoluyla güncel olmayan bir dizini tespit etmek için kullanılır."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:96
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:46
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:26
 #, fuzzy
 #| msgid "published"
 msgid "Internally published"
@@ -11651,7 +11750,7 @@ msgstr "Geçersiz güvenlik kodu! Lütfen yeni bir kodla tekrar deneyin."
 
 #: lib/secure_mailing/pgp/tool/data.rb:71
 msgid "Invalid signature format: expected a PGP signature"
-msgstr ""
+msgstr "Geçersiz imza biçimi: PGP imzası bekleniyor"
 
 #: app/controllers/integration/cti_controller.rb:41
 #: app/controllers/integration/placetel_controller.rb:40
@@ -11899,12 +11998,12 @@ msgstr "Etiketler"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
-#: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:118
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:103
-#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
-#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
-#: app/models/knowledge_base.rb:262 db/seeds/permissions.rb:113
+#: app/assets/javascripts/app/models/knowledge_base.coffee:87
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
+#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
+#: app/models/knowledge_base.rb:283 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "Bilgi Tabanı"
 
@@ -11913,7 +12012,7 @@ msgid "Knowledge Base Answer"
 msgstr "Bilgi Tabanı Cevabı"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:40
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:45
 msgid "Knowledge Base Answer \"|%s|\" has been created"
 msgstr "Bilgi Tabanı Cevabı \"|%s|\" oluşturuldu"
 
@@ -11973,16 +12072,17 @@ msgstr "Bilgi Tabanı Cevabı"
 msgid "Knowledge Base multilingual support"
 msgstr "Bilgi Tabanı çoklu dil desteği"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:356
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base actions"
 msgstr "Bilgi Tabanı aktif"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:28
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:211
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:172
+#: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:13
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:258
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "Knowledge base answer"
@@ -12000,7 +12100,7 @@ msgstr "The test run was successful."
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr "Destek talebi ekranı davranışı başarıyla güncellendi"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Knowledge base answer updated successfully."
@@ -12094,7 +12194,7 @@ msgstr "Etiket"
 msgid "Labels"
 msgstr "etiketler"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:224
+#: app/assets/javascripts/app/models/knowledge_base.coffee:236
 msgid "Landing page layout"
 msgstr "Açılış sayfası düzeni"
 
@@ -12104,7 +12204,7 @@ msgstr "Açılış sayfası düzeni"
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:97
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
 msgid "Language"
@@ -12115,7 +12215,7 @@ msgid "Language Detection Service"
 msgstr "Dil Tespit Hizmeti"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:115
-#: app/assets/javascripts/app/models/knowledge_base.coffee:278
+#: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Languages"
 msgstr "Languages"
 
@@ -12231,7 +12331,7 @@ msgstr "Last sync"
 msgid "Last sync at:"
 msgstr "Son senkronizasyon:"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:53
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:62
 #, fuzzy
 #| msgid "Has update"
 msgid "Last updated"
@@ -12254,7 +12354,7 @@ msgstr "Soyadı"
 msgid "Lastname, Firstname"
 msgstr "Soyadı"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:152
+#: app/assets/javascripts/app/models/knowledge_base.coffee:164
 msgid "Layout"
 msgstr "Yerleşim"
 
@@ -12287,6 +12387,8 @@ msgid ""
 "Length of the vectors the embedding model produces. Filled in for a model "
 "whose size is known."
 msgstr ""
+"Gömme modelinin ürettiği vektörlerin uzunluğu. Boyutu bilinen bir model için "
+"bu değer otomatik olarak doldurulur."
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
 msgid "Library"
@@ -12437,7 +12539,7 @@ msgid "Link text"
 msgstr "Metni bağlantıla"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:106
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Link ticket"
@@ -12500,6 +12602,8 @@ msgid ""
 "List of self-hosted video servers. This list is used for content security "
 "policy."
 msgstr ""
+"Kendi sunucunuzda barındırılan video sunucularının listesi. Bu liste içerik "
+"güvenliği politikası için kullanılmaktadır."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
 msgid "List of shortcuts"
@@ -12602,7 +12706,7 @@ msgstr "%s'ye giriş yapın"
 #: app/assets/javascripts/app/controllers/search.coffee:31
 #: app/assets/javascripts/app/controllers/user.coffee:36
 msgid "Logged in within last 7 days"
-msgstr ""
+msgstr "Son 7 gün içinde oturum açmış"
 
 #: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
@@ -13443,6 +13547,12 @@ msgstr "Yanlış eşleşen telefon numarası kimliği."
 msgid "Missing embedding model in the provider configuration"
 msgstr "AI sağlayıcı yapılandırmasını saklar."
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:48
+#, fuzzy
+#| msgid "Original Translation"
+msgid "Missing translation"
+msgstr "Orijinal Çeviri"
+
 #: app/assets/javascripts/app/lib/app_post/ai_provider/mistral.coffee:3
 msgid "Mistral AI"
 msgstr "Mistral Yapay Zeka"
@@ -13465,12 +13575,16 @@ msgid ""
 "Model used for image text recognition. Leave empty to use the model of this "
 "connection."
 msgstr ""
+"Görsel metin tanıma için kullanılan model. Bu bağlantının modelini kullanmak "
+"için boş bırakın."
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:366
 msgid ""
 "Model used for vector embedding in semantic search. Required for the "
 "provider that serves semantic search."
 msgstr ""
+"Anlamsal aramada vektör gömme için kullanılan model. Anlamsal arama "
+"hizmetini sunan sağlayıcı için gereklidir."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:272
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
@@ -13556,6 +13670,10 @@ msgstr "Yukarı taşı"
 msgid "Move up and down"
 msgstr "Move up and down"
 
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:133
+msgid "Moved %s to position %s in the target list."
+msgstr "%s öğesi hedef listesindeki %s konumuna taşındı."
+
 #: app/models/report.rb:59
 msgid "Moved in"
 msgstr "Moved in"
@@ -13623,8 +13741,8 @@ msgstr "Nagios"
 msgid "Nagios integration"
 msgstr "Nagios entegrasyonu"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:526
-#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:533
+#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:42
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:328
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:560
@@ -13945,7 +14063,7 @@ msgstr "New Version"
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:37
 msgid "New Video Server"
-msgstr ""
+msgstr "Yeni Video Sunucusu"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:36
 msgid "New Webhook"
@@ -13964,7 +14082,7 @@ msgid "New desktop BETA UI"
 msgstr "Yeni masaüstü BETA Kullanıcı Arayüzü"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerCreate.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:92
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:93
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:107
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:90
 #, fuzzy
@@ -14088,7 +14206,7 @@ msgid "New user?"
 msgstr "Yeni kullanıcı?"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:627
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:636
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -14335,6 +14453,8 @@ msgid ""
 "No existing knowledge base answers match this topic. Generate a new answer "
 "to continue."
 msgstr ""
+"Bu konuyla eşleşen hiçbir mevcut Bilgi Tabanı yanıtı bulunmamaktadır. Devam "
+"etmek için yeni bir yanıt oluşturun."
 
 #: app/frontend/shared/form/i18n/locales.ts:45
 msgid "No file chosen."
@@ -14361,7 +14481,7 @@ msgstr "Devam eden içe aktarım yok."
 msgid "No items available"
 msgstr "Mevcut öğe yok"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:329
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
 #, fuzzy
 #| msgid "No editable knowledge base categories available."
 msgid "No knowledge base content is available yet."
@@ -14376,7 +14496,7 @@ msgstr "Bilgi Tabanı yerel ayarı yapılandırılmamış."
 msgid "No linked issues"
 msgstr "Bağlantılı issue yok"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr "Henüz bağlantı eklenmedi."
@@ -14414,6 +14534,9 @@ msgid ""
 "No proxy for these comma-separated addresses. Supports wildcards like "
 "*.example.com. Note: Loopback addresses are always excluded from proxying."
 msgstr ""
+"Virgülle ayrılmış bu adresler için proxy kullanılmaz. .example.com gibi "
+"joker karakterleri destekler. Not: Geri döngü (loopback) adresleri her zaman "
+"proxy dışında tutulur."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:260
 msgid "No recent searches"
@@ -14467,7 +14590,7 @@ msgstr "Güvenlik bilgisi mevcut değil."
 
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:18
 msgid "No self-hosted video servers configured yet."
-msgstr ""
+msgstr "Henüz kendi barındırdığınız bir video sunucusu yapılandırılmadı."
 
 #: lib/sessions/event/chat_session_start.rb:23
 #: lib/sessions/event/chat_transfer.rb:15
@@ -14524,12 +14647,14 @@ msgid "No token!"
 msgstr "Belirteç yok!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:98
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:117
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:172
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:206
-msgid "No translation for this locale available"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
+#, fuzzy
+#| msgid "No translation for this locale available"
+msgid "No translation available for this locale"
 msgstr "No translation for this locale available"
 
 #: app/models/ticket.rb:434
@@ -14552,9 +14677,9 @@ msgstr "Oturum açma sırasında kullanıcı oluşturulmaz"
 msgid "No valid knowledge base category provided."
 msgstr "Geçerli Bilgi Tabanı kategorisi sağlanmadı."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:164
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:135
 msgid "No visibility changes scheduled yet."
-msgstr ""
+msgstr "Henüz planlanmış bir görünürlük değişikliği yok."
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -14657,10 +14782,10 @@ msgstr "Not configured"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:84
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
 msgid "Not found"
@@ -14831,6 +14956,8 @@ msgid ""
 "Number of input tokens the embedding model takes at once. Filled in for a "
 "model whose limit is known."
 msgstr ""
+"Gömme modelinin tek seferde aldığı belirteçlerin sayısı. Sınırı bilinen bir "
+"model için bu alan doldurulur."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:180
 #, fuzzy
@@ -14840,7 +14967,7 @@ msgstr "Sayı"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
-msgstr ""
+msgstr "AI temsilcisinin atayabileceği etiket sayısı."
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:12
 msgid "OAuth"
@@ -15006,6 +15133,8 @@ msgid ""
 "One or more self-hosted video servers are invalid. Please check the host "
 "names."
 msgstr ""
+"Bir veya daha fazla kendi barındırdığınız video sunucusu geçersiz. Lütfen "
+"sunucu adlarını kontrol edin."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
 #: public/assets/chat/chat.coffee:207
@@ -15056,6 +15185,7 @@ msgid ""
 "Only answers reaching this relevance score are included in the list of "
 "suggestions."
 msgstr ""
+"Yalnızca bu alaka düzeyine ulaşan yanıtlar öneri listesine dahil edilir."
 
 #: app/assets/javascripts/app/models/overview.coffee:11
 msgid ""
@@ -15153,7 +15283,7 @@ msgstr "Yeni sekmede aç"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:258
 msgid "Open in primary locale"
-msgstr ""
+msgstr "Birincil dil ayarında aç"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:66
 msgid "Open link"
@@ -15601,7 +15731,7 @@ msgstr "PGP entegrasyonu"
 
 #: lib/secure_mailing/pgp/tool/data.rb:85
 msgid "PGP signature does not cover the displayed message body"
-msgstr ""
+msgstr "PGP imzası, görüntülenen mesaj gövdesini kapsamamaktadır"
 
 #: db/seeds/settings.rb:5902
 #, fuzzy
@@ -15870,7 +16000,7 @@ msgstr "İzinler"
 
 #: lib/core_ext/execjs/persistent_node_runtime.rb:128
 msgid "Persistent Node.js (V8)"
-msgstr ""
+msgstr "Kalıcı Node.js (V8)"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
 msgid "Personal Access Tokens"
@@ -16018,7 +16148,7 @@ msgid "Please configure import source before running."
 msgstr "Lütfen çalıştırmadan önce içe aktarma kaynağını yapılandırın."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:330
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
 msgid "Please contact your administrator."
 msgstr "Lütfen yöneticinizle iletişime geçin."
 
@@ -16045,7 +16175,7 @@ msgstr "Lütfen geçerli bir e-posta adresi girin."
 
 #: app/assets/javascripts/app/controllers/package.coffee:170
 msgid "Please enter the API token you received from Zammad."
-msgstr ""
+msgstr "Lütfen Zammad'dan aldığınız API belirteçini girin."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:14
 msgid "Please enter the endpoint for accessing Exchange Web Services."
@@ -16433,7 +16563,7 @@ msgstr "Profiles"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:78
 msgid "Project ID"
-msgstr ""
+msgstr "Proje IDsi"
 
 #: db/seeds/settings.rb:2145
 msgid ""
@@ -16472,7 +16602,8 @@ msgid ""
 msgstr ""
 "Görüşmeye dayalı olarak kullanıcı duyarlılığının bir değerlendirmesini sağla."
 
-#: app/controllers/knowledge_base/categories_controller.rb:23
+#: app/controllers/knowledge_base/categories_controller.rb:70
+#: app/services/service/knowledge_base/reorder/base.rb:109
 #: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Kapsamdaki tüm öğelerin konumunu sağlayın"
@@ -16494,7 +16625,7 @@ msgstr "Sağlayıcı"
 
 #: app/assets/javascripts/app/models/ai_provider_connection.coffee:46
 msgid "Provider not used at the moment."
-msgstr ""
+msgstr "Sağlayıcı şu anda kullanılmıyor."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:80
 #, fuzzy
@@ -16553,11 +16684,8 @@ msgstr "Public Menu"
 msgid "Publish Article"
 msgstr "Yazıyı Yayınla"
 
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:24
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:45
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:31
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:33
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:104
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:50
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
 #, fuzzy
 #| msgid "published"
@@ -16614,7 +16742,7 @@ msgstr ""
 
 #: app/models/audit_log.rb:87
 msgid "Rails console"
-msgstr ""
+msgstr "Rails konsolu"
 
 #: app/models/audit_log.rb:90
 #, fuzzy
@@ -16768,14 +16896,14 @@ msgstr "Yinelemeli Destek Talebi Tetikleyicileri"
 
 #: db/seeds/settings.rb:6442
 msgid "Recursive hierarchical chunking"
-msgstr ""
+msgstr "Yinelemeli hiyerarşik bölümlere ayırma"
 
 #: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
 #: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
 msgid "Redirecting to authorization…"
-msgstr ""
+msgstr "Yetkilendirme sayfasına yönlendiriliyor…"
 
 #: app/models/system_report/plugin/redis.rb:4
 msgid "Redis version"
@@ -16856,7 +16984,7 @@ msgstr ""
 "İlgili Bilgi Tabanı yanıt oluşturma işlemi, verilen destek talebi için "
 "başlatıldı."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:84
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
@@ -16888,7 +17016,7 @@ msgstr "Yeniden Yükle"
 msgid "Reload application"
 msgstr "Reload application"
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:96
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
 #: app/frontend/shared/stores/authentication.ts:165
 msgid "Reload now"
 msgstr "Şimdi yeniden yükle"
@@ -16934,7 +17062,7 @@ msgstr "Uzak"
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:69
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
@@ -17030,9 +17158,9 @@ msgstr "Yöntemi kaldır"
 msgid "Remove notification"
 msgstr "Bildirimi kaldır"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:69
 msgid "Remove scheduled visibility change"
-msgstr ""
+msgstr "Planlanmış görünürlük değişikliğini kaldır"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:22
 msgid "Remove security keys"
@@ -17042,9 +17170,9 @@ msgstr "Güvenlik anahtarlarını kaldır"
 msgid "Remove selected values"
 msgstr "Seçilen değerleri kaldır"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:152
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:123
 msgid "Remove this scheduled visibility change"
-msgstr ""
+msgstr "Bu planlanmış görünürlük değişikliğini kaldır"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
@@ -17086,6 +17214,8 @@ msgid ""
 "Removing %s language(s) will permanently delete all translation(s) related "
 "to them. Enter \"%s\" to confirm."
 msgstr ""
+"%s dilini/dillerini kaldırmak, bunlarla ilgili tüm çevirileri kalıcı olarak "
+"silecektir. Onaylamak için \"%s\" yazın."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:373
@@ -17227,7 +17357,7 @@ msgstr "Requesting the Grant"
 
 #: db/seeds/settings.rb:1810
 msgid "Require verified email domain"
-msgstr ""
+msgstr "Doğrulanmış eposta etki alanı zorunlu"
 
 #: app/controllers/reports_controller.rb:65
 msgid "Required parameter 'downloadBackendSelected' is missing."
@@ -17250,6 +17380,12 @@ msgid ""
 "claims on the Azure app registration. Until that is done, enabling this "
 "blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
+"Hesap otomatik bağlama işlemi için söz konusu adrese güvenebilmek üzere, "
+"\"xms_edov\" ID belirteçinin doğru olması ve \"email\" belirteçinin gelen "
+"eposta adresiyle eşleşmesi gerekir. Her iki talep de öncelikle Azure "
+"uygulama kaydında isteğe bağlı talepler olarak yapılandırılmalıdır. Bu işlem "
+"tamamlanana kadar, bu özelliğin etkinleştirilmesi eposta yoluyla tüm "
+"Microsoft 365 hesaplarının otomatik bağlanmasını engeller."
 
 #: db/seeds/settings.rb:6117
 msgid ""
@@ -17457,7 +17593,7 @@ msgstr "Sonuç yapısı"
 msgid "Result:"
 msgstr "Sonuç:"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:609
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:623
 msgid "Results"
 msgstr "Sonuçlar"
 
@@ -17547,11 +17683,11 @@ msgstr "Kanal geçişinin geri alınması başarılı oldu!"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:53
 msgid "Rotate left"
-msgstr ""
+msgstr "Sola döndür"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:62
 msgid "Rotate right"
-msgstr ""
+msgstr "Sağa döndür"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:302
 msgid "Rows"
@@ -17574,7 +17710,7 @@ msgstr "macroyu çalıştır"
 
 #: app/assets/javascripts/app/controllers/job.coffee:18
 msgid "Run within last 24 hours"
-msgstr ""
+msgstr "Son 24 saat içinde çalıştırıldı"
 
 #: app/assets/javascripts/app/models/job.coffee:21
 msgid "Running"
@@ -17623,7 +17759,7 @@ msgstr "S/MIME entegrasyonu"
 
 #: db/seeds/settings.rb:5832
 msgid "S/MIME signing for system notifications"
-msgstr ""
+msgstr "Sistem bildirimleri için S/MIME imzalaması"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
@@ -17773,6 +17909,7 @@ msgstr "Cumartesi"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:86
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:117
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:225
@@ -17833,7 +17970,7 @@ msgstr "Bildirimleri kaydet"
 msgid "Save out of office"
 msgstr "Ofis dışındayı kaydet"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:120
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:115
 msgid "Save the answer in this language before linking tickets to it."
 msgstr ""
 
@@ -17849,11 +17986,11 @@ msgid "Saving failed."
 msgstr "Kaydetme başarısız oldu."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:62
 msgid "Schedule for"
 msgstr "Schedule for"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:171
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:142
 msgid "Schedule visibility change"
 msgstr ""
 
@@ -17862,17 +17999,24 @@ msgstr ""
 msgid "Scheduled for"
 msgstr "Scheduled for"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:109
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:93
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerScheduledVisibilityPopover.vue:30
 #, fuzzy
 #| msgid "Limited visibility"
 msgid "Scheduled visibility"
 msgstr "Sınırlı görünürlük"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:109
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:93
 #, fuzzy
 #| msgid "Ticket tag removed successfully."
 msgid "Scheduled visibility change removed successfully."
 msgstr "Destek talebi etiketi başarıyla kaldırıldı."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:91
+#, fuzzy
+#| msgid "Limited visibility"
+msgid "Scheduled visibility: %s"
+msgstr "Sınırlı görünürlük"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
@@ -17952,13 +18096,13 @@ msgstr "Aşağıya kaydırın"
 msgid "Scroll to unread item"
 msgstr "Aşağı kaydır"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:272
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:285
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards end"
 msgstr "Aşağı kaydır"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:221
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:233
 #, fuzzy
 #| msgid "Scroll to bottom"
 msgid "Scroll towards start"
@@ -17970,7 +18114,7 @@ msgstr "Aşağıya kaydırın"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:607
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:621
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -18114,7 +18258,7 @@ msgstr "Arama yapın veya e-posta adresini girin…"
 msgid "Search or enter phone number…"
 msgstr "Arama yapın veya telefon numarası girin…"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:661
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:675
 #, fuzzy
 #| msgid "Search result list"
 msgid "Search result for: %s"
@@ -18491,7 +18635,7 @@ msgstr "Seçilen nesne zaten silinmek üzere sıraya alınmış."
 msgid "Selected tickets do not match any macros."
 msgstr "Seçilen destek talepleri hiçbir makroyla eşleşmiyor."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:227
 msgid "Selection cancelled for %s."
 msgstr "Seçim %s için iptal edildi."
 
@@ -19003,7 +19147,7 @@ msgstr "%s daha fazla göster"
 msgid "Show Draft"
 msgstr "Taslağı Göster"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:212
+#: app/assets/javascripts/app/models/knowledge_base.coffee:224
 msgid "Show Feed Icon"
 msgstr "Besleme Simgesini Göster"
 
@@ -19395,6 +19539,13 @@ msgstr "Üzgünüz, tüm alanlar doğru şekilde doldurulmamıştır."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Üzgünüz, şu anda CTI arka ucu etkin değil."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:13
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:33
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Sort alphabetically"
+msgstr "Sohbeti otomatik olarak göster"
+
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
 msgid "Sort by %s ascending"
 msgstr "%s'ye göre artan şekilde sırala"
@@ -19403,7 +19554,38 @@ msgstr "%s'ye göre artan şekilde sırala"
 msgid "Sort by %s descending"
 msgstr "%s'ye göre sırala azalan şekilde sırala"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:14
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:36
+msgid "Sort by drag & drop"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:15
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:39
+#, fuzzy
+#| msgid "between agent updates"
+msgid "Sort by latest updates"
+msgstr "temsilci güncellemeleri arasında"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:151
+#, fuzzy
+#| msgid "Overwrite content"
+msgid "Sort content"
+msgstr "İçeriğin üzerine yaz"
+
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:247
+#, fuzzy
+#| msgid ""
+#| "Sortable list focused. Use up and down arrows to navigate items. Press "
+#| "Space to select an item and again on another item to swap them."
+msgid ""
+"Sortable grid focused. Use the arrow keys to navigate items. Press Space to "
+"select an item and again on another item to swap them."
+msgstr ""
+"Sıralanabilir listeye odaklanıldı. Öğeler arasında gezinmek için yukarı ve "
+"aşağı okları kullanın. Bir öğeyi seçmek için Space tuşuna basın ve "
+"değiştirmek için başka bir öğe üzerinde tekrar basın."
+
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:250
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select an item and again on another item to swap them."
@@ -19412,14 +19594,22 @@ msgstr ""
 "aşağı okları kullanın. Bir öğeyi seçmek için Space tuşuna basın ve "
 "değiştirmek için başka bir öğe üzerinde tekrar basın."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
-msgid "Sorted %s in user taskbar list to position %s."
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:124
+#, fuzzy
+#| msgid "Sorted %s in user taskbar list to position %s."
+msgid "Sorted %s to position %s."
 msgstr "Kullanıcı görev çubuğu listesindeki %s'yi %s konumuna sıraladı."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
 #: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
 msgstr "Sıralama kriteri"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:69
+#, fuzzy
+#| msgid "Sorting order"
+msgid "Sorting mode"
+msgstr "Sıralama düzeni"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
 #: app/assets/javascripts/app/models/overview.coffee:31
@@ -19742,7 +19932,7 @@ msgstr ""
 "için ek arama."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:646
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:655
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -19768,7 +19958,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:128
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:50
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:129
 #: app/frontend/shared/form/i18n/locales.ts:41
 msgid "Submit"
 msgstr "Gönder"
@@ -19781,7 +19971,7 @@ msgstr "Yorum Gönder"
 msgid "Submit comment"
 msgstr "Yorum gönder"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:129
 #, fuzzy
 #| msgid "Save changes"
 msgid "Submit your changes"
@@ -19897,7 +20087,7 @@ msgstr "Pazar"
 msgid "Support of multilingual Knowledge Base."
 msgstr "Çok dilli Bilgi Tabanı desteği."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:167
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr "%s ile %s değiştirildi. %s, %s konumuna taşındı."
 
@@ -19967,7 +20157,7 @@ msgstr "Sistem varsayılanı - %s"
 msgid "System information"
 msgstr "Sistem bilgileri"
 
-#: app/models/knowledge_base.rb:33
+#: app/models/knowledge_base.rb:52
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
@@ -20054,10 +20244,10 @@ msgstr "oluşturuldu %s"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:133
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -20429,6 +20619,12 @@ msgid ""
 "changed here."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:696
+msgid ""
+"The Zammad AI provider is managed by the platform and cannot be fully edited "
+"here."
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:82
 msgid "The access token could not be created."
 msgstr "Erişim belirteci oluşturulamadı."
@@ -20665,6 +20861,7 @@ msgstr "%s için sertifika bulunamadı."
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:143
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseSortingSave.ts:100
 msgid "The changes could not be saved."
 msgstr "Değişiklikler kaydedilemedi."
 
@@ -20705,7 +20902,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "Zammad'ın yapılandırması değişti, lütfen tarayıcı sayfanızı yenileyin."
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:117
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:118
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr "Zammad yapılandırmasında değişiklik yapıldı. Lütfen sayfayı yenileyin."
@@ -20779,7 +20976,7 @@ msgstr ""
 msgid "The data we need to collect consists of:"
 msgstr "Toplamamız gereken veriler şunlardan oluşmaktadır:"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:294
+#: app/assets/javascripts/app/models/knowledge_base.coffee:306
 msgid ""
 "The default URL for your knowledge base is e.g. example.com or example.com/"
 "help. To serve it from a custom URL instead, enter the destination below "
@@ -21063,8 +21260,8 @@ msgid "The issue reference could not be found."
 msgstr "Sorun referansı bulunamadı."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:152
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:96
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:103
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:43
 #, fuzzy
 #| msgid "The Knowledge Base could not be created."
 msgid "The knowledge base could not be loaded."
@@ -21121,7 +21318,7 @@ msgstr "Oturum açmak mümkün değildir."
 msgid "The minutes overlay"
 msgstr "Dakika katmanı"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:758
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:774
 #, fuzzy
 #| msgid "The avatar could not be fetched."
 msgid "The model list could not be fetched: %s"
@@ -21140,7 +21337,7 @@ msgid "The new ticket number could not be generated."
 msgstr "Yeni destek talebi numarası oluşturulamadı."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -21155,7 +21352,7 @@ msgstr "Nesne oluşturulamadı."
 msgid "The object could not be found."
 msgstr "Nesne bulunamadı."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -21539,6 +21736,12 @@ msgstr "Gerekli 'permission' parametresi eksik."
 msgid "The required parameter 'signup' is missing."
 msgstr "Gerekli 'signup' parametresi eksik."
 
+#: app/controllers/knowledge_base/categories_controller.rb:62
+#, fuzzy
+#| msgid "The required parameter 'code' is missing."
+msgid "The required parameter 'sorting_mode' is missing."
+msgstr "Gerekli 'code' parametresi eksik."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:72
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Gerekli 'ticket_number' parametresi eksik."
@@ -21599,7 +21802,7 @@ msgid ""
 "prefer tags from existing tags list."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:49
 #, fuzzy
 #| msgid "Ticket tag could not be removed."
 msgid "The scheduled visibility change could not be removed."
@@ -21608,12 +21811,6 @@ msgstr "Destek talebi etiketi kaldırılamadı."
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "The seconds overlay"
 msgstr "Saniye katmanı"
-
-#: app/services/service/knowledge_base/answer/base.rb:176
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
-msgid "The selected category does not belong to this knowledge base."
-msgstr "Yazı belirtilen destek talebine ait değil."
 
 #: app/frontend/shared/form/i18n/locales.ts:525
 msgid "The selected date is invalid."
@@ -21696,6 +21893,14 @@ msgstr ""
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
 msgstr "İmza başarıyla doğrulandı."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:361
+msgid "The sorting mode you save here will apply to answers added later."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+msgid "The sorting mode you save here will apply to categories added later."
+msgstr ""
 
 #: app/controllers/tickets_controller.rb:372
 msgid "The source ticket could not be found."
@@ -22019,9 +22224,19 @@ msgstr ""
 "alabilir, en iyisi bir fincan kahve alın. Şu anda bilinen sayı aşılır "
 "aşılmaz toplam destek talebi sayısı güncellenir."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:358
+#, fuzzy
+#| msgid "There are no business hours configured."
+msgid "There are no answers to arrange yet."
+msgstr "Yapılandırılmış bir çalışma saati yoktur."
+
 #: app/models/calendar.rb:313
 msgid "There are no business hours configured."
 msgstr "Yapılandırılmış bir çalışma saati yoktur."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+msgid "There are no categories to arrange yet."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:40
 msgid "There are no enabled third-party authentication providers."
@@ -22210,7 +22425,7 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr "Bu Yazım Asistanı Aracı, seçilen metni İngilizceye çevirir."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:41
 msgid "This answer has been updated. Submitting will replace those changes."
 msgstr ""
 
@@ -22523,20 +22738,20 @@ msgstr ""
 msgid "This item expands to show more options"
 msgstr "Bu öğe daha fazla seçenek göstermek için genişler"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
 #, fuzzy
 #| msgid "No editable knowledge base categories available."
 msgid "This knowledge base answer is not available."
 msgstr "Düzenlenebilir bilgi tabanı kategorileri mevcut değil."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
 #, fuzzy
 #| msgid "No editable knowledge base categories available."
 msgid "This knowledge base category is not available."
 msgstr "Düzenlenebilir bilgi tabanı kategorileri mevcut değil."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:31
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
 #, fuzzy
 #| msgid "Not available in selected language"
 msgid "This knowledge base is not available in the selected language."
@@ -23566,7 +23781,7 @@ msgstr "Zaman Dilimi"
 msgid "Timing"
 msgstr "Timing"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:143
+#: app/assets/javascripts/app/models/knowledge_base.coffee:155
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:29
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:76
 #: app/assets/javascripts/app/models/knowledge_base_translation.coffee:7
@@ -23581,7 +23796,7 @@ msgstr "Timing"
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:34
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:57
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:151
 #: app/graphql/gql/types/overview_type.rb:92
@@ -23835,10 +24050,6 @@ msgstr "Kontrol listesi öğesi olarak takip ediliyor"
 msgid "Transfer conversation to another chat:"
 msgstr "Konuşmayı başka bir sohbete aktar:"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
-msgid "Transferred %s from user taskbar list %s at position %s."
-msgstr "Kullanıcı görev çubuğu listesi %s'den %s konumundaki %s aktarıldı."
-
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
 msgstr "Alan içeriklerini çevir"
@@ -24074,7 +24285,7 @@ msgstr "İki faktörlü yöntem yapılandırılamadı."
 msgid "Two-factor method has been configured successfully."
 msgstr "İki faktörlü yöntem başarıyla yapılandırıldı."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:525
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:529
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -24232,7 +24443,7 @@ msgstr "Bilgi tabanı yanıtını ekler"
 msgid "Unlink object"
 msgstr "Nesnenin bağlantısını kaldır"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:108
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:103
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
 #, fuzzy
 #| msgid "Link ticket"
@@ -24331,9 +24542,9 @@ msgstr "Yaklaşan etkinlikler"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:450
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:124
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
 msgid "Update"
@@ -24504,7 +24715,7 @@ msgstr "Updated at"
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:57
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:66
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -25271,7 +25482,7 @@ msgid "View"
 msgstr "Görüntüle"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:347
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
 #, fuzzy
 #| msgid "New Answer"
 msgid "View answer"
@@ -25307,15 +25518,15 @@ msgstr "Destek talebini inceliyor"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:174
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:188
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:44
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:48
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr "Visibility"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:96
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:102
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "Visibility change scheduled successfully."
@@ -25956,7 +26167,7 @@ msgstr "Veri gizliliği görevini artık göremezsiniz."
 msgid "You can no longer see the group."
 msgstr "Artık grubu göremezsiniz."
 
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:38
 msgid "You can no longer see the knowledge base answer."
 msgstr "Bilgi Tabanı cevabını artık göremezsiniz."
 
@@ -25996,7 +26207,7 @@ msgid ""
 msgstr ""
 "Grup yöneticisinde belirli gruplar için bu ayarın üzerine yazabilirsiniz. %l"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:282
+#: app/assets/javascripts/app/models/knowledge_base.coffee:294
 msgid ""
 "You can provide different versions of your knowledge base for different "
 "locales. Add a language below, then select it in the Knowledge Base Editor "
@@ -26032,7 +26243,7 @@ msgstr ""
 "Halihazırda üretimde olan bir sistemde bile herhangi bir veri kaybı olmadan "
 "yeni ekler için aşağıdaki arka uçlar arasında geçiş yapabilirsiniz."
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:78
 #, fuzzy
 #| msgid ""
 #| "You can switch between the old and the New BETA UI at any moment in the "
@@ -26198,6 +26409,12 @@ msgid ""
 msgstr ""
 "Kontrol listesinde işaretlenmemiş öğeleriniz var. Bu destek talebini "
 "kapatmadan önce bunları halletmek istiyor musunuz?"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:47
+msgid ""
+"You have updated this answer elsewhere. Submitting will replace those "
+"changes."
+msgstr ""
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:37
@@ -26694,7 +26911,7 @@ msgstr "değiştirilemez"
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "kullanılamaz çünkü *_id ve *_ids'ye izin verilmez"
 
-#: app/models/knowledge_base/category.rb:277
+#: app/models/knowledge_base/category.rb:389
 msgid "cannot be a subcategory of the parent category"
 msgstr "ana kategorinin bir alt kategorisi olamaz"
 
@@ -26982,17 +27199,17 @@ msgstr "örneğin bayram tatili"
 msgid "edit"
 msgstr "düzenle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:60
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:107
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s"
 msgstr "düzenlenmiş %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:64
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:111
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:44
 msgid "edited %s by %s"
 msgstr "%s tarafından %s düzenlendi"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:62
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:109
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s by me"
 msgstr "benim tarafımdan düzenlenmiş %s"
@@ -27380,7 +27597,7 @@ msgstr "is not in working time"
 msgid "is not included in the list"
 msgstr "listeye dahil edilmemiştir"
 
-#: app/models/knowledge_base/category.rb:295
+#: app/models/knowledge_base/category.rb:407
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -27546,7 +27763,7 @@ msgstr "Month(s)"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:888
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:904
 #, fuzzy
 #| msgid "must be an integer"
 msgid "must be a positive number"
@@ -27558,7 +27775,7 @@ msgstr "bir tamsayı olmalı"
 msgid "must be a valid HTTP(S) URL"
 msgstr "geçerli bir URL değildir"
 
-#: app/models/knowledge_base.rb:288
+#: app/models/knowledge_base.rb:309
 msgid "must be a valid path or domain"
 msgstr "geçerli bir yol ya da etki alanı olmalıdır"
 
@@ -27598,7 +27815,7 @@ msgstr "tek sayı olmalıdır"
 msgid "must be other than %{count}"
 msgstr "%{count} dışında bir değer olmalıdır"
 
-#: app/models/knowledge_base.rb:276
+#: app/models/knowledge_base.rb:297
 msgid "must begin with a slash (\"/\")"
 msgstr "eğik çizgi (\"/\") ile başlamalıdır"
 
@@ -27611,11 +27828,11 @@ msgstr "mevcut olmalı"
 msgid "must have a year between 1 and 9999"
 msgstr "Bu alan %s ile %s arasında bir değere sahip olmalıdır."
 
-#: app/models/knowledge_base.rb:284
+#: app/models/knowledge_base.rb:305
 msgid "must not end with a slash (\"/\")"
 msgstr "eğik çizgi (\"/\") ile bitmemelidir"
 
-#: app/models/knowledge_base.rb:280
+#: app/models/knowledge_base.rb:301
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr "bir protokol içermemelidir (ör. \"http://\" veya \"https://\")"
 
@@ -28241,13 +28458,13 @@ msgstr "within last (relative)"
 msgid "within next (relative)"
 msgstr "within next (relative)"
 
-#: app/models/knowledge_base/category.rb:308
+#: app/models/knowledge_base/category.rb:420
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would exceed the allowed nesting depth"
 msgstr "Bu grup veya alt grupları izin verilen yuvalama derinliğini aşıyor."
 
-#: app/models/knowledge_base/category.rb:313
+#: app/models/knowledge_base/category.rb:425
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would push this category's children beyond the allowed nesting depth"
@@ -28313,6 +28530,17 @@ msgstr "...tüm metin alanının"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Bugünkü bekleme süresi"
+
+#~ msgid "Drag to reorder"
+#~ msgstr "Drag to reorder"
+
+#, fuzzy
+#~| msgid "The article does not belong to the specified ticket."
+#~ msgid "The selected category does not belong to this knowledge base."
+#~ msgstr "Yazı belirtilen destek talebine ait değil."
+
+#~ msgid "Transferred %s from user taskbar list %s at position %s."
+#~ msgstr "Kullanıcı görev çubuğu listesi %s'den %s konumundaki %s aktarıldı."
 
 #, fuzzy
 #~| msgid "Are you sure you want to delete this object?"

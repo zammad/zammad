@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-13 09:27+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-09-09 22:12+0000\n"
+"Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/hu/>\n"
+"zammad-stable/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -437,8 +437,6 @@ msgstr "%s ezelőtt"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:219
-#, fuzzy
-#| msgid "%s attached files"
 msgid "%s attached file(s)"
 msgstr "%s csatolt fájl"
 
@@ -496,7 +494,7 @@ msgstr "%s hitelesítési adatok"
 msgid "%s days ago"
 msgstr "%s nappal ezelőtt"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:149
 msgid "%s deselected."
 msgstr "%s kiválasztása megszüntetve."
 
@@ -531,9 +529,10 @@ msgstr "%s mappa"
 msgid "%s groups to %s roles assignments"
 msgstr "%s csoportok %s szerepekhez való hozzárendelésekhez"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:37
 msgid "%s has updated this answer. Submitting will replace their changes."
 msgstr ""
+"%s frissítette ezt a választ. Az elküldés felül fogja írni a változtatásait."
 
 #: app/frontend/shared/i18n/dates.ts:110
 msgid "%s hours ago"
@@ -637,7 +636,7 @@ msgstr "%s találat kiválasztva"
 msgid "%s result(s) selected, selection limit reached"
 msgstr "%s találat kiválasztva, a kiválasztási korlát elérve"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:142
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s kiválasztva. Használja a nyílbillentyűket az ejtés helyének "
@@ -726,10 +725,8 @@ msgid "%s via WhatsApp"
 msgstr "%s WhatsAppon keresztül"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts:36
-#, fuzzy
-#| msgid "Video"
 msgid "%s video"
-msgstr "Videó"
+msgstr "%s videó"
 
 #: app/frontend/shared/i18n/dates.ts:96
 msgid "%s weeks ago"
@@ -993,7 +990,7 @@ msgstr ""
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "A Zammad új verziója érhető el, töltse újra a böngészőjét."
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:80
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:81
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
@@ -1046,10 +1043,8 @@ msgstr ""
 
 #: app/services/service/knowledge_base/answer/base.rb:58
 #: app/services/service/knowledge_base/category/create.rb:56
-#, fuzzy
-#| msgid "A user is required!"
 msgid "A title is required."
-msgstr "Felhasználó szükséges!"
+msgstr "Egy cím megadása kötelező."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:216
 msgid "A user is required!"
@@ -1058,7 +1053,7 @@ msgstr "Felhasználó szükséges!"
 #: app/services/service/knowledge_base/answer/visibility_schedule/add.rb:50
 msgid ""
 "A visibility change can only be scheduled for a point in time in the future."
-msgstr ""
+msgstr "Egy láthatóság-változtatás csak egy jövőbeli időpontra ütemezhető."
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:12
 msgid ""
@@ -1351,6 +1346,8 @@ msgstr "Hozzáférési token"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:130
 msgid "Access token renewed, update your RSS reader with the new feed URLs."
 msgstr ""
+"A hozzáférési token megújítva, frissítse az RSS-olvasóját az új hírforrás "
+"URL-ekkel."
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:152
 msgid "Accessing your camera is forbidden. Please check your settings."
@@ -1554,10 +1551,8 @@ msgstr "Aktív ügyintézők"
 #: app/assets/javascripts/app/controllers/text_module.coffee:21
 #: app/assets/javascripts/app/controllers/trigger.coffee:18
 #: app/assets/javascripts/app/controllers/webhook.coffee:19
-#, fuzzy
-#| msgid "Active"
 msgid "Active only"
-msgstr "Aktív"
+msgstr "Csak aktív"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
 msgid "Activity"
@@ -1718,11 +1713,9 @@ msgstr ""
 msgid "Add all values"
 msgstr "Összes érték hozzáadása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:396
-#, fuzzy
-#| msgid "Add Answer"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
 msgid "Add answer"
 msgstr "Válasz hozzáadása"
 
@@ -1735,9 +1728,9 @@ msgstr "Mellékletlehetőség hozzáadása a feltöltéshez."
 msgid "Add bullet list"
 msgstr "Felsorolásjeles lista hozzáadása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:379
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
 msgid "Add category"
 msgstr "Kategória hozzáadása"
 
@@ -1815,17 +1808,15 @@ msgstr "Telefonhívás hozzáadása"
 msgid "Add reply"
 msgstr "Válasz hozzáadása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:71
-#, fuzzy
-#| msgid "%s schedulers"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:77
 msgid "Add schedule"
-msgstr "%s ütemezők"
+msgstr "Ütemezés hozzáadása"
 
 #: app/frontend/shared/form/i18n/locales.ts:77
 msgid "Add selected values"
 msgstr "Kiválasztott értékek hozzáadása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:73
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:102
 msgid "Add sub-category"
 msgstr "Alkategória hozzáadása"
 
@@ -1853,9 +1844,9 @@ msgstr "Hozzáadás meglévő címkékhez"
 msgid "Add unordered list"
 msgstr "Rendezetlen lista hozzáadása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:112
 msgid "Add visibility schedule"
-msgstr ""
+msgstr "Láthatóság-ütemezés hozzáadása"
 
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:4
 msgid ""
@@ -1871,6 +1862,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "További csatornák"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:60
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:140
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
@@ -2010,7 +2002,7 @@ msgstr "Speciális szűrők"
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 #: app/assets/javascripts/app/controllers/trigger.coffee:19
 msgid "Affects group field"
-msgstr ""
+msgstr "Csoportmezőt érint"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:63
 msgid "Affects only notifications for not assigned and all tickets."
@@ -2173,6 +2165,7 @@ msgstr "Az összes csoport figyelembe lesz véve a jegyek kiosztásánál."
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
 msgid "All notifications will be deleted. This action cannot be undone."
 msgstr ""
+"Az összes értesítés törlésre kerül. Ezt a műveletet nem lehet visszavonni."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:29
 msgid "All priorities will be considered for prioritizing tickets."
@@ -2304,6 +2297,8 @@ msgstr ""
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
+"Egy beágyazási modellt be kell állítani a beágyazásokhoz használt "
+"kapcsolatnál."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee:50
 msgid "An error has occurred"
@@ -2325,10 +2320,8 @@ msgstr "Hiba történt: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:79
 #: lib/validations/link_self_reference_validator.rb:4
-#, fuzzy
-#| msgid "A ticket cannot be merged into itself."
 msgid "An object cannot be linked to itself."
-msgstr "Egy jegy nem egyesíthető önmagába."
+msgstr "Egy objektum nem kapcsolható önmagához."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:60
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
@@ -2345,7 +2338,7 @@ msgstr "Váratlan hiba történt."
 msgid "An unexpected error occurred during system setup."
 msgstr "Váratlan hiba történt a rendszer beállítása során."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:752
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:768
 #: lib/ai/provider/concerns/handles_response.rb:22
 msgid "An unknown error occurred"
 msgstr "Ismeretlen hiba történt"
@@ -2415,30 +2408,29 @@ msgstr "Egy másik jegy egyesítve lett a(z) |%s| jegybe"
 msgid "Answer"
 msgstr "Válasz"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:112
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:143
-#, fuzzy
-#| msgid "Answer count: %s"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:231
 msgid "Answer actions"
-msgstr "Válasz darabszáma: %s"
+msgstr "Válaszműveletek"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:171
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
 msgid "Answer count: %s"
 msgstr "Válasz darabszáma: %s"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:51
-#, fuzzy
-#| msgid "KB Answer Generation"
 msgid "Answer navigation"
-msgstr "Tudásbázis-válasz előállítása"
+msgstr "Válasznavigáció"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:307
+msgid "Answer order list"
+msgstr "Válasz rendezési listája"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:90
-#, fuzzy
-#| msgid "Copy secret"
 msgid "Answer title"
-msgstr "Titok másolása"
+msgstr "Válasz címe"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:28
 msgid "Answers"
 msgstr "Válaszok"
 
@@ -2598,10 +2590,8 @@ msgid "Archive emails"
 msgstr "E-mailek archiválása"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:33
-#, fuzzy
-#| msgid "Previous page"
 msgid "Archive this answer"
-msgstr "Előző oldal"
+msgstr "A válasz archiválása"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:725
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:44
@@ -2611,12 +2601,9 @@ msgid "Archive ticket target state"
 msgstr "Jegy archiválásának célállapota"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:29
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:37
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:32
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:49
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:112
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:54
 msgid "Archived"
 msgstr "Archiválva"
 
@@ -2653,10 +2640,8 @@ msgid "Are you sure you want to set \"%s\" as default?"
 msgstr "Biztosan alapértelmezettként szeretné beállítani a következőt: „%s”?"
 
 #: app/assets/javascripts/app/controllers/_ai/embedding_stop_confirm.coffee:8
-#, fuzzy
-#| msgid "Are you sure you want to set \"%s\" as default?"
 msgid "Are you sure you want to stop semantic search?"
-msgstr "Biztosan alapértelmezettként szeretné beállítani a következőt: „%s”?"
+msgstr "Biztosan le szeretné állítani a szemantikus keresést?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:735
 msgid "Are you sure you want to unset \"%s\" as default?"
@@ -2907,12 +2892,10 @@ msgstr "Csatolt fájlok"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileList.vue:62
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:49
-#, fuzzy
-#| msgid "Attached Files"
 msgid "Attached files"
 msgstr "Csatolt fájlok"
 
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:118
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
@@ -3294,7 +3277,7 @@ msgid "BETA UI illustration"
 msgstr "BÉTA felhasználói felület illusztrációja"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:800
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:816
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -3316,7 +3299,7 @@ msgid "Back to previous page"
 msgstr "Vissza az előző oldalra"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:227
 msgid "Back to search results"
 msgstr "Vissza a keresési eredményekhez"
 
@@ -3754,6 +3737,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue:24
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:209
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:77
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:201
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:30
@@ -3795,9 +3779,9 @@ msgstr "Mégse és kijelentkezés"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:72
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:438
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3854,14 +3838,15 @@ msgid "Capture from camera"
 msgstr "Felvétel a kamerából"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:3
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:27
 msgid "Categories"
 msgstr "Kategóriák"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:186
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:58
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:170
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:85
 msgid "Category"
 msgstr "Kategória"
 
@@ -3869,23 +3854,23 @@ msgstr "Kategória"
 msgid "Category Attribute"
 msgstr "Kategória attribútuma"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:183
-#, fuzzy
-#| msgid "Category count: %s"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
 msgid "Category actions"
-msgstr "Kategória darabszáma: %s"
+msgstr "Kategóriaműveletek"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:155
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
 msgid "Category count: %s"
 msgstr "Kategória darabszáma: %s"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:164
-#, fuzzy
-#| msgid "Category"
 msgid "Category feed"
-msgstr "Kategória"
+msgstr "Kategória-hírforrás"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:246
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+msgid "Category order list"
+msgstr "Kategória rendezési listája"
+
+#: app/assets/javascripts/app/models/knowledge_base.coffee:258
 msgid "Category page layout"
 msgstr "Kategória oldalelrendezése"
 
@@ -3940,15 +3925,14 @@ msgid "Change date"
 msgstr "Dátum megváltoztatása"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:92
-#, fuzzy
-#| msgid "Change to %s"
 msgid "Change icon set"
-msgstr "Megváltoztatás erre: %s"
+msgstr "Ikonkészlet megváltoztatása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:110
 msgid "Change language"
 msgstr "Nyelv megváltoztatása"
 
+#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:9
 #: app/assets/javascripts/app/views/generic/history.jst.eco:2
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco:10
 msgid "Change order"
@@ -4381,10 +4365,8 @@ msgstr "Összes szűrő törlése"
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
-#, fuzzy
-#| msgid "Close notification"
 msgid "Clear all notifications"
-msgstr "Értesítés bezárása"
+msgstr "Összes értesítés törlése"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:85
 msgid "Clear filter"
@@ -4519,10 +4501,8 @@ msgid "Close dialog"
 msgstr "Párbeszédablak bezárása"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:88
-#, fuzzy
-#| msgid "Image preview"
 msgid "Close image preview"
-msgstr "Kép előnézete"
+msgstr "Kép előnézetének bezárása"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:355
 msgid "Close side panel"
@@ -4537,19 +4517,15 @@ msgstr "Lap bezárása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:15
 msgid "Close tab and add another answer"
-msgstr ""
+msgstr "Lap bezárása és másik válasz hozzáadása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:13
-#, fuzzy
-#| msgid "Close tab on ticket close"
 msgid "Close tab and open the answer"
-msgstr "Lap bezárása a jegy lezárásakor"
+msgstr "Lap bezárása és a válasz megnyitása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:14
-#, fuzzy
-#| msgid "Close tab on ticket close"
 msgid "Close tab and open the category"
-msgstr "Lap bezárása a jegy lezárásakor"
+msgstr "Lap bezárása és a kategória megnyitása"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:46
@@ -4600,7 +4576,7 @@ msgstr "Cloudflare Turnstile"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:193
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:85
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:94
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:71
 msgid "Collapse sidebar"
 msgstr "Oldalsáv összecsukása"
@@ -4954,6 +4930,11 @@ msgstr ""
 msgid "Content"
 msgstr "Tartalom"
 
+#: app/controllers/knowledge_base/categories_controller.rb:79
+#: app/services/service/knowledge_base/reorder/base.rb:117
+msgid "Content can only be rearranged while its sorting mode is manual."
+msgstr "A tartalom csak addig rendezhető át, amíg a rendezési módja kézi."
+
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:92
 msgid "Content could not be loaded."
@@ -4970,6 +4951,10 @@ msgstr "A tartalom előnézetét nem sikerült előállítani."
 #: app/frontend/apps/desktop/components/layout/LayoutContent.vue:195
 msgid "Content sidebar"
 msgstr "Tartalomoldalsáv"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:44
+msgid "Content type"
+msgstr "Tartalom típusa"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
@@ -4992,7 +4977,7 @@ msgstr "Helyi menü"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:392
 msgid "Context window size"
-msgstr ""
+msgstr "Környezeti ablak mérete"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
@@ -5066,21 +5051,17 @@ msgstr "Másolás"
 msgid "Copy URL"
 msgstr "URL másolása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:181
-#, fuzzy
-#| msgid "Copy secret"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
 msgid "Copy answer title"
-msgstr "Titok másolása"
+msgstr "Válasz címének másolása"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
 msgid "Copy article permalink"
 msgstr "Bejegyzés állandó hivatkozásának másolása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:213
-#, fuzzy
-#| msgid "Copy secret"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:242
 msgid "Copy category title"
-msgstr "Titok másolása"
+msgstr "Kategória címének másolása"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:113
 msgid "Copy codes"
@@ -5157,8 +5138,6 @@ msgstr ""
 "korlátozására, illetve a kitöltési kötelezettség megváltoztatására."
 
 #: app/models/audit_log/object_type_labels.rb:8
-#, fuzzy
-#| msgid "Core Workflow"
 msgid "Core workflow"
 msgstr "Fő munkafolyamat"
 
@@ -5279,7 +5258,7 @@ msgstr "Ország"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:248
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:251
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
@@ -5566,10 +5545,8 @@ msgid "Created within last 14 days"
 msgstr "Az elmúlt 14 napon létrehozva"
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:53
-#, fuzzy
-#| msgid "Created within last 14 days"
 msgid "Created within last 24 hours"
-msgstr "Az elmúlt 14 napon létrehozva"
+msgstr "Létrehozva az elmúlt 24 órában"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:57
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
@@ -5580,10 +5557,8 @@ msgstr "Az elmúlt 14 napon létrehozva"
 #: app/assets/javascripts/app/controllers/search.coffee:36
 #: app/assets/javascripts/app/controllers/template.coffee:16
 #: app/assets/javascripts/app/controllers/text_module.coffee:22
-#, fuzzy
-#| msgid "Created within last 14 days"
 msgid "Created within last month"
-msgstr "Az elmúlt 14 napon létrehozva"
+msgstr "Létrehozva az elmúlt hónapban"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:474
@@ -5690,7 +5665,7 @@ msgid "Custom Translation"
 msgstr "Egyéni fordítás"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:139
-#: app/assets/javascripts/app/models/knowledge_base.coffee:290
+#: app/assets/javascripts/app/models/knowledge_base.coffee:302
 msgid "Custom URL"
 msgstr "Egyéni URL"
 
@@ -6696,16 +6671,12 @@ msgstr ""
 "Zammad fejlécek eltávolításához."
 
 #: db/seeds/settings.rb:4434
-#, fuzzy
-#| msgid ""
-#| "Defines postmaster filter to identify auto responses to prevent auto "
-#| "replies from Zammad."
 msgid ""
 "Defines postmaster filter to remove references to local attachments from "
 "incoming emails."
 msgstr ""
-"Meghatározza a levelezési szűrőt az automatikus válaszok azonosításához, "
-"hogy megakadályozza a Zammadtól érkező automatikus válaszokat."
+"Meghatározza a levelezési szűrőt a helyi mellékletekre mutató hivatkozások "
+"eltávolításához a bejövő e-mailekből."
 
 #: db/seeds/settings.rb:4362
 msgid ""
@@ -7200,7 +7171,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:45
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:221
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:10
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:11
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:149
 msgid "Delete"
@@ -7241,10 +7212,8 @@ msgstr "Felhasználó törlése"
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:67
-#, fuzzy
-#| msgid "Delete table"
 msgid "Delete all"
-msgstr "Táblázat törlése"
+msgstr "Összes törlése"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:33
@@ -7257,13 +7226,11 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Először törölje az összes meglévő rekordot."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:68
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:105
-#, fuzzy
-#| msgid "Delete User"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:112
 msgid "Delete answer"
-msgstr "Felhasználó törlése"
+msgstr "Válasz törlése"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:77
 msgid "Delete article"
@@ -7273,12 +7240,10 @@ msgstr "Bejegyzés törlése"
 msgid "Delete avatar"
 msgstr "Profilkép törlése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:92
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:168
-#, fuzzy
-#| msgid "Cannot delete category"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:121
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:197
 msgid "Delete category"
-msgstr "Nem lehet törölni a kategóriát"
+msgstr "Kategória törlése"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
@@ -7390,10 +7355,8 @@ msgid "Deletion failed."
 msgstr "A törlés nem sikerült."
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:51
-#, fuzzy
-#| msgid "Deletion Task"
 msgid "Deletions only"
-msgstr "Törlési feladat"
+msgstr "Csak törlések"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco:4
 msgid "Delivery failed:"
@@ -7642,8 +7605,7 @@ msgid "Discard article"
 msgstr "Bejegyzés elvetése"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:231
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:434
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
@@ -7662,6 +7624,7 @@ msgstr "Pillanatkép elvetése"
 msgid "Discard unsaved reply"
 msgstr "Mentetlen válasz elvetése"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -7750,11 +7713,9 @@ msgstr "Valóban törölni szeretné ezt az objektumot?"
 msgid "Do you really want to delete your current avatar?"
 msgstr "Valóban törölni szeretné a jelenlegi profilképét?"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:83
-#, fuzzy
-#| msgid "Do you really want to delete this draft?"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:67
 msgid "Do you really want to remove the scheduled change to %s?"
-msgstr "Valóban törölni szeretné ezt a piszkozatot?"
+msgstr "Valóban el szeretné távolítani a(z) %s ütemezett változtatásait?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
 msgid "Do you really want to set the visibility of this article to \"public\"?"
@@ -7872,10 +7833,8 @@ msgid "Download feedback report"
 msgstr "Visszajelzési jelentés letöltése"
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:94
-#, fuzzy
-#| msgid "Download %s"
 msgid "Download file: %s"
-msgstr "A(z) %s letöltése"
+msgstr "Fájl letöltése: %s"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Download original email"
@@ -7891,7 +7850,7 @@ msgstr "Mellékletek letöltése…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:14
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:20
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 msgid "Draft"
@@ -7923,17 +7882,13 @@ msgstr "Piszkozatok és makrók"
 msgid "Drafts only"
 msgstr "Csak piszkozatok"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:145
 msgid "Drag ended for %s."
 msgstr "A(z) %s húzása befejeződött."
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:115
 msgid "Drag here to cancel"
 msgstr "Húzza ide a megszakításhoz"
-
-#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
-msgid "Drag to reorder"
-msgstr "Húzza az átrendezéshez"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
@@ -7988,7 +7943,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Húsvéti ünnepek"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:639
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:648
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -8042,11 +7997,8 @@ msgstr "Szervezet szerkesztése"
 msgid "Edit Video Server"
 msgstr "Videokiszolgáló szerkesztése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:59
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:96
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:156
-#, fuzzy
-#| msgid "Edit Answer"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:103
 msgid "Edit answer"
 msgstr "Válasz szerkesztése"
 
@@ -8054,11 +8006,9 @@ msgstr "Válasz szerkesztése"
 msgid "Edit authenticator app"
 msgstr "Hitelesítő alkalmazás szerkesztése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:80
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:109
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:159
-#, fuzzy
-#| msgid "Edit Category"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:186
 msgid "Edit category"
 msgstr "Kategória szerkesztése"
 
@@ -8075,18 +8025,14 @@ msgstr "Ügyfél szerkesztése"
 msgid "Edit item"
 msgstr "Elem szerkesztése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:147
-#, fuzzy
-#| msgid "Edit Knowledge Base"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:127
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:172
 msgid "Edit knowledge base"
 msgstr "Tudásbázis szerkesztése"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:115
-#, fuzzy
-#| msgid "Link knowledge base answer"
 msgid "Edit knowledge base answer"
-msgstr "Tudásbázisválasz hozzákapcsolása"
+msgstr "Tudásbázisválasz szerkesztése"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:63
 msgid "Edit mask"
@@ -8348,20 +8294,16 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:310
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:144
-#, fuzzy
-#| msgid "Enter video URL"
 msgid "Embed video"
-msgstr "Videó URL-ének megadása"
+msgstr "Videó beágyazása"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
 msgid "Embedding Model"
 msgstr "Beágyazási modell"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:387
-#, fuzzy
-#| msgid "Embedding Model"
 msgid "Embedding dimensions"
-msgstr "Beágyazási modell"
+msgstr "Beágyazási dimenziók"
 
 #: app/services/service/ai/vectordb/embedding.rb:36
 msgid "Embedding provider returned no usable vector"
@@ -8973,7 +8915,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:132
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:37
 #: lib/excel_sheet/ai/analytics/errors.rb:36
 msgid "Error"
@@ -9095,7 +9037,7 @@ msgstr "Eszkaláció ekkor (frissítési idő)"
 msgid "Escalation times"
 msgstr "Eszkalációs idők"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:230
 msgid "Escape pressed. No item selected."
 msgstr "Az Escape lenyomva. Nincs kiválasztva elem."
 
@@ -9115,13 +9057,7 @@ msgstr "Esemény kezdete"
 msgid "Event summary"
 msgstr "Esemény összefoglalója"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:271
-#, fuzzy
-#| msgid ""
-#| "Every category in your knowledge base should be given a unique icon for "
-#| "maximum visual clarity. Each set below provides a wide range of icons to "
-#| "choose from, but beware: You can't mix and match different icons from "
-#| "different sets. Choose carefully!"
+#: app/assets/javascripts/app/models/knowledge_base.coffee:283
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
 "maximum visual clarity. Each set below provides a wide range of icons to "
@@ -9132,7 +9068,9 @@ msgstr ""
 "A tudásbázisban minden kategóriának egyedi ikont kell adni a legnagyobb "
 "vizuális áttekinthetőség érdekében. Az alábbi készletek az ikonok széles "
 "választékát kínálják, de figyeljen: nem keverhet és nem párosíthat különféle "
-"készletekből származó ikonokat. Gondosan válasszon!"
+"készletekből származó ikonokat. A készlet későbbi átváltása visszaállítja az "
+"összes kategóriaikont az új készlet alapértelmezett ikonjára, ezért gondosan "
+"válasszon!"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -9260,7 +9198,7 @@ msgstr "Piszkozat kibővítése jól megírt szöveggé"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:194
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:86
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:96
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:72
 msgid "Expand sidebar"
 msgstr "Oldalsáv kinyitása"
@@ -9611,7 +9549,7 @@ msgstr "Keresztnév Vezetéknév"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:44
 msgid "Fit to screen"
-msgstr ""
+msgstr "Képernyőhöz igazítás"
 
 #: db/seeds/ai/text_tools.rb:4
 msgid "Fix spelling and grammar"
@@ -9625,7 +9563,7 @@ msgstr "Rögzített e-mail-fiókok"
 msgid "Flat Design"
 msgstr "Lapos kialakítás"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:113
 msgid "Focus on %s"
 msgstr "Fókuszálás erre: %s"
 
@@ -9679,13 +9617,11 @@ msgstr "Betűméret"
 msgid "Footer Menu"
 msgstr "Lábléc menü"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:171
+#: app/assets/javascripts/app/models/knowledge_base.coffee:183
 msgid "Footer Note"
 msgstr "Lábjegyzet"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:50
-#, fuzzy
-#| msgid "Footer Note"
 msgid "Footer note"
 msgstr "Lábjegyzet"
 
@@ -9847,6 +9783,12 @@ msgstr "Formázás ||dőltként||"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:64
 msgid "Forward"
 msgstr "Továbbítás"
+
+#: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:15
+#, fuzzy
+#| msgid "Edit knowledge base answer"
+msgid "Found knowledge base answers"
+msgstr "Tudásbázisválasz szerkesztése"
 
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:16
 msgid "Found organizations"
@@ -10137,8 +10079,8 @@ msgstr "Ugrás a kezdőlapra"
 msgid "Go inside group"
 msgstr "Ugrás a csoportba"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:55
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
 msgid "Go to knowledge base"
 msgstr "Ugrás a tudásbázishoz"
 
@@ -10197,7 +10139,7 @@ msgstr "Google reCAPTCHA vállalati"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:83
 msgid "Got it"
 msgstr "Értettem"
 
@@ -10407,11 +10349,11 @@ msgstr "Problémái vannak?"
 msgid "Header"
 msgstr "Fejléc"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:190
+#: app/assets/javascripts/app/models/knowledge_base.coffee:202
 msgid "Header Color"
 msgstr "Fejléc színe"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:201
+#: app/assets/javascripts/app/models/knowledge_base.coffee:213
 msgid "Header Link Color"
 msgstr "Fejléc hivatkozásszíne"
 
@@ -10465,7 +10407,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:81
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -10795,15 +10737,15 @@ msgid "Icinga integration"
 msgstr "Icinga-integráció"
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:63
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:66
 msgid "Icon"
 msgstr "Ikon"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:179
+#: app/assets/javascripts/app/models/knowledge_base.coffee:191
 msgid "Icon & Link Color"
 msgstr "Ikon- és hivatkozásszín"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:268
+#: app/assets/javascripts/app/models/knowledge_base.coffee:280
 msgid "Icon Set"
 msgstr "Ikonkészlet"
 
@@ -10813,6 +10755,9 @@ msgid ""
 "therefore reset all category icons to the default icon of the new set, and "
 "your current selections will be lost. Do you want to continue?"
 msgstr ""
+"Az ikonok nem vihetők át az ikonkészletek között. A készlet átváltása ezért "
+"vissza fogja állítani az összes kategóriaikont az új készlet alapértelmezett "
+"ikonjára, és az aktuális kiválasztásai el fognak veszni. Szeretné folytatni?"
 
 #: db/seeds/settings.rb:2103 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
@@ -10871,10 +10816,10 @@ msgstr ""
 "állítsa be ügyfélként."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr ""
-"Ha ez a reguláris kifejezés illeszkedik, akkor a küldő nem fog értesítést "
-"küldeni."
+"Ha ez a reguláris kifejezés illeszkedik, akkor nem lesz értesítés küldve a "
+"küldőnek."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179
 msgid ""
@@ -10928,6 +10873,9 @@ msgid ""
 "If you want to invalidate your feed URLs, renew the access token below. Make "
 "sure to update your RSS reader with new feed URLs afterwards."
 msgstr ""
+"Ha érvényteleníteni szeretné a hírforrás URL-jeit, akkor újítsa meg az "
+"alábbi hozzáférési tokent. Győződjön meg arról, hogy azután frissítette-e az "
+"RSS-olvasóját az új hírforrás URL-ekkel."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
 msgid ""
@@ -10984,10 +10932,8 @@ msgid "Image Service"
 msgstr "Képszolgáltatás"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:23
-#, fuzzy
-#| msgid "Change Objects"
 msgid "Image actions"
-msgstr "Objektumok módosítása"
+msgstr "Képműveletek"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -11002,10 +10948,8 @@ msgid "Image file size is too large, please try inserting a smaller file."
 msgstr "A képfájl mérete túl nagy, próbáljon meg egy kisebb fájlt beszúrni."
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:151
-#, fuzzy
-#| msgid "Image of %s"
 msgid "Image name: %s"
-msgstr "%s képe"
+msgstr "Kép neve: %s"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:100
 msgid "Image of %s"
@@ -11142,10 +11086,8 @@ msgstr "Inaktív"
 
 #: app/assets/javascripts/app/controllers/organization.coffee:20
 #: app/assets/javascripts/app/controllers/user.coffee:34
-#, fuzzy
-#| msgid "Inactive"
 msgid "Inactive only"
-msgstr "Inaktív"
+msgstr "Csak inaktív"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:60
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:13
@@ -11416,6 +11358,18 @@ msgstr "Telepítve"
 msgid "Installed packages"
 msgstr "Telepített csomagok"
 
+#: app/controllers/packages_controller.rb:58
+#, fuzzy
+#| msgid ""
+#| "After installing, updating, or uninstalling packages the following "
+#| "commands need to be executed on the server:"
+msgid ""
+"Installing, updating or uninstalling packages is not possible in container "
+"environments."
+msgstr ""
+"A csomagok telepítése, frissítése vagy eltávolítása után a következő "
+"parancsokat kell végrehajtani a kiszolgálón:"
+
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
 msgstr "Utasítás"
@@ -11442,7 +11396,7 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "A letöltött WhatsApp-média integritás-ellenőrzése nem sikerült."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:19
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:25
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:22
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
@@ -11468,14 +11422,14 @@ msgid ""
 "index was last built with. Used to detect a stale index by comparison, "
 "without probing Elasticsearch."
 msgstr ""
+"A beágyazási modell belső rekordja és a tudásbázis-index legutóbbi "
+"összeállításhoz használt vektorméret. Ahhoz van használva, hogy "
+"összehasonlítás alapján, az Elasticsearch lekérdezése nélkül észlelje az "
+"elavult indexet."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:96
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:46
-#, fuzzy
-#| msgid "Internally published at"
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:26
 msgid "Internally published"
-msgstr "Belsőleg közzétéve ekkor:"
+msgstr "Belsőleg közzétéve"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:58
@@ -11892,12 +11846,12 @@ msgstr "Kulcsszavak"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
-#: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:118
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:103
-#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:28
-#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:21
-#: app/models/knowledge_base.rb:262 db/seeds/permissions.rb:113
+#: app/assets/javascripts/app/models/knowledge_base.coffee:87
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
+#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
+#: app/models/knowledge_base.rb:283 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "Tudásbázis"
 
@@ -11906,7 +11860,7 @@ msgid "Knowledge Base Answer"
 msgstr "Tudásbázisválasz"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:40
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:45
 msgid "Knowledge Base Answer \"|%s|\" has been created"
 msgstr "A(z) „|%s|” tudásbázisválasz létrehozva"
 
@@ -11935,10 +11889,8 @@ msgid "Knowledge Base Feed"
 msgstr "Tudásbázis-hírforrás"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBreadcrumbItems.ts:27
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base Home"
-msgstr "Tudásbázis"
+msgstr "Tudásbázis kezdőlapja"
 
 #: db/seeds/permissions.rb:404
 msgid "Knowledge Base Reader"
@@ -11953,56 +11905,44 @@ msgid "Knowledge Base active publicly"
 msgstr "A tudásbázis nyilvánosan aktív"
 
 #: app/models/audit_log/object_type_labels.rb:10
-#, fuzzy
-#| msgid "Knowledge Base Answer"
 msgid "Knowledge Base language"
-msgstr "Tudásbázisválasz"
+msgstr "Tudásbázis nyelve"
 
 #: db/seeds/settings.rb:5651
 msgid "Knowledge Base multilingual support"
 msgstr "Tudásbázis többnyelvű támogatása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:356
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
 msgid "Knowledge base actions"
 msgstr "Tudásbázis-műveletek"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:28
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:211
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:172
-#, fuzzy
-#| msgid "Knowledge Base Answer"
+#: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:13
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:258
 msgid "Knowledge base answer"
 msgstr "Tudásbázisválasz"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts:128
-#, fuzzy
-#| msgid "Ticket updated successfully."
 msgid "Knowledge base answer deleted successfully."
-msgstr "A jegy sikeresen frissült."
+msgstr "A tudásbázisválasz sikeresen törölve."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/KnowledgeBaseAnswerScreenBehavior.vue:71
-#, fuzzy
-#| msgid "Ticket screen behavior updated successfully"
 msgid "Knowledge base answer screen behavior updated successfully."
-msgstr "A jegyképernyő viselkedése sikeresen frissítve"
+msgstr "A tudásbázisválasz képernyőjének viselkedése sikeresen frissítve."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:265
-#, fuzzy
-#| msgid "Ticket updated successfully."
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
 msgid "Knowledge base answer updated successfully."
-msgstr "A jegy sikeresen frissült."
+msgstr "A tudásbázisválasz sikeresen frissítve."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:125
-#, fuzzy
-#| msgid ""
-#| "User with specified ID was not found. Try checking the URL for errors."
 msgid ""
 "Knowledge base answer with specified ID was not found. Try checking the URL "
 "for errors."
 msgstr ""
-"A megadott azonosítóval rendelkező felhasználó nem található. Próbálja meg "
-"ellenőrizni az URL-t a hibák kiszűrésére."
+"A megadott azonosítóval rendelkező tudásbázisválasz nem található. Próbálja "
+"meg ellenőrizni az URL-t a hibák kiszűrésére."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
 msgid "Knowledge base articles"
@@ -12019,8 +11959,6 @@ msgid "Knowledge base draft could not be generated."
 msgstr "A tudásbázis-piszkozatot nem sikerült előállítani."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:145
-#, fuzzy
-#| msgid "Knowledge Base Feed"
 msgid "Knowledge base feed"
 msgstr "Tudásbázis-hírforrás"
 
@@ -12071,7 +12009,7 @@ msgstr "Címke"
 msgid "Labels"
 msgstr "Címkék"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:224
+#: app/assets/javascripts/app/models/knowledge_base.coffee:236
 msgid "Landing page layout"
 msgstr "Érkező oldal elrendezése"
 
@@ -12081,7 +12019,7 @@ msgstr "Érkező oldal elrendezése"
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:97
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
 msgid "Language"
@@ -12092,7 +12030,7 @@ msgid "Language Detection Service"
 msgstr "Nyelvfelismerési szolgáltatás"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:115
-#: app/assets/javascripts/app/models/knowledge_base.coffee:278
+#: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Languages"
 msgstr "Nyelvek"
 
@@ -12206,11 +12144,9 @@ msgstr "Utolsó szinkronizálás"
 msgid "Last sync at:"
 msgstr "Utoljára szinkronizálva:"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:53
-#, fuzzy
-#| msgid "Has update"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:62
 msgid "Last updated"
-msgstr "Van frissítése"
+msgstr "Utoljára frissítve"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
@@ -12225,7 +12161,7 @@ msgstr "Vezetéknév Keresztnév"
 msgid "Lastname, Firstname"
 msgstr "Vezetéknév, Keresztnév"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:152
+#: app/assets/javascripts/app/models/knowledge_base.coffee:164
 msgid "Layout"
 msgstr "Elrendezés"
 
@@ -12258,6 +12194,8 @@ msgid ""
 "Length of the vectors the embedding model produces. Filled in for a model "
 "whose size is known."
 msgstr ""
+"A beágyazási modell által előállított vektorok hossza. Olyan modellnél van "
+"kitöltve, amelynek ismert a mérete."
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
 msgid "Library"
@@ -12374,8 +12312,6 @@ msgstr "A hivatkozás már létezik"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:213
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:321
-#, fuzzy
-#| msgid "Link Answer"
 msgid "Link answer"
 msgstr "Válasz hozzákapcsolása"
 
@@ -12406,7 +12342,7 @@ msgid "Link text"
 msgstr "Hivatkozás szövege"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:106
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Link ticket"
@@ -12569,10 +12505,8 @@ msgstr "Bejelentkezés ide: %s"
 
 #: app/assets/javascripts/app/controllers/search.coffee:31
 #: app/assets/javascripts/app/controllers/user.coffee:36
-#, fuzzy
-#| msgid "Updated within last 3 days"
 msgid "Logged in within last 7 days"
-msgstr "Frissítve az elmúlt 3 napon"
+msgstr "Bejelentkezve az elmúlt 7 napon"
 
 #: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
@@ -12601,10 +12535,8 @@ msgstr ""
 "hitelesítési módszerét."
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:15
-#, fuzzy
-#| msgid "Login Screen"
 msgid "Login screen links"
-msgstr "Bejelentkezési képernyő"
+msgstr "Bejelentkezési képernyő hivatkozásai"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:14
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:20
@@ -13400,10 +13332,12 @@ msgstr "Nem egyező telefonszám-azonosító."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
 #: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
-#, fuzzy
-#| msgid "Stores the AI provider configuration."
 msgid "Missing embedding model in the provider configuration"
-msgstr "Az MI-szolgáltató beállítását tárolja."
+msgstr "Hiányzik a beágyazási modell a szolgáltató beállításában"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:48
+msgid "Missing translation"
+msgstr "Hiányzó fordítás"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/mistral.coffee:3
 msgid "Mistral AI"
@@ -13423,28 +13357,20 @@ msgid "Model"
 msgstr "Modell"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:402
-#, fuzzy
-#| msgid ""
-#| "Model used for image text recognition. Leave empty to use the default/"
-#| "base model."
 msgid ""
 "Model used for image text recognition. Leave empty to use the model of this "
 "connection."
 msgstr ""
-"A képen lévő szöveg felismeréséhez használt modell. Hagyja üresen az "
-"alapértelmezett vagy az alapmodell használatához."
+"A képen lévő szöveg felismeréséhez használt modell. Hagyja üresen ezen "
+"kapcsolat modelljének használatához."
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:366
-#, fuzzy
-#| msgid ""
-#| "Model used for vector embedding in semantic search. Leave empty to use "
-#| "the default/base model."
 msgid ""
 "Model used for vector embedding in semantic search. Required for the "
 "provider that serves semantic search."
 msgstr ""
-"A szemantikus keresésben való vektorbeágyazáshoz használt modell. Hagyja "
-"üresen az alapértelmezett vagy az alapmodell használatához."
+"A vektor beágyazásához használt modell a szemantikus keresésben. Olyan "
+"szolgáltatónál szükséges, amely szemantikus keresést szolgáltat."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:272
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
@@ -13530,6 +13456,10 @@ msgstr "Mozgatás fel"
 msgid "Move up and down"
 msgstr "Mozgatás fel és le"
 
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:133
+msgid "Moved %s to position %s in the target list."
+msgstr "A(z) %s áthelyezve a(z) %s. pozícióba a céllistán."
+
 #: app/models/report.rb:59
 msgid "Moved in"
 msgstr "Áthelyezve ide"
@@ -13597,8 +13527,8 @@ msgstr "Nagios"
 msgid "Nagios integration"
 msgstr "Nagios-integráció"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:526
-#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:533
+#: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:42
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:328
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:560
@@ -13936,19 +13866,15 @@ msgid "New desktop BETA UI"
 msgstr "Új asztali BÉTA felhasználói felület"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerCreate.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:92
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:93
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateHeader.vue:107
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:90
-#, fuzzy
-#| msgid "Link knowledge base answer"
 msgid "New knowledge base answer"
-msgstr "Tudásbázisválasz hozzákapcsolása"
+msgstr "Új tudásbázisválasz"
 
 #: app/assets/javascripts/app/controllers/search.coffee:24
-#, fuzzy
-#| msgid "New & open tickets"
 msgid "New or open tickets"
-msgstr "Új és nyitott jegyek"
+msgstr "Új vagy nyitott jegyek"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "New organizations are shared."
@@ -14058,7 +13984,7 @@ msgid "New user?"
 msgstr "Új felhasználó?"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:627
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:636
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -14077,22 +14003,16 @@ msgid "Next State"
 msgstr "Következő állapot"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:40
-#, fuzzy
-#| msgid "No answers"
 msgid "Next answer"
-msgstr "Nincsenek válaszok"
+msgstr "Következő válasz"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:40
-#, fuzzy
-#| msgid "No answers"
 msgid "Next answer: %s"
-msgstr "Nincsenek válaszok"
+msgstr "Következő válasz: %s"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:76
-#, fuzzy
-#| msgid "Next page"
 msgid "Next image"
-msgstr "Következő oldal"
+msgstr "Következő kép"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
@@ -14329,7 +14249,7 @@ msgstr "Nincs importálás folyamatban."
 msgid "No items available"
 msgstr "Nincsenek elérhető elemek"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:329
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
 msgid "No knowledge base content is available yet."
 msgstr "Még nincs elérhető tudásbázis-tartalom."
 
@@ -14342,7 +14262,7 @@ msgstr "Nincs tudásbázis területi beállítás beállítva."
 msgid "No linked issues"
 msgstr "Nincsenek kapcsolt problémák"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr "Még nincsenek hivatkozások hozzáadva."
@@ -14490,12 +14410,12 @@ msgid "No token!"
 msgstr "Nincs token!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:98
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:117
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:172
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:206
-msgid "No translation for this locale available"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
+msgid "No translation available for this locale"
 msgstr "Nincs elérhető fordítás ehhez a területi beállításhoz"
 
 #: app/models/ticket.rb:434
@@ -14518,9 +14438,9 @@ msgstr "Nincs felhasználó-létrehozás bejelentkezéskor"
 msgid "No valid knowledge base category provided."
 msgstr "Nem lett érvényes tudásbázis-kategória megadva."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:164
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:135
 msgid "No visibility changes scheduled yet."
-msgstr ""
+msgstr "Még nincsenek láthatóság-változtatások ütemezve."
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -14618,10 +14538,10 @@ msgstr "Nincs beállítva"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:84
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
 msgid "Not found"
@@ -14792,6 +14712,8 @@ msgid ""
 "Number of input tokens the embedding model takes at once. Filled in for a "
 "model whose limit is known."
 msgstr ""
+"A bemeneti tokenek száma, amelyet a beágyazási modell egyszerre fogad. Olyan "
+"modellnél van kitöltve, amelynek korlátja ismert."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:180
 msgid "Number of tags"
@@ -14979,10 +14901,8 @@ msgstr "Internetes szolgáltatás"
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:181
 #: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:162
-#, fuzzy
-#| msgid "The notifcation could not be deleted."
 msgid "Online notifications could not be cleared."
-msgstr "Az értesítést nem lehetett törölni."
+msgstr "Az internetes értesítéseket nem sikerült törölni."
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 msgid "Only %s attachment allowed"
@@ -15100,10 +15020,8 @@ msgid "Open checklist"
 msgstr "Ellenőrzőlista megnyitása"
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:95
-#, fuzzy
-#| msgid "Open Ticket# %s"
 msgid "Open file: %s"
-msgstr "Jegy# %s megnyitása"
+msgstr "Fájl megnyitása: %s"
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:38
@@ -15191,10 +15109,8 @@ msgid "OpenID Connect Options"
 msgstr "OpenID csatlakozás beállításai"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:16
-#, fuzzy
-#| msgid "Open in new tab"
 msgid "Opened in new tab"
-msgstr "Megnyitás új lapon"
+msgstr "Megnyitva új lapon"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:55
 msgid "Opened in tabs"
@@ -15622,10 +15538,8 @@ msgid "Parent"
 msgstr "Szülő"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:76
-#, fuzzy
-#| msgid "Add category"
 msgid "Parent category"
-msgstr "Kategória hozzáadása"
+msgstr "Szülőkategória"
 
 #: db/seeds/object_manager_attributes.rb:2103
 msgid "Parent group"
@@ -15791,10 +15705,8 @@ msgid "Permanently Delete Knowledge Base"
 msgstr "Tudásbázis végleges törlése"
 
 #: app/models/audit_log/object_type_labels.rb:12
-#, fuzzy
-#| msgid "Permissions"
 msgid "Permission"
-msgstr "Jogosultságok"
+msgstr "Jogosultság"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2835
@@ -15815,10 +15727,8 @@ msgid "Permissions"
 msgstr "Jogosultságok"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:129
-#, fuzzy
-#| msgid "Permissions"
 msgid "Permissions matrix"
-msgstr "Jogosultságok"
+msgstr "Jogosultságok mátrixa"
 
 #: lib/core_ext/execjs/persistent_node_runtime.rb:128
 msgid "Persistent Node.js (V8)"
@@ -15845,8 +15755,6 @@ msgid "Personal overview order was reset."
 msgstr "A személyes áttekintés sorrendje vissza lett állítva."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#, fuzzy
-#| msgid "Personal Settings"
 msgid "Personal settings"
 msgstr "Személyes beállítások"
 
@@ -15968,7 +15876,7 @@ msgid "Please configure import source before running."
 msgstr "Állítsa be az importálás forrását a futtatás előtt."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:330
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
 msgid "Please contact your administrator."
 msgstr "Vegye fel a kapcsolatot az adminisztrátorral."
 
@@ -16251,22 +16159,16 @@ msgid "Previous"
 msgstr "Előző"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:27
-#, fuzzy
-#| msgid "Previous page"
 msgid "Previous answer"
-msgstr "Előző oldal"
+msgstr "Előző válasz"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:27
-#, fuzzy
-#| msgid "Previous page"
 msgid "Previous answer: %s"
-msgstr "Előző oldal"
+msgstr "Előző válasz: %s"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:64
-#, fuzzy
-#| msgid "Previous page"
 msgid "Previous image"
-msgstr "Előző oldal"
+msgstr "Előző kép"
 
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:5
 msgid "Previous in overview"
@@ -16422,7 +16324,8 @@ msgid ""
 msgstr ""
 "Az ügyfél hangulatáról szóló értékelés elkészítése a beszélgetés alapján."
 
-#: app/controllers/knowledge_base/categories_controller.rb:23
+#: app/controllers/knowledge_base/categories_controller.rb:70
+#: app/services/service/knowledge_base/reorder/base.rb:109
 #: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "A hatókörben lévő összes elem helyzetének megadása"
@@ -16499,11 +16402,8 @@ msgstr "Nyilvános menü"
 msgid "Publish Article"
 msgstr "Bejegyzés közzététele"
 
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:24
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:45
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:31
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:33
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:104
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:50
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
 msgid "Published"
 msgstr "Közzétéve"
@@ -16793,7 +16693,7 @@ msgstr ""
 "A kapcsolódó tudásbázisválasz létrehozása már el lett indítva a megadott "
 "jegynél."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:84
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
@@ -16821,7 +16721,7 @@ msgstr "Újratöltés"
 msgid "Reload application"
 msgstr "Alkalmazás újratöltése"
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:96
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
 #: app/frontend/shared/stores/authentication.ts:165
 msgid "Reload now"
 msgstr "Újratöltés most"
@@ -16867,7 +16767,7 @@ msgstr "Távoli"
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:69
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
@@ -16915,10 +16815,8 @@ msgid "Remove element"
 msgstr "Elem eltávolítása"
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:204
-#, fuzzy
-#| msgid "Remove filter"
 msgid "Remove file: %s"
-msgstr "Szűrő eltávolítása"
+msgstr "Fájl eltávolítása: %s"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
@@ -16957,9 +16855,9 @@ msgstr "Módszer eltávolítása"
 msgid "Remove notification"
 msgstr "Értesítés eltávolítása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:69
 msgid "Remove scheduled visibility change"
-msgstr ""
+msgstr "Ütemezett láthatóság-változtatás eltávolítása"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:22
 msgid "Remove security keys"
@@ -16969,9 +16867,9 @@ msgstr "Biztonsági kulcsok eltávolítása"
 msgid "Remove selected values"
 msgstr "Kiválasztott értékek eltávolítása"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:152
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:123
 msgid "Remove this scheduled visibility change"
-msgstr ""
+msgstr "Az ütemezett láthatóság-változtatás eltávolítása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
@@ -16987,10 +16885,8 @@ msgid "Remove two-factor authentication: %s"
 msgstr "Kétfaktoros hitelesítés eltávolítása: %s"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts:60
-#, fuzzy
-#| msgid "Remove item"
 msgid "Remove video"
-msgstr "Elem eltávolítása"
+msgstr "Videó eltávolítása"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 msgid "Removed reaction from message %s from %s"
@@ -17026,16 +16922,12 @@ msgid "Renew Access Token"
 msgstr "Hozzáférési token megújítása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:192
-#, fuzzy
-#| msgid "Renew Access Token"
 msgid "Renew access token"
 msgstr "Hozzáférési token megújítása"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:109
-#, fuzzy
-#| msgid "Delete this access token"
 msgid "Renewing the access token failed."
-msgstr "A hozzáférési token törlése"
+msgstr "A hozzáférési token megújítása nem sikerült."
 
 #: app/models/report.rb:52
 msgid "Reopened"
@@ -17168,13 +17060,6 @@ msgid "Requirements"
 msgstr "Követelmények"
 
 #: db/seeds/settings.rb:1820
-#, fuzzy
-#| msgid ""
-#| "Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) "
-#| "to be present and true before trusting an incoming email address for "
-#| "account auto-linking. Both must first be configured as optional claims on "
-#| "the Azure app registration. Until that is done, enabling this blocks all "
-#| "Microsoft 365 account auto-linking by email."
 msgid ""
 "Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
 "to match the incoming email address, before trusting that address for "
@@ -17182,12 +17067,12 @@ msgid ""
 "claims on the Azure app registration. Until that is done, enabling this "
 "blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
-"Megköveteli, hogy az „xms_edov” azonosító jogkivonatjogcíme (az „email” "
-"jogcímmel együtt) jelen legyen és igaz legyen, mielőtt megbízik egy beérkező "
-"e-mail-címben a fiók automatikus összekapcsolásához. Először mindkettőt be "
-"kell állítani nem kötelező jogcímekként az Azure-alkalmazásregisztrációban. "
+"Szükséges, hogy az „xms_edov” azonosítótoken-igénylés igaz legyen, és az "
+"„email” igénylés megegyezzen a bejövő e-mail-címmel, mielőtt megbízna abban "
+"a címben a fiók automatikus összekapcsolásához. Mindkét igénylést először be "
+"kell állítani választható igénylésként az Azure-alkalmazásregisztrációban. "
 "Amíg ez nem történik meg, addig ennek engedélyezése tiltja az összes "
-"Microsoft 365-fiók e-mailen keresztüli automatikus összekapcsolását."
+"Microsoft 365-fiók e-mailen keresztül történő automatikus összekapcsolását."
 
 #: db/seeds/settings.rb:6117
 msgid ""
@@ -17396,7 +17281,7 @@ msgstr "Eredmény szerkezet"
 msgid "Result:"
 msgstr "Eredmény:"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:609
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:623
 msgid "Results"
 msgstr "Eredmények"
 
@@ -17486,11 +17371,11 @@ msgstr "A csatorna költöztetésének visszaállítása sikerült!"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:53
 msgid "Rotate left"
-msgstr ""
+msgstr "Forgatás balra"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:62
 msgid "Rotate right"
-msgstr ""
+msgstr "Forgatás jobbra"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:302
 msgid "Rows"
@@ -17510,10 +17395,8 @@ msgid "Run macro"
 msgstr "Makró futtatása"
 
 #: app/assets/javascripts/app/controllers/job.coffee:18
-#, fuzzy
-#| msgid "Created within last 14 days"
 msgid "Run within last 24 hours"
-msgstr "Az elmúlt 14 napon létrehozva"
+msgstr "Futtatva az elmúlt 24 órában"
 
 #: app/assets/javascripts/app/models/job.coffee:21
 msgid "Running"
@@ -17654,10 +17537,8 @@ msgid "SSL verification"
 msgstr "SSL-ellenőrzés"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:20
-#, fuzzy
-#| msgid "SSL verification"
 msgid "SSL verification disabled"
-msgstr "SSL-ellenőrzés"
+msgstr "Az SSL-ellenőrzés letiltva"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:419
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
@@ -17713,6 +17594,7 @@ msgstr "szombat"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:86
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:117
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:225
@@ -17773,9 +17655,9 @@ msgstr "Értesítések mentése"
 msgid "Save out of office"
 msgstr "Irodán kívül mentése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:120
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:115
 msgid "Save the answer in this language before linking tickets to it."
-msgstr ""
+msgstr "Mentse el a választ ezen a nyelven, mielőtt jegyeket kapcsolna hozzá."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:10
 msgid "Saved conditions"
@@ -17789,30 +17671,31 @@ msgid "Saving failed."
 msgstr "A mentés nem sikerült."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:62
 msgid "Schedule for"
 msgstr "Ütemezés ehhez"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:171
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:142
 msgid "Schedule visibility change"
-msgstr ""
+msgstr "Láthatóság-változtatás ütemezése"
 
 #: app/assets/javascripts/app/models/job.coffee:20
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:2
 msgid "Scheduled for"
 msgstr "Ütemezve ehhez"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:109
-#, fuzzy
-#| msgid "Limited visibility"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:93
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerScheduledVisibilityPopover.vue:30
 msgid "Scheduled visibility"
-msgstr "Korlátozott láthatóság"
+msgstr "Ütemezett láthatóság"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:109
-#, fuzzy
-#| msgid "Ticket tag removed successfully."
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:93
 msgid "Scheduled visibility change removed successfully."
-msgstr "A jegycímke sikeresen eltávolítva."
+msgstr "Az ütemezett láthatóság-változtatás sikeresen eltávolítva."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:91
+msgid "Scheduled visibility: %s"
+msgstr "Ütemezett láthatóság: %s"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
@@ -17884,11 +17767,11 @@ msgstr "Görgetés az olvasatlan bejegyzéshez"
 msgid "Scroll to unread item"
 msgstr "Görgetés az olvasatlan elemhez"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:272
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:285
 msgid "Scroll towards end"
 msgstr "Görgetés a végére"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:221
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:233
 msgid "Scroll towards start"
 msgstr "Görgetés az elejére"
 
@@ -17898,7 +17781,7 @@ msgstr "Görgetés az elejére"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:607
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:621
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -18036,7 +17919,7 @@ msgstr "Keresés vagy e-mail-cím megadása…"
 msgid "Search or enter phone number…"
 msgstr "Keresés vagy telefonszám megadása…"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:661
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:675
 msgid "Search result for: %s"
 msgstr "Keresési eredmények erre: %s"
 
@@ -18112,16 +17995,12 @@ msgid "Search result value key \"%s\" was not found."
 msgstr "A keresési eredmény értékének „%s” kulcsa nem található."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:79
-#, fuzzy
-#| msgid "Go to knowledge base"
 msgid "Search the knowledge base"
-msgstr "Ugrás a tudásbázishoz"
+msgstr "A tudásbázis keresése"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue:16
-#, fuzzy
-#| msgid "Search…"
 msgid "Search within %s…"
-msgstr "Keresés…"
+msgstr "Keresés ebben: %s…"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:35
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:17
@@ -18406,7 +18285,7 @@ msgstr "A kiválasztott objektum már sorba lett állítva a törléshez."
 msgid "Selected tickets do not match any macros."
 msgstr "A kiválasztott jegyek nem illeszkednek egyetlen makróra sem."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:227
 msgid "Selection cancelled for %s."
 msgstr "Kiválasztás megszakítva ennél: %s."
 
@@ -18464,6 +18343,8 @@ msgstr ""
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
+"A szemantikus keresés nem fog működni, amíg nincs másik szolgáltató "
+"kiválasztva hozzá."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
@@ -18742,7 +18623,7 @@ msgstr "Beállítás"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseFeedAction.ts:34
 msgid "Set up RSS feed"
-msgstr ""
+msgstr "RSS-hírforrás beállítása"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco:6
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:56
@@ -18784,10 +18665,8 @@ msgstr ""
 "fél rendszeréből érkezik az e-mail egy ügyfél nevében."
 
 #: app/models/audit_log/object_type_labels.rb:14
-#, fuzzy
-#| msgid "Settings"
 msgid "Setting"
-msgstr "Beállítások"
+msgstr "Beállítás"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:26
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:40
@@ -18870,10 +18749,8 @@ msgid "Shared drafts are not activated for the selected group"
 msgstr "A megosztott piszkozatok nincsenek aktiválva a kiválasztott csoporthoz"
 
 #: app/assets/javascripts/app/controllers/group.coffee:16
-#, fuzzy
-#| msgid "Shared drafts"
 msgid "Shared drafts enabled"
-msgstr "Megosztott piszkozatok"
+msgstr "A megosztott piszkozatok engedélyezve"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
 msgid "Shared mailbox"
@@ -18887,10 +18764,8 @@ msgstr "Megosztott szervezet"
 #: app/assets/javascripts/app/controllers/organization.coffee:21
 #: app/assets/javascripts/app/controllers/overview.coffee:22
 #: app/assets/javascripts/app/controllers/search.coffee:35
-#, fuzzy
-#| msgid "Shared organization"
 msgid "Shared organizations"
-msgstr "Megosztott szervezet"
+msgstr "Megosztott szervezetek"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:28
 msgid "Sharing draft…"
@@ -18913,7 +18788,7 @@ msgstr "További %s megjelenítése"
 msgid "Show Draft"
 msgstr "Piszkozat megjelenítése"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:212
+#: app/assets/javascripts/app/models/knowledge_base.coffee:224
 msgid "Show Feed Icon"
 msgstr "Hírforrásikon megjelenítése"
 
@@ -19309,6 +19184,11 @@ msgstr "Elnézést, nem minden mező lett helyesen kitöltve."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Elnézést, jelenleg nincs CTI-háttérprogram engedélyezve."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:13
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:33
+msgid "Sort alphabetically"
+msgstr "Rendezés betűrendbe"
+
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
 msgid "Sort by %s ascending"
 msgstr "Rendezés %s szerint növekvő sorrendben"
@@ -19317,7 +19197,30 @@ msgstr "Rendezés %s szerint növekvő sorrendben"
 msgid "Sort by %s descending"
 msgstr "Rendezés %s szerint csökkenő sorrendben"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:14
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:36
+msgid "Sort by drag & drop"
+msgstr "Rendezés fogd és vidd módon"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/_generic_list.coffee:15
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:39
+msgid "Sort by latest updates"
+msgstr "Rendezés a legújabb frissítések szerint"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:151
+msgid "Sort content"
+msgstr "Tartalom rendezése"
+
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:247
+msgid ""
+"Sortable grid focused. Use the arrow keys to navigate items. Press Space to "
+"select an item and again on another item to swap them."
+msgstr ""
+"Rendezhető rács került fókuszba. Használja a nyílbillentyűket az elemek "
+"közötti navigáláshoz. Nyomja meg a szóköz billentyűt egy elem "
+"kiválasztásához, majd ismét egy másik elemnél a felcserélésükhöz."
+
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:250
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select an item and again on another item to swap them."
@@ -19326,14 +19229,18 @@ msgstr ""
 "közötti navigáláshoz. Nyomja meg a szóköz billentyűt egy elem "
 "kiválasztásához, majd ismét egy másik elemnél a felcserélésükhöz."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
-msgid "Sorted %s in user taskbar list to position %s."
-msgstr "A felhasználói tálca listában lévő %s elem %s. pozícióra rendezve."
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:124
+msgid "Sorted %s to position %s."
+msgstr "A(z) %s elem %s. pozícióra rendezve."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
 #: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
 msgstr "Rendezés eszerint"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:69
+msgid "Sorting mode"
+msgstr "Rendezési mód"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
 #: app/assets/javascripts/app/models/overview.coffee:31
@@ -19586,10 +19493,8 @@ msgid "Stop after match"
 msgstr "Leállítás találat után"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:19
-#, fuzzy
-#| msgid "Stop after match"
 msgid "Stop after match enabled"
-msgstr "Leállítás találat után"
+msgstr "A találat utáni leállítás engedélyezve"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
@@ -19655,7 +19560,7 @@ msgstr ""
 "utókövetés felismerve az alapértelmezett beállítások használatával."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:646
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:655
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -19681,7 +19586,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:128
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:50
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:129
 #: app/frontend/shared/form/i18n/locales.ts:41
 msgid "Submit"
 msgstr "Elküldés"
@@ -19694,11 +19599,9 @@ msgstr "Megjegyzés elküldése"
 msgid "Submit comment"
 msgstr "Megjegyzés elküldése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:106
-#, fuzzy
-#| msgid "No changes."
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/useKnowledgeBaseAnswerConcurrentChange.ts:129
 msgid "Submit your changes"
-msgstr "Nincsenek változtatások."
+msgstr "Változtatások elküldése"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:147
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
@@ -19750,10 +19653,8 @@ msgstr "Illeszkedő tudásbázisválaszok javaslata a jegy oldalsávjában."
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:43
-#, fuzzy
-#| msgid "AI suggested knowledge"
 msgid "Suggested knowledge"
-msgstr "MI által javasolt tudás"
+msgstr "Javasolt tudás"
 
 #: app/assets/javascripts/app/views/generic/admin/index.jst.eco:49
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
@@ -19804,7 +19705,7 @@ msgstr "vasárnap"
 msgid "Support of multilingual Knowledge Base."
 msgstr "Többnyelvű tudásbázis támogatása."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:167
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr "A(z) %s kicserélve ezzel: %s. A(z) %s áthelyezve ebbe a pozícióba: %s."
 
@@ -19872,7 +19773,7 @@ msgstr "Rendszer alapértelmezés – %s"
 msgid "System information"
 msgstr "Rendszer-információk"
 
-#: app/models/knowledge_base.rb:33
+#: app/models/knowledge_base.rb:52
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
@@ -19927,20 +19828,16 @@ msgid "Tag \"%s\" already exists."
 msgstr "A(z) „%s” címke már létezik."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
-#, fuzzy
-#| msgid "Ticket tag added successfully."
 msgid "Tag added successfully."
-msgstr "A jegycímke sikeresen hozzáadva."
+msgstr "A címke sikeresen hozzáadva."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:165
 msgid "Tag assignment mode"
 msgstr "Címke-hozzárendelési mód"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
-#, fuzzy
-#| msgid "Ticket tag removed successfully."
 msgid "Tag removed successfully."
-msgstr "A jegycímke sikeresen eltávolítva."
+msgstr "A címke sikeresen eltávolítva."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:37
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue:46
@@ -19955,10 +19852,10 @@ msgstr "Megjelölt %s"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:133
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -20331,6 +20228,14 @@ msgstr ""
 "A Zammad MI-kapcsolatát a platform kezeli, és nem lehet itt létrehozni vagy "
 "megváltoztatni."
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:696
+msgid ""
+"The Zammad AI provider is managed by the platform and cannot be fully edited "
+"here."
+msgstr ""
+"A Zammad MI-szolgáltatóját a platform kezeli, és nem lehet itt teljesen "
+"szerkeszteni."
+
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:82
 msgid "The access token could not be created."
 msgstr "A hozzáférési tokent nem sikerült létrehozni."
@@ -20351,16 +20256,16 @@ msgid "The admin password auth email could not be sent."
 msgstr "Az adminisztrátori jelszó-hitelesítési e-mailt nem sikerült elküldeni."
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts:58
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The answer could not be created."
-msgstr "A bejegyzést nem sikerült létrehozni."
+msgstr "A választ nem sikerült létrehozni."
 
 #: app/services/service/knowledge_base/answer/visibility_schedule/add.rb:60
 msgid ""
 "The answer has already reached this visibility state, so a change to it "
 "cannot be scheduled."
 msgstr ""
+"A válasz már elérte ezt a láthatósági állapotot, ezért az arra való "
+"változtatást nem lehet ütemezni."
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:43
 msgid ""
@@ -20400,7 +20305,7 @@ msgstr "A bejegyzés nem tartozik a megadott jegyhez."
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
 "The attachments of this answer were changed by someone else in the meantime."
-msgstr ""
+msgstr "Ennek a válasznak a mellékleteit időközben valaki más megváltoztatta."
 
 #: app/assets/javascripts/app/models/audit_log.coffee
 msgid ""
@@ -20606,6 +20511,7 @@ msgstr "A(z) %s tanúsítványai nem találhatók."
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:143
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseSortingSave.ts:100
 msgid "The changes could not be saved."
 msgstr "A változtatásokat nem sikerült elmenteni."
 
@@ -20646,7 +20552,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "A Zammad beállításai megváltoztak, töltse újra a böngészőjét."
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:117
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:118
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr "A Zammad beállításai megváltoztak. Töltse újra a lehető leghamarabb."
@@ -20686,7 +20592,7 @@ msgstr ""
 
 #: app/models/ai/provider_connection.rb:20
 msgid "The context window size must be a positive number."
-msgstr ""
+msgstr "A környezeti ablak méretének pozitív számnak kell lennie."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:387
@@ -20697,10 +20603,14 @@ msgstr "A megadott jelenlegi jelszó helytelen."
 #: app/models/core_workflow/result.rb:61
 msgid "The current user is not allowed to access the referenced object."
 msgstr ""
+"A jelenlegi felhasználó számára nem engedélyezett a hivatkozott objektumhoz "
+"való hozzáférés."
 
 #: app/models/core_workflow/result.rb:45
 msgid "The current user is not allowed to use core workflow for this object."
 msgstr ""
+"A jelenlegi felhasználó számára nem engedélyezett a fő munkafolyamat "
+"használata ennél az objektumnál."
 
 #: app/services/service/ai/vectordb/create_table.rb:21
 msgid "The currently selected AI provider does not support embeddings."
@@ -20720,7 +20630,7 @@ msgstr ""
 msgid "The data we need to collect consists of:"
 msgstr "Az általunk gyűjteni szükséges adatok a következőkből állnak:"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:294
+#: app/assets/javascripts/app/models/knowledge_base.coffee:306
 msgid ""
 "The default URL for your knowledge base is e.g. example.com or example.com/"
 "help. To serve it from a custom URL instead, enter the destination below "
@@ -20799,7 +20709,7 @@ msgstr "Az e-mailt nem sikerült elküldeni a felhasználónak."
 
 #: app/models/ai/provider_connection.rb:19
 msgid "The embedding dimensions must be a positive number."
-msgstr ""
+msgstr "A beágyazási dimenzióknak pozitív számnak kell lennie."
 
 #: lib/secure_mailing/pgp/incoming.rb:118
 msgid ""
@@ -20843,10 +20753,8 @@ msgid "The entry could not be created."
 msgstr "A bejegyzést nem sikerült létrehozni."
 
 #: lib/sessions/event.rb:61
-#, fuzzy
-#| msgid "The request could not be processed."
 msgid "The event could not be processed."
-msgstr "A kérést nem sikerült feldolgozni."
+msgstr "Az eseményt nem sikerült feldolgozni."
 
 #: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
@@ -21010,8 +20918,8 @@ msgid "The issue reference could not be found."
 msgstr "A problémahivatkozás nem található."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:152
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:96
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:103
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:43
 msgid "The knowledge base could not be loaded."
 msgstr "A tudásbázist nem sikerült betölteni."
 
@@ -21020,12 +20928,16 @@ msgid ""
 "The knowledge base index cannot be built. Please check that Elasticsearch is "
 "reachable and runs a supported version."
 msgstr ""
+"A tudásbázisindexet nem sikerült összeállítani. Ellenőrizze, hogy az "
+"Elasticsearch elérhető-e, és támogatott verziót futtat-e."
 
 #: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
 msgstr ""
+"A tudásbázisindex megtartásra került, így ugyanazon szolgáltató újbóli "
+"kiválasztása nem igényel újraindexelést."
 
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
 msgid "The language could not be updated."
@@ -21033,12 +20945,12 @@ msgstr "A nyelvet nem sikerült frissíteni."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:156
 msgid "The latest internal answers in the whole knowledge base."
-msgstr ""
+msgstr "A legfrissebb belső válaszok a teljes tudásbázisban."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:166
 msgid ""
 "The latest internal answers of the current category and its sub-categories."
-msgstr ""
+msgstr "A jelenlegi kategória és alkategóriáinak legfrissebb belső válaszai."
 
 #: app/models/setting/validation/saml/security.rb:44
 msgid "The length of the private key is too short."
@@ -21066,11 +20978,9 @@ msgstr "A bejelentkezés nem lehetséges."
 msgid "The minutes overlay"
 msgstr "A percek átfedés"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:758
-#, fuzzy
-#| msgid "The avatar could not be fetched."
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:774
 msgid "The model list could not be fetched: %s"
-msgstr "A profilképet nem sikerült lekérni."
+msgstr "A modell-listát nem sikerült lekérni: %s"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
 msgid "The month picker"
@@ -21085,7 +20995,7 @@ msgid "The new ticket number could not be generated."
 msgstr "Az új jegyszámot nem sikerült előállítani."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -21100,7 +21010,7 @@ msgstr "Az objektumot nem sikerült létrehozni."
 msgid "The object could not be found."
 msgstr "Az objektum nem található."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:615
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -21138,11 +21048,11 @@ msgstr "A „mentionable_type” paraméter érvénytelen."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:101
 msgid "The parent already grants this role editor access."
-msgstr ""
+msgstr "A szülő már megadja ezt a szerepszerkesztési hozzáférést."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:104
 msgid "The parent denies this role access."
-msgstr ""
+msgstr "A szülő megtagadja ezt a szerephozzáférést."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:135
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:135
@@ -21284,16 +21194,12 @@ msgid "The provided token is invalid."
 msgstr "A megadott token érvénytelen."
 
 #: app/models/setting/validation/vectordb.rb:17
-#, fuzzy
-#| msgid ""
-#| "The provider configuration is disabled. Before proceeding, please set up "
-#| "at least one provider in |AI > Providers|."
 msgid ""
 "The provider configuration is disabled. Before proceeding, please enable it "
 "in AI > Providers."
 msgstr ""
-"A szolgáltató beállítása le van tiltva. A folytatás előtt állítson be "
-"legalább egy szolgáltatót az |MI > Szolgáltatók| menüpontban."
+"A szolgáltató beállítása le van tiltva. A folytatás előtt engedélyezze az MI "
+"> Szolgáltatók menüpontban."
 
 #: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
 msgid ""
@@ -21312,12 +21218,16 @@ msgid ""
 "The provider offered no matching model for this field, so it has to be "
 "entered manually."
 msgstr ""
+"A szolgáltató nem kínált ehhez a mezőhöz illeszkedő modellt, ezért azt "
+"kézzel kell megadni."
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
 msgid ""
 "The provider offered no models to choose from, so it has to be entered "
 "manually."
 msgstr ""
+"A szolgáltató nem kínált olyan modelleket, amelyekből választani lehet, "
+"ezért azt kézzel kell megadni."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:20
 msgid "The providers could not be loaded."
@@ -21483,6 +21393,10 @@ msgstr "A szükséges „permission” paraméter hiányzik."
 msgid "The required parameter 'signup' is missing."
 msgstr "A szükséges „signup” paraméter hiányzik."
 
+#: app/controllers/knowledge_base/categories_controller.rb:62
+msgid "The required parameter 'sorting_mode' is missing."
+msgstr "A szükséges „sorting_mode” paraméter hiányzik."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:72
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "A szükséges „ticket_number” paraméter hiányzik."
@@ -21549,31 +21463,21 @@ msgstr ""
 "előállítani, és mikor kell előnyben részesíteni a meglévő címkék listájából "
 "származó címkéket."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:65
-#, fuzzy
-#| msgid "Ticket tag could not be removed."
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:49
 msgid "The scheduled visibility change could not be removed."
-msgstr "A jegycímkét nem sikerült eltávolítani."
+msgstr "Az ütemezett láthatóság-változtatást nem sikerült eltávolítani."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "The seconds overlay"
 msgstr "A másodpercek átfedés"
-
-#: app/services/service/knowledge_base/answer/base.rb:176
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
-msgid "The selected category does not belong to this knowledge base."
-msgstr "A bejegyzés nem tartozik a megadott jegyhez."
 
 #: app/frontend/shared/form/i18n/locales.ts:525
 msgid "The selected date is invalid."
 msgstr "A kiválasztott dátum érvénytelen."
 
 #: app/services/service/knowledge_base/base.rb:32
-#, fuzzy
-#| msgid "The file does not belong to the specified article."
 msgid "The selected language does not belong to this knowledge base."
-msgstr "A fájl nem tartozik a megadott bejegyzéshez."
+msgstr "A kiválasztott nyelv nem tartozik ehhez a tudásbázishoz."
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
 msgid "The server presented a certificate that could not be verified."
@@ -21648,6 +21552,18 @@ msgstr ""
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
 msgstr "Az aláírás sikeresen ellenőrizve lett."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:361
+msgid "The sorting mode you save here will apply to answers added later."
+msgstr ""
+"Az itt elmentett rendezési mód lesz alkalmazva a később hozzáadott "
+"válaszokra."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+msgid "The sorting mode you save here will apply to categories added later."
+msgstr ""
+"Az itt elmentett rendezési mód lesz alkalmazva a később hozzáadott "
+"kategóriákra."
 
 #: app/controllers/tickets_controller.rb:372
 msgid "The source ticket could not be found."
@@ -21743,16 +21659,12 @@ msgid "The system was configured successfully. You are being redirected."
 msgstr "A rendszer sikeresen be lett állítva. Most átirányításra kerül."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
-#, fuzzy
-#| msgid "Ticket tag could not be added."
 msgid "The tag could not be added."
-msgstr "A jegycímkét nem sikerült hozzáadni."
+msgstr "A címkét nem sikerült hozzáadni."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
-#, fuzzy
-#| msgid "Ticket tag could not be removed."
 msgid "The tag could not be removed."
-msgstr "A jegycímkét nem sikerült eltávolítani."
+msgstr "A címkét nem sikerült eltávolítani."
 
 #: app/controllers/tickets_controller.rb:363
 msgid "The target ticket number could not be found."
@@ -21881,10 +21793,8 @@ msgid "The username or password is incorrect."
 msgstr "A felhasználónév vagy a jelszó helytelen."
 
 #: app/models/core_workflow/result.rb:40
-#, fuzzy
-#| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The value of the parameter 'payload->class_name' is invalid."
-msgstr "A szükséges „payload->class_name” paraméter hiányzik."
+msgstr "A „payload->class_name” paraméter értéke érvénytelen."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -21893,7 +21803,7 @@ msgstr "A vektorindexet nem sikerült frissíteni."
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:238
 msgid ""
 "The vector index rebuild has started and will continue in the background."
-msgstr ""
+msgstr "A vektorindex újjáépítése elkezdődött, és a háttérben fog folytatódni."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 msgid "The verification email could not be resent."
@@ -21969,9 +21879,17 @@ msgstr ""
 "csésze kávét. A jegyek teljes száma frissül, amint a jelenleg ismert számot "
 "túllépjük."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:358
+msgid "There are no answers to arrange yet."
+msgstr "Még nincsenek rendezendő válaszok."
+
 #: app/models/calendar.rb:313
 msgid "There are no business hours configured."
 msgstr "Nincsenek nyitvatartási idők beállítva."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+msgid "There are no categories to arrange yet."
+msgstr "Még nincsenek rendezendő kategóriák."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:40
 msgid "There are no enabled third-party authentication providers."
@@ -22109,7 +22027,7 @@ msgstr "Ezek támogatottak:"
 
 #: lib/knowledge_base/permissions_update.rb:79
 msgid "These permissions are invalid because they would lock you out."
-msgstr ""
+msgstr "Ezek a jogosultságok érvénytelenek, mert kizárnák Önt."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:13
 msgid "Third-party Applications"
@@ -22165,9 +22083,11 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr "Az írássegédeszköz lefordítja a kijelölt szöveget angol nyelvre."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:41
 msgid "This answer has been updated. Submitting will replace those changes."
 msgstr ""
+"Ez a válasz frissítve lett. Az elküldés le fogja cserélni azokat a "
+"változtatásokat."
 
 #: app/controllers/ticket_articles_controller.rb:198
 msgid "This article does not have a raw copy available."
@@ -22480,18 +22400,16 @@ msgstr ""
 msgid "This item expands to show more options"
 msgstr "Ez az elem kinyílik, hogy további lehetőségeket jelenítsen meg"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#, fuzzy
-#| msgid "This knowledge base category is not available."
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
 msgid "This knowledge base answer is not available."
-msgstr "Ez a tudásbázis-kategória nem érhető el."
+msgstr "Ez a tudásbázisválasz nem érhető el."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
 msgid "This knowledge base category is not available."
 msgstr "Ez a tudásbázis-kategória nem érhető el."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:31
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
 msgid "This knowledge base is not available in the selected language."
 msgstr "Ez a tudásbázis nem érhető el a kiválasztott nyelven."
 
@@ -22604,10 +22522,8 @@ msgid "This provider does not support embeddings."
 msgstr "A szolgáltató nem támogatja a beágyazásokat."
 
 #: app/services/service/ai/provider_connection/list_models.rb:51
-#, fuzzy
-#| msgid "This provider does not support embeddings."
 msgid "This provider does not support model listing."
-msgstr "A szolgáltató nem támogatja a beágyazásokat."
+msgstr "Ez a szolgáltató nem támogatja a modell-listázást."
 
 #: app/services/service/execute_locked_block.rb:43
 msgid ""
@@ -22617,10 +22533,8 @@ msgstr ""
 "Ezt az erőforrást nem lehet zárolni, mert egy másik folyamat már zárolta."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:106
-#, fuzzy
-#| msgid "Access the knowledge base editor features."
 msgid "This role has no knowledge base editor permission."
-msgstr "Hozzáférés a tudásbázis-szerkesztő funkcióihoz."
+msgstr "Ennek a szerepnek nincs tudásbázis-szerkesztési jogosultsága."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:6
@@ -23112,10 +23026,8 @@ msgid "Ticket information"
 msgstr "Jegyinformációk"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:96
-#, fuzzy
-#| msgid "Ticket updated successfully."
 msgid "Ticket linked successfully."
-msgstr "A jegy sikeresen frissítve."
+msgstr "A jegy sikeresen hozzákapcsolva."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:74
 msgid "Ticket merged successfully"
@@ -23451,10 +23363,8 @@ msgid "Time accounting"
 msgstr "Időelszámolás"
 
 #: app/models/audit_log/object_type_labels.rb:19
-#, fuzzy
-#| msgid "Time Accounting Types"
 msgid "Time accounting type"
-msgstr "Időelszámolás típusai"
+msgstr "Időelszámolás típusa"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:16
 msgid "Time accounting unit"
@@ -23496,7 +23406,7 @@ msgstr "Időzóna"
 msgid "Timing"
 msgstr "Időzítés"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:143
+#: app/assets/javascripts/app/models/knowledge_base.coffee:155
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:29
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:76
 #: app/assets/javascripts/app/models/knowledge_base_translation.coffee:7
@@ -23511,7 +23421,7 @@ msgstr "Időzítés"
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:34
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:57
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:151
 #: app/graphql/gql/types/overview_type.rb:92
@@ -23765,10 +23675,6 @@ msgstr "Ellenőrzőlista-elemként követve ebben"
 msgid "Transfer conversation to another chat:"
 msgstr "Beszélgetés átvitele egy másik csevegésbe:"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
-msgid "Transferred %s from user taskbar list %s at position %s."
-msgstr "A(z) %s áthelyezve a felhasználó %s. tálcalistájának %s. pozíciójából."
-
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
 msgstr "Mezőtartalmak lefordítása"
@@ -24004,7 +23910,7 @@ msgstr "A kétfaktoros módszert nem sikerült beállítani."
 msgid "Two-factor method has been configured successfully."
 msgstr "A kétfaktoros módszer sikeresen be lett állítva."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:525
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:529
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -24155,7 +24061,7 @@ msgstr "Tudásbázisválasz hozzákapcsolásának megszüntetése"
 msgid "Unlink object"
 msgstr "Objektum kapcsolatának törlése"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:108
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:103
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
 msgid "Unlink ticket"
 msgstr "Jegy hozzákapcsolásának megszüntetése"
@@ -24252,9 +24158,9 @@ msgstr "Közelgő események"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:450
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:124
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
 msgid "Update"
@@ -24416,7 +24322,7 @@ msgstr "Frissítve ekkor"
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:57
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:66
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -24564,10 +24470,8 @@ msgstr "Frissítve az elmúlt 3 napon"
 #: app/assets/javascripts/app/controllers/text_module.coffee:23
 #: app/assets/javascripts/app/controllers/trigger.coffee:20
 #: app/assets/javascripts/app/controllers/webhook.coffee:21
-#, fuzzy
-#| msgid "Updated within last 3 days"
 msgid "Updated within last 7 days"
-msgstr "Frissítve az elmúlt 3 napon"
+msgstr "Frissítve az elmúlt 7 napon"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
 msgid "Updating Database"
@@ -24613,10 +24517,8 @@ msgstr "Feltöltés"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileListSkeleton.vue:22
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:127
-#, fuzzy
-#| msgid "Download %s"
 msgid "Uploading file: %s"
-msgstr "A(z) %s letöltése"
+msgstr "Fájl feltöltése: %s"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
 msgid "Uploading…"
@@ -24810,10 +24712,8 @@ msgid "User authorization failed."
 msgstr "A felhasználó felhatalmazása nem sikerült."
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:52
-#, fuzzy
-#| msgid "Unsaved changes"
 msgid "User changes only"
-msgstr "Mentetlen változtatások"
+msgstr "Csak felhasználói változtatások"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
@@ -25015,7 +24915,7 @@ msgstr "VIP"
 #: app/assets/javascripts/app/controllers/search.coffee:30
 #: app/assets/javascripts/app/controllers/user.coffee:35
 msgid "VIP only"
-msgstr ""
+msgstr "Csak VIP"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:13
 msgid "Valid from"
@@ -25055,7 +24955,7 @@ msgstr "Vektoradatbázis"
 
 #: db/seeds/settings.rb:6412
 msgid "Vector DB indexed embedding configuration"
-msgstr ""
+msgstr "Vektoradatbázis indexelt beágyazási beállításai"
 
 #: db/seeds/settings.rb:6430
 msgid "Vector DB knowledge base chunking strategy"
@@ -25146,10 +25046,8 @@ msgid "Video Servers"
 msgstr "Videokiszolgálók"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:127
-#, fuzzy
-#| msgid "Video"
 msgid "Video URL"
-msgstr "Videó"
+msgstr "Videó URL"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:34
@@ -25170,11 +25068,9 @@ msgid "View"
 msgstr "Megtekintés"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:347
-#, fuzzy
-#| msgid "New Answer"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
 msgid "View answer"
-msgstr "Új válasz"
+msgstr "Válasz megtekintése"
 
 #: app/assets/javascripts/app/controllers/user.coffee:69
 msgid "View from user's perspective"
@@ -25204,25 +25100,25 @@ msgstr "Jegy megtekintése"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:174
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:188
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:44
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:48
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr "Láthatóság"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:96
-#, fuzzy
-#| msgid "Password changed successfully."
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:102
 msgid "Visibility change scheduled successfully."
-msgstr "A jelszó sikeresen megváltoztatva."
+msgstr "A láthatóság-változtatás sikeresen ütemezve."
 
 #: app/services/service/knowledge_base/answer/visibility_schedule/add.rb:77
 msgid ""
 "Visibility changes take effect in the order internal, published, archived, "
 "and can only be scheduled in that order."
 msgstr ""
+"A láthatóság-változtatások belső, közzétett, archivált sorrendben lépnek "
+"hatályba, és csak ebben a sorrendben ütemezhetők."
 
 #: app/helpers/knowledge_base_top_bar_helper.rb:32
 msgid "Visible"
@@ -25848,7 +25744,7 @@ msgstr "Többé nem láthatja az adatvédelmi feladatot."
 msgid "You can no longer see the group."
 msgstr "Többé nem láthatja a csoportot."
 
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:38
 msgid "You can no longer see the knowledge base answer."
 msgstr "Többé nem láthatja a tudásbázisválaszt."
 
@@ -25888,7 +25784,7 @@ msgid ""
 msgstr ""
 "Felülírhatja ezt a beállítást bizonyos csoportoknál a csoportkezelőben. %l"
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee:282
+#: app/assets/javascripts/app/models/knowledge_base.coffee:294
 msgid ""
 "You can provide different versions of your knowledge base for different "
 "locales. Add a language below, then select it in the Knowledge Base Editor "
@@ -25923,17 +25819,13 @@ msgstr ""
 "Az új mellékletek esetében a következő háttérprogramok között adatvesztés "
 "nélkül válthat, akár egy már produktív rendszeren is."
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
-#, fuzzy
-#| msgid ""
-#| "You can switch between the old and the New BETA UI at any moment in the "
-#| "Profile settings > New BETA UI section."
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:78
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Personal settings > New BETA UI section."
 msgstr ""
-"Bármikor válthat a régi és az új BÉTA felhasználói felület között a Profil "
-"beállítások > Új BÉTA felhasználói felület menüpontban."
+"Bármikor válthat a régi és az új BÉTA felhasználói felület között a "
+"Személyes beállítások > Új BÉTA felhasználói felület menüpontban."
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 msgid ""
@@ -26009,10 +25901,8 @@ msgid "You have insufficient permissions to mention other users."
 msgstr "Nincsenek elegendő jogosultságai más felhasználók megemlítéséhez."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:123
-#, fuzzy
-#| msgid "You have insufficient rights to view this user."
 msgid "You have insufficient rights to edit this knowledge base answer."
-msgstr "Nincsenek elegendő jogosultságai a felhasználó megtekintéséhez."
+msgstr "Nincs elegendő jogosultsága ezen tudásbázisválasz szerkesztéséhez."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:19
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:65
@@ -26089,6 +25979,14 @@ msgid ""
 msgstr ""
 "Be nem jelölt elemei vannak az ellenőrzőlistán. Szerezné kezelni azokat a "
 "jegy lezárása előtt?"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:47
+msgid ""
+"You have updated this answer elsewhere. Submitting will replace those "
+"changes."
+msgstr ""
+"Ezt a választ máshol már frissítette. Az elküldés le fogja cserélni azokat a "
+"változtatásokat."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:37
@@ -26387,11 +26285,11 @@ msgstr "Irányítószám"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:26
 msgid "Zoom in"
-msgstr ""
+msgstr "Nagyítás"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:35
 msgid "Zoom out"
-msgstr ""
+msgstr "Kicsinyítés"
 
 #. This is the template file app/views/mailer/email_oversized/en.txt.erb in ERB/Text format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -26584,7 +26482,7 @@ msgstr "nem lehet módosítani"
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "nem használható, mert *_id és *_ids nem engedélyezettek"
 
-#: app/models/knowledge_base/category.rb:277
+#: app/models/knowledge_base/category.rb:389
 msgid "cannot be a subcategory of the parent category"
 msgstr "nem lehet a szülőkategória alkategóriája"
 
@@ -26611,10 +26509,8 @@ msgid "clear"
 msgstr "törlés"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationFooter.vue:43
-#, fuzzy
-#| msgid "Clear all"
 msgid "clear all"
-msgstr "Összes törlése"
+msgstr "összes törlése"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:16
 #: app/assets/javascripts/app/views/widget/task_item.jst.eco:15
@@ -26865,17 +26761,17 @@ msgstr "például húsvéti ünnepek"
 msgid "edit"
 msgstr "szerkesztés"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:60
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:107
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s"
 msgstr "szerkesztve: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:64
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:111
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:44
 msgid "edited %s by %s"
 msgstr "szerkesztve: %s – %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:62
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:109
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s by me"
 msgstr "szerkesztve: %s – általam"
@@ -26957,10 +26853,8 @@ msgstr "üres kitöltése"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:190
 #: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:62
-#, fuzzy
-#| msgid "Search for activity types"
 msgid "for activity type |%s|"
-msgstr "Tevékenységtípusok keresése"
+msgstr "|%s| tevékenységtípushoz"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:50
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
@@ -27011,7 +26905,7 @@ msgstr "elérte a figyelmeztetést"
 
 #: app/models/knowledge_base/has_unique_title.rb:21
 msgid "has to be unique"
-msgstr ""
+msgstr "egyedinek kell lennie"
 
 #: app/helpers/knowledge_base_visibility_note_helper.rb:38
 msgid "hidden, no published answers"
@@ -27262,7 +27156,7 @@ msgstr "nincs munkaidőben"
 msgid "is not included in the list"
 msgstr "nem szerepel a listán"
 
-#: app/models/knowledge_base/category.rb:295
+#: app/models/knowledge_base/category.rb:407
 msgid "is part of a circular reference"
 msgstr "egy körkörös hivatkozás része"
 
@@ -27420,17 +27314,15 @@ msgstr "hónap"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr "„label” vagy „value” kulccsal rendelkező kivonatnak kell lennie"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:888
-#, fuzzy
-#| msgid "must be an integer"
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:904
 msgid "must be a positive number"
-msgstr "egész számnak kell lennie"
+msgstr "pozitív számnak kell lennie"
 
 #: app/models/calendar.rb:247
 msgid "must be a valid HTTP(S) URL"
 msgstr "érvényes HTTP(S) URL-nek kell lennie"
 
-#: app/models/knowledge_base.rb:288
+#: app/models/knowledge_base.rb:309
 msgid "must be a valid path or domain"
 msgstr "érvényes útvonalnak vagy tartománynak kell lennie"
 
@@ -27470,7 +27362,7 @@ msgstr "páratlannak kell lennie"
 msgid "must be other than %{count}"
 msgstr "másnak kell lennie mint %{count}"
 
-#: app/models/knowledge_base.rb:276
+#: app/models/knowledge_base.rb:297
 msgid "must begin with a slash (\"/\")"
 msgstr "perjellel („/”) kell kezdődnie"
 
@@ -27478,17 +27370,14 @@ msgid "must exist"
 msgstr "léteznie kell"
 
 #: lib/validations/date_range_validator.rb:16
-#, fuzzy
-#| msgid "This field must have a value that is between %s and %s."
 msgid "must have a year between 1 and 9999"
-msgstr ""
-"Ennek a mezőnek olyan értékkel kell rendelkeznie, amely %s és %s között van."
+msgstr "1 és 9999 közötti évnek kell lennie"
 
-#: app/models/knowledge_base.rb:284
+#: app/models/knowledge_base.rb:305
 msgid "must not end with a slash (\"/\")"
 msgstr "nem végződhet perjellel („/”)"
 
-#: app/models/knowledge_base.rb:280
+#: app/models/knowledge_base.rb:301
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr "nem tartalmazhat protokollt (például „http://” vagy „https://”)"
 
@@ -28098,11 +27987,11 @@ msgstr "az utolsón belül (relatív)"
 msgid "within next (relative)"
 msgstr "a következőn belül (relatív)"
 
-#: app/models/knowledge_base/category.rb:308
+#: app/models/knowledge_base/category.rb:420
 msgid "would exceed the allowed nesting depth"
 msgstr "túllépné a megengedett beágyazási mélységet"
 
-#: app/models/knowledge_base/category.rb:313
+#: app/models/knowledge_base/category.rb:425
 msgid "would push this category's children beyond the allowed nesting depth"
 msgstr "betolná a kategória gyermekeit a megengedett beágyazási mélységen túl"
 
@@ -28165,6 +28054,18 @@ msgstr "…a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Várakozási idő ma"
+
+#~ msgid "Drag to reorder"
+#~ msgstr "Húzza az átrendezéshez"
+
+#, fuzzy
+#~| msgid "The article does not belong to the specified ticket."
+#~ msgid "The selected category does not belong to this knowledge base."
+#~ msgstr "A bejegyzés nem tartozik a megadott jegyhez."
+
+#~ msgid "Transferred %s from user taskbar list %s at position %s."
+#~ msgstr ""
+#~ "A(z) %s áthelyezve a felhasználó %s. tálcalistájának %s. pozíciójából."
 
 #, fuzzy
 #~| msgid "Are you sure you want to delete this object?"
