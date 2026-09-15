@@ -151,9 +151,7 @@ requires `admin.organization`, and agent tokens receive `403 Forbidden`.
 
 **Related issue:** [#6315](https://github.com/zammad/zammad/issues/6315)
 
-## 7.2.1
-
-The following breaking change occurred due to a security fix.
+## 7.2
 
 ### The getting started endpoints require `admin.wizard` once the system is set up
 
@@ -182,8 +180,6 @@ with the `admin.wizard` permission — an API token needs that permission in its
 `GET /api/v1/groups` respectively `GET /api/v1/email_addresses`.
 
 **Related advisory:** [GHSA-x3fm-p95w-xj7v](https://github.com/zammad/zammad/security/advisories/GHSA-x3fm-p95w-xj7v)
-
-## 7.2
 
 ### The legacy WebSocket login is authenticated from the session cookie and `signshow` no longer returns `session_id`
 
