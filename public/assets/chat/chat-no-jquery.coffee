@@ -197,6 +197,24 @@ do(window) ->
     initialQueueDelay: 10000
     translations:
     # ZAMMAD_TRANSLATIONS_START
+      'bn':
+        '<strong>Chat</strong> with us!': 'আমাদের সাথে <strong>চ্যাট</strong> করুন!'
+        'All colleagues are busy.': 'সব সহকর্মী ব্যস্ত আছেন।'
+        'Chat closed by %s': '%s দ্বারা চ্যাট বন্ধ করা হয়েছে'
+        'Compose your message…': 'আপনার বার্তা লিখুন…'
+        'Connecting': 'সংযুক্ত হচ্ছে'
+        'Connection lost': 'সংযোগ বিচ্ছিন্ন হয়েছে'
+        'Connection re-established': 'সংযোগ পুনঃস্থাপিত হয়েছে'
+        'Offline': 'অফলাইন'
+        'Online': 'অনলাইন'
+        'Scroll down to see new messages': 'নতুন বার্তা দেখতে নিচে স্ক্রল করুন'
+        'Send': 'পাঠান'
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'আপনি গত %s মিনিটে সাড়া না দেওয়ায় আপনার কথোপকথন বন্ধ করে দেওয়া হয়েছে।'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'আপনি গত %s মিনিটে সাড়া না দেওয়ায় <strong>%s</strong>-এর সাথে আপনার কথোপকথন বন্ধ করে দেওয়া হয়েছে।'
+        'Start new conversation': 'নতুন কথোপকথন শুরু করুন'
+        'Today': 'আজ'
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'আমরা দুঃখিত, একটি স্লট পেতে প্রত্যাশার চেয়ে বেশি সময় লাগছে। অনুগ্রহ করে পরে আবার চেষ্টা করুন অথবা আমাদের একটি ইমেল পাঠান। ধন্যবাদ!'
+        'You are on waiting list position <strong>%s</strong>.': 'আপনি অপেক্ষমাণ তালিকায় <strong>%s</strong> নম্বর অবস্থানে আছেন।'
       'ca':
         '<strong>Chat</strong> with us!': '<strong>Xateja</strong> amb nosaltres!'
         'All colleagues are busy.': 'Tot el personal està ocupat.'

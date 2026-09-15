@@ -1,0 +1,19 @@
+টিকিট আর্টিকেল আপডেট হয়েছে (#{ticket.title})
+
+<div>প্রিয় #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> #{article.created_by.fullname}-এর বার্তায় <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> দিয়ে রিঅ্যাক্ট করেছেন:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">#{config.product_name}-এ এটি দেখুন</a>
+</div>

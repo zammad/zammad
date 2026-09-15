@@ -106,6 +106,15 @@ $(function() {
     ],
     translations: {
     // ZAMMAD_TRANSLATIONS_START
+      'bn': {
+        'Attachments': 'সংযুক্তি',
+        'Email': 'ইমেইল',
+        'Message': 'বার্তা',
+        'Name': 'নাম',
+        'Your Email': 'আপনার ইমেল',
+        'Your Message…': 'আপনার বার্তা…',
+        'Your Name': 'আপনার নাম',
+      },
       'cs': {
         'Attachments': 'Přílohy',
         'Email': 'Email',

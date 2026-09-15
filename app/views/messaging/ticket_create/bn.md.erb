@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: #{current_user.longname} #{ticket.updated_at}-এ তৈরি করেছেন_
+* গ্রুপ: #{ticket.group.name}
+* মালিক: #{ticket.owner.fullname}
+* অবস্থা: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

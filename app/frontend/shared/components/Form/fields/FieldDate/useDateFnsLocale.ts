@@ -13,6 +13,8 @@ export const importDateFnsLocale = async (localeKey: string) => {
       return await import('date-fns/locale/ar')
     case 'bg':
       return await import('date-fns/locale/bg')
+    case 'bn':
+      return await import('date-fns/locale/bn')
     case 'ca':
       return await import('date-fns/locale/ca')
     case 'cs':

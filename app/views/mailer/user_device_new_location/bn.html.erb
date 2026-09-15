@@ -1,0 +1,19 @@
+#{config.product_name}-এ একটি নতুন দেশ থেকে লগইন
+
+<div>প্রিয় #{user.firstname},</div>
+<br>
+<div>মনে হচ্ছে আপনি "#{user_device.created_at}" তারিখে <b>পরিচিত ডিভাইস কিন্তু একটি নতুন দেশ থেকে</b> আপনার অ্যাকাউন্ট ব্যবহার করেছেন:</div>
+<br>
+<div>
+আপনার ডিভাইস: #{user_device.name}<br>
+আপনার অবস্থান (আনুমানিক): #{user_device.location}<br>
+আপনার আইপি: #{user_device.ip}<br>
+</div>
+<br>
+<div>দেশটি আপনার পরিচিত ডিভাইসের তালিকায় যুক্ত করা হয়েছে, যা আপনি এখানে দেখতে পারেন:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>যদি এটি আপনি না হয়ে থাকেন, তাহলে অনুগ্রহ করে ডিভাইসটি সরিয়ে ফেলুন, আপনার অ্যাকাউন্টের পাসওয়ার্ড পরিবর্তন করুন এবং আপনার প্রশাসকের সাথে যোগাযোগ করুন। কেউ হয়তো আপনার অ্যাকাউন্টে অননুমোদিত অ্যাক্সেস পেয়ে থাকতে পারে।</div>
+<br>
+<div>আপনার #{config.product_name} টিম</div>

@@ -1,0 +1,24 @@
+নতুন টিকিট (#{ticket.title})
+
+<div>প্রিয় #{recipient.firstname},</div>
+<br>
+<div>নতুন টিকিট (#{ticket.title}) "<b>#{current_user.longname}</b>" দ্বারা তৈরি করা হয়েছে।</div>
+<br>
+<div>
+গ্রুপ: #{ticket.group.name}<br>
+মালিক: #{ticket.owner.fullname}<br>
+অবস্থা: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  তথ্য:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}-এ এটি দেখুন</a>
+</div>

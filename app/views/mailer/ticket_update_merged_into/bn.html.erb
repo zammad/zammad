@@ -1,0 +1,11 @@
+টিকিট (#{ticket.title}) আরেকটি টিকিটের সাথে মিশিয়ে ফেলা হয়েছে
+
+<div>প্রিয় #{recipient.firstname},</div>
+<br>
+<div>
+"<b>#{current_user.longname}</b>" টিকিট (#{ticket.title})-কে আরেকটি টিকিটের সাথে মিশিয়ে দিয়েছেন।
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}-এ এটি দেখুন</a>
+</div>

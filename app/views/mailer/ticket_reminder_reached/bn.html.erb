@@ -1,0 +1,18 @@
+টিকিট রিমাইন্ডারের সময় হয়েছে (#{ticket.title})
+
+<div>প্রিয় #{recipient.firstname},</div>
+<br>
+<div>একটি টিকিটে মনোযোগ প্রয়োজন: "<b>#{ticket.customer.longname}</b>" গ্রাহকের (#{ticket.title}) টিকিটের রিমাইন্ডারের সময় হয়েছে।</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  তথ্য:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}-এ এটি দেখুন</a>
+</div>

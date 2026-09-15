@@ -5,6 +5,7 @@ require 'rails_helper'
 SUPPORTED_LOCALES = %w[
   ar
   bg
+  bn
   ca
   cs
   da

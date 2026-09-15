@@ -19,6 +19,11 @@
   name: Български - Bulgarian
   active: true
   dir: ltr
+- locale: bn
+  alias: ''
+  name: বাংলা - Bangla
+  active: true
+  dir: ltr
 - locale: ca
   alias: ''
   name: Català - Catalan

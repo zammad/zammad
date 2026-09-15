@@ -1,0 +1,18 @@
+এস্কেলেটেড টিকিট (#{ticket.title})
+
+<div>প্রিয় #{recipient.firstname},</div>
+<br>
+<div>"<b>#{ticket.customer.longname}</b>" থেকে আসা টিকিট (#{ticket.title}) "#{ticket.escalation_at}" থেকে এস্কেলেটেড হয়েছে!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  তথ্য:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}-এ এটি দেখুন</a>
+</div>
