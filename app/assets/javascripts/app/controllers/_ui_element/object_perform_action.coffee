@@ -104,7 +104,8 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
     # Add ticket delete actions:
     #   - Delete immediately
     #   - Add a data privacy deletion task
-    if attribute.object_name is 'Ticket' and (attribute.ticket_delete or attribute.data_privacy_deletion_task)
+    #   - Close taskbar tab
+    if attribute.object_name is 'Ticket' and (attribute.ticket_delete or attribute.data_privacy_deletion_task or attribute.close_taskbars)
       availableActions = {}
 
       if attribute.ticket_delete
@@ -112,6 +113,9 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
 
       if attribute.data_privacy_deletion_task
         availableActions.data_privacy_deletion_task = __('Add a data privacy deletion task')
+
+      if attribute.close_taskbars
+        availableActions.close_taskbars = __('Close taskbar tab')
 
       elements['ticket.action'] =
         name: 'action'
