@@ -556,4 +556,64 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       expect(organization2.active).to be(false)
     end
   end
+
+  describe 'DELETE /api/v1/organizations/:id', :aggregate_failures do
+    let(:deletable_organization) { create(:organization) }
+    let(:organization_admin)     { create(:user, roles: [create(:role, permission_names: 'admin.organization')]) }
+
+    context 'with an agent account' do
+      before { authenticated_as(agent) }
+
+      it 'answers forbidden and keeps the organization' do
+        delete "/api/v1/organizations/#{deletable_organization.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:forbidden)
+        expect(Organization).to exist(deletable_organization.id)
+      end
+    end
+
+    context 'with an agent-only token of an account that may manage organizations' do
+      let(:token) { create(:token, user: admin, permissions: %w[ticket.agent]) }
+
+      before { authenticated_as(admin, token:) }
+
+      it 'answers forbidden and keeps the organization' do
+        delete "/api/v1/organizations/#{deletable_organization.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:forbidden)
+        expect(Organization).to exist(deletable_organization.id)
+      end
+    end
+
+    context 'with an admin.organization token' do
+      let(:token) { create(:token, user: organization_admin, permissions: %w[admin.organization]) }
+
+      before { authenticated_as(organization_admin, token:) }
+
+      it 'deletes an unreferenced organization' do
+        delete "/api/v1/organizations/#{deletable_organization.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(Organization).not_to exist(deletable_organization.id)
+      end
+
+      it 'keeps an organization that still has members' do
+        delete "/api/v1/organizations/#{organization.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(Organization).to exist(organization.id)
+      end
+    end
+
+    context 'with an account that holds the blanket admin permission' do
+      before { authenticated_as(create(:admin_only)) }
+
+      it 'deletes an unreferenced organization' do
+        delete "/api/v1/organizations/#{deletable_organization.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(Organization).not_to exist(deletable_organization.id)
+      end
+    end
+  end
 end

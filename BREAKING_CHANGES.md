@@ -29,19 +29,6 @@ will be returned in a dedicated `inline_attachments` key instead.
 
 **Related issue:** [#6254](https://github.com/zammad/zammad/issues/6254)
 
-### Deleting organizations via API will require the `admin.organization` permission
-
-**Who is affected?** Integrations that call `DELETE /api/v1/organizations/:id` with a token that only
-has the `ticket.agent` permission.
-
-The endpoint has historically been permitted for users with only the `ticket.agent` permission. That is
-deprecated and will be restricted to `admin.organization` in a future release; agent tokens will then
-receive `403 Forbidden`.
-
-⚠️ Switch such integrations to an account with the `admin.organization` permission.
-
-**Related issue:** [#6315](https://github.com/zammad/zammad/issues/6315)
-
 ### Import mode will also enable maintenance mode
 
 **Who is affected?** Admins of instances that are left in import mode while users are expected to work
@@ -84,6 +71,21 @@ Until then they emit a deprecation warning and return the value that always appl
 instead.
 
 **Related issue:** [#5580](https://github.com/zammad/zammad/issues/5580)
+
+## 7.3
+
+### Deleting organizations via API requires the `admin.organization` permission
+
+**Who is affected?** Integrations that call `DELETE /api/v1/organizations/:id` with a token that only
+has the `ticket.agent` permission.
+
+The endpoint has historically been permitted for users with only the `ticket.agent` permission, which
+contradicted the API documentation. That behaviour was deprecated in Zammad 7.2: the endpoint now
+requires `admin.organization`, and agent tokens receive `403 Forbidden`.
+
+⚠️ Switch such integrations to an account with the `admin.organization` permission.
+
+**Related issue:** [#6315](https://github.com/zammad/zammad/issues/6315)
 
 ## 7.2
 
