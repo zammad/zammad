@@ -372,8 +372,8 @@ class SessionsController < ApplicationController
     # Announce Elasticsearch availability to the front end.
     config['es_enabled'] = SearchIndexBackend.enabled?
 
-    # Hide the admin packages interface in environments like docker, where installed packages do not persist.
-    config['admin_packages'] = !Zammad::Deployment.container?
+    # Hide the package actions in environments like docker, where installed packages do not persist.
+    config['package_actions_enabled'] = !Zammad::Deployment.container?
 
     # remember if we can switch back to user
     if session[:switched_from_user_id]
