@@ -1,0 +1,11 @@
+チケット (#{ticket.title}) は別のチケットに統合されました。
+
+<div>こんにちは #{recipient.firstname} 様、</div>
+<br>
+<div>
+チケット (#{ticket.title}) は "<b>#{current_user.longname}</b>" によって別のチケットに統合されました。
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">これを #{config.product_name} で表示する</a>
+</div>

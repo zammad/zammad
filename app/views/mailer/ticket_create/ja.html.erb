@@ -1,0 +1,24 @@
+新規チケット (#{ticket.title})
+
+<div>#{recipient.firstname} 様、</div>
+<br>
+<div>「<b>#{current_user.longname}</b>」によって、新しいチケット（#{ticket.title}）が作成されました。</div>
+<br>
+<div>
+グループ: #{ticket.group.name}<br>
+所有者: #{ticket.owner.fullname}<br>
+状態: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  情報:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">これを #{config.product_name} で表示</a>
+</div>

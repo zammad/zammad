@@ -1,0 +1,18 @@
+エスカレーションされたチケット (#{ticket.title})
+
+<div>こんにちは #{recipient.firstname} さん、</div>
+<br>
+<div>チケット (#{ticket.title}) は「<b>#{ticket.customer.longname}</b>」からのもので、"#{ticket.escalation_at}" よりエスカレーションされています。</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  情報:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name} で表示</a>
+</div>

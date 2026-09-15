@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: リマインダーに到達しました！_
+チケット (#{ticket.title}) は顧客 "*#{ticket.customer.longname}*" のリマインダーに到達したため、対応が必要です。
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

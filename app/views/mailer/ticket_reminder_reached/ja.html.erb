@@ -1,0 +1,18 @@
+チケットのリマインダーに達しました（#{ticket.title}
+
+<div>#{recipient.firstname} 様、</div>
+<br>
+<div>対応が必要なチケットがあります：顧客「<b>#{ticket.customer.longname}</b>」のチケット（#{ticket.title}）のリマインダーに達しました。</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  情報:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">これを #{config.product_name} で表示する</a>
+</div>

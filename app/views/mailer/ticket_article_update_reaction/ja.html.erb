@@ -1,0 +1,19 @@
+チケット記事（#{ticket.title}）が更新されました
+
+<div>こんにちは、#{recipient.firstname}さん。</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> が #{article.created_by.fullname} からのメッセージに対して <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> でリアクションしました。
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">これを#{config.product_name}で表示する</a>
+</div>

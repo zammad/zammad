@@ -1189,6 +1189,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Siamo spiacenti, ci vuole più tempo del previsto per ottenere uno spazio libero. Riprova più tardi o inviaci un\'e-mail. Grazie!',
         'You are on waiting list position <strong>%s</strong>.': 'Sei alla posizione <strong>%s</strong> della lista di attesa.'
       },
+      'ja': {
+        '<strong>Chat</strong> with us!': '<strong>チャット</strong>でお問い合わせください！',
+        'All colleagues are busy.': 'すべての担当者が対応中です。',
+        'Chat closed by %s': '%sによってチャットが終了しました',
+        'Compose your message…': 'メッセージを入力…',
+        'Connecting': '接続中',
+        'Connection lost': '接続が切断されました',
+        'Connection re-established': '接続が再確立されました',
+        'Offline': 'オフライン',
+        'Online': 'オンライン',
+        'Scroll down to see new messages': '下にスクロールして、新規メッセージを見て下さい',
+        'Send': '送信',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '%s分間応答がなかったため、会話を終了しました。',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '%s分間応答がなかったため、<strong>%s</strong>との会話を終了しました。',
+        'Start new conversation': '新しい会話を開始する',
+        'Today': '今日',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '申し訳ございませんが、空き枠の確保に予想以上の時間がかかっています。後でもう一度お試しいただくか、メールでお問い合わせください。ありがとうございます！',
+        'You are on waiting list position <strong>%s</strong>.': 'あなたは待ち行列の<strong>%s</strong>番目です。'
+      },
       'ko': {
         '<strong>Chat</strong> with us!': '우리와 <strong>채팅</strong> !',
         'All colleagues are busy.': '모든 동료가 바쁩니다.',

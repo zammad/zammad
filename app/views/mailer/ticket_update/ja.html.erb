@@ -1,0 +1,29 @@
+チケット（#{ticket.title}）が更新されました
+
+<div>こんにちは、#{recipient.firstname}さん。</div>
+<br>
+<div>
+チケット（#{ticket.title}）が「<b>#{current_user.longname}</b>」によって更新されました。
+</div>
+<br>
+<% if @objects[:changes].present? %>
+  <div>
+  変更点：<br>
+  <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <div>
+  情報：
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">これを#{config.product_name}で表示する</a>
+</div>

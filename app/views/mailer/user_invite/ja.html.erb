@@ -1,0 +1,13 @@
+#{config.fqdn} の #{config.product_name} への招待
+
+<div>#{user.firstname} 様、</div>
+<br>
+<div>私（#{current_user.firstname} #{current_user.lastname}）が、当社のカスタマーサポートプラットフォームである #{config.product_name} へあなたを招待します。</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">こちら</a>をクリックしてパスワードを設定してください。</div>
+<br>
+<div>よろしくお願いいたします。</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>#{config.product_name} チーム</div>

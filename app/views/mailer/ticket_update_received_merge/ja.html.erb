@@ -1,0 +1,11 @@
+別のチケットがチケット (#{ticket.title}) にマージされました
+
+<div>こんにちは #{recipient.firstname} さん、</div>
+<br>
+<div>
+"<b>#{current_user.longname}</b>" によって、別のチケットがチケット (#{ticket.title}) にマージされました。
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">これを #{config.product_name} で表示</a>
+</div>

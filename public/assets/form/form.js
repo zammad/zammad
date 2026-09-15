@@ -205,6 +205,15 @@ $(function() {
         'Your Message…': 'Il tuo messaggio…',
         'Your Name': 'Il tuo nome',
       },
+      'ja': {
+        'Attachments': '添付ファイル',
+        'Email': 'メール',
+        'Message': 'メッセージ',
+        'Name': '名前',
+        'Your Email': 'メールアドレス',
+        'Your Message…': 'メッセージ…',
+        'Your Name': 'お名前',
+      },
       'ko': {
         'Attachments': '첨부파일',
         'Email': '이메일',
