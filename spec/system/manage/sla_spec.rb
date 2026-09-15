@@ -59,6 +59,36 @@ RSpec.describe 'Manage > Sla', type: :system do
     end
   end
 
+  context 'when using times longer than 999 hours', authenticated_as: :authenticate do
+    def authenticate
+      create(:sla, name: 'long sla', first_response_time: 6000, update_time: 86_400, solution_time: 5_999_940)
+      true
+    end
+
+    it 'shows and saves long times correctly (#6355)' do
+      click '.js-edit'
+
+      in_modal do
+        expect(page).to have_field('first_response_time_in_text', with: '100:00')
+        expect(page).to have_field('update_time_in_text', with: '1440:00')
+        expect(page).to have_field('solution_time_in_text', with: '99999:00')
+
+        fill_in 'solution_time_in_text', with: '2880', fill_options: { clear: :backspace }
+        find('input[name=solution_time_in_text]').send_keys(:tab)
+
+        expect(page).to have_field('solution_time_in_text', with: '2880:00')
+
+        click '.js-submit'
+      end
+
+      expect(Sla.find_by(name: 'long sla')).to have_attributes(
+        first_response_time: 6000,
+        update_time:         86_400,
+        solution_time:       172_800,
+      )
+    end
+  end
+
   context 'when using custom calendars' do
     let(:calendar) { create(:calendar) }
 

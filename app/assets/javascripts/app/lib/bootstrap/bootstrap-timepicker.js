@@ -828,14 +828,14 @@
         second = timeArray[2] ? timeArray[2].toString() : '';
 
         // adaptive time parsing
-        if (hour.length > 4) {
+        if (hour.length > hour_max_length + 2) {
           second = hour.slice(-2);
           hour = hour.slice(0, -2);
         }
 
         if (hour.length > hour_max_length) {
-          minute = hour.slice(-hour_max_length);
-          hour = hour.slice(0, -hour_max_length);
+          minute = hour.slice(-2);
+          hour = hour.slice(0, -2);
         }
 
         if (minute.length > 2) {

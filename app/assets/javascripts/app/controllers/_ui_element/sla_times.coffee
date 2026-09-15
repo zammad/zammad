@@ -19,7 +19,7 @@ class App.UiElement.sla_times
 
     # apply hour picker
     item.find('.js-timeConvertFrom').timepicker(
-      maxHours: 999
+      maxHours: 99999
     )
 
     # disable/enable rows

@@ -105,3 +105,75 @@ QUnit.test("form SLA times clears field instead of 00:00", function(assert) {
 
   assert.equal(input.val(), '', 'shows placeholder')
 });
+
+QUnit.test("form SLA times supports hours longer than 999 (#6355)", function(assert) {
+  $('#forms').append('<hr><h1>SLA with times longer than 999 hours</h1><form id="form6"></form>')
+
+  var el = $('#form6')
+
+  var item = new App.Sla()
+  item.id = '123'
+  item.first_response_time = 6000    // 100 hours
+  item.update_time = 86400           // 1440 hours = 60 days
+  item.solution_time = 5999940       // 99999 hours
+
+  new App.ControllerForm({
+    el:     el,
+    model:  item.constructor,
+    params: item
+  });
+
+  var firstRow = el.find('.sla_times tbody > tr:first')
+  var secondRow = el.find('.sla_times tbody > tr:nth-child(2)')
+  var thirdRow = el.find('.sla_times tbody > tr:nth-child(3)')
+
+  assert.equal(firstRow.find('input[data-name=first_response_time]').val(), '100:00', 'renders 3-digit hours')
+  assert.equal(firstRow.find('input[name=first_response_time]').val(), '6000')
+
+  assert.equal(secondRow.find('input[data-name=update_time]').val(), '1440:00', 'renders 4-digit hours')
+  assert.equal(secondRow.find('input[name=update_time]').val(), '86400')
+
+  assert.equal(thirdRow.find('input[data-name=solution_time]').val(), '99999:00', 'renders 5-digit hours')
+  assert.equal(thirdRow.find('input[name=solution_time]').val(), '5999940')
+
+  $('#forms').append('<hr><h1>SLA with manually entered long times</h1><form id="form7"></form>')
+
+  var el = $('#form7')
+
+  var item = new App.Sla()
+  item.id = '123'
+
+  new App.ControllerForm({
+    el:     el,
+    model:  item.constructor,
+    params: item
+  });
+
+  var row = el.find('.sla_times tbody > tr:nth-child(3)')
+  var input = row.find('input[data-name=solution_time]')
+  var hidden = row.find('input[name=solution_time]')
+
+  input.val('100').trigger('blur')
+  assert.equal(input.val(), '100:00', 'accepts 3-digit hours without colon')
+  assert.equal(hidden.val(), '6000')
+
+  input.val('1440').trigger('blur')
+  assert.equal(input.val(), '1440:00', 'accepts 4-digit hours without colon')
+  assert.equal(hidden.val(), '86400')
+
+  input.val('1440:30').trigger('blur')
+  assert.equal(input.val(), '1440:30', 'accepts 4-digit hours with minutes')
+  assert.equal(hidden.val(), '86430')
+
+  input.val('99999:00').trigger('blur')
+  assert.equal(input.val(), '99999:00', 'accepts 5-digit hours with minutes')
+  assert.equal(hidden.val(), '5999940')
+
+  input.val('144030').trigger('blur')
+  assert.equal(input.val(), '1440:30', 'splits compact 4-digit hours and minutes without colon')
+  assert.equal(hidden.val(), '86430')
+
+  input.val('9999930').trigger('blur')
+  assert.equal(input.val(), '99999:30', 'splits compact 5-digit hours and minutes without colon')
+  assert.equal(hidden.val(), '5999970')
+});
