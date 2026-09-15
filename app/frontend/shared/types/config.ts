@@ -239,5 +239,6 @@ export interface ConfigList {
   vectordb_enabled: boolean
   websocket_backend: string
   websocket_port: string
+  // This is also required for packages (addons) in docker environments, as their settings cannot be part of this generated file (no database at image build time).
   [key: string]: unknown
 }

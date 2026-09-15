@@ -12,6 +12,8 @@ module Tasks
         end
 
         def self.task_handler
+          abort_in_container_environment!
+
           puts 'Reinstalling all packages...'
           ::Package.find_each do |package|
             puts "Reinstalling '#{package.name}' (#{package.version})..."

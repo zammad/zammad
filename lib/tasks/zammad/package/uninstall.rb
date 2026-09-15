@@ -18,6 +18,8 @@ module Tasks
         ARGUMENT_COUNT = 1
 
         def self.task_handler
+          abort_in_container_environment!
+
           name = ArgvHelper.argv[1]
           if name.blank?
             abort "Error: please provide a package name: #{ArgvHelper.argv[0]} MyPackage"

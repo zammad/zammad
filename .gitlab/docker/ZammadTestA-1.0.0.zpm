@@ -1,0 +1,31 @@
+{
+  "name": "ZammadTestA",
+  "version": "1.0.0",
+  "vendor": "Zammad GmbH",
+  "license": "GNU AFFERO GENERAL PUBLIC LICENSE",
+  "url": "http://zammad.com/",
+  "change_log": [],
+  "dependencies": {
+    "ZammadTestB": ">= 1.0.0"
+  },
+  "description": [
+    {
+      "language": "en",
+      "text": "Test package for CI"
+    },
+    {
+      "language": "de",
+      "text": "Testpaket für die CI"
+    }
+  ],
+  "buildhost": "zammad42",
+  "builddate": "2026-08-19 15:29:46 UTC",
+  "files": [
+    {
+      "location": "db/addon/zammad_test_a/20251112113130_zammad_test_a_settings.rb",
+      "permission": 644,
+      "content": "Y2xhc3MgWmFtbWFkVGVzdEFTZXR0aW5ncyA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uWzguMF0KICBkZWYgc2VsZi51cAogICAgU2V0dGluZy5jcmVhdGVfaWZfbm90X2V4aXN0cygKICAgICAgdGl0bGU6ICAgICAgICdaYW1tYWQgVGVzdCBBIEFkZG9uIFVwJywKICAgICAgbmFtZTogICAgICAgICd6YW1tYWRfdGVzdF9hX2FkZG9uX3VwJywKICAgICAgYXJlYTogICAgICAgICdDb3JlJywKICAgICAgZGVzY3JpcHRpb246ICdWZXJpZnkgdGhhdCB0aGUgYWRkb24gd2FzIGluc3RhbGxlZC4nLAogICAgKQogIGVuZAoKICBkZWYgc2VsZi5kb3duCiAgICBTZXR0aW5nLmNyZWF0ZV9pZl9ub3RfZXhpc3RzKAogICAgICB0aXRsZTogICAgICAgJ1phbW1hZCBUZXN0IEEgQWRkb24gRG93bicsCiAgICAgIG5hbWU6ICAgICAgICAnemFtbWFkX3Rlc3RfYV9hZGRvbl9kb3duJywKICAgICAgYXJlYTogICAgICAgICdDb3JlJywKICAgICAgZGVzY3JpcHRpb246ICdWZXJpZnkgdGhhdCB0aGUgYWRkb24gd2FzIHJlbW92ZWQuJywKICAgICkKICBlbmQKZW5kCg==",
+      "encode": "base64"
+    }
+  ]
+}

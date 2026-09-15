@@ -373,7 +373,7 @@ class SessionsController < ApplicationController
     config['es_enabled'] = SearchIndexBackend.enabled?
 
     # Hide the admin packages interface in environments like docker, where installed packages do not persist.
-    config['admin_packages'] = ENV['ZAMMAD_DOCKER'].blank?
+    config['admin_packages'] = !Zammad::Deployment.container?
 
     # remember if we can switch back to user
     if session[:switched_from_user_id]

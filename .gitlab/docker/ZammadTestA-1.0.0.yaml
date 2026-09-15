@@ -1,0 +1,39 @@
+---
+name: ZammadTestA
+version: 1.0.0
+vendor: Zammad GmbH
+license: GNU AFFERO GENERAL PUBLIC LICENSE
+url: http://zammad.com/
+change_log: []
+dependencies:
+  ZammadTestB: ">= 1.0.0"
+description:
+- language: en
+  text: Test package for CI
+- language: de
+  text: Testpaket für die CI
+buildhost: zammad42
+builddate: 2026-08-19 15:29:46 UTC
+files:
+- location: db/addon/zammad_test_a/20251112113130_zammad_test_a_settings.rb
+  permission: 644
+  content: |
+    class ZammadTestASettings < ActiveRecord::Migration[8.0]
+      def self.up
+        Setting.create_if_not_exists(
+          title:       'Zammad Test A Addon Up',
+          name:        'zammad_test_a_addon_up',
+          area:        'Core',
+          description: 'Verify that the addon was installed.',
+        )
+      end
+
+      def self.down
+        Setting.create_if_not_exists(
+          title:       'Zammad Test A Addon Down',
+          name:        'zammad_test_a_addon_down',
+          area:        'Core',
+          description: 'Verify that the addon was removed.',
+        )
+      end
+    end

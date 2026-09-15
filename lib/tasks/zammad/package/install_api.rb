@@ -17,6 +17,8 @@ module Tasks
         ARGUMENT_COUNT = 3
 
         def self.task_handler
+          abort_in_container_environment!
+
           package_name = ArgvHelper.argv[1]
           version_name = ArgvHelper.argv[2]
           prod_mode    = ArgvHelper.argv[3] == 'prod'

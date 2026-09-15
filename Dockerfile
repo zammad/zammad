@@ -40,6 +40,9 @@ RUN npm -g install corepack && corepack enable pnpm && \
 FROM base AS build
 
 ARG COMMIT_SHA
+# Optional additional build information, e.g. the customer image name when building
+#   images with addon packages. Shown in the version string of the instance.
+ARG BUILD_LABEL
 
 SHELL ["/bin/bash", "-o", "errexit", "-o", "pipefail", "-c"]
 
@@ -72,9 +75,28 @@ RUN if [ -z "${COMMIT_SHA}" ]; then \
     exit 1; \
   fi; \
   COMMIT_SHA_SHORT=$(echo "${COMMIT_SHA}" | cut -c 1-8); \
-  echo "$(tr -d '\n' < VERSION)-${COMMIT_SHA_SHORT}.docker" > VERSION; \
+  echo "$(tr -d '\n' < VERSION)-${COMMIT_SHA_SHORT}${BUILD_LABEL:+.${BUILD_LABEL}}.docker" > VERSION; \
   echo 'Updated build information in VERSION:'; \
   cat VERSION
+
+# Special handling for zpm addons, if present:
+# - Unpack addon packages provided in packages/install/*.zpm (registered in the database on container start)
+#   and packages/uninstall/*.zpm (removed from the database on container start).
+# - Install additional gems provided by addon packages (Gemfile.local.*).
+#   Deployment mode is disabled to allow updating the Gemfile.lock with the additional gems.
+# - Regenerate the GraphQL frontend API in case addon packages extend the GraphQL schema.
+#   A rake task is used instead of 'rails generate' because rake skips eager loading,
+#   which would require a database connection.
+RUN if compgen -G "packages/*/*.zpm" > /dev/null; then \
+    ruby script/build/unpack_addon_packages.rb; \
+    if compgen -G "Gemfile.local.*" > /dev/null; then \
+        BUNDLE_DEPLOYMENT=false bundle install && \
+        rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache; \
+    fi; \
+    mkdir -p tmp && touch db/schema.rb; \
+    RAILS_LOG_TO_STDOUT= ZAMMAD_SAFE_MODE=1 DATABASE_URL=postgresql://zammad:/zammad ZAMMAD_GRAPHQL_INTROSPECTION=true bundle exec rake zammad:graphql:introspection > app/graphql/graphql_introspection.json; \
+    pnpm exec graphql-codegen -c .graphql_code_generator.js; \
+  fi
 
 # Don't require Redis or Postgres (use fake DATABASE_URL to make Rails validation happy).
 RUN touch db/schema.rb && \

@@ -14,7 +14,7 @@ Channel.create_if_not_exists(
     },
   },
   preferences: { online_service_disable: true },
-  active:      ENV['ZAMMAD_DOCKER'].present?,
+  active:      Zammad::Deployment.container?,
 )
 Channel.create_if_not_exists(
   area:        'Email::Notification',
@@ -24,5 +24,5 @@ Channel.create_if_not_exists(
     },
   },
   preferences: { online_service_disable: true },
-  active:      ENV['ZAMMAD_DOCKER'].blank?,
+  active:      !Zammad::Deployment.container?,
 )

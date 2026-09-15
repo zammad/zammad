@@ -74,4 +74,45 @@ RSpec.describe 'Packages', type: :request do
       expect(json_response['error']).to eq('User authorization failed.')
     end
   end
+
+  describe 'request handling in container environments' do
+
+    before do
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with('ZAMMAD_DOCKER').and_return('true')
+      authenticated_as(admin)
+    end
+
+    it 'does packages index with admin' do
+      get '/api/v1/packages', as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['packages']).to be_truthy
+    end
+
+    it 'refuses package install' do
+      post '/api/v1/packages', as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json_response['error']).to eq('Installing, updating or uninstalling packages is not possible in container environments.')
+    end
+
+    it 'refuses package uninstall' do
+      delete '/api/v1/packages', as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it 'refuses package install via api' do
+      post '/api/v1/packages/api', as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it 'refuses package update via api' do
+      put '/api/v1/packages/api', as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+  end
 end

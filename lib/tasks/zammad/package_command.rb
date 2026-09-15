@@ -7,6 +7,10 @@ class Tasks::Zammad::PackageCommand < Tasks::Zammad::Command
     ENV['PACKAGES_TOKEN'] || Setting.get('packages_token')
   end
 
+  def self.abort_in_container_environment!
+    abort 'Error: Installing, updating or uninstalling packages is not possible in container environments.' if ::Zammad::Deployment.container?
+  end
+
   def self.validate_args!(version_name, mode)
     abort "Error: Invalid parameter version name '#{version_name}'!" if version_name.blank? || version_name !~ %r{^(\d+)\.(\d+)\.x\.?$}
     abort "Error: Invalid parameter execution mode '#{mode}'!" if %w[dry prod].exclude?(mode)
