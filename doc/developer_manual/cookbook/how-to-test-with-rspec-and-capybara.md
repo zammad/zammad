@@ -45,6 +45,10 @@ Also running failed tests only is possible with the option `--only-failures`.
 bundle exec rspec --only-failures spec/system/ticket/zoom_spec.rb
 ```
 
+Besides the Selenium browsers there is a Playwright driver, which records a trace of every example and is therefore
+useful to debug a failing browser test. See
+[How to debug system tests with Playwright](how-to-debug-with-playwright.md).
+
 ## Ports Used by a Test Run
 
 A run claims two ports, both taken from the environment. Their defaults sit
