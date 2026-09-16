@@ -1217,6 +1217,97 @@ describe('Form - Field - TreeSelect - Features', () => {
       ])
     })
   })
+
+  describe('displays option labels containing HTML-like text verbatim', () => {
+    const markupLabel = '<img src=x alt="unrelated">'
+
+    const renderTreeSelectWithMarkupLabel = () =>
+      renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          options: [
+            {
+              value: 0,
+              label: 'Item A',
+              children: [{ value: 1, label: `Item 1 ${markupLabel}` }],
+            },
+          ],
+        },
+      })
+
+    it('displays labels verbatim when the filter contains only whitespace', async () => {
+      const wrapper = renderTreeSelectWithMarkupLabel()
+
+      await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
+
+      // A whitespace-only filter yields an empty match, so no text is highlighted.
+      await wrapper.events.type(wrapper.getByRole('searchbox'), ' ')
+
+      const listbox = wrapper.getByRole('listbox')
+
+      expect(listbox.querySelector('img')).toBeNull()
+      expect(getByText(listbox, `Item A › Item 1 ${markupLabel}`)).toBeInTheDocument()
+    })
+
+    it('displays the non-matched fragments of a highlighted label verbatim', async () => {
+      const wrapper = renderTreeSelectWithMarkupLabel()
+
+      await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
+      await wrapper.events.type(wrapper.getByRole('searchbox'), 'item 1')
+
+      const listbox = wrapper.getByRole('listbox')
+
+      // The matched text is wrapped in the highlight span, the only element a label renders as.
+      const highlight = listbox.querySelector('span[class*="bg-blue"]')
+      expect(highlight).toHaveTextContent('Item 1')
+
+      expect(listbox.querySelector('img')).toBeNull()
+      expect(getByRole(listbox, 'option')).toHaveTextContent(`Item A › Item 1 ${markupLabel}`)
+    })
+
+    it('displays parent labels in the option path verbatim', async () => {
+      const wrapper = renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          options: [
+            {
+              value: 0,
+              label: markupLabel,
+              children: [{ value: 1, label: 'Item 1' }],
+            },
+          ],
+        },
+      })
+
+      await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
+      await wrapper.events.type(wrapper.getByRole('searchbox'), 'item 1')
+
+      const listbox = wrapper.getByRole('listbox')
+
+      expect(listbox.querySelector('img')).toBeNull()
+      expect(getByRole(listbox, 'option')).toHaveTextContent(`${markupLabel} › Item 1`)
+    })
+  })
+
+  it('highlights at the correct offset when the label contains combining marks', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        options: [{ value: 0, label: 'Cafe\u0301 zammad' }],
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
+    await wrapper.events.type(wrapper.getByRole('searchbox'), 'zammad')
+
+    const highlight = wrapper.getByRole('listbox').querySelector('span[class*="bg-blue"]')
+
+    expect(highlight).not.toBeNull()
+    expect(highlight).toHaveTextContent('zammad')
+  })
 })
 
 describe('Form - Field - TreeSelect - Accessibility', () => {

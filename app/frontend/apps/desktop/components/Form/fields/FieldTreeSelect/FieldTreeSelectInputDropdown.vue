@@ -2,18 +2,13 @@
 
 <script setup lang="ts">
 import { type UseElementBoundingReturn, onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
-import { escape } from 'lodash-es'
 import { useTemplateRef, onUnmounted, computed, nextTick, ref, toRef } from 'vue'
 
-import type {
-  FlatSelectOption,
-  MatchedFlatSelectOption,
-} from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import type { FlatSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
@@ -339,49 +334,14 @@ const getCurrentIndex = (option: FlatSelectOption) => {
   return props.flatOptions.findIndex((o) => o.value === option.value)
 }
 
-const highlightedOptions = computed(() =>
-  props.options.map((option) => {
-    let parentPaths: string[] = []
+// Labels of the option's ancestors, shown as a path prefix while filtering across all levels.
+//   The item component renders each of them as a separate text node.
+const getParentLabels = (option: FlatSelectOption) =>
+  (option.parents || []).map((parentValue) => {
+    const parentOption = props.optionValueLookup[parentValue as string | number]
 
-    if (option.parents) {
-      parentPaths = option.parents.map((parentValue) => {
-        const parentOption = props.optionValueLookup[parentValue as string | number]
-
-        return `${escape(parentOption.label || parentOption.value.toString())} \u203A `
-      })
-    }
-
-    let label = option.label || i18n.t('%s (unknown)', option.value.toString())
-
-    // Highlight the matched text within the option label by re-using passed regex match object.
-    //   This approach has several benefits:
-    //   - no repeated regex matching in order to identify matched text
-    //   - support for matched text with accents, in case the search keyword didn't contain them (and vice-versa)
-    if (option.match && option.match[0]) {
-      const labelBeforeMatch = label.slice(0, option.match.index)
-
-      // Do not use the matched text here, instead use part of the original label in the same length.
-      //   This is because the original match does not include accented characters.
-      const labelMatchedText = label.slice(
-        option.match.index,
-        option.match.index + option.match[0].length,
-      )
-
-      const labelAfterMatch = label.slice(option.match.index + option.match[0].length)
-
-      const highlightClasses = option.disabled
-        ? 'bg-blue-200 dark:bg-gray-300'
-        : 'bg-blue-600 dark:bg-blue-900 group-hover:bg-blue-800 group-hover:group-focus:bg-blue-600 group-hover:text-white group-focus:text-black group-hover:group-focus:text-black'
-
-      label = `${escape(labelBeforeMatch)}<span class="${highlightClasses}">${escape(labelMatchedText)}</span>${escape(labelAfterMatch)}`
-    }
-
-    return {
-      ...option,
-      matchedPath: parentPaths.join('') + label,
-    } as MatchedFlatSelectOption
-  }),
-)
+    return parentOption.label || parentOption.value.toString()
+  })
 
 const { transitions } = useTransitionConfig()
 const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollapse()
@@ -459,7 +419,7 @@ const hasTopElement = computed(
               class="w-full overflow-y-auto"
             >
               <FieldTreeSelectInputDropdownItem
-                v-for="(option, index) in filter ? highlightedOptions : currentOptions"
+                v-for="(option, index) in filter ? options : currentOptions"
                 :key="String(option.value)"
                 :class="{
                   'first:rounded-t-[7px]':
@@ -469,7 +429,7 @@ const hasTopElement = computed(
                   'last:rounded-b-[7px]': !hasDirectionUp,
                 }"
                 :index="index"
-                :total="filter ? highlightedOptions.length : currentOptions.length"
+                :total="filter ? options.length : currentOptions.length"
                 :has-top-button="hasTopElement"
                 :has-direction-up="hasDirectionUp"
                 :aria-setsize="flatOptions.length"
@@ -478,6 +438,7 @@ const hasTopElement = computed(
                 :multiple="multiple"
                 :filter="filter"
                 :option="option"
+                :parent-labels="filter ? getParentLabels(option) : undefined"
                 :no-label-translate="noOptionsLabelTranslation"
                 @select="select($event)"
                 @next="goToNextPage($event)"
@@ -491,7 +452,7 @@ const hasTopElement = computed(
                     label: __('No results found'),
                     value: '',
                     disabled: true,
-                  } as MatchedFlatSelectOption
+                  } as FlatSelectOption
                 "
                 no-selection-indicator
                 :index="0"

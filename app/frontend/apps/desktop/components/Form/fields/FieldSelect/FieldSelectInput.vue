@@ -19,6 +19,7 @@ import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import { i18n } from '#shared/i18n.ts'
 import stopEvent from '#shared/utils/events.ts'
+import { deaccent } from '#shared/utils/labelMatching.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
@@ -58,8 +59,6 @@ const clearFilter = () => {
 }
 
 watch(() => contextReactive.value.noFiltering, clearFilter)
-
-const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const filteredOptions = computed(() => {
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.

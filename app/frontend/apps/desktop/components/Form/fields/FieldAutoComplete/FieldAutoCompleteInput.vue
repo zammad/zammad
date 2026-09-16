@@ -29,6 +29,7 @@ import { i18n } from '#shared/i18n.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import stopEvent from '#shared/utils/events.ts'
+import { deaccent } from '#shared/utils/labelMatching.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
@@ -325,8 +326,6 @@ const onKeydownFilterInput = (event: KeyboardEvent) => {
     )
   })
 }
-
-const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const availableOptionsWithMatches = computed(() => {
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.

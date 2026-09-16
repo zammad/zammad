@@ -3,21 +3,23 @@
 <script setup lang="ts">
 import { computed, useTemplateRef } from 'vue'
 
-import type {
-  FlatSelectOption,
-  MatchedFlatSelectOption,
-} from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import type { FlatSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import { splitLabelByMatch } from '#shared/utils/labelMatching.ts'
 
 const props = defineProps<{
-  option: FlatSelectOption | MatchedFlatSelectOption
+  option: FlatSelectOption
   index: number
   total: number // total number of options
   selected?: boolean
   multiple?: boolean
   noLabelTranslate?: boolean
   filter?: string
+  /**
+   * Labels of the option's ancestors, rendered as a `Parent › Child` path prefix while filtering.
+   */
+  parentLabels?: string[]
   noSelectionIndicator?: boolean
   hasTopButton?: boolean
   hasDirectionUp?: boolean
@@ -44,6 +46,17 @@ const label = computed(() => {
   return i18n.t(option.label, ...(option.labelPlaceholder || [])) || option.value.toString()
 })
 
+const highlightedLabel = computed(() => splitLabelByMatch(label.value, props.filter))
+
+// The option button carries the hover background, so the highlight switches to the darker accent
+//   with white text while hovered. There is no focus background to react to: the focusable button is
+//   `group/button`, and focus only draws an outline.
+const matchHighlightClasses = computed(() =>
+  props.option.disabled
+    ? 'bg-blue-200 dark:bg-gray-300'
+    : 'bg-blue-600 dark:bg-blue-900 group-hover:bg-blue-800 group-hover:text-white',
+)
+
 const isLastItem = computed(() => props.index + 1 === props.total)
 const isFirstItem = computed(() => props.index === 0)
 
@@ -53,7 +66,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
 
 const optionElement = useTemplateRef('option-button')
 
-const handleClickOnNext = (option: FlatSelectOption | MatchedFlatSelectOption) => {
+const handleClickOnNext = (option: FlatSelectOption) => {
   if (option.disabled) return optionElement.value?.click()
   goToNextPage(option)
 }
@@ -118,7 +131,6 @@ const handleNextPageOrSelect = () =>
         decorative
         class="shrink-0 fill-gray-100 group-hover/button:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
       />
-      <!--      eslint-disable vue/no-v-html -->
       <span
         v-if="filter"
         v-tooltip="label"
@@ -126,8 +138,14 @@ const handleNextPageOrSelect = () =>
           'pointer-events-none text-stone-200 dark:text-neutral-500': option.disabled,
         }"
         class="grow truncate group-hover/button:text-black dark:group-hover/button:text-white"
-        v-html="(option as MatchedFlatSelectOption).matchedPath"
-      />
+        ><template v-for="(parentLabel, parentIndex) in parentLabels" :key="parentIndex"
+          >{{ parentLabel }} › </template
+        >{{ highlightedLabel.before
+        }}<span v-if="highlightedLabel.matched" :class="matchHighlightClasses">{{
+          highlightedLabel.matched
+        }}</span
+        >{{ highlightedLabel.after }}</span
+      >
       <span
         v-else
         v-tooltip="label"

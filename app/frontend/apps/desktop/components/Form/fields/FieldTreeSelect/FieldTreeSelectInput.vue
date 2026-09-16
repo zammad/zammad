@@ -17,6 +17,7 @@ import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import { i18n } from '#shared/i18n.ts'
 import stopEvent from '#shared/utils/events.ts'
+import { deaccent } from '#shared/utils/labelMatching.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 
@@ -75,8 +76,6 @@ const clearFilter = () => {
 }
 
 watch(() => contextReactive.value.noFiltering, clearFilter)
-
-const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const filteredOptions = computed(() => {
   // In case we are not currently filtering for a parent, search across all options.
