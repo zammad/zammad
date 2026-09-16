@@ -15,25 +15,31 @@ RSpec.describe GraphqlValidations::AliasesCount do
     end
   end
 
-  context 'when too many directives are given' do
-    let(:query) do
-      "{ dummy alias0: __typename
-               alias1: __typename
-               alias2: __typename
-               alias3: __typename
-               alias4: __typename
-               alias5: __typename
-               alias6: __typename }"
-    end
+  let(:query) do
+    aliases = Array.new(aliases_count) { |i| "alias#{i}: __typename" }.join(' ')
+
+    "{ dummy #{aliases} }"
+  end
+
+  context 'when too many aliases are given' do
+    let(:aliases_count) { 11 }
 
     it 'raises an error' do
       expect { schema.execute(query) }
-        .to raise_error(GraphqlValidations::Error, 'Too many aliases given (maximum is 5)')
+        .to raise_error(GraphqlValidations::Error, 'Too many aliases given (maximum is 10)')
     end
   end
 
-  context 'when within directive limit' do
-    let(:query) { '{ dummy alias0: __typename }' }
+  context 'when exactly at the alias limit' do
+    let(:aliases_count) { 10 }
+
+    it 'does not raise an error' do
+      expect { schema.execute(query) }.not_to raise_error
+    end
+  end
+
+  context 'when within alias limit' do
+    let(:aliases_count) { 1 }
 
     it 'does not raise an error' do
       expect { schema.execute(query) }.not_to raise_error
