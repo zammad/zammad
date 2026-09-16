@@ -1880,7 +1880,7 @@ msgstr ""
 msgid "Answer actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 msgid "Answer count: %s"
 msgstr ""
 
@@ -3221,11 +3221,11 @@ msgstr ""
 msgid "Category Attribute"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 msgid "Category actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 msgid "Category count: %s"
 msgstr ""
 
@@ -13453,7 +13453,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr ""
 
@@ -13483,6 +13483,10 @@ msgstr ""
 
 #: lib/email_helper.rb:13
 msgid "POP3"
+msgstr ""
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
@@ -13696,7 +13700,7 @@ msgstr ""
 msgid "Permanently Delete Knowledge Base"
 msgstr ""
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 msgid "Permission"
 msgstr ""
 
@@ -15234,7 +15238,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr ""
 
@@ -15270,7 +15274,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr ""
 
@@ -15321,7 +15325,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr ""
 
@@ -16405,7 +16409,7 @@ msgstr ""
 msgid "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to set correct customer if email is received from a third-party system on behalf of a customer."
 msgstr ""
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "Setting"
 msgstr ""
 
@@ -17662,7 +17666,7 @@ msgid "Text missing"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr ""
 
@@ -20332,7 +20336,7 @@ msgstr ""
 msgid "Time accounting"
 msgstr ""
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 msgid "Time accounting type"
 msgstr ""
 
@@ -20815,7 +20819,7 @@ msgid "Two-factor Authentication Methods"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 msgid "Two-factor authentication"
 msgstr ""
 

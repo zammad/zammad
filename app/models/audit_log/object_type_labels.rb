@@ -9,6 +9,7 @@ module AuditLog::ObjectTypeLabels
     'Job'                          => __('Scheduler'),
     'KnowledgeBase::Locale'        => __('Knowledge Base language'),
     'LdapSource'                   => __('LDAP'),
+    'Package'                      => __('Package'),
     'Permission'                   => __('Permission'),
     'PGPKey'                       => __('PGP'),
     'Setting'                      => __('Setting'),
