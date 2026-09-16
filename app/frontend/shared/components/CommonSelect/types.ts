@@ -13,7 +13,3 @@ export interface SelectOption extends ObjectSelectOption {
   iconProps?: Omit<IconProps, 'name'>
   match?: RegExpExecArray
 }
-
-export interface MatchedSelectOption extends SelectOption {
-  matchedLabel?: string
-}
