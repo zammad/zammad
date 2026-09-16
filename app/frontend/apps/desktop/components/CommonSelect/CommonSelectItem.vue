@@ -1,13 +1,13 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { escapeRegExp } from 'lodash-es'
 import { computed } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import { splitLabelByMatch } from '#shared/utils/labelMatching.ts'
 
 import type { CommonSelectOptionEmits, CommonSelectOptionProps } from './types.ts'
 
@@ -46,52 +46,8 @@ const heading = computed(() => {
   )
 })
 
-const combiningMark = /[\u0300-\u036f]/
-const combiningMarks = /[\u0300-\u036f]/g
-
-const deaccent = (s: string) => s.normalize('NFD').replace(combiningMarks, '')
-
-// Maps code-unit indices of `deaccent(text)` back to code-unit indices of `text`.
-// Removing combining marks shortens the string, so match offsets taken from the
-// deaccented label no longer line up with the original one (e.g. a label stored
-// in decomposed form like `Cafe\u0301 zammad`).
-const deaccentIndexMap = (text: string): number[] => {
-  const map: number[] = []
-  let offset = 0
-
-  for (const character of text) {
-    for (const part of character.normalize('NFD')) {
-      if (combiningMark.test(part)) continue
-      for (let i = 0; i < part.length; i++) map.push(offset)
-    }
-    offset += character.length
-  }
-
-  map.push(text.length)
-  return map
-}
-
-const highlightedLabel = computed(() => {
-  const text = label.value
-  const keyword = props.filter?.trim()
-
-  if (!keyword) return { before: text, matched: '', after: '' }
-
-  // Match the displayed label; option.match offsets drift when it's translated.
-  const match = new RegExp(escapeRegExp(deaccent(keyword)), 'i').exec(deaccent(text))
-
-  if (!match?.[0]) return { before: text, matched: '', after: '' }
-
-  const indexMap = deaccentIndexMap(text)
-  const matchStart = indexMap[match.index]
-  const matchEnd = indexMap[match.index + match[0].length]
-
-  return {
-    before: text.slice(0, matchStart),
-    matched: text.slice(matchStart, matchEnd),
-    after: text.slice(matchEnd),
-  }
-})
+// Match the displayed label; option.match offsets drift when it's translated.
+const highlightedLabel = computed(() => splitLabelByMatch(label.value, props.filter))
 
 const matchHighlightClasses = computed(() =>
   props.option.disabled
