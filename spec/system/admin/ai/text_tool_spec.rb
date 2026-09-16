@@ -60,7 +60,7 @@ RSpec.describe 'Manage > AI > Text Tool', type: :system do
         visit '/#ai/text_tools'
 
         within('.js-missingProviderAlert') do
-          expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
+          expect(page).to have_text('The AI provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
         end
       end
     end

@@ -66,7 +66,7 @@ class ProviderSettings extends App.Controller
 
     # The AI service stays selectable while the AI provider is switched off, so that its
     # configuration survives the switch. The alert says why nothing translates in the meantime.
-    if @service('ai').available() and !App.Config.get('ai_provider')
+    if @service('ai').available() and provider is 'ai' and not App.Config.get('ai_provider')
       @el.prepend(App.view('ai/missing_provider_alert')(visible: true))
 
     defaults = { ai_provider_connection_id: App.AIFeatureProvider.valueFor(@aiFeatureProvider(provider)) }
@@ -84,8 +84,7 @@ class ProviderSettings extends App.Controller
     for attribute in attributes
       @forms.push(new App.ControllerForm(
         el:        @$("[data-name='#{attribute.name}']")
-        # The table names the field; the label stays for assistive technology only.
-        model:     { configure_attributes: [_.extend({}, attribute, label_class: 'hidden')] }
+        model:     { configure_attributes: [_.extend({}, attribute, class: 'form-control--small', label_class: 'sr-only')] }
         params:    params
         autofocus: false
       ))
@@ -135,7 +134,7 @@ class ProviderSettings extends App.Controller
     return [] if !@aiFeatureIdentifier(provider)
 
     [
-      { name: 'ai_provider_connection_id', display: __('Provider'), tag: 'select', options: @aiProviderOptions(), null: false }
+      { name: 'ai_provider_connection_id', display: __('Provider'), tag: 'select', options: @aiProviderOptions() }
     ]
 
   aiProviderOptions: ->
@@ -256,7 +255,7 @@ class TicketArticles extends App.Controller
       el:        @$('.js-form')
       model:
         configure_attributes: [
-          { name: 'content_translation_ticket_article_auto_role_ids', display: __('Roles'), tag: 'column_select', null: true, relation: 'Role', translate: true }
+          { name: 'content_translation_ticket_article_auto_role_ids', display: __('Available for the following roles'), tag: 'column_select', null: true, relation: 'Role', translate: true }
         ]
       params:
         content_translation_ticket_article_auto_role_ids: @renderedRoleIds

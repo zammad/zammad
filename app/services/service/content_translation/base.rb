@@ -51,8 +51,9 @@ class Service::ContentTranslation::Base < Service::Base
   #   when the caller asked for a stored translation and there is none.
   def execute
     # Before the stored translation is looked up: a switched-off feature means nobody may
-    # translate, not even what is stored. A switched-off service is different - translations are
-    # reused across services, so a stored one still counts - which is why #translate checks that later.
+    # translate, not even what is stored. A switched-off service is different - what is stored is
+    # the configured service's own translation, so it still counts - which is why #translate checks
+    # that later.
     ensure_feature_enabled!
 
     locale # rejects an unknown or inactive target before any content is touched
@@ -121,9 +122,9 @@ class Service::ContentTranslation::Base < Service::Base
     Result.new(content: content.to_s, backend: nil, translated: false, fresh: false, analytics_run: nil)
   end
 
-  # A stored translation is served whatever the backend is; only producing a new one needs the
-  # translation service to be usable, and only then may it be worth deferring - which is the
-  # backend's own answer. The feature gate sits in #execute instead, see there.
+  # A stored translation is the configured backend's own, and serving it does not need that service
+  # to be usable; only producing a new one does, and only then may it be worth deferring - which is
+  # the backend's own answer. The feature gate sits in #execute instead, see there.
   def translate
     stored = dispatch(:stored_only) if persistence_strategy != :request_only
 
@@ -135,7 +136,7 @@ class Service::ContentTranslation::Base < Service::Base
 
     return defer_to_background if defer_to_background?
 
-    dispatch(:request_only)
+    dispatch(:request_only) || untranslated_result
   end
 
   def defer_to_background?

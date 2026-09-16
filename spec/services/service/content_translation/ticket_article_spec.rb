@@ -187,6 +187,159 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     end
   end
 
+  # The backend has its own spec; what is covered here is that the service resolves it, hands it the
+  # article and answers with what it returns.
+  describe 'with LibreTranslate configured' do
+    let(:url)                { 'https://translate.example.com' }
+    let(:endpoint)           { "#{url}/translate" }
+    let(:languages_endpoint) { "#{url}/languages" }
+    let(:languages)          { %w[en de] }
+    let(:response)           { '<p>Hallo <strong>Welt</strong>.</p>' }
+
+    before do
+      stub_request(:get, languages_endpoint)
+        .to_return(status: 200, body: languages.map { |code| { code: } }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+      stub_request(:post, endpoint)
+        .to_return(status: 200, body: { translatedText: response }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+      # Without the validation: its connection test asks the instance to translate, which would
+      # count towards the requests the examples below expect.
+      Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url }, validate: false)
+    end
+
+    it 'answers with its translation' do
+      expect(translate)
+        .to have_attributes(content: response, backend: 'libre_translate', translated: true, fresh: true)
+    end
+
+    it 'asks no AI provider' do
+      translate
+
+      expect(provider_calls).to be_empty
+    end
+
+    # One HTTP round trip is not worth a job and a subscription, so the backend does not defer.
+    it 'answers in place although the caller could be answered later' do
+      expect { described_class.execute(object: article, target_locale:) }
+        .not_to have_enqueued_job(ContentTranslationJob)
+    end
+
+    it 'serves a second request without asking the instance again' do
+      2.times { translate }
+
+      expect(WebMock).to have_requested(:post, endpoint).once
+    end
+
+    describe 'when nothing usable comes back' do
+      before { stub_request(:post, endpoint).to_return(status: 200, body: { translatedText: '' }.to_json, headers: { 'Content-Type' => 'application/json' }) }
+
+      it 'answers with the untranslated article instead of with nothing' do
+        expect(translate).to have_attributes(content: body, backend: nil, translated: false)
+      end
+    end
+
+    # The service adds nothing to a failure of its backend: what the caller has to tell the
+    # outcomes apart by is the class the backend raised.
+    describe 'when the instance refuses the request' do
+      before { stub_request(:post, endpoint).to_return(status: 403, body: { error: 'Invalid API key' }.to_json) }
+
+      it 'surfaces the outcome unchanged' do
+        expect { translate }.to raise_error(Service::ContentTranslation::Backend::Base::InvalidCredentialsError)
+      end
+
+      it 'stores nothing' do
+        expect { suppress(Service::ContentTranslation::Backend::Base::Error) { translate } }
+          .not_to change(AI::StoredResult, :count)
+      end
+    end
+
+    describe 'with a target language the instance does not serve' do
+      let(:languages) { %w[en fr] }
+
+      it 'fails rather than answering with untranslated content' do
+        expect { translate }.to raise_error(Service::ContentTranslation::Backend::Base::UnsupportedLanguageError)
+      end
+
+      it 'stores nothing' do
+        expect { suppress(Service::ContentTranslation::Backend::Base::Error) { translate } }
+          .not_to change(AI::StoredResult, :count)
+      end
+
+      # The service answers an article that is already in the target language before any backend is
+      # asked, so an unsupported language must not start failing what was never translated.
+      it 'still answers an article that is already in the target language' do
+        article.update!(detected_language: 'de')
+
+        expect(translate).to have_attributes(content: body, translated: false)
+      end
+    end
+  end
+
+  # Showing that switching the service does not serve the previous one's translation needs a second
+  # backend that uses the same store, which the echo double above deliberately does not - it answers
+  # without storing anything.
+  describe 'switching the configured translation service' do
+    # What a backend without an AI feature behind it does: read the store, or translate and write it.
+    let(:mirror_backend) do
+      Class.new(Service::ContentTranslation::Backend::Base) do
+        def self.backend_name = 'mirror'
+
+        def initialize(object:, content:, html:, locale:, persistence_strategy: :stored_or_request, **) # rubocop:disable Lint/MissingSuper
+          @content              = content
+          @persistence_strategy = persistence_strategy
+          @key                  = { object:, locale:, content:, html:, backend: self.class.backend_name }
+        end
+
+        def execute
+          stored = Service::ContentTranslation::StoredTranslation.find(**@key) if @persistence_strategy != :request_only
+
+          return { content: stored.content, backend: stored.metadata['backend'], fresh: false, analytics_run: nil } if stored
+          return if @persistence_strategy == :stored_only
+
+          row = Service::ContentTranslation::StoredTranslation.save(**@key, translation: "mirror: #{@content}")
+
+          { content: row.content, backend: self.class.backend_name, fresh: true, analytics_run: nil }
+        end
+      end
+    end
+
+    before { stub_const('Service::ContentTranslation::Backend::Mirror', mirror_backend) }
+
+    def configure(provider)
+      Setting.set('content_translation_service_config', { 'provider' => provider })
+    end
+
+    it 'translates again instead of serving what the AI backend stored' do
+      translate
+      configure('mirror')
+
+      expect(translate).to have_attributes(content: "mirror: #{body}", backend: 'mirror', fresh: true)
+    end
+
+    it 'asks the AI provider again instead of serving what the other backend stored' do
+      configure('mirror')
+      translate
+      configure('ai')
+
+      expect { translate }.to change(provider_calls, :size).by(1)
+    end
+
+    it 'serves its own stored translation while it stays configured' do
+      configure('mirror')
+      translate
+
+      expect(translate).to have_attributes(content: "mirror: #{body}", fresh: false)
+    end
+
+    it 'keeps one stored translation per article and locale' do
+      translate
+      configure('mirror')
+
+      expect { translate }.not_to change(AI::StoredResult, :count)
+    end
+  end
+
   context 'when the article has no content' do
     before { article.body = '' }
 

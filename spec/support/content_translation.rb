@@ -3,8 +3,8 @@
 module ContentTranslationHelper
   # Switches content translation on: names the translation service and enables the article feature.
   # The service is named before the flag is set, because the flag validates against it.
-  def setup_content_translation(provider: 'ai', ticket_article: true)
-    Setting.set('content_translation_service_config', { 'provider' => provider })
+  def setup_content_translation(provider: 'ai', ticket_article: true, **config)
+    Setting.set('content_translation_service_config', { 'provider' => provider, **config.stringify_keys })
     Setting.set('content_translation_service', true)
     Setting.set('content_translation_ticket_article', ticket_article)
   end

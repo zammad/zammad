@@ -12,7 +12,7 @@ RSpec.describe 'AI > AI Agents', type: :system do
     it 'shows a warning message' do
       visit '#ai/ai_agents'
 
-      expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
+      expect(page).to have_text('The AI provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
     end
   end
 

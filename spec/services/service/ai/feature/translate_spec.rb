@@ -46,12 +46,17 @@ RSpec.describe Service::AI::Feature::Translate do
   context 'when another service translated the same content' do
     before { described_class.new(context_data: context_data.merge(backend: 'deepl'), locale: target_locale).execute }
 
-    it 'reuses its translation' do
-      expect { ai_service.execute }.not_to change(provider_calls, :size)
+    it 'translates it again instead of serving that translation' do
+      expect { ai_service.execute }.to change(provider_calls, :size).by(1)
     end
 
-    it 'keeps naming the service that produced it' do
-      expect(ai_service.execute.stored_result.metadata).to include('backend' => 'deepl')
+    it 'names itself as the service that produced what is served' do
+      expect(ai_service.execute.stored_result.metadata).to include('backend' => 'ai')
+    end
+
+    # The row is keyed without the producing service, so the two never hold one each.
+    it 'replaces the row of the other service' do
+      expect { ai_service.execute }.not_to change(AI::StoredResult, :count)
     end
   end
 

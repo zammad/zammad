@@ -3,9 +3,50 @@
 # What a translation backend has to answer for the content translation services. A backend maps
 # one translation service onto backend-neutral data; which one is used comes from the service config.
 class Service::ContentTranslation::Backend::Base < Service::Base
+  # Every failure of a translation service comes out as one of these, so a caller tells the
+  # outcomes apart by class rather than by the wording the service answered with.
+  class Error < StandardError; end
+
+  class UnreachableError < Error
+    def initialize(message = __('The translation service cannot be reached.'))
+      super
+    end
+  end
+
+  class InvalidCredentialsError < Error
+    def initialize(message = __('The translation service refused the configured credentials.'))
+      super
+    end
+  end
+
+  class UnsupportedLanguageError < Error
+    def initialize(message = __('The translation service does not support the requested target language.'))
+      super
+    end
+  end
+
+  class QuotaExceededError < Error
+    def initialize(message = __('The quota or rate limit of the translation service is exhausted.'))
+      super
+    end
+  end
+
+  class ContentTooLargeError < Error
+    def initialize(message = __('The content is too large for the translation service.'))
+      super
+    end
+  end
+
   # Raises when the service behind this backend is not usable. Whether translation is switched on
   # at all is not its question - the content translation services ask that before.
   def self.ensure_enabled!
+    nil
+  end
+
+  # Reaches the service with the config that would be stored, and proves the credentials it
+  # carries are accepted. Raises one of the errors above. A backend without a testable endpoint
+  # keeps the no-op, the way AI::Provider.ping! does.
+  def self.ping!(_config)
     nil
   end
 

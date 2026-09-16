@@ -857,6 +857,7 @@ msgstr ""
 msgid "API error."
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
 msgstr ""
@@ -1718,7 +1719,7 @@ msgstr ""
 msgid "Allow future dates toggle value is required."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
 msgid "Allow global translation"
 msgstr ""
 
@@ -1738,7 +1739,7 @@ msgstr ""
 msgid "Allow reopening of tickets within a certain time."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
 msgid "Allow specific roles to translate all articles at once. Be careful, this can result in a lot of translation calls and might be cost related."
 msgstr ""
 
@@ -2602,6 +2603,7 @@ msgstr ""
 msgid "Available Values"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:258
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -6990,7 +6992,7 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 msgid "Enable AI provider"
 msgstr ""
 
@@ -10378,6 +10380,10 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+msgid "LibreTranslate"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -11699,7 +11705,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -12467,7 +12473,7 @@ msgstr ""
 msgid "No translation available for this locale"
 msgstr ""
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:66
 msgid "No translation service is configured."
 msgstr ""
 
@@ -14279,7 +14285,7 @@ msgstr ""
 msgid "Provider Settings"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 msgid "Provider configuration"
 msgstr ""
 
@@ -14451,7 +14457,7 @@ msgstr ""
 msgid "Recent Customer Tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr ""
@@ -15159,7 +15165,6 @@ msgstr ""
 msgid "Role description"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614
@@ -15385,7 +15390,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -16094,7 +16099,7 @@ msgstr ""
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid "Semantic search will stop working until another provider is selected for it."
 msgstr ""
 
@@ -16415,6 +16420,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -17246,7 +17252,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -17733,6 +17739,14 @@ msgstr ""
 msgid "The 24 hour customer service window is now closed, no further WhatsApp messages can be sent."
 msgstr ""
 
+#: app/models/setting/validation/vectordb.rb:17
+msgid "The AI provider configuration is disabled. Before proceeding, please enable it in AI > Providers."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+msgid "The AI provider configuration is disabled. Before proceeding, please set up at least one provider in |AI > Providers|. %l"
+msgstr ""
+
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
 msgstr ""
@@ -17913,7 +17927,7 @@ msgstr ""
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:247
 msgid "The article language detection is disabled. Enable it to avoid translating articles that are already in the target language. %l"
 msgstr ""
 
@@ -18084,6 +18098,10 @@ msgstr ""
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
+msgstr ""
+
+#: app/services/service/content_translation/backend/base.rb:34
+msgid "The content is too large for the translation service."
 msgstr ""
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
@@ -18352,7 +18370,7 @@ msgstr ""
 msgid "The knowledge base index cannot be built. Please check that Elasticsearch is reachable and runs a supported version."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid "The knowledge base index is kept, so selecting the same provider again requires no re-index."
 msgstr ""
 
@@ -18590,14 +18608,6 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: app/models/setting/validation/vectordb.rb:17
-msgid "The provider configuration is disabled. Before proceeding, please enable it in AI > Providers."
-msgstr ""
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid "The provider configuration is disabled. Before proceeding, please set up at least one provider in |AI > Providers|."
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 msgid "The provider could not be updated."
 msgstr ""
@@ -18617,6 +18627,10 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
+msgstr ""
+
+#: app/services/service/content_translation/backend/base.rb:28
+msgid "The quota or rate limit of the translation service is exhausted."
 msgstr ""
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
@@ -19036,6 +19050,22 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
+msgstr ""
+
+#: app/services/service/content_translation/backend/base.rb:10
+msgid "The translation service cannot be reached."
+msgstr ""
+
+#: app/services/service/content_translation/backend/base.rb:22
+msgid "The translation service does not support the requested target language."
+msgstr ""
+
+#: app/services/service/content_translation/backend/libre_translate.rb:128
+msgid "The translation service does not support the target language %s."
+msgstr ""
+
+#: app/services/service/content_translation/backend/base.rb:16
+msgid "The translation service refused the configured credentials."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
@@ -19670,7 +19700,7 @@ msgid "This role has no knowledge base editor permission."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid "This service allows agents to translate articles to their configured UI language or other languages of their choice."
 msgstr ""
 
@@ -20006,7 +20036,7 @@ msgstr ""
 msgid "Ticket article translation is not enabled."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 msgid "Ticket articles translation"
 msgstr ""
 
@@ -20586,7 +20616,7 @@ msgstr ""
 msgid "Translate section to English"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:333
 msgid "Translate ticket articles into another language."
 msgstr ""
 
@@ -20619,7 +20649,7 @@ msgstr ""
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:116
 msgid "Translation service provider"
 msgstr ""
 
@@ -20875,6 +20905,7 @@ msgid "UID Field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21138,7 +21169,7 @@ msgid "Update shared draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:177
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -21698,7 +21729,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -22348,11 +22379,11 @@ msgstr ""
 msgid "You can find archived emails in Zammad anytime using the search function, like for any other ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:308
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:308
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 

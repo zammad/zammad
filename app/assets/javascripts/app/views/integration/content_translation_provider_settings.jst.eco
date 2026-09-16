@@ -1,4 +1,5 @@
-<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
+<h2><%- @T('Settings') %></h2>
+
 <form>
   <div class="settings-entry js-serviceForm no-margin"></div>
 

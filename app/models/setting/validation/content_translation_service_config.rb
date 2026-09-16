@@ -10,7 +10,11 @@ class Setting::Validation::ContentTranslationServiceConfig < Setting::Validation
     return result_failed(__('Translation service is not supported')) if backend.nil?
     return result_failed(__('Translation service configuration is incomplete')) if missing_keys.any?
 
+    backend.ping!(config)
+
     result_success
+  rescue Service::ContentTranslation::Backend::Base::Error => e
+    result_failed(e.message)
   end
 
   private

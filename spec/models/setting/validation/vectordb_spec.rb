@@ -38,7 +38,7 @@ RSpec.describe Setting::Validation::VectorDB do
     context 'when a provider connection is present, but the AI provider configuration is disabled' do
       before { create(:ai_provider_connection, :default_embedding, config: { token: 'a', embedding_model: 'text-embedding-3-small' }) }
 
-      it_behaves_like 'raising an error', value: true, message: 'The provider configuration is disabled. Before proceeding, please enable it in AI > Providers.'
+      it_behaves_like 'raising an error', value: true, message: 'The AI provider configuration is disabled. Before proceeding, please enable it in AI > Providers.'
     end
 
     context 'when the configured provider cannot generate embeddings' do

@@ -11936,6 +11936,10 @@ output {
   &.zammad-switch--green input:checked + label {
     background: var(--supergood-color);
   }
+
+  + h1, + h2, + h3, + h4, + h5, + h6 {
+    margin: 0;
+  }
 }
 
 .zammad-switch label {
@@ -12210,6 +12214,15 @@ output {
       > .form-group {
         margin-left: 0;
         margin-right: 0;
+
+        &:last-child {
+          padding: 0;
+          margin-bottom: 0;
+
+          > .formGroup-label {
+            margin-bottom: 0;
+          }
+        }
       }
 
       > .checkbox,

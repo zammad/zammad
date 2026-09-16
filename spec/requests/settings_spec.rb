@@ -202,6 +202,43 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response.find { it['name'] == 'user_lost_password' }['state_current']['value']).to be(true)
     end
 
+    # The key is only masked because it is spelled `api_key`, so a rename would leak it to every
+    # reader of this endpoint without anything else failing.
+    it 'masks the API key of the translation service but not its URL' do
+      url = 'https://translate.example.com'
+
+      stub_request(:get, "#{url}/languages")
+        .to_return(status: 200, body: [{ code: 'en' }].to_json, headers: { 'Content-Type' => 'application/json' })
+      stub_request(:post, "#{url}/translate")
+        .to_return(status: 200, body: { translatedText: 'Zammad' }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+      Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url, 'api_key' => 'secret-key' })
+
+      authenticated_as(admin)
+
+      setting = Setting.find_by(name: 'content_translation_service_config')
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['state_current']['value']).to include(
+        'api_key' => SensitiveParamsHelper::SENSITIVE_MASK,
+        'url'     => url,
+      )
+
+      # The form sends the mask back unchanged, and the connection test now runs on what is
+      # unmasked - so a key that stayed masked would refuse every further save of this form.
+      params = {
+        id:            setting.id,
+        state_current: {
+          value: { 'provider' => 'libre_translate', 'url' => url, 'api_key' => SensitiveParamsHelper::SENSITIVE_MASK },
+        }
+      }
+      put "/api/v1/settings/#{setting.id}", params: params, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(Setting.get('content_translation_service_config')).to include('api_key' => 'secret-key')
+    end
+
     it 'does settings index with admin-api' do
 
       # index

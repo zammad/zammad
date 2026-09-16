@@ -1,4 +1,3 @@
-<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
 <div class="page-header-title">
   <div class="zammad-switch zammad-switch--small js-ticketArticleSetting">
     <input name="content_translation_ticket_article" type="checkbox" id="content-translation-ticket-article" <% if @ticketArticle: %>checked<% end %>>
@@ -14,9 +13,9 @@
     <input name="content_translation_ticket_article_auto" type="checkbox" id="content-translation-ticket-article-auto" <% if @ticketArticleAuto: %>checked<% end %>>
     <label for="content-translation-ticket-article-auto"></label>
   </div>
-  <label class="label" for="content-translation-ticket-article-auto"><%- @T('Allow global translation') %></label>
+  <h3><%- @T('Allow global translation') %></h3>
 </div>
-<p class="help-text"><%- @T('Allow specific roles to translate all articles at once. Be careful, this can result in a lot of translation calls and might be cost related.') %></p>
+<p><%- @T('Allow specific roles to translate all articles at once. Be careful, this can result in a lot of translation calls and might be cost related.') %></p>
 
 <form class="settings-entry">
   <div class="horizontal end">

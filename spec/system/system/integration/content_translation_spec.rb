@@ -43,8 +43,10 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     it 'offers the service and warns about the switched-off provider' do
       within :active_content do
-        expect(page).to have_select('provider', options: ['-', 'AI provider'])
-        expect(page).to have_css('.js-missingProviderAlert', text: 'The provider configuration is disabled.')
+        expect(page).to have_select('provider', options: ['-', 'AI provider', 'LibreTranslate'])
+        expect(page).to have_no_css('.js-missingProviderAlert')
+        select 'AI provider', from: 'provider'
+        expect(page).to have_css('.js-missingProviderAlert', text: 'The AI provider configuration is disabled.')
       end
     end
   end
@@ -61,7 +63,7 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
       within :active_content do
         expect(page).to have_select('provider', selected: 'AI provider')
         expect(page).to have_select('ai_provider_connection_id', options: ['Default (none)'])
-        expect(page).to have_css('.js-missingProviderAlert', text: 'The provider configuration is disabled.')
+        expect(page).to have_css('.js-missingProviderAlert', text: 'The AI provider configuration is disabled.')
       end
     end
   end
@@ -76,9 +78,9 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
       visit 'system/integration/content_translation'
     end
 
-    it 'offers no service and no warning' do
+    it 'offers no AI service and no warning' do
       within :active_content do
-        expect(page).to have_select('provider', options: ['-'], selected: '-')
+        expect(page).to have_select('provider', options: ['-', 'LibreTranslate'], selected: '-')
         expect(page).to have_no_css('.js-missingProviderAlert')
       end
     end
@@ -98,7 +100,9 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     it 'offers the AI provider without a warning' do
       within :active_content do
-        expect(page).to have_select('provider', options: ['-', 'AI provider'])
+        expect(page).to have_select('provider', options: ['-', 'AI provider', 'LibreTranslate'])
+        expect(page).to have_no_css('.js-missingProviderAlert')
+        select 'AI provider', from: 'provider'
         expect(page).to have_no_css('.js-missingProviderAlert')
       end
     end
@@ -246,6 +250,57 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
             expect(page).to have_no_select('ai_provider_connection_id')
           end
         end
+      end
+    end
+  end
+
+  context 'with the LibreTranslate service' do
+    let(:url) { 'https://translate.example.com' }
+
+    def configure_libre_translate
+      within :active_content do
+        select 'LibreTranslate', from: 'provider'
+        fill_in 'url', with: url
+        click_on 'Save'
+      end
+    end
+
+    before do
+      # System specs run without WebMock, so saving - which runs the connection test - is answered
+      # through UserAgent itself.
+      allow(UserAgent).to receive_messages(
+        get:  UserAgent::Result.new(success: true, code: 200, data: [{ 'code' => 'en' }, { 'code' => 'de' }]),
+        post: UserAgent::Result.new(success: true, code: 200, data: { 'translatedText' => 'Zammad' }),
+      )
+
+      visit 'system/integration/content_translation'
+    end
+
+    it 'asks for the server URL and the API key, but for no AI connection' do
+      within :active_content do
+        select 'LibreTranslate', from: 'provider'
+
+        expect(page).to have_field('url')
+        expect(page).to have_field('api_key')
+        expect(page).to have_no_select('ai_provider_connection_id')
+      end
+    end
+
+    it 'stores a configuration the instance answers for' do
+      configure_libre_translate
+
+      wait_for_setting('content_translation_service', true)
+      expect(Setting.get('content_translation_service_config')).to include('provider' => 'libre_translate', 'url' => url)
+    end
+
+    context 'when the instance cannot be reached' do
+      before { allow(UserAgent).to receive(:get).and_return(UserAgent::Result.new(success: false, code: 0)) }
+
+      it 'refuses the configuration with the reason instead of storing it' do
+        configure_libre_translate
+
+        expect(page).to have_text('The translation service cannot be reached.')
+        expect(Setting.get('content_translation_service_config')).to eq({})
       end
     end
   end

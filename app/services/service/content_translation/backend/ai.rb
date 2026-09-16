@@ -33,8 +33,8 @@ class Service::ContentTranslation::Backend::AI < Service::ContentTranslation::Ba
   end
 
   # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run`; nil without a
-  #   translation. `backend` comes out of the store, not from this class: a stored translation is
-  #   reused across services, so the one that answers is not necessarily the one that made it.
+  #   translation. `backend` comes out of the store rather than from this class, because the row is
+  #   what records which service produced what is served.
   def execute
     result = Service::AI::Feature::Translate.execute(
       locale:               locale.locale,

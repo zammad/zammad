@@ -34,6 +34,55 @@ RSpec.describe Setting::Validation::ContentTranslationServiceConfig do
     it_behaves_like 'not raising an error', value: { 'provider' => 'ai' }
   end
 
+  context 'with the LibreTranslate service' do
+    let(:url)                { 'https://translate.example.com' }
+    let(:languages_endpoint) { "#{url}/languages" }
+    let(:translate_endpoint) { "#{url}/translate" }
+    let(:config)             { { 'provider' => 'libre_translate', 'url' => url } }
+
+    before do
+      stub_request(:get, languages_endpoint)
+        .to_return(status: 200, body: [{ code: 'en' }, { code: 'de' }].to_json, headers: { 'Content-Type' => 'application/json' })
+      stub_request(:post, translate_endpoint)
+        .to_return(status: 200, body: { translatedText: 'Zammad' }.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'stores a configuration the instance answers for' do
+      expect { Setting.set(setting_name, config) }.not_to raise_error
+    end
+
+    context 'when the instance cannot be reached' do
+      before { stub_request(:get, languages_endpoint).to_timeout }
+
+      it 'refuses it as unreachable' do
+        expect { Setting.set(setting_name, config) }
+          .to raise_error(ActiveRecord::RecordInvalid, %r{cannot be reached})
+      end
+    end
+
+    context 'with an API key' do
+      let(:config) { super().merge('api_key' => 'secret-key') }
+
+      it 'has the instance accept it' do
+        Setting.set(setting_name, config)
+
+        expect(WebMock).to have_requested(:post, translate_endpoint).with(body: hash_including('api_key' => 'secret-key'))
+      end
+
+      context 'when the instance rejects it' do
+        before do
+          stub_request(:post, translate_endpoint)
+            .to_return(status: 403, body: { error: 'Invalid API key' }.to_json)
+        end
+
+        it 'refuses it as invalid credentials rather than as unreachable' do
+          expect { Setting.set(setting_name, config) }
+            .to raise_error(ActiveRecord::RecordInvalid, %r{refused the configured credentials})
+        end
+      end
+    end
+  end
+
   context 'with a service that needs credentials' do
     let(:backend) do
       Class.new(Service::ContentTranslation::Backend::Base) do

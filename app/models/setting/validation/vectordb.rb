@@ -17,7 +17,7 @@ class Setting::Validation::VectorDB < Setting::Validation::Base
     # (app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco), minus its |…| emphasis:
     # that markup is understood by the frontend translation only, and a validation message is read
     # from the console, the API and the logs as well.
-    return result_failed(__('The provider configuration is disabled. Before proceeding, please enable it in AI > Providers.')) if !Setting.get('ai_provider')
+    return result_failed(__('The AI provider configuration is disabled. Before proceeding, please enable it in AI > Providers.')) if !Setting.get('ai_provider')
 
     result_success
   end

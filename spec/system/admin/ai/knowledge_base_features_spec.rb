@@ -89,7 +89,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
 
       it 'displays a warning' do
         within('.js-missingProviderAlert') do
-          expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
+          expect(page).to have_text('The AI provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
         end
       end
 
