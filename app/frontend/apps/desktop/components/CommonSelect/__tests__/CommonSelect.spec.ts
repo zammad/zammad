@@ -237,6 +237,68 @@ describe('CommonSelect.vue', () => {
     expect(view.getByRole('option', { name: 'Label (A) – Heading (B)' })).toBeInTheDocument()
   })
 
+  // Regression guard: option labels must never be rendered as HTML.
+  describe('escapes option labels rendered with an active filter', () => {
+    const maliciousLabel = '<img src=x onerror="globalThis.xssExecuted = true">'
+
+    it('escapes labels that carry no highlight match', async () => {
+      const view = renderSelect({
+        options: [{ value: 0, label: maliciousLabel }],
+        filter: 'query',
+      })
+
+      await view.events.click(view.getByText('Open Select'))
+
+      // The payload must be rendered as inert text, never parsed into a live element.
+      expect(view.getByRole('menu').querySelector('img')).toBeNull()
+      expect(view.getByText(maliciousLabel)).toBeInTheDocument()
+    })
+
+    it('escapes the non-matched fragments of a highlighted label', async () => {
+      const label = `${maliciousLabel} zammad`
+      const view = renderSelect({
+        options: [{ value: 0, label, match: /zammad/.exec(label)! }],
+        filter: 'zammad',
+      })
+
+      await view.events.click(view.getByText('Open Select'))
+
+      const menu = view.getByRole('menu')
+      // The matched text is wrapped in the highlight span (the only intended markup) ...
+      expect(menu.querySelector('span[class*="bg-blue"]')).not.toBeNull()
+      // ... while injected markup in the surrounding fragments stays inert.
+      expect(menu.querySelector('img')).toBeNull()
+    })
+  })
+
+  it('highlights at the correct offset when the label contains combining marks', async () => {
+    const label = 'Cafe\u0301\u0300 zammad'
+    const view = renderSelect({
+      options: [{ value: 0, label }],
+      filter: 'zammad',
+    })
+
+    await view.events.click(view.getByText('Open Select'))
+
+    const highlight = view.getByRole('menu').querySelector('span[class*="bg-blue"]')
+    expect(highlight).not.toBeNull()
+    expect(highlight).toHaveTextContent('zammad')
+  })
+
+  it.each([
+    ['with an active filter', 'query'],
+    ['without a filter', undefined],
+  ])('labels an option without a label as unknown %s', async (_, filter) => {
+    const view = renderSelect({
+      options: [{ value: 5 }],
+      filter,
+    })
+
+    await view.events.click(view.getByText('Open Select'))
+
+    expect(view.getByRole('menu')).toHaveTextContent('5 (unknown)')
+  })
+
   it('can use boolean as value', async () => {
     const modelValue = ref()
     const view = renderSelect(

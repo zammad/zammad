@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { MatchedSelectOption, SelectOption } from '#shared/components/CommonSelect/types.ts'
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 
 import type { UseElementBoundingReturn } from '@vueuse/core'
@@ -28,7 +28,7 @@ export interface CommonSelectInternalInstance extends Omit<CommonSelectInstance,
  *   not use, otherwise they end up as stray attributes on its root element.
  */
 export interface CommonSelectOptionProps {
-  option: AutoCompleteOption | MatchedSelectOption | SelectOption
+  option: AutoCompleteOption | SelectOption
   selected?: boolean
   multiple?: boolean
   noLabelTranslate?: boolean

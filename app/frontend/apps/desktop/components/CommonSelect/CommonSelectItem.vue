@@ -1,9 +1,10 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { escapeRegExp } from 'lodash-es'
 import { computed } from 'vue'
 
-import type { MatchedSelectOption, SelectOption } from '#shared/components/CommonSelect/types.ts'
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
@@ -25,9 +26,12 @@ const label = computed(() => {
   const { option } = props
 
   if (props.noLabelTranslate && !option.labelPlaceholder)
-    return option.label || option.value.toString()
+    return option.label || i18n.t('%s (unknown)', option.value.toString())
 
-  return i18n.t(option.label, ...(option.labelPlaceholder || [])) || option.value.toString()
+  return (
+    i18n.t(option.label, ...(option.labelPlaceholder || [])) ||
+    i18n.t('%s (unknown)', option.value.toString())
+  )
 })
 
 const heading = computed(() => {
@@ -41,6 +45,59 @@ const heading = computed(() => {
     ...((option as AutoCompleteOption).headingPlaceholder || []),
   )
 })
+
+const combiningMark = /[\u0300-\u036f]/
+const combiningMarks = /[\u0300-\u036f]/g
+
+const deaccent = (s: string) => s.normalize('NFD').replace(combiningMarks, '')
+
+// Maps code-unit indices of `deaccent(text)` back to code-unit indices of `text`.
+// Removing combining marks shortens the string, so match offsets taken from the
+// deaccented label no longer line up with the original one (e.g. a label stored
+// in decomposed form like `Cafe\u0301 zammad`).
+const deaccentIndexMap = (text: string): number[] => {
+  const map: number[] = []
+  let offset = 0
+
+  for (const character of text) {
+    for (const part of character.normalize('NFD')) {
+      if (combiningMark.test(part)) continue
+      for (let i = 0; i < part.length; i++) map.push(offset)
+    }
+    offset += character.length
+  }
+
+  map.push(text.length)
+  return map
+}
+
+const highlightedLabel = computed(() => {
+  const text = label.value
+  const keyword = props.filter?.trim()
+
+  if (!keyword) return { before: text, matched: '', after: '' }
+
+  // Match the displayed label; option.match offsets drift when it's translated.
+  const match = new RegExp(escapeRegExp(deaccent(keyword)), 'i').exec(deaccent(text))
+
+  if (!match?.[0]) return { before: text, matched: '', after: '' }
+
+  const indexMap = deaccentIndexMap(text)
+  const matchStart = indexMap[match.index]
+  const matchEnd = indexMap[match.index + match[0].length]
+
+  return {
+    before: text.slice(0, matchStart),
+    matched: text.slice(matchStart, matchEnd),
+    after: text.slice(matchEnd),
+  }
+})
+
+const matchHighlightClasses = computed(() =>
+  props.option.disabled
+    ? 'bg-blue-200 dark:bg-gray-300'
+    : 'bg-blue-600 dark:bg-blue-900 group-hover:bg-blue-800 group-hover:text-white',
+)
 
 const locale = useLocaleStore()
 </script>
@@ -98,7 +155,6 @@ const locale = useLocaleStore()
       class="shrink-0 fill-gray-100 group-hover:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
     />
     <div v-if="filter" v-tooltip="label + (heading ? ` – ${heading}` : '')" class="grow truncate">
-      <!-- eslint-disable vue/no-v-html -->
       <span
         :class="{
           'text-stone-200 dark:text-neutral-500':
@@ -107,8 +163,12 @@ const locale = useLocaleStore()
             option.disabled && (option as AutoCompleteOption).children?.length,
           'group-hover:text-white': option.disabled,
         }"
-        v-html="(option as MatchedSelectOption).matchedLabel"
-      />
+        >{{ highlightedLabel.before
+        }}<span v-if="highlightedLabel.matched" :class="matchHighlightClasses">{{
+          highlightedLabel.matched
+        }}</span
+        >{{ highlightedLabel.after }}</span
+      >
       <span
         v-if="heading"
         class="text-stone-200 dark:text-neutral-500"
