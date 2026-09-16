@@ -878,13 +878,13 @@ msgstr "%s% са отворени отново"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} може да има пълен или подробен достъп до групата"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 #, fuzzy
 #| msgid "%s Object(s) are deleted."
 msgid "%{name} already exists"
 msgstr "%s Обект(и) са премахнати."
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} е запазена дума"
 
@@ -1425,7 +1425,7 @@ msgstr "API Ключ"
 msgid "API Password Access"
 msgstr "API Достъп с парола"
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
 msgstr "API Токън"
@@ -1567,8 +1567,8 @@ msgstr "Акаунтът вече съществува!"
 msgid "Account not verified"
 msgstr "Акаунта не е потвърден"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:64
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:63
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:112
 #, fuzzy
 #| msgid "Account Time"
 msgid "Account time"
@@ -1587,7 +1587,7 @@ msgstr "Отчетено време"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:133
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:185
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:128
-#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:49
+#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 #, fuzzy
 #| msgid "Accounted Time"
@@ -1642,7 +1642,7 @@ msgstr "Потребителски записи"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:63
+#: app/assets/javascripts/app/views/package.jst.eco:71
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -1771,7 +1771,7 @@ msgstr "Активна"
 msgid "Activity Stream"
 msgstr "Поток на активност"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:51
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
@@ -2282,7 +2282,7 @@ msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 "След одобрение, моля, свържете отново своята пощенска кутия на Microsoft 365."
 
-#: app/assets/javascripts/app/views/package.jst.eco:17
+#: app/assets/javascripts/app/views/package.jst.eco:20
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
@@ -3560,7 +3560,7 @@ msgstr "Предлага се за следните роли"
 msgid "Available methods"
 msgstr "премахнат"
 
-#: app/assets/javascripts/app/views/package.jst.eco:109
+#: app/assets/javascripts/app/views/package.jst.eco:120
 #, fuzzy
 #| msgid "removed"
 msgid "Available packages"
@@ -4102,7 +4102,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:217
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:68
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:86
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:85
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:46
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:140
@@ -5084,10 +5084,10 @@ msgstr ""
 msgid "Configuration of performance settings via environment variables."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:150
+#: app/assets/javascripts/app/controllers/package.coffee:153
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:25
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:7
 msgid "Configure"
 msgstr ""
 
@@ -5588,7 +5588,7 @@ msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr ""
 
-#: app/models/channel/email_parser.rb:33
+#: app/models/channel/email_parser.rb:32
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
 
@@ -6198,7 +6198,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:59
+#: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
 msgid "Dashboard"
 msgstr "Табло"
@@ -7348,7 +7348,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #: app/assets/javascripts/app/controllers/user.coffee:107
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
@@ -9079,7 +9079,7 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
-#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:52
+#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:50
 msgid "Enter the time you want to record"
 msgstr ""
 
@@ -11360,6 +11360,12 @@ msgstr "Импортиране"
 msgid "Imported"
 msgstr ""
 
+#: app/assets/javascripts/app/views/package.jst.eco:53
+msgid ""
+"In container-based environments, packages are managed as part of the "
+"deployment and cannot be installed or removed from here."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr ""
@@ -11650,19 +11656,19 @@ msgstr ""
 msgid "Install App"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:45
+#: app/assets/javascripts/app/views/package.jst.eco:48
 msgid "Install Package"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:144
+#: app/assets/javascripts/app/views/package.jst.eco:155
 msgid "Install package"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:37
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Installed"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:49
+#: app/assets/javascripts/app/views/package.jst.eco:56
 msgid "Installed packages"
 msgstr ""
 
@@ -11720,7 +11726,7 @@ msgstr ""
 msgid "Internal Knowledge Base feed:"
 msgstr "%s Обект(и) са създадени."
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Internal attributes cannot be deleted"
@@ -13356,7 +13362,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: app/assets/javascripts/app/views/package.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
@@ -14023,7 +14028,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:59
+#: app/assets/javascripts/app/views/package.jst.eco:66
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -14549,7 +14554,7 @@ msgstr "Коментар"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:53
+#: app/assets/javascripts/app/views/package.jst.eco:60
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -14946,7 +14951,7 @@ msgid ""
 "\"Manage > Webhook\""
 msgstr ""
 
-#: app/models/channel/email_parser.rb:120
+#: app/models/channel/email_parser.rb:119
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
@@ -15459,7 +15464,7 @@ msgstr ""
 msgid "Only available for users with shared organizations"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:14
+#: app/assets/javascripts/app/views/package.jst.eco:17
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
@@ -16057,23 +16062,20 @@ msgstr ""
 msgid "POP3"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:3
-msgid "Package"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/package.coffee:131
+#: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Package installed successfully."
 msgstr "%s Обект(и) са създадени."
 
-#: app/assets/javascripts/app/controllers/package.coffee:112
+#: app/assets/javascripts/app/controllers/package.coffee:115
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Package updated successfully."
 msgstr "%s Обект(и) са създадени."
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
+#: app/assets/javascripts/app/views/package.jst.eco:3
 #: db/seeds/permissions.rb:329
 msgid "Packages"
 msgstr ""
@@ -16502,7 +16504,7 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 msgid "Please enter the API token you received from Zammad."
 msgstr ""
 
@@ -17850,7 +17852,7 @@ msgstr "се промени"
 msgid "Reset to default"
 msgstr "задай като вътрешен"
 
-#: app/assets/javascripts/app/controllers/package.coffee:158
+#: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
 msgid "Reset to default settings"
@@ -18030,7 +18032,7 @@ msgstr ""
 msgid "Role description"
 msgstr "Описание"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:255
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -19246,7 +19248,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr "Адрес"
 
-#: app/models/ticket/article.rb:342
+#: app/models/ticket/article.rb:345
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -19722,7 +19724,7 @@ msgid "Show the chat when ready."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:104
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:78
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:85
 #, fuzzy
 #| msgid "New Overview"
 msgid "Show ticket actions"
@@ -19982,8 +19984,8 @@ msgstr "провалено"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:66
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:90
 msgid "Skip"
 msgstr ""
 
@@ -20302,7 +20304,7 @@ msgstr "Търси потребители"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:62
+#: app/assets/javascripts/app/views/package.jst.eco:69
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
@@ -20402,7 +20404,7 @@ msgstr ""
 msgid "Storage Method"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:38
+#: app/assets/javascripts/app/views/package.jst.eco:41
 msgid "Store"
 msgstr ""
 
@@ -21254,7 +21256,7 @@ msgstr "%s Обект(и) са създадени."
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:246
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -21809,7 +21811,7 @@ msgid ""
 "please reload your browser, and try again."
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:12
+#: app/assets/javascripts/app/views/package.jst.eco:15
 msgid ""
 "The installation of packages comes with security implications, because "
 "arbitrary code will be executed in the context of the Zammad application."
@@ -22887,7 +22889,7 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
@@ -23171,7 +23173,7 @@ msgstr ""
 msgid "This field must contain a lowercase letter."
 msgstr "2 главни и 2 малки букви"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:58
+#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:56
 #: app/frontend/shared/form/i18n/locales.ts:462
 msgid "This field must contain a number."
 msgstr ""
@@ -23347,7 +23349,7 @@ msgstr "База знания"
 msgid "This knowledge base is not available in the selected language."
 msgstr ""
 
-#: app/models/channel/email_parser.rb:11
+#: app/models/channel/email_parser.rb:10
 msgid ""
 "This message cannot be displayed because it contains over 5,000 links. "
 "Download the raw message below and open it via an Email client if you still "
@@ -23427,6 +23429,12 @@ msgstr ""
 #| msgid "not exist"
 msgid "This page doesn't exist."
 msgstr "не съществува"
+
+#: app/assets/javascripts/app/views/package.jst.eco:52
+msgid ""
+"This page gives you an overview of the packages currently installed in your "
+"Zammad instance."
+msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -23967,7 +23975,7 @@ msgid "Ticket info"
 msgstr "Билет"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:70
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:74
 msgid "Ticket information"
 msgstr ""
 
@@ -23984,6 +23992,7 @@ msgid "Ticket merged successfully"
 msgstr "%s Обект(и) са създадени."
 
 #: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:77
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket number"
@@ -24297,8 +24306,8 @@ msgstr ""
 msgid "Time Units Total"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:72
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:71
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:80
 #, fuzzy
 #| msgid "Created"
 msgid "Time accounting"
@@ -25026,7 +25035,7 @@ msgstr ""
 msgid "Uncheck item"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:92
+#: app/assets/javascripts/app/views/package.jst.eco:102
 msgid "Uninstall package"
 msgstr ""
 
@@ -25262,7 +25271,7 @@ msgid ""
 "Update existing records with the attributes specified in the import data."
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:87
+#: app/assets/javascripts/app/views/package.jst.eco:97
 #, fuzzy
 #| msgid "Update"
 msgid "Update package"
@@ -25286,7 +25295,7 @@ msgstr "Създаден"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/controllers/package.coffee:200
+#: app/assets/javascripts/app/controllers/package.coffee:203
 #: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr ""
@@ -25304,7 +25313,7 @@ msgstr "%s Обект(и) са обновени."
 msgid "Update time"
 msgstr "Актуализация"
 
-#: app/assets/javascripts/app/views/package.jst.eco:71
+#: app/assets/javascripts/app/views/package.jst.eco:80
 #, fuzzy
 #| msgid "Update"
 msgid "Update to %s"
@@ -26025,7 +26034,7 @@ msgstr ""
 msgid "Vector DB knowledge base excluded categories"
 msgstr "База знания"
 
-#: app/assets/javascripts/app/views/package.jst.eco:61
+#: app/assets/javascripts/app/views/package.jst.eco:68
 msgid "Vendor"
 msgstr "Доставчик"
 
@@ -26092,7 +26101,7 @@ msgid "Verifying…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:60
+#: app/assets/javascripts/app/views/package.jst.eco:67
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 #: lib/excel_sheet/ai/analytics/errors.rb:25
@@ -27397,7 +27406,7 @@ msgstr "зачисли билет"
 msgid "at"
 msgstr "на"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 msgid "at least one letter is required"
 msgstr ""
 
@@ -27406,7 +27415,7 @@ msgstr ""
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 msgid "attribute is not editable"
 msgstr ""
 
@@ -27440,7 +27449,7 @@ msgstr "зает"
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -27452,13 +27461,13 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 #, fuzzy
 #| msgid "Account not verified"
 msgid "can't be modified"
 msgstr "Акаунта не е потвърден"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -28166,7 +28175,7 @@ msgstr ""
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:94
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:96
 msgid "is not a number"
 msgstr ""
 
@@ -28499,7 +28508,7 @@ msgstr ""
 msgid "none"
 msgstr "няма"
 
-#: app/assets/javascripts/app/views/package.jst.eco:132
+#: app/assets/javascripts/app/views/package.jst.eco:143
 #, fuzzy
 #| msgid "not translated"
 msgid "not installed"
@@ -28548,7 +28557,7 @@ msgstr "Фирми"
 msgid "now"
 msgstr "не"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -28833,7 +28842,7 @@ msgstr "пропуснат"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr ""
 

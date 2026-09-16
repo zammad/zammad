@@ -812,11 +812,11 @@ msgstr "%s% 的工单已被重新打开"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model}可以具有对群组的完全或粒度访问权限"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "%{name} 已存在"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} 是一个保留词"
 
@@ -1327,7 +1327,7 @@ msgstr "API Key"
 msgid "API Password Access"
 msgstr "API 密码访问"
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
 msgstr "API Token"
@@ -1466,8 +1466,8 @@ msgstr "帐号已经存在！"
 msgid "Account not verified"
 msgstr "账号尚未通过验证"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:64
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:63
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:112
 #, fuzzy
 #| msgid "Account Time"
 msgid "Account time"
@@ -1486,7 +1486,7 @@ msgstr "佔用時間"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:133
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:185
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:128
-#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:49
+#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 #, fuzzy
 #| msgid "Accounted Time"
@@ -1540,7 +1540,7 @@ msgstr "帐号"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:63
+#: app/assets/javascripts/app/views/package.jst.eco:71
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -1663,7 +1663,7 @@ msgstr "激活"
 msgid "Activity Stream"
 msgstr "活动流"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:51
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
@@ -2149,7 +2149,7 @@ msgstr "批准后，请重新连接您的Exchange账户。"
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr "批准后，请重新连接您的Microsoft365邮箱。"
 
-#: app/assets/javascripts/app/views/package.jst.eco:17
+#: app/assets/javascripts/app/views/package.jst.eco:20
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
@@ -3371,7 +3371,7 @@ msgstr "适用于以下角色"
 msgid "Available methods"
 msgstr "可用方法"
 
-#: app/assets/javascripts/app/views/package.jst.eco:109
+#: app/assets/javascripts/app/views/package.jst.eco:120
 #, fuzzy
 #| msgid "Available methods"
 msgid "Available packages"
@@ -3919,7 +3919,7 @@ msgstr "无法更新密码，您输入的密码错误。请再试一次。"
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:217
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:68
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:86
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:85
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:46
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:140
@@ -4917,10 +4917,10 @@ msgstr "%s的配置"
 msgid "Configuration of performance settings via environment variables."
 msgstr "通过环境变量对性能设置的配置。"
 
-#: app/assets/javascripts/app/controllers/package.coffee:150
+#: app/assets/javascripts/app/controllers/package.coffee:153
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:25
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:7
 msgid "Configure"
 msgstr "配置"
 
@@ -5417,7 +5417,7 @@ msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr "无法加载该用户的双因素身份验证配置。"
 
-#: app/models/channel/email_parser.rb:33
+#: app/models/channel/email_parser.rb:32
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
 
@@ -6023,7 +6023,7 @@ msgstr "暗色模式"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:59
+#: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
 msgid "Dashboard"
 msgstr "信息中心"
@@ -7224,7 +7224,7 @@ msgstr "定义哪些用户角色将在匹配机票的情况下会收到警告。
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #: app/assets/javascripts/app/controllers/user.coffee:107
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
@@ -8953,7 +8953,7 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr "输入Authenticator应用程序生成的安全代码："
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
-#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:52
+#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:50
 msgid "Enter the time you want to record"
 msgstr "输入您要记录的时间"
 
@@ -11258,6 +11258,12 @@ msgstr "重要的"
 msgid "Imported"
 msgstr "进口"
 
+#: app/assets/javascripts/app/views/package.jst.eco:53
+msgid ""
+"In container-based environments, packages are managed as part of the "
+"deployment and cannot be installed or removed from here."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "为了让 Zammad 访问 %s，%s API 令牌必须存储在此处："
@@ -11544,21 +11550,21 @@ msgstr "插入文本模块"
 msgid "Install App"
 msgstr "安装应用程序"
 
-#: app/assets/javascripts/app/views/package.jst.eco:45
+#: app/assets/javascripts/app/views/package.jst.eco:48
 msgid "Install Package"
 msgstr "安装软件包"
 
-#: app/assets/javascripts/app/views/package.jst.eco:144
+#: app/assets/javascripts/app/views/package.jst.eco:155
 #, fuzzy
 #| msgid "Install Package"
 msgid "Install package"
 msgstr "安装软件包"
 
-#: app/assets/javascripts/app/views/package.jst.eco:37
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Installed"
 msgstr "已安装"
 
-#: app/assets/javascripts/app/views/package.jst.eco:49
+#: app/assets/javascripts/app/views/package.jst.eco:56
 #, fuzzy
 #| msgid "Install Package"
 msgid "Installed packages"
@@ -11614,7 +11620,7 @@ msgstr "內部"
 msgid "Internal Knowledge Base feed:"
 msgstr "内部知识库提要："
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -13353,7 +13359,6 @@ msgstr "管理您的通知设置"
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: app/assets/javascripts/app/views/package.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
@@ -14043,7 +14048,7 @@ msgstr "纳吉奥斯整合"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:59
+#: app/assets/javascripts/app/views/package.jst.eco:66
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -14642,7 +14647,7 @@ msgstr "注释"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:53
+#: app/assets/javascripts/app/views/package.jst.eco:60
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -15085,7 +15090,7 @@ msgstr ""
 "没有可用的 Webhook，请创建一个新的 Webhook 或在“管理 > Webhook”中激活现有的 "
 "Webhook"
 
-#: app/models/channel/email_parser.rb:120
+#: app/models/channel/email_parser.rb:119
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "没有 x-zammad-session-user-id，没有设置发件人！"
 
@@ -15647,7 +15652,7 @@ msgstr "只適用於代理其他使用者的使用者"
 msgid "Only available for users with shared organizations"
 msgstr "仅显示属于共享机构的用户"
 
-#: app/assets/javascripts/app/views/package.jst.eco:14
+#: app/assets/javascripts/app/views/package.jst.eco:17
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr "只应安装来自已知、可信且经过验证的来源的软件包。"
@@ -16259,23 +16264,20 @@ msgstr ""
 msgid "POP3"
 msgstr "pop3"
 
-#: app/assets/javascripts/app/views/package.jst.eco:3
-msgid "Package"
-msgstr "套件"
-
-#: app/assets/javascripts/app/controllers/package.coffee:131
+#: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Package installed successfully."
 msgstr "測試運行成功"
 
-#: app/assets/javascripts/app/controllers/package.coffee:112
+#: app/assets/javascripts/app/controllers/package.coffee:115
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Package updated successfully."
 msgstr "測試運行成功"
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
+#: app/assets/javascripts/app/views/package.jst.eco:3
 #: db/seeds/permissions.rb:329
 msgid "Packages"
 msgstr "插件"
@@ -16700,7 +16702,7 @@ msgstr "请输入有效的JSON字符串。"
 msgid "Please enter a valid email address."
 msgstr "请输入有效的电子邮件地址。"
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 msgid "Please enter the API token you received from Zammad."
 msgstr ""
 
@@ -18055,7 +18057,7 @@ msgstr "更改字体颜色"
 msgid "Reset to default"
 msgstr "Reset to default"
 
-#: app/assets/javascripts/app/controllers/package.coffee:158
+#: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
 msgid "Reset to default settings"
@@ -18272,7 +18274,7 @@ msgstr "角色 %s 与角色 %s 冲突，您想继续吗？"
 msgid "Role description"
 msgstr "描述"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:255
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -19491,7 +19493,7 @@ msgstr "上一篇文章的发件人"
 msgid "Sending Email Address"
 msgstr "电子邮件"
 
-#: app/models/ticket/article.rb:342
+#: app/models/ticket/article.rb:345
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -19965,7 +19967,7 @@ msgid "Show the chat when ready."
 msgstr "自动显示即时聊天"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:104
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:78
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:85
 msgid "Show ticket actions"
 msgstr "显示工单操作"
 
@@ -20211,8 +20213,8 @@ msgstr "糊键"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:66
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:90
 msgid "Skip"
 msgstr "跳过"
 
@@ -20525,7 +20527,7 @@ msgstr "开始导入…"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:62
+#: app/assets/javascripts/app/views/package.jst.eco:69
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
@@ -20621,7 +20623,7 @@ msgstr "数据存储"
 msgid "Storage Method"
 msgstr "储存方法"
 
-#: app/assets/javascripts/app/views/package.jst.eco:38
+#: app/assets/javascripts/app/views/package.jst.eco:41
 msgid "Store"
 msgstr "儲存"
 
@@ -21458,7 +21460,7 @@ msgstr "该文章无法设置为公开。"
 msgid "The article does not belong to the specified ticket."
 msgstr "该文章不属于指定的票证。"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:246
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -21995,7 +21997,7 @@ msgid ""
 "please reload your browser, and try again."
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:12
+#: app/assets/javascripts/app/views/package.jst.eco:15
 msgid ""
 "The installation of packages comes with security implications, because "
 "arbitrary code will be executed in the context of the Zammad application."
@@ -23094,7 +23096,7 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr "无法回滚此删除操作。 如果绝对确定要执行此操作，则在输入中输入\"%s\"。"
 
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #, fuzzy
 #| msgid ""
 #| "There is no rollback of this deletion possible. If you are absolutely "
@@ -23415,7 +23417,7 @@ msgstr "该字段的类型必须是“%s”。"
 msgid "This field must contain a lowercase letter."
 msgstr "密碼必須至少包含 1個數字"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:58
+#: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:56
 #: app/frontend/shared/form/i18n/locales.ts:462
 msgid "This field must contain a number."
 msgstr "该字段必须包含一个数字。"
@@ -23603,7 +23605,7 @@ msgstr "简单的存储服务不可用。"
 msgid "This knowledge base is not available in the selected language."
 msgstr "不適用於所選語言"
 
-#: app/models/channel/email_parser.rb:11
+#: app/models/channel/email_parser.rb:10
 msgid ""
 "This message cannot be displayed because it contains over 5,000 links. "
 "Download the raw message below and open it via an Email client if you still "
@@ -23692,6 +23694,12 @@ msgstr ""
 #| msgid "not exist"
 msgid "This page doesn't exist."
 msgstr "不存在"
+
+#: app/assets/javascripts/app/views/package.jst.eco:52
+msgid ""
+"This page gives you an overview of the packages currently installed in your "
+"Zammad instance."
+msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -24288,7 +24296,7 @@ msgid "Ticket info"
 msgstr "阻止通知"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:70
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:74
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Ticket information"
@@ -24307,6 +24315,7 @@ msgid "Ticket merged successfully"
 msgstr "測試運行成功"
 
 #: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:77
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket number"
@@ -24715,8 +24724,8 @@ msgstr "時間單位"
 msgid "Time Units Total"
 msgstr "時間單位總計"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:72
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:71
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:80
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time accounting"
@@ -25482,7 +25491,7 @@ msgstr "未分配的電子郵件地址，將其分配給管道或將其刪除"
 msgid "Uncheck item"
 msgstr "选中"
 
-#: app/assets/javascripts/app/views/package.jst.eco:92
+#: app/assets/javascripts/app/views/package.jst.eco:102
 #, fuzzy
 #| msgid "Install Package"
 msgid "Uninstall package"
@@ -25728,7 +25737,7 @@ msgid ""
 "Update existing records with the attributes specified in the import data."
 msgstr "使用匯入數據中指定的屬性更新現有記錄"
 
-#: app/assets/javascripts/app/views/package.jst.eco:87
+#: app/assets/javascripts/app/views/package.jst.eco:97
 #, fuzzy
 #| msgid "Update Database"
 msgid "Update package"
@@ -25752,7 +25761,7 @@ msgstr "应用共享草稿"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/controllers/package.coffee:200
+#: app/assets/javascripts/app/controllers/package.coffee:203
 #: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "更新成功。"
@@ -25770,7 +25779,7 @@ msgstr "％s 对象已更新。"
 msgid "Update time"
 msgstr "更新时间"
 
-#: app/assets/javascripts/app/views/package.jst.eco:71
+#: app/assets/javascripts/app/views/package.jst.eco:80
 #, fuzzy
 #| msgid "Updated At"
 msgid "Update to %s"
@@ -26600,7 +26609,7 @@ msgstr "进入知识库页面。"
 msgid "Vector DB knowledge base excluded categories"
 msgstr "插入知识库答案"
 
-#: app/assets/javascripts/app/views/package.jst.eco:61
+#: app/assets/javascripts/app/views/package.jst.eco:68
 msgid "Vendor"
 msgstr "提供者"
 
@@ -26669,7 +26678,7 @@ msgid "Verifying…"
 msgstr "正在验证中…"
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:60
+#: app/assets/javascripts/app/views/package.jst.eco:67
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 #: lib/excel_sheet/ai/analytics/errors.rb:25
@@ -28164,7 +28173,7 @@ msgstr "分配工单"
 msgid "at"
 msgstr "在"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 #, fuzzy
 #| msgid "At least one letter is required"
 msgid "at least one letter is required"
@@ -28175,7 +28184,7 @@ msgstr "至少需要一个字母"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 #, fuzzy
 #| msgid "Attribute not editable!"
 msgid "attribute is not editable"
@@ -28211,7 +28220,7 @@ msgstr "忙碌"
 msgid "camera,image,photo,picture"
 msgstr "相机、图像、照片、图片"
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -28223,13 +28232,13 @@ msgstr "不能空白"
 msgid "can't be empty"
 msgstr "不能空"
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "不能空"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "无法使用，因为 *_id和 *_id不允许"
 
@@ -28973,7 +28982,7 @@ msgstr "非"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "不是一种颜色。仅支持 Hex、RGB 和 HSL 颜色。"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:94
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:96
 #, fuzzy
 #| msgid "Min. size of number"
 msgid "is not a number"
@@ -29333,7 +29342,7 @@ msgstr ""
 msgid "none"
 msgstr "无"
 
-#: app/assets/javascripts/app/views/package.jst.eco:132
+#: app/assets/javascripts/app/views/package.jst.eco:143
 #, fuzzy
 #| msgid "Installed"
 msgid "not installed"
@@ -29384,7 +29393,7 @@ msgstr "通知"
 msgid "now"
 msgstr "未设置"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "只允许使用小写字母、数字和“_”"
 
@@ -29675,7 +29684,7 @@ msgstr "已跳过"
 msgid "sms"
 msgstr "短信"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr "不允许使用空格"
 
@@ -30015,6 +30024,9 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#~ msgid "Package"
+#~ msgstr "套件"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "拖曳重新排序"
