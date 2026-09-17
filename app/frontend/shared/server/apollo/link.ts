@@ -9,12 +9,14 @@ import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 import { consumer } from '#shared/server/action_cable/consumer.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
+import authenticationGenerationLink from './link/authenticationGeneration.ts'
 import csrfLink from './link/csrf.ts'
 import debugLink from './link/debug.ts'
 import errorLink from './link/error.ts'
 import setAuthorizationLink from './link/setAuthorization.ts'
 import skipSubscriptionResultLink from './link/skipSubscriptionResult.ts'
 import testFlagsLink from './link/testFlags.ts'
+import trackSubscriptionsLink from './link/trackSubscriptions.ts'
 import getBatchContext from './utils/getBatchContext.ts'
 import getWebsocketContext from './utils/getWebsocketContext.ts'
 
@@ -91,11 +93,13 @@ const splitLink = ApolloLink.split(requiresHttpLink, httpLink, actionCableLink)
 const link = from([
   ...(VITE_TEST_MODE ? [testFlagsLink] : []),
   csrfLink,
+  authenticationGenerationLink,
   errorLink,
   setAuthorizationLink,
   debugLink,
   skipSubscriptionResultLink,
   removeTypenameFromVariables(),
+  trackSubscriptionsLink,
   splitLink,
 ])
 

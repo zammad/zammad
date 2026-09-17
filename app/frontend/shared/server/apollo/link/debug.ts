@@ -5,6 +5,11 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { print } from 'graphql/language/printer'
 import { capitalize, cloneDeep, isEmpty } from 'lodash-es'
 
+import {
+  authenticationGenerationOutdated,
+  authenticationInvalidated,
+} from '#shared/server/apollo/utils/authenticationState.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type {
   DebugLinkRequestOutput,
   DebugLinkResponseOutput,
@@ -50,6 +55,18 @@ const debugLink = new ApolloLink((operation, forward) => {
     }
 
     const duration = end.getTime() - context.start.getTime()
+
+    // Operations which were left over from the authenticated app can still fail
+    //  after the authentication was invalidated, or even after a new login. The
+    //  error link already mentions them in a single line, so don't dump their
+    //  whole response on top.
+    if (
+      (authenticationInvalidated() || authenticationGenerationOutdated(operation)) &&
+      data.errors?.length &&
+      data.errors.every((error) => error.extensions?.type === GraphQLErrorTypes.NotAuthorized)
+    ) {
+      return data
+    }
 
     const responseOutput: DebugLinkResponseOutput = {
       data,

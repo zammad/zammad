@@ -21,6 +21,12 @@ export interface ClientWebsocketContext {
   active: boolean
 }
 
+export interface ClientSubscriptionContext {
+  // Subscriptions which also work for unauthenticated users must survive the
+  //  cleanup on logout, e.g. the config updates for the login screen.
+  keepAliveOnLogout: boolean
+}
+
 export interface DebugLinkRequestOutput {
   requestHeaders?: Record<string, string>
   printedDocument: string

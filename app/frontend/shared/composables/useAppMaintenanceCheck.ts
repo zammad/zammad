@@ -102,7 +102,16 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
       })
     })
 
-    appMaintenanceSubscription = new SubscriptionHandler(useAppMaintenanceSubscription())
+    appMaintenanceSubscription = new SubscriptionHandler(
+      useAppMaintenanceSubscription({
+        context: {
+          subscription: {
+            // Public subscription which is also needed on the login screen.
+            keepAliveOnLogout: true,
+          },
+        },
+      }),
+    )
     appMaintenanceSubscription.onResult((result) => {
       const type = result.data?.appMaintenance?.type
 

@@ -32,6 +32,7 @@ export abstract class BaseHandler<
 
   protected baseHandlerOptions: BaseHandlerOptions = {
     errorShowNotification: true,
+    errorShowNotificationOnNotAuthorized: false,
     errorNotificationMessage: '',
     errorNotificationType: NotificationTypes.Error,
   }
@@ -102,16 +103,25 @@ export abstract class BaseHandler<
       }
     }
 
-    if (errorHandler.type === GraphQLErrorTypes.NotAuthorized) {
-      triggerNotification = false
-    }
-
     if (options.errorCallback) {
       const trigger = options.errorCallback(errorHandler)
 
       if (typeof trigger === 'boolean') {
         triggerNotification = trigger
       }
+    }
+
+    // Never notify about an authentication error unless the operation opted in,
+    //  no matter what the error callback decided: the invalid session is handled
+    //  centrally and the user ends up on the login screen anyway. This is
+    //  checked after the error callback, because callbacks are usually written
+    //  as a filter for specific error types and would otherwise switch the
+    //  notification on again.
+    if (
+      errorHandler.type === GraphQLErrorTypes.NotAuthorized &&
+      !options.errorShowNotificationOnNotAuthorized
+    ) {
+      triggerNotification = false
     }
 
     if (triggerNotification) {

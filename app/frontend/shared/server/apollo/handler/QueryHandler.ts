@@ -1,4 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+import { ApolloError, isApolloError } from '@apollo/client/errors'
 import { getOperationName } from '@apollo/client/utilities'
 import { useApolloClient } from '@vue/apollo-composable'
 import { watch, computed } from 'vue'
@@ -14,7 +15,6 @@ import type {
 import type { ReactiveFunction } from '#shared/types/utils.ts'
 
 import type {
-  ApolloError,
   ApolloQueryResult,
   FetchMoreOptions,
   FetchMoreQueryOptions,
@@ -186,7 +186,30 @@ export default class QueryHandler<
           SubscribeToMoreOptions<TResult, TSubscriptionVariables, TSubscriptionData>
         >,
   ): void {
-    return this.operationResult.subscribeToMore(options)
+    type Options = SubscribeToMoreOptions<TResult, TSubscriptionVariables, TSubscriptionData>
+
+    // Without an 'onError' callback, Apollo logs an unhandled subscription error
+    //  to the console itself. Route it through the handler instead, so that an
+    //  expected authentication error during logout stays quiet, while any other
+    //  failure is still reported like the error of the query itself.
+    const withDefaultErrorHandling = (subscribeToMoreOptions: Options): Options => {
+      if (subscribeToMoreOptions.onError) return subscribeToMoreOptions
+
+      return {
+        ...subscribeToMoreOptions,
+        onError: (error) => {
+          // A subscription can also fail with a plain network error, which the
+          //  handler expects in its Apollo shape.
+          this.handleError(isApolloError(error) ? error : new ApolloError({ networkError: error }))
+        },
+      }
+    }
+
+    if (typeof options === 'function') {
+      return this.operationResult.subscribeToMore(() => withDefaultErrorHandling(options()))
+    }
+
+    return this.operationResult.subscribeToMore(withDefaultErrorHandling(options))
   }
 
   public fetchMore(

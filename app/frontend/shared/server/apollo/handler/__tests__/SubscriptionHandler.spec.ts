@@ -13,6 +13,7 @@ import type {
 import createMockClient from '#tests/support/mock-apollo-client.ts'
 
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import SubscriptionHandler from '../SubscriptionHandler.ts'
 
@@ -34,6 +35,16 @@ const subscriptionSampleErrorResult = {
     {
       message: 'GraphQL Error',
       extensions: { type: 'Exceptions::UnknownError' },
+    },
+  ],
+}
+
+const subscriptionSampleNotAuthorizedErrorResult = {
+  networkStatus: NetworkStatus.error,
+  errors: [
+    {
+      message: 'Authentication required',
+      extensions: { type: 'Exceptions::NotAuthorized' },
     },
   ],
 }
@@ -246,6 +257,28 @@ describe('SubscriptionHandler', () => {
             type: 'Exceptions::UnknownError',
             message: 'GraphQL Error',
           })
+        })
+      })
+
+      it('no notification is triggered for an authentication error, even when the error callback asks for one', () => {
+        scope.run(() => {
+          const { notifications } = useNotifications()
+
+          const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }), {
+            // Error callbacks are usually written as a filter for other error
+            //  types, which must not switch the notification on again.
+            errorCallback: (error) => error.type !== GraphQLErrorTypes.Forbidden,
+          })
+
+          mockSubscription.next(subscriptionSampleNotAuthorizedErrorResult)
+
+          expect(subscriptionHandlerObject.operationError().value).toBeTruthy()
+
+          // Checked by message instead of by count, because the examples of this
+          //  file share one effect scope and therefore leak notifications.
+          expect(notifications.value.map((notification) => notification.message)).not.toContain(
+            'Authentication required',
+          )
         })
       })
     })

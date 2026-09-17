@@ -28,7 +28,16 @@ const usePushMessages = () => {
   onMounted(() => {
     if (subscription) return
 
-    subscription = new SubscriptionHandler(usePushMessagesSubscription())
+    subscription = new SubscriptionHandler(
+      usePushMessagesSubscription({
+        context: {
+          subscription: {
+            // Public subscription which is also needed on the login screen.
+            keepAliveOnLogout: true,
+          },
+        },
+      }),
+    )
     subscription.onResult((result) => {
       const message = result.data?.pushMessages
       if (!message?.title && !message?.text) {

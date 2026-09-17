@@ -76,7 +76,16 @@ export const useApplicationStore = defineStore(
     const initializeConfigUpdateSubscription = (): void => {
       const scope = effectScope()
       scope.run(() => {
-        const configUpdatesSubscription = new SubscriptionHandler(useConfigUpdatesSubscription())
+        const configUpdatesSubscription = new SubscriptionHandler(
+          useConfigUpdatesSubscription({
+            context: {
+              subscription: {
+                // Public subscription which is also needed on the login screen.
+                keepAliveOnLogout: true,
+              },
+            },
+          }),
+        )
 
         configUpdatesSubscription.onResult((result) => {
           const updatedSetting = result.data?.configUpdates.setting

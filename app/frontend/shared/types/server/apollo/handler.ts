@@ -82,6 +82,11 @@ export type OperationResult =
 
 export interface BaseHandlerOptions {
   errorShowNotification: boolean
+  // Authentication errors are silenced by default, because they usually only
+  //  mean that the session is gone and the user ends up on the login screen
+  //  anyway. Operations for which an authentication error is an actual result -
+  //  the login itself - have to opt in to see it.
+  errorShowNotificationOnNotAuthorized: boolean
   errorNotificationMessage: string
   errorNotificationType: NotificationTypes
   errorCallback?: (error: GraphQLHandlerError) => void | boolean

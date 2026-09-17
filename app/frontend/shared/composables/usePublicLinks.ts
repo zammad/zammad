@@ -23,6 +23,12 @@ export const usePublicLinks = (screen: EnumPublicLinksScreen) => {
     variables: {
       screen,
     },
+    context: {
+      subscription: {
+        // Public subscription which is also needed on the login screen.
+        keepAliveOnLogout: true,
+      },
+    },
     updateQuery(_, { subscriptionData }) {
       const publicLinks = subscriptionData.data.publicLinkUpdates?.publicLinks
       // if we return empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"

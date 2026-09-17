@@ -2,10 +2,18 @@
 
 import { NetworkStatus } from '@apollo/client/core'
 import { useLazyQuery, useQuery } from '@vue/apollo-composable'
+import { createMockSubscription } from 'mock-apollo-client'
 import { effectScope } from 'vue'
 
-import { SampleTypedQueryDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
-import type { SampleQuery, SampleQueryVariables } from '#tests/fixtures/graphqlSampleTypes.ts'
+import {
+  SampleTypedQueryDocument,
+  SampleTypedSubscriptionDocument,
+} from '#tests/fixtures/graphqlSampleTypes.ts'
+import type {
+  SampleQuery,
+  SampleQueryVariables,
+  SampleUpdatedSubscriptionVariables,
+} from '#tests/fixtures/graphqlSampleTypes.ts'
 import createMockClient from '#tests/support/mock-apollo-client.ts'
 import { waitForNextTick, waitUntilSpyCalled } from '#tests/support/utils.ts'
 
@@ -15,6 +23,7 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import QueryHandler from '../QueryHandler.ts'
 
 import type { ApolloError, ApolloQueryResult } from '@apollo/client/core'
+import type { IMockSubscription } from 'mock-apollo-client'
 
 const queryFunctionCallSpy = vi.fn()
 
@@ -33,6 +42,16 @@ const querySampleErrorResult = {
     {
       message: 'GraphQL Error',
       extensions: { type: 'Exceptions::UnknownError' },
+    },
+  ],
+}
+
+const querySampleNotAuthorizedErrorResult = {
+  networkStatus: NetworkStatus.error,
+  errors: [
+    {
+      message: 'Authentication required',
+      extensions: { type: 'Exceptions::NotAuthorized' },
     },
   ],
 }
@@ -396,6 +415,192 @@ describe('QueryHandler', () => {
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
         await expect(queryHandlerObject.fetchMore({})).resolves.toEqual(querySampleResult)
+      })
+    })
+  })
+
+  describe('subscribeToMore', () => {
+    let mockSubscription: IMockSubscription
+
+    // Every example gets its own scope, so that the subscription of one does not
+    //  receive the error of the next one.
+    let subscriptionScope: ReturnType<typeof effectScope>
+
+    // Apollo only logs an unhandled subscription error when its development
+    //  diagnostics are on, which the test setup switches off globally. Turn them
+    //  on for the error itself only - a client constructed with them on would
+    //  schedule the devtools suggestion timer (see 'tests/vitest.setup.ts').
+    const withDevelopmentDiagnostics = (emitError: () => void) => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+      ;(globalThis as any).__DEV__ = true
+
+      try {
+        emitError()
+      } finally {
+        ;(globalThis as any).__DEV__ = false
+      }
+
+      return consoleErrorSpy
+    }
+
+    // The examples of this file share one notification store, so only the
+    //  notifications of the current example can be counted.
+    const countNewNotifications = () => {
+      const { notifications } = useNotifications()
+      const before = notifications.value.length
+
+      return () => notifications.value.length - before
+    }
+
+    const subscribeToMoreOptions = (options = {}) => ({
+      document: SampleTypedSubscriptionDocument,
+      variables: { id: 1 },
+      ...options,
+    })
+
+    beforeEach(() => {
+      mockSubscription = createMockSubscription()
+
+      mockClient()
+
+      createMockClient([
+        {
+          operationDocument: SampleTypedSubscriptionDocument,
+          handler: () => mockSubscription,
+        },
+      ])
+
+      subscriptionScope = effectScope()
+    })
+
+    afterEach(() => {
+      subscriptionScope.stop()
+
+      vi.mocked(console.error).mockReset()
+    })
+
+    it('stays quiet about an authentication error', () => {
+      subscriptionScope.run(() => {
+        const errorCallbackSpy = vi.fn()
+
+        const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
+          errorCallback: (error) => {
+            errorCallbackSpy(error)
+          },
+        })
+
+        queryHandlerObject.subscribeToMore<SampleUpdatedSubscriptionVariables>(
+          subscribeToMoreOptions(),
+        )
+
+        const newNotifications = countNewNotifications()
+
+        const consoleErrorSpy = withDevelopmentDiagnostics(() =>
+          mockSubscription.next(querySampleNotAuthorizedErrorResult),
+        )
+
+        expect(consoleErrorSpy).not.toHaveBeenCalled()
+        expect(errorCallbackSpy).toHaveBeenCalledWith({
+          type: GraphQLErrorTypes.NotAuthorized,
+          message: 'Authentication required',
+        })
+        expect(newNotifications()).toBe(0)
+      })
+    })
+
+    it('reports any other error through the handler', () => {
+      subscriptionScope.run(() => {
+        const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+        queryHandlerObject.subscribeToMore<SampleUpdatedSubscriptionVariables>(
+          subscribeToMoreOptions(),
+        )
+
+        const newNotifications = countNewNotifications()
+
+        const consoleErrorSpy = withDevelopmentDiagnostics(() =>
+          mockSubscription.next(querySampleErrorResult),
+        )
+
+        expect(consoleErrorSpy).not.toHaveBeenCalled()
+        expect(newNotifications()).toBe(1)
+      })
+    })
+
+    it('reports a plain network error through the handler', () => {
+      subscriptionScope.run(() => {
+        const errorCallbackSpy = vi.fn()
+
+        const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
+          errorCallback: (error) => {
+            errorCallbackSpy(error)
+          },
+        })
+
+        queryHandlerObject.subscribeToMore<SampleUpdatedSubscriptionVariables>(
+          subscribeToMoreOptions(),
+        )
+
+        const consoleErrorSpy = withDevelopmentDiagnostics(() =>
+          mockSubscription.error(querySampleNetworkErrorResult),
+        )
+
+        expect(consoleErrorSpy).not.toHaveBeenCalled()
+        expect(errorCallbackSpy).toHaveBeenCalledWith({
+          type: GraphQLErrorTypes.NetworkError,
+        })
+      })
+    })
+
+    it('keeps an explicitly given error callback', () => {
+      subscriptionScope.run(() => {
+        const onErrorSpy = vi.fn()
+
+        const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+        queryHandlerObject.subscribeToMore<SampleUpdatedSubscriptionVariables>(
+          subscribeToMoreOptions({ onError: onErrorSpy }),
+        )
+
+        const newNotifications = countNewNotifications()
+
+        const consoleErrorSpy = withDevelopmentDiagnostics(() =>
+          mockSubscription.next(querySampleErrorResult),
+        )
+
+        expect(consoleErrorSpy).not.toHaveBeenCalled()
+        expect(onErrorSpy).toHaveBeenCalled()
+        expect(newNotifications()).toBe(0)
+      })
+    })
+
+    it('handles the error of reactive options', () => {
+      subscriptionScope.run(() => {
+        const errorCallbackSpy = vi.fn()
+
+        const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
+          errorCallback: (error) => {
+            errorCallbackSpy(error)
+          },
+        })
+
+        queryHandlerObject.subscribeToMore<SampleUpdatedSubscriptionVariables>(() =>
+          subscribeToMoreOptions(),
+        )
+
+        const newNotifications = countNewNotifications()
+
+        const consoleErrorSpy = withDevelopmentDiagnostics(() =>
+          mockSubscription.next(querySampleNotAuthorizedErrorResult),
+        )
+
+        expect(consoleErrorSpy).not.toHaveBeenCalled()
+        expect(errorCallbackSpy).toHaveBeenCalledWith({
+          type: GraphQLErrorTypes.NotAuthorized,
+          message: 'Authentication required',
+        })
+        expect(newNotifications()).toBe(0)
       })
     })
   })

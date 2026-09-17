@@ -2,6 +2,10 @@
 
 import { onError } from '@apollo/client/link/error'
 
+import {
+  authenticationGenerationOutdated,
+  authenticationInvalidated,
+} from '#shared/server/apollo/utils/authenticationState.ts'
 import getErrorContext from '#shared/server/apollo/utils/getErrorContext.ts'
 import type { GraphQLErrorExtensionsHandler } from '#shared/types/error.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -23,14 +27,31 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
         backtrace: extensions?.backtrace as string,
       }
 
-      errorMessages.push(`[GraphQL error - ${type}]: ${message}, Path: ${path}`, backtrace)
+      const errorMessage = `[GraphQL error - ${type}]: ${message}, Path: ${path}`
 
       if (operation.operationName !== 'session' && type === GraphQLErrorTypes.NotAuthorized) {
+        // An operation which was left over from the authenticated app can still
+        //  fail after the authentication was invalidated. That is expected, so
+        //  only mention it for debugging and don't invalidate the session again.
+        if (authenticationInvalidated()) {
+          log.debug(`${errorMessage} (expected, the authentication is already gone)`)
+          return
+        }
+
+        // The same operation can also come back only after a new login already
+        //  happened. It must not invalidate the session it does not belong to.
+        if (authenticationGenerationOutdated(operation)) {
+          log.debug(`${errorMessage} (expected, it belongs to a previous authentication)`)
+          return
+        }
+
         // Reset authenticated state after an unathenticated error type.
         emitter.emit('session-invalid')
 
         log.warn('Session invalid, trigger logout and show login page.')
       }
+
+      errorMessages.push(errorMessage, backtrace)
     })
   }
 
@@ -42,7 +63,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     }
   }
 
-  if (errorContext.logLevel === 'silent') return
+  if (!errorMessages.length || errorContext.logLevel === 'silent') return
 
   log[errorContext.logLevel](...errorMessages)
 })
