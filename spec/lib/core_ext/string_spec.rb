@@ -2020,6 +2020,28 @@ RSpec.describe String do
           expect(string.utf8_encode(from: 'gb2312')).to eq(original_string)
         end
       end
+
+      # regression test for issue 6340
+      context 'with a from: option that Ruby cannot resolve' do
+        # Binary, like the mail parser hands it over - otherwise the encoding of
+        # the string itself would be a viable candidate and mask the fallback.
+        subject(:string) { original_string.encode(input_encoding).b }
+
+        let(:original_string) { 'Добрый день' }
+        let(:input_encoding)  { Encoding::CP949 }
+
+        it 'resolves the charset label via the mail gem' do
+          expect { Encoding.find('ks_c_5601-1987') }
+            .to raise_error(ArgumentError)
+
+          expect(string.utf8_encode(from: 'ks_c_5601-1987')).to eq(original_string)
+        end
+
+        it 'falls back to encoding detection if the mail gem cannot resolve it either' do
+          expect(string.utf8_encode(from: 'totally-unknown-charset'))
+            .to eq(string.utf8_encode)
+        end
+      end
     end
 
     context 'performance' do

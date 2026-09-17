@@ -90,7 +90,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       it 'ensures tests were dynamically generated' do
-        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(118)
+        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(119)
       end
     end
 
@@ -130,6 +130,16 @@ RSpec.describe Channel::EmailParser, type: :model do
 
       it { expect(parsed['body']).to eq '<div>このアドレスへのメルマガを解除してください。</div>' }
       it { expect(parsed['subject']).to eq 'メルマガ解除' }
+    end
+
+    # regression test for issue 6340 - Mail body silently falls back to CharDet
+    #   when Encoding.find cannot resolve the declared charset label
+    describe 'handling a charset label that Ruby cannot resolve' do
+      let(:mail_file) { Rails.root.join('test/data/mail/mail119.box') }
+      let(:raw_mail)  { File.read(mail_file) }
+      let(:parsed)    { described_class.new.parse(raw_mail) }
+
+      it { expect(parsed['body']).to start_with '<p>Добрый день!</p>' }
     end
 
     describe 'handling RFC 2047 encoded-words in From addr-spec (security)' do

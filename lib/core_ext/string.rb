@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rchardet'
+require 'mail'
 
 class String
   alias old_strip strip
@@ -526,7 +527,7 @@ class String
     # convert string to given charset, if valid_encoding? is true
     if options[:from].present?
       begin
-        encoding = Encoding.find(options[:from])
+        encoding = find_encoding(options[:from])
         if encoding.present? && dup.force_encoding(encoding).valid_encoding?
           force_encoding(encoding)
           return encode!('utf-8', encoding)
@@ -560,6 +561,23 @@ class String
   end
 
   private
+
+  # Resolves a charset label to an `Encoding`.
+  #
+  # Ruby knows only a subset of the charset labels that occur in real mail. For
+  # labels it cannot resolve, the `mail` gem's alias table is consulted before
+  # giving up, so that a declared charset is not silently dropped in favour of
+  # charset detection (e.g. 'ks_c_5601-1987', the Microsoft alias for CP949).
+  def find_encoding(charset)
+    Encoding.find(charset)
+  rescue ArgumentError
+    picked = Mail::Utilities.pick_encoding(charset)
+
+    # The gem falls back to BINARY for labels it does not know either.
+    raise if picked == Encoding::BINARY
+
+    picked
+  end
 
   def viable_encodings(try_first: nil)
     return dup.viable_encodings(try_first: try_first) if frozen?

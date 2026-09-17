@@ -1,0 +1,19 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Иван" <sender@example.com>'
+from_email: sender@example.com
+from_display_name: Иван
+to: support@example.org
+subject: Запрос цены
+body: "<p>Добрый день!</p><p>Подскажите, пожалуйста, по наличию, срокам и цене.</p><p>С
+  уважением, Иван</p>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "<html><head></head><body><p>Добрый день!</p><p>Подскажите, пожалуйста, по
+    наличию, срокам и цене.</p><p>С уважением, Иван</p></body></html>"
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: ks_c_5601-1987
