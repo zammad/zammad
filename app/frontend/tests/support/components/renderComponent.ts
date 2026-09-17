@@ -15,7 +15,7 @@ import { afterEach, vi } from 'vitest'
 import { isRef, nextTick, ref, watchEffect, unref, type App, type Plugin, type Ref } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-import type { DependencyProvideApi } from '#tests/support/components/types.ts'
+import type { DependencyProvideApi, SessionHistoryWindow } from '#tests/support/components/types.ts'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
@@ -376,6 +376,13 @@ setTestState({
 
 afterEach(() => {
   router?.restoreMethods()
+
+  // jsdom queues a history traversal (`router.back()`, e.g. from `walker.back()`) as a
+  //   `setTimeout(…, 0)` task on the window, which is shared by every test in the file. One that
+  //   is still pending when the test ends fires in the middle of the next one, unmounting its
+  //   freshly rendered view and reactivating the previous test's route. Nothing may traverse
+  //   across a test boundary, so drop whatever is still queued.
+  ;(window as SessionHistoryWindow)._sessionHistory?.clearHistoryTraversalTasks()
 
   imageViewerOptions.value = {
     visible: false,

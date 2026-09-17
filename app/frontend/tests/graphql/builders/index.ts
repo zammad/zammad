@@ -300,8 +300,12 @@ const populateObjectFromVariables = (value: any, meta: ResolversMeta) => {
   }
 }
 
-const getObjectDefinitionFromUnion = (fieldDefinition: any) => {
+const getObjectDefinitionFromUnion = (fieldDefinition: any, defaults?: any) => {
   if (fieldDefinition.kind === 'UNION') {
+    // Resolve the type the mock declared, otherwise the random pick below populates
+    // the value with a different member's fields — leaving the fields the query
+    // selects for the declared type ungenerated.
+    if (defaults?.__typename) return getObjectDefinition(defaults.__typename)
     const unionDefinition = getUnionDefinition(fieldDefinition.name)
     const randomObjectDefinition = faker.helpers.arrayElement(unionDefinition.possibleTypes)
     return getObjectDefinition(randomObjectDefinition.name)
@@ -327,7 +331,7 @@ const buildObjectFromInformation = (
     }
   }
   if (!list) {
-    const typeDefinition = getObjectDefinitionFromUnion(field)
+    const typeDefinition = getObjectDefinitionFromUnion(field, defaults)
     return generateGqlValue(parent, fieldName, typeDefinition, defaults, meta)
   }
   if (defaults) {

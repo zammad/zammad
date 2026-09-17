@@ -110,6 +110,7 @@ describe('Organization Detail View - History Flyout', () => {
             records: [
               {
                 issuer: {
+                  __typename: 'User',
                   id: convertToGraphQLId('User', 3),
                   internalId: 3,
                   firstname: 'Test Admin',
@@ -124,6 +125,7 @@ describe('Organization Detail View - History Flyout', () => {
                     createdAt: '2025-11-24T08:32:57Z',
                     action: 'created',
                     object: {
+                      __typename: 'ObjectClass',
                       klass: 'Organization',
                       info: null,
                     },
