@@ -126,6 +126,120 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     end
   end
 
+  describe '.stored_translations' do
+    let(:german)        { Locale.find_by(locale: 'de-de') }
+    let(:html_article)  { create(:ticket_article, body: '<p>Hello</p>', content_type: 'text/html') }
+    let(:plain_article) { create(:ticket_article, body: 'Hello', content_type: 'text/plain') }
+    let(:other_article) { create(:ticket_article, body: '<p>Other</p>', content_type: 'text/html') }
+    let(:articles)      { [html_article, plain_article, other_article] }
+
+    def store(article, content, locale: german, backend: 'ai')
+      html = article.content_type.match?(%r{html}i)
+      AI::StoredResult.create!(
+        content:,
+        metadata: { 'backend' => backend },
+        version:  Service::AI::Feature::Translate.lookup_version({ html:, body: article.body, backend: }, locale),
+        **Service::AI::Feature::Translate.lookup_attributes({ object: article }, locale)
+      )
+    end
+
+    before do
+      store(html_article, '<p>Hallo</p>')
+      store(plain_article, 'Hallo')
+    end
+
+    it 'finds the translations of the given articles' do
+      expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
+        .to contain_exactly(html_article.id, plain_article.id)
+    end
+
+    it 'leaves out a translation of former content' do
+      html_article.update!(body: '<p>Hello again</p>')
+
+      expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
+        .to eq([plain_article.id])
+    end
+
+    it 'leaves out translations into other locales' do
+      store(other_article, '<p>Autre</p>', locale: Locale.find_by(locale: 'fr-fr'))
+
+      expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
+        .not_to include(other_article.id)
+    end
+
+    it 'leaves out a translation of another backend' do
+      store(other_article, '<p>Hallo</p>', backend: 'libre_translate')
+
+      expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
+        .not_to include(other_article.id)
+    end
+
+    it 'finds what the configured backend stored' do
+      allow(Service::ContentTranslation::Backend)
+        .to receive(:configured).and_return(Service::ContentTranslation::Backend::LibreTranslate)
+      store(other_article, '<p>Hallo</p>', backend: 'libre_translate')
+
+      expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
+        .to eq([other_article.id])
+    end
+
+    it 'leaves the content out' do
+      expect { described_class.stored_translations(articles, 'de-de').first.content }
+        .to raise_error(ActiveModel::MissingAttributeError)
+    end
+
+    it 'finds nothing for an unknown locale' do
+      expect(described_class.stored_translations(articles, 'xx-xx')).to be_empty
+    end
+  end
+
+  describe '.for_display' do
+    let(:cid)     { "#{SecureRandom.uuid}@zammad.example.com" }
+    let(:body)    { "<p>Hello</p><img src=\"cid:#{cid}\">" }
+    let(:article) { create(:ticket_article, body:, content_type:) }
+    let(:translation) do
+      Service::ContentTranslation::Base::Result[content: "<p>Hallo</p><img src=\"cid:#{cid}\">", backend: 'ai', translated: true, fresh: true, analytics_run: nil]
+    end
+
+    before do
+      create(:store, object: 'Ticket::Article', o_id: article.id, data: 'fake', filename: 'inline.jpg',
+                     preferences: { 'Content-Type' => 'image/jpeg', 'Content-ID' => "<#{cid}>", 'Content-Disposition' => 'inline' })
+    end
+
+    it 'resolves inline image references like the display body of the article' do
+      expect(described_class.for_display(article, translation)[:content])
+        .to eq("<p>Hallo</p><img src=\"/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/#{article.attachments.first.id}?view=inline\">")
+    end
+
+    it 'leaves the article untouched' do
+      expect { described_class.for_display(article, translation) }
+        .not_to change { article.reload.body }
+    end
+
+    it 'carries the producer and the translated flag' do
+      expect(described_class.for_display(article, translation))
+        .to include(backend: 'ai', translated: true)
+    end
+
+    it 'accepts the hash a background job publishes' do
+      expect(described_class.for_display(article, { 'content' => '<p>Hallo</p>', 'backend' => 'deepl', 'translated' => true }))
+        .to eq(content: '<p>Hallo</p>', backend: 'deepl', translated: true)
+    end
+
+    it 'keeps a missing translation missing, so the client sees no empty one' do
+      expect(described_class.for_display(article, nil)).to be_nil
+    end
+
+    context 'with a plain text article' do
+      let(:content_type) { 'text/plain' }
+      let(:body)         { "Hello cid:#{cid}" }
+
+      it 'returns the content as it is' do
+        expect(described_class.for_display(article, translation)[:content]).to eq(translation.content)
+      end
+    end
+  end
+
   describe 'resolving the configured translation service' do
     # The config validation refuses such a service; a backend removed later leaves the same state
     # behind, which is exactly the one that must not fall back to another service.

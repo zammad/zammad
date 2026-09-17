@@ -47,6 +47,7 @@ import {
   useArticleDataHandler,
   type AddArticleCallbackArgs,
 } from '#shared/entities/ticket-article/composables/useArticleDataHandler.ts'
+import { useTicketArticleTranslation } from '#shared/entities/ticket-article/composables/useTicketArticleTranslation.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { EnumFormUpdaterId, EnumTaskbarApp, EnumUserErrorException } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -110,9 +111,16 @@ const onAddArticleCallback = ({ articlesQuery, updates }: AddArticleCallbackArgs
   return (articlesQuery as QueryHandler).refetch()
 }
 
-const { articleResult, articlesQuery, isLoadingArticles } = useArticleDataHandler(ticketId, {
-  pageSize: 20,
-  onAddArticleCallback,
+const { articleResult, articlesQuery, isLoadingArticles, firstArticlesCount, loadedArticlesCount } =
+  useArticleDataHandler(ticketId, {
+    pageSize: 20,
+    onAddArticleCallback,
+  })
+
+// The translations of this tab's articles live as long as the tab does.
+const articleTranslation = useTicketArticleTranslation(ticketId, {
+  loadedArticlesCount,
+  firstArticlesCount,
 })
 
 provide(ARTICLES_INFORMATION_KEY, {
@@ -322,6 +330,7 @@ provideTicketInformation({
     isActive: false,
     isEraserActive: false,
   }),
+  articleTranslation,
   ...ticketInformation,
 })
 

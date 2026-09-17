@@ -43,6 +43,13 @@ describe('setAutoDirectionOnChildElements', () => {
 })
 
 describe('waitForImagesToLoad', () => {
+  const pendingImage = (source = 'pending.png') => {
+    const image = document.createElement('img')
+    image.setAttribute('src', source)
+    Object.defineProperty(image, 'complete', { value: false })
+    return image
+  }
+
   it('resolves immediately if no images are present', async () => {
     const container = document.createElement('div')
 
@@ -53,8 +60,8 @@ describe('waitForImagesToLoad', () => {
 
   it('resolves when all images load successfully', async () => {
     const container = document.createElement('div')
-    const img1 = document.createElement('img')
-    const img2 = document.createElement('img')
+    const img1 = pendingImage()
+    const img2 = pendingImage()
     container.appendChild(img1)
     container.appendChild(img2)
 
@@ -73,10 +80,37 @@ describe('waitForImagesToLoad', () => {
     })
   })
 
+  it('does not wait for an image that has already finished loading', async () => {
+    const container = document.createElement('div')
+    const img = document.createElement('img')
+    img.setAttribute('src', 'cached.png')
+    // A cached image is complete before any handler is attached and fires no further event.
+    Object.defineProperty(img, 'complete', { value: true })
+    Object.defineProperty(img, 'naturalWidth', { value: 16 })
+    container.appendChild(img)
+
+    const promises = await waitForImagesToLoad(container)
+
+    expect(promises).toHaveLength(1)
+    expect(promises[0].status).toBe('fulfilled')
+  })
+
+  it.each(['missing', 'empty'])('does not wait for an image with a %s source', async (variant) => {
+    const container = document.createElement('div')
+    const img = document.createElement('img')
+    if (variant === 'empty') img.setAttribute('src', '')
+    container.appendChild(img)
+
+    const promises = await waitForImagesToLoad(container)
+
+    expect(promises).toHaveLength(1)
+    expect(promises[0].status).toBe('rejected')
+  })
+
   it('rejects if any image fails to load', async () => {
     const container = document.createElement('div')
-    const img1 = document.createElement('img')
-    const img2 = document.createElement('img')
+    const img1 = pendingImage()
+    const img2 = pendingImage()
     container.appendChild(img1)
     container.appendChild(img2)
 

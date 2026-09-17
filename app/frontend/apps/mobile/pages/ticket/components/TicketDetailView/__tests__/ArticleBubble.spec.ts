@@ -153,7 +153,7 @@ describe('component for displaying text article', () => {
 
     const content = view.getByTestId('article-content')
 
-    Object.defineProperty(content, 'clientHeight', {
+    Object.defineProperty(content, 'scrollHeight', {
       value: 900,
     })
 
@@ -189,7 +189,7 @@ describe('component for displaying text article', () => {
     const content = view.getByTestId('article-content')
     const signature = view.getByTestId('signature')
 
-    Object.defineProperty(content, 'clientHeight', {
+    Object.defineProperty(content, 'scrollHeight', {
       value: 200,
     })
     Object.defineProperty(signature, 'offsetTop', {

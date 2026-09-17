@@ -3,6 +3,10 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
+import { mockTicketArticleTranslationTargetLocalesQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts'
+import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
+
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TopBarHeaderFull from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue'
@@ -64,6 +68,37 @@ describe('TopBarHeaderFull', () => {
     })
 
     expect(view.queryByRole('button', { name: 'Highlight options' })).not.toBeInTheDocument()
+  })
+
+  it('shows the translation language menu for agents when the service can translate', async () => {
+    mockApplicationConfig({
+      content_translation_service: true,
+      content_translation_ticket_article: true,
+    })
+    mockTicketArticleTranslationTargetLocalesQuery({
+      ticketArticleTranslationTargetLocales: [
+        { locale: 'en-us', alias: 'en', name: 'English', dir: EnumTextDirection.Ltr },
+      ],
+    })
+    // What the ticket tab does on creation.
+    useArticleTranslationStore().loadTargetLocales()
+
+    const view = renderTopBarHeaderFull({
+      ticket: {
+        ...testOptionsTopBar,
+        policy: { ...testOptionsTopBar.policy, update: false },
+      },
+    })
+
+    expect(await view.findByTestId('article-translation-target-menu')).toBeInTheDocument()
+  })
+
+  it('hides the translation language menu while article translation is off', () => {
+    mockApplicationConfig({ content_translation_service: false })
+
+    const view = renderTopBarHeaderFull()
+
+    expect(view.queryByTestId('article-translation-target-menu')).not.toBeInTheDocument()
   })
 
   it('copies ticket number with desktop link', async () => {

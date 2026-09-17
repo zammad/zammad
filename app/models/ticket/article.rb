@@ -104,20 +104,22 @@ class Ticket::Article < ApplicationModel
   # If the article does not need modification, the original body and attachments are returned.
   #
   # @param article [Ticket::Article] the article for which to replace the URLs
+  # @param body [String] a stand-in for the article body, e.g. its translation; the article is
+  #   not modified
   # @return [Array(String, Array<Attachment>, Array<Attachment>)] the modified body, the remaining attachments and the inline attachments
   #
   # Example usage:
   # body, attachments, inline_attachments = Ticket::Article.insert_urls(article)
-  def self.insert_urls(article)
+  def self.insert_urls(article, body = article.body)
     if article.attachments.blank? ||
        !article.content_type.match?(%r{text/html}i) ||
-       article.body !~ %r{<img}i
-      return [article.body, article.attachments, []]
+       body !~ %r{<img}i
+      return [body, article.attachments, []]
     end
 
     inline_attachments = {}
 
-    new_body = article.body.gsub(%r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im) do |item|
+    new_body = body.gsub(%r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im) do |item|
       tag_start = $1
       cid = $3
       tag_end = $4

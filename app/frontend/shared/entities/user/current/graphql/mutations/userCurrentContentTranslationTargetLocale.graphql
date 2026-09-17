@@ -1,0 +1,8 @@
+mutation userCurrentContentTranslationTargetLocale($targetLocale: String!) {
+  userCurrentContentTranslationTargetLocale(targetLocale: $targetLocale) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -853,6 +853,31 @@ RSpec.describe Ticket::Article, type: :model do
     end
   end
 
+  describe '.insert_urls' do
+    let(:cid)     { "#{SecureRandom.uuid}@zammad.example.com" }
+    let(:article) { create(:ticket_article, content_type: 'text/html', body: "<img src=\"cid:#{cid}\"> some text") }
+    let(:url)     { "/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/#{article.attachments.first.id}?view=inline" }
+
+    before do
+      create(:store, object: 'Ticket::Article', o_id: article.id, data: 'fake', filename: 'inline.jpg',
+                     preferences: { 'Content-Type' => 'image/jpeg', 'Content-ID' => "<#{cid}>", 'Content-Disposition' => 'inline' })
+    end
+
+    it 'replaces the inline image references of the article body' do
+      body, attachments = described_class.insert_urls(article)
+
+      expect(body).to eq("<img src=\"#{url}\"> some text")
+      expect(attachments).to be_empty
+    end
+
+    it 'replaces them in a stand-in body without touching the article' do
+      body, = described_class.insert_urls(article, "<p>Translated</p><img src=\"cid:#{cid}\">")
+
+      expect(body).to eq("<p>Translated</p><img src=\"#{url}\">")
+      expect(article.body).to start_with('<img src="cid:')
+    end
+  end
+
   describe '.without_system_notifications' do
     let(:ticket)    { create(:ticket) }
     let(:article_1) { create(:ticket_article, :system_outbound_email, ticket:) }

@@ -67,6 +67,15 @@ class Service::ContentTranslation::Backend::Base < Service::Base
     []
   end
 
+  # The locales this backend can translate into, out of the given active ones. Everything by
+  # default; a service with a fixed language list narrows it down.
+  #
+  # @param locales [Array<Locale>]
+  # @return [Array<Locale>]
+  def self.supported_locales(locales)
+    locales
+  end
+
   def initialize(object:, content:, html:, locale:, persistence_strategy: :stored_or_request, regeneration_of: nil)
     @object               = object
     @content              = content

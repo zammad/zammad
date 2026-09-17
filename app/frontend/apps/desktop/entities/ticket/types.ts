@@ -2,6 +2,7 @@
 
 import type { FormRefParameter } from '#shared/components/Form/types.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { TicketArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
 
 import type { MenuState } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/types.ts'
 
@@ -16,6 +17,7 @@ export interface TicketInformation {
   showTicketArticleReplyForm: () => void
   newTicketArticlePresent: Ref<boolean | undefined>
   highlightMenu: Reactive<MenuState>
+  articleTranslation: TicketArticleTranslation
 }
 
 export type BulkUpdateSyncResult = {

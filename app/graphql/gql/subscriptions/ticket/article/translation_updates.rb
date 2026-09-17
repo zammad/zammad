@@ -44,7 +44,7 @@ module Gql::Subscriptions
 
       {
         article:,
-        translation: object[:translation],
+        translation: Service::ContentTranslation::TicketArticle.for_display(article, object[:translation]),
         analytics:,
       }
     end

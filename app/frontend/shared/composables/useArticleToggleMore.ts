@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { onMounted, ref } from 'vue'
+import { onActivated, onMounted, ref } from 'vue'
 
 import { waitForImagesToLoad } from '#shared/utils/dom.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
@@ -14,6 +14,9 @@ export const useArticleToggleMore = () => {
   const hasShowMore = ref(true)
   const shownMore = ref(false)
 
+  // A hidden tab is detached from the document, where nothing has a height.
+  let measureOnActivation = false
+
   const getSignatureMarker = (element: HTMLElement): HTMLElement | null => {
     const marker = element.querySelector('.js-signatureMarker') as HTMLElement
     if (marker) return marker
@@ -25,14 +28,23 @@ export const useArticleToggleMore = () => {
     if (!bubbleElement.value) return
 
     const styles = bubbleElement.value.style
-    styles.height = ''
 
     await waitForAnimationFrame()
 
     // it's possible it was remounted somehow
     if (!bubbleElement.value) return
 
-    const height = bubbleElement.value.clientHeight
+    if (!bubbleElement.value.isConnected) {
+      measureOnActivation = true
+      return
+    }
+
+    // The content height, whatever the element is constrained to right now: measuring this way
+    // never shows the full content in between, e.g. when a translation replaces the body.
+    const previousHeight = styles.height
+    styles.height = 'auto'
+    const height = bubbleElement.value.scrollHeight
+    styles.height = previousHeight
 
     const signatureMarker = getSignatureMarker(bubbleElement.value)
 
@@ -49,12 +61,11 @@ export const useArticleToggleMore = () => {
       heightHidden = 0
     }
 
-    if (heightHidden) {
-      styles.height = `${heightHidden}px`
-    }
+    styles.height = heightHidden ? `${heightHidden}px` : ''
   }
 
-  onMounted(async () => {
+  // Measures once the content, inline images included, is there; a swapped body calls it again.
+  const recalculateHeight = async () => {
     if (!bubbleElement.value) return
 
     // Wait for inline images to load before calculating height
@@ -62,6 +73,17 @@ export const useArticleToggleMore = () => {
     await waitForImagesToLoad(bubbleElement)
 
     await setHeight()
+
+    if (shownMore.value && bubbleElement.value) bubbleElement.value.style.height = 'auto'
+  }
+
+  onMounted(recalculateHeight)
+
+  onActivated(() => {
+    if (!measureOnActivation) return
+
+    measureOnActivation = false
+    recalculateHeight()
   })
 
   const toggleShowMore = () => {
@@ -76,6 +98,7 @@ export const useArticleToggleMore = () => {
 
   return {
     toggleShowMore,
+    recalculateHeight,
     hasShowMore,
     shownMore,
     bubbleElement,

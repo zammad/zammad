@@ -1,0 +1,9 @@
+mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean) {
+  ticketArticleTranslate(articleId: $articleId, targetLocale: $targetLocale, force: $force) {
+    translation {
+      content
+      backend
+      translated
+    }
+  }
+}

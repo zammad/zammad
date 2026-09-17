@@ -2,6 +2,7 @@
 
 import { computed, provide, reactive, ref } from 'vue'
 
+import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import type { TicketQuery } from '#shared/graphql/types.ts'
 
 import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
@@ -28,6 +29,7 @@ export const provideTicketInformationMocks = (
       isActive: false,
       isEraserActive: false,
     }),
+    articleTranslation: createArticleTranslationMock(),
     ...overrideProvideOptions,
   } as TicketInformation)
 }

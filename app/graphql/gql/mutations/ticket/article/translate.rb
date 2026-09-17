@@ -26,7 +26,7 @@ module Gql::Mutations
       return pending if translation.nil?
 
       {
-        translation:,
+        translation: Service::ContentTranslation::TicketArticle.for_display(article, translation),
         analytics:   {
           run:   translation.analytics_run,
           usage: translation.analytics_run&.usage_by(context.current_user),

@@ -57,6 +57,8 @@ export const useArticleDataHandler = (
 
   const articleData = computed(() => articleResult.value)
 
+  const loadedArticlesCount = computed(() => articleResult.value?.articles.edges.length ?? 0)
+
   const allArticleLoaded = computed(() => {
     if (!articleResult.value?.articles.totalCount) return false
     return articleResult.value?.articles.edges.length < articleResult.value?.articles.totalCount
@@ -163,6 +165,8 @@ export const useArticleDataHandler = (
     articleData,
     allArticleLoaded,
     isLoadingArticles,
+    firstArticlesCount,
+    loadedArticlesCount,
     refetchArticlesQuery,
   }
 }

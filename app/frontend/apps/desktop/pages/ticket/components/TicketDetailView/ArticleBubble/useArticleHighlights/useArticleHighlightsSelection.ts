@@ -177,6 +177,8 @@ export const useArticleHighlightsSelection = (
   highlightedTexts: ComputedRef<TicketArticleHighlightedText[] | undefined>,
   articleId: ComputedRef<string>,
   onHighlightApplied?: AnnouncerHandler,
+  // Highlights are offsets into the original text; a selection in any other body must not be saved.
+  isEditable?: Ref<boolean> | ComputedRef<boolean>,
 ) => {
   const { isActive, isEraserActive, activeMenuItem } = useHighlightMenuState()
   const { mutate } = useTicketArticleHighlightedTextUpsertMutation()
@@ -236,7 +238,7 @@ export const useArticleHighlightsSelection = (
   }
 
   const applyFromCurrentSelection = async () => {
-    if (!isActive.value) return
+    if (!isActive.value || isEditable?.value === false) return
 
     const container = getContainer()
     if (!container) return

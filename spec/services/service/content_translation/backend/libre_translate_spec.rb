@@ -411,4 +411,38 @@ RSpec.describe Service::ContentTranslation::Backend::LibreTranslate do
       end
     end
   end
+
+  describe '.supported_locales' do
+    let(:active_locales) { Locale.where(locale: %w[de-de en-us fr-fr zh-tw]).to_a }
+
+    def supported
+      described_class.supported_locales(active_locales).map(&:locale)
+    end
+
+    it 'offers only the locales the instance serves' do
+      expect(supported).to contain_exactly('de-de', 'en-us')
+    end
+
+    it 'asks the instance once for its languages' do
+      supported
+
+      expect(WebMock).to have_requested(:get, languages_endpoint).once
+    end
+
+    context 'with a locale LibreTranslate spells differently' do
+      let(:languages) { %w[en zt] }
+
+      it 'offers it under the code the instance serves' do
+        expect(supported).to contain_exactly('en-us', 'zh-tw')
+      end
+    end
+
+    context 'when the instance cannot be reached' do
+      before { stub_request(:get, languages_endpoint).to_return(status: 503, body: 'Service Unavailable') }
+
+      it 'raises the unreachable outcome' do
+        expect { supported }.to raise_error(described_class::UnreachableError)
+      end
+    end
+  end
 end

@@ -44,6 +44,11 @@ module Gql::Types::Ticket
 
     internal_fields do
       field :highlighted_texts, [Gql::Types::Ticket::Article::HighlightedTextType]
+
+      # Translating is an agent action, so is knowing about translations.
+      field :translation_available, Boolean, description: 'Whether a translation into the given locale is stored for the current content of this article' do
+        argument :target_locale, String, required: false, description: 'The locale to translate into, e.g. "de-de".'
+      end
     end
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
@@ -85,7 +90,18 @@ module Gql::Types::Ticket
       end
     end
 
+    # Both batched per page and locale; without a locale there is nothing to look up.
+    def translation_available(target_locale: nil)
+      return if target_locale.blank?
+
+      stored_translation(target_locale).then(&:present?)
+    end
+
     private
+
+    def stored_translation(target_locale)
+      Gql::Loaders::Ticket::ArticleTranslationLoader.for(target_locale).load(@object)
+    end
 
     # Batched, so listing many articles of the same ticket does not cause one query per article.
     def time_accounting

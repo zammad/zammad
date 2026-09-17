@@ -8,7 +8,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
     let(:agent)                { create(:agent) }
     let(:query)                do
       <<~QUERY
-        query ticketArticles($ticketId: ID!) {
+        query ticketArticles($ticketId: ID!, $translationTargetLocale: String) {
           ticketArticles(ticketId: $ticketId) {
             totalCount
             edges {
@@ -66,6 +66,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   encryptionSuccess
                   encryptionMessage
                 }
+                translationAvailable(targetLocale: $translationTargetLocale)
                 highlightedTexts {
                   startIndex
                   endIndex
@@ -303,6 +304,39 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           context 'when body is normal content' do
             it 'returns bodyRenderingError as false' do
               expect(response_articles.first).to include('bodyRenderingError' => false)
+            end
+          end
+        end
+
+        context 'with translation information' do
+          let(:variables) { { ticketId: gql.id(ticket), translationTargetLocale: 'de-de' } }
+
+          before do
+            setup_content_translation
+
+            AI::StoredResult.create!(
+              content:  '<p>Hallo</p>',
+              metadata: { 'backend' => 'ai' },
+              version:  Service::AI::Feature::Translate.lookup_version({ html: true, body: article1.body, backend: 'ai' }, Locale.find_by(locale: 'de-de')),
+              **Service::AI::Feature::Translate.lookup_attributes({ object: article1 }, Locale.find_by(locale: 'de-de'))
+            )
+
+            gql.execute(query, variables: variables)
+          end
+
+          it 'tells which articles have a stored translation' do
+            expect(response_articles.first).to include('translationAvailable' => true)
+          end
+
+          it 'answers false without one' do
+            expect(response_articles.last).to include('translationAvailable' => false)
+          end
+
+          context 'without a target locale' do
+            let(:variables) { { ticketId: gql.id(ticket) } }
+
+            it 'answers nothing' do
+              expect(response_articles.first).to include('translationAvailable' => nil)
             end
           end
         end

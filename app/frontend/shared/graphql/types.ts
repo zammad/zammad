@@ -1686,6 +1686,39 @@ export type TicketArticleRetrySecurityProcessMutationVariables = Exact<{
 
 export type TicketArticleRetrySecurityProcessMutation = { ticketArticleRetrySecurityProcess: { __typename: 'TicketArticleRetrySecurityProcessPayload', retryResult: { __typename: 'TicketArticleSecurityState', type: Types.EnumSecurityStateType | null | undefined, signingSuccess: boolean | null | undefined, signingMessage: string | null | undefined, encryptionSuccess: boolean | null | undefined, encryptionMessage: string | null | undefined } | null | undefined, article: { __typename: 'TicketArticle', id: string, securityState: { __typename: 'TicketArticleSecurityState', type: Types.EnumSecurityStateType | null | undefined, signingSuccess: boolean | null | undefined, signingMessage: string | null | undefined, encryptionSuccess: boolean | null | undefined, encryptionMessage: string | null | undefined } | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
+export type TicketArticleTranslateMutationVariables = Exact<{
+  articleId: string | number;
+  targetLocale: string;
+  force?: boolean | null | undefined;
+}>;
+
+
+export type TicketArticleTranslateMutation = { ticketArticleTranslate: { __typename: 'TicketArticleTranslatePayload', translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } | null | undefined };
+
+export type TicketArticleTranslationTargetLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TicketArticleTranslationTargetLocalesQuery = { ticketArticleTranslationTargetLocales: Array<{ __typename: 'Locale', locale: string, alias: string | null | undefined, name: string, dir: Types.EnumTextDirection }> };
+
+export type TicketArticlesTranslationAvailabilityQueryVariables = Exact<{
+  ticketId: string | number;
+  pageSize?: number | null | undefined;
+  loadFirstArticles?: boolean | null | undefined;
+  firstArticlesCount?: number | null | undefined;
+  translationTargetLocale: string;
+}>;
+
+
+export type TicketArticlesTranslationAvailabilityQuery = { firstArticles?: { __typename: 'TicketArticleConnection', edges: Array<{ __typename: 'TicketArticleEdge', node: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } }> }, articles: { __typename: 'TicketArticleConnection', edges: Array<{ __typename: 'TicketArticleEdge', node: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } }> } };
+
+export type TicketArticleTranslationUpdatesSubscriptionVariables = Exact<{
+  ticketId: string | number;
+  targetLocale: string;
+}>;
+
+
+export type TicketArticleTranslationUpdatesSubscription = { ticketArticleTranslationUpdates: { __typename: 'TicketArticleTranslationUpdatesPayload', article: { __typename: 'TicketArticle', id: string } | null | undefined, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined, error: { __typename: 'AsyncExecutionError', message: string, exception: string } | null | undefined } };
+
 export type TicketSharedDraftStartAttributesFragment = { __typename: 'TicketSharedDraftStart', id: string, name: string | null | undefined, updatedAt: string, updatedBy: { __typename: 'User', id: string, internalId: number, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, phone: string | null | undefined, image: string | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined } | null | undefined };
 
 export type TicketSharedDraftStartCreateMutationVariables = Exact<{
@@ -1958,6 +1991,13 @@ export type UserCurrentAvatarDeleteMutationVariables = Exact<{
 
 
 export type UserCurrentAvatarDeleteMutation = { userCurrentAvatarDelete: { __typename: 'UserCurrentAvatarDeletePayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type UserCurrentContentTranslationTargetLocaleMutationVariables = Exact<{
+  targetLocale: string;
+}>;
+
+
+export type UserCurrentContentTranslationTargetLocaleMutation = { userCurrentContentTranslationTargetLocale: { __typename: 'UserCurrentContentTranslationTargetLocalePayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type UserCurrentLocaleMutationVariables = Exact<{
   locale: string;

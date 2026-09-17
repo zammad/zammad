@@ -8,10 +8,12 @@ import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
 import { i18n } from '#shared/i18n.ts'
 import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import { useArticleHighlights } from './useArticleHighlights/useArticleHighlights.ts'
 import { useArticleHighlightsA11y } from './useArticleHighlights/useArticleHighlightsA11y.ts'
@@ -30,7 +32,31 @@ const emit = defineEmits<{
   preview: [image: ImageViewerFile]
 }>()
 
-const { shownMore, bubbleElement, hasShowMore, toggleShowMore } = useArticleToggleMore()
+const { shownMore, bubbleElement, hasShowMore, toggleShowMore, recalculateHeight } =
+  useArticleToggleMore()
+
+const { articleTranslation } = useTicketInformation()
+
+const translationStore = useArticleTranslationStore()
+
+const translation = computed(() => articleTranslation.translationFor(props.article.id))
+
+// A finished translation; an empty article gets none and keeps its original.
+const displayedTranslation = computed(() =>
+  translation.value?.status === 'done' && translation.value.translated ? translation.value : null,
+)
+
+const translationAttribution = computed(() => {
+  if (!displayedTranslation.value) return ''
+
+  return displayedTranslation.value.backend === 'ai'
+    ? __('Translated by AI')
+    : __('Translated automatically')
+})
+
+const translationDirection = computed(() =>
+  displayedTranslation.value ? translationStore.targetLocaleData?.dir?.toLowerCase() : undefined,
+)
 
 const bodyClasses = computed(() =>
   props.position === 'right'
@@ -39,14 +65,22 @@ const bodyClasses = computed(() =>
 )
 
 const body = computed(() => {
-  if (props.article.bodyRenderingError) {
-    return textToHtml(i18n.t(props.article.bodyWithUrls))
+  // The translation comes in the format of the original, so it takes the same path.
+  const content = displayedTranslation.value?.content ?? props.article.bodyWithUrls
+
+  if (props.article.bodyRenderingError && !displayedTranslation.value) {
+    return textToHtml(i18n.t(content))
   }
   if (props.article.contentType !== 'text/html') {
-    return textToHtml(props.article.bodyWithUrls)
+    return textToHtml(content)
   }
-  return ensureImagesKeepAspectRatio(props.article.bodyWithUrls)
+  return ensureImagesKeepAspectRatio(content)
 })
+
+// Highlights are offsets into the original text and mean nothing in a translation.
+const highlightedTexts = computed(() =>
+  displayedTranslation.value ? undefined : (props.article.highlightedTexts ?? undefined),
+)
 
 const showAuthorInformation = computed(() => {
   const author = props.article.author.fullname // `-` => system message
@@ -59,15 +93,11 @@ const { populateInlineImages } = useHtmlInlineImages(toRef(props, 'inlineImages'
   emit('preview', props.inlineImages[index]),
 )
 
-useArticleHighlights(
-  bubbleElement,
-  computed(() => props.article.highlightedTexts ?? undefined),
-  body,
-)
+useArticleHighlights(bubbleElement, highlightedTexts, body)
 
 const { descriptionId, description } = useArticleHighlightsA11y(
   bubbleElement,
-  computed(() => props.article.highlightedTexts ?? undefined),
+  highlightedTexts,
   body,
   computed(() => props.article.internalId),
 )
@@ -76,25 +106,38 @@ const { announce } = useAnnouncer()
 
 useArticleHighlightsSelection(
   bubbleElement,
-  computed(() => props.article.highlightedTexts ?? undefined),
+  highlightedTexts,
   computed(() => props.article.id),
   announce,
+  computed(() => !displayedTranslation.value),
 )
 
 const toggleShowMoreAndEmit = () => {
   toggleShowMore()
 }
 
-watch(
-  () => body,
-  async () => {
-    await nextTick()
-    if (bubbleElement.value) {
-      setupLinksHandlers(bubbleElement.value)
-      populateInlineImages(bubbleElement.value)
-    }
-  },
-)
+// A swapped body brings its own links and images, and a different height to collapse to.
+watch(body, async () => {
+  // Pinned at its current height until measured, so a longer body never shows at full size first.
+  //   Without the transition: it would otherwise animate down from the new content's full height.
+  // Not in a hidden tab: detached from the document, the element has no height to pin.
+  const element = bubbleElement.value
+  if (element?.isConnected && !element.style.height) {
+    element.style.transitionProperty = 'none'
+    element.style.height = `${element.clientHeight}px`
+  }
+
+  await nextTick()
+  if (element) {
+    void element.offsetHeight // applies the pin before the transition is back
+    element.style.transitionProperty = ''
+  }
+  if (bubbleElement.value) {
+    setupLinksHandlers(bubbleElement.value)
+    populateInlineImages(bubbleElement.value)
+    recalculateHeight()
+  }
+})
 
 onMounted(() => {
   if (bubbleElement.value) {
@@ -138,6 +181,7 @@ onMounted(() => {
       ref="bubbleElement"
       data-test-id="article-content"
       class="overflow-hidden text-sm transition-[height] duration-200 print:h-auto! print:overflow-visible"
+      :dir="translationDirection"
     >
       <!--    Never drop this inner-article-body class used for Highlight feature-->
       <!--    eslint-disable vue/no-v-html-->
@@ -154,17 +198,33 @@ onMounted(() => {
         BubbleGradient: !shownMore,
       }"
     />
-    <CommonLink
-      v-if="hasShowMore"
-      class="mb-1 inline-block! outline-transparent! hover:underline! focus-visible:outline-blue-800! print:hidden!"
-      role="button"
-      link="#"
-      size="medium"
-      @click.prevent="toggleShowMoreAndEmit"
-      @keydown.enter.prevent="toggleShowMoreAndEmit"
+    <div
+      v-if="hasShowMore || displayedTranslation"
+      class="flex flex-wrap items-center gap-x-2.5 gap-y-1 py-1 print:hidden"
+      data-test-id="article-body-toolbar"
     >
-      {{ shownMore ? $t('See less') : $t('See more') }}
-    </CommonLink>
+      <CommonLink
+        v-if="hasShowMore"
+        class="inline-block! outline-transparent! hover:underline! focus-visible:outline-blue-800!"
+        role="button"
+        link="#"
+        size="medium"
+        @click.prevent="toggleShowMoreAndEmit"
+        @keydown.enter.prevent="toggleShowMoreAndEmit"
+      >
+        {{ shownMore ? $t('See less') : $t('See more') }}
+      </CommonLink>
+
+      <CommonLabel
+        v-if="displayedTranslation"
+        class="text-stone-200! ltr:ml-auto rtl:mr-auto dark:text-neutral-500!"
+        size="xs"
+        prefix-icon="translate"
+        data-test-id="article-translation-attribution"
+      >
+        {{ $t(translationAttribution) }}
+      </CommonLabel>
+    </div>
   </article>
 </template>
 

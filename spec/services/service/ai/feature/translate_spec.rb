@@ -235,4 +235,39 @@ RSpec.describe Service::AI::Feature::Translate do
       expect(ai_service.execute.content).to eq("Preis < 5 & > 3\nZweite Zeile")
     end
   end
+
+  describe '.lookup_version_sql' do
+    def sql_version(backend)
+      sql = described_class.lookup_version_sql(backend, "ticket_articles.content_type ILIKE '%html%'", 'ticket_articles.body')
+
+      ActiveRecord::Base.connection.select_value(
+        "SELECT #{sql} FROM ticket_articles WHERE ticket_articles.id = #{object.id}"
+      )
+    end
+
+    it 'digests HTML content like the Ruby version' do
+      expect(sql_version('ai')).to eq(described_class.lookup_version(context_data, target_locale))
+    end
+
+    it 'digests the backend, so another backend does not match' do
+      expect(sql_version('libre_translate')).not_to eq(described_class.lookup_version(context_data, target_locale))
+    end
+
+    context 'with plain text content' do
+      let(:html) { false }
+      let(:body) { "Price < 5 & > 3\nSecond line" }
+
+      it 'digests plain text content like the Ruby version' do
+        expect(sql_version('ai')).to eq(described_class.lookup_version(context_data, target_locale))
+      end
+    end
+
+    context 'without a configured backend' do
+      let(:context_data) { super().merge(backend: nil) }
+
+      it 'digests a missing backend like the Ruby version' do
+        expect(sql_version(nil)).to eq(described_class.lookup_version(context_data, target_locale))
+      end
+    end
+  end
 end

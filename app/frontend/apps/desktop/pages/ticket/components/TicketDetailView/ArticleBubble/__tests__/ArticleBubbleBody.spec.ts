@@ -1,20 +1,40 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { nextTick } from 'vue'
+import { waitFor } from '@testing-library/vue'
+import { defineComponent, nextTick, reactive, ref } from 'vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import type { ArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
+import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
+import { TicketArticleHighlightedTextUpsertDocument } from '#desktop/entities/ticket-article/graphql/mutations/highlightedTextUpsert.api.ts'
+import {
+  mockTicketArticleHighlightedTextUpsertMutation,
+  waitForTicketArticleHighlightedTextUpsertMutationCalls,
+} from '#desktop/entities/ticket-article/graphql/mutations/highlightedTextUpsert.mocks.ts'
 import ArticleBubbleBody from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue'
+import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts'
+
+// The tab's translation state, as the bubble injects it.
+let articleTranslation = createArticleTranslationMock()
+
+beforeEach(() => {
+  articleTranslation = createArticleTranslationMock()
+})
 
 const renderBody = (
   article: ReturnType<typeof createDummyArticle>,
   showMetaInformation: boolean,
+  ticketInformation: Partial<TicketInformation> = {},
 ) => {
   return renderComponent(
     {
@@ -23,7 +43,7 @@ const renderBody = (
       setup: () => {
         const dummyTicket = createDummyTicket()
 
-        provideTicketInformationMocks(dummyTicket)
+        provideTicketInformationMocks(dummyTicket, { articleTranslation, ...ticketInformation })
 
         return {
           article,
@@ -280,6 +300,296 @@ describe('ArticleBubbleBody', () => {
       expect(
         wrapper.container.querySelector('[id^="article-highlight-description-"]'),
       ).not.toBeInTheDocument()
+    })
+  })
+
+  describe('with a translation', () => {
+    const mockTranslation = (translation?: ArticleTranslation) => {
+      articleTranslation.translationFor = () => translation
+    }
+
+    it('shows the translated HTML instead of the original, with the AI attribution', async () => {
+      mockTranslation({
+        status: 'done',
+        content: '<p>Hallo <strong>Welt</strong></p>',
+        backend: 'ai',
+        translated: true,
+      })
+
+      const article = createDummyArticle({
+        bodyWithUrls: '<p>Hello <strong>world</strong></p>',
+        contentType: 'text/html',
+      })
+
+      const wrapper = renderBody(article, false)
+
+      expect(await wrapper.findByText('Welt')).toBeInTheDocument()
+      expect(wrapper.queryByText('world')).not.toBeInTheDocument()
+      expect(wrapper.getByTestId('article-translation-attribution')).toHaveTextContent(
+        'Translated by AI',
+      )
+    })
+
+    it('renders a plain text translation as text and names any other producer', async () => {
+      mockTranslation({
+        status: 'done',
+        content: 'Hallo <Welt>',
+        backend: 'deepl',
+        translated: true,
+      })
+
+      const article = createDummyArticle({
+        bodyWithUrls: 'Hello <world>',
+        contentType: 'text/plain',
+      })
+
+      const wrapper = renderBody(article, false)
+
+      expect(await wrapper.findByText('Hallo <Welt>')).toBeInTheDocument()
+      expect(wrapper.getByTestId('article-translation-attribution')).toHaveTextContent(
+        'Translated automatically',
+      )
+    })
+
+    // The waiting is shown on the translate button, not in place of the article.
+    it('keeps the original body while translating', async () => {
+      mockTranslation({ status: 'pending' })
+
+      const wrapper = renderBody(
+        createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+        false,
+      )
+
+      expect(await wrapper.findByText('Hello')).toBeInTheDocument()
+      expect(wrapper.getByTestId('article-content')).toBeVisible()
+    })
+
+    it('swaps between original and translation as the state changes', async () => {
+      const translation = ref<ArticleTranslation | undefined>(undefined)
+      articleTranslation.translationFor = () => translation.value
+
+      const article = createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+
+      const wrapper = renderBody(article, false)
+
+      expect(wrapper.getByText('Hello')).toBeInTheDocument()
+
+      translation.value = { status: 'done', content: 'Hallo', backend: 'ai', translated: true }
+
+      expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+      expect(wrapper.queryByText('Hello')).not.toBeInTheDocument()
+
+      translation.value = undefined
+
+      expect(await wrapper.findByText('Hello')).toBeInTheDocument()
+      expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+    })
+
+    it('keeps the original when the translation failed', async () => {
+      const translation = ref<ArticleTranslation | undefined>({ status: 'pending' })
+      articleTranslation.translationFor = () => translation.value
+
+      const article = createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+
+      const wrapper = renderBody(article, false)
+
+      expect(await wrapper.findByText('Hello')).toBeInTheDocument()
+
+      translation.value = { status: 'error', error: 'Provider down' }
+      await nextTick()
+
+      expect(wrapper.getByTestId('article-content')).toBeVisible()
+      expect(wrapper.getByText('Hello')).toBeInTheDocument()
+      expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+    })
+
+    it('shows the original when the original is asked for', () => {
+      mockTranslation(undefined)
+
+      const article = createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+
+      const wrapper = renderBody(article, false)
+
+      expect(wrapper.getByText('Hello')).toBeInTheDocument()
+      expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+    })
+
+    // Highlights are offsets into the original text; measured in a translation they would land
+    // anywhere in the original, and replace what was highlighted there.
+    it('does not save highlights while the translation is shown', async () => {
+      const translation = ref<ArticleTranslation | undefined>({
+        status: 'done',
+        content: '<p>Hallo Welt</p>',
+        backend: 'ai',
+        translated: true,
+      })
+      articleTranslation.translationFor = () => translation.value
+      mockTicketArticleHighlightedTextUpsertMutation({
+        ticketArticleHighlightedTextUpsert: { success: true, errors: null },
+      })
+
+      const article = createDummyArticle({
+        bodyWithUrls: '<p>Hello world</p>',
+        contentType: 'text/html',
+      })
+
+      const wrapper = renderBody(article, false, {
+        highlightMenu: reactive({
+          activeMenuItem: highlightMenuItems[0],
+          isActive: true,
+          isEraserActive: false,
+        }),
+      })
+
+      const selectFirstWord = () => {
+        const text = wrapper.getByTestId('article-content').querySelector('p')!.firstChild!
+        const range = document.createRange()
+        range.setStart(text, 0)
+        range.setEnd(text, 5)
+        const selection = window.getSelection()!
+        selection.removeAllRanges()
+        selection.addRange(range)
+        document.dispatchEvent(new Event('pointerup'))
+      }
+
+      expect(await wrapper.findByText('Hallo Welt')).toBeInTheDocument()
+      selectFirstWord()
+      await waitForNextTick(true)
+
+      expect(getGraphQLMockCalls(TicketArticleHighlightedTextUpsertDocument)).toHaveLength(0)
+
+      // The same gesture on the original is saved, so the guard is what kept the translation out.
+      translation.value = undefined
+      expect(await wrapper.findByText('Hello world')).toBeInTheDocument()
+      selectFirstWord()
+
+      const calls = await waitForTicketArticleHighlightedTextUpsertMutationCalls()
+      expect(calls[0].variables).toMatchObject({
+        articleId: article.id,
+        highlight: [{ startIndex: 0, endIndex: 5 }],
+      })
+    })
+
+    // A swapped body brings its own height, so it is measured again - a translation long enough
+    // to be collapsed gets its own "See more".
+    it('measures the translated body that replaced the original', async () => {
+      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockReturnValue(800)
+
+      const translation = ref<ArticleTranslation | undefined>(undefined)
+      articleTranslation.translationFor = () => translation.value
+
+      const article = createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+      const wrapper = renderBody(article, false)
+
+      translation.value = { status: 'done', content: 'Hallo', backend: 'ai', translated: true }
+
+      expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+      expect(wrapper.getByTestId('article-content')).toBeVisible()
+      expect(await wrapper.findByRole('button', { name: 'See more' })).toBeInTheDocument()
+    })
+    // A hidden tab is detached from the document, where nothing has a height.
+    it('measures a translation that arrived while the tab was hidden once it is shown again', async () => {
+      // The browser's measurements: a long text, nothing while detached.
+      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(
+        function (this: Element) {
+          return this.isConnected ? 800 : 0
+        },
+      )
+
+      const translation = ref<ArticleTranslation | undefined>(undefined)
+      articleTranslation.translationFor = () => translation.value
+
+      const article = createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+      const shown = ref(true)
+
+      const wrapper = renderComponent(
+        {
+          components: { ArticleBubbleBody },
+          setup: () => {
+            provideTicketInformationMocks(createDummyTicket(), { articleTranslation })
+
+            return { article, shown }
+          },
+          template:
+            '<KeepAlive><ArticleBubbleBody v-if="shown" :article="article" :showMetaInformation="false" position="left" :inlineImages="[]" /></KeepAlive>',
+        },
+        { router: true, store: true },
+      )
+
+      expect(await wrapper.findByRole('button', { name: 'See more' })).toBeInTheDocument()
+
+      shown.value = false
+      await nextTick()
+
+      translation.value = { status: 'done', content: 'Hallo', backend: 'ai', translated: true }
+      // Long enough for a measurement to run while detached: images, then an animation frame.
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
+
+      shown.value = true
+
+      expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+      expect(await wrapper.findByRole('button', { name: 'See more' })).toBeInTheDocument()
+    })
+    // The same for an article that arrives while the tab is hidden: its bubble mounts detached.
+    it('measures an article that arrived while the tab was hidden once it is shown again', async () => {
+      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(
+        function (this: Element) {
+          return this.isConnected ? 800 : 0
+        },
+      )
+
+      const articles = ref([
+        createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+      ])
+      const shown = ref(true)
+
+      // KeepAlive keeps a component alive, so the list is one.
+      const Tab = defineComponent({
+        components: { ArticleBubbleBody },
+        setup: () => ({ articles }),
+        template: `<div>
+          <ArticleBubbleBody v-for="article in articles" :key="article.id" :article="article" :showMetaInformation="false" position="left" :inlineImages="[]" />
+        </div>`,
+      })
+
+      const wrapper = renderComponent(
+        {
+          components: { Tab },
+          setup: () => {
+            provideTicketInformationMocks(createDummyTicket(), { articleTranslation })
+
+            return { shown }
+          },
+          template: '<KeepAlive><Tab v-if="shown" /></KeepAlive>',
+        },
+        { router: true, store: true },
+      )
+
+      expect(await wrapper.findAllByRole('button', { name: 'See more' })).toHaveLength(1)
+
+      shown.value = false
+      await nextTick()
+
+      articles.value = [
+        ...articles.value,
+        createDummyArticle({
+          articleId: 2,
+          bodyWithUrls: 'Later',
+          contentType: 'text/plain',
+        }),
+      ]
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
+
+      shown.value = true
+
+      expect(await wrapper.findByText('Later')).toBeInTheDocument()
+      await waitFor(() =>
+        expect(wrapper.getAllByRole('button', { name: 'See more' })).toHaveLength(2),
+      )
     })
   })
 })

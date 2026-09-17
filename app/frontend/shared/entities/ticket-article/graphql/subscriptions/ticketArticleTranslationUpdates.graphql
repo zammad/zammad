@@ -1,0 +1,16 @@
+subscription ticketArticleTranslationUpdates($ticketId: ID!, $targetLocale: String!) {
+  ticketArticleTranslationUpdates(ticketId: $ticketId, targetLocale: $targetLocale) {
+    article {
+      id
+    }
+    translation {
+      content
+      backend
+      translated
+    }
+    error {
+      message
+      exception
+    }
+  }
+}

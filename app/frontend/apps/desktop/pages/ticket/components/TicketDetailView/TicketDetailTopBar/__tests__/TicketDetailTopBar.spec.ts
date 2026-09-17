@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { EnumChannelArea } from '#shared/graphql/types.ts'
 import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
@@ -11,6 +13,30 @@ import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
+
+// jsdom has no layout and never scrolls, so the top bar measures 0 everywhere. Drive its inputs
+// instead: every measured element reports `measuredHeight`, and `scrollY` stands in for the scroll
+// position of the content container. The defaults leave the page at the top, with the compact
+// header still undocked.
+const measuredWidth = ref(0)
+const measuredHeight = ref(0)
+const scrollY = ref(0)
+
+vi.mock('@vueuse/core', async (importOriginal) => {
+  const modules = await importOriginal<typeof import('@vueuse/core')>()
+
+  return {
+    ...modules,
+    useElementSize: () => ({ width: measuredWidth, height: measuredHeight }),
+    useScroll: () => ({ y: scrollY, directions: {} }),
+  }
+})
+
+// Scrolled past the point where the compact header takes over from the full one.
+const scrollPastFullHeader = () => {
+  measuredHeight.value = 100
+  scrollY.value = 500
+}
 
 const withChannelAlert = (
   overrides: Partial<typeof testOptionsTopBar> = {},
@@ -50,6 +76,10 @@ const renderTicketDetailTopBar = ({
 
 describe('TicketDetailTopBar', () => {
   beforeEach(() => {
+    measuredWidth.value = 0
+    measuredHeight.value = 0
+    scrollY.value = 0
+
     mockApplicationConfig({
       fqdn: 'zammad.example.com',
       http_type: 'http',
@@ -148,6 +178,23 @@ describe('TicketDetailTopBar', () => {
     expect(view.queryByTestId('common-alert')).not.toBeInTheDocument()
     expect(view.getByTestId('ticket-detail-top-bar-clipped-details')).toBeInTheDocument()
     expect(view.getByTestId('ticket-detail-top-bar-full-details')).toBeInTheDocument()
+  })
+
+  it('closes an open menu popover when the compact header takes over', async () => {
+    const view = renderTicketDetailTopBar()
+
+    const fullHeader = view.getByTestId('ticket-detail-top-bar-full-details')
+
+    await view.events.click(within(fullHeader).getByRole('button', { name: 'Highlight options' }))
+
+    expect(view.getByText('Yellow'), 'popover of the full header is open').toBeInTheDocument()
+
+    scrollPastFullHeader()
+    await waitForNextTick()
+
+    // The popover is teleported to the body and anchored on the trigger of the header that is
+    // sliding away, so it would otherwise linger over the compact header taking its place.
+    expect(view.queryByText('Yellow')).not.toBeInTheDocument()
   })
 
   it('does not wrap the headers with a channel alert when the ticket is not editable', () => {

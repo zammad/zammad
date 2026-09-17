@@ -17,6 +17,20 @@ class Service::AI::Feature::Translate < Service::AI::Feature
     Service::ContentTranslation::StoredTranslation.version(context_data[:body], context_data[:html], context_data[:backend])
   end
 
+  # The same digest as an SQL expression, for looking up the translations of many objects in one
+  # query. Kept next to the Ruby version so the two cannot drift apart - the parts have to be
+  # concatenated in the order Service::ContentTranslation::StoredTranslation.version uses.
+  #
+  # @param backend [String, NilClass] `backend_name` of the service asking
+  # @param html_sql [String] a boolean SQL expression telling whether the content is HTML
+  # @param body_sql [String] the SQL expression of the content
+  # @return [String]
+  def self.lookup_version_sql(backend, html_sql, body_sql)
+    backend_sql = ActiveRecord::Base.connection.quote(backend)
+
+    "encode(sha256(convert_to(concat(#{backend_sql}, E'\\n', CASE WHEN #{html_sql} THEN 'true' ELSE 'false' END, E'\\n', #{body_sql}), 'UTF8')), 'hex')"
+  end
+
   def persistable?
     true
   end

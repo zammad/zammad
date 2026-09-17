@@ -67,6 +67,13 @@ export const waitForImagesToLoad = async (container: MaybeRef) => {
 
           image.onload = handleLoad
           image.onerror = handleError
+
+          // An image that is already complete fires no further event: it is either one the browser
+          // already has (cache, or a body swap re-rendering the same image), or one without a usable
+          // source, which stays complete forever.
+          if (image.complete)
+            if (image.naturalWidth > 0) handleLoad()
+            else handleError()
         })
       }),
     )

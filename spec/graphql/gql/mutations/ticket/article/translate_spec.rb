@@ -89,6 +89,24 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
       end
     end
 
+    context 'with a stored translation referencing an inline image' do
+      let(:cid)     { "#{SecureRandom.uuid}@zammad.example.com" }
+      let(:article) { create(:ticket_article, ticket:, body: "<p>Hello</p><img src=\"cid:#{cid}\">", content_type: 'text/html') }
+
+      before do
+        create(:store, object: 'Ticket::Article', o_id: article.id, data: 'fake', filename: 'inline.jpg',
+                       preferences: { 'Content-Type' => 'image/jpeg', 'Content-ID' => "<#{cid}>", 'Content-Disposition' => 'inline' })
+        store_translation("<p>Hallo</p><img src=\"cid:#{cid}\">")
+      end
+
+      it 'answers with the image URL resolved, as in the display body of the article' do
+        gql.execute(query, variables:)
+
+        expect(gql.result.data[:translation]['content'])
+          .to eq("<p>Hallo</p><img src=\"/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{article.attachments.first.id}?view=inline\">")
+      end
+    end
+
     context 'without a stored translation' do
       it 'returns no translation yet' do
         gql.execute(query, variables:)

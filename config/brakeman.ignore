@@ -390,6 +390,29 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "58cb90d51ea08ea0833e7030a0e2138825628e36a1c3fa4fbe2e0dce41b17f32",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/service/content_translation/ticket_article.rb",
+      "line": 28,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "AI::StoredResult.select([:id, :related_object_id, :metadata]).joins(\"INNER JOIN ticket_articles ON ticket_articles.id = ai_stored_results.related_object_id\").where(:identifier => Service::AI::Feature::Translate.identifier, :locale => Locale.find_by(:locale => target_locale, :active => true), :related_object_type => \"Ticket::Article\", :related_object_id => articles.map(&:id)).where(\"ai_stored_results.version = #{version_sql}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Service::ContentTranslation::TicketArticle",
+        "method": "self.stored_translations"
+      },
+      "user_input": "version_sql",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Version SQL assembled without request data: .lookup_version_sql has one call site, which passes two hard-coded SQL fragments plus the backend name of the configured service - a literal defined on the backend class, quoted with connection.quote before it is interpolated into a fixed digest expression. The locale and the article ids are bound parameters."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "687d16bd4eea300cd239f4d6e9905bac0a8f3494d93b9bc0f6de835cb937286f",
       "check_name": "SQL",
       "message": "Possible SQL injection",

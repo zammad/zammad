@@ -2,12 +2,13 @@
 
 <script setup lang="ts">
 import { useElementSize } from '@vueuse/core'
-import { computed, toRef, useTemplateRef, type Ref } from 'vue'
+import { computed, toRef, useTemplateRef, watch, type Ref } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
+import emitter from '#shared/utils/emitter.ts'
 
 import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
@@ -88,6 +89,14 @@ const hasMeasuredCompactHeaderThreshold = computed(() => {
 const isCompactHeaderVisible = computed(
   () => hasMeasuredCompactHeaderThreshold.value && compactHeaderOffset.value > 0,
 )
+
+// Both headers keep their own copy of the action menus mounted, and their popovers are
+// teleported to the body anchored on the trigger of the header they belong to. When the headers
+// swap, the popover of the leaving header would keep hanging over the arriving one, so close any
+// open popover at the switch.
+watch(isCompactHeaderVisible, () => {
+  emitter.emit('close-popover')
+})
 
 const absoluteContainerOffset = computed(
   () => `${isCompactHeaderVisible.value ? 0 : compactHeaderOffset.value}px`,

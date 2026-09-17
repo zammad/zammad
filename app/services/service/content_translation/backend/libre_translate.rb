@@ -57,6 +57,23 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
     raise outcome_for(e)
   end
 
+  # The instance names what it serves; a locale it could not be asked for is not offered.
+  def self.supported_locales(locales)
+    languages = client(config).languages
+
+    locales.select { |locale| candidate_languages(locale).intersect?(languages) }
+  rescue LibreTranslate::Client::Error => e
+    raise outcome_for(e)
+  end
+
+  def self.candidate_languages(locale)
+    LANGUAGE_CODES[locale.locale] || [locale.locale.split('-').first]
+  end
+
+  def self.config
+    Setting.get('content_translation_service_config').to_h.with_indifferent_access
+  end
+
   def self.client(config)
     LibreTranslate::Client.new(url: config[:url], api_key: config[:api_key])
   end
@@ -109,7 +126,7 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
   end
 
   def candidate_languages
-    LANGUAGE_CODES[locale.locale] || [locale.locale.split('-').first]
+    self.class.candidate_languages(locale)
   end
 
   def supported_languages

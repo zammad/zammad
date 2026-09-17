@@ -1,0 +1,8 @@
+query ticketArticleTranslationTargetLocales {
+  ticketArticleTranslationTargetLocales {
+    locale
+    alias
+    name
+    dir
+  }
+}

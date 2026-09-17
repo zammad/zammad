@@ -1,10 +1,13 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import OrganizationPopoverWithTrigger from '#desktop/components/Organization/OrganizationPopoverWithTrigger.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
+import ArticleTranslationTargetMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue'
 
 import { useTopBarHeader } from './useTopBarHeader.ts'
@@ -19,6 +22,8 @@ const {
   isUpdatingTitle,
   updateTitle,
 } = useTopBarHeader()
+
+const translationStore = useArticleTranslationStore()
 </script>
 
 <template>
@@ -104,11 +109,11 @@ const {
     </div>
 
     <div
-      v-if="isTicketAgent && isTicketEditable"
-      class="col-start-2 justify-self-end @7xl:col-start-3 @7xl:row-start-1"
+      v-if="isTicketAgent && (isTicketEditable || translationStore.isAvailable)"
+      class="col-start-2 flex gap-2 justify-self-end @7xl:col-start-3 @7xl:row-start-1"
     >
-      <!-- Div because we add soon more actions here  -->
-      <HighlightMenu />
+      <ArticleTranslationTargetMenu v-if="translationStore.isAvailable" />
+      <HighlightMenu v-if="isTicketEditable" />
     </div>
   </header>
 </template>

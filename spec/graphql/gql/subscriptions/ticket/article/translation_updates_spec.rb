@@ -93,6 +93,26 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
     end
   end
 
+  context 'when the translation references an inline image' do
+    let(:cid)     { "#{SecureRandom.uuid}@zammad.example.com" }
+    let(:article) { create(:ticket_article, ticket:, body: "<p>Hello</p><img src=\"cid:#{cid}\">", content_type: 'text/html') }
+
+    before do
+      create(:store, object: 'Ticket::Article', o_id: article.id, data: 'fake', filename: 'inline.jpg',
+                     preferences: { 'Content-Type' => 'image/jpeg', 'Content-ID' => "<#{cid}>", 'Content-Disposition' => 'inline' })
+
+      described_class.trigger(
+        { article:, translation: { content: "<p>Hallo</p><img src=\"cid:#{cid}\">", backend: 'ai', translated: true } },
+        arguments: { ticket_id: gql.id(ticket), target_locale: }
+      )
+    end
+
+    it 'delivers the image URL resolved, as the mutation does' do
+      expect(broadcasted['translation']['content'])
+        .to eq("<p>Hallo</p><img src=\"/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{article.attachments.first.id}?view=inline\">")
+    end
+  end
+
   context 'when the subscriber is the customer of the ticket', authenticated_as: :customer do
     let(:customer) { create(:customer) }
     let(:ticket)   { create(:ticket, customer:) }
@@ -128,6 +148,19 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
 
     it 'receives nothing' do
       expect(mock_channel.mock_broadcasted_messages).to be_empty
+    end
+  end
+
+  # The job publishes an event without a translation when the service produced nothing usable.
+  context 'when the translation job produced nothing' do
+    before do
+      allow(Service::ContentTranslation::TicketArticle).to receive(:execute).and_return(nil)
+
+      ContentTranslationJob.new.perform(article, target_locale, service: 'Service::ContentTranslation::TicketArticle')
+    end
+
+    it 'delivers no translation, not an empty one' do
+      expect(broadcasted).to include('article' => { 'id' => gql.id(article) }, 'translation' => nil, 'error' => nil)
     end
   end
 

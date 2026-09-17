@@ -17,6 +17,7 @@ import ArticleBubbleFooter from '#desktop/pages/ticket/components/TicketDetailVi
 import ArticleBubbleMediaError from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue'
 import ArticleBubbleSecurityStatusBar from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityStatusBar.vue'
 import ArticleBubbleSecurityWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue'
+import ArticleBubbleTranslationError from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue'
 import { useBubbleHeader } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleHeader.ts'
 import { useBubbleStyleGuide } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleStyleGuide.ts'
 import ArticleReactionBadge from '#desktop/pages/ticket/components/TicketDetailView/ArticleReactionBadge.vue'
@@ -153,6 +154,7 @@ const { hasReducedMotion } = useReducedMotion()
         :article="article"
       />
 
+      <ArticleBubbleTranslationError :article="article" />
       <ArticleBubbleSecurityWarning :article="article" />
       <ArticleBubbleMediaError :article="article" />
 
