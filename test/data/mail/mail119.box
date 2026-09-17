@@ -1,0 +1,30 @@
+Return-Path: <sender@example.com>
+From: =?ks_c_5601-1987?B?rKqs06zRrN8=?= <sender@example.com>
+To: support@example.org
+Subject: =?ks_c_5601-1987?B?rKms0azhrOKs4KzjIKzorNas36zt?=
+Date: Mon, 31 Aug 2026 10:12:33 +0300
+Message-ID: <charset-alias-demo-6340@example.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----=_NextPart_6340"
+X-Mailer: Microsoft Outlook 16.0
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_6340
+Content-Type: text/plain; charset="ks_c_5601-1987"
+Content-Transfer-Encoding: base64
+
+rKWs4KzSrOKs7azbIKzVrNas36zuIQ0KrLGs4KzVrOOs3KzRrNis2qzkrNYsIKzhrOCs2KzRrN2s
+5azbrOOs5KzRLCCs4azgIKzfrNGs3azarOms2qzwLCCs46zirOCs3KzRrN4grNogrOis1qzfrNYu
+DQqssyCs5azTrNGs2KzWrN+s2qzWrN4sIKyqrNOs0azf
+
+------=_NextPart_6340
+Content-Type: text/html; charset="ks_c_5601-1987"
+Content-Transfer-Encoding: base64
+
+PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5PjxwPqylrOCs0qzirO2s2yCs1azWrN+s7iE8L3A+PHA+
+rLGs4KzVrOOs3KzRrNis2qzkrNYsIKzhrOCs2KzRrN2s5azbrOOs5KzRLCCs4azgIKzfrNGs3aza
+rOms2qzwLCCs46zirOCs3KzRrN4grNogrOis1qzfrNYuPC9wPjxwPqyzIKzlrNOs0azYrNas36za
+rNas3iwgrKqs06zRrN88L3A+PC9ib2R5PjwvaHRtbD4=
+
+------=_NextPart_6340--
