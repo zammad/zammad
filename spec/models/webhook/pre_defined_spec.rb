@@ -7,6 +7,7 @@ RSpec.describe(Webhook::PreDefined) do
     expect(described_class.pre_defined_webhooks.sort_by(&:name)).to include(
       Webhook::PreDefined::Mattermost,
       Webhook::PreDefined::MicrosoftTeams,
+      Webhook::PreDefined::Ntfy,
       Webhook::PreDefined::RocketChat,
       Webhook::PreDefined::Slack
     )
