@@ -16,7 +16,7 @@ interface Props {
   set: KnowledgeBaseIconSet
   size?: Sizes
   status?: EnumKnowledgeBaseVisibility
-  horizontal?: boolean
+  breadcrumb?: boolean
 }
 
 const props = defineProps<Props>()
@@ -38,36 +38,42 @@ const tooltipText = computed(() => {
   }
 })
 
-const containerClass = computed(() => {
-  if (props.horizontal) return 'flex'
-  return 'relative h-fit'
-})
-
 const metaContainerClass = computed(() => {
-  const baseClasses = ['flex', 'items-center', 'justify-center', 'p-0.5']
-
-  if (props.horizontal) return baseClasses
-
-  return [
-    ...baseClasses,
+  const baseClasses = [
+    'flex',
+    'items-center',
+    'justify-center',
+    'p-0.5',
     'absolute',
     'inset-e-0',
     'bottom-0',
     'rounded-sm',
-    'translate-y-2',
     'ltr:translate-x-1.5', // eslint-disable-line zammad/zammad-tailwind-ltr
     'rtl:-translate-x-1.5', // eslint-disable-line zammad/zammad-tailwind-ltr
-    'bg-blue-200',
-    'dark:bg-gray-500',
   ]
+
+  if (props.breadcrumb)
+    return [...baseClasses, 'translate-y-0.5', 'bg-neutral-50', 'dark:bg-gray-500']
+
+  return [...baseClasses, 'translate-y-2', 'bg-blue-200', 'dark:bg-gray-500']
+})
+
+const currentMetaIconFixedSize = computed(() => {
+  if (props.size === 'small') return { width: 8, height: 8 }
+  return { width: 12, height: 12 }
 })
 </script>
 
 <template>
-  <div v-tooltip="$t(tooltipText)" role="img" :class="containerClass">
+  <div v-tooltip="$t(tooltipText)" class="relative h-fit" role="img">
     <KnowledgeBaseCategoryIcon :name="name" :set="set" :size="size" :class="currentMetaClass" />
     <div v-if="currentMetaIcon" :class="metaContainerClass">
-      <CommonIcon :class="currentMetaClass" :name="currentMetaIcon" decorative size="xs" />
+      <CommonIcon
+        :class="currentMetaClass"
+        :name="currentMetaIcon"
+        :fixed-size="currentMetaIconFixedSize"
+        decorative
+      />
     </div>
   </div>
 </template>

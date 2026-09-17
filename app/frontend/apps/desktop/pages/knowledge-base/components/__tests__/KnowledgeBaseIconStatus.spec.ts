@@ -58,17 +58,36 @@ describe('KnowledgeBaseIconStatus', () => {
     expect(wrapper.getByLabelText(label)).toBeInTheDocument()
   })
 
-  it('supports two layouts', async () => {
-    const wrapper = renderStatus({ status: 'published', horizontal: true })
+  it('positions the status marker for the breadcrumb', () => {
+    const wrapper = renderStatus({ status: 'published', breadcrumb: true })
 
-    const container = wrapper.container.querySelector('div')!
+    const marker = wrapper.getByIconName('unlock-fill').parentElement
 
-    expect(container).toHaveClass('flex')
-    expect(container).not.toHaveClass('relative')
-
-    await wrapper.rerender({ horizontal: false })
-
-    expect(container).not.toHaveClass('flex')
-    expect(container).toHaveClass('relative')
+    expect(marker).toHaveClass('translate-y-0.5', 'bg-neutral-50')
+    expect(marker).not.toHaveClass('translate-y-2', 'bg-blue-200')
   })
+
+  it('positions the status marker for the default context', () => {
+    const wrapper = renderStatus({ status: 'published', breadcrumb: false })
+
+    const marker = wrapper.getByIconName('unlock-fill').parentElement
+
+    expect(marker).toHaveClass('translate-y-2', 'bg-blue-200')
+    expect(marker).not.toHaveClass('translate-y-0.5', 'bg-neutral-50')
+  })
+
+  it.each([
+    { size: 'small', dimension: '8' },
+    { size: 'medium', dimension: '12' },
+  ] as const)(
+    'renders the status marker at $dimension px for the $size size',
+    ({ size, dimension }) => {
+      const wrapper = renderStatus({ status: 'published', size })
+
+      const marker = wrapper.getByIconName('unlock-fill')
+
+      expect(marker).toHaveAttribute('width', dimension)
+      expect(marker).toHaveAttribute('height', dimension)
+    },
+  )
 })

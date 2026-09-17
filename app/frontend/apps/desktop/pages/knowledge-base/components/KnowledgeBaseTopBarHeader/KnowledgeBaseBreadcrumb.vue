@@ -58,15 +58,15 @@ const displayItems = computed(() =>
           :name="item.icon"
           :set="item.iconSet"
           :status="item.visibility"
-          size="tiny"
+          size="small"
           class="m-1 me-1.5 shrink-0"
           :class="item.iconClass"
-          horizontal
+          breadcrumb
         />
         <CommonIcon
           v-else-if="!item.route && item.icon"
           :name="item.icon"
-          size="tiny"
+          size="small"
           class="m-1 me-1.5 shrink-0"
           :class="item.iconClass"
         />
@@ -83,15 +83,15 @@ const displayItems = computed(() =>
             :name="item.icon"
             :set="item.iconSet"
             :status="item.visibility"
-            size="tiny"
+            size="small"
             class="shrink-0"
             :class="item.iconClass"
-            horizontal
+            breadcrumb
           />
           <CommonIcon
             v-else-if="item.icon"
             :name="item.icon"
-            size="tiny"
+            size="small"
             class="shrink-0"
             :class="item.iconClass"
           />
@@ -109,15 +109,15 @@ const displayItems = computed(() =>
             :name="item.icon"
             :set="item.iconSet"
             :status="item.visibility"
-            size="tiny"
+            size="small"
             class="shrink-0"
             :class="item.iconClass"
-            horizontal
+            breadcrumb
           />
           <CommonIcon
             v-else-if="item.icon"
             :name="item.icon"
-            size="tiny"
+            size="small"
             class="shrink-0"
             :class="item.iconClass"
           />
