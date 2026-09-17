@@ -7,6 +7,8 @@ import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
 import type { Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { OrganizationHistoryDocument } from '#desktop/entities/organization/graphql/queries/history.api.ts'
+
 import { generateObjectData, mockOperation } from '../index.ts'
 
 describe('correctly mocks operations', () => {
@@ -124,4 +126,43 @@ describe('correctly mocks operations', () => {
       `[Error: expected numerical or graphql id for Ticket, got dsfsdffds]`,
     )
   })
+})
+
+describe('mocking union fields', () => {
+  // `HistoryRecord.issuer` is a union of seven types. Without honoring the
+  // `__typename` a mock declares, the mocker picks a member at random and
+  // populates the value from that member's fields, which made every spec mocking
+  // a history issuer randomly flaky.
+  const mockIssuer = (__typename: string) => {
+    const organizationId = convertToGraphQLId('Organization', 2)
+    const mock = mockOperation(
+      OrganizationHistoryDocument,
+      { organizationId },
+      { organizationHistory: [{ records: [{ issuer: { __typename } }] }] },
+    )
+
+    return mock.organizationHistory[0].records[0].issuer
+  }
+
+  // A wrongly resolved member still carries the declared `__typename`, so assert
+  // on the generated fields instead. These are the members of the union that own
+  // a field none of the others has.
+  const markers = {
+    Macro: 'uxFlowNextUp',
+    ObjectClass: 'klass',
+    User: 'fullname',
+  }
+
+  it.each(Object.entries(markers))(
+    'populates the union member declared by the mock: %s',
+    (__typename, marker) => {
+      const issuer = mockIssuer(__typename)
+
+      expect(issuer).toHaveProperty(marker)
+
+      for (const [otherType, otherMarker] of Object.entries(markers)) {
+        if (otherType !== __typename) expect(issuer).not.toHaveProperty(otherMarker)
+      }
+    },
+  )
 })
