@@ -21,6 +21,7 @@ const defaultItem = computed(() => menuItems.find((item) => item.key === 'ticket
     }"
     orientation="autoVertical"
     :hide-arrow="isSidebarCollapsed"
+    z-index="52"
     :default-icon="defaultItem?.icon"
     :default-button-variant="defaultItem?.variant"
     :placement="isSidebarCollapsed ? 'start' : 'arrowStart'"

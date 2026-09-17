@@ -18,6 +18,7 @@ const defaultItem = computed(() => adminItems.find((item) => item.key === 'admin
     class="flex!"
     :actions="adminItems"
     orientation="autoVertical"
+    z-index="52"
     :default-icon="defaultItem?.icon"
     :default-button-variant="defaultItem?.variant"
     :hide-arrow="isSidebarCollapsed"
