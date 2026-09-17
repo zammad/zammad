@@ -10,6 +10,8 @@ import type { TooltipModifiers } from './types'
 const getMessageAttribute = (modifiers: TooltipModifiers) =>
   modifiers.supportive ? 'aria-description' : 'aria-label'
 
+const writtenMessages = new WeakMap<HTMLElement, string>()
+
 let isTooltipShown = false
 let hasHoverOnNode = false
 let currentEvent: MouseEvent | TouchEvent | null = null
@@ -236,13 +238,25 @@ const tooltipDirective: FunctionDirective<HTMLDivElement, unknown, keyof Tooltip
   element,
   { value, modifiers, instance },
 ) => {
-  if (typeof value !== 'string') return
-
   const attribute = getMessageAttribute(modifiers)
+
+  if (typeof value !== 'string' || !value) {
+    if (element.getAttribute(attribute) === writtenMessages.get(element)) {
+      element.removeAttribute(attribute)
+      writtenMessages.delete(element)
+    }
+
+    element.removeAttribute('data-tooltip')
+
+    return
+  }
 
   // In some cases the message is updated on an interval (e.g. table time cells), so
   //   only write to the DOM when it actually changed.
-  if (element.getAttribute(attribute) !== value) element.setAttribute(attribute, value)
+  if (element.getAttribute(attribute) !== value) {
+    element.setAttribute(attribute, value)
+    writtenMessages.set(element, value)
+  }
 
   // Everything below only needs to take effect once
   appContext ??= instance?.$.appContext ?? null

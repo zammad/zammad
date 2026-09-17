@@ -2,6 +2,7 @@
 
 import { fireEvent, waitFor } from '@testing-library/vue'
 import { describe, vi } from 'vitest'
+import { nextTick, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockLocale } from '#tests/support/mock-locale.ts'
@@ -165,6 +166,158 @@ describe('TooltipDirective', () => {
 
       // The message is a description, not an accessible name/label.
       expect(wrapper.queryByLabelText('Hello, Tooltip')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('clearing the message', () => {
+    it('removes the tooltip when the message becomes empty', async () => {
+      const message = ref<string | undefined>('Hello, Tooltip')
+
+      const wrapper = renderComponent({
+        template: `<div v-tooltip="message">Foo Test World</div>`,
+        setup: () => ({ message }),
+      })
+
+      const target = wrapper.getByText('Foo Test World')
+
+      expect(target).toHaveAttribute('aria-label', 'Hello, Tooltip')
+      expect(target).toHaveAttribute('data-tooltip', 'true')
+
+      message.value = undefined
+      await nextTick()
+
+      expect(target).not.toHaveAttribute('aria-label')
+      expect(target).not.toHaveAttribute('data-tooltip')
+
+      message.value = 'Hello again, Tooltip'
+      await nextTick()
+
+      expect(target).toHaveAttribute('aria-label', 'Hello again, Tooltip')
+      expect(target).toHaveAttribute('data-tooltip', 'true')
+    })
+
+    it('does not show the old message on hover after it was cleared', async () => {
+      const message = ref<string | undefined>('Hello, Tooltip')
+
+      const wrapper = renderComponent({
+        template: `<div v-tooltip="message">Foo Test World</div>`,
+        setup: () => ({ message }),
+      })
+
+      const target = wrapper.getByText('Foo Test World')
+
+      await wrapper.events.hover(target)
+      await waitFor(() => expect(wrapper.queryByText('Hello, Tooltip')).toBeInTheDocument())
+      await wrapper.events.unhover(target)
+
+      message.value = undefined
+      await nextTick()
+
+      vi.useFakeTimers()
+      await wrapper.events.hover(target)
+
+      // Give the 300ms tooltip delay a chance to fire without actually showing.
+      vi.advanceTimersByTime(350)
+
+      expect(wrapper.queryByText('Hello, Tooltip')).not.toBeInTheDocument()
+
+      vi.useRealTimers()
+    })
+
+    it('treats an empty string as no tooltip', async () => {
+      const message = ref('Hello, Tooltip')
+
+      const wrapper = renderComponent({
+        template: `<div v-tooltip="message">Foo Test World</div>`,
+        setup: () => ({ message }),
+      })
+
+      message.value = ''
+      await nextTick()
+
+      const target = wrapper.getByText('Foo Test World')
+
+      expect(target).not.toHaveAttribute('aria-label')
+      expect(target).not.toHaveAttribute('data-tooltip')
+    })
+
+    it('keeps a message attribute it did not set itself', () => {
+      const wrapper = renderComponent({
+        template: `<div v-tooltip="undefined" aria-label="Remove image">Foo Test World</div>`,
+      })
+
+      expect(wrapper.getByText('Foo Test World')).toHaveAttribute('aria-label', 'Remove image')
+    })
+
+    it('keeps a message attribute that a binding set to the same value', async () => {
+      const message = ref<string | undefined>('Remove image')
+      const label = ref('Remove image')
+
+      const wrapper = renderComponent({
+        template: `<div v-tooltip="message" :aria-label="label">Foo Test World</div>`,
+        setup: () => ({ message, label }),
+      })
+
+      const target = wrapper.getByText('Foo Test World')
+
+      expect(target).toHaveAttribute('aria-label', 'Remove image')
+
+      message.value = undefined
+      await nextTick()
+
+      // The binding still provides the accessible name, only the tooltip is gone.
+      expect(target).toHaveAttribute('aria-label', 'Remove image')
+      expect(target).not.toHaveAttribute('data-tooltip')
+    })
+
+    it('stops showing a tooltip when another binding replaced its message', async () => {
+      const message = ref<string | undefined>('Hello, Tooltip')
+      const label = ref<string | undefined>()
+
+      const wrapper = renderComponent({
+        template: `<div v-tooltip="message" :aria-label="label">Foo Test World</div>`,
+        setup: () => ({ message, label }),
+      })
+
+      const target = wrapper.getByText('Foo Test World')
+
+      expect(target).toHaveAttribute('aria-label', 'Hello, Tooltip')
+
+      message.value = undefined
+      label.value = 'Remove image'
+      await nextTick()
+
+      expect(target).toHaveAttribute('aria-label', 'Remove image')
+      expect(target).not.toHaveAttribute('data-tooltip')
+
+      vi.useFakeTimers()
+      await wrapper.events.hover(target)
+
+      // Give the 300ms tooltip delay a chance to fire without actually showing.
+      vi.advanceTimersByTime(350)
+
+      expect(wrapper.queryByRole('tooltip', { hidden: true })).not.toBeInTheDocument()
+
+      vi.useRealTimers()
+    })
+
+    it('clears the supportive message from aria-description', async () => {
+      const message = ref<string | undefined>('Hello, Tooltip')
+
+      const wrapper = renderComponent({
+        template: `<div v-tooltip.supportive="message">Foo Test World</div>`,
+        setup: () => ({ message }),
+      })
+
+      const target = wrapper.getByText('Foo Test World')
+
+      expect(target).toHaveAttribute('aria-description', 'Hello, Tooltip')
+
+      message.value = undefined
+      await nextTick()
+
+      expect(target).not.toHaveAttribute('aria-description')
+      expect(target).not.toHaveAttribute('data-tooltip')
     })
   })
 })
