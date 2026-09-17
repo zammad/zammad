@@ -1,5 +1,16 @@
 {
-  "enabledManagers": ["bundler", "npm", "github-actions", "devcontainer", "custom.regex"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "ignorePaths": ["**/node_modules/**"],
+  "enabledManagers": [
+    "bundler",
+    "npm",
+    "github-actions",
+    "devcontainer",
+    "dockerfile",
+    "docker-compose",
+    "gitlabci",
+    "custom.regex"
+  ],
   "customManagers": [
     {
       "customType": "regex",
@@ -27,6 +38,11 @@
       "commitMessageExtra": "(Ruby)"
     }
   },
+  "gitlabci": {
+    "managerFilePatterns": [
+      "/^\\.gitlab/ci/.*\\.yml$/"
+    ]
+  },
   "devcontainer": {
     "managerFilePatterns": [
       "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
@@ -41,6 +57,11 @@
     }
   },
   "minimumReleaseAge": "3 days",
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "minimumReleaseAge": null,
+    "addLabels": ["security"]
+  },
   "assignees": ["fl"],
   "packageRules": [
     {
@@ -65,14 +86,38 @@
     },
     {
       "matchCategories": ["js"],
-      "matchFileNames": [".cypress/package.json"],
-      "labels": ["cypress"]
+      "matchFileNames": [".dev/cypress/package.json"],
+      "addLabels": ["cypress"]
+    },
+    {
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchFileNames": [
+        ".dev/**",
+        ".gitlab/packager.io/**"
+      ],
+      "enabled": false
+    },
+    {
+      "matchDepNames": ["ruby", "docker.io/library/ruby"],
+      "groupName": "Ruby version",
+      "groupSlug": "ruby-version"
+    },
+    {
+      "matchDepNames": ["node", "docker.io/library/node"],
+      "groupName": "Node version",
+      "groupSlug": "node-version"
     },
     {
       "matchCategories": ["js"],
       "groupName": "Eslint packages",
       "groupSlug": "eslint",
       "matchPackageNames": ["/eslint/"]
+    },
+    {
+      "matchCategories": ["js"],
+      "groupName": "Oxc packages",
+      "groupSlug": "oxc",
+      "matchPackageNames": ["oxlint", "oxfmt", "eslint-plugin-oxlint"]
     },
     {
       "matchCategories": ["js"],
@@ -118,7 +163,8 @@
         "/^@vue/",
         "/^vue/",
         "!@vue/eslint-config-typescript",
-        "!@vuepic/vue-datepicker"
+        "!@vuepic/vue-datepicker",
+        "!/^@vueuse/"
       ],
       "groupName": "Vue packages",
       "groupSlug": "vue"
