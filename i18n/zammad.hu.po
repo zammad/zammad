@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-09 22:12+0000\n"
+"PO-Revision-Date: 2026-09-17 13:19+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.8.1\n"
+"X-Generator: Weblate 2026.9.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -9785,10 +9785,8 @@ msgid "Forward"
 msgstr "Továbbítás"
 
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:16
-#, fuzzy
-#| msgid "Edit knowledge base answer"
 msgid "Found knowledge base answers"
-msgstr "Tudásbázisválasz szerkesztése"
+msgstr "Tudásbázisválaszok találhatók"
 
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:16
 msgid "Found organizations"
@@ -11359,16 +11357,12 @@ msgid "Installed packages"
 msgstr "Telepített csomagok"
 
 #: app/controllers/packages_controller.rb:58
-#, fuzzy
-#| msgid ""
-#| "After installing, updating, or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "Installing, updating or uninstalling packages is not possible in container "
 "environments."
 msgstr ""
-"A csomagok telepítése, frissítése vagy eltávolítása után a következő "
-"parancsokat kell végrehajtani a kiszolgálón:"
+"Csomagok telepítése, frissítése vagy eltávolítása nem lehetséges konténeres "
+"környezetekben."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"

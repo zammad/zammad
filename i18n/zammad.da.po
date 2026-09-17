@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-11 22:12+0000\n"
+"PO-Revision-Date: 2026-09-17 22:12+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -11113,16 +11113,12 @@ msgid "Installed packages"
 msgstr "Installér pakker"
 
 #: app/controllers/packages_controller.rb:58
-#, fuzzy
-#| msgid ""
-#| "After installing, updating, or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "Installing, updating or uninstalling packages is not possible in container "
 "environments."
 msgstr ""
-"Efter installation, opdatering eller afinstallation af pakker, skal følgende "
-"kommandoer udføres på serveren:"
+"Installation, opdatering eller afinstallation af pakker er ikke mulig i "
+"container-miljøer."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"

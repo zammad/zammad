@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-14 22:12+0000\n"
+"PO-Revision-Date: 2026-09-17 13:19+0000\n"
 "Last-Translator: Igor Costa <igor_sfx@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -443,7 +443,7 @@ msgstr "%s arquivo(s) anexado(s)"
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:28
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
-"%s completou uma tarefa de privacidade de dados para excluir a id do usuário "
+"%s completou uma tarefa de privacidade de dados para excluir o ID do usuário "
 "|%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
@@ -455,7 +455,7 @@ msgstr "%s artigo criado para |%s|"
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:23
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
-"%s criou uma tarefa de privacidade de dados para excluir a id do usuário |%s|"
+"%s criou uma tarefa de privacidade de dados para excluir o ID do usuário |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:23
@@ -682,7 +682,7 @@ msgstr "%s atualizou artigo para |%s|"
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:25
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s atualizou uma tarefa de privacidade de dados para excluir a id do usuário "
+"%s atualizou uma tarefa de privacidade de dados para excluir o ID do usuário "
 "|%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:32
@@ -3893,7 +3893,7 @@ msgstr "Alterar"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:14
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:126
 msgid "Change Customer"
-msgstr "Editar cliente"
+msgstr "Alterar cliente"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:17
 msgid "Change Objects"
@@ -3909,7 +3909,7 @@ msgstr "Altere sua senha"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
 msgid "Change customer"
-msgstr "Editar cliente"
+msgstr "Alterar cliente"
 
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
@@ -11249,16 +11249,12 @@ msgid "Installed packages"
 msgstr "Pacotes instalados"
 
 #: app/controllers/packages_controller.rb:58
-#, fuzzy
-#| msgid ""
-#| "After installing, updating, or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "Installing, updating or uninstalling packages is not possible in container "
 "environments."
 msgstr ""
-"Após instalar, atualizar ou desinstalar pacotes, os comandos abaixo precisam "
-"ser executados no servidor:"
+"Instalar, atualizar ou desinstalar pacotes não é possível em ambientes de "
+"container."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
@@ -11717,7 +11713,7 @@ msgstr "Atalhos de teclado"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:4
 msgid "Keyboard Shortcuts Enabled"
-msgstr "Atalhos do Teclado Ativados"
+msgstr "Atalhos de teclado ativados"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
 msgid "Keyboard shortcuts"

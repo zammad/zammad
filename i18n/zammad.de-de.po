@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-10 13:29+0000\n"
-"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
+"PO-Revision-Date: 2026-09-17 13:19+0000\n"
+"Last-Translator: Marcel Bialas <mtzl.29@proton.me>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.8.1\n"
+"X-Generator: Weblate 2026.9.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -724,7 +724,7 @@ msgstr "%s über WhatsApp"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts:36
 msgid "%s video"
-msgstr "%s Video"
+msgstr "%s-Video"
 
 #: app/frontend/shared/i18n/dates.ts:96
 msgid "%s weeks ago"
@@ -1090,7 +1090,7 @@ msgstr "KI-Agenten"
 
 #: db/seeds/permissions.rb:257
 msgid "AI Feedback & Logs"
-msgstr "KI Feedback & Protokolle"
+msgstr "KI-Feedback & Protokolle"
 
 #: db/seeds/permissions.rb:263
 msgid "AI Knowledge Base"
@@ -1098,11 +1098,11 @@ msgstr "KI Knowledge Base"
 
 #: db/seeds/settings.rb:6342
 msgid "AI Knowledge Base Answer Suggestions"
-msgstr "KI Knowledge Base-Antwortvorschläge"
+msgstr "KI-Knowledge Base-Antwortvorschläge"
 
 #: db/seeds/settings.rb:6356
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
-msgstr "Relevanzwert KI Knowledge Base-Antwortvorschläge"
+msgstr "Relevanzwert KI-Knowledge Base-Antwortvorschläge"
 
 #: db/seeds/settings.rb:6328
 msgid "AI Knowledge Base Answer from Ticket"
@@ -1184,11 +1184,11 @@ msgstr "KI-Anbieter"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:205
 msgid "AI provider configuration disabled successfully."
-msgstr "KI-Anbieter Konfiguration erfolgreich deaktiviert."
+msgstr "KI-Anbieter-Konfiguration erfolgreich deaktiviert."
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:203
 msgid "AI provider configuration enabled successfully."
-msgstr "KI-Anbieter Konfiguration erfolgreich aktiviert."
+msgstr "KI-Anbieter-Konfiguration erfolgreich aktiviert."
 
 #: app/models/setting/validation/ai_provider.rb:13
 msgid "AI provider is missing"
@@ -1848,7 +1848,7 @@ msgstr "Auflistung hinzufügen"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:112
 msgid "Add visibility schedule"
-msgstr "Sichtbarkeit planen"
+msgstr "Sichtbarkeitsplan hinzufügen"
 
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:4
 msgid ""
@@ -3383,8 +3383,8 @@ msgid ""
 "Before creating a new knowledge base answer, please check whether an "
 "existing answer already covers the solution for this ticket."
 msgstr ""
-"Bevor eine neue knowledge base-Antwort erstellt wird, überprüfe ob bereits "
-"eine Lösung für das Ticket existiert."
+"Bevor Sie eine neue Antwort in der Knowledge Base erstellen, prüfen Sie "
+"bitte, ob bereits eine Antwort für die Lösung dieses Ticket existiert."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:806
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:107
@@ -3820,7 +3820,7 @@ msgstr "Datensatz kann nicht gelöscht werden, da %{record} davon abhängen"
 #: app/models/ai/provider_connection.rb:438
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
-"Die Zammad KI Verbindung konnte auf diesem System nicht gelöscht werden."
+"Die Verbindung zu Zammad AI konnte auf diesem System nicht gelöscht werden."
 
 #: app/policies/ticket_policy.rb:47
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -5055,7 +5055,7 @@ msgstr "URL kopieren"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
 msgid "Copy answer title"
-msgstr "Antworttitel kopieren"
+msgstr "Antwort-Titel kopieren"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
 msgid "Copy article permalink"
@@ -5957,7 +5957,7 @@ msgstr "Standard bei neuen Tickets"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:177
 msgid "Default provider updated successfully."
-msgstr "Standard Provider Update erfolgreich."
+msgstr "Standard-Provider erfolgreich aktualisiert."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:349
 msgid "Default time diff (hours)"
@@ -8001,7 +8001,7 @@ msgstr "Knowledge Base bearbeiten"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:115
 msgid "Edit knowledge base answer"
-msgstr "Knowledge Base Antwort bearbeiten"
+msgstr "Knowledge Base-Antwort bearbeiten"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:63
 msgid "Edit mask"
@@ -8301,7 +8301,7 @@ msgstr "Aktivieren"
 
 #: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
 msgid "Enable AI provider"
-msgstr "Aktiviere KI-Anbieter"
+msgstr "KI-Anbieter aktivieren"
 
 #: db/seeds/settings.rb:3669
 msgid "Enable Chat"
@@ -9769,7 +9769,7 @@ msgstr "Weiterleiten"
 
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:16
 msgid "Found knowledge base answers"
-msgstr "Knowledge Base Antworten gefunden"
+msgstr "Gefundene Knowledge Base-Antworten"
 
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:16
 msgid "Found organizations"
@@ -11351,16 +11351,12 @@ msgid "Installed packages"
 msgstr "Installierte Pakete"
 
 #: app/controllers/packages_controller.rb:58
-#, fuzzy
-#| msgid ""
-#| "After installing, updating, or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "Installing, updating or uninstalling packages is not possible in container "
 "environments."
 msgstr ""
-"Nach dem Installieren, Aktualisieren oder Entfernen von Paketen müssen "
-"folgende Befehle auf dem Server ausgeführt werden:"
+"Das Installieren, Aktualisieren oder Deinstallieren von Paketen ist in "
+"Container-Umgebungen nicht möglich."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
@@ -11863,7 +11859,7 @@ msgstr "Knowledge Base Antworterstellung"
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:83
 msgid "Knowledge Base Answer Suggestions"
-msgstr "Knowledge Base Antwortvorschläge"
+msgstr "Knowledge Base-Antwortvorschläge"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:28
 msgid "Knowledge Base Answer could not be created"
@@ -11871,7 +11867,7 @@ msgstr "Knowledge Base Antwort konnte nicht erstellt werden"
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:5
 msgid "Knowledge Base Assistant"
-msgstr "Knowledge Base Assistent"
+msgstr "Knowledge Base-Assistent"
 
 #: db/seeds/permissions.rb:398
 msgid "Knowledge Base Editor"
@@ -11883,7 +11879,7 @@ msgstr "Knowledge Base Feed"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBreadcrumbItems.ts:27
 msgid "Knowledge Base Home"
-msgstr "Knowledge Base Startseite"
+msgstr "Startseite der Knowledge Base"
 
 #: db/seeds/permissions.rb:404
 msgid "Knowledge Base Reader"
@@ -11915,27 +11911,27 @@ msgstr "Knowledge Base-Aktionen"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
 msgid "Knowledge base answer"
-msgstr "Knowledge Base Antwort"
+msgstr "Knowledge Base-Antwort"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts:128
 msgid "Knowledge base answer deleted successfully."
-msgstr "Knowledge Base Antwort wurde erfolgreich gelöscht."
+msgstr "Knowledge Base-Antwort wurde erfolgreich gelöscht."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/KnowledgeBaseAnswerScreenBehavior.vue:71
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr ""
-"Verhalten der Knowledge Base Antwort-Ansicht wurde erfolgreich aktualisiert."
+"Verhalten der Knowledge Base-Antwort-Ansicht wurde erfolgreich aktualisiert."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
 msgid "Knowledge base answer updated successfully."
-msgstr "Knowledge Base Antwort erfolgreich aktualisiert."
+msgstr "Knowledge Base-Antwort erfolgreich aktualisiert."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:125
 msgid ""
 "Knowledge base answer with specified ID was not found. Try checking the URL "
 "for errors."
 msgstr ""
-"Die Knowledge Base Antwort mit der angegebenen ID wurde nicht gefunden. "
+"Die Knowledge Base-Antwort mit der angegebenen ID wurde nicht gefunden. "
 "Bitte überprüfen Sie die URL auf Fehler."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
@@ -11954,7 +11950,7 @@ msgstr "Entwurf für Knowledge Base konnte nicht generiert werden."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:145
 msgid "Knowledge base feed"
-msgstr "Knowledge Base Feed"
+msgstr "Feed der Knowledge Base"
 
 #: app/assets/javascripts/app/views/ai/missing_knowledge_base_alert.jst.eco:2
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:14
@@ -12529,7 +12525,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:15
 msgid "Login screen links"
-msgstr "Links Anmeldeansicht"
+msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:14
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:20
@@ -12637,7 +12633,7 @@ msgstr ""
 
 #: db/seeds/permissions.rb:258
 msgid "Manage AI feedback and logs of your system."
-msgstr "Verwalte das KI Feedback und die Logs von deinem Syste."
+msgstr "Verwalten Sie das KI-Feedback und die Protokolle Ihres Systems."
 
 #: db/seeds/permissions.rb:234
 msgid "Manage AI provider of your system."
@@ -13855,7 +13851,7 @@ msgstr "Neuer Workflow"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:42
 msgid "New Writing Assistant Tool"
-msgstr "Neues Schreibassistent-Werzeug"
+msgstr "Neues Schreibassistent-Werkzeug"
 
 #: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUiDisclaimer.ts:42
 msgid "New desktop BETA UI"
@@ -14219,8 +14215,8 @@ msgid ""
 "No existing knowledge base answers match this topic. Generate a new answer "
 "to continue."
 msgstr ""
-"Es existiert noch keine knowledge base Antwort mit diesem Titel. Erstelle "
-"eine neue Antwort, um fortzufahren."
+"Es existiert noch keine Knowledge Base-Antwort mit diesem Titel. Erstellen "
+"Sie eine neue Antwort, um fortzufahren."
 
 #: app/frontend/shared/form/i18n/locales.ts:45
 msgid "No file chosen."
@@ -14474,7 +14470,6 @@ msgstr "Keine"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:131
 msgid "None of the existing knowledge base answers fit your ticket?"
 msgstr ""
-"Keine von den existierenden knowledge base Antworten passt zu deinem Ticket?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/linked_tickets.coffee:52
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
@@ -15478,8 +15473,7 @@ msgstr "PGP-Integration"
 
 #: lib/secure_mailing/pgp/tool/data.rb:85
 msgid "PGP signature does not cover the displayed message body"
-msgstr ""
-"Die PGP-Signatur bezieht sich nicht auf den angezeigten Nachrichtentext"
+msgstr "Die PGP-Signatur bezieht sich nicht auf den angezeigten Nachrichtentext"
 
 #: db/seeds/settings.rb:5902
 msgid "PGP signing for system notifications"
@@ -16366,7 +16360,7 @@ msgstr "Anbieter wird derzeit nicht genutzt."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:80
 msgid "Provider updated successfully."
-msgstr "Provider erfolgreich aktualisiert."
+msgstr "Anbieter erfolgreich aktualisiert."
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:5
 msgid "Providers"
@@ -16720,7 +16714,7 @@ msgstr "Entspannen Sie sich, Ihr System wird gerade eingerichtet…"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:73
 msgid "Relevance score"
-msgstr "Relevantheitsgard"
+msgstr "Relevanzwert"
 
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:38
 msgid "Relevance score threshold"
@@ -20658,7 +20652,7 @@ msgstr ""
 
 #: app/services/service/ai/vectordb/create_table.rb:21
 msgid "The currently selected AI provider does not support embeddings."
-msgstr "Der aktuell ausgewählte KI-Anbieter unterstützt keine Einbettungen."
+msgstr "Der aktuell ausgewählte KI-Anbieter unterstützt keine Embeddings."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:6
 msgid ""
@@ -22613,7 +22607,7 @@ msgstr ""
 #: app/controllers/ai/provider_connections_controller.rb:38
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:37
 msgid "This provider does not support embeddings."
-msgstr "Dieser Anbieter unterstützt keine Einbettungen."
+msgstr "Dieser Anbieter unterstützt keine Embeddings."
 
 #: app/services/service/ai/provider_connection/list_models.rb:51
 msgid "This provider does not support model listing."
@@ -25077,7 +25071,8 @@ msgstr "Vector DB-Strategie zur Aufteilung der Knowledge Base in Segmente"
 
 #: db/seeds/settings.rb:6421
 msgid "Vector DB knowledge base excluded categories"
-msgstr "Ausgeschlossen Knowledge Base-Kategorien aus der Vektor-Datenbank"
+msgstr ""
+"Knowledge Base-Kategorien, die aus der Vektor-Datenbank ausgeschlossen werden"
 
 #: app/assets/javascripts/app/views/package.jst.eco:61
 msgid "Vendor"
