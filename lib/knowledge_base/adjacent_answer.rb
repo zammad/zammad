@@ -114,8 +114,16 @@ class KnowledgeBase::AdjacentAnswer
       .pluck(:id)
   end
 
+  # Load the answer and its category in the browsed locale for the link title and breadcrumb.
+  # The category keeps its existing translation when it has none in this locale.
   def answer_by_id(id)
-    id && ::KnowledgeBase::Answer.find_by(id: id)
+    return if id.nil?
+
+    ::KnowledgeBase::Answer.localed(locale).find_by(id: id)&.tap do |answer|
+      localed_category = ::KnowledgeBase::Category.localed(locale).find_by(id: answer.category_id)
+
+      answer.category = localed_category if localed_category
+    end
   end
 
   # The ids of the categories listed inside one node, in the mode that node stores for them. `node`

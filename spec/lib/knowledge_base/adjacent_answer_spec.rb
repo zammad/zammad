@@ -396,4 +396,68 @@ RSpec.describe KnowledgeBase::AdjacentAnswer do
       end
     end
   end
+
+  # Which translation `HasTranslations#translation` hands back depends on what the record was loaded
+  #   through, and the link these become carries the answer's title as well as — via
+  #   `breadcrumb_path_for` — its category's.
+  describe 'with a second locale' do
+    let(:alternative_locale) do
+      create(:knowledge_base_locale, knowledge_base:, system_locale: Locale.find_by(locale: 'lt'))
+    end
+
+    let(:translation) { answer.translations.find_by(kb_locale: alternative_locale) }
+    let(:answer)      { answer_a_1_1_third }
+
+    # Only the walked branch is translated: an untranslated record is not listed in this locale, so
+    #   everything the walk has to step over has to exist in it.
+    before do
+      [category_a_1_1, category_a_1_2].each do |category|
+        create(:knowledge_base_category_translation, category:, kb_locale: alternative_locale, title: "#{category.translations.first.title} (lt)")
+      end
+
+      [answer_a_1_1_second, answer_a_1_1_third, answer_a_1_2_first].each do |item|
+        create(:knowledge_base_answer_translation, answer: item, kb_locale: alternative_locale, title: "#{item.translations.first.title} (lt)")
+      end
+    end
+
+    context 'when the neighbour is in the same category' do
+      it 'reads the answer in the browsed locale' do
+        expect(adjacent_answer.previous.translation.kb_locale).to eq(alternative_locale)
+      end
+
+      it 'reads its category in the browsed locale' do
+        expect(adjacent_answer.previous.category.translation.kb_locale).to eq(alternative_locale)
+      end
+    end
+
+    context 'when the neighbour is in another category' do
+      it 'reads the answer in the browsed locale' do
+        expect(adjacent_answer.next.translation.kb_locale).to eq(alternative_locale)
+      end
+
+      it 'reads its category in the browsed locale' do
+        expect(adjacent_answer.next.category.translation.kb_locale).to eq(alternative_locale)
+      end
+    end
+
+    # Stepping out of a category walks up into ones the site does not list in this locale, and the
+    #   link still has to render a breadcrumb for the answer it lands on.
+    context 'when the category of the neighbour is untranslated' do
+      let(:answer) { answer_a_1_2_first }
+
+      let!(:answer_a_1_first) do
+        create(:knowledge_base_answer, :published, category: category_a_1).tap do |item|
+          create(:knowledge_base_answer_translation, answer: item, kb_locale: alternative_locale, title: 'Untranslated parent (lt)')
+        end
+      end
+
+      it 'returns the answer' do
+        expect(adjacent_answer.next).to eq(answer_a_1_first)
+      end
+
+      it 'keeps the translation the category came with' do
+        expect(adjacent_answer.next.category.translation).to eq(category_a_1.translations.first)
+      end
+    end
+  end
 end
