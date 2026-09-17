@@ -3,8 +3,6 @@
 # Translation through the AI provider. Everything the LLM path needs - prompts, stored results,
 # analytics - lives in the AI feature; this class only maps it onto backend-neutral data.
 class Service::ContentTranslation::Backend::AI < Service::ContentTranslation::Backend::Base
-  attr_reader :object, :content, :html, :locale, :persistence_strategy, :regeneration_of
-
   # The AI provider is a feature switch of its own, so only this backend asks about it; a service
   # configured elsewhere answers for itself.
   def self.ensure_enabled!
@@ -21,15 +19,6 @@ class Service::ContentTranslation::Backend::AI < Service::ContentTranslation::Ba
   # stored with every translation this backend produces.
   def self.backend_name
     'ai'
-  end
-
-  def initialize(object:, content:, html:, locale:, persistence_strategy: :stored_or_request, regeneration_of: nil)
-    @object               = object
-    @content              = content
-    @html                 = html
-    @locale               = locale
-    @persistence_strategy = persistence_strategy
-    @regeneration_of      = regeneration_of
   end
 
   # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run`; nil without a

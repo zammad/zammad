@@ -89,8 +89,11 @@ class ProviderSettings extends App.Controller
         autofocus: false
       ))
 
+  # Only the service and the AI connection survive the switch: credentials belong to the service
+  # they were entered for, so a field both services ask for, like the API key, would stay filled.
   changeProvider: =>
-    @config = _.extend({}, @config, @formParam(@$('form')))
+    params  = _.extend({}, @config, @formParam(@$('form')))
+    @config = _.pick(params, 'provider', 'ai_provider_connection_id')
 
     @render()
 
@@ -323,7 +326,7 @@ class Logs extends App.Controller
 
 class State
   @current: ->
-    App.Setting.get('content_translation_ticket_article')
+    not _.isEmpty(App.Setting.get('content_translation_service_config'))
 
 App.Config.set(
   'IntegrationContentTranslation'

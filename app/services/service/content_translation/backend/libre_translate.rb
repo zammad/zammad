@@ -4,7 +4,7 @@
 # so the HTML handling and the store are its own rather than the feature layer's; the instance
 # itself is reached through LibreTranslate::Client.
 class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTranslation::Backend::Base
-  attr_reader :object, :content, :html, :locale, :persistence_strategy, :regeneration_of
+  include Service::ContentTranslation::Backend::Concerns::StoresTranslations
 
   # Zammad locales LibreTranslate does not name by their primary subtag. The first code an instance
   # serves wins - Portuguese may fall back on the other region, Chinese not on the other script.
@@ -66,15 +66,6 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
     ERRORS.fetch(error.class, UnreachableError)
   end
 
-  def initialize(object:, content:, html:, locale:, persistence_strategy: :stored_or_request, regeneration_of: nil)
-    @object               = object
-    @content              = content
-    @html                 = html
-    @locale               = locale
-    @persistence_strategy = persistence_strategy
-    @regeneration_of      = regeneration_of
-  end
-
   # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run` - nil for the last
   #   one, there is no analytics run without an LLM. nil altogether without a translation.
   def execute
@@ -95,27 +86,6 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
   end
 
   private
-
-  def find_stored
-    return if persistence_strategy == :request_only
-    # A regeneration asks for another translation of what is stored, so the store must not answer.
-    return if regeneration_of
-
-    Service::ContentTranslation::StoredTranslation.find(**store_key)
-  end
-
-  # .save answers with nothing when it loses the race for the row; this one has its own translation.
-  def store(translation)
-    Service::ContentTranslation::StoredTranslation.save(**store_key, translation:)
-  end
-
-  def store_key
-    { object:, locale:, content:, html:, backend: backend_name }
-  end
-
-  def result(translation, fresh:)
-    { content: translation, backend: backend_name, fresh:, analytics_run: nil }
-  end
 
   def translate
     return request(content, 'text') if !html
@@ -148,24 +118,5 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
 
   def client
     @client ||= self.class.client(config)
-  end
-
-  def config
-    @config ||= Setting.get('content_translation_service_config').to_h.with_indifferent_access
-  end
-
-  # Nothing else sanitizes what the instance answers, and a translation never passes the
-  # sanitization of the object it belongs to - so only HTML that sanitization allows may be stored.
-  def sanitize(translation)
-    body = html ? HtmlSanitizer.strict(translation) : translation
-
-    # The sanitizer answers with its own message rather than raising when it gives up on the HTML;
-    # storing that would serve an English error sentence as this content's translation.
-    return if body == HtmlSanitizer::UNPROCESSABLE_HTML_MSG
-
-    # The row is keyed by the content, so an empty translation would be served until it changes.
-    return if body.blank?
-
-    body
   end
 end

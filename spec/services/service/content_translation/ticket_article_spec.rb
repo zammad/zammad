@@ -276,6 +276,83 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     end
   end
 
+  describe 'with DeepL configured' do
+    let(:endpoint) { 'https://api-free.deepl.com/v2/translate' }
+    let(:response) { '<p>Hallo <strong>Welt</strong>.</p>' }
+
+    before do
+      stub_request(:post, endpoint)
+        .to_return(status: 200, body: { translations: [{ text: response }] }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+      # Without the validation: its connection test asks DeepL to translate, which would count
+      # towards the requests the examples below expect.
+      Setting.set('content_translation_service_config', { 'provider' => 'deepl', 'api_key' => 'secret-key', 'tier' => 'free' }, validate: false)
+    end
+
+    it 'answers with its translation' do
+      expect(translate)
+        .to have_attributes(content: response, backend: 'deepl', translated: true, fresh: true)
+    end
+
+    it 'asks no AI provider' do
+      translate
+
+      expect(provider_calls).to be_empty
+    end
+
+    # One HTTP round trip is not worth a job and a subscription, so the backend does not defer.
+    it 'answers in place although the caller could be answered later' do
+      expect { described_class.execute(object: article, target_locale:) }
+        .not_to have_enqueued_job(ContentTranslationJob)
+    end
+
+    it 'serves a second request without asking DeepL again' do
+      2.times { translate }
+
+      expect(WebMock).to have_requested(:post, endpoint).once
+    end
+
+    # The service adds nothing to a failure of its backend: what the caller has to tell the outcomes
+    # apart by is the class the backend raised.
+    describe 'when DeepL refuses the request' do
+      before { stub_request(:post, endpoint).to_return(status: 403, body: { message: 'Authorization failed' }.to_json) }
+
+      it 'surfaces the outcome unchanged' do
+        expect { translate }.to raise_error(Service::ContentTranslation::Backend::Base::InvalidCredentialsError)
+      end
+
+      it 'stores nothing' do
+        expect { suppress(Service::ContentTranslation::Backend::Base::Error) { translate } }
+          .not_to change(AI::StoredResult, :count)
+      end
+    end
+
+    describe 'with a target language DeepL does not serve' do
+      let(:target_locale) { 'rw' }
+
+      it 'fails rather than answering with untranslated content' do
+        expect { translate }.to raise_error(Service::ContentTranslation::Backend::Base::UnsupportedLanguageError)
+      end
+
+      it 'sends no content' do
+        suppress(Service::ContentTranslation::Backend::Base::Error) { translate }
+
+        expect(WebMock).not_to have_requested(:post, endpoint)
+      end
+    end
+
+    # The two services key their rows apart, so the one that is configured now has to translate
+    # again rather than serve what the other one left behind.
+    it 'does not serve what LibreTranslate stored for the same article' do
+      Service::ContentTranslation::StoredTranslation.save(
+        object: article, locale: Locale.find_by(locale: target_locale), content: body, html: true,
+        backend: 'libre_translate', translation: '<p>Von der Instanz.</p>'
+      )
+
+      expect(translate).to have_attributes(content: response, backend: 'deepl', fresh: true)
+    end
+  end
+
   # Showing that switching the service does not serve the previous one's translation needs a second
   # backend that uses the same store, which the echo double above deliberately does not - it answers
   # without storing anything.

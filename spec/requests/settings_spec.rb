@@ -239,6 +239,23 @@ RSpec.describe 'Settings', type: :request do
       expect(Setting.get('content_translation_service_config')).to include('api_key' => 'secret-key')
     end
 
+    it 'masks the API key of DeepL as well' do
+      stub_request(:post, 'https://api-free.deepl.com/v2/translate')
+        .to_return(status: 200, body: { translations: [{ text: 'Hallo' }] }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+      Setting.set('content_translation_service_config', { 'provider' => 'deepl', 'api_key' => 'secret-key', 'tier' => 'free' })
+
+      authenticated_as(admin)
+
+      setting = Setting.find_by(name: 'content_translation_service_config')
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+
+      expect(json_response['state_current']['value']).to include(
+        'api_key' => SensitiveParamsHelper::SENSITIVE_MASK,
+        'tier'    => 'free',
+      )
+    end
+
     it 'does settings index with admin-api' do
 
       # index

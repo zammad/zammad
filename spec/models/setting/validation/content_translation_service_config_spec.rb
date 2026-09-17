@@ -83,6 +83,54 @@ RSpec.describe Setting::Validation::ContentTranslationServiceConfig do
     end
   end
 
+  context 'with the DeepL service' do
+    let(:endpoint) { 'https://api-free.deepl.com/v2/translate' }
+    let(:config)   { { 'provider' => 'deepl', 'api_key' => 'secret-key', 'tier' => 'free' } }
+
+    before do
+      stub_request(:post, endpoint)
+        .to_return(status: 200, body: { translations: [{ text: 'Hallo' }] }.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'stores a configuration DeepL answers for' do
+      expect { Setting.set(setting_name, config) }.not_to raise_error
+    end
+
+    context 'when DeepL cannot be reached' do
+      before { stub_request(:post, endpoint).to_timeout }
+
+      it 'refuses it as unreachable' do
+        expect { Setting.set(setting_name, config) }
+          .to raise_error(ActiveRecord::RecordInvalid, %r{cannot be reached})
+      end
+    end
+
+    context 'when DeepL rejects the key' do
+      before { stub_request(:post, endpoint).to_return(status: 403, body: { message: 'Authorization failed' }.to_json) }
+
+      it 'refuses it as invalid credentials rather than as unreachable' do
+        expect { Setting.set(setting_name, config) }
+          .to raise_error(ActiveRecord::RecordInvalid, %r{refused the configured credentials})
+      end
+    end
+
+    context 'without the plan' do
+      let(:config) { super().except('tier') }
+
+      it 'refuses it as incomplete' do
+        expect { Setting.set(setting_name, config) }
+          .to raise_error(ActiveRecord::RecordInvalid, %r{configuration is incomplete})
+      end
+
+      # The required keys are checked before the ping, so an incomplete config asks nothing.
+      it 'sends the key nowhere' do
+        suppress(ActiveRecord::RecordInvalid) { Setting.set(setting_name, config) }
+
+        expect(WebMock).not_to have_requested(:post, endpoint)
+      end
+    end
+  end
+
   context 'with a service that needs credentials' do
     let(:backend) do
       Class.new(Service::ContentTranslation::Backend::Base) do

@@ -86,6 +86,21 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
       end
     end
 
+    # DeepL authenticates with a scheme of its own rather than with Bearer or Basic.
+    context 'when the input includes a DeepL authorization header' do
+      it 'masks the key' do
+        header = 'Authorization: DeepL-Auth-Key 1234abcd-ef56-7890-abcd-ef1234567890:fx'
+
+        expect(described_class.mask_sensitive_data(header)).to eq('Authorization: DeepL-Auth-Key [FILTERED]')
+      end
+
+      it 'keeps what follows the header' do
+        header = "Authorization: DeepL-Auth-Key secret-key\nContent-Type: application/json"
+
+        expect(described_class.mask_sensitive_data(header)).to eq("Authorization: DeepL-Auth-Key [FILTERED]\nContent-Type: application/json")
+      end
+    end
+
     context 'when the input includes sensitive query parameters' do
       it 'masks only the sensitive query parameter values' do
         url = 'https://example.com/api?api_key=abc123&other=param'

@@ -32,4 +32,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'MD5'
   inflect.acronym 'VectorDB'
   inflect.acronym 'OCR'
+  inflect.acronym 'DeepL'
 end

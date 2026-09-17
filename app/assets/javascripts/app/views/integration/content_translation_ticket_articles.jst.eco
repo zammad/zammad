@@ -13,9 +13,9 @@
     <input name="content_translation_ticket_article_auto" type="checkbox" id="content-translation-ticket-article-auto" <% if @ticketArticleAuto: %>checked<% end %>>
     <label for="content-translation-ticket-article-auto"></label>
   </div>
-  <h3><%- @T('Allow global translation') %></h3>
+  <h3><%- @T('Allow translation of all articles at once') %></h3>
 </div>
-<p><%- @T('Allow specific roles to translate all articles at once. Be careful, this can result in a lot of translation calls and might be cost related.') %></p>
+<p><%- @T('Allow specific roles to translate all articles in one ticket at once. Use with caution, as this can result in a large number of translation calls and may incur additional costs.') %></p>
 
 <form class="settings-entry">
   <div class="horizontal end">

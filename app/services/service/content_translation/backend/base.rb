@@ -37,6 +37,8 @@ class Service::ContentTranslation::Backend::Base < Service::Base
     end
   end
 
+  attr_reader :object, :content, :html, :locale, :persistence_strategy, :regeneration_of
+
   # Raises when the service behind this backend is not usable. Whether translation is switched on
   # at all is not its question - the content translation services ask that before.
   def self.ensure_enabled!
@@ -63,6 +65,15 @@ class Service::ContentTranslation::Backend::Base < Service::Base
   # Keys the service config must carry for this backend, beside `provider`.
   def self.required_config_keys
     []
+  end
+
+  def initialize(object:, content:, html:, locale:, persistence_strategy: :stored_or_request, regeneration_of: nil)
+    @object               = object
+    @content              = content
+    @html                 = html
+    @locale               = locale
+    @persistence_strategy = persistence_strategy
+    @regeneration_of      = regeneration_of
   end
 
   def backend_name

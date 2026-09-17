@@ -803,7 +803,7 @@ msgstr ""
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
@@ -857,9 +857,14 @@ msgstr ""
 msgid "API error."
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
 msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:14
@@ -1719,10 +1724,6 @@ msgstr ""
 msgid "Allow future dates toggle value is required."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
-msgid "Allow global translation"
-msgstr ""
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 msgid "Allow multiple selections"
 msgstr ""
@@ -1740,7 +1741,11 @@ msgid "Allow reopening of tickets within a certain time."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
-msgid "Allow specific roles to translate all articles at once. Be careful, this can result in a lot of translation calls and might be cost related."
+msgid "Allow specific roles to translate all articles in one ticket at once. Use with caution, as this can result in a large number of translation calls and may incur additional costs."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+msgid "Allow translation of all articles at once"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
@@ -2603,7 +2608,7 @@ msgstr ""
 msgid "Available Values"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:258
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -5030,6 +5035,10 @@ msgstr ""
 msgid "Decryption was successful."
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:32
@@ -6197,6 +6206,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:117
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
 msgid "Detected language"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
 msgstr ""
 
 #: db/seeds/settings.rb:74
@@ -8680,6 +8693,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/group.coffee:30
 msgid "Groups are …"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
@@ -17931,7 +17948,7 @@ msgstr ""
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:247
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid "The article language detection is disabled. Enable it to avoid translating articles that are already in the target language. %l"
 msgstr ""
 
@@ -19064,7 +19081,8 @@ msgstr ""
 msgid "The translation service does not support the requested target language."
 msgstr ""
 
-#: app/services/service/content_translation/backend/libre_translate.rb:128
+#: app/services/service/content_translation/backend/deepl.rb:132
+#: app/services/service/content_translation/backend/libre_translate.rb:99
 msgid "The translation service does not support the target language %s."
 msgstr ""
 
@@ -20620,7 +20638,7 @@ msgstr ""
 msgid "Translate section to English"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:333
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
 msgstr ""
 
@@ -20653,7 +20671,7 @@ msgstr ""
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:116
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 msgid "Translation service provider"
 msgstr ""
 
@@ -21173,7 +21191,7 @@ msgid "Update shared draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:177
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -22383,11 +22401,11 @@ msgstr ""
 msgid "You can find archived emails in Zammad anytime using the search function, like for any other ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:308
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:308
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 

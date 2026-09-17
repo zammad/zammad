@@ -43,7 +43,7 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     it 'offers the service and warns about the switched-off provider' do
       within :active_content do
-        expect(page).to have_select('provider', options: ['-', 'AI provider', 'LibreTranslate'])
+        expect(page).to have_select('provider', options: ['-', 'AI provider', 'LibreTranslate', 'DeepL'])
         expect(page).to have_no_css('.js-missingProviderAlert')
         select 'AI provider', from: 'provider'
         expect(page).to have_css('.js-missingProviderAlert', text: 'The AI provider configuration is disabled.')
@@ -80,7 +80,7 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     it 'offers no AI service and no warning' do
       within :active_content do
-        expect(page).to have_select('provider', options: ['-', 'LibreTranslate'], selected: '-')
+        expect(page).to have_select('provider', options: ['-', 'LibreTranslate', 'DeepL'], selected: '-')
         expect(page).to have_no_css('.js-missingProviderAlert')
       end
     end
@@ -100,7 +100,7 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     it 'offers the AI provider without a warning' do
       within :active_content do
-        expect(page).to have_select('provider', options: ['-', 'AI provider', 'LibreTranslate'])
+        expect(page).to have_select('provider', options: ['-', 'AI provider', 'LibreTranslate', 'DeepL'])
         expect(page).to have_no_css('.js-missingProviderAlert')
         select 'AI provider', from: 'provider'
         expect(page).to have_no_css('.js-missingProviderAlert')
@@ -302,6 +302,54 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
         expect(page).to have_text('The translation service cannot be reached.')
         expect(Setting.get('content_translation_service_config')).to eq({})
       end
+    end
+  end
+
+  context 'with the DeepL service' do
+    def configure_deepl
+      within :active_content do
+        select 'DeepL', from: 'provider'
+        fill_in 'api_key', with: 'secret-key'
+        select 'Developer API (api-free.deepl.com)', from: 'tier'
+        click_on 'Save'
+      end
+    end
+
+    before do
+      # System specs run without WebMock, so saving - which runs the connection test - is answered
+      # through UserAgent itself.
+      allow(UserAgent).to receive(:post).and_return(UserAgent::Result.new(success: true, code: 200, data: { 'translations' => [{ 'text' => 'Hallo' }] }))
+
+      visit 'system/integration/content_translation'
+    end
+
+    it 'asks for the API key and the plan, but for no AI connection' do
+      within :active_content do
+        select 'DeepL', from: 'provider'
+
+        expect(page).to have_field('api_key')
+        expect(page).to have_select('tier', options: ['-', 'Developer API (api-free.deepl.com)', 'Growth/Enterprise API (api.deepl.com)'])
+        expect(page).to have_no_select('ai_provider_connection_id')
+      end
+    end
+
+    # Both services ask for an API key, so the field of the previous one must not be kept.
+    it 'starts with an empty API key when the service was switched' do
+      within :active_content do
+        select 'LibreTranslate', from: 'provider'
+        fill_in 'api_key', with: 'libre-translate-key'
+
+        select 'DeepL', from: 'provider'
+
+        expect(page).to have_field('api_key', with: '')
+      end
+    end
+
+    it 'stores a configuration DeepL answers for' do
+      configure_deepl
+
+      wait_for_setting('content_translation_service', true)
+      expect(Setting.get('content_translation_service_config')).to include('provider' => 'deepl', 'api_key' => 'secret-key', 'tier' => 'free')
     end
   end
 
