@@ -118,8 +118,8 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
     end
 
     # The titles the two links point at, as the rendered page offers them.
-    def adjacent_titles(answer)
-      get help_answer_path(locale_name, category, answer)
+    def adjacent_titles(answer, locale: locale_name)
+      get help_answer_path(locale, category, answer)
 
       %w[previous next].map { |direction| response.parsed_body.at_css(".article-nav-adjacent-#{direction} a")&.attr('title') }
     end
@@ -138,6 +138,30 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
 
       it 'walks the order the listing renders' do
         expect(adjacent_titles(mike)).to eq([alpha.translation.title, zulu.translation.title])
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/6367
+    context 'with a second locale' do
+      let(:alternative_locale_name) { alternative_locale.system_locale.locale }
+
+      let!(:category_lt) { create(:knowledge_base_category_translation, category:, kb_locale: alternative_locale, title: 'Kategorija') }
+      let!(:zulu_lt)     { create(:knowledge_base_answer_translation, answer: zulu, kb_locale: alternative_locale, title: 'Zulu lietuviskai') }
+      let!(:alpha_lt)    { create(:knowledge_base_answer_translation, answer: alpha, kb_locale: alternative_locale, title: 'Alpha lietuviskai') }
+
+      before do
+        create(:knowledge_base_translation, kb_locale: alternative_locale)
+        create(:knowledge_base_answer_translation, answer: mike, kb_locale: alternative_locale, title: 'Mike lietuviskai')
+      end
+
+      it 'offers the links in the browsed locale' do
+        expect(adjacent_titles(mike, locale: alternative_locale_name)).to eq([zulu_lt.title, alpha_lt.title])
+      end
+
+      it 'links through the category in the browsed locale' do
+        get help_answer_path(alternative_locale_name, category, mike)
+
+        expect(response.parsed_body.at_css('.article-nav-adjacent-next a').attr('href')).to include(category_lt.to_param)
       end
     end
   end
