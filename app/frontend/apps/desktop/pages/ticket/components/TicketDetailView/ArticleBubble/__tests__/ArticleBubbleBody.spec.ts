@@ -490,11 +490,11 @@ describe('ArticleBubbleBody', () => {
     // A hidden tab is detached from the document, where nothing has a height.
     it('measures a translation that arrived while the tab was hidden once it is shown again', async () => {
       // The browser's measurements: a long text, nothing while detached.
-      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(
-        function (this: Element) {
-          return this.isConnected ? 800 : 0
-        },
-      )
+      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(function (
+        this: Element,
+      ) {
+        return this.isConnected ? 800 : 0
+      })
 
       const translation = ref<ArticleTranslation | undefined>(undefined)
       articleTranslation.translationFor = () => translation.value
@@ -534,11 +534,11 @@ describe('ArticleBubbleBody', () => {
     })
     // The same for an article that arrives while the tab is hidden: its bubble mounts detached.
     it('measures an article that arrived while the tab was hidden once it is shown again', async () => {
-      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(
-        function (this: Element) {
-          return this.isConnected ? 800 : 0
-        },
-      )
+      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(function (
+        this: Element,
+      ) {
+        return this.isConnected ? 800 : 0
+      })
 
       const articles = ref([
         createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
