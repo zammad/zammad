@@ -122,7 +122,7 @@ class CoreWorkflow::Attributes
 
   def object_elements_class
     ObjectManager::Object.new(@payload['class_name']).attributes(@user, saved_only, data_only: false).each_with_object([]) do |element, result|
-      result << element.data.merge(screens: element.screens)
+      result << element_data(element)
     end
   end
 
@@ -132,8 +132,12 @@ class CoreWorkflow::Attributes
     return [] if @payload['class_name'] != 'Ticket' || @payload['screen'] != 'create_middle'
 
     ObjectManager::Object.new('TicketArticle').attributes(@user, saved_only, data_only: false).each_with_object([]) do |element, result|
-      result << element.data.merge(screens: element.screens)
+      result << element_data(element)
     end.select { |o| o[:name] == 'body' }
+  end
+
+  def element_data(element)
+    element.data.merge(screens: element.screens, configured_screens: element.attribute.screens)
   end
 
   def object_elements_hash
@@ -154,8 +158,15 @@ class CoreWorkflow::Attributes
   # dont cache this else the result object will work with references and cache bugs occur
   def visibility_default
     object_elements.to_h do |attribute|
-      [attribute[:name], screen_value(attribute, 'shown') == false ? 'remove' : 'show']
+      [attribute[:name], attribute_shown?(attribute) ? 'show' : 'remove']
     end
+  end
+
+  # A configured screen that resolves to no options is not shown, same as in the legacy frontend.
+  def attribute_shown?(attribute)
+    return false if attribute[:screens][@payload['screen']] == {} && attribute[:configured_screens][@payload['screen']].present?
+
+    screen_value(attribute, 'shown') != false
   end
 
   def attribute_mandatory?(attribute)

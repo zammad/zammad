@@ -19,6 +19,12 @@ describe TokenPolicy do
 
       it { is_expected.to forbid_action(:destroy) }
     end
+
+    context 'when the same user is wrapped in a user context' do
+      let(:user) { UserContext.new(record.user) }
+
+      it { is_expected.to permit_action(:destroy) }
+    end
   end
 
   context 'when token is not visible in frontend' do

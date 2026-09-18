@@ -36,6 +36,11 @@ class UserContext < Delegator
   end
   alias kind_of? is_a?
 
+  # ActiveRecord equality checks `other.instance_of?(self.class)`, so `record.user == user_context` needs this too.
+  def instance_of?(klass)
+    super || @user.instance_of?(klass)
+  end
+
   def permissions?(permissions)
     permissions!(permissions)
     true

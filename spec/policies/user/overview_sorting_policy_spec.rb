@@ -21,4 +21,12 @@ describe User::OverviewSortingPolicy do
 
     it { is_expected.to forbid_actions(%i[show create update destroy]) }
   end
+
+  context 'with the user wrapped in a user context' do
+    subject { described_class.new(UserContext.new(user1), record) }
+
+    let(:record) { record1 }
+
+    it { is_expected.to permit_actions(%i[show create update destroy]) }
+  end
 end
