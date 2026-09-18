@@ -32,7 +32,7 @@ services:
     command: sleep infinity
 
   elasticsearch:
-    image: elasticsearch:9.3.2
+    image: elasticsearch:9.5.2
     environment:
       - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
       - discovery.type=single-node
