@@ -60,6 +60,56 @@ RSpec.describe CoreWorkflow::Attributes, type: :model do
     it 'priority should be shown by default' do
       expect(result.visibility_default['priority_id']).to eq('show')
     end
+
+    context 'with an attribute which has screen options for specific permissions', db_strategy: :reset do
+      let(:field_name) { SecureRandom.uuid }
+
+      before do
+        create(:object_manager_attribute_text, name: field_name, screens: { 'create_middle' => screen_options })
+
+        ObjectManager::Attribute.migration_execute
+      end
+
+      context 'when the user has a matching permission' do
+        let(:screen_options) { { 'ticket.agent' => { 'shown' => true } } }
+
+        it 'shows the attribute' do
+          expect(result.visibility_default[field_name]).to eq('show')
+        end
+      end
+
+      context 'when the user has no matching permission' do
+        let(:screen_options) { { 'ticket.customer' => { 'shown' => true } } }
+
+        it 'removes the attribute' do
+          expect(result.visibility_default[field_name]).to eq('remove')
+        end
+      end
+
+      context 'when the matching permission has no options' do
+        let(:screen_options) { { 'ticket.agent' => {} } }
+
+        it 'removes the attribute' do
+          expect(result.visibility_default[field_name]).to eq('remove')
+        end
+      end
+
+      context 'when the -all- permission has no options' do
+        let(:screen_options) { { '-all-' => {} } }
+
+        it 'removes the attribute' do
+          expect(result.visibility_default[field_name]).to eq('remove')
+        end
+      end
+
+      context 'when the screen has no options at all' do
+        let(:screen_options) { {} }
+
+        it 'shows the attribute' do
+          expect(result.visibility_default[field_name]).to eq('show')
+        end
+      end
+    end
   end
 
   describe '#options_array' do

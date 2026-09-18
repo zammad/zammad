@@ -279,6 +279,16 @@ RSpec.describe ObjectManager::Object do
         end
       end
 
+      describe 'with a customer wrapped in a user context' do
+        let(:customer) { create(:customer) }
+        let(:user)     { UserContext.new(customer) }
+        let(:record)   { create(:ticket, customer: customer) }
+
+        it 'applies ticket.customer screen options' do
+          expect(attribute[:screen]['edit']['shown']).to be true
+        end
+      end
+
       # https://github.com/zammad/zammad/issues/5993
       describe 'with a shared organization' do
         let(:organization)   { create(:organization, shared: true) }

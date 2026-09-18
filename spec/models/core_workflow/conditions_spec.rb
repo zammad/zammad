@@ -881,6 +881,14 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
         expect(result[:matched_workflows]).not_to include(workflow.id)
       end
     end
+
+    describe 'for agent wrapped in a user context' do
+      let!(:action_user) { UserContext.new(create(:agent, groups: [ticket.group])) } # rubocop:disable RSpec/LetSetup
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
   end
 
   describe '.perform - Condition - session.group_ids_change' do
