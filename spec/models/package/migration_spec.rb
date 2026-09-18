@@ -3,6 +3,45 @@
 require 'rails_helper'
 
 RSpec.describe Package::Migration, type: :model do
+  describe '.pending?' do
+    let(:package)       { 'PendingTestPackage' }
+    let(:root)          { Dir.mktmpdir('package-migration', Rails.root.join('tmp')) }
+    let(:migration_dir) { File.join(root, 'db/addon', package.underscore) }
+
+    before do
+      Setting.set('system_init_done', true)
+
+      FileUtils.mkdir_p(migration_dir)
+      File.write(File.join(migration_dir, '20260101000000_pending_package_test.rb'), <<~MIGRATION)
+        class PendingPackageTest < ActiveRecord::Migration[8.0]
+          def self.up; end
+
+          def self.down; end
+        end
+      MIGRATION
+
+      allow(described_class).to receive(:root).and_return(root)
+    end
+
+    after do
+      FileUtils.remove_entry(root)
+    end
+
+    it 'detects a migration that has not been executed yet' do
+      expect(described_class).to be_pending(package)
+    end
+
+    it 'passes when all migrations have been executed' do
+      described_class.migrate(package)
+
+      expect(described_class).not_to be_pending(package)
+    end
+
+    it 'passes for a package without migrations' do
+      expect(described_class).not_to be_pending('UnknownPackage')
+    end
+  end
+
   describe '.migrate' do
     let(:package)       { 'AuditLogTestPackage' }
     let(:root)          { Dir.mktmpdir('package-migration', Rails.root.join('tmp')) }

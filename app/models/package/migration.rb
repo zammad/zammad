@@ -74,6 +74,22 @@ class Package::Migration < ApplicationModel
     end
   end
 
+  # Are there migrations of the given package that have not been executed yet?
+  def self.pending?(package)
+    location = "#{root}/db/addon/#{package.underscore}"
+
+    return false if !File.exist?(location)
+
+    Dir.entries(location).any? do |migration|
+      next false if !migration.end_with?('.rb')
+
+      version = migration[%r{^(.+?)_.*\.rb$}, 1]
+      next false if !version
+
+      !exists?(name: package.underscore, version: version)
+    end
+  end
+
   def self.root
     Rails.root
   end

@@ -366,6 +366,46 @@ Down migrations are executed (see Package.uninstall).
     end
   end
 
+=begin
+
+verify that the addon packages staged in a container image are fully applied:
+packages/install installed or updated, packages/uninstall uninstalled and all
+package migrations executed - raises otherwise
+
+  Package.check_staged_packages_applied!
+
+Containers wait for the init container with this check, so that the application
+is not served while addon packages or their migrations are still being applied.
+
+=end
+
+  def self.check_staged_packages_applied!
+    raise 'Staged package installations are pending!' if _pending_staged_installations? # rubocop:disable Zammad/DetectTranslatableString
+    raise 'Staged package uninstallations are pending!' if _pending_staged_uninstallations? # rubocop:disable Zammad/DetectTranslatableString
+    raise 'Package migrations are pending!' if _pending_package_migrations? # rubocop:disable Zammad/DetectTranslatableString
+
+    true
+  end
+
+  def self._pending_staged_installations?
+    _packages_in_dir('packages/install').any? { |package| _staged_install_pending?(package) }
+  end
+
+  def self._pending_staged_uninstallations?
+    _packages_in_dir('packages/uninstall').any? { |package| Package.exists?(name: package['name']) }
+  end
+
+  def self._pending_package_migrations?
+    Package.all.any? { |package| Package::Migration.pending?(package.name) }
+  end
+
+  def self._staged_install_pending?(package)
+    installed = Package.find_by(name: package['name'])
+    return true if !installed
+
+    Gem::Version.new(installed.version) < Gem::Version.new(package['version'])
+  end
+
   def self._sort_by_dependencies(packages)
     sorted_packages    = []
     remaining_packages = packages

@@ -228,6 +228,86 @@ RSpec.describe Package, type: :model do
       end
     end
 
+    describe '.check_staged_packages_applied!' do
+      it 'passes without staged packages' do
+        expect(described_class.check_staged_packages_applied!).to be true
+      end
+
+      context 'with a staged installation' do
+        before do
+          allow(described_class).to receive(:_packages_in_dir).with('packages/install').and_return([{ 'name' => package_name, 'version' => '1.0.1' }])
+          allow(described_class).to receive(:_packages_in_dir).with('packages/uninstall').and_return([])
+        end
+
+        it 'raises while the package is not installed yet' do
+          expect { described_class.check_staged_packages_applied! }.to raise_error(%r{installations are pending})
+        end
+
+        it 'raises while an older version is installed' do
+          described_class.install(string: old_package_zpm_json)
+
+          expect { described_class.check_staged_packages_applied! }.to raise_error(%r{installations are pending})
+        end
+
+        it 'passes when the staged version is installed' do
+          described_class.install(string: package_zpm_json)
+
+          expect(described_class.check_staged_packages_applied!).to be true
+        end
+      end
+
+      context 'with a staged uninstallation' do
+        before do
+          allow(described_class).to receive(:_packages_in_dir).with('packages/install').and_return([])
+          allow(described_class).to receive(:_packages_in_dir).with('packages/uninstall').and_return([{ 'name' => package_name, 'version' => '1.0.1' }])
+        end
+
+        it 'raises while the package is still installed' do
+          described_class.install(string: package_zpm_json)
+
+          expect { described_class.check_staged_packages_applied! }.to raise_error(%r{uninstallations are pending})
+        end
+
+        it 'passes when the package is uninstalled' do
+          expect(described_class.check_staged_packages_applied!).to be true
+        end
+      end
+
+      context 'with pending package migrations' do
+        let(:migration_root) { Dir.mktmpdir('package-readiness', Rails.root.join('tmp')) }
+        let(:migration_dir)  { File.join(migration_root, 'db/addon', package_name.underscore) }
+
+        before do
+          described_class.install(string: package_zpm_json)
+
+          FileUtils.mkdir_p(migration_dir)
+          File.write(File.join(migration_dir, '20260101000000_readiness_package_test.rb'), <<~MIGRATION)
+            class ReadinessPackageTest < ActiveRecord::Migration[8.0]
+              def self.up; end
+
+              def self.down; end
+            end
+          MIGRATION
+
+          allow(Package::Migration).to receive(:root).and_return(migration_root)
+        end
+
+        after do
+          FileUtils.remove_entry(migration_root)
+        end
+
+        it 'raises while a package migration is pending' do
+          expect { described_class.check_staged_packages_applied! }.to raise_error(%r{migrations are pending})
+        end
+
+        it 'passes when all package migrations are executed' do
+          Package::Migration.migrate(package_name)
+
+          expect(described_class.check_staged_packages_applied!).to be true
+        end
+      end
+    end
+
     context 'when uninstalling packages from a directory' do
       let(:uninstall_dir)              { Rails.root.join('tmp/spec_package_uninstall_dir') }
       let(:dependent_package_zpm_json) { get_package_structure('UnitTestSampleDependent', '[]', '1.0.1', "{ \"#{package_name}\": \">= 1.0.1\" }") }
