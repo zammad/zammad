@@ -34,6 +34,7 @@ class Package extends App.ControllerSubContent
       )
 
   render: ->
+    actions_available = App.Config.get('package_actions_enabled')
 
     for item in @packages
       item.action = []
@@ -45,6 +46,7 @@ class Package extends App.ControllerSubContent
       else if item.state == 'deactivate'
         item.action = ['uninstall', 'activate']
       item.action = ['uninstall']
+      continue if !actions_available
       if @api_package_metas[item.name] && item.vendor is @api_package_metas[item.name].vendor
         if @isNewerVersion(item.version, @api_package_metas[item.name].version)
           item.action.unshift('update_api')
@@ -63,6 +65,7 @@ class Package extends App.ControllerSubContent
       token_present: @token_present
       api_package_metas: @api_package_metas
       api_packages_installable: api_packages_installable
+      actions_available: actions_available
     )
 
   uninstall: (e) ->
@@ -207,4 +210,4 @@ class PackageSettingsModal extends App.ControllerModal
     super
     @parent.load()
 
-App.Config.set('Packages', { prio: 3700, name: __('Packages'), parent: '#system', target: '#system/package', controller: Package, permission: (controller) -> App.Config.get('admin_packages') && controller.permissionCheck('admin.package') }, 'NavBarAdmin')
+App.Config.set('Packages', { prio: 3700, name: __('Packages'), parent: '#system', target: '#system/package', controller: Package, permission: (controller) -> controller.permissionCheck('admin.package') }, 'NavBarAdmin')

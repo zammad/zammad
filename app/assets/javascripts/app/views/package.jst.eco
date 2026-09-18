@@ -1,13 +1,16 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T( 'Package' ) %> <small><%- @T('Management') %></small></h1>
+    <h1><%- @T('Packages') %></h1>
   </div>
+<% if @actions_available: %>
   <div class="page-header-meta">
     <a data-type="settings" class="btn js-packageSettings" href="#"><%- @T('Configure') %></a>
   </div>
+<% end %>
 </div>
 
 <div class="page-content">
+<% if @actions_available: %>
   <p>
     <%- @T('The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application.') %>
     <br>
@@ -45,6 +48,10 @@
       <button class="align-right btn btn--primary js-submit" type="submit" disabled="disabled"><%- @T('Install Package') %></button>
     </form>
   </p>
+<% else: %>
+  <p><%- @T('This page gives you an overview of the packages currently installed in your Zammad instance.') %></p>
+  <p><%- @T('In container-based environments, packages are managed as part of the deployment and cannot be installed or removed from here.') %></p>
+<% end %>
 
   <h2 class="package-table-heading"><%- @T('Installed packages') %></h2>
 
@@ -60,7 +67,9 @@
         <th><%- @T('Version') %></th>
         <th><%- @T('Vendor') %></th>
         <th><%- @T('State') %></th>
+      <% if @actions_available: %>
         <th class="package-action-header"><%- @T('Action') %></th>
+      <% end %>
       </tr>
     </thead>
     <tbody>
@@ -71,6 +80,7 @@
         <td><%= item.version %><% if _.contains(item.action, 'update_api'): %> <span class="badge badge--closed"<% if lastLog: %> title="<%= lastLog.content %> (<%- @Ttimestamp(lastLog.date) %>)"<% end %>><%- @T('Update to %s', meta.version) %></span><% end %></td>
         <td><% if item.url: %><a href="<%= item.url %>" target="_blank"><% end %><%= item.vendor %><% if item.url: %></a><% end %></td>
         <td><%- @T(item.state) %></td>
+      <% if @actions_available: %>
         <td class="package-action-cell no-padding">
           <div class="dropdown dropdown--actions">
             <div class="btn btn--table btn--text btn--secondary js-action package-action-toggle" data-toggle="dropdown">
@@ -99,13 +109,14 @@
               </ul>
             </div>
           </td>
+      <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
 
-<% if @token_present: %>
+<% if @actions_available && @token_present: %>
   <h2 class="package-table-heading"><%- @T('Available packages') %></h2>
   <% if _.isEmpty(@api_packages_installable): %>
   <table class="table table--placeholder">
