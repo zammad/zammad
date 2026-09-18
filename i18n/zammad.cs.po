@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-13 09:40+0000\n"
-"Last-Translator: Dominikmarek88 <marek47@uniba.sk>\n"
+"PO-Revision-Date: 2026-09-17 09:12+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
 "development/cs/>\n"
 "Language: cs\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.9.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1317,7 +1317,7 @@ msgstr "Poskytovatel"
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 #, fuzzy
@@ -1378,11 +1378,17 @@ msgstr "API přístup s tokenem"
 msgid "API error."
 msgstr "Chyba API."
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 #, fuzzy
 #| msgid "API Key"
 msgid "API key"
 msgstr "API klíč"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
+msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2377,12 +2383,6 @@ msgstr "Povolit budoucí"
 msgid "Allow future dates toggle value is required."
 msgstr "Hodnota přepínače Povolit budoucí data je povinná."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
-#, fuzzy
-#| msgid "Create a translation"
-msgid "Allow global translation"
-msgstr "Vytvořit překlad"
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 #, fuzzy
 #| msgid "Multiple selection field"
@@ -2401,11 +2401,18 @@ msgstr "Hodnota přepínače Povolit minulá data je povinná."
 msgid "Allow reopening of tickets within a certain time."
 msgstr "Povolit znovuotevření tiketů po určitou dobu."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
 msgid ""
-"Allow specific roles to translate all articles at once. Be careful, this can "
-"result in a lot of translation calls and might be cost related."
+"Allow specific roles to translate all articles in one ticket at once. Use "
+"with caution, as this can result in a large number of translation calls and "
+"may incur additional costs."
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+#, fuzzy
+#| msgid "No translation for this locale available"
+msgid "Allow translation of all articles at once"
+msgstr "Pro toto národní prostředí není k dispozici žádný překlad"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2586,7 +2593,7 @@ msgstr "Odpověď"
 msgid "Answer actions"
 msgstr "Odpovědi: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer count: %s"
@@ -2973,7 +2980,7 @@ msgstr "Akce článku"
 msgid "Article could not be deleted."
 msgstr "Článek se nepodařilo smazat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr "Meta informace článku"
@@ -3283,7 +3290,7 @@ msgstr "Tajný kód autentizační aplikace"
 msgid "Author"
 msgstr "Autor"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
 msgid "Author name and article creation date"
 msgstr "Jméno autora a datum vytvoření článku"
 
@@ -3414,6 +3421,7 @@ msgstr "Odstranit vše"
 msgid "Available Values"
 msgstr "Odstranit vše"
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -4101,13 +4109,13 @@ msgstr "Kategorie"
 msgid "Category Attribute"
 msgstr "Nový Atribut"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category actions"
 msgstr "Rozložení stránky kategorie"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category count: %s"
@@ -4852,7 +4860,7 @@ msgstr "Sbalit postranní panel"
 msgid "Collapse this element"
 msgstr "Sbalit tento prvek"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:263
 msgid "Color %s highlight applied to \"%s\""
 msgstr ""
 
@@ -5373,8 +5381,8 @@ msgstr "Kopírovat tajný klíč"
 msgid "Copy text"
 msgstr "Zkopírovat text"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr "Zkopírovat číslo tiketu"
 
@@ -6191,6 +6199,10 @@ msgstr "Dekódování selhalo! %s"
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
 msgstr "Dešifrování bylo úspěšné."
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7744,6 +7756,10 @@ msgstr "Detekovaný jazyk"
 msgid "Detected language"
 msgstr "Detekovaný jazyk"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
+msgstr ""
+
 #: db/seeds/settings.rb:74
 msgid "Developer System"
 msgstr "Vývojový systém"
@@ -8358,8 +8374,8 @@ msgstr "Upravit odpověď"
 msgid "Edit security keys"
 msgstr "Upravit bezpečnostní klíče"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr "Upravit název tiketu"
 
@@ -8655,7 +8671,7 @@ msgstr "Prázdný přehled"
 msgid "Enable"
 msgstr "Aktivovat"
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 #, fuzzy
 #| msgid "Provider"
 msgid "Enable AI provider"
@@ -9712,6 +9728,12 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Nepovedlo se nastavit QR kód. Zkuste to prosím později."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#, fuzzy
+#| msgid "Failed to load content."
+msgid "Failed to translate article content."
+msgstr "Nepovedlo se načíst obsah."
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
 msgstr "Nepovedlo se aktualizovat položku kontrolního seznamu."
@@ -10654,6 +10676,10 @@ msgstr "Skupiny"
 msgid "Groups are …"
 msgstr "Skupiny jsou …"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 podpisový token"
@@ -10957,7 +10983,7 @@ msgstr "Ikona zvýraznění"
 msgid "Highlight options"
 msgstr "Ikona zvýraznění"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:260
 msgid "Highlight removed from \"%s\""
 msgstr ""
 
@@ -11592,7 +11618,7 @@ msgstr "Neúplné položky kontrolního seznamu"
 msgid "Incomplete credentials"
 msgstr "Neúplné pověření"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:465
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 #, fuzzy
 #| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete ticket checklist"
@@ -12682,6 +12708,12 @@ msgstr ""
 msgid "Library"
 msgstr "Knihovna"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+#, fuzzy
+#| msgid "Translations"
+msgid "LibreTranslate"
+msgstr "Překlady"
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -12971,6 +13003,7 @@ msgid "Locale"
 msgstr "Lokalizace"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:15
+#: app/services/service/user/content_translation_target_locale.rb:15
 msgid "Locale could not be found."
 msgstr "Národní prostředí se nepodařilo najít."
 
@@ -14106,7 +14139,7 @@ msgstr "Integrace Nagiosu"
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -14919,6 +14952,7 @@ msgstr "Pro tento dotaz nebyly nalezeny žádné výsledky."
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14981,6 +15015,12 @@ msgid ""
 "first: %s"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
+#, fuzzy
+#| msgid "The Simple Storage Service is not available."
+msgid "No supported target language is available."
+msgstr "Služba Simple Storage Service není dostupná."
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
@@ -15009,7 +15049,8 @@ msgstr "Žádný token!"
 msgid "No translation available for this locale"
 msgstr "Pro toto národní prostředí není k dispozici žádný překlad"
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/target_locales.rb:7
 #, fuzzy
 #| msgid "No filter was configured."
 msgid "No translation service is configured."
@@ -15052,7 +15093,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "No, just close the ticket"
 msgstr "Ne, jen zavřete tiket"
 
@@ -16104,7 +16145,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -16137,6 +16178,10 @@ msgstr "PKCE"
 #: lib/email_helper.rb:13
 msgid "POP3"
 msgstr "POP3"
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
+msgstr "Balíček"
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
@@ -16360,7 +16405,7 @@ msgstr "Provést akce"
 msgid "Permanently Delete Knowledge Base"
 msgstr "Trvale smazat Znalostní bázi"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 #, fuzzy
 #| msgid "Permissions"
 msgid "Permission"
@@ -16540,6 +16585,7 @@ msgstr "Před spuštěním prosím nakonfigurujte zdroj importu."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
 msgid "Please contact your administrator."
 msgstr "Kontaktujte prosím svého správce."
 
@@ -17030,7 +17076,7 @@ msgstr "Poskytovatel"
 msgid "Provider Settings"
 msgstr "Nastavení proflu"
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 #, fuzzy
 #| msgid "Save configuration"
 msgid "Provider configuration"
@@ -17226,7 +17272,7 @@ msgstr "Přijatý hovor"
 msgid "Recent Customer Tickets"
 msgstr "Nedávné zákaznické tikety"
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr "Nedávné záznamy"
@@ -18110,7 +18156,6 @@ msgstr "Role %s je protichůdná s rolí %s, určitě chcete pokračovat?"
 msgid "Role description"
 msgstr "Popis"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -18181,7 +18226,7 @@ msgstr "Probíhá…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -18223,7 +18268,7 @@ msgstr "Aplikační pověření SAML"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -18274,7 +18319,7 @@ msgstr "SMTP - nakonfigurujte své vlastní nastavení odchozího SMTP"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -18345,7 +18390,7 @@ msgstr "Sobota"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -19013,7 +19058,7 @@ msgstr "Podrobnosti naleznete v HTTPLogu."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr "Zobrazit méně"
@@ -19024,7 +19069,7 @@ msgstr "Zobrazit méně"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "Zobrazit více"
@@ -19217,7 +19262,7 @@ msgstr "Otevřít rychlé vyhledávání"
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "Načítání selhalo, prosím zkuste načtení znovu později."
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -19338,7 +19383,7 @@ msgstr "Odesílatel posledního článku"
 msgid "Sending Email Address"
 msgstr "Odesílací e-mailová adresa"
 
-#: app/models/ticket/article.rb:345
+#: app/models/ticket/article.rb:347
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Odeslání e-mailu bez platného příjemce není možné."
 
@@ -19564,7 +19609,7 @@ msgstr ""
 "Užitečné pro nastavení správného e-mailu zákazníka, pokud je zpráva obdržena "
 "ze systému třetí strany jménem zákazníka."
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 #, fuzzy
 #| msgid "Settings"
 msgid "Setting"
@@ -19581,6 +19626,7 @@ msgstr "Nastavení"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -19774,6 +19820,12 @@ msgstr "Zobrazit další záložku"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr "Zobrazit oznámení"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Original"
+msgid "Show original"
+msgstr "Originál"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -20443,6 +20495,12 @@ msgstr "Zastavit po shodě"
 msgid "Stop after match enabled"
 msgstr "Zastavit po shodě"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#, fuzzy
+#| msgid "Translations"
+msgid "Stop translating the article"
+msgstr "Překlady"
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr "Úložiště"
@@ -20518,7 +20576,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -20874,6 +20932,12 @@ msgstr ""
 msgid "Target Language"
 msgstr "Cílový jazyk"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
+#, fuzzy
+#| msgid "Target Language"
+msgid "Target language"
+msgstr "Cílový jazyk"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 msgid "Target ticket"
 msgstr "Cílový tiket"
@@ -20998,7 +21062,7 @@ msgid "Text missing"
 msgstr "Chybějící text"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "Textový modul"
 
@@ -21081,6 +21145,18 @@ msgid ""
 msgstr ""
 "24hodinové okno zákaznické podpory je nyní uzavřeno, další zprávy přes "
 "WhatsApp nelze odesílat."
+
+#: app/models/setting/validation/vectordb.rb:17
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please enable "
+"it in AI > Providers."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please set up "
+"at least one provider in |AI > Providers|. %l"
+msgstr ""
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -21281,7 +21357,7 @@ msgstr "Odstavec nemůže být nastaven jako veřejný."
 msgid "The article does not belong to the specified ticket."
 msgstr "Článek nepatří uvedenému ticketu."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -21554,6 +21630,12 @@ msgstr "Připojení k serveru bylo ztraceno."
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
 msgstr "Připojení bylo odmítnuto."
+
+#: app/services/service/content_translation/backend/base.rb:34
+#, fuzzy
+#| msgid "The Simple Storage Service is not available."
+msgid "The content is too large for the translation service."
+msgstr "Služba Simple Storage Service není dostupná."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -21932,7 +22014,7 @@ msgid ""
 "reachable and runs a supported version."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -22229,18 +22311,6 @@ msgstr "Poskytnutá příloha není správná. Prosím, zkontrolujte vaši synta
 msgid "The provided token is invalid."
 msgstr "Poskytnutý token je neplatný."
 
-#: app/models/setting/validation/vectordb.rb:17
-msgid ""
-"The provider configuration is disabled. Before proceeding, please enable it "
-"in AI > Providers."
-msgstr ""
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid ""
-"The provider configuration is disabled. Before proceeding, please set up at "
-"least one provider in |AI > Providers|."
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 #, fuzzy
 #| msgid "The object could not be updated."
@@ -22271,6 +22341,12 @@ msgstr "Soubor se nepodařilo nahrát."
 #| msgid "Locale could not be found."
 msgid "The public PGP key could not be found."
 msgstr "Národní prostředí se nepodařilo najít."
+
+#: app/services/service/content_translation/backend/base.rb:28
+#, fuzzy
+#| msgid "The setting 'storage_provider' was not configured."
+msgid "The quota or rate limit of the translation service is exhausted."
+msgstr "Nastavení 'storage_provider' není nakonfigurováno."
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -22787,6 +22863,41 @@ msgstr "Token pro přihlášení správce heslem je neplatný."
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#, fuzzy
+#| msgid "The language could not be updated."
+msgid "The translation language could not be saved."
+msgstr "Jazyk se nepodařilo aktualizovat."
+
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
+#, fuzzy
+#| msgid "This host cannot be reached."
+msgid "The translation returned no usable content."
+msgstr "Tohoto hostitele se nedaří kontaktovat."
+
+#: app/services/service/content_translation/backend/base.rb:10
+#, fuzzy
+#| msgid "This host cannot be reached."
+msgid "The translation service cannot be reached."
+msgstr "Tohoto hostitele se nedaří kontaktovat."
+
+#: app/services/service/content_translation/backend/base.rb:22
+msgid "The translation service does not support the requested target language."
+msgstr ""
+
+#: app/services/service/content_translation/backend/deepl.rb:135
+#: app/services/service/content_translation/backend/libre_translate.rb:125
+#, fuzzy
+#| msgid "The setting 'storage_provider' was not configured."
+msgid "The translation service does not support the target language %s."
+msgstr "Nastavení 'storage_provider' není nakonfigurováno."
+
+#: app/services/service/content_translation/backend/base.rb:16
+#, fuzzy
+#| msgid "No filter was configured."
+msgid "The translation service refused the configured credentials."
+msgstr "Žádný nakonfigurovaný filtr."
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 #, fuzzy
@@ -23602,7 +23713,7 @@ msgid "This role has no knowledge base editor permission."
 msgstr "Přístup k funkcím editora znalostní báze."
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid ""
 "This service allows agents to translate articles to their configured UI "
 "language or other languages of their choice."
@@ -24032,13 +24143,14 @@ msgstr "Články ochrany proti smyčce spouštěče tiketu na jeden tiket"
 msgid "Ticket actions"
 msgstr "Akce tiketu"
 
-#: app/services/service/content_translation/ticket_article.rb:13
+#: app/graphql/gql/queries/ticket/article/translation_target_locales.rb:11
+#: app/services/service/content_translation/ticket_article.rb:61
 #, fuzzy
 #| msgid "i-doit integration"
 msgid "Ticket article translation is not enabled."
 msgstr "Integrace i-doit"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 #, fuzzy
 #| msgid "Ticket escalation"
 msgid "Ticket articles translation"
@@ -24235,7 +24347,7 @@ msgid "Ticket update failed."
 msgstr "Aktualizace tiketu se nezdařila."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:548
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "Tiket byl úspěšně aktualizován."
@@ -24450,7 +24562,7 @@ msgstr "Celkem časových jednotek"
 msgid "Time accounting"
 msgstr "Počítání času"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time accounting type"
@@ -24646,7 +24758,7 @@ msgstr "Dnes"
 msgid "Toggle AM/PM mode"
 msgstr "Přepnout tmavý režim"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
 #, fuzzy
 #| msgid "Article meta information"
 msgid "Toggle article meta information"
@@ -24788,6 +24900,12 @@ msgstr "Kontrolní součet"
 msgid "Transfer conversation to another chat:"
 msgstr "Přesunout konverzaci do jiného chatu:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate article"
+msgstr "Překlady"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 #, fuzzy
 #| msgid "Translations"
@@ -24800,9 +24918,27 @@ msgstr "Překlady"
 msgid "Translate section to English"
 msgstr "Překlady"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate to %s"
+msgstr "Překlady"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Translated automatically"
+msgstr "Zobrazovat chat automaticky"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
+#, fuzzy
+#| msgid "Recent searches"
+msgid "Translated by AI"
+msgstr "Nedávná vyhledávání"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #, fuzzy
@@ -24845,7 +24981,7 @@ msgstr "Překlady"
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 #, fuzzy
 #| msgid "Translations"
 msgid "Translation service provider"
@@ -24855,6 +24991,12 @@ msgstr "Překlady"
 #, fuzzy
 #| msgid "Translations"
 msgid "Translation services"
+msgstr "Překlady"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation to %s"
 msgstr "Překlady"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
@@ -25040,7 +25182,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Autentizace"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor authentication"
@@ -25158,6 +25300,7 @@ msgid "UID Field"
 msgstr "Pole data"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -25476,7 +25619,7 @@ msgid "Update shared draft"
 msgstr "Použít sdílený koncept"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -26241,7 +26384,7 @@ msgstr "Ověření se nezdařilo: %{errors}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -26913,7 +27056,7 @@ msgid "Yes, add attachments now"
 msgstr "Přidat možnost nahrávání příloh."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -27059,11 +27202,11 @@ msgstr ""
 "Archivované e-maily v Zammad můžete kdykoli najít pomocí funkce vyhledávání, "
 "stejně jako u ostatních tiketů."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -27327,7 +27470,7 @@ msgstr "Musíte povolit přístup k vaší webkameře."
 msgid "You have unchecked items in the checklist."
 msgstr "Máte nezaškrtnuté položky v kontrolním seznamu."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:462
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -29566,8 +29709,10 @@ msgstr "...celé textové oblasti"
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
 
-#~ msgid "Package"
-#~ msgstr "Balíček"
+#, fuzzy
+#~| msgid "Create a translation"
+#~ msgid "Allow global translation"
+#~ msgstr "Vytvořit překlad"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "Přetáhnout"
@@ -29591,11 +29736,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "Shared organization"
 #~ msgid "Shared with organizations"
 #~ msgstr "Sdílená organizace"
-
-#, fuzzy
-#~| msgid "Recent searches"
-#~ msgid "Suggested by AI"
-#~ msgstr "Nedávná vyhledávání"
 
 #~ msgid "Invalid permissions, do not lock yourself out."
 #~ msgstr "Neplatná oprávnění, zabraňte vlastnímu uzamčení."
@@ -30920,9 +31060,6 @@ msgstr "dnešní ∅ čekací doby"
 #~ msgstr ""
 #~ "Také můžete překládat přes níže umístěnou tabulku všech přeložitelných "
 #~ "výrazů."
-
-#~ msgid "Original"
-#~ msgstr "Originál"
 
 #~ msgid "Reset changes"
 #~ msgstr "Resetovat změny"

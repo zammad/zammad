@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-13 09:33+0000\n"
-"Last-Translator: Arif Waram <ninearif@hotmail.com>\n"
+"PO-Revision-Date: 2026-09-17 09:13+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
 "development/th/>\n"
 "Language: th\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.9.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1280,7 +1280,7 @@ msgstr "ไม่พบผู้ให้บริการ AI"
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 #, fuzzy
@@ -1341,11 +1341,17 @@ msgstr "เข้าถึงโทเค็น API"
 msgid "API error."
 msgstr "API error."
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 #, fuzzy
 #| msgid "API Key"
 msgid "API key"
 msgstr "API Key"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
+msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2324,12 +2330,6 @@ msgstr "ให้อนาคต"
 msgid "Allow future dates toggle value is required."
 msgstr "ค่าการสลับอนุญาตวันที่ในอนาคตเป็นสิ่งจำเป็น"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
-#, fuzzy
-#| msgid "Create a translation"
-msgid "Allow global translation"
-msgstr "สร้างคำแปล"
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 #, fuzzy
 #| msgid "Multiple selection field"
@@ -2348,11 +2348,18 @@ msgstr "ค่าการสลับอนุญาตวันที่ย้
 msgid "Allow reopening of tickets within a certain time."
 msgstr "อนุญาตให้เปิด Tickets อีกครั้งภายในเวลาที่กําหนด"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
 msgid ""
-"Allow specific roles to translate all articles at once. Be careful, this can "
-"result in a lot of translation calls and might be cost related."
+"Allow specific roles to translate all articles in one ticket at once. Use "
+"with caution, as this can result in a large number of translation calls and "
+"may incur additional costs."
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+#, fuzzy
+#| msgid "No translation for this locale available"
+msgid "Allow translation of all articles at once"
+msgstr "ไม่มีคำแปลสำหรับสถานที่นี้"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2533,7 +2540,7 @@ msgstr "รับสาย"
 msgid "Answer actions"
 msgstr "คำตอบ: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer count: %s"
@@ -2914,7 +2921,7 @@ msgstr "การกระทําของบทความ"
 msgid "Article could not be deleted."
 msgstr "ไม่สามารถลบบทความได้"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr "ข้อมูลเมตาของบทความ"
@@ -3215,7 +3222,7 @@ msgstr "รหัสลับของแอปตรวจสอบสิทธ
 msgid "Author"
 msgstr "ผู้แต่ง"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
 msgid "Author name and article creation date"
 msgstr "ชื่อผู้เขียนและวันที่สร้างบทความ"
 
@@ -3344,6 +3351,7 @@ msgstr "วิธีที่ใช้ได้"
 msgid "Available Values"
 msgstr "วิธีที่ใช้ได้"
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -4021,13 +4029,13 @@ msgstr "หมวดหมู่"
 msgid "Category Attribute"
 msgstr "คุณสมบัติใหม่"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category actions"
 msgstr "เค้าโครงหน้าหมวดหมู่"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category count: %s"
@@ -4768,7 +4776,7 @@ msgstr "ยุบแถบด้านข้าง"
 msgid "Collapse this element"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:263
 msgid "Color %s highlight applied to \"%s\""
 msgstr ""
 
@@ -5296,8 +5304,8 @@ msgstr "คัดลอกรหัสลับ"
 msgid "Copy text"
 msgstr "คัดลอกข้อความ"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr "คัดลอกหมายเลข ticket"
 
@@ -6129,6 +6137,10 @@ msgstr "การถอดรหัสล้มเหลว! %s"
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
 msgstr "ถอดรหัสสำเร็จ"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7625,6 +7637,10 @@ msgstr "ภาษา"
 msgid "Detected language"
 msgstr "ภาษา"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
+msgstr ""
+
 #: db/seeds/settings.rb:74
 msgid "Developer System"
 msgstr "ผู้พัฒนาระบบ"
@@ -8285,8 +8301,8 @@ msgstr "เพิ่ม ตอบกลับ"
 msgid "Edit security keys"
 msgstr "ระบบความปลอดภัย"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
@@ -8588,7 +8604,7 @@ msgstr "ภาพรวม"
 msgid "Enable"
 msgstr "เปิดใช้"
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 #, fuzzy
 #| msgid "AI provider"
 msgid "Enable AI provider"
@@ -9666,6 +9682,12 @@ msgstr "ไม่สามารถส่งอีเมลไปที่ \"%s\
 msgid "Failed to set up QR code. Please try again."
 msgstr "รหัสความปลอดภัยไม่ถูกต้อง! โปรดลองอีกครั้งด้วยรหัสใหม่"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to translate article content."
+msgstr "สร้างลูกค้าใหม่"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 #, fuzzy
 #| msgid "Create new Customer"
@@ -10656,6 +10678,10 @@ msgstr "กลุ่ม"
 msgid "Groups are …"
 msgstr "กลุ่มคือ …"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 Signature Token"
@@ -10961,7 +10987,7 @@ msgstr ""
 msgid "Highlight options"
 msgstr "เพิ่มทางเลือก"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:260
 msgid "Highlight removed from \"%s\""
 msgstr ""
 
@@ -11594,7 +11620,7 @@ msgstr "ข้อมูลประจำตัวที่ไม่สมบู
 msgid "Incomplete credentials"
 msgstr "ข้อมูลประจำตัวที่ไม่สมบูรณ์"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:465
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete ticket checklist"
@@ -12708,6 +12734,12 @@ msgstr ""
 msgid "Library"
 msgstr "Library"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+#, fuzzy
+#| msgid "Translations"
+msgid "LibreTranslate"
+msgstr "การแปล"
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -13013,6 +13045,7 @@ msgid "Locale"
 msgstr "ท้องถิ่น"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:15
+#: app/services/service/user/content_translation_target_locale.rb:15
 msgid "Locale could not be found."
 msgstr "ไม่พบตําแหน่งที่ตั้ง"
 
@@ -14278,7 +14311,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -15114,6 +15147,7 @@ msgstr "ไม่พบรายการ"
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -15180,6 +15214,12 @@ msgid ""
 "first: %s"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
+#, fuzzy
+#| msgid "Knowledge Base active"
+msgid "No supported target language is available."
+msgstr "ศูนย์การเรียนรู้ เปิดการทำงาน"
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 #, fuzzy
@@ -15212,7 +15252,8 @@ msgstr ""
 msgid "No translation available for this locale"
 msgstr "ไม่มีคำแปลสำหรับสถานที่นี้"
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/target_locales.rb:7
 #, fuzzy
 #| msgid "No filter was configured."
 msgid "No translation service is configured."
@@ -15255,7 +15296,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -16376,7 +16417,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -16411,6 +16452,10 @@ msgstr ""
 #: lib/email_helper.rb:13
 msgid "POP3"
 msgstr "POP3"
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
+msgstr "แพกเกจ"
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
@@ -16652,7 +16697,7 @@ msgstr "ข้อมูลข่าวสาร"
 msgid "Permanently Delete Knowledge Base"
 msgstr "ลบศูนย์การเรียนรู้อย่างถาวร"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 #, fuzzy
 #| msgid "Permissions"
 msgid "Permission"
@@ -16832,6 +16877,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -17339,7 +17385,7 @@ msgstr "ผู้ให้บริการ"
 msgid "Provider Settings"
 msgstr "ค่าตั้งพร็อกซี"
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 #, fuzzy
 #| msgid "Web Server Configuration"
 msgid "Provider configuration"
@@ -17543,7 +17589,7 @@ msgstr "รับสาย"
 msgid "Recent Customer Tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr "บันทึกล่าสุด"
@@ -18522,7 +18568,6 @@ msgstr ""
 msgid "Role description"
 msgstr "คำบรรยาย"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -18593,7 +18638,7 @@ msgstr "กำลังทำงาน…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr ""
 
@@ -18632,7 +18677,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -18683,7 +18728,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -18756,7 +18801,7 @@ msgstr "วันเสาร์"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -19446,7 +19491,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr ""
@@ -19457,7 +19502,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "แสดงเพิ่ม"
@@ -19654,7 +19699,7 @@ msgstr "เปิด Ticket# %s"
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -19775,7 +19820,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr "ที่อยู่อีเมล"
 
-#: app/models/ticket/article.rb:345
+#: app/models/ticket/article.rb:347
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -20013,7 +20058,7 @@ msgid ""
 "behalf of a customer."
 msgstr ""
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 #, fuzzy
 #| msgid "Settings"
 msgid "Setting"
@@ -20030,6 +20075,7 @@ msgstr "การตั้งค่า"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -20240,6 +20286,12 @@ msgstr "แสดงแท็บถัดไป"
 #| msgid "Block Notifications"
 msgid "Show notifications"
 msgstr "ปิดกั้นการแจ้งเตือน"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Original"
+msgid "Show original"
+msgstr "ต้นฉบับ"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -20931,6 +20983,12 @@ msgstr ""
 msgid "Stop after match enabled"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#, fuzzy
+#| msgid "Translations"
+msgid "Stop translating the article"
+msgstr "การแปล"
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr "สื่อจัดเก็บข้อมูล"
@@ -21005,7 +21063,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -21370,6 +21428,12 @@ msgstr ""
 msgid "Target Language"
 msgstr "ภาษา"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
+#, fuzzy
+#| msgid "Language"
+msgid "Target language"
+msgstr "ภาษา"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 #, fuzzy
 #| msgid "Test Ticket"
@@ -21490,7 +21554,7 @@ msgid "Text missing"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "โมดูลข้อความ"
 
@@ -21577,6 +21641,18 @@ msgstr "โทเค็นที่ระบุไม่ถูกต้อง"
 msgid ""
 "The 24 hour customer service window is now closed, no further WhatsApp "
 "messages can be sent."
+msgstr ""
+
+#: app/models/setting/validation/vectordb.rb:17
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please enable "
+"it in AI > Providers."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please set up "
+"at least one provider in |AI > Providers|. %l"
 msgstr ""
 
 #: app/controllers/user_access_token_controller.rb:41
@@ -21817,7 +21893,7 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -22076,6 +22152,12 @@ msgstr ""
 #| msgid "Connection refused"
 msgid "The connection was refused."
 msgstr "ไม่รับการเชื่อมต่อ"
+
+#: app/services/service/content_translation/backend/base.rb:34
+#, fuzzy
+#| msgid "Knowledge Base active"
+msgid "The content is too large for the translation service."
+msgstr "ศูนย์การเรียนรู้ เปิดการทำงาน"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -22439,7 +22521,7 @@ msgid ""
 "reachable and runs a supported version."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -22736,18 +22818,6 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "โทเค็นที่ระบุไม่ถูกต้อง"
 
-#: app/models/setting/validation/vectordb.rb:17
-msgid ""
-"The provider configuration is disabled. Before proceeding, please enable it "
-"in AI > Providers."
-msgstr ""
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid ""
-"The provider configuration is disabled. Before proceeding, please set up at "
-"least one provider in |AI > Providers|."
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 #, fuzzy
 #| msgid "The file could not be uploaded."
@@ -22778,6 +22848,12 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 #| msgid "Locale could not be found."
 msgid "The public PGP key could not be found."
 msgstr "ไม่พบตําแหน่งที่ตั้ง"
+
+#: app/services/service/content_translation/backend/base.rb:28
+#, fuzzy
+#| msgid "No filter was configured."
+msgid "The quota or rate limit of the translation service is exhausted."
+msgstr "No filter was configured."
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -23309,6 +23385,41 @@ msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The translation language could not be saved."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The translation returned no usable content."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/services/service/content_translation/backend/base.rb:10
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The translation service cannot be reached."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/services/service/content_translation/backend/base.rb:22
+msgid "The translation service does not support the requested target language."
+msgstr ""
+
+#: app/services/service/content_translation/backend/deepl.rb:135
+#: app/services/service/content_translation/backend/libre_translate.rb:125
+#, fuzzy
+#| msgid "No filter was configured."
+msgid "The translation service does not support the target language %s."
+msgstr "No filter was configured."
+
+#: app/services/service/content_translation/backend/base.rb:16
+#, fuzzy
+#| msgid "No filter was configured."
+msgid "The translation service refused the configured credentials."
+msgstr "No filter was configured."
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 msgid "The two-factor authentication is not configured yet."
@@ -24124,7 +24235,7 @@ msgid "This role has no knowledge base editor permission."
 msgstr "เข้าถึงฟีเจอร์ตัวแก้ไขฐานความรู้"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid ""
 "This service allows agents to translate articles to their configured UI "
 "language or other languages of their choice."
@@ -24575,13 +24686,14 @@ msgstr ""
 msgid "Ticket actions"
 msgstr "Ticket ขยาย"
 
-#: app/services/service/content_translation/ticket_article.rb:13
+#: app/graphql/gql/queries/ticket/article/translation_target_locales.rb:11
+#: app/services/service/content_translation/ticket_article.rb:61
 #, fuzzy
 #| msgid "i-doit integration"
 msgid "Ticket article translation is not enabled."
 msgstr "i-doit integration"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 #, fuzzy
 #| msgid "Ticket escalation"
 msgid "Ticket articles translation"
@@ -24791,7 +24903,7 @@ msgid "Ticket update failed."
 msgstr "Ticket อัปเดต"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:548
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 #, fuzzy
 #| msgid "The test run was successful."
@@ -24988,7 +25100,7 @@ msgstr "หน่วยเวลาทั้งหมด"
 msgid "Time accounting"
 msgstr "Time Accounting"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 #, fuzzy
 #| msgid "Time Accounting Selector"
 msgid "Time accounting type"
@@ -25167,7 +25279,7 @@ msgstr "วันนี้"
 msgid "Toggle AM/PM mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
 #, fuzzy
 #| msgid "Article meta information"
 msgid "Toggle article meta information"
@@ -25309,6 +25421,12 @@ msgstr "Checksum"
 msgid "Transfer conversation to another chat:"
 msgstr "โอนการสนทนาไปยังแชทอื่น:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate article"
+msgstr "การแปล"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 #, fuzzy
 #| msgid "Translations"
@@ -25321,9 +25439,27 @@ msgstr "การแปล"
 msgid "Translate section to English"
 msgstr "การแปล"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate to %s"
+msgstr "การแปล"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Translated automatically"
+msgstr "แสดงแชทอัตโนมัติ"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
+#, fuzzy
+#| msgid "Last searches"
+msgid "Translated by AI"
+msgstr "กลับไปที่ผลการค้นหา"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #, fuzzy
@@ -25367,7 +25503,7 @@ msgstr "การแปล"
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 #, fuzzy
 #| msgid "Translations"
 msgid "Translation service provider"
@@ -25377,6 +25513,12 @@ msgstr "การแปล"
 #, fuzzy
 #| msgid "Translations"
 msgid "Translation services"
+msgstr "การแปล"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation to %s"
 msgstr "การแปล"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
@@ -25567,7 +25709,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "การยึนยันตน"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor authentication"
@@ -25685,6 +25827,7 @@ msgid "UID Field"
 msgstr "ช่องวัน"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -26000,7 +26143,7 @@ msgid "Update shared draft"
 msgstr "ยืนยัน แบบร่างที่ใช้ร่วมกัน"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -26733,7 +26876,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -27394,7 +27537,7 @@ msgid "Yes, add attachments now"
 msgstr "เพิ่มตัวเลือกไฟล์แนบเพื่ออัปโหลด"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -27539,11 +27682,11 @@ msgid ""
 msgstr ""
 "คุณสามารถค้นหาอีเมลที่เก็บถาวรใน Zammad ได้ทุกเมื่อโดยใช้ฟังก์ชันการค้นหา เช่นเดียวกับตั๋วอื่น ๆ"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -27810,7 +27953,7 @@ msgstr "คุณต้องอนุญาตการเข้าถึงเ
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:462
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -30016,8 +30159,10 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
 
-#~ msgid "Package"
-#~ msgstr "แพกเกจ"
+#, fuzzy
+#~| msgid "Create a translation"
+#~ msgid "Allow global translation"
+#~ msgstr "สร้างคำแปล"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "ลากเพื่อจัดลำดับใหม่"
@@ -30036,11 +30181,6 @@ msgstr "∅ รอเวลาวันนี้"
 #~| msgid "Shared organization"
 #~ msgid "Shared with organizations"
 #~ msgstr "แชร์ องค์กร"
-
-#, fuzzy
-#~| msgid "Last searches"
-#~ msgid "Suggested by AI"
-#~ msgstr "กลับไปที่ผลการค้นหา"
 
 #, fuzzy
 #~| msgid "Remove all"
@@ -31242,9 +31382,6 @@ msgstr "∅ รอเวลาวันนี้"
 
 #~ msgid "Date & Time"
 #~ msgstr "วันที่และเวลา"
-
-#~ msgid "Original"
-#~ msgstr "ต้นฉบับ"
 
 #~ msgid "Reset changes"
 #~ msgstr "รีเซ็ตการเปลี่ยนแปลง"

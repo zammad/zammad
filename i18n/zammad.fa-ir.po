@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-13 09:16+0000\n"
-"Last-Translator: Leonerd <3ickleonerd@gmail.com>\n"
+"PO-Revision-Date: 2026-09-17 09:12+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
 "Language: fa-ir\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.7.1\n"
+"X-Generator: Weblate 2026.9.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1203,7 +1203,7 @@ msgstr "ارائه‌دهنده هوش مصنوعی وجود ندارد"
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
@@ -1256,11 +1256,17 @@ msgstr "دسترسی به توکن API"
 msgid "API error."
 msgstr "خطای API."
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 #, fuzzy
 #| msgid "API Key"
 msgid "API key"
 msgstr "کلید API"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
+msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2211,12 +2217,6 @@ msgstr "اجازه برای آینده"
 msgid "Allow future dates toggle value is required."
 msgstr "مقدار سوئیچ اجازه تاریخ‌های آینده الزامی است."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
-#, fuzzy
-#| msgid "Create a translation"
-msgid "Allow global translation"
-msgstr "ایجاد یک ترجمه"
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 msgid "Allow multiple selections"
 msgstr "اجازه انتخاب چندگانه"
@@ -2233,11 +2233,18 @@ msgstr "مقدار تغییر وضعیت مجاز بودن تاریخ‌های �
 msgid "Allow reopening of tickets within a certain time."
 msgstr "اجازه بازگشایی مجدد تیکت‌ها در یک بازه زمانی مشخص."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
 msgid ""
-"Allow specific roles to translate all articles at once. Be careful, this can "
-"result in a lot of translation calls and might be cost related."
+"Allow specific roles to translate all articles in one ticket at once. Use "
+"with caution, as this can result in a large number of translation calls and "
+"may incur additional costs."
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+#, fuzzy
+#| msgid "No translation for this locale available"
+msgid "Allow translation of all articles at once"
+msgstr "هیچ ترجمه‌ای برای این منطقه در دسترس نیست"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2418,7 +2425,7 @@ msgstr "پاسخ"
 msgid "Answer actions"
 msgstr "پاسخ‌ها: %s"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer count: %s"
@@ -2786,7 +2793,7 @@ msgstr "فعالیت‌های بند"
 msgid "Article could not be deleted."
 msgstr "امکان حذف بند وجود ندارد."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr "اطلاعات بیشتر بند"
@@ -3084,7 +3091,7 @@ msgstr "رمز برنامه احراز کننده هویت"
 msgid "Author"
 msgstr "نویسنده"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
 msgid "Author name and article creation date"
 msgstr "نام نویسنده و تاریخ ایجاد مقاله"
 
@@ -3205,6 +3212,7 @@ msgstr "اولویت‌های موجود"
 msgid "Available Values"
 msgstr "مقادیر موجود"
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -3875,13 +3883,13 @@ msgstr "دسته‌بندی"
 msgid "Category Attribute"
 msgstr "ویژگی دسته‌بندی"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category actions"
 msgstr "ساختار صفحه دسته‌بندی"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category count: %s"
@@ -4607,7 +4615,7 @@ msgstr "جمع کردن نوار کناری"
 msgid "Collapse this element"
 msgstr "جمع کردن این عنصر"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:263
 msgid "Color %s highlight applied to \"%s\""
 msgstr "هایلایت رنگی %s روی «%s» اعمال شد"
 
@@ -5108,8 +5116,8 @@ msgstr "کپی راز"
 msgid "Copy text"
 msgstr "کپی متن"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr "کپی شماره تیکت"
 
@@ -5895,6 +5903,10 @@ msgstr "رمزگشایی ناموفق بود! %s"
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
 msgstr "رمزگشایی موفقیت‌آمیز بود."
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7396,6 +7408,10 @@ msgstr "زبان تشخیص داده شده"
 msgid "Detected language"
 msgstr "زبان تشخیص داده شده"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
+msgstr ""
+
 #: db/seeds/settings.rb:74
 msgid "Developer System"
 msgstr "سیستم توسعه‌دهنده"
@@ -7991,8 +8007,8 @@ msgstr "ویرایش پاسخ"
 msgid "Edit security keys"
 msgstr "ویرایش کلیدهای امنیتی"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr "ویرایش عنوان تیکت"
 
@@ -8264,7 +8280,7 @@ msgstr "نمای کلی خالی"
 msgid "Enable"
 msgstr "فعال کردن"
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 #, fuzzy
 #| msgid "AI provider"
 msgid "Enable AI provider"
@@ -9296,6 +9312,12 @@ msgstr "ارسال ایمیل به \"%s\" ناموفق بود. لطفا با ا�
 msgid "Failed to set up QR code. Please try again."
 msgstr "راه‌اندازی کد QR ناموفق بود. لطفاً دوباره تلاش کنید."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#, fuzzy
+#| msgid "Failed to load content."
+msgid "Failed to translate article content."
+msgstr "بارگیری محتوا ناموفق بود."
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
 msgstr "به‌روزرسانی آیتم چک‌لیست ناموفق بود."
@@ -10203,6 +10225,10 @@ msgstr "گروه‌ها"
 msgid "Groups are …"
 msgstr "گروه‌ها عبارتند از…"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
 msgstr "توکن امضای HMAC SHA1"
@@ -10501,7 +10527,7 @@ msgstr "آیکون برجسته"
 msgid "Highlight options"
 msgstr "گزینه‌های هایلایت"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:260
 msgid "Highlight removed from \"%s\""
 msgstr "هایلایت از «%s» حذف شد"
 
@@ -11122,7 +11148,7 @@ msgstr "آیتم‌های چک‌لیست ناقص"
 msgid "Incomplete credentials"
 msgstr "نام‌کاربری و رمزعبور ناقص"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:465
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid "Incomplete ticket checklist"
 msgstr "چک‌لیست ناقص تیکت"
 
@@ -12162,6 +12188,12 @@ msgstr ""
 msgid "Library"
 msgstr "پرونده‌ها"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+#, fuzzy
+#| msgid "Translation"
+msgid "LibreTranslate"
+msgstr "ترجمه"
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -12439,6 +12471,7 @@ msgid "Locale"
 msgstr "زبان محلی"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:15
+#: app/services/service/user/content_translation_target_locale.rb:15
 msgid "Locale could not be found."
 msgstr "محل یافت نمی‌شود."
 
@@ -13539,7 +13572,7 @@ msgstr "ادغام Nagios"
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -14315,6 +14348,7 @@ msgstr "هیچ نتیجه‌ای برای این جستجو وجود ندارد.
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14377,6 +14411,12 @@ msgstr ""
 "هیچ ویژگی شی مناسبی یافت نشد، لطفاً ابتدا یکی از انواع پشتیبانی شده را اضافه "
 "کنید: %s"
 
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
+#, fuzzy
+#| msgid "No editable knowledge base categories available."
+msgid "No supported target language is available."
+msgstr "هیچ دسته‌بندی قابل ویرایشی در پایگاه دانش موجود نیست."
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
@@ -14405,7 +14445,8 @@ msgstr "توکن وجود ندارد!"
 msgid "No translation available for this locale"
 msgstr "هیچ ترجمه‌ای برای این منطقه در دسترس نیست"
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/target_locales.rb:7
 #, fuzzy
 #| msgid "No filter was configured."
 msgid "No translation service is configured."
@@ -14448,7 +14489,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-id وجود ندارد، فرستنده تنظیم نشده است!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "No, just close the ticket"
 msgstr "نه، فقط تیکت را ببند"
 
@@ -15436,7 +15477,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15467,6 +15508,10 @@ msgstr "PKCE"
 #: lib/email_helper.rb:13
 msgid "POP3"
 msgstr "POP3"
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
+msgstr "پکیج نرم‌افزاری"
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
@@ -15686,7 +15731,7 @@ msgstr "انجام عملیات"
 msgid "Permanently Delete Knowledge Base"
 msgstr "حذف دائمی پایگاه دانش"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 #, fuzzy
 #| msgid "Permissions"
 msgid "Permission"
@@ -15866,6 +15911,7 @@ msgstr "لطفاً قبل از اجرا، منبع واردات را پیکرب�
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
 msgid "Please contact your administrator."
 msgstr "لطفا با ادمین تماس بگیرید."
 
@@ -16339,7 +16385,7 @@ msgstr "تأمین کننده"
 msgid "Provider Settings"
 msgstr "تنظیمات پروفایل"
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 #, fuzzy
 #| msgid "Save configuration"
 msgid "Provider configuration"
@@ -16528,7 +16574,7 @@ msgstr "تماس دریافتی: %s"
 msgid "Recent Customer Tickets"
 msgstr "تیکت‌های اخیر مشتری"
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr "لاگ‌های اخیر"
@@ -17354,7 +17400,6 @@ msgstr "نقش %s با نقش %s در تضاد است، آیا می‌خواهی
 msgid "Role description"
 msgstr "توضیحات نقش"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -17425,7 +17470,7 @@ msgstr "درحال اجرا…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -17469,7 +17514,7 @@ msgstr "اعتبارنامه برنامه SAML"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17520,7 +17565,7 @@ msgstr "SMTP - تنظیمات SMTP خروجی خود را پیکربندی کن�
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -17591,7 +17636,7 @@ msgstr "شنبه"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -18172,7 +18217,7 @@ msgstr "برای جزئیات به HTTPLog مراجعه کنید."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr "نمایش کمتر"
@@ -18183,7 +18228,7 @@ msgstr "نمایش کمتر"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "نمایش بیشتر"
@@ -18363,7 +18408,7 @@ msgstr "باز کردن جستجوی سریع"
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "سرور API در دسترس نیست - لطفاً بعداً دوباره تلاش کنید"
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -18470,7 +18515,7 @@ msgstr "فرستنده آخرین بند"
 msgid "Sending Email Address"
 msgstr "آدرس ایمیل فرستنده"
 
-#: app/models/ticket/article.rb:345
+#: app/models/ticket/article.rb:347
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "ارسال ایمیل بدون گیرنده معتبر امکان‌پذیر نیست."
 
@@ -18682,7 +18727,7 @@ msgstr ""
 "تنظیم/بازنویسی فرستنده/از ایمیل بر اساس هدر \"Reply-To\". مفید برای تنظیم "
 "مشتری صحیح اگر ایمیل از یک سیستم شخص ثالث از طرف مشتری دریافت می‌شود."
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 #, fuzzy
 #| msgid "Settings"
 msgid "Setting"
@@ -18699,6 +18744,7 @@ msgstr "تنظیمات"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -18879,6 +18925,12 @@ msgstr "نمایش برگه بعدی"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr "نمایش اعلان‌ها"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Original"
+msgid "Show original"
+msgstr "اصلی"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19518,6 +19570,12 @@ msgstr "توقف پس از تطبیق"
 msgid "Stop after match enabled"
 msgstr "توقف پس از تطبیق"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#, fuzzy
+#| msgid "Translation Source"
+msgid "Stop translating the article"
+msgstr "منبع ترجمه"
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr "ذخیره سازی"
@@ -19596,7 +19654,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -19926,6 +19984,12 @@ msgstr "ویژگی هدف برای متن استخراج‌شده"
 msgid "Target Language"
 msgstr "زبان مقصد"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
+#, fuzzy
+#| msgid "Target Language"
+msgid "Target language"
+msgstr "زبان مقصد"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 msgid "Target ticket"
 msgstr "تیکت هدف"
@@ -20050,7 +20114,7 @@ msgid "Text missing"
 msgstr "متن جاافتاده"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "ماژول‌ متن"
 
@@ -20132,6 +20196,30 @@ msgid ""
 msgstr ""
 "پنجره خدمات مشتری 24 ساعته اکنون بسته شده است، دیگر نمی‌توان پیام‌های WhatsApp "
 "ارسال کرد."
+
+#: app/models/setting/validation/vectordb.rb:17
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Please set up the provider before "
+#| "proceeding in |AI > Providers|."
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please enable "
+"it in AI > Providers."
+msgstr ""
+"پیکربندی ارائه‌دهنده غیرفعال است. لطفاً قبل از ادامه در |AI > Providers| "
+"ارائه‌دهنده را تنظیم کنید."
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Please set up the provider before "
+#| "proceeding in |AI > Providers|."
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please set up "
+"at least one provider in |AI > Providers|. %l"
+msgstr ""
+"پیکربندی ارائه‌دهنده غیرفعال است. لطفاً قبل از ادامه در |AI > Providers| "
+"ارائه‌دهنده را تنظیم کنید."
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -20329,7 +20417,7 @@ msgstr "این بند نمی‌تواند به عمومی تنظیم شود."
 msgid "The article does not belong to the specified ticket."
 msgstr "این بند به تیکت مشخص شده تعلق ندارد."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -20572,6 +20660,12 @@ msgstr "اتصال به سرور قطع شد."
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
 msgstr "ارتباط مردود شد."
+
+#: app/services/service/content_translation/backend/base.rb:34
+#, fuzzy
+#| msgid "The Simple Storage Service is not available."
+msgid "The content is too large for the translation service."
+msgstr "سرویس S3 در دسترس نیست."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -20923,7 +21017,7 @@ msgid ""
 "reachable and runs a supported version."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -21190,30 +21284,6 @@ msgstr "بارگذاری ارائه شده نامعتبر است. لطفاً ن�
 msgid "The provided token is invalid."
 msgstr "توکن ارائه شده نامعتبر است."
 
-#: app/models/setting/validation/vectordb.rb:17
-#, fuzzy
-#| msgid ""
-#| "The provider configuration is disabled. Please set up the provider before "
-#| "proceeding in |AI > Providers|."
-msgid ""
-"The provider configuration is disabled. Before proceeding, please enable it "
-"in AI > Providers."
-msgstr ""
-"پیکربندی ارائه‌دهنده غیرفعال است. لطفاً قبل از ادامه در |AI > Providers| "
-"ارائه‌دهنده را تنظیم کنید."
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-#, fuzzy
-#| msgid ""
-#| "The provider configuration is disabled. Please set up the provider before "
-#| "proceeding in |AI > Providers|."
-msgid ""
-"The provider configuration is disabled. Before proceeding, please set up at "
-"least one provider in |AI > Providers|."
-msgstr ""
-"پیکربندی ارائه‌دهنده غیرفعال است. لطفاً قبل از ادامه در |AI > Providers| "
-"ارائه‌دهنده را تنظیم کنید."
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 #, fuzzy
 #| msgid "The object could not be updated."
@@ -21242,6 +21312,12 @@ msgstr "پرونده بارگزاری نشد."
 #: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr "کلید عمومی PGP یافت نشد."
+
+#: app/services/service/content_translation/backend/base.rb:28
+#, fuzzy
+#| msgid "Defines if the AI provider is configured."
+msgid "The quota or rate limit of the translation service is exhausted."
+msgstr "تعیین می‌کند که آیا ارائه‌دهنده هوش مصنوعی پیکربندی شده است یا خیر."
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -21739,6 +21815,43 @@ msgstr "توکن برای ورود رمز مدیر معتبر نیست."
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
 msgstr "توکن معتبر است. اکنون می‌توانید یک بار با رمز عبور وارد شوید."
+
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#, fuzzy
+#| msgid "The language could not be updated."
+msgid "The translation language could not be saved."
+msgstr "زبان قابل به‌روزرسانی نبود."
+
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
+#, fuzzy
+#| msgid "AI provider is not supported"
+msgid "The translation returned no usable content."
+msgstr "ارائه‌دهنده هوش مصنوعی پشتیبانی نمی‌شود"
+
+#: app/services/service/content_translation/backend/base.rb:10
+#, fuzzy
+#| msgid "AI provider is not supported"
+msgid "The translation service cannot be reached."
+msgstr "ارائه‌دهنده هوش مصنوعی پشتیبانی نمی‌شود"
+
+#: app/services/service/content_translation/backend/base.rb:22
+#, fuzzy
+#| msgid "AI provider is not supported"
+msgid "The translation service does not support the requested target language."
+msgstr "ارائه‌دهنده هوش مصنوعی پشتیبانی نمی‌شود"
+
+#: app/services/service/content_translation/backend/deepl.rb:135
+#: app/services/service/content_translation/backend/libre_translate.rb:125
+#, fuzzy
+#| msgid "AI provider is not supported"
+msgid "The translation service does not support the target language %s."
+msgstr "ارائه‌دهنده هوش مصنوعی پشتیبانی نمی‌شود"
+
+#: app/services/service/content_translation/backend/base.rb:16
+#, fuzzy
+#| msgid "No filter was configured."
+msgid "The translation service refused the configured credentials."
+msgstr "هیچ صافی‌ای تنظیم نشده است."
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 msgid "The two-factor authentication is not configured yet."
@@ -22535,7 +22648,7 @@ msgid "This role has no knowledge base editor permission."
 msgstr "دسترسی به قابلیت‌های ویرایشگر پایگاه دانش."
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid ""
 "This service allows agents to translate articles to their configured UI "
 "language or other languages of their choice."
@@ -22999,13 +23112,14 @@ msgstr "مقالات در هر تیکت حفاظت از حلقه تریگر تی
 msgid "Ticket actions"
 msgstr "عملیات تیکت"
 
-#: app/services/service/content_translation/ticket_article.rb:13
+#: app/graphql/gql/queries/ticket/article/translation_target_locales.rb:11
+#: app/services/service/content_translation/ticket_article.rb:61
 #, fuzzy
 #| msgid "i-doit integration is not enabled"
 msgid "Ticket article translation is not enabled."
 msgstr "ادغام i-doit فعال نیست"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 #, fuzzy
 #| msgid "Ticket escalation"
 msgid "Ticket articles translation"
@@ -23191,7 +23305,7 @@ msgid "Ticket update failed."
 msgstr "به‌روزرسانی تیکت ناموفق بود."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:548
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "تیکت به‌روز شد."
@@ -23392,7 +23506,7 @@ msgstr "کل واحدهای زمان"
 msgid "Time accounting"
 msgstr "حسابداری زمان"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 #, fuzzy
 #| msgid "Time Accounting Types"
 msgid "Time accounting type"
@@ -23581,7 +23695,7 @@ msgstr "امروز"
 msgid "Toggle AM/PM mode"
 msgstr "تغییر حالت AM/PM"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
 msgid "Toggle article meta information"
 msgstr "تغییر وضعیت اطلاعات فراداده مقاله"
 
@@ -23699,6 +23813,12 @@ msgstr "ردیابی شده به عنوان آیتم چک‌لیست در"
 msgid "Transfer conversation to another chat:"
 msgstr "انتقال مکالمه به چت دیگر:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Translation Source"
+msgid "Translate article"
+msgstr "منبع ترجمه"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
 msgstr "محتواهای جانوشت ترجمه"
@@ -23707,9 +23827,27 @@ msgstr "محتواهای جانوشت ترجمه"
 msgid "Translate section to English"
 msgstr "ترجمه بخش به انگلیسی"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate to %s"
+msgstr "ترجمه ها"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Translated automatically"
+msgstr "نمایش چت به طور خودکار"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
+#, fuzzy
+#| msgid "Suggested searches"
+msgid "Translated by AI"
+msgstr "جستجوهای پیشنهادی"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -23750,7 +23888,7 @@ msgstr "منبع ترجمه"
 msgid "Translation service is not supported"
 msgstr "ارائه‌دهنده هوش مصنوعی پشتیبانی نمی‌شود"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translation service provider"
@@ -23761,6 +23899,12 @@ msgstr "منبع ترجمه"
 #| msgid "Translation Source"
 msgid "Translation services"
 msgstr "منبع ترجمه"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation to %s"
+msgstr "ترجمه ها"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
@@ -23929,7 +24073,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "روش‌های احراز هویت دوعاملی"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 msgid "Two-factor authentication"
 msgstr "احراز هویت دو مرحله‌ای"
 
@@ -24023,6 +24167,7 @@ msgid "UID Field"
 msgstr "فیلد UID"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -24306,7 +24451,7 @@ msgid "Update shared draft"
 msgstr "به‌روزرسانی پیش‌نویس مشترک"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -25018,7 +25163,7 @@ msgstr "اعتبارسنجی ناموفق بود: %{errors}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -25657,7 +25802,7 @@ msgid "Yes, add attachments now"
 msgstr "بله، همین الان پیوست‌ها را اضافه کن"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 msgid "Yes, open the checklist"
 msgstr "بله، چک‌لیست را باز کن"
 
@@ -25803,11 +25948,11 @@ msgstr ""
 "شما می‌توانید ایمیل‌های بایگانی شده را در هر زمان در Zammad با استفاده از "
 "عملکرد جستجو، مانند هر تیکت دیگر، پیدا کنید."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -26075,7 +26220,7 @@ msgstr "شما باید به دوربین وب خود دسترسی دهید."
 msgid "You have unchecked items in the checklist."
 msgstr "شما آیتم‌های علامت نخورده در چک‌لیست دارید."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:462
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -28166,8 +28311,10 @@ msgstr "...از تمام محدوده متن"
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
 
-#~ msgid "Package"
-#~ msgstr "پکیج نرم‌افزاری"
+#, fuzzy
+#~| msgid "Create a translation"
+#~ msgid "Allow global translation"
+#~ msgstr "ایجاد یک ترجمه"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "برای جابجایی بکشید"
@@ -28194,11 +28341,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~| msgid "Shared organization"
 #~ msgid "Shared with organizations"
 #~ msgstr "سازمان به اشتراک گذاشته شده"
-
-#, fuzzy
-#~| msgid "Suggested searches"
-#~ msgid "Suggested by AI"
-#~ msgstr "جستجوهای پیشنهادی"
 
 #~ msgid "Invalid permissions, do not lock yourself out."
 #~ msgstr "مجوزهای نامعتبر، خودتان را قفل نکنید."
@@ -29241,9 +29383,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ msgstr ""
 #~ "اگر می‌خواهید ترجمه را در جدول ترجمه انجام دهید، از طریق لینک ذیل اقدام "
 #~ "نمائید."
-
-#~ msgid "Original"
-#~ msgstr "اصلی"
 
 #~ msgid "Reset changes"
 #~ msgstr "بازیابی تغییرات"

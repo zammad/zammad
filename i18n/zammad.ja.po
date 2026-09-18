@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-14 09:12+0000\n"
-"Last-Translator: k-fujimaru <k.fujimaru@natsuhara.link>\n"
+"PO-Revision-Date: 2026-09-17 09:12+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Japanese <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ja/>\n"
 "Language: ja\n"
@@ -1182,7 +1182,7 @@ msgstr "AIプロバイダーが設定されていません"
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
@@ -1235,9 +1235,15 @@ msgstr "APIトークンアクセス"
 msgid "API error."
 msgstr "APIエラー"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
 msgstr "APIキー"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
+msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2180,10 +2186,6 @@ msgstr "将来を許可"
 msgid "Allow future dates toggle value is required."
 msgstr "将来の日付を許可するトグルの値が必要です。"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
-msgid "Allow global translation"
-msgstr "グローバル翻訳を許可する"
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 msgid "Allow multiple selections"
 msgstr "複数選択を許可する"
@@ -2200,11 +2202,18 @@ msgstr "過去の日付を許可するトグルの値が必要です。"
 msgid "Allow reopening of tickets within a certain time."
 msgstr "一定期間内のチケットの再オープンを許可します。"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
 msgid ""
-"Allow specific roles to translate all articles at once. Be careful, this can "
-"result in a lot of translation calls and might be cost related."
+"Allow specific roles to translate all articles in one ticket at once. Use "
+"with caution, as this can result in a large number of translation calls and "
+"may incur additional costs."
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+#, fuzzy
+#| msgid "No translation available for this locale"
+msgid "Allow translation of all articles at once"
+msgstr "このロケールには翻訳がありません"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2379,7 +2388,7 @@ msgstr "回答"
 msgid "Answer actions"
 msgstr "回答アクション"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 msgid "Answer count: %s"
 msgstr "回答数: %s"
 
@@ -2735,7 +2744,7 @@ msgstr "記事のアクション"
 msgid "Article could not be deleted."
 msgstr "記事を削除できませんでした。"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr "記事のメタ情報"
@@ -3032,7 +3041,7 @@ msgstr "認証アプリのシークレット"
 msgid "Author"
 msgstr "作成者"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
 msgid "Author name and article creation date"
 msgstr "作成者名と記事の作成日"
 
@@ -3153,6 +3162,7 @@ msgstr "利用可能な優先度"
 msgid "Available Values"
 msgstr "利用可能な値"
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -3820,11 +3830,11 @@ msgstr "分類"
 msgid "Category Attribute"
 msgstr "カテゴリ属性"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 msgid "Category actions"
 msgstr "カテゴリのアクション"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 msgid "Category count: %s"
 msgstr "カテゴリ数: %s"
 
@@ -4533,7 +4543,7 @@ msgstr "サイドバーを折りたたむ"
 msgid "Collapse this element"
 msgstr "この要素を折りたたむ"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:263
 msgid "Color %s highlight applied to \"%s\""
 msgstr "色%sのハイライトを\"%s\"に適用しました"
 
@@ -5034,8 +5044,8 @@ msgstr "シークレットをコピー"
 msgid "Copy text"
 msgstr "テキストをコピー"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr "チケット番号をコピー"
 
@@ -5813,6 +5823,10 @@ msgstr "復号に失敗しました！ %s"
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
 msgstr "復号に成功しました。"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7294,6 +7308,10 @@ msgstr "検出された言語"
 msgid "Detected language"
 msgstr "検出された言語"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
+msgstr ""
+
 #: db/seeds/settings.rb:74
 msgid "Developer System"
 msgstr "開発者システム"
@@ -7873,8 +7891,8 @@ msgstr "返信の編集"
 msgid "Edit security keys"
 msgstr "セキュリティキーの編集"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr "チケットタイトルの編集"
 
@@ -8144,7 +8162,7 @@ msgstr "一覧は空です"
 msgid "Enable"
 msgstr "有効"
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 msgid "Enable AI provider"
 msgstr "AIプロバイダーを有効にする"
 
@@ -9154,6 +9172,12 @@ msgstr "\"%s\" へのメール送信に失敗しました。管理者に連絡�
 msgid "Failed to set up QR code. Please try again."
 msgstr "QRコードを設定できませんでした。もう一度お試しください。"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#, fuzzy
+#| msgid "Failed to load content."
+msgid "Failed to translate article content."
+msgstr "コンテンツの読み込みに失敗しました。"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
 msgstr "チェックリスト項目の更新に失敗しました。"
@@ -10052,6 +10076,10 @@ msgstr "グループ"
 msgid "Groups are …"
 msgstr "グループは…"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1署名トークン"
@@ -10345,7 +10373,7 @@ msgstr "ハイライトアイコン"
 msgid "Highlight options"
 msgstr "ハイライトオプション"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:260
 msgid "Highlight removed from \"%s\""
 msgstr "\"%s\"からハイライトを削除しました"
 
@@ -10956,7 +10984,7 @@ msgstr "未完了のチェックリスト項目"
 msgid "Incomplete credentials"
 msgstr "資格情報が不完全です"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:465
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid "Incomplete ticket checklist"
 msgstr "未完了のチケットチェックリスト"
 
@@ -11962,6 +11990,12 @@ msgstr ""
 msgid "Library"
 msgstr "ライブラリ"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+#, fuzzy
+#| msgid "Translation"
+msgid "LibreTranslate"
+msgstr "翻訳"
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -12235,6 +12269,7 @@ msgid "Locale"
 msgstr "ロケール"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:15
+#: app/services/service/user/content_translation_target_locale.rb:15
 msgid "Locale could not be found."
 msgstr "ロケールが見つかりませんでした。"
 
@@ -13327,7 +13362,7 @@ msgstr "Nagios連携"
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -14085,6 +14120,7 @@ msgstr "このクエリに対する結果はありません。"
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14145,6 +14181,12 @@ msgstr ""
 "適切なオブジェクト属性が見つかりません。まずサポートされているタイプを追加し"
 "てください: %s"
 
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
+#, fuzzy
+#| msgid "No knowledge base content is available yet."
+msgid "No supported target language is available."
+msgstr "ナレッジベースの内容がまだありません。"
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
@@ -14171,7 +14213,8 @@ msgstr "トークンがありません！"
 msgid "No translation available for this locale"
 msgstr "このロケールには翻訳がありません"
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/target_locales.rb:7
 #, fuzzy
 #| msgid "No filter was configured."
 msgid "No translation service is configured."
@@ -14214,7 +14257,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-idがなく、送信者が設定されていません！"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "No, just close the ticket"
 msgstr "いいえ、チケットを閉じるだけです"
 
@@ -15205,7 +15248,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15236,6 +15279,10 @@ msgstr "PKCE"
 #: lib/email_helper.rb:13
 msgid "POP3"
 msgstr "POP3"
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
+msgstr "パッケージ"
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
 msgid "Package installed successfully."
@@ -15447,7 +15494,7 @@ msgstr "アクションを実行する"
 msgid "Permanently Delete Knowledge Base"
 msgstr "ナレッジベースを完全に削除する"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 msgid "Permission"
 msgstr "権限"
 
@@ -15620,6 +15667,7 @@ msgstr "実行する前にインポート元を設定してください。"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
 msgid "Please contact your administrator."
 msgstr "管理者にお問い合わせください。"
 
@@ -16085,7 +16133,7 @@ msgstr "プロバイダー"
 msgid "Provider Settings"
 msgstr "プロフィール設定"
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 #, fuzzy
 #| msgid "Save configuration"
 msgid "Provider configuration"
@@ -16267,7 +16315,7 @@ msgstr "着信あり: %s"
 msgid "Recent Customer Tickets"
 msgstr "最近の顧客チケット"
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr "最近のログ"
@@ -17084,7 +17132,6 @@ msgstr "ロール %s はロール %s と競合しています。続行します�
 msgid "Role description"
 msgstr "ロールの説明"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -17153,7 +17200,7 @@ msgstr "実行中…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -17196,7 +17243,7 @@ msgstr "SAML アプリの認証情報"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17247,7 +17294,7 @@ msgstr "SMTP - 独自の送信SMTP設定を構成します"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -17316,7 +17363,7 @@ msgstr "土曜日"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -17877,7 +17924,7 @@ msgstr "詳細はHTTPLogを確認してください。"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr "少なめに表示"
@@ -17888,7 +17935,7 @@ msgstr "少なめに表示"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "もっと見る"
@@ -18064,7 +18111,7 @@ msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr ""
 "現在、セマンティック検索をご利用いただけません。後でもう一度お試しください。"
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr "別のプロバイダーを選択するまで、セマンティック検索は機能しません。"
@@ -18172,7 +18219,7 @@ msgstr "最後の記事の送信者"
 msgid "Sending Email Address"
 msgstr "送信メールアドレス"
 
-#: app/models/ticket/article.rb:345
+#: app/models/ticket/article.rb:347
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "有効な受信者がいないため、メールを送信できません。"
 
@@ -18384,7 +18431,7 @@ msgstr ""
 "サードパーティシステムからメールを受信する場合、正しい顧客を設定するのに便利"
 "です。"
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "Setting"
 msgstr "設定"
 
@@ -18399,6 +18446,7 @@ msgstr "設定"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -18575,6 +18623,12 @@ msgstr "次のタブを表示"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr "通知を表示"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Original"
+msgid "Show original"
+msgstr "オリジナル"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19193,6 +19247,12 @@ msgstr "一致後に停止"
 msgid "Stop after match enabled"
 msgstr "一致後に停止を有効にする"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#, fuzzy
+#| msgid "Translation Source"
+msgid "Stop translating the article"
+msgstr "翻訳元"
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr "ストレージ"
@@ -19269,7 +19329,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -19589,6 +19649,12 @@ msgstr "抽出テキストの対象属性"
 msgid "Target Language"
 msgstr "対象言語"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
+#, fuzzy
+#| msgid "Target Language"
+msgid "Target language"
+msgstr "対象言語"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 msgid "Target ticket"
 msgstr "対象チケット"
@@ -19712,7 +19778,7 @@ msgid "Text missing"
 msgstr "テキストがありません"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "テキストモジュール"
 
@@ -19796,6 +19862,30 @@ msgid ""
 msgstr ""
 "24時間のカスタマーサービス窓口は終了しました。これ以上 WhatsApp メッセージを"
 "送信することはできません。"
+
+#: app/models/setting/validation/vectordb.rb:17
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Before proceeding, please enable "
+#| "it in AI > Providers."
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please enable "
+"it in AI > Providers."
+msgstr ""
+"プロバイダーの設定が無効になっています。続行する前に、AI > Providers で有効に"
+"してください。"
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Before proceeding, please set up "
+#| "at least one provider in |AI > Providers|."
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please set up "
+"at least one provider in |AI > Providers|. %l"
+msgstr ""
+"プロバイダーの設定が無効になっています。続行する前に、|AI > Providers| で少な"
+"くとも1つのプロバイダーを設定してください。"
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -19996,7 +20086,7 @@ msgstr "記事を「公開」に設定できませんでした。"
 msgid "The article does not belong to the specified ticket."
 msgstr "その記事は指定されたチケットに属していません。"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -20269,6 +20359,12 @@ msgstr "サーバーとの接続が切断されました。"
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
 msgstr "接続が拒否されました。"
+
+#: app/services/service/content_translation/backend/base.rb:34
+#, fuzzy
+#| msgid "This knowledge base answer is not available."
+msgid "The content is too large for the translation service."
+msgstr "このナレッジベースの回答は利用できません。"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -20620,7 +20716,7 @@ msgstr ""
 "ナレッジベースのインデックスを作成できません。Elasticsearchに接続できるか、お"
 "よびサポートされているバージョンで実行されているかを確認してください。"
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -20890,22 +20986,6 @@ msgstr "提供されたペイロードが無効です。構文を確認してく
 msgid "The provided token is invalid."
 msgstr "提供されたトークンが無効です。"
 
-#: app/models/setting/validation/vectordb.rb:17
-msgid ""
-"The provider configuration is disabled. Before proceeding, please enable it "
-"in AI > Providers."
-msgstr ""
-"プロバイダーの設定が無効になっています。続行する前に、AI > Providers で有効に"
-"してください。"
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid ""
-"The provider configuration is disabled. Before proceeding, please set up at "
-"least one provider in |AI > Providers|."
-msgstr ""
-"プロバイダーの設定が無効になっています。続行する前に、|AI > Providers| で少な"
-"くとも1つのプロバイダーを設定してください。"
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 msgid "The provider could not be updated."
 msgstr "プロバイダーを更新できませんでした。"
@@ -20934,6 +21014,12 @@ msgstr "プロバイダーを読み込めませんでした。"
 #: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr "公開PGPキーが見つかりませんでした。"
+
+#: app/services/service/content_translation/backend/base.rb:28
+#, fuzzy
+#| msgid "Defines if the AI provider is configured."
+msgid "The quota or rate limit of the translation service is exhausted."
+msgstr "AI プロバイダーが設定されているかどうかを定義します。"
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -21418,6 +21504,41 @@ msgstr "管理者パスワードログイン用のトークンが無効です。
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
 msgstr "トークンは有効です。パスワードによるログインが一度だけ可能です。"
+
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#, fuzzy
+#| msgid "The language could not be updated."
+msgid "The translation language could not be saved."
+msgstr "言語を更新できませんでした。"
+
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
+#, fuzzy
+#| msgid "This host cannot be reached."
+msgid "The translation returned no usable content."
+msgstr "このホストに到達できません。"
+
+#: app/services/service/content_translation/backend/base.rb:10
+#, fuzzy
+#| msgid "This host cannot be reached."
+msgid "The translation service cannot be reached."
+msgstr "このホストに到達できません。"
+
+#: app/services/service/content_translation/backend/base.rb:22
+msgid "The translation service does not support the requested target language."
+msgstr ""
+
+#: app/services/service/content_translation/backend/deepl.rb:135
+#: app/services/service/content_translation/backend/libre_translate.rb:125
+#, fuzzy
+#| msgid "This provider does not support embeddings."
+msgid "The translation service does not support the target language %s."
+msgstr "このプロバイダーは埋め込みをサポートしていません。"
+
+#: app/services/service/content_translation/backend/base.rb:16
+#, fuzzy
+#| msgid "No filter was configured."
+msgid "The translation service refused the configured credentials."
+msgstr "フィルターは設定されていません。"
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 msgid "The two-factor authentication is not configured yet."
@@ -22203,7 +22324,7 @@ msgid "This role has no knowledge base editor permission."
 msgstr "このロールにはナレッジベースの編集権限がありません。"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid ""
 "This service allows agents to translate articles to their configured UI "
 "language or other languages of their choice."
@@ -22647,13 +22768,14 @@ msgstr "チケットごとのトリガーループ保護記事数"
 msgid "Ticket actions"
 msgstr "チケットアクション"
 
-#: app/services/service/content_translation/ticket_article.rb:13
+#: app/graphql/gql/queries/ticket/article/translation_target_locales.rb:11
+#: app/services/service/content_translation/ticket_article.rb:61
 #, fuzzy
 #| msgid "i-doit integration is not enabled"
 msgid "Ticket article translation is not enabled."
 msgstr "i-doit 連携は有効になっていません"
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 #, fuzzy
 #| msgid "Ticket escalation"
 msgid "Ticket articles translation"
@@ -22837,7 +22959,7 @@ msgid "Ticket update failed."
 msgstr "チケットの更新に失敗しました。"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:548
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "チケットを更新しました。"
@@ -23037,7 +23159,7 @@ msgstr "総時間単位"
 msgid "Time accounting"
 msgstr "タイムアカウンティング"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 msgid "Time accounting type"
 msgstr "工数管理タイプ"
 
@@ -23226,7 +23348,7 @@ msgstr "今日"
 msgid "Toggle AM/PM mode"
 msgstr "AM/PMモードの切り替え"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
 msgid "Toggle article meta information"
 msgstr "記事メタ情報の表示切替"
 
@@ -23344,6 +23466,12 @@ msgstr "の日に公開予定"
 msgid "Transfer conversation to another chat:"
 msgstr "会話を別のチャットに転送:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Translation Source"
+msgid "Translate article"
+msgstr "翻訳元"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
 msgstr "フィールドの内容を翻訳"
@@ -23352,9 +23480,27 @@ msgstr "フィールドの内容を翻訳"
 msgid "Translate section to English"
 msgstr "セクションを英語に翻訳"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate to %s"
+msgstr "翻訳"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Translated automatically"
+msgstr "チャットを自動で表示"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
+#, fuzzy
+#| msgid "Last sync"
+msgid "Translated by AI"
+msgstr "最終同期"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -23393,7 +23539,7 @@ msgstr "翻訳元"
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translation service provider"
@@ -23404,6 +23550,12 @@ msgstr "翻訳元"
 #| msgid "Translation Source"
 msgid "Translation services"
 msgstr "翻訳元"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation to %s"
+msgstr "翻訳"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
@@ -23572,7 +23724,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "二要素認証の方法"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 msgid "Two-factor authentication"
 msgstr "二要素認証"
 
@@ -23666,6 +23818,7 @@ msgid "UID Field"
 msgstr "UIDフィールド"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -23937,7 +24090,7 @@ msgid "Update shared draft"
 msgstr "共有下書きを更新"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -24640,7 +24793,7 @@ msgstr "検証に失敗しました: %{errors}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -25273,7 +25426,7 @@ msgid "Yes, add attachments now"
 msgstr "はい、今すぐ添付ファイルを追加します"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 msgid "Yes, open the checklist"
 msgstr "はい、チェックリストを開きます"
 
@@ -25418,11 +25571,11 @@ msgstr ""
 "アーカイブされたメールは、他のチケットと同様に、検索機能を使用していつでも"
 "Zammad内で確認できます。"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -25683,7 +25836,7 @@ msgstr "ウェブカメラへのアクセスを許可する必要があります
 msgid "You have unchecked items in the checklist."
 msgstr "チェックリスト内に未チェックの項目があります。"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:462
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -27753,8 +27906,8 @@ msgstr "…テキストエリア全体"
 msgid "∅ Waiting time today"
 msgstr "∅ Waiting time today"
 
-#~ msgid "Package"
-#~ msgstr "パッケージ"
+#~ msgid "Allow global translation"
+#~ msgstr "グローバル翻訳を許可する"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "ドラッグして並べ替え"
@@ -27779,11 +27932,6 @@ msgstr "∅ Waiting time today"
 #~| msgid "Shared organization"
 #~ msgid "Shared with organizations"
 #~ msgstr "組織の共有"
-
-#, fuzzy
-#~| msgid "Last sync"
-#~ msgid "Suggested by AI"
-#~ msgstr "最終同期"
 
 #, fuzzy
 #~| msgid "Attached Files"
@@ -28746,9 +28894,6 @@ msgstr "∅ Waiting time today"
 #~ "If you want to translate it via the translation table, just go ahead "
 #~ "below."
 #~ msgstr "翻訳テーブルで翻訳したい場合は、次で翻訳してください。"
-
-#~ msgid "Original"
-#~ msgstr "オリジナル"
 
 #~ msgid "Reset changes"
 #~ msgstr "変更のリセット"

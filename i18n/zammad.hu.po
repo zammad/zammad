@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-10 09:13+0000\n"
-"Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
+"PO-Revision-Date: 2026-09-17 09:12+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
 "Language: hu\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.8.1\n"
+"X-Generator: Weblate 2026.9.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1203,7 +1203,7 @@ msgstr "Az MI-szolgáltató hiányzik"
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
@@ -1256,9 +1256,15 @@ msgstr "API-token hozzáférés"
 msgid "API error."
 msgstr "API hiba."
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
 msgstr "API-kulcs"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
+msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2219,12 +2225,6 @@ msgid "Allow future dates toggle value is required."
 msgstr ""
 "A jövőbeli dátumok lehetővé tétele váltókapcsoló értékének megadása kötelező."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
-#, fuzzy
-#| msgid "Create a translation"
-msgid "Allow global translation"
-msgstr "Fordítás létrehozása"
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 msgid "Allow multiple selections"
 msgstr "Többszörös kiválasztás engedélyezése"
@@ -2242,11 +2242,25 @@ msgstr ""
 msgid "Allow reopening of tickets within a certain time."
 msgstr "A jegyek bizonyos időn belüli újranyitásának lehetővé tétele."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
+#, fuzzy
+#| msgid ""
+#| "Allow specific roles to translate all articles at once. Be careful, this "
+#| "can result in a lot of translation calls and might be cost related."
 msgid ""
-"Allow specific roles to translate all articles at once. Be careful, this can "
-"result in a lot of translation calls and might be cost related."
+"Allow specific roles to translate all articles in one ticket at once. Use "
+"with caution, as this can result in a large number of translation calls and "
+"may incur additional costs."
 msgstr ""
+"Lehetővé tétel bizonyos szerepek számára az összes bejegyzés egyszerre "
+"történő lefordítására. Legyen óvatos, mert ez rengeteg fordítási kérést "
+"eredményezhet, és költségekkel járhat."
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+#, fuzzy
+#| msgid "No translation available for this locale"
+msgid "Allow translation of all articles at once"
+msgstr "Nincs elérhető fordítás ehhez a területi beállításhoz"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2428,7 +2442,7 @@ msgstr "Válasz"
 msgid "Answer actions"
 msgstr "Válaszműveletek"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 msgid "Answer count: %s"
 msgstr "Válasz darabszáma: %s"
 
@@ -2779,10 +2793,8 @@ msgid "Article Language Detection"
 msgstr "Bejegyzés nyelvének felismerése"
 
 #: db/seeds/settings.rb:5971
-#, fuzzy
-#| msgid "Alternative Translations"
 msgid "Article Translation"
-msgstr "Alternatív fordítások"
+msgstr "Bejegyzésfordítás"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "Article actions"
@@ -2792,7 +2804,7 @@ msgstr "Bejegyzésműveletek"
 msgid "Article could not be deleted."
 msgstr "A bejegyzést nem sikerült törölni."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr "Bejegyzés metainformációi"
@@ -3097,7 +3109,7 @@ msgstr "Hitelesítő alkalmazás titka"
 msgid "Author"
 msgstr "Szerző"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
 msgid "Author name and article creation date"
 msgstr "Szerző neve és a bejegyzés létrehozásának dátuma"
 
@@ -3155,16 +3167,12 @@ msgid "Automated setup"
 msgstr "Automatizált beállítás"
 
 #: db/seeds/settings.rb:5985
-#, fuzzy
-#| msgid "Custom Translation"
 msgid "Automatic Article Translation"
-msgstr "Egyéni fordítás"
+msgstr "Automatikus bejegyzésfordítás"
 
 #: db/seeds/settings.rb:5999
-#, fuzzy
-#| msgid "Alternative Translations"
 msgid "Automatic Article Translation Roles"
-msgstr "Alternatív fordítások"
+msgstr "Automatikus bejegyzésfordítás szerepei"
 
 #: db/seeds/settings.rb:1279
 msgid "Automatic account link on initial logon"
@@ -3218,6 +3226,7 @@ msgstr "Elérhető prioritások"
 msgid "Available Values"
 msgstr "Elérhető értékek"
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -3888,11 +3897,11 @@ msgstr "Kategória"
 msgid "Category Attribute"
 msgstr "Kategória attribútuma"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 msgid "Category actions"
 msgstr "Kategóriaműveletek"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 msgid "Category count: %s"
 msgstr "Kategória darabszáma: %s"
 
@@ -4619,7 +4628,7 @@ msgstr "Oldalsáv összecsukása"
 msgid "Collapse this element"
 msgstr "Az elem összecsukása"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:263
 msgid "Color %s highlight applied to \"%s\""
 msgstr "%s színű kiemelés alkalmazva erre: „%s”"
 
@@ -5122,8 +5131,8 @@ msgstr "Titok másolása"
 msgid "Copy text"
 msgstr "Szöveg másolása"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr "Jegyszám másolása"
 
@@ -5924,6 +5933,10 @@ msgstr "A visszafejtés nem sikerült! %s"
 msgid "Decryption was successful."
 msgstr "A visszafejtés sikeres volt."
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:32
@@ -6377,10 +6390,8 @@ msgstr ""
 "keresztül."
 
 #: db/seeds/settings.rb:5944
-#, fuzzy
-#| msgid "Defines if the AI provider is configured."
 msgid "Defines if a translation service is configured."
-msgstr "Meghatározza, hogy az MI-szolgáltató be van-e állítva."
+msgstr "Meghatározza, hogy egy fordítási szolgáltatás be van-e állítva."
 
 #: db/seeds/settings.rb:20
 msgid "Defines if application is in init mode."
@@ -7170,14 +7181,10 @@ msgstr ""
 "Meghatározza, hogy mely jegyek használhatják a jegyösszefoglaló oldalsávot."
 
 #: db/seeds/settings.rb:6002
-#, fuzzy
-#| msgid ""
-#| "Defines which user roles will receive a warning in case of matching "
-#| "tickets."
 msgid "Defines which user roles automatic article translation applies to."
 msgstr ""
-"Meghatározza, hogy mely felhasználói szerepek kapjanak figyelmeztetést "
-"illeszkedő jegyek esetén."
+"Meghatározza, hogy mely felhasználói szerepekre van alkalmazva az "
+"automatikus bejegyzésfordítás."
 
 #: db/seeds/settings.rb:2804
 msgid ""
@@ -7517,6 +7524,10 @@ msgstr "Felismert nyelv"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
 msgid "Detected language"
 msgstr "Felismert nyelv"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
+msgstr ""
 
 #: db/seeds/settings.rb:74
 msgid "Developer System"
@@ -8103,8 +8114,8 @@ msgstr "Válasz szerkesztése"
 msgid "Edit security keys"
 msgstr "Biztonsági kulcsok szerkesztése"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr "Jegy címének szerkesztése"
 
@@ -8378,7 +8389,7 @@ msgstr "Üres áttekintés"
 msgid "Enable"
 msgstr "Engedélyezés"
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 msgid "Enable AI provider"
 msgstr "MI-szolgáltató engedélyezése"
 
@@ -8496,14 +8507,12 @@ msgstr ""
 "automatikus újraindítási irányelvet."
 
 #: db/seeds/settings.rb:5988
-#, fuzzy
-#| msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgid ""
 "Enable or disable the automatic translation of ticket articles when an agent "
 "opens a ticket."
 msgstr ""
-"Automatikus hozzárendelés engedélyezése, amikor egy ügyintéző első "
-"alkalommal nyit meg egy jegyet."
+"A jegybejegyzések automatikus fordításának engedélyezése vagy letiltása, ha "
+"egy ügyintéző megnyit egy jegyet."
 
 #: db/seeds/settings.rb:6417
 msgid ""
@@ -8538,10 +8547,8 @@ msgid "Enable or disable the ticket summary."
 msgstr "A jegyösszefoglaló engedélyezése vagy letiltása."
 
 #: db/seeds/settings.rb:5974
-#, fuzzy
-#| msgid "Enable or disable the ticket summary."
 msgid "Enable or disable the translation of ticket articles."
-msgstr "A jegyösszefoglaló engedélyezése vagy letiltása."
+msgstr "A jegybejegyzések fordításának engedélyezése vagy letiltása."
 
 #: db/seeds/settings.rb:6473
 msgid ""
@@ -9421,6 +9428,12 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:189
 msgid "Failed to set up QR code. Please try again."
 msgstr "Nem sikerült beállítani a QR-kódot. Próbálja meg újra."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#, fuzzy
+#| msgid "Failed to load content."
+msgid "Failed to translate article content."
+msgstr "Nem sikerült betölteni a tartalmat."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
@@ -10324,6 +10337,10 @@ msgstr "Csoportok"
 msgid "Groups are …"
 msgstr "A csoportok …"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 aláírási token"
@@ -10624,7 +10641,7 @@ msgstr "Kiemelés ikonja"
 msgid "Highlight options"
 msgstr "Kiemelés beállításai"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:260
 msgid "Highlight removed from \"%s\""
 msgstr "Kiemelés eltávolítva erről: „%s”"
 
@@ -11127,6 +11144,8 @@ msgid ""
 "In container-based environments, packages are managed as part of the "
 "deployment and cannot be installed or removed from here."
 msgstr ""
+"Konténeralapú környezetekben a csomagok az üzembe állítás részeként vannak "
+"kezelve, és innen nem lehet azokat telepíteni vagy eltávolítani."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
@@ -11257,7 +11276,7 @@ msgstr "Befejezetlen ellenőrzőlista-elemek"
 msgid "Incomplete credentials"
 msgstr "Befejezetlen hitelesítési adatok"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:465
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid "Incomplete ticket checklist"
 msgstr "Befejezetlen jegy-ellenőrzőlista"
 
@@ -11429,16 +11448,12 @@ msgid "Installed packages"
 msgstr "Telepített csomagok"
 
 #: app/controllers/packages_controller.rb:58
-#, fuzzy
-#| msgid ""
-#| "After installing, updating, or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "Installing, updating or uninstalling packages is not possible in container "
 "environments."
 msgstr ""
-"A csomagok telepítése, frissítése vagy eltávolítása után a következő "
-"parancsokat kell végrehajtani a kiszolgálón:"
+"Csomagok telepítése, frissítése vagy eltávolítása nem lehetséges konténeres "
+"környezetekben."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
@@ -12271,6 +12286,12 @@ msgstr ""
 msgid "Library"
 msgstr "Könyvtár"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+#, fuzzy
+#| msgid "Translation"
+msgid "LibreTranslate"
+msgstr "Fordítás"
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -12546,6 +12567,7 @@ msgid "Locale"
 msgstr "Területi beállítás"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:15
+#: app/services/service/user/content_translation_target_locale.rb:15
 msgid "Locale could not be found."
 msgstr "A területi beállítás nem található."
 
@@ -12620,7 +12642,7 @@ msgstr "Kijelentkezés"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:16
 msgid "Logs"
-msgstr ""
+msgstr "Naplók"
 
 #: db/seeds/settings.rb:1108
 msgid "Lost Password"
@@ -13643,7 +13665,7 @@ msgstr "Nagios-integráció"
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -14406,6 +14428,7 @@ msgstr "Nincsenek találatok erre a lekérdezésre."
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14467,6 +14490,12 @@ msgstr ""
 "Nem találhatók megfelelő objektumattribútumok, először adja hozzá a "
 "támogatott típusok egyikét: %s"
 
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
+#, fuzzy
+#| msgid "No knowledge base content is available yet."
+msgid "No supported target language is available."
+msgstr "Még nincs elérhető tudásbázis-tartalom."
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
@@ -14493,11 +14522,10 @@ msgstr "Nincs token!"
 msgid "No translation available for this locale"
 msgstr "Nincs elérhető fordítás ehhez a területi beállításhoz"
 
-#: app/services/service/content_translation/base.rb:65
-#, fuzzy
-#| msgid "No filter was configured."
+#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/target_locales.rb:7
 msgid "No translation service is configured."
-msgstr "Nem lett szűrő beállítva."
+msgstr "Nincs fordítási szolgáltatás beállítva."
 
 #: app/models/ticket.rb:434
 msgid "No triggers active"
@@ -14536,7 +14564,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Nincs „x-zammad-session-user-id”, nincs küldő beállítva!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "No, just close the ticket"
 msgstr "Nem, csak zárja le a jegyet"
 
@@ -15539,7 +15567,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15570,6 +15598,10 @@ msgstr "PKCE"
 #: lib/email_helper.rb:13
 msgid "POP3"
 msgstr "POP3"
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
+msgstr "Csomag"
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
 msgid "Package installed successfully."
@@ -15782,7 +15814,7 @@ msgstr "Műveletek végrehajtása"
 msgid "Permanently Delete Knowledge Base"
 msgstr "Tudásbázis végleges törlése"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 msgid "Permission"
 msgstr "Jogosultság"
 
@@ -15955,6 +15987,7 @@ msgstr "Állítsa be az importálás forrását a futtatás előtt."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
 msgid "Please contact your administrator."
 msgstr "Vegye fel a kapcsolatot az adminisztrátorral."
 
@@ -16425,16 +16458,12 @@ msgid "Provider"
 msgstr "Szolgáltató"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:14
-#, fuzzy
-#| msgid "Profile settings"
 msgid "Provider Settings"
-msgstr "Profilbeállítások"
+msgstr "Szolgáltató beállításai"
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
-#, fuzzy
-#| msgid "Save configuration"
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 msgid "Provider configuration"
-msgstr "Beállítások mentése"
+msgstr "Szolgáltató beállítása"
 
 #: app/assets/javascripts/app/models/ai_provider_connection.coffee:46
 msgid "Provider not used at the moment."
@@ -16613,7 +16642,7 @@ msgstr "Fogadott hívás: %s"
 msgid "Recent Customer Tickets"
 msgstr "Legutóbbi ügyféljegyek"
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr "Legutóbbi naplók"
@@ -17439,7 +17468,6 @@ msgstr "A(z) %s szerep ütközik a(z) %s szereppel, szeretné folytatni?"
 msgid "Role description"
 msgstr "Szerep leírása"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -17508,7 +17536,7 @@ msgstr "Fut…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -17553,7 +17581,7 @@ msgstr "SAML-alkalmazás hitelesítési adatai"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17604,7 +17632,7 @@ msgstr "SMTP – saját kimenő SMTP-beállítások konfigurálása"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -17673,7 +17701,7 @@ msgstr "szombat"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -18242,7 +18270,7 @@ msgstr "Nézze meg a HTTP-naplót a részletekért."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr "Kevesebb megtekintése"
@@ -18253,7 +18281,7 @@ msgstr "Kevesebb megtekintése"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "Több megtekintése"
@@ -18433,7 +18461,7 @@ msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr ""
 "A szemantikus keresés átmenetileg nem érhető el. Próbálja meg később újra."
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -18543,7 +18571,7 @@ msgstr "Az utolsó bejegyzés küldője"
 msgid "Sending Email Address"
 msgstr "Küldő e-mail-cím"
 
-#: app/models/ticket/article.rb:345
+#: app/models/ticket/article.rb:347
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Érvényes címzett nélkül nem lehetséges e-mailt küldeni."
 
@@ -18758,7 +18786,7 @@ msgstr ""
 "To” fejléc alapján. Hasznos a megfelelő ügyfél beállításához, ha harmadik "
 "fél rendszeréből érkezik az e-mail egy ügyfél nevében."
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "Setting"
 msgstr "Beállítás"
 
@@ -18773,6 +18801,7 @@ msgstr "Beállítás"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -18953,6 +18982,12 @@ msgstr "Következő lap megjelenítése"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr "Értesítések megjelenítése"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Original"
+msgid "Show original"
+msgstr "Eredeti"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19591,6 +19626,12 @@ msgstr "Leállítás találat után"
 msgid "Stop after match enabled"
 msgstr "A találat utáni leállítás engedélyezve"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#, fuzzy
+#| msgid "Translation Service"
+msgid "Stop translating the article"
+msgstr "Fordítási szolgáltatás"
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr "Tároló"
@@ -19626,10 +19667,8 @@ msgstr ""
 "A jegyösszefoglalás beállításait tárolja (például melyik tartalom látható)."
 
 #: db/seeds/settings.rb:5959
-#, fuzzy
-#| msgid "Stores the GitLab configuration."
 msgid "Stores the translation service configuration."
-msgstr "A GitLab beállítását tárolja."
+msgstr "Eltárolja a fordítási szolgáltatás beállításait."
 
 #: db/seeds/object_manager_attributes.rb:1275
 msgid "Street"
@@ -19669,7 +19708,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -19991,6 +20030,12 @@ msgstr "Célattribútum a kinyert szöveghez"
 msgid "Target Language"
 msgstr "Célnyelv"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
+#, fuzzy
+#| msgid "Target Language"
+msgid "Target language"
+msgstr "Célnyelv"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 msgid "Target ticket"
 msgstr "Céljegy"
@@ -20115,7 +20160,7 @@ msgid "Text missing"
 msgstr "Hiányzó szöveg"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "Szövegmodul"
 
@@ -20200,6 +20245,30 @@ msgid ""
 msgstr ""
 "A 24 órás ügyfélszolgálati ablak mostantól zárva van, nem küldhetők további "
 "WhatsApp-üzenetek."
+
+#: app/models/setting/validation/vectordb.rb:17
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Before proceeding, please enable "
+#| "it in AI > Providers."
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please enable "
+"it in AI > Providers."
+msgstr ""
+"A szolgáltató beállítása le van tiltva. A folytatás előtt engedélyezze az MI "
+"> Szolgáltatók menüpontban."
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Before proceeding, please set up "
+#| "at least one provider in |AI > Providers|."
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please set up "
+"at least one provider in |AI > Providers|. %l"
+msgstr ""
+"A szolgáltató beállítása le van tiltva. A folytatás előtt állítson be "
+"legalább egy szolgáltatót az |MI > Szolgáltatók| menüpontban."
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -20404,11 +20473,13 @@ msgstr "A bejegyzést nem sikerült nyilvánosra állítani."
 msgid "The article does not belong to the specified ticket."
 msgstr "A bejegyzés nem tartozik a megadott jegyhez."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
 msgstr ""
+"A bejegyzés nyelvének felismerése le van tiltva. Engedélyezze, hogy "
+"elkerülje a már célnyelven lévő bejegyzések fordítását. %l"
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -20666,11 +20737,8 @@ msgid ""
 msgstr "A Zammad beállításai megváltoztak. Töltse újra a lehető leghamarabb."
 
 #: app/services/service/content_translation/base.rb:20
-#, fuzzy
-#| msgid "The Simple Storage Service is not available."
 msgid "The configured translation service is not available."
-msgstr ""
-"Az egyszerű tárolási szolgáltatás (Simple Storage Service) nem érhető el."
+msgstr "A beállított fordítási szolgáltatás nem érhető el."
 
 #: app/frontend/apps/mobile/composables/useConnection.ts:18
 msgid "The connection to the server was lost."
@@ -20686,6 +20754,12 @@ msgstr "Megszakadt a kapcsolat a kiszolgálóval."
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
 msgstr "A kapcsolat visszautasításra került."
+
+#: app/services/service/content_translation/backend/base.rb:34
+#, fuzzy
+#| msgid "The configured translation service is not available."
+msgid "The content is too large for the translation service."
+msgstr "A beállított fordítási szolgáltatás nem érhető el."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -21046,7 +21120,7 @@ msgstr ""
 "A tudásbázisindexet nem sikerült összeállítani. Ellenőrizze, hogy az "
 "Elasticsearch elérhető-e, és támogatott verziót futtat-e."
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -21086,10 +21160,8 @@ msgid "The linked account could not be found."
 msgstr "A kapcsolt fiók nem található."
 
 #: app/services/service/content_translation/base.rb:14
-#, fuzzy
-#| msgid "The checklist feature is not active"
 msgid "The locale '%s' is not active."
-msgstr "Az ellenőrzőlista funkció nem aktív"
+msgstr "A(z) „%s” területi beállítás nem aktív."
 
 #: app/services/service/auth/verify_admin_token.rb:16
 msgid "The login is not possible."
@@ -21314,22 +21386,6 @@ msgstr "A megadott hasznos tartalom érvénytelen. Ellenőrizze a szintaxist."
 msgid "The provided token is invalid."
 msgstr "A megadott token érvénytelen."
 
-#: app/models/setting/validation/vectordb.rb:17
-msgid ""
-"The provider configuration is disabled. Before proceeding, please enable it "
-"in AI > Providers."
-msgstr ""
-"A szolgáltató beállítása le van tiltva. A folytatás előtt engedélyezze az MI "
-"> Szolgáltatók menüpontban."
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid ""
-"The provider configuration is disabled. Before proceeding, please set up at "
-"least one provider in |AI > Providers|."
-msgstr ""
-"A szolgáltató beállítása le van tiltva. A folytatás előtt állítson be "
-"legalább egy szolgáltatót az |MI > Szolgáltatók| menüpontban."
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 msgid "The provider could not be updated."
 msgstr "A szolgáltatót nem sikerült frissíteni."
@@ -21358,6 +21414,12 @@ msgstr "A szolgáltatókat nem sikerült betölteni."
 #: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr "A nyilvános PGP-kulcs nem található."
+
+#: app/services/service/content_translation/backend/base.rb:28
+#, fuzzy
+#| msgid "Defines if a translation service is configured."
+msgid "The quota or rate limit of the translation service is exhausted."
+msgstr "Meghatározza, hogy egy fordítási szolgáltatás be van-e állítva."
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -21860,6 +21922,43 @@ msgstr "Az adminisztrátori jelszavas bejelentkezés tokenje érvénytelen."
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
 msgstr "A token érvényes. Most már bejelentkezhet jelszóval egyszer."
+
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#, fuzzy
+#| msgid "The language could not be updated."
+msgid "The translation language could not be saved."
+msgstr "A nyelvet nem sikerült frissíteni."
+
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
+#, fuzzy
+#| msgid "Translation service is not supported"
+msgid "The translation returned no usable content."
+msgstr "A fordítási szolgáltatás nem támogatott"
+
+#: app/services/service/content_translation/backend/base.rb:10
+#, fuzzy
+#| msgid "Translation service is not supported"
+msgid "The translation service cannot be reached."
+msgstr "A fordítási szolgáltatás nem támogatott"
+
+#: app/services/service/content_translation/backend/base.rb:22
+#, fuzzy
+#| msgid "Translation service is not supported"
+msgid "The translation service does not support the requested target language."
+msgstr "A fordítási szolgáltatás nem támogatott"
+
+#: app/services/service/content_translation/backend/deepl.rb:135
+#: app/services/service/content_translation/backend/libre_translate.rb:125
+#, fuzzy
+#| msgid "Translation service is not supported"
+msgid "The translation service does not support the target language %s."
+msgstr "A fordítási szolgáltatás nem támogatott"
+
+#: app/services/service/content_translation/backend/base.rb:16
+#, fuzzy
+#| msgid "No translation service is configured."
+msgid "The translation service refused the configured credentials."
+msgstr "Nincs fordítási szolgáltatás beállítva."
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 msgid "The two-factor authentication is not configured yet."
@@ -22631,6 +22730,8 @@ msgid ""
 "This page gives you an overview of the packages currently installed in your "
 "Zammad instance."
 msgstr ""
+"Ez az oldal áttekintést nyújt a Zammad-példányában jelenleg telepített "
+"csomagokról."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -22665,11 +22766,14 @@ msgid "This role has no knowledge base editor permission."
 msgstr "Ennek a szerepnek nincs tudásbázis-szerkesztési jogosultsága."
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid ""
 "This service allows agents to translate articles to their configured UI "
 "language or other languages of their choice."
 msgstr ""
+"Ez a szolgáltatás lehetővé teszi az ügyintézők számára, hogy a bejegyzéseket "
+"a beállított felhasználói felületük nyelvére vagy más, általuk választott "
+"nyelvekre fordítsák le."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:6
@@ -22941,10 +23045,8 @@ msgid "Ticket (censored):"
 msgstr "Jegy (cenzúrázott):"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:15
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Ticket Articles"
-msgstr "Jegycím"
+msgstr "Jegybejegyzések"
 
 #: db/seeds/permissions.rb:221
 msgid "Ticket Auto Assignment"
@@ -23123,17 +23225,14 @@ msgstr "Jegyeseményindtó hurokvédelem-bejegyzések jegyenként"
 msgid "Ticket actions"
 msgstr "Jegyműveletek"
 
-#: app/services/service/content_translation/ticket_article.rb:13
-#, fuzzy
-#| msgid "i-doit integration is not enabled"
+#: app/graphql/gql/queries/ticket/article/translation_target_locales.rb:11
+#: app/services/service/content_translation/ticket_article.rb:61
 msgid "Ticket article translation is not enabled."
-msgstr "az i-doit-integráció nincs engedélyezve"
+msgstr "A jegybejegyzések fordítása nincs engedélyezve."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
-#, fuzzy
-#| msgid "Ticket escalation"
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 msgid "Ticket articles translation"
-msgstr "Jegyeszkaláció"
+msgstr "Jegybejegyzések fordítása"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:63
 msgid "Ticket could not be created."
@@ -23313,7 +23412,7 @@ msgid "Ticket update failed."
 msgstr "A jegyfrissítés nem sikerült."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:548
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "A jegy sikeresen frissítve."
@@ -23517,7 +23616,7 @@ msgstr "Időegységek összesen"
 msgid "Time accounting"
 msgstr "Időelszámolás"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 msgid "Time accounting type"
 msgstr "Időelszámolás típusa"
 
@@ -23712,7 +23811,7 @@ msgstr "Ma"
 msgid "Toggle AM/PM mode"
 msgstr "DE/DU mód be- és kikapcsolása"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
 msgid "Toggle article meta information"
 msgstr "Bejegyzés metaadat-információinak be- és kikapcsolása"
 
@@ -23830,6 +23929,12 @@ msgstr "Ellenőrzőlista-elemként követve ebben"
 msgid "Transfer conversation to another chat:"
 msgstr "Beszélgetés átvitele egy másik csevegésbe:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Translation Service"
+msgid "Translate article"
+msgstr "Fordítási szolgáltatás"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
 msgstr "Mezőtartalmak lefordítása"
@@ -23838,60 +23943,70 @@ msgstr "Mezőtartalmak lefordítása"
 msgid "Translate section to English"
 msgstr "Szakasz lefordítása angol nyelvre"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
-msgstr ""
+msgstr "Jegybejegyzések fordítása egy másik nyelvre."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate to %s"
+msgstr "Fordítások"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Translated automatically"
+msgstr "Csevegés automatikus megjelenítése"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
+#, fuzzy
+#| msgid "Suggested by AI"
+msgid "Translated by AI"
+msgstr "MI által javasolt"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
 msgstr "Fordítás"
 
 #: db/seeds/settings.rb:5941
-#, fuzzy
-#| msgid "Translation Source"
 msgid "Translation Service"
-msgstr "Fordítás forrása"
+msgstr "Fordítási szolgáltatás"
 
 #: db/seeds/settings.rb:5956
-#, fuzzy
-#| msgid "Translation Source"
 msgid "Translation Service Config"
-msgstr "Fordítás forrása"
+msgstr "Fordítási szolgáltatás beállítása"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:80
 msgid "Translation Source"
 msgstr "Fordítás forrása"
 
 #: app/models/setting/validation/content_translation_service_config.rb:10
-#, fuzzy
-#| msgid "AI provider Azure configuration is incomplete"
 msgid "Translation service configuration is incomplete"
-msgstr "Az MI-szolgáltató Azure beállítása befejezetlen"
+msgstr "A fordítási szolgáltatás beállításai befejezetlenek"
 
 #: app/models/setting/validation/content_translation_service.rb:10
 #: app/models/setting/validation/content_translation_service_config.rb:8
-#, fuzzy
-#| msgid "Translation Source"
 msgid "Translation service is missing"
-msgstr "Fordítás forrása"
+msgstr "A fordítási szolgáltatás hiányzik"
 
 #: app/models/setting/validation/content_translation_service_config.rb:9
-#, fuzzy
-#| msgid "AI provider is not supported"
 msgid "Translation service is not supported"
-msgstr "Az MI-szolgáltató nem támogatott"
+msgstr "A fordítási szolgáltatás nem támogatott"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
-#, fuzzy
-#| msgid "Translation Source"
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 msgid "Translation service provider"
-msgstr "Fordítás forrása"
+msgstr "Fordítási szolgáltatás szolgáltatója"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:5
-#, fuzzy
-#| msgid "Translation Source"
 msgid "Translation services"
-msgstr "Fordítás forrása"
+msgstr "Fordítás szolgáltatások"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation to %s"
+msgstr "Fordítások"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
@@ -24061,7 +24176,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Kétfaktoros hitelesítési módszerek"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 msgid "Two-factor authentication"
 msgstr "Kétfaktoros hitelesítés"
 
@@ -24155,6 +24270,7 @@ msgid "UID Field"
 msgstr "UID mező"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -24430,7 +24546,7 @@ msgid "Update shared draft"
 msgstr "Megosztott piszkozat frissítése"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -25134,7 +25250,7 @@ msgstr "Az ellenőrzés nem sikerült: %{errors}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -25769,7 +25885,7 @@ msgid "Yes, add attachments now"
 msgstr "Igen, mellékletek hozzáadása most"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 msgid "Yes, open the checklist"
 msgstr "Igen, az ellenőrzőlista megnyitása"
 
@@ -25916,13 +26032,17 @@ msgstr ""
 "Az archivált e-maileket bármikor megtalálhatja a Zammad rendszerben a "
 "keresési funkcióval, mint bármely más jegy esetében."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
+"A kapcsolódó MI-szolgáltató naplóját az MI > Visszajelzések és naplók "
+"menüpont alatt találja meg."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
+"A kapcsolódó MI-szolgáltató naplóját az MI > Visszajelzések és naplók "
+"menüpont alatt találja meg. %l"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:171
@@ -26186,7 +26306,7 @@ msgstr "Engedélyeznie kell a webkamerájához való hozzáférést."
 msgid "You have unchecked items in the checklist."
 msgstr "Be nem jelölt elemei vannak az ellenőrzőlistán."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:462
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -28266,8 +28386,8 @@ msgstr "…a teljes szövegterületből"
 msgid "∅ Waiting time today"
 msgstr "∅ Várakozási idő ma"
 
-#~ msgid "Package"
-#~ msgstr "Csomag"
+#~ msgid "Allow global translation"
+#~ msgstr "Globális fordítás engedélyezése"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "Húzza az átrendezéshez"
@@ -28293,9 +28413,6 @@ msgstr "∅ Várakozási idő ma"
 #~| msgid "Shared organization"
 #~ msgid "Shared with organizations"
 #~ msgstr "Megosztott szervezet"
-
-#~ msgid "Suggested by AI"
-#~ msgstr "MI által javasolt"
 
 #~ msgid "Invalid permissions, do not lock yourself out."
 #~ msgstr "Érvénytelen jogosultságok, ne zárja ki magát."
@@ -29624,9 +29741,6 @@ msgstr "∅ Várakozási idő ma"
 #~ msgstr ""
 #~ "Amennyiben a fordítási táblázaton keresztül szeretné lefordítani, csak "
 #~ "folytassa az alábbiakban."
-
-#~ msgid "Original"
-#~ msgstr "Eredeti"
 
 #~ msgid "Reset changes"
 #~ msgstr "Módosítások visszaállítása"

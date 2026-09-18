@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-12 09:12+0000\n"
+"PO-Revision-Date: 2026-09-17 13:18+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/uk/>\n"
@@ -1203,7 +1203,7 @@ msgstr "Відсутній постачальник ШІ"
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/content_translation/backend/ai.rb:9
+#: app/services/service/content_translation/backend/ai.rb:8
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
@@ -1256,9 +1256,15 @@ msgstr "Доступ до API через токен"
 msgid "API error."
 msgstr "Помилка API."
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
 msgstr "Ключ API"
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
+msgid "API plan"
+msgstr "План API"
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2213,10 +2219,6 @@ msgstr "Дозволити у майбутньому"
 msgid "Allow future dates toggle value is required."
 msgstr "Потрібне значення ознаки \"Дозволити майбутні дати\"."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:17
-msgid "Allow global translation"
-msgstr "Дозволити глобальний переклад"
-
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
 msgid "Allow multiple selections"
 msgstr "Дозвольте кілька варіантів вибору"
@@ -2233,14 +2235,20 @@ msgstr "Потрібне значення ознаки \"Дозволити ми
 msgid "Allow reopening of tickets within a certain time."
 msgstr "Дозволити повторне відкриття заявок протягом певного часу."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:19
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
 msgid ""
-"Allow specific roles to translate all articles at once. Be careful, this can "
-"result in a lot of translation calls and might be cost related."
+"Allow specific roles to translate all articles in one ticket at once. Use "
+"with caution, as this can result in a large number of translation calls and "
+"may incur additional costs."
 msgstr ""
-"Надайте певним ролям право перекладати всі статті одночасно. Будьте "
-"обережні: це може призвести до великої кількості запитів на переклад і, "
-"відповідно, до додаткових витрат."
+"Надайте певним ролям можливість перекладати всі статті в одній заявці "
+"одночасно. Використовуйте цю функцію з обережністю, оскільки це може "
+"призвести до великої кількості запитів на переклад і спричинити додаткові "
+"витрати."
+
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
+msgid "Allow translation of all articles at once"
+msgstr "Дозволити переклад усіх статей одночасно"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2424,7 +2432,7 @@ msgstr "Відповісти"
 msgid "Answer actions"
 msgstr "Дії з відповідями"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:220
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
 msgid "Answer count: %s"
 msgstr "Кількість відповідей: %s"
 
@@ -2780,7 +2788,7 @@ msgstr "Дії з повідомленням"
 msgid "Article could not be deleted."
 msgstr "Повідомлення не може бути видалено."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr "Метаінформація повідомлення"
@@ -3077,7 +3085,7 @@ msgstr "Ключ із програми-автентифікатора"
 msgid "Author"
 msgstr "Автор"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
 msgid "Author name and article creation date"
 msgstr "Ім'я автора та дата створення повідомлення"
 
@@ -3195,6 +3203,7 @@ msgstr "Доступні пріоритети"
 msgid "Available Values"
 msgstr "Доступні значення"
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -3869,11 +3878,11 @@ msgstr "Категорія"
 msgid "Category Attribute"
 msgstr "Атрибут категорії"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:232
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
 msgid "Category actions"
 msgstr "Дії з категоріями"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:204
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
 msgid "Category count: %s"
 msgstr "Кількість категорій: %s"
 
@@ -4585,7 +4594,7 @@ msgstr "Згорнути бічну панель"
 msgid "Collapse this element"
 msgstr "Згорнути цей елемент"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:263
 msgid "Color %s highlight applied to \"%s\""
 msgstr "До \"%s\" застосовано виділення кольором %s"
 
@@ -5090,8 +5099,8 @@ msgstr "Копіювати секрет"
 msgid "Copy text"
 msgstr "Копіювати текст"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr "Скопіювати номер заявки"
 
@@ -5883,6 +5892,10 @@ msgstr "Не вдалося дешифрувати! %s"
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
 msgstr "Розшифрування пройшло успішно."
+
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
+msgid "DeepL"
+msgstr "DeepL"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7412,6 +7425,10 @@ msgstr "Визначена мова"
 msgid "Detected language"
 msgstr "Визначена мова"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
+msgid "Developer API (api-free.deepl.com)"
+msgstr "API для розробників (api-free.deepl.com)"
+
 #: db/seeds/settings.rb:74
 msgid "Developer System"
 msgstr "Система для розробників"
@@ -7993,8 +8010,8 @@ msgstr "Редагувати відповідь"
 msgid "Edit security keys"
 msgstr "Редагування ключів безпеки"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr "Редагувати заголовок заявки"
 
@@ -8272,7 +8289,7 @@ msgstr "Порожній огляд"
 msgid "Enable"
 msgstr "Увімкнути"
 
-#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:2
 msgid "Enable AI provider"
 msgstr "Увімкнути постачальника ШІ"
 
@@ -9303,6 +9320,12 @@ msgstr "Не вдалося відправити лист до «%s». Звер�
 msgid "Failed to set up QR code. Please try again."
 msgstr "Не вдалося налаштувати QR-код. Будь ласка, спробуйте ще раз."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#, fuzzy
+#| msgid "Failed to load content."
+msgid "Failed to translate article content."
+msgstr "Не вдалося завантажити вміст."
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
 msgstr "Не вдалося оновити елемент чеклиста."
@@ -10207,6 +10230,10 @@ msgstr "Групи"
 msgid "Groups are …"
 msgstr "Групи…"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
+msgid "Growth/Enterprise API (api.deepl.com)"
+msgstr "API «Зростання/Підприємництво» (api.deepl.com)"
+
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
 msgstr "Токен підпису HMAC SHA1"
@@ -10504,7 +10531,7 @@ msgstr "Значок підсвітки"
 msgid "Highlight options"
 msgstr "Параметри виділення"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:260
 msgid "Highlight removed from \"%s\""
 msgstr "Видалено виділення з \"%s\""
 
@@ -11016,6 +11043,8 @@ msgid ""
 "In container-based environments, packages are managed as part of the "
 "deployment and cannot be installed or removed from here."
 msgstr ""
+"У середовищах на основі контейнерів пакети управляються в рамках процесу "
+"розгортання, і їх неможливо встановити або видалити звідси."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
@@ -11145,7 +11174,7 @@ msgstr "Неповні пункти чеклиста"
 msgid "Incomplete credentials"
 msgstr "Неповні облікові дані"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:465
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid "Incomplete ticket checklist"
 msgstr "Неповний чеклист заявки"
 
@@ -12153,6 +12182,10 @@ msgstr ""
 msgid "Library"
 msgstr "Бібліотека"
 
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
+msgid "LibreTranslate"
+msgstr "LibreTranslate"
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
@@ -12428,6 +12461,7 @@ msgid "Locale"
 msgstr "Локалізація"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:15
+#: app/services/service/user/content_translation_target_locale.rb:15
 msgid "Locale could not be found."
 msgstr "Не вдалося знайти локалізацію."
 
@@ -13526,7 +13560,7 @@ msgstr "Інтеграція з Nagios"
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:4
 #: app/assets/javascripts/app/models/webhook.coffee:7
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:5
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:13
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:37
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:18
 #: app/assets/javascripts/app/views/integration/github.jst.eco:7
@@ -14294,6 +14328,7 @@ msgstr "За цим запитом немає результатів."
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14356,6 +14391,12 @@ msgstr ""
 "Відповідних атрибутів об'єкта не знайдено, додайте спочатку один з "
 "підтримуваних типів: %s"
 
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
+#, fuzzy
+#| msgid "No knowledge base content is available yet."
+msgid "No supported target language is available."
+msgstr "Контент бази знань поки що недоступний."
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
@@ -14382,7 +14423,8 @@ msgstr "Немає токену!"
 msgid "No translation available for this locale"
 msgstr "Переклад для цієї мови недоступний"
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/target_locales.rb:7
 msgid "No translation service is configured."
 msgstr "Служба перекладу не налаштована."
 
@@ -14423,7 +14465,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Ні x-zammad-session-user-id, ні відправника не задано!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "No, just close the ticket"
 msgstr "Ні, просто закрити заявку"
 
@@ -15423,7 +15465,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15454,6 +15496,10 @@ msgstr "PKCE"
 #: lib/email_helper.rb:13
 msgid "POP3"
 msgstr "POP3"
+
+#: app/models/audit_log/object_type_labels.rb:12
+msgid "Package"
+msgstr "Пакет"
 
 #: app/assets/javascripts/app/controllers/package.coffee:134
 msgid "Package installed successfully."
@@ -15665,7 +15711,7 @@ msgstr "Виконати дії"
 msgid "Permanently Delete Knowledge Base"
 msgstr "Видалити базу знань назавжди"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 msgid "Permission"
 msgstr "Дозвіл"
 
@@ -15838,6 +15884,7 @@ msgstr "Будь ласка, налаштуйте джерело імпорту 
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
 msgid "Please contact your administrator."
 msgstr "Будь ласка, зверніться до адміністратора."
 
@@ -16310,7 +16357,7 @@ msgstr "Провайдер"
 msgid "Provider Settings"
 msgstr "Налаштування постачальника"
 
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:8
 msgid "Provider configuration"
 msgstr "Налаштування постачальника"
 
@@ -16491,7 +16538,7 @@ msgstr "Прийнятий виклик: %s"
 msgid "Recent Customer Tickets"
 msgstr "Нещодавні заявки клієнтів"
 
-#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:2
+#: app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco:1
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:3
 msgid "Recent Logs"
 msgstr "Нещодавні журнали"
@@ -17310,7 +17357,6 @@ msgstr "Роль %s конфліктує з роллю %s, Ви хочете п�
 msgid "Role description"
 msgstr "Опис ролі"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:259
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
 #: db/seeds/object_manager_attributes.rb:1614 db/seeds/permissions.rb:23
@@ -17379,7 +17425,7 @@ msgstr "Виконується…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "Безпечні/багатоцільові розширення пошти Інтернету (S/MIME)"
 
@@ -17423,7 +17469,7 @@ msgstr "Облікові дані додатку SAML"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17474,7 +17520,7 @@ msgstr "SMTP - налаштуйте власні параметри вихідн
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -17543,7 +17589,7 @@ msgstr "Субота"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:27
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:28
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
@@ -18107,7 +18153,7 @@ msgstr "Дивіться HTTPLog для отримання додаткової 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr "Бачити менше"
@@ -18118,7 +18164,7 @@ msgstr "Бачити менше"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "Бачити більше"
@@ -18296,7 +18342,7 @@ msgstr "Семантичний пошук"
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "Семантичний пошук тимчасово недоступний. Спробуйте ще раз пізніше."
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:3
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:1
 msgid ""
 "Semantic search will stop working until another provider is selected for it."
 msgstr ""
@@ -18406,7 +18452,7 @@ msgstr "Відправник останнього повідомлення"
 msgid "Sending Email Address"
 msgstr "Адреса вихідної електронної пошти"
 
-#: app/models/ticket/article.rb:345
+#: app/models/ticket/article.rb:347
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Відправлення листа без дійсного одержувача неможливе."
 
@@ -18623,7 +18669,7 @@ msgstr ""
 "заголовка \"Reply-To\". Корисно для встановлення правильного клієнта, якщо "
 "електронна пошта отримана із сторонньої системи від імені клієнта."
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "Setting"
 msgstr "Налаштування"
 
@@ -18638,6 +18684,7 @@ msgstr "Налаштування"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:8
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:1
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:28
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
@@ -18815,6 +18862,12 @@ msgstr "Показати наступну вкладку"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr "Показати сповіщення"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Original"
+msgid "Show original"
+msgstr "Оригінальний"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19447,6 +19500,12 @@ msgstr "Зупинити після збігу"
 msgid "Stop after match enabled"
 msgstr "Увімкнути зупинку після збігу"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#, fuzzy
+#| msgid "Translation Service"
+msgid "Stop translating the article"
+msgstr "Послуги з перекладу"
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr "Сховище"
@@ -19524,7 +19583,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:24
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -19845,6 +19904,12 @@ msgstr "Цільовий Атрибут для Витягнутого Текст
 msgid "Target Language"
 msgstr "Цільова мова"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
+#, fuzzy
+#| msgid "Target Language"
+msgid "Target language"
+msgstr "Цільова мова"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 msgid "Target ticket"
 msgstr "Цільова заявка"
@@ -19968,7 +20033,7 @@ msgid "Text missing"
 msgstr "Текст відсутній"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "Текстовий модуль"
 
@@ -20050,6 +20115,22 @@ msgid ""
 msgstr ""
 "Цілодобове вікно обслуговування клієнтів закрите, повідомлення в WhatsApp "
 "більше не надсилаються."
+
+#: app/models/setting/validation/vectordb.rb:17
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please enable "
+"it in AI > Providers."
+msgstr ""
+"Конфігурація провайдера вимкнена. Перш ніж продовжувати, увімкніть її в "
+"розділі «ШІ > Провайдери»."
+
+#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
+msgid ""
+"The AI provider configuration is disabled. Before proceeding, please set up "
+"at least one provider in |AI > Providers|. %l"
+msgstr ""
+"Конфігурацію постачальника вимкнено. Перш ніж продовжити, налаштуйте "
+"принаймні одного постачальника в |ШІ > Постачальники|"
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -20252,7 +20333,7 @@ msgstr "Повідомлення не змогло стати публічним
 msgid "The article does not belong to the specified ticket."
 msgstr "Повідомлення не належить до вказаної заявки."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:248
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
@@ -20537,6 +20618,10 @@ msgstr "З'єднання з сервером було втрачено."
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
 msgstr "У з'єднанні було відмовлено."
+
+#: app/services/service/content_translation/backend/base.rb:34
+msgid "The content is too large for the translation service."
+msgstr "Обсяг тексту занадто великий для сервісу перекладу."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -20893,7 +20978,7 @@ msgstr ""
 "Не вдається створити індекс Бази знань. Перевірте, чи доступний сервер "
 "Elasticsearch і чи на ньому встановлено підтримувану версію."
 
-#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:4
+#: app/assets/javascripts/app/views/ai/embedding_stop_confirm.jst.eco:2
 msgid ""
 "The knowledge base index is kept, so selecting the same provider again "
 "requires no re-index."
@@ -21160,22 +21245,6 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "Наданий Токен недійсний."
 
-#: app/models/setting/validation/vectordb.rb:17
-msgid ""
-"The provider configuration is disabled. Before proceeding, please enable it "
-"in AI > Providers."
-msgstr ""
-"Конфігурація провайдера вимкнена. Перш ніж продовжувати, увімкніть її в "
-"розділі «ШІ > Провайдери»."
-
-#: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid ""
-"The provider configuration is disabled. Before proceeding, please set up at "
-"least one provider in |AI > Providers|."
-msgstr ""
-"Конфігурацію постачальника вимкнено. Перш ніж продовжити, налаштуйте "
-"принаймні одного постачальника в |ШІ > Постачальники|."
-
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:37
 msgid "The provider could not be updated."
 msgstr "Не вдалося оновити постачальника."
@@ -21204,6 +21273,10 @@ msgstr "Не вдалося завантажити постачальників.
 #: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr "Публічний ключ PGP не вдалося знайти."
+
+#: app/services/service/content_translation/backend/base.rb:28
+msgid "The quota or rate limit of the translation service is exhausted."
+msgstr "Квота або ліміт обсягу послуг з перекладу вичерпано."
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -21711,6 +21784,35 @@ msgstr "Токен для входу з паролем адміністрато�
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:49
 msgid "The token is valid. You are now able to login via password once."
 msgstr "Токен дійсний. Тепер ви можете увійти за допомогою пароля один раз."
+
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#, fuzzy
+#| msgid "The language could not be updated."
+msgid "The translation language could not be saved."
+msgstr "Мову не вдалося оновити."
+
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
+#, fuzzy
+#| msgid "The translation service cannot be reached."
+msgid "The translation returned no usable content."
+msgstr "Не вдається зв’язатися зі службою перекладів."
+
+#: app/services/service/content_translation/backend/base.rb:10
+msgid "The translation service cannot be reached."
+msgstr "Не вдається зв’язатися зі службою перекладів."
+
+#: app/services/service/content_translation/backend/base.rb:22
+msgid "The translation service does not support the requested target language."
+msgstr "Служба перекладу не підтримує вказану мову перекладу."
+
+#: app/services/service/content_translation/backend/deepl.rb:135
+#: app/services/service/content_translation/backend/libre_translate.rb:125
+msgid "The translation service does not support the target language %s."
+msgstr "Служба перекладу не підтримує мову перекладу %s."
+
+#: app/services/service/content_translation/backend/base.rb:16
+msgid "The translation service refused the configured credentials."
+msgstr "Служба перекладу відхилила вказані облікові дані."
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 msgid "The two-factor authentication is not configured yet."
@@ -22474,6 +22576,8 @@ msgid ""
 "This page gives you an overview of the packages currently installed in your "
 "Zammad instance."
 msgstr ""
+"На цій сторінці наведено огляд пакетів, які наразі встановлені у вашому "
+"екземплярі Zammad."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -22507,7 +22611,7 @@ msgid "This role has no knowledge base editor permission."
 msgstr "Ця роль не має прав на редагування Бази знань."
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:6
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:9
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:8
 msgid ""
 "This service allows agents to translate articles to their configured UI "
 "language or other languages of their choice."
@@ -22957,11 +23061,12 @@ msgstr "Захист від циклічних тригерів Повідомл
 msgid "Ticket actions"
 msgstr "Дії по заявці"
 
-#: app/services/service/content_translation/ticket_article.rb:13
+#: app/graphql/gql/queries/ticket/article/translation_target_locales.rb:11
+#: app/services/service/content_translation/ticket_article.rb:61
 msgid "Ticket article translation is not enabled."
 msgstr "Переклад статті про заявки не увімкнено."
 
-#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:7
+#: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:6
 msgid "Ticket articles translation"
 msgstr "Переклад статей про заявки"
 
@@ -23143,7 +23248,7 @@ msgid "Ticket update failed."
 msgstr "Не вдалося оновити заявку."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:548
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "Заявку успішно оновлено."
@@ -23347,7 +23452,7 @@ msgstr "Разом одиниць часу"
 msgid "Time accounting"
 msgstr "Облік часу"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 msgid "Time accounting type"
 msgstr "Тип обліку робочого часу"
 
@@ -23540,7 +23645,7 @@ msgstr "Сьогодні"
 msgid "Toggle AM/PM mode"
 msgstr "Перемикання режиму AM/PM"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
 msgid "Toggle article meta information"
 msgstr "Показати/приховати деталі повідомлення"
 
@@ -23658,6 +23763,12 @@ msgstr "Відстежується як пункт чеклиста в"
 msgid "Transfer conversation to another chat:"
 msgstr "Перенести розмову в інший чат:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#, fuzzy
+#| msgid "Translation Service"
+msgid "Translate article"
+msgstr "Послуги з перекладу"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
 msgstr "Перекласти вміст полів"
@@ -23666,9 +23777,27 @@ msgstr "Перекласти вміст полів"
 msgid "Translate section to English"
 msgstr "Перекласти розділ англійською мовою"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:334
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
 msgid "Translate ticket articles into another language."
 msgstr "Перекласти статті з бази заявки на іншу мову."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate to %s"
+msgstr "Переклади"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
+#, fuzzy
+#| msgid "Show chat automatically"
+msgid "Translated automatically"
+msgstr "Показувати чат автоматично"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
+#, fuzzy
+#| msgid "Suggested by AI"
+msgid "Translated by AI"
+msgstr "За пропозицією ШІ"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -23699,13 +23828,19 @@ msgstr "Відсутня послуга перекладу"
 msgid "Translation service is not supported"
 msgstr "Послуга перекладу не підтримується"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:117
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
 msgid "Translation service provider"
 msgstr "Постачальник послуг з перекладу"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:5
 msgid "Translation services"
 msgstr "Послуги з перекладу"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation to %s"
+msgstr "Переклади"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
@@ -23875,7 +24010,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Методи двофакторної автентифікації"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 msgid "Two-factor authentication"
 msgstr "Двофакторна аутентифікація"
 
@@ -23969,6 +24104,7 @@ msgid "UID Field"
 msgstr "Поле UID"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -24243,7 +24379,7 @@ msgid "Update shared draft"
 msgstr "Оновити спільну чернетку"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:178
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -24949,7 +25085,7 @@ msgstr "Валідація не пройшла: %{errors}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:926
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:8
-#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco:15
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:38
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:19
@@ -25591,7 +25727,7 @@ msgid "Yes, add attachments now"
 msgstr "Так, додати вкладення зараз"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:467
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 msgid "Yes, open the checklist"
 msgstr "Так, відкрити чеклист"
 
@@ -25739,13 +25875,13 @@ msgstr ""
 "Ви можете знайти архівні листи в Zammad в будь-який час, скориставшись "
 "функцією пошуку, як і для будь-якої іншої заявки."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 "Ви можете знайти відповідні журнали постачальників послуг ШІ в розділі «ШІ» "
 "> «Відгуки та журнали»."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:309
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 "Ви можете знайти відповідні журнали постачальників послуг ШІ в розділі «ШІ» "
@@ -26012,7 +26148,7 @@ msgstr "Ви повинні дозволити доступ до своєї ве
 msgid "You have unchecked items in the checklist."
 msgstr "У вас є непозначені пункти в чеклисті."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:462
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -28090,8 +28226,8 @@ msgstr "…від усієї текстової ділянки"
 msgid "∅ Waiting time today"
 msgstr "∅ Час очікування сьогодні"
 
-#~ msgid "Package"
-#~ msgstr "Пакет"
+#~ msgid "Allow global translation"
+#~ msgstr "Дозволити глобальний переклад"
 
 #~ msgid "Drag to reorder"
 #~ msgstr "Перетягніть, щоб змінити порядок"
@@ -28129,9 +28265,6 @@ msgstr "∅ Час очікування сьогодні"
 
 #~ msgid "Shared with organizations"
 #~ msgstr "Спільне з організаціями"
-
-#~ msgid "Suggested by AI"
-#~ msgstr "За пропозицією ШІ"
 
 #~ msgid "Invalid permissions, do not lock yourself out."
 #~ msgstr "Недійсні дозволи, не блокуйте себе."
@@ -29292,9 +29425,6 @@ msgstr "∅ Час очікування сьогодні"
 #~ msgstr ""
 #~ "Якщо Ви бажаєте перекласти це за допомогою таблиці перекладу, Ви можете "
 #~ "зробити це нижче."
-
-#~ msgid "Original"
-#~ msgstr "Оригінальний"
 
 #~ msgid "Reset changes"
 #~ msgstr "Скинути зміни"
