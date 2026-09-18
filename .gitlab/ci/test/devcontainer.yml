@@ -9,7 +9,7 @@
   needs: []
   variables:
     DOCKER_HOST: unix:///var/run/docker.sock
-    DEVCONTAINERS_CLI_VERSION: '0.87.0'
+    DEVCONTAINERS_CLI_VERSION: '0.89.0'
   cache: []
   before_script:
     - apk add --no-cache docker-cli docker-cli-buildx docker-compose
