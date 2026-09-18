@@ -126,6 +126,26 @@ describe('email permissions', () => {
       expect(actions.find((action) => action.name === 'email-reply-all')).toBeDefined()
     })
 
+    it('reply-all action is available for agent email sent to a system address with external CC', () => {
+      const { ticket, article } = setupAction()
+      article.from = {
+        raw: 'agent@example.com',
+        parsed: [{ emailAddress: 'agent@example.com', isSystemAddress: false }],
+      }
+      article.to = {
+        raw: 'support@example.com',
+        parsed: [{ emailAddress: 'support@example.com', isSystemAddress: true }],
+      }
+      article.cc = {
+        raw: 'external@example.com',
+        parsed: [{ emailAddress: 'external@example.com', isSystemAddress: false }],
+      }
+
+      const actions = createTestArticleActions(ticket, article)
+
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeDefined()
+    })
+
     it('reply-all action is not available for agent with email article and multiple non-unique emails', () => {
       const { ticket, article } = setupAction()
       article.to = {
