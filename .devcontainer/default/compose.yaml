@@ -56,7 +56,7 @@ services:
 
   memcached:
     command: memcached -m 256M
-    image: memcached:1.6.38-alpine
+    image: memcached:1.6.44-alpine
     restart: unless-stopped
 
   postgresql:
