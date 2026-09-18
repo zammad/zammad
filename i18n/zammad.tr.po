@@ -2386,7 +2386,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr "Bir hata oluştu"
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:141
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:151
 msgid "An error occurred during the operation."
 msgstr "İşlem sırasında bir hata oluştu."
 
@@ -9555,7 +9555,7 @@ msgstr "\"%s\" adresine e-posta gönderilemedi. Lütfen bir yöneticiye başvuru
 msgid "Failed to set up QR code. Please try again."
 msgstr "QR kodu ayarlanamadı. Lütfen tekrar deneyin."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
 #, fuzzy
 #| msgid "Failed to load content."
 msgid "Failed to translate article content."
@@ -11430,7 +11430,7 @@ msgstr "Tamamlanmamış kontrol listesi öğeleri"
 msgid "Incomplete credentials"
 msgstr "Eksik kimlik bilgileri"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "Incomplete ticket checklist"
 msgstr "Eksik destek talebi kontrol listesi"
 
@@ -14675,7 +14675,7 @@ msgstr "Bu sorgu için sonuç yok."
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:145
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14816,7 +14816,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-id ve gönderici belirtilmemiş!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:477
 msgid "No, just close the ticket"
 msgstr "Hayır, sadece destek talebini kapat"
 
@@ -16272,7 +16272,7 @@ msgstr "Lütfen çalıştırmadan önce içe aktarma kaynağını yapılandırı
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:31
 msgid "Please contact your administrator."
 msgstr "Lütfen yöneticinizle iletişime geçin."
 
@@ -17155,7 +17155,7 @@ msgid "Reload application"
 msgstr "Reload application"
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
-#: app/frontend/shared/stores/authentication.ts:165
+#: app/frontend/shared/stores/authentication.ts:200
 msgid "Reload now"
 msgstr "Şimdi yeniden yükle"
 
@@ -18618,7 +18618,7 @@ msgstr ""
 msgid "Security token verification failed"
 msgstr "Güvenlik belirteci doğrulaması başarısız oldu"
 
-#: app/frontend/shared/stores/authentication.ts:160
+#: app/frontend/shared/stores/authentication.ts:195
 msgid ""
 "Security token verification failed. This may be just temporary, please "
 "reload and try again. Reloading in %s second(s)…"
@@ -19358,7 +19358,7 @@ msgstr "Sonraki sekmeyi göster"
 msgid "Show notifications"
 msgstr "Bildirimleri göster"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
 #, fuzzy
 #| msgid "Original"
 msgid "Show original"
@@ -20016,7 +20016,7 @@ msgstr "Eşleşince durdur"
 msgid "Stop after match enabled"
 msgstr "Eşleşince durdur"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Stop translating the article"
@@ -21098,7 +21098,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "Zammad'ın yapılandırması değişti, lütfen tarayıcı sayfanızı yenileyin."
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:118
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:127
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr "Zammad yapılandırmasında değişiklik yapıldı. Lütfen sayfayı yenileyin."
@@ -22280,7 +22280,7 @@ msgstr "Yönetici parolası oturum açma anahtarı geçersiz."
 msgid "The token is valid. You are now able to login via password once."
 msgstr "Belirteç geçerlidir. Artık şifre ile bir kez giriş yapabilirsiniz."
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
 #, fuzzy
 #| msgid "The language could not be updated."
 msgid "The translation language could not be saved."
@@ -22304,8 +22304,8 @@ msgstr "Yapay zeka sağlayıcısı desteklenmiyor"
 msgid "The translation service does not support the requested target language."
 msgstr "Yapay zeka sağlayıcısı desteklenmiyor"
 
-#: app/services/service/content_translation/backend/deepl.rb:135
-#: app/services/service/content_translation/backend/libre_translate.rb:125
+#: app/services/service/content_translation/backend/deepl.rb:132
+#: app/services/service/content_translation/backend/libre_translate.rb:115
 #, fuzzy
 #| msgid "AI provider is not supported"
 msgid "The translation service does not support the target language %s."
@@ -23798,7 +23798,7 @@ msgid "Ticket update failed."
 msgstr "Destek talebi güncellemesi başarısız oldu."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:557
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "Destek talebi başarıyla güncellendi."
@@ -24318,7 +24318,7 @@ msgstr "Kontrol listesi öğesi olarak takip ediliyor"
 msgid "Transfer conversation to another chat:"
 msgstr "Konuşmayı başka bir sohbete aktar:"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translate article"
@@ -26335,7 +26335,7 @@ msgid "Yes, add attachments now"
 msgstr "Evet, şimdi ekleri ekleyin"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:476
 msgid "Yes, open the checklist"
 msgstr "Evet, kontrol listesini açın"
 
@@ -26760,7 +26760,7 @@ msgstr "Web kameranıza erişime izin vermelisiniz."
 msgid "You have unchecked items in the checklist."
 msgstr "Kontrol listesinde işaretlenmemiş öğeleriniz var."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"

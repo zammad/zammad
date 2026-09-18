@@ -2418,7 +2418,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr "Došlo je do greške"
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:141
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:151
 msgid "An error occurred during the operation."
 msgstr "Došlo je do greške pri radu."
 
@@ -9479,7 +9479,7 @@ msgstr "Slanje maila na \"%s\" nije uspjelo. Obratite se administratoru."
 msgid "Failed to set up QR code. Please try again."
 msgstr "Postavljanje QR koda nije uspjelo. Molimo, pokušajte ponovno."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
 #, fuzzy
 #| msgid "Failed to load content."
 msgid "Failed to translate article content."
@@ -11337,7 +11337,7 @@ msgstr "Nepotpune stavke liste zadataka"
 msgid "Incomplete credentials"
 msgstr "Nepotpuni pristupni podaci"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 msgid "Incomplete ticket checklist"
 msgstr "Nepotpuna ticket lista zadataka"
 
@@ -14577,7 +14577,7 @@ msgstr "Nema rezultata za ovaj upit"
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:145
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -14718,7 +14718,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Bez x-zammad-session-user-id, pošiljatelj nije postavljen!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:477
 msgid "No, just close the ticket"
 msgstr "Ne, samo zatvorite ticket"
 
@@ -16156,7 +16156,7 @@ msgstr "Prije pokretanja, molimo konfigurirajte izvor uvoza."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:31
 msgid "Please contact your administrator."
 msgstr "Molimo, obratite se administratoru."
 
@@ -17029,7 +17029,7 @@ msgid "Reload application"
 msgstr "Ponovno učitaj aplikaciju"
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
-#: app/frontend/shared/stores/authentication.ts:165
+#: app/frontend/shared/stores/authentication.ts:200
 #, fuzzy
 #| msgid "Reload"
 msgid "Reload now"
@@ -18488,7 +18488,7 @@ msgstr ""
 msgid "Security token verification failed"
 msgstr "Provjera sigurnosnog tokena nije uspjela."
 
-#: app/frontend/shared/stores/authentication.ts:160
+#: app/frontend/shared/stores/authentication.ts:195
 #, fuzzy
 #| msgid ""
 #| "Security token verification failed. This may be just temporary, click "
@@ -19239,7 +19239,7 @@ msgstr "Pokaži sljedeću karticu"
 msgid "Show notifications"
 msgstr "Pokaži obavijesti"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
 #, fuzzy
 #| msgid "Original"
 msgid "Show original"
@@ -19905,7 +19905,7 @@ msgstr "Zaustavi nakon poklapanja"
 msgid "Stop after match enabled"
 msgstr "Zaustavi nakon poklapanja"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Stop translating the article"
@@ -20980,7 +20980,7 @@ msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 "Konfiguracija Zammada se promijenila, ponovno učitajte svoj preglednik."
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:118
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:127
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
@@ -22159,7 +22159,7 @@ msgstr "Token za prijavu preko administratorske lozinke nije valjan."
 msgid "The token is valid. You are now able to login via password once."
 msgstr "Token je ispravan. Sada se možete jednokratno prijaviti putem lozinke."
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
 #, fuzzy
 #| msgid "The language could not be updated."
 msgid "The translation language could not be saved."
@@ -22183,8 +22183,8 @@ msgstr "AI provider nije podržan"
 msgid "The translation service does not support the requested target language."
 msgstr "AI provider nije podržan"
 
-#: app/services/service/content_translation/backend/deepl.rb:135
-#: app/services/service/content_translation/backend/libre_translate.rb:125
+#: app/services/service/content_translation/backend/deepl.rb:132
+#: app/services/service/content_translation/backend/libre_translate.rb:115
 #, fuzzy
 #| msgid "AI provider is not supported"
 msgid "The translation service does not support the target language %s."
@@ -23679,7 +23679,7 @@ msgid "Ticket update failed."
 msgstr "Ažuriranje ticketa nije uspjelo."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:557
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "Ticket je uspješno ažuriran."
@@ -24196,7 +24196,7 @@ msgstr "Praćeno kao stavka popisa zadataka u"
 msgid "Transfer conversation to another chat:"
 msgstr "Prijenos razgovora u drugi chat:"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translate article"
@@ -26206,7 +26206,7 @@ msgid "Yes, add attachments now"
 msgstr "Da, dodaj privitke sad"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:476
 msgid "Yes, open the checklist"
 msgstr "Da, otvori popis zadataka"
 
@@ -26628,7 +26628,7 @@ msgstr "Morate odobriti pristup svojoj web-kameri."
 msgid "You have unchecked items in the checklist."
 msgstr "U popisu zadataka postoje neoznačene stavke."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"

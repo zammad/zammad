@@ -2423,7 +2423,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr "เกิดข้อผิดพลาด"
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:141
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:151
 #, fuzzy
 #| msgid "An error occured during the operation."
 msgid "An error occurred during the operation."
@@ -9682,7 +9682,7 @@ msgstr "ไม่สามารถส่งอีเมลไปที่ \"%s\
 msgid "Failed to set up QR code. Please try again."
 msgstr "รหัสความปลอดภัยไม่ถูกต้อง! โปรดลองอีกครั้งด้วยรหัสใหม่"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to translate article content."
@@ -11620,7 +11620,7 @@ msgstr "ข้อมูลประจำตัวที่ไม่สมบู
 msgid "Incomplete credentials"
 msgstr "ข้อมูลประจำตัวที่ไม่สมบูรณ์"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete ticket checklist"
@@ -15147,7 +15147,7 @@ msgstr "ไม่พบรายการ"
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:143
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:145
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -15296,7 +15296,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:477
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -16877,7 +16877,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:604
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:31
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -17821,7 +17821,7 @@ msgid "Reload application"
 msgstr "รีเฟรช แอปเพื่อเข้าใช้งานใหม่"
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
-#: app/frontend/shared/stores/authentication.ts:165
+#: app/frontend/shared/stores/authentication.ts:200
 #, fuzzy
 #| msgid "Upload"
 msgid "Reload now"
@@ -19478,7 +19478,7 @@ msgstr "คลิกที่นี่เพื่อตั้งค่าวิ
 msgid "Security token verification failed"
 msgstr "การตรวจสอบลายเซ็นล้มเหลว!"
 
-#: app/frontend/shared/stores/authentication.ts:160
+#: app/frontend/shared/stores/authentication.ts:195
 msgid ""
 "Security token verification failed. This may be just temporary, please "
 "reload and try again. Reloading in %s second(s)…"
@@ -20287,7 +20287,7 @@ msgstr "แสดงแท็บถัดไป"
 msgid "Show notifications"
 msgstr "ปิดกั้นการแจ้งเตือน"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
 #, fuzzy
 #| msgid "Original"
 msgid "Show original"
@@ -20983,7 +20983,7 @@ msgstr ""
 msgid "Stop after match enabled"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
 #, fuzzy
 #| msgid "Translations"
 msgid "Stop translating the article"
@@ -22125,7 +22125,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:118
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:127
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr "การกําหนดค่าของ Zammad มีการเปลี่ยนแปลง โปรดโหลดใหม่โดยเร็วที่สุด"
@@ -23386,7 +23386,7 @@ msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:145
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The translation language could not be saved."
@@ -23408,8 +23408,8 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 msgid "The translation service does not support the requested target language."
 msgstr ""
 
-#: app/services/service/content_translation/backend/deepl.rb:135
-#: app/services/service/content_translation/backend/libre_translate.rb:125
+#: app/services/service/content_translation/backend/deepl.rb:132
+#: app/services/service/content_translation/backend/libre_translate.rb:115
 #, fuzzy
 #| msgid "No filter was configured."
 msgid "The translation service does not support the target language %s."
@@ -24903,7 +24903,7 @@ msgid "Ticket update failed."
 msgstr "Ticket อัปเดต"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:554
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:557
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 #, fuzzy
 #| msgid "The test run was successful."
@@ -25421,7 +25421,7 @@ msgstr "Checksum"
 msgid "Transfer conversation to another chat:"
 msgstr "โอนการสนทนาไปยังแชทอื่น:"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
 #, fuzzy
 #| msgid "Translations"
 msgid "Translate article"
@@ -27537,7 +27537,7 @@ msgid "Yes, add attachments now"
 msgstr "เพิ่มตัวเลือกไฟล์แนบเพื่ออัปโหลด"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:476
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -27953,7 +27953,7 @@ msgstr "คุณต้องอนุญาตการเข้าถึงเ
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:468
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
