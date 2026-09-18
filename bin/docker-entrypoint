@@ -36,8 +36,9 @@ function check_zammad_ready {
   check_no_restore_running
 
   echo 'Checking if Zammad is ready...'
-  # Verify that migrations have been ran and seeds executed to process ENV vars like FQDN correctly.
-  until bundle exec rails r 'ActiveRecord::Migration.check_all_pending!; Translation.any? || raise' &> /dev/null; do
+  # Verify that migrations have been ran and seeds executed to process ENV vars like FQDN correctly,
+  #   and that staged addon packages are fully installed and migrated.
+  until bundle exec rails r 'ActiveRecord::Migration.check_all_pending!; Package.check_staged_packages_applied!; Translation.any? || raise' &> /dev/null; do
     echo "  waiting for init container to finish install or update..."
     sleep 2
   done
