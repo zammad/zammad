@@ -85,7 +85,10 @@ describe('CommonSimpleTable', () => {
       { router: true },
     )
 
-    expect(wrapper.getByText('Actions')).toBeInTheDocument()
+    const actionsHeader = wrapper.getByRole('columnheader', { name: 'Actions' })
+
+    expect(actionsHeader).toHaveClass('w-12.5')
+    expect(wrapper.getByText('Actions')).toHaveClass('sr-only')
     expect(wrapper.getByLabelText('Action menu button')).toBeInTheDocument()
   })
 
