@@ -476,4 +476,154 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
     include_examples 'FormUpdater::PreparesTicketSignature'
 
   end
+
+  context 'when a value arrives in the transport form of its attribute' do
+    let(:taskbar)         { create(:taskbar, key: 'TicketZoom-1234', callback: 'Ticket', user_id: user.id, state: taskbar_state) } # gitleaks:allow
+    let(:taskbar_state)   { {} }
+    let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar) } }
+    let(:meta)            { { form_id: SecureRandom.uuid, additional_data: } }
+    let(:id)              { Gql::ZammadSchema.id_from_object(ticket) }
+    let(:data)            { { field_name => submitted_value } }
+
+    # Lazily, so that a context adding an object attribute has migrated it before the ticket which
+    #   carries a value for it is created.
+    let(:stored_ticket_state) do
+      resolved_result.authorized?
+      resolved_result.resolve
+
+      taskbar.reload.state['ticket']
+    end
+
+    let(:resolved_fields) do
+      resolved_result.authorized?
+
+      resolved_result.resolve[:fields]
+    end
+
+    # The other side of the same question: the tab is reopened on a field it reports as dirty and
+    #   the stored state holds nothing for it, so the comparison decides whether the record's own
+    #   value is a default to restore over what the form sent.
+    shared_context 'when the tab is reopened on that field' do
+      let(:taskbar_state)   { { 'ticket' => {} } }
+      let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar), 'applyTaskbarState' => true } }
+      let(:meta)            { { form_id: SecureRandom.uuid, additional_data:, dirty_fields: [field_name] } }
+    end
+
+    shared_examples 'leaving the tab unchanged' do
+      it 'does not store the value' do
+        expect(stored_ticket_state).not_to have_key(field_name)
+      end
+
+      it 'does not mark the tab as changed' do
+        stored_ticket_state
+
+        expect(taskbar).not_to be_state_changed
+      end
+
+      context 'when the tab is reopened on that field' do
+        include_context 'when the tab is reopened on that field'
+
+        it 'does not restore the record value over it' do
+          expect(resolved_fields).not_to include(field_name => include(:value))
+        end
+      end
+    end
+
+    shared_examples 'storing the value' do
+      it 'stores the value' do
+        expect(stored_ticket_state).to include(field_name => submitted_value)
+      end
+
+      context 'when the tab is reopened on that field' do
+        include_context 'when the tab is reopened on that field'
+
+        it 'restores the record value over it' do
+          expect(resolved_fields).to include(field_name => include(value: stored_value))
+        end
+      end
+    end
+
+    context 'with a datetime attribute' do
+      let(:field_name) { 'pending_time' }
+      let(:ticket)     { create(:ticket, group: group, state_name: 'pending reminder', pending_time: stored_value) }
+
+      # Already equal before the fix - ActiveSupport coerces the string in Time#<=>, offset
+      #   included - so this one guards that, not the fix.
+      context 'when the form sends the same instant in the client offset' do
+        let(:stored_value)    { Time.zone.parse('2026-08-14T08:00:00Z') }
+        let(:submitted_value) { '2026-08-14T10:00:00+02:00' }
+
+        include_examples 'leaving the tab unchanged'
+      end
+
+      # A timestamp set anywhere but the form - a trigger, the scheduler, the API - keeps its
+      #   sub-second part, and the coercion above compares that against a string that has none.
+      context 'when the record carries a sub-second part the form cannot send' do
+        let(:stored_value)    { Time.zone.parse('2026-08-14T08:00:00.123Z') }
+        let(:submitted_value) { '2026-08-14T10:00:00+02:00' }
+
+        include_examples 'leaving the tab unchanged'
+      end
+
+      context 'when the value was changed' do
+        let(:stored_value)    { Time.zone.parse('2026-08-14T08:00:00Z') }
+        let(:submitted_value) { '2026-08-15T10:00:00+02:00' }
+
+        include_examples 'storing the value'
+      end
+    end
+
+    context 'with a date attribute', db_strategy: :reset do
+      let(:field_name) { 'date_attribute' }
+      let(:ticket)     { create(:ticket, group: group, field_name.to_sym => stored_value) }
+
+      before do
+        create(:object_manager_attribute_date, name: field_name, display: field_name)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      context 'when the form sends the date as a string' do
+        let(:stored_value)    { Date.new(2026, 8, 14) }
+        let(:submitted_value) { '2026-08-14' }
+
+        include_examples 'leaving the tab unchanged'
+      end
+
+      context 'when the value was changed' do
+        let(:stored_value)    { Date.new(2026, 8, 14) }
+        let(:submitted_value) { '2026-08-15' }
+
+        include_examples 'storing the value'
+      end
+    end
+
+    # Not pending_time, which Ticket::ResetsPendingTimeSeconds zeroes on save for the same reason
+    #   the comparison truncates - a custom attribute has no such concern and keeps the seconds
+    #   whatever set it gave it.
+    context 'with a custom datetime attribute', db_strategy: :reset do
+      let(:field_name) { 'datetime_attribute' }
+      let(:ticket)     { create(:ticket, group: group, field_name.to_sym => stored_value) }
+
+      before do
+        create(:object_manager_attribute_datetime, name: field_name, display: field_name)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      # The field displays and parses FORMAT_DATETIME, which carries seconds in no locale but hu,
+      #   so it submits as zero what the record holds there.
+      context 'when the record carries seconds the form cannot send' do
+        let(:stored_value)    { Time.zone.parse('2026-08-14T08:00:30Z') }
+        let(:submitted_value) { '2026-08-14T10:00:00+02:00' }
+
+        include_examples 'leaving the tab unchanged'
+      end
+
+      context 'when the value was changed' do
+        let(:stored_value)    { Time.zone.parse('2026-08-14T08:00:00Z') }
+        let(:submitted_value) { '2026-08-15T10:00:00+02:00' }
+
+        include_examples 'storing the value'
+      end
+    end
+  end
 end
