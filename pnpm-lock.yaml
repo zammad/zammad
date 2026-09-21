@@ -289,8 +289,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(pinia@4.0.3(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.43(typescript@6.0.3)))
       '@sa11y/preset-rules':
-        specifier: ^8.0.28
-        version: 8.0.28
+        specifier: ^8.1.1
+        version: 8.1.1
       '@sa11y/vitest':
         specifier: ^8.1.1
         version: 8.1.1(@types/node@26.2.0)(jsdom@30.0.1)(vite@8.3.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
@@ -2275,10 +2275,6 @@ packages:
     resolution: {integrity: sha512-f3X9lEybqnhs/SvW2h+5BfqVYO9KmEEr9Jshfrv+B8ZV0xcFpQX11QFZRhgiD5FSzWkvRH+KG81s81C0o2vbQQ==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/common@8.0.28':
-    resolution: {integrity: sha512-DmOgo4VSpDzLmH5LRPLO5GL4NFF6D/bEe0btKFye9LzuB4uUvVQFSZ1vdiw0Y/s0ObjAaP9zwXezLFuM48LEoA==}
-    engines: {node: ^20 || ^22 || ^24}
-
   '@sa11y/common@8.1.1':
     resolution: {integrity: sha512-Liy/hSiRMHXlsDzm0KWmJmZHwB3oTgOyXPBcVvCFTCdnBkXr2os+sF6mY1ZLjbvHfxJBzJR2hGLw+CCo2Wbcpg==}
     engines: {node: ^20 || ^22 || ^24}
@@ -2289,10 +2285,6 @@ packages:
 
   '@sa11y/matcher@8.1.1':
     resolution: {integrity: sha512-FmgEo2cXwnskqBHU3ELgpySJ+tqE5o40PcxBNLeDseC00b/Uw8IhqMpPYZi1VhwNsFT7M2AIKj9T8ZcWQYe6Tw==}
-    engines: {node: ^20 || ^22 || ^24}
-
-  '@sa11y/preset-rules@8.0.28':
-    resolution: {integrity: sha512-PqLPUKbQsyEkh7tNMnbvp0u0SmQ4Sy5RUOnHwMfcfFDuTRgodbl0wD4mYVFBasaBnE/Sv3sZtQHURUt00dMQ2g==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sa11y/preset-rules@8.1.1':
@@ -8504,10 +8496,6 @@ snapshots:
       '@sa11y/preset-rules': 8.1.1
       axe-core: 4.11.1
 
-  '@sa11y/common@8.0.28':
-    dependencies:
-      axe-core: 4.11.1
-
   '@sa11y/common@8.1.1':
     dependencies:
       axe-core: 4.11.1
@@ -8523,10 +8511,6 @@ snapshots:
       '@sa11y/assert': 8.1.1
       '@sa11y/format': 8.1.1
       '@sa11y/preset-rules': 8.1.1
-
-  '@sa11y/preset-rules@8.0.28':
-    dependencies:
-      '@sa11y/common': 8.0.28
 
   '@sa11y/preset-rules@8.1.1':
     dependencies:
