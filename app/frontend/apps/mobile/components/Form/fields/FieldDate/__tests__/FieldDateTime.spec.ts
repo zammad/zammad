@@ -264,7 +264,7 @@ describe('Fields - FieldDate', () => {
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
-      expect(emittedInput.at(-1)?.at(0)).toBe('2021-04-13T11:10:00.000Z')
+      expect(emittedInput.at(-1)?.at(0)).toBe('2021-04-13T11:10:00Z')
       expect(input).toHaveDisplayValue('2021-04-13 11:10')
     })
 

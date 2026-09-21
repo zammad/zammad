@@ -109,6 +109,13 @@ class FormUpdater::Updater::KnowledgeBase::Answer::Edit < FormUpdater::Updater
     send(OBJECT_VALUES.fetch(field))
   end
 
+  # None of the four - each of these values is built above rather than read off the answer. Stated
+  #   rather than derived, so a column the answer grows under one of these names cannot start
+  #   casting a value that is not its own.
+  def object_field_attribute?(_field)
+    false
+  end
+
   # The translation the tab edits, or nil while the locale has none yet.
   def translation
     return @translation if defined?(@translation)

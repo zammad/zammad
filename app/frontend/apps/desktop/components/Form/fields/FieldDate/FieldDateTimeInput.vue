@@ -4,12 +4,13 @@
 
 <script setup lang="ts">
 import { VueDatePicker, WeekStart } from '@vuepic/vue-datepicker'
-import { isValid, format, formatISO, parse, parseISO } from 'date-fns'
+import { isValid, format, parse, parseISO } from 'date-fns'
 import { isEqual } from 'lodash-es'
 import { computed, nextTick, toRef, watch, useTemplateRef } from 'vue'
 import { IMask, useIMask } from 'vue-imask'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
+import { formatDateTimeValue } from '#shared/components/Form/fields/FieldDate/normalizeDateValue.ts'
 import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/types.ts'
 import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
@@ -187,7 +188,7 @@ const parseValue = (value: string) => {
 }
 
 const formatValue = (value: Date) => {
-  if (valueFormat.value === 'iso') return formatISO(value)
+  if (valueFormat.value === 'iso') return formatDateTimeValue(value)
   return format(value, valueFormat.value)
 }
 

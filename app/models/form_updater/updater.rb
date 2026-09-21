@@ -82,11 +82,33 @@ class FormUpdater::Updater
     object[field]
   end
 
-  # Whether a submitted value differs from the object's own. Overridable for a field whose submitted
-  #   form is not the object's own — a timestamp arrives as the client's local wall clock while the
-  #   record holds UTC, and comparing those two as text reports a change on every round trip.
+  # And whether that value is the attribute of the same name, which is what lets the comparison
+  #   below read both sides through the attribute's type. Overridden together with the two above:
+  #   a field an override resolves belongs to that override, even where a column happens to carry
+  #   the same name and would cast the value into something else.
+  def object_field_attribute?(field)
+    object.class.has_attribute?(field)
+  end
+
+  # Whether a submitted value differs from the object's own. The form sends JSON, so a date arrives
+  #   as "2026-08-14" while the record holds a Date, and those two never compare equal - every round
+  #   trip would report a change. A timestamp does compare equal, ActiveSupport coercing the string
+  #   in Time#<=>, but only as far as the minute the form is able to express.
   def object_field_changed?(field, value)
-    object_field_value(field) != value
+    comparable_field_value(field, object_field_value(field)) != comparable_field_value(field, value)
+  end
+
+  # Both sides of that comparison read through the attribute's own type, so they are in the terms
+  #   the record holds them in. Whole minutes for a timestamp, as
+  #   PerformChanges::Action::AttributeUpdates#fetch_new_date_value does and for the same reason:
+  #   FORMAT_DATETIME carries seconds in no locale but hu, so the field cannot express what the
+  #   record holds below the minute. It costs hu a second-level edit going unstored in the draft.
+  def comparable_field_value(field, value)
+    return value if !object_field_attribute?(field)
+
+    value = object.class.type_for_attribute(field).cast(value)
+
+    value.acts_like?(:time) ? value.change(usec: 0, sec: 0) : value
   end
 
   def resolve_relation_fields

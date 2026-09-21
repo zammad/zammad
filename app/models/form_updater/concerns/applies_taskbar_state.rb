@@ -60,10 +60,11 @@ module FormUpdater::Concerns::AppliesTaskbarState
 
       next if !object_field?(field)
 
-      object_value = object_field_value(field)
-      next if object_value == data[field]
+      # Through the same comparison the store path uses, so that the two cannot answer differently
+      #   for a value whose submitted form is not the record's own (see #object_field_changed?).
+      next if !object_field_changed?(field, data[field])
 
-      apply_value.perform(field: field, config: { 'value' => object_value }, include_blank: true)
+      apply_value.perform(field: field, config: { 'value' => object_field_value(field) }, include_blank: true)
     end
   end
 
