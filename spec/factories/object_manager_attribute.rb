@@ -363,7 +363,7 @@ FactoryBot.define do
             'value' => 'Change request'
           }
         ],
-        'default'    => '',
+        'default'    => default,
         'null'       => true,
         'relation'   => '',
         'maxlength'  => 255,
@@ -476,7 +476,7 @@ FactoryBot.define do
             'value' => 'Change request'
           }
         ],
-        'default'    => '',
+        'default'    => default,
         'null'       => true,
         'relation'   => '',
         'maxlength'  => 255,
