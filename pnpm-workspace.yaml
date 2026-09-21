@@ -9,5 +9,5 @@ minimumReleaseAgeExclude:
   - '@vitest/spy@5.0.0'
   - vitest@5.0.0
 overrides:
-  '@sa11y/vitest>vitest': ^5.0.0
+  '@sa11y/vitest>vitest': ^5.0.1
 verifyDepsBeforeRun: false
