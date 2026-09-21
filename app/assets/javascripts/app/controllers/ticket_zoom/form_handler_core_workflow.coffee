@@ -77,6 +77,19 @@ class App.FormHandlerCoreWorkflow
     result.lastUpdatedAt = App[attribute.relation].lastUpdatedAt()
     return result
 
+  # a removed field is not part of the form params, so a hidden field
+  # would lose its configured default when a workflow mutates its options.
+  # fall back to the default on create screens like the backend does
+  @restrictedDefaultValue: (ui, item, values) ->
+    return '' if !ui.screen?.match(/^create/)
+    return '' if item.default is undefined || item.default is null || item.default is ''
+
+    allowedValues = _.map(values, (value) -> value?.toString())
+    defaultValues = _.filter(_.flatten([item.default]), (value) -> _.contains(allowedValues, value?.toString()))
+    return '' if defaultValues.length is 0
+    return defaultValues if item.multiple
+    defaultValues[0]
+
   # restricts the dropdown and tree select values of a form
   @restrictValues: (classname, form, ui, attributes, params, data) ->
     return if _.isEmpty(data.restrict_values)
@@ -143,7 +156,7 @@ class App.FormHandlerCoreWorkflow
             item.default  = obj[item.name]
             item.newValue = obj[item.name]
         else
-          item.newValue = ''
+          item.newValue = App.FormHandlerCoreWorkflow.restrictedDefaultValue(ui, item, values)
 
         if attribute.relation
           item.rejectNonExistentValues = true

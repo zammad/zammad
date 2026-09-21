@@ -190,6 +190,23 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     nil # Page may navigate away mid-check (e.g. SAML redirect), making App undefined.
   end
 
+  # Waits until all pending Core Workflow requests of the legacy frontend are
+  # resolved, so their visibility, restriction or value changes are applied.
+  #
+  # `await_empty_ajax_queue` only waits up to 5 seconds for a Core Workflow
+  # request to resolve and silently swallows a timeout, so a slow backend
+  # round trip can let execution reach an assertion before the result is
+  # applied. `have_css` alone can't tell the difference between "not applied
+  # yet" and "never going to match", so give the pending request the full
+  # default wait here first.
+  #
+  # @example
+  #  wait_for_core_workflow
+  #
+  def wait_for_core_workflow
+    wait.until { page.evaluate_script('Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0') }
+  end
+
   # Moves the mouse from its current position by the given offset.
   # If the coordinates provided are outside the viewport (the mouse will end up outside the browser window)
   # then the viewport is scrolled to match.
