@@ -40,6 +40,12 @@ class App.Controller extends Spine.Controller
         oldLocation = history[history.length-2]
         if oldLocation
           window.history.replaceState(null, null, oldLocation)
+        else
+          # Direct entry, e. g. a bookmark: there is no previous route to fall back to, so
+          # replace the current entry instead of adding one. The hash still changes, so the
+          # target route is executed by the resulting hashchange event.
+          window.location.replace(location.replace(/^#*/, '#'))
+          return
     super location
 
   preventDefault: (e) ->
