@@ -292,8 +292,8 @@ importers:
         specifier: ^8.0.28
         version: 8.0.28
       '@sa11y/vitest':
-        specifier: ^8.0.28
-        version: 8.0.28(@types/node@26.2.0)(jsdom@30.0.1)(vite@8.3.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
+        specifier: ^8.1.1
+        version: 8.1.1(@types/node@26.2.0)(jsdom@30.0.1)(vite@8.3.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
       '@sinonjs/fake-timers':
         specifier: ^15.4.0
         version: 15.4.0
@@ -2271,28 +2271,36 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sa11y/assert@8.0.28':
-    resolution: {integrity: sha512-nwWPrnkf6RlS/5b4A0aIswJUt2dvo5RH50mJg5S3unsp5efUKjJTkxZS+MLmodx7K8EhNf7DJlZFbtxmohsWhA==}
+  '@sa11y/assert@8.1.1':
+    resolution: {integrity: sha512-f3X9lEybqnhs/SvW2h+5BfqVYO9KmEEr9Jshfrv+B8ZV0xcFpQX11QFZRhgiD5FSzWkvRH+KG81s81C0o2vbQQ==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sa11y/common@8.0.28':
     resolution: {integrity: sha512-DmOgo4VSpDzLmH5LRPLO5GL4NFF6D/bEe0btKFye9LzuB4uUvVQFSZ1vdiw0Y/s0ObjAaP9zwXezLFuM48LEoA==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/format@8.0.28':
-    resolution: {integrity: sha512-NLfPJAUiNiHhZIjjjyLCQMQ7TBDmO7SDwZkDeDneoOue2zATQzDp5iHUveUM66CGCRCJt5gJEIMYjKkIzkht5g==}
+  '@sa11y/common@8.1.1':
+    resolution: {integrity: sha512-Liy/hSiRMHXlsDzm0KWmJmZHwB3oTgOyXPBcVvCFTCdnBkXr2os+sF6mY1ZLjbvHfxJBzJR2hGLw+CCo2Wbcpg==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/matcher@8.0.28':
-    resolution: {integrity: sha512-dSd0ydSSi+F0JlMkp9n8u40P0/hLZCffrcnLxa2YWilWKOKkU6u7c5klFcTr2NGi6I06hVQ9FoWG82SGJJVkAA==}
+  '@sa11y/format@8.1.1':
+    resolution: {integrity: sha512-/p4HZEDvLmRNKwsu0pAluWANcgAljSfEDEk8eSp57v39A/pHT4fJhZWSIJPZwvmc2Z9+N2sR7Rboof+3PwxSVg==}
+    engines: {node: ^20 || ^22 || ^24}
+
+  '@sa11y/matcher@8.1.1':
+    resolution: {integrity: sha512-FmgEo2cXwnskqBHU3ELgpySJ+tqE5o40PcxBNLeDseC00b/Uw8IhqMpPYZi1VhwNsFT7M2AIKj9T8ZcWQYe6Tw==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sa11y/preset-rules@8.0.28':
     resolution: {integrity: sha512-PqLPUKbQsyEkh7tNMnbvp0u0SmQ4Sy5RUOnHwMfcfFDuTRgodbl0wD4mYVFBasaBnE/Sv3sZtQHURUt00dMQ2g==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/vitest@8.0.28':
-    resolution: {integrity: sha512-SmHTI6pMHimxnUqWr03E8kFRsJ8mdtHEX14WALkXsER9nqQjoIAp2sLBuX1UAzonbKyWhjbu8Ya7nCepxy7Q2Q==}
+  '@sa11y/preset-rules@8.1.1':
+    resolution: {integrity: sha512-fMFkBZT2I0a1QadRa8jxjaqy2+3XhvlK5U5HChUGV0EefRTqt7O9tyKrdpxOWEy0cl6Y2pngO2yG47QNTQ1dDA==}
+    engines: {node: ^20 || ^22 || ^24}
+
+  '@sa11y/vitest@8.1.1':
+    resolution: {integrity: sha512-8wSGpNb6hNR+q5MCwB6tvd4Vi+mYW6kbW5uXfCt/Pe4urr5I5s5krbgUwQXa0yXsRo7yGePn8X1xXRuI3kKN6Q==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sindresorhus/merge-streams@4.0.0':
@@ -8470,39 +8478,47 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.4':
     optional: true
 
-  '@sa11y/assert@8.0.28':
+  '@sa11y/assert@8.1.1':
     dependencies:
-      '@sa11y/common': 8.0.28
-      '@sa11y/format': 8.0.28
-      '@sa11y/preset-rules': 8.0.28
+      '@sa11y/common': 8.1.1
+      '@sa11y/format': 8.1.1
+      '@sa11y/preset-rules': 8.1.1
       axe-core: 4.11.1
 
   '@sa11y/common@8.0.28':
     dependencies:
       axe-core: 4.11.1
 
-  '@sa11y/format@8.0.28':
+  '@sa11y/common@8.1.1':
     dependencies:
-      '@sa11y/common': 8.0.28
-      '@sa11y/preset-rules': 8.0.28
       axe-core: 4.11.1
 
-  '@sa11y/matcher@8.0.28':
+  '@sa11y/format@8.1.1':
     dependencies:
-      '@sa11y/assert': 8.0.28
-      '@sa11y/format': 8.0.28
-      '@sa11y/preset-rules': 8.0.28
+      '@sa11y/common': 8.1.1
+      '@sa11y/preset-rules': 8.1.1
+      axe-core: 4.11.1
+
+  '@sa11y/matcher@8.1.1':
+    dependencies:
+      '@sa11y/assert': 8.1.1
+      '@sa11y/format': 8.1.1
+      '@sa11y/preset-rules': 8.1.1
 
   '@sa11y/preset-rules@8.0.28':
     dependencies:
       '@sa11y/common': 8.0.28
 
-  '@sa11y/vitest@8.0.28(@types/node@26.2.0)(jsdom@30.0.1)(vite@8.3.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))':
+  '@sa11y/preset-rules@8.1.1':
     dependencies:
-      '@sa11y/assert': 8.0.28
-      '@sa11y/format': 8.0.28
-      '@sa11y/matcher': 8.0.28
-      '@sa11y/preset-rules': 8.0.28
+      '@sa11y/common': 8.1.1
+
+  '@sa11y/vitest@8.1.1(@types/node@26.2.0)(jsdom@30.0.1)(vite@8.3.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))':
+    dependencies:
+      '@sa11y/assert': 8.1.1
+      '@sa11y/format': 8.1.1
+      '@sa11y/matcher': 8.1.1
+      '@sa11y/preset-rules': 8.1.1
       '@vitest/runner': 3.2.7
       vitest: 5.0.0(@types/node@26.2.0)(jsdom@30.0.1)(vite@8.3.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
     transitivePeerDependencies:
