@@ -499,6 +499,49 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     end
   end
 
+  context 'when using the browser back button on the ticket create screen' do
+    it 'returns to the previous screen without spawning another draft' do
+      visit '#dashboard'
+
+      visit '#ticket/create'
+
+      within(:active_content) do
+        find('[name=title]').fill_in with: 'Title'
+      end
+
+      wait.until { find(:task_active)['data-key'].present? }
+
+      page.go_back
+
+      expect(page).to have_current_path(%r{\#dashboard\z}, url: true)
+      expect(page).to have_css('.tasks .task', count: 1)
+    end
+
+    # A direct load, e. g. a bookmark, leaves no previous route behind. It cannot be visited
+    # as such here, because the redirect then happens while the page is still loading and the
+    # browser replaces the entry on its own; only a boot that finishes later keeps it. The
+    # route history it leaves behind is therefore set up explicitly.
+    it 'returns to the previous page without spawning another draft on a direct entry' do
+      visit '#dashboard'
+
+      wait.until { page.evaluate_script("App.Config.get('History').length").positive? }
+
+      page.execute_script("App.Config.set('History', [])")
+      page.execute_script("window.location.hash = '#ticket/create'")
+
+      within(:active_content) do
+        find('[name=title]').fill_in with: 'Title'
+      end
+
+      wait.until { find(:task_active)['data-key'].present? }
+
+      page.go_back
+
+      expect(page).to have_current_path(%r{\#dashboard\z}, url: true)
+      expect(page).to have_css('.tasks .task', count: 1)
+    end
+  end
+
   describe 'customer selection to check the field search' do
     before do
       create(:customer, active: true)

@@ -866,7 +866,7 @@ class Router extends App.ControllerPermanent
         split = "/query/#{params.query}"
 
       id = Math.floor( Math.random() * 99999 )
-      @navigate "#ticket/create/id/#{id}#{split}"
+      @navigate "#ticket/create/id/#{id}#{split}", { hideCurrentLocationFromHistory: true }
       return
 
     # check authentication
