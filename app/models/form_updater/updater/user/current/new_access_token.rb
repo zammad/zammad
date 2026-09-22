@@ -26,8 +26,20 @@ class FormUpdater::Updater::User::Current::NewAccessToken < FormUpdater::Updater
     end
 
     {
-      options: build_options_tree_structure(permissions)
+      options: build_options_tree_structure(permissions + missing_ancestors(permissions))
     }
+  end
+
+  # An ancestor the user's permission list leaves out, e.g. the inactive parent of a granted
+  #   permission, still has to show for the sake of its children. Like an ancestor the user does
+  #   not hold, it cannot be selected itself.
+  def missing_ancestors(permissions)
+    names          = permissions.map(&:name)
+    ancestor_names = names.flat_map { |name| Permission.with_parents(name)[...-1] }.uniq - names
+
+    return [] if ancestor_names.blank?
+
+    Permission.where(name: ancestor_names).each { |permission| permission.preferences['disabled'] = true }
   end
 
   def build_options_tree_structure(permissions)
@@ -35,12 +47,12 @@ class FormUpdater::Updater::User::Current::NewAccessToken < FormUpdater::Updater
       current_level = memo
       segments = permission.name.split('.')
 
-      segments[...-1].each do |segment|
-        current_level[segment] ||= { children: {} }
+      segments[...-1].each_with_index do |segment, index|
+        current_level[segment] ||= { name: segments[..index].join('.'), children: {} }
         current_level = current_level[segment][:children]
       end
 
-      current_level[segments.last] ||= { children: {} }
+      current_level[segments.last] ||= { name: permission.name, children: {} }
       current_level[segments.last][:object] = permission
     end
 
@@ -52,21 +64,28 @@ class FormUpdater::Updater::User::Current::NewAccessToken < FormUpdater::Updater
 
     hierarchy
       .values
-      .sort_by do |elem|
-        permission = elem[:object]
+      .sort_by { |elem| option_sort_key(elem) }
+      .map { |elem| build_option(elem) }
+  end
 
-        [permission.preferences[:prio], permission.name]
-      end
-      .map do |elem|
-        permission = elem[:object]
+  # Permissions created outside of the seeds may carry no priority; they sort after the seeded ones.
+  def option_sort_key(elem)
+    prio = elem[:object]&.preferences&.dig(:prio)
 
-        {
-          value:       permission.name,
-          label:       permission.label.presence || permission.name,
-          description: permission.description,
-          disabled:    permission.preferences[:disabled],
-          children:    build_options_array_structure(elem[:children])
-        }
-      end
+    [prio.is_a?(Numeric) ? prio : Float::INFINITY, elem[:name]]
+  end
+
+  # A node without a permission is an ancestor without a row of its own, e.g. a custom 'a.b.c'
+  #   permission lacking 'a.b'. It is shown under its name for its children and cannot be selected.
+  def build_option(elem)
+    permission = elem[:object]
+
+    {
+      value:       elem[:name],
+      label:       permission&.label.presence || elem[:name],
+      description: permission&.description,
+      disabled:    permission ? permission.preferences[:disabled] : true,
+      children:    build_options_array_structure(elem[:children])
+    }
   end
 end

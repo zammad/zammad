@@ -59,5 +59,62 @@ RSpec.describe FormUpdater::Updater::User::Current::NewAccessToken do
         )
       )
     end
+
+    context 'when a granted permission has no priority' do
+      let(:role) { create(:role, permission_names: %w[admin.user custom_permission]) }
+
+      before { create(:permission, name: 'custom_permission', label: 'Custom', preferences: {}) }
+
+      it 'sorts it after the prioritized permissions' do
+        expect(form_updater.resolve[:fields]['permissions'][:options].pluck(:value))
+          .to eq(%w[admin custom_permission])
+      end
+    end
+
+    context 'when the parent of a granted permission is inactive' do
+      let(:role)            { create(:role, permission_names: %w[admin.user chat.agent]) }
+      let(:permission_chat) { Permission.find_by! name: 'chat' }
+
+      before { permission_chat.update!(active: false) }
+
+      it 'lists the permission below its disabled parent' do
+        expect(form_updater.resolve[:fields]['permissions'][:options]).to include(
+          include(
+            value:       'chat',
+            label:       permission_chat.label,
+            description: permission_chat.description,
+            disabled:    true,
+            children:    contain_exactly(
+              include(
+                value:    'chat.agent',
+                disabled: be_falsey,
+              )
+            )
+          )
+        )
+      end
+    end
+
+    context 'when the parent of a granted permission does not exist' do
+      let(:role) { create(:role, permission_names: %w[admin.user custom.child]) }
+
+      before { create(:permission, name: 'custom.child', label: 'Custom child', preferences: {}) }
+
+      it 'lists the permission below a disabled placeholder named after the parent' do
+        expect(form_updater.resolve[:fields]['permissions'][:options]).to include(
+          include(
+            value:    'custom',
+            label:    'custom',
+            disabled: true,
+            children: contain_exactly(
+              include(
+                value:    'custom.child',
+                disabled: be_falsey,
+              )
+            )
+          )
+        )
+      end
+    end
   end
 end
