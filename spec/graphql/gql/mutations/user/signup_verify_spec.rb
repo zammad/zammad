@@ -5,21 +5,12 @@ require 'rails_helper'
 # Session handling works only via controller, so use type: request.
 RSpec.describe Gql::Mutations::User::SignupVerify, :aggregate_failures, type: :request do
   context 'when verifying signed up user' do
-    let(:user) do
-      create(:role, name: 'user_preferences_device', default_at_signup: true, permission_names: ['user_preferences.device'])
-      create(:user, verified: false)
-    end
+    let(:user) { create(:user, verified: false) }
     let(:query) do
       <<~QUERY
         mutation userSignupVerify($token: String!) {
           userSignupVerify(token: $token) {
-            session {
-              id
-              afterAuth {
-                type
-                data
-              }
-            }
+            success
             errors {
               message
             }
@@ -30,30 +21,32 @@ RSpec.describe Gql::Mutations::User::SignupVerify, :aggregate_failures, type: :r
 
     let(:variables) { { token: token } }
 
-    let(:headers) do
-      {
-        'X-Browser-Fingerprint' => 'some-fingerprint',
-      }
-    end
-
     let(:graphql_response) do
       execute_graphql_query
       json_response
     end
 
     def execute_graphql_query
-      post '/graphql', params: { query: query, variables: variables }, headers: headers, as: :json
+      post '/graphql', params: { query: query, variables: variables }, as: :json
     end
 
     shared_examples 'returning an error' do |message|
       it 'returns an error' do
-        expect(graphql_response['data']['userSignupVerify']).to include({ 'errors' => include({ 'message' => message }) }).and include({ 'session' => nil })
+        expect(graphql_response['data']['userSignupVerify']).to include({ 'errors' => include({ 'message' => message }) }).and include({ 'success' => nil })
       end
     end
 
-    shared_examples 'returning a session' do
-      it 'returns the session' do
-        expect(graphql_response['data']['userSignupVerify']).to include({ 'session' => include({ 'id' => a_kind_of(String) }) }).and include({ 'errors' => nil })
+    shared_examples 'returning success' do
+      it 'returns success' do
+        expect(graphql_response['data']['userSignupVerify']).to include({ 'success' => true }).and include({ 'errors' => nil })
+      end
+    end
+
+    shared_examples 'not signing the user in' do
+      it 'does not establish a session' do
+        execute_graphql_query
+
+        expect(session[:user_id]).to be_nil
       end
     end
 
@@ -72,7 +65,8 @@ RSpec.describe Gql::Mutations::User::SignupVerify, :aggregate_failures, type: :r
     context 'with a valid token' do
       let(:token) { User.signup_new_token(user)[:token].token } # NB: Don't ask!
 
-      it_behaves_like 'returning a session'
+      it_behaves_like 'returning success'
+      it_behaves_like 'not signing the user in'
     end
 
     context 'with an invalid token' do

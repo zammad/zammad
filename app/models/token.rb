@@ -83,8 +83,8 @@ returns
       return false
     end
 
-    # persistent token not valid if user is inactive
-    return false if !inactive_user && persistent && user.active == false
+    # token not valid if user is inactive
+    return false if !inactive_user && user&.active == false
 
     # add permission check
     return false if permission && !permissions?(permission)

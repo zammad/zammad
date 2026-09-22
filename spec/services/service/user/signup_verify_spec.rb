@@ -48,6 +48,18 @@ RSpec.describe Service::User::SignupVerify do
       it_behaves_like 'raising an error', Service::User::SignupVerify::InvalidTokenError, 'The provided token is invalid.'
     end
 
+    context 'with an inactive user' do
+      let(:user)  { create(:user, verified: false, active: false) }
+      let(:token) { User.signup_new_token(user)[:token].token } # NB: Don't ask!
+
+      it_behaves_like 'raising an error', Service::User::SignupVerify::InvalidTokenError, 'The provided token is invalid.'
+
+      it 'does not verify the user', :aggregate_failures do
+        expect { service_result }.to raise_error(Service::User::SignupVerify::InvalidTokenError)
+        expect(user.reload).not_to be_verified
+      end
+    end
+
     context 'with current user' do
       context 'when same as the user being verified' do
         subject(:service_result) { described_class.with_current_user(user).execute(token:) }

@@ -4,15 +4,12 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 
-import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 import { useUserSignupVerifyMutation } from '../graphql/mutations/userSignupVerify.api.ts'
 
 import type { VerifyState } from '../types/signup.ts'
@@ -59,16 +56,9 @@ onMounted(() => {
     return
   }
 
-  const { fingerprint } = useFingerprint()
-
   const userSignupVerify = new MutationHandler(
     useUserSignupVerifyMutation({
       variables: { token: props.token },
-      context: {
-        headers: {
-          'X-Browser-Fingerprint': fingerprint.value,
-        },
-      },
     }),
     {
       errorShowNotification: false,
@@ -77,28 +67,18 @@ onMounted(() => {
 
   userSignupVerify
     .send()
-    .then(async (result) => {
-      const { setAuthenticatedSessionId } = useAuthenticationStore()
-
-      if (await setAuthenticatedSessionId(result?.userSignupVerify?.session?.id || null)) {
-        setState('success')
-
-        const afterAuth = result?.userSignupVerify?.session?.afterAuth
-
-        // Redirect only after some seconds, in order to give the user a chance to read the message.
-        window.setTimeout(() => {
-          if (afterAuth) {
-            ensureAfterAuth(router, afterAuth)
-            return
-          }
-
-          router.replace('/')
-        }, 2000)
-
+    .then((result) => {
+      if (!result?.userSignupVerify?.success) {
+        setState('error')
         return
       }
 
-      setState('error')
+      setState('success')
+
+      // Redirect only after some seconds, in order to give the user a chance to read the message.
+      window.setTimeout(() => {
+        router.replace('/login')
+      }, 2000)
     })
     .catch(() => {
       setState('error')
@@ -111,6 +91,9 @@ onMounted(() => {
     <div class="mt-1 text-center">
       <CommonLabel>
         {{ $t(message) }}
+      </CommonLabel>
+      <CommonLabel v-if="state === 'success'" class="mt-1 block">
+        {{ $t('Please sign in to continue.') }}
       </CommonLabel>
       <CommonLoader v-if="state === 'loading'" loading class="mt-9 mb-3" />
       <CommonIcon

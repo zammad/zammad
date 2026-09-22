@@ -40396,12 +40396,12 @@
               "deprecationReason": null
             },
             {
-              "name": "session",
-              "description": "The current session, if the verification was successful.",
+              "name": "success",
+              "description": "This indicates if the verification was successful.",
               "args": [],
               "type": {
-                "kind": "OBJECT",
-                "name": "Session",
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               },
               "isDeprecated": false,

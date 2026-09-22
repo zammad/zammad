@@ -7395,8 +7395,8 @@ export type UserSignupVerifyPayload = {
   __typename?: 'UserSignupVerifyPayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
-  /** The current session, if the verification was successful. */
-  session?: Maybe<Session>;
+  /** This indicates if the verification was successful. */
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** Users taskbar item */
