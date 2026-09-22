@@ -51,8 +51,8 @@ class Show extends App.ControllerModal
     super
 
   content: ->
-    request_content  = App.Utils.text2html(JSON.stringify(@record.request.content, null, 2))
-    response_content = App.Utils.text2html(JSON.stringify(@record.response.content, null, 2))
+    request_content  = App.Utils.text2html(@formatContent(@record.request.content))
+    response_content = App.Utils.text2html(@formatContent(@record.response.content))
 
     # Special formatting for AI Provider + Webhook logs
     if @record?.facility and @record?.facility in ['AI::Provider', 'webhook']
@@ -64,6 +64,13 @@ class Show extends App.ControllerModal
       request_content: request_content
       response_content: response_content
     )
+
+  # Strings are the raw payload and already carry their line breaks. Some facilities store a
+  # structure instead, which is pretty-printed so it comes out line by line as well.
+  formatContent: (content) ->
+    return content if _.isString(content)
+
+    JSON.stringify(content, null, 2)
 
   formatJsonData: (data) ->
     try
