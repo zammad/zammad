@@ -164,6 +164,80 @@ describe('search view', () => {
       })
     })
 
+    it('lets a foreign route change win over a term the user is still typing', async () => {
+      const { searchContainer, view } = await visitSearchView()
+
+      await waitForDetailSearchQueryCalls()
+
+      const searchInput = within(searchContainer).getByRole('searchbox', { name: 'Search…' })
+      const router = getTestRouter()
+
+      await view.events.type(searchInput, 'ing')
+
+      // Deep link, browser history or cross-tab sync, arriving while the typed
+      // term is still waiting for the debounce.
+      await router.replace('/search/foreign?entity=Ticket')
+
+      await waitFor(() => expect(searchInput).toHaveDisplayValue('foreign'))
+
+      // The pending push must be dropped, not navigate on top of it.
+      await new Promise((resolve) => {
+        setTimeout(resolve, 800)
+      })
+
+      expect(router.currentRoute.value.fullPath).toBe('/search/foreign?entity=Ticket')
+    })
+
+    it('lets a foreign entity switch win over a pending push for the same term', async () => {
+      const { searchContainer, view } = await visitSearchView()
+
+      await waitForDetailSearchQueryCalls()
+
+      const searchInput = within(searchContainer).getByRole('searchbox', { name: 'Search…' })
+      const router = getTestRouter()
+
+      // Hold the push for 'testing', so the foreign change below lands while it
+      // is still in flight.
+      let releaseNavigation: (() => void) | undefined
+      const removeGuard = router.beforeEach(async (to) => {
+        if (
+          to.params.searchTerm !== 'testing' ||
+          to.query.entity === EnumSearchableModels.Organization
+        )
+          return true
+
+        await new Promise<void>((resolve) => {
+          releaseNavigation = resolve
+        })
+
+        return true
+      })
+
+      await view.events.type(searchInput, 'ing')
+
+      await waitFor(() => expect(releaseNavigation).toBeDefined())
+
+      await view.events.type(searchInput, 'x')
+
+      // Cross-tab sync reusing the term we just pushed, but on another entity:
+      // same term, different route - so it is no echo of ours.
+      await router.replace(`/search/testing?entity=${EnumSearchableModels.Organization}`)
+
+      releaseNavigation?.()
+
+      await waitFor(() => expect(searchInput).toHaveDisplayValue('testing'))
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 800)
+      })
+
+      expect(router.currentRoute.value.fullPath).toBe(
+        `/search/testing?entity=${EnumSearchableModels.Organization}`,
+      )
+
+      removeGuard()
+    })
+
     it('selects a ticket for bulk edit', async () => {
       mockFormUpdaterQuery({
         formUpdater: {
