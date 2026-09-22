@@ -128,6 +128,8 @@ class UsersController < ApplicationController
       user.update!(clean_params)
     end
 
+    Service::User::NotifyPasswordChange.with_current_user(current_user).execute(user: user)
+
     if response_expand?
       user = user.reload.attributes_with_association_names
       user.delete('password')

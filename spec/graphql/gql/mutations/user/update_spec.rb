@@ -68,6 +68,18 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
       end
     end
 
+    context 'with a password change' do
+      let(:input) { { password: 'SomeTestPassword123!' } }
+
+      it 'notifies the user' do
+        allow(NotificationFactory::Mailer).to receive(:notification)
+
+        gql.execute(query, variables: variables)
+
+        expect(NotificationFactory::Mailer).to have_received(:notification).with(include(template: 'password_change'))
+      end
+    end
+
     context 'with multiple secondary organizations' do
       let(:organization_a) { create(:organization) }
       let(:organization_b) { create(:organization) }
