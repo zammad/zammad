@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-17 13:19+0000\n"
+"PO-Revision-Date: 2026-09-21 22:12+0000\n"
 "Last-Translator: Igor Costa <igor_sfx@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -1245,7 +1245,7 @@ msgstr "Chave da API"
 msgid "API Password Access"
 msgstr "Senha de acesso da API"
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
 msgstr "Token da API"
@@ -1445,7 +1445,7 @@ msgstr "Contas"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:63
+#: app/assets/javascripts/app/views/package.jst.eco:71
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -2011,7 +2011,7 @@ msgstr "Após a aprovação, reconecte sua conta de email do Exchange."
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr "Após a aprovação, reconecte sua conta de correio do Microsoft 365."
 
-#: app/assets/javascripts/app/views/package.jst.eco:17
+#: app/assets/javascripts/app/views/package.jst.eco:20
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
@@ -3033,7 +3033,7 @@ msgstr "Autenticação não disponível (não oferecida pelo serviço)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:48
 msgid "Authentication required"
 msgstr "Autenticação obrigatória"
 
@@ -3184,7 +3184,7 @@ msgstr "Disponível para as seguintes funções"
 msgid "Available methods"
 msgstr "Métodos disponíveis"
 
-#: app/assets/javascripts/app/views/package.jst.eco:109
+#: app/assets/javascripts/app/views/package.jst.eco:120
 msgid "Available packages"
 msgstr "Pacotes disponíveis"
 
@@ -4365,7 +4365,7 @@ msgstr "Limpar pesquisa"
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
@@ -4674,10 +4674,10 @@ msgid "Configuration of performance settings via environment variables."
 msgstr ""
 "Configuração das definições de performance através de variáveis de ambiente."
 
-#: app/assets/javascripts/app/controllers/package.coffee:150
+#: app/assets/javascripts/app/controllers/package.coffee:153
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:25
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:7
 msgid "Configure"
 msgstr "Configurar"
 
@@ -5007,7 +5007,7 @@ msgstr "A conversa foi transferida para outro chat. Aguarde."
 msgid "Conversation summary"
 msgstr "Resumo da conversa"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:125
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
 msgid "Copied!"
 msgstr "Copiado!"
@@ -5749,7 +5749,7 @@ msgstr "Modo escuro"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:59
+#: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
 msgid "Dashboard"
 msgstr "Painel"
@@ -7057,7 +7057,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #: app/assets/javascripts/app/controllers/user.coffee:107
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
@@ -10954,6 +10954,14 @@ msgstr "Importante"
 msgid "Imported"
 msgstr "Importado"
 
+#: app/assets/javascripts/app/views/package.jst.eco:53
+msgid ""
+"In container-based environments, packages are managed as part of the "
+"deployment and cannot be installed or removed from here."
+msgstr ""
+"Em ambientes baseados em container, os pacotes são gerenciados como parte da "
+"implantação e não podem ser instalados ou removidos por aqui."
+
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr ""
@@ -11232,19 +11240,19 @@ msgstr "Insere módulo de texto"
 msgid "Install App"
 msgstr "Instalar aplicativo"
 
-#: app/assets/javascripts/app/views/package.jst.eco:45
+#: app/assets/javascripts/app/views/package.jst.eco:48
 msgid "Install Package"
 msgstr "Instalar pacote"
 
-#: app/assets/javascripts/app/views/package.jst.eco:144
+#: app/assets/javascripts/app/views/package.jst.eco:155
 msgid "Install package"
 msgstr "Instalar pacote"
 
-#: app/assets/javascripts/app/views/package.jst.eco:37
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Installed"
 msgstr "Instalado"
 
-#: app/assets/javascripts/app/views/package.jst.eco:49
+#: app/assets/javascripts/app/views/package.jst.eco:56
 msgid "Installed packages"
 msgstr "Pacotes instalados"
 
@@ -12821,7 +12829,6 @@ msgstr "Gerenciar suas configurações de notificação"
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: app/assets/javascripts/app/views/package.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
@@ -13462,7 +13469,7 @@ msgstr "Integração do Nagios"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:59
+#: app/assets/javascripts/app/views/package.jst.eco:66
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -13961,7 +13968,7 @@ msgstr "Sem comentário"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:53
+#: app/assets/javascripts/app/views/package.jst.eco:60
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -14830,7 +14837,7 @@ msgstr ""
 msgid "Only available for users with shared organizations"
 msgstr "Disponível apenas para usuários com organizações compartilhadas"
 
-#: app/assets/javascripts/app/views/package.jst.eco:14
+#: app/assets/javascripts/app/views/package.jst.eco:17
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
@@ -15341,7 +15348,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15373,19 +15380,20 @@ msgstr "PKCE"
 msgid "POP3"
 msgstr "POP3"
 
-#: app/assets/javascripts/app/views/package.jst.eco:3
+#: app/models/audit_log/object_type_labels.rb:12
 msgid "Package"
 msgstr "Pacote"
 
-#: app/assets/javascripts/app/controllers/package.coffee:131
+#: app/assets/javascripts/app/controllers/package.coffee:134
 msgid "Package installed successfully."
 msgstr "Pacote instalado com sucesso."
 
-#: app/assets/javascripts/app/controllers/package.coffee:112
+#: app/assets/javascripts/app/controllers/package.coffee:115
 msgid "Package updated successfully."
 msgstr "Pacote atualizado com sucesso."
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
+#: app/assets/javascripts/app/views/package.jst.eco:3
 #: db/seeds/permissions.rb:329
 msgid "Packages"
 msgstr "Pacotes"
@@ -15588,7 +15596,7 @@ msgstr "Executar ações"
 msgid "Permanently Delete Knowledge Base"
 msgstr "Excluir permanentemente a base de conhecimento"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 msgid "Permission"
 msgstr "Permissão"
 
@@ -15786,7 +15794,7 @@ msgstr "Insira uma string JSON válida."
 msgid "Please enter a valid email address."
 msgstr "Insira um endereço de email válido."
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 msgid "Please enter the API token you received from Zammad."
 msgstr "Informe o token de API que você recebeu do Zammad."
 
@@ -17011,7 +17019,7 @@ msgstr "Redefinir cor do texto"
 msgid "Reset to default"
 msgstr "Redefinir para o padrão"
 
-#: app/assets/javascripts/app/controllers/package.coffee:158
+#: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
 msgid "Reset to default settings"
@@ -17289,7 +17297,7 @@ msgstr "Executando…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -17332,7 +17340,7 @@ msgstr "Credenciais do aplicativo SAML"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17383,7 +17391,7 @@ msgstr "SMTP - defina suas próprias configurações de SMTP de saída"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -18535,7 +18543,7 @@ msgstr ""
 "Útil para definir corretamente o cliente quando o email é recebido de um "
 "sistema de terceiros em nome de um cliente."
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 msgid "Setting"
 msgstr "Configuração"
 
@@ -19278,7 +19286,7 @@ msgstr "Iniciando a importação…"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:62
+#: app/assets/javascripts/app/views/package.jst.eco:69
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
@@ -19368,7 +19376,7 @@ msgstr "Armazenamento"
 msgid "Storage Method"
 msgstr "Método de Armazenamento"
 
-#: app/assets/javascripts/app/views/package.jst.eco:38
+#: app/assets/javascripts/app/views/package.jst.eco:41
 msgid "Store"
 msgstr "Loja"
 
@@ -19880,7 +19888,7 @@ msgid "Text missing"
 msgstr "Texto faltando"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "Módulo de texto"
 
@@ -20753,7 +20761,7 @@ msgstr ""
 "O token de segurança incluído é inválido. Isso pode ser apenas um erro "
 "temporário, por favor, recarregue o navegador e tente novamente."
 
-#: app/assets/javascripts/app/views/package.jst.eco:12
+#: app/assets/javascripts/app/views/package.jst.eco:15
 msgid ""
 "The installation of packages comes with security implications, because "
 "arbitrary code will be executed in the context of the Zammad application."
@@ -21809,7 +21817,7 @@ msgstr ""
 "Não haverá reversão possível dessa exclusão. Se você tem certeza absoluta de "
 "que deseja prosseguir, digite \"%s\" no campo."
 
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
@@ -22374,6 +22382,14 @@ msgstr ""
 #: app/frontend/shared/router/error.ts:28
 msgid "This page doesn't exist."
 msgstr "Esta página não existe."
+
+#: app/assets/javascripts/app/views/package.jst.eco:52
+msgid ""
+"This page gives you an overview of the packages currently installed in your "
+"Zammad instance."
+msgstr ""
+"Esta página oferece uma visão geral dos pacotes atualmente instalados na sua "
+"instância do Zammad."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -23229,7 +23245,7 @@ msgstr "Total de unidades de tempo"
 msgid "Time accounting"
 msgstr "Contabilização de tempo"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 msgid "Time accounting type"
 msgstr "Tipo de contabilização de tempo"
 
@@ -23413,7 +23429,7 @@ msgstr "Para acionar a pré-visualização, insira algum termo de pesquisa acima
 msgid "To work on Tickets."
 msgstr "Para trabalhar em tickets."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
@@ -23726,7 +23742,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Métodos de autenticação de dois fatores"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 msgid "Two-factor authentication"
 msgstr "Autenticação de dois fatores"
 
@@ -23870,7 +23886,7 @@ msgstr "Endereço de email não atribuído, atribua-o a um canal ou exclua-o."
 msgid "Uncheck item"
 msgstr "Desmarcar item"
 
-#: app/assets/javascripts/app/views/package.jst.eco:92
+#: app/assets/javascripts/app/views/package.jst.eco:102
 msgid "Uninstall package"
 msgstr "Desinstalar pacote"
 
@@ -24085,7 +24101,7 @@ msgstr ""
 "Atualize os registros existentes com os atributos especificados nos dados de "
 "importação."
 
-#: app/assets/javascripts/app/views/package.jst.eco:87
+#: app/assets/javascripts/app/views/package.jst.eco:97
 msgid "Update package"
 msgstr "Atualizar pacote"
 
@@ -24104,7 +24120,7 @@ msgstr "Atualizar rascunho compartilhado"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/controllers/package.coffee:200
+#: app/assets/javascripts/app/controllers/package.coffee:203
 #: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Atualizado com sucesso."
@@ -24118,7 +24134,7 @@ msgstr "Atualizar os tickets mais recentes."
 msgid "Update time"
 msgstr "Tempo de atualização"
 
-#: app/assets/javascripts/app/views/package.jst.eco:71
+#: app/assets/javascripts/app/views/package.jst.eco:80
 msgid "Update to %s"
 msgstr "Atualizar para %s"
 
@@ -24836,7 +24852,7 @@ msgid "Vector DB knowledge base excluded categories"
 msgstr ""
 "Categorias excluídas da base de conhecimento no banco de dados vetorial"
 
-#: app/assets/javascripts/app/views/package.jst.eco:61
+#: app/assets/javascripts/app/views/package.jst.eco:68
 msgid "Vendor"
 msgstr "Fornecedor"
 
@@ -24895,7 +24911,7 @@ msgid "Verifying…"
 msgstr "Verificando…"
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:60
+#: app/assets/javascripts/app/views/package.jst.eco:67
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 #: lib/excel_sheet/ai/analytics/errors.rb:25
@@ -27326,7 +27342,7 @@ msgstr "sem próximos eventos"
 msgid "none"
 msgstr "Nenhum"
 
-#: app/assets/javascripts/app/views/package.jst.eco:132
+#: app/assets/javascripts/app/views/package.jst.eco:143
 msgid "not installed"
 msgstr "não instalado"
 

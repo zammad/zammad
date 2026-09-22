@@ -1291,7 +1291,7 @@ msgstr "API Key"
 msgid "API Password Access"
 msgstr "API 密碼存取"
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
 msgstr "API Token"
@@ -1493,7 +1493,7 @@ msgstr "帳號"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:63
+#: app/assets/javascripts/app/views/package.jst.eco:71
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -2072,7 +2072,7 @@ msgstr "核准後，請重新連接您的 Exchange 帳戶。"
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr "核准後，請重新連接您的 Microsoft365 郵箱。"
 
-#: app/assets/javascripts/app/views/package.jst.eco:17
+#: app/assets/javascripts/app/views/package.jst.eco:20
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
@@ -3072,7 +3072,7 @@ msgstr "無法驗證（該服務不提供）"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:48
 msgid "Authentication required"
 msgstr "需要驗證"
 
@@ -3221,7 +3221,7 @@ msgstr "適用於以下的角色"
 msgid "Available methods"
 msgstr "可用方式"
 
-#: app/assets/javascripts/app/views/package.jst.eco:109
+#: app/assets/javascripts/app/views/package.jst.eco:120
 #, fuzzy
 #| msgid "Available Groups"
 msgid "Available packages"
@@ -4373,7 +4373,7 @@ msgstr "清除搜尋"
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
@@ -4683,10 +4683,10 @@ msgstr "%s 的配置"
 msgid "Configuration of performance settings via environment variables."
 msgstr "透過環境變數配置效能設定。"
 
-#: app/assets/javascripts/app/controllers/package.coffee:150
+#: app/assets/javascripts/app/controllers/package.coffee:153
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:25
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:7
 msgid "Configure"
 msgstr "配置"
 
@@ -5007,7 +5007,7 @@ msgstr ""
 msgid "Conversation summary"
 msgstr "交談摘要"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:125
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
 msgid "Copied!"
 msgstr ""
@@ -5713,7 +5713,7 @@ msgstr "黑暗模式"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:59
+#: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
 msgid "Dashboard"
 msgstr "儀表板"
@@ -6844,7 +6844,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #: app/assets/javascripts/app/controllers/user.coffee:107
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
@@ -10651,6 +10651,12 @@ msgstr "重要的"
 msgid "Imported"
 msgstr ""
 
+#: app/assets/javascripts/app/views/package.jst.eco:53
+msgid ""
+"In container-based environments, packages are managed as part of the "
+"deployment and cannot be installed or removed from here."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "為了讓 Zammad 存取 %s，%s API token 必須保存在此："
@@ -10921,21 +10927,21 @@ msgstr "插入文字模組"
 msgid "Install App"
 msgstr "安裝應用程式"
 
-#: app/assets/javascripts/app/views/package.jst.eco:45
+#: app/assets/javascripts/app/views/package.jst.eco:48
 msgid "Install Package"
 msgstr "安裝套件"
 
-#: app/assets/javascripts/app/views/package.jst.eco:144
+#: app/assets/javascripts/app/views/package.jst.eco:155
 #, fuzzy
 #| msgid "Install Package"
 msgid "Install package"
 msgstr "安裝套件"
 
-#: app/assets/javascripts/app/views/package.jst.eco:37
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Installed"
 msgstr "已安装"
 
-#: app/assets/javascripts/app/views/package.jst.eco:49
+#: app/assets/javascripts/app/views/package.jst.eco:56
 #, fuzzy
 #| msgid "Install Package"
 msgid "Installed packages"
@@ -12548,7 +12554,6 @@ msgstr "管理您的通知設置"
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: app/assets/javascripts/app/views/package.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
@@ -13191,7 +13196,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:59
+#: app/assets/javascripts/app/views/package.jst.eco:66
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -13698,7 +13703,7 @@ msgstr "沒有評論"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:53
+#: app/assets/javascripts/app/views/package.jst.eco:60
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -14558,7 +14563,7 @@ msgstr "只適用於代理其他使用者。"
 msgid "Only available for users with shared organizations"
 msgstr "僅適用於屬於共享機構的使用者"
 
-#: app/assets/javascripts/app/views/package.jst.eco:14
+#: app/assets/javascripts/app/views/package.jst.eco:17
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
@@ -15058,7 +15063,7 @@ msgstr "使用者所承辦的工單不會被刪除。承辦人將對應到系統
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15092,23 +15097,24 @@ msgstr "PKCE"
 msgid "POP3"
 msgstr "POP3"
 
-#: app/assets/javascripts/app/views/package.jst.eco:3
+#: app/models/audit_log/object_type_labels.rb:12
 msgid "Package"
 msgstr "套件"
 
-#: app/assets/javascripts/app/controllers/package.coffee:131
+#: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
 #| msgid "Ticket tag added successfully."
 msgid "Package installed successfully."
 msgstr "工單標籤已成功新增。"
 
-#: app/assets/javascripts/app/controllers/package.coffee:112
+#: app/assets/javascripts/app/controllers/package.coffee:115
 #, fuzzy
 #| msgid "Ticket updated successfully."
 msgid "Package updated successfully."
 msgstr "工單已成功更新。"
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
+#: app/assets/javascripts/app/views/package.jst.eco:3
 #: db/seeds/permissions.rb:329
 msgid "Packages"
 msgstr "套件"
@@ -15313,7 +15319,7 @@ msgstr "執行操作"
 msgid "Permanently Delete Knowledge Base"
 msgstr "永久刪除知識庫"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 #, fuzzy
 #| msgid "Permissions"
 msgid "Permission"
@@ -15511,7 +15517,7 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 msgid "Please enter the API token you received from Zammad."
 msgstr ""
 
@@ -16748,7 +16754,7 @@ msgstr "重設文字顏色"
 msgid "Reset to default"
 msgstr "重設為預設值"
 
-#: app/assets/javascripts/app/controllers/package.coffee:158
+#: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
 msgid "Reset to default settings"
@@ -17038,7 +17044,7 @@ msgstr "執行中…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr ""
 
@@ -17077,7 +17083,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17128,7 +17134,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -18329,7 +18335,7 @@ msgstr ""
 "根據「Reply-To」標頭設置/覆蓋寄送者/。如果收到第三方系統代表客戶發送的電子郵"
 "件，則有助於設定正確的客戶。"
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 #, fuzzy
 #| msgid "Settings"
 msgid "Setting"
@@ -19135,7 +19141,7 @@ msgstr "開始匯入…"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:62
+#: app/assets/javascripts/app/views/package.jst.eco:69
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
@@ -19235,7 +19241,7 @@ msgstr "資料儲存"
 msgid "Storage Method"
 msgstr "儲存機制"
 
-#: app/assets/javascripts/app/views/package.jst.eco:38
+#: app/assets/javascripts/app/views/package.jst.eco:41
 msgid "Store"
 msgstr "儲存"
 
@@ -19781,7 +19787,7 @@ msgid "Text missing"
 msgstr "文字遺漏"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "文字模組"
 
@@ -20627,7 +20633,7 @@ msgid ""
 msgstr ""
 "包含的安全 token 無效。這可能只是暫時性錯誤，請重新載入瀏覽器後再試一次。"
 
-#: app/assets/javascripts/app/views/package.jst.eco:12
+#: app/assets/javascripts/app/views/package.jst.eco:15
 msgid ""
 "The installation of packages comes with security implications, because "
 "arbitrary code will be executed in the context of the Zammad application."
@@ -21705,7 +21711,7 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr "無法回溯此删除操作。如果確定要進行，請在輸入欄中鍵入 \"%s\"。"
 
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #, fuzzy
 #| msgid ""
 #| "There is no rollback of this deletion possible. If you are absolutely "
@@ -22232,6 +22238,12 @@ msgstr "只有當您是 out of office 的職務代理人時，您才能看到此
 #: app/frontend/shared/router/error.ts:28
 msgid "This page doesn't exist."
 msgstr "頁面不存在。"
+
+#: app/assets/javascripts/app/views/package.jst.eco:52
+msgid ""
+"This page gives you an overview of the packages currently installed in your "
+"Zammad instance."
+msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -23108,7 +23120,7 @@ msgstr "時間單位總計"
 msgid "Time accounting"
 msgstr "工時"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time accounting type"
@@ -23285,7 +23297,7 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "去處理工單。"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
@@ -23632,7 +23644,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "身份驗證"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor authentication"
@@ -23782,7 +23794,7 @@ msgstr "未指派的電子郵件地址，將其指派給通訊管道或將其刪
 msgid "Uncheck item"
 msgstr "未確認項目"
 
-#: app/assets/javascripts/app/views/package.jst.eco:92
+#: app/assets/javascripts/app/views/package.jst.eco:102
 #, fuzzy
 #| msgid "Install Package"
 msgid "Uninstall package"
@@ -24022,7 +24034,7 @@ msgid ""
 "Update existing records with the attributes specified in the import data."
 msgstr "指定匯入資料中的特定屬性來更新現有的記錄。"
 
-#: app/assets/javascripts/app/views/package.jst.eco:87
+#: app/assets/javascripts/app/views/package.jst.eco:97
 #, fuzzy
 #| msgid "Update Database"
 msgid "Update package"
@@ -24045,7 +24057,7 @@ msgstr "已分享"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/controllers/package.coffee:200
+#: app/assets/javascripts/app/controllers/package.coffee:203
 #: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr ""
@@ -24063,7 +24075,7 @@ msgstr "%s 個物件已刪除。"
 msgid "Update time"
 msgstr "更新時間"
 
-#: app/assets/javascripts/app/views/package.jst.eco:71
+#: app/assets/javascripts/app/views/package.jst.eco:80
 #, fuzzy
 #| msgid "Updated at"
 msgid "Update to %s"
@@ -24809,7 +24821,7 @@ msgstr "存取知識庫介面。"
 msgid "Vector DB knowledge base excluded categories"
 msgstr "插入知識庫解答"
 
-#: app/assets/javascripts/app/views/package.jst.eco:61
+#: app/assets/javascripts/app/views/package.jst.eco:68
 msgid "Vendor"
 msgstr "供應商"
 
@@ -24868,7 +24880,7 @@ msgid "Verifying…"
 msgstr "確認中…"
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:60
+#: app/assets/javascripts/app/views/package.jst.eco:67
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 #: lib/excel_sheet/ai/analytics/errors.rb:25
@@ -27373,7 +27385,7 @@ msgstr "無即將到來的活動"
 msgid "none"
 msgstr "無"
 
-#: app/assets/javascripts/app/views/package.jst.eco:132
+#: app/assets/javascripts/app/views/package.jst.eco:143
 #, fuzzy
 #| msgid "Installed"
 msgid "not installed"

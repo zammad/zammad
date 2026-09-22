@@ -1338,7 +1338,7 @@ msgstr "API 키"
 msgid "API Password Access"
 msgstr "API 비밀번호 액세스"
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
 msgstr "API 토큰"
@@ -1546,7 +1546,7 @@ msgstr "계정"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:63
+#: app/assets/javascripts/app/views/package.jst.eco:71
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -2134,7 +2134,7 @@ msgstr "승인이 완료된 후, 교체된 계정을 다시 연결해 주세요.
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr "승인 후 Microsoft365 사서함을 다시 연결해 주세요."
 
-#: app/assets/javascripts/app/views/package.jst.eco:17
+#: app/assets/javascripts/app/views/package.jst.eco:20
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
@@ -3166,7 +3166,7 @@ msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:48
 msgid "Authentication required"
 msgstr "인증이 필요합니다"
 
@@ -3321,7 +3321,7 @@ msgstr "다음 역할에 사용 가능"
 msgid "Available methods"
 msgstr "사용 가능한 방법"
 
-#: app/assets/javascripts/app/views/package.jst.eco:109
+#: app/assets/javascripts/app/views/package.jst.eco:120
 #, fuzzy
 #| msgid "Available Groups"
 msgid "Available packages"
@@ -4528,7 +4528,7 @@ msgstr "검색 지우기"
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
@@ -4845,10 +4845,10 @@ msgstr "%s에 대한 구성"
 msgid "Configuration of performance settings via environment variables."
 msgstr "환경 변수를 통한 성능 설정 구성."
 
-#: app/assets/javascripts/app/controllers/package.coffee:150
+#: app/assets/javascripts/app/controllers/package.coffee:153
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:25
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:7
 msgid "Configure"
 msgstr "구성"
 
@@ -5175,7 +5175,7 @@ msgstr "대화가 다른 채팅으로 전송되었습니다. 잠시만 기다려
 msgid "Conversation summary"
 msgstr "대화 요약"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:125
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
 msgid "Copied!"
 msgstr "복사됨!"
@@ -5927,7 +5927,7 @@ msgstr "다크 모드"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:59
+#: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
 msgid "Dashboard"
 msgstr "Dashboard"
@@ -7160,7 +7160,7 @@ msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 �
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 #: app/assets/javascripts/app/controllers/user.coffee:107
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
@@ -11126,6 +11126,12 @@ msgstr "중요"
 msgid "Imported"
 msgstr "가져옴"
 
+#: app/assets/javascripts/app/views/package.jst.eco:53
+msgid ""
+"In container-based environments, packages are managed as part of the "
+"deployment and cannot be installed or removed from here."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "Zammad가 %s에 접근하려면 여기 %s API 토큰을 저장해야 합니다:"
@@ -11408,21 +11414,21 @@ msgstr "텍스트 모듈을 삽입"
 msgid "Install App"
 msgstr "설치"
 
-#: app/assets/javascripts/app/views/package.jst.eco:45
+#: app/assets/javascripts/app/views/package.jst.eco:48
 msgid "Install Package"
 msgstr "패키지 설치"
 
-#: app/assets/javascripts/app/views/package.jst.eco:144
+#: app/assets/javascripts/app/views/package.jst.eco:155
 #, fuzzy
 #| msgid "Install Package"
 msgid "Install package"
 msgstr "패키지 설치"
 
-#: app/assets/javascripts/app/views/package.jst.eco:37
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Installed"
 msgstr "설치"
 
-#: app/assets/javascripts/app/views/package.jst.eco:49
+#: app/assets/javascripts/app/views/package.jst.eco:56
 #, fuzzy
 #| msgid "Install Package"
 msgid "Installed packages"
@@ -13078,7 +13084,6 @@ msgstr "알림 설정 관리"
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: app/assets/javascripts/app/views/package.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
@@ -13732,7 +13737,7 @@ msgstr "Nagios 통합"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:59
+#: app/assets/javascripts/app/views/package.jst.eco:66
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -14254,7 +14259,7 @@ msgstr "댓글 없음"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
-#: app/assets/javascripts/app/views/package.jst.eco:53
+#: app/assets/javascripts/app/views/package.jst.eco:60
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -15137,7 +15142,7 @@ msgstr "다른 사용자의 부재 대체 사용자에게만 사용 가능합니
 msgid "Only available for users with shared organizations"
 msgstr "공유 조직을 가진 사용자에게만 사용 가능합니다"
 
-#: app/assets/javascripts/app/views/package.jst.eco:14
+#: app/assets/javascripts/app/views/package.jst.eco:17
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr "알려진 신뢰할 수 있고 검증된 소스의 패키지만 설치해야 합니다."
@@ -15663,7 +15668,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
-#: app/models/audit_log/object_type_labels.rb:13
+#: app/models/audit_log/object_type_labels.rb:14
 msgid "PGP"
 msgstr "PGP"
 
@@ -15697,23 +15702,24 @@ msgstr "PKCE"
 msgid "POP3"
 msgstr "POP3"
 
-#: app/assets/javascripts/app/views/package.jst.eco:3
+#: app/models/audit_log/object_type_labels.rb:12
 msgid "Package"
 msgstr "패키지"
 
-#: app/assets/javascripts/app/controllers/package.coffee:131
+#: app/assets/javascripts/app/controllers/package.coffee:134
 #, fuzzy
 #| msgid "Ticket tag added successfully."
 msgid "Package installed successfully."
 msgstr "티켓 태그가 성공적으로 추가되었습니다."
 
-#: app/assets/javascripts/app/controllers/package.coffee:112
+#: app/assets/javascripts/app/controllers/package.coffee:115
 #, fuzzy
 #| msgid "Ticket updated successfully."
 msgid "Package updated successfully."
 msgstr "티켓이 성공적으로 업데이트되었습니다."
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
+#: app/assets/javascripts/app/views/package.jst.eco:3
 #: db/seeds/permissions.rb:329
 msgid "Packages"
 msgstr "패키지"
@@ -15920,7 +15926,7 @@ msgstr "작업 수행"
 msgid "Permanently Delete Knowledge Base"
 msgstr "지식 베이스 영구 삭제"
 
-#: app/models/audit_log/object_type_labels.rb:12
+#: app/models/audit_log/object_type_labels.rb:13
 #, fuzzy
 #| msgid "Permissions"
 msgid "Permission"
@@ -16124,7 +16130,7 @@ msgstr "유효한 JSON 문자열을 입력하세요."
 msgid "Please enter a valid email address."
 msgstr "유효한 이메일 주소를 입력하세요."
 
-#: app/assets/javascripts/app/controllers/package.coffee:170
+#: app/assets/javascripts/app/controllers/package.coffee:173
 msgid "Please enter the API token you received from Zammad."
 msgstr ""
 
@@ -17410,7 +17416,7 @@ msgstr "텍스트 색상 재설정"
 msgid "Reset to default"
 msgstr "기본값으로 재설정"
 
-#: app/assets/javascripts/app/controllers/package.coffee:158
+#: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
 msgid "Reset to default settings"
@@ -17688,7 +17694,7 @@ msgstr "실행 중…"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
-#: app/models/audit_log/object_type_labels.rb:16
+#: app/models/audit_log/object_type_labels.rb:17
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -17729,7 +17735,7 @@ msgstr "SAML 앱 자격 증명"
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
-#: app/models/audit_log/object_type_labels.rb:15
+#: app/models/audit_log/object_type_labels.rb:16
 msgid "SLA"
 msgstr "SLA"
 
@@ -17780,7 +17786,7 @@ msgstr "SMTP - 자체 발신 SMTP 설정 구성"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
-#: app/models/audit_log/object_type_labels.rb:17
+#: app/models/audit_log/object_type_labels.rb:18
 msgid "SSL"
 msgstr "SSL"
 
@@ -19001,7 +19007,7 @@ msgstr ""
 "에 따라 이메일에서 설정 / 덮어 쓰기 보낸 사람 / 회신하는 헤더. 이메일이 고객"
 "을 대신 타사 시스템에서 수신되는 경우 유용한 올바른 고객을 설정합니다."
 
-#: app/models/audit_log/object_type_labels.rb:14
+#: app/models/audit_log/object_type_labels.rb:15
 #, fuzzy
 #| msgid "Settings"
 msgid "Setting"
@@ -19792,7 +19798,7 @@ msgstr "가져오기 시작 중…"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:62
+#: app/assets/javascripts/app/views/package.jst.eco:69
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
@@ -19888,7 +19894,7 @@ msgstr "저장소"
 msgid "Storage Method"
 msgstr "저장 방법"
 
-#: app/assets/javascripts/app/views/package.jst.eco:38
+#: app/assets/javascripts/app/views/package.jst.eco:41
 msgid "Store"
 msgstr "저장소"
 
@@ -20416,7 +20422,7 @@ msgid "Text missing"
 msgstr "텍스트 누락"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:27
-#: app/models/audit_log/object_type_labels.rb:18
+#: app/models/audit_log/object_type_labels.rb:19
 msgid "Text module"
 msgstr "텍스트 모듈"
 
@@ -21222,7 +21228,7 @@ msgid ""
 "please reload your browser, and try again."
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:12
+#: app/assets/javascripts/app/views/package.jst.eco:15
 msgid ""
 "The installation of packages comes with security implications, because "
 "arbitrary code will be executed in the context of the Zammad application."
@@ -22267,7 +22273,7 @@ msgstr ""
 "이 삭제는 되돌릴 수 없습니다. 계속 진행하려면 입력란에 \"%s\"을(를) 입력하세"
 "요."
 
-#: app/assets/javascripts/app/controllers/package.coffee:73
+#: app/assets/javascripts/app/controllers/package.coffee:76
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
@@ -22807,6 +22813,12 @@ msgstr "이 개요는 부재 중 대체자일 때만 표시됩니다."
 #: app/frontend/shared/router/error.ts:28
 msgid "This page doesn't exist."
 msgstr "이 페이지가 존재하지 않습니다."
+
+#: app/assets/javascripts/app/views/package.jst.eco:52
+msgid ""
+"This page gives you an overview of the packages currently installed in your "
+"Zammad instance."
+msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -23664,7 +23676,7 @@ msgstr "시간 단위 총"
 msgid "Time accounting"
 msgstr "시간 회계"
 
-#: app/models/audit_log/object_type_labels.rb:19
+#: app/models/audit_log/object_type_labels.rb:20
 #, fuzzy
 #| msgid "Time Accounting Types"
 msgid "Time accounting type"
@@ -23840,7 +23852,7 @@ msgstr "미리보기를 실행하려면 위에 검색어를 입력하세요."
 msgid "To work on Tickets."
 msgstr "티켓에서 작업합니다."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
@@ -24168,7 +24180,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "이중 인증 방법"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/models/audit_log/object_type_labels.rb:20
+#: app/models/audit_log/object_type_labels.rb:21
 #, fuzzy
 #| msgid "Two-factor Authentication"
 msgid "Two-factor authentication"
@@ -24317,7 +24329,7 @@ msgstr "할당되지 않은 이메일 주소는 채널에 할당하거나 삭제
 msgid "Uncheck item"
 msgstr "항목 선택 해제"
 
-#: app/assets/javascripts/app/views/package.jst.eco:92
+#: app/assets/javascripts/app/views/package.jst.eco:102
 #, fuzzy
 #| msgid "Install Package"
 msgid "Uninstall package"
@@ -24554,7 +24566,7 @@ msgid ""
 "Update existing records with the attributes specified in the import data."
 msgstr "가져오기 데이터에 지정된 속성으로 기존 레코드를 업데이트합니다."
 
-#: app/assets/javascripts/app/views/package.jst.eco:87
+#: app/assets/javascripts/app/views/package.jst.eco:97
 #, fuzzy
 #| msgid "Update Database"
 msgid "Update package"
@@ -24577,7 +24589,7 @@ msgstr "공유 초안 업데이트"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/controllers/package.coffee:200
+#: app/assets/javascripts/app/controllers/package.coffee:203
 #: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "업데이트 성공."
@@ -24593,7 +24605,7 @@ msgstr "가장 최근 티켓을 업데이트합니다."
 msgid "Update time"
 msgstr "업데이트 시간"
 
-#: app/assets/javascripts/app/views/package.jst.eco:71
+#: app/assets/javascripts/app/views/package.jst.eco:80
 #, fuzzy
 #| msgid "Updated At"
 msgid "Update to %s"
@@ -25322,7 +25334,7 @@ msgstr "지식 삭제 지식 베이스 인터페이스에 대한 접근 권한."
 msgid "Vector DB knowledge base excluded categories"
 msgstr "지식 베이스 답변을 삽입"
 
-#: app/assets/javascripts/app/views/package.jst.eco:61
+#: app/assets/javascripts/app/views/package.jst.eco:68
 msgid "Vendor"
 msgstr "공급업체"
 
@@ -25380,7 +25392,7 @@ msgid "Verifying…"
 msgstr "확인 중…"
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:60
+#: app/assets/javascripts/app/views/package.jst.eco:67
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 #: lib/excel_sheet/ai/analytics/errors.rb:25
@@ -27849,7 +27861,7 @@ msgstr "예정된 이벤트"
 msgid "none"
 msgstr "없음"
 
-#: app/assets/javascripts/app/views/package.jst.eco:132
+#: app/assets/javascripts/app/views/package.jst.eco:143
 #, fuzzy
 #| msgid "Installed"
 msgid "not installed"
