@@ -4,6 +4,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, ref, toRef, watch } from 'vue'
 
 import { useTicketArticleTranslationTargetLocalesLazyQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.api.ts'
+import { useUserCurrentContentTranslationAutoMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts'
 import { useUserCurrentContentTranslationTargetLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.api.ts'
 import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -67,6 +68,35 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
   // answer, no second copy of the server's rules in the client.
   const isAvailable = computed(() => isEnabled.value && (targetLocales.value?.length ?? 0) > 0)
 
+  // Whether this agent may switch a whole ticket to the target language: the server answers it
+  // with the session, the configured roles never reach the client.
+  const isAutoAvailable = computed(
+    () =>
+      isAvailable.value &&
+      !!config.value.content_translation_ticket_article_auto &&
+      !!session.user?.hasContentTranslationAutoAvailable,
+  )
+
+  // Whole ticket
+
+  // Whether the agent reads whole tickets in the target language. A personal preference like the
+  // target language itself, so a ticket opened later is translated without asking again - and
+  // switching it in one ticket switches it in every open one.
+  const isAutoEnabled = computed(
+    () => isAutoAvailable.value && !!session.user?.preferences?.content_translation_auto,
+  )
+
+  const autoMutation = new MutationHandler(useUserCurrentContentTranslationAutoMutation(), {
+    errorNotificationMessage: __('The translation setting could not be saved.'),
+  })
+
+  const setAutoEnabled = (enabled: boolean) => {
+    if (isAutoEnabled.value === enabled) return
+
+    session.setUserPreference('content_translation_auto', enabled)
+    autoMutation.send({ enabled })
+  }
+
   // The answer can change with the settings: ask again, if anyone asked before.
   watch(
     () => [isEnabled.value, config.value.ai_provider],
@@ -120,6 +150,9 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
   return {
     isEnabled,
     isAvailable,
+    isAutoAvailable,
+    isAutoEnabled,
+    setAutoEnabled,
     targetLocales,
     loadTargetLocales,
     targetLocale,

@@ -8,6 +8,10 @@ import { createArticleTranslationMock } from '#shared/entities/ticket-article/__
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { mockTicketArticleTranslationTargetLocalesQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
+import {
+  mockUserCurrentContentTranslationAutoMutation,
+  waitForUserCurrentContentTranslationAutoMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.mocks.ts'
 import { mockUserCurrentContentTranslationTargetLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.mocks.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 
@@ -16,10 +20,12 @@ import ArticleTranslationTargetMenu from '#desktop/pages/ticket/components/Ticke
 
 const ticket = createDummyTicket()
 
-const renderMenu = () => {
+// `auto` is the server capability; `allArticles` is the saved preference.
+const renderMenu = ({ auto = false, allArticles = false } = {}) => {
   mockApplicationConfig({
     content_translation_service: true,
     content_translation_ticket_article: true,
+    content_translation_ticket_article_auto: true,
     locale_default: 'en-us',
   })
 
@@ -32,7 +38,14 @@ const renderMenu = () => {
   })
 
   // The picked language is saved as a preference of the current user.
-  mockUserCurrent({ preferences: { locale: 'en-us' } })
+  mockUserCurrent({
+    preferences: { locale: 'en-us', content_translation_auto: allArticles },
+    hasContentTranslationAutoAvailable: auto,
+  })
+
+  mockUserCurrentContentTranslationAutoMutation({
+    userCurrentContentTranslationAuto: { success: true, errors: null },
+  })
 
   mockUserCurrentContentTranslationTargetLocaleMutation({
     userCurrentContentTranslationTargetLocale: { success: true, errors: null },
@@ -55,14 +68,17 @@ const renderMenu = () => {
     { router: true, store: true, form: true },
   )
 
-  return { wrapper, store, articleTranslation }
+  return { wrapper, store }
 }
 
-const openMenu = async (wrapper: ReturnType<typeof renderMenu>['wrapper']) => {
-  await wrapper.events.click(
-    await wrapper.findByRole('button', { name: 'Translation to English (United States)' }),
-  )
+const openMenu = async (
+  wrapper: ReturnType<typeof renderMenu>['wrapper'],
+  name = 'Translation to English (United States)',
+) => {
+  await wrapper.events.click(await wrapper.findByRole('button', { name }))
 }
+
+const ALL_ARTICLES_TRIGGER = 'All articles translated to English (United States)'
 
 describe('ArticleTranslationTargetMenu', () => {
   it('shows the code of the current target language', async () => {
@@ -120,5 +136,59 @@ describe('ArticleTranslationTargetMenu', () => {
     ).toHaveTextContent('DE-DE')
   })
 
-  // Kept for the follow-up that translates the articles of a whole ticket automatically.
+  describe('the switch for the whole ticket', () => {
+    it('is missing for an agent the configured roles do not allow', async () => {
+      const { wrapper } = renderMenu()
+
+      await openMenu(wrapper)
+
+      expect(wrapper.queryByRole('switch')).not.toBeInTheDocument()
+      // The target language stays theirs to pick.
+      expect(wrapper.getByRole('option', { name: 'Deutsch - German' })).toBeInTheDocument()
+    })
+
+    it('switches the whole ticket on', async () => {
+      const { wrapper } = renderMenu({ auto: true })
+
+      await openMenu(wrapper)
+
+      const toggle = wrapper.getByRole('switch', { name: 'Translate all articles' })
+      expect(toggle).toHaveAttribute('aria-checked', 'false')
+
+      await wrapper.events.click(toggle)
+
+      expect(
+        (await waitForUserCurrentContentTranslationAutoMutationCalls()).at(-1)?.variables,
+      ).toEqual({ enabled: true })
+    })
+
+    it('shows the mode of the ticket when the popover is opened again', async () => {
+      const { wrapper } = renderMenu({ auto: true, allArticles: true })
+
+      await openMenu(wrapper, ALL_ARTICLES_TRIGGER)
+
+      expect(wrapper.getByRole('switch', { name: 'Translate all articles' })).toHaveAttribute(
+        'aria-checked',
+        'true',
+      )
+    })
+
+    it('switches the whole ticket off again', async () => {
+      const { wrapper } = renderMenu({ auto: true, allArticles: true })
+
+      await openMenu(wrapper, ALL_ARTICLES_TRIGGER)
+      await wrapper.events.click(wrapper.getByRole('switch', { name: 'Translate all articles' }))
+
+      expect(
+        (await waitForUserCurrentContentTranslationAutoMutationCalls()).at(-1)?.variables,
+      ).toEqual({ enabled: false })
+    })
+
+    // The mode is otherwise only visible on the articles themselves.
+    it('is announced by the trigger button while it is on', async () => {
+      const { wrapper } = renderMenu({ auto: true, allArticles: true })
+
+      expect(await wrapper.findByRole('button', { name: ALL_ARTICLES_TRIGGER })).toBeInTheDocument()
+    })
+  })
 })

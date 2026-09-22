@@ -4,11 +4,18 @@ import { createTestingPinia } from '@pinia/testing'
 import { waitFor } from '@testing-library/vue'
 import { setActivePinia } from 'pinia'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
+
 import {
   mockTicketArticleTranslationTargetLocalesQuery,
   mockTicketArticleTranslationTargetLocalesQueryError,
   waitForTicketArticleTranslationTargetLocalesQueryCalls,
 } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts'
+import { UserCurrentContentTranslationAutoDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts'
+import {
+  mockUserCurrentContentTranslationAutoMutation,
+  waitForUserCurrentContentTranslationAutoMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.mocks.ts'
 import {
   mockUserCurrentContentTranslationTargetLocaleMutation,
   waitForUserCurrentContentTranslationTargetLocaleMutationCalls,
@@ -32,12 +39,13 @@ const mockTargetLocales = (locales = ['de-de', 'en-us', 'fr-fr']) =>
   })
 
 // A pinia of its own per example: the locales of the last one would otherwise carry over.
-const setup = (config: Partial<ConfigList> = {}) => {
+const setup = (config: Partial<ConfigList> = {}, user: Partial<UserData> = {}) => {
   setActivePinia(createTestingPinia({ createSpy: vi.fn, stubActions: false }))
 
   useApplicationStore().config = {
     content_translation_service: true,
     content_translation_ticket_article: true,
+    content_translation_ticket_article_auto: true,
     locale_default: 'en-us',
     ...config,
   } as ConfigList
@@ -45,10 +53,14 @@ const setup = (config: Partial<ConfigList> = {}) => {
   useSessionStore().user = {
     id: 'gid://zammad/User/2',
     preferences: { locale: 'de-de' },
+    ...user,
   } as UserData
 
   mockUserCurrentContentTranslationTargetLocaleMutation({
     userCurrentContentTranslationTargetLocale: { success: true, errors: null },
+  })
+  mockUserCurrentContentTranslationAutoMutation({
+    userCurrentContentTranslationAuto: { success: true, errors: null },
   })
 
   return useArticleTranslationStore()
@@ -114,6 +126,88 @@ describe('useArticleTranslationStore', () => {
         expect(await waitForTicketArticleTranslationTargetLocalesQueryCalls()).toHaveLength(2),
       )
       await waitFor(() => expect(store.isAvailable).toBe(true))
+    })
+  })
+
+  describe('whole ticket', () => {
+    // The capability the server answers for this agent; without it the setting has no effect.
+    const withCapability = (preferences: Record<string, unknown> = {}) => ({
+      hasContentTranslationAutoAvailable: true,
+      preferences: { locale: 'de-de', ...preferences },
+    })
+
+    const available = async (store: ReturnType<typeof setup>) => {
+      store.loadTargetLocales()
+      await waitFor(() => expect(store.isAvailable).toBe(true))
+    }
+
+    it('is off without a stored preference', async () => {
+      const store = setup({}, withCapability() as Partial<UserData>)
+      mockTargetLocales()
+      await available(store)
+
+      expect(store.isAutoEnabled).toBe(false)
+    })
+
+    it('follows the stored preference', async () => {
+      const store = setup(
+        {},
+        withCapability({ content_translation_auto: true }) as Partial<UserData>,
+      )
+      mockTargetLocales()
+      await available(store)
+
+      expect(store.isAutoEnabled).toBe(true)
+    })
+
+    it('stays off for an agent the configured roles do not allow', async () => {
+      const store = setup({}, {
+        preferences: { locale: 'de-de', content_translation_auto: true },
+      } as Partial<UserData>)
+      mockTargetLocales()
+      await available(store)
+
+      expect(store.isAutoEnabled).toBe(false)
+    })
+
+    it('turns off when the admin disables automatic translation in an open session', async () => {
+      const store = setup(
+        {},
+        withCapability({ content_translation_auto: true }) as Partial<UserData>,
+      )
+      mockTargetLocales()
+      await available(store)
+
+      expect(store.isAutoEnabled).toBe(true)
+
+      useApplicationStore().config.content_translation_ticket_article_auto = false
+
+      expect(store.isAutoAvailable).toBe(false)
+      expect(store.isAutoEnabled).toBe(false)
+      expect(store.isAvailable).toBe(true)
+    })
+
+    it('saves a change as a personal preference', async () => {
+      const store = setup({}, withCapability() as Partial<UserData>)
+      mockTargetLocales()
+      await available(store)
+
+      store.setAutoEnabled(true)
+
+      expect(store.isAutoEnabled).toBe(true)
+
+      const calls = await waitForUserCurrentContentTranslationAutoMutationCalls()
+      expect(calls.at(-1)?.variables).toEqual({ enabled: true })
+    })
+
+    it('saves nothing when it is set to what it already is', async () => {
+      const store = setup({}, withCapability() as Partial<UserData>)
+      mockTargetLocales()
+      await available(store)
+
+      store.setAutoEnabled(false)
+
+      expect(getGraphQLMockCalls(UserCurrentContentTranslationAutoDocument)).toHaveLength(0)
     })
   })
 

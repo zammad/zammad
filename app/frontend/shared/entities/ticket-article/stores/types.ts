@@ -2,6 +2,8 @@
 
 import type { TicketArticleTranslationTargetLocalesQuery } from '#shared/graphql/types.ts'
 
+import type { ComputedRef } from 'vue'
+
 export type ArticleTranslationTargetLocale =
   TicketArticleTranslationTargetLocalesQuery['ticketArticleTranslationTargetLocales'][number]
 
@@ -24,4 +26,5 @@ export interface TicketArticleTranslation {
   hasDirectTranslationAction: (articleId: string) => boolean
   showTranslation: (articleId: string) => Promise<void>
   showOriginal: (articleId: string) => void
+  isTranslating: ComputedRef<boolean>
 }

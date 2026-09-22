@@ -2,6 +2,8 @@
 
 import { nextTick, onMounted, onUnmounted, watch, type ComputedRef, type Ref } from 'vue'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import type { TicketArticleHighlightedText } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
@@ -182,6 +184,7 @@ export const useArticleHighlightsSelection = (
 ) => {
   const { isActive, isEraserActive, activeMenuItem } = useHighlightMenuState()
   const { mutate } = useTicketArticleHighlightedTextUpsertMutation()
+  const { notify } = useNotifications()
 
   const getContainer = (): HTMLElement | null => {
     const root = bubbleBodyElement.value
@@ -238,13 +241,27 @@ export const useArticleHighlightsSelection = (
   }
 
   const applyFromCurrentSelection = async () => {
-    if (!isActive.value || isEditable?.value === false) return
+    if (!isActive.value) return
 
     const container = getContainer()
     if (!container) return
 
     const context = getSelectionContext(container)
     if (!context) return
+
+    // Refused rather than ignored: the agent selected text with the highlighter on, so silence
+    // would read as a broken tool.
+    if (isEditable?.value === false) {
+      context.selection.removeAllRanges()
+
+      notify({
+        id: 'article-highlight-translation',
+        type: NotificationTypes.Warn,
+        message: __('Switch back to the original article to use highlighting.'),
+      })
+
+      return
+    }
 
     const updated = getUpdatedHighlights(context.startIndex, context.endIndex)
 

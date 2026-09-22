@@ -7,6 +7,7 @@ import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -416,7 +417,7 @@ describe('ArticleBubbleBody', () => {
 
     // Highlights are offsets into the original text; measured in a translation they would land
     // anywhere in the original, and replace what was highlighted there.
-    it('does not save highlights while the translation is shown', async () => {
+    it('warns instead of saving a highlight while the translation is shown', async () => {
       const translation = ref<ArticleTranslation | undefined>({
         status: 'done',
         content: '<p>Hallo Welt</p>',
@@ -457,6 +458,13 @@ describe('ArticleBubbleBody', () => {
       await waitForNextTick(true)
 
       expect(getGraphQLMockCalls(TicketArticleHighlightedTextUpsertDocument)).toHaveLength(0)
+
+      const { notifications } = useNotifications()
+
+      expect(notifications.value.at(-1)).toMatchObject({
+        type: 'warn',
+        message: 'Switch back to the original article to use highlighting.',
+      })
 
       // The same gesture on the original is saved, so the guard is what kept the translation out.
       translation.value = undefined

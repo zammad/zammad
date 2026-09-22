@@ -111,16 +111,23 @@ const onAddArticleCallback = ({ articlesQuery, updates }: AddArticleCallbackArgs
   return (articlesQuery as QueryHandler).refetch()
 }
 
-const { articleResult, articlesQuery, isLoadingArticles, firstArticlesCount, loadedArticlesCount } =
-  useArticleDataHandler(ticketId, {
-    pageSize: 20,
-    onAddArticleCallback,
-  })
+const {
+  articleResult,
+  articlesQuery,
+  isLoadingArticles,
+  firstArticlesCount,
+  loadedArticlesCount,
+  loadedArticleSelections,
+} = useArticleDataHandler(ticketId, {
+  pageSize: 20,
+  onAddArticleCallback,
+})
 
 // The translations of this tab's articles live as long as the tab does.
 const articleTranslation = useTicketArticleTranslation(ticketId, {
   loadedArticlesCount,
   firstArticlesCount,
+  loadedArticleSelections,
 })
 
 provide(ARTICLES_INFORMATION_KEY, {

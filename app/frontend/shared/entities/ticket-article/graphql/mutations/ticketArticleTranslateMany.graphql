@@ -1,0 +1,31 @@
+mutation ticketArticleTranslateMany(
+  $ticketId: ID!
+  $firstArticlesCount: Int
+  $loadFirstArticles: Boolean
+  $pageSize: Int
+  $beforeCursor: String
+  $afterCursor: String
+  $targetLocale: String!
+) {
+  ticketArticleTranslateMany(
+    ticketId: $ticketId
+    firstArticlesCount: $firstArticlesCount
+    loadFirstArticles: $loadFirstArticles
+    pageSize: $pageSize
+    beforeCursor: $beforeCursor
+    afterCursor: $afterCursor
+    targetLocale: $targetLocale
+  ) {
+    pendingArticleIds
+    translations {
+      article {
+        id
+      }
+      translation {
+        content
+        backend
+        translated
+      }
+    }
+  }
+}

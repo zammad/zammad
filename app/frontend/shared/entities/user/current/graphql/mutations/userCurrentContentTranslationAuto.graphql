@@ -1,0 +1,8 @@
+mutation userCurrentContentTranslationAuto($enabled: Boolean!) {
+  userCurrentContentTranslationAuto(enabled: $enabled) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

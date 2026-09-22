@@ -8,6 +8,7 @@ import { TicketArticleUpdatesDocument } from '#shared/entities/ticket/graphql/su
 import type {
   PageInfo,
   TicketArticlesQuery,
+  TicketArticlesQueryVariables,
   TicketArticleUpdatesSubscription,
   TicketArticleUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
@@ -58,6 +59,27 @@ export const useArticleDataHandler = (
   const articleData = computed(() => articleResult.value)
 
   const loadedArticlesCount = computed(() => articleResult.value?.articles.edges.length ?? 0)
+
+  const loadedArticleSelections = computed<TicketArticlesQueryVariables[]>(() => {
+    const edges = articleResult.value?.articles.edges
+    if (!edges) return []
+
+    // Each selection must fit the GraphQL connection limit, even after many fetchMore calls.
+    const pageSize = 2000
+    const selections: TicketArticlesQueryVariables[] = []
+
+    for (let offset = 0; offset < Math.max(edges.length, 1); offset += pageSize) {
+      selections.push({
+        ticketId: ticketId.value,
+        firstArticlesCount: firstArticlesCount.value,
+        loadFirstArticles: offset === 0,
+        pageSize: Math.min(pageSize, edges.length - offset),
+        beforeCursor: edges[offset + pageSize]?.cursor,
+      })
+    }
+
+    return selections
+  })
 
   const allArticleLoaded = computed(() => {
     if (!articleResult.value?.articles.totalCount) return false
@@ -167,6 +189,7 @@ export const useArticleDataHandler = (
     isLoadingArticles,
     firstArticlesCount,
     loadedArticlesCount,
+    loadedArticleSelections,
     refetchArticlesQuery,
   }
 }

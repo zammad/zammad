@@ -57,6 +57,7 @@ module Gql::Types
       field :permissions, Gql::Types::User::PermissionType, method: :itself
       field :tickets_count, Gql::Types::TicketCountType, method: :itself
       field :has_beta_ui_switch_available, Boolean, description: 'Whether the user has access to the BETA UI switch'
+      field :has_content_translation_auto_available, Boolean, description: 'Whether the user may have the articles of a whole ticket translated automatically'
     end
 
     # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
@@ -91,6 +92,10 @@ module Gql::Types
       end
 
       @object.permissions? 'user_preferences.beta_ui_switch'
+    end
+
+    def has_content_translation_auto_available
+      Service::ContentTranslation::TicketArticle::AutoAllowed.execute(user: @object)
     end
   end
 end

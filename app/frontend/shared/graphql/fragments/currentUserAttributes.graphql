@@ -11,4 +11,5 @@ fragment currentUserAttributes on User {
     names
   }
   hasBetaUiSwitchAvailable
+  hasContentTranslationAutoAvailable
 }

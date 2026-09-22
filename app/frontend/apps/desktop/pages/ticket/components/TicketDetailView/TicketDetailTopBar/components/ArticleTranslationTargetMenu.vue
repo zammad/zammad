@@ -13,8 +13,10 @@ import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInput
 import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonSelectItem from '#desktop/components/CommonSelect/CommonSelectItem.vue'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const store = useArticleTranslationStore()
+const { articleTranslation } = useTicketInformation()
 
 // A11y - Ids are required to link the popover and the language list to their labels.
 const targetId = getUuid()
@@ -71,13 +73,21 @@ const select = (option: SelectOption) => {
     <CommonButton
       :id="targetId"
       ref="popoverTarget"
-      v-tooltip="$t('Translation to %s', currentName)"
+      v-tooltip="
+        store.isAutoEnabled
+          ? $t('All articles translated to %s', currentName)
+          : $t('Translation to %s', currentName)
+      "
       variant="tertiary-light"
       size="small"
       class="h-7! px-2! -outline-offset-1!"
-      :class="{ 'outline-1! outline-blue-800!': isOpen }"
+      :class="{
+        'outline-1! outline-blue-800!': isOpen,
+      }"
       prefix-icon="translate"
+      :icon-class="store.isAutoEnabled ? 'text-blue-800!' : undefined"
       :aria-expanded="isOpen"
+      :aria-busy="articleTranslation.isTranslating.value"
       @click="toggle(true)"
     >
       <span
@@ -102,7 +112,18 @@ const select = (option: SelectOption) => {
     placement="arrowEnd"
   >
     <div class="flex w-72 flex-col overflow-clip rounded-b-xl">
-      <!-- The switch for translating the whole ticket comes with the automatic translation. -->
+      <FormKit
+        v-if="store.isAutoAvailable"
+        type="toggle"
+        size="small"
+        data-test-id="translate-all-articles"
+        :model-value="store.isAutoEnabled"
+        :label="__('Translate all articles')"
+        :variants="{ true: __('yes'), false: __('no') }"
+        wrapper-class="gap-2 flex border-b border-neutral-100 px-2.5 py-2.5 dark:border-gray-900"
+        label-class="text-xs"
+        @update:model-value="store.setAutoEnabled($event as boolean)"
+      />
 
       <div class="flex flex-col gap-1.5 px-2.5 pt-2.5 pb-2">
         <CommonLabel
