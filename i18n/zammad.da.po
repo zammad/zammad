@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-18 05:19+0000\n"
+"PO-Revision-Date: 2026-09-21 07:12+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/da/>\n"
@@ -9207,10 +9207,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Kunne ikke oprette QR-kode. Prøv igen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
-#, fuzzy
-#| msgid "Failed to load content."
 msgid "Failed to translate article content."
-msgstr "Kunne ikke indlæse indhold."
+msgstr "Oversættelse af artikelindhold mislykkedes."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
@@ -14218,10 +14216,8 @@ msgstr ""
 "først: %s"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
-#, fuzzy
-#| msgid "No knowledge base content is available yet."
 msgid "No supported target language is available."
-msgstr "Intet vidensbaseindhold er tilgængeligt endnu."
+msgstr "Der er ikke noget understøttet målsprog tilgængeligt."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
@@ -18661,10 +18657,8 @@ msgid "Show notifications"
 msgstr "Vis notifikationer"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Original"
 msgid "Show original"
-msgstr "Original"
+msgstr "Vis original"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19289,10 +19283,8 @@ msgid "Stop after match enabled"
 msgstr "Stop efter match aktiveret"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Stop translating the article"
-msgstr "Oversættelsestjeneste"
+msgstr "Stop oversættelsen af artiklen"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
@@ -19335,7 +19327,7 @@ msgstr "Gemmer konfigurationen af oversættelsestjenesten."
 
 #: db/seeds/object_manager_attributes.rb:1275
 msgid "Street"
-msgstr "Gade"
+msgstr "Vej"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:196
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:26
@@ -19692,8 +19684,6 @@ msgid "Target Language"
 msgstr "Målsprog"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
-#, fuzzy
-#| msgid "Target Language"
 msgid "Target language"
 msgstr "Målsprog"
 
@@ -21551,16 +21541,12 @@ msgid "The token is valid. You are now able to login via password once."
 msgstr "Tokenet er gyldigt. Du kan nu logge ind med adgangskode én gang."
 
 #: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
-#, fuzzy
-#| msgid "The language could not be updated."
 msgid "The translation language could not be saved."
-msgstr "Sproget kunne ikke opdateres."
+msgstr "Oversættelsessproget kunne ikke gemmes."
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
-#, fuzzy
-#| msgid "The translation service cannot be reached."
 msgid "The translation returned no usable content."
-msgstr "Oversættelsestjenesten kan ikke nås."
+msgstr "Oversættelsen returnerede intet brugbart indhold."
 
 #: app/services/service/content_translation/backend/base.rb:10
 msgid "The translation service cannot be reached."
@@ -23515,10 +23501,8 @@ msgid "Transfer conversation to another chat:"
 msgstr "Overfør samtale til en anden chat:"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Translate article"
-msgstr "Oversættelsestjeneste"
+msgstr "Oversæt artikel"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
@@ -23533,22 +23517,16 @@ msgid "Translate ticket articles into another language."
 msgstr "Oversæt sagsartikler til et andet sprog."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate to %s"
-msgstr "Oversættelser"
+msgstr "Oversæt til %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
-#, fuzzy
-#| msgid "Show chat automatically"
 msgid "Translated automatically"
-msgstr "Vis chat automatisk"
+msgstr "Oversat automatisk"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
-#, fuzzy
-#| msgid "Suggested by AI"
 msgid "Translated by AI"
-msgstr "Foreslået af AI"
+msgstr "Oversat af AI"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -23588,10 +23566,8 @@ msgid "Translation services"
 msgstr "Oversættelsestjenester"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation to %s"
-msgstr "Oversættelser"
+msgstr "Oversættelse til %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3

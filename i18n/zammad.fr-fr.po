@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-17 09:12+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-09-21 07:12+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -1273,7 +1273,7 @@ msgstr "Clé d'API"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
 msgid "API plan"
-msgstr ""
+msgstr "Plan API"
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2256,24 +2256,19 @@ msgid "Allow reopening of tickets within a certain time."
 msgstr "Autoriser la réouverture des tickets pendant une période donnée."
 
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
-#, fuzzy
-#| msgid ""
-#| "Allow specific roles to translate all articles at once. Be careful, this "
-#| "can result in a lot of translation calls and might be cost related."
 msgid ""
 "Allow specific roles to translate all articles in one ticket at once. Use "
 "with caution, as this can result in a large number of translation calls and "
 "may incur additional costs."
 msgstr ""
-"Autoriser des rôles spécifiques à traduire tous les articles en une seule "
-"fois. Attention : cela peut générer un grand nombre de requêtes de "
-"traduction et entraîner des coûts supplémentaires."
+"Autoriser des rôles spécifiques à traduire tous les articles d'un ticket en "
+"une seule fois. Utilisez cette fonctionnalité avec prudence, car elle peut "
+"générer un grand nombre de requêtes de traduction et entraîner des coûts "
+"supplémentaires."
 
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
-#, fuzzy
-#| msgid "No translation available for this locale"
 msgid "Allow translation of all articles at once"
-msgstr "Aucune traduction disponible pour cette langue"
+msgstr "Autoriser la traduction de tous les articles en une seule fois"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -5956,7 +5951,7 @@ msgstr "Déchiffrement réussi."
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
 msgid "DeepL"
-msgstr ""
+msgstr "DeepL"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7504,7 +7499,7 @@ msgstr "Langue détectée"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
 msgid "Developer API (api-free.deepl.com)"
-msgstr ""
+msgstr "API pour développeurs (api-free.deepl.com)"
 
 #: db/seeds/settings.rb:74
 msgid "Developer System"
@@ -9418,10 +9413,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Échec de la configuration du QR Code. Veuillez réessayer."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
-#, fuzzy
-#| msgid "Failed to load content."
 msgid "Failed to translate article content."
-msgstr "Échec du chargement du contenu."
+msgstr "Échec de la traduction du contenu de l'article."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
@@ -10337,7 +10330,7 @@ msgstr "Les groupes sont …"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
 msgid "Growth/Enterprise API (api.deepl.com)"
-msgstr ""
+msgstr "API Growth/Enterprise (api.deepl.com)"
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
@@ -11148,6 +11141,9 @@ msgid ""
 "In container-based environments, packages are managed as part of the "
 "deployment and cannot be installed or removed from here."
 msgstr ""
+"Dans les environnements basés sur des conteneurs, les paquets sont gérés "
+"dans le cadre du déploiement et ne peuvent pas être installés ou supprimés "
+"ici."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
@@ -12297,10 +12293,8 @@ msgid "Library"
 msgstr "Bibliothèque"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:6
-#, fuzzy
-#| msgid "Translation"
 msgid "LibreTranslate"
-msgstr "Traduction"
+msgstr "LibreTranslate"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
@@ -14508,10 +14502,8 @@ msgstr ""
 "l'un des types pris en charge : %s"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
-#, fuzzy
-#| msgid "No knowledge base content is available yet."
 msgid "No supported target language is available."
-msgstr "Aucun contenu de base de connaissances n'est encore disponible."
+msgstr "Aucune langue cible prise en charge n'est disponible."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
@@ -19022,10 +19014,8 @@ msgid "Show notifications"
 msgstr "Afficher les notifications"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Original"
 msgid "Show original"
-msgstr "Original"
+msgstr "Afficher l'original"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19665,10 +19655,8 @@ msgid "Stop after match enabled"
 msgstr "Arrêter à la première correspondance activé"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Stop translating the article"
-msgstr "Service de traduction"
+msgstr "Arrêter la traduction de l'article"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
@@ -20075,8 +20063,6 @@ msgid "Target Language"
 msgstr "Langue cible"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
-#, fuzzy
-#| msgid "Target Language"
 msgid "Target language"
 msgstr "Langue cible"
 
@@ -20292,28 +20278,20 @@ msgstr ""
 "WhatsApp ne peut être envoyé."
 
 #: app/models/setting/validation/vectordb.rb:17
-#, fuzzy
-#| msgid ""
-#| "The provider configuration is disabled. Before proceeding, please enable "
-#| "it in AI > Providers."
 msgid ""
 "The AI provider configuration is disabled. Before proceeding, please enable "
 "it in AI > Providers."
 msgstr ""
-"La configuration du fournisseur est désactivée. Avant de continuer, veuillez "
-"l'activer dans AI > Fournisseurs."
+"La configuration du fournisseur IA est désactivée. Avant de continuer, "
+"veuillez l'activer dans IA > Fournisseurs."
 
 #: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-#, fuzzy
-#| msgid ""
-#| "The provider configuration is disabled. Before proceeding, please set up "
-#| "at least one provider in |AI > Providers|."
 msgid ""
 "The AI provider configuration is disabled. Before proceeding, please set up "
 "at least one provider in |AI > Providers|. %l"
 msgstr ""
-"La configuration du fournisseur est désactivée. Avant de continuer, veuillez "
-"configurer au moins un fournisseur dans |IA > Fournisseurs|."
+"La configuration du fournisseur IA est désactivée. Avant de continuer, "
+"veuillez configurer au moins un fournisseur dans |IA > Fournisseurs|. %l"
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -20818,10 +20796,8 @@ msgid "The connection was refused."
 msgstr "La connexion a été refusée."
 
 #: app/services/service/content_translation/backend/base.rb:34
-#, fuzzy
-#| msgid "The configured translation service is not available."
 msgid "The content is too large for the translation service."
-msgstr "Le service de traduction configuré n'est pas disponible."
+msgstr "Le contenu est trop volumineux pour le service de traduction."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -21496,10 +21472,9 @@ msgid "The public PGP key could not be found."
 msgstr "La clé publique PGP est introuvable."
 
 #: app/services/service/content_translation/backend/base.rb:28
-#, fuzzy
-#| msgid "Defines if a translation service is configured."
 msgid "The quota or rate limit of the translation service is exhausted."
-msgstr "Définir si un service de traduction est configuré."
+msgstr ""
+"Le quota ou la limite d'utilisation du service de traduction est atteint."
 
 #: app/models/setting/validation/ai_relevance_score.rb:9
 msgid "The relevance score must be a number between 0 and 100."
@@ -22008,41 +21983,30 @@ msgstr ""
 "de passe."
 
 #: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
-#, fuzzy
-#| msgid "The language could not be updated."
 msgid "The translation language could not be saved."
-msgstr "La langue n'a pas pu être mise à jour."
+msgstr "La langue de traduction n'a pas pu être enregistrée."
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
-#, fuzzy
-#| msgid "Translation service is not supported"
 msgid "The translation returned no usable content."
-msgstr "Le service de traduction n'est pas pris en charge"
+msgstr "La traduction n'a donné aucun contenu exploitable."
 
 #: app/services/service/content_translation/backend/base.rb:10
-#, fuzzy
-#| msgid "Translation service is not supported"
 msgid "The translation service cannot be reached."
-msgstr "Le service de traduction n'est pas pris en charge"
+msgstr "Le service de traduction est injoignable."
 
 #: app/services/service/content_translation/backend/base.rb:22
-#, fuzzy
-#| msgid "Translation service is not supported"
 msgid "The translation service does not support the requested target language."
-msgstr "Le service de traduction n'est pas pris en charge"
+msgstr ""
+"Le service de traduction ne prend pas en charge la langue cible demandée."
 
 #: app/services/service/content_translation/backend/deepl.rb:132
 #: app/services/service/content_translation/backend/libre_translate.rb:115
-#, fuzzy
-#| msgid "Translation service is not supported"
 msgid "The translation service does not support the target language %s."
-msgstr "Le service de traduction n'est pas pris en charge"
+msgstr "Le service de traduction ne prend pas en charge la langue cible %s."
 
 #: app/services/service/content_translation/backend/base.rb:16
-#, fuzzy
-#| msgid "No translation service is configured."
 msgid "The translation service refused the configured credentials."
-msgstr "Aucun service de traduction n'est configuré."
+msgstr "Le service de traduction a refusé les identifiants configurés."
 
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue:18
 msgid "The two-factor authentication is not configured yet."
@@ -22828,6 +22792,8 @@ msgid ""
 "This page gives you an overview of the packages currently installed in your "
 "Zammad instance."
 msgstr ""
+"Cette page vous donne un aperçu des paquets actuellement installés sur votre "
+"instance Zammad."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb:4
 msgid "This page is invisible to the public."
@@ -24031,10 +23997,8 @@ msgid "Transfer conversation to another chat:"
 msgstr "Transférer la conversation vers un autre chat :"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Translate article"
-msgstr "Service de traduction"
+msgstr "Traduire l'article"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
@@ -24049,22 +24013,16 @@ msgid "Translate ticket articles into another language."
 msgstr "Traduire les articles de tickets dans une autre langue."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate to %s"
-msgstr "Traductions"
+msgstr "Traduire en %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
-#, fuzzy
-#| msgid "Show chat automatically"
 msgid "Translated automatically"
-msgstr "Afficher le chat automatiquement"
+msgstr "Traduit automatiquement"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
-#, fuzzy
-#| msgid "Suggested by AI"
 msgid "Translated by AI"
-msgstr "Suggéré par IA"
+msgstr "Traduit par IA"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -24104,10 +24062,8 @@ msgid "Translation services"
 msgstr "Services de traduction"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation to %s"
-msgstr "Traductions"
+msgstr "Traduire vers %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3

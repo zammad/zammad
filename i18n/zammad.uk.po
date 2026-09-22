@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-17 13:18+0000\n"
+"PO-Revision-Date: 2026-09-22 04:56+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/uk/>\n"
@@ -9321,10 +9321,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Не вдалося налаштувати QR-код. Будь ласка, спробуйте ще раз."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
-#, fuzzy
-#| msgid "Failed to load content."
 msgid "Failed to translate article content."
-msgstr "Не вдалося завантажити вміст."
+msgstr "Не вдалося перекласти вміст статті."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
@@ -11043,8 +11041,8 @@ msgid ""
 "In container-based environments, packages are managed as part of the "
 "deployment and cannot be installed or removed from here."
 msgstr ""
-"У середовищах на основі контейнерів пакети управляються в рамках процесу "
-"розгортання, і їх неможливо встановити або видалити звідси."
+"У контейнерних середовищах, пакети керуються як частина розгортання та не "
+"можуть бути встановлені або видалені звідси."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
@@ -14392,10 +14390,8 @@ msgstr ""
 "підтримуваних типів: %s"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
-#, fuzzy
-#| msgid "No knowledge base content is available yet."
 msgid "No supported target language is available."
-msgstr "Контент бази знань поки що недоступний."
+msgstr "Немає доступних мов перекладу."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
@@ -18864,10 +18860,8 @@ msgid "Show notifications"
 msgstr "Показати сповіщення"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Original"
 msgid "Show original"
-msgstr "Оригінальний"
+msgstr "Показати оригінал"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19501,10 +19495,8 @@ msgid "Stop after match enabled"
 msgstr "Увімкнути зупинку після збігу"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Stop translating the article"
-msgstr "Послуги з перекладу"
+msgstr "Припинити переклад статті"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
@@ -19905,10 +19897,8 @@ msgid "Target Language"
 msgstr "Цільова мова"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
-#, fuzzy
-#| msgid "Target Language"
 msgid "Target language"
-msgstr "Цільова мова"
+msgstr "Мова перекладу"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:46
 msgid "Target ticket"
@@ -21786,16 +21776,12 @@ msgid "The token is valid. You are now able to login via password once."
 msgstr "Токен дійсний. Тепер ви можете увійти за допомогою пароля один раз."
 
 #: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
-#, fuzzy
-#| msgid "The language could not be updated."
 msgid "The translation language could not be saved."
-msgstr "Мову не вдалося оновити."
+msgstr "Не вдалося зберегти мову перекладу."
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
-#, fuzzy
-#| msgid "The translation service cannot be reached."
 msgid "The translation returned no usable content."
-msgstr "Не вдається зв’язатися зі службою перекладів."
+msgstr "Переклад не дав жодного корисного результату."
 
 #: app/services/service/content_translation/backend/base.rb:10
 msgid "The translation service cannot be reached."
@@ -23764,10 +23750,8 @@ msgid "Transfer conversation to another chat:"
 msgstr "Перенести розмову в інший чат:"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Translate article"
-msgstr "Послуги з перекладу"
+msgstr "Перекласти статтю"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
@@ -23782,22 +23766,16 @@ msgid "Translate ticket articles into another language."
 msgstr "Перекласти статті з бази заявки на іншу мову."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate to %s"
-msgstr "Переклади"
+msgstr "Перекласти на %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
-#, fuzzy
-#| msgid "Show chat automatically"
 msgid "Translated automatically"
-msgstr "Показувати чат автоматично"
+msgstr "Перекладено автоматично"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
-#, fuzzy
-#| msgid "Suggested by AI"
 msgid "Translated by AI"
-msgstr "За пропозицією ШІ"
+msgstr "Перекладено за допомогою ШІ"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -23837,10 +23815,8 @@ msgid "Translation services"
 msgstr "Послуги з перекладу"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation to %s"
-msgstr "Переклади"
+msgstr "Переклад на %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3

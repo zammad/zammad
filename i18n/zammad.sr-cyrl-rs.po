@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-17 09:13+0000\n"
+"PO-Revision-Date: 2026-09-21 07:12+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -1245,7 +1245,7 @@ msgstr "API кључ"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
 msgid "API plan"
-msgstr ""
+msgstr "API план"
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -2210,23 +2210,18 @@ msgid "Allow reopening of tickets within a certain time."
 msgstr "Дозволи поновно отварање тикета унутар одређеног времена."
 
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:18
-#, fuzzy
-#| msgid ""
-#| "Allow specific roles to translate all articles at once. Be careful, this "
-#| "can result in a lot of translation calls and might be cost related."
 msgid ""
 "Allow specific roles to translate all articles in one ticket at once. Use "
 "with caution, as this can result in a large number of translation calls and "
 "may incur additional costs."
 msgstr ""
-"Омогућите одговарајућим улогама да преведу све чланке тикета. Будите "
-"опрезни, ово може резултовати у пуно захтева за превод и бити скупље."
+"Омогућите одговарајућим улогама да преведу све чланке тикета одједанпут. "
+"Будите опрезни, ово може резултовати у великом броју захтева за превод и "
+"довести то увећане потрошње."
 
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:16
-#, fuzzy
-#| msgid "No translation available for this locale"
 msgid "Allow translation of all articles at once"
-msgstr "Без превода за овај језик"
+msgstr "Дозволи превод свих чланака одједанпут"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -5850,7 +5845,7 @@ msgstr "Успешно дешифровање."
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:6
 msgid "DeepL"
-msgstr ""
+msgstr "DeepL"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7346,7 +7341,7 @@ msgstr "Откривени језик"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:18
 msgid "Developer API (api-free.deepl.com)"
-msgstr ""
+msgstr "Developer API (api-free.deepl.com)"
 
 #: db/seeds/settings.rb:74
 msgid "Developer System"
@@ -9220,10 +9215,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Није било могуће приказати QR код. Молимо покушајте поново."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
-#, fuzzy
-#| msgid "Failed to load content."
 msgid "Failed to translate article content."
-msgstr "Неуспешно учитавање садржаја."
+msgstr "Неуспешан превод садржаја чланка."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
@@ -10125,7 +10118,7 @@ msgstr "Групе су …"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:19
 msgid "Growth/Enterprise API (api.deepl.com)"
-msgstr ""
+msgstr "Growth/Enterprise API (api.deepl.com)"
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC SHA1 Signature Token"
@@ -14233,10 +14226,8 @@ msgstr ""
 "типова: %s"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:21
-#, fuzzy
-#| msgid "No knowledge base content is available yet."
 msgid "No supported target language is available."
-msgstr "Нема доступног садржаја базе знања за приказ."
+msgstr "Нема подржаних циљних језика за превод."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
@@ -18681,10 +18672,8 @@ msgid "Show notifications"
 msgstr "Прикажи обавештења"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Original"
 msgid "Show original"
-msgstr "Оригиналан"
+msgstr "Прикажи оригинал"
 
 #: db/seeds/settings.rb:1058
 msgid ""
@@ -19316,10 +19305,8 @@ msgid "Stop after match enabled"
 msgstr "Заустављање после поклапања"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Stop translating the article"
-msgstr "Сервис превода"
+msgstr "Прекини превод чланка"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
@@ -19715,8 +19702,6 @@ msgid "Target Language"
 msgstr "Циљни језик"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:115
-#, fuzzy
-#| msgid "Target Language"
 msgid "Target language"
 msgstr "Циљни језик"
 
@@ -21567,16 +21552,12 @@ msgstr ""
 "лозинке."
 
 #: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:108
-#, fuzzy
-#| msgid "The language could not be updated."
 msgid "The translation language could not be saved."
-msgstr "Није било могуће освежити језик."
+msgstr "Није било могуће снимити језик превода."
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:22
-#, fuzzy
-#| msgid "The translation service cannot be reached."
 msgid "The translation returned no usable content."
-msgstr "Сервис превода није доступан."
+msgstr "Превод није вратио користан садржај."
 
 #: app/services/service/content_translation/backend/base.rb:10
 msgid "The translation service cannot be reached."
@@ -23520,10 +23501,8 @@ msgid "Transfer conversation to another chat:"
 msgstr "Пренеси разговор у друго ћаскање:"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:61
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Translate article"
-msgstr "Сервис превода"
+msgstr "Преведи чланак"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
@@ -23538,22 +23517,16 @@ msgid "Translate ticket articles into another language."
 msgstr "Преведи чланке тикета на други језик."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate to %s"
-msgstr "Преводи"
+msgstr "Преведи чланак на %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
-#, fuzzy
-#| msgid "Show chat automatically"
 msgid "Translated automatically"
-msgstr "Прикажи ћаскање аутоматски"
+msgstr "Аутоматски преведено"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
-#, fuzzy
-#| msgid "Suggested by AI"
 msgid "Translated by AI"
-msgstr "AI предлог"
+msgstr "Преведено преко AI"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
@@ -23593,10 +23566,8 @@ msgid "Translation services"
 msgstr "Сервиси превода"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:74
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation to %s"
-msgstr "Преводи"
+msgstr "Превод на %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
