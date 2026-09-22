@@ -25,12 +25,6 @@ class Service::User::ChangePassword < Service::Base
   def notify_user
     return if current_user.email.blank?
 
-    NotificationFactory::Mailer.notification(
-      template: 'password_change',
-      user:     current_user,
-      objects:  {
-        user: current_user,
-      }
-    )
+    Service::User::SendPasswordChangeNotification.execute(user: current_user)
   end
 end

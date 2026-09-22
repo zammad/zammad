@@ -25,6 +25,8 @@ module Gql::Mutations
         user.update!(user_data)
       end
 
+      Service::User::NotifyPasswordChange.with_current_user(context.current_user).execute(user: user)
+
       user
     end
   end

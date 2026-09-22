@@ -18,13 +18,7 @@ class Service::User::PasswordReset::Update < Service::Base
     raise InvalidTokenError if !user
     raise EmailError if user.email.blank?
 
-    NotificationFactory::Mailer.notification(
-      template: 'password_change',
-      user:     user,
-      objects:  {
-        user: user,
-      }
-    )
+    Service::User::SendPasswordChangeNotification.execute(user: user)
 
     user
   end
