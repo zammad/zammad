@@ -31,7 +31,8 @@ RSpec.describe 'Signup', authenticated_as: false, performs_jobs: true, type: :sy
 
     visit notification_url
 
-    expect_current_route 'ticket/view/my_tickets'
+    expect(page).to have_text('Your email address has been verified!')
+    expect_current_route 'login'
   end
 
   it 'with a weak password show password strength error' do

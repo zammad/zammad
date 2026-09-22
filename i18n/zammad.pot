@@ -112,14 +112,13 @@ msgstr ""
 msgid "%s (option)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:343
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:590
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:261
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:354
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:29
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:589
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:145
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
-#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:288
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:287
 #: app/frontend/shared/composables/useSelectOptions.ts:128
 msgid "%s (unknown)"
 msgstr ""
@@ -1594,7 +1593,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:806
+#: app/models/user.rb:807
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2270,7 +2269,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:708
+#: app/models/user.rb:709
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2287,7 +2286,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:785
+#: app/models/user.rb:786
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2669,8 +2668,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:816
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:433
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:390
 msgid "Back"
 msgstr ""
 
@@ -2682,9 +2681,9 @@ msgstr ""
 msgid "Back to overview"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
-#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:181
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:433
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:390
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:180
 msgid "Back to previous page"
 msgstr ""
 
@@ -3050,7 +3049,7 @@ msgstr ""
 msgid "Can you tell us what are you missing in the BETA UI?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/getting_started/agent.coffee:87
+#: app/assets/javascripts/app/controllers/getting_started/agent.coffee:92
 msgid "Can't create user!"
 msgstr ""
 
@@ -3656,10 +3655,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:680
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:313
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:375
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
@@ -4338,7 +4337,7 @@ msgstr ""
 msgid "Core workflow"
 msgstr ""
 
-#: app/services/service/user/signup.rb:53
+#: app/services/service/user/signup.rb:41
 msgid "Could not create user and send verification email because import_mode setting is on."
 msgstr ""
 
@@ -4392,7 +4391,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method."
 msgstr ""
 
-#: app/services/service/user/signup.rb:51
+#: app/services/service/user/signup.rb:39
 msgid "Could not send user verification email because import_mode setting is on."
 msgstr ""
 
@@ -6860,7 +6859,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:718
+#: app/models/user.rb:719
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6873,7 +6872,7 @@ msgid "Email channel"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:53
-#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:49
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:46
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 
@@ -6911,7 +6910,7 @@ msgid "Email sent to %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:111
-#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:110
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:90
 msgid "Email verification"
 msgstr ""
 
@@ -8692,9 +8691,9 @@ msgstr ""
 msgid "Has processed"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:144
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:149
-#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:309
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:160
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:167
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:308
 msgid "Has submenu"
 msgstr ""
 
@@ -9704,7 +9703,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:657
+#: app/models/user.rb:658
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9810,7 +9809,7 @@ msgstr ""
 msgid "Invitation sent to %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
+#: app/assets/javascripts/app/controllers/getting_started/agent.coffee:83
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:65
 msgid "Invitation sent!"
 msgstr ""
@@ -9826,7 +9825,7 @@ msgstr ""
 msgid "Invite"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/getting_started/agent.coffee:10
+#: app/assets/javascripts/app/controllers/getting_started/agent.coffee:15
 msgid "Invite Agents"
 msgstr ""
 
@@ -10612,7 +10611,7 @@ msgstr ""
 msgid "Locale could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:257
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:264
 msgid "Locale not found"
 msgstr ""
 
@@ -10682,7 +10681,7 @@ msgstr ""
 msgid "Lost network connection"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:349
 msgid "Lost network connection!"
 msgstr ""
 
@@ -11512,7 +11511,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:737
+#: app/models/user.rb:738
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12224,7 +12223,7 @@ msgstr ""
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:273
+#: app/controllers/users_controller.rb:271
 msgid "No email!"
 msgstr ""
 
@@ -12338,16 +12337,16 @@ msgid "No results for this query."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:716
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:376
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:452
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
-#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:319
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:318
 msgid "No results found"
 msgstr ""
 
@@ -12386,7 +12385,7 @@ msgstr ""
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:561
+#: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
 msgstr ""
 
@@ -12492,12 +12491,12 @@ msgstr ""
 msgid "Not Assigned"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:247
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:254
 msgid "Not Available"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:247
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:127
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
 msgid "Not Found"
@@ -12520,7 +12519,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
 #: app/controllers/application_controller/handles_errors.rb:72
-#: app/services/service/ticket/article/create.rb:136
+#: app/services/service/ticket/article/create.rb:138
 msgid "Not authorized"
 msgstr ""
 
@@ -12982,7 +12981,7 @@ msgstr ""
 msgid "Open in new tab"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:258
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:265
 msgid "Open in primary locale"
 msgstr ""
 
@@ -13879,13 +13878,13 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
-#: app/controllers/users_controller.rb:369
+#: app/controllers/users_controller.rb:367
 msgid "Please provide your current password."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:374
+#: app/controllers/users_controller.rb:372
 msgid "Please provide your new password."
 msgstr ""
 
@@ -13916,6 +13915,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:5
 msgid "Please select the authentication method that should be used to establish the connection to your Exchange server."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:96
+msgid "Please sign in to continue."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:4
@@ -15526,7 +15529,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:169
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:32
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:208
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
@@ -15766,11 +15769,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:725
+#: app/models/user.rb:726
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:731
+#: app/models/user.rb:732
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -16021,12 +16024,12 @@ msgstr ""
 msgid "Selects the ticket number generator module."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:502
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:462
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:415
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:197
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:274
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:171
-#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:201
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:200
 msgid "Select…"
 msgstr ""
 
@@ -17017,7 +17020,7 @@ msgstr ""
 msgid "Start typing to search or enter an email address…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:78
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:72
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseAnswer/FieldKnowledgeBaseAnswerWrapper.vue:39
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
@@ -18033,7 +18036,7 @@ msgid "The context window size must be a positive number."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:389
+#: app/controllers/users_controller.rb:387
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr ""
@@ -18092,7 +18095,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1713
 msgid "The download could not be started. Please try again later."
 msgstr ""
 
@@ -18100,7 +18103,7 @@ msgstr ""
 msgid "The email address |%s| is already in use by another account."
 msgstr ""
 
-#: app/services/service/user/password_reset/send.rb:40
+#: app/services/service/user/password_reset/send.rb:42
 msgid "The email could not be sent to the user because import_mode setting is on."
 msgstr ""
 
@@ -18378,11 +18381,11 @@ msgstr ""
 msgid "The order of your ticket overviews was reset."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:255
 msgid "The page is not available anymore"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:243
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:250
 msgid "The page was not found"
 msgstr ""
 
@@ -18580,7 +18583,7 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:660
+#: app/controllers/users_controller.rb:658
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr ""
@@ -18655,7 +18658,7 @@ msgstr ""
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:502
+#: app/controllers/users_controller.rb:500
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
@@ -18687,7 +18690,7 @@ msgstr ""
 msgid "The required parameter 'params' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:397
+#: app/controllers/users_controller.rb:395
 msgid "The required parameter 'password' is missing."
 msgstr ""
 
@@ -18703,7 +18706,7 @@ msgstr ""
 msgid "The required parameter 'permission' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:653
+#: app/controllers/users_controller.rb:651
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
@@ -18950,7 +18953,7 @@ msgstr ""
 msgid "The time picker"
 msgstr ""
 
-#: app/services/service/user/signup.rb:62
+#: app/services/service/user/signup.rb:50
 msgid "The token could not be generated."
 msgstr ""
 
@@ -19164,7 +19167,7 @@ msgstr ""
 msgid "There was an unknown PGP error."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:181
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:185
 msgid "There was no Knowledge Base created."
 msgstr ""
 
@@ -19460,7 +19463,7 @@ msgid "This group exceeds the allowed nesting depth."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
-#: app/controllers/concerns/creates_ticket_articles.rb:43
+#: app/controllers/concerns/creates_ticket_articles.rb:45
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
@@ -19498,8 +19501,8 @@ msgstr ""
 msgid "This is not a valid X509 certificate. Please check the certificate format."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:57
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:89
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:70
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:102
 msgid "This item expands to show more options"
 msgstr ""
 
@@ -20587,7 +20590,7 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:352
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr ""
@@ -20893,9 +20896,9 @@ msgstr ""
 msgid "Unseen notifications count"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:268
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:332
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:599
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:267
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:331
 msgid "Unselect option"
 msgstr ""
 
@@ -21657,7 +21660,7 @@ msgstr ""
 msgid "Verifying your configuration…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:52
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:49
 msgid "Verifying your email…"
 msgstr ""
 
@@ -22053,7 +22056,7 @@ msgid "With |Date| the ticket numbers will be generated by the current date, the
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:35
-#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:47
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:44
 msgid "Woo hoo! Your email address has been verified!"
 msgstr ""
 
@@ -22768,7 +22771,7 @@ msgstr ""
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1096
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
@@ -23377,7 +23380,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1471
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -23522,7 +23525,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:924
+#: app/models/user.rb:925
 msgid "is too long"
 msgstr ""
 
@@ -23995,8 +23998,8 @@ msgstr ""
 msgid "select"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:390
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:451
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:350
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:411
 msgid "select all options"
 msgstr ""
 
@@ -24005,7 +24008,7 @@ msgstr ""
 msgid "select attachment…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:451
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:411
 msgid "select visible options"
 msgstr ""
 

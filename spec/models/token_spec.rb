@@ -81,6 +81,32 @@ RSpec.describe Token, type: :model do
       end
     end
 
+    describe 'inactive user handling' do
+      let(:user) { create(:user, active: false) }
+
+      context 'for persistent token' do
+        subject(:token) { create(:ical_token, user: user) }
+
+        it 'returns nil' do
+          expect(described_class.check(action: token.action, token: token.token)).to be_nil
+        end
+      end
+
+      context 'for non-persistent token' do
+        subject(:token) { create(:password_reset_token, user: user, persistent: false) }
+
+        it 'returns nil' do
+          expect(described_class.check(action: token.action, token: token.token)).to be_nil
+        end
+      end
+
+      context 'with inactive_user option' do
+        it 'returns the token’s user' do
+          expect(described_class.check(action: token.action, token: token.token, inactive_user: true)).to eq(user)
+        end
+      end
+    end
+
     describe 'permission matching' do
       subject(:token) { create(:api_token, user: agent, preferences: preferences) }
 

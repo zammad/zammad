@@ -1,8 +1,6 @@
 mutation userSignupVerify($token: String!) {
   userSignupVerify(token: $token) {
-    session {
-      ...session
-    }
+    success
     errors {
       ...errors
     }

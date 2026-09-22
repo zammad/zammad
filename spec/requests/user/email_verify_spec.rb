@@ -19,6 +19,12 @@ RSpec.describe 'User email verify endpoint', authenticated_as: false, type: :req
       end
     end
 
+    shared_examples 'not signing the user in' do
+      it 'does not establish a session' do
+        expect(session[:user_id]).to be_nil
+      end
+    end
+
     before do
       disable_user_create_account if defined?(disable_user_create_account)
       post api_v1_users_email_verify_path, params: params
@@ -38,6 +44,11 @@ RSpec.describe 'User email verify endpoint', authenticated_as: false, type: :req
       let(:token) { User.signup_new_token(user)[:token].token } # NB: Don't ask!
 
       it_behaves_like 'returning success'
+      it_behaves_like 'not signing the user in'
+
+      it 'marks the user as verified' do
+        expect(user.reload).to be_verified
+      end
     end
 
     context 'without a token parameter' do

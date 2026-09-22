@@ -873,7 +873,7 @@ export type UserSignupVerifyMutationVariables = Exact<{
 }>;
 
 
-export type UserSignupVerifyMutation = { userSignupVerify: { __typename: 'UserSignupVerifyPayload', session: { __typename: 'Session', id: string, afterAuth: { __typename: 'SessionAfterAuth', type: Types.EnumAfterAuthType, data: any } | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type UserSignupVerifyMutation = { userSignupVerify: { __typename: 'UserSignupVerifyPayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type GuidedSetupSetSystemInformationMutationVariables = Exact<{
   input: Types.SystemInformation;

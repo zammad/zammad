@@ -53,7 +53,7 @@ describe('signup verify view', () => {
   it('shows an error message when an invalid token is supplied', async () => {
     mockUserSignupVerifyMutation({
       userSignupVerify: {
-        session: null,
+        success: null,
         errors: [{ message: 'The provided token is invalid.' }],
       },
     })
@@ -66,14 +66,29 @@ describe('signup verify view', () => {
   })
 
   it('shows a success message when a valid token is supplied', async () => {
+    mockUserSignupVerifyMutation({
+      userSignupVerify: {
+        success: true,
+        errors: null,
+      },
+    })
+
     const view = await visitView('/signup/verify/123')
 
     expect(
       await view.findByText('Woo hoo! Your email address has been verified!'),
     ).toBeInTheDocument()
+    expect(view.getByText('Please sign in to continue.')).toBeInTheDocument()
   })
 
-  it('redirects to dashboard screen when the verification was successful', async () => {
+  it('redirects to the login screen when the verification was successful', async () => {
+    mockUserSignupVerifyMutation({
+      userSignupVerify: {
+        success: true,
+        errors: null,
+      },
+    })
+
     vi.useFakeTimers()
 
     await visitView('/signup/verify/123')
@@ -84,7 +99,7 @@ describe('signup verify view', () => {
     await waitFor(() => {
       const router = getTestRouter()
       const route = router.currentRoute.value
-      expect(route.name).toBe('Dashboard')
+      expect(route.name).toBe('Login')
     })
   })
 })

@@ -73,6 +73,32 @@ instead.
 
 ## 7.2
 
+### Verifying a signup email address no longer signs the user in
+
+**Who is affected?** Integrations that redeem a signup verification token through
+`POST /api/v1/users/email_verify` or the `userSignupVerify` GraphQL mutation and rely on the session
+that the redemption used to establish, and admins who send a verification or password reset link to a
+deactivated account.
+
+Redeeming the token established a fully authenticated session for the account, without the account's
+password and without the second factor configured for it. Both endpoints now only mark the email
+address as verified and establish no session. The REST endpoint still answers
+`200 {"message":"ok","user_email":"…"}`, but the response no longer carries a session cookie. The
+mutation's payload field `session` was replaced by a boolean `success`, so a client selecting
+`session { id }` receives a GraphQL error.
+
+A non-persistent token — `Signup`, `PasswordReset`, `AdminAuth`, `KnowledgeBasePreview` — is now
+rejected when it belongs to an inactive user. Previously only persistent tokens were checked this
+way. The mail carrying such a link is still sent, but the link itself no longer works while the
+account is deactivated.
+
+⚠️ Sign in through `POST /api/v1/signin` or the `login` mutation after redeeming a verification
+token, and pass the configured second factor there. Change GraphQL clients to select `success`
+instead of `session`. Activate a deactivated account before sending it a verification or password
+reset link.
+
+**Related advisory:** [GHSA-f3qr-94c2-7mx2](https://github.com/zammad/zammad/security/advisories/GHSA-f3qr-94c2-7mx2)
+
 ### The getting started endpoints require `admin.wizard` once the system is set up
 
 **Who is affected?** Integrations that read `GET /api/v1/getting_started` or
