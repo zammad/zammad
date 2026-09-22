@@ -64,7 +64,7 @@
     - gem exec bundle-audit update
     - gem exec bundle-audit
     - echo "Brakeman security check…"
-    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
+    - bin/brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Checking if yard can generate documentation…"
     - bundle exec yard --no-output --no-progress
     - echo "Verify that vendored gems are not world writable"

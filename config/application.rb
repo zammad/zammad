@@ -20,7 +20,7 @@ end
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
+    config.load_defaults 8.1
 
     Rails.autoloaders.each do |autoloader|
       autoloader.ignore            "#{config.root}/app/frontend"
