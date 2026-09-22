@@ -39,7 +39,7 @@ const formSchema = defineFormSchema([
   {
     type: 'permissions',
     name: 'permissions',
-    label: 'Permissions',
+    label: __('Permissions'),
     props: {
       options: [],
     },
