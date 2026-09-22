@@ -69,11 +69,33 @@ class SearchKnowledgeBaseBackend
     results = SearchIndexBackend
       .search(query, indexes, options(query, pagination: pagination))
       .map do |hash|
-        hash[:id] = hash[:id].to_i
+        hash[:id]        = hash[:id].to_i
+        hash[:highlight] = repair_highlighted_entities(hash[:highlight]) if hash[:highlight]
         hash
       end
 
     sort_by_relevance results
+  end
+
+  # The texts are indexed HTML-escaped (see the translations' #search_index_attribute_lookup), so
+  #   `&amp;` carries an `amp` term of its own. A query that matches every term — `*` — marks that
+  #   one too and tears the entity apart, as `&<em>amp</em>;`, which no consumer decodes back to
+  #   `&`. Those terms exist only because of the escaping, so drop the tags inside an entity.
+  def repair_highlighted_entities(highlight)
+    tags   = Regexp.union(highlight_tags)
+    entity = %r{&(?:#{tags})*\w+(?:#{tags})*;}
+
+    highlight.transform_values do |fragments|
+      fragments.map { |fragment| fragment.gsub(entity) { |match| match.gsub(tags, '') } }
+    end
+  end
+
+  # Elasticsearch applies its `<em>` defaults per tag, so a caller naming only one of them still
+  #   gets the other one's default.
+  def highlight_tags
+    highlight_options = @params[:highlight_options].to_h
+
+    (highlight_options[:pre_tags].presence || ['<em>']) + (highlight_options[:post_tags].presence || ['</em>'])
   end
 
   # Elasticsearch is asked once per index and the responses are concatenated

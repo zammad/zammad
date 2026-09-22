@@ -212,6 +212,14 @@ RSpec.describe Service::KnowledgeBase::Search do
       it 'previews a non-breaking space and an angle bracket unescaped' do
         expect(result_for(nbsp_answer).title_preview.map(&:text).join).to eq("Ocarina\u00A0<3")
       end
+
+      # The escaping leaves an `amp` term in the index, which a query that matches every term marks
+      #   as a hit of its own - https://github.com/zammad/zammad/issues/6369
+      it 'previews an ampersand unescaped for a query that matches every term' do
+        result = search('*').find { |elem| elem.item == ampersand_answer }
+
+        expect(result.title_preview.map(&:text).join).to eq('Ocarina & order')
+      end
     end
 
     it 'still previews the body when only the title matched' do

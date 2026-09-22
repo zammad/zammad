@@ -294,6 +294,41 @@ RSpec.describe SearchKnowledgeBaseBackend do
         expect(highlight_for(title_only_match)['content.body'].first).to be_present
       end
     end
+
+    # The texts are indexed HTML-escaped, so `&amp;` carries an `amp` term of its own that a query
+    #   matching every term marks too - https://github.com/zammad/zammad/issues/6369
+    describe '#search with a query that matches every term' do
+      let(:options) do
+        {
+          knowledge_base:    knowledge_base,
+          locale:            primary_locale,
+          scope:             nil,
+          # Every answer matches, so ask for more than Elasticsearch's default of ten hits -
+          #   otherwise the one below can be crowded out of the response.
+          from:              0,
+          limit:             200,
+          highlight_enabled: true,
+        }
+      end
+
+      let(:ampersand_answer) do
+        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Kalimba & castanets' })
+      end
+
+      before do
+        ampersand_answer
+        searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+      end
+
+      it 'keeps the entity intact' do
+        highlight = instance
+          .search('*', user: user)
+          .find { |elem| elem[:id] == translation_id(ampersand_answer) }
+          .dig(:highlight, 'title')
+
+        expect(highlight.first).to eq('<em>Kalimba</em> &amp; <em>castanets</em>')
+      end
+    end
   end
 
   describe '#options' do
