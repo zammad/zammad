@@ -65,26 +65,30 @@ function detect_webserver () {
   if command -v nginx > /dev/null 2>&1; then
     WEBSERVER="nginx"
     WEBSERVER_CMD="nginx"
-    if [ "${OS}" == "DEBIAN" ]; then
-      WEBSERVER_CONF="/etc/nginx/sites-available/zammad.conf"
-    elif [ "${OS}" == "REDHAT" ]; then
-      WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
-    elif [ "${OS}" == "SUSE" ]; then
-      WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
+    if [ -z "${WEBSERVER_CONF}" ]; then
+      if [ "${OS}" == "DEBIAN" ]; then
+        WEBSERVER_CONF="/etc/nginx/sites-available/zammad.conf"
+      elif [ "${OS}" == "REDHAT" ]; then
+        WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
+      elif [ "${OS}" == "SUSE" ]; then
+        WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
+      fi
     fi
   elif command -v apache2 > /dev/null 2>&1; then
     WEBSERVER="apache2"
     WEBSERVER_CMD="apache2"
-    if [ "${OS}" == "DEBIAN" ]; then
+    if [ -z "${WEBSERVER_CONF}" ] && [ "${OS}" == "DEBIAN" ]; then
       WEBSERVER_CONF="/etc/apache2/sites-available/zammad.conf"
     fi
   elif command -v httpd > /dev/null 2>&1; then
     WEBSERVER="apache2"
     WEBSERVER_CMD="httpd"
-    if [ "${OS}" == "REDHAT" ]; then
-      WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
-    elif [ "${OS}" == "SUSE" ]; then
-      WEBSERVER_CONF="/etc/apache2/vhosts.d/zammad.conf"
+    if [ -z "${WEBSERVER_CONF}" ]; then
+      if [ "${OS}" == "REDHAT" ]; then
+        WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
+      elif [ "${OS}" == "SUSE" ]; then
+        WEBSERVER_CONF="/etc/apache2/vhosts.d/zammad.conf"
+      fi
     fi
   fi
 
@@ -220,23 +224,46 @@ function update_translations () {
 }
 
 function create_webserver_config () {
+  if [ "${WEBSERVER_CONFIG_SKIP}" == "yes" ] || [ "${WEBSERVER_CONFIG_SKIP}" == "true" ]; then
+    echo "# Skipping webserver configuration as WEBSERVER_CONFIG_SKIP is set."
+    return 0
+  fi
+
   if [ "${OS}" == "DEBIAN" ]; then
+    WEBSERVER_SITES_ENABLED="${WEBSERVER_SITES_ENABLED:-/etc/${WEBSERVER}/sites-enabled}"
+    WEBSERVER_CONF_DIR="$(dirname "${WEBSERVER_CONF}")"
+
+    if [ ! -d "${WEBSERVER_CONF_DIR}" ]; then
+      mkdir -p "${WEBSERVER_CONF_DIR}" || echo "Warning: Unable to create ${WEBSERVER_CONF_DIR}"
+    fi
+
     if [ ! -f "${WEBSERVER_CONF}" ]; then
-      if [ -f "/etc/${WEBSERVER}/sites-enabled/zammad.conf" ]; then
-        mv /etc/${WEBSERVER}/sites-enabled/zammad.conf ${WEBSERVER_CONF}
-      else
-        cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+      if [ -f "${WEBSERVER_SITES_ENABLED}/zammad.conf" ]; then
+        mv "${WEBSERVER_SITES_ENABLED}/zammad.conf" "${WEBSERVER_CONF}"
+      elif [ -f "${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf" ] && [ -d "${WEBSERVER_CONF_DIR}" ]; then
+        cp "${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf" "${WEBSERVER_CONF}"
       fi
-      ln -s ${WEBSERVER_CONF} /etc/${WEBSERVER}/sites-enabled/zammad.conf
+
+      if [ ! -d "${WEBSERVER_SITES_ENABLED}" ]; then
+        mkdir -p "${WEBSERVER_SITES_ENABLED}" || echo "Warning: Unable to create ${WEBSERVER_SITES_ENABLED}"
+      fi
+
+      if [ -d "${WEBSERVER_SITES_ENABLED}" ] && [ -f "${WEBSERVER_CONF}" ]; then
+        ln -sf "${WEBSERVER_CONF}" "${WEBSERVER_SITES_ENABLED}/zammad.conf"
+      fi
     fi
     if [ "${WEBSERVER}" == "apache2" ]; then
-      a2enmod proxy
-      a2enmod proxy_http
-      a2enmod proxy_wstunnel
-      a2enmod headers
+      a2enmod proxy 2>/dev/null || true
+      a2enmod proxy_http 2>/dev/null || true
+      a2enmod proxy_wstunnel 2>/dev/null || true
+      a2enmod headers 2>/dev/null || true
     fi
   else
-    test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+    WEBSERVER_CONF_DIR="$(dirname "${WEBSERVER_CONF}")"
+    if [ ! -d "${WEBSERVER_CONF_DIR}" ]; then
+      mkdir -p "${WEBSERVER_CONF_DIR}" || echo "Warning: Unable to create ${WEBSERVER_CONF_DIR}"
+    fi
+    test -f "${WEBSERVER_CONF}" || ( [ -d "${WEBSERVER_CONF_DIR}" ] && cp "${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf" "${WEBSERVER_CONF}" )
   fi
 
   echo "# Creating webserver bootstart"
