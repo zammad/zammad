@@ -79,11 +79,15 @@ Full reference:
 Test files use `.spec.ts` extension and are co-located with source files.
 
 ```bash
-VITE_TEST_MODE=1 pnpm test -- app/frontend/path/to/file.spec.ts
+pnpm test --run app/frontend/path/to/file.spec.ts
 ```
 
+Always pass `--run` and at least one file path. In an interactive terminal,
+watch mode is the default and does not exit. Never put `--` between `pnpm test` and the arguments: pnpm
+forwards it, Vitest then ignores everything after it and runs the complete
+suite. `VITE_TEST_MODE` is not needed, Vitest enables the test mode itself.
+
 Tests use **Testing Library** (on top of Vue Test Utils).
-Watch mode is the default.
 
 ### Two levels of frontend tests
 
