@@ -93,11 +93,11 @@ class Service::ContentTranslation::Backend::DeepL < Service::ContentTranslation:
     ERRORS.fetch(error.class, UnreachableError)
   end
 
-  # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run` - nil for the last
-  #   one, there is no analytics run without an LLM. nil altogether without a translation.
+  # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run`; nil altogether
+  #   without a translation.
   def execute
     stored = find_stored
-    return result(stored.content, fresh: false) if stored
+    return result(stored.content, fresh: false, analytics_run: stored.ai_analytics_run) if stored
     return if persistence_strategy == :stored_only
 
     target_language # refuses a target DeepL does not serve, before any content is sent
@@ -105,9 +105,11 @@ class Service::ContentTranslation::Backend::DeepL < Service::ContentTranslation:
     translation = sanitize(translate)
     return if translation.nil?
 
-    store(translation)
+    analytics_run = save_analytics_run(translation)
 
-    result(translation, fresh: true)
+    store(translation, analytics_run:)
+
+    result(translation, fresh: true, analytics_run:)
   rescue DeepL::Client::Error => e
     raise self.class.outcome_for(e)
   end

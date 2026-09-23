@@ -14,16 +14,29 @@ module Service::ContentTranslation::Backend::Concerns::StoresTranslations
   end
 
   # .save answers with nothing when it loses the race for the row; this one has its own translation.
-  def store(translation)
-    Service::ContentTranslation::StoredTranslation.save(**store_key, translation:)
+  def store(translation, analytics_run:)
+    Service::ContentTranslation::StoredTranslation.save(**store_key, translation:, analytics_run:)
   end
 
   def store_key
     { object:, locale:, content:, html:, backend: backend_name }
   end
 
-  def result(translation, fresh:)
-    { content: translation, backend: backend_name, fresh:, analytics_run: nil }
+  # The entry a rating of this translation attaches to, keyed like the stored row so a backend
+  # without an AI feature records what the AI one records for free. It names no triggering object
+  # on purpose: the AI agent satisfaction figures are scoped by that, and this is no AI answer.
+  def save_analytics_run(translation)
+    AI::Analytics::Run.create!(
+      **Service::ContentTranslation::StoredTranslation.lookup_attributes(object, locale),
+      version:         Service::ContentTranslation::StoredTranslation.version(content, html, backend_name),
+      content:         translation,
+      ai_service_name: backend_name,
+      regeneration_of:,
+    )
+  end
+
+  def result(translation, fresh:, analytics_run:)
+    { content: translation, backend: backend_name, fresh:, analytics_run: }
   end
 
   def config

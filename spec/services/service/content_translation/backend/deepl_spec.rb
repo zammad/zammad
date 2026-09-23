@@ -39,8 +39,38 @@ RSpec.describe Service::ContentTranslation::Backend::DeepL do
     expect(translate).to include(content: translation, backend: 'deepl', fresh: true)
   end
 
-  it 'records no analytics run' do
-    expect(translate[:analytics_run]).to be_nil
+  describe 'the analytics run' do
+    it 'records one for the article and the target locale' do
+      expect(translate[:analytics_run])
+        .to have_attributes(identifier: 'translate', related_object: article, locale:)
+    end
+
+    it 'names the service that produced the translation' do
+      expect(translate[:analytics_run].ai_service_name).to eq('deepl')
+    end
+
+    # The AI agent satisfaction figures are scoped by it, and this translation is no AI answer.
+    it 'names no triggering object' do
+      expect(translate[:analytics_run].triggered_by).to be_nil
+    end
+
+    it 'links a regeneration back to the run it replaces' do
+      previous = create(:ai_analytics_run)
+
+      expect(translate(regeneration_of: previous)[:analytics_run].regeneration_of).to eq(previous)
+    end
+
+    it 'records none for a translation served from the store' do
+      translate
+
+      expect { translate }.not_to change(AI::Analytics::Run, :count)
+    end
+
+    it 'serves the recorded one along with the stored translation' do
+      recorded = translate[:analytics_run]
+
+      expect(translate[:analytics_run]).to eq(recorded)
+    end
   end
 
   it 'asks DeepL for the code it knows the locale under' do
@@ -105,6 +135,10 @@ RSpec.describe Service::ContentTranslation::Backend::DeepL do
 
       it 'stores nothing' do
         expect { translate }.not_to change(AI::StoredResult, :count)
+      end
+
+      it 'records no analytics run' do
+        expect { translate }.not_to change(AI::Analytics::Run, :count)
       end
     end
 

@@ -165,10 +165,10 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
           .to include('content' => '<p>Hallo Welt.</p>', 'backend' => 'libre_translate', 'translated' => true)
       end
 
-      it 'answers without an analytics run, there being no LLM behind it' do
+      it 'answers with an analytics run, so a rating has something to attach to' do
         gql.execute(query, variables:)
 
-        expect(gql.result.data[:analytics][:run]).to be_nil
+        expect(gql.result.data[:analytics][:run]).to include('id' => be_present)
       end
     end
 
