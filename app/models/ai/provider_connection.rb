@@ -62,6 +62,15 @@ class AI::ProviderConnection < ApplicationModel
   # can tell the initiating admin about background work without persisting response state.
   attr_reader :vector_index_rebuild_started
 
+  # Only an assigned connection receives calls, so only its stored status describes something the
+  # admin can still act on; an unassigned one keeps its last result for the admin table alone.
+  scope :in_use, lambda {
+    where(default_chat: true)
+      .or(where(default_embedding: true))
+      .or(where(default_ocr: true))
+      .or(where(id: AI::FeatureProvider.select(:provider_connection_id)))
+  }
+
   def self.chat_connection
     all.detect(&:default_chat?)
   end
