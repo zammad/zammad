@@ -41,6 +41,9 @@ capybara:filtered:playwright:
     - .template_browser-core_capybara_playwright
     - .template_capybara_filtered
     - .variables_auth
+  # Playwright evaluation is paused - job disabled in CI.
+  rules:
+    - when: never
   services:
     - !reference [.template_browser-core_capybara_playwright, services]
     # Also add containers for integration tests here.

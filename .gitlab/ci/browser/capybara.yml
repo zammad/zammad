@@ -16,3 +16,6 @@ capybara:playwright:
     - .template_browser-core_capybara_playwright
   allow_failure: true
   parallel: 16
+  # Playwright evaluation is paused - job disabled in CI.
+  rules:
+    - when: never

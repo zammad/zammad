@@ -61,3 +61,6 @@ capybara:es:playwright:
   extends:
     - .template_browser-core_capybara_playwright_es
   allow_failure: true
+  # Playwright evaluation is paused - job disabled in CI.
+  rules:
+    - when: never
