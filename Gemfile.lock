@@ -970,6 +970,7 @@ DEPENDENCIES
   overcommit
   parallel
   pg (~> 1.5, >= 1.5.4)
+  playwright-ruby-client
   pry-doc
   pry-rails
   pry-remote

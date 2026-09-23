@@ -24,6 +24,15 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
+        "/^\\.gitlab/ci/.*\\.yml$/"
+      ],
+      "matchStrings": ["PLAYWRIGHT_VERSION: '(?<currentValue>[^']+)'"],
+      "depNameTemplate": "playwright",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
         "/^lib/form_spam_protection/captcha/.*\\.rb$/"
       ],
       "matchStrings": ["cdn\\.jsdelivr\\.net/npm/(?<depName>[^@]+)@(?<currentValue>[^/]+)/"],
@@ -96,6 +105,15 @@
         ".gitlab/packager.io/**"
       ],
       "enabled": false
+    },
+    {
+      "matchPackageNames": [
+        "playwright",
+        "playwright-ruby-client",
+        "capybara-playwright-driver"
+      ],
+      "groupName": "Playwright packages",
+      "groupSlug": "playwright"
     },
     {
       "matchDepNames": ["ruby", "docker.io/library/ruby"],

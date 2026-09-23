@@ -228,8 +228,11 @@ group :development, :test do
   gem 'capybara'
   gem 'selenium-webdriver'
 
-  # Playwright pilot (throwaway evaluation)
+  # Playwright pilot (throwaway evaluation). playwright-ruby-client is pulled in
+  #   by the driver; it is declared here so Renovate sees it and can keep it in
+  #   lockstep with the playwright npm package.
   gem 'capybara-playwright-driver'
+  gem 'playwright-ruby-client'
 
   # code QA
   gem 'brakeman', require: false
