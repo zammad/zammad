@@ -2,21 +2,20 @@
 
 module MonitoringHelper
   class HealthChecker
-    # Reports every AI provider connection whose last real call failed, based on the stored
-    # health status (channel-style: reads only, does not ping).
+    # Reports every assigned AI provider connection whose last real call failed, based on the
+    # stored health status (channel-style: reads only, does not ping). An unassigned connection
+    # serves nothing and gets no call that could clear its error, so it is left out.
     class AIProviderAccessible < Backend
 
       def run_health_check
         return if !Setting.get('ai_provider')
 
-        connections = AI::ProviderConnection.all
-
-        if connections.none?
+        if AI::ProviderConnection.none?
           response.issues.push 'The AI provider is not configured.' # rubocop:disable Zammad/DetectTranslatableString
           return
         end
 
-        connections.select(&:status_error?).each { |connection| report_issue(connection) }
+        AI::ProviderConnection.in_use.select(&:status_error?).each { |connection| report_issue(connection) }
       end
 
       private

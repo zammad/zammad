@@ -744,6 +744,53 @@ RSpec.describe AI::ProviderConnection, type: :model do
     end
   end
 
+  describe '.in_use' do
+    let!(:chat) { create(:ai_provider_connection, :default_chat) }
+
+    # The first connection ever created is seeded with the optional defaults on a separate instance
+    # (hence the reload), so the flags under test have to be moved off it explicitly.
+    before do
+      chat.reload.update!(default_embedding: false, default_ocr: false)
+    end
+
+    it 'includes the default chat connection' do
+      expect(described_class.in_use).to contain_exactly(chat)
+    end
+
+    it 'includes the connection serving embeddings' do
+      embedding = create(:ai_provider_connection, :default_embedding)
+
+      expect(described_class.in_use).to contain_exactly(chat, embedding)
+    end
+
+    it 'includes the connection serving OCR' do
+      ocr = create(:ai_provider_connection, :default_ocr)
+
+      expect(described_class.in_use).to contain_exactly(chat, ocr)
+    end
+
+    it 'includes a connection assigned through a feature routing' do
+      routed = create(:ai_feature_provider).provider_connection
+
+      expect(described_class.in_use).to contain_exactly(chat, routed)
+    end
+
+    it 'excludes a connection with neither a role nor a feature routing' do
+      create(:ai_provider_connection)
+
+      expect(described_class.in_use).to contain_exactly(chat)
+    end
+
+    it 'lists a connection once even when it holds several roles and routings', :aggregate_failures do
+      chat.update!(default_embedding: true, default_ocr: true, config: chat.config.merge('embedding_model' => 'text-embedding-3-small'))
+      create(:ai_feature_provider, provider_connection: chat)
+      create(:ai_feature_provider, identifier: 'text_tool', provider_connection: chat)
+
+      expect(described_class.in_use).to contain_exactly(chat)
+      expect(described_class.in_use.count).to eq(1)
+    end
+  end
+
   describe 'provider resolution' do
     let(:connection) do
       create(:ai_provider_connection, :default_chat, provider: 'open_ai', config: { token: 'sk-test', model: 'base-model' })
