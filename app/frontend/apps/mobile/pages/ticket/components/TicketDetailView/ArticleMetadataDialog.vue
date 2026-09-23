@@ -38,11 +38,11 @@ const { articleDeliveryStatus } = useWhatsapp(toRef(props.article))
 
 const links = computed(() => {
   const { article } = props
-  // Example for usage: https://github.com/zammad/zammad/blob/develop/app/jobs/communicate_twitter_job.rb#L65
+  // Stored links come from the backend (e.g. lib/facebook.rb) and use `name` as caption.
   const links = [...(article.preferences?.links || [])]
   if (article.type?.name === 'email') {
     links.push({
-      label: __('Raw'),
+      name: __('Raw'),
       api: true,
       url: `/ticket_article_plain/${article.internalId}`,
       target: '_blank',
@@ -57,7 +57,7 @@ const links = computed(() => {
     const { ticketInternalId } = props
     const url = `/ticket_attachment/${ticketInternalId}/${articleInternalId}/${attachmentInternalId}?disposition=attachment`
     links.push({
-      label: __('Original formatting'),
+      name: __('Original formatting'),
       api: true,
       url,
       target: '_blank',
@@ -114,14 +114,14 @@ const activityTypeSentence = computed(() => formatAccountedTimeType(props.articl
         </span>
         <div class="leading-3">
           <CommonLink
-            v-for="{ url, api, label, target } of links"
-            :key="url"
-            :link="url"
-            :rest-api="api"
-            :target="target"
+            v-for="link of links"
+            :key="link.url"
+            :link="link.url"
+            :rest-api="link.api"
+            :target="link.target"
             class="text-sm text-white/75 after:inline after:content-['|'] last:after:hidden ltr:mr-1 ltr:after:ml-1 rtl:ml-1 rtl:after:mr-1"
           >
-            {{ $t(label) }}
+            {{ $t(link.name) }}
           </CommonLink>
         </div>
       </CommonSectionMenuItem>

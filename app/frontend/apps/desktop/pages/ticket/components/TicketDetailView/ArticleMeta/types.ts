@@ -6,7 +6,7 @@ export interface ChannelMetaField {
   label: string
   name: string
   component: unknown
-  links?: { label: string; api: boolean; url: string; target: string }[]
+  links?: { name: string; api: boolean; url: string; target: string }[]
   icon?: string
   order: number
   value?: unknown

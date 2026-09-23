@@ -89,13 +89,13 @@ describe('ArticleBubbleMetaFields', () => {
           preferences: {
             links: [
               {
-                label: 'Zammad',
+                name: 'Zammad',
                 api: true,
                 url: '/zammad.org',
                 target: '_blank',
               },
               {
-                label: 'Vue',
+                name: 'Vue',
                 api: true,
                 url: '/vuejs.org/',
                 target: '_blank',

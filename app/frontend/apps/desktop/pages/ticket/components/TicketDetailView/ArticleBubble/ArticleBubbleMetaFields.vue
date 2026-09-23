@@ -36,14 +36,14 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
 
         <template v-if="field.links?.length">
           <CommonLink
-            v-for="{ url, api, label, target } of field.links"
-            :key="url"
-            :link="url"
-            :rest-api="api"
-            :target="target"
+            v-for="link of field.links"
+            :key="link.url"
+            :link="link.url"
+            :rest-api="link.api"
+            :target="link.target"
             size="medium"
           >
-            {{ $t(label) }}
+            {{ $t(link.name) }}
           </CommonLink>
         </template>
       </div>

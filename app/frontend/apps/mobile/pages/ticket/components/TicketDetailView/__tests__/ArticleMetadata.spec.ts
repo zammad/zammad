@@ -56,8 +56,8 @@ describe('visuals for metadata', () => {
       preferences: {
         links: [
           {
-            label: 'Twitter',
-            url: 'https://twitter.com/zammad',
+            name: 'Facebook',
+            url: 'https://www.facebook.com/zammad',
             target: '_blank',
           },
         ],
@@ -101,10 +101,10 @@ describe('visuals for metadata', () => {
     const links = getAllByRole(channel, 'link')
     expect(links).toHaveLength(3)
 
-    const [twitter, raw, attachment] = links
+    const [facebook, raw, attachment] = links
 
-    expect(twitter).toHaveTextContent('Twitter')
-    expect(twitter).toHaveAttribute('href', 'https://twitter.com/zammad')
+    expect(facebook).toHaveTextContent('Facebook')
+    expect(facebook).toHaveAttribute('href', 'https://www.facebook.com/zammad')
 
     expect(raw).toHaveTextContent('Raw')
     expect(raw).toHaveAttribute('href', '/api/ticket_article_plain/1')
