@@ -173,6 +173,19 @@ RSpec.describe Channel::EmailBuild, type: :model do
 
         it_behaves_like 'not adding email content as attachment'
       end
+
+      context 'when scrubbing the html part fails' do
+        let(:mail_body)    { html_body }
+        let(:content_type) { 'text/html' }
+
+        before do
+          allow(ScrubHtml).to receive(:new).and_raise(StandardError, 'scrub failed')
+        end
+
+        it 'still builds a mail with a html part' do
+          expect(mail.html_part).to be_present
+        end
+      end
     end
 
     context 'with email and attachment' do
