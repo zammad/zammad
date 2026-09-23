@@ -36,7 +36,7 @@ class Store::Provider::File
     local_sha = Store::File.checksum(content)
 
     if local_sha != sha
-      raise "File corrupted: path #{location} does not match SHA digest (#{local_sha})"
+      raise "File corrupted: path #{get_location(sha)} does not match SHA digest (#{local_sha})"
     end
 
     true
