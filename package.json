@@ -90,7 +90,7 @@
     "mock-apollo-client": "^1.4.0",
     "oxfmt": "^0.68.0",
     "oxlint": "^1.83.0",
-    "playwright": "1.62.1",
+    "playwright": "1.63.0",
     "postcss-html": "^2.0.0",
     "regenerator-runtime": "^0.14.1",
     "stylelint": "^17.15.0",

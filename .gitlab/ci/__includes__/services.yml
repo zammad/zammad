@@ -32,7 +32,7 @@
     #   gem and the package.json pin; the driver asserts this at startup
     #   (spec/support/capybara/playwright_driver.rb), so a gem bump fails fast
     #   here instead of at the server's version handshake.
-    PLAYWRIGHT_VERSION: '1.62.1'
+    PLAYWRIGHT_VERSION: '1.63.0'
 
 .variables_proxy:
   variables:
@@ -84,14 +84,13 @@
     alias: selenium-firefox
 
   playwright:
-    name: $CI_REGISTRY/docker/zammad-playwright:stable
+    name: $CI_REGISTRY/docker/zammad-playwright:latest
     alias: playwright
     variables:
       # Lets the server accept the Chromium args the driver passes via the
       #   endpoint's launch-options (see playwright_driver.rb); it strips them
       #   otherwise. Opt-in because it also unlocks executablePath - fine here,
-      #   as the server is only reachable from this job. See
-      #   docker/zammad-playwright!2.
+      #   as the server is only reachable from this job.
       PLAYWRIGHT_UNSAFE: '1'
 
   redis:
