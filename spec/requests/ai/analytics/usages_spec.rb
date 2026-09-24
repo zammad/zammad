@@ -42,6 +42,21 @@ RSpec.describe 'AI::Analytics::UsageController', :aggregate_failures, authentica
       end
     end
 
+    context 'when feedback was provided already' do
+      let(:params) { { ai_analytics_run_id: ai_analytics_run.id, rating: true } }
+
+      before do
+        allow(Service::AI::Analytics::UpsertUsage).to receive(:execute).and_raise(Service::AI::Analytics::UpsertUsage::FeedbackAlreadyProvidedError)
+
+        put '/api/v1/ai/analytics/usages', params:, as: :json
+      end
+
+      it 'responds with a flagged error' do
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response).to include('feedback_already_provided' => true, 'error_human' => 'You have already provided feedback, thank you.')
+      end
+    end
+
     context 'when submitting context' do
       let(:params) { { ai_analytics_run_id: ai_analytics_run.id, rating: false, context: { approved: false } } }
 

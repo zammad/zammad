@@ -15,6 +15,8 @@ export enum GraphQLErrorTypes {
   NotAuthorized = 'Exceptions::NotAuthorized',
 
   InvalidCsrfToken = 'Exceptions::InvalidCSRFToken',
+
+  AiFeedbackAlreadyProvided = 'Service::AI::Analytics::UpsertUsage::FeedbackAlreadyProvidedError',
 }
 
 export type GraphQLErrorTypeKeys = keyof GraphQLErrorTypes

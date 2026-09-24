@@ -4,7 +4,12 @@ import { getNode } from '@formkit/core'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import { waitForAiAnalyticsUsageMutationCalls } from '#shared/graphql/mutations/aiAnalyticsUsage.mocks.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import {
+  mockAiAnalyticsUsageMutationError,
+  waitForAiAnalyticsUsageMutationCalls,
+} from '#shared/graphql/mutations/aiAnalyticsUsage.mocks.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import CommonAIFeedback from '#desktop/components/CommonAIFeedback/CommonAIFeedback.vue'
 
@@ -136,6 +141,83 @@ describe('CommonAIFeedback', () => {
 
     expect(wrapper.getByText('Thank you for your feedback.')).toBeInTheDocument()
     expect(wrapper.getByRole('button', { name: 'Regenerate' })).toBeInTheDocument()
+  })
+
+  it('shows the feedback as given when a comment was provided meanwhile in another view', async () => {
+    const wrapper = renderCommonAIFeedback({
+      analyticsMeta: { run: { id: RUN_ID }, usage: { userHasProvidedFeedback: false } },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Negative feedback'))
+
+    await waitForAiAnalyticsUsageMutationCalls()
+
+    mockAiAnalyticsUsageMutationError('You have already provided feedback, thank you.', {
+      type: GraphQLErrorTypes.AiFeedbackAlreadyProvided,
+    })
+
+    const fieldNode = getNode('feedback-comment')
+
+    await wrapper.events.type(
+      await wrapper.findByPlaceholderText(
+        'Thanks for the feedback. Please explain what went wrong?',
+      ),
+      'Never trust AI',
+    )
+
+    await fieldNode?.settled
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit comment' }))
+
+    await waitForAiAnalyticsUsageMutationCalls()
+
+    expect(await wrapper.findByText('Thank you for your feedback.')).toBeInTheDocument()
+    expect(
+      wrapper.queryByPlaceholderText('Thanks for the feedback. Please explain what went wrong?'),
+    ).not.toBeInTheDocument()
+    expect(useNotifications().notifications.value).toHaveLength(0)
+  })
+
+  describe('when feedback was provided already in another view', () => {
+    beforeEach(() => {
+      mockAiAnalyticsUsageMutationError('You have already provided feedback, thank you.', {
+        type: GraphQLErrorTypes.AiFeedbackAlreadyProvided,
+      })
+    })
+
+    const renderWithTrackedUsage = () =>
+      renderCommonAIFeedback({
+        analyticsMeta: { run: { id: RUN_ID }, usage: { userHasProvidedFeedback: false } },
+      })
+
+    it('shows the feedback as given after a positive rating', async () => {
+      const wrapper = renderWithTrackedUsage()
+
+      await wrapper.events.click(wrapper.getByLabelText('Positive feedback'))
+
+      await waitForAiAnalyticsUsageMutationCalls()
+
+      expect(await wrapper.findByText('Thank you for your feedback.')).toBeInTheDocument()
+      expect(wrapper.queryByLabelText('Positive feedback')).not.toBeInTheDocument()
+      expect(wrapper.emitted('rated')).toHaveLength(1)
+      expect(useNotifications().notifications.value).toHaveLength(0)
+    })
+
+    it('shows the feedback as given instead of the comment field after a negative rating', async () => {
+      const wrapper = renderWithTrackedUsage()
+
+      await wrapper.events.click(wrapper.getByLabelText('Negative feedback'))
+
+      await waitForAiAnalyticsUsageMutationCalls()
+
+      expect(await wrapper.findByText('Thank you for your feedback.')).toBeInTheDocument()
+      expect(
+        wrapper.queryByPlaceholderText('Thanks for the feedback. Please explain what went wrong?'),
+      ).not.toBeInTheDocument()
+      expect(wrapper.queryByLabelText('Negative feedback')).not.toBeInTheDocument()
+      expect(wrapper.emitted('rated')).toHaveLength(1)
+      expect(useNotifications().notifications.value).toHaveLength(0)
+    })
   })
 
   it('emits regenerate event', async () => {

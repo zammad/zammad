@@ -528,6 +528,28 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
       end
 
+      context 'when user provides feedback meanwhile in another view' do
+        before do
+          # Waits for the buttons, so the update below happens after the page has loaded the usage.
+          find('.sidebar[data-tab="summary"] .js-aiFeedbackButtons')
+
+          ai_analytics_usage.update!(rating: true)
+        end
+
+        it 'shows the feedback as given instead of the comment field' do
+          within '.sidebar[data-tab="summary"]' do
+            click '.js-aiNegativeReaction'
+
+            expect(page).to have_text('Thank you for your feedback.')
+              .and have_no_field('comment')
+              .and have_no_css('.js-aiFeedbackButtons')
+              .and have_css('.js-aiFeedbackAlert.hide', visible: :all)
+          end
+
+          expect(ai_analytics_usage.reload).to have_attributes(rating: true)
+        end
+      end
+
       context 'when user has already provided feedback' do
         let(:ai_analytics_usage) { create(:ai_analytics_usage, ai_analytics_run:, user: agent, rating: true) }
 
