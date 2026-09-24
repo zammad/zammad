@@ -24,19 +24,21 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     EXPRESSION_SIGNATURE.match?(check_content_type)
   end
 
+  # An opaque `smime-type=signed-data` body shares `application/(x-)pkcs7-mime` with enveloped
+  # data, so it is recognized by its MIME type and the signed-data marker (special wrapped
+  # mime-type S/MIME signature, e.g. for Microsoft Outlook).
+  def wrapped?(check_content_type = content_type)
+    EXPRESSION_MIME.match?(check_content_type) && signed?(check_content_type)
+  end
+
   def signed_type
-    @signed_type ||= begin
-      # Special wrapped mime-type S/MIME signature check (e.g. for Microsoft Outlook).
-      if content_type.include?('signed-data') && EXPRESSION_MIME.match?(content_type)
-        'wrapped'
-      else
-        'inline'
-      end
-    end
+    @signed_type ||= (wrapped? ? 'wrapped' : 'inline')
   end
 
   def encrypted?(check_content_type = content_type)
-    EXPRESSION_MIME.match?(check_content_type)
+    # A `smime-type=signed-data` body is an opaque signature, not encryption, even though it
+    # shares the `application/(x-)pkcs7-mime` type; only `enveloped-data` is actually encrypted.
+    EXPRESSION_MIME.match?(check_content_type) && !signed?(check_content_type)
   end
 
   def decrypt
@@ -75,6 +77,13 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   def verify_signature
     return if !signed?
 
+    # For an opaque signature the message content is embedded in the PKCS7 structure, so it must
+    # be extracted regardless of whether the signature can be verified — otherwise a mail whose
+    # signer certificate is unknown would be shown with no visible content at all.
+    if signed_type == 'wrapped' && (content = wrapped_signature_content).present?
+      parse_decrypted_mail(content)
+    end
+
     success = false
     comment = __('The certificate for verification could not be found.')
 
@@ -82,10 +91,6 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     if result.present?
       success = true
       comment = result
-
-      if signed_type == 'wrapped'
-        parse_decrypted_mail(verify_sign_p7enc.data)
-      end
 
       mail[:attachments].delete_if do |attachment|
         signed?(attachment.dig(:preferences, 'Content-Type'))
@@ -188,6 +193,26 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
 
   def verify_sign_p7enc
     @verify_sign_p7enc ||= OpenSSL::PKCS7.read_smime(verify_sign_raw)
+  end
+
+  # The embedded content of an opaque signature must be shown regardless of whether the signature
+  # can ever be verified. `PKCS7#verify` cannot be used to extract it: it only decodes the content
+  # after locating the signer certificate, so a message that does not bundle its signer certificate
+  # yields nothing even with `NOVERIFY | NOSIGS`. Read the encapsulated content straight out of the
+  # PKCS7 SignedData structure instead — the actual trust decision is made separately in
+  # `verify_certificate_chain`. The type guard keeps a mail that only pretends to be signed-data
+  # (an `enveloped-data` body mislabelled via its content type) from being misread as signed content.
+  def wrapped_signature_content
+    return if verify_sign_p7enc.type != :signed
+
+    asn1                      = OpenSSL::ASN1.decode(verify_sign_p7enc.to_der)
+    signed_data               = asn1.value[1].value[0]
+    encapsulated_content_info = signed_data.value[2]
+    return if encapsulated_content_info.value.size < 2
+
+    # A BER-encoded `eContent` may be split into several nested `OCTET STRING` chunks, so join them.
+    content = encapsulated_content_info.value[1].value[0]
+    Array(content.value).map { |chunk| chunk.is_a?(OpenSSL::ASN1::ASN1Data) ? chunk.value : chunk }.join
   end
 
   # Captured once, since `mail[:raw]` is overwritten in place with the decrypted/unwrapped
