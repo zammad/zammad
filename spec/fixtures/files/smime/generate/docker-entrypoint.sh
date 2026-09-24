@@ -301,6 +301,40 @@ do
     fi
 done
 
+echo "Generating opaque (smime-type=signed-data) test mails"
+
+# Opaque signatures embed the signed content inside the PKCS7 structure (e.g. Microsoft Outlook),
+# unlike the detached signatures above. Zammad must show that content even when the signature cannot
+# be verified, so these cover a signer whose certificate is not in the store: once with the signer
+# certificate bundled in the mail, and once without it (`-nocerts`) - see issue #6376.
+# Each entry is "mail_name,signer_email,extra_openssl_opts".
+for TEST_MAIL_SIGNER_OPTS in "opaque_sender_not_in_store,smime1@example.com," "opaque_no_bundled_signer_cert,smime1@example.com,-nocerts"
+do
+    IFS=',' read -r TEST_MAIL TEST_SIGNER EXTRA_OPTS <<< "$TEST_MAIL_SIGNER_OPTS"
+
+    if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml" ]] || [[ -z "$SKIP_REGENERATE" ]]
+    then
+        if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.head.txt" ]] || [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.body.txt" ]] || [[ -n "$SKIP_REGENERATE" ]]
+        then
+            echo "$CERT_DIR/$TEST_MAIL.eml.head.txt or $CERT_DIR/$TEST_MAIL.eml.body.txt not found, skipping..."
+            continue
+        fi
+
+        if [[ ! -e "$CERT_DIR/$TEST_SIGNER.crt" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.key" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.secret" ]] || [[ -n "$SKIP_REGENERATE" ]]
+        then
+            echo "$CERT_DIR/$TEST_SIGNER.crt, $CERT_DIR/$TEST_SIGNER.key or $CERT_DIR/$TEST_SIGNER.secret not found, skipping..."
+            continue
+        fi
+
+        echo "Generating $CERT_DIR/$TEST_MAIL.eml"
+        # shellcheck disable=SC2086 # EXTRA_OPTS is an intentional, controlled set of openssl flags.
+        openssl smime -sign -nodetach $EXTRA_OPTS -in "$CERT_DIR/$TEST_MAIL.eml.body.txt" -out "$CERT_DIR/$TEST_MAIL.eml" \
+            -signer "$CERT_DIR/$TEST_SIGNER.crt" -inkey "$CERT_DIR/$TEST_SIGNER.key" \
+            -text -passin "file:$CERT_DIR/$TEST_SIGNER.secret"
+        cat "$CERT_DIR/$TEST_MAIL.eml.head.txt" "$CERT_DIR/$TEST_MAIL.eml" > /tmp/test_mail && mv /tmp/test_mail "$CERT_DIR/$TEST_MAIL.eml"
+    fi
+done
+
 echo "Generating further certificates for test variation"
 
 certs=(

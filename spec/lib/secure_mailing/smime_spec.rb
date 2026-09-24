@@ -282,6 +282,94 @@ RSpec.describe SecureMailing::SMIME do
         }
       end
 
+      context 'opaque signature, sender certificate not in store' do
+        let(:mail) do
+          smime_mail = Rails.root.join('spec/fixtures/files/smime/opaque_sender_not_in_store.eml').read
+          mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'shows the content and marks the signature as unverified' do
+          expect(mail[:body]).to include('Some text')
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+        end
+      end
+
+      context 'opaque signature, signer certificate not bundled in the mail' do
+        let(:mail) do
+          smime_mail = Rails.root.join('spec/fixtures/files/smime/opaque_no_bundled_signer_cert.eml').read
+          mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'still shows the content and marks the signature as unverified' do
+          expect(mail[:body]).to include('Some text')
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
+        end
+      end
+
+      context 'opaque signature mislabelled as signed-data but actually encrypted' do
+        before do
+          create(:smime_certificate, fixture: recipient_email_address)
+        end
+
+        let(:mail) do
+          smime_mail = Channel::EmailBuild.build(
+            from:         sender_email_address,
+            to:           recipient_email_address,
+            body:         raw_body,
+            content_type: 'text/plain',
+            security:     {
+              type:       'S/MIME',
+              sign:       { success: false },
+              encryption: { success: true },
+            },
+          )
+          smime_mail.header['Content-Type'] = 'application/pkcs7-mime; smime-type=signed-data; name="smime.p7m"'
+
+          mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'keeps the payload reachable as attachment instead of wiping the mail' do
+          expect(mail[:attachments].any? { |attachment| attachment[:filename] == 'smime.p7m' }).to be(true)
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be(false)
+        end
+      end
+
+      context 'opaque signature with mixed-case smime-type' do
+        before do
+          create(:smime_certificate, :with_private, fixture: sender_email_address)
+          stub_const('OpenSSL::PKCS7::DETACHED', nil)
+        end
+
+        let(:mail) do
+          smime_mail = build_mail
+          smime_mail.header['Content-Type'] = smime_mail.header['Content-Type'].to_s.sub('signed-data', 'Signed-Data')
+
+          mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'treats it as signed instead of encrypted' do
+          expect(mail[:body]).to include(raw_body)
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be(true)
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+        end
+      end
+
       context 'sender certificate present' do
 
         before do
@@ -342,6 +430,11 @@ RSpec.describe SecureMailing::SMIME do
 
           it 'check that body was verified' do
             expect(mail[:body]).to include(raw_body)
+          end
+
+          it 'check that it is not treated as encrypted' do
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
         end
 
