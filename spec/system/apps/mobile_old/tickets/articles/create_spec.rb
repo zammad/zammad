@@ -122,6 +122,10 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
         wait_for_form_updater(3)
 
+        # The signature is applied after the form updater response, typing before it
+        #   lands places the text next to or inside it.
+        wait_for_test_flag('editor.signatureAdd')
+
         within_form(form_updater_gql_number: 3) do
           find_editor('Text').type('This is a note!')
           find_autocomplete('To').search_for_option('zammad_test_to@zammad.com')
@@ -154,6 +158,10 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         find_select('Channel', visible: :all).select_option('Email')
 
         wait_for_form_updater(3)
+
+        # The signature is applied after the form updater response, typing before it
+        #   lands places the text next to or inside it.
+        wait_for_test_flag('editor.signatureAdd')
 
         within_form(form_updater_gql_number: 3) do
           find_editor('Text').type('This is a note!')

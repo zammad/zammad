@@ -320,8 +320,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def type_editor(text, click: true, skip_waiting: false, wait_for: nil)
     raise 'Field does not support typing' if !type_editor?
 
-    cursor_home_shortcut = mac_platform? ? %i[command up] : %i[control home]
-    input_element.click.send_keys(cursor_home_shortcut) if click
+    move_editor_caret_to_start if click
     input_element.send_keys(text)
 
     maybe_wait_for_form_updater if !skip_waiting
@@ -970,6 +969,44 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
   def triggers_form_updater?
     element['data-triggers-form-updater'] == 'true'
+  end
+
+  # Returns whether the caret is at the start of the editor, and moves it there if not.
+  EDITOR_CARET_TO_START_JS = <<~JS.freeze
+    ((el) => {
+      const { view, state: { selection, doc } } = el.editor;
+      const domSelection = document.getSelection();
+
+      let start = null;
+      doc.descendants((node, pos) => {
+        if (start !== null) return false;
+        if (node.isTextblock) {
+          start = pos + 1;
+          return false;
+        }
+      });
+
+      // The browser inserts typed text at its own caret, which the editor reads asynchronously.
+      const atStart = document.activeElement === el &&
+        selection.empty && selection.from === start &&
+        domSelection.isCollapsed && view.posAtDOM(domSelection.anchorNode, domSelection.anchorOffset) === start;
+
+      if (!atStart) el.editor.commands.focus('start');
+
+      return atStart;
+    })(this)
+  JS
+
+  # The click leaves the caret at the click position, e.g. inside a signature, and
+  #   go-to-start keys are unreliable: headless Chrome on macOS ignores them, and in
+  #   CI they sometimes had no effect. Place the caret via the editor instead, until
+  #   it stays there.
+  def move_editor_caret_to_start
+    input_element.click
+
+    wait.until { input_element.evaluate_script(EDITOR_CARET_TO_START_JS) }
+  rescue Selenium::WebDriver::Error::TimeoutError
+    raise 'The caret did not stay at the start of the editor'
   end
 
   def maybe_wait_for_form_updater
