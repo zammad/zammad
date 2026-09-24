@@ -6,6 +6,10 @@ module Cti
 
     DEFAULT_COUNTRY_ID = '49'.freeze
 
+    # Columns whose digit runs are no phone numbers: the UUID of an auto-generated
+    #   login, a password hash, the store id of an avatar.
+    ATTRIBUTES_WITHOUT_NUMBERS = %w[login password image image_source].freeze
+
     # adopt/orphan matching Cti::Log records
     # (see https://github.com/zammad/zammad/issues/2057)
     after_commit :update_cti_logs, on: :destroy, unless: -> { BulkImportInfo.enabled? }
@@ -69,7 +73,7 @@ returns
 
       # get caller IDs
       caller_ids = []
-      attributes = record.attributes
+      attributes = record.attributes.except(*ATTRIBUTES_WITHOUT_NUMBERS)
       attributes.each_value do |value|
         next if value.class != String
         next if value.blank?

@@ -291,6 +291,42 @@ RSpec.describe Cti::CallerId do
 
       expect(described_class.where(object: 'Ticket', o_id: article.id, caller_id: '49309876543')).to exist
     end
+
+    context 'when a User record holds a phone number' do
+      let(:user) { create(:user, phone: '+49 30 609812345') }
+
+      it 'indexes the number as a known caller ID of the user' do
+        described_class.add(user)
+
+        expect(described_class.where(user_id: user.id).pluck(:caller_id, :level)).to eq([%w[4930609812345 known]])
+      end
+    end
+
+    # A user without an email address gets an auto-<uuid> login, and a UUID holds digit
+    #   runs which used to be indexed like numbers.
+    context 'when a User record holds digits in columns which are no phone numbers' do
+      let(:user) do
+        create(:user, :without_email, login:        'auto-4358116e-5280-4687-b71a-4a4b619bd42c',
+                                      image_source: 'https://example.com/avatars/2024092312345.png',
+                                      phone:        '+49 30 609812345')
+      end
+
+      it 'indexes the phone number alone' do
+        described_class.add(user)
+
+        expect(described_class.where(user_id: user.id).pluck(:caller_id)).to eq(['4930609812345'])
+      end
+    end
+
+    context 'when a User record holds a phone number in a free text column' do
+      let(:user) { create(:user, phone: '', note: 'Reachable at +49 30 609812345 in the morning.') }
+
+      it 'indexes the number' do
+        described_class.add(user)
+
+        expect(described_class.where(user_id: user.id).pluck(:caller_id)).to eq(['4930609812345'])
+      end
+    end
   end
 
   describe 'callbacks' do
