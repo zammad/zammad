@@ -17,6 +17,7 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
         ticketArticleTranslationUpdates(ticketId: $ticketId, targetLocale: $targetLocale) {
           article {
             id
+            translation(targetLocale: $targetLocale) { content backend translated }
           }
           translation {
             content
@@ -46,6 +47,7 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
 
   before do
     setup_ai_provider
+    setup_content_translation
 
     gql.execute(subscription, variables:, context: { channel: mock_channel })
   end
@@ -66,17 +68,19 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
     end
 
     before do
+      Service::ContentTranslation::StoredTranslation.save(
+        object: article, locale: Locale.find_by(locale: target_locale), content: article.body,
+        html: article.content_type.include?('html'), backend: 'ai', translation: service_result.content
+      )
       allow(Service::ContentTranslation::TicketArticle).to receive(:execute).and_return(service_result)
 
       ContentTranslationJob.new.perform(article, target_locale, service: 'Service::ContentTranslation::TicketArticle')
     end
 
-    it 'receives the translation' do
+    it 'receives the article translation and analytics', :aggregate_failures do
       expect(broadcasted['translation'])
         .to eq('content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true)
-    end
-
-    it 'receives the analytics run' do
+      expect(broadcasted['article']).to eq('id' => gql.id(article), 'translation' => broadcasted['translation'])
       expect(broadcasted['analytics']).to include('run' => { 'id' => gql.id(ai_analytics_run) })
     end
 
@@ -88,8 +92,11 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
       expect(broadcasted(-1)['analytics']).to include('usage' => { 'userHasProvidedFeedback' => true })
     end
 
-    it 'names the article the translation belongs to' do
-      expect(broadcasted['article']).to eq('id' => gql.id(article))
+    it 'does not expose an obsolete result from a delayed event' do
+      article.update!(body: 'Changed after translation')
+      ContentTranslationJob.new.perform(article, target_locale, service: 'Service::ContentTranslation::TicketArticle')
+
+      expect(broadcasted(-1)['article']).to include('translation' => nil)
     end
   end
 
@@ -160,7 +167,7 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
     end
 
     it 'delivers no translation, not an empty one' do
-      expect(broadcasted).to include('article' => { 'id' => gql.id(article) }, 'translation' => nil, 'error' => nil)
+      expect(broadcasted).to include('article' => { 'id' => gql.id(article), 'translation' => nil }, 'translation' => nil, 'error' => nil)
     end
   end
 
@@ -176,4 +183,5 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
       expect(broadcasted['error']).to eq('message' => 'some error', 'exception' => 'StandardError')
     end
   end
+
 end

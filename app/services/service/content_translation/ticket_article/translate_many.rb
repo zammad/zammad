@@ -3,21 +3,24 @@
 class Service::ContentTranslation::TicketArticle::TranslateMany < Service::Base
   requires_current_user!
 
-  attr_reader :articles, :target_locale
+  attr_reader :articles, :target_locale, :generate_missing
 
   # @param articles [Array<Ticket::Article>] the articles to translate
   # @param target_locale [String] e.g. "de-de"
-  def initialize(articles:, target_locale:)
-    @articles      = articles
-    @target_locale = target_locale
+  def initialize(articles:, target_locale:, generate_missing: false)
+    @articles         = articles
+    @target_locale    = target_locale
+    @generate_missing = generate_missing
   end
 
-  # A nil translation means its result will arrive through the subscription.
+  # Only attempted translations include :translation; nil means the result is pending.
   def execute
-    ensure_allowed!
+    Service::CheckFeatureEnabled.execute(name: 'content_translation_service')
+    Service::CheckFeatureEnabled.execute(name: 'content_translation_ticket_article')
+    ensure_allowed! if generate_missing
 
-    articles.filter_map do |article|
-      next if !translatable?(article)
+    articles.map do |article|
+      next { article: } if !generate_missing || !translatable?(article)
 
       { article:, translation: translate(article) }
     end
@@ -43,6 +46,6 @@ class Service::ContentTranslation::TicketArticle::TranslateMany < Service::Base
   # No batch lookup of the stored translations in front of this loop: a stored translation is
   # served with its content, which such a lookup would have to read a second time anyway.
   def translate(article)
-    Service::ContentTranslation::TicketArticle.execute(object: article, target_locale:, force: false)
+    Service::ContentTranslation::TicketArticle.execute(object: article, target_locale:, force: false, background: true)
   end
 end

@@ -6,6 +6,7 @@ mutation ticketArticleTranslateMany(
   $beforeCursor: String
   $afterCursor: String
   $targetLocale: String!
+  $generateMissing: Boolean!
 ) {
   ticketArticleTranslateMany(
     ticketId: $ticketId
@@ -15,17 +16,15 @@ mutation ticketArticleTranslateMany(
     beforeCursor: $beforeCursor
     afterCursor: $afterCursor
     targetLocale: $targetLocale
+    generateMissing: $generateMissing
   ) {
-    pendingArticleIds
-    translations {
+    pendingArticleIds @include(if: $generateMissing)
+    results {
       article {
-        id
+        ...ticketArticleTranslationAvailability
+        ...ticketArticleTranslation @include(if: $generateMissing)
       }
-      translation {
-        content
-        backend
-        translated
-      }
+      translated @include(if: $generateMissing)
     }
   }
 }

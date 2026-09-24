@@ -15237,7 +15237,7 @@
             },
             {
               "name": "ticketArticleTranslateMany",
-              "description": "Translate several articles of a ticket at once, for an agent who switched the whole ticket to a target language",
+              "description": "Check or generate translations for several articles of a ticket",
               "args": [
                 {
                   "name": "ticketId",
@@ -15316,6 +15316,16 @@
                     }
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "generateMissing",
+                  "description": "Generate missing translations instead of only checking availability",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": "false"
                 }
               ],
               "type": {
@@ -28463,6 +28473,33 @@
               "deprecationReason": null
             },
             {
+              "name": "translation",
+              "description": "The stored translation of the current article content",
+              "args": [
+                {
+                  "name": "targetLocale",
+                  "description": "The locale to translate into, e.g. \"de-de\".",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ContentTranslation",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "translationAvailable",
               "description": "Whether a translation into the given locale is stored for the current content of this article",
               "args": [
@@ -29517,19 +29554,23 @@
               "deprecationReason": null
             },
             {
-              "name": "translations",
-              "description": "The translations that are available already; the others are delivered by the subscription",
+              "name": "results",
+              "description": "Translation availability and outcomes for all selected articles",
               "args": [],
               "type": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "NON_NULL",
+                  "kind": "LIST",
                   "name": null,
                   "ofType": {
-                    "kind": "OBJECT",
-                    "name": "TicketArticleTranslation",
-                    "ofType": null
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "TicketArticleTranslationResult",
+                      "ofType": null
+                    }
                   }
                 }
               },
@@ -29555,6 +29596,22 @@
                 "kind": "OBJECT",
                 "name": "AIAnalyticsMetadata",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "article",
+              "description": "The article whose translation was requested",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketArticle",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -29599,8 +29656,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "TicketArticleTranslation",
-          "description": "The translation of one article of a ticket",
+          "name": "TicketArticleTranslationResult",
+          "description": "The outcome of translating one article of a ticket",
           "fields": [
             {
               "name": "article",
@@ -29619,17 +29676,13 @@
               "deprecationReason": null
             },
             {
-              "name": "translation",
-              "description": "The translation",
+              "name": "translated",
+              "description": "True when translated, false when skipped, and null without a completed translation request",
               "args": [],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "ContentTranslation",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

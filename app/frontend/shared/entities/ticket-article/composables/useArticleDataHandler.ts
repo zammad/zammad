@@ -58,23 +58,45 @@ export const useArticleDataHandler = (
 
   const articleData = computed(() => articleResult.value)
 
-  const loadedArticlesCount = computed(() => articleResult.value?.articles.edges.length ?? 0)
-
-  const loadedArticleSelections = computed<TicketArticlesQueryVariables[]>(() => {
-    const edges = articleResult.value?.articles.edges
+  let previousArticleResult: TicketArticlesQuery | undefined
+  const loadedArticleSelections = computed<TicketArticlesQueryVariables[]>((previousSelections) => {
+    const previous = previousArticleResult
+    const result = articleResult.value
+    previousArticleResult = result
+    const edges = result?.articles.edges
     if (!edges) return []
 
-    // Each selection must fit the GraphQL connection limit, even after many fetchMore calls.
+    const previousEdges = previous?.articles.edges ?? []
+    const addedCount = edges.length - previousEdges.length
+    const onlyOlderArticlesAdded =
+      addedCount > 0 &&
+      previousEdges.length > 0 &&
+      previousSelections?.[0]?.ticketId === ticketId.value &&
+      previousSelections[0].firstArticlesCount === firstArticlesCount.value &&
+      previousEdges.every((edge, index) => edge === edges[index + addedCount]) &&
+      previous?.firstArticles?.edges.length === result?.firstArticles?.edges.length &&
+      previous?.firstArticles?.edges.every(
+        (edge, index) => edge.node === result?.firstArticles?.edges[index]?.node,
+      )
+
+    // Anchor chunks at the newest end so fetching older articles preserves completed full pages.
     const pageSize = 2000
     const selections: TicketArticlesQueryVariables[] = []
 
     for (let offset = 0; offset < Math.max(edges.length, 1); offset += pageSize) {
+      const end = edges.length - offset
+      const previousSelection = onlyOlderArticlesAdded && previousSelections?.[selections.length]
+      if (previousSelection && previousSelection.pageSize === pageSize) {
+        selections.push(previousSelection)
+        continue
+      }
+
       selections.push({
         ticketId: ticketId.value,
         firstArticlesCount: firstArticlesCount.value,
         loadFirstArticles: offset === 0,
-        pageSize: Math.min(pageSize, edges.length - offset),
-        beforeCursor: edges[offset + pageSize]?.cursor,
+        pageSize: Math.min(pageSize, end),
+        beforeCursor: edges[end]?.cursor,
       })
     }
 
@@ -187,8 +209,6 @@ export const useArticleDataHandler = (
     articleData,
     allArticleLoaded,
     isLoadingArticles,
-    firstArticlesCount,
-    loadedArticlesCount,
     loadedArticleSelections,
     refetchArticlesQuery,
   }

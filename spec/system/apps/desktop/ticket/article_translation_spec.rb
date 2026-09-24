@@ -48,11 +48,8 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     end
   end
 
-  # An article arriving while the agent has the ticket open, answered in place so no background
-  # worker has to run for it.
-  context 'when an article arrives with the mode on' do
+  context 'when an article arrives with the mode on', performs_jobs: true do
     before do
-      allow(Service::ContentTranslation::Backend::AI).to receive(:background?).and_return(false)
       allow_any_instance_of(AI::Provider::ZammadAI).to receive(:ask).and_return('Gibt es etwas Neues?')
     end
 
@@ -63,9 +60,11 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
 
       expect(page).to have_text('Hallo Welt.')
 
-      create(:ticket_article, ticket:, body: 'Anything new?', content_type: 'text/plain')
+      perform_enqueued_jobs(only: ContentTranslationJob) do
+        create(:ticket_article, ticket:, body: 'Anything new?', content_type: 'text/plain')
 
-      expect(page).to have_text('Gibt es etwas Neues?')
+        expect(page).to have_text('Gibt es etwas Neues?')
+      end
     end
   end
 

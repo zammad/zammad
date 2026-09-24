@@ -10,7 +10,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
   let(:articles)      { create_list(:ticket_article, 2, ticket:, body: 'Hello world.', content_type: 'text/plain') }
   let(:target_locale) { 'de-de' }
 
-  let(:translate) { service.execute(articles:, target_locale:) }
+  let(:translate) { service.execute(articles:, target_locale:, generate_missing: true) }
 
   before do
     setup_ai_provider('zammad_ai')
@@ -23,6 +23,39 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
   it 'enqueues and identifies pending translations', :aggregate_failures do
     expect { translate }.to have_enqueued_job(ContentTranslationJob).exactly(articles.count).times
     expect(translate).to match_array(articles.map { |article| { article:, translation: nil } })
+  end
+
+  %w[deepl libre_translate].each do |provider|
+    context "with #{provider} configured" do
+      let(:endpoint) { provider == 'deepl' ? 'https://api-free.deepl.com/v2/translate' : 'https://translate.example.com/translate' }
+      let(:response) { provider == 'deepl' ? { translations: [{ text: 'Hallo Welt.' }] } : { translatedText: 'Hallo Welt.' } }
+
+      before do
+        Setting.set('content_translation_service_config', { provider:, api_key: 'test', tier: 'free', url: 'https://translate.example.com' }, validate: false)
+        stub_request(:get, 'https://translate.example.com/languages')
+          .to_return_json(body: [{ code: 'en' }, { code: 'de' }])
+        stub_request(:post, endpoint).to_return_json(body: response)
+        allow(Gql::Subscriptions::Ticket::Article::TranslationUpdates).to receive(:trigger_for)
+      end
+
+      it 'generates in jobs, publishes results and reuses them on the next request', :aggregate_failures do
+        expect { translate }.to have_enqueued_job(ContentTranslationJob).exactly(articles.count).times
+        expect(translate).to match_array(articles.map { |article| { article:, translation: nil } })
+        expect(WebMock).not_to have_requested(:post, endpoint)
+
+        perform_enqueued_jobs(only: ContentTranslationJob)
+
+        expect(WebMock).to have_requested(:post, endpoint).twice
+        expect(Gql::Subscriptions::Ticket::Article::TranslationUpdates)
+          .to have_received(:trigger_for).with(
+            anything, target_locale,
+            { translation: { content: 'Hallo Welt.', backend: provider, translated: true }, ai_analytics_run_id: be_present }
+          ).twice
+        expect { service.execute(articles:, target_locale:, generate_missing: true) }.not_to have_enqueued_job(ContentTranslationJob)
+        expect(service.execute(articles:, target_locale:, generate_missing: true).pluck(:translation))
+          .to all(have_attributes(content: 'Hallo Welt.', translated: true))
+      end
+    end
   end
 
   context 'with a stored translation' do
@@ -61,7 +94,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
     end
 
     it 'translates only the ordinary note', :aggregate_failures do
-      expect(translate).to eq([{ article: articles.last, translation: nil }])
+      expect(translate).to eq([{ article: articles.first }, { article: articles.second }, { article: articles.last, translation: nil }])
       expect(ContentTranslationJob).to have_been_enqueued.once
     end
   end
@@ -69,16 +102,27 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
   it 'reuses results when overlapping requests are processed', :aggregate_failures do
     perform_enqueued_jobs(only: ContentTranslationJob) { translate }
 
-    expect { service.execute(articles:, target_locale:) }.not_to have_enqueued_job(ContentTranslationJob)
-    expect(service.execute(articles:, target_locale:).pluck(:translation)).to all(have_attributes(translated: true))
+    expect { service.execute(articles:, target_locale:, generate_missing: true) }.not_to have_enqueued_job(ContentTranslationJob)
+    expect(service.execute(articles:, target_locale:, generate_missing: true).pluck(:translation)).to all(have_attributes(translated: true))
   end
 
   context 'when the user may not translate automatically' do
     before { Setting.set('content_translation_ticket_article_auto_role_ids', [create(:role).id]) }
 
-    it 'refuses the request' do
+    it 'refuses generation but allows lookup without invoking the translation service', :aggregate_failures do
+      allow(Service::ContentTranslation::TicketArticle).to receive(:execute).and_call_original
+      expect(service.execute(articles:, target_locale:)).to eq(articles.map { |article| { article: } })
+      expect(Service::ContentTranslation::TicketArticle).not_to have_received(:execute)
       expect { translate }
         .to raise_error(Exceptions::Forbidden, 'Automatic translation of ticket articles is not available for you.')
+    end
+  end
+
+  context 'when article translation is disabled' do
+    before { Setting.set('content_translation_ticket_article', false) }
+
+    it 'also refuses lookup-only requests' do
+      expect { service.execute(articles:, target_locale:) }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError)
     end
   end
 

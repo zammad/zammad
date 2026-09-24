@@ -1,0 +1,10 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+fragment ticketArticleTranslation on TicketArticle {
+  id
+  translation(targetLocale: $targetLocale) {
+    content
+    backend
+    translated
+  }
+}

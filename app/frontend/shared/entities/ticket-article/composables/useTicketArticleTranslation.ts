@@ -5,7 +5,6 @@ import { computed, onActivated, onDeactivated, ref, watch, type Ref } from 'vue'
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useTicketArticleTranslateMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleTranslate.api.ts'
 import { useTicketArticleTranslateManyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleTranslateMany.api.ts'
-import { useTicketArticlesTranslationAvailabilityLazyQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticlesTranslationAvailability.api.ts'
 import { useTicketArticleTranslationUpdatesSubscription } from '#shared/entities/ticket-article/graphql/subscriptions/ticketArticleTranslationUpdates.api.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
 import type {
@@ -13,15 +12,21 @@ import type {
   ArticleTranslationResult,
   TicketArticleTranslation,
 } from '#shared/entities/ticket-article/stores/types.ts'
-import type { TicketArticlesQueryVariables } from '#shared/graphql/types.ts'
-import {
-  MutationHandler,
-  QueryHandler,
-  SubscriptionHandler,
-} from '#shared/server/apollo/handler/index.ts'
+import type {
+  TicketArticlesQueryVariables,
+  TicketArticleTranslationFragment,
+} from '#shared/graphql/types.ts'
+import { MutationHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
+
+import { useArticleTranslationCache } from './useArticleTranslationCache.ts'
 
 export const NO_TARGET_LOCALE_ERROR = __('No supported target language is available.')
 export const NO_RESULT_ERROR = __('The translation returned no usable content.')
+
+type TranslationState =
+  | { status: 'pending' }
+  | { status: 'done'; translated: boolean }
+  | { status: 'error'; error: string }
 
 const translationKey = (articleId: string, locale: string) => `${articleId}:${locale}`
 
@@ -55,10 +60,6 @@ const useSubscriptionReadiness = () => {
 export const useTicketArticleTranslation = (
   ticketId: Ref<string>,
   options: {
-    // How many articles the tab has loaded: which of them have a stored translation is asked for
-    // separately, page by page like the articles themselves.
-    loadedArticlesCount: Ref<number>
-    firstArticlesCount: Ref<number>
     loadedArticleSelections: Ref<TicketArticlesQueryVariables[]>
   },
 ): TicketArticleTranslation => {
@@ -68,11 +69,10 @@ export const useTicketArticleTranslation = (
   if (store.isEnabled) store.loadTargetLocales()
 
   // Keyed by article and locale, so a result for a former target never shows up as the current one.
-  const translations = ref(new Map<string, ArticleTranslation>())
+  const translations = ref(new Map<string, TranslationState>())
+  const translationCache = useArticleTranslationCache()
   // Articles whose translation is displayed instead of the original.
   const shown = ref(new Set<string>())
-  // Articles the server has a stored translation for, per locale.
-  const available = ref(new Map<string, Set<string>>())
 
   // Whether whole tickets are read in the target language is the agent's personal setting; what
   // this tab does with it stays here, so a ticket nobody is looking at still translates nothing.
@@ -103,7 +103,7 @@ export const useTicketArticleTranslation = (
   const subscription = new SubscriptionHandler(
     useTicketArticleTranslationUpdatesSubscription(
       () => ({ ticketId: ticketId.value, targetLocale: targetLocale.value ?? '' }),
-      () => ({ enabled: started.value }),
+      () => ({ enabled: started.value, fetchPolicy: 'no-cache' }),
     ),
     { errorShowNotification: false },
   )
@@ -114,7 +114,8 @@ export const useTicketArticleTranslation = (
     articleId: string,
     locale: string,
     update: {
-      translation?: Maybe<ArticleTranslationResult>
+      article?: Maybe<Partial<TicketArticleTranslationFragment>>
+      translation?: Maybe<Pick<ArticleTranslationResult, 'translated'>>
       error?: Maybe<{ message: string }>
     },
   ) => {
@@ -125,15 +126,20 @@ export const useTicketArticleTranslation = (
       return
     }
 
+    const translation =
+      update.translation?.translated === false
+        ? { translated: false }
+        : update.translation && update.article?.translation
+
     // The job publishes an empty event when the service produced nothing usable.
-    if (!update.translation) {
+    if (!translation) {
       translations.value.set(key, { status: 'error', error: NO_RESULT_ERROR })
       return
     }
 
-    const { content, backend, translated } = update.translation
-
-    translations.value.set(key, { status: 'done', content, backend, translated })
+    const translated = translation.translated !== false
+    if (translated) translationCache.write(articleId, locale, translation)
+    translations.value.set(key, { status: 'done', translated })
   }
 
   subscription.onResult(({ data }) => {
@@ -149,67 +155,14 @@ export const useTicketArticleTranslation = (
   // A failing subscription is not the end: the mutation still answers, and reports its own error.
   subscription.onError(() => readiness.answered())
 
-  // Stored translations
-
-  // Which of the loaded articles have a stored translation in the current target, asked with the
-  // pages of the articles query reduced to that one flag: the bodies stay where they are.
-  const availabilityQuery = new QueryHandler(useTicketArticlesTranslationAvailabilityLazyQuery(), {
-    errorShowNotification: false,
-  })
-
-  let fetched: { locale: string; count: number } | undefined
-
-  const fetchAvailability = async () => {
-    const locale = targetLocale.value
-    const count = options.loadedArticlesCount.value
-
-    if (!store.isAvailable || !locale || !count) return
-    if (fetched?.locale === locale && fetched.count === count) return
-
-    fetched = { locale, count }
-
-    const { data } = await availabilityQuery.query({
-      variables: {
-        ticketId: ticketId.value,
-        pageSize: count,
-        firstArticlesCount: options.firstArticlesCount.value,
-        translationTargetLocale: locale,
-      },
-      // Not written to the cache: a cache write of the same connection would make the articles
-      // query fetch its bodies again.
-      fetchPolicy: 'no-cache',
-    })
-
-    if (!data) {
-      // Not answered: the next change asks again.
-      fetched = undefined
-      return
-    }
-
-    const set = available.value.get(locale) ?? new Set<string>()
-
-    ;[...(data.firstArticles?.edges ?? []), ...data.articles.edges].forEach(({ node }) => {
-      if (node.translationAvailable) set.add(node.id)
-      else set.delete(node.id)
-    })
-
-    available.value.set(locale, set)
-  }
-
-  // Only a shown tab asks; a hidden one catches up once when shown again.
-  watch(
-    () => [targetLocale.value, store.isAvailable, options.loadedArticlesCount.value],
-    () => {
-      if (isActive.value) fetchAvailability()
-    },
-    { immediate: true },
-  )
-
   // Translating
 
-  const translateMutation = new MutationHandler(useTicketArticleTranslateMutation(), {
-    errorShowNotification: false,
-  })
+  const translateMutation = new MutationHandler(
+    useTicketArticleTranslateMutation({ fetchPolicy: 'no-cache' }),
+    {
+      errorShowNotification: false,
+    },
+  )
 
   // Results that cannot arrive anymore are forgotten, so that the next request asks the server again.
   const forgetPending = () => {
@@ -241,9 +194,15 @@ export const useTicketArticleTranslation = (
     // A known result is reused; a failed one is asked for again, and so is one the ticket-wide
     // request left untranslated - this one is forced, which is what the agent asks for here.
     if (existing?.status === 'pending') return
-    if (existing?.status === 'done' && existing.translated !== false) return
+    if (
+      existing?.status === 'done' &&
+      existing.translated &&
+      translationCache.read(articleId, locale)
+    )
+      return
 
     translations.value.set(key, { status: 'pending' })
+    const pending = translations.value.get(key)
 
     await readiness.until(locale)
 
@@ -255,11 +214,13 @@ export const useTicketArticleTranslation = (
       // stored translation is still served first.
       const result = await translateMutation.send({ articleId, targetLocale: locale, force: true })
 
-      const translation = result?.ticketArticleTranslate?.translation
+      if (translations.value.get(key) !== pending) return
+      const payload = result?.ticketArticleTranslate
 
       // No translation yet means it is generated in the background; the subscription delivers it.
-      if (translation) applyUpdate(articleId, locale, { translation })
+      if (payload?.translation) applyUpdate(articleId, locale, payload)
     } catch (error) {
+      if (translations.value.get(key) !== pending) return
       applyUpdate(articleId, locale, {
         error: { message: error instanceof Error ? error.message : String(error) },
       })
@@ -268,8 +229,17 @@ export const useTicketArticleTranslation = (
 
   const translateShown = () => shown.value.forEach((articleId) => translate(articleId))
 
-  const translateManyMutation = new MutationHandler(useTicketArticleTranslateManyMutation())
-  const requests = ref(new Set<string>())
+  // Lookup errors stay silent even if a generating request starts before they arrive.
+  const lookupMutation = new MutationHandler(
+    useTicketArticleTranslateManyMutation({ fetchPolicy: 'no-cache' }),
+    { errorShowNotification: false },
+  )
+  const translateManyMutation = new MutationHandler(
+    useTicketArticleTranslateManyMutation({ fetchPolicy: 'no-cache' }),
+  )
+  const requests = ref(new Map<string, boolean>())
+  // Selection objects change on article-list refresh, even when pagination stays identical.
+  let completedLookups = new WeakSet<TicketArticlesQueryVariables>()
   let generation = 0
 
   const cancelRequests = () => {
@@ -277,103 +247,125 @@ export const useTicketArticleTranslation = (
     requests.value.clear()
   }
 
-  const translateSelection = async (selection: TicketArticlesQueryVariables) => {
+  const requestSelection = async (selection: TicketArticlesQueryVariables) => {
     const locale = targetLocale.value
-    if (!locale || !store.isAvailable || !allArticlesEnabled.value || !isActive.value) return
+    if (!locale || !store.isAvailable || !isActive.value) return
+
+    const generateMissing = allArticlesEnabled.value
 
     const requestGeneration = generation
-    const requestKey = JSON.stringify([requestGeneration, locale, selection])
-    if (requests.value.has(requestKey)) return
+    const requestKey = JSON.stringify([requestGeneration, locale, generateMissing, selection])
+    if (requests.value.has(requestKey) || (!generateMissing && completedLookups.has(selection)))
+      return
 
-    requests.value.add(requestKey)
+    requests.value.set(requestKey, generateMissing)
 
     try {
-      await readiness.until(locale)
+      if (generateMissing) await readiness.until(locale)
 
-      if (requestGeneration !== generation || !allArticlesEnabled.value || !isActive.value) return
+      if (requestGeneration !== generation || !isActive.value) return
 
       const previous = new Map(translations.value)
-      const result = await translateManyMutation.send({ ...selection, targetLocale: locale })
+      const mutation = generateMissing ? translateManyMutation : lookupMutation
+      const result = await mutation.send({
+        ...selection,
+        targetLocale: locale,
+        generateMissing,
+      })
       if (requestGeneration !== generation) return
 
       const payload = result?.ticketArticleTranslateMany
-      payload?.translations?.forEach(({ article, translation }) => {
-        const key = translationKey(article.id, locale)
-        const current = translations.value.get(key)
-        if (current !== previous.get(key)) return
-        // An unforced batch must not replace a translation the agent explicitly requested.
-        if (translation.translated === false && current?.status === 'done' && current.translated)
-          return
+      translationCache.batch(() => {
+        payload?.results.forEach((entry) => {
+          const { article, translated } = entry
+          const key = translationKey(article.id, locale)
+          const current = translations.value.get(key)
+          if (current !== previous.get(key)) return
+          translationCache.writeAvailability(article.id, locale, article.translationAvailable)
 
-        applyUpdate(article.id, locale, { translation })
+          if (!generateMissing || translated == null) return
+          // An unforced batch must not replace a translation the agent explicitly requested.
+          if (!translated && current?.status === 'done' && current.translated) return
+
+          applyUpdate(article.id, locale, { article, translation: { translated } })
+        })
       })
-      payload?.pendingArticleIds.forEach((articleId) => {
+      if (payload && !generateMissing) completedLookups.add(selection)
+      payload?.pendingArticleIds?.forEach((articleId) => {
         const key = translationKey(articleId, locale)
         const current = translations.value.get(key)
         // A background result can arrive before the mutation acknowledges the queued job.
-        if (current === previous.get(key) && current?.status !== 'done') {
+        if (
+          current === previous.get(key) &&
+          (current?.status !== 'done' ||
+            (current.translated && !translationCache.read(articleId, locale)))
+        ) {
           translations.value.set(key, { status: 'pending' })
         }
       })
     } catch {
-      // MutationHandler reports request failures; article failures arrive via the subscription.
+      // Generating requests report failures; metadata lookups retry on the next change.
     } finally {
       requests.value.delete(requestKey)
     }
   }
 
-  const translateAll = () => options.loadedArticleSelections.value.forEach(translateSelection)
+  const requestSelections = () => options.loadedArticleSelections.value.forEach(requestSelection)
 
-  // Every open tab follows the agent's preference; per-article display overrides remain local.
   watch(
-    allArticlesEnabled,
-    (enabled) => {
-      original.value.clear()
-
-      if (!enabled) {
-        cancelRequests()
-        shown.value.clear()
-        return
+    [
+      ticketId,
+      targetLocale,
+      () => store.isAvailable,
+      allArticlesEnabled,
+      options.loadedArticleSelections,
+      isActive,
+    ],
+    (
+      [ticket, locale, serviceAvailable, enabled],
+      [previousTicket, previousLocale, previousServiceAvailable, previousEnabled],
+    ) => {
+      cancelRequests()
+      if (
+        ticket !== previousTicket ||
+        locale !== previousLocale ||
+        serviceAvailable !== previousServiceAvailable ||
+        enabled !== previousEnabled
+      )
+        completedLookups = new WeakSet()
+      if (ticket !== previousTicket || locale !== previousLocale) {
+        readiness.reset()
+        forgetPending()
       }
+      if (enabled !== previousEnabled) {
+        original.value.clear()
+        if (!enabled) shown.value.clear()
+      }
+      if (!isActive.value) return
 
-      translateAll()
+      translateShown()
+      requestSelections()
     },
     { immediate: true },
   )
 
-  watch(options.loadedArticleSelections, () => {
+  // A result published while disconnected is lost; generating again waits for the subscription.
+  useOnEmitter('reconnected', () => {
     cancelRequests()
-    translateAll()
-  })
-
-  // What was on its way is lost with the former subscription; the shown articles are asked for
-  // again once the new one answered. Known results are reused.
-  const restart = () => {
-    cancelRequests()
+    completedLookups = new WeakSet()
     readiness.reset()
     forgetPending()
+    if (!isActive.value) return
 
-    if (isActive.value) translateShown()
-    translateAll()
-  }
-
-  // Articles showing a translation follow the new target.
-  watch([ticketId, targetLocale], restart)
-
-  // A result published while the connection was down is lost, and so would be one asked for
-  // before the subscription is registered anew on the server.
-  useOnEmitter('reconnected', restart)
+    translateShown()
+    requestSelections()
+  })
 
   onActivated(() => {
     isActive.value = true
-    fetchAvailability()
-    translateShown()
-    translateAll()
   })
-
   onDeactivated(() => {
     isActive.value = false
-    cancelRequests()
   })
 
   // Reading
@@ -386,10 +378,16 @@ export const useTicketArticleTranslation = (
   const translationFor = (articleId: string) => {
     if (!store.isAvailable || !isShown(articleId)) return undefined
 
-    return (
-      translations.value.get(translationKey(articleId, targetLocale.value ?? '')) ??
+    const locale = targetLocale.value ?? ''
+    const state =
+      translations.value.get(translationKey(articleId, locale)) ??
       translations.value.get(translationKey(articleId, ''))
-    )
+    if (state?.status !== 'done' || !state.translated) return state
+
+    const cached = translationCache.read(articleId, locale)
+    if (!cached) return undefined
+
+    return { ...state, content: cached.content, backend: cached.backend }
   }
 
   // A failed one leaves the original on screen, and so does a result for an article already in the
@@ -414,7 +412,7 @@ export const useTicketArticleTranslation = (
     const known = translations.value.get(translationKey(articleId, locale))
 
     return (
-      !!available.value.get(locale)?.has(articleId) ||
+      !!translationCache.readAvailability(articleId, locale) ||
       (known?.status === 'done' && isTranslation(known)) ||
       isTranslationActive(articleId)
     )
@@ -432,6 +430,6 @@ export const useTicketArticleTranslation = (
     hasDirectTranslationAction,
     showTranslation: translate,
     showOriginal,
-    isTranslating: computed(() => requests.value.size > 0),
+    isTranslating: computed(() => [...requests.value.values()].some(Boolean)),
   }
 }

@@ -1,12 +1,14 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { TicketArticleTranslationAvailabilityFragmentDoc } from '../fragments/ticketArticleTranslationAvailability.api';
+import { TicketArticleTranslationFragmentDoc } from '../fragments/ticketArticleTranslation.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketArticleTranslateManyDocument = gql`
-    mutation ticketArticleTranslateMany($ticketId: ID!, $firstArticlesCount: Int, $loadFirstArticles: Boolean, $pageSize: Int, $beforeCursor: String, $afterCursor: String, $targetLocale: String!) {
+    mutation ticketArticleTranslateMany($ticketId: ID!, $firstArticlesCount: Int, $loadFirstArticles: Boolean, $pageSize: Int, $beforeCursor: String, $afterCursor: String, $targetLocale: String!, $generateMissing: Boolean!) {
   ticketArticleTranslateMany(
     ticketId: $ticketId
     firstArticlesCount: $firstArticlesCount
@@ -15,21 +17,20 @@ export const TicketArticleTranslateManyDocument = gql`
     beforeCursor: $beforeCursor
     afterCursor: $afterCursor
     targetLocale: $targetLocale
+    generateMissing: $generateMissing
   ) {
-    pendingArticleIds
-    translations {
+    pendingArticleIds @include(if: $generateMissing)
+    results {
       article {
-        id
+        ...ticketArticleTranslationAvailability
+        ...ticketArticleTranslation @include(if: $generateMissing)
       }
-      translation {
-        content
-        backend
-        translated
-      }
+      translated @include(if: $generateMissing)
     }
   }
 }
-    `;
+    ${TicketArticleTranslationAvailabilityFragmentDoc}
+${TicketArticleTranslationFragmentDoc}`;
 export function useTicketArticleTranslateManyMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables>(TicketArticleTranslateManyDocument, options);
 }

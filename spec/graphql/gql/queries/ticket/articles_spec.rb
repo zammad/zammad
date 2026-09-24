@@ -8,7 +8,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
     let(:agent)                { create(:agent) }
     let(:query)                do
       <<~QUERY
-        query ticketArticles($ticketId: ID!, $translationTargetLocale: String) {
+        query ticketArticles($ticketId: ID!) {
           ticketArticles(ticketId: $ticketId) {
             totalCount
             edges {
@@ -66,7 +66,6 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   encryptionSuccess
                   encryptionMessage
                 }
-                translationAvailable(targetLocale: $translationTargetLocale)
                 highlightedTexts {
                   startIndex
                   endIndex
@@ -308,39 +307,6 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           end
         end
 
-        context 'with translation information' do
-          let(:variables) { { ticketId: gql.id(ticket), translationTargetLocale: 'de-de' } }
-
-          before do
-            setup_content_translation
-
-            AI::StoredResult.create!(
-              content:  '<p>Hallo</p>',
-              metadata: { 'backend' => 'ai' },
-              version:  Service::AI::Feature::Translate.lookup_version({ html: true, body: article1.body, backend: 'ai' }, Locale.find_by(locale: 'de-de')),
-              **Service::AI::Feature::Translate.lookup_attributes({ object: article1 }, Locale.find_by(locale: 'de-de'))
-            )
-
-            gql.execute(query, variables: variables)
-          end
-
-          it 'tells which articles have a stored translation' do
-            expect(response_articles.first).to include('translationAvailable' => true)
-          end
-
-          it 'answers false without one' do
-            expect(response_articles.last).to include('translationAvailable' => false)
-          end
-
-          context 'without a target locale' do
-            let(:variables) { { ticketId: gql.id(ticket) } }
-
-            it 'answers nothing' do
-              expect(response_articles.first).to include('translationAvailable' => nil)
-            end
-          end
-        end
-
         context 'when has originBy' do
           let(:articles) { create_list(:ticket_article, 1, :inbound_phone, ticket: ticket, origin_by: agent, created_by: create(:agent, groups: [ticket.group])) }
 
@@ -495,4 +461,105 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       end
     end
   end
+
+  context 'when fetching stored article translations', :aggregate_failures, authenticated_as: :agent do
+    let(:ticket)    { create(:ticket) }
+    let(:agent)     { create(:agent, groups: [ticket.group]) }
+    let!(:articles) { create_list(:ticket_article, 3, ticket:, body: '<p>Hello</p>', content_type: 'text/html') }
+    let(:variables) { { ticketId: gql.id(ticket), targetLocale: 'de-de', includeContent: true } }
+    let(:query) do
+      <<~QUERY
+        query ticketArticles($ticketId: ID!, $targetLocale: String!, $includeContent: Boolean!) {
+          ticketArticles(ticketId: $ticketId) {
+            edges {
+              node {
+                id
+                translationAvailable(targetLocale: $targetLocale)
+                availabilityWithoutLocale: translationAvailable
+                translation(targetLocale: $targetLocale) @include(if: $includeContent) {
+                  content
+                  backend
+                  translated
+                }
+              }
+            }
+          }
+        }
+      QUERY
+    end
+
+    before do
+      setup_content_translation
+      articles.first(2).each do |article|
+        Service::ContentTranslation::StoredTranslation.save(
+          object: article, locale: Locale.find_by(locale: 'de-de'), content: article.body,
+          html: true, backend: 'ai', translation: '<p>Hallo</p>'
+        )
+      end
+    end
+
+    def stored_result_queries
+      queries = []
+      subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+        queries << payload[:sql] if payload[:sql].include?('FROM "ai_stored_results"')
+      end
+      gql.execute(query, variables:)
+      queries
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
+
+    it 'batches content reads and never generates a missing translation' do
+      allow(Service::ContentTranslation::TicketArticle).to receive(:execute).and_call_original
+
+      expect(stored_result_queries.size).to eq(2)
+      expect(gql.result.nodes.first['translation']).to eq('content' => '<p>Hallo</p>', 'backend' => 'ai', 'translated' => true)
+      expect(gql.result.nodes.last['translation']).to be_nil
+      expect(Service::ContentTranslation::TicketArticle).not_to have_received(:execute)
+
+      gql.execute(query, variables: variables.merge(targetLocale: 'fr-fr'))
+      expect(gql.result.nodes.pluck('translation')).to all(be_nil)
+    end
+
+    it 'keeps availability-only requests free of translated bodies' do
+      variables[:includeContent] = false
+      queries = stored_result_queries
+
+      expect(queries.size).to eq(1)
+      expect(queries.first).not_to include('"ai_stored_results"."content"')
+      expect(gql.result.nodes.first).to include('translationAvailable' => true, 'availabilityWithoutLocale' => nil)
+      expect(gql.result.nodes.last).to include('translationAvailable' => false)
+      expect(gql.result.nodes.first).not_to have_key('translation')
+    end
+
+    it 'does not return content when article translation is disabled' do
+      Setting.set('content_translation_ticket_article', false)
+      gql.execute(query, variables:)
+
+      expect(gql.result.nodes.pluck('translation')).to all(be_nil)
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:ticket) { create(:ticket, customer:) }
+
+      it 'does not expose translation content' do
+        gql.execute(query, variables:)
+
+        expect(gql.result.nodes.pluck('translation')).to all(be_nil)
+      end
+    end
+
+    context 'with an agent who only has customer access', authenticated_as: :customer do
+      let(:customer) { create(:agent_and_customer) }
+      let(:ticket) { create(:ticket, customer:) }
+
+      it 'does not expose translation content' do
+        gql.execute(query, variables:)
+
+        expect(gql.result.nodes.pluck('translation')).to all(be_nil)
+      end
+    end
+  end
+
 end

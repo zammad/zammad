@@ -1649,6 +1649,10 @@ export type AutocompleteSearchTagQuery = { autocompleteSearchTag: Array<{ __type
 
 export type SecurityStateFragment = { __typename: 'TicketArticleSecurityState', type: Types.EnumSecurityStateType | null | undefined, signingSuccess: boolean | null | undefined, signingMessage: string | null | undefined, encryptionSuccess: boolean | null | undefined, encryptionMessage: string | null | undefined };
 
+export type TicketArticleTranslationFragment = { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined };
+
+export type TicketArticleTranslationAvailabilityFragment = { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined };
+
 export type TicketArticleChangeVisibilityMutationVariables = Exact<{
   articleId: string | number;
   internal: boolean;
@@ -1693,7 +1697,7 @@ export type TicketArticleTranslateMutationVariables = Exact<{
 }>;
 
 
-export type TicketArticleTranslateMutation = { ticketArticleTranslate: { __typename: 'TicketArticleTranslatePayload', translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } | null | undefined };
+export type TicketArticleTranslateMutation = { ticketArticleTranslate: { __typename: 'TicketArticleTranslatePayload', article: { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, translation: { __typename: 'ContentTranslation', translated: boolean | null | undefined } | null | undefined } | null | undefined };
 
 export type TicketArticleTranslateManyMutationVariables = Exact<{
   ticketId: string | number;
@@ -1703,26 +1707,16 @@ export type TicketArticleTranslateManyMutationVariables = Exact<{
   beforeCursor?: string | null | undefined;
   afterCursor?: string | null | undefined;
   targetLocale: string;
+  generateMissing: boolean;
 }>;
 
 
-export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds: Array<string>, translations: Array<{ __typename: 'TicketArticleTranslation', article: { __typename: 'TicketArticle', id: string }, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } }> | null | undefined } | null | undefined };
+export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds?: Array<string>, results: Array<{ __typename: 'TicketArticleTranslationResult', translated?: boolean | null | undefined, article: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } & { __typename: 'TicketArticle', id?: string, translation?: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } }> } | null | undefined };
 
 export type TicketArticleTranslationTargetLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type TicketArticleTranslationTargetLocalesQuery = { ticketArticleTranslationTargetLocales: Array<{ __typename: 'Locale', locale: string, alias: string | null | undefined, name: string, dir: Types.EnumTextDirection }> };
-
-export type TicketArticlesTranslationAvailabilityQueryVariables = Exact<{
-  ticketId: string | number;
-  pageSize?: number | null | undefined;
-  loadFirstArticles?: boolean | null | undefined;
-  firstArticlesCount?: number | null | undefined;
-  translationTargetLocale: string;
-}>;
-
-
-export type TicketArticlesTranslationAvailabilityQuery = { firstArticles?: { __typename: 'TicketArticleConnection', edges: Array<{ __typename: 'TicketArticleEdge', node: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } }> }, articles: { __typename: 'TicketArticleConnection', edges: Array<{ __typename: 'TicketArticleEdge', node: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } }> } };
 
 export type TicketArticleTranslationUpdatesSubscriptionVariables = Exact<{
   ticketId: string | number;
@@ -1730,7 +1724,7 @@ export type TicketArticleTranslationUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type TicketArticleTranslationUpdatesSubscription = { ticketArticleTranslationUpdates: { __typename: 'TicketArticleTranslationUpdatesPayload', article: { __typename: 'TicketArticle', id: string } | null | undefined, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined, error: { __typename: 'AsyncExecutionError', message: string, exception: string } | null | undefined } };
+export type TicketArticleTranslationUpdatesSubscription = { ticketArticleTranslationUpdates: { __typename: 'TicketArticleTranslationUpdatesPayload', article: { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } | null | undefined, translation: { __typename: 'ContentTranslation', translated: boolean | null | undefined } | null | undefined, error: { __typename: 'AsyncExecutionError', message: string, exception: string } | null | undefined } };
 
 export type TicketSharedDraftStartAttributesFragment = { __typename: 'TicketSharedDraftStart', id: string, name: string | null | undefined, updatedAt: string, updatedBy: { __typename: 'User', id: string, internalId: number, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, phone: string | null | undefined, image: string | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined } | null | undefined };
 

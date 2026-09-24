@@ -15,23 +15,22 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
     <<~MUTATION
       mutation ticketArticleTranslateMany(
         $ticketId: ID!, $targetLocale: String!, $pageSize: Int, $firstArticlesCount: Int,
-        $loadFirstArticles: Boolean, $beforeCursor: String, $afterCursor: String
+        $loadFirstArticles: Boolean, $beforeCursor: String, $afterCursor: String,
+        $generateMissing: Boolean = false, $includeContent: Boolean! = true
       ) {
         ticketArticleTranslateMany(
           ticketId: $ticketId, targetLocale: $targetLocale, pageSize: $pageSize,
           firstArticlesCount: $firstArticlesCount, loadFirstArticles: $loadFirstArticles,
-          beforeCursor: $beforeCursor, afterCursor: $afterCursor
+          beforeCursor: $beforeCursor, afterCursor: $afterCursor, generateMissing: $generateMissing
         ) {
           pendingArticleIds
-          translations {
+          results {
             article {
               id
+              translationAvailable(targetLocale: $targetLocale)
+              translation(targetLocale: $targetLocale) @include(if: $includeContent) { content backend translated }
             }
-            translation {
-              content
-              backend
-              translated
-            }
+            translated
           }
         }
       }
@@ -40,9 +39,11 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
 
   let(:variables) do
     {
-      ticketId:     gql.id(ticket),
-      pageSize:     2,
-      targetLocale: target_locale,
+      ticketId:        gql.id(ticket),
+      pageSize:        2,
+      targetLocale:    target_locale,
+      generateMissing: true,
+      includeContent:  true,
     }
   end
 
@@ -64,21 +65,61 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
       Setting.set('content_translation_ticket_article_auto', true)
     end
 
-    context 'with a stored translation of one article' do
-      before { store_translation(articles.first, '<p>Hallo Welt.</p>') }
+    context 'with stored, skipped and pending translations' do
+      let(:variables) { super().merge(pageSize: 3) }
+      let!(:skipped_article) { create(:ticket_article, ticket:, detected_language: 'de', content_type: 'text/html') }
 
-      it 'answers with it, and leaves the other one to the subscription' do
+      before do
+        store_translation(articles.first, '<p>Hallo Welt.</p>')
+        store_translation(skipped_article, '<p>Manuell</p>')
+      end
+
+      it 'returns completed outcomes and leaves pending articles to the subscription' do
+        allow(Service::ContentTranslation::TicketArticle).to receive(:stored_translations).and_call_original
         gql.execute(query, variables:)
 
         expect(gql.result.data[:pendingArticleIds]).to eq([gql.id(articles.last)])
-        expect(gql.result.data[:translations]).to contain_exactly(
+        expect(Service::ContentTranslation::TicketArticle).to have_received(:stored_translations).with([skipped_article], target_locale).once
+        expect(gql.result.data[:results]).to contain_exactly(
           {
-            'article'     => { 'id' => gql.id(articles.first) },
-            'translation' => { 'content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true },
+            'article'    => { 'id' => gql.id(articles.first), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true } },
+            'translated' => true,
+          },
+          {
+            'article'    => { 'id' => gql.id(skipped_article), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Manuell</p>', 'backend' => 'ai', 'translated' => true } },
+            'translated' => false,
+          },
+          {
+            'article'    => { 'id' => gql.id(articles.last), 'translationAvailable' => false, 'translation' => nil },
+            'translated' => nil,
           }
         )
       end
 
+    end
+
+    it 'defaults to a metadata-only lookup without requiring automatic translation permission' do
+      Setting.set('content_translation_ticket_article_auto', false)
+      store_translation(articles.first, '<p>Hallo Welt.</p>')
+      allow(Service::ContentTranslation::TicketArticle).to receive(:execute).and_call_original
+      queries = []
+      subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+        queries << payload[:sql] if payload[:sql].include?('FROM "ai_stored_results"')
+      end
+
+      gql.execute(query, variables: variables.except(:generateMissing).merge(includeContent: false))
+
+      expect(gql.result.data[:pendingArticleIds]).to be_empty
+      expect(gql.result.data[:results]).to contain_exactly(
+        { 'article' => { 'id' => gql.id(articles.first), 'translationAvailable' => true }, 'translated' => nil },
+        { 'article' => { 'id' => gql.id(articles.last), 'translationAvailable' => false }, 'translated' => nil }
+      )
+      expect(queries.size).to eq(1)
+      expect(queries.first).not_to include('"ai_stored_results"."content"')
+      expect(Service::ContentTranslation::TicketArticle).not_to have_received(:execute)
+      expect(ContentTranslationJob).not_to have_been_enqueued
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscriber)
     end
 
     context 'with paginated articles' do
@@ -101,7 +142,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
       end
 
       def list_result(selection)
-        Gql::ZammadSchema.execute(list_query, variables: selection.except(:targetLocale), context: { current_user: agent }).to_h
+        Gql::ZammadSchema.execute(list_query, variables: selection.except(:targetLocale, :generateMissing, :includeContent), context: { current_user: agent }).to_h
       end
 
       def expect_same_selection(selection)
@@ -112,7 +153,8 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
         gql.execute(query, variables: selection)
 
         expect(gql.result.data[:pendingArticleIds]).to match_array(expected_ids)
-        expect(gql.result.data[:translations]).to be_empty
+        expect(gql.result.data[:results].map { |entry| entry['article']['id'] }).to match_array(expected_ids)
+        expect(gql.result.data[:results].pluck('translated')).to all(be_nil)
       end
 
       it 'selects the same leading and trailing pages' do

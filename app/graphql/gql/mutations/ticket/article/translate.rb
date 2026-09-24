@@ -14,6 +14,7 @@ module Gql::Mutations
     argument :target_locale, String, description: 'The locale to translate into, e.g. "de-de".'
     argument :force, Boolean, required: false, default_value: false, description: 'Translate even when the article is already in the target locale.'
 
+    field :article, Gql::Types::Ticket::ArticleType, null: false, description: 'The article whose translation was requested'
     field :translation, Gql::Types::ContentTranslationType, null: true, description: 'The translation, if one is available already'
     field :analytics, Gql::Types::AI::Analytics::MetadataType, null: true, description: 'Analytics metadata'
 
@@ -23,10 +24,16 @@ module Gql::Mutations
       translation = translate(article, target_locale, force:)
 
       # nil means the translation service deferred it; the subscription delivers the outcome.
-      return pending if translation.nil?
+      return { article:, **pending } if translation.nil?
+
+      display_translation = Service::ContentTranslation::TicketArticle.for_display(article, translation)
+      if translation.translated
+        context.scoped_set!(:article_translations, { [article.id, target_locale] => display_translation })
+      end
 
       {
-        translation: Service::ContentTranslation::TicketArticle.for_display(article, translation),
+        article:,
+        translation: display_translation,
         analytics:   {
           run:   translation.analytics_run,
           usage: translation.analytics_run&.usage_by(context.current_user),

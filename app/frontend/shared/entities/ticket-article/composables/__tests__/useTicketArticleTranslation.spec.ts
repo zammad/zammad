@@ -1,14 +1,17 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { ApolloLink } from '@apollo/client/core'
+import { asyncMap } from '@apollo/client/utilities'
 import { waitFor } from '@testing-library/vue'
-import { computed, defineComponent, h, nextTick, ref } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 
-import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
+import { getGraphQLMockCalls, mockedApolloClient } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import {
   mockTicketArticleTranslateMutation,
   mockTicketArticleTranslateMutationError,
@@ -20,10 +23,6 @@ import {
   waitForTicketArticleTranslateManyMutationCalls,
   mockTicketArticleTranslateManyMutationError,
 } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleTranslateMany.mocks.ts'
-import {
-  mockTicketArticlesTranslationAvailabilityQuery,
-  waitForTicketArticlesTranslationAvailabilityQueryCalls,
-} from '#shared/entities/ticket-article/graphql/queries/ticketArticlesTranslationAvailability.mocks.ts'
 import { mockTicketArticleTranslationTargetLocalesQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts'
 import { getTicketArticleTranslationUpdatesSubscriptionHandler } from '#shared/entities/ticket-article/graphql/subscriptions/ticketArticleTranslationUpdates.mocks.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
@@ -59,22 +58,15 @@ const mockTargetLocales = (locales = ['de-de', 'en-us', 'fr-fr']) =>
 
 // Which articles the server has a stored translation for, per target language.
 const mockAvailability = (availableIn: (locale: string) => string[]) =>
-  mockTicketArticlesTranslationAvailabilityQuery((variables) => ({
-    firstArticles: { edges: [] },
-    articles: {
-      edges: [articleId, otherArticleId].map((id) => ({
-        node: {
-          id,
-          translationAvailable: availableIn(variables.translationTargetLocale as string).includes(
-            id,
-          ),
-        },
+  mockTicketArticleTranslateManyMutation((variables) => ({
+    ticketArticleTranslateMany: {
+      results: [articleId, otherArticleId].map((id) => ({
+        article: { id, translationAvailable: availableIn(variables.targetLocale).includes(id) },
+        translated: null,
       })),
+      pendingArticleIds: variables.generateMissing ? [articleId, otherArticleId] : [],
     },
   }))
-
-// How many articles the tab has loaded.
-const loadedArticlesCount = ref(0)
 
 const loadedArticleSelections = ref<TicketArticlesQueryVariables[]>([])
 
@@ -91,12 +83,13 @@ let translation: TicketArticleTranslation
 const Tab = defineComponent({
   setup() {
     translation = useTicketArticleTranslation(ref(ticketId), {
-      loadedArticlesCount,
-      firstArticlesCount: computed(() => 5),
       loadedArticleSelections,
     })
 
-    return () => h('div', 'tab')
+    return () => {
+      const result = translation.translationFor(articleId)
+      return h('div', result?.status === 'done' ? (result.content ?? '') : 'tab')
+    }
   },
 })
 
@@ -122,7 +115,6 @@ const setup = (config: Partial<ConfigList> = {}, locales?: string[], auto = fals
   mockTargetLocales(locales)
   mockAvailability(() => [])
 
-  loadedArticlesCount.value = 2
   loadedArticleSelections.value = [selection()]
 
   const shown = ref(true)
@@ -164,20 +156,25 @@ const openSubscription = async () => {
 const deferredAll = () =>
   mockTicketArticleTranslateManyMutation({
     ticketArticleTranslateMany: {
-      translations: [],
+      results: [],
       pendingArticleIds: [articleId, otherArticleId],
     },
   })
 
 const deferred = () =>
-  mockTicketArticleTranslateMutation({ ticketArticleTranslate: { translation: null } })
+  mockTicketArticleTranslateMutation({
+    ticketArticleTranslate: { article: { id: articleId, translation: null }, translation: null },
+  })
 
 const immediate = (content = '<p>Hallo</p>') =>
   mockTicketArticleTranslateMutation({
-    ticketArticleTranslate: { translation: { content, backend: 'ai', translated: true } },
+    ticketArticleTranslate: {
+      article: { id: articleId, translation: { content, backend: 'ai', translated: true } },
+      translation: { translated: true },
+    },
   })
 
-const holdAutomaticResponse = () => {
+const holdBatchResponse = (generateMissing = true) => {
   let resolve!: (result: TicketArticleTranslateManyMutation) => void
   const promise = new Promise<TicketArticleTranslateManyMutation>((done) => {
     resolve = done
@@ -188,7 +185,12 @@ const holdAutomaticResponse = () => {
     variables,
     options,
   ) {
-    if (variables && 'pageSize' in variables) return promise
+    if (
+      variables &&
+      'generateMissing' in variables &&
+      variables.generateMissing === generateMissing
+    )
+      return promise
     return send.call(this, variables, options)
   })
   return { resolve }
@@ -200,28 +202,68 @@ describe('useTicketArticleTranslation', () => {
       vi.mocked(MutationHandler.prototype.send).mockRestore()
   })
   describe('translating', () => {
-    it('shows an immediate result and records its producer', async () => {
-      const { translation } = setup()
-      mockTicketArticleTranslateMutation({
-        ticketArticleTranslate: {
-          translation: { content: '<p>Hallo</p>', backend: 'deepl', translated: true },
-        },
-      })
+    it('does not let Apollo overwrite a subscription result with a late pending response', async () => {
+      const originalLink = mockedApolloClient.link
+      let release: (() => void) | undefined
+      mockedApolloClient.setLink(
+        new ApolloLink((operation, forward) => {
+          if (operation.operationName !== 'ticketArticleTranslate') return forward(operation)
+          return asyncMap(forward(operation), async (result) => {
+            await new Promise<void>((resolve) => {
+              release = resolve
+            })
+            return result
+          })
+        }).concat(originalLink),
+      )
 
-      const translating = translation.showTranslation(articleId)
-      await openSubscription()
-      await translating
+      try {
+        const { translation } = setup()
+        deferred()
+        const translating = translation.showTranslation(articleId)
+        const subscription = await openSubscription()
+        await waitFor(() => expect(release).toBeDefined())
+        await subscription.trigger({
+          ticketArticleTranslationUpdates: {
+            article: {
+              id: articleId,
+              translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+            },
+            translation: { translated: true },
+            error: null,
+          },
+        })
+        release!()
+        await translating
 
-      expect(translation.translationFor(articleId)).toEqual({
-        status: 'done',
-        content: '<p>Hallo</p>',
-        backend: 'deepl',
-        translated: true,
-      })
-      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
+        expect(translation.translationFor(articleId)).toMatchObject({
+          status: 'done',
+          content: '<p>Hallo</p>',
+        })
+      } finally {
+        mockedApolloClient.setLink(originalLink)
+      }
     })
 
-    it('subscribes to the ticket and target before asking for the translation', async () => {
+    it('validates content again after a view is reopened instead of trusting its old cache entry', async () => {
+      const first = setup()
+      immediate()
+      const translating = first.translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+      first.wrapper.unmount()
+
+      const second = setup()
+      deferred()
+      const pending = second.translation.showTranslation(articleId)
+      await openSubscription()
+      await pending
+
+      expect(second.translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(2)
+    })
+
+    it('waits for subscription readiness and receives the deferred translation', async () => {
       const { translation } = setup()
       deferred()
 
@@ -230,30 +272,25 @@ describe('useTicketArticleTranslation', () => {
 
       expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
       expect(getTicketArticleTranslationUpdatesSubscriptionHandler()).toBeDefined()
+      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
+      expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(false)
 
-      await openSubscription()
+      const subscription = await openSubscription()
       await translating
 
       const calls = await waitForTicketArticleTranslateMutationCalls()
 
-      // Forced: the agent's request for one article overrides the language detection.
       expect(calls.at(-1)?.variables).toEqual({ articleId, targetLocale: 'de-de', force: true })
-    })
-
-    it('stays pending until the deferred result arrives through the subscription', async () => {
-      const { translation } = setup()
-      deferred()
-
-      const translating = translation.showTranslation(articleId)
-      const subscription = await openSubscription()
-      await translating
-
       expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
 
       await subscription.trigger({
         ticketArticleTranslationUpdates: {
-          article: { id: articleId },
-          translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
           error: null,
         },
       })
@@ -275,8 +312,11 @@ describe('useTicketArticleTranslation', () => {
 
       await subscription.trigger({
         ticketArticleTranslationUpdates: {
-          article: { id: otherArticleId },
-          translation: { content: '<p>Andere</p>', backend: 'ai', translated: true },
+          article: {
+            id: otherArticleId,
+            translation: { content: '<p>Andere</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
           error: null,
         },
       })
@@ -287,7 +327,10 @@ describe('useTicketArticleTranslation', () => {
       expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(true)
     })
 
-    it('records a failed background translation', async () => {
+    it.each([
+      { error: { message: 'Provider down', exception: 'StandardError' }, message: 'Provider down' },
+      { error: null, message: 'The translation returned no usable content.' },
+    ])('records a background failure: $message', async ({ error, message }) => {
       const { translation } = setup()
       deferred()
 
@@ -297,47 +340,26 @@ describe('useTicketArticleTranslation', () => {
 
       await subscription.trigger({
         ticketArticleTranslationUpdates: {
-          article: { id: articleId },
+          article: { id: articleId, translation: null },
           translation: null,
-          error: { message: 'Provider down', exception: 'StandardError' },
+          error,
         },
       })
 
-      expect(translation.translationFor(articleId)).toEqual({
-        status: 'error',
-        error: 'Provider down',
-      })
+      expect(translation.translationFor(articleId)).toEqual({ status: 'error', error: message })
       expect(translation.isTranslationActive(articleId)).toBe(false)
       expect(translation.hasDirectTranslationAction(articleId)).toBe(false)
-    })
-
-    it('treats an empty event as a failure, so the agent can ask again', async () => {
-      const { translation } = setup()
-      deferred()
-
-      const translating = translation.showTranslation(articleId)
-      const subscription = await openSubscription()
-      await translating
-
-      await subscription.trigger({
-        ticketArticleTranslationUpdates: {
-          article: { id: articleId },
-          translation: null,
-          error: null,
-        },
-      })
-
-      expect(translation.translationFor(articleId)).toEqual({
-        status: 'error',
-        error: 'The translation returned no usable content.',
-      })
     })
 
     it('is not showing a translation of an article already in the target language', async () => {
       const { translation } = setup()
       mockTicketArticleTranslateMutation({
         ticketArticleTranslate: {
-          translation: { content: '<p>Hallo</p>', backend: 'ai', translated: false },
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: false },
+          },
+          translation: { translated: false },
         },
       })
 
@@ -401,7 +423,7 @@ describe('useTicketArticleTranslation', () => {
       })
     })
 
-    it('reuses a known translation instead of asking again', async () => {
+    it('reuses cached content and requests it again after cache collection', async () => {
       const { translation } = setup()
       immediate()
 
@@ -416,6 +438,12 @@ describe('useTicketArticleTranslation', () => {
 
       expect(translation.translationFor(articleId)).toMatchObject({ content: '<p>Hallo</p>' })
       expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(1)
+
+      mockedApolloClient.cache.gc()
+      expect(translation.translationFor(articleId)).toBeUndefined()
+      await translation.showTranslation(articleId)
+      expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(2)
+      expect(translation.translationFor(articleId)).toMatchObject({ content: '<p>Hallo</p>' })
     })
 
     it('translates shown articles into a new target, and reuses the old result on the way back', async () => {
@@ -475,8 +503,11 @@ describe('useTicketArticleTranslation', () => {
 
       await subscription.trigger({
         ticketArticleTranslationUpdates: {
-          article: { id: articleId },
-          translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
           error: null,
         },
       })
@@ -512,31 +543,7 @@ describe('useTicketArticleTranslation', () => {
       )
     })
 
-    it('asks again for what was pending when the connection comes back', async () => {
-      const { translation } = setup()
-      deferred()
-
-      const translating = translation.showTranslation(articleId)
-      await openSubscription()
-      await translating
-
-      immediate()
-      emitter.emit('reconnected')
-      await waitForNextTick(true)
-
-      // Not before the new connection subscribed again and answered with its first event: a result
-      // published in between would be lost the same way.
-      expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(1)
-
-      await openSubscription()
-
-      await waitFor(() =>
-        expect(translation.translationFor(articleId)).toMatchObject({ content: '<p>Hallo</p>' }),
-      )
-      expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(2)
-    })
-
-    it('lets a hidden tab ask again for what it lost in a reconnect once it is shown', async () => {
+    it.each([false, true])('retries after reconnecting with hidden=%s', async (hidden) => {
       const { translation, shown } = setup()
       deferred()
 
@@ -544,15 +551,14 @@ describe('useTicketArticleTranslation', () => {
       await openSubscription()
       await translating
 
-      shown.value = false
+      shown.value = !hidden
       await nextTick()
-
+      immediate()
       emitter.emit('reconnected')
       await waitForNextTick(true)
 
       expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(1)
 
-      immediate()
       shown.value = true
       await openSubscription()
 
@@ -562,6 +568,15 @@ describe('useTicketArticleTranslation', () => {
       expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(2)
     })
   })
+
+  const waitForGenerationCalls = () =>
+    waitFor(async () => {
+      const calls = (await waitForTicketArticleTranslateManyMutationCalls()).filter(
+        ({ variables }) => variables.generateMissing,
+      )
+      expect(calls.length).toBeGreaterThan(0)
+      return calls
+    })
 
   describe('the whole ticket', () => {
     // Enabling the mode and letting the subscription answer, as a tab does on its own.
@@ -581,10 +596,15 @@ describe('useTicketArticleTranslation', () => {
       await openSubscription()
       await waitForNextTick(true)
 
-      const calls = await waitForTicketArticleTranslateManyMutationCalls()
+      const calls = await waitForGenerationCalls()
 
       expect(calls).toHaveLength(1)
-      expect(calls[0].variables).toEqual({ ...selection(), targetLocale: 'de-de' })
+      expect(getGraphQLMockCalls(TicketArticleTranslateManyDocument)).toHaveLength(1)
+      expect(calls[0].variables).toEqual({
+        ...selection(),
+        targetLocale: 'de-de',
+        generateMissing: true,
+      })
       expect(useArticleTranslationStore().isAutoEnabled).toBe(true)
       expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
     })
@@ -610,10 +630,13 @@ describe('useTicketArticleTranslation', () => {
       mockTicketArticleTranslateManyMutation({
         ticketArticleTranslateMany: {
           pendingArticleIds: [otherArticleId],
-          translations: [
+          results: [
             {
-              article: { id: articleId },
-              translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+              article: {
+                id: articleId,
+                translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+              },
+              translated: true,
             },
           ],
         },
@@ -635,7 +658,7 @@ describe('useTicketArticleTranslation', () => {
       'keeps a subscription %s result that arrives before the pending acknowledgement',
       async (status) => {
         const { translation } = setup()
-        const response = holdAutomaticResponse()
+        const response = holdBatchResponse()
         const subscription = await enable()
 
         expect(translation.isTranslating.value).toBe(true)
@@ -643,9 +666,12 @@ describe('useTicketArticleTranslation', () => {
 
         await subscription.trigger({
           ticketArticleTranslationUpdates: {
-            article: { id: articleId },
-            translation:
-              status === 'done' ? { content: 'Hallo', translated: true, backend: 'ai' } : null,
+            article: {
+              id: articleId,
+              translation:
+                status === 'done' ? { content: 'Hallo', translated: true, backend: 'ai' } : null,
+            },
+            translation: status === 'done' ? { translated: true } : null,
             error:
               status === 'error'
                 ? { message: 'Provider unavailable', exception: 'StandardError' }
@@ -655,7 +681,7 @@ describe('useTicketArticleTranslation', () => {
         response.resolve({
           ticketArticleTranslateMany: {
             __typename: 'TicketArticleTranslateManyPayload',
-            translations: [],
+            results: [],
             pendingArticleIds: [articleId],
           },
         })
@@ -667,7 +693,7 @@ describe('useTicketArticleTranslation', () => {
 
     it('ignores a response from a former subscription generation', async () => {
       const { translation, store } = setup()
-      const response = holdAutomaticResponse()
+      const response = holdBatchResponse()
       await enable()
 
       store.setTargetLocale('fr-fr')
@@ -675,7 +701,7 @@ describe('useTicketArticleTranslation', () => {
       response.resolve({
         ticketArticleTranslateMany: {
           __typename: 'TicketArticleTranslateManyPayload',
-          translations: [],
+          results: [],
           pendingArticleIds: [articleId],
         },
       })
@@ -691,11 +717,13 @@ describe('useTicketArticleTranslation', () => {
 
     it('requests a refreshed page while an equal-sized selection is still in flight', async () => {
       const { translation } = setup()
-      const response = holdAutomaticResponse()
+      const response = holdBatchResponse()
       await enable()
       const send = vi.mocked(MutationHandler.prototype.send)
       const batchCalls = () =>
-        send.mock.calls.filter(([variables]) => variables && 'pageSize' in variables)
+        send.mock.calls.filter(
+          ([variables]) => variables && 'generateMissing' in variables && variables.generateMissing,
+        )
       expect(batchCalls()).toHaveLength(1)
 
       loadedArticleSelections.value = [selection()]
@@ -704,7 +732,7 @@ describe('useTicketArticleTranslation', () => {
       response.resolve({
         ticketArticleTranslateMany: {
           __typename: 'TicketArticleTranslateManyPayload',
-          translations: [],
+          results: [],
           pendingArticleIds: [otherArticleId],
         },
       })
@@ -720,29 +748,46 @@ describe('useTicketArticleTranslation', () => {
         { ...selection(100), loadFirstArticles: false },
       ]
       await enable()
-      expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(2)
+      expect(await waitForGenerationCalls()).toHaveLength(2)
 
       store.setTargetLocale('fr-fr')
       await openSubscription()
       await waitFor(async () => {
-        const calls = await waitForTicketArticleTranslateManyMutationCalls()
+        const calls = await waitForGenerationCalls()
         expect(calls).toHaveLength(4)
         expect(calls.slice(-2).map(({ variables }) => variables)).toEqual(
-          loadedArticleSelections.value.map((page) => ({ ...page, targetLocale: 'fr-fr' })),
+          loadedArticleSelections.value.map((page) => ({
+            ...page,
+            targetLocale: 'fr-fr',
+            generateMissing: true,
+          })),
         )
       })
     })
 
-    it('does not leave articles pending after a refused batch request', async () => {
-      const { translation } = setup()
-      mockTicketArticleTranslateManyMutationError('Provider unavailable', {
-        type: GraphQLErrorTypes.UnknownError,
-      })
-      await enable()
+    it.each([false, true])(
+      'handles a failed batch with generateMissing=%s',
+      async (generateMissing) => {
+        const { notifications, clearAllNotifications } = useNotifications()
+        clearAllNotifications()
+        const send = vi.spyOn(MutationHandler.prototype, 'send')
+        const { translation, shown } = setup({}, undefined, generateMissing)
+        mockTicketArticleTranslateManyMutationError('Provider unavailable', {
+          type: GraphQLErrorTypes.UnknownError,
+        })
+        await openSubscription()
+        await waitForNextTick(true)
+        expect(notifications.value).toHaveLength(generateMissing ? 1 : 0)
 
-      await waitFor(() => expect(translation.isTranslating.value).toBe(false))
-      expect(translation.translationFor(articleId)).toBeUndefined()
-    })
+        await waitFor(() => expect(translation.isTranslating.value).toBe(false))
+        expect(translation.translationFor(articleId)).toBeUndefined()
+
+        shown.value = false
+        await nextTick()
+        shown.value = true
+        await waitFor(() => expect(send).toHaveBeenCalledTimes(2))
+      },
+    )
 
     // The ticket-wide request is unforced, so the server answers an article already in the target
     // language with its original. Asking for that one article is forced, and must go through.
@@ -751,10 +796,13 @@ describe('useTicketArticleTranslation', () => {
       mockTicketArticleTranslateManyMutation({
         ticketArticleTranslateMany: {
           pendingArticleIds: [otherArticleId],
-          translations: [
+          results: [
             {
-              article: { id: articleId },
-              translation: { content: 'Hallo Welt.', backend: null, translated: false },
+              article: {
+                id: articleId,
+                translation: null,
+              },
+              translated: false,
             },
           ],
         },
@@ -777,9 +825,7 @@ describe('useTicketArticleTranslation', () => {
       )
 
       loadedArticleSelections.value = [selection(3)]
-      await waitFor(async () =>
-        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(2),
-      )
+      await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(2))
       expect(translation.translationFor(articleId)).toMatchObject({
         content: '<p>Hallo</p>',
         translated: true,
@@ -802,11 +848,12 @@ describe('useTicketArticleTranslation', () => {
         await openSubscription()
 
         await waitFor(async () => {
-          const calls = await waitForTicketArticleTranslateManyMutationCalls()
+          const calls = await waitForGenerationCalls()
           expect(calls).toHaveLength(2)
           expect(calls[1].variables).toEqual({
             ...selection(),
             targetLocale: trigger === 'target change' ? 'fr-fr' : 'de-de',
+            generateMissing: true,
           })
         })
         expect(translation.translationFor(articleId)).toBeUndefined()
@@ -826,8 +873,11 @@ describe('useTicketArticleTranslation', () => {
 
       await subscription.trigger({
         ticketArticleTranslationUpdates: {
-          article: { id: articleId },
-          translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
           error: null,
         },
       })
@@ -848,7 +898,11 @@ describe('useTicketArticleTranslation', () => {
         await nextTick()
         await openSubscription()
 
-        expect(getGraphQLMockCalls(TicketArticleTranslateManyDocument)).toHaveLength(0)
+        expect(
+          getGraphQLMockCalls(TicketArticleTranslateManyDocument).filter(
+            ({ variables }) => variables.generateMissing,
+          ),
+        ).toHaveLength(0)
         expect(translation.isTranslating.value).toBe(false)
 
         if (condition === 'disabled') useArticleTranslationStore().setAutoEnabled(true)
@@ -856,9 +910,13 @@ describe('useTicketArticleTranslation', () => {
         await openSubscription()
 
         await waitFor(async () => {
-          const calls = await waitForTicketArticleTranslateManyMutationCalls()
+          const calls = await waitForGenerationCalls()
           expect(calls).toHaveLength(1)
-          expect(calls[0].variables).toEqual({ ...selection(), targetLocale: 'de-de' })
+          expect(calls[0].variables).toEqual({
+            ...selection(),
+            targetLocale: 'de-de',
+            generateMissing: true,
+          })
         })
         expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
       },
@@ -875,15 +933,17 @@ describe('useTicketArticleTranslation', () => {
       await waitForNextTick(true)
 
       // Nothing was requested for the hidden tab.
-      expect(getGraphQLMockCalls(TicketArticleTranslateManyDocument)).toHaveLength(0)
+      expect(
+        getGraphQLMockCalls(TicketArticleTranslateManyDocument).filter(
+          ({ variables }) => variables.generateMissing,
+        ),
+      ).toHaveLength(0)
 
       shown.value = true
       await openSubscription()
 
       await waitFor(async () =>
-        expect(
-          (await waitForTicketArticleTranslateManyMutationCalls()).at(-1)?.variables,
-        ).toMatchObject(selection()),
+        expect((await waitForGenerationCalls()).at(-1)?.variables).toMatchObject(selection()),
       )
     })
 
@@ -898,14 +958,12 @@ describe('useTicketArticleTranslation', () => {
         deferredAll()
 
         await enable()
-        await waitForTicketArticleTranslateManyMutationCalls()
+        await waitForGenerationCalls()
 
         await arrive()
 
         await waitFor(async () =>
-          expect(
-            (await waitForTicketArticleTranslateManyMutationCalls()).at(-1)?.variables,
-          ).toMatchObject({ pageSize: 3 }),
+          expect((await waitForGenerationCalls()).at(-1)?.variables).toMatchObject({ pageSize: 3 }),
         )
       })
 
@@ -916,7 +974,11 @@ describe('useTicketArticleTranslation', () => {
         await openSubscription()
         await arrive()
 
-        expect(getGraphQLMockCalls(TicketArticleTranslateManyDocument)).toHaveLength(0)
+        expect(
+          getGraphQLMockCalls(TicketArticleTranslateManyDocument).filter(
+            ({ variables }) => variables.generateMissing,
+          ),
+        ).toHaveLength(0)
       })
 
       it('is left alone while the tab is hidden, and translated when it is shown', async () => {
@@ -924,22 +986,24 @@ describe('useTicketArticleTranslation', () => {
         deferredAll()
 
         await enable()
-        await waitForTicketArticleTranslateManyMutationCalls()
+        await waitForGenerationCalls()
 
         shown.value = false
         await nextTick()
 
         await arrive()
 
-        expect(getGraphQLMockCalls(TicketArticleTranslateManyDocument)).toHaveLength(1)
+        expect(
+          getGraphQLMockCalls(TicketArticleTranslateManyDocument).filter(
+            ({ variables }) => variables.generateMissing,
+          ),
+        ).toHaveLength(1)
 
         shown.value = true
         await openSubscription()
 
         await waitFor(async () =>
-          expect(
-            (await waitForTicketArticleTranslateManyMutationCalls()).at(-1)?.variables,
-          ).toMatchObject({ pageSize: 3 }),
+          expect((await waitForGenerationCalls()).at(-1)?.variables).toMatchObject({ pageSize: 3 }),
         )
       })
     })
@@ -947,48 +1011,130 @@ describe('useTicketArticleTranslation', () => {
 
   describe('stored translations', () => {
     it('asks which of the loaded articles have one, without their bodies', async () => {
-      const { store } = setup()
-      await waitFor(() => expect(store.isAvailable).toBe(true))
+      const { translation } = setup()
+      mockAvailability(() => [articleId])
+      await waitFor(() => expect(translation.hasDirectTranslationAction(articleId)).toBe(true))
+      expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(false)
 
-      const calls = await waitForTicketArticlesTranslationAvailabilityQueryCalls()
+      const calls = await waitForTicketArticleTranslateManyMutationCalls()
+      expect(calls).toHaveLength(1)
+      expect(translation.isTranslating.value).toBe(false)
 
       expect(calls.at(-1)?.variables).toMatchObject({
         ticketId,
         pageSize: 2,
         firstArticlesCount: 5,
-        translationTargetLocale: 'de-de',
+        targetLocale: 'de-de',
+        generateMissing: false,
       })
     })
 
-    it('asks again for a new target language', async () => {
-      const { store } = setup()
-      await waitForTicketArticlesTranslationAvailabilityQueryCalls()
-
-      store.setTargetLocale('fr-fr')
-
-      await waitFor(async () =>
-        expect(
-          (await waitForTicketArticlesTranslationAvailabilityQueryCalls()).at(-1)?.variables,
-        ).toMatchObject({ translationTargetLocale: 'fr-fr' }),
+    it('ignores an old lookup response after switching to generation', async () => {
+      const { store, translation } = setup()
+      const lookup = holdBatchResponse(false)
+      await waitFor(() =>
+        expect(MutationHandler.prototype.send).toHaveBeenCalledWith(
+          expect.objectContaining({ generateMissing: false }),
+        ),
       )
+
+      mockTicketArticleTranslateManyMutation({
+        ticketArticleTranslateMany: {
+          results: [
+            {
+              article: {
+                id: articleId,
+                translationAvailable: true,
+                translation: { content: 'Hallo', backend: 'ai', translated: true },
+              },
+              translated: true,
+            },
+          ],
+          pendingArticleIds: [],
+        },
+      })
+      store.setAutoEnabled(true)
+      await openSubscription()
+      await waitFor(() =>
+        expect(translation.translationFor(articleId)).toMatchObject({ content: 'Hallo' }),
+      )
+
+      lookup.resolve({
+        ticketArticleTranslateMany: {
+          __typename: 'TicketArticleTranslateManyPayload',
+          results: [
+            {
+              __typename: 'TicketArticleTranslationResult',
+              article: { __typename: 'TicketArticle', id: articleId, translationAvailable: false },
+            },
+          ],
+        },
+      })
+      await waitForNextTick(true)
+
+      expect(translation.translationFor(articleId)).toMatchObject({ content: 'Hallo' })
+      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
     })
 
-    it('asks again once more articles are loaded', async () => {
+    it.each([2, 3])(
+      'refreshes availability after loading a page of %s articles',
+      async (pageSize) => {
+        const { translation } = setup()
+        await waitForNextTick(true)
+        expect(translation.hasDirectTranslationAction(articleId)).toBe(false)
+        mockAvailability(() => [articleId])
+
+        loadedArticleSelections.value = [selection(pageSize)]
+
+        await waitFor(() => expect(translation.hasDirectTranslationAction(articleId)).toBe(true))
+        const calls = await waitForTicketArticleTranslateManyMutationCalls()
+        expect(calls).toHaveLength(2)
+        expect(calls.at(-1)?.variables).toMatchObject({ pageSize })
+      },
+    )
+
+    it('looks up only the added page when completed pages are retained', async () => {
       setup()
-      await waitForTicketArticlesTranslationAvailabilityQueryCalls()
+      loadedArticleSelections.value = [selection(2000)]
+      await waitForNextTick(true)
+      const olderPage = { ...selection(100), loadFirstArticles: false, beforeCursor: 'older-page' }
 
-      loadedArticlesCount.value = 3
+      loadedArticleSelections.value = [...loadedArticleSelections.value, olderPage]
 
-      await waitFor(async () =>
-        expect(
-          (await waitForTicketArticlesTranslationAvailabilityQueryCalls()).at(-1)?.variables,
-        ).toMatchObject({ pageSize: 3 }),
-      )
+      await waitForNextTick(true)
+      const calls = await waitForTicketArticleTranslateManyMutationCalls()
+      expect(calls).toHaveLength(2)
+      expect(calls.at(-1)?.variables).toMatchObject(olderPage)
     })
+
+    it.each([false, true])(
+      'reuses only completed lookups across tab switches with generateMissing=%s',
+      async (generateMissing) => {
+        const { shown } = setup({}, undefined, generateMissing)
+        await openSubscription()
+        await waitForNextTick(true)
+        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(1)
+
+        shown.value = false
+        await nextTick()
+        shown.value = true
+        await waitForNextTick(true)
+        const expectedCalls = generateMissing ? 2 : 1
+        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(expectedCalls)
+
+        emitter.emit('reconnected')
+        await openSubscription()
+        await waitFor(() =>
+          expect(getGraphQLMockCalls(TicketArticleTranslateManyDocument)).toHaveLength(
+            expectedCalls + 1,
+          ),
+        )
+      },
+    )
 
     it('does not follow a change while hidden, and catches up when shown again', async () => {
       const { store, shown } = setup()
-      const before = (await waitForTicketArticlesTranslationAvailabilityQueryCalls()).length
+      const before = (await waitForTicketArticleTranslateManyMutationCalls()).length
 
       shown.value = false
       await nextTick()
@@ -996,49 +1142,35 @@ describe('useTicketArticleTranslation', () => {
       store.setTargetLocale('fr-fr')
       await waitForNextTick(true)
 
-      expect((await waitForTicketArticlesTranslationAvailabilityQueryCalls()).length).toBe(before)
+      expect((await waitForTicketArticleTranslateManyMutationCalls()).length).toBe(before)
 
       shown.value = true
 
       await waitFor(async () => {
-        const calls = await waitForTicketArticlesTranslationAvailabilityQueryCalls()
+        const calls = await waitForTicketArticleTranslateManyMutationCalls()
         expect(calls.length).toBe(before + 1)
-        expect(calls.at(-1)?.variables).toMatchObject({ translationTargetLocale: 'fr-fr' })
+        expect(calls.at(-1)?.variables).toMatchObject({
+          targetLocale: 'fr-fr',
+          generateMissing: false,
+        })
       })
     })
   })
 
   describe('direct action', () => {
-    it('belongs to an article the server has a stored translation for', async () => {
-      const { translation } = setup()
-      mockAvailability(() => [articleId])
-
-      await waitFor(() => expect(translation.hasDirectTranslationAction(articleId)).toBe(true))
-      expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(false)
-    })
-
     it('follows the target language', async () => {
       const { translation, store } = setup()
       mockAvailability((locale) => (locale === 'fr-fr' ? [articleId] : []))
 
-      await waitForTicketArticlesTranslationAvailabilityQueryCalls()
+      await waitForTicketArticleTranslateManyMutationCalls()
       expect(translation.hasDirectTranslationAction(articleId)).toBe(false)
 
       store.setTargetLocale('fr-fr')
 
       await waitFor(() => expect(translation.hasDirectTranslationAction(articleId)).toBe(true))
-    })
-
-    it('belongs to an article while its translation is on its way or shown', async () => {
-      const { translation } = setup()
-      deferred()
-
-      const translating = translation.showTranslation(articleId)
-      await openSubscription()
-      await translating
-
-      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
-      expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(false)
+      expect(
+        (await waitForTicketArticleTranslateManyMutationCalls()).at(-1)?.variables,
+      ).toMatchObject({ targetLocale: 'fr-fr', generateMissing: false })
     })
 
     it('belongs to nobody while the service cannot translate', async () => {

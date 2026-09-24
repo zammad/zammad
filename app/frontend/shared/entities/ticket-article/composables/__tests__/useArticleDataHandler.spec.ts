@@ -41,7 +41,7 @@ const setup = async (count = 2) => {
     },
     { store: true },
   )
-  await waitFor(() => expect(handler.loadedArticlesCount.value).toBe(count))
+  await waitFor(() => expect(handler.articleResult.value?.articles.edges.length).toBe(count))
   return handler
 }
 
@@ -61,6 +61,8 @@ describe('article selections', () => {
 
   it('includes pages retained by the relay cache after fetching older articles', async () => {
     const handler = await setup()
+    const previousEdges = handler.articleResult.value!.articles.edges
+    const previousLeading = handler.articleResult.value!.firstArticles!.edges[0].node
     mockTicketArticlesQuery({
       articles: {
         edges: edges(8, 2),
@@ -75,41 +77,51 @@ describe('article selections', () => {
         loadFirstArticles: false,
       },
     })
-    await waitFor(() => expect(handler.loadedArticlesCount.value).toBe(4))
+    await waitFor(() => expect(handler.articleResult.value?.articles.edges.length).toBe(4))
+    expect(handler.articleResult.value!.articles.edges[2]).toBe(previousEdges[0])
+    expect(handler.articleResult.value!.firstArticles!.edges[0].node).toBe(previousLeading)
     expect(handler.loadedArticleSelections.value).toMatchObject([
       { pageSize: 4, loadFirstArticles: true },
     ])
   })
 
-  it('splits a retained window larger than the connection limit at actual cursors', async () => {
+  it('preserves a full page when older articles extend the retained window', async () => {
     const handler = await setup()
     const result = handler.articleResult.value!
+    const pageEdges = (start: number, count: number) =>
+      edges(start, count).map((edge) =>
+        Object.assign(edge, {
+          __typename: 'TicketArticleEdge' as const,
+          node: Object.assign({}, result.articles.edges[0].node, edge.node),
+        }),
+      )
+    const retainedEdges = pageEdges(10, 2000)
+    handler.articleResult.value = {
+      ...result,
+      articles: { ...result.articles, edges: retainedEdges },
+    }
+    const previous = handler.loadedArticleSelections.value[0]
+
     handler.articleResult.value = {
       ...result,
       articles: {
         ...result.articles,
-        edges: edges(10, 2001).map((edge) =>
-          Object.assign(edge, {
-            __typename: 'TicketArticleEdge' as const,
-            node: Object.assign({}, result.articles.edges[0].node, edge.node),
-          }),
-        ),
+        edges: [...pageEdges(9, 1), ...retainedEdges],
       },
     }
-    expect(handler.loadedArticleSelections.value).toEqual([
+
+    expect(handler.loadedArticleSelections.value).toHaveLength(2)
+    expect(handler.loadedArticleSelections.value[0]).toBe(previous)
+    expect(handler.loadedArticleSelections.value).toMatchObject([
       {
-        ticketId,
-        firstArticlesCount: 5,
         loadFirstArticles: true,
         pageSize: 2000,
-        beforeCursor: 'cursor-2010',
+        beforeCursor: undefined,
       },
       {
-        ticketId,
-        firstArticlesCount: 5,
         loadFirstArticles: false,
         pageSize: 1,
-        beforeCursor: undefined,
+        beforeCursor: 'cursor-10',
       },
     ])
   })
@@ -128,5 +140,6 @@ describe('article selections', () => {
     await handler.articlesQuery.refetch()
     await waitFor(() => expect(handler.loadedArticleSelections.value).not.toBe(previous))
     expect(handler.loadedArticleSelections.value).toEqual(previous)
+    expect(handler.loadedArticleSelections.value[0]).not.toBe(previous[0])
   })
 })

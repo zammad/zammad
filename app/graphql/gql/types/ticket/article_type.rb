@@ -49,6 +49,10 @@ module Gql::Types::Ticket
       field :translation_available, Boolean, description: 'Whether a translation into the given locale is stored for the current content of this article' do
         argument :target_locale, String, required: false, description: 'The locale to translate into, e.g. "de-de".'
       end
+
+      field :translation, Gql::Types::ContentTranslationType, null: true, description: 'The stored translation of the current article content' do
+        argument :target_locale, String, description: 'The locale to translate into, e.g. "de-de".'
+      end
     end
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
@@ -94,13 +98,22 @@ module Gql::Types::Ticket
     def translation_available(target_locale: nil)
       return if target_locale.blank?
 
-      stored_translation(target_locale).then(&:present?)
+      load_translation(target_locale, with_content: context[:article_translation_content_locale] == target_locale).then(&:present?)
+    end
+
+    def translation(target_locale:)
+      return if !Setting.get('content_translation_service') || !Setting.get('content_translation_ticket_article')
+      return if !Pundit.policy!(context.current_user, @object).agent_read_access?
+
+      load_translation(target_locale, with_content: true)
     end
 
     private
 
-    def stored_translation(target_locale)
-      Gql::Loaders::Ticket::ArticleTranslationLoader.for(target_locale).load(@object)
+    def load_translation(target_locale, with_content:)
+      (context[:article_translations] || {}).fetch([@object.id, target_locale]) do
+        Gql::Loaders::Ticket::ArticleTranslationLoader.for(target_locale, with_content:).load(@object)
+      end
     end
 
     # Batched, so listing many articles of the same ticket does not cause one query per article.

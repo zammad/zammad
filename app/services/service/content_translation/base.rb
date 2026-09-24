@@ -33,11 +33,10 @@ class Service::ContentTranslation::Base < Service::Base
   #   own detection is used when nothing is given.
   # @param force [Boolean] translate even when the source language matches the target. Unrelated to
   #   the store: a stored translation is still served, use `regeneration_of` to bypass that.
-  # @param background [Boolean] set it to false when the caller cannot be answered later - the
-  #   background job does, because it is the background. Whether deferring is worth it at all is
-  #   the translation service's own answer, and an explicit `persistence_strategy` overrides it.
+  # @param background [Boolean, Symbol] :auto follows the backend preference; true always defers
+  #   generation, false runs it in place. An explicit `persistence_strategy` overrides it.
   # @param persistence_strategy [Symbol, NilClass] @see Service::AI::Feature#initialize
-  def initialize(object:, target_locale:, source_language: nil, force: false, background: true, persistence_strategy: :stored_or_request, regeneration_of: nil)
+  def initialize(object:, target_locale:, source_language: nil, force: false, background: :auto, persistence_strategy: :stored_or_request, regeneration_of: nil)
     @object               = object
     @target_locale        = target_locale
     @source_language      = source_language
@@ -143,7 +142,7 @@ class Service::ContentTranslation::Base < Service::Base
     # An explicit persistence strategy is the caller insisting on an answer of its own.
     return false if persistence_strategy != :stored_or_request
 
-    background && backend_class.background?
+    background == :auto ? backend_class.background? : background
   end
 
   # The caller learns the outcome from the subscription the job triggers.

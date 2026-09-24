@@ -1,8 +1,9 @@
 mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean) {
   ticketArticleTranslate(articleId: $articleId, targetLocale: $targetLocale, force: $force) {
+    article {
+      ...ticketArticleTranslation
+    }
     translation {
-      content
-      backend
       translated
     }
   }
