@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, onActivated, onDeactivated, ref, watch, type Ref } from 'vue'
+import { computed, onActivated, onDeactivated, ref, shallowReactive, watch, type Ref } from 'vue'
 
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useTicketArticleTranslateMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleTranslate.api.ts'
@@ -13,10 +13,12 @@ import type {
   TicketArticleTranslation,
 } from '#shared/entities/ticket-article/stores/types.ts'
 import type {
+  AiAnalyticsMetadata,
   TicketArticlesQueryVariables,
   TicketArticleTranslationFragment,
 } from '#shared/graphql/types.ts'
 import { MutationHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 import { useArticleTranslationCache } from './useArticleTranslationCache.ts'
 
@@ -25,7 +27,7 @@ export const NO_RESULT_ERROR = __('The translation returned no usable content.')
 
 type TranslationState =
   | { status: 'pending' }
-  | { status: 'done'; translated: boolean }
+  | { status: 'done'; translated: boolean; analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>> }
   | { status: 'error'; error: string }
 
 const translationKey = (articleId: string, locale: string) => `${articleId}:${locale}`
@@ -70,6 +72,9 @@ export const useTicketArticleTranslation = (
 
   // Keyed by article and locale, so a result for a former target never shows up as the current one.
   const translations = ref(new Map<string, TranslationState>())
+  // Regenerations on their way, by the same key: the translation they replace stays until one
+  // succeeds, and is kept when it fails.
+  const regenerations = shallowReactive(new Map<string, object>())
   const translationCache = useArticleTranslationCache()
   // Articles whose translation is displayed instead of the original.
   const shown = ref(new Set<string>())
@@ -117,12 +122,19 @@ export const useTicketArticleTranslation = (
       article?: Maybe<Partial<TicketArticleTranslationFragment>>
       translation?: Maybe<Pick<ArticleTranslationResult, 'translated'>>
       error?: Maybe<{ message: string }>
+      // A sibling of the translation in both payloads, not a part of it.
+      analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>>
     },
   ) => {
     const key = translationKey(articleId, locale)
+    const regenerating = regenerations.delete(key)
+
+    const fail = (error: string) => {
+      if (!regenerating) translations.value.set(key, { status: 'error', error })
+    }
 
     if (update.error) {
-      translations.value.set(key, { status: 'error', error: update.error.message })
+      fail(update.error.message)
       return
     }
 
@@ -133,13 +145,13 @@ export const useTicketArticleTranslation = (
 
     // The job publishes an empty event when the service produced nothing usable.
     if (!translation) {
-      translations.value.set(key, { status: 'error', error: NO_RESULT_ERROR })
+      fail(NO_RESULT_ERROR)
       return
     }
 
     const translated = translation.translated !== false
     if (translated) translationCache.write(articleId, locale, translation)
-    translations.value.set(key, { status: 'done', translated })
+    translations.value.set(key, { status: 'done', translated, analytics: update.analytics })
   }
 
   subscription.onResult(({ data }) => {
@@ -169,6 +181,52 @@ export const useTicketArticleTranslation = (
     translations.value.forEach((translation, key) => {
       if (translation.status === 'pending') translations.value.delete(key)
     })
+    regenerations.clear()
+  }
+
+  const requestTranslation = async (
+    articleId: string,
+    locale: string,
+    regenerationOfId?: string,
+  ) => {
+    const key = translationKey(articleId, locale)
+    const request = {}
+
+    if (regenerationOfId) regenerations.set(key, request)
+    else translations.value.set(key, { status: 'pending' })
+    const pending = translations.value.get(key)
+
+    // Answered already, or forgotten, e.g. because the target changed.
+    const isCurrent = () =>
+      regenerationOfId
+        ? regenerations.get(key) === request
+        : translations.value.get(key) === pending
+
+    await readiness.until(locale)
+
+    if (!isCurrent()) return
+
+    try {
+      // Forced: the agent asked for this one article, whatever language it was detected in. A
+      // stored translation is still served first, unless it is the one to regenerate.
+      const result = await translateMutation.send({
+        articleId,
+        targetLocale: locale,
+        force: true,
+        regenerationOfId,
+      })
+
+      if (!isCurrent()) return
+      const payload = result?.ticketArticleTranslate
+
+      // No translation yet means it is generated in the background; the subscription delivers it.
+      if (payload?.translation) applyUpdate(articleId, locale, payload)
+    } catch (error) {
+      if (!isCurrent()) return
+      applyUpdate(articleId, locale, {
+        error: { message: error instanceof Error ? error.message : String(error) },
+      })
+    }
   }
 
   const translate = async (articleId: string) => {
@@ -201,30 +259,21 @@ export const useTicketArticleTranslation = (
     )
       return
 
-    translations.value.set(key, { status: 'pending' })
-    const pending = translations.value.get(key)
+    await requestTranslation(articleId, locale)
+  }
 
-    await readiness.until(locale)
+  // Only a translation that came from an analytics run can be regenerated: the run is what the
+  // server asks another translation for.
+  const regenerateTranslation = async (articleId: string) => {
+    const locale = targetLocale.value
+    if (!locale) return
 
-    // Forgotten while waiting, e.g. because the target changed.
-    if (translations.value.get(key)?.status !== 'pending') return
+    const key = translationKey(articleId, locale)
+    const translation = translations.value.get(key)
+    if (translation?.status !== 'done' || !translation.analytics?.run?.id) return
+    if (regenerations.has(key)) return
 
-    try {
-      // Forced: the agent asked for this one article, whatever language it was detected in. A
-      // stored translation is still served first.
-      const result = await translateMutation.send({ articleId, targetLocale: locale, force: true })
-
-      if (translations.value.get(key) !== pending) return
-      const payload = result?.ticketArticleTranslate
-
-      // No translation yet means it is generated in the background; the subscription delivers it.
-      if (payload?.translation) applyUpdate(articleId, locale, payload)
-    } catch (error) {
-      if (translations.value.get(key) !== pending) return
-      applyUpdate(articleId, locale, {
-        error: { message: error instanceof Error ? error.message : String(error) },
-      })
-    }
+    await requestTranslation(articleId, locale, translation.analytics.run.id)
   }
 
   const translateShown = () => shown.value.forEach((articleId) => translate(articleId))
@@ -277,17 +326,17 @@ export const useTicketArticleTranslation = (
       const payload = result?.ticketArticleTranslateMany
       translationCache.batch(() => {
         payload?.results.forEach((entry) => {
-          const { article, translated } = entry
+          const { article, translated, analytics } = entry
           const key = translationKey(article.id, locale)
           const current = translations.value.get(key)
-          if (current !== previous.get(key)) return
+          if (current !== previous.get(key) || regenerations.has(key)) return
           translationCache.writeAvailability(article.id, locale, article.translationAvailable)
 
           if (!generateMissing || translated == null) return
           // An unforced batch must not replace a translation the agent explicitly requested.
           if (!translated && current?.status === 'done' && current.translated) return
 
-          applyUpdate(article.id, locale, { article, translation: { translated } })
+          applyUpdate(article.id, locale, { article, translation: { translated }, analytics })
         })
       })
       if (payload && !generateMissing) completedLookups.add(selection)
@@ -379,15 +428,20 @@ export const useTicketArticleTranslation = (
     if (!store.isAvailable || !isShown(articleId)) return undefined
 
     const locale = targetLocale.value ?? ''
+    const key = translationKey(articleId, locale)
     const state =
-      translations.value.get(translationKey(articleId, locale)) ??
-      translations.value.get(translationKey(articleId, ''))
+      translations.value.get(key) ?? translations.value.get(translationKey(articleId, ''))
     if (state?.status !== 'done' || !state.translated) return state
 
     const cached = translationCache.read(articleId, locale)
     if (!cached) return undefined
 
-    return { ...state, content: cached.content, backend: cached.backend }
+    return {
+      ...state,
+      content: cached.content,
+      backend: cached.backend,
+      regenerating: regenerations.has(key),
+    }
   }
 
   // A failed one leaves the original on screen, and so does a result for an article already in the
@@ -424,6 +478,23 @@ export const useTicketArticleTranslation = (
     if (allArticlesEnabled.value) original.value.add(articleId)
   }
 
+  // The rating belongs to the translation, not to whatever displays it: showing the original and
+  // back reuses this entry, so a rating kept elsewhere would be forgotten with the control.
+  const markTranslationRated = (articleId: string) => {
+    const key = translationKey(articleId, targetLocale.value ?? '')
+    const translation = translations.value.get(key)
+
+    if (translation?.status !== 'done' || !translation.analytics) return
+
+    translations.value.set(key, {
+      ...translation,
+      analytics: {
+        ...translation.analytics,
+        usage: { ...translation.analytics.usage, userHasProvidedFeedback: true },
+      },
+    })
+  }
+
   return {
     translationFor,
     isTranslationActive,
@@ -431,5 +502,7 @@ export const useTicketArticleTranslation = (
     showTranslation: translate,
     showOriginal,
     isTranslating: computed(() => [...requests.value.values()].some(Boolean)),
+    markTranslationRated,
+    regenerateTranslation,
   }
 }

@@ -335,6 +335,7 @@ class MockLink extends ApolloLink {
 
       const errorCall = calls.find((call) => call.result.errors)
       if (errorCall) {
+        calls.push({ document: query, result: errorCall.result, variables })
         observer.next(cloneDeep(errorCall.result))
         observer.complete()
         return noop

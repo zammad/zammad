@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef, watch, nextTick, onMounted } from 'vue'
+import { computed, toRef, watch, nextTick, onMounted, useTemplateRef } from 'vue'
 
 import { useArticleToggleMore } from '#shared/composables/useArticleToggleMore.ts'
 import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
@@ -12,6 +12,7 @@ import { useArticleTranslationStore } from '#shared/entities/ticket-article/stor
 import { i18n } from '#shared/i18n.ts'
 import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
+import CommonAIFeedback from '#desktop/components/CommonAIFeedback/CommonAIFeedback.vue'
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
@@ -46,13 +47,23 @@ const displayedTranslation = computed(() =>
   translation.value?.status === 'done' && translation.value.translated ? translation.value : null,
 )
 
+const isAiTranslation = computed(() => displayedTranslation.value?.backend === 'ai')
+
 const translationAttribution = computed(() => {
   if (!displayedTranslation.value) return ''
 
-  return displayedTranslation.value.backend === 'ai'
-    ? __('Translated by AI')
-    : __('Translated automatically')
+  return isAiTranslation.value
+    ? __('Translated by AI, some formatting may be lost.')
+    : __('Machine-translated, some formatting may be lost.')
 })
+
+const translationAnalytics = computed(() => displayedTranslation.value?.analytics)
+
+const translationFeedback = useTemplateRef('translation-feedback')
+
+const isTranslationFeedbackCommenting = computed(
+  () => !!translationFeedback.value?.showCommentField,
+)
 
 const translationDirection = computed(() =>
   displayedTranslation.value ? translationStore.targetLocaleData?.dir?.toLowerCase() : undefined,
@@ -160,7 +171,7 @@ onMounted(() => {
   >
     <div
       v-if="showAuthorInformation"
-      class="absolute top-3 flex w-full px-3 ltr:left-0 rtl:right-0 print:hidden"
+      class="absolute inset-s-0 top-3 flex w-full px-3 print:hidden"
       aria-describedby="author-name-and-creation-date"
     >
       <p id="author-name-and-creation-date" class="sr-only">
@@ -171,10 +182,7 @@ onMounted(() => {
         {{ article.author.fullname }}
       </CommonLabel>
 
-      <CommonDateTime
-        class="shrink-0 text-xs ltr:ml-auto rtl:mr-auto"
-        :date-time="article.createdAt"
-      />
+      <CommonDateTime class="ms-auto shrink-0 text-xs" :date-time="article.createdAt" />
     </div>
 
     <div
@@ -217,13 +225,34 @@ onMounted(() => {
 
       <CommonLabel
         v-if="displayedTranslation"
-        class="text-stone-200! ltr:ml-auto rtl:mr-auto dark:text-neutral-500!"
+        class="ms-auto text-stone-200! dark:text-neutral-500!"
         size="xs"
+        tag="p"
         prefix-icon="translate"
         data-test-id="article-translation-attribution"
       >
         {{ $t(translationAttribution) }}
       </CommonLabel>
+
+      <CommonAIFeedback
+        v-if="translationAnalytics?.run?.id"
+        ref="translation-feedback"
+        :class="{ 'w-full': isTranslationFeedbackCommenting }"
+        :analytics-meta="translationAnalytics"
+        no-usage-tracking
+        regenerate-variant="neutral"
+        data-test-id="article-translation-feedback"
+        :no-ai-based="!isAiTranslation"
+        :regenerating="displayedTranslation?.regenerating"
+        @rated="articleTranslation.markTranslationRated(article.id)"
+        @regenerate="articleTranslation.regenerateTranslation(article.id)"
+      >
+        <template #success>
+          <CommonLabel class="-ms-2 flex! text-stone-200! dark:text-neutral-500!" size="xs">
+            {{ $t('Thank you for your feedback.') }}
+          </CommonLabel>
+        </template>
+      </CommonAIFeedback>
     </div>
   </article>
 </template>

@@ -31,6 +31,14 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
               translation(targetLocale: $targetLocale) @include(if: $includeContent) { content backend translated }
             }
             translated
+            analytics @include(if: $includeContent) {
+              run {
+                id
+              }
+              usage {
+                userHasProvidedFeedback
+              }
+            }
           }
         }
       }
@@ -47,14 +55,15 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
     }
   end
 
-  def store_translation(article, translation)
+  def store_translation(article, translation, analytics_run: nil)
     Service::ContentTranslation::StoredTranslation.save(
-      object:      article,
+      object:        article,
       locale:,
-      content:     article.body,
-      html:        true,
-      backend:     'ai',
+      content:       article.body,
+      html:          true,
+      backend:       'ai',
       translation:,
+      analytics_run:,
     )
   end
 
@@ -84,18 +93,48 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
           {
             'article'    => { 'id' => gql.id(articles.first), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true } },
             'translated' => true,
+            'analytics'  => { 'run' => nil, 'usage' => nil },
           },
           {
             'article'    => { 'id' => gql.id(skipped_article), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Manuell</p>', 'backend' => 'ai', 'translated' => true } },
             'translated' => false,
+            'analytics'  => { 'run' => nil, 'usage' => nil },
           },
           {
             'article'    => { 'id' => gql.id(articles.last), 'translationAvailable' => false, 'translation' => nil },
             'translated' => nil,
+            'analytics'  => nil,
           }
         )
       end
+    end
 
+    context 'with a stored translation that came from an analytics run' do
+      let(:run) { create(:ai_analytics_run, related_object: articles.first) }
+
+      before { store_translation(articles.first, '<p>Hallo Welt.</p>', analytics_run: run) }
+
+      def result_for(article)
+        gql.result.data[:results].find { |result| result.dig('article', 'id') == gql.id(article) }
+      end
+
+      it 'returns the run for the feedback widget' do
+        gql.execute(query, variables:)
+
+        expect(result_for(articles.first)['analytics']).to eq(
+          'run'   => { 'id' => gql.id(run) },
+          'usage' => nil,
+        )
+      end
+
+      it 'returns the feedback the current user gave' do
+        create(:ai_analytics_usage, ai_analytics_run: run, user: agent, rating: 1)
+
+        gql.execute(query, variables:)
+
+        expect(result_for(articles.first)['analytics'])
+          .to include('usage' => { 'userHasProvidedFeedback' => true })
+      end
     end
 
     it 'defaults to a metadata-only lookup without requiring automatic translation permission' do

@@ -2933,6 +2933,7 @@ export type MutationsTicketArticleRetrySecurityProcessArgs = {
 export type MutationsTicketArticleTranslateArgs = {
   articleId: Scalars['ID']['input'];
   force?: InputMaybe<Scalars['Boolean']['input']>;
+  regenerationOfId?: InputMaybe<Scalars['ID']['input']>;
   targetLocale: Scalars['String']['input'];
 };
 
@@ -5460,6 +5461,8 @@ export type TicketArticleTranslatePayload = {
 /** The outcome of translating one article of a ticket */
 export type TicketArticleTranslationResult = {
   __typename?: 'TicketArticleTranslationResult';
+  /** Analytics metadata of the translation, if one is available */
+  analytics?: Maybe<AiAnalyticsMetadata>;
   /** The article the translation belongs to */
   article: TicketArticle;
   /** True when translated, false when skipped, and null without a completed translation request */

@@ -6,5 +6,6 @@ module Gql::Types
 
     field :article, Gql::Types::Ticket::ArticleType, null: false, description: 'The article the translation belongs to'
     field :translated, Boolean, null: true, description: 'True when translated, false when skipped, and null without a completed translation request'
+    field :analytics, Gql::Types::AI::Analytics::MetadataType, null: true, description: 'Analytics metadata of the translation, if one is available'
   end
 end

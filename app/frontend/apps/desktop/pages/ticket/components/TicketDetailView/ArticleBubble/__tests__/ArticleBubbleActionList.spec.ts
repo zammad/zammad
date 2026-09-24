@@ -340,6 +340,26 @@ describe('ArticleBubbleActionList', () => {
       expect(articleTranslation.showOriginal).toHaveBeenCalledTimes(1)
     })
 
+    it('pulses while another translation is regenerated for the shown one', async () => {
+      enableTranslation(true)
+      articleTranslation.isTranslationActive = () => true
+      articleTranslation.translationFor = () => ({
+        status: 'done',
+        content: 'Hallo',
+        translated: true,
+        regenerating: true,
+      })
+
+      const wrapper = renderArticleBubbleActionList({})
+
+      const toggle = await wrapper.findByRole('button', {
+        name: 'Stop translating the article',
+      })
+
+      expect(toggle).toHaveAttribute('aria-busy', 'true')
+      expect(toggle.querySelector('.icon-square-fill')).toHaveClass('animate-pulse')
+    })
+
     it('keeps the direct button while the translation is shown, to switch back', async () => {
       enableTranslation()
       const active = ref(true)

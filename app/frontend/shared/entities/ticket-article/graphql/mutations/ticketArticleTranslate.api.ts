@@ -7,17 +7,26 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketArticleTranslateDocument = gql`
-    mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean) {
+    mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean, $regenerationOfId: ID) {
   ticketArticleTranslate(
     articleId: $articleId
     targetLocale: $targetLocale
     force: $force
+    regenerationOfId: $regenerationOfId
   ) {
     article {
       ...ticketArticleTranslation
     }
     translation {
       translated
+    }
+    analytics {
+      run {
+        id
+      }
+      usage {
+        userHasProvidedFeedback
+      }
     }
   }
 }

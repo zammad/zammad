@@ -49,9 +49,15 @@ const translateMenuItem = computed<MenuItem | undefined>(() => {
 
 const isTranslationActive = computed(() => articleTranslation.isTranslationActive(props.article.id))
 
-const isTranslationPending = computed(
-  () => articleTranslation.translationFor(props.article.id)?.status === 'pending',
-)
+// A regenerated translation is on its way just the same, while the current one stays shown.
+const isTranslationPending = computed(() => {
+  const translation = articleTranslation.translationFor(props.article.id)
+
+  return (
+    translation?.status === 'pending' ||
+    (translation?.status === 'done' && !!translation.regenerating)
+  )
+})
 
 // The article keeps its original content while the translation is on its way, so the button carries
 // the waiting: it pulses, and offers to stop waiting for it.

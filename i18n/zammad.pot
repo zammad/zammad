@@ -2503,7 +2503,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:167
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:178
 msgid "Author name and article creation date"
 msgstr ""
 
@@ -10771,6 +10771,10 @@ msgstr ""
 msgid "MAC address (unique identifier of the report)"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:57
+msgid "Machine-translated, some formatting may be lost."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:8
 msgid "Macro"
@@ -11827,7 +11831,7 @@ msgstr ""
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:144
 msgid "Negative feedback"
 msgstr ""
 
@@ -12275,7 +12279,7 @@ msgstr ""
 msgid "No checklist templates have been created yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:161
 msgid "No comment"
 msgstr ""
 
@@ -12479,7 +12483,7 @@ msgstr ""
 msgid "No suitable object attributes found, please add one of the supported types first: %s"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:23
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:25
 msgid "No supported target language is available."
 msgstr ""
 
@@ -14046,7 +14050,7 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Positive feedback"
 msgstr ""
 
@@ -14595,7 +14599,7 @@ msgstr ""
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:179
 msgid "Regenerate"
 msgstr ""
 
@@ -15969,7 +15973,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:223
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr ""
@@ -15980,7 +15984,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:215
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:223
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr ""
@@ -17331,7 +17335,7 @@ msgstr ""
 msgid "Submit Comment"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:164
 msgid "Submit comment"
 msgstr ""
 
@@ -17759,7 +17763,8 @@ msgid "Textarea field"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:251
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -17773,7 +17778,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:156
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
@@ -19115,7 +19120,7 @@ msgstr ""
 msgid "The translation language could not be saved."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:24
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:26
 msgid "The translation returned no usable content."
 msgstr ""
 
@@ -20705,12 +20710,8 @@ msgstr ""
 msgid "Translate to %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:54
-msgid "Translated automatically"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:53
-msgid "Translated by AI"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:56
+msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3

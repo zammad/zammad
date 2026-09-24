@@ -1694,10 +1694,11 @@ export type TicketArticleTranslateMutationVariables = Exact<{
   articleId: string | number;
   targetLocale: string;
   force?: boolean | null | undefined;
+  regenerationOfId?: string | number | null | undefined;
 }>;
 
 
-export type TicketArticleTranslateMutation = { ticketArticleTranslate: { __typename: 'TicketArticleTranslatePayload', article: { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, translation: { __typename: 'ContentTranslation', translated: boolean | null | undefined } | null | undefined } | null | undefined };
+export type TicketArticleTranslateMutation = { ticketArticleTranslate: { __typename: 'TicketArticleTranslatePayload', article: { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, translation: { __typename: 'ContentTranslation', translated: boolean | null | undefined } | null | undefined, analytics: { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 export type TicketArticleTranslateManyMutationVariables = Exact<{
   ticketId: string | number;
@@ -1711,7 +1712,7 @@ export type TicketArticleTranslateManyMutationVariables = Exact<{
 }>;
 
 
-export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds?: Array<string>, results: Array<{ __typename: 'TicketArticleTranslationResult', translated?: boolean | null | undefined, article: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } & { __typename: 'TicketArticle', id?: string, translation?: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } }> } | null | undefined };
+export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds?: Array<string>, results: Array<{ __typename: 'TicketArticleTranslationResult', translated?: boolean | null | undefined, article: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } & { __typename: 'TicketArticle', id?: string, translation?: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, analytics?: { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined }> } | null | undefined };
 
 export type TicketArticleTranslationTargetLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1724,7 +1725,7 @@ export type TicketArticleTranslationUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type TicketArticleTranslationUpdatesSubscription = { ticketArticleTranslationUpdates: { __typename: 'TicketArticleTranslationUpdatesPayload', article: { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } | null | undefined, translation: { __typename: 'ContentTranslation', translated: boolean | null | undefined } | null | undefined, error: { __typename: 'AsyncExecutionError', message: string, exception: string } | null | undefined } };
+export type TicketArticleTranslationUpdatesSubscription = { ticketArticleTranslationUpdates: { __typename: 'TicketArticleTranslationUpdatesPayload', article: { __typename: 'TicketArticle', id: string, translation: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined } | null | undefined, translation: { __typename: 'ContentTranslation', translated: boolean | null | undefined } | null | undefined, error: { __typename: 'AsyncExecutionError', message: string, exception: string } | null | undefined, analytics: { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined } };
 
 export type TicketSharedDraftStartAttributesFragment = { __typename: 'TicketSharedDraftStart', id: string, name: string | null | undefined, updatedAt: string, updatedBy: { __typename: 'User', id: string, internalId: number, firstname: string | null | undefined, lastname: string | null | undefined, fullname: string | null | undefined, email: string | null | undefined, phone: string | null | undefined, image: string | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined } | null | undefined };
 

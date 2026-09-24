@@ -11,8 +11,8 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
 
   let(:query) do
     <<~MUTATION
-      mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean) {
-        ticketArticleTranslate(articleId: $articleId, targetLocale: $targetLocale, force: $force) {
+      mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean, $regenerationOfId: ID) {
+        ticketArticleTranslate(articleId: $articleId, targetLocale: $targetLocale, force: $force, regenerationOfId: $regenerationOfId) {
           article {
             id
             translation(targetLocale: $targetLocale) { content backend translated }
@@ -134,6 +134,41 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
 
         expect(Service::ContentTranslation::TicketArticle)
           .to have_received(:execute).with(hash_including(force: true))
+      end
+    end
+
+    context 'when the agent asks to regenerate a stored translation' do
+      let(:run) { AI::Analytics::Run.last }
+
+      before { store_translation('<p>Hallo Welt.</p>') }
+
+      it 'returns no translation yet and regenerates it in the background' do
+        expect { gql.execute(query, variables: variables.merge(regenerationOfId: gql.id(run))) }
+          .to have_enqueued_job(ContentTranslationJob)
+          .with(article, target_locale, service: 'Service::ContentTranslation::TicketArticle', regeneration_of: run)
+
+        expect(gql.result.data[:translation]).to be_nil
+      end
+    end
+
+    context 'when the agent asks to regenerate a run of an inaccessible ticket' do
+      let(:run) { create(:ai_analytics_run, related_object: create(:ticket_article)) }
+
+      it 'fails with an error' do
+        gql.execute(query, variables: variables.merge(regenerationOfId: gql.id(run)))
+
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
+    context 'when the agent asks to regenerate a run of another accessible article' do
+      let(:run) { create(:ai_analytics_run, related_object: create(:ticket_article, ticket:)) }
+
+      it 'fails with an error without regenerating' do
+        expect { gql.execute(query, variables: variables.merge(regenerationOfId: gql.id(run))) }
+          .not_to have_enqueued_job(ContentTranslationJob)
+
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
 

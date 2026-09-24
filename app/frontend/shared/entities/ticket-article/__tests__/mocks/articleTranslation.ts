@@ -14,5 +14,7 @@ export const createArticleTranslationMock = (
   showTranslation: vi.fn(() => Promise.resolve()),
   showOriginal: vi.fn(),
   isTranslating: computed(() => false),
+  markTranslationRated: vi.fn(),
+  regenerateTranslation: vi.fn(() => Promise.resolve()),
   ...overrides,
 })

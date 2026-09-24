@@ -2,9 +2,12 @@
 
 import { getNode } from '@formkit/core'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { AiAnalyticsUsageDocument } from '#shared/graphql/mutations/aiAnalyticsUsage.api.ts'
 import {
   mockAiAnalyticsUsageMutationError,
   waitForAiAnalyticsUsageMutationCalls,
@@ -42,6 +45,17 @@ describe('CommonAIFeedback', () => {
       aiAnalyticsRunId: 'test-run-id',
       input: { rating: null },
     })
+  })
+
+  it('sends no initial usage on mount with noUsageTracking prop', async () => {
+    renderCommonAIFeedback({
+      analyticsMeta: { run: { id: RUN_ID } },
+      noUsageTracking: true,
+    })
+
+    await waitForNextTick()
+
+    expect(getGraphQLMockCalls(AiAnalyticsUsageDocument)).toHaveLength(0)
   })
 
   it('handles positive feedback', async () => {
@@ -99,11 +113,11 @@ describe('CommonAIFeedback', () => {
 
     expect(wrapper.emitted('rated')).toHaveLength(1)
 
-    const fieldNode = getNode('feedback-comment')
-
     const commentField = await wrapper.findByPlaceholderText(
       'Thanks for the feedback. Please explain what went wrong?',
     )
+
+    const fieldNode = getNode(commentField.id)
 
     expect(commentField).toHaveFocus()
 
@@ -156,20 +170,24 @@ describe('CommonAIFeedback', () => {
       type: GraphQLErrorTypes.AiFeedbackAlreadyProvided,
     })
 
-    const fieldNode = getNode('feedback-comment')
-
-    await wrapper.events.type(
-      await wrapper.findByPlaceholderText(
-        'Thanks for the feedback. Please explain what went wrong?',
-      ),
-      'Never trust AI',
+    const commentField = await wrapper.findByPlaceholderText(
+      'Thanks for the feedback. Please explain what went wrong?',
     )
+
+    const fieldNode = getNode(commentField.id)
+
+    await wrapper.events.type(commentField, 'Never trust AI')
 
     await fieldNode?.settled
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit comment' }))
 
-    await waitForAiAnalyticsUsageMutationCalls()
+    const usageMutation = await waitForAiAnalyticsUsageMutationCalls()
+
+    expect(usageMutation.at(-1)?.variables).toEqual({
+      aiAnalyticsRunId: RUN_ID,
+      input: { comment: 'Never trust AI' },
+    })
 
     expect(await wrapper.findByText('Thank you for your feedback.')).toBeInTheDocument()
     expect(
@@ -256,5 +274,57 @@ describe('CommonAIFeedback', () => {
     expect(wrapper.getByRole('button', { name: 'Regenerate' })).toBeInTheDocument()
     expect(wrapper.queryByRole('button', { name: 'Positive feedback' })).not.toBeInTheDocument()
     expect(wrapper.queryByRole('button', { name: 'Negative feedback' })).not.toBeInTheDocument()
+  })
+
+  it('renders nothing for a result rated earlier that cannot be regenerated', () => {
+    const wrapper = renderCommonAIFeedback({
+      analyticsMeta: { run: { id: RUN_ID }, usage: { userHasProvidedFeedback: true } },
+      noRegeneration: true,
+      noUsageTracking: true,
+    })
+
+    expect(wrapper.container).toBeEmptyDOMElement()
+  })
+
+  it('keeps the comment field when the rating sets the feedback flag', async () => {
+    const props = {
+      analyticsMeta: { run: { id: RUN_ID } },
+      noRegeneration: true,
+      noUsageTracking: true,
+    }
+
+    const wrapper = renderCommonAIFeedback(props)
+
+    await wrapper.events.click(wrapper.getByLabelText('Negative feedback'))
+    await waitForAiAnalyticsUsageMutationCalls()
+
+    await wrapper.rerender({
+      ...props,
+      analyticsMeta: { run: { id: RUN_ID }, usage: { userHasProvidedFeedback: true } },
+    })
+
+    expect(
+      wrapper.getByPlaceholderText('Thanks for the feedback. Please explain what went wrong?'),
+    ).toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'No comment' }))
+
+    expect(wrapper.getByText('Thank you for your feedback.')).toBeInTheDocument()
+  })
+
+  it('gives every comment field its own id', async () => {
+    const props = { analyticsMeta: { run: { id: RUN_ID } }, noUsageTracking: true }
+    const placeholder = 'Thanks for the feedback. Please explain what went wrong?'
+
+    renderCommonAIFeedback(props)
+    const wrapper = renderCommonAIFeedback(props)
+
+    const [firstButton, secondButton] = wrapper.getAllByLabelText('Negative feedback')
+    await wrapper.events.click(firstButton)
+    await wrapper.events.click(secondButton)
+
+    const [firstField, secondField] = await wrapper.findAllByPlaceholderText(placeholder)
+
+    expect(firstField.id).not.toBe(secondField.id)
   })
 })

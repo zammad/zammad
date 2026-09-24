@@ -10,5 +10,13 @@ subscription ticketArticleTranslationUpdates($ticketId: ID!, $targetLocale: Stri
       message
       exception
     }
+    analytics {
+      run {
+        id
+      }
+      usage {
+        userHasProvidedFeedback
+      }
+    }
   }
 }

@@ -22,6 +22,14 @@ export const TicketArticleTranslationUpdatesDocument = gql`
       message
       exception
     }
+    analytics {
+      run {
+        id
+      }
+      usage {
+        userHasProvidedFeedback
+      }
+    }
   }
 }
     ${TicketArticleTranslationFragmentDoc}`;

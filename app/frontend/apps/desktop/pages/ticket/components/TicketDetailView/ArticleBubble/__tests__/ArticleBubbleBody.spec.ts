@@ -12,6 +12,8 @@ import { createArticleTranslationMock } from '#shared/entities/ticket-article/__
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import type { ArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
+import { AiAnalyticsUsageDocument } from '#shared/graphql/mutations/aiAnalyticsUsage.api.ts'
+import { waitForAiAnalyticsUsageMutationCalls } from '#shared/graphql/mutations/aiAnalyticsUsage.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 
@@ -57,6 +59,8 @@ const renderBody = (
     {
       router: true,
       store: true,
+      // CommonAIFeedback holds a FormKit comment field, which Vue resolves even while it is hidden.
+      form: true,
     },
   )
 }
@@ -327,7 +331,7 @@ describe('ArticleBubbleBody', () => {
       expect(await wrapper.findByText('Welt')).toBeInTheDocument()
       expect(wrapper.queryByText('world')).not.toBeInTheDocument()
       expect(wrapper.getByTestId('article-translation-attribution')).toHaveTextContent(
-        'Translated by AI',
+        'Translated by AI, some formatting may be lost.',
       )
     })
 
@@ -348,7 +352,7 @@ describe('ArticleBubbleBody', () => {
 
       expect(await wrapper.findByText('Hallo <Welt>')).toBeInTheDocument()
       expect(wrapper.getByTestId('article-translation-attribution')).toHaveTextContent(
-        'Translated automatically',
+        'Machine-translated, some formatting may be lost.',
       )
     })
 
@@ -598,6 +602,206 @@ describe('ArticleBubbleBody', () => {
       await waitFor(() =>
         expect(wrapper.getAllByRole('button', { name: 'See more' })).toHaveLength(2),
       )
+    })
+
+    // A rating attaches to the analytics run behind the translation, whichever service produced it;
+    // a translation stored before runs were recorded leaves nothing to attach it to.
+    describe('feedback', () => {
+      const runId = convertToGraphQLId('AIAnalyticsRun', 1)
+
+      const rateable = (
+        userHasProvidedFeedback = false,
+        backend = 'ai',
+        regenerating = false,
+      ): ArticleTranslation => ({
+        status: 'done',
+        content: 'Hallo',
+        backend,
+        translated: true,
+        analytics: { run: { id: runId }, usage: { userHasProvidedFeedback } },
+        regenerating,
+      })
+
+      const translatedArticle = () =>
+        createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+
+      // Like the composable: the rating lands on the stored translation, and showing the original
+      // only hides that entry.
+      const mockRateableTranslation = () => {
+        const rated = ref(false)
+        const shown = ref(true)
+
+        articleTranslation.translationFor = () => (shown.value ? rateable(rated.value) : undefined)
+        articleTranslation.markTranslationRated = vi.fn(() => {
+          rated.value = true
+        })
+
+        return shown
+      }
+
+      it('offers a rating for a translation that carries a run', async () => {
+        mockTranslation(rateable())
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByLabelText('Positive feedback')).toBeInTheDocument()
+        expect(wrapper.getByLabelText('Negative feedback')).toBeInTheDocument()
+      })
+
+      it('offers a rating for a machine translation that carries a run, without the AI styling', async () => {
+        mockTranslation(rateable(false, 'deepl'))
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByLabelText('Positive feedback')).toBeInTheDocument()
+        expect(wrapper.getByLabelText('Negative feedback')).toBeInTheDocument()
+        expect(wrapper.getByLabelText('Regenerate')).not.toHaveClass('ai-stripe')
+      })
+
+      it('shows the AI styling on the regeneration of an AI translation', async () => {
+        mockTranslation(rateable())
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByLabelText('Regenerate')).toHaveClass('ai-stripe')
+      })
+
+      it('offers no rating for a translation without a run', async () => {
+        mockTranslation({
+          status: 'done',
+          content: 'Hallo',
+          backend: 'libretranslate',
+          translated: true,
+        })
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+        expect(wrapper.queryByLabelText('Positive feedback')).not.toBeInTheDocument()
+      })
+
+      it('offers no rating while the original is shown', async () => {
+        mockTranslation(undefined)
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByText('Hello')).toBeInTheDocument()
+        expect(wrapper.queryByLabelText('Positive feedback')).not.toBeInTheDocument()
+      })
+
+      it('spans the toolbar only while the comment field is open', async () => {
+        mockRateableTranslation()
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        const feedback = await wrapper.findByTestId('article-translation-feedback')
+        expect(feedback).not.toHaveClass('w-full')
+
+        await wrapper.events.click(wrapper.getByLabelText('Negative feedback'))
+
+        await waitFor(() => expect(feedback).toHaveClass('w-full'))
+
+        await wrapper.events.click(wrapper.getByRole('button', { name: 'No comment' }))
+
+        await waitFor(() => expect(feedback).not.toHaveClass('w-full'))
+      })
+
+      it('regenerates the translation on request', async () => {
+        mockTranslation(rateable())
+
+        const article = translatedArticle()
+        const wrapper = renderBody(article, false)
+
+        await wrapper.events.click(await wrapper.findByLabelText('Regenerate'))
+
+        expect(articleTranslation.regenerateTranslation).toHaveBeenCalledWith(article.id)
+      })
+
+      it('keeps the translation and refuses another regeneration while one is on its way', async () => {
+        mockTranslation(rateable(false, 'ai', true))
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        const regenerate = await wrapper.findByLabelText('Regenerate')
+        expect(regenerate).toHaveAttribute('aria-disabled', 'true')
+        expect(regenerate).toHaveAttribute('aria-busy', 'true')
+        expect(wrapper.getByTestId('article-translation-attribution')).toBeInTheDocument()
+      })
+
+      it('offers no regeneration for a translation without a run', async () => {
+        mockTranslation({
+          status: 'done',
+          content: 'Hallo',
+          backend: 'libretranslate',
+          translated: true,
+        })
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+        expect(wrapper.queryByLabelText('Regenerate')).not.toBeInTheDocument()
+      })
+
+      // One control per article: recording every displayed translation on render would mean one
+      // mutation per translated article of the ticket.
+      it('records nothing before the agent rates', async () => {
+        mockTranslation(rateable())
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByLabelText('Positive feedback')).toBeInTheDocument()
+        await waitForNextTick(true)
+
+        expect(getGraphQLMockCalls(AiAnalyticsUsageDocument)).toHaveLength(0)
+      })
+
+      it('records the rating against the run and stops asking', async () => {
+        mockRateableTranslation()
+
+        const article = translatedArticle()
+        const wrapper = renderBody(article, false)
+
+        await wrapper.events.click(await wrapper.findByLabelText('Positive feedback'))
+
+        const calls = await waitForAiAnalyticsUsageMutationCalls()
+        expect(calls.at(-1)?.variables).toEqual({
+          aiAnalyticsRunId: runId,
+          input: { rating: true },
+        })
+
+        expect(articleTranslation.markTranslationRated).toHaveBeenCalledWith(article.id)
+
+        expect(wrapper.queryByLabelText('Positive feedback')).not.toBeInTheDocument()
+      })
+
+      // The control unmounts with the translation, so a rating kept on it alone would be lost.
+      it('offers no rating again after the original was shown in between', async () => {
+        const shown = mockRateableTranslation()
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        await wrapper.events.click(await wrapper.findByLabelText('Positive feedback'))
+        await waitForAiAnalyticsUsageMutationCalls()
+
+        shown.value = false
+        await waitForNextTick(true)
+
+        shown.value = true
+        await waitForNextTick(true)
+
+        expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+        expect(wrapper.queryByLabelText('Positive feedback')).not.toBeInTheDocument()
+      })
+
+      // A rating is final, so a translation rated in an earlier visit offers no control again.
+      it('offers no rating for a translation the agent already rated', async () => {
+        mockTranslation(rateable(true))
+
+        const wrapper = renderBody(translatedArticle(), false)
+
+        expect(await wrapper.findByText('Hallo')).toBeInTheDocument()
+        expect(wrapper.queryByLabelText('Positive feedback')).not.toBeInTheDocument()
+      })
     })
   })
 })

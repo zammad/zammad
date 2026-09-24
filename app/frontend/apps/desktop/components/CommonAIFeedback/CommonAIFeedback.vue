@@ -9,9 +9,11 @@ import type { AiAnalyticsMetadata, AiAnalyticsUsageInput } from '#shared/graphql
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 import type { UiState } from '#desktop/components/CommonAIFeedback/types.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import type { ButtonVariant } from '#desktop/components/CommonButton/types.ts'
 
 import type { ApolloError } from '@apollo/client/core'
 
@@ -19,14 +21,25 @@ interface Props {
   analyticsMeta: DeepPartial<AiAnalyticsMetadata>
   label?: string
   noRegeneration?: boolean
+  // A regeneration is on its way; asking for another one is refused until it arrives.
+  regenerating?: boolean
+  // Opt out where one view holds many controls: a ticket of translated articles would otherwise
+  //   send one mutation per article on render.
+  noUsageTracking?: boolean
+  regenerateVariant?: ButtonVariant
+  // Removes ai styling
+  noAiBased?: boolean
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  regenerateVariant: 'tertiary',
+})
 
 const emit = defineEmits<{ regenerate: []; rated: [] }>()
 
 const uiState = shallowRef<UiState>('idle')
 
 const comment = shallowRef('')
+const commentFieldId = `feedback-comment-${getUuid()}`
 const commentFieldElement = useTemplateRef('comment-field')
 
 const usageMutation = new MutationHandler(useAiAnalyticsUsageMutation(), {
@@ -95,11 +108,21 @@ const cancelComment = () => {
 }
 
 const showActions = computed(() => uiState.value === 'idle' && !hasProvidedFeedback.value)
-const showCommentField = computed(() => uiState.value === 'comment' && !hasProvidedFeedback.value)
+// A consumer may record the rating that opens this field, so it must not depend on that flag.
+const showCommentField = computed(() => uiState.value === 'comment')
 const showSuccess = computed(() => uiState.value === 'success' || !hasProvidedFeedback.value)
 const canRegenerate = computed(() => !props.noRegeneration && uiState.value !== 'comment')
 
+// An empty row still reserves its height next to whatever holds the component.
+const hasContent = computed(
+  () => showActions.value || showCommentField.value || showSuccess.value || canRegenerate.value,
+)
+
+defineExpose({ showCommentField })
+
 onMounted(async () => {
+  if (props.noUsageTracking) return
+
   // Track usage once if not yet done.
   const usage = props.analyticsMeta?.usage
   if (!usage && runId.value) await submitUsage({ rating: null })
@@ -107,7 +130,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div v-if="hasContent">
     <CommonLabel v-if="label && !hasProvidedFeedback" class="col-span-2 mb-4" tag="h3">
       {{ label }}
     </CommonLabel>
@@ -132,7 +155,7 @@ onMounted(async () => {
 
       <div v-else-if="showCommentField" ref="comment-field" class="w-full space-y-2">
         <FormKit
-          id="feedback-comment"
+          :id="commentFieldId"
           v-model="comment"
           :placeholder="$t('Thanks for the feedback. Please explain what went wrong?')"
           type="textarea"
@@ -148,16 +171,24 @@ onMounted(async () => {
       </div>
 
       <div v-else class="flex-1">
-        <CommonLabel v-if="showSuccess" size="small">
-          {{ $t('Thank you for your feedback.') }}
-        </CommonLabel>
+        <slot v-if="showSuccess" name="success">
+          <CommonLabel size="small">
+            {{ $t('Thank you for your feedback.') }}
+          </CommonLabel>
+        </slot>
       </div>
 
       <CommonButton
         v-if="canRegenerate"
         v-tooltip="$t('Regenerate')"
-        class="relative ai-stripe before:absolute before:-bottom-0 before:left-1/2 before:h-[1px] before:w-[.7em] before:-translate-x-1/2 hover:animate-ai-stripe focus-visible:animate-ai-stripe ltr:ml-auto rtl:mr-auto"
-        variant="tertiary"
+        class="relative ltr:ml-auto rtl:mr-auto"
+        :class="{
+          'ai-stripe before:absolute before:bottom-0 before:left-1/2 before:h-px before:w-[.7em] before:-translate-x-1/2 hover:animate-ai-stripe focus-visible:animate-ai-stripe':
+            !noAiBased,
+        }"
+        :variant="regenerateVariant"
+        :disabled="regenerating"
+        :aria-busy="regenerating"
         size="medium"
         icon="arrow-repeat"
         @click="$emit('regenerate')"

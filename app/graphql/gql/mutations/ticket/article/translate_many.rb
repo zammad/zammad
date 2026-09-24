@@ -40,7 +40,7 @@ module Gql::Mutations
       end
 
       {
-        results:             translations.map { |entry| { article: entry[:article], translated: entry[:translation]&.translated } },
+        results:             translations.map { |entry| result(entry) },
         pending_article_ids: translations.filter_map do |entry|
           Gql::ZammadSchema.id_from_object(entry[:article]) if entry.key?(:translation) && entry[:translation].nil?
         end,
@@ -48,6 +48,19 @@ module Gql::Mutations
     end
 
     private
+
+    def result(entry)
+      translation = entry[:translation]
+
+      {
+        article:    entry[:article],
+        translated: translation&.translated,
+        analytics:  translation && {
+          run:   translation.analytics_run,
+          usage: translation.analytics_run&.usage_by(context.current_user),
+        },
+      }
+    end
 
     # Batch loaders are cleared after the mutation root; scoped data survives into its fields.
     def resolved_translations(translations, target_locale)

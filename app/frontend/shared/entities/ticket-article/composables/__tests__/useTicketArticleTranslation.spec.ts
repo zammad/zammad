@@ -45,6 +45,7 @@ import { useTicketArticleTranslation } from '../useTicketArticleTranslation.ts'
 const ticketId = convertToGraphQLId('Ticket', 1)
 const articleId = convertToGraphQLId('Ticket::Article', 1)
 const otherArticleId = convertToGraphQLId('Ticket::Article', 2)
+const analyticsRunId = convertToGraphQLId('AIAnalyticsRun', 1)
 
 const mockTargetLocales = (locales = ['de-de', 'en-us', 'fr-fr']) =>
   mockTicketArticleTranslationTargetLocalesQuery({
@@ -487,6 +488,346 @@ describe('useTicketArticleTranslation', () => {
     })
   })
 
+  // What a rating attaches to: without it the article offers no feedback control at all.
+  describe('analytics metadata', () => {
+    const analytics = {
+      run: { id: analyticsRunId },
+      usage: { userHasProvidedFeedback: false },
+    }
+
+    it('carries the run of a translation that came back at once', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          analytics,
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      expect(translation.translationFor(articleId)).toMatchObject({ status: 'done', analytics })
+    })
+
+    // The AI service always defers, so this is the path a rateable translation normally takes.
+    it('carries the run of a deferred translation', async () => {
+      const { translation } = setup()
+      deferred()
+
+      const translating = translation.showTranslation(articleId)
+      const subscription = await openSubscription()
+      await translating
+
+      await subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          error: null,
+          analytics,
+        },
+      })
+
+      expect(translation.translationFor(articleId)).toMatchObject({ status: 'done', analytics })
+    })
+
+    it('shows a translation the service recorded no run for', async () => {
+      const { translation } = setup()
+      deferred()
+
+      const translating = translation.showTranslation(articleId)
+      const subscription = await openSubscription()
+      await translating
+
+      await subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'libretranslate', translated: true },
+          },
+          translation: { translated: true },
+          error: null,
+          analytics: null,
+        },
+      })
+
+      expect(translation.translationFor(articleId)).toEqual({
+        status: 'done',
+        content: '<p>Hallo</p>',
+        backend: 'libretranslate',
+        translated: true,
+        analytics: null,
+        regenerating: false,
+      })
+    })
+
+    it('keeps a rating on the translation it was given for', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          analytics,
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      translation.markTranslationRated(articleId)
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        analytics: { usage: { userHasProvidedFeedback: true } },
+      })
+
+      translation.showOriginal(articleId)
+      await translation.showTranslation(articleId)
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        analytics: { usage: { userHasProvidedFeedback: true } },
+      })
+    })
+
+    it('records no rating for a translation the service recorded no run for', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'libretranslate', translated: true },
+          },
+          translation: { translated: true },
+          analytics: null,
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      translation.markTranslationRated(articleId)
+
+      expect(translation.translationFor(articleId)).toMatchObject({ analytics: null })
+    })
+  })
+
+  describe('regenerating', () => {
+    const analytics = {
+      run: { id: analyticsRunId },
+      usage: { userHasProvidedFeedback: false },
+    }
+
+    const translateWithRun = async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          analytics,
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      const subscription = await openSubscription()
+      await translating
+
+      return { translation, subscription }
+    }
+
+    const current = { status: 'done', content: '<p>Hallo</p>', analytics }
+
+    it('asks for another translation of the run and keeps the current one until it arrives', async () => {
+      const { translation, subscription } = await translateWithRun()
+
+      deferred()
+      await translation.regenerateTranslation(articleId)
+
+      const calls = await waitForTicketArticleTranslateMutationCalls()
+      expect(calls.at(-1)?.variables).toEqual({
+        articleId,
+        targetLocale: 'de-de',
+        force: true,
+        regenerationOfId: analyticsRunId,
+      })
+      expect(translation.translationFor(articleId)).toMatchObject({
+        ...current,
+        regenerating: true,
+      })
+
+      // Asking again while one is on its way requests nothing more.
+      await translation.regenerateTranslation(articleId)
+      expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(2)
+
+      const regeneratedAnalytics = {
+        run: { id: convertToGraphQLId('AIAnalyticsRun', 2) },
+        usage: { userHasProvidedFeedback: false },
+      }
+
+      await subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Guten Tag</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          error: null,
+          analytics: regeneratedAnalytics,
+        },
+      })
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        status: 'done',
+        content: '<p>Guten Tag</p>',
+        analytics: regeneratedAnalytics,
+        regenerating: false,
+      })
+    })
+
+    it('does not let a ticket-wide result end a regeneration on its way', async () => {
+      const { translation, subscription } = await translateWithRun()
+      const response = holdBatchResponse()
+
+      deferred()
+      await translation.regenerateTranslation(articleId)
+
+      useArticleTranslationStore().setAutoEnabled(true)
+      await waitFor(() =>
+        expect(
+          vi
+            .mocked(MutationHandler.prototype.send)
+            .mock.calls.some(
+              ([variables]) =>
+                variables && 'generateMissing' in variables && variables.generateMissing,
+            ),
+        ).toBe(true),
+      )
+
+      response.resolve({
+        ticketArticleTranslateMany: {
+          __typename: 'TicketArticleTranslateManyPayload',
+          results: [
+            {
+              __typename: 'TicketArticleTranslationResult',
+              article: {
+                __typename: 'TicketArticle',
+                id: articleId,
+                translationAvailable: true,
+                translation: {
+                  __typename: 'ContentTranslation',
+                  content: '<p>Hallo</p>',
+                  backend: 'ai',
+                  translated: true,
+                },
+              },
+              translated: true,
+              analytics: {
+                __typename: 'AIAnalyticsMetadata',
+                run: { __typename: 'AIAnalyticsRun', id: analyticsRunId },
+                usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: false },
+              },
+            },
+          ],
+          pendingArticleIds: [],
+        },
+      })
+      await waitForNextTick(true)
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        ...current,
+        regenerating: true,
+      })
+
+      await subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Guten Tag</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          error: null,
+        },
+      })
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        status: 'done',
+        content: '<p>Guten Tag</p>',
+        regenerating: false,
+      })
+    })
+
+    it('keeps the current translation when the regeneration is rejected', async () => {
+      const { translation } = await translateWithRun()
+
+      mockTicketArticleTranslateMutationError('AI provider is not configured.', {
+        type: GraphQLErrorTypes.UnknownError,
+      })
+      await translation.regenerateTranslation(articleId)
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        ...current,
+        regenerating: false,
+      })
+    })
+
+    it('keeps the current translation when the regeneration fails in the background', async () => {
+      const { translation, subscription } = await translateWithRun()
+
+      deferred()
+      await translation.regenerateTranslation(articleId)
+
+      await subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: { id: articleId, translation: null },
+          translation: null,
+          error: { message: 'AI provider is not configured.' },
+        },
+      })
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        ...current,
+        regenerating: false,
+      })
+    })
+
+    it('does not regenerate a translation the service recorded no run for', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'libretranslate', translated: true },
+          },
+          translation: { translated: true },
+          analytics: null,
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      await translation.regenerateTranslation(articleId)
+
+      expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(1)
+      expect(translation.translationFor(articleId)).toMatchObject({ status: 'done' })
+    })
+  })
+
   describe('per tab', () => {
     it('keeps listening while hidden, so a deferred result still arrives', async () => {
       const { translation, shown } = setup()
@@ -652,6 +993,35 @@ describe('useTicketArticleTranslation', () => {
       )
       // Still on its way, so the original stays on screen without a direct answer.
       expect(translation.translationFor(otherArticleId)).toEqual({ status: 'pending' })
+    })
+
+    it('carries the run of a stored translation, so it can be rated', async () => {
+      const { translation } = setup()
+      const analytics = {
+        run: { id: analyticsRunId },
+        usage: { userHasProvidedFeedback: false },
+      }
+      mockTicketArticleTranslateManyMutation({
+        ticketArticleTranslateMany: {
+          pendingArticleIds: [],
+          results: [
+            {
+              article: {
+                id: articleId,
+                translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+              },
+              translated: true,
+              analytics,
+            },
+          ],
+        },
+      })
+
+      await enable()
+
+      await waitFor(() =>
+        expect(translation.translationFor(articleId)).toMatchObject({ status: 'done', analytics }),
+      )
     })
 
     it.each(['done', 'error'] as const)(
