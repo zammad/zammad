@@ -21,8 +21,6 @@ import {
   type DetailSearchQueryVariables,
   type EnumOrderDirection,
   EnumSearchableModels,
-  type SearchTaskbarItemStateUpdatesSubscription,
-  type UserCurrentTaskbarItemUpdateMutationVariables,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
@@ -263,8 +261,8 @@ const applyForeignSearchEntity = (
     .then(syncFiltersFromRoute)
 }
 
-// Cross-tab sync: own echoes are dropped by the skip link, so we only apply
-// foreign changes. Paused while cached; usePage re-enables it on reactivate
+// Cross-tab sync: the server leaves out the echoes of our own writes, so we only
+// apply foreign changes. Paused while cached; usePage re-enables it on reactivate
 // and reconciles once from the (still-fresh) entity to catch up.
 const searchTaskbarSubscriptionActive = ref(true)
 
@@ -273,26 +271,6 @@ const taskbarStateUpdatesSubscription = new SubscriptionHandler(
     () => ({ taskbarItemId: currentTaskbarTabId.value! }),
     () => ({
       enabled: !!currentTaskbarTabId.value && searchTaskbarSubscriptionActive.value,
-      context: {
-        // Match our own echo by value (sent state vs payload), not by id — so
-        // two browser windows on the same search (shared id) don't collide.
-        skipSubscriptionCallback: (
-          variables: UserCurrentTaskbarItemUpdateMutationVariables,
-          result?: { data?: SearchTaskbarItemStateUpdatesSubscription | null },
-        ) => {
-          const sent = variables.input?.state as
-            | { query?: string; model?: string; filters?: string }
-            | undefined
-          const received = result?.data?.userCurrentTaskbarItemStateUpdates?.taskbarItem?.entity
-          if (received?.__typename !== 'UserTaskbarItemEntitySearch') return false
-
-          return (
-            sent?.query === received.query &&
-            sent?.model === received.model &&
-            sent?.filters === received.filters
-          )
-        },
-      },
     }),
   ),
 )
@@ -306,9 +284,8 @@ watchThrottled(
   (newValue) => {
     if (!currentTaskbarTab.value) return
 
-    // Skip no-op writes (state we already hold): they get no echo, so the skip
-    // entry would linger and later swallow a real foreign change. Compare the
-    // search fields only — `newValue` also has `formIsDirty`, the entity doesn't.
+    // Skip no-op writes (state we already hold). Compare the search fields
+    // only — `newValue` also has `formIsDirty`, the entity doesn't.
     const { entity } = currentTaskbarTab.value
     if (
       entity?.__typename === 'UserTaskbarItemEntitySearch' &&
@@ -318,10 +295,8 @@ watchThrottled(
     )
       return
 
-    // Tag the write so the skip-subscription link can recognise (and drop) its
-    // echo by comparing the sent state to the incoming payload.
     currentTaskbarTabUpdate(currentTaskbarTab.value, newValue, {
-      context: { skipSubscription: 'searchTaskbarItemStateUpdates' },
+      context: { skipSubscriptions: ['userCurrentTaskbarItemStateUpdates'] },
     })
   },
   { throttle: 500 },

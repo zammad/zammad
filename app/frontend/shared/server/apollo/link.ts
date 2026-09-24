@@ -7,17 +7,19 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
 import { consumer } from '#shared/server/action_cable/consumer.ts'
-import getUuid from '#shared/utils/getUuid.ts'
 
 import authenticationGenerationLink from './link/authenticationGeneration.ts'
 import csrfLink from './link/csrf.ts'
 import debugLink from './link/debug.ts'
 import errorLink from './link/error.ts'
 import setAuthorizationLink from './link/setAuthorization.ts'
-import skipSubscriptionResultLink from './link/skipSubscriptionResult.ts'
+import skipSubscriptionsLink from './link/skipSubscriptions.ts'
 import testFlagsLink from './link/testFlags.ts'
 import trackSubscriptionsLink from './link/trackSubscriptions.ts'
+import { browserTabId } from './utils/browserTabId.ts'
+import { createUuid } from './utils/createUuid.ts'
 import getBatchContext from './utils/getBatchContext.ts'
+import { getSkipSubscriptions } from './utils/getSkipSubscriptions.ts'
 import getWebsocketContext from './utils/getWebsocketContext.ts'
 
 import type { Operation } from '@apollo/client/core'
@@ -84,9 +86,15 @@ const requiresHttpLink = (op: Operation) => {
   return operationIsLoginLogout(definition)
 }
 
-// Because "crypto" is only available in secure context we add a fallback.
-const createChannelId = (): string => globalThis.crypto?.randomUUID?.() ?? getUuid()
-const actionCableLink = new ActionCableLink({ cable: consumer, createChannelId })
+// Every operation opens its own channel, so its params act like the headers of an HTTP request.
+const actionCableLink = new ActionCableLink({
+  cable: consumer,
+  createChannelId: createUuid,
+  connectionParams: (operation) => ({
+    browserTabId,
+    skipSubscriptions: getSkipSubscriptions(operation),
+  }),
+})
 
 const splitLink = ApolloLink.split(requiresHttpLink, httpLink, actionCableLink)
 
@@ -96,8 +104,8 @@ const link = from([
   authenticationGenerationLink,
   errorLink,
   setAuthorizationLink,
+  skipSubscriptionsLink,
   debugLink,
-  skipSubscriptionResultLink,
   removeTypenameFromVariables(),
   trackSubscriptionsLink,
   splitLink,

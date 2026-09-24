@@ -18,10 +18,14 @@ class GraphqlChannel < ApplicationCable::Channel
       current_user_id: current_user&.id,
       # :channel is required for ActionCableSubscriptions and MUST NOT be used otherwise.
       channel:         self,
+      # :browser_tab_id identifies the subscriber for Gql::ActionCableSubscriptions.
+      browser_tab_id:  params[:browserTabId],
     }
 
     result = UserInfo.with_user_id(current_user&.id) do
-      Gql::ZammadSchema.execute(query:, context:, variables:, operation_name:)
+      Gql::SubscriptionOrigin.with(browser_tab_id: params[:browserTabId], skip_subscriptions: params[:skipSubscriptions]) do
+        Gql::ZammadSchema.execute(query:, context:, variables:, operation_name:)
+      end
     end
 
     payload = {

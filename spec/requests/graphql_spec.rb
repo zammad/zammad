@@ -42,6 +42,37 @@ RSpec.describe 'GraphQL', type: :request do
     end
   end
 
+  describe 'originating browser tab' do
+    let(:headers) { { 'X-Zammad-Browser-Tab-Id' => 'tab-a', 'X-Zammad-Skip-Subscriptions' => 'ticketUpdates,userCurrentTaskbarItemStateUpdates' } }
+
+    let(:origins) { {} }
+
+    before do
+      allow(Gql::ZammadSchema).to receive(:execute).and_wrap_original do |method, *args, **kwargs|
+        origins[:execution] = Gql::SubscriptionOrigin.current
+        method.call(*args, **kwargs)
+      end
+
+      allow(TransactionDispatcher).to receive(:commit).and_wrap_original do |method, *args|
+        origins[:transaction] = Gql::SubscriptionOrigin.current
+        method.call(*args)
+      end
+
+      post '/graphql', params: { query: '{ __typename }' }, headers:, as: :json
+    end
+
+    it 'applies it to the execution' do
+      expect(origins[:execution]).to have_attributes(
+        browser_tab_id:     'tab-a',
+        skip_subscriptions: %w[ticketUpdates userCurrentTaskbarItemStateUpdates],
+      )
+    end
+
+    it 'does not apply it to the transaction backends' do
+      expect(origins).to include(transaction: nil)
+    end
+  end
+
   describe 'custom errors for DDOS-like queries' do
     before do
       allow(Gql::ZammadSchema)

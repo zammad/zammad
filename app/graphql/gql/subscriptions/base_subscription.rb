@@ -42,7 +42,8 @@ module Gql::Subscriptions
         graphql_field_name,
         arguments,
         object,
-        scope: scope
+        scope:   scope,
+        context: { skipped_browser_tab_id: Gql::SubscriptionOrigin.skipped_browser_tab_id(graphql_field_name) }.compact
       )
     end
 

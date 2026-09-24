@@ -1375,10 +1375,7 @@ const initializeFormSchema = () => {
               // becomes a bottleneck. Subsequent refetches stay on ActionCable.
               active: !formUpdaterVariables.value?.meta.initial,
             },
-            skipSubscription: 'userCurrentTaskbarItemStateUpdates',
-            skipSubscriptionAddCallback: (variables: FormUpdaterQueryVariables) => {
-              return !variables.meta.initial && !variables.meta.additionalData?.applyTaskbarState
-            },
+            skipSubscriptions: ['userCurrentTaskbarItemStateUpdates'],
           },
           fetchPolicy: 'no-cache',
         })),

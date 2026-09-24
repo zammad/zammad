@@ -57,4 +57,33 @@ RSpec.describe GraphqlChannel, type: :channel do
       end
     end
   end
+
+  describe 'originating browser tab' do
+    let(:captured) { {} }
+
+    before do
+      allow(Gql::ZammadSchema).to receive(:execute).and_wrap_original do |method, **kwargs|
+        captured[:origin]         = Gql::SubscriptionOrigin.current
+        captured[:browser_tab_id] = kwargs[:context][:browser_tab_id]
+        method.call(**kwargs)
+      end
+
+      stub_connection sid: '123_456', current_user: create(:agent)
+
+      subscribe browserTabId: 'tab-a', skipSubscriptions: %w[userCurrentTaskbarItemStateUpdates]
+
+      perform :execute, query: '{ __typename }'
+    end
+
+    it 'applies it to the execution' do
+      expect(captured[:origin]).to have_attributes(
+        browser_tab_id:     'tab-a',
+        skip_subscriptions: %w[userCurrentTaskbarItemStateUpdates],
+      )
+    end
+
+    it 'identifies the subscriber by it' do
+      expect(captured[:browser_tab_id]).to eq('tab-a')
+    end
+  end
 end

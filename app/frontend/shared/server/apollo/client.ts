@@ -5,7 +5,6 @@ import { ApolloClient } from '@apollo/client/core'
 import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
 
 import createCache from './cache.ts'
-import { clearSkipSubscriptionStore } from './link/skipSubscriptionResult.ts'
 import link from './link.ts'
 
 import type { NormalizedCacheObject } from '@apollo/client/core'
@@ -41,7 +40,4 @@ export const getApolloClient = () => {
 
 export const clearApolloClientStore = async () => {
   await apolloClient.clearStore()
-
-  // We clear also the skip subscription store on this situation.
-  clearSkipSubscriptionStore()
 }
