@@ -96,8 +96,10 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
 
           <slot :name="`header-suffix-${header.key}`" :item="header" />
         </th>
-        <th v-if="actions" class="h-10 w-0 p-2.5 text-center">
-          <CommonLabel class="font-normal text-stone-200! dark:text-neutral-500!" size="small"
+        <th v-if="actions" class="h-10 w-12.5 p-2.5 text-center">
+          <CommonLabel
+            class="sr-only font-normal text-stone-200! dark:text-neutral-500!"
+            size="small"
             >{{ $t('Actions') }}
           </CommonLabel>
         </th>
