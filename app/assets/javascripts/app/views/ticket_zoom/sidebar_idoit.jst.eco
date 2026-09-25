@@ -1,7 +1,13 @@
 <% for object in @objects: %>
   <div class="sidebar-block">
     <label class="horizontal">
-      <%- @T('ID:') %> <%- @T(object.id) %>
+      <span
+          class="js-idoitObjectId u-clickable u-highlight"
+          data-object-id="<%- object.id %>"
+          title="<%- @T('Search tickets linked to this i-doit object') %>"
+        >
+          <%- @T('ID:') %> <%- @T(object.id) %>
+        </span>
       <div class="list-item-delete js-delete" data-object-id="<%= object.id %>" data-type="remove">
         <%- @Icon('diagonal-cross') %>
       </div>
