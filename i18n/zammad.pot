@@ -1802,7 +1802,7 @@ msgstr ""
 msgid "An email was sent to _%s_. Click the link in the email to verify your account."
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
 
@@ -2580,7 +2580,7 @@ msgstr ""
 msgid "Automatic reminders"
 msgstr ""
 
-#: app/services/service/content_translation/ticket_article/translate_many.rb:35
+#: app/services/service/content_translation/ticket_article/translate_many.rb:38
 #: app/services/service/user/content_translation_auto.rb:27
 msgid "Automatic translation of ticket articles is not available for you."
 msgstr ""
@@ -2617,7 +2617,7 @@ msgstr ""
 msgid "Available Values"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:261
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:262
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 #: app/assets/javascripts/app/models/report_profile.js.coffee:8
@@ -3190,7 +3190,7 @@ msgstr ""
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -3921,7 +3921,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: lib/excel_sheet/ai/analytics/with_usage.rb:46
+#: lib/excel_sheet/ai/analytics/with_usage.rb:47
 msgid "Comments"
 msgstr ""
 
@@ -6518,6 +6518,7 @@ msgid "Download Error Logs"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/feedback_logs.jst.eco:14
+#: app/assets/javascripts/app/views/integration/content_translation_feedback.jst.eco:5
 msgid "Download Feedback"
 msgstr ""
 
@@ -6541,6 +6542,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:4
 msgid "Download feedback from agents on AI features and error details about failed AI requests."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/content_translation_feedback.jst.eco:1
+msgid "Download feedback from agents on translations."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:50
@@ -7483,7 +7488,7 @@ msgstr ""
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 msgid "Error while verifying signature, please contact your administrator."
 msgstr ""
 
@@ -7870,6 +7875,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:17
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:27
 #: app/assets/javascripts/app/views/channel/form.jst.eco:116
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:61
@@ -9491,7 +9497,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:481
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -12513,7 +12519,7 @@ msgstr ""
 msgid "No translation available for this locale"
 msgstr ""
 
-#: app/services/service/content_translation/base.rb:66
+#: app/services/service/content_translation/base.rb:65
 #: app/services/service/content_translation/target_locales.rb:7
 msgid "No translation service is configured."
 msgstr ""
@@ -12551,7 +12557,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:484
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:476
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -14451,6 +14457,10 @@ msgstr ""
 msgid "Rating can only be set once"
 msgstr ""
 
+#: lib/excel_sheet/ai/analytics/with_usage.rb:46
+msgid "Ratings"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:107
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:45
 msgid "Raw"
@@ -15148,7 +15158,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:660
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:635
 msgid "Results"
 msgstr ""
 
@@ -15634,7 +15644,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:658
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:633
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -15772,7 +15782,7 @@ msgstr ""
 msgid "Search or enter phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:712
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:687
 msgid "Search result for: %s"
 msgstr ""
 
@@ -17927,7 +17937,7 @@ msgstr ""
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid "The Zammad AI connection is managed by the platform and cannot be created or changed here."
 msgstr ""
 
@@ -17991,7 +18001,7 @@ msgstr ""
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:250
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:251
 msgid "The article language detection is disabled. Enable it to avoid translating articles that are already in the target language. %l"
 msgstr ""
 
@@ -18058,7 +18068,7 @@ msgstr ""
 msgid "The certificate for this private key could not be found."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 msgid "The certificate for verification could not be found."
 msgstr ""
 
@@ -18238,8 +18248,7 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
+#: app/assets/javascripts/app/lib/app_post/ai_analytics_download.coffee:29
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -18587,7 +18596,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 msgid "The private key for decryption could not be found."
 msgstr ""
 
@@ -18685,7 +18694,7 @@ msgid "The provider offered no models to choose from, so it has to be entered ma
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:20
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:54
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:55
 msgid "The providers could not be loaded."
 msgstr ""
 
@@ -19132,8 +19141,8 @@ msgstr ""
 msgid "The translation service does not support the requested target language."
 msgstr ""
 
-#: app/services/service/content_translation/backend/deepl.rb:132
-#: app/services/service/content_translation/backend/libre_translate.rb:115
+#: app/services/service/content_translation/backend/deepl.rb:134
+#: app/services/service/content_translation/backend/libre_translate.rb:117
 msgid "The translation service does not support the target language %s."
 msgstr ""
 
@@ -19706,7 +19715,7 @@ msgstr ""
 msgid "This message contains images or other content hosted by an external source. It was blocked, but you can download the original formatting."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr ""
 
@@ -20252,7 +20261,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:564
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:556
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr ""
@@ -20702,7 +20711,7 @@ msgstr ""
 msgid "Translate section to English"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:336
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:362
 msgid "Translate ticket articles into another language."
 msgstr ""
 
@@ -20743,7 +20752,7 @@ msgstr ""
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:119
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:120
 msgid "Translation service provider"
 msgstr ""
 
@@ -21267,7 +21276,7 @@ msgid "Update shared draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:180
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:181
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -22381,7 +22390,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:483
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:475
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -22477,11 +22486,11 @@ msgstr ""
 msgid "You can find archived emails in Zammad anytime using the search function, like for any other ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:312
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:311
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:312
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -22684,7 +22693,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:478
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:470
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -23731,7 +23740,7 @@ msgstr ""
 msgid "is not a number"
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 msgid "is not a supported AI provider"
 msgstr ""
 

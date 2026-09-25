@@ -600,4 +600,50 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
       end
     end
   end
+
+  describe 'Feedback tab' do
+    def open_feedback_tab
+      visit 'system/integration/content_translation'
+
+      within :active_content do
+        find('.nav-tabs a[href="#feedback"]').click
+      end
+    end
+
+    it 'downloads the feedback on translations only' do
+      translation_run = create(:ai_analytics_run, identifier: Service::ContentTranslation::StoredTranslation::IDENTIFIER)
+      create(:ai_analytics_run, identifier: 'ticket_summarize')
+
+      reported_scope = nil
+      allow(Service::AI::Analytics::GenerateReport::WithUsages).to receive(:new).and_wrap_original do |original, **args|
+        reported_scope = args[:scope]
+        original.call(**args)
+      end
+
+      open_feedback_tab
+
+      within :active_content do
+        expect(page).to have_text('Download feedback from agents on translations.')
+
+        click_on 'Download Feedback'
+      end
+
+      wait.until { reported_scope }
+      expect(reported_scope).to contain_exactly(translation_run)
+    end
+
+    context 'with a delegated administrator without AI logs permission', authenticated_as: :delegated_admin do
+      let(:role)            { create(:role, permission_names: %w[admin.integration]) }
+      let(:delegated_admin) { create(:agent, roles: [role]) }
+
+      it 'offers no feedback tab' do
+        visit 'system/integration/content_translation'
+
+        within :active_content do
+          expect(page).to have_css('.nav-tabs a[href="#logs"]')
+          expect(page).to have_no_css('.nav-tabs a[href="#feedback"]')
+        end
+      end
+    end
+  end
 end

@@ -89,6 +89,13 @@ RSpec.describe 'AI::Analytics::DownloadsController', :aggregate_failures, authen
           end
         end
 
+        context 'when filtering for identifier' do
+          let(:matching_value) { ai_analytics_run.identifier }
+          let(:nonmatching_value) { 'nonexisting' }
+
+          include_examples 'check filter type', :identifier
+        end
+
         context 'when filtering for ai_service_name' do
           let(:matching_value) { ai_analytics_run.ai_service_name }
           let(:nonmatching_value) { 'nonexisting' }

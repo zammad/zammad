@@ -17,6 +17,9 @@ class Service::AI::Analytics::GenerateReport::WithUsages < Service::AI::Analytic
     comments       = record.usages
       .filter { it.comment.present? }
       .map { |usage| usage.slice(:user_id, :comment, :created_at, :rating).merge(user_login: usage.user.login) }
+    ratings        = record.usages
+      .filter { !it.rating.nil? }
+      .map { |usage| usage.slice(:user_id, :rating).merge(user_login: usage.user.login) }
 
     {
       **record.slice(*RUN_ATTRIBUTES).symbolize_keys,
@@ -24,6 +27,7 @@ class Service::AI::Analytics::GenerateReport::WithUsages < Service::AI::Analytic
       usages_count:   record.usages.size,
       likes_count:,
       dislikes_count:,
+      ratings:,
       comments:
     }
   end

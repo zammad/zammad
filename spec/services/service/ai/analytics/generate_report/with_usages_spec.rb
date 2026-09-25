@@ -47,6 +47,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
               usages_count:   0,
               likes_count:    0,
               dislikes_count: 0,
+              ratings:        [],
               comments:       []
             )
           )
@@ -91,6 +92,10 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
               usages_count:   2,
               likes_count:    1,
               dislikes_count: 1,
+              ratings:        contain_exactly(
+                { user_id: user.id, rating: true, user_login: user.login },
+                { user_id: user_2.id, rating: false, user_login: user_2.login }
+              ),
               comments:       [{
                 user_id:    user_2.id,
                 comment:    'some comment here',
@@ -104,6 +109,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
               usages_count:   1,
               likes_count:    0,
               dislikes_count: 0,
+              ratings:        [],
               comments:       []
             ),
             include(
@@ -111,6 +117,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
               usages_count:   0,
               likes_count:    0,
               dislikes_count: 0,
+              ratings:        [],
               comments:       []
             )
           )

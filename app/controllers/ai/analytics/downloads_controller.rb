@@ -33,6 +33,7 @@ class AI::Analytics::DownloadsController < ApplicationController
   private
 
   DIRECT_FILTERS = %i[
+    identifier
     related_object_type
     related_object_id
     ai_service_name

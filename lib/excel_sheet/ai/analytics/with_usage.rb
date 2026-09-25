@@ -43,6 +43,7 @@ class ExcelSheet::AI::Analytics::WithUsage < ExcelSheet
       { display: __('Likes count'), name: 'likes_count', width: 10, data_type: 'integer' },
       { display: __('Dislikes count'), name: 'dislikes_count', width: 10, data_type: 'integer' },
 
+      { display: __('Ratings'), name: 'ratings', width: 34, data_type: 'string' },
       { display: __('Comments'), name: 'comments', width: 34, data_type: 'string' },
     ]
   end
@@ -52,6 +53,10 @@ class ExcelSheet::AI::Analytics::WithUsage < ExcelSheet
       PRETTY_JSON_COLUMNS.each do |attr|
         entry[attr] = JSON.pretty_generate(entry[attr])
       end
+
+      entry[:ratings] = entry[:ratings]
+        .map { |rating| "#{rating[:user_login]} (##{rating[:user_id]}): #{rating[:rating] ? 'like' : 'dislike'}" }
+        .join("\n")
 
       entry[:comments] = entry[:comments]
         .map do |comment|

@@ -14,6 +14,7 @@ class ContentTranslation extends App.ControllerTabs
       { name: __('Provider Settings'), target: 'provider-settings', controller: ProviderSettings }
       { name: __('Ticket Articles'), target: 'ticket-articles', controller: TicketArticles }
       { name: __('Logs'), target: 'logs', controller: Logs }
+      { name: __('Feedback'), target: 'feedback', controller: Feedback }
     ]
 
     # The tabs read settings while rendering, and App.ControllerTabs#render never releases the
@@ -323,6 +324,31 @@ class Logs extends App.Controller
 
     @httpLog?.releaseController()
     @httpLog = null
+
+class Feedback extends App.Controller
+  # The page asks for admin.integration only, but the download answers to admin.ai_feedback_logs, so
+  # App.ControllerTabs leaves out the tab for whoever lacks it instead of offering a failing button.
+  @requiredPermission: 'admin.ai_feedback_logs'
+
+  events:
+    'click .js-downloadFeedback': 'downloadFeedback'
+
+  constructor: ->
+    super
+
+    @render()
+
+  render: =>
+    @html App.view('integration/content_translation_feedback')()
+
+  # Hardcoded, as Service::ContentTranslation::StoredTranslation::IDENTIFIER does not reach the
+  # frontend. It covers the AI service and the others alike.
+  downloadFeedback: =>
+    App.AIAnalyticsDownload.request(
+      type:    'with_usages'
+      filters: { identifier: 'translate' }
+      button:  @$('.js-downloadFeedback')
+    )
 
 class State
   @current: ->

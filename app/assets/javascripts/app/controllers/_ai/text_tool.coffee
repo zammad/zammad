@@ -67,34 +67,18 @@ class TextTool extends App.ControllerAIFeatureBase
 
     @controllerBind('config_update', @configHasChanged)
 
-  downloadFeedbackReport: (id) =>
+  downloadFeedbackReport: (id) ->
     text_tool = App.AITextTool.find(id)
 
-    url = "#{@apiPath}/ai/analytics/download/with_usages?filters[triggered_by_type]=AI::TextTool&filters[triggered_by_id]=#{id}"
+    filters =
+      triggered_by_type: 'AI::TextTool'
+      triggered_by_id:   id
 
     # Only limit the report to feedback since the last reset if one happened;
     #   otherwise the report should collect everything.
-    if text_tool.analytics_stats_reset_at
-      url += "&filters[created_after]=#{text_tool.analytics_stats_reset_at}"
+    filters.created_after = text_tool.analytics_stats_reset_at if text_tool.analytics_stats_reset_at
 
-    @ajax(
-      id:          'download_feedback_report'
-      type:        'GET'
-      url:         url
-      processData: true
-      dataType:    'binary'
-      contentType: 'application/octet-stream'
-      xhrFields:
-        responseType: 'blob'
-      success: (data, status, xhr) ->
-        App.Utils.downloadFileFromBlob(data, xhr, { fallbackFilename: 'ai_analytics_with_usages.xlsx' })
-      error: (xhr, status, error) =>
-        @log 'error', error || status
-        @notify(
-          type: 'error'
-          msg: __('The download could not be started. Please try again later.')
-        )
-    )
+    App.AIAnalyticsDownload.request(type: 'with_usages', filters: filters)
 
   resetFeedbackTimestamp: (id) =>
     @ajax(
