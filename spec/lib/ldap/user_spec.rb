@@ -133,6 +133,63 @@ RSpec.describe Ldap::User do
 
         it_behaves_like 'validates credentials'
       end
+
+      context 'with a login attribute mapping' do
+
+        shared_examples 'binds with the given login attribute' do |expected_attribute|
+          it "uses '#{expected_attribute}' in the bind filter" do
+            connection = double
+            allow(mocked_ldap).to receive(:connection).and_return(connection)
+
+            allow(mocked_ldap).to receive(:base_dn)
+            allow(connection).to receive(:bind_as).and_return(true)
+
+            instance.valid?('example_username', 'password')
+
+            expect(connection).to have_received(:bind_as).with(
+              base:     anything,
+              filter:   "(#{expected_attribute}=example_username)",
+              password: 'password',
+            )
+          end
+        end
+
+        context 'when mapped to a single Zammad attribute' do
+          let(:initialization_config) do
+            {
+              uid_attribute:   'objectguid',
+              filter:          '(objectClass=user)',
+              user_attributes: { 'mail' => 'login' },
+            }
+          end
+
+          it_behaves_like 'binds with the given login attribute', 'mail'
+        end
+
+        context 'when mapped to multiple Zammad attributes' do
+          let(:initialization_config) do
+            {
+              uid_attribute:   'objectguid',
+              filter:          '(objectClass=user)',
+              user_attributes: { 'mail' => %w[login email] },
+            }
+          end
+
+          it_behaves_like 'binds with the given login attribute', 'mail'
+        end
+
+        context 'when no attribute is mapped to login' do
+          let(:initialization_config) do
+            {
+              uid_attribute:   'objectguid',
+              filter:          '(objectClass=user)',
+              user_attributes: { 'mail' => %w[email] },
+            }
+          end
+
+          it_behaves_like 'binds with the given login attribute', 'objectguid'
+        end
+      end
     end
 
     describe '#attributes' do
