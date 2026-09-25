@@ -7,6 +7,10 @@ import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import { AutocompleteSearchGenericDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/generic.api.ts'
 import type { AutoCompleteCustomerGenericOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
+import {
+  emailFilterValueValidator,
+  formattedPhoneFilterValueValidator,
+} from '#shared/components/Form/fields/FieldRecipient/features/filterValueValidators.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -23,10 +27,11 @@ interface Props {
   context: FormFieldContext<
     AutoCompleteProps & {
       options?: AutoCompleteCustomerGenericOption[]
-      // Lets the user add a typed-in email as a new customer option. Off by
-      // default — opt in only where the email becomes a new customer user on
-      // submit (e.g. ticket create).
+      // Let the user add a typed-in email address or phone number as a new
+      // customer option. Off by default — opt in only where the value becomes
+      // a new customer user on submit (e.g. ticket create).
       allowUnknownEmail?: boolean
+      allowUnknownPhone?: boolean
     }
   >
 }
@@ -42,14 +47,33 @@ const buildEntityOption = (entity: User) => {
   }
 }
 
-// Setup-time read: `allowUnknownEmail` is supplied by the form schema and
-// doesn't change for the lifetime of the field, so we read it once and
-// branch wiring statically rather than per-render.
+// Setup-time read: the opt-ins are supplied by the form schema and don't
+// change for the lifetime of the field, so we read them once and branch
+// wiring statically rather than per-render.
 const allowUnknownEmail = props.context.allowUnknownEmail ?? false
+const allowUnknownPhone = props.context.allowUnknownPhone ?? false
 
-const { actions, onSearchInteractionUpdate, onKeydownFilterInput } = allowUnknownEmail
-  ? useAddUnknownValueAction()
-  : { actions: undefined, onSearchInteractionUpdate: undefined, onKeydownFilterInput: undefined }
+const isUnknownEmail = (filter: string) => allowUnknownEmail && emailFilterValueValidator(filter)
+const isUnknownPhone = (filter: string) =>
+  allowUnknownPhone && formattedPhoneFilterValueValidator(filter)
+
+const { actions, onSearchInteractionUpdate, onKeydownFilterInput } =
+  allowUnknownEmail || allowUnknownPhone
+    ? useAddUnknownValueAction(
+        (filter) =>
+          isUnknownPhone(filter) ? __('add new phone number') : __('add new email address'),
+        (filter) => isUnknownEmail(filter) || isUnknownPhone(filter),
+      )
+    : { actions: undefined, onSearchInteractionUpdate: undefined, onKeydownFilterInput: undefined }
+
+const emptyInitialLabelText = () => {
+  if (allowUnknownEmail && allowUnknownPhone)
+    return __('Start typing to search or enter an email address or phone number…')
+  if (allowUnknownEmail) return __('Start typing to search or enter an email address…')
+  if (allowUnknownPhone) return __('Start typing to search or enter a phone number…')
+
+  return __('Start typing to search…')
+}
 
 // eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
@@ -111,9 +135,7 @@ Object.assign(props.context, {
       return autocompleteOption
     }),
   actions,
-  emptyInitialLabelText: allowUnknownEmail
-    ? __('Start typing to search or enter an email address…')
-    : __('Start typing to search…'),
+  emptyInitialLabelText: emptyInitialLabelText(),
 })
 </script>
 

@@ -21,6 +21,7 @@ type TableHeaderPreference = {
   noResize?: boolean
   displayWidth?: number
   noSorting?: boolean
+  minimumWidth?: number
 }
 
 type TableColumnPreference = {
@@ -55,6 +56,8 @@ export interface TableAdvancedItem {
     update?: boolean
   }
 }
+
+export type TableRowClass = string | string[] | Record<string, boolean>
 
 interface BaseTableProps {
   actions?: MenuItem[]
@@ -130,6 +133,11 @@ export interface AdvancedTableProps extends BaseTableProps {
 
   onClickRow?: (tableItem: TableAdvancedItem) => void
 
+  /**
+   * Additional classes for a row, e.g. to highlight or dim it depending on the item
+   */
+  rowClass?: (tableItem: TableAdvancedItem) => TableRowClass
+
   reachedScrollTop?: boolean
 
   onLoadMore?: () => Awaitable<void>
@@ -144,6 +152,8 @@ export interface AdvancedTableProps extends BaseTableProps {
   orderDirection?: EnumOrderDirection
 
   isSorting?: boolean
+
+  dynamicRowHeight?: boolean
 }
 
 export interface ListTableProps<T> {

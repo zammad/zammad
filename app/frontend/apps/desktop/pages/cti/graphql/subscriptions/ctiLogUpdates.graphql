@@ -1,0 +1,11 @@
+subscription ctiLogUpdates {
+  ctiLogUpdates {
+    addLog {
+      ...ctiLogAttributes
+    }
+    updateLog {
+      ...ctiLogAttributes
+    }
+    removeLogId
+  }
+}

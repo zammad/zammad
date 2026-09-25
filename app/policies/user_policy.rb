@@ -10,6 +10,8 @@ class UserPolicy < ApplicationPolicy
     return true if user.permissions?('admin.*')
     return true if own_account? # TODO: check if a customer user may really see all their fields.
     return true if user.permissions?('ticket.agent')
+    # The caller log shows the matched customers to every phone agent, with the fields the old UI ships to that role.
+    return customer_field_scope if user.permissions?('cti.agent')
 
     return false if !user.permissions?('ticket.customer')
 

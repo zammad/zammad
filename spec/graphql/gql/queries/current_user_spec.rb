@@ -36,6 +36,9 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
             permissions {
               names
             }
+            personalSettings {
+              callerNotificationEnabled
+            }
             createdBy {
               firstname
             }
@@ -103,6 +106,18 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
       it 'has permission data' do
         expect(gql.result.data[:permissions][:names]).to eq(agent.permissions_with_child_names)
+      end
+
+      it 'has the caller notification switched off while the preference is unset' do
+        expect(gql.result.data[:personalSettings]).to include('callerNotificationEnabled' => false)
+      end
+
+      context 'with the caller notification switched on' do
+        let(:agent) { create(:agent, preferences: { cti: true }) }
+
+        it 'has the caller notification switched on' do
+          expect(gql.result.data[:personalSettings]).to include('callerNotificationEnabled' => true)
+        end
       end
 
       it 'has updatedBy data' do

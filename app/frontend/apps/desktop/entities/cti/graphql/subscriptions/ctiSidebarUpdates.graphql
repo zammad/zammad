@@ -1,0 +1,7 @@
+subscription ctiSidebarUpdates {
+  ctiSidebarUpdates {
+    sidebar {
+      ...ctiSidebarAttributes
+    }
+  }
+}

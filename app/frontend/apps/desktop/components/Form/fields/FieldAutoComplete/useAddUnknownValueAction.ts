@@ -13,11 +13,15 @@ import type {
 } from '#desktop/components/Form/fields/FieldAutoComplete/types.ts'
 
 export const useAddUnknownValueAction = (
-  label?: Ref<string>,
+  label?: Ref<string> | ((filter: string) => string),
   filterValueValidator?: (filter: string) => boolean | Promise<boolean>,
 ) => {
   const actions = ref<DropdownOptionsAction[]>([])
   const actionLabel = label ?? ref(__('add new email address'))
+
+  // A field taking values of more than one kind names the kind the typed value is.
+  const labelFor = (filter: string) =>
+    typeof actionLabel === 'function' ? actionLabel(filter) : actionLabel.value
 
   const isValidFilterValue = filterValueValidator ?? emailFilterValueValidator
 
@@ -53,7 +57,7 @@ export const useAddUnknownValueAction = (
     actions.value = [
       {
         key: 'addUnknownValue',
-        label: actionLabel.value,
+        label: labelFor(filter),
         icon: 'plus-square-fill',
         onClick: (focus) => {
           addUnknownValue(filter, selectOption, clearFilter, focus)

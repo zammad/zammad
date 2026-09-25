@@ -48,6 +48,7 @@ class Cti::Driver::Base
 
       # open screen if call got answered
       push_open_ticket_screen(log)
+      push_pickup_target(log)
     end
 
     result || {}
@@ -128,13 +129,8 @@ class Cti::Driver::Base
   end
 
   def push_open_ticket_screen(log)
-    return if log.destroyed?
-    return if @params[:event] != 'answer'
-    return if @params[:direction] != 'in'
-
-    user = push_open_ticket_screen_recipient
+    user = answering_agent(log)
     return if !user
-    return if !user.permissions?('cti.agent')
 
     customer_id = log.best_customer_id_of_log_entry
 
@@ -169,6 +165,32 @@ class Cti::Driver::Base
                              url:        "ticket/create/id/#{id}"
                            },
                          })
+  end
+
+  # The decision of push_open_ticket_screen for the new stack, pushed over GraphQL. Unlike the old UI,
+  #   only to an agent with the caller notification switched on: there the toggle controls the pickup as well.
+  def push_pickup_target(log)
+    user = answering_agent(log)
+    return if !user
+    return if !user.preferences[:cti]
+
+    Gql::Subscriptions::Cti::CallPickup.trigger(
+      Service::Cti::Log::ResolvePickupTarget.execute(log:),
+      scope: user.id,
+    )
+  end
+
+  # The agent a view is opened for: the one who answered an inbound call, if known and a CTI agent.
+  def answering_agent(log)
+    return if log.destroyed?
+    return if @params[:event] != 'answer'
+    return if @params[:direction] != 'in'
+
+    user = push_open_ticket_screen_recipient
+    return if !user
+    return if !user.permissions?('cti.agent')
+
+    user
   end
 
   def push_open_ticket_screen_recipient

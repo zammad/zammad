@@ -18,6 +18,23 @@ describe('CommonLabel.vue', () => {
     expect(badge).toHaveClass('text-xs')
   })
 
+  it('renders a dot without visible text if size is dot', () => {
+    const view = renderComponent(CommonBadge, {
+      props: {
+        size: 'dot',
+        variant: 'highlight',
+      },
+      slots: {
+        default: '<span class="sr-only">3</span>',
+      },
+    })
+
+    const badge = view.getByTestId('common-badge')
+
+    expect(badge).toHaveTextContent('3')
+    expect(badge).toHaveClasses(['size-2', 'p-0', 'rounded-full'])
+  })
+
   it('renders bigger text if size is given', () => {
     const view = renderComponent(CommonBadge, {
       props: {

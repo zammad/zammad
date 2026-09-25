@@ -1,0 +1,11 @@
+mutation ctiLogDoneUpdate($id: ID!, $done: Boolean!) {
+  ctiLogDoneUpdate(id: $id, done: $done) {
+    log {
+      id
+      done
+    }
+    errors {
+      ...errors
+    }
+  }
+}

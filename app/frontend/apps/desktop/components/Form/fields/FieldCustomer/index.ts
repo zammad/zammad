@@ -10,7 +10,7 @@ import FieldCustomerWrapper from './FieldCustomerWrapper.vue'
 
 const fieldDefinition = createInput(
   FieldCustomerWrapper,
-  [...autoCompleteProps, 'allowUnknownEmail'],
+  [...autoCompleteProps, 'allowUnknownEmail', 'allowUnknownPhone'],
   {
     features: [addLink, formUpdaterTrigger()],
   },

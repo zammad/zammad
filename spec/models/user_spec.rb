@@ -862,6 +862,17 @@ RSpec.describe User, type: :model do
         end
       end
 
+      # A new ticket touches its customer, so a customer created with the ticket is saved twice
+      #   in one transaction, and only the touch is left in previous_changes at the commit.
+      context 'when included on create and touched in the same transaction' do
+        let(:orig_number) { '1234567890' }
+
+        it 'adds corresponding CallerId record' do
+          expect { described_class.transaction { user.touch } }
+            .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(1)
+        end
+      end
+
       context 'when added on update' do
         let(:orig_number) { nil }
         let(:new_number)  { '1234567890' }

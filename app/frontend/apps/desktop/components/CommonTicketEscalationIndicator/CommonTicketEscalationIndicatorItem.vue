@@ -21,7 +21,7 @@ const colorClasses = computed(() => {
     case EscalationState.Escalated:
       return 'text-red-500'
     case EscalationState.Warning:
-      return 'text-yellow-600'
+      return 'text-yellow-700 dark:text-yellow-300'
     default:
       return null
   }

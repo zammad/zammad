@@ -1,0 +1,15 @@
+query ctiLogs($cursor: String, $pageSize: Int = 25) {
+  ctiLogs(after: $cursor, first: $pageSize) {
+    totalCount
+    edges {
+      node {
+        ...ctiLogAttributes
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

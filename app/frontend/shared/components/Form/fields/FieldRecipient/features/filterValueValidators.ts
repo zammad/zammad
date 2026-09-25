@@ -9,3 +9,7 @@ export const emailFilterValueValidator = (filter: string) =>
 
 // Very rudimentary validator for the E.164 telephone number format, i.e. +499876543210.
 export const phoneFilterValueValidator = (filter: string) => /^\+?[1-9]\d+$/.test(filter)
+
+// A number the way people write it down, i.e. +49 (0)30 123-456: separators allowed, at least six digits.
+export const formattedPhoneFilterValueValidator = (filter: string) =>
+  /^\+?[\d\s\-()/.]+$/.test(filter) && (filter.match(/\d/g)?.length ?? 0) >= 6

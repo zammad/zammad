@@ -32,7 +32,7 @@ describe('CommonTicketEscalationIndicatorItem.vue', () => {
       },
     })
 
-    expect(wrapper.getByText('in 1 month').parentElement).toHaveClass('text-yellow-600')
+    expect(wrapper.getByText('in 1 month').parentElement).toHaveClass('text-yellow-700')
   })
 
   it('does not render label without valid time', () => {
@@ -43,7 +43,7 @@ describe('CommonTicketEscalationIndicatorItem.vue', () => {
       },
     })
 
-    expect(wrapper.container.querySelector('.text-yellow-600')).not.toBeInTheDocument()
+    expect(wrapper.container.querySelector('.text-yellow-700')).not.toBeInTheDocument()
     expect(wrapper.container.querySelector('.text-red-500')).not.toBeInTheDocument()
     expect(wrapper.queryByText('test label')).not.toBeInTheDocument()
   })

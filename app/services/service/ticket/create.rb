@@ -5,6 +5,8 @@ class Service::Ticket::Create < Service::Base
 
   requires_current_user!
 
+  PHONE_NUMBER = %r{\A\+?[\d\s\-()/.]+\z}
+
   attr_reader :ticket_data
 
   def initialize(ticket_data:)
@@ -80,26 +82,54 @@ class Service::Ticket::Create < Service::Base
     end
   end
 
+  # An unknown customer arrives as { email: } or { phone: }, and becomes a user here.
   def find_or_create_customer(ticket_data)
-    return if ticket_data[:customer].blank? || ticket_data[:customer].is_a?(::User)
+    customer = ticket_data[:customer]
+    return if customer.blank? || customer.is_a?(::User)
 
-    email_address = ticket_data[:customer]
+    ticket_data[:customer] = if customer.key?(:phone)
+                               find_or_create_customer_by_phone(customer[:phone])
+                             else
+                               find_or_create_customer_by_email(customer[:email])
+                             end
+  end
+
+  def find_or_create_customer_by_email(email_address)
     EmailAddressValidation.new(email_address).valid!
 
-    customer = User.find_by(email: email_address.downcase)
-    if customer.present?
-      ticket_data[:customer] = customer
-      return
-    end
-
-    customer = User.create(
+    User.find_by(email: email_address.downcase) || User.create(
       firstname: '',
       lastname:  '',
       email:     email_address,
       password:  '',
       active:    true,
     )
-    ticket_data[:customer] = customer
+  end
+
+  def find_or_create_customer_by_phone(phone)
+    number = phone.match?(PHONE_NUMBER) ? Cti::CallerId.normalize_number(phone) : nil
+
+    if number.blank? || number.length < 6
+      raise Exceptions::InvalidAttribute.new('customer_id', __('The phone number is invalid.'))
+    end
+
+    find_customer_by_number(number) || User.create(
+      firstname: '',
+      lastname:  '',
+      phone:     phone,
+      password:  '',
+      active:    true,
+    )
+  end
+
+  # Matched through the caller ID index like a call is, so a number written
+  #   differently on the existing customer does not turn into a second one.
+  def find_customer_by_number(number)
+    user_ids = Cti::CallerId.where(caller_id: number, level: 'known', object: 'User').pluck(:user_id)
+
+    User.where(id: user_ids).reorder(id: :desc).find do |user|
+      [user.phone, user.mobile].any? { |value| Cti::CallerId.extract_numbers(value).include?(number) }
+    end
   end
 
   # Desktop UI supplies this data from frontend

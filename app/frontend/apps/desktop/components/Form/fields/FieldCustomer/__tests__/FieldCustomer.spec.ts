@@ -123,6 +123,81 @@ describe('Form - Field - Customer - Features', () => {
 
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
+
+  it('supports adding a new phone number when allowUnknownPhone is set', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        clearable: true,
+        allowUnknownEmail: true,
+        allowUnknownPhone: true,
+      },
+    })
+
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
+
+    expect(
+      wrapper.getByText('Start typing to search or enter an email address or phone number…'),
+    ).toBeInTheDocument()
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchGenericQuery({
+      autocompleteSearchGeneric: [],
+    })
+
+    await wrapper.events.type(filterElement, '+49 30')
+
+    await waitForAutocompleteSearchGenericQueryCalls()
+
+    expect(wrapper.queryByRole('button', { name: 'add new phone number' })).not.toBeInTheDocument()
+
+    await wrapper.events.type(filterElement, ' 609854180')
+
+    await waitForAutocompleteSearchGenericQueryCalls()
+
+    expect(wrapper.queryByRole('button', { name: 'add new email address' })).not.toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'add new phone number' }))
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toEqual('+49 30 609854180')
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('+49 30 609854180')
+  })
+
+  it('does not offer a phone number with allowUnknownEmail alone', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        clearable: true,
+        allowUnknownEmail: true,
+      },
+    })
+
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchGenericQuery({
+      autocompleteSearchGeneric: [],
+    })
+
+    await wrapper.events.type(filterElement, '+49 30 609854180')
+
+    await waitForAutocompleteSearchGenericQueryCalls()
+
+    expect(wrapper.queryByRole('button', { name: /add new/ })).not.toBeInTheDocument()
+  })
 })
 
 describe('Form - Field - Customer - Query', () => {

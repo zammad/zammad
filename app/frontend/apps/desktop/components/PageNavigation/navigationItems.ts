@@ -5,6 +5,7 @@ import {
   type NavigationGroup,
 } from '#desktop/components/PageNavigation/navigationGroups.ts'
 
+import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 interface RouteModule {
@@ -23,6 +24,7 @@ export interface PageRoute {
     requiresAuth: boolean
     canAccess?: () => boolean
     navigationGroup?: string
+    navigationItemComponent?: Component
     [key: string]: unknown
   }
 }

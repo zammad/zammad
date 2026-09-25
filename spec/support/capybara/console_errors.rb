@@ -6,6 +6,12 @@ require_relative 'driven_by'
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do
+    # Capybara resets the kept session after the gate below has run, so what the page
+    #   logs while it unloads would count against the next example: drop it here.
+    if page.driver.is_a?(Capybara::Selenium::Driver) && page.driver.browser.respond_to?(:browser) && page.driver.browser.browser == :chrome
+      page.driver.browser.logs.get(:browser)
+    end
+
     next if !page.driver.is_a?(Capybara::Playwright::Driver)
 
     # Playwright has no log polling API (like Selenium's `logs.get`) - subscribe

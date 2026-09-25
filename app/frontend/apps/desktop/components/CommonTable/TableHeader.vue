@@ -119,9 +119,11 @@ const setHeaderWidths = (reset?: boolean) => {
 
     const headerWidthRelative = headerWidthsRelativeStorage.value[tableAttribute.name]
 
+    const minimumWidth = tableAttribute.headerPreferences?.minimumWidth ?? MINIMUM_COLUMN_WIDTH
+
     const headerWidth =
       tableAttribute.headerPreferences?.displayWidth ??
-      Math.max(MINIMUM_COLUMN_WIDTH, headerWidthRelative * tableWidth)
+      Math.max(minimumWidth, headerWidthRelative * tableWidth)
 
     header.style.width = `${headerWidth}px`
   })
@@ -384,6 +386,7 @@ useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
 
         <HeaderResizeLine
           v-if="!tableAttribute.headerPreferences?.noResize && index !== tableAttributes.length - 1"
+          :minimum-width="tableAttribute.headerPreferences?.minimumWidth ?? MINIMUM_COLUMN_WIDTH"
           @resize="calculateHeaderWidths"
           @reset="resetHeaderWidths"
         />

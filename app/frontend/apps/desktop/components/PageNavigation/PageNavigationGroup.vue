@@ -10,6 +10,7 @@ import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopov
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import type { NavigationGroup } from '#desktop/components/PageNavigation/navigationGroups.ts'
 import {
+  navigationIconButtonClass,
   navigationItemClass,
   navigationItemHighlightClass,
 } from '#desktop/components/PageNavigation/navigationItemClasses.ts'
@@ -48,8 +49,7 @@ watch(() => props.collapsed, close)
     :id="triggerId"
     ref="popoverTarget"
     v-tooltip="$t(group.title)"
-    class="shrink-0 text-neutral-400 focus-visible-app-default hover:outline-blue-900"
-    :class="{ [navigationItemHighlightClass]: isOpen }"
+    :class="[navigationIconButtonClass, { [navigationItemHighlightClass]: isOpen }]"
     size="large"
     variant="neutral"
     :icon="group.icon"

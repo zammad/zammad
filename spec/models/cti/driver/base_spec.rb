@@ -133,4 +133,61 @@ RSpec.describe Cti::Driver::Base do
 
   end
 
+  describe '#push_pickup_target' do
+    let(:event)  { 'answer' }
+    let(:agent)  { create(:agent, preferences: { cti: true }) }
+    let(:params) { { 'direction' => direction, 'event' => event, 'user_id' => agent.id }.with_indifferent_access }
+    let(:log)    { create(:cti_log, :inbound, :connected) }
+    let(:target) { { view: :user_detail } }
+
+    before do
+      allow(Gql::Subscriptions::Cti::CallPickup).to receive(:trigger)
+      allow(Service::Cti::Log::ResolvePickupTarget).to receive(:execute).with(log:).and_return(target)
+    end
+
+    shared_examples 'pushing nothing' do
+      it 'pushes nothing' do
+        driver.push_pickup_target(log)
+
+        expect(Gql::Subscriptions::Cti::CallPickup).not_to have_received(:trigger)
+      end
+    end
+
+    it 'pushes the resolved target to the answering agent' do
+      driver.push_pickup_target(log)
+
+      expect(Gql::Subscriptions::Cti::CallPickup).to have_received(:trigger).with(target, scope: agent.id)
+    end
+
+    context 'while the call is still ringing' do
+      let(:event) { 'newCall' }
+
+      include_examples 'pushing nothing'
+    end
+
+    context 'for an outbound call' do
+      let(:direction) { 'out' }
+
+      include_examples 'pushing nothing'
+    end
+
+    context 'when no answering agent is found' do
+      let(:params) { { 'direction' => direction, 'event' => event }.with_indifferent_access }
+
+      include_examples 'pushing nothing'
+    end
+
+    context 'when the answering agent lacks cti.agent' do
+      let(:agent) { create(:user, roles: [create(:role, permission_names: 'ticket.agent')], preferences: { cti: true }) }
+
+      include_examples 'pushing nothing'
+    end
+
+    context 'when the answering agent has the caller notification switched off' do
+      let(:agent) { create(:agent) }
+
+      include_examples 'pushing nothing'
+    end
+  end
+
 end

@@ -1719,8 +1719,8 @@ const { openFeedbackDialog } = useFeedbackDialog()
         <CommonAlert variant="info" dismissible class="mb-2.5">It's Friday! </CommonAlert>
         <CommonAlert variant="success" class="mb-2.5">
           <div class="flex flex-col gap-1.5">
-            <CommonLabel class="text-yellow-600!" size="large">Similar tickets found</CommonLabel>
-            <CommonLabel class="text-yellow-600!"
+            <CommonLabel class="text-green-500!" size="large">Similar tickets found</CommonLabel>
+            <CommonLabel class="text-green-500!"
               >Tickets with the same attributes were found.</CommonLabel
             >
             <ul class="list-inside list-disc">

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getInitials, toClassName } from '../formatter.ts'
+import { getFullname, getInitials, toClassName } from '../formatter.ts'
 
 describe('getInitials', () => {
   it('returns ?? initials, if no arguments are present', () => {
@@ -48,6 +48,39 @@ describe('getInitials', () => {
   it('returns last two numbers from phone and mobile', () => {
     expect(getInitials('', '', '', '490123456789')).toBe('89')
     expect(getInitials('', '', '', '', '491234567890')).toBe('90')
+  })
+})
+
+describe('getFullname', () => {
+  it.each([
+    [undefined, 'Nicole Braun'],
+    ['first_last', 'Nicole Braun'],
+    ['last_first', 'Braun Nicole'],
+    ['last_first_comma', 'Braun, Nicole'],
+  ])('composes both names in the %s format', (format, expected) => {
+    expect(getFullname('Nicole', 'Braun', format)).toBe(expected)
+  })
+
+  // Like the backend, a missing part leaves no separator behind, whatever the format.
+  it.each([
+    ['Nicole', null, 'last_first_comma', 'Nicole'],
+    ['', 'Braun', 'last_first_comma', 'Braun'],
+    [undefined, 'Braun', 'last_first', 'Braun'],
+    ['Nicole', ' ', 'first_last', 'Nicole'],
+  ])(
+    'leaves out an empty name part for %s %s in the %s format',
+    (firstname, lastname, format, expected) => {
+      expect(getFullname(firstname, lastname, format)).toBe(expected)
+    },
+  )
+
+  it('trims the name parts', () => {
+    expect(getFullname(' Nicole ', ' Braun ')).toBe('Nicole Braun')
+  })
+
+  it('returns an empty string without any name', () => {
+    expect(getFullname()).toBe('')
+    expect(getFullname('', null, 'last_first')).toBe('')
   })
 })
 

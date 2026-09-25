@@ -352,11 +352,11 @@ msgstr ""
 msgid "%s required!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:403
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
 msgid "%s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:403
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
 msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
@@ -396,6 +396,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:113
 msgid "%s tickets found"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNavigationItem.vue:50
+msgid "%s unhandled calls"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
@@ -1082,7 +1086,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:396
 msgid "Actions"
 msgstr ""
 
@@ -1603,7 +1607,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:789
+#: app/models/user.rb:790
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1632,7 +1636,7 @@ msgstr ""
 msgid "Alarm"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:404
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
 msgid "All %s result(s) selected"
 msgstr ""
 
@@ -2295,7 +2299,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:691
+#: app/models/user.rb:692
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2312,7 +2316,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:768
+#: app/models/user.rb:769
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2935,6 +2939,10 @@ msgstr ""
 msgid "Business Hours"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:49
+msgid "Busy"
+msgstr ""
+
 #: app/views/knowledge_base/public/show_alternatives.html.erb:5
 msgid "But it's only available in these languages:"
 msgstr ""
@@ -2997,6 +3005,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:3
 #: app/controllers/cti_controller.rb:10
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNotConfigured.vue:12
 msgid "CTI (generic)"
 msgstr ""
 
@@ -3040,7 +3049,11 @@ msgstr ""
 msgid "Call Settings"
 msgstr ""
 
-#: app/models/cti/driver/base.rb:152
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:55
+msgid "Call ended"
+msgstr ""
+
+#: app/models/cti/driver/base.rb:148
 msgid "Call from %s"
 msgstr ""
 
@@ -3070,7 +3083,17 @@ msgid "Caller Log Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/index.jst.eco:2
+#: app/frontend/apps/desktop/pages/cti/routes.ts:15
+#: app/frontend/apps/desktop/pages/cti/views/CallerLog.vue:22
 msgid "Caller log"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/views/CallerLog.vue:54
+msgid "Caller log unavailable"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNavigationItem.vue:119
+msgid "Caller notification"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:240
@@ -3083,6 +3106,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:110
 msgid "Can be in any CSS color format."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:123
+msgid "Can be marked as handled once the call has ended or is a minute old"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:37
@@ -3163,7 +3190,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:416
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 msgid "Cancel & go back"
@@ -3695,7 +3722,7 @@ msgid "Clear search"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:430
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
@@ -3899,7 +3926,7 @@ msgstr ""
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:72
 msgid "Column width: %s pixels"
 msgstr ""
 
@@ -4123,6 +4150,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:31
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue:20
 msgid "Connect channels"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:41
+msgid "Connected"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ai_provider_connection.coffee:44
@@ -4476,7 +4507,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:251
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -6331,7 +6362,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:412
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:413
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
@@ -6458,6 +6489,10 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:39
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
 msgid "Document file"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:53
+msgid "Does not exist"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1832
@@ -6638,6 +6673,7 @@ msgid "Duplicate Email Address"
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:34
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:85
 msgid "Duration"
 msgstr ""
 
@@ -6921,7 +6957,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:701
+#: app/models/user.rb:702
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -7003,6 +7039,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
 msgid "Empty"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/views/CallerLog.vue:81
+msgid "Empty caller log"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:431
@@ -8290,6 +8330,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:57
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:95
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
@@ -8760,6 +8801,10 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:223
 msgid "Handle data privacy tasks."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:50
+msgid "Handled"
 msgstr ""
 
 #: app/models/system_report/plugin/hardware.rb:4
@@ -9421,6 +9466,10 @@ msgstr ""
 msgid "Inbound Call"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:104
+msgid "Inbound call"
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:15
 msgid "Inbound:"
 msgstr ""
@@ -9782,7 +9831,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:640
+#: app/models/user.rb:641
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -11171,6 +11220,14 @@ msgstr ""
 msgid "Mark all as read"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:125
+msgid "Mark as handled"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:125
+msgid "Mark as not handled"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:39
 #: app/frontend/apps/mobile/pages/online-notification/components/ActivityMessage.vue:34
 msgid "Mark as read"
@@ -11274,6 +11331,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/User/UserInfo.vue:80
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogMaybeBadge.vue:13
+msgid "Maybe"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:106
@@ -11599,7 +11661,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:720
+#: app/models/user.rb:721
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -11642,6 +11704,10 @@ msgstr ""
 
 #: app/models/report.rb:67
 msgid "Moved out"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:144
+msgid "Multiple matches"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:61
@@ -11804,7 +11870,7 @@ msgid "Navigate to %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:70
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:71
 msgid "Navigation"
 msgstr ""
 
@@ -12078,6 +12144,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:248
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:81
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:19
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts:11
@@ -12094,7 +12161,8 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:66
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:225
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
 msgstr ""
@@ -12253,6 +12321,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:54
 msgid "No attached files"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/views/CallerLog.vue:82
+msgid "No calls to process."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:327
@@ -12651,6 +12723,10 @@ msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:12
 msgid "Not found - resource not found"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:47
+msgid "Not reached"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
@@ -13100,7 +13176,7 @@ msgstr ""
 msgid "Open questions"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:77
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:78
 msgid "Open quick search"
 msgstr ""
 
@@ -13406,6 +13482,7 @@ msgstr ""
 msgid "Outbound Call"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:104
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
 msgid "Outbound call"
 msgstr ""
@@ -13803,6 +13880,7 @@ msgid "Personal settings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNavigationItem.vue:65
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:1017
@@ -13857,6 +13935,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:3
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
 #: app/controllers/cti_controller.rb:20
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNotConfigured.vue:14
 msgid "Placetel"
 msgstr ""
 
@@ -15114,7 +15193,7 @@ msgstr ""
 msgid "Resize article panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:134
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:136
 msgid "Resize column"
 msgstr ""
 
@@ -15199,6 +15278,22 @@ msgstr ""
 
 #: db/seeds/settings.rb:6525
 msgid "Richtext Bubble Menu"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogRingingCalls.vue:63
+msgid "Ringing call from %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogRingingCalls.vue:64
+msgid "Ringing call from unknown caller %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogRingingCalls.vue:74
+msgid "Ringing calls"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:39
+msgid "Ringing…"
 msgstr ""
 
 #: app/models/webhook/pre_defined/rocket_chat.rb:5
@@ -15871,7 +15966,7 @@ msgstr ""
 msgid "Search…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
+#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:112
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:149
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
@@ -15880,11 +15975,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:708
+#: app/models/user.rb:709
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:714
+#: app/models/user.rb:715
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -16007,11 +16102,11 @@ msgstr ""
 msgid "See your tickets from within your favorite calendar by adding the subscription URL to your calendar app."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:304
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:306
 msgid "Select"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:417
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:420
 msgid "Select %s result(s)"
 msgstr ""
 
@@ -16032,7 +16127,7 @@ msgstr ""
 msgid "Select Template"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:418
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:421
 msgid "Select all %s results"
 msgstr ""
 
@@ -16520,7 +16615,7 @@ msgid "Shared draft"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:197
+#: app/services/service/ticket/create.rb:225
 #: app/services/service/ticket/update.rb:86
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
@@ -16952,6 +17047,7 @@ msgid "Sorry, not all fields are filled out correctly."
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco:4
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNotConfigured.vue:25
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr ""
 
@@ -16960,11 +17056,11 @@ msgstr ""
 msgid "Sort alphabetically"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:279
 msgid "Sort by %s ascending"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:281
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:283
 msgid "Sort by %s descending"
 msgstr ""
 
@@ -17128,17 +17224,22 @@ msgstr ""
 msgid "Start typing to search or enter a new tag…"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:73
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:36
 msgid "Start typing to search or enter a phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:71
+msgid "Start typing to search or enter an email address or phone number…"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:72
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:37
 msgid "Start typing to search or enter an email address…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:78
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:75
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseAnswer/FieldKnowledgeBaseAnswerWrapper.vue:39
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:372
@@ -17189,6 +17290,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:215
 msgid "Status"
@@ -18043,6 +18145,22 @@ msgstr ""
 msgid "The calendar icon"
 msgstr ""
 
+#: app/frontend/apps/desktop/entities/cti/composables/useCallerLogDoneToggle.ts:16
+msgid "The call could not be updated."
+msgstr ""
+
+#: app/services/service/cti/log/done_update.rb:15
+msgid "The call is not in your caller log."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/cti/views/CallerLog.vue:55
+msgid "The caller log could not be loaded. Please try again later."
+msgstr ""
+
+#: app/frontend/apps/desktop/entities/cti/composables/useCallerNotificationToggle.ts:20
+msgid "The caller notification could not be updated."
+msgstr ""
+
 #: app/models/setting/validation/saml/security.rb:16
 msgid "The certificate could not be parsed."
 msgstr ""
@@ -18582,6 +18700,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:125
 msgid "The personal access token could not be deleted."
+msgstr ""
+
+#: app/services/service/ticket/create.rb:112
+msgid "The phone number is invalid."
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:286
@@ -19388,6 +19510,7 @@ msgid "There were errors in your form."
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco:5
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogNotConfigured.vue:29
 msgid "These are supported:"
 msgstr ""
 
@@ -20366,6 +20489,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:39
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:6
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:92
 msgid "Time"
 msgstr ""
 
@@ -20497,6 +20621,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:97
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
@@ -21082,6 +21207,10 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:185
+msgid "Unknown caller"
+msgstr ""
+
 #: app/controllers/ai/provider_connections_controller.rb:35
 msgid "Unknown default purpose."
 msgstr ""
@@ -21518,7 +21647,7 @@ msgstr ""
 msgid "Use the camera to take a photo for the avatar."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:149
 msgid "Use the left and right arrow keys to resize the column."
 msgstr ""
 
@@ -21646,7 +21775,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:73
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr ""
@@ -22037,7 +22166,12 @@ msgstr ""
 msgid "VoIP service provider with realtime push."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:51
+msgid "Voicemail"
+msgstr ""
+
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:29
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:78
 msgid "Waiting"
 msgstr ""
 
@@ -22958,10 +23092,12 @@ msgid "add"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:20
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:64
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:21
 msgid "add new email address"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:64
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:21
 msgid "add new phone number"
 msgstr ""
@@ -23788,7 +23924,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:907
+#: app/models/user.rb:908
 msgid "is too long"
 msgstr ""
 

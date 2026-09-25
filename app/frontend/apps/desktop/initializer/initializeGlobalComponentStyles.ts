@@ -20,10 +20,10 @@ export const initializeGlobalComponentStyles = () => {
     success: 'bg-green-300 text-green-500 dark:bg-green-900 dark:text-green-500',
     info: 'bg-blue-500 text-blue-800 dark:bg-blue-950 dark:text-blue-800',
     tertiary: 'bg-blue-200 text-stone-200 dark:bg-gray-700  dark:text-neutral-500',
-    warning: 'bg-yellow-50 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-600',
+    warning: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
     danger: 'bg-pink-100 text-red-500 dark:bg-red-900 dark:text-red-500',
     neutral: 'text-gray-100 bg-neutral-50 dark:text-neutral-400 dark:bg-gray-500',
-    highlight: 'border-2 border-white bg-pink-500 text-white dark:border-gray-500',
+    highlight: 'bg-pink-500 text-white',
     custom: 'badge-custom',
   })
 
@@ -31,14 +31,14 @@ export const initializeGlobalComponentStyles = () => {
     base: 'grid gap-1.5 text-center md:text-start text-sm items-start justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full md:w-auto',
     success: 'bg-green-300 dark:bg-green-900 text-green-500',
     info: 'bg-blue-500 dark:bg-blue-950 text-blue-800',
-    warning: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-600',
+    warning: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300',
     danger: 'bg-pink-100 dark:bg-red-900 text-red-500',
     dismissButton:
       'outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 rounded-sm',
     translucent: {
       success: 'bg-green-300/80 dark:bg-green-900/80 text-green-500',
       info: 'bg-blue-500/80 dark:bg-blue-950/80 text-blue-800',
-      warning: 'bg-yellow-50/80 dark:bg-yellow-900/80 text-yellow-600',
+      warning: 'bg-yellow-50/80 dark:bg-yellow-900/80 text-yellow-700 dark:text-yellow-300',
       danger: 'bg-pink-100/80 dark:bg-red-900/80 text-red-500',
     },
   })
@@ -78,7 +78,7 @@ export const initializeGlobalComponentStyles = () => {
     info: 'bg-blue-500 dark:bg-blue-950 text-blue-800',
     message: '',
     success: 'bg-green-300 dark:bg-green-900 text-green-500',
-    warn: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-600',
+    warn: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300',
   })
 
   initializePopoverClasses({

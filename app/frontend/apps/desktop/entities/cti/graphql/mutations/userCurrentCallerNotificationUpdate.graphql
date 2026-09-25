@@ -1,0 +1,8 @@
+mutation userCurrentCallerNotificationUpdate($enabled: Boolean!) {
+  userCurrentCallerNotificationUpdate(enabled: $enabled) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

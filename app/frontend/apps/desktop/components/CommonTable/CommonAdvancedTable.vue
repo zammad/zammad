@@ -561,6 +561,7 @@ watch(
         />
         <TableRow
           :item="item"
+          :class="rowClass?.(item)"
           :is-row-selected="!hasBulkAction && item.id === selectedRowId"
           tabindex="-1"
           :has-checkbox="hasBulkAction"
@@ -571,7 +572,12 @@ watch(
           v-on="rowHandlers"
         >
           <template #default="{ isRowSelected }">
-            <td v-if="hasBulkAction" headers="select-header" class="size-10">
+            <td
+              v-if="hasBulkAction"
+              headers="select-header"
+              :class="{ 'h-10': !dynamicRowHeight }"
+              class="w-10"
+            >
               <CellCheckbox
                 :item="item"
                 :item-ids="checkedItemIds"
@@ -583,7 +589,8 @@ watch(
               v-for="tableAttribute in tableAttributes"
               :key="`${item.id}-${tableAttribute.name}`"
               :headers="`${tableAttribute.name}-header`"
-              class="h-10 text-sm"
+              :class="{ 'h-10': !dynamicRowHeight }"
+              class="text-sm"
             >
               <div
                 class="flex size-full items-center"
@@ -643,7 +650,12 @@ watch(
                 <slot :name="`item-suffix-${tableAttribute.name}`" :item="item" />
               </div>
             </td>
-            <td v-if="actions" headers="actions-header" class="h-10 px-2.5 py-1 text-center">
+            <td
+              v-if="actions"
+              headers="actions-header"
+              :class="{ 'h-10': !dynamicRowHeight }"
+              class="px-2.5 py-1 text-center"
+            >
               <slot name="actions" v-bind="{ actions, item }">
                 <CommonActionMenu
                   class="flex! items-center justify-center"

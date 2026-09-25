@@ -61,6 +61,7 @@ export const UserPersonalSettingsFragmentDoc = gql`
       enabled
       file
     }
+    callerNotificationEnabled
   }
 }
     `;

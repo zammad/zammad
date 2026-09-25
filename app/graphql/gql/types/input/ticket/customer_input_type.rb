@@ -7,11 +7,14 @@ module Gql::Types::Input::Ticket
 
     argument :id, GraphQL::Types::ID, required: false, description: 'The customer of the ticket.', loads: Gql::Types::UserType
     argument :email, String, required: false, description: 'A customer email address.'
+    argument :phone, String, required: false, description: 'A customer phone number.'
 
-    transform :flatten
+    transform :unwrap_user
 
-    def flatten(payload)
-      payload.to_h.flatten.last
+    # A loaded user stands for itself, an address or a number keeps its key so
+    #   the service knows which of the two it was handed.
+    def unwrap_user(payload)
+      payload[:id] || payload.to_h
     end
 
   end

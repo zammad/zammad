@@ -71,8 +71,21 @@ module.exports = plugin(
         minWidth: {
           '1/2': '50%',
         },
+        keyframes: {
+          // A ringing phone: a burst of swings, then a pause before it rings again.
+          vibrate: {
+            '0%, 47%, 100%': { transform: 'rotate(0) translate(0)' },
+            '3%, 9%, 15%, 21%, 27%, 33%, 39%': {
+              transform: 'rotate(-2deg) translateX(-1px)',
+            },
+            '6%, 12%, 18%, 24%, 30%, 36%, 42%': {
+              transform: 'rotate(10deg) translateX(1px)',
+            },
+          },
+        },
         animation: {
           'ping-once': 'ping .3s cubic-bezier(0, 0, 0.2, 1)',
+          vibrate: 'vibrate 3s ease-in-out infinite',
         },
       },
     },

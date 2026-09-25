@@ -107,6 +107,21 @@ describe('useAddUnknownValueAction', () => {
     ])
   })
 
+  it('supports a label depending on the typed value', async () => {
+    const { actions, onSearchInteractionUpdate } = useAddUnknownValueAction(
+      (filter) => (filter.includes('@') ? 'add new email address' : 'add new phone number'),
+      () => true,
+    )
+
+    onSearchInteractionUpdate(testEmailAddress, testOptions, vi.fn(), vi.fn())
+
+    expect(actions.value).toEqual([expect.objectContaining({ label: 'add new email address' })])
+
+    onSearchInteractionUpdate('+49 30 609854180', testOptions, vi.fn(), vi.fn())
+
+    expect(actions.value).toEqual([expect.objectContaining({ label: 'add new phone number' })])
+  })
+
   it('supports providing custom validator', async () => {
     const testActionLabel = ref('the answer to life the universe and everything')
 

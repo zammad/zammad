@@ -25,7 +25,7 @@ const appName = useAppName()
 const isDesktop = appName === 'desktop'
 
 const characterClassError = isDesktop ? 'text-red-500' : 'text-red'
-const characterClassWarning = isDesktop ? 'text-yellow-600' : 'text-orange'
+const characterClassWarning = isDesktop ? 'text-yellow-700 dark:text-yellow-300' : 'text-orange'
 </script>
 
 <template>

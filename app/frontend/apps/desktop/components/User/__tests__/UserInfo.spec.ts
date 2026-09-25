@@ -58,4 +58,31 @@ describe('UserInfo', () => {
       `/organizations/${user.organization.internalId}`,
     )
   })
+
+  describe('uncertain identity', () => {
+    const renderUserInfo = (props: Record<string, unknown> = {}) => {
+      const user = generateObjectData('User', {
+        id: convertToGraphQLId('User', 2),
+        internalId: 2,
+        fullname: 'Nicole Braun',
+      })
+
+      return renderComponent(UserInfo, { props: { user, ...props }, router: true })
+    }
+
+    it('badges a user who is only a possible match', () => {
+      expect(renderUserInfo({ isMaybe: true }).getByText('Maybe')).toBeVisible()
+    })
+
+    it('badges them without a profile link as well', () => {
+      const wrapper = renderUserInfo({ isMaybe: true, noLink: true })
+
+      expect(wrapper.getByText('Maybe')).toBeVisible()
+      expect(wrapper.queryByRole('link', { name: 'Nicole Braun' })).not.toBeInTheDocument()
+    })
+
+    it('has no badge for a certain match', () => {
+      expect(renderUserInfo().queryByText('Maybe')).not.toBeInTheDocument()
+    })
+  })
 })

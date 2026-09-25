@@ -61,6 +61,7 @@ class User < ApplicationModel
   before_create     :validate_preferences, :domain_based_assignment, :set_locale
   before_update     :validate_preferences, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
+  after_save        :track_caller_id_change
   after_commit      :update_caller_id
 
   validate :ensure_identifier, :ensure_email
@@ -1161,14 +1162,22 @@ raise 'At least one user need to have admin permissions'
     true
   end
 
+  # Remembered on save, as a touch later in the same transaction, like the one a new
+  #   ticket gives its customer, has replaced previous_changes by the time of the commit.
+  #   A change like [nil, ""] does not count.
+  def track_caller_id_change
+    @caller_id_changed = saved_changes.slice(:phone, :mobile).values.flatten.any?(&:present?)
+  end
+
   # When adding/removing a phone/mobile number from the User table,
   # update caller ID table
   # to adopt/orphan matching Cti::Logs accordingly
   # (see https://github.com/zammad/zammad/issues/2057)
   def update_caller_id
-    # skip if "phone/mobile" does not change, or changes like [nil, ""]
-    return if persisted? && previous_changes.slice(:phone, :mobile).values.flatten.none?(&:present?)
+    return if persisted? && !@caller_id_changed
     return if destroyed? && phone.blank? && mobile.blank?
+
+    @caller_id_changed = false
 
     Cti::CallerId.add(self)
   end

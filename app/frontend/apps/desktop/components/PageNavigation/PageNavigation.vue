@@ -9,6 +9,7 @@ import emitter from '#shared/utils/emitter.ts'
 
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import {
+  navigationIconButtonClass,
   navigationItemClass,
   navigationItemHighlightClass,
 } from '#desktop/components/PageNavigation/navigationItemClasses.ts'
@@ -85,7 +86,7 @@ const isRouteActive = (name: string) =>
             <li
               v-for="item in permittedItems"
               :key="item.type === 'group' ? item.group.key : item.route.path"
-              class="flex"
+              class="flex empty:hidden"
               :class="collapsed ? 'justify-center' : 'not-last:mb-1.5'"
             >
               <PageNavigationGroup
@@ -94,10 +95,17 @@ const isRouteActive = (name: string) =>
                 :routes="item.routes"
                 :collapsed="collapsed"
               />
+              <component
+                :is="item.route.meta.navigationItemComponent"
+                v-else-if="item.route.meta.navigationItemComponent"
+                :route="item.route"
+                :collapsed="collapsed"
+                :active="isRouteActive(item.route.name)"
+              />
               <CommonButton
                 v-else-if="collapsed"
                 v-tooltip="$t(item.route.meta.title)"
-                class="shrink-0 text-neutral-400 focus-visible-app-default hover:outline-blue-900"
+                :class="navigationIconButtonClass"
                 size="large"
                 variant="neutral"
                 :icon="item.route.meta.icon"

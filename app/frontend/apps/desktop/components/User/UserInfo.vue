@@ -24,6 +24,7 @@ interface Props {
   hasOrganizationPopover?: boolean
   titleSize?: Sizes
   titleClass?: string
+  isMaybe?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -71,6 +72,14 @@ const { organizationDisplayName } = useOrganizationEntity(organization)
           :class="{ group: !noLink }"
           :link="!noLink ? `/users/${getIdFromGraphQLId(user.id!)}` : undefined"
         >
+          <CommonBadge v-if="isMaybe" class="me-1" variant="warning" size="xs">
+            <CommonLabel
+              class="text-yellow-700! dark:text-yellow-300!"
+              prefix-icon="person-maybe"
+              size="small"
+              >{{ $t('Maybe') }}</CommonLabel
+            >
+          </CommonBadge>
           <CommonLabel
             :class="{
               [`${titleClass}`]: titleClass,
@@ -83,6 +92,14 @@ const { organizationDisplayName } = useOrganizationEntity(organization)
           </CommonLabel>
         </component>
         <div v-else class="flex items-center">
+          <CommonBadge v-if="isMaybe" class="me-1" variant="warning" size="xs">
+            <CommonLabel
+              class="text-yellow-700! dark:text-yellow-300!"
+              prefix-icon="person-maybe"
+              size="small"
+              >{{ $t('Maybe') }}</CommonLabel
+            >
+          </CommonBadge>
           <CommonLabel
             :size="titleSize ? titleSize : labelSize"
             class="line-clamp-2! break-all text-gray-300! dark:text-neutral-400!"

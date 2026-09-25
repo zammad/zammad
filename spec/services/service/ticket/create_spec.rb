@@ -31,12 +31,61 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
     it 'creates a ticket with customer email address' do
       test_email = Faker::Internet.unique.email
-      ticket_data[:customer] = test_email
+      ticket_data[:customer] = { email: test_email }
 
       expect(service_result.customer).to have_attributes(
         email:    test_email,
         role_ids: Role.signup_role_ids
       )
+    end
+
+    context 'when the customer is given as a phone number' do
+      let(:phone_number) { '+49 30 609812345' }
+
+      before { ticket_data[:customer] = { phone: phone_number } }
+
+      it 'creates a customer with the number' do
+        expect(service_result.customer).to have_attributes(
+          phone:    phone_number,
+          email:    '',
+          role_ids: Role.signup_role_ids
+        )
+      end
+
+      it 'indexes the number as the caller ID of the new customer, so the next call finds them' do
+        expect(Cti::CallerId.where(user_id: service_result.customer.id, level: 'known').pluck(:caller_id))
+          .to include('4930609812345')
+      end
+
+      it 'takes an existing customer whose phone is the number, however written' do
+        existing_customer = create(:customer, phone: '030 / 609812345')
+
+        expect(service_result.customer).to eq(existing_customer)
+      end
+
+      it 'takes an existing customer whose mobile is the number' do
+        existing_customer = create(:customer, mobile: '0049 30 609812345')
+
+        expect(service_result.customer).to eq(existing_customer)
+      end
+
+      it 'passes over a user who only mentions the number' do
+        create(:customer, note: "Reachable at #{phone_number} in the morning.")
+
+        expect(service_result.customer).to have_attributes(phone: phone_number, note: '')
+      end
+
+      it 'rejects a value that is no phone number' do
+        ticket_data[:customer] = { phone: 'not a number' }
+
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute, 'The phone number is invalid.')
+      end
+
+      it 'rejects a number too short to be one' do
+        ticket_data[:customer] = { phone: '12345' }
+
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
+      end
     end
 
     it 'fails to create ticket without access' do

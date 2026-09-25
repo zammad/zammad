@@ -57,5 +57,6 @@ fragment userPersonalSettings on User {
       enabled
       file
     }
+    callerNotificationEnabled
   }
 }

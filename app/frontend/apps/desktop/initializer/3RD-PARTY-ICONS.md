@@ -66,6 +66,7 @@
 - `assets/lightbulb.svg`
 - `assets/lock.svg`
 - `assets/lock-fill.svg`
+- `assets/mic.svg`
 - `assets/paperclip.svg`
 - `assets/patch-check.svg`
 - `assets/pencil-square.svg`
@@ -101,6 +102,7 @@
 - `assets/telegram.svg`
 - `assets/telephone-inbound.svg`
 - `assets/telephone-outbound.svg`
+- `assets/telephone-x.svg`
 - `assets/telephone.svg`
 - `assets/three-dots-vertical.svg`
 - `assets/trash3.svg`

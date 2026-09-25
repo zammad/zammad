@@ -8,8 +8,9 @@ import CommonError from '#desktop/components/CommonError/CommonError.vue'
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 
 defineOptions({
-  beforeRouteEnter() {
-    if (useAuthenticationStore().authenticated) return '/error-tab'
+  beforeRouteEnter(to) {
+    // Keep the query, it tells the after guard to preserve error options set by a route guard.
+    if (useAuthenticationStore().authenticated) return { path: '/error-tab', query: to.query }
     return true
   },
 })

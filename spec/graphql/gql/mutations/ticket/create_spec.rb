@@ -202,6 +202,26 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
 
+      # The matrix of what a number matches lives in spec/services/service/ticket/create_spec.rb.
+      context 'when customer is provided as a phone number' do
+        let(:phone_number)  { '+49 30 609812345' }
+        let(:input_payload) { input_base_payload.merge(customer: { phone: phone_number }) }
+
+        it 'creates the ticket and a new customer' do
+          it_creates_ticket
+          expect(gql.result.data[:ticket][:customer][:fullname]).to eq(User.find_by(phone: phone_number).fullname)
+        end
+
+        context 'with invalid phone number' do
+          let(:phone_number) { 'not a number' }
+
+          it 'fails with an error on the customer field' do
+            it_fails_to_create_ticket
+            expect(gql.result.data[:errors]).to eq([{ 'field' => 'customer_id', 'message' => 'The phone number is invalid.' }])
+          end
+        end
+      end
+
       context 'when creating the ticket in a group with only :create permission' do
         let(:group)         { create(:group) }
         let(:owner)         { create(:agent, groups: [group]) }

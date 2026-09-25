@@ -1,0 +1,16 @@
+subscription ctiCallPickup {
+  ctiCallPickup {
+    target {
+      view
+      customer {
+        id
+        internalId
+      }
+      log {
+        id
+        from
+        fromPretty
+      }
+    }
+  }
+}

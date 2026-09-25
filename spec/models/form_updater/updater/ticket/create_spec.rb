@@ -239,6 +239,128 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
         )
       end
     end
+
+    context 'when the customer is prefilled with a phone number' do
+      let(:phone) { '+49 30 609812345' }
+      let(:meta)  { { initial: true, form_id: SecureRandom.uuid, additional_data: { 'customer_phone' => phone } } }
+
+      it 'returns the number as the customer with an option naming it' do
+        expect(resolved_result.resolve[:fields]).to include(
+          'customer_id' => include(
+            initialValue: phone,
+            options:      [{ value: phone, label: phone }],
+          )
+        )
+      end
+
+      context 'when a customer is prefilled as well' do
+        let(:customer) { create(:customer) }
+        let(:meta) do
+          { initial: true, form_id: SecureRandom.uuid, additional_data: { 'customer_id' => customer.id, 'customer_phone' => phone } }
+        end
+
+        it 'prefers the customer' do
+          expect(resolved_result.resolve[:fields]['customer_id']).to include(initialValue: customer.id)
+        end
+      end
+
+      context 'with a fresh taskbar' do
+        let(:taskbar) { create(:taskbar, key: 'TicketCreateScreen-1234', callback: 'TicketCreate', user_id: user.id) }
+        let(:meta) do
+          {
+            initial:         true,
+            form_id:         SecureRandom.uuid,
+            additional_data: {
+              'customer_phone' => phone,
+              'taskbarId'      => Gql::ZammadSchema.id_from_object(taskbar),
+            },
+          }
+        end
+
+        it 'stores the number wrapped, so the reopened tab cannot read it as an id' do
+          resolved_result.resolve
+
+          expect(taskbar.reload.state).to include('customer_id' => { 'phone' => phone })
+        end
+      end
+    end
+
+    context 'when an unknown customer is typed into the field of a draft' do
+      let(:taskbar) { create(:taskbar, key: 'TicketCreateScreen-1234', callback: 'TicketCreate', user_id: user.id) }
+      let(:meta)    { { form_id: SecureRandom.uuid, additional_data: { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar) } } }
+      let(:data)    { { 'customer_id' => 'new@example.com' } }
+
+      it 'stores the address wrapped' do
+        resolved_result.resolve
+
+        expect(taskbar.reload.state).to include('customer_id' => { 'email' => 'new@example.com' })
+      end
+    end
+
+    context 'when a create screen holding an unknown customer is reopened' do
+      let(:phone) { '+49 30 609812345' }
+      let(:state) { { 'customer_id' => { 'phone' => phone } } }
+      let(:taskbar) do
+        create(:taskbar, key: 'TicketCreateScreen-1234', callback: 'TicketCreate', user_id: user.id,
+                         state: state.merge('form_id' => SecureRandom.uuid))
+      end
+      let(:meta) do
+        { additional_data: { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar), 'applyTaskbarState' => true } }
+      end
+
+      it 'keeps the typed-in number as the customer' do
+        expect(resolved_result.resolve[:fields]['customer_id']).to include(
+          value:   phone,
+          options: [{ value: phone, label: phone }],
+        )
+      end
+
+      # A number typed without separators is all digits, like an id.
+      context 'when the number reads like the id of an existing user' do
+        let(:phone) { '123456' }
+
+        before { create(:customer, id: 123_456) }
+
+        it 'keeps the number rather than resolving that user' do
+          expect(resolved_result.resolve[:fields]['customer_id']).to include(
+            value:   phone,
+            options: [{ value: phone, label: phone }],
+          )
+        end
+      end
+
+      context 'when the typed-in value is an email address' do
+        let(:state) { { 'customer_id' => { 'email' => 'new@example.com' } } }
+
+        it 'keeps the address as the customer' do
+          expect(resolved_result.resolve[:fields]['customer_id']).to include(value: 'new@example.com')
+        end
+      end
+
+      # The old UI stores the customer id as a string.
+      context 'when the tab was left open in the old UI' do
+        let(:customer) { create(:customer) }
+        let(:state)    { { 'customer_id' => customer.id.to_s } }
+
+        it 'resolves the customer' do
+          expect(resolved_result.resolve[:fields]['customer_id']).to include(value: customer.id)
+        end
+      end
+    end
+
+    context 'when a shared draft holding an unknown customer is applied' do
+      let(:draft) { create(:ticket_shared_draft_start, group: group, content: { 'customer_id' => { 'phone' => '123456' } }) }
+      let(:meta)  { { additional_data: { 'sharedDraftId' => Gql::ZammadSchema.id_from_object(draft), 'draftType' => 'start' }, dirty_fields: [] } }
+
+      before { create(:customer, id: 123_456) }
+
+      it 'keeps the typed-in number rather than resolving the user with that id' do
+        expect(resolved_result.resolve[:fields]['customer_id']).to include(
+          value:   '123456',
+          options: [{ value: '123456', label: '123456' }],
+        )
+      end
+    end
   end
 
   describe '#authorized?' do

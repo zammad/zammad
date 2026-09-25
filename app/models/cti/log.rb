@@ -3,12 +3,22 @@
 module Cti
   class Log < ApplicationModel
     include HasSearchIndexBackend
+    include Cti::Log::TriggersSubscriptions
 
     self.table_name = 'cti_logs'
 
     store :preferences, accessors: %i[from_pretty to_pretty]
 
     validates :state, format: { with: %r{\A(newCall|answer|hangup)\z},  message: 'newCall|answer|hangup is allowed' }
+
+    # The same reading as the old caller log: its counter is the calls not marked as done,
+    #   and its navigation widgets are the not-done calls that are still ringing. Unlike the old
+    #   widgets, only inbound calls ring: an outbound one is waiting on the other side to pick up.
+    scope :unhandled, -> { where(done: false) }
+    scope :ringing,   -> { unhandled.where(state: 'newCall', direction: 'in') }
+
+    # The window the old caller log shows, and its navigation derives counter and widgets from.
+    scope :within_view_limit, -> { where(id: reorder(created_at: :desc).limit(view_limit)) }
 
     before_create :set_pretty
     before_update :set_pretty

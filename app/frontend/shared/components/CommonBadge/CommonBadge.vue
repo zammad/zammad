@@ -22,12 +22,15 @@ const props = withDefaults(defineProps<Props>(), {
 
 const sizeClasses = computed(() => {
   switch (props.size) {
+    case 'dot':
+      return 'text-[0px]'
     case 'large':
       return 'text-base'
     case 'medium':
       return 'text-sm'
     case 'xs':
       return 'text-[10px]'
+    case 'circle':
     case 'small':
     default:
       return 'text-xs'
@@ -36,6 +39,10 @@ const sizeClasses = computed(() => {
 
 const paddingClasses = computed(() => {
   switch (props.size) {
+    case 'dot':
+      return ['size-2', 'p-0']
+    case 'circle':
+      return ['size-6', 'p-0']
     case 'large':
       return ['px-4', 'py-2.5']
     case 'medium':
@@ -49,7 +56,7 @@ const paddingClasses = computed(() => {
 })
 
 const borderRadiusClass = computed(() => {
-  if (props.rounded) return 'rounded-full'
+  if (props.rounded || props.size === 'dot' || props.size === 'circle') return 'rounded-full'
 
   switch (props.size) {
     case 'large':

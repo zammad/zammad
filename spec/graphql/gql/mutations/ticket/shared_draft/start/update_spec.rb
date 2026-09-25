@@ -56,6 +56,16 @@ RSpec.describe Gql::Mutations::Ticket::SharedDraft::Start::Update, type: :graphq
         expect(gql.result.data)
           .to include('sharedDraft' => include('id' => gql.id(shared_draft)))
       end
+
+      context 'with a customer who does not exist yet' do
+        let(:new_content) { { 'customer_id' => 'new@example.com' } }
+
+        it 'stores the typed-in address wrapped' do
+          gql.execute(query, variables:)
+
+          expect(shared_draft.reload.content).to include('customer_id' => { 'email' => 'new@example.com' })
+        end
+      end
     end
   end
 

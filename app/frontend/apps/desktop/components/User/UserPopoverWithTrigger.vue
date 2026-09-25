@@ -24,6 +24,7 @@ export interface Props {
   noFocusStyling?: boolean
   noHoverStyling?: boolean
   zIndex?: string
+  isMaybe?: boolean
 }
 
 const props = defineProps<Props>()
@@ -77,6 +78,7 @@ const isSystemUser = computed(() => {
         :user-avatar="user"
         :has-open-via-long-click="hasOpenedViaLongClick"
         :no-profile-link="!noTriggerLink"
+        :is-maybe="isMaybe"
       />
     </template>
 

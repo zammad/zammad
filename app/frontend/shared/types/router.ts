@@ -3,7 +3,7 @@
 import type { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 
 import type { RequiredPermission } from './permission.ts'
-import type { App } from 'vue'
+import type { App, Component } from 'vue'
 import type {
   Router,
   RouteRecordRaw,
@@ -38,6 +38,10 @@ export interface RouteRecordMeta {
   //   `navigationGroup` in addition to nest it under a shared parent menu.
   mainNavigation?: boolean
   navigationGroup?: string
+  // Desktop only: rendered in place of the default main navigation link for
+  //   this route, e.g. an entry that carries a counter or an inline control.
+  //   It may render nothing to hide the entry while the route stays reachable.
+  navigationItemComponent?: Component
   pageKey?: string
   permanentItem?: boolean
   skipRedirect?: (toRoute: RouteLocationNormalizedGeneric) => boolean

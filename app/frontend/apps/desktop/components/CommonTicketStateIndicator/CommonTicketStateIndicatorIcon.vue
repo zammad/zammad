@@ -40,7 +40,7 @@ const iconColor = computed(() => {
       return 'text-red-300'
     case EnumTicketStateColorCode.Open:
     default:
-      return 'text-yellow-500'
+      return 'text-yellow-700 dark:text-yellow-300'
   }
 })
 

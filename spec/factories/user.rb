@@ -106,6 +106,10 @@ FactoryBot.define do
     trait :with_org do
       organization
     end
+
+    trait :with_phone do
+      phone { Faker::PhoneNumber.unique.cell_phone_in_e164 }
+    end
   end
 
   sequence(:password_valid) do |n|

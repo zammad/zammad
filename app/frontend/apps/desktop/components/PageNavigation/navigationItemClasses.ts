@@ -8,3 +8,7 @@ export const navigationItemClass =
 
 // Current page, or an open group menu.
 export const navigationItemHighlightClass = 'bg-blue-800! text-white!'
+
+// Collapsed, every entry shrinks to an icon button; the same applies to a group trigger.
+export const navigationIconButtonClass =
+  'shrink-0 text-neutral-400 focus-visible-app-default hover:outline-blue-900'

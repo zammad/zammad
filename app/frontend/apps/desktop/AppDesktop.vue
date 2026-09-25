@@ -26,6 +26,7 @@ import {
 import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
 import CommonImageViewer from '#desktop/components/CommonImageViewer/CommonImageViewer.vue'
 import { useConnection } from '#desktop/composables/useConnection.ts'
+import { useCtiCallPickup } from '#desktop/entities/cti/composables/useCtiCallPickup.ts'
 import { useTicketOverviewsStore } from '#desktop/entities/ticket/stores/ticketOverviews.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
@@ -128,6 +129,9 @@ watch(
 )
 
 useConnection()
+
+// At the app level, so a picked-up call opens its view from any screen.
+useCtiCallPickup()
 </script>
 
 <template>

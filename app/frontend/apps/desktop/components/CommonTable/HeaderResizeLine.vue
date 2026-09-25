@@ -11,7 +11,9 @@ import getUuid from '#shared/utils/getUuid.ts'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 
-import { MINIMUM_COLUMN_WIDTH } from './types.ts'
+const props = defineProps<{
+  minimumWidth: number
+}>()
 
 const emit = defineEmits<{
   resize: []
@@ -41,11 +43,11 @@ const setCurrentHeaderWidths = () => {
 const setHeaderWidths = (diff: number) => {
   if (!currentHeader.value || !nextHeader.value) return
 
-  if (currentHeaderWidth.value + diff < MINIMUM_COLUMN_WIDTH)
-    diff = -(currentHeaderWidth.value - MINIMUM_COLUMN_WIDTH)
+  if (currentHeaderWidth.value + diff < props.minimumWidth)
+    diff = -(currentHeaderWidth.value - props.minimumWidth)
 
-  if (nextHeaderWidth.value - diff < MINIMUM_COLUMN_WIDTH)
-    diff = nextHeaderWidth.value - MINIMUM_COLUMN_WIDTH
+  if (nextHeaderWidth.value - diff < props.minimumWidth)
+    diff = nextHeaderWidth.value - props.minimumWidth
 
   currentHeader.value.style.width = `${currentHeaderWidth.value + diff}px`
   nextHeader.value.style.width = `${nextHeaderWidth.value - diff}px`

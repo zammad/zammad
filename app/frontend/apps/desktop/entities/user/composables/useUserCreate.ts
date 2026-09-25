@@ -26,7 +26,7 @@ const userCreateFormSchema = defineFormSchema([
   },
 ])
 
-const buildUserEditFormChangeFields = (organization?: Organization) => {
+const buildUserEditFormChangeFields = (organization?: Organization, phone?: string) => {
   const noteMetaDisabled = {
     mentionText: {
       disabled: true,
@@ -51,15 +51,19 @@ const buildUserEditFormChangeFields = (organization?: Organization) => {
         options: organization ? [useFieldOrganizationOption(organization)] : [],
       },
     },
+    phone: {
+      initialValue: phone,
+    },
   } satisfies Record<string, Partial<FormSchemaField>>
 }
 
 export const openUserCreateFlyout = async (options?: {
   title?: string
   organization?: Organization
+  phone?: string
   onSuccess?: (data: unknown) => void
 }) => {
-  const formChangeFields = buildUserEditFormChangeFields(options?.organization)
+  const formChangeFields = buildUserEditFormChangeFields(options?.organization, options?.phone)
 
   return openFlyout(USER_CREATE_FLYOUT_NAME, {
     name: USER_CREATE_FLYOUT_NAME,

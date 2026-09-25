@@ -81,8 +81,11 @@ export const useTicketCreate = (
     errorShowNotification: false,
   })
 
+  // An unknown customer arrives as the typed value: an email address or a phone number.
   const getCustomerVariable = (customerId: string) => {
-    return isGraphQLId(customerId) ? { id: customerId } : { email: customerId }
+    if (customerId.includes('@')) return { email: customerId }
+
+    return isGraphQLId(customerId) ? { id: customerId } : { phone: customerId }
   }
 
   const createTicket = async (formData: FormSubmitData<TicketFormData>) => {

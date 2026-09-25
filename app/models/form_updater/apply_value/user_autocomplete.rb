@@ -12,6 +12,9 @@ class FormUpdater::ApplyValue::UserAutocomplete < FormUpdater::ApplyValue::Base
   # prefill inherits that and will be tightened together with the apply-value
   # path in a follow-up.
   def self.resolve_option(id)
+    # Cast to an integer, a string like '12abc' would hit user 12.
+    return if !id.to_s.match?(%r{\A\d+\z})
+
     user = User.find_by(id: id)
     return if !user
 
@@ -28,10 +31,23 @@ class FormUpdater::ApplyValue::UserAutocomplete < FormUpdater::ApplyValue::Base
   end
 
   def map_value(field:, config:)
-    option = self.class.resolve_option(config['value'])
+    value  = config['value']
+    option = unknown_value_option(value) || self.class.resolve_option(value)
     return if !option
 
     result[field][:value] = option[:value]
     result[field][:options] = [option]
+  end
+
+  private
+
+  # An email address or phone number of a customer who does not exist yet, kept as typed. It
+  #   arrives wrapped (see FormUpdater::StoreValue::UnknownCustomer): a bare string is an id,
+  #   which the old UI stores as such.
+  def unknown_value_option(value)
+    typed = FormUpdater::StoreValue::UnknownCustomer.unwrap(value)
+    return if typed.blank?
+
+    { value: typed, label: typed }
   end
 end

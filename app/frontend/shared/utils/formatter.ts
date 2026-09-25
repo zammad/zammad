@@ -84,6 +84,28 @@ export const getInitials = (
 }
 
 /**
+ * Composes the user's full name the same way `User#fullname` does on the backend.
+ * @param firstname - user's first name
+ * @param lastname - user's last name
+ * @param format - value of the `user_name_format` setting
+ */
+export const getFullname = (
+  firstname?: Maybe<string>,
+  lastname?: Maybe<string>,
+  format?: Maybe<string>,
+) => {
+  const lastFirst = format === 'last_first' || format === 'last_first_comma'
+  const parts = lastFirst ? [lastname, firstname] : [firstname, lastname]
+  const separator = format === 'last_first_comma' ? ', ' : ' '
+
+  return parts
+    .map((part) => (part ?? '').trim())
+    .filter(Boolean)
+    .join(separator)
+    .trim()
+}
+
+/**
  * Replaces code inside `#{obj.key}` with the value of the corresponding object.
  * @param template - string to replace
  * @param objects - reference object

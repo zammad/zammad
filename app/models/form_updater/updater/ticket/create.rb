@@ -32,6 +32,7 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
 
     customer_id = meta.dig(:additional_data, 'customer_id')
     customer_user = ::User.find_by(id: customer_id)
+    customer_phone = meta.dig(:additional_data, 'customer_phone')
 
     if customer_user
       # We use the internal_id to avoid coercing the customer_id if it's a string
@@ -48,6 +49,13 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
         heading: customer_user.organization&.name,
         object:  customer_user_serialized
       }]
+    elsif customer_phone.present?
+      # A create screen opened for a caller nobody knows yet: the number stands in
+      #   for the customer until the ticket is created or a user is picked.
+      values['customer_id'] = customer_phone
+
+      result['customer_id'] ||= {}
+      result['customer_id'][:options] = [{ value: customer_phone, label: customer_phone }]
     end
 
     values

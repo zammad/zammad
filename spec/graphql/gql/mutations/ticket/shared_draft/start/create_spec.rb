@@ -42,15 +42,39 @@ RSpec.describe Gql::Mutations::Ticket::SharedDraft::Start::Create, type: :graphq
     end
 
     context 'when agent has access to the draft group' do
-      it 'returns new object' do
-        gql.execute(query, variables:)
-
-        draft = Gql::ZammadSchema.verified_object_from_id(
+      let(:draft) do
+        Gql::ZammadSchema.verified_object_from_id(
           gql.result.data.dig('sharedDraft', 'id'),
           type: Ticket::SharedDraftStart
         )
+      end
+
+      it 'returns new object' do
+        gql.execute(query, variables:)
 
         expect(draft).to have_attributes(name:, content:, group:)
+      end
+
+      # The old UI stores a customer id as a string, so the typed-in value of a customer who does
+      #   not exist yet is marked apart here, before the draft is stored.
+      context 'with a customer who does not exist yet' do
+        let(:content) { { 'customer_id' => '123456' } }
+
+        it 'stores the typed-in number wrapped' do
+          gql.execute(query, variables:)
+
+          expect(draft.content).to include('customer_id' => { 'phone' => '123456' })
+        end
+      end
+
+      context 'with a known customer' do
+        let(:content) { { 'customer_id' => 2 } }
+
+        it 'stores the id as it is' do
+          gql.execute(query, variables:)
+
+          expect(draft.content).to include('customer_id' => 2)
+        end
       end
     end
   end

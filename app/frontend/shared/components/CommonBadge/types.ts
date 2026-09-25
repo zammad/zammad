@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-export type BadgeSize = 'xs' | 'small' | 'medium' | 'large' | 'xl'
+export type BadgeSize = 'dot' | 'circle' | 'xs' | 'small' | 'medium' | 'large' | 'xl'
 
 export type BadgeVariant =
   | 'success'
