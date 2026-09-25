@@ -13,6 +13,9 @@ class AI::Analytics::UsagesController < ApplicationController
       .execute(ai_analytics_run, **usage_attributes)
 
     render json: { status: :ok }
+  rescue Service::AI::Analytics::UpsertUsage::FeedbackAlreadyProvidedError => e
+    # Flagged apart from other unprocessable input, so the client can show the feedback as given.
+    render json: { error: e.message, error_human: e.message, feedback_already_provided: true }, status: :unprocessable_content
   end
 
   private

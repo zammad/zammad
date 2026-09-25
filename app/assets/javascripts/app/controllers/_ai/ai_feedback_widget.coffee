@@ -57,7 +57,9 @@ class App.AIFeedbackWidget extends App.Controller
   submitPositiveReaction: (e) ->
     @preventDefault(e)
 
-    @recordUsage(rating: true, null, =>
+    @recordUsage(rating: true, null, (data) =>
+      return false if @feedbackAlreadyProvided(data)
+
       @hideAcknowledgment()
       @showQuestionAndButtons()
     )
@@ -68,9 +70,14 @@ class App.AIFeedbackWidget extends App.Controller
   submitNegativeReaction: (e) ->
     @preventDefault(e)
 
-    @recordUsage(rating: false, null, =>
+    @recordUsage(rating: false, null, (data) =>
       @hideComment()
       @showToolbar()
+
+      if @feedbackAlreadyProvided(data)
+        @showAcknowledgment()
+        return false
+
       @showQuestionAndButtons()
     )
 
@@ -94,7 +101,9 @@ class App.AIFeedbackWidget extends App.Controller
     @preventDefault(e)
 
     if commentText = @comment.find('textarea').val()
-      @recordUsage(comment: commentText, null, =>
+      @recordUsage(comment: commentText, null, (data) =>
+        return false if @feedbackAlreadyProvided(data)
+
         @hideAcknowledgment()
         @hideToolbar()
         @showComment()
@@ -103,6 +112,10 @@ class App.AIFeedbackWidget extends App.Controller
     @hideComment()
     @showToolbar()
     @showAcknowledgment()
+
+  # Feedback may have been given meanwhile in another view of the same result.
+  feedbackAlreadyProvided: (data) ->
+    !!data.responseJSON?.feedback_already_provided
 
   showQuestionAndButtons: ->
     @question.removeClass('hide')

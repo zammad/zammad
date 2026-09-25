@@ -95,6 +95,15 @@ RSpec.describe Gql::Mutations::AIAnalytics::Usage, :aggregate_failures, type: :g
           end
         end
 
+        context 'with feedback provided already' do
+          let(:usage)  { create(:ai_analytics_usage, ai_analytics_run:, user: agent, rating: true) }
+          let(:rating) { true }
+
+          it 'raises an error' do
+            expect(gql.result.error_type).to eq(Service::AI::Analytics::UpsertUsage::FeedbackAlreadyProvidedError)
+          end
+        end
+
         context 'with a usage context' do
           let(:context) { { approved: true } }
 
