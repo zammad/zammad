@@ -1,0 +1,23 @@
+# Data needed to render an answer's header before its own query resolves — carried on every
+#   listed answer so it is cached for an instant open, and read back from the cache by id. The
+#   counterpart of knowledgeBaseCategoryPreInfo, and deliberately not a superset of it: the
+#   breadcrumb is the *category's*, so this only names the category and that one is read next.
+fragment knowledgeBaseAnswerPreInfo on KnowledgeBaseAnswer {
+  visibility
+  translation(locale: $locale) {
+    id
+    title
+    # Which locale the title actually came from, so the header can dock its missing-translation
+    #   alert from the cache too. Without it the alert would arrive with the answer and grow the
+    #   header a row - the very jump opening from the cache is here to avoid.
+    kbLocale {
+      id
+      systemLocale {
+        locale
+      }
+    }
+  }
+  category {
+    id
+  }
+}

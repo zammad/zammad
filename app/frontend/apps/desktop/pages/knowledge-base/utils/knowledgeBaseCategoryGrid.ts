@@ -19,3 +19,10 @@ export const CATEGORY_GRID_REVEAL = {
   3: 'hidden lg:flex',
   4: 'hidden 2xl:flex',
 } as const
+
+// The widest the grid ever gets, and therefore the most tiles a skeleton may render: the reveal
+//   map above can only hide a tile it has a breakpoint for, so anything past the last one would
+//   show at every width and give a skeleton more rows than the list it stands in for. Derived from
+//   that map rather than restated, so only the class string above still has to be kept in step by
+//   hand - Tailwind scans for whole class names, so that one cannot be built either.
+export const CATEGORY_GRID_MAX_COLUMNS = Math.max(...Object.keys(CATEGORY_GRID_REVEAL).map(Number))

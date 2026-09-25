@@ -1,5 +1,8 @@
 fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
   ...knowledgeBaseAnswerPolicy
+  # Everything the header opens from, so an answer reached without passing a listing (the stepper's
+  #   prefetch, a taskbar tab) writes the same entry the listing would have.
+  ...knowledgeBaseAnswerPreInfo
   visibility
   # The changes still ahead, beside the state the answer is in now - both are derived from the same
   # three dates, and the sidebar shows them next to each other. Null for a *reader* of the category:
@@ -64,16 +67,9 @@ fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
   }
   category {
     id
-    breadcrumb {
-      id
-      translation(locale: $locale) {
-        id
-        title
-      }
-      categoryIcon
-      iconSet
-      visibility(locale: $locale)
-    }
+    # The header of the opened answer renders this path, and reads it back from the cache by id
+    #   when the answer itself is not there yet (useKnowledgeBaseAnswer).
+    ...knowledgeBaseCategoryBreadcrumb
   }
   tags
   attachments {

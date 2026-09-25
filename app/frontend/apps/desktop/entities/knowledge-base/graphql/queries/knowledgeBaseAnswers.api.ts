@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { KnowledgeBaseAnswerPreInfoFragmentDoc } from '../fragments/knowledgeBaseAnswerPreInfo.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -20,6 +21,7 @@ export const KnowledgeBaseAnswersDocument = gql`
         id
         visibility
         position
+        ...knowledgeBaseAnswerPreInfo
         translation(locale: $locale) {
           id
           title
@@ -38,7 +40,7 @@ export const KnowledgeBaseAnswersDocument = gql`
     }
   }
 }
-    `;
+    ${KnowledgeBaseAnswerPreInfoFragmentDoc}`;
 export function useKnowledgeBaseAnswersQuery(variables: Types.KnowledgeBaseAnswersQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseAnswersQueryVariables> | ReactiveFunction<Types.KnowledgeBaseAnswersQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswersQuery, Types.KnowledgeBaseAnswersQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswersQuery, Types.KnowledgeBaseAnswersQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswersQuery, Types.KnowledgeBaseAnswersQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.KnowledgeBaseAnswersQuery, Types.KnowledgeBaseAnswersQueryVariables>(KnowledgeBaseAnswersDocument, variables, options);
 }

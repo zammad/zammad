@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
@@ -26,7 +28,7 @@ const locales: DropdownItem[] = [
   { key: '2', label: 'Deutsch' },
 ]
 
-const renderHeader = (props = {}) =>
+const renderHeader = (props = {}, slots: Record<string, string> = {}) =>
   renderComponent(TopBarHeaderFull, {
     props: {
       breadcrumbs,
@@ -37,6 +39,7 @@ const renderHeader = (props = {}) =>
       selectedLocale: locales[0],
       ...props,
     },
+    slots,
     router: true,
   })
 
@@ -108,6 +111,41 @@ describe('TopBarHeaderFull', () => {
 
   // While a node is being created the breadcrumb's last item is the heading, so the big title
   //   row must not take up space above it.
+  // The reader's answer header opens from the cached pre-info, which carries the breadcrumb and
+  //   the title but nothing the badges need. Without a loading state of its own the details row
+  //   would be absent until the answer lands, and the header would grow a row on arrival.
+  describe('the details row', () => {
+    const details = { details: '<div data-test-id="details">details</div>' }
+
+    // Scoped to this render's own container: the examples of a file are not cleaned up between
+    //   runs, so a document-wide query would also find the details of the ones before it.
+    const renderDetails = (props = {}) =>
+      within(renderHeader(props, details).container as HTMLElement)
+
+    it('holds its place while only the details are still loading', () => {
+      const view = renderDetails({ loadingDetails: true })
+
+      expect(view.queryByTestId('details')).not.toBeInTheDocument()
+      expect(view.getAllByRole('progressbar').length).toBeGreaterThan(0)
+
+      // The rest of the header is not loading, so it is there for real.
+      expect(view.getByRole('link', { name: /Support/ })).toBeInTheDocument()
+      expect(view.getByText('Knowledge Base Title')).toBeInTheDocument()
+    })
+
+    it('shows the details once they are there', () => {
+      expect(renderDetails({ loadingDetails: false }).getByTestId('details')).toBeInTheDocument()
+    })
+
+    // A header that loads as a whole - the edit view's - says so once and means both.
+    it('follows the header loading state when it is not told otherwise', () => {
+      const view = renderDetails({ loading: true })
+
+      expect(view.queryByTestId('details')).not.toBeInTheDocument()
+      expect(view.getAllByRole('progressbar').length).toBeGreaterThan(0)
+    })
+  })
+
   it('renders no title row without a title', () => {
     const view = renderHeader({ title: undefined })
 
@@ -174,5 +212,38 @@ describe('TopBarHeaderFull', () => {
     // Same class the create/edit form column uses, so the two stay aligned at any width.
     expect(target).toHaveClass('max-w-270', 'px-5.5')
     expect(target?.parentElement).toHaveClass('-mx-5.5')
+  })
+
+  // The edit header opens its breadcrumb from the cache while the form is still on its way, so the
+  //   title field's placeholder must not go with the header's own loading state.
+  describe('the title field placeholder', () => {
+    const renderTitleField = (props = {}) => {
+      const view = renderHeader({
+        title: undefined,
+        titleFieldTarget: 'knowledgeBaseAnswerTitleField',
+        ...props,
+      })
+
+      return view.container.querySelector('#knowledgeBaseAnswerTitleField') as HTMLElement
+    }
+
+    it('stays while only the title field is still loading', () => {
+      const target = renderTitleField({ loadingTitleField: true })
+
+      expect(within(target).getByRole('progressbar')).toBeInTheDocument()
+    })
+
+    it('goes once the title field is there, keeping its container', () => {
+      const target = renderTitleField({ loading: true, loadingTitleField: false })
+
+      expect(target).toBeInTheDocument()
+      expect(within(target).queryByRole('progressbar')).not.toBeInTheDocument()
+    })
+
+    it('follows the header loading state when it is not told otherwise', () => {
+      const target = renderTitleField({ loading: true })
+
+      expect(within(target).getByRole('progressbar')).toBeInTheDocument()
+    })
   })
 })

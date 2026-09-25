@@ -2,9 +2,12 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseAnswerPolicyFragmentDoc } from './knowledgeBaseAnswerPolicy.api';
+import { KnowledgeBaseAnswerPreInfoFragmentDoc } from './knowledgeBaseAnswerPreInfo.api';
+import { KnowledgeBaseCategoryBreadcrumbFragmentDoc } from './knowledgeBaseCategoryBreadcrumb.api';
 export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
   ...knowledgeBaseAnswerPolicy
+  ...knowledgeBaseAnswerPreInfo
   visibility
   visibilitySchedules {
     visibility
@@ -55,16 +58,7 @@ export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
   }
   category {
     id
-    breadcrumb {
-      id
-      translation(locale: $locale) {
-        id
-        title
-      }
-      categoryIcon
-      iconSet
-      visibility(locale: $locale)
-    }
+    ...knowledgeBaseCategoryBreadcrumb
   }
   tags
   attachments {
@@ -76,4 +70,6 @@ export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     preferences
   }
 }
-    ${KnowledgeBaseAnswerPolicyFragmentDoc}`;
+    ${KnowledgeBaseAnswerPolicyFragmentDoc}
+${KnowledgeBaseAnswerPreInfoFragmentDoc}
+${KnowledgeBaseCategoryBreadcrumbFragmentDoc}`;

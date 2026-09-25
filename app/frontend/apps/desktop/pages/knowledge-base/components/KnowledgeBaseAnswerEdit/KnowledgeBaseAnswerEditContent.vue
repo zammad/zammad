@@ -78,7 +78,7 @@ const answerId = computed(() => convertToGraphQLId('KnowledgeBase::Answer', prop
 // Not the reader's own redirect-on-error behaviour: LayoutTaskbarTabContent has already gated this
 //   component's mount on the tab's own (edit-authorized) entity access, so a 403/404 here can only
 //   be a race - nothing to navigate to a second time for.
-const { answer, answerConfirmed } = useKnowledgeBaseAnswer({
+const { answer, answerConfirmed, cachedHeader } = useKnowledgeBaseAnswer({
   answerId,
   locale: toRef(props, 'localeCode'),
   redirectOnAccessError: false,
@@ -96,6 +96,20 @@ const translation = computed(() => answer.value?.translation)
 
 const translationMissing = computed(
   () => Boolean(answer.value) && isTranslationMissing(translation.value, props.localeCode),
+)
+
+// The same for the header, which may already be showing the cached pre-info (see its
+//   `cachedHeader`) while the form still waits for the edit query - so it can announce a missing
+//   translation before that lands. Never for the form itself: seeding and takeovers read only the
+//   complete edit result.
+const headerTranslation = computed(() =>
+  answer.value ? translation.value : cachedHeader.value?.translation,
+)
+
+const headerTranslationMissing = computed(
+  () =>
+    Boolean(answer.value || cachedHeader.value) &&
+    isTranslationMissing(headerTranslation.value, props.localeCode),
 )
 
 const {
@@ -179,7 +193,7 @@ const {
 //   fallback label either: a title is empty only for an answer with no translation at all, and then
 //   the answer genuinely has no name to show.
 usePage({
-  metaTitle: computed(() => translation.value?.title ?? ''),
+  metaTitle: computed(() => headerTranslation.value?.title ?? ''),
 })
 
 useScrollPosition(contentContainerElement)
@@ -546,8 +560,9 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
       <KnowledgeBaseAnswerEditHeader
         :content-container-element="contentContainerElement"
         :answer="answer"
+        :cached-header="cachedHeader"
         :title-field-target="TITLE_FIELD_TARGET_ID"
-        :translation-missing="translationMissing"
+        :translation-missing="headerTranslationMissing"
       />
 
       <!-- A band across the whole content area, with the message itself on the form column - the

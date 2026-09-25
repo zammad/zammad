@@ -21,15 +21,32 @@ const props = withDefaults(
       //   TopBarHeaderProps: the compact header never showed a title row either, so there is
       //   nothing here for it to receive.
       titleFieldTarget?: string
+      // Whether the details row alone is still loading, for a header whose other rows are already
+      //   there: the reader's opens from the cached pre-info, which carries the breadcrumb and the
+      //   title but nothing the badges need (KnowledgeBaseAnswerTopBarHeader). Without it that row
+      //   would be absent until the answer lands and the header would grow a row on arrival.
+      //   Follows `loading` unless it is given, so a header that loads as a whole is unaffected.
+      loadingDetails?: boolean
+      // The same for the title field's placeholder: the edit header opens its breadcrumb from the
+      //   cached pre-info, while the field teleported into `titleFieldTarget` only arrives with the
+      //   form. Follows `loading` unless it is given.
+      loadingTitleField?: boolean
     }
   >(),
   {
     contentWidth: 'wide',
+    // Explicitly, because Vue casts an absent boolean prop to `false` - which would make the
+    //   fallbacks to `loading` below unreachable for every caller that does not pass these.
+    loadingDetails: undefined,
+    loadingTitleField: undefined,
   },
 )
 
 const contentWidthClass = computed(() => HEADER_CONTENT_WIDTH_CLASSES[props.contentWidth])
 const contentOuterClass = computed(() => HEADER_CONTENT_OUTER_CLASSES[props.contentWidth])
+
+const loadingDetails = computed(() => props.loadingDetails ?? props.loading)
+const loadingTitleField = computed(() => props.loadingTitleField ?? props.loading)
 
 const selectedLocale = defineModel<DropdownItem>('selectedLocale')
 </script>
@@ -77,13 +94,13 @@ const selectedLocale = defineModel<DropdownItem>('selectedLocale')
         class="mx-auto w-full"
         :class="contentWidthClass"
       >
-        <CommonSkeleton v-if="loading" class="h-10 w-full" />
+        <CommonSkeleton v-if="loadingTitleField" class="h-10 w-full" />
       </div>
     </div>
 
-    <div v-if="$slots.details || loading" class="col-span-2" :class="contentOuterClass">
+    <div v-if="$slots.details || loadingDetails" class="col-span-2" :class="contentOuterClass">
       <div class="mx-auto w-full" :class="contentWidthClass">
-        <div v-if="loading" class="flex gap-2.5">
+        <div v-if="loadingDetails" class="flex gap-2.5">
           <CommonSkeleton class="h-7 w-24" rounded />
           <CommonSkeleton class="h-7 w-56" rounded />
         </div>

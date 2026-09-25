@@ -1,9 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { ApolloLink, Observable, type FetchResult } from '@apollo/client/core'
 import { getNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
 
-import { getGraphQLMockCalls, waitForGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
+import {
+  getGraphQLMockCalls,
+  mockedApolloClient,
+  waitForGraphQLMockCalls,
+} from '#tests/graphql/builders/mocks.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -234,6 +239,42 @@ const visitEditView = (
   return visitView(`/knowledge-base/locale/${locale}/answer/${answerInternalId}/edit`, options)
 }
 
+// Holds the edit view's answer query back until the returned function is called - what a slow edit
+//   response looks like. The mocked link answers within the same tick otherwise, which leaves no
+//   state in between to look at. The reader's query (no `withBodyForEditing`) is let through.
+const holdEditAnswerQuery = () => {
+  const { link } = mockedApolloClient
+
+  let release = () => {}
+  const released = new Promise<void>((resolve) => {
+    release = resolve
+  })
+
+  mockedApolloClient.setLink(
+    new ApolloLink((operation, forward) => {
+      if (
+        operation.operationName !== 'knowledgeBaseAnswer' ||
+        !operation.variables.withBodyForEditing
+      )
+        return forward(operation)
+
+      return new Observable<FetchResult>((observer) => {
+        let subscription: { unsubscribe: () => void } | undefined
+
+        released.then(() => {
+          subscription = forward(operation).subscribe(observer)
+        })
+
+        return () => subscription?.unsubscribe()
+      })
+    }).concat(link),
+  )
+
+  onTestFinished(() => mockedApolloClient.setLink(link))
+
+  return release
+}
+
 describe('knowledge base answer edit', () => {
   beforeEach(() => {
     mockApplicationConfig({ kb_active: true })
@@ -388,12 +429,27 @@ describe('knowledge base answer edit', () => {
   //   store had resolved put a breadcrumb with nothing but the knowledge base root on screen and
   //   replaced it a moment later.
   it('skeletons the header until the answer is there', async () => {
+    // What a refreshed edit tab starts from: nothing cached to open the header from (see
+    //   'opened from an answer that was read' for the other case).
+    await mockedApolloClient.clearStore()
+
+    const release = holdEditAnswerQuery()
+
     const view = await visitEditView()
+
+    // Mounted, so the absence below is a skeleton rather than a header that is not there yet.
+    await waitFor(() => {
+      expect(
+        view.baseElement.querySelector('#knowledgeBaseAnswerEditTitleField'),
+      ).toBeInTheDocument()
+    })
 
     expect(
       view.queryAllByRole('navigation', { name: 'Knowledge base navigation' }),
       'no half-filled breadcrumb before the answer has arrived',
     ).toHaveLength(0)
+
+    release()
 
     await view.findByDisplayValue(TITLE)
 
@@ -1737,6 +1793,123 @@ describe('knowledge base answer edit', () => {
       })
 
       expect(await view.findByRole('img', { name: 'Avatar (Second Editor)' })).toBeInTheDocument()
+    })
+  })
+
+  // Opened from the reader, the answer's breadcrumb and title are in the cache already - so the
+  //   header shows them at once instead of skeletoning until the edit query lands. The form does
+  //   wait for it: the reader never loaded `bodyForEditing`, which keeps the markers the rendered
+  //   body has expanded.
+  describe('opened from an answer that was read', () => {
+    const VIDEO_MARKER = '( widget: video, provider: youtube, id: vTTzwJsHpU8 )'
+
+    const openFromReader = async (locale = LOCALE) => {
+      mockTaskbarTab()
+
+      const view = await visitView(`/knowledge-base/locale/${locale}/answer/${ANSWER_INTERNAL_ID}`)
+
+      await view.findAllByRole('heading', { name: TITLE })
+
+      const release = holdEditAnswerQuery()
+
+      await view.router.push(`/knowledge-base/locale/${locale}/answer/${ANSWER_INTERNAL_ID}/edit`)
+
+      return { view, release }
+    }
+
+    const fullHeader = (view: Awaited<ReturnType<typeof visitView>>) =>
+      within(view.getByTestId('knowledge-base-header-full'))
+
+    beforeEach(() => {
+      mockAnswer({
+        translation: {
+          content: {
+            __typename: 'KnowledgeBaseAnswerTranslationContent',
+            id: CONTENT_ID,
+            bodyWithUrls:
+              '<p><iframe src="https://www.youtube.com/embed/vTTzwJsHpU8"></iframe></p>',
+            bodyForEditing: `<p>${VIDEO_MARKER}</p>`,
+          },
+        },
+      })
+
+      // The real updater's rule for the text: no initial value for a name the form already sent
+      //   one for (FormUpdater::Concerns::ProvidesInitialValues) - so the body is the seeded one.
+      mockFormUpdaterQuery(({ meta }) => ({
+        formUpdater: {
+          fields: {
+            categoryId: {
+              options: CATEGORY_OPTIONS,
+              required: true,
+              ...(meta.initial ? { initialValue: 1 } : {}),
+            },
+          },
+        },
+      }))
+    })
+
+    it('keeps the stored breadcrumb and title in the header while the edit query is out', async () => {
+      const { view, release } = await openFromReader()
+
+      const header = await waitFor(() => {
+        const header = fullHeader(view)
+
+        expect(
+          header.getByRole('navigation', { name: 'Knowledge base navigation' }),
+        ).toHaveTextContent('Hardware')
+
+        return header
+      })
+
+      expect(header.getByRole('heading', { name: TITLE })).toBeInTheDocument()
+
+      // Still the form's placeholder, not a field: the form waits for the complete edit result.
+      expect(header.queryByLabelText('Title')).not.toBeInTheDocument()
+      expect(header.getAllByRole('progressbar').length).toBeGreaterThan(0)
+
+      release()
+
+      expect(await header.findByDisplayValue(TITLE)).toBeInTheDocument()
+    })
+
+    it('hands over to a clean form that keeps the markers of the body', async () => {
+      const { view, release } = await openFromReader()
+
+      release()
+
+      expect(await fullHeader(view).findByDisplayValue(TITLE)).toBeInTheDocument()
+
+      await view.findByRole('radio', { name: 'Public' })
+
+      const body = getNode('knowledge-base-answer-edit')?.children.find(
+        (child) => child.name === 'body',
+      )
+
+      await waitFor(() => {
+        expect(body?._value).toContain(VIDEO_MARKER)
+      })
+      expect(body?._value).not.toContain('<iframe')
+
+      expect(view.getByRole('button', { name: 'Cancel & go back' })).toBeInTheDocument()
+      expect(
+        view.queryByRole('button', { name: 'Discard your unsaved changes' }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('announces a locale without its own translation before the edit query is back', async () => {
+      mockAnswer({ translation: FOREIGN_LOCALE_TRANSLATION })
+
+      const { view, release } = await openFromReader()
+
+      await waitFor(() => {
+        expect(view.getAllByText('No translation available for this locale')).not.toHaveLength(0)
+      })
+
+      expect(view.queryByLabelText('Title')).not.toBeInTheDocument()
+
+      release()
+
+      expect(await view.findByLabelText('Title')).toHaveValue('')
     })
   })
 })

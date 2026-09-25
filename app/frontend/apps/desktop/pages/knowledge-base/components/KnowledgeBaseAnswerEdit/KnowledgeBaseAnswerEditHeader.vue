@@ -16,7 +16,7 @@ import TopBarHeaderFull from '../KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue'
 import TopBarHeaderShell from '../KnowledgeBaseTopBarHeader/TopBarHeaderShell.vue'
 import { useKnowledgeBaseHeaderLocales } from '../KnowledgeBaseTopBarHeader/useKnowledgeBaseHeaderLocales.ts'
 
-import type { KnowledgeBaseAnswerHeader } from '../../types.ts'
+import type { KnowledgeBaseAnswerCachedHeader, KnowledgeBaseAnswerHeader } from '../../types.ts'
 import type { TopBarHeaderProps } from '../KnowledgeBaseTopBarHeader/types.ts'
 
 // The header of the edit view: the create header's shape (no big title row, see
@@ -38,6 +38,10 @@ interface Props {
   // The stored answer, for everything here that acts on a persisted record - undefined only for
   //   the instant before its query has resolved.
   answer?: KnowledgeBaseAnswerHeader
+  // The breadcrumb and title read out of the cache while the edit query is still on its way - see
+  //   useKnowledgeBaseAnswer. Not enough for the form, which needs `bodyForEditing`, nor for the
+  //   badges; absent for an answer nothing has loaded yet (a refreshed edit tab).
+  cachedHeader?: KnowledgeBaseAnswerCachedHeader
   // Where the form's title field (useAnswerFormSchema.ts) teleports its input - see
   //   TopBarHeaderFull's own titleFieldTarget prop for why this container has to be a bare id
   //   rather than a CSS selector.
@@ -54,9 +58,26 @@ const router = useRouter()
 
 const { activeLocale } = storeToRefs(useKnowledgeBaseStore())
 
-// Everything the header shows is fed from the stored answer, so its rows skeleton until the
-//   answer is there - the reader's header does the same, and without this one rendered a
-//   breadcrumb holding nothing but the knowledge base root and replaced it a moment later.
+// The stored answer as the header renders it: the loaded record once it is there, the cached
+//   pre-info until then - the reader header's own selection (KnowledgeBaseAnswerTopBarHeader).
+const headerContent = computed(() => {
+  const { answer, cachedHeader } = props
+
+  if (!answer) return cachedHeader
+
+  return {
+    id: answer.id,
+    translation: answer.translation,
+    visibility: answer.visibility,
+    breadcrumb: answer.category.breadcrumb,
+  }
+})
+
+// Everything the header shows is fed from the stored answer, so its rows skeleton until either
+//   of the two above is there - without this it rendered a breadcrumb holding nothing but the
+//   knowledge base root and replaced it a moment later. The title field and the badges wait for
+//   the answer itself (see the template), since neither the form nor the badges can run on the
+//   cached pre-info.
 //
 // Skeletoned *in place* rather than swapped for TopBarHeaderFullSkeleton the way the reader's
 //   header is: the shell unmounts the full header to skeleton it, and the form's title field is
@@ -68,15 +89,15 @@ const { activeLocale } = storeToRefs(useKnowledgeBaseStore())
 // Not gated on the knowledge base store either (`useKnowledgeBaseStore().loading`): the route
 //   guard awaits it before this view is created (useKnowledgeBaseLocaleGuard), so it is settled
 //   by the time anything here renders.
-const loading = computed(() => !props.answer)
+const loading = computed(() => !headerContent.value)
 
 // One tab is one translation, so switching the language here opens the edit tab of that other
 //   translation rather than retitling this one.
 const { localeItems, selectedLocaleItem, selectedLocaleCode } = useKnowledgeBaseHeaderLocales(
   (localeCode) => {
-    if (!props.answer) return
+    if (!headerContent.value) return
 
-    router.push(knowledgeBaseAnswerEditRoute(localeCode, props.answer.id))
+    router.push(knowledgeBaseAnswerEditRoute(localeCode, headerContent.value.id))
   },
 )
 
@@ -86,9 +107,9 @@ const { localeItems, selectedLocaleItem, selectedLocaleCode } = useKnowledgeBase
 const breadcrumbs = computed(() =>
   knowledgeBaseBreadcrumbItems({
     localeCode: activeLocale.value,
-    categoryBreadcrumb: props.answer?.category?.breadcrumb,
-    trailingItem: props.answer
-      ? { label: props.answer.translation?.title ?? '', noOptionLabelTranslation: true }
+    categoryBreadcrumb: headerContent.value?.breadcrumb,
+    trailingItem: headerContent.value
+      ? { label: headerContent.value.translation?.title ?? '', noOptionLabelTranslation: true }
       : undefined,
   }),
 )
@@ -129,6 +150,8 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
         v-model:selected-locale="selectedLocaleItem"
         v-bind="headerProps"
         :title-field-target="titleFieldTarget"
+        :loading-title-field="!answer"
+        :loading-details="!answer"
         :inert="inert"
         content-width="form"
       >

@@ -1,6 +1,13 @@
 # Data needed to render a category's header and size its loading skeleton before
 #   its own query resolves — carried on every listed subcategory so it is cached
 #   for an instant open, and read back from the cache by id.
+#
+# The breadcrumb below is the same selection as knowledgeBaseCategoryBreadcrumb, and has to stay
+#   that way: the answer header reads that fragment back by id, and a category written through
+#   this one has to satisfy it. Spelled out rather than spread from it - nesting it here, one
+#   level below knowledgeBaseCategoryGridAttributes, stops the browse grid from rendering at all
+#   under the test mock builder, and the cause was not worth chasing for a shared block of six
+#   fields.
 fragment knowledgeBaseCategoryPreInfo on KnowledgeBaseCategory {
   directAnswerCount(locale: $locale)
   directSubcategoryCount(locale: $locale)

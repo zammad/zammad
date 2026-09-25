@@ -1,18 +1,23 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, shallowRef, type Ref } from 'vue'
+import { computed, shallowRef, watchEffect, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useReactivate } from '#shared/composables/useReactivate.ts'
 import type {
+  KnowledgeBaseAnswerPreInfoFragment,
   KnowledgeBaseAnswerUpdatesSubscription,
   KnowledgeBaseAnswerUpdatesSubscriptionVariables,
+  KnowledgeBaseCategoryBreadcrumbFragment,
 } from '#shared/graphql/types.ts'
 import { redirectToError, ErrorRouteType } from '#shared/router/error.ts'
+import { getApolloClient } from '#shared/server/apollo/client.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { useKnowledgeBaseContentUpdates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseContentUpdates.ts'
+import { KnowledgeBaseAnswerPreInfoFragmentDoc } from '#desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPreInfo.api.ts'
+import { KnowledgeBaseCategoryBreadcrumbFragmentDoc } from '#desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryBreadcrumb.api.ts'
 import { useKnowledgeBaseAnswerQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.api.ts'
 import { KnowledgeBaseAnswerUpdatesDocument } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseAnswerUpdates.api.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
@@ -123,6 +128,109 @@ export const useKnowledgeBaseAnswer = (
 
   const result = knowledgeBaseAnswerQuery.result()
   const loading = knowledgeBaseAnswerQuery.loadingWithoutCachedResult()
+
+  // What the header can render before this query resolves, read straight out of the cache the way
+  //   the category listing reads its own pre-info (useKnowledgeBaseCategorySubcategories): an
+  //   answer that was listed is already normalized under its id, and the category it names carries
+  //   the breadcrumb. Two reads rather than one, because a breadcrumb is the *category's* data -
+  //   the answer only says which category it is in.
+  const cachedAnswer = shallowRef<KnowledgeBaseAnswerPreInfoFragment>()
+  const cachedCategory = shallowRef<KnowledgeBaseCategoryBreadcrumbFragment>()
+
+  // `readFragment` is a snapshot, so make both halves of the header reactive to cache writes. The
+  // category watcher follows the answer watcher because the answer tells it which category to read.
+  watchEffect(
+    (onCleanup) => {
+      const currentAnswerId = answerId?.value
+      const currentLocale = locale?.value
+      const { cache } = getApolloClient()
+
+      cachedAnswer.value = undefined
+      cachedCategory.value = undefined
+
+      if (!currentAnswerId) return
+
+      let categorySubscription: { unsubscribe: () => void } | undefined
+
+      const watchCategory = (categoryId?: string) => {
+        categorySubscription?.unsubscribe()
+        cachedCategory.value = undefined
+
+        if (!categoryId) return
+
+        // Keep the existing cached-header path synchronous. `watchFragment` reports its initial
+        // value asynchronously, but navigation must be able to render a complete cached header in
+        // the same tick that opens the answer.
+        cachedCategory.value =
+          cache.readFragment<KnowledgeBaseCategoryBreadcrumbFragment>({
+            id: `KnowledgeBaseCategory:${categoryId}`,
+            fragment: KnowledgeBaseCategoryBreadcrumbFragmentDoc,
+            variables: { locale: currentLocale },
+          }) ?? undefined
+
+        // The breadcrumb alone, not the browse page's `knowledgeBaseCategoryPreInfo`: that one
+        // also carries the two counts that size the category grid, and a fragment read is
+        // all-or-nothing - so asking for them here would miss categories written by an answer
+        // listing, which has no reason to carry those counts.
+        categorySubscription = cache
+          .watchFragment<KnowledgeBaseCategoryBreadcrumbFragment>({
+            from: `KnowledgeBaseCategory:${categoryId}`,
+            fragment: KnowledgeBaseCategoryBreadcrumbFragmentDoc,
+            variables: { locale: currentLocale },
+          })
+          .subscribe(({ data, complete }) => {
+            cachedCategory.value = complete ? data : undefined
+          })
+      }
+
+      const updateAnswer = (answer?: KnowledgeBaseAnswerPreInfoFragment) => {
+        cachedAnswer.value = answer
+        watchCategory(answer?.category.id)
+      }
+
+      updateAnswer(
+        cache.readFragment<KnowledgeBaseAnswerPreInfoFragment>({
+          id: `KnowledgeBaseAnswer:${currentAnswerId}`,
+          fragment: KnowledgeBaseAnswerPreInfoFragmentDoc,
+          variables: { locale: currentLocale },
+        }) ?? undefined,
+      )
+
+      const answerSubscription = cache
+        .watchFragment<KnowledgeBaseAnswerPreInfoFragment>({
+          from: `KnowledgeBaseAnswer:${currentAnswerId}`,
+          fragment: KnowledgeBaseAnswerPreInfoFragmentDoc,
+          variables: { locale: currentLocale },
+        })
+        .subscribe(({ data, complete }) => {
+          updateAnswer(complete ? data : undefined)
+        })
+
+      onCleanup(() => {
+        answerSubscription.unsubscribe()
+        categorySubscription?.unsubscribe()
+      })
+    },
+    { flush: 'sync' },
+  )
+
+  const cachedHeader = computed(() => {
+    if (!answerId?.value || !cachedAnswer.value || !cachedCategory.value) return undefined
+
+    return {
+      // Not from the fragment: the read was keyed by it, so it is the id by definition - and the
+      //   header's public preview link needs one.
+      id: answerId.value,
+      translation: cachedAnswer.value.translation,
+      visibility: cachedAnswer.value.visibility,
+      breadcrumb: cachedCategory.value.breadcrumb,
+    }
+  })
+
+  // The header needs only the breadcrumb, the title and the visibility, and all three are known the
+  //   moment an answer is opened from a listing - so it can appear at once instead of waiting out
+  //   the full load. The counterpart of the browse view's own `headerLoading`.
+  const headerLoading = computed(() => loading.value && !cachedHeader.value)
 
   // Whether what `answer` holds is what the server last said, rather than a cache entry that no
   //   round trip has confirmed. The app queries `cache-and-network` (see the Apollo client's
@@ -264,5 +372,5 @@ export const useKnowledgeBaseAnswer = (
     }
   })
 
-  return { knowledgeBaseAnswerQuery, answer, answerConfirmed, loading }
+  return { knowledgeBaseAnswerQuery, answer, answerConfirmed, cachedHeader, headerLoading, loading }
 }
