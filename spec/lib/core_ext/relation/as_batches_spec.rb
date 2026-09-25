@@ -19,6 +19,14 @@ RSpec.describe 'AsBatches' do
     result
   end
 
+  def priorities_with_limit(limit, size)
+    result = []
+    Ticket::Priority.reorder(name: :asc).limit(limit).as_batches(size: size) do |prio|
+      result << prio
+    end
+    result
+  end
+
   context 'when batch is smaller then total result' do
     it 'does return all priorities ascending' do
       expect(priorities_asc(1)).to eq([ Ticket::Priority.find_by(name: '1 low'), Ticket::Priority.find_by(name: '2 normal'), Ticket::Priority.find_by(name: '3 high') ])
@@ -36,6 +44,12 @@ RSpec.describe 'AsBatches' do
 
     it 'does return all priorities decending' do
       expect(priorities_desc(100)).to eq([ Ticket::Priority.find_by(name: '3 high'), Ticket::Priority.find_by(name: '2 normal'), Ticket::Priority.find_by(name: '1 low') ])
+    end
+  end
+
+  context 'when a .limit is chained before as_batches' do
+    it 'does return only the outer-limited priorities, batching by size' do
+      expect(priorities_with_limit(2, 1)).to eq([ Ticket::Priority.find_by(name: '1 low'), Ticket::Priority.find_by(name: '2 normal') ])
     end
   end
 end
