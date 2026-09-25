@@ -18,6 +18,7 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
@@ -143,9 +144,20 @@ const schemaData = reactive({
 
 const calendarSubscriptionListQuery = new QueryHandler(
   useUserCurrentCalendarSubscriptionListQuery(),
+  { errorShowNotification: false },
 )
 
 const calendarSubscriptionListQueryResult = calendarSubscriptionListQuery.result()
+const calendarSubscriptionListQueryLoading =
+  calendarSubscriptionListQuery.loadingWithoutCachedResult()
+const calendarSubscriptionListQueryError = calendarSubscriptionListQuery.operationError()
+
+// Without the stored settings, any change would save the missing ones as switched off.
+const calendarSubscriptionListLoadingError = computed(() =>
+  calendarSubscriptionListQueryError.value && !calendarSubscriptionListQueryResult.value
+    ? __('Loading failed, please try again later.')
+    : null,
+)
 
 const user = toRef(useSessionStore(), 'user')
 
@@ -285,50 +297,55 @@ const { tabs: navigationTabs, activeTab } = usePersonalSettingTabs()
     "
     width="narrow"
   >
-    <div class="mb-4">
-      <CommonInputCopyToClipboard
-        :label="__('Combined subscription URL')"
-        :copy-button-text="__('Copy URL')"
-        :value="combinedSubscriptionURL"
-        :help="__('Includes escalated, new & open and pending tickets.')"
-      />
-
-      <FormKit
-        v-model="alarmLocalValue"
-        type="toggle"
-        :label="__('Add alarm to pending reminder and escalated tickets')"
-        :variants="{ true: 'yes', false: 'no' }"
-        @update:model-value="formSubmit"
-      />
-
-      <CommonLabel role="heading" aria-level="2" class="mt-5 mb-2" size="large">
-        {{ $t('Subscription settings') }}
-      </CommonLabel>
-
-      <CommonTabGroup v-model="activeStep" class="mb-3" :tabs="tabs" />
-
-      <div
-        :id="`tab-panel-${activeStep}`"
-        role="tabpanel"
-        :aria-labelledby="`tab-label-${activeStep}`"
-      >
+    <CommonLoader
+      :loading="calendarSubscriptionListQueryLoading"
+      :error="calendarSubscriptionListLoadingError"
+    >
+      <div class="mb-4">
         <CommonInputCopyToClipboard
-          :label="__('Direct subscription URL')"
+          :label="__('Combined subscription URL')"
           :copy-button-text="__('Copy URL')"
-          :value="directSubscriptionURL"
+          :value="combinedSubscriptionURL"
+          :help="__('Includes escalated, new & open and pending tickets.')"
         />
 
-        <Form
-          id="calendar-subscription"
-          ref="form"
-          :schema="formSchema"
-          :flatten-form-groups="Object.keys(allSteps)"
-          :initial-values="formInitialValues"
-          :schema-data="schemaData"
-          @changed="formSubmit"
-          @submit="submitForm"
+        <FormKit
+          v-model="alarmLocalValue"
+          type="toggle"
+          :label="__('Add alarm to pending reminder and escalated tickets')"
+          :variants="{ true: 'yes', false: 'no' }"
+          @update:model-value="formSubmit"
         />
+
+        <CommonLabel role="heading" aria-level="2" class="mt-5 mb-2" size="large">
+          {{ $t('Subscription settings') }}
+        </CommonLabel>
+
+        <CommonTabGroup v-model="activeStep" class="mb-3" :tabs="tabs" />
+
+        <div
+          :id="`tab-panel-${activeStep}`"
+          role="tabpanel"
+          :aria-labelledby="`tab-label-${activeStep}`"
+        >
+          <CommonInputCopyToClipboard
+            :label="__('Direct subscription URL')"
+            :copy-button-text="__('Copy URL')"
+            :value="directSubscriptionURL"
+          />
+
+          <Form
+            id="calendar-subscription"
+            ref="form"
+            :schema="formSchema"
+            :flatten-form-groups="Object.keys(allSteps)"
+            :initial-values="formInitialValues"
+            :schema-data="schemaData"
+            @changed="formSubmit"
+            @submit="submitForm"
+          />
+        </div>
       </div>
-    </div>
+    </CommonLoader>
   </LayoutContent>
 </template>

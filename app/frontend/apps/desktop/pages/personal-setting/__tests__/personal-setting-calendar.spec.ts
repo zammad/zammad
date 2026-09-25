@@ -1,19 +1,53 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed, ref } from 'vue'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { getCurrentUserUpdatesSubscriptionHandler } from '#shared/graphql/subscriptions/currentUserUpdates.mocks.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import {
   mockUserCurrentCalendarSubscriptionUpdate,
   waitForUserCurrentCalendarSubscriptionUpdateCalls,
 } from '../graphql/mutations/userCurrentCalendarSubscriptionUpdate.mocks.ts'
-import { mockUserCurrentCalendarSubscriptionList } from '../graphql/queries/userCurrentCalendarSubscriptionList.mocks.ts'
+import {
+  mockUserCurrentCalendarSubscriptionList,
+  mockUserCurrentCalendarSubscriptionListError,
+} from '../graphql/queries/userCurrentCalendarSubscriptionList.mocks.ts'
+
+// The mocked link answers before the view is visited, so hold the list query back to see the
+//   state a user can act on before its result has arrived.
+const listQueryHeld = ref(false)
+
+vi.mock('../graphql/queries/userCurrentCalendarSubscriptionList.api.ts', async (importOriginal) => {
+  const original =
+    await importOriginal<
+      typeof import('../graphql/queries/userCurrentCalendarSubscriptionList.api.ts')
+    >()
+
+  return {
+    ...original,
+    useUserCurrentCalendarSubscriptionListQuery: (
+      ...args: Parameters<typeof original.useUserCurrentCalendarSubscriptionListQuery>
+    ) => {
+      const query = original.useUserCurrentCalendarSubscriptionListQuery(...args)
+
+      return {
+        ...query,
+        result: computed(() => (listQueryHeld.value ? undefined : query.result.value)),
+        loading: computed(() => listQueryHeld.value || query.loading.value),
+      }
+    },
+  }
+})
 
 describe('personal calendar subscription settings', () => {
   beforeEach(() => {
+    listQueryHeld.value = false
+
     mockPermissions(['user_preferences.calendar+ticket.agent'])
 
     mockUserCurrentCalendarSubscriptionList({
@@ -63,6 +97,50 @@ describe('personal calendar subscription settings', () => {
     expect(view.getByRole('tab', { name: 'New & open tickets' })).toBeInTheDocument()
 
     expect(view.getByRole('tab', { name: 'Pending tickets' })).toBeInTheDocument()
+  })
+
+  it('does not accept any input before the subscription settings have loaded', async () => {
+    listQueryHeld.value = true
+
+    const view = await visitView('personal-setting/calendar-subscriptions')
+
+    mockUserCurrentCalendarSubscriptionUpdate({
+      userCurrentCalendarSubscriptionUpdate: {
+        success: true,
+        errors: null,
+      },
+    })
+
+    expect(view.queryByLabelText('Add alarm to pending reminder and escalated tickets')).toBeNull()
+    expect(view.queryAllByLabelText('My tickets')).toHaveLength(0)
+
+    listQueryHeld.value = false
+
+    const [escalationNotAssigned] = await view.findAllByLabelText('Not assigned')
+
+    await view.events.click(escalationNotAssigned)
+
+    const calls = await waitForUserCurrentCalendarSubscriptionUpdateCalls()
+
+    expect(calls).toHaveLength(1)
+    expect(calls[0].variables).toEqual({
+      input: expect.objectContaining({
+        escalation: { own: true, notAssigned: true },
+      }),
+    })
+  })
+
+  it('does not accept any input when the subscription settings failed to load', async () => {
+    mockUserCurrentCalendarSubscriptionListError('Failed', {
+      type: GraphQLErrorTypes.UnknownError,
+    })
+
+    const view = await visitView('personal-setting/calendar-subscriptions')
+
+    expect(await view.findByText('Loading failed, please try again later.')).toBeInTheDocument()
+
+    expect(view.queryByLabelText('Add alarm to pending reminder and escalated tickets')).toBeNull()
+    expect(view.queryAllByLabelText('My tickets')).toHaveLength(0)
   })
 
   it('switches tab panels correctly', async () => {
@@ -182,6 +260,8 @@ describe('personal calendar subscription settings', () => {
   it('resets state when session store is updated', async () => {
     const view = await visitView('personal-setting/calendar-subscriptions')
 
+    const form = view.container.querySelector('#calendar-subscription')
+
     // Mock opposite states than what was loaded with the initial request.
     mockUserCurrentCalendarSubscriptionList({
       userCurrentCalendarSubscriptionList: {
@@ -235,5 +315,10 @@ describe('personal calendar subscription settings', () => {
     expect(view.getAllByLabelText('Not assigned')[1]).not.toBeChecked()
     expect(view.getAllByLabelText('My tickets')[2]).not.toBeChecked()
     expect(view.getAllByLabelText('Not assigned')[2]).not.toBeChecked()
+
+    expect(
+      view.container.querySelector('#calendar-subscription'),
+      'the form stays mounted while the settings are refetched',
+    ).toBe(form)
   })
 })
