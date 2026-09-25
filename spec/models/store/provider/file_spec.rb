@@ -84,6 +84,20 @@ RSpec.describe Store::Provider::File do
     end
   end
 
+  describe '.validate_file' do
+    before do
+      FileUtils.mkdir_p(filepath.parent)
+      File.write(filepath, 'bar')
+    end
+
+    context 'when the file contents do NOT match the SHA digest' do
+      it 'raises an error naming the corrupted file' do
+        expect { described_class.validate_file(sha) }
+          .to raise_error(RuntimeError, %r{File corrupted: path #{Regexp.escape(filepath.to_s)} does not match SHA digest})
+      end
+    end
+  end
+
   describe '.delete' do
     before do
       FileUtils.mkdir_p(filepath.parent)
