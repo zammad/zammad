@@ -8,7 +8,8 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   let(:content_type)  { 'text/html' }
   let(:body)          { '<p>Hello <strong>world</strong>.</p>' }
   let(:article)       { create(:ticket_article, body:, content_type:) }
-  let(:llm_response)  { '<p>Hallo <strong>Welt</strong>.</p>' }
+  let(:llm_response)  { "{s1}\nHallo **Welt**." }
+  let(:translated)    { '<p>Hallo <strong>Welt</strong>.</p>' }
 
   # Every prompt pair the provider was asked with — the size doubles as the call count.
   let(:provider_calls) { [] }
@@ -33,7 +34,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     result = translate
 
     expect(result).to have_attributes(
-      content:    llm_response,
+      content:    translated,
       backend:    'ai',
       translated: true,
       fresh:      true,
@@ -54,7 +55,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     translate
 
     expect(translate)
-      .to have_attributes(content: llm_response, fresh: false)
+      .to have_attributes(content: translated, fresh: false)
   end
 
   context 'when the AI provider is not configured' do
@@ -66,7 +67,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
       unset_ai_provider
 
       expect(translate)
-        .to have_attributes(content: llm_response, fresh: false)
+        .to have_attributes(content: translated, fresh: false)
     end
 
     it 'raises an error' do
@@ -162,6 +163,19 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
     it 'leaves out translations into other locales' do
       store(other_article, '<p>Autre</p>', locale: Locale.find_by(locale: 'fr-fr'))
+
+      expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
+        .not_to include(other_article.id)
+    end
+
+    # Translated from the raw HTML the model was sent before, which the current format replaced.
+    it 'leaves out an AI translation of the previous HTML format' do
+      AI::StoredResult.create!(
+        content:  '<p>Autre</p>',
+        metadata: { 'backend' => 'ai' },
+        version:  Digest::SHA256.hexdigest("ai\ntrue\n#{other_article.body}"),
+        **Service::AI::Feature::Translate.lookup_attributes({ object: other_article }, german)
+      )
 
       expect(described_class.stored_translations(articles, 'de-de').map(&:related_object_id))
         .not_to include(other_article.id)
@@ -333,6 +347,12 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
       expect(provider_calls).to be_empty
     end
 
+    it 'sends the article HTML as it is' do
+      translate
+
+      expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('q' => body))
+    end
+
     # One HTTP round trip is not worth a job and a subscription, so the backend does not defer.
     it 'answers in place although the caller could be answered later' do
       expect { described_class.execute(object: article, target_locale:) }
@@ -412,6 +432,12 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
       translate
 
       expect(provider_calls).to be_empty
+    end
+
+    it 'sends the article HTML as it is' do
+      translate
+
+      expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('text' => [body]))
     end
 
     # One HTTP round trip is not worth a job and a subscription, so the backend does not defer.
@@ -653,7 +679,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
     it 'translates although the article is already in the target language' do
       expect(translate(force: true))
-        .to have_attributes(content: llm_response, translated: true)
+        .to have_attributes(content: translated, translated: true)
     end
   end
 
@@ -666,7 +692,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   describe 'deferring to the background' do
     it 'translates in place when the caller cannot be answered later' do
       expect(described_class.execute(object: article, target_locale:, background: false))
-        .to have_attributes(content: llm_response, translated: true)
+        .to have_attributes(content: translated, translated: true)
     end
 
     it 'enqueues nothing when the caller cannot be answered later' do
@@ -699,7 +725,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
       it 'returns it' do
         expect(described_class.execute(object: article, target_locale:))
-          .to have_attributes(content: llm_response, fresh: false)
+          .to have_attributes(content: translated, fresh: false)
       end
     end
 
@@ -722,7 +748,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
       it 'translates in place although the caller could be answered later' do
         expect(described_class.execute(object: article, target_locale:))
-          .to have_attributes(content: llm_response, translated: true)
+          .to have_attributes(content: translated, translated: true)
       end
 
       it 'enqueues no job' do

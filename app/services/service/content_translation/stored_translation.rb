@@ -12,6 +12,10 @@ class Service::ContentTranslation::StoredTranslation
   # Service::AI::Feature::Translate.
   IDENTIFIER = 'translate'.freeze
 
+  # The AI backend translates HTML in an intermediate format (ContentTranslation::Html). Changing it
+  # is a new version, so translations of the previous format are not served anymore.
+  AI_HTML_FORMAT = 'hybrid-1'.freeze
+
   class << self
     # The row of an object and target locale, whichever service produced it.
     def lookup_attributes(object, locale)
@@ -26,7 +30,15 @@ class Service::ContentTranslation::StoredTranslation
     # changing. The producing service is part of it: the row itself is keyed without the service, so
     # the version is what makes another service's translation a miss instead of a reused result.
     def version(content, html, backend)
-      Digest::SHA256.hexdigest("#{backend}\n#{html}\n#{content}")
+      Digest::SHA256.hexdigest("#{backend}\n#{content_format(html, backend)}\n#{content}")
+    end
+
+    # The part of .version that tells the kind of content apart, see
+    # Service::AI::Feature::Translate.lookup_version_sql for its SQL counterpart.
+    def content_format(html, backend)
+      return html.to_s if !html || backend != Service::ContentTranslation::Backend::AI.backend_name
+
+      AI_HTML_FORMAT
     end
 
     # @param object [ApplicationModel] the object whose content is translated

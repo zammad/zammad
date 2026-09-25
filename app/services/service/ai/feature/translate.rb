@@ -28,7 +28,10 @@ class Service::AI::Feature::Translate < Service::AI::Feature
   def self.lookup_version_sql(backend, html_sql, body_sql)
     backend_sql = ActiveRecord::Base.connection.quote(backend)
 
-    "encode(sha256(convert_to(concat(#{backend_sql}, E'\\n', CASE WHEN #{html_sql} THEN 'true' ELSE 'false' END, E'\\n', #{body_sql}), 'UTF8')), 'hex')"
+    html_format_sql = ActiveRecord::Base.connection.quote(Service::ContentTranslation::StoredTranslation.content_format(true, backend))
+    text_format_sql = ActiveRecord::Base.connection.quote(Service::ContentTranslation::StoredTranslation.content_format(false, backend))
+
+    "encode(sha256(convert_to(concat(#{backend_sql}, E'\\n', CASE WHEN #{html_sql} THEN #{html_format_sql} ELSE #{text_format_sql} END, E'\\n', #{body_sql}), 'UTF8')), 'hex')"
   end
 
   def persistable?
@@ -43,7 +46,8 @@ class Service::AI::Feature::Translate < Service::AI::Feature
   # of the object it belongs to - so only HTML that sanitization allows may be stored.
   def post_transform_result(result)
     body = result.to_s
-    body = HtmlSanitizer.strict(body) if html?
+    body = html_document.translate(body) if html?
+    body = HtmlSanitizer.strict(body) if html? && body
 
     # The sanitizer answers with its own message rather than raising when it gives up on the HTML.
     # Storing that would serve an English error sentence as the translation of this content until
@@ -58,6 +62,22 @@ class Service::AI::Feature::Translate < Service::AI::Feature
   end
 
   private
+
+  # HTML without any text to translate, only an image or code for example, needs no request.
+  def request_fresh
+    return if html? && html_document.sections.empty?
+
+    super
+  end
+
+  # The model gets the HTML as text with markers, see ContentTranslation::Html.
+  def transform_user_prompt(prompt)
+    html? ? html_document.to_s : prompt
+  end
+
+  def html_document
+    @html_document ||= ContentTranslation::Html.new(context_data[:body])
+  end
 
   # Through the store rather than through the feature base: a backend without an AI feature writes
   # the same rows the same way.

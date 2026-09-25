@@ -21,7 +21,7 @@ RSpec.describe Service::AI::Feature::Translate do
     }
   end
 
-  let(:llm_response) { '<p>Hallo <strong>Welt</strong>.</p>' }
+  let(:llm_response) { "{s1}\nHallo **Welt**." }
 
   # Every prompt pair the provider was asked with — the size doubles as the call count.
   let(:provider_calls) { [] }
@@ -36,7 +36,7 @@ RSpec.describe Service::AI::Feature::Translate do
   end
 
   it 'returns the translated content' do
-    expect(ai_service.execute.content).to eq(llm_response)
+    expect(ai_service.execute.content).to eq('<p>Hallo <strong>Welt</strong>.</p>')
   end
 
   it 'records the service that produced it' do
@@ -74,18 +74,26 @@ RSpec.describe Service::AI::Feature::Translate do
     expect(provider_calls.first[:prompt_system]).to include('Deutsch - German', 'de-de')
   end
 
-  it 'asks for the content without wrapping it' do
+  it 'asks for the content as text with markers' do
     ai_service.execute
 
-    expect(provider_calls.first[:prompt_user]).to eq(body)
+    expect(provider_calls.first[:prompt_user]).to eq("{s1}\nHello **world**.")
   end
 
-  it 'tells the model that the content is HTML' do
+  it 'asks the provider once' do
+    expect { ai_service.execute }.to change(provider_calls, :size).by(1)
+  end
+
+  it 'records the text the model was asked for, not the HTML' do
+    expect(ai_service.execute.ai_analytics_run.payload).to include('prompt_user' => "{s1}\nHello **world**.")
+  end
+
+  it 'tells the model about the markers' do
     ai_service.execute
 
     expect(provider_calls.first[:prompt_system])
-      .to include('HTML format')
-      .and include('<blockquote>')
+      .to include('{s1}')
+      .and include('{1}text{/1}')
       .and not_include('plain text')
   end
 
@@ -131,19 +139,34 @@ RSpec.describe Service::AI::Feature::Translate do
     end
   end
 
-  # Preserving the structure of the content has two halves: the model has to return it, which the
-  #   prompt asks for and its evaluation answers, and the sanitizer must not take it away again.
-  #   The second half is the one that would break the promise silently, so it is pinned here.
-  context 'when the model returns structured HTML' do
-    let(:llm_response) do
+  context 'with structured HTML' do
+    let(:body) do
       <<~HTML.strip
-        <h2>Uberschrift</h2>
-        <p>Ein <strong>fetter</strong> Absatz mit einem <a href="https://example.com/doc">Link</a>.<br>Zweite Zeile.</p>
-        <ul><li>Erster Punkt<ol><li>Unterpunkt</li></ol></li></ul>
-        <blockquote><p>Zitat</p></blockquote>
+        <h2>Heading</h2>
+        <p>A <strong>bold</strong> paragraph with a <a href="https://example.com/doc">link</a>.<br>Second line.</p>
+        <ul><li>First item<ol><li>Sub item</li></ol></li></ul>
+        <blockquote><p>Quote</p></blockquote>
         <pre><code>bundle exec rspec</code></pre>
-        <table><thead><tr><th>Kopf</th></tr></thead><tbody><tr><td colspan="2">Zelle</td></tr></tbody></table>
+        <table><tbody><tr><td colspan="2">Cell</td></tr></tbody></table>
       HTML
+    end
+
+    let(:llm_response) do
+      <<~TEXT
+        {s1}
+        Überschrift
+        {s2}
+        Ein **fetter** Absatz mit einem {1}Link{/1}.
+        Zweite Zeile.
+        {s3}
+        Erster Punkt
+        {s4}
+        Unterpunkt
+        {s5}
+        Zitat
+        {s6}
+        Zelle
+      TEXT
     end
 
     # Nested rather than a flat list of tag names, which cannot tell
@@ -156,27 +179,67 @@ RSpec.describe Service::AI::Feature::Translate do
       node.element_children.map { |child| [child.name, element_tree(child)] }
     end
 
-    it 'stores the structure of the answer unchanged' do
-      expect(tag_tree(ai_service.execute.content)).to eq(tag_tree(llm_response))
+    it 'keeps the structure of the original' do
+      expect(tag_tree(ai_service.execute.content)).to eq(tag_tree(body))
     end
 
-    it 'stores the attributes that carry structure' do
+    it 'keeps the attributes and the protected content of the original' do
       expect(ai_service.execute.content)
         .to include('href="https://example.com/doc"')
         .and include('colspan="2"')
+        .and include('<pre><code>bundle exec rspec</code></pre>')
     end
   end
 
-  context 'when the model returns unsafe HTML' do
-    let(:llm_response) { '<p onclick="alert(1)">Hallo</p><script>alert(2)</script>' }
+  context 'when the model answers with HTML' do
+    let(:llm_response) { "{s1}\n<b onclick=\"alert(1)\">Hallo</b><script>alert(2)</script>" }
 
-    it 'stores the content without script tags and event handlers' do
-      stored_content = ai_service.execute.content
+    it 'stores it as text' do
+      expect(ai_service.execute.content)
+        .to eq('<p>&lt;b onclick="alert(1)"&gt;Hallo&lt;/b&gt;&lt;script&gt;alert(2)&lt;/script&gt;</p>')
+    end
+  end
 
-      expect(stored_content)
-        .to include('Hallo')
-        .and not_include('onclick')
-        .and not_include('<script')
+  context 'when the answer cannot be rebuilt' do
+    let(:body)         { '<p>Read the <a href="https://example.com/doc">guide</a>.</p><p>Thanks!</p>' }
+    let(:llm_response) { "{s1}\nLies die Anleitung.\nDanke!" }
+
+    it 'stores the translated text with simplified formatting and the links of the original' do
+      expect(ai_service.execute.content)
+        .to start_with('<div>Lies die Anleitung.<br>Danke!</div><div><a href="https://example.com/doc"')
+    end
+
+    it 'asks the provider once' do
+      expect { ai_service.execute }.to change(provider_calls, :size).by(1)
+    end
+  end
+
+  context 'with HTML without text to translate' do
+    let(:body) { '<p><img src="cid:image@example.com"></p><pre>ls -la</pre>' }
+
+    it 'returns no result' do
+      expect(ai_service.execute).to be_nil
+    end
+
+    it 'does not ask the provider' do
+      expect { ai_service.execute }.not_to change(provider_calls, :size)
+    end
+
+    it 'saves no analytics run' do
+      expect { ai_service.execute }.not_to change(AI::Analytics::Run, :count)
+    end
+  end
+
+  context 'when the transformation fails' do
+    before { allow_any_instance_of(ContentTranslation::Html::Section).to receive(:replace).and_raise(ArgumentError) }
+
+    it 'raises a transformation error instead of the internal one' do
+      expect { ai_service.execute }.to raise_error(ContentTranslation::Html::TransformationError, 'The response could not be processed.')
+    end
+
+    it 'stores no translation' do
+      expect { suppress(ContentTranslation::Html::TransformationError) { ai_service.execute } }
+        .not_to change(AI::StoredResult, :count)
     end
   end
 
@@ -194,8 +257,8 @@ RSpec.describe Service::AI::Feature::Translate do
     end
   end
 
-  context 'when nothing is left after sanitizing' do
-    let(:llm_response) { '<script>alert(1)</script>' }
+  context 'when the answer has no text' do
+    let(:llm_response) { "{s1}\n{1/}" }
 
     it 'stores no translation' do
       expect { ai_service.execute }.not_to change(AI::StoredResult, :count)
@@ -234,6 +297,12 @@ RSpec.describe Service::AI::Feature::Translate do
     it 'returns the content unchanged by the HTML sanitizer' do
       expect(ai_service.execute.content).to eq("Preis < 5 & > 3\nZweite Zeile")
     end
+
+    it 'asks for the content without wrapping it' do
+      ai_service.execute
+
+      expect(provider_calls.first[:prompt_user]).to eq(body)
+    end
   end
 
   describe '.lookup_version_sql' do
@@ -247,6 +316,10 @@ RSpec.describe Service::AI::Feature::Translate do
 
     it 'digests HTML content like the Ruby version' do
       expect(sql_version('ai')).to eq(described_class.lookup_version(context_data, target_locale))
+    end
+
+    it 'digests HTML content of another backend like the Ruby version' do
+      expect(sql_version('deepl')).to eq(described_class.lookup_version(context_data.merge(backend: 'deepl'), target_locale))
     end
 
     it 'digests the backend, so another backend does not match' do

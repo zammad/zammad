@@ -18888,6 +18888,7 @@ msgstr ""
 #: lib/ai/provider.rb:252
 #: lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
+#: lib/content_translation/html.rb:17
 msgid "The response could not be processed."
 msgstr ""
 

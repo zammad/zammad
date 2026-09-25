@@ -80,6 +80,19 @@ RSpec.describe Service::ContentTranslation::StoredTranslation do
     end
   end
 
+  describe '.version' do
+    # Rows stored before the AI backend had its own HTML format have to keep matching.
+    it 'digests the content of other backends as before', :aggregate_failures do
+      expect(described_class.version(content, true, 'libre_translate')).to eq(Digest::SHA256.hexdigest("libre_translate\ntrue\n#{content}"))
+      expect(described_class.version(content, true, 'deepl')).to eq(Digest::SHA256.hexdigest("deepl\ntrue\n#{content}"))
+      expect(described_class.version('Hello world.', false, 'ai')).to eq(Digest::SHA256.hexdigest("ai\nfalse\nHello world."))
+    end
+
+    it 'digests HTML of the AI backend with its format, so translations of the raw HTML are not served' do
+      expect(described_class.version(content, true, 'ai')).to eq(Digest::SHA256.hexdigest("ai\n#{described_class::AI_HTML_FORMAT}\n#{content}"))
+    end
+  end
+
   describe '.find' do
     before { save }
 
