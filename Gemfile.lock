@@ -304,6 +304,10 @@ GEM
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
     ffi (1.17.4)
+    ffi (1.17.4-aarch64-linux-gnu)
+    ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86_64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     ffi-compiler (1.4.2)
       ffi (>= 1.15.5)
       rake
@@ -316,6 +320,18 @@ GEM
     globalid (1.4.0)
       activesupport (>= 6.1)
     google-protobuf (4.36.1)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-aarch64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-arm64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-x86_64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-x86_64-linux-gnu)
       bigdecimal
       rake (~> 13.3)
     graphql (2.6.10)
@@ -446,6 +462,14 @@ GEM
     nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    nokogiri (1.19.4-aarch64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.19.4-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.19.4-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.19.4-x86_64-linux-gnu)
+      racc (~> 1.4)
     nori (2.9.1)
       bigdecimal
       stringio
@@ -542,6 +566,10 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.3)
+    pg (1.6.3-aarch64-linux)
+    pg (1.6.3-arm64-darwin)
+    pg (1.6.3-x86_64-darwin)
+    pg (1.6.3-x86_64-linux)
     playwright-ruby-client (1.63.0)
       base64
       concurrent-ruby (>= 1.1.6)
@@ -756,6 +784,14 @@ GEM
     sass-embedded (1.104.1)
       google-protobuf (~> 4.31)
       rake (>= 13)
+    sass-embedded (1.104.1-aarch64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.1-arm64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.1-x86_64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.1-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
     securerandom (0.4.1)
     selenium-webdriver (4.49.0)
       base64 (~> 0.2)
@@ -892,7 +928,11 @@ GEM
       multipart-post (~> 2.0)
 
 PLATFORMS
+  aarch64-linux-gnu
+  arm64-darwin
   ruby
+  x86_64-darwin
+  x86_64-linux-gnu
 
 DEPENDENCIES
   PoParser

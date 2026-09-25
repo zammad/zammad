@@ -18,7 +18,7 @@ WORKDIR /opt/zammad
 RUN apt-get update -qq && \
     apt-get install -y postgresql-common && \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && \
-    apt-get install -y --no-install-recommends libjemalloc2 curl libimlib2 libpq5 nginx gnupg postgresql-client && \
+    apt-get install -y --no-install-recommends libjemalloc2 curl libimlib2 nginx gnupg postgresql-client && \
     apt-get remove -y --purge exim4-base exim4-config bsd-mailx && \
     apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -48,7 +48,7 @@ SHELL ["/bin/bash", "-o", "errexit", "-o", "pipefail", "-c"]
 
 # Install packages needed to build gems and node modules
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libimlib2-dev libpq-dev libyaml-dev && \
+    apt-get install --no-install-recommends -y build-essential git libimlib2-dev libssl-dev libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems

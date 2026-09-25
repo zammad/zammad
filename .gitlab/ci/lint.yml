@@ -63,6 +63,8 @@
     - echo "bundler-audit security check…"
     - gem exec bundle-audit update
     - gem exec bundle-audit
+    - echo "Native gem platforms check…"
+    - .gitlab/check_native_gem_platforms.rb
     - echo "Brakeman security check…"
     - bin/brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Checking if yard can generate documentation…"
