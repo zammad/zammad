@@ -1,0 +1,20 @@
+# The path from the knowledge base root down to a category, as one locale has it. Its own fragment
+#   so the answer header can read exactly this back from the cache: a fragment read is
+#   all-or-nothing, and asking through knowledgeBaseCategoryPreInfo instead would also demand the
+#   two counts that size the browse grid - which an answer query has no reason to carry, so the
+#   read would come back null for every category no listing has written.
+#
+# Kept identical to the breadcrumb selection spelled out in knowledgeBaseCategoryPreInfo, which
+#   says why it is not simply spread from here.
+fragment knowledgeBaseCategoryBreadcrumb on KnowledgeBaseCategory {
+  breadcrumb {
+    id
+    translation(locale: $locale) {
+      id
+      title
+    }
+    categoryIcon
+    iconSet
+    visibility(locale: $locale)
+  }
+}

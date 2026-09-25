@@ -158,6 +158,40 @@ describe('useKnowledgeBaseCategorySubcategories', () => {
     expect(api.directSubcategoryCount.value).toBe(2)
   })
 
+  // The add card is a tile of the browse grid, so its skeleton has to reserve a cell for it before
+  //   the opened category's own query answers - and that query is where its policy comes from. The
+  //   grid caches the whole policy set with every category it lists, so it can be read back by id.
+  it('reads the opened category policy from the cache while its own query is out', async () => {
+    mockKnowledgeBaseCategorySubcategoriesQuery({
+      knowledgeBaseCategorySubcategories: {
+        category: null,
+        subcategories: [
+          {
+            id: CHILD_CATEGORY_ID,
+            translation: { title: 'Billing' },
+            categoryIcon: 'folder',
+            visibility: EnumKnowledgeBaseVisibility.Published,
+            answerCount: 0,
+            subcategoryCount: 0,
+            position: 0,
+            policy: { createSubcategory: true },
+          },
+        ],
+      },
+    })
+
+    mountComposable({ categoryId: undefined, locale: 'en-us' })
+    await flushPromises()
+
+    mountComposable({ categoryId: CHILD_CATEGORY_ID, locale: 'en-us' })
+
+    expect(api.cachedPolicy.value?.createSubcategory).toBe(true)
+
+    // Deliberately not `policy`, which the add controls read: they wait for the category's own
+    //   answer, so none of them flashes into view on a cached permission and out again.
+    expect(api.policy.value).toBeUndefined()
+  })
+
   it('refetches when a content update affects a shown category', async () => {
     mountComposable({ categoryId: CATEGORY_ID, locale: 'en-us' })
 

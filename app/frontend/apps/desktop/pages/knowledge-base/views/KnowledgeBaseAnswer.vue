@@ -46,7 +46,7 @@ const answerId = computed(() =>
     : undefined,
 )
 
-const { answer, loading } = useKnowledgeBaseAnswer({
+const { answer, cachedHeader, headerLoading, loading } = useKnowledgeBaseAnswer({
   answerId,
   locale: toRef(props, 'localeCode'),
 })
@@ -158,10 +158,14 @@ watch(
     >
       <CommonIndicator v-model="isReachingTop" class="translate-y-1" />
 
+      <!-- `headerLoading`, not the page's `loading`: everything the header shows is in the cache
+           the moment an answer is opened from a listing, so it appears at once while the body
+           below still skeletons - the same split the browse view makes. -->
       <KnowledgeBaseAnswerTopBarHeader
         :content-container-element="contentContainerElement"
         :answer="answer"
-        :loading="loading"
+        :cached-header="cachedHeader"
+        :loading="headerLoading"
       />
 
       <!-- Similar to the column of the ticket article list (ArticleList.vue), so an

@@ -17,11 +17,15 @@ import {
   mockKnowledgeBaseAnswerQueryError,
   waitForKnowledgeBaseAnswerQueryCalls,
 } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.mocks.ts'
+import { mockKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts'
+import { mockKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
 import { getKnowledgeBaseAnswerUpdatesSubscriptionHandler } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseAnswerUpdates.mocks.ts'
 import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
 import { useKnowledgeBaseAnswer } from '../useKnowledgeBaseAnswer.ts'
+import { useKnowledgeBaseAnswers } from '../useKnowledgeBaseAnswers.ts'
+import { useKnowledgeBaseCategorySubcategories } from '../useKnowledgeBaseCategorySubcategories.ts'
 
 const KB_ID = convertToGraphQLId('KnowledgeBase', 1)
 const ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 5)
@@ -97,6 +101,62 @@ const mountKeptAlive = (props: { answerId?: string; locale?: string } = {}) => {
       shown.value = true
       await flushPromises()
     },
+  }
+}
+
+// The two listing queries of the browse page an answer is opened from, run for real so they leave
+//   behind exactly the cache entries that page leaves behind - the category's own pre-info and one
+//   per listed answer. Seeding the fragments by hand would prove only that the reads compose, not
+//   that anything actually writes what they ask for.
+const browseCategory = async () => {
+  const CategoryPage = defineComponent({
+    setup() {
+      useKnowledgeBaseCategorySubcategories({
+        categoryId: ref(CATEGORY_ID),
+        locale: ref('en-us'),
+      })
+      useKnowledgeBaseAnswers({
+        categoryId: ref(CATEGORY_ID),
+        locale: ref('en-us'),
+      })
+      return () => null
+    },
+  })
+
+  renderComponent(CategoryPage, { router: true, routerRoutes })
+
+  await flushPromises()
+}
+
+const browseCategoryAnswersFirst = async () => {
+  const showCategorySubcategories = ref(false)
+
+  const CategorySubcategories = defineComponent({
+    setup() {
+      useKnowledgeBaseCategorySubcategories({
+        categoryId: ref(CATEGORY_ID),
+        locale: ref('en-us'),
+      })
+      return () => null
+    },
+  })
+
+  const CategoryPage = defineComponent({
+    setup() {
+      useKnowledgeBaseAnswers({
+        categoryId: ref(CATEGORY_ID),
+        locale: ref('en-us'),
+      })
+      return () => (showCategorySubcategories.value ? h(CategorySubcategories) : null)
+    },
+  })
+
+  renderComponent(CategoryPage, { router: true, routerRoutes })
+  await flushPromises()
+
+  return async () => {
+    showCategorySubcategories.value = true
+    await flushPromises()
   }
 }
 
@@ -217,6 +277,107 @@ describe('useKnowledgeBaseAnswer', () => {
       )
       expect(api.knowledgeBaseAnswerQuery.operationError().value?.message).toBe('Nope')
       expect(api.answerConfirmed.value).toBe(false)
+    })
+  })
+
+  // The header of an answer opened from the category that lists it renders before the answer's own
+  //   query resolves: the listed answer and its category are both in the cache already. Anything
+  //   short of that put a skeleton in the top bar for one round trip, which collapsed the header
+  //   to the loader's own height and grew it back again.
+  describe('the cached header', () => {
+    beforeEach(() => {
+      mockKnowledgeBaseCategorySubcategoriesQuery({
+        knowledgeBaseCategorySubcategories: {
+          category: {
+            id: CATEGORY_ID,
+            directAnswerCount: 1,
+            directSubcategoryCount: 0,
+            breadcrumb: [{ id: CATEGORY_ID, translation: { title: 'Support' } }],
+          },
+          subcategories: [],
+        },
+      })
+
+      mockKnowledgeBaseAnswersQuery({
+        knowledgeBaseAnswers: {
+          totalCount: 1,
+          edges: [
+            {
+              node: {
+                id: ANSWER_ID,
+                category: { id: CATEGORY_ID },
+                translation: {
+                  id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+                  title: 'Some Answer',
+                },
+              },
+            },
+          ],
+          pageInfo: { endCursor: null, hasNextPage: false },
+        },
+      })
+    })
+
+    it('opens the header from the cache while the answer query is still out', async () => {
+      await browseCategory()
+
+      mountComposable({ answerId: ANSWER_ID, locale: 'en-us' })
+
+      // Nothing is flushed in between, so what is in hand now can only have come from the cache.
+      expect(api.headerLoading.value).toBe(false)
+      expect(api.cachedHeader.value?.id).toBe(ANSWER_ID)
+      expect(api.cachedHeader.value?.translation?.title).toBe('Some Answer')
+      expect(api.cachedHeader.value?.breadcrumb.map((item) => item.translation?.title)).toEqual([
+        'Support',
+      ])
+    })
+
+    // A field is cached per argument it was asked with, so a read in another locale finds an entry
+    //   nothing ever wrote - and a half-filled header is one more interim state, not one less.
+    it('does not open the header from another locale than the one that wrote it', async () => {
+      await browseCategory()
+
+      mountComposable({ answerId: ANSWER_ID, locale: 'de-de' })
+
+      expect(api.cachedHeader.value).toBeUndefined()
+      expect(api.headerLoading.value).toBe(true)
+    })
+
+    // Reached without passing the category listing - a deep link, a search hit in a category
+    //   nobody has browsed. The answer may well be cached, its category's breadcrumb is not, and a
+    //   title above an empty breadcrumb would be exactly the kind of frame this removes.
+    it('skeletons the header when the category it names is not cached', async () => {
+      mountComposable({ answerId: ANSWER_ID, locale: 'en-us' })
+
+      expect(api.cachedHeader.value).toBeUndefined()
+      expect(api.headerLoading.value).toBe(true)
+    })
+
+    it('reacts when the category breadcrumb is cached after the answer listing', async () => {
+      const loadCategorySubcategories = await browseCategoryAnswersFirst()
+
+      mountComposable({ answerId: ANSWER_ID, locale: 'en-us' })
+
+      expect(api.cachedHeader.value).toBeUndefined()
+      expect(api.headerLoading.value).toBe(true)
+
+      await loadCategorySubcategories()
+
+      expect(api.cachedHeader.value?.id).toBe(ANSWER_ID)
+      expect(api.cachedHeader.value?.breadcrumb.map((item) => item.translation?.title)).toEqual([
+        'Support',
+      ])
+      expect(api.headerLoading.value).toBe(false)
+    })
+
+    it('hands over to the loaded answer once it arrives', async () => {
+      await browseCategory()
+
+      mountComposable({ answerId: ANSWER_ID, locale: 'en-us' })
+      await flushPromises()
+
+      expect(api.headerLoading.value).toBe(false)
+      expect(api.answer.value?.translation?.title).toBe('Some Answer')
     })
   })
 

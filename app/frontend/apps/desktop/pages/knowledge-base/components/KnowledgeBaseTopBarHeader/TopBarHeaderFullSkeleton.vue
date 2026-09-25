@@ -38,9 +38,11 @@ const contentOuterClass = computed(() => HEADER_CONTENT_OUTER_CLASSES[props.cont
       <CommonSkeleton class="h-6 w-12" />
     </div>
 
+    <!-- `h-7`, the line box of the `text-xl` heading it stands in for (TopBarHeaderFull): a
+         shorter block would hand the header back four pixels taller than it skeletoned. -->
     <div class="col-span-2" :class="contentOuterClass">
       <div class="mx-auto w-full" :class="contentWidthClass">
-        <CommonSkeleton class="h-6 w-64" />
+        <CommonSkeleton class="h-7 w-64" />
       </div>
     </div>
 

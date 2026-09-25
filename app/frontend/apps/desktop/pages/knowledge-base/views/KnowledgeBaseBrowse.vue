@@ -97,6 +97,7 @@ const {
   deletable: categoryDeletable,
   policy: categoryPolicy,
   directAnswerCount,
+  cachedPolicy,
   categorySortingMode,
   answerSortingMode,
 } = useKnowledgeBaseCategorySubcategories({
@@ -120,11 +121,6 @@ const browsedPage = computed(() => `${props.localeCode}:${categoryId.value}`)
 const headerLoading = computed(
   () => loading.value && Boolean(categoryId.value) && !breadcrumb.value.length,
 )
-
-// Size the category skeleton to the opened category's next level when known;
-//   otherwise fall back to a small default.
-const DEFAULT_SKELETON_COUNT = 4
-const categorySkeletonCount = computed(() => directSubcategoryCount.value || DEFAULT_SKELETON_COUNT)
 
 // Adding is gated by whoever would own the new category: the opened category (its own
 //   `createSubcategory`), or the knowledge base at the root — where `CategoryPolicy#create?`
@@ -384,6 +380,18 @@ const tileCount = computed(
   () => subcategories.value.length + (canAddCategory.value && !isSortingArmed.value ? 1 : 0),
 )
 
+// The skeleton stands in for those same tiles, so it has to reserve the add card's cell under the
+//   same condition - without it the card appears when loading ends and pushes the answers down.
+//   Its permission comes from the cached record, since the opened category's own policy arrives
+//   only with the query the skeleton is waiting for. An unknown count stays unknown: the skeleton
+//   has its own answer for that (one row at most).
+const skeletonTileCount = computed(() =>
+  directSubcategoryCount.value === undefined
+    ? undefined
+    : directSubcategoryCount.value +
+      (cachedPolicy.value?.createSubcategory && !isSortingArmed.value ? 1 : 0),
+)
+
 // Only the knowledge base root fills the page when it has no tiles: there its empty state is the
 //   entire content. A category without subcategories — a reader sees no add card either — still
 //   has its answers below, so the grid must not stretch above them. Never while sorting, which
@@ -508,7 +516,7 @@ watch(browsedPage, () => {
 
         <CommonLoader v-else class="flex w-full items-center" :loading="loading">
           <template #skeleton>
-            <KnowledgeBaseCategoryCardSkeleton :count="categorySkeletonCount" />
+            <KnowledgeBaseCategoryCardSkeleton :count="skeletonTileCount" />
           </template>
 
           <!-- One root element: the loader renders its slot inside a <Transition>. -->

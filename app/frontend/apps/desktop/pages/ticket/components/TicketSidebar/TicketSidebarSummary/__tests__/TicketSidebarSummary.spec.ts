@@ -286,11 +286,11 @@ describe('TicketSidebarSummary', () => {
 
     const wrapper = renderRenderTicketSidebarSummary()
 
-    // CommonLoader uses useDebouncedLoading which even in test mode (delay=0) — goes
-    // through useTimeoutFn and schedules a setTimeout(fn, 0). With vi.useFakeTimers() active, this timer
-    // never fires automatically, so debouncedLoading stays false and the loading component is never rendered
-    // in the DOM.
+    // Pumps the microtasks the render is waiting on. Fake timers are on for the generation
+    //   timing below, and nothing else drains the queue while they are - so this stands in for a
+    //   `flushPromises`, not for any debounce of the loader.
     await vi.advanceTimersByTimeAsync(0)
+
     expect(wrapper.getByText('Summary is being generated…')).toBeInTheDocument()
     expect(wrapper.getAllByLabelText('Placeholder for AI generated heading')).toHaveLength(4)
 

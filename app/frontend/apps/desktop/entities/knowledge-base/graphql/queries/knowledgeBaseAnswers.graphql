@@ -19,6 +19,10 @@ query knowledgeBaseAnswers(
         id
         visibility
         position
+        # What the answer's own header opens from before its query resolves - the same role the
+        #   grid's `knowledgeBaseCategoryPreInfo` plays for a category. Spread rather than relied on
+        #   through the fields below, so the header's cache read cannot be broken by editing them.
+        ...knowledgeBaseAnswerPreInfo
         translation(locale: $locale) {
           id
           title
