@@ -249,6 +249,9 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     let(:sender_agent)              { create(:agent) }
     let(:sender_outbound_article)   { create(:ticket_article, :outbound_email, ticket: ticket, created_by_id: sender_agent.id, origin_by_id: sender_agent.id, body: SecureRandom.hex(8)) }
 
+    # Created before the ticket is opened, otherwise the article only shows up via a push.
+    let(:ticket_article) { super().tap { sender_outbound_article } }
+
     # The recipient (To/CC) rendering must not depend on the sender format, so the
     #   shared examples pin it for every format value.
     shared_examples 'renders agent recipients name only' do
@@ -280,7 +283,6 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       let(:setting_ticket_email_from) { 'SystemAddressName' }
 
       it 'does not show agent name on forward' do
-        sender_outbound_article
         expect(page).to have_text(sender_outbound_article.body)
 
         page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
@@ -295,7 +297,6 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       let(:setting_ticket_email_from) { 'AgentNameSystemAddressName' }
 
       it 'does show agent name on forward' do
-        sender_outbound_article
         expect(page).to have_text(sender_outbound_article.body)
 
         page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
