@@ -5400,6 +5400,10 @@ input[type='search']::-webkit-search-decoration {
   }
 }
 
+.search .logo .company-logo {
+  object-fit: contain;
+}
+
 .search .logo .activity-counter {
   min-width: 21px;
   position: absolute;

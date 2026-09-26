@@ -9,7 +9,11 @@
       </div>
     </form>
     <div class="logo js-toggleNotifications">
-      <%- @Icon('logo') %>
+      <% if @C('product_logo') && @C('product_logo') != 'logo.svg': %>
+        <img class="icon-logo company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
+      <% else: %>
+        <%- @Icon('logo') %>
+      <% end %>
       <div class="activity-counter js-notificationsCounter"></div>
     </div>
     <div class="global-search-menu">
