@@ -4,6 +4,8 @@
 import { whenever } from '@vueuse/core'
 import { computed } from 'vue'
 
+import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
@@ -32,6 +34,7 @@ whenever(
 )
 
 const { hasPermission } = useSessionStore()
+const application = useApplicationStore()
 
 const isTicketAgent = computed(() => hasPermission('ticket.agent') ?? false)
 </script>
@@ -51,8 +54,11 @@ const isTicketAgent = computed(() => hasPermission('ticket.agent') ?? false)
       class="flex items-center justify-center"
       :class="{ 'ltr:ml-auto rtl:mr-auto': !collapsed }"
     >
-      <!--  :TODO Add custom branding  -->
-      <CommonIcon name="logo" class="z-10 block h-9 w-9" />
+      <CommonLogo
+        v-if="application.hasCustomProductBranding"
+        class="z-10 block h-9 w-9 object-contain"
+      />
+      <CommonIcon v-else name="logo" class="z-10 block h-9 w-9" />
     </component>
   </header>
 </template>

@@ -37,6 +37,11 @@ class Navigation extends App.Controller
       @render()
     )
 
+    @controllerBind('config_update_local', (data) =>
+      return if data.name not in ['product_logo', 'product_name']
+      @render()
+    )
+
     # rerender menu
     @controllerBind('menu:render', =>
       @renderMenu()
@@ -232,6 +237,7 @@ class Navigation extends App.Controller
 
     navigation = $(App.view('navigation')(
       user: user
+      logoUrl: @logoUrl()
     ))
 
     @taskbar?.releaseController()
