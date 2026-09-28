@@ -713,7 +713,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
     add_index :cti_logs, [:call_id], unique: true
     add_index :cti_logs, [:direction]
-    add_index :cti_logs, [:from]
+    add_index :cti_logs, "regexp_replace(\"from\", '\\D', '', 'g')", name: 'index_cti_logs_on_from_digits'
     add_index :cti_logs, [:created_at]
     add_index :cti_logs, [:queue]
 

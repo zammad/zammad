@@ -206,6 +206,30 @@ returns
 
 =begin
 
+  Cti::CallerId.stored_number_variants('4930123456')
+
+  returns the digit strings a number sent by a telephony backend can have that
+  normalize_number folds into this caller id, for looking log entries up by their raw number
+
+  ['4930123456', '004930123456', '030123456']
+
+=end
+
+    # The inverse of normalize_number for what a backend sends: E.164 with or without
+    #   a plus, a leading 00, and for the default country the national form with a 0.
+    #   A bracketed trunk zero like +49 (0) 30 … is left out on purpose: no backend sends it,
+    #   and by digits alone it collides with a number that has a real 0 after the country code.
+    def self.stored_number_variants(caller_id)
+      digits = caller_id.to_s.gsub(%r{\D}, '')
+      return [] if digits.blank?
+
+      variants = [digits, "00#{digits}"]
+      variants << "0#{digits.delete_prefix(DEFAULT_COUNTRY_ID)}" if digits.start_with?(DEFAULT_COUNTRY_ID)
+      variants
+    end
+
+=begin
+
   from_comment, preferences = Cti::CallerId.get_comment_preferences('00491710000000', 'from')
 
   returns

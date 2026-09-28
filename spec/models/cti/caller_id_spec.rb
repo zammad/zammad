@@ -79,6 +79,36 @@ RSpec.describe Cti::CallerId do
     end
   end
 
+  describe '.stored_number_variants' do
+    it 'lists the stored forms of a default country number' do
+      expect(described_class.stored_number_variants('4930123456'))
+        .to eq(%w[4930123456 004930123456 030123456])
+    end
+
+    it 'leaves the national form out for another country' do
+      expect(described_class.stored_number_variants('43664123456'))
+        .to eq(%w[43664123456 0043664123456])
+    end
+
+    # What normalize_number folds into one caller id, the variants must cover by digits.
+    it 'covers the digits of every form a backend sends for the caller id' do
+      {
+        '4930123456'  => ['4930123456', '+49 30 123456', '0049 30 123456', '030 123456'],
+        '43664123456' => ['+43 664 123456', '0043664123456'],
+      }.each do |caller_id, stored_forms|
+        stored_forms.each do |stored|
+          expect(described_class.normalize_number(stored)).to eq(caller_id)
+          expect(described_class.stored_number_variants(caller_id)).to include(stored.gsub(%r{\D}, ''))
+        end
+      end
+    end
+
+    it 'is empty without digits' do
+      expect(described_class.stored_number_variants(nil)).to eq([])
+      expect(described_class.stored_number_variants('+ ')).to eq([])
+    end
+  end
+
   describe '.normalize_number' do
     it 'does not modify digit-only strings (starting with 1-9)' do
       expect(described_class.normalize_number('5754321')).to eq('5754321')
