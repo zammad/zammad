@@ -378,6 +378,7 @@ RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integra
             '90 Sheridan, San Francisco, CA 94103, USA',
             '3030 16th St, San Francisco, CA 94103, USA',
             '548 Market St, San Francisco, CA 94104, USA',
+            '548 Market St, San Francisco, CA 94103, USA',
           ]
         )
       )
