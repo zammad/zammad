@@ -86,5 +86,6 @@ RSpec.describe 'Login Maintenance Mode', authenticated_as: false, type: :system 
     visit '/'
 
     ensure_websocket
+    ensure_websocket_push_delivery
   end
 end

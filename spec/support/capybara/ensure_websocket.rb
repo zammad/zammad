@@ -47,6 +47,22 @@ module EnsureWebsocket
     end
   end
 
+  # Waits until a push from the server reaches the current page. A push sent
+  #   right after the connection opened can get lost, although ensure_websocket
+  #   already passed - the probe is sent again until one arrives.
+  def ensure_websocket_push_delivery
+    page.execute_script(<<~JS)
+      window.websocketProbeReceived = false
+      App.Event.bind('spec:websocket_probe', function() { window.websocketProbeReceived = true }, 'spec')
+    JS
+
+    wait(interval: 0.5).until do
+      Sessions.broadcast({ event: 'spec:websocket_probe' }, 'public')
+
+      page.evaluate_script('window.websocketProbeReceived')
+    end
+  end
+
   private
 
   # Checks if session was active since given time
