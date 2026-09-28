@@ -20,6 +20,7 @@ import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
 import BulkCheckbox from './CellContent/BulkCheckbox.vue'
 import HeaderResizeLine from './HeaderResizeLine.vue'
@@ -294,6 +295,10 @@ onMounted(() => {
 useEventListener('resize', () => initializeHeaderWidths())
 
 useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
+
+useKeepAliveHooks({
+  onReactivated: initializeHeaderWidths,
+})
 </script>
 
 <template>
