@@ -18,7 +18,7 @@ interface Props {
 const props = defineProps<Props>()
 const ticketData = toRef(props, 'ticket')
 
-const { timeAccountingDisplayUnit, timeAccountingConfig } = useTicketAccountedTime()
+const { timeAccountingConfig, formatAccountedTime } = useTicketAccountedTime()
 
 const isShown = toRef(() => Boolean(ticketData.value.timeUnit))
 
@@ -48,17 +48,16 @@ const shownUnits = computed(() => {
 <template>
   <CommonSectionMenu v-if="isShown">
     <CommonSectionMenuItem v-if="ticketData.timeUnit" :label="__('Total accounted time')">
-      {{ ticketData.timeUnit }}
-      {{ $t(timeAccountingDisplayUnit) }}
+      {{ formatAccountedTime(ticketData.timeUnit) }}
     </CommonSectionMenuItem>
 
     <CommonSectionMenuItem v-if="allUnits.length" data-test-id="timeUnitsEntries">
       <div class="grid grid-cols-[1fr_auto_auto] py-2" role="list">
         <template v-for="({ name, timeUnit }, index) of shownUnits" :key="index">
-          <div class="col-[1] truncate text-white/80 ltr:mr-2 rtl:ml-2">
+          <div class="col-1 truncate text-white/80 ltr:mr-2 rtl:ml-2">
             {{ capitalize($t(name)) }}
           </div>
-          <div>{{ timeUnit }} {{ $t(timeAccountingDisplayUnit) }}</div>
+          <div>{{ formatAccountedTime(timeUnit) }}</div>
         </template>
       </div>
     </CommonSectionMenuItem>

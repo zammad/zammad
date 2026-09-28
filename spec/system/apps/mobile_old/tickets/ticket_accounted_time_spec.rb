@@ -32,11 +32,11 @@ RSpec.describe 'Mobile > Ticket > Information > Accounted Time', app: :mobile, a
     end
 
     it 'shows accounted time', if: !display_unit do
-      expect(accounted_time_element).to have_text(time_unit)
+      expect(accounted_time_element).to have_text(format('%.2f', time_unit))
     end
 
     it "shows accounted time in #{display_unit}", if: display_unit do
-      expect(accounted_time_element).to have_text("#{time_unit} #{display_unit}")
+      expect(accounted_time_element).to have_text("#{format('%.2f', time_unit)} #{display_unit}")
     end
   end
 

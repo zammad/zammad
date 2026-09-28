@@ -21,7 +21,7 @@ describe('TicketObjectAttributes', () => {
 
     const accountedTime = wrapper.getByLabelText('Total accounted time')
 
-    expect(accountedTime).toHaveTextContent('1.1')
+    expect(accountedTime).toHaveTextContent('1.10')
 
     expect(wrapper.queryByText('none')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('button'), 'no "show more" button').not.toBeInTheDocument()
@@ -58,7 +58,7 @@ describe('TicketObjectAttributes', () => {
 
     const accountedTime = wrapper.getByLabelText('Total accounted time')
 
-    expect(accountedTime).toHaveTextContent('1.1 minute(s)')
+    expect(accountedTime).toHaveTextContent('1.10 minute(s)')
   })
 
   it('renders the custom time accounting unit', () => {
@@ -79,7 +79,7 @@ describe('TicketObjectAttributes', () => {
 
     const accountedTime = wrapper.getByLabelText('Total accounted time')
 
-    expect(accountedTime).toHaveTextContent('1.1 person day(s)')
+    expect(accountedTime).toHaveTextContent('1.10 person day(s)')
   })
 
   const formatTimeUnits = (element: HTMLElement) => {
@@ -156,9 +156,9 @@ describe('TicketObjectAttributes', () => {
     // correctly sorted with highest at the top
     expect(formatTimeUnits(entriesElement)).toMatchInlineSnapshot(
       `
-      "Billable42.2 minute(s)
-      Not billable2 minute(s)
-      None1.1 minute(s)
+      "Billable42.20 minute(s)
+      Not billable2.00 minute(s)
+      None1.10 minute(s)
       "
     `,
     )
@@ -211,9 +211,9 @@ describe('TicketObjectAttributes', () => {
     const entriesElement = view.getByTestId('timeUnitsEntries')
     expect(formatTimeUnits(entriesElement)).toMatchInlineSnapshot(
       `
-      "Name I - 10.1 minute(s)
-      Name III - 4 minute(s)
-      Name IV - 3 minute(s)
+      "Name I - 10.10 minute(s)
+      Name III - 4.00 minute(s)
+      Name IV - 3.00 minute(s)
       "
     `,
     )
@@ -224,11 +224,11 @@ describe('TicketObjectAttributes', () => {
 
     expect(formatTimeUnits(entriesElement)).toMatchInlineSnapshot(
       `
-      "Name I - 10.1 minute(s)
-      Name III - 4 minute(s)
-      Name IV - 3 minute(s)
-      Name II - 2 minute(s)
-      None1.1 minute(s)
+      "Name I - 10.10 minute(s)
+      Name III - 4.00 minute(s)
+      Name IV - 3.00 minute(s)
+      Name II - 2.00 minute(s)
+      None1.10 minute(s)
       "
     `,
     )
