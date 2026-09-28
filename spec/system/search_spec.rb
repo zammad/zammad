@@ -483,18 +483,27 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       end
 
       it 'does switch search results properly' do
-        # clear: :backspace paces the clear+type sequence more naturally - the default
-        #   clear strategy has occasionally dropped the first typed character here.
-        page.find('.js-search').fill_in(with: '"Testing Ticket 1"', fill_options: { clear: :backspace })
-        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
-        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
+        page.find('.js-search').fill_in(with: '"Testing Ticket 1"')
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
+        expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 2')
         expect(current_url).to include('Testing%20Ticket%201')
 
         # switch by global search
-        page.find('.js-search').fill_in(with: '"Testing Ticket 2"', fill_options: { clear: :backspace })
-        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
-        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
+        page.find('.js-search').fill_in(with: '"Testing Ticket 2"')
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 2')
+        expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 1')
         expect(current_url).to include('Testing%20Ticket%202')
+      end
+
+      it 'keeps input typed before the route of the previous key is executed' do
+        page.execute_script(<<~JS)
+          $('.js-search').val('Testing Ticket').trigger('keyup')
+          $('.js-search').val('Testing Ticket 2')
+        JS
+
+        # The results of the first key are rendered only after the route has been executed.
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
+        expect(page).to have_field(class: 'js-search', with: 'Testing Ticket 2')
       end
     end
 
