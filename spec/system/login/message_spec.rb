@@ -62,6 +62,7 @@ RSpec.describe 'Login Message', authenticated_as: false, type: :system do
     visit '/'
 
     ensure_websocket
+    ensure_websocket_push_delivery
 
     # Wait until the event binding for the 'config_update_local' is present.
     # TODO: If this works we can maybe move the check for event bindings in a helper function.
