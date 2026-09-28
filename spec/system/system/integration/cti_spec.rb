@@ -3,14 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Integration > CTI (generic)', type: :system do
-  let!(:agent)    { create(:agent, firstname: 'Phone', lastname: 'Agent') }
-  let!(:customer) { create(:customer, firstname: 'Phone', lastname: 'Customer') }
+  let!(:agent)    { create(:agent) }
+  let!(:customer) { create(:customer) }
 
   it 'offers only users with the cti.agent permission in the caller log filter' do
     # The picker lists the users the client has loaded; the user management loads
     #   them, and the in-app navigation keeps them.
+    # normalize_ws avoids driver differences in how whitespace between adjacent table cells is rendered
     visit 'manage/users'
-    expect(page).to have_text(agent.fullname).and have_text(customer.fullname)
+    expect(page).to have_text(agent.fullname, normalize_ws: true).and have_text(customer.fullname, normalize_ws: true)
 
     visit 'system/integration/cti'
     check 'setting-switch', allow_label_click: true
