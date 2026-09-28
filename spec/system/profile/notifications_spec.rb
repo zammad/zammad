@@ -48,14 +48,22 @@ RSpec.describe 'Profile > Notifications', authenticated_as: :user, type: :system
   end
 
   context 'with custom notification settings' do
+    let(:group) { create(:group) }
+
     before do
+      user.groups = [group]
       user.preferences[:notification_config][:matrix][:escalation][:criteria][:owned_by_me] = false
+      user.preferences[:notification_config][:group_ids] = [group.id.to_s]
+      user.preferences[:notification_sound] = { file: 'Plop.mp3', enabled: false }
       user.save!
 
       visit 'profile/notifications'
     end
 
     it 'can reset notifications' do
+      expect(page).to have_field('profile-groups-limit', checked: true, visible: :all)
+      expect(page).to have_select('notification-sound', selected: 'Plop')
+
       find('#content_permanent_Profile form .js-reset').click
 
       in_modal do
@@ -63,6 +71,9 @@ RSpec.describe 'Profile > Notifications', authenticated_as: :user, type: :system
       end
 
       expect(page).to have_field('matrix.escalation.criteria.owned_by_me', checked: true, visible: :all)
+      expect(page).to have_field('profile-groups-limit', checked: false, visible: :all)
+      expect(page).to have_select('notification-sound', selected: 'Xylo')
+      expect(page).to have_field('notification_sound::enabled', checked: true, visible: :all)
 
       expect(user.reload.preferences).to include(
         notification_config: include(matrix: include(escalation: include(criteria: include(owned_by_me: true))))

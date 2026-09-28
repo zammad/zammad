@@ -657,6 +657,19 @@ returns
     user.save!
   end
 
+  # .reset_notifications_preferences! is also used to apply the admin defaults to all agents.
+  # This one also removes the group limit and sound settings, so the frontends use their defaults.
+  #
+  # @option user [User] to reset preferences
+  def self.reset_personal_notifications_preferences!(user)
+    return if !user.permissions? 'ticket.agent'
+
+    user.preferences[:notification_config]&.delete(:group_ids)
+    user.preferences.delete(:notification_sound)
+
+    reset_notifications_preferences!(user)
+  end
+
 =begin
 
 try to find correct name

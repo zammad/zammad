@@ -577,7 +577,7 @@ curl http://localhost/api/v1/users/preferences_reset -v -u #{login}:#{password} 
 =end
 
   def preferences_notifications_reset
-    User.reset_notifications_preferences!(current_user)
+    User.reset_personal_notifications_preferences!(current_user)
 
     render json: { message: 'ok' }, status: :ok
   end

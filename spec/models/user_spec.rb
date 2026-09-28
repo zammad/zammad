@@ -357,6 +357,49 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '.reset_personal_notifications_preferences!' do
+      let(:custom_sound) { { 'file' => 'Plop.mp3', 'enabled' => false } }
+
+      context 'when user is agent' do
+        before do
+          agent.preferences['notification_config']['group_ids'] = ['123']
+          agent.preferences['notification_config']['matrix']['escalation']['criteria']['owned_by_me'] = false
+          agent.preferences['notification_sound'] = custom_sound
+          agent.save!
+        end
+
+        it 'removes selected groups' do
+          expect { described_class.reset_personal_notifications_preferences!(agent) }
+            .to change { agent.reload.preferences.dig('notification_config', 'group_ids') }
+            .to(nil)
+        end
+
+        it 'removes notification sound settings' do
+          expect { described_class.reset_personal_notifications_preferences!(agent) }
+            .to change { agent.reload.preferences['notification_sound'] }
+            .to(nil)
+        end
+
+        it 'resets matrix' do
+          expect { described_class.reset_personal_notifications_preferences!(agent) }
+            .to change { agent.reload.preferences.dig('notification_config', 'matrix', 'escalation', 'criteria', 'owned_by_me') }
+            .to(true)
+        end
+      end
+
+      context 'when user is not agent' do
+        before do
+          customer.preferences['notification_sound'] = custom_sound
+          customer.save!
+        end
+
+        it 'does not change notification sound settings' do
+          expect { described_class.reset_personal_notifications_preferences!(customer) }
+            .not_to change { customer.reload.preferences['notification_sound'] }
+        end
+      end
+    end
+
     describe '.by_mobile' do
       let!(:user)        { create(:customer, mobile: saved_mobile) }
       let(:saved_mobile) { '+4912341234' }

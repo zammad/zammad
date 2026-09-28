@@ -9,7 +9,7 @@ module Gql::Mutations
     requires_permission 'user_preferences.notifications+ticket.agent'
 
     def resolve
-      ::User.reset_notifications_preferences!(context.current_user)
+      ::User.reset_personal_notifications_preferences!(context.current_user)
 
       { user: context.current_user.reload }
     end

@@ -1926,11 +1926,11 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     it 'calls notification reset method' do
       allow(User)
-        .to receive(:reset_notifications_preferences!)
+        .to receive(:reset_personal_notifications_preferences!)
 
       post '/api/v1/users/preferences_notifications_reset', as: :json
 
-      expect(User).to have_received(:reset_notifications_preferences!).with(agent)
+      expect(User).to have_received(:reset_personal_notifications_preferences!).with(agent)
     end
   end
 

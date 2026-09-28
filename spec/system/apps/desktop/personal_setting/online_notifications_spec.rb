@@ -45,7 +45,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       find('label', text: 'New ticket - All tickets').click
       find('label', text: 'Ticket update - All tickets').click
 
-      click_on 'Save notifications'
+      click_on 'Save notification settings'
 
       wait_for_mutation('userCurrentNotificationPreferencesUpdate', number: 1)
 

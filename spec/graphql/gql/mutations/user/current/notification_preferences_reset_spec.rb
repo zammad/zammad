@@ -11,6 +11,9 @@ RSpec.describe Gql::Mutations::User::Current::NotificationPreferencesReset, :agg
         userCurrentNotificationPreferencesReset {
           user {
             personalSettings {
+              notificationConfig {
+                groupIds
+              }
               notificationSound {
                 enabled
                 file
@@ -46,14 +49,31 @@ RSpec.describe Gql::Mutations::User::Current::NotificationPreferencesReset, :agg
     end
 
     context 'with sufficient permissions' do
-      before do
-        allow(User).to receive(:reset_notifications_preferences!)
+      it 'resets user preferences' do
+        allow(User).to receive(:reset_personal_notifications_preferences!)
+
+        execute_graphql_query
+
+        expect(User).to have_received(:reset_personal_notifications_preferences!).with(user)
       end
 
-      it 'resets user preferences' do
-        execute_graphql_query
-        expect(gql.result.data[:notificationSound]).to be_nil
-        expect(User).to have_received(:reset_notifications_preferences!).with(user)
+      context 'with customized group limit and sound' do
+        let(:user) do
+          create(:agent).tap do |agent|
+            agent.preferences['notification_config']['group_ids'] = [123]
+            agent.preferences['notification_sound'] = { 'file' => 'Plop.mp3', 'enabled' => false }
+            agent.save!
+          end
+        end
+
+        it 'returns the cleared settings the form is rebuilt from' do
+          execute_graphql_query
+
+          expect(gql.result.data[:user][:personalSettings]).to include(
+            'notificationConfig' => { 'groupIds' => nil },
+            'notificationSound'  => nil
+          )
+        end
       end
     end
   end

@@ -85,18 +85,19 @@ const schema = defineFormSchema([
   },
 ])
 
+const notificationFormValues = (
+  personalSettings: UserData['personalSettings'],
+): NotificationFormData => ({
+  group_ids: personalSettings?.notificationConfig?.groupIds ?? [],
+  matrix: personalSettings?.notificationConfig?.matrix || {},
+
+  // Default notification sound settings are not present on the user preferences.
+  file: personalSettings?.notificationSound?.file ?? EnumNotificationSoundFile.Xylo,
+  enabled: personalSettings?.notificationSound?.enabled ?? true,
+})
+
 const initialFormValues = computed<NotificationFormData>((oldValues) => {
-  const notificationConfig = user.value?.personalSettings?.notificationConfig
-  const notificationSound = user.value?.personalSettings?.notificationSound
-
-  const values: NotificationFormData = {
-    group_ids: notificationConfig?.groupIds ?? [],
-    matrix: notificationConfig?.matrix || {},
-
-    // Default notification sound settings are not present on the user preferences.
-    file: notificationSound?.file ?? EnumNotificationSoundFile.Xylo,
-    enabled: notificationSound?.enabled ?? true,
-  }
+  const values = notificationFormValues(user.value?.personalSettings)
 
   if (oldValues && isEqual(values, oldValues)) return oldValues
 
@@ -147,14 +148,6 @@ const onSubmit = async (form: FormSubmitData<NotificationFormData>) => {
     })
 }
 
-const resetFormToDefaults = (personalSettings: UserData['personalSettings']) => {
-  form.value?.resetForm({
-    values: {
-      matrix: personalSettings?.notificationConfig?.matrix || {},
-    },
-  })
-}
-
 const onResetToDefaultSettings = async () => {
   const confirmed = await waitForConfirmation(
     __('Are you sure? Your notifications settings will be reset to default.'),
@@ -179,7 +172,7 @@ const onResetToDefaultSettings = async () => {
 
       if (!personalSettings) return
 
-      resetFormToDefaults(personalSettings)
+      formReset({ values: notificationFormValues(personalSettings) })
 
       notify({
         id: 'notification-reset-success',
@@ -223,7 +216,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
               {{ $t('Reset to default settings') }}
             </CommonButton>
             <CommonButton size="medium" type="submit" variant="submit" :disabled="loading">
-              {{ $t('Save notifications') }}
+              {{ $t('Save notification settings') }}
             </CommonButton>
           </div>
         </template>
