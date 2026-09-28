@@ -57,7 +57,7 @@ const issueStateName = computed(() => {
   <div class="group flex gap-2">
     <CommonIcon
       role="status"
-      class="flex-shrink-0"
+      class="shrink-0"
       :class="issueStateColor"
       :label="__('Issue status')"
       :aria-roledescription="$t('issue status: %s', $t(issue.state))"
@@ -79,7 +79,7 @@ const issueStateName = computed(() => {
       <ExternalReferenceContent v-if="issue.issueType" :label="$t('Type')">
         <CommonBadge
           :style="issueTypeStyle"
-          class="max-w-full self-start truncate !rounded-full border-neutral-100 ltr:border rtl:border dark:border-gray-900"
+          class="max-w-full self-start truncate rounded-full! border-neutral-100 ltr:border rtl:border dark:border-gray-900"
         >
           {{ issue.issueType.name }}
         </CommonBadge>

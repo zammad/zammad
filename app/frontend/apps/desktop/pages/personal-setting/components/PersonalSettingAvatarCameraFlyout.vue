@@ -125,13 +125,13 @@ const captureImage = () => {
     <div class="flex flex-col items-center gap-6 pt-12 pb-10">
       <canvas
         v-show="image"
-        class="h-64 min-h-64 w-64 min-w-64 rounded-full border border-black dark:border-white"
+        class="size-64 min-h-64 min-w-64 rounded-full border border-black dark:border-white"
       >
       </canvas>
 
       <div
         v-if="!image"
-        class="relative h-64 min-h-64 w-64 min-w-64 overflow-hidden rounded-full border border-black bg-blue-200 text-stone-200 dark:border-white dark:bg-gray-700 dark:text-neutral-500"
+        class="relative size-64 min-h-64 min-w-64 overflow-hidden rounded-full border border-black bg-blue-200 text-stone-200 dark:border-white dark:bg-gray-700 dark:text-neutral-500"
       >
         <CommonIcon
           :name="cameraIcon"
@@ -141,7 +141,7 @@ const captureImage = () => {
         <!-- eslint-disable vuejs-accessibility/media-has-caption -->
         <video
           v-show="!cameraIsDisabled"
-          class="h-full w-full object-cover"
+          class="size-full object-cover"
           :aria-label="$t('Use the camera to take a photo for the avatar.')"
           :srcObject="stream"
           autoplay

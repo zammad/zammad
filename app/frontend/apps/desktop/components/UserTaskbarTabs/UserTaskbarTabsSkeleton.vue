@@ -14,7 +14,7 @@ const labelWidths = ['w-3/4', 'w-1/2', 'w-2/3', 'w-5/6', 'w-1/2']
 
 <template>
   <div v-if="collapsed" class="flex justify-center py-1">
-    <CommonSkeleton class="h-9 w-9" />
+    <CommonSkeleton class="size-9" />
   </div>
   <div v-else class="flex flex-col gap-1.5 p-1">
     <div
@@ -22,7 +22,7 @@ const labelWidths = ['w-3/4', 'w-1/2', 'w-2/3', 'w-5/6', 'w-1/2']
       :key="index"
       class="flex items-center gap-2 rounded-md px-2 py-3"
     >
-      <CommonSkeleton :style="{ 'animation-delay': `${index * 0.1}s` }" class="h-4 w-4 shrink-0" />
+      <CommonSkeleton :style="{ 'animation-delay': `${index * 0.1}s` }" class="size-4 shrink-0" />
       <CommonSkeleton
         :style="{ 'animation-delay': `${index * 0.1 + 0.05}s` }"
         :class="width"

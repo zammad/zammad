@@ -59,7 +59,7 @@ const customer = computed(() => {
           class="overflow-hidden ltr:mr-1 rtl:ml-1"
           :class="{ 'ltr:-ml-1 rtl:-mr-1': ticket.organization }"
         >
-          <div class="flex text-sm leading-4 text-gray-100">
+          <div class="flex text-sm/4 text-gray-100">
             <div
               class="truncate"
               :class="{
@@ -76,7 +76,7 @@ const customer = computed(() => {
               </div>
             </template>
           </div>
-          <h1 class="line-clamp-3 text-xl leading-7 font-bold break-words">
+          <h1 class="line-clamp-3 text-xl/7 font-bold wrap-break-word">
             {{ ticket.title }}
           </h1>
           <div class="mt-2 flex flex-wrap gap-2">

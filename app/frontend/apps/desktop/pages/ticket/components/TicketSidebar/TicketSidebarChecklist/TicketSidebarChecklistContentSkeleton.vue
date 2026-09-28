@@ -20,6 +20,6 @@ import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vu
       </li>
     </ul>
 
-    <CommonSkeleton class="col-start-2 h-8 w-8 justify-self-end" />
+    <CommonSkeleton class="col-start-2 size-8 justify-self-end" />
   </div>
 </template>

@@ -229,7 +229,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
       <CommonButton
         v-if="selectedEntityHasFiltersEnabled"
         :id="advancedFiltersButtonId"
-        class="relative z-20 h-auto! w-full! bg-blue-200! -outline-offset-1! transition-[border-radius]! before:absolute before:right-0 before:bottom-0 before:left-0 before:hidden before:h-3 before:w-full before:translate-y-full before:bg-blue-200 before:opacity-0 before:transition-opacity before:duration-0 before:ease-in-out active:scale-none! @lg:w-auto! @lg:before:block dark:bg-gray-700! dark:before:bg-gray-700"
+        class="relative z-20 h-auto! w-full! bg-blue-200! -outline-offset-1! transition-[border-radius]! before:absolute before:inset-x-0 before:bottom-0 before:hidden before:h-3 before:w-full before:translate-y-full before:bg-blue-200 before:opacity-0 before:transition-opacity before:duration-0 before:ease-in-out active:scale-none! @lg:w-auto! @lg:before:block dark:bg-gray-700! dark:before:bg-gray-700"
         :class="{
           'rounded-b-none! before:h-3 before:opacity-100 @lg:rounded-b-none!': isFilterPanelsOpen,
           'before:delay-200 before:duration-25': !isFilterPanelsOpen,

@@ -24,7 +24,7 @@ defineProps<Props>()
       <li
         v-for="content in summary"
         :key="content"
-        class="grid grid-cols-[min-content_1fr] gap-x-2 gap-y-1 ps-2 before:col-start-1 before:mt-2 before:h-[3px] before:w-[3px] before:shrink-0 before:rounded-full before:bg-current"
+        class="grid grid-cols-[min-content_1fr] gap-x-2 gap-y-1 ps-2 before:col-start-1 before:mt-2 before:size-[3px] before:shrink-0 before:rounded-full before:bg-current"
       >
         <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component, vue/no-v-html -->
         <CommonLabel class="col-2 wrap-anywhere" tag="p" v-html="textToHtml(content)" />

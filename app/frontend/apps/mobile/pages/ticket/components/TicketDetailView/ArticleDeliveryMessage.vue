@@ -26,7 +26,7 @@ useArticleSeen(articleElement, emit)
       class="flex flex-col items-center rounded-3xl border border-yellow bg-yellow-highlight p-4 text-yellow"
     >
       <div
-        class="absolute flex h-7 w-7 -translate-y-7 items-center justify-center rounded-full bg-yellow text-black"
+        class="absolute flex size-7 -translate-y-7 items-center justify-center rounded-full bg-yellow text-black"
       >
         <CommonIcon name="warning" size="small" />
       </div>

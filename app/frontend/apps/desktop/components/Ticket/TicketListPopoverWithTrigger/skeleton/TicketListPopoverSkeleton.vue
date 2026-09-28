@@ -25,15 +25,15 @@ const { debouncedLoading } = useDebouncedLoading({
     :class="{ invisible: !debouncedLoading }"
   >
     <div class="flex h-9 items-center gap-2">
-      <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="h-5 w-5" rounded />
+      <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="size-5" rounded />
       <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="h-4 w-4/5" />
     </div>
     <div class="flex h-9 items-center gap-2">
-      <CommonSkeleton :style="{ 'animation-delay': `${0.2}s` }" class="h-5 w-5" rounded />
+      <CommonSkeleton :style="{ 'animation-delay': `${0.2}s` }" class="size-5" rounded />
       <CommonSkeleton :style="{ 'animation-delay': `${0.2}s` }" class="h-4 w-3/5" />
     </div>
     <div class="flex h-9 items-center gap-2">
-      <CommonSkeleton :style="{ 'animation-delay': `${0.3}s` }" class="h-5 w-5" rounded />
+      <CommonSkeleton :style="{ 'animation-delay': `${0.3}s` }" class="size-5" rounded />
       <CommonSkeleton :style="{ 'animation-delay': `${0.3}s` }" class="h-4 w-full" />
     </div>
   </div>

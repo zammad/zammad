@@ -67,7 +67,7 @@ const notificationMessageHtml = computed(() =>
 
     <button
       v-if="notification.persistent && notification.actionLabel && notification.actionCallback"
-      class="col-start-3 ps-2.5 text-sm leading-snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
+      class="col-start-3 ps-2.5 text-sm/snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
       :class="{
         'row-span-2': notification.currentProgress !== undefined,
       }"
@@ -78,7 +78,7 @@ const notificationMessageHtml = computed(() =>
 
     <button
       v-if="notification.persistent"
-      class="col-start-4 ps-2.5 pe-1.5 text-sm leading-snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
+      class="col-start-4 ps-2.5 pe-1.5 text-sm/snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
       :class="{
         'row-span-2': notification.currentProgress !== undefined,
       }"
@@ -90,7 +90,7 @@ const notificationMessageHtml = computed(() =>
 
     <CommonProgressBar
       v-if="notification.currentProgress !== undefined"
-      class="col-row-2 col-start-2 col-end-3 w-full"
+      class="col-start-2 col-end-3 row-start-2 w-full"
       size="small"
       variant="inverted"
       :max="maxProgress.toString()"

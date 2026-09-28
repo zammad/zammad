@@ -62,7 +62,7 @@ const emptyMessage = computed(() => {
 <template>
   <ul
     :id="listboxId"
-    class="z-10 max-h-64 overflow-auto rounded bg-gray-300 text-white"
+    class="z-10 max-h-64 overflow-auto bg-gray-300 leading-snug text-white"
     :data-test-id="`mention-${type}`"
     role="listbox"
     :aria-label="$t(label)"
@@ -93,7 +93,7 @@ const emptyMessage = computed(() => {
         <div>{{ (item as MentionTextItem).name }}</div>
         <div
           v-if="(item as MentionTextItem).keywords"
-          class="rounded border border-solid border-gray-150 px-1 text-sm"
+          class="rounded-sm border border-solid border-gray-150 px-1 text-sm"
         >
           {{ (item as MentionTextItem).keywords }}
         </div>

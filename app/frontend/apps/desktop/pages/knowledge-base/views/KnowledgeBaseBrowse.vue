@@ -534,7 +534,7 @@ watch(browsedPage, () => {
             <ol
               v-if="!showsSortingEmptyState"
               ref="dnd-parent"
-              class="group focus-visible:outline-offset-0.5! rounded-xl focus-visible-app-default"
+              class="group rounded-xl focus-visible-app-default focus-visible:outline-offset-0!"
               :class="CATEGORY_GRID_CLASSES"
               :tabindex="isRearranging ? 0 : undefined"
               :aria-label="isRearranging ? $t('Category order list') : undefined"
@@ -638,7 +638,10 @@ watch(browsedPage, () => {
       <CommonIndicator v-model="isReachingBottom" />
 
       <!-- Not while sorting: the bottom bar takes over there, and adding is not on offer. -->
-      <div v-if="!isSortingArmed" class="pointer-none sticky bottom-3 h-0 w-full print:hidden">
+      <div
+        v-if="!isSortingArmed"
+        class="pointer-events-none sticky bottom-3 h-0 w-full print:hidden"
+      >
         <CommonFloatingToolbar
           :label="$t('Knowledge base actions')"
           :is-reaching-bottom="isReachingBottom"

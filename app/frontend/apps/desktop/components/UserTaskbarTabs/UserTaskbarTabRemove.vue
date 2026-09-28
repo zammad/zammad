@@ -69,7 +69,7 @@ const confirmRemoveUserTaskbarTab = async () => {
   <CommonButton
     v-tooltip="$t('Close this tab')"
     :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
-    class="absolute end-2 top-3 group-hover/tab:opacity-100 focus:opacity-100"
+    class="absolute inset-e-2 top-3 group-hover/tab:opacity-100 focus:opacity-100"
     icon="x-lg"
     size="small"
     variant="remove"

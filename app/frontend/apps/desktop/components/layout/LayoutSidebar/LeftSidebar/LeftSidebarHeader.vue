@@ -52,7 +52,7 @@ const isTicketAgent = computed(() => hasPermission('ticket.agent') ?? false)
       :class="{ 'ltr:ml-auto rtl:mr-auto': !collapsed }"
     >
       <!--  :TODO Add custom branding  -->
-      <CommonIcon name="logo" class="z-10 block h-9 w-9" />
+      <CommonIcon name="logo" class="z-10 block size-9" />
     </component>
   </header>
 </template>

@@ -17,7 +17,7 @@ const application = useApplicationStore()
       open-in-new-tab
       class="ltr:mr-1 rtl:ml-1"
     >
-      <img :src="'/assets/images/icons/logo.svg'" :alt="$t('Logo')" class="h-6 w-6" />
+      <img :src="'/assets/images/icons/logo.svg'" :alt="$t('Logo')" class="size-6" />
     </CommonLink>
     <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>
     <CommonLink link="https://zammad.org" external open-in-new-tab class="font-medium">

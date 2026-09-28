@@ -29,7 +29,7 @@ const { debouncedLoading } = useDebouncedLoading({
   <div v-if="loading || debouncedLoading" class="p-3" :class="{ invisible: !debouncedLoading }">
     <!-- Visibility icon and title. -->
     <div class="mb-3 flex items-center gap-1.25">
-      <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="h-4 w-4 shrink-0" rounded />
+      <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="size-4 shrink-0" rounded />
       <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="h-5 w-2/3" />
     </div>
 

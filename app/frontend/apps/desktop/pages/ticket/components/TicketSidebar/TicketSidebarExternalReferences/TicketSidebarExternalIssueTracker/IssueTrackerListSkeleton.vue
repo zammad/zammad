@@ -17,7 +17,7 @@ import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vu
 
         <div class="flex flex-col gap-0.5">
           <CommonSkeleton class="h-3 w-10" />
-          <CommonSkeleton class="h-5 w-16 !rounded-full" />
+          <CommonSkeleton class="h-5 w-16 rounded-full!" />
         </div>
 
         <div class="flex flex-col gap-0.5">
@@ -28,8 +28,8 @@ import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vu
         <div v-if="i === 1" class="flex flex-col gap-0.5">
           <CommonSkeleton class="h-3 w-12" />
           <div class="flex gap-1">
-            <CommonSkeleton class="h-5 w-14 !rounded-full" />
-            <CommonSkeleton class="h-5 w-10 !rounded-full" />
+            <CommonSkeleton class="h-5 w-14 rounded-full!" />
+            <CommonSkeleton class="h-5 w-10 rounded-full!" />
           </div>
         </div>
       </div>

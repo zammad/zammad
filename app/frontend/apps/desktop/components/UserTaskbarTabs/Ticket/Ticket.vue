@@ -79,7 +79,7 @@ const currentViewTitle = computed(
     :link="taskbarTabLink"
     :class="{
       [activeBackgroundColor]: taskbarTabActive,
-      'group-hover/tab:bg-blue-60': collapsed,
+      'group-hover/tab:bg-blue-600': collapsed,
       'rounded-lg!': !collapsed,
     }"
     internal

@@ -28,6 +28,6 @@ import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vu
       </div>
     </div>
 
-    <CommonSkeleton class="h-8 w-8 self-end" />
+    <CommonSkeleton class="size-8 self-end" />
   </div>
 </template>

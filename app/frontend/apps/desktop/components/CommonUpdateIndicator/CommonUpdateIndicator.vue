@@ -8,7 +8,7 @@ withDefaults(defineProps<{ label?: string }>(), {
 
 <template>
   <div
-    class="indicator absolute -top-[3px] h-1.5 w-1.5 animate-pulse rounded-full bg-pink-500 ltr:-right-[3px] rtl:-left-[3px]"
+    class="indicator absolute top-[-3px] size-1.5 animate-pulse rounded-full bg-pink-500 ltr:right-[-3px] rtl:left-[-3px]"
     role="status"
     aria-live="polite"
     :aria-label="$t(label)"

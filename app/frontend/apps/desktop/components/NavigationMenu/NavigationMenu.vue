@@ -90,11 +90,7 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
     >{{ __('No results found') }}
   </CommonLabel>
   <ul v-else>
-    <li
-      v-for="category in categories"
-      :key="category.label"
-      class="bg-neutral-00 relative z-0 mb-1"
-    >
+    <li v-for="category in categories" :key="category.label" class="relative z-0 mb-1">
       <CommonSectionCollapse
         v-if="permittedEntries[category.label].length > 0"
         :id="category.id"

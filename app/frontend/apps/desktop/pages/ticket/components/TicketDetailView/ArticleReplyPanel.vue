@@ -115,7 +115,7 @@ onMounted(() => {
     </h2>
     <div class="flex h-full min-h-0 grow flex-col">
       <div
-        class="mx-auto flex h-full w-full max-w-4xl grow flex-col px-12"
+        class="mx-auto flex size-full max-w-4xl grow flex-col px-12"
         :class="{ 'py-3': isPinned }"
       >
         <div class="flex h-full grow flex-col" data-test-id="article-reply-stripes-panel">

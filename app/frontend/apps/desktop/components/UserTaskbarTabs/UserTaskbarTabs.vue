@@ -312,7 +312,7 @@ const { isTouchDevice } = useTouchDevice()
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
                 :collapsed="collapsed"
                 :is-active="index === selectedItemIndex"
-                class="group/link peer-focus-visible:trl:pl-(--tab-remove-bar-button-width) focus-visible-app-default [--tab-remove-bar-button-width:2rem] group-hover/tab:ltr:pr-(--tab-remove-bar-button-width) peer-focus-visible:ltr:pr-(--tab-remove-bar-button-width) group-hover/tab:rtl:pl-(--tab-remove-bar-button-width)"
+                class="group/link focus-visible-app-default [--tab-remove-bar-button-width:2rem] group-hover/tab:ltr:pr-(--tab-remove-bar-button-width) peer-focus-visible:ltr:pr-(--tab-remove-bar-button-width) group-hover/tab:rtl:pl-(--tab-remove-bar-button-width) peer-focus-visible:rtl:pl-(--tab-remove-bar-button-width)"
                 :class="{
                   'rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:-outline-offset-1!':
                     collapsed,

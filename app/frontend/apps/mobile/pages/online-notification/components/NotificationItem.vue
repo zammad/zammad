@@ -41,7 +41,7 @@ const removeNotification = () => {
     <div class="flex items-center ltr:pr-2 rtl:pl-2">
       <div
         role="status"
-        class="h-3 w-3 rounded-full"
+        class="size-3 rounded-full"
         :class="{ 'bg-blue': !activity.seen }"
         :aria-label="activity.seen ? $t('Notification read') : $t('Unread notification')"
       ></div>

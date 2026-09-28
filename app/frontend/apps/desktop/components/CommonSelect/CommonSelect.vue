@@ -531,7 +531,7 @@ const goToChildPage = ({ option, noFocus }: { option: AutoCompleteOption; noFocu
                   />
                 </div>
 
-                <div v-else-if="isLoading" class="px-2.5 py-2.5">
+                <div v-else-if="isLoading" class="p-2.5">
                   <CommonLoader class="w-full" size="small" loading />
                 </div>
                 <CommonSelectItem

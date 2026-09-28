@@ -56,7 +56,7 @@ const actionName2Placeholder: Record<string, RenderPlaceholder[]> = {
 <template>
   <span>
     <CommonTranslateRenderer
-      class="text-sm leading-snug text-gray-100 dark:text-neutral-400"
+      class="text-sm/snug text-gray-100 dark:text-neutral-400"
       :source="actionName2Source[event.actionName]"
       :placeholders="actionName2Placeholder[event.actionName]"
     />

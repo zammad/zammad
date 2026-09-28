@@ -5,6 +5,7 @@ import path from 'path'
 
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import { globalIgnores } from 'eslint/config'
+import betterTailwindcss from 'eslint-plugin-better-tailwindcss'
 // @ts-ignore
 import importPlugin from 'eslint-plugin-import-x'
 import eslintConfigPrettier from 'eslint-config-prettier'
@@ -19,6 +20,14 @@ const mobilePagesFolder = fs.readdirSync(mobilePagesDir)
 
 const desktopPagesDir = path.resolve(__dirname, 'app/frontend/apps/desktop/pages')
 const desktopPagesFolder = fs.readdirSync(desktopPagesDir)
+
+const testFiles = [
+  'app/frontend/tests/**',
+  'app/frontend/**/__tests__/**',
+  'app/frontend/**/*.spec.*',
+  'app/frontend/cypress/**',
+  '.eslint-plugin-zammad/**',
+]
 
 export default defineConfigWithVueTs(
   {
@@ -57,6 +66,53 @@ export default defineConfigWithVueTs(
       'zammad/zammad-detect-translatable-string': 'error',
       'zammad/zammad-tailwind-ltr': 'error',
       'zammad/zammad-symbol-description': 'error',
+    },
+  },
+
+  {
+    name: 'app/tailwindcss',
+    files: ['app/frontend/**/*.{js,ts,vue}'],
+    ignores: testFiles,
+    plugins: betterTailwindcss.configs.recommended.plugins,
+    rules: {
+      ...betterTailwindcss.configs.recommended.rules,
+      // Conflicts with the `printWidth` of oxfmt.
+      'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
+      'better-tailwindcss/enforce-canonical-classes': 'error',
+      'better-tailwindcss/no-unknown-classes': [
+        'error',
+        {
+          // Custom classes for stylesheets, scoped styles, scripts and tests.
+          ignore: [
+            '^[A-Z][A-Za-z]*$',
+            '^(avatar-selected|border-shadow-b|bottom-navigation|color-indicator|content|cropper)$',
+            '^(draggable|editor-action-popover|editor-overflow-popover|field-autocomplete-dialog)$',
+            '^(file-list|formkit-link|icon|indicator|inner-article-body|left|line-more)$',
+            '^(line-more-wrapper|line-new|object-attributes?|object-attribute-spanned-column)$',
+            '^(popover|print-area|progress-bar|select-dialog|select-overlay|show-action-bar)$',
+            '^(select-scroll-shadows(--alt|--base)?|(bottom|show|top)-gradient)$',
+            '^(ticket-detail-grid-full|vip|window|wrapper)$',
+          ],
+        },
+      ],
+    },
+    settings: {
+      // Shared code is checked against the desktop stylesheet.
+      'better-tailwindcss': {
+        // Editors may run ESLint from a subdirectory, which breaks the relative entry points.
+        cwd: __dirname,
+        entryPoint: 'app/frontend/apps/desktop/styles/main.css',
+      },
+    },
+  },
+
+  {
+    name: 'app/tailwindcss/mobile',
+    files: ['app/frontend/apps/mobile/**'],
+    settings: {
+      'better-tailwindcss': {
+        entryPoint: 'app/frontend/apps/mobile/styles/main.css',
+      },
     },
   },
 
@@ -205,13 +261,7 @@ export default defineConfigWithVueTs(
 
   {
     name: 'app/override/tests',
-    files: [
-      'app/frontend/tests/**',
-      'app/frontend/**/__tests__/**',
-      'app/frontend/**/*.spec.*',
-      'app/frontend/cypress/**',
-      '.eslint-plugin-zammad/**',
-    ],
+    files: testFiles,
     rules: {
       'zammad/zammad-tailwind-ltr': 'off',
       'zammad/zammad-detect-translatable-string': 'off',

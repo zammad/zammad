@@ -240,7 +240,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
         <CommonIcon
           v-if="context.multiple"
           :class="{
-            '!text-white': isCurrentValue(option.value),
+            'text-white!': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
           :name="isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'"
@@ -261,7 +261,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           v-else-if="option.icon"
           :name="option.icon"
           :class="{
-            '!text-white': isCurrentValue(option.value),
+            'text-white!': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
           size="small"

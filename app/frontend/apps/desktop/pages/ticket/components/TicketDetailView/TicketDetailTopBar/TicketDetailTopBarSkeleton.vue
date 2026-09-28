@@ -10,7 +10,7 @@ import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vu
   >
     <div class="flex items-center gap-1.5">
       <CommonSkeleton class="h-3 w-12" />
-      <CommonSkeleton class="h-3 w-3" />
+      <CommonSkeleton class="size-3" />
       <CommonSkeleton class="h-3 w-20" />
     </div>
 

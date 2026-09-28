@@ -15,7 +15,7 @@ const { event } = defineProps<Props>()
 <template>
   <span>
     <CommonTranslateRenderer
-      class="text-sm leading-snug text-gray-100 dark:text-neutral-400"
+      class="text-sm/snug text-gray-100 dark:text-neutral-400"
       :source="__('Email sent to %s')"
       :placeholders="[
         {

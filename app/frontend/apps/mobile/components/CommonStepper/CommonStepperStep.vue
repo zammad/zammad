@@ -22,7 +22,7 @@ const classes = computed(() => {
 
 <template>
   <button
-    class="flex h-6 w-6 grow-0 items-center justify-center rounded-full"
+    class="flex size-6 grow-0 items-center justify-center rounded-full"
     :disabled="disabled"
     :class="classes"
     type="button"
@@ -32,7 +32,7 @@ const classes = computed(() => {
       role="status"
       :aria-label="$t('Invalid values in step %s', label)"
       aria-live="assertive"
-      class="absolute mb-3 h-4 min-w-[1rem] rounded-full bg-red px-1 text-center text-xs text-black ltr:ml-6 rtl:mr-6"
+      class="absolute mb-3 h-4 min-w-4 rounded-full bg-red px-1 text-center text-xs/snug text-black ltr:ml-6 rtl:mr-6"
     >
       {{ errorCount }}
     </div>

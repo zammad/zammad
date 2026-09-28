@@ -60,7 +60,7 @@ const heading = computed(() => {
   >
     <template #header>
       <div
-        class="flex min-h-[3.5rem] items-center justify-center border-b border-gray-300 p-3 text-center text-white"
+        class="flex min-h-14 items-center justify-center border-b border-gray-300 p-3 text-center text-white"
       >
         {{
           $t(

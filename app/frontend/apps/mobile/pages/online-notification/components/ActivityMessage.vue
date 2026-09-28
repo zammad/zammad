@@ -46,7 +46,7 @@ defineEmits<{
 
     <div class="flex flex-col">
       <!--  eslint-disable vue/no-v-html -->
-      <div class="text-lg leading-5" v-html="markup(message)" />
+      <div class="text-lg/5" v-html="markup(message)" />
       <div class="mt-1 flex text-gray">
         <CommonDateTime :date-time="activity.createdAt" type="relative" />
       </div>

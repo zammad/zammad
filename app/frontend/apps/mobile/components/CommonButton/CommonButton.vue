@@ -61,7 +61,7 @@ const iconSizeClass = computed(() => {
     :type="type"
     :form="form"
     :disabled="disabled"
-    class="inline-flex flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0"
+    class="inline-flex shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0"
     :class="[
       ...transparentBackgroundClasses,
       ...variantClasses,

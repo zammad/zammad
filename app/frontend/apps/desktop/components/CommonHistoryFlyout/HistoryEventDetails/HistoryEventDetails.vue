@@ -44,7 +44,7 @@ const descriptionOutput = computed(() => {
 
     <CommonLabel
       v-if="event.details"
-      class="max-w-md cursor-text rounded bg-neutral-200 px-0.5 font-mono break-word text-black dark:bg-gray-400 dark:text-white"
+      class="max-w-md cursor-text rounded-sm bg-neutral-200 px-0.5 font-mono break-word text-black dark:bg-gray-400 dark:text-white"
       :class="{
         'me-1': event.showSeparator || event.additionalDetails,
         'ms-1': descriptionOutput,
@@ -63,7 +63,7 @@ const descriptionOutput = computed(() => {
 
     <CommonLabel
       v-if="event.additionalDetails"
-      class="cursor-text rounded bg-neutral-200 px-0.5 font-mono break-word text-black dark:bg-gray-400 dark:text-white"
+      class="cursor-text rounded-sm bg-neutral-200 px-0.5 font-mono break-word text-black dark:bg-gray-400 dark:text-white"
       >{{ event.additionalDetails }}</CommonLabel
     >
   </div>

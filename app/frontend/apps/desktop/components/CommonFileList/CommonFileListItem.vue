@@ -162,7 +162,7 @@ const onPrimaryClick = () => {
       </div>
 
       <div
-        class="flex min-w-0 flex-1 flex-col text-sm leading-snug text-black dark:text-white"
+        class="flex min-w-0 flex-1 flex-col text-sm/snug text-black dark:text-white"
         :class="{ 'group-active:text-white': canPreview }"
       >
         <div class="flex">

@@ -125,7 +125,7 @@ const { transitions } = useTransitionConfig()
         :id="dialogId"
         tag="div"
         disable-teleport
-        class="absolute top-[50%] z-50 size-full translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
+        class="absolute top-[50%] z-50 size-full translate-y-[-50%] ltr:left-[50%] ltr:-translate-x-1/2 rtl:right-[50%] rtl:translate-x-1/2"
         :class="{ 'z-40': isFullscreen, hidden: !isActive }"
         role="dialog"
         backdrop-class="z-40"
@@ -143,9 +143,7 @@ const { transitions } = useTransitionConfig()
         >
           <div class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500">
             <slot name="header">
-              <div
-                class="flex items-center gap-2 text-xl leading-snug text-gray-100 dark:text-neutral-400"
-              >
+              <div class="flex items-center gap-2 text-xl/snug text-gray-100 dark:text-neutral-400">
                 <CommonIcon v-if="headerIcon" size="small" :name="headerIcon" />
                 <h3 :id="`${dialogId}-title`">{{ $t(headerTitle) }}</h3>
               </div>

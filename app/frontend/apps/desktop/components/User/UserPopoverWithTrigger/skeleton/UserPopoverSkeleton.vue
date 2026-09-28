@@ -10,7 +10,7 @@ import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vu
       <!--   :TODO label for screen reader? or to many translation strings    -->
       <CommonSkeleton
         :style="{ 'animation-delay': `${0.1}s` }"
-        class="row-span-2 h-12.5 w-12.5 space-y-2"
+        class="row-span-2 size-12.5 space-y-2"
         rounded
       />
       <CommonSkeleton :style="{ 'animation-delay': `${0.1}s` }" class="h-6 w-full" />

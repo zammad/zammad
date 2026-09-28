@@ -1606,7 +1606,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
       <CommonSkeleton class="h-8 w-full" />
 
       Avatar example
-      <CommonSkeleton rounded class="h-8 w-8" />
+      <CommonSkeleton rounded class="size-8" />
 
       Table Skeleton
       <CommonTableSkeleton />
@@ -2203,7 +2203,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
         <div class="mb-4 w-96">
           <CommonTabGroup v-model="activeTab" :tabs="playgroundTabItems" select-first-by-default />
         </div>
-        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+        <pre class="mb-6 rounded-sm bg-blue-100 px-3 py-1 font-mono text-xs/snug dark:bg-gray-700">
 active: {{ activeTab }}</pre>
 
         <h3 class="mb-2">2. Tab Group — Multi Select (scroll, no marker)</h3>
@@ -2219,7 +2219,7 @@ active: {{ activeTab }}</pre>
             multiple
           />
         </div>
-        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+        <pre class="mb-6 rounded-sm bg-blue-100 px-3 py-1 font-mono text-xs/snug dark:bg-gray-700">
 active: {{ activeFilters }}</pre>
 
         <h3 class="mb-2">3. Tab Group — Single Select (overflow menu)</h3>
@@ -2235,7 +2235,7 @@ active: {{ activeFilters }}</pre>
             select-first-by-default
           />
         </div>
-        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+        <pre class="mb-6 rounded-sm bg-blue-100 px-3 py-1 font-mono text-xs/snug dark:bg-gray-700">
 active: {{ activeTabOverflow }}</pre>
 
         <h3 class="mb-2">4. Tab Group — Multi Select (overflow menu)</h3>
@@ -2252,7 +2252,7 @@ active: {{ activeTabOverflow }}</pre>
             mode="overflow"
           />
         </div>
-        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+        <pre class="mb-6 rounded-sm bg-blue-100 px-3 py-1 font-mono text-xs/snug dark:bg-gray-700">
 active: {{ activeFiltersOverflow }}</pre>
 
         <h3 class="mb-2">5. Navigation Tabs — Scroll Mode</h3>
@@ -2267,7 +2267,7 @@ active: {{ activeFiltersOverflow }}</pre>
             mode="scroll"
           />
         </div>
-        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+        <pre class="mb-6 rounded-sm bg-blue-100 px-3 py-1 font-mono text-xs/snug dark:bg-gray-700">
 active: {{ activeNavTabScroll }}</pre>
 
         <h3 class="mb-2">6. Navigation Tabs — Overflow Menu</h3>
@@ -2282,7 +2282,7 @@ active: {{ activeNavTabScroll }}</pre>
             mode="overflow"
           />
         </div>
-        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+        <pre class="mb-6 rounded-sm bg-blue-100 px-3 py-1 font-mono text-xs/snug dark:bg-gray-700">
 active: {{ activeNavTabOverflow }}</pre>
       </section>
 

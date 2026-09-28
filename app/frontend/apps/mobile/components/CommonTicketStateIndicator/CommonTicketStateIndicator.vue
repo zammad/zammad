@@ -52,7 +52,7 @@ const backgroundClass = computed(() => {
       textClass,
       backgroundClass,
       {
-        'rounded py-1 ltr:pr-1.5 ltr:pl-1 rtl:pr-1 rtl:pl-1.5': pill,
+        'rounded-sm py-1 ltr:pr-1.5 ltr:pl-1 rtl:pr-1 rtl:pl-1.5': pill,
       },
     ]"
     class="flex items-center select-none"

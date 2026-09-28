@@ -183,7 +183,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
       >
         <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
         <div
-          class="select-overlay fixed inset-0 flex h-full w-full bg-gray-500 opacity-60"
+          class="select-overlay fixed inset-0 flex size-full bg-gray-500 opacity-60"
           data-test-id="dialog-overlay"
           role="presentation"
           @click="void 0"

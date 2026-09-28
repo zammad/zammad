@@ -78,6 +78,7 @@
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-better-tailwindcss": "^4.7.0",
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-oxlint": "^1.85.0",
     "eslint-plugin-security": "^4.0.1",

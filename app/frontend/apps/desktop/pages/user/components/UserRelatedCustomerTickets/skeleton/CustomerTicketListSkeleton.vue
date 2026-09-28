@@ -28,7 +28,7 @@ const { debouncedLoading } = useDebouncedLoading({
     <div class="mb-2 flex h-9 items-center gap-2">
       <CommonSkeleton
         :style="{ 'animation-delay': `${0.2}s` }"
-        class="h-5 w-5 -translate-y-2"
+        class="size-5 -translate-y-2"
         rounded
         alternative-background
       />
@@ -48,7 +48,7 @@ const { debouncedLoading } = useDebouncedLoading({
     <div class="mb-2 flex h-9 items-center gap-2">
       <CommonSkeleton
         :style="{ 'animation-delay': `${0.2}s` }"
-        class="h-5 w-5 -translate-y-2"
+        class="size-5 -translate-y-2"
         rounded
         alternative-background
       />
@@ -68,7 +68,7 @@ const { debouncedLoading } = useDebouncedLoading({
     <div class="flex h-9 items-center gap-2">
       <CommonSkeleton
         :style="{ 'animation-delay': `${0.3}s` }"
-        class="h-5 w-5 -translate-y-2"
+        class="size-5 -translate-y-2"
         rounded
         alternative-background
       />

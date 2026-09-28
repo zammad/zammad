@@ -133,7 +133,7 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
       <div
         v-if="persistent || localState"
         v-show="persistent ? localState : true"
-        class="window fixed top-0 bottom-0 flex w-screen flex-col justify-end px-4 pb-safe-4 text-white ltr:left-0 rtl:right-0"
+        class="window fixed inset-y-0 flex w-screen flex-col justify-end px-4 pb-safe-4 text-white ltr:left-0 rtl:right-0"
         :class="{ 'z-20': !zIndex }"
         :style="{ zIndex }"
         role="presentation"

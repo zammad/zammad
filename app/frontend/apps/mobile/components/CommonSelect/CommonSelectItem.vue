@@ -52,7 +52,7 @@ const label = computed(() => {
     <CommonIcon
       v-if="multiple"
       :class="{
-        '!text-white': selected,
+        'text-white!': selected,
         'opacity-30': option.disabled,
       }"
       size="base"

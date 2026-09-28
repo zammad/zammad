@@ -306,7 +306,7 @@ useTraverseOptions(autocompleteList)
         <CommonIcon
           v-if="context.multiple"
           :class="{
-            '!text-white': isCurrentValue(option.value),
+            'text-white!': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
           :name="isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'"

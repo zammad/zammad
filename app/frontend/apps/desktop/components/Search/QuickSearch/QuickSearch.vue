@@ -180,7 +180,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
                     :class="{
                       'opacity-0 transition-opacity': !isTouchDevice,
                     }"
-                    class="absolute end-2 top-3 justify-end group-hover/recent-search:opacity-100 focus:opacity-100"
+                    class="absolute inset-e-2 top-3 justify-end group-hover/recent-search:opacity-100 focus:opacity-100"
                     icon="x-lg"
                     size="small"
                     variant="remove"

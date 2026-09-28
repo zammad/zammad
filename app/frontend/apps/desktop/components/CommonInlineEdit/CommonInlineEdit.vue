@@ -195,7 +195,7 @@ const vFocus = (el: HTMLElement) => {
 // Styling
 const focusClasses = computed(() => {
   let classes =
-    'group-focus-within:before:absolute group-focus-within:before:-left-[5px] group-focus-within:before:top-1/2 group-focus-within:before:z-0 group-focus-within:before:h-[calc(100%+10px)] group-focus-within:before:w-[calc(100%+10px)] group-focus-within:before:-translate-y-1/2 group-focus-within:before:rounded-md group-focus-visible-within group-focus-visible:before:outline-1 group-focus-visible:before:outline-blue-800'
+    'group-focus-within:before:absolute group-focus-within:before:top-1/2 group-focus-within:before:left-[-5px] group-focus-within:before:z-0 group-focus-within:before:size-[calc(100%+10px)] group-focus-within:before:-translate-y-1/2 group-focus-within:before:rounded-md group-focus-visible:before:outline-1 group-focus-visible:before:outline-blue-800'
 
   if (props.alternativeBackground) {
     classes += ' group-focus-within:before:bg-neutral-50 dark:group-focus-within:before:bg-gray-500'
@@ -237,7 +237,7 @@ const editBackgroundClass = computed(() =>
 
 const hoverClasses = computed(() => {
   let classes =
-    'before:absolute before:-left-[5px] before:top-1/2 before:-translate-y-1/2 before:-z-10 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:rounded-md'
+    'before:absolute before:top-1/2 before:left-[-5px] before:-z-10 before:size-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md'
 
   if (props.alternativeBackground) {
     classes +=
@@ -305,7 +305,7 @@ defineExpose({
 
     <div
       v-else
-      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-1.25 before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md focus-within:before:outline-1 focus-within:before:outline-blue-800"
+      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-1.25 before:z-0 before:size-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md focus-within:before:outline-1 focus-within:before:outline-blue-800"
       :class="[{ 'w-full': block }, editBackgroundClass, fontSizeClassMap[size]]"
     >
       <div class="relative z-10 w-full ltr:pr-14 rtl:pl-14">

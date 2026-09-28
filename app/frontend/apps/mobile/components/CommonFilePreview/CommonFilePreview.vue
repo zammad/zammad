@@ -86,7 +86,7 @@ const { isTouchDevice } = useTouchDevice()
     <button
       v-if="canPreview"
       v-tooltip="$t('Preview %s', props.file.name)"
-      class="flex h-9 w-9 shrink-0 items-center justify-center rounded"
+      class="flex size-9 shrink-0 items-center justify-center rounded-sm"
       :class="{ border: canPreview !== 'image' }"
       @click="onPreviewClick"
       @keydown.delete.prevent="$emit('remove')"
@@ -95,7 +95,7 @@ const { isTouchDevice } = useTouchDevice()
       <template v-if="canPreview">
         <img
           v-if="canPreview === 'image'"
-          class="h-9 w-9 rounded border object-cover"
+          class="size-9 rounded-sm border object-cover"
           :src="previewUrl"
           :alt="$t('Image of %s', file.name)"
           @error="imageFailed = true"
@@ -118,7 +118,7 @@ const { isTouchDevice } = useTouchDevice()
     >
       <div
         v-if="!canPreview"
-        class="flex h-9 w-9 items-center justify-center rounded border"
+        class="flex size-9 items-center justify-center rounded-sm border"
         :class="iconClass || 'border-gray-300'"
       >
         <CommonIcon

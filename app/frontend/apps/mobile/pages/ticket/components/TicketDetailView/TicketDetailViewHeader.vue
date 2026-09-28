@@ -60,7 +60,7 @@ const showActions = () => {
     back-url="/"
   >
     <div
-      class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
+      class="flex flex-1 flex-col items-center justify-center text-center text-sm/4"
       data-test-id="header-content"
     >
       <div class="line-clamp-1 font-bold break-all">
@@ -91,7 +91,7 @@ const showActions = () => {
           />
           <div
             v-if="liveUserList?.length && liveUserList.length - 1"
-            class="z-0 flex h-6 w-6 items-center justify-center rounded-full bg-white/80 text-xs text-black select-none ltr:-translate-x-2 rtl:translate-x-2"
+            class="z-0 flex size-6 items-center justify-center rounded-full bg-white/80 text-xs text-black select-none ltr:-translate-x-2 rtl:translate-x-2"
             role="img"
             :aria-label="$t('Ticket has %s viewers', liveUserList.length)"
           >

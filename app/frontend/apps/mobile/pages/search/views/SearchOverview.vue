@@ -207,7 +207,7 @@ export default {
           ref="searchInput"
           v-model="search"
           wrapper-class="flex-1"
-          class="!h-10"
+          class="h-10!"
           :aria-label="$t('Enter search and select a type to search for')"
         />
         <CommonLink

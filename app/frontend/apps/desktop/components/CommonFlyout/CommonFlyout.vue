@@ -324,7 +324,7 @@ const { transitions } = useTransitionConfig()
         { 'transition-all': !isResizing, hidden: !isActive },
         isSmallScreen
           ? 'inset-6 w-auto overflow-hidden rounded-xl border print:inset-0'
-          : 'overflow-clip-x inset-y-0 inset-e-0 w-full rounded-s-xl border-y border-s lg:w-(--flyout-container-width) print:w-full',
+          : 'inset-y-0 inset-e-0 w-full overflow-x-clip rounded-s-xl border-y border-s lg:w-(--flyout-container-width) print:w-full',
       ]"
       :fullscreen="isFullscreen"
       :aria-labelledby="`${flyoutId}-title`"

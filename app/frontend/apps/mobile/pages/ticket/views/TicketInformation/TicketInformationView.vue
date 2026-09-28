@@ -69,7 +69,7 @@ const router = useRouter()
     :back-url="`/tickets/${internalId}`"
     :style="stickyStyles.header"
   >
-    <div class="flex flex-col items-center text-center text-sm leading-4">
+    <div class="flex flex-col items-center text-center text-sm/4">
       <span class="order-2 text-base font-bold">
         {{ $t('Ticket information') }}
       </span>
@@ -90,7 +90,7 @@ const router = useRouter()
     </template>
   </LayoutHeader>
   <div class="flex p-4" :style="stickyStyles.body">
-    <h1 class="line-clamp-3 flex flex-1 items-center text-xl leading-7 font-bold break-words">
+    <h1 class="line-clamp-3 flex flex-1 items-center text-xl/7 font-bold wrap-break-word">
       <CommonLoader position="left" :loading="loadingTicket">
         {{ ticket?.title }}
       </CommonLoader>

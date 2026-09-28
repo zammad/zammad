@@ -546,7 +546,7 @@ watch(
       class="relative"
       :inert="isSorting"
       :class="{
-        'opacity-50 before:absolute before:z-20 before:h-full before:w-full': isSorting,
+        'opacity-50 before:absolute before:z-20 before:size-full': isSorting,
       }"
     >
       <template v-for="(item, index) in loadedItems" :key="`${index}-${item.id}`">

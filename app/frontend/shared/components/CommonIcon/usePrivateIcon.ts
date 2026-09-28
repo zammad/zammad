@@ -24,6 +24,7 @@ export const usePrivateIcon = (props: Omit<Props, 'size'> & { size: Sizes }) => 
   }
 
   const iconClass = computed(() => {
+    // eslint-disable-next-line better-tailwindcss/no-concatenated-classes -- icon-* classes come from the SVG sprite, not Tailwind
     let className = `icon-${props.name}`
     // by default, always spin the spinner
     const animation = props.animation || (props.name === 'spinner' && 'spin')

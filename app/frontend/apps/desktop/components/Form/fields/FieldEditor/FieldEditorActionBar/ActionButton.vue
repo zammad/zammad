@@ -48,7 +48,7 @@ defineExpose({
     ref="button"
     v-tooltip="$t(action.label || action.name)"
     type="button"
-    class="transition-color relative flex items-center gap-1 rounded-lg p-1.5 focus-visible-app-default hover:bg-blue-600 hover:text-black active:bg-blue-800! active:text-white aria-expanded:text-white dark:hover:bg-blue-900 dark:hover:text-white"
+    class="relative flex items-center gap-1 rounded-lg p-1.5 focus-visible-app-default transition-colors hover:bg-blue-600 hover:text-black active:bg-blue-800! active:text-white aria-expanded:text-white dark:hover:bg-blue-900 dark:hover:text-white"
     :class="[
       action.class,
       {
@@ -70,7 +70,7 @@ defineExpose({
     />
     <div
       v-if="action.name === 'textColor'"
-      class="color-indicator absolute start-1/2 bottom-[0.4rem] box-content h-1.5 w-1.5 rounded-[1px] border border-blue-50 ltr:-translate-x-[0.25rem] rtl:translate-x-[0.25rem] dark:border-gray-800"
+      class="color-indicator absolute inset-s-1/2 bottom-[0.4rem] box-content size-1.5 rounded-[1px] border border-blue-50 ltr:-translate-x-1 rtl:translate-x-1 dark:border-gray-800"
       :style="{
         backgroundColor: props.editor?.getAttributes('textStyle')?.color
           ? props.editor.getAttributes('textStyle').color

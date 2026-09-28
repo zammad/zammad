@@ -71,7 +71,7 @@ const discardImage = () => {
           },
         }"
         :transitions="false"
-        class="cropper !max-h-[340px] !max-w-[476px]"
+        class="cropper max-h-[340px]! max-w-[476px]!"
         background-class="cropper-background"
         image-class="cropper__image"
         @change="imageCropped"

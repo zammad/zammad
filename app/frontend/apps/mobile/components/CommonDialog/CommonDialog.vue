@@ -117,9 +117,7 @@ export default {
       <div
         class="relative flex h-16 shrink-0 items-center justify-center rounded-t-xl bg-gray-600/80 select-none"
       >
-        <div
-          class="absolute top-0 bottom-0 flex items-center ltr:left-0 ltr:pl-4 rtl:right-0 rtl:pr-4"
-        >
+        <div class="absolute inset-y-0 flex items-center ltr:left-0 ltr:pl-4 rtl:right-0 rtl:pr-4">
           <slot name="before-label" />
         </div>
         <div
@@ -129,9 +127,7 @@ export default {
             {{ $t(label) }}
           </slot>
         </div>
-        <div
-          class="absolute top-0 bottom-0 flex items-center ltr:right-0 ltr:pr-4 rtl:left-0 rtl:pl-4"
-        >
+        <div class="absolute inset-y-0 flex items-center ltr:right-0 ltr:pr-4 rtl:left-0 rtl:pl-4">
           <slot name="after-label">
             <CommonButton
               class="grow"

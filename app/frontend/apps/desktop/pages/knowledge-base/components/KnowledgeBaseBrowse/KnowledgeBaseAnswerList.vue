@@ -301,7 +301,7 @@ defineExpose({ addAnswer })
       <ol
         v-if="!showsSortingEmptyState"
         ref="dnd-parent"
-        class="group focus-visible:outline-offset-0.5! flex flex-col gap-4 rounded-xl focus-visible-app-default"
+        class="group flex flex-col gap-4 rounded-xl focus-visible-app-default focus-visible:outline-offset-0!"
         :class="{ 'mt-4': !isSorting }"
         :tabindex="isDraggable ? 0 : undefined"
         :aria-label="isDraggable ? $t('Answer order list') : undefined"

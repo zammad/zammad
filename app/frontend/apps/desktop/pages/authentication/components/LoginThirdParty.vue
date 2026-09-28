@@ -23,7 +23,7 @@ defineProps<Props>()
       <CommonThirdPartyAuthenticationButton
         v-for="provider of providers"
         :key="provider.name"
-        class="grow basis-[calc(50%-theme(spacing.2))]"
+        class="grow basis-[calc(50%-(--spacing(2)))]"
         :url="provider.url"
         :button-prefix-icon="provider.icon"
         button-size="large"

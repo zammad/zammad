@@ -265,7 +265,7 @@ const { isOverDropZone } = useDropZone(dropZoneElement, {
       :class="classMap.dropZoneContainer"
     >
       <div
-        class="flex h-full w-full items-center justify-center rounded border-2 border-dashed"
+        class="flex size-full items-center justify-center rounded-sm border-2 border-dashed"
         :class="classMap.dropZoneBorder"
       >
         <CommonLabel

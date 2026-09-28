@@ -250,7 +250,7 @@ const actions = computed<CommonButtonOption[]>(() => [
 
       <div v-if="avatarImage" class="flex w-full flex-col items-center justify-center">
         <Cropper
-          class="mt-4 mb-4 !max-h-[250px] !max-w-[400px]"
+          class="my-4 max-h-[250px]! max-w-[400px]!"
           :src="avatarImage.content"
           :stencil-props="{
             aspectRatio: 1,

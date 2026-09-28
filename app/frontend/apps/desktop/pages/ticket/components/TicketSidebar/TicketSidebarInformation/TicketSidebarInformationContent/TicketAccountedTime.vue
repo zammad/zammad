@@ -84,7 +84,7 @@ const showDivider = computed(() => shownUnits.value.length > 1) // If more than 
 
     <CommonButton
       v-if="shouldDisplayShowButton"
-      class="mt-1 hover:outline-transparent! ltr:float-right ltr:-mr-2 ltr:-ml-2 rtl:float-left rtl:-mr-2 rtl:-ml-2"
+      class="mt-1 hover:outline-transparent! ltr:float-right ltr:-mx-2 rtl:float-left rtl:-mx-2"
       variant="secondary"
       @click="showAll = true"
       >{{ $t('Show %s more', remainingUnitsCount) }}&hellip;</CommonButton

@@ -186,10 +186,10 @@ const processSearchKeydown = (event: KeyboardEvent) => {
       >
         <CommonIcon
           :class="{
-            '!text-white': isCurrentValue(option),
+            'text-white! opacity-100': isCurrentValue(option),
           }"
           :name="isCurrentValue(option) ? 'check-box-yes' : 'check-box-no'"
-          class="text-white/50 ltr:mr-3 rtl:ml-3"
+          class="text-white opacity-50 ltr:mr-3 rtl:ml-3"
           size="base"
           decorative
         />

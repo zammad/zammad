@@ -17,7 +17,7 @@ defineProps<Props>()
       :key="label.title"
       :style="{ backgroundColor: label.color, color: label.textColor }"
       role="listitem"
-      class="!rounded-full border-neutral-100 ltr:border rtl:border dark:border-gray-900"
+      class="rounded-full! border-neutral-100 ltr:border rtl:border dark:border-gray-900"
     >
       {{ label.title }}
     </CommonBadge>

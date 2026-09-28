@@ -36,7 +36,7 @@ const csrfToken = getCSRFToken()
             decorative
             class="shrink-0 ltr:mr-2.5 rtl:ml-2.5"
           />
-          <span class="truncate text-xl leading-7">
+          <span class="truncate text-xl/7">
             {{ $t(provider.label) }}
           </span>
         </button>

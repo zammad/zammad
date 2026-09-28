@@ -68,7 +68,7 @@ const { organizationDisplayName } = useOrganizationEntity(organization)
         <component
           :is="nameComponent"
           v-if="dense"
-          class="text-sm leading-snug"
+          class="text-sm/snug"
           :class="{ group: !noLink }"
           :link="!noLink ? `/users/${getIdFromGraphQLId(user.id!)}` : undefined"
         >

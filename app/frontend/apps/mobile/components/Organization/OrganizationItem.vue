@@ -55,7 +55,7 @@ const users = computed(() => {
           {{ users }}
         </template>
       </span>
-      <span class="mb-1 line-clamp-3 text-lg leading-5 font-bold whitespace-normal">
+      <span class="mb-1 line-clamp-3 text-lg/5 font-bold whitespace-normal">
         <slot> {{ entity.name }} </slot>
       </span>
       <div v-if="stringUpdated" data-test-id="stringUpdated" class="truncate text-gray">

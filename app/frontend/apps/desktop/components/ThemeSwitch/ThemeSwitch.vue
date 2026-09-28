@@ -82,7 +82,7 @@ const ariaChecked = computed(() => {
   <button
     type="button"
     role="checkbox"
-    class="relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full bg-stone-200 ring-1 ring-neutral-100 focus-visible-app-default hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 dark:bg-gray-500 dark:ring-gray-900"
+    class="relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-stone-200 ring-1 ring-neutral-100 focus-visible-app-default hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 dark:bg-gray-500 dark:ring-gray-900"
     :class="[
       trackSizeClasses,
       {

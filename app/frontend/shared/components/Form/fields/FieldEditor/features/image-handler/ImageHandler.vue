@@ -258,12 +258,7 @@ const wrapperStyle = computed(() => {
       class="relative! inline-block!"
       @resize-end="stopResizing"
     >
-      <img
-        class="block h-full w-full"
-        :alt="$t('Resize frame')"
-        :src="src"
-        :draggable="isDraggable"
-      />
+      <img class="block size-full" :alt="$t('Resize frame')" :src="src" :draggable="isDraggable" />
     </DraggableResizable>
   </NodeViewWrapper>
 </template>

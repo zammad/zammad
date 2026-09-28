@@ -28,7 +28,7 @@ onKeyDown('Escape', cancelBulkAction)
     class="flex min-w-lg flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 focus:outline-none dark:border-gray-900 dark:bg-gray-500"
   >
     <div class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500">
-      <div class="flex items-center gap-2 text-xl leading-snug text-gray-100 dark:text-neutral-400">
+      <div class="flex items-center gap-2 text-xl/snug text-gray-100 dark:text-neutral-400">
         <CommonLabel size="xl" tag="h3">{{ $t('Confirm bulk action') }}</CommonLabel>
       </div>
       <CommonButton

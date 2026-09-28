@@ -16,7 +16,7 @@ const locale = useLocaleStore()
        or two; a truncated segment reveals its full title as a tooltip on hover. -->
   <div
     v-if="categoryPath.length"
-    class="flex min-w-0 items-center gap-1 text-xs leading-snug text-stone-200 dark:text-neutral-500"
+    class="flex min-w-0 items-center gap-1 text-xs/snug text-stone-200 dark:text-neutral-500"
   >
     <template v-for="(segment, index) in categoryPath" :key="segment.id">
       <CommonIcon

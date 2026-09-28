@@ -313,7 +313,7 @@ setupMissingOrDisabledOptionHandling()
             role="listitem"
           >
             <div
-              class="inline-flex cursor-default items-center gap-1 rounded bg-white px-1.5 py-0.5 text-xs text-black dark:bg-gray-200 dark:text-white formkit-alternative-background:bg-neutral-100 dark:formkit-alternative-background:bg-gray-200"
+              class="inline-flex cursor-default items-center gap-1 rounded-sm bg-white px-1.5 py-0.5 text-xs/snug text-black dark:bg-gray-200 dark:text-white formkit-alternative-background:bg-neutral-100 dark:formkit-alternative-background:bg-gray-200"
             >
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"

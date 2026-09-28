@@ -43,7 +43,7 @@ const iconProps = computed<IconProps | null>(() => {
       <div class="flex min-h-[54px] items-center">
         <div
           v-if="iconProps || $slots.icon"
-          class="flex h-8 w-8 items-center justify-center ltr:mr-2 rtl:ml-2"
+          class="flex size-8 items-center justify-center ltr:mr-2 rtl:ml-2"
           data-test-id="wrapper-icon"
           :class="{
             [`rounded-lg ${iconBg}`]: iconBg,

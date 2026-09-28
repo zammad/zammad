@@ -7,5 +7,5 @@ const { logoUrl } = useLogoUrl()
 </script>
 
 <template>
-  <img class="max-h-32 max-w-[14rem]" :src="logoUrl" :alt="$c.product_name" />
+  <img class="max-h-32 max-w-56" :src="logoUrl" :alt="$c.product_name" />
 </template>

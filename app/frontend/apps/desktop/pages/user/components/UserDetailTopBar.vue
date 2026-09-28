@@ -73,7 +73,7 @@ useStickyTopCalculator(headerWithHiddenDetailsHeight, { offset: 7 })
 <template>
   <TopBarHeaderCompact
     ref="header-with-hidden-details"
-    class="absolute top-0 right-0 left-0 z-30 bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
+    class="absolute inset-x-0 top-0 z-30 bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
     :inert="!isCompactHeaderVisible"
     :user="user"
     :user-display-name="userDisplayName"
@@ -86,7 +86,7 @@ useStickyTopCalculator(headerWithHiddenDetailsHeight, { offset: 7 })
 
   <TopBarHeaderFull
     ref="header-with-details"
-    class="sticky top-0 right-0 left-0 z-20 w-full min-w-xs bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
+    class="sticky inset-x-0 top-0 z-20 w-full min-w-xs bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
     :inert="isCompactHeaderVisible"
     :user="user"
     :user-display-name="userDisplayName"

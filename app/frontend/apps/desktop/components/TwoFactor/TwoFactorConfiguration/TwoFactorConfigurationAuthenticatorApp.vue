@@ -221,7 +221,7 @@ const { transitions } = useTransitionConfig()
         </CommonLabel>
         <ul class="list-disc ltr:pl-5 rtl:pr-5">
           <li v-for="app in authenticatorApps" :key="app.key">
-            <CommonLink class="text-sm leading-snug" :link="app.link" open-in-new-tab>
+            <CommonLink class="text-sm/snug" :link="app.link" open-in-new-tab>
               {{ $t(app.label) }}
             </CommonLink>
           </li>
@@ -252,7 +252,7 @@ const { transitions } = useTransitionConfig()
             <div
               v-show="showSecretOverlay"
               id="qr-code-secret-overlay"
-              class="bg-opacity-90 absolute top-0 right-0 bottom-0 left-0 flex flex-col items-center justify-center gap-1.5 rounded-lg bg-black"
+              class="absolute inset-0 flex flex-col items-center justify-center gap-1.5 rounded-lg bg-black/90"
               role="presentation"
             >
               <span

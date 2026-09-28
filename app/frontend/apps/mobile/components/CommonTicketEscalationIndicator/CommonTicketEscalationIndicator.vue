@@ -22,7 +22,7 @@ const escalationState = useEscalationState(toRef(() => props.escalationAt))
       'bg-red-dark text-red-bright': escalationState === EscalationState.Escalated,
       'bg-yellow-highlight text-yellow': escalationState === EscalationState.Warning,
     }"
-    class="flex items-center rounded bg-gray-100 py-1 text-black select-none ltr:pr-1.5 ltr:pl-1 rtl:pr-1 rtl:pl-1.5"
+    class="flex items-center rounded-sm bg-gray-100 py-1 text-black select-none ltr:pr-1.5 ltr:pl-1 rtl:pr-1 rtl:pl-1.5"
     role="alert"
   >
     <CommonIcon name="ticket-escalating" size="tiny" decorative />

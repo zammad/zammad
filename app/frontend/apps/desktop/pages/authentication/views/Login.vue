@@ -298,7 +298,7 @@ const { switchValue, toggleBetaUiSwitch } = useBetaUi()
 
       <CommonLabel
         v-if="loginFlow.state === '2fa-select'"
-        class="mt-3 mb-3 text-stone-200 dark:text-neutral-500"
+        class="my-3 text-stone-200 dark:text-neutral-500"
       >
         {{ $t('Contact the administrator if you have any problems logging in.') }}
       </CommonLabel>

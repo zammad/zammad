@@ -39,7 +39,7 @@ const scrollDown = () => {
   >
     <div
       v-if="!hidden"
-      class="fixed bottom-0 z-10 bg-gray-600/90 px-2 pb-safe-1 text-white backdrop-blur-lg transition ltr:right-0 ltr:left-0 rtl:right-0 rtl:left-0"
+      class="fixed bottom-0 z-10 bg-gray-600/90 px-2 pb-safe-1 text-white backdrop-blur-lg transition ltr:inset-x-0 rtl:inset-x-0"
     >
       <div class="relative flex flex-1 items-center gap-2 p-2">
         <div class="flex-1">
@@ -65,7 +65,7 @@ const scrollDown = () => {
                 v-if="newRepliesCount"
                 aria-hidden="true"
                 data-test-id="new-replies-count"
-                class="absolute top-0 z-10 h-4 min-w-[1rem] rounded-full bg-yellow px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
+                class="absolute top-0 z-10 h-4 min-w-4 rounded-full bg-yellow px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
               >
                 {{ newRepliesCount }}
               </span>
@@ -103,7 +103,7 @@ const scrollDown = () => {
             <span
               role="status"
               :aria-label="$t('Validation failed')"
-              class="absolute bottom-7 h-5 w-5 cursor-pointer rounded-full bg-red text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
+              class="absolute bottom-7 size-5 cursor-pointer rounded-full bg-red text-center text-xs/5 text-black ltr:right-2 rtl:left-2"
             >
               <CommonIcon class="mx-auto h-5" name="close" size="tiny" decorative />
             </span>

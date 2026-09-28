@@ -83,7 +83,7 @@ const translationStore = useArticleTranslationStore()
 
       <!-- 48rem for the middle grid to align with the content area -->
       <!-- 1.5 rem some extra spacing => 46.5rem-->
-      <div class="justify-start-center w-full max-w-186">
+      <div class="w-full max-w-186">
         <div class="flex flex-col justify-center">
           <CommonInlineEdit
             v-model:editing="isUpdatingTitle"

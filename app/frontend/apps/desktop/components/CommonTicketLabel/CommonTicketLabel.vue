@@ -47,7 +47,7 @@ const { getTicketNumberWithTitle } = useTicketNumberAndTitle()
     :is="component"
     v-else
     v-tooltip="!noLink ? getTicketNumberWithTitle(ticket?.number, ticket?.title) : undefined"
-    class="flex! grow gap-2 rounded-md break-words group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md focus-visible:outline-hidden group-hover/tab:dark:bg-blue-900"
+    class="flex! grow gap-2 rounded-md wrap-break-word group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md focus-visible:outline-hidden group-hover/tab:dark:bg-blue-900"
     :class="{
       group: !noLink,
       'items-start': !noWrap,

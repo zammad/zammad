@@ -27,7 +27,7 @@ const metaAddress = computed(() => {
 
 <template>
   <div
-    class="flex max-w-full flex-wrap items-center gap-1 overflow-hidden whitespace-nowrap *:not-last:after:text-sm *:not-last:after:leading-snug *:not-last:after:content-[',']"
+    class="flex max-w-full flex-wrap items-center gap-1 overflow-hidden whitespace-nowrap *:not-last:after:text-sm/snug *:not-last:after:content-[',']"
   >
     <template v-if="metaAddress?.parsed?.length">
       <template v-for="meta in metaAddress.parsed" :key="`${meta.name}-${meta.emailAddress}`">
