@@ -193,6 +193,42 @@ QUnit.test("html2text", assert => {
   result = App.Utils.html2text(source)
   assert.equal(result, should, source)
 
+  // first line left unwrapped by the browser
+  source = "Hello<div>1</div><div>2</div>"
+  should = "Hello\n1\n2"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
+  source = "<b>Hello</b><div>1</div>"
+  should = "Hello\n1"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
+  source = "Hello<div><br></div><div>1</div>"
+  should = "Hello\n\n1"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
+  source = "<div><div>Some</div></div><div>Value</div>"
+  should = "Some\n\nValue"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
+  source = "Hello<div class=\"x\">1</div>"
+  should = "Hello\n1"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
+  source = "<div>Some</div>  <div>Value</div>"
+  should = "Some\nValue"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
+  source = "Hello<div title=\"a>b\">1</div><div title='c>d'><br></div><div title=\"e&gt;f\">2</div>"
+  should = "Hello\n1\n\n2"
+  result = App.Utils.html2text(source)
+  assert.equal(result, should, source)
+
   // in raw format, without cleanup
   source = "<div>Some</div><div>1234</div>"
   should = "Some\n1234\n"
@@ -226,6 +262,52 @@ QUnit.test("html2text", assert => {
 
   source = "<p><span>Was\nsoll verbessert werden:</span></p>"
   should = "Was soll verbessert werden:\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  // first line left unwrapped by the browser
+  source = "Hello<div>1</div><div>2</div><div>3</div><div>4</div>"
+  should = "Hello\n1\n2\n3\n4\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "Hello<p>1</p>"
+  should = "Hello\n1\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "<b>Hello</b><div>1</div>"
+  should = "Hello\n1\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "Hello<div><br></div><div>1</div>"
+  should = "Hello\n\n1\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "<div>Some</div><div><br></div><div>Test</div>"
+  should = "Some\n\nTest\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "<div><div>Some</div></div>"
+  should = "Some\n\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "Hello<p dir=\"auto\"><br></p><p dir=\"auto\">1</p>"
+  should = "Hello\n\n1\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "<div>Some</div>  <div>Value</div>"
+  should = "Some\nValue\n"
+  result = App.Utils.html2text(source, true)
+  assert.equal(result, should, source)
+
+  source = "Hello<div title=\"a>b\">1</div><div title='c>d'><br></div><div title=\"e&gt;f\">2</div>"
+  should = "Hello\n1\n\n2\n"
   result = App.Utils.html2text(source, true)
   assert.equal(result, should, source)
 
