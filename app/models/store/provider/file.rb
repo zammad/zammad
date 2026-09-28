@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Store::Provider::File
+  CHUNK_SIZE = 64.kilobytes
 
   # write file to fs
   def self.add(data, sha)
@@ -29,6 +30,21 @@ class Store::Provider::File
     Rails.logger.debug { "read from fs #{location}" }
 
     File.binread(location)
+  end
+
+  def self.stream(sha)
+    File.open(get_location(sha), 'rb') do |file|
+      while (chunk = file.read(CHUNK_SIZE))
+        yield chunk
+      end
+    end
+  end
+
+  def self.bytesize(sha)
+    location = get_location(sha)
+    return if !File.exist?(location)
+
+    File.size(location)
   end
 
   def self.validate_file(sha)

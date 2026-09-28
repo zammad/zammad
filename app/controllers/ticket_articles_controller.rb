@@ -191,13 +191,7 @@ class TicketArticlesController < ApplicationController
     # preview calendar attachments
     return render_calendar_preview if params[:view] == 'preview' && params[:type] == 'calendar'
 
-    content = download_file.content(params[:view])
-    send_data(
-      content,
-      filename:    download_file.filename,
-      type:        download_file.content_type,
-      disposition: download_file.disposition
-    )
+    send_download_file(params[:view])
   end
 
   # GET /ticket_article_plain/1
@@ -211,8 +205,8 @@ class TicketArticlesController < ApplicationController
       raise ActiveRecord::RecordNotFound, __('This article does not have a raw copy available.')
     end
 
-    send_data(
-      file.content,
+    send_store_file(
+      file.store_file,
       filename:    file.filename,
       type:        'message/rfc822',
       disposition: 'inline'

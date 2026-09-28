@@ -64,6 +64,14 @@ read content of a file
       @content ||= provider_class.get(sha)
     end
 
+    def stream(&)
+      provider_class.stream(sha, &)
+    end
+
+    def stream_bytesize
+      provider_class.bytesize(sha)
+    end
+
 =begin
 
 file system check of store, check data and sha (in case fix it)

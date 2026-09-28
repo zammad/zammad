@@ -177,6 +177,55 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true, 
     end
   end
 
+  describe '.stream' do
+    let(:data)   { Rails.root.join('spec/fixtures/files/image/large.png').binread }
+    let(:sha256) { Digest::SHA256.hexdigest(data) }
+
+    before { described_class.add(data, sha256) }
+
+    after { described_class.delete(sha256) }
+
+    it 'yields the complete content' do
+      chunks = []
+      described_class.stream(sha256) { |chunk| chunks << chunk }
+
+      expect(chunks.join.b).to eq(data)
+    end
+
+    context 'when the block raises an error, like a client disconnect' do
+      before { stub_const('ClientGoneError', Class.new(StandardError)) }
+
+      it 'passes the error through unchanged' do
+        expect { described_class.stream(sha256) { raise ClientGoneError } }
+          .to raise_error(ClientGoneError)
+      end
+    end
+
+    context 'when the object does not exist' do
+      it 'raises an error' do
+        expect { described_class.stream('nonexistentsha') { nil } }
+          .to raise_error(Store::Provider::S3::Error)
+      end
+    end
+  end
+
+  describe '.bytesize' do
+    let(:data)   { Rails.root.join('spec/fixtures/files/image/large.png').binread }
+    let(:sha256) { Digest::SHA256.hexdigest(data) }
+
+    before { described_class.add(data, sha256) }
+
+    after { described_class.delete(sha256) }
+
+    it 'returns the size of the stored object' do
+      expect(described_class.bytesize(sha256)).to eq(data.bytesize)
+    end
+
+    it 'returns nil when the object does not exist' do
+      expect(described_class.bytesize('nonexistentsha')).to be_nil
+    end
+  end
+
   describe '.change_checksum' do
     let(:initial_data)     { 'foo' }
     let(:new_data)         { 'bar' }

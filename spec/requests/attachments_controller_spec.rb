@@ -91,6 +91,66 @@ RSpec.describe AttachmentsController, type: :request do
       get "/api/v1/attachments/#{internal_store.id}"
       expect(response).to have_http_status(:ok)
     end
+
+    it 'streams the attachment content', :aggregate_failures do
+      get "/api/v1/attachments/#{public_store.id}"
+      expect(response.body).to eq('public data')
+      expect(response.headers['Content-Length']).to eq('public data'.bytesize.to_s)
+    end
+
+    context 'with file system storage' do
+      before { Setting.set('storage_provider', 'File') }
+
+      after { Store::Provider::File.delete(public_store.store_file.sha) }
+
+      it 'streams the attachment content', :aggregate_failures do
+        get "/api/v1/attachments/#{public_store.id}"
+        expect(public_store.store_file.provider).to eq('File')
+        expect(response.body).to eq('public data')
+        expect(response.headers['Content-Length']).to eq('public data'.bytesize.to_s)
+      end
+    end
+
+    context 'when the stored content is missing' do
+      shared_examples 'responding with not found' do
+        before { allow(Rails.logger).to receive(:error) }
+
+        it 'returns 404 for the download and logs the missing content', :aggregate_failures do
+          get "/api/v1/attachments/#{image_store.id}"
+          expect(response).to have_http_status(:not_found)
+          expect(Rails.logger).to have_received(:error).with(%r{Content of Store::File #{image_store.store_file_id} .* is missing})
+        end
+
+        it 'returns 404 for the preview' do
+          get "/api/v1/attachments/#{image_store.id}?preview=1"
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      let(:image_store) do
+        create(:store,
+               object:      'Ticket::Article',
+               o_id:        public_article.id,
+               data:        Rails.root.join('test/data/upload/upload2.jpg').binread,
+               filename:    'image.jpg',
+               preferences: { 'Content-Type' => 'image/jpg' })
+      end
+
+      context 'with database storage' do
+        before { Store::Provider::DB.delete(image_store.store_file.sha) }
+
+        include_examples 'responding with not found'
+      end
+
+      context 'with file system storage' do
+        before do
+          Setting.set('storage_provider', 'File')
+          Store::Provider::File.delete(image_store.store_file.sha)
+        end
+
+        include_examples 'responding with not found'
+      end
+    end
   end
 
   describe '#destroy' do

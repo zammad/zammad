@@ -34,6 +34,58 @@ RSpec.describe Store::Provider::DB do
     end
   end
 
+  describe '.stream' do
+    let(:checksum) { Store::File.checksum(data) }
+    let(:data)     { "#{"foo\x00bar" * 3}\n\n\n\n".b }
+
+    before do
+      stub_const("#{described_class}::CHUNK_SIZE", 4)
+      described_class.add(data, checksum)
+    end
+
+    it 'yields the content in chunks' do
+      expect { |block| described_class.stream(checksum, &block) }
+        .to yield_successive_args(*data.scan(%r{.{1,4}}m))
+    end
+
+    it 'does not keep the chunks in the query cache' do
+      described_class.cache do
+        described_class.stream(checksum) { nil }
+
+        expect(described_class.connection.query_cache.size).to eq(1)
+      end
+    end
+
+    it 'raises an error when the content ends before its announced size' do
+      allow(described_class).to receive(:bytesize).and_return(data.bytesize + 4)
+
+      expect { described_class.stream(checksum) { nil } }
+        .to raise_error(RuntimeError, %r{ended after #{data.bytesize} of #{data.bytesize + 4} bytes})
+    end
+
+    it 'yields nothing when no matching record exists' do
+      expect { |block| described_class.stream('nonexistentsha', &block) }
+        .not_to yield_control
+    end
+  end
+
+  describe '.bytesize' do
+    let(:checksum) { Store::File.checksum(data) }
+    let(:data)     { "foo\x00bar".b }
+
+    before do
+      described_class.add(data, checksum)
+    end
+
+    it 'returns the size of the stored data' do
+      expect(described_class.bytesize(checksum)).to eq(data.bytesize)
+    end
+
+    it 'returns nil when no matching record exists' do
+      expect(described_class.bytesize('nonexistentsha')).to be_nil
+    end
+  end
+
   describe '.delete' do
     let(:checksum) { Store::File.checksum(data) }
     let(:data)     { 'bar' }

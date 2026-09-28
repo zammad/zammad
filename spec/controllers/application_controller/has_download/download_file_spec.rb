@@ -71,6 +71,28 @@ RSpec.describe ApplicationController::HasDownload::DownloadFile do
     end
   end
 
+  describe '#resized_content' do
+    context 'with not resizable file' do
+      it 'returns nil' do
+        expect(download_file.resized_content('preview')).to be_nil
+      end
+    end
+
+    context 'with image content type' do
+      let(:file_content_type) { 'image/jpg' }
+      let(:file_data)         { Rails.root.join('test/data/upload/upload2.jpg').binread }
+      let(:file_name)         { 'image.jpg' }
+
+      it 'returns nil without view type' do
+        expect(download_file.resized_content(nil)).to be_nil
+      end
+
+      it 'returns resized content for the preview' do
+        expect(download_file.resized_content('preview')).to be_present.and not_eq(file_data)
+      end
+    end
+  end
+
   describe '#content' do
     context 'with not resizable file' do
       it 'check that normal content will be returned' do

@@ -22,12 +22,15 @@ class ApplicationController::HasDownload::DownloadFile < SimpleDelegator
   end
 
   def content(view_type)
-    return __getobj__.content if view_type.blank? || !preferences[:resizable]
+    resized_content(view_type) || __getobj__.content
+  end
+
+  def resized_content(view_type)
+    return if view_type.blank? || !preferences[:resizable]
 
     return content_inline if content_inline? && view_type == 'inline'
-    return content_preview if content_preview? && view_type == 'preview'
 
-    __getobj__.content
+    content_preview if content_preview? && view_type == 'preview'
   end
 
   private

@@ -36,6 +36,26 @@ module Store::Provider::S3
       object.body.binmode.read
     end
 
+    # Not via #request: its catch-all would turn errors raised by the block,
+    #   like a client disconnect, into an S3 malfunction.
+    def stream(sha, &)
+      client.get_object(bucket:, key: sha, &)
+    rescue => e
+      # The SDK wraps any error once chunks were yielded, as it cannot retry then.
+      e = e.original_error if e.is_a?(Aws::S3::Plugins::NonRetryableStreamingError)
+      raise e if !e.is_a?(Aws::Errors::ServiceError) && !e.is_a?(Seahorse::Client::NetworkingError)
+
+      log_and_raise(e)
+    end
+
+    def bytesize(sha)
+      client.head_object(bucket:, key: sha).content_length
+    rescue Aws::S3::Errors::NotFound
+      nil
+    rescue => e
+      log_and_raise(e)
+    end
+
     def upload(data, sha)
       begin
         id    = Store::Provider::S3::Upload.create(sha)

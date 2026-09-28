@@ -8,13 +8,7 @@ class AttachmentsController < ApplicationController
   def show
     return render_calendar_preview if params[:preview].present? && params[:type] == 'calendar'
 
-    view_type = params[:preview] ? 'preview' : nil
-    send_data(
-      download_file.content(view_type),
-      filename:    download_file.filename,
-      type:        download_file.content_type,
-      disposition: download_file.disposition
-    )
+    send_download_file(params[:preview] ? 'preview' : nil)
   end
 
   def create

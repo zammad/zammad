@@ -837,6 +837,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       it 'returns the raw copy of the article' do
         expect(response.body).to eq('This is a test article')
+        expect(response.headers['Content-Length']).to eq('This is a test article'.bytesize.to_s)
       end
     end
 

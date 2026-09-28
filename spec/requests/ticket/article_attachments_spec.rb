@@ -36,6 +36,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:ok)
           expect(response.body).to eq('some content')
+          expect(response.headers['Content-Length']).to eq('some content'.bytesize.to_s)
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)

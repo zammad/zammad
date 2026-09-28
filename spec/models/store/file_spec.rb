@@ -25,6 +25,24 @@ RSpec.describe Store::File, type: :model do
     end
   end
 
+  describe '#stream' do
+    before do
+      file
+      allow(Store::Provider::DB).to receive(:get).and_call_original
+    end
+
+    it 'yields the content without reading it as a whole' do
+      expect { |block| file.stream(&block) }.to yield_with_args('foo')
+      expect(Store::Provider::DB).not_to have_received(:get)
+    end
+  end
+
+  describe '#stream_bytesize' do
+    it 'returns the size of the content' do
+      expect(file.stream_bytesize).to eq(3)
+    end
+  end
+
   describe 'verify' do
     let(:counter) { Set.new }
     let(:stores) do

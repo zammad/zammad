@@ -84,6 +84,42 @@ RSpec.describe Store::Provider::File do
     end
   end
 
+  describe '.stream' do
+    let(:data) { "foo\x00bar".b * 3 }
+
+    before do
+      stub_const("#{described_class}::CHUNK_SIZE", 4)
+      described_class.add(data, sha)
+    end
+
+    it 'yields the content in chunks' do
+      expect { |block| described_class.stream(sha, &block) }
+        .to yield_successive_args(*data.scan(%r{.{1,4}}m))
+    end
+  end
+
+  describe '.bytesize' do
+    it 'returns the size of the stored file' do
+      described_class.add(data, sha)
+
+      expect(described_class.bytesize(sha)).to eq(data.bytesize)
+    end
+
+    context 'with an empty file' do
+      let(:data) { '' }
+
+      it 'returns zero' do
+        described_class.add(data, sha)
+
+        expect(described_class.bytesize(sha)).to eq(0)
+      end
+    end
+
+    it 'returns nil when the file does not exist' do
+      expect(described_class.bytesize(sha)).to be_nil
+    end
+  end
+
   describe '.delete' do
     before do
       FileUtils.mkdir_p(filepath.parent)
