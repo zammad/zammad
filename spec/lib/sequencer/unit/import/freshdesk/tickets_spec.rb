@@ -106,10 +106,10 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::Tickets, db_strategy: 'reset'
 
           # Subject was changed during the import.
           ticket_data.merge(
-            id:       10,
-            subject:  'Different subject',
-            status:   8,
-            priority: 6
+            'id'       => 10,
+            'subject'  => 'Different subject',
+            'status'   => 8,
+            'priority' => 6
           ),
         ]
       end
