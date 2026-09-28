@@ -62,13 +62,10 @@ class Form extends App.Controller
     )
 
     # placeholder
-    configure_attributes = [
-      { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'displayName' },
-    ]
     new App.ControllerForm(
       el: @$('.js-userSelectorBlank')
       model:
-        configure_attributes: configure_attributes,
+        configure_attributes: @userSelectorAttributes()
       params:
         user_ids: []
       autofocus: false
@@ -99,17 +96,34 @@ class Form extends App.Controller
     )
 
     for row in @config.notify_map
-      configure_attributes = [
-        { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'displayName' },
-      ]
       new App.ControllerForm(
         el: @$("[name=queue][value='#{row.queue}']").closest('tr').find('.js-userSelector')
         model:
-          configure_attributes: configure_attributes,
+          configure_attributes: @userSelectorAttributes()
         params:
           user_ids: row.user_ids
         autofocus: false
       )
+
+  # Only a user with the cti.agent permission ever sees a caller log, so the
+  #   filter offers no one else. The form runs it twice, over the records and
+  #   over the built options, so an entry carries the user as id or as value.
+  userSelectorAttributes: ->
+    [
+      {
+        name: 'user_ids'
+        display: ''
+        tag: 'column_select'
+        multiple: true
+        null: true
+        relation: 'User'
+        sortBy: 'displayName'
+        filter: (entries) ->
+          entries.filter (entry) ->
+            user = App.User.find(entry.id || entry.value)
+            user && user.permission('cti.agent')
+      }
+    ]
 
   updateCurrentConfig: =>
     config = @config
