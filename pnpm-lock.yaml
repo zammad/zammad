@@ -54,8 +54,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2(vue@3.5.43(typescript@6.0.3))
       '@rails/actioncable':
-        specifier: ~8.0.500
-        version: 8.0.501
+        specifier: ~8.1.400
+        version: 8.1.400
       '@tiptap/core':
         specifier: 3.31.3
         version: 3.31.3(@tiptap/pm@3.31.3)
@@ -1979,8 +1979,8 @@ packages:
     peerDependencies:
       pinia: '>=4.0.2'
 
-  '@rails/actioncable@8.0.501':
-    resolution: {integrity: sha512-KaXmiD9Ua2M/ov4wOMmrrYrVLiaXjx25TxL+MoBcNdmlbxCcyTr8a3odLmLxNmQeDUXPahrBDp54Kes4/nlPYQ==}
+  '@rails/actioncable@8.1.400':
+    resolution: {integrity: sha512-Qffc3/I9xcpeaal12hmi9EPRV3hz9FvakUHBR7kL0jpZviWwO9dyaG8F1ltcjkHIdFxQ5QqzRyequAWHMq17xQ==}
 
   '@repeaterjs/repeater@3.1.0':
     resolution: {integrity: sha512-TaoVksZRSx2KWYYpyLQtMQXXeS98VsgZImzW65xmiVgbYhXLk+aEsmzPLirqVuE4/XuUapH2iMtxUzaBNDzdSQ==}
@@ -8342,7 +8342,7 @@ snapshots:
       nostics: 1.2.0
       pinia: 4.0.3(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.43(typescript@6.0.3))
 
-  '@rails/actioncable@8.0.501': {}
+  '@rails/actioncable@8.1.400': {}
 
   '@repeaterjs/repeater@3.1.0': {}
 
