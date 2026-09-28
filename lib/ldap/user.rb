@@ -138,7 +138,7 @@ class Ldap
           attributes[name] = if value.encoding == Encoding.find('ascii-8bit')
                                "#{name} (binary data)"
                              else
-                               "#{name} (e.g., #{value.utf8_encode})"
+                               "#{name} (e.g., #{TextEncoding.utf8_encode(value)})"
                              end
         end
       end

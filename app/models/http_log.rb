@@ -169,8 +169,8 @@ optional you can put the max oldest chat entries as argument
   private
 
   def messages_to_utf8
-    request.transform_values! { |v| v.try(:utf8_encode) || v }
-    response.transform_values! { |v| v.try(:utf8_encode) || v }
+    request.transform_values! { |v| v.is_a?(String) ? TextEncoding.utf8_encode(v) : v }
+    response.transform_values! { |v| v.is_a?(String) ? TextEncoding.utf8_encode(v) : v }
   end
 
   def filter_sensitive_data

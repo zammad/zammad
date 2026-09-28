@@ -25,7 +25,7 @@ class Channel::EmailParser::HeadersParser
     if field.value.match?(ISO2022JP_REGEXP)
       header_field_unpack_japanese(field)
     else
-      field.decoded.to_utf8
+      TextEncoding.utf8_encode(field.decoded)
     end
   # fields that cannot be cleanly parsed fallback to the empty string
   rescue Mail::Field::IncompleteParseError
@@ -36,7 +36,7 @@ class Channel::EmailParser::HeadersParser
     raise e if !try_iso88591.is_utf8?
 
     field.value = try_iso88591
-    field.decoded.to_utf8
+    TextEncoding.utf8_encode(field.decoded)
   rescue Date::Error => e
     raise e if field.name != 'Resent-Date'
 
@@ -44,7 +44,7 @@ class Channel::EmailParser::HeadersParser
 
     nil
   rescue
-    field.decoded.to_utf8(fallback: :read_as_sanitized_binary)
+    TextEncoding.utf8_encode(field.decoded, fallback: :read_as_sanitized_binary)
   end
 
   def raw_fields
@@ -92,9 +92,9 @@ module Mail
   class Field
     def raw_value
       begin
-        value = @raw_value.try(:utf8_encode)
+        value = @raw_value.is_a?(String) ? TextEncoding.utf8_encode(@raw_value) : nil
       rescue
-        value = @raw_value.utf8_encode(fallback: :read_as_sanitized_binary)
+        value = TextEncoding.utf8_encode(@raw_value, fallback: :read_as_sanitized_binary)
       end
       return value if value.blank?
 

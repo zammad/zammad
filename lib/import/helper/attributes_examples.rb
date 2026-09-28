@@ -61,7 +61,7 @@ module Import
 
           next if value.nil?
 
-          example = value.to_utf8(fallback: :read_as_sanitized_binary)
+          example = TextEncoding.utf8_encode(value, fallback: :read_as_sanitized_binary)
           example.gsub!(%r{^(.{20,}?).*$}m, '\1...')
 
           @examples[attribute] = "#{attribute} (e. g. #{example})"

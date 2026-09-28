@@ -264,7 +264,7 @@ returns
   def self.day_and_comment_by_event(event, start_time)
     day = "#{start_time.year}-#{format('%<month>02d', month: start_time.month)}-#{format('%<day>02d', day: start_time.day)}"
     comment = event.summary || event.description
-    comment = comment.to_utf8(fallback: :read_as_sanitized_binary)
+    comment = TextEncoding.utf8_encode(comment, fallback: :read_as_sanitized_binary)
 
     # ignore daylight saving time entries
     return if comment.match?(%r{(daylight saving|sommerzeit|summertime)}i)

@@ -100,7 +100,7 @@ module Import
       end
 
       def handle_response(response)
-        encoded_body = response.body.to_utf8(fallback: :read_as_sanitized_binary)
+        encoded_body = TextEncoding.utf8_encode(response.body, fallback: :read_as_sanitized_binary)
         # remove null bytes otherwise PostgreSQL will fail
         encoded_body.delete('\u0000')
         JSON.parse(encoded_body)

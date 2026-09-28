@@ -6,8 +6,13 @@ class Issue2100Utf8EncodeHttpLogs < ActiveRecord::Migration[5.1]
            .limit(100_000)
            .reorder(created_at: :desc)
            .find_each do |log|
-             log.update(request:  log.request.transform_values(&:utf8_encode),
-                        response: log.response.transform_values(&:utf8_encode))
+             log.update(request: utf8_encode(log.request), response: utf8_encode(log.response))
            end
+  end
+
+  private
+
+  def utf8_encode(messages)
+    messages.transform_values { |value| value.is_a?(String) ? TextEncoding.utf8_encode(value) : value }
   end
 end

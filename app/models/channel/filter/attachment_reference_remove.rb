@@ -33,9 +33,9 @@ module Channel::Filter::AttachmentReferenceRemove
   end
 
   def self.cleanup_source(src)
-    CGI.unescape(src)
-       .utf8_encode(fallback: :read_as_sanitized_binary)
-       .tr('\\', '/')
-       .gsub(%r{[[:space:]]}, '')
+    TextEncoding
+      .utf8_encode(CGI.unescape(src), fallback: :read_as_sanitized_binary)
+      .tr('\\', '/')
+      .gsub(%r{[[:space:]]}, '')
   end
 end

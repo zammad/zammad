@@ -90,7 +90,7 @@ class SecureMailing::Backend::HandlerRetry < SecureMailing::Backend::Handler
     mail[:attachments]&.each do |attachment|
       filename = attachment[:filename].force_encoding('utf-8')
       if !filename.force_encoding('UTF-8').valid_encoding?
-        filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
+        filename = TextEncoding.utf8_encode(filename, fallback: :read_as_sanitized_binary)
       end
       Store.create!(
         object:        'Ticket::Article',

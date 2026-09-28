@@ -145,7 +145,7 @@ class Channel::EmailParser::MessageWalker
       message.body.raw_source
     end
 
-    body_text = body_text.utf8_encode(from: message.charset, fallback: :read_as_sanitized_binary)
+    body_text = TextEncoding.utf8_encode(body_text, from: message.charset, fallback: :read_as_sanitized_binary)
     body_text = Mail::Utilities.to_lf(body_text)
 
     # plaintext body requires no processing

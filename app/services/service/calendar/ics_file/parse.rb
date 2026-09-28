@@ -27,12 +27,12 @@ class Service::Calendar::IcsFile::Parse < Service::Base
   end
 
   def build_event(event)
-    description = event.description.to_utf8(fallback: :read_as_sanitized_binary)
-    summary = event.summary.to_utf8(fallback: :read_as_sanitized_binary)
+    description = TextEncoding.utf8_encode(event.description, fallback: :read_as_sanitized_binary)
+    summary = TextEncoding.utf8_encode(event.summary, fallback: :read_as_sanitized_binary)
 
     {
       title:       summary || description,
-      location:    event.location.to_utf8(fallback: :read_as_sanitized_binary),
+      location:    TextEncoding.utf8_encode(event.location, fallback: :read_as_sanitized_binary),
       start_date:  build_date(event.dtstart),
       end_date:    build_date(event.dtend),
       attendees:   event.attendee.map { |attendee| attendee.try(:to) },

@@ -62,9 +62,8 @@ class HtmlSanitizer
       end
 
       def href_starts_with_protocol?(href_without_spaces)
-        CGI
-          .unescape(href_without_spaces)
-          .utf8_encode(fallback: :read_as_sanitized_binary)
+        TextEncoding
+          .utf8_encode(CGI.unescape(href_without_spaces), fallback: :read_as_sanitized_binary)
           .gsub(%r{[[:space:]]}, '')
           .downcase
           .start_with?('http', 'ftp', '//')
@@ -164,7 +163,7 @@ class HtmlSanitizer
       end
 
       def cleanup_target(string, **options)
-        cleaned_string = string.utf8_encode(fallback: :read_as_sanitized_binary)
+        cleaned_string = TextEncoding.utf8_encode(string, fallback: :read_as_sanitized_binary)
         cleaned_string = cleaned_string.gsub(%r{[[:space:]]}, '') if !options[:keep_spaces]
         cleaned_string = cleaned_string.strip
                                        .delete("\t\n\r\u0000")
@@ -203,9 +202,8 @@ class HtmlSanitizer
       end
 
       def url_same_build(input)
-        url = CGI
-          .unescape(input.to_s)
-          .utf8_encode(fallback: :read_as_sanitized_binary)
+        url = TextEncoding
+          .utf8_encode(CGI.unescape(input.to_s), fallback: :read_as_sanitized_binary)
           .downcase
           .delete_suffix('/')
           .gsub(%r{[[:space:]]|\t|\n|\r}, '')

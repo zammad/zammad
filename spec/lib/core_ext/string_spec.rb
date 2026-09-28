@@ -1960,125 +1960,22 @@ RSpec.describe String do
     end
   end
 
-  describe '#utf8_encode' do
-    context 'on valid, UTF-8-encoded strings' do
-      subject(:string) { 'hello' }
+  describe '#utf8_encode (deprecated)' do
+    let(:deprecator) { instance_double(ActiveSupport::Deprecation, warn: nil) }
 
-      it 'returns an identical copy' do
-        expect(string.utf8_encode).to eq(string)
-        expect(string.utf8_encode.encoding).to be(string.encoding)
-        expect(string.utf8_encode).not_to be(string)
-      end
+    before { allow(ActiveSupport::Deprecation).to receive(:new).and_return(deprecator) }
 
-      context 'which are incorrectly set to other, technically valid encodings' do
-        subject(:string) { described_class.new('ö', encoding: 'tis-620') }
+    it 'warns about the deprecation' do
+      'hello'.utf8_encode
 
-        it 'sets input encoding to UTF-8 instead of attempting conversion' do
-          expect(string.utf8_encode).to eq(string.dup.force_encoding('utf-8'))
-        end
-      end
+      expect(deprecator).to have_received(:warn).once
     end
 
-    context 'on strings in other encodings' do
-      subject(:string) { original_string.encode(input_encoding) }
+    it 'delegates to TextEncoding', :aggregate_failures do
+      string = 'Tschüss!'.encode(Encoding::ISO_8859_2)
 
-      context 'with no from: option' do
-        let(:original_string) { 'Tschüss!' }
-        let(:input_encoding)  { Encoding::ISO_8859_2 }
-
-        it 'detects the input encoding' do
-          expect(string.utf8_encode).to eq(original_string)
-        end
-      end
-
-      context 'with a valid from: option' do
-        let(:original_string) { 'Tschüss!' }
-        let(:input_encoding) { Encoding::ISO_8859_2 }
-
-        it 'uses the specified input encoding' do
-          expect(string.utf8_encode(from: 'iso-8859-2')).to eq(original_string)
-        end
-
-        it 'uses any valid input encoding, even if not correct' do
-          expect(string.utf8_encode(from: 'gb18030')).to eq('Tsch黶s!')
-        end
-      end
-
-      context 'with an invalid from: option' do
-        let(:original_string) { '―陈志' }
-        let(:input_encoding) { Encoding::GB18030 }
-
-        it 'does not try it' do
-          expect { string.encode('utf-8', 'gb2312') }
-            .to raise_error(Encoding::InvalidByteSequenceError)
-
-          expect { string.utf8_encode(from: 'gb2312') }
-            .not_to raise_error
-        end
-
-        it 'uses the detected input encoding instead' do
-          expect(string.utf8_encode(from: 'gb2312')).to eq(original_string)
-        end
-      end
-
-      # regression test for issue 6340
-      context 'with a from: option that Ruby cannot resolve' do
-        # Binary, like the mail parser hands it over - otherwise the encoding of
-        # the string itself would be a viable candidate and mask the fallback.
-        subject(:string) { original_string.encode(input_encoding).b }
-
-        let(:original_string) { 'Добрый день' }
-        let(:input_encoding)  { Encoding::CP949 }
-
-        it 'resolves the charset label via the mail gem' do
-          expect { Encoding.find('ks_c_5601-1987') }
-            .to raise_error(ArgumentError)
-
-          expect(string.utf8_encode(from: 'ks_c_5601-1987')).to eq(original_string)
-        end
-
-        it 'falls back to encoding detection if the mail gem cannot resolve it either' do
-          expect(string.utf8_encode(from: 'totally-unknown-charset'))
-            .to eq(string.utf8_encode)
-        end
-      end
-    end
-
-    context 'performance' do
-      subject(:string) { original_string.encode(input_encoding) }
-
-      context 'with utf8_encode in iso-8859-1' do
-        let(:original_string) { 'äöü0' * 999_999 }
-        let(:input_encoding) { Encoding::ISO_8859_1 }
-
-        it 'detects the input encoding' do
-          Timeout.timeout(1) do
-            expect(string.utf8_encode(from: 'iso-8859-1')).to eq(original_string)
-          end
-        end
-      end
-
-      context 'with utf8_encode in utf-8' do
-        let(:original_string) { 'äöü0' * 999_999 }
-        let(:input_encoding) { Encoding::UTF_8 }
-
-        it 'detects the input encoding' do
-          Timeout.timeout(1) do
-            expect(string.utf8_encode(from: 'utf-8')).to eq(original_string)
-          end
-        end
-      end
-
-      context 'with utf8_encode in iso-8859-1 and charset detection' do
-        let(:original_string) { 'äöü0' * 199_999 }
-        let(:input_encoding) { Encoding::ISO_8859_1 }
-
-        it 'detects the input encoding' do
-          Timeout.timeout(18) do
-            expect(string.utf8_encode(from: 'utf-8')).to eq(original_string)
-          end
-        end
-      end
+      expect(string.utf8_encode(from: 'iso-8859-2')).to eq('Tschüss!')
+      expect(string.encoding).to be(Encoding::ISO_8859_2)
     end
   end
 

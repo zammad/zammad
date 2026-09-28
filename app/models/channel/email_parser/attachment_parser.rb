@@ -36,7 +36,7 @@ class Channel::EmailParser::AttachmentParser
 
   def parse_headers
     headers = part.header.fields.each_with_object({}) do |field, memo|
-      memo[field.name.to_s] = field.to_utf8.presence || field.raw_value
+      memo[field.name.to_s] = TextEncoding.utf8_encode(field).presence || field.raw_value
     rescue
       memo[field.name.to_s] = field.raw_value
     end
@@ -236,6 +236,6 @@ class Channel::EmailParser::AttachmentParser
       return filename
     end
 
-    filename.utf8_encode(fallback: :read_as_sanitized_binary)
+    TextEncoding.utf8_encode(filename, fallback: :read_as_sanitized_binary)
   end
 end

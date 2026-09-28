@@ -305,7 +305,7 @@ returns
       mail[:attachments]&.each do |attachment|
         filename = attachment[:filename].dup.force_encoding('utf-8')
         if !filename.force_encoding('UTF-8').valid_encoding?
-          filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
+          filename = TextEncoding.utf8_encode(filename, fallback: :read_as_sanitized_binary)
         end
         Store.create!(
           object:      'Ticket::Article',
@@ -387,7 +387,7 @@ returns
   def self.sender_attributes(from)
     if from.is_a?(ActiveSupport::HashWithIndifferentAccess)
       from = SENDER_FIELDS.filter_map { |f| from[f] }
-                          .map(&:to_utf8).compact_blank
+                          .map { |value| TextEncoding.utf8_encode(value) }.compact_blank
                           .partition { |address| address.match?(EMAIL_REGEX) }
                           .flatten.first
     end
@@ -424,7 +424,7 @@ returns
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] =
-      Mail::Field.new('X-From', data[:from_display_name].to_utf8)
+      Mail::Field.new('X-From', TextEncoding.utf8_encode(data[:from_display_name]))
                  .to_s
                  .delete('"')
                  .strip

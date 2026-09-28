@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'rchardet'
-require 'mail'
-
 class String
   alias old_strip strip
   alias old_strip! strip!
@@ -299,7 +296,7 @@ class String
         chr_orig
       end
     end
-    string = string.utf8_encode(fallback: :read_as_sanitized_binary)
+    string = TextEncoding.utf8_encode(string, fallback: :read_as_sanitized_binary)
 
     # signature block handling 1/2
     string.gsub!(%r{^-- \s{1}}, '###SIGNATURE_BLOCK###')
@@ -502,99 +499,14 @@ class String
     string
   end
 
-  # Returns a copied string whose encoding is UTF-8.
-  # If both the provided and current encodings are invalid,
-  # an auto-detected encoding is tried.
-  #
-  # Supports some fallback strategies if a valid encoding cannot be found.
-  #
-  # Options:
-  #
-  #   * from: An encoding to try first.
-  #           Takes precedence over the current and auto-detected encodings.
-  #
-  #   * fallback: The strategy to follow if no valid encoding can be found.
-  #     * `:output_to_binary` returns an ASCII-8BIT-encoded string.
-  #     * `:read_as_sanitized_binary` returns a UTF-8-encoded string with all
-  #       invalid byte sequences replaced with "?" characters.
-  def utf8_encode(...)
-    dup.utf8_encode!(...)
-  end
+  # Kept for third-party code only; no caller in this repository remains.
+  def utf8_encode(**)
+    ActiveSupport::Deprecation.new.warn('String#utf8_encode is deprecated and will be removed in Zammad 8.0. Please use TextEncoding.utf8_encode(string, **options) instead.')
 
-  def utf8_encode!(**options)
-    return force_encoding('utf-8') if dup.force_encoding('utf-8').valid_encoding?
-
-    # convert string to given charset, if valid_encoding? is true
-    if options[:from].present?
-      begin
-        encoding = find_encoding(options[:from])
-        if encoding.present? && dup.force_encoding(encoding).valid_encoding?
-          force_encoding(encoding)
-          return encode!('utf-8', encoding)
-        end
-      rescue ArgumentError, EncodingError => e
-        Rails.logger.error { e.inspect }
-      end
-    end
-
-    # try to find valid encodings of string
-    viable_encodings.each do |enc|
-
-      return encode!('utf-8', enc)
-    rescue EncodingError => e
-      Rails.logger.error { e.inspect }
-
-    end
-
-    case options[:fallback]
-    when :output_to_binary
-      force_encoding('ascii-8bit')
-    when :read_as_sanitized_binary
-      encode!('utf-8', 'ascii-8bit', invalid: :replace, undef: :replace, replace: '?')
-    else
-      raise EncodingError, 'could not find a valid input encoding'
-    end
+    TextEncoding.utf8_encode(self, **)
   end
 
   def json_escape
     to_json[1..-2] # convert to JSON string, and remove surrounding quotes
-  end
-
-  private
-
-  # Resolves a charset label to an `Encoding`.
-  #
-  # Ruby knows only a subset of the charset labels that occur in real mail. For
-  # labels it cannot resolve, the `mail` gem's alias table is consulted before
-  # giving up, so that a declared charset is not silently dropped in favour of
-  # charset detection (e.g. 'ks_c_5601-1987', the Microsoft alias for CP949).
-  def find_encoding(charset)
-    Encoding.find(charset)
-  rescue ArgumentError
-    picked = Mail::Utilities.pick_encoding(charset)
-
-    # The gem falls back to BINARY for labels it does not know either.
-    raise if picked == Encoding::BINARY
-
-    picked
-  end
-
-  def viable_encodings(try_first: nil)
-    return dup.viable_encodings(try_first: try_first) if frozen?
-
-    provided = Encoding.find(try_first) if try_first.present?
-    original = encoding
-    detected = CharDet.detect(self)['encoding']
-
-    [provided, original, detected]
-      .compact
-      .reject { |e| Encoding.find(e) == Encoding::ASCII_8BIT }
-      .reject { |e| Encoding.find(e) == Encoding::UTF_8 }
-      .select { |e| force_encoding(e).valid_encoding? }
-      .tap { force_encoding(original) } # clean up changes from previous line
-
-  # if `try_first` is not a valid encoding, try_first again without it
-  rescue ArgumentError
-    try_first.present? ? viable_encodings : raise
   end
 end
