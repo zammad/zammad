@@ -374,6 +374,7 @@ RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integra
           [
             'San Francisco, CA, USA',
             'San Francisco, CA 94103, USA',
+            'San Francisco, CA 94107, USA',
             '90 Sheridan St, San Francisco, CA 94103, USA',
             '90 Sheridan, San Francisco, CA 94103, USA',
             '3030 16th St, San Francisco, CA 94103, USA',
