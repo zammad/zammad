@@ -216,7 +216,8 @@ get instance of channel driver
 
     return if new_record?
 
-    save!
+    # the automatic token refresh is not an admin action and must not flood the audit log (#6402)
+    AuditLog.suspend { save! }
   rescue => e
     logger.error e
     raise XOAuth2RefreshError, "Failed to refresh XOAUTH2 access_token of provider '#{options[:auth][:provider]}': #{e.message}"
