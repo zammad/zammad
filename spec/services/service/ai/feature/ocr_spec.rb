@@ -13,20 +13,15 @@ RSpec.describe Service::AI::Feature::OCR, integration: true, required_envs: %w[Z
     }
   end
 
-  let(:llm_response) do
-    <<~OCR.chomp
-      Sorry, but the Phoenix is not able to find your page.
-      Try checking the URL for errors - maybe there there's a tyop, erm, typo!
-    OCR
-  end
-
   before do
     setup_ai_provider('zammad_ai', token: ENV['ZAMMAD_AI_TOKEN'])
   end
 
   it 'returns recognized image text' do
-    result = ai_service.execute
-    expect(result.content).to eq(llm_response)
+    # Line breaks and the doubled "there there's" of the image vary between model runs.
+    expect(ai_service.execute.content.squish).to match(
+      %r{\ASorry, but the Phoenix is not able to find your page\. Try checking the URL for errors - maybe (there )?there's a tyop, erm, typo!\z}
+    )
   end
 
 end
