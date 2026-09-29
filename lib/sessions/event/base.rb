@@ -133,8 +133,14 @@ class Sessions::Event::Base
     raw_header
       .split(',')
       .map(&:strip)
-      .difference(Rails.application.config.action_dispatch.trusted_proxies)
+      .reject { |ip| trusted_proxy?(ip) }
       .last
+  end
+
+  def trusted_proxy?(ip)
+    Rails.application.config.action_dispatch.trusted_proxies.any? { |proxy| proxy.include?(ip) }
+  rescue IPAddr::InvalidAddressError
+    false
   end
 
   def origin
