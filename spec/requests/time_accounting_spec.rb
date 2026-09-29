@@ -101,6 +101,30 @@ RSpec.describe 'Time Accounting API endpoints', authenticated_as: :admin, type: 
         expect(response['Content-Disposition']).to be_truthy
         expect(response['Content-Disposition']).to eq("attachment; filename=\"by_activity-#{year}-#{month}.xlsx\"; filename*=UTF-8''by_activity-#{year}-#{month}.xlsx")
         expect(response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
+      end
+
+      it 'closes the sent file after the response' do
+        bodies = []
+        allow(ApplicationController::HasDownload::TempfileBody).to receive(:new).and_wrap_original do |original, *args|
+          original.call(*args).tap { |body| bodies << body }
+        end
+
+        get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}?download=true", params: {}
+
+        expect(bodies.map(&:file)).to contain_exactly(be_closed)
+      end
+
+      it 'instruments the download like send_data' do
+        filenames = []
+        subscriber = ->(*, payload) { filenames << payload[:filename] }
+
+        ActiveSupport::Notifications.subscribed(subscriber, 'send_data.action_controller') do
+          get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}?download=true", params: {}
+        end
+
+        expect(filenames).to eq(["by_activity-#{year}-#{month}.xlsx"])
       end
     end
   end
@@ -134,6 +158,8 @@ RSpec.describe 'Time Accounting API endpoints', authenticated_as: :admin, type: 
         expect(response['Content-Disposition']).to be_truthy
         expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xlsx\"; filename*=UTF-8''by_ticket-#{year}-#{month}.xlsx")
         expect(response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
     end
 
@@ -155,6 +181,8 @@ RSpec.describe 'Time Accounting API endpoints', authenticated_as: :admin, type: 
         expect(response['Content-Disposition']).to be_truthy
         expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xlsx\"; filename*=UTF-8''by_ticket-#{year}-#{month}.xlsx")
         expect(response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
     end
 
@@ -219,6 +247,8 @@ RSpec.describe 'Time Accounting API endpoints', authenticated_as: :admin, type: 
         expect(response['Content-Disposition']).to be_truthy
         expect(response['Content-Disposition']).to eq("attachment; filename=\"by_organization-#{year}-#{month}.xlsx\"; filename*=UTF-8''by_organization-#{year}-#{month}.xlsx")
         expect(response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
     end
 
@@ -277,6 +307,8 @@ RSpec.describe 'Time Accounting API endpoints', authenticated_as: :admin, type: 
         expect(response['Content-Disposition']).to be_truthy
         expect(response['Content-Disposition']).to eq("attachment; filename=\"by_customer-#{year}-#{month}.xlsx\"; filename*=UTF-8''by_customer-#{year}-#{month}.xlsx")
         expect(response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
     end
 

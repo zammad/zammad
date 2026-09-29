@@ -11,27 +11,38 @@ class Service::AI::Analytics::GenerateReport::Base < Service::Base
     created_at
   ].freeze
 
+  CONTENT_TYPES = {
+    xlsx: ExcelSheet::CONTENT_TYPE,
+    json: 'application/json',
+  }.freeze
+
   attr_reader :scope, :format
 
   # @param scope [ActiveRecord::Relation<AI::Analytics::Run>]
-  # @param format [Symbol] :json or :xlsx
+  # @param format [Symbol, String] one of the keys of CONTENT_TYPES
   def initialize(scope: AI::Analytics::Run.all, format: :json)
     @scope  = scope
-    @format = format.to_sym
+    @format = CONTENT_TYPES.keys.find { |key| key.to_s == format.to_s }
+
+    raise Exceptions::UnprocessableContent, 'invalid format' if !@format
   end
 
+  def content_type
+    CONTENT_TYPES[format]
+  end
+
+  # Returns the report as a file with its path already deleted, the data vanishes once it is closed.
   def execute
     case format
     when :xlsx
       self.class.excel_sheet_class.new(
-        entries:  parsed_records,
+        entries:  each_parsed_record,
         timezone: Setting.get('timezone_default'),
         locale:   Locale.first
-      ).content
+      ).file
     when :json
       # needs to take into account timezone too
-      parsed_records
-        .to_json
+      json_file
     end
   end
 
@@ -41,10 +52,28 @@ class Service::AI::Analytics::GenerateReport::Base < Service::Base
 
   private
 
-  def parsed_records
-    parsed = []
-    query_records { |record| parsed << build_struct_from_record(record) }
-    parsed
+  def each_parsed_record
+    return enum_for(__method__) if !block_given?
+
+    query_records { |record| yield build_struct_from_record(record) }
+  end
+
+  def json_file
+    file = Tempfile.new(['ai-analytics', '.json'])
+    file.unlink
+
+    separator = ''
+    file.write('[')
+    each_parsed_record do |record|
+      file.write(separator, record.to_json)
+      separator = ','
+    end
+    file.write(']')
+
+    file.tap(&:rewind)
+  rescue
+    file&.close
+    raise
   end
 
   def build_struct_from_record(_record)

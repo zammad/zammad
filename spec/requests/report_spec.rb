@@ -68,6 +68,8 @@ RSpec.describe 'Report', type: :request do
         assert(response['Content-Disposition'])
         expect(response['Content-Disposition']).to eq('attachment; filename="tickets--all--Created.xlsx"; filename*=UTF-8\'\'tickets--all--Created.xlsx')
         expect(response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
 
       it 'does report example - deliver result' do

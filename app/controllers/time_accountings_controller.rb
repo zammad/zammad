@@ -126,11 +126,10 @@ class TimeAccountingsController < ApplicationController
       timezone: params[:timezone],
       locale:   current_user.locale,
     )
-    send_data(
-      excel.content,
-      filename:    "by_activity-#{year}-#{month}.xlsx",
-      type:        ExcelSheet::CONTENT_TYPE,
-      disposition: 'attachment'
+    send_tempfile(
+      excel.file,
+      filename: "by_activity-#{year}-#{month}.xlsx",
+      type:     ExcelSheet::CONTENT_TYPE,
     )
   end
 
@@ -196,11 +195,10 @@ class TimeAccountingsController < ApplicationController
       locale:                       current_user.locale,
     )
 
-    send_data(
-      excel.content,
-      filename:    "by_ticket-#{year}-#{month}.xlsx",
-      type:        ExcelSheet::CONTENT_TYPE,
-      disposition: 'attachment'
+    send_tempfile(
+      excel.file,
+      filename: "by_ticket-#{year}-#{month}.xlsx",
+      type:     ExcelSheet::CONTENT_TYPE,
     )
   end
 
@@ -263,11 +261,10 @@ class TimeAccountingsController < ApplicationController
         timezone: params[:timezone],
         locale:   current_user.locale,
       )
-      send_data(
-        excel.content,
-        filename:    "by_customer-#{year}-#{month}.xlsx",
-        type:        ExcelSheet::CONTENT_TYPE,
-        disposition: 'attachment'
+      send_tempfile(
+        excel.file,
+        filename: "by_customer-#{year}-#{month}.xlsx",
+        type:     ExcelSheet::CONTENT_TYPE,
       )
       return
     end
@@ -328,11 +325,10 @@ class TimeAccountingsController < ApplicationController
         timezone: params[:timezone],
         locale:   current_user.locale,
       )
-      send_data(
-        excel.content,
-        filename:    "by_organization-#{year}-#{month}.xlsx",
-        type:        ExcelSheet::CONTENT_TYPE,
-        disposition: 'attachment'
+      send_tempfile(
+        excel.file,
+        filename: "by_organization-#{year}-#{month}.xlsx",
+        type:     ExcelSheet::CONTENT_TYPE,
       )
       return
     end

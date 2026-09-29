@@ -27,10 +27,7 @@ module ApplicationController::HasDownload
   end
 
   def send_store_file(store_file, filename:, type:, disposition:, bytesize: store_file_bytesize!(store_file))
-    send_file_headers!(filename:, type:, disposition:)
-    headers['Content-Length'] = bytesize.to_s
-    self.response_body = ::ApplicationController::HasDownload::StoreFileBody.new(store_file)
-    set_null_csp
+    send_streamed_body(::ApplicationController::HasDownload::StoreFileBody.new(store_file), bytesize:, filename:, type:, disposition:)
   end
 
   def store_file_bytesize!(store_file)
@@ -39,6 +36,21 @@ module ApplicationController::HasDownload
 
     Rails.logger.error "Content of Store::File #{store_file.id} (#{store_file.provider}) is missing."
     raise ActiveRecord::RecordNotFound
+  end
+
+  # Expects a file whose path is already deleted, so its data vanishes once the body closes it.
+  def send_tempfile(file, filename:, type:, disposition: 'attachment')
+    send_streamed_body(::ApplicationController::HasDownload::TempfileBody.new(file), bytesize: file.size, filename:, type:, disposition:)
+  end
+
+  # Emits the same instrumentation event as #send_data, so the download stays visible in the log.
+  def send_streamed_body(body, bytesize:, filename:, type:, disposition:)
+    ActiveSupport::Notifications.instrument('send_data.action_controller', filename:, type:, disposition:) do
+      send_file_headers!(filename:, type:, disposition:)
+      headers['Content-Length'] = bytesize.to_s
+      self.response_body = body
+      set_null_csp
+    end
   end
 
   def file_id

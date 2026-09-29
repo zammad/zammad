@@ -9,7 +9,7 @@ RSpec.shared_examples 'ordering items correctly and returning latest entries' do
   it 'returns latest records' do
     ai_analytics_runs
 
-    parsed_records = described_class.new.send(:parsed_records)
+    parsed_records = described_class.new.send(:each_parsed_record).to_a
 
     expect(parsed_records.pluck(:id)).to eq(ai_analytics_runs.last(6).map(&:id).reverse)
   end

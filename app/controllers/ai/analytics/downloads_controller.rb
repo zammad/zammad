@@ -4,33 +4,23 @@ class AI::Analytics::DownloadsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def download
-    format       = params[:format].presence || 'xlsx'
-    filename     = "ai_analytics_#{params[:type]}.#{format}"
-    content_type = case format
-                   when 'xlsx' then ExcelSheet::CONTENT_TYPE
-                   else 'application/json'
-                   end
+    report = report_class.new(scope:, format: params[:format].presence || 'xlsx')
 
-    content = case params[:type]
-              when 'errors'
-                Service::AI::Analytics::GenerateReport::Errors
-              when 'with_usages'
-                Service::AI::Analytics::GenerateReport::WithUsages
-              else
-                raise Exceptions::UnprocessableContent, 'invalid report type'
-              end
-                 .new(scope:, format:)
-                 .execute
-
-    send_data(
-      content,
-      filename:,
-      type:        content_type,
-      disposition: 'attachment'
-    )
+    send_tempfile(report.execute, filename: "ai_analytics_#{params[:type]}.#{report.format}", type: report.content_type)
   end
 
   private
+
+  def report_class
+    case params[:type]
+    when 'errors'
+      Service::AI::Analytics::GenerateReport::Errors
+    when 'with_usages'
+      Service::AI::Analytics::GenerateReport::WithUsages
+    else
+      raise Exceptions::UnprocessableContent, 'invalid report type'
+    end
+  end
 
   DIRECT_FILTERS = %i[
     identifier

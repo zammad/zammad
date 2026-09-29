@@ -42,6 +42,8 @@ RSpec.describe 'AI::Analytics::DownloadsController', :aggregate_failures, authen
     shared_examples 'returns basic data' do
       it 'returns xlsx by default' do
         expect(response.content_type).to eq(ExcelSheet::CONTENT_TYPE)
+        expect(response.body).to start_with('PK')
+        expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
 
       context 'when format is json' do
@@ -53,6 +55,19 @@ RSpec.describe 'AI::Analytics::DownloadsController', :aggregate_failures, authen
 
         it 'returns json content type' do
           expect(response.content_type).to eq('application/json')
+        end
+
+        it 'returns the runs as json' do
+          expect(response.parsed_body).to be_an(Array)
+          expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
+        end
+      end
+
+      context 'when format is unknown' do
+        let(:format) { 'csv' }
+
+        it 'response is unprocessable' do
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
@@ -90,7 +105,7 @@ RSpec.describe 'AI::Analytics::DownloadsController', :aggregate_failures, authen
         end
 
         context 'when filtering for identifier' do
-          let(:matching_value) { ai_analytics_run.identifier }
+          let(:matching_value)    { ai_analytics_run.identifier }
           let(:nonmatching_value) { 'nonexisting' }
 
           include_examples 'check filter type', :identifier

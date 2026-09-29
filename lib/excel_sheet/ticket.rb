@@ -13,7 +13,7 @@ class ExcelSheet::Ticket < ExcelSheet
     locale:                       current_user.locale,
   )
 
-  excel.content
+  excel.file
 
 =end
 

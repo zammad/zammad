@@ -5,32 +5,60 @@ require_relative 'ordering_examples'
 
 RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
   describe '#execute' do
-    let(:ai_analytics_run) { create(:ai_analytics_run) }
+    let(:ai_analytics_runs) { create_list(:ai_analytics_run, 2) }
 
-    before { ai_analytics_run }
+    before { ai_analytics_runs }
 
     context 'when format is xlsx' do
-      subject(:service_result) { described_class.execute(format: :xlsx) }
+      subject(:generated_file) { described_class.execute(format: :xlsx) }
 
-      it 'returns the report as XLSX' do
-        expect(service_result).to be_a(String)
+      after { generated_file.close }
+
+      it 'returns the report as an XLSX file' do
+        expect(generated_file.read(2)).to eq('PK')
       end
+
+      include_examples 'not leaving the generated file on disk', prefix: 'excel-export'
     end
 
     context 'when format is json' do
-      subject(:service_result) { described_class.execute(format: :json) }
+      subject(:generated_file) { described_class.execute(format: :json) }
 
-      it 'returns the report as JSON' do
-        expect(JSON.parse(service_result))
-          .to contain_exactly(include('id' => ai_analytics_run.id))
+      after { generated_file.close }
+
+      it 'returns the report as a JSON file' do
+        expect(JSON.parse(generated_file.read))
+          .to match_array(ai_analytics_runs.map { |run| include('id' => run.id) })
+      end
+
+      include_examples 'not leaving the generated file on disk', prefix: 'ai-analytics'
+
+      context 'without records' do
+        let(:ai_analytics_runs) { [] }
+
+        it 'returns an empty JSON array' do
+          expect(JSON.parse(generated_file.read)).to eq([])
+        end
       end
     end
   end
 
-  describe '#parsed_records' do
+  describe '.new' do
+    it 'raises an error for an unknown format' do
+      expect { described_class.new(format: 'csv') }.to raise_error(Exceptions::UnprocessableContent)
+    end
+  end
+
+  describe '#content_type' do
+    it 'returns the content type of the format' do
+      expect(described_class.new(format: 'xlsx').content_type).to eq(ExcelSheet::CONTENT_TYPE)
+    end
+  end
+
+  describe '#each_parsed_record' do
     context 'when no records exist' do
       it 'returns an empty array' do
-        expect(described_class.new.send(:parsed_records)).to be_empty
+        expect(described_class.new.send(:each_parsed_record).to_a).to be_empty
       end
     end
 
@@ -40,7 +68,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
       before { ai_analytics_run }
 
       it 'returns the parsed record' do
-        expect(described_class.new.send(:parsed_records))
+        expect(described_class.new.send(:each_parsed_record).to_a)
           .to contain_exactly(
             include(
               id:             ai_analytics_run.id,
@@ -57,7 +85,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
         it 'does not include that record' do
           create(:ai_analytics_run, :with_error)
 
-          expect(described_class.new.send(:parsed_records))
+          expect(described_class.new.send(:each_parsed_record).to_a)
             .to contain_exactly(
               include(
                 id: ai_analytics_run.id,
@@ -85,7 +113,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
       end
 
       it 'returns the parsed record' do
-        expect(described_class.new.send(:parsed_records))
+        expect(described_class.new.send(:each_parsed_record).to_a)
           .to contain_exactly(
             include(
               id:             ai_analytics_run.id,
@@ -137,7 +165,7 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
       it 'returns records within the scope' do
         scope = AI::Analytics::Run.where(related_object: ticket)
 
-        expect(described_class.new(scope:).send(:parsed_records))
+        expect(described_class.new(scope:).send(:each_parsed_record).to_a)
           .to contain_exactly(
             include(
               id: ai_analytics_run.id,

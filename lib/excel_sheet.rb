@@ -13,11 +13,10 @@ class ExcelSheet
     @records         = records
     @timezone        = timezone.presence || Setting.get('timezone_default')
     @locale          = locale || Locale.default
-    @tempfile        = Tempfile.new('excel-export.xlsx')
-    @workbook        = WriteXLSX.new(@tempfile)
+    @directory       = File.join(Dir.tmpdir, "excel-export-#{SecureRandom.hex(16)}")
+    @workbook        = WriteXLSX.new(File.join(@directory, 'export.xlsx'), tempdir: File.join(@directory, 'package'))
     @format_decimal  = @workbook.add_format(num_format: '0.00')
     @worksheet       = @workbook.add_worksheet
-    @contents        = nil
     @current_row     = 0
     @current_column  = 0
 
@@ -42,18 +41,44 @@ class ExcelSheet
     @format_footer.set_size(8)
   end
 
-  def contents
-    file = File.new(@tempfile, 'r')
-    contents = file.read
-    file.close
-    contents
+  # Generates the spreadsheet and returns it as a File opened for reading.
+  #
+  # The file is already deleted from disk when it is returned: its data stays
+  #   available only until the caller closes the File, and nothing is left
+  #   behind if the process dies. Use this in server processes, e.g. to send the
+  #   spreadsheet as a download with ApplicationController::HasDownload#send_tempfile,
+  #   as it keeps the result out of memory.
+  #
+  # A spreadsheet can only be generated once per instance.
+  def file
+    raise "#{self.class}#file can only be called once per instance." if @generated
+
+    @generated = true
+
+    # write_xlsx creates the output and its intermediate files with default permissions.
+    FileUtils.mkdir(@directory, mode: 0o700)
+
+    begin
+      gen_header
+      gen_rows
+      gen_footer
+
+      File.open(File.join(@directory, 'export.xlsx'), 'rb')
+    ensure
+      FileUtils.rm_rf(@directory)
+    end
   end
 
+  # Generates the spreadsheet and returns its content as a String.
+  #
+  # This keeps the complete spreadsheet in memory, which is fine for scripts and
+  #   small exports. Use #file instead wherever the result is passed on as a
+  #   file anyway, e.g. for downloads.
   def content
-    gen_header
-    gen_rows
-    gen_footer
-    contents
+    generated_file = file
+    generated_file.read
+  ensure
+    generated_file&.close
   end
 
   def gen_header

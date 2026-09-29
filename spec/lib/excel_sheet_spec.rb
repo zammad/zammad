@@ -5,6 +5,65 @@ require 'rails_helper'
 RSpec.describe ExcelSheet do
   let(:document) { described_class.new(title: 'some title', header: [], records: [], timezone: 'Europe/Berlin', locale: 'de-de') }
 
+  describe '#file' do
+    subject(:generated_file) { document.file }
+
+    let(:document) do
+      described_class.new(
+        title:    'some title',
+        header:   [{ name: 'number', display: 'Number' }, { name: 'title', display: 'Title' }],
+        records:  [[1, 'first'], [2, 'second']],
+        timezone: 'Europe/Berlin',
+        locale:   'de-de'
+      )
+    end
+
+    context 'when generating succeeds' do
+      after { generated_file.close }
+
+      it 'returns the generated XLSX file' do
+        expect(generated_file.read(2)).to eq('PK')
+      end
+
+      it 'generates the file in a directory only the current user can access' do
+        directory_mode = nil
+        allow(document).to receive(:gen_footer).and_wrap_original do |original|
+          directory_mode = File.stat(document.instance_variable_get(:@directory)).mode & 0o777
+          original.call
+        end
+
+        generated_file
+
+        expect(directory_mode).to eq(0o700)
+      end
+
+      it 'can only generate the file once' do
+        generated_file
+
+        expect { document.file }.to raise_error(RuntimeError, 'ExcelSheet#file can only be called once per instance.')
+      end
+
+      include_examples 'not leaving the generated file on disk', prefix: 'excel-export'
+    end
+
+    context 'when generating fails' do
+      before { allow(document).to receive(:gen_rows).and_raise('broken') }
+
+      it 'does not leave the generated file on disk', :aggregate_failures do
+        entries_before = Dir.children(Dir.tmpdir)
+
+        expect { document.file }.to raise_error('broken')
+        expect((Dir.children(Dir.tmpdir) - entries_before).grep(%r{\Aexcel-export})).to be_empty
+      end
+    end
+  end
+
+  describe '#content' do
+    it 'returns the generated XLSX file as a string' do
+      expect(document.content).to start_with('PK')
+    end
+  end
+
   describe '.timestamp_in_localtime' do
     it 'does convert UTC timestamp to local system based timestamp' do
       expect(document.timestamp_in_localtime(Time.parse('2019-08-08T01:00:05Z').in_time_zone)).to eq('2019-08-08 03:00:05')

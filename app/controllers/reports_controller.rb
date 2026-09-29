@@ -111,11 +111,10 @@ class ReportsController < ApplicationController
       break
     end
     if excel
-      send_data(
-        excel.content,
-        filename:    filename,
-        type:        ExcelSheet::CONTENT_TYPE,
-        disposition: 'attachment'
+      send_tempfile(
+        excel.file,
+        filename: filename,
+        type:     ExcelSheet::CONTENT_TYPE,
       )
       return
     end
