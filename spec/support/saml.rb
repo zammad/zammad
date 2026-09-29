@@ -1,26 +1,39 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'keycloak/admin'
-
 module ZammadSpecSupportSAML
 
   def saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:)
-    # Setup Keycloak SAML authentication.
-    if !Keycloak::Admin.configured?
-      Keycloak::Admin.configure do |config|
-        config.username = ENV['KC_BOOTSTRAP_ADMIN_USERNAME']
-        config.password = ENV['KC_BOOTSTRAP_ADMIN_PASSWORD']
-        config.realm    = 'zammad'
-        config.base_url = ENV['KEYCLOAK_BASE_URL']
-      end
-    end
+    token       = saml_keycloak_admin_token
+    clients_url = "#{ENV['KEYCLOAK_BASE_URL']}/admin/realms/zammad/clients"
 
     # Force create Zammad client in Keycloak.
-    client = Keycloak::Admin.clients.lookup(clientId: zammad_saml_metadata)
-    if client.any?
-      Keycloak::Admin.clients.delete(client.first['id'])
+    clients = saml_keycloak_request!(:get, "#{clients_url}?clientId=#{CGI.escape(zammad_saml_metadata)}", {}, { json: true, bearer_token: token }).data
+    clients.each do |client|
+      saml_keycloak_request!(:delete, "#{clients_url}/#{client['id']}", {}, { bearer_token: token })
     end
-    Keycloak::Admin.clients.create(JSON.parse(saml_client_json))
+    saml_keycloak_request!(:post, clients_url, JSON.parse(saml_client_json), { json: true, jsonParseDisable: true, bearer_token: token })
+  end
+
+  def saml_keycloak_admin_token
+    response = saml_keycloak_request!(
+      :post,
+      "#{ENV['KEYCLOAK_BASE_URL']}/realms/master/protocol/openid-connect/token",
+      {
+        grant_type: 'password',
+        client_id:  'admin-cli',
+        username:   ENV['KC_BOOTSTRAP_ADMIN_USERNAME'],
+        password:   ENV['KC_BOOTSTRAP_ADMIN_PASSWORD'],
+      },
+    )
+
+    JSON.parse(response.body)['access_token']
+  end
+
+  def saml_keycloak_request!(method, url, params = {}, options = {})
+    response = UserAgent.public_send(method, url, params, options)
+    raise "Keycloak request #{method.upcase} #{url} failed: #{response.code} #{response.body}" if !response.success?
+
+    response
   end
 
   def saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:, name_identifier_format: nil, uid_attribute: nil, idp_slo_service_url: true, security: nil)

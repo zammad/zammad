@@ -350,10 +350,6 @@ GEM
       redis-client (= 0.30.1)
     htmlentities (4.4.2)
     http_parser.rb (0.8.1)
-    httparty (0.24.2)
-      csv
-      mini_mime (>= 1.0.0)
-      multi_xml (>= 0.5.2)
     httpclient (2.9.0)
       mutex_m
     i18n (1.15.2)
@@ -759,9 +755,6 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
-    ruby-keycloak-admin (26.5.2)
-      hashie (>= 5.0.0)
-      httparty (>= 0.21, < 0.25)
     ruby-lsp (0.26.11)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
@@ -1040,7 +1033,6 @@ DEPENDENCIES
   rubocop-rake
   rubocop-rspec
   rubocop-rspec_rails
-  ruby-keycloak-admin
   ruby-lsp
   ruby-lsp-rails
   ruby-lsp-rspec

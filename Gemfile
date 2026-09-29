@@ -272,9 +272,6 @@ group :development, :test do
   # Self-signed localhost certificates for puma / capybara.
   gem 'localhost'
 
-  # Keycloak admin tool for setting up SAML auth tests
-  gem 'ruby-keycloak-admin'
-
   # Debugging and profiling
   gem 'pry-doc', require: false # This gem is very large, so don't include it in production.
 
