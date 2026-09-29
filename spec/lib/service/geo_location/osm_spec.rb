@@ -4,6 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Service::GeoLocation::Osm, :integration, use_vcr: true do
   before do
+    if VCR.configuration.allow_http_connections_when_no_cassette?
+      skip 'Nominatim blocks requests from the CI runners, so this spec works with VCR cassettes only.'
+    end
+
     # NB: Exclude possible geocoding matches, in order to always receive same coordinates for purpose of this test.
     #   https://nominatim.org/release-docs/develop/api/Search/#result-restriction
     stub_const('Service::GeoLocation::Osm::OSM_SEARCH_URL', "#{Service::GeoLocation::Osm::OSM_SEARCH_URL}&exclude_place_ids=158906443")
