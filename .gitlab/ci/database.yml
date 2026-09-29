@@ -6,6 +6,7 @@
   stage: lint
   extends:
     - .job_rules_default
+  timeout: 6 minutes
   services:
     - !reference [.services, postgresql]
   variables:
