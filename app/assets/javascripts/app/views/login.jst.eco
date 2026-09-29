@@ -3,7 +3,7 @@
     <div class="fullscreen-body">
       <p><%- @T('Log in to %s', @C('fqdn')) %></p>
 
-      <% if @C('maintenance_mode'): %>
+      <% if @C('maintenance_mode') || @C('import_mode'): %>
         <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.') %></div>
       <% end %>
       <% if @C('maintenance_login') && @C('maintenance_login_message'): %>

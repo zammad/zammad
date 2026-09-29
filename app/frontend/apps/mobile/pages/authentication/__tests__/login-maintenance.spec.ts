@@ -49,19 +49,22 @@ describe('testing login maintenance mode', () => {
     expect(maintenanceModeMessage).not.toBeInTheDocument()
   })
 
-  it('check for maintenance mode message', async () => {
-    mockApplicationConfig({
-      maintenance_mode: true,
-    })
+  it.each(['maintenance_mode', 'import_mode'])(
+    'check for maintenance mode message when %s is active',
+    async (setting) => {
+      mockApplicationConfig({
+        [setting]: true,
+      })
 
-    const view = await visitView('/login')
+      const view = await visitView('/login')
 
-    const maintenanceModeMessage = view.queryByText(
-      'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
-    )
+      const maintenanceModeMessage = view.queryByText(
+        'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
+      )
 
-    expect(maintenanceModeMessage).toBeInTheDocument()
-  })
+      expect(maintenanceModeMessage).toBeInTheDocument()
+    },
+  )
 
   it('check for maintenance mode login custom message (e.g. to announce maintenance)', async () => {
     mockApplicationConfig({
@@ -76,90 +79,96 @@ describe('testing login maintenance mode', () => {
     expect(maintenanceModeCustomMessage).toBeInTheDocument()
   })
 
-  it('does not logout for admin user after maintenance mode switch', async () => {
-    mockApplicationConfig({
-      maintenance_mode: false,
-    })
-    mockAuthentication(true)
-    mockPermissions(['admin.maintenance'])
+  it.each(['maintenance_mode', 'import_mode'])(
+    'does not logout for admin user after %s switch',
+    async (setting) => {
+      mockApplicationConfig({
+        maintenance_mode: false,
+        import_mode: false,
+      })
+      mockAuthentication(true)
+      mockPermissions(['admin.maintenance'])
 
-    const mockSubscription = mockGraphQLSubscription(ConfigUpdatesDocument)
+      const mockSubscription = mockGraphQLSubscription(ConfigUpdatesDocument)
 
-    const application = useApplicationStore()
-    application.initializeConfigUpdateSubscription()
+      const application = useApplicationStore()
+      application.initializeConfigUpdateSubscription()
 
-    await visitView('/')
+      await visitView('/')
 
-    // Change maintenance mode to trigger the logout for non admin user.
-    await mockSubscription.next({
-      data: {
-        configUpdates: {
-          setting: {
-            key: 'maintenance_mode',
-            value: true,
+      await mockSubscription.next({
+        data: {
+          configUpdates: {
+            setting: {
+              key: setting,
+              value: true,
+            },
           },
         },
-      },
-    })
+      })
 
-    expect(useAuthenticationStore().authenticated).toBe(true)
-  })
+      expect(useAuthenticationStore().authenticated).toBe(true)
+    },
+  )
 
-  it('check logout for non admin user after maintenance mode switch', async () => {
-    mockApplicationConfig({
-      maintenance_mode: false,
-    })
-    mockAuthentication(true)
-    mockPermissions(['ticket.agent'])
+  it.each(['maintenance_mode', 'import_mode'])(
+    'check logout for non admin user after %s switch',
+    async (setting) => {
+      mockApplicationConfig({
+        maintenance_mode: false,
+        import_mode: false,
+      })
+      mockAuthentication(true)
+      mockPermissions(['ticket.agent'])
 
-    mockGraphQLApi(LogoutDocument).willResolve({
-      logout: {
-        success: true,
-        errors: null,
-        externalLogoutUrl: null,
-      },
-    })
-
-    const mockSubscription = mockGraphQLSubscription(ConfigUpdatesDocument)
-
-    const application = useApplicationStore()
-    application.initializeConfigUpdateSubscription()
-
-    mockGraphQLApi(ApplicationConfigDocument).willResolve({
-      applicationConfig: [
-        {
-          key: 'maintenance_mode',
-          value: true,
+      mockGraphQLApi(LogoutDocument).willResolve({
+        logout: {
+          success: true,
+          errors: null,
+          externalLogoutUrl: null,
         },
-        {
-          key: 'product_name',
-          value: 'Zammad',
-        },
-      ],
-    })
+      })
 
-    const view = await visitView('/')
+      const mockSubscription = mockGraphQLSubscription(ConfigUpdatesDocument)
 
-    // Change maintenance mode to trigger the logout for non admin user.
-    await mockSubscription.next({
-      data: {
-        configUpdates: {
-          setting: {
-            key: 'maintenance_mode',
+      const application = useApplicationStore()
+      application.initializeConfigUpdateSubscription()
+
+      mockGraphQLApi(ApplicationConfigDocument).willResolve({
+        applicationConfig: [
+          {
+            key: setting,
             value: true,
           },
+          {
+            key: 'product_name',
+            value: 'Zammad',
+          },
+        ],
+      })
+
+      const view = await visitView('/')
+
+      await mockSubscription.next({
+        data: {
+          configUpdates: {
+            setting: {
+              key: setting,
+              value: true,
+            },
+          },
         },
-      },
-    })
+      })
 
-    expect(useAuthenticationStore().authenticated).toBe(false)
+      expect(useAuthenticationStore().authenticated).toBe(false)
 
-    await waitFor(() => {
-      const maintenanceModeMessage = view.queryByText(
-        'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
-      )
+      await waitFor(() => {
+        const maintenanceModeMessage = view.queryByText(
+          'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
+        )
 
-      expect(maintenanceModeMessage).toBeInTheDocument()
-    })
-  })
+        expect(maintenanceModeMessage).toBeInTheDocument()
+      })
+    },
+  )
 })

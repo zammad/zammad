@@ -34,7 +34,7 @@ const useAuthenticationChanges = () => {
   })
 
   watch(
-    () => application.config.maintenance_mode,
+    () => application.isMaintenanceModeActive,
     async (newValue, oldValue) => {
       if (
         !oldValue &&

@@ -38,6 +38,16 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
       end
     end
 
+    context 'with authenticated session, but in import_mode', authenticated_as: :agent do
+      before do
+        Setting.set('import_mode', true)
+      end
+
+      it 'logs out' do
+        expect(graphql_response['data']['logout']).to eq('success' => true, 'externalLogoutUrl' => nil)
+      end
+    end
+
     context 'without authenticated session', authenticated_as: false do
       it 'logs out' do
         expect(graphql_response['data']['logout']).to eq('success' => true, 'externalLogoutUrl' => nil)

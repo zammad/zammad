@@ -65,6 +65,22 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
       post '/graphql', params: { query: query, variables: variables }, headers: headers, as: :json
     end
 
+    context 'with correct credentials in import mode' do
+      before { Setting.set('import_mode', true) }
+
+      it 'refuses the login' do
+        expect(graphql_response['errors'].first['message']).to eq('Maintenance mode enabled!')
+      end
+
+      context 'with an administrator' do
+        let(:agent) { create(:admin, password: agent_password) }
+
+        it 'returns session data' do
+          expect(graphql_response['data']['login']['session']['id']).to be_present
+        end
+      end
+    end
+
     context 'with correct credentials' do
       context 'without two factor authentication' do
         it 'returns session data' do

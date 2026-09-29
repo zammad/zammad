@@ -2,10 +2,13 @@
 
 <script setup lang="ts">
 import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 defineProps<{
   title: string
 }>()
+
+const application = useApplicationStore()
 </script>
 
 <template>
@@ -15,7 +18,7 @@ defineProps<{
   <h1 class="mb-6 flex justify-center p-2 text-2xl font-bold">
     {{ $t(title) }}
   </h1>
-  <template v-if="$c.maintenance_mode">
+  <template v-if="application.isMaintenanceModeActive">
     <div class="mb-4 flex items-center rounded-xl bg-red px-4 py-2 text-white">
       {{
         $t(

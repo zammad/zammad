@@ -3829,7 +3829,7 @@ Setting.create_if_not_exists(
   title:       __('Import Mode'),
   name:        'import_mode',
   area:        'Import::Base',
-  description: __('Puts Zammad into import mode (disables some triggers).'),
+  description: __('Puts Zammad into import mode. This disables some triggers and denies access to all users without the permission "admin.maintenance".'),
   options:     {
     form: [
       {

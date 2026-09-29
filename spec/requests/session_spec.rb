@@ -321,9 +321,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
       let(:user) { create(:agent) }
       let(:login) { user.login }
 
-      context 'in Maintenance Mode' do
-        before { Setting.set('maintenance_mode', true) }
-
+      shared_examples 'refusing the login with 403 Forbidden' do
         context 'in "REMOTE_USER" request env var' do
           let(:env) { { 'REMOTE_USER' => login } }
 
@@ -356,6 +354,18 @@ RSpec.describe 'Sessions endpoints', type: :request do
             expect(json_response).to include('error' => 'Maintenance mode enabled!')
           end
         end
+      end
+
+      context 'in Maintenance Mode' do
+        before { Setting.set('maintenance_mode', true) }
+
+        include_examples 'refusing the login with 403 Forbidden'
+      end
+
+      context 'in Import Mode' do
+        before { Setting.set('import_mode', true) }
+
+        include_examples 'refusing the login with 403 Forbidden'
       end
 
       context 'in "REMOTE_USER" request env var' do

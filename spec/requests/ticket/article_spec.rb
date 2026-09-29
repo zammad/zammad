@@ -554,7 +554,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         article = create(:ticket_article, ticket: ticket)
 
         Setting.set('import_mode', true)
-        authenticated_as(agent)
+        authenticated_as(admin)
 
         new_created_at = Time.zone.parse('2020-01-02 03:04:05 UTC')
 

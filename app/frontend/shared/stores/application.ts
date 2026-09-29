@@ -128,6 +128,11 @@ export const useApplicationStore = defineStore(
       Boolean(config.value.product_logo && config.value.product_logo !== 'logo.svg'),
     )
 
+    // Import mode closes the instance to everyone except administrators, like maintenance mode does.
+    const isMaintenanceModeActive = computed(() =>
+      Boolean(config.value.maintenance_mode || config.value.import_mode),
+    )
+
     // this is called right before router renders a page, - we remove "loading" element here instead of "setLoaded"
     // so we don't have a short period when App route is not fetched yet and we see a black screen
     const setInitialized = () => {
@@ -151,6 +156,7 @@ export const useApplicationStore = defineStore(
       getConfig,
       resetAndGetConfig,
       hasCustomProductBranding,
+      isMaintenanceModeActive,
       initialized,
       setInitialized,
     }

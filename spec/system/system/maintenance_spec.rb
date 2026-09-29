@@ -69,6 +69,19 @@ RSpec.describe 'System > Maintenance', type: :system do
     end
   end
 
+  context 'when import mode is active', authenticated_as: :authenticate do
+    def authenticate
+      Setting.set('import_mode', true)
+      true
+    end
+
+    it 'shows the maintenance mode message in the login preview' do
+      visit 'system/maintenance'
+
+      expect(find('.js-loginPreview')).to have_css('.alert--danger', text: 'Zammad is currently in maintenance mode.')
+    end
+  end
+
   context 'when maintenance mode is used' do
     context 'when maintenance mode will be activated', authenticated_as: :authenticate do
       def authenticate

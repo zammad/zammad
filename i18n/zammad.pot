@@ -618,7 +618,7 @@ msgstr ""
 msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:149
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
@@ -630,7 +630,7 @@ msgstr ""
 msgid "A powerful service to get more information about your customers."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/cti.coffee:209
+#: app/assets/javascripts/app/controllers/_integration/cti.coffee:223
 msgid "A queue is required!"
 msgstr ""
 
@@ -660,7 +660,7 @@ msgstr ""
 msgid "A title is required."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/cti.coffee:216
+#: app/assets/javascripts/app/controllers/_integration/cti.coffee:230
 msgid "A user is required!"
 msgstr ""
 
@@ -3794,7 +3794,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:317
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:40
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -3999,7 +3999,7 @@ msgstr ""
 msgid "Config"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
 msgid "Config has changed"
 msgstr ""
 
@@ -4192,7 +4192,7 @@ msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:303
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:306
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
@@ -4271,7 +4271,7 @@ msgstr ""
 msgid "Continue anyway"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:38
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -4285,7 +4285,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:73
 #: app/assets/javascripts/app/views/login.jst.eco:125
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/continue-to-mobile.ts:14
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:313
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:316
 msgid "Continue to mobile"
 msgstr ""
 
@@ -8420,7 +8420,7 @@ msgstr ""
 msgid "Generating text…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/cti.coffee:265
+#: app/assets/javascripts/app/controllers/_integration/cti.coffee:279
 msgid "Generic API to integrate VoIP service provider with real-time push."
 msgstr ""
 
@@ -8839,7 +8839,7 @@ msgid "Have the BETA switch between the old and the new UI always available in t
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:3
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:269
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:272
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:133
 msgid "Having problems?"
 msgstr ""
@@ -9243,7 +9243,7 @@ msgid "If you don't see the email, check other places it might be, like your jun
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco:105
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:290
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:293
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:150
 msgid "If you have problems with the third-party login you can request a one-time password login as an admin."
 msgstr ""
@@ -12080,7 +12080,7 @@ msgstr ""
 msgid "New User Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:148
 msgid "New Version"
 msgstr ""
 
@@ -12168,7 +12168,7 @@ msgstr ""
 msgid "New user"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:224
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:227
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:144
 msgid "New user?"
 msgstr ""
@@ -14506,14 +14506,14 @@ msgid "Put a message on the login page. To change it, click on the text area bel
 msgstr ""
 
 #: db/seeds/settings.rb:3831
-msgid "Puts Zammad into import mode (disables some triggers)."
+msgid "Puts Zammad into import mode. This disables some triggers and denies access to all users without the permission \"admin.maintenance\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:21
 msgid "Queue"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/cti.coffee:225
+#: app/assets/javascripts/app/controllers/_integration/cti.coffee:239
 msgid "Queue already exists!"
 msgstr ""
 
@@ -14703,7 +14703,7 @@ msgstr ""
 msgid "Regeneration Of ID"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:226
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:229
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:150
 msgid "Register"
 msgstr ""
@@ -14765,7 +14765,7 @@ msgstr ""
 msgid "Relevance score threshold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:131
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr ""
@@ -15082,7 +15082,7 @@ msgid "Request password login for admin?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:295
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:298
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr ""
@@ -16064,7 +16064,7 @@ msgstr ""
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:126
 msgid "Security token verification failed"
 msgstr ""
 
@@ -16856,7 +16856,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue:77
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:154
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:13
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:231
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:234
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:160
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:80
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:158
@@ -17027,11 +17027,11 @@ msgstr ""
 msgid "Some Text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:69
 msgid "Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:88
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 
@@ -17574,7 +17574,7 @@ msgstr ""
 msgid "Switch to new layout"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:322
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:325
 msgid "Switch to old interface"
 msgstr ""
 
@@ -18266,7 +18266,7 @@ msgstr ""
 msgid "The chosen unit will be used for display only and will not affect stored values."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:112
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
@@ -18527,7 +18527,7 @@ msgstr ""
 msgid "The import was successful."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:127
 msgid "The included security token is invalid. This may be just a temporary error, please reload your browser, and try again."
 msgstr ""
 
@@ -20958,7 +20958,7 @@ msgid "Try again"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:4
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:271
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:274
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:138
 #: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts:96
 msgid "Try another method"
@@ -23032,12 +23032,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:4
 #: app/assets/javascripts/app/views/login.jst.eco:7
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:190
-#: app/frontend/apps/mobile/pages/authentication/components/LoginHeader.vue:22
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:193
+#: app/frontend/apps/mobile/pages/authentication/components/LoginHeader.vue:25
 msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:68
 msgid "Zammad is restarting…"
 msgstr ""
 
@@ -23045,7 +23045,7 @@ msgstr ""
 msgid "Zammad looks like this for \"%s\""
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:87
 msgid "Zammad requires a restart!"
 msgstr ""
 

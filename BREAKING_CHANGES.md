@@ -41,19 +41,6 @@ will be returned in a dedicated `inline_attachments` key instead.
 
 **Related issue:** [#6254](https://github.com/zammad/zammad/issues/6254)
 
-### Import mode will also enable maintenance mode
-
-**Who is affected?** Admins of instances that are left in import mode while users are expected to work
-in them.
-
-Import mode was never intended for productive environments. In a future release, an instance running in
-import mode will automatically run in maintenance mode as well, which prevents non-admin users from
-logging in.
-
-⚠️ Disable import mode before letting users work in the instance.
-
-**Related issue:** [#6237](https://github.com/zammad/zammad/issues/6237)
-
 ### `Exceptions::UnprocessableEntity` will be removed
 
 **Who is affected?** Developers of custom packages, patches or add-ons that still reference
@@ -104,6 +91,23 @@ never modifies its argument and always returns a new string.
 replace `String#utf8_encode!` with an assignment from it.
 
 **Related issue:** [#6371](https://github.com/zammad/zammad/issues/6371)
+
+### Import mode also enables maintenance mode
+
+**Who is affected?** Admins of instances that are left in import mode while users are expected to work
+in them.
+
+Import mode was never intended for productive environments. An instance running in import mode now
+automatically runs in maintenance mode as well: while the `import_mode` setting is enabled, every
+authenticated request of a user without the `admin.maintenance` permission is refused. REST and API
+requests get `403 Forbidden`, and GraphQL treats the session as logged out. This covers new logins,
+sessions that were already open, and API access via token or HTTP basic authentication alike. An
+impersonated session is only exempt when the administrator who switched into it holds
+`admin.maintenance`; this also applies to the classic maintenance mode.
+
+⚠️ Disable import mode before letting users work in the instance.
+
+**Related issue:** [#6237](https://github.com/zammad/zammad/issues/6237)
 
 ### Deleting organizations via API requires the `admin.organization` permission
 
