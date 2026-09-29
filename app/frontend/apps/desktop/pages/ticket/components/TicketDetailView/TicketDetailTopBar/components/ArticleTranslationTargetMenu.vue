@@ -69,7 +69,7 @@ const select = (option: SelectOption) => {
 </script>
 
 <template>
-  <div class="flex" data-test-id="article-translation-target-menu">
+  <div data-test-id="article-translation-target-menu">
     <CommonButton
       :id="targetId"
       ref="popoverTarget"
@@ -80,7 +80,7 @@ const select = (option: SelectOption) => {
       "
       variant="tertiary-light"
       size="small"
-      class="h-7! px-2! -outline-offset-1!"
+      class="px-1! py-0! h-full! -outline-offset-1!"
       :class="{
         'outline-1! outline-blue-800!': isOpen,
       }"
