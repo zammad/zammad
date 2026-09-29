@@ -12,6 +12,8 @@ export const CtiSidebarAttributesFragmentDoc = gql`
     from
     fromPretty
     fromComment
+    to
+    toComment
     done
     createdAt
     fromMatches {

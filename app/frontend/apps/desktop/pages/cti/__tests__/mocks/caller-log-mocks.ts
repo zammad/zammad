@@ -179,6 +179,8 @@ const baseRingingCall = {
   from: '4930609854180',
   fromPretty: '+49 30 609854180',
   fromComment: null,
+  to: '4930609811111',
+  toComment: null,
   done: false,
   createdAt: '2026-09-21T09:00:00Z',
 }

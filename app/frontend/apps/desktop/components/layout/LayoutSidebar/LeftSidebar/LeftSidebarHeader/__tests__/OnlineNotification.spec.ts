@@ -4,6 +4,7 @@ import { within } from '@testing-library/vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { resetGlobalStates } from '#tests/support/mock-globalState.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick, waitUntil, waitUntilSpyCalled } from '#tests/support/utils.ts'
 
@@ -55,24 +56,38 @@ vi.mock('#shared/composables/useOnlineNotification/useOnlineNotificationSound.ts
   }),
 }))
 
-const closeWebNotificationSpy = vi.hoisted(() => vi.fn())
-const showWebNotificationSpy = vi.hoisted(() =>
-  vi.fn(() => Promise.resolve({ close: closeWebNotificationSpy })),
-)
+const closeWebNotificationSpy = vi.fn()
+const showWebNotificationSpy = vi.fn()
+const requestPermissionSpy = vi.fn(() => Promise.resolve('granted'))
 
-vi.mock('@vueuse/core', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@vueuse/core')>()
+// The shared browser notification instance snapshots the permission when it is
+//   created, so every example gets a fresh one.
+vi.mock('@vueuse/core', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@vueuse/core')>()),
+  createGlobalState: (await import('#tests/support/mock-globalState.ts')).createGlobalState,
+}))
 
-  return {
-    ...actual,
-    useWebNotification: () => ({
-      ...actual.useWebNotification(),
-      show: showWebNotificationSpy,
-      isSupported: { value: true },
-      permissionGranted: { value: true },
-    }),
-  }
-})
+// The constructor is the spy for shown notifications. VueUse probes the support
+//   with an untitled notification, which is not one.
+const mockNotification = (permission: NotificationPermission) => {
+  resetGlobalStates()
+
+  Object.defineProperty(globalThis, 'Notification', {
+    value: class {
+      static permission = permission
+
+      static requestPermission = requestPermissionSpy
+
+      close = closeWebNotificationSpy
+
+      constructor(title: string, options?: NotificationOptions) {
+        if (title) showWebNotificationSpy(title, options)
+      }
+    },
+    writable: true,
+    configurable: true,
+  })
+}
 
 const waitForConfirmationMock = vi.fn().mockImplementation(() => true)
 
@@ -84,6 +99,8 @@ vi.mock('#shared/composables/useConfirmation.ts', () => ({
 
 describe('OnlineNotification', () => {
   beforeEach(() => {
+    mockNotification('granted')
+
     mockUserCurrent({
       preferences: {
         notification_sound: {
@@ -133,14 +150,25 @@ describe('OnlineNotification', () => {
   })
 
   it('makes a notification sound if a new unseen message comes in', async () => {
-    const requestPermissionSpy = vi.fn(() => Promise.resolve('granted'))
-
-    Object.assign(window.Notification, {
-      permission: undefined,
-      requestPermission: requestPermissionSpy,
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [{ node }],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
     })
 
-    renderComponent(OnlineNotification)
+    renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 0,
+      },
+    })
 
     await getOnlineNotificationsCountSubscriptionHandler().trigger({
       onlineNotificationsCount: {
@@ -148,13 +176,13 @@ describe('OnlineNotification', () => {
       },
     })
 
-    expect(requestPermissionSpy).toHaveBeenCalled()
+    await waitUntilSpyCalled(playSoundSpy)
+
+    expect(playSoundSpy).toHaveBeenCalled()
   })
 
   it('does not play a notification sound if the sound is disabled', async () => {
-    Object.assign(Notification, {
-      permission: undefined,
-    })
+    mockNotification('default')
 
     mockUserCurrent({
       preferences: {
@@ -178,26 +206,109 @@ describe('OnlineNotification', () => {
     expect(playSoundSpy).not.toHaveBeenCalled()
   })
 
-  it('asks for notification permission if session starts for the first time', async () => {
-    Object.assign(Notification, {
-      permission: undefined,
-    })
+  it.each([true, false])(
+    'does not ask for the notification permission on mount when the sound is %s',
+    async (enabled) => {
+      mockNotification('default')
 
-    const spy = vi.spyOn(Notification, 'requestPermission')
+      mockUserCurrent({
+        preferences: {
+          notification_sound: {
+            enabled,
+            notification_sound: 'Xylo.mp3',
+          },
+        },
+      })
+
+      renderComponent(OnlineNotification, {
+        router: true,
+      })
+
+      await waitForNextTick()
+
+      expect(requestPermissionSpy).not.toHaveBeenCalled()
+    },
+  )
+
+  it('shows a browser notification when the permission is granted', async () => {
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [{ node }],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
 
     renderComponent(OnlineNotification, {
       router: true,
     })
 
-    await waitForNextTick()
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 0,
+      },
+    })
 
-    expect(spy).toHaveBeenCalled()
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 1,
+      },
+    })
+
+    await waitUntilSpyCalled(showWebNotificationSpy)
+
+    expect(showWebNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ tag: node.id, silent: true }),
+    )
+    expect(requestPermissionSpy).not.toHaveBeenCalled()
   })
 
+  it.each(['default', 'denied'] as const)(
+    'skips the browser notification silently when the permission is %s',
+    async (permission) => {
+      mockNotification(permission)
+
+      mockOnlineNotificationsQuery({
+        onlineNotifications: {
+          edges: [{ node }],
+          pageInfo: {
+            endCursor: 'Nw',
+            hasNextPage: false,
+          },
+        },
+      })
+
+      const wrapper = renderComponent(OnlineNotification, {
+        router: true,
+      })
+
+      await getOnlineNotificationsCountSubscriptionHandler().trigger({
+        onlineNotificationsCount: {
+          unseenCount: 0,
+        },
+      })
+
+      await getOnlineNotificationsCountSubscriptionHandler().trigger({
+        onlineNotificationsCount: {
+          unseenCount: 1,
+        },
+      })
+
+      await waitUntilSpyCalled(playSoundSpy)
+
+      expect(showWebNotificationSpy).not.toHaveBeenCalled()
+      expect(requestPermissionSpy).not.toHaveBeenCalled()
+      expect(wrapper.getByRole('status', { name: 'Unseen notifications count' })).toHaveTextContent(
+        '1',
+      )
+    },
+  )
+
   it('does not play a sound if the user has not granted permission', async () => {
-    Object.assign(Notification, {
-      permission: 'denied',
-    })
+    mockNotification('denied')
 
     renderComponent(OnlineNotification, {
       router: true,
@@ -213,9 +324,7 @@ describe('OnlineNotification', () => {
   })
 
   it('does not play a sound if the user has a pending permission prompt', async () => {
-    Object.assign(Notification, {
-      permission: 'prompt',
-    })
+    mockNotification('default')
 
     renderComponent(OnlineNotification, {
       router: true,

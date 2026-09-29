@@ -8,6 +8,8 @@ fragment ctiSidebarAttributes on CtiSidebar {
     from
     fromPretty
     fromComment
+    to
+    toComment
     done
     createdAt
     fromMatches {
