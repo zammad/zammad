@@ -6,6 +6,11 @@ import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { resetGlobalStates } from '#tests/support/mock-globalState.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import {
+  holdLockFromAnotherTab,
+  mockWebLocks,
+  unmockWebLocks,
+} from '#tests/support/mock-webLocks.ts'
 import { waitForNextTick, waitUntil, waitUntilSpyCalled } from '#tests/support/utils.ts'
 
 import { waitForOnlineNotificationDeleteMutationCalls } from '#shared/entities/online-notification/graphql/mutations/delete.mocks.ts'
@@ -21,6 +26,7 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import OnlineNotification from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue'
+import { BROWSER_NOTIFICATION_LOCK } from '#desktop/composables/useBrowserNotification.ts'
 
 const playSoundSpy = vi.hoisted(() => vi.fn())
 
@@ -98,6 +104,10 @@ vi.mock('#shared/composables/useConfirmation.ts', () => ({
 }))
 
 describe('OnlineNotification', () => {
+  afterEach(() => {
+    unmockWebLocks()
+  })
+
   beforeEach(() => {
     mockNotification('granted')
 
@@ -306,6 +316,82 @@ describe('OnlineNotification', () => {
       )
     },
   )
+
+  it('leaves the browser notification to the tab the agent used last', async () => {
+    mockWebLocks()
+    holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK)
+
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [{ node }],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 0,
+      },
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 1,
+      },
+    })
+
+    await waitUntilSpyCalled(playSoundSpy)
+
+    expect(showWebNotificationSpy).not.toHaveBeenCalled()
+    expect(wrapper.getByRole('status', { name: 'Unseen notifications count' })).toHaveTextContent(
+      '1',
+    )
+  })
+
+  it('closes its browser notifications when another tab takes over', async () => {
+    mockWebLocks()
+
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [{ node }],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 0,
+      },
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 1,
+      },
+    })
+
+    await waitUntilSpyCalled(showWebNotificationSpy)
+
+    holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK, true)
+
+    await waitUntilSpyCalled(closeWebNotificationSpy)
+
+    expect(closeWebNotificationSpy).toHaveBeenCalledOnce()
+  })
 
   it('does not play a sound if the user has not granted permission', async () => {
     mockNotification('denied')

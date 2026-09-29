@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createGlobalState, useEventListener, useWebNotification } from '@vueuse/core'
-import { watch } from 'vue'
+import { tryOnScopeDispose } from '@vueuse/shared'
+import { readonly, ref, watch } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -71,3 +72,58 @@ export const useBrowserNotificationPermissionRequest = () => {
     { immediate: true },
   )
 }
+
+// The lock is per origin, like the notification tag.
+export const BROWSER_NOTIFICATION_LOCK = 'zammad-browser-notifications'
+
+// Which of the tabs of this origin shows the browser notifications: the one the
+//   agent used last. Every tab has its own subscriptions, so without this each
+//   background tab would notify, even while the agent looks at another one.
+//   A tab takes the lock over on focus; the tab that lost it closes what it
+//   showed and waits its turn, so a closed tab hands over to one still open.
+export const useBrowserNotificationTab = createGlobalState(() => {
+  const isNotifyingTab = ref(false)
+
+  // Without the Web Locks API every tab notifies, as before.
+  if (!('locks' in navigator)) {
+    isNotifyingTab.value = true
+
+    return { isNotifyingTab: readonly(isNotifyingTab) }
+  }
+
+  let controller: AbortController | undefined
+
+  // The request is rejected without an abort only when another tab took the lock over.
+  const request = (steal: boolean) => {
+    controller?.abort()
+
+    controller = new AbortController()
+    const { signal } = controller
+
+    // The API refuses a signal on a stealing request, which is granted at once anyway.
+    navigator.locks
+      .request(BROWSER_NOTIFICATION_LOCK, steal ? { steal } : { signal }, () => {
+        isNotifyingTab.value = true
+
+        return new Promise((resolve) => {
+          signal.addEventListener('abort', resolve, { once: true })
+        })
+      })
+      .catch(() => {
+        if (signal.aborted || !isNotifyingTab.value) return
+
+        isNotifyingTab.value = false
+        request(false)
+      })
+  }
+
+  request(document.hasFocus())
+
+  useEventListener(window, 'focus', () => {
+    if (!isNotifyingTab.value) request(true)
+  })
+
+  tryOnScopeDispose(() => controller?.abort())
+
+  return { isNotifyingTab: readonly(isNotifyingTab) }
+})

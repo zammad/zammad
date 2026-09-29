@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { whenever } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useActivityMessage } from '#shared/composables/activity-message/useActivityMessage.ts'
@@ -19,7 +19,10 @@ import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import NotificationButton from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue'
 import NotificationPopover from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover.vue'
-import { useBrowserNotification } from '#desktop/composables/useBrowserNotification.ts'
+import {
+  useBrowserNotification,
+  useBrowserNotificationTab,
+} from '#desktop/composables/useBrowserNotification.ts'
 
 const webNotificationList = new Map<ID, Notification>()
 
@@ -32,6 +35,8 @@ const { play, isEnabled } = useOnlineNotificationSound()
 const { notificationsCountSubscription } = useOnlineNotificationCount()
 
 const { permissionGranted, show } = useBrowserNotification()
+
+const { isNotifyingTab } = useBrowserNotificationTab()
 
 const {
   notificationList,
@@ -139,8 +144,10 @@ notificationsCountSubscription.watchOnResult(async (result) => {
 
   // The permission is requested centrally after login; without it, the
   //   browser notification is skipped and only the badge and sound remain.
+  //   The same goes for a tab that is not the one showing them.
   if (
     permissionGranted.value &&
+    isNotifyingTab.value &&
     data?.onlineNotifications &&
     result.onlineNotificationsCount.unseenCount > previousUnseenCount
   ) {
@@ -166,6 +173,11 @@ notificationsCountSubscription.watchOnResult(async (result) => {
   }
 
   previousUnseenCount = result.onlineNotificationsCount.unseenCount
+})
+
+// The tab that took over is in front and shows the badge itself.
+watch(isNotifyingTab, (notifying) => {
+  if (!notifying) closeWebNotifications()
 })
 
 whenever(

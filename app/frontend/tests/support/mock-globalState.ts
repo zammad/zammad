@@ -2,10 +2,13 @@
 
 import { effectScope } from 'vue'
 
-const globalStates = new Map<() => unknown, unknown>()
+import type { EffectScope } from 'vue'
+
+const globalStates = new Map<() => unknown, { scope: EffectScope; state: unknown }>()
 
 // Stands in for `createGlobalState` from VueUse: still one instance per factory,
-//   but `resetGlobalStates()` lets every example start from a fresh one.
+//   but `resetGlobalStates()` lets every example start from a fresh one and
+//   stops the previous one, so its listeners do not outlive the example.
 //
 // The `vi.mock('@vueuse/core', ...)` call itself stays in the spec file, since
 //   Vitest hoists it per module:
@@ -16,10 +19,17 @@ const globalStates = new Map<() => unknown, unknown>()
 //   }))
 export const createGlobalState = <T>(factory: () => T) => {
   return () => {
-    if (!globalStates.has(factory)) globalStates.set(factory, effectScope(true).run(factory))
+    if (!globalStates.has(factory)) {
+      const scope = effectScope(true)
 
-    return globalStates.get(factory) as T
+      globalStates.set(factory, { scope, state: scope.run(factory) })
+    }
+
+    return globalStates.get(factory)!.state as T
   }
 }
 
-export const resetGlobalStates = () => globalStates.clear()
+export const resetGlobalStates = () => {
+  globalStates.forEach(({ scope }) => scope.stop())
+  globalStates.clear()
+}

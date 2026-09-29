@@ -8,7 +8,10 @@ import { useRouter } from 'vue-router'
 import type { CtiSidebarQuery } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import { useBrowserNotification } from '#desktop/composables/useBrowserNotification.ts'
+import {
+  useBrowserNotification,
+  useBrowserNotificationTab,
+} from '#desktop/composables/useBrowserNotification.ts'
 
 import { useCtiSidebar } from './useCtiSidebar.ts'
 
@@ -24,6 +27,8 @@ export const useCtiCallNotification = () => {
 
   // The permission is requested centrally after login, this only checks it.
   const { permissionGranted, show } = useBrowserNotification()
+
+  const { isNotifyingTab } = useBrowserNotificationTab()
 
   const isActive = computed(() => isLoaded.value && isNotificationEnabled.value)
 
@@ -99,7 +104,7 @@ export const useCtiCallNotification = () => {
 
       knownCallIds = callIds
 
-      if (document.hasFocus() || !permissionGranted.value) return
+      if (document.hasFocus() || !isNotifyingTab.value || !permissionGranted.value) return
 
       newCalls.forEach(notify)
     },
@@ -108,6 +113,12 @@ export const useCtiCallNotification = () => {
 
   // A window in front shows the ringing calls itself.
   useEventListener(window, 'focus', closeAll)
+
+  // The tab that took over is in front; it does not notify for these calls
+  //   either, since its own list knows them already.
+  watch(isNotifyingTab, (notifying) => {
+    if (!notifying) closeAll()
+  })
 
   // A notification outliving its host would have nothing to open on click.
   tryOnScopeDispose(() => {

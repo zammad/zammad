@@ -8,12 +8,19 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { resetGlobalStates } from '#tests/support/mock-globalState.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import {
+  holdLockFromAnotherTab,
+  mockWebLocks,
+  unmockWebLocks,
+} from '#tests/support/mock-webLocks.ts'
 import { nullableMock, waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 
 import type { CtiSidebarQuery, CtiSidebarUpdatesSubscription } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
+
+import { BROWSER_NOTIFICATION_LOCK } from '#desktop/composables/useBrowserNotification.ts'
 
 import { CtiSidebarDocument } from '../../graphql/queries/ctiSidebar.api.ts'
 import {
@@ -173,6 +180,7 @@ describe('useCtiCallNotification', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals()
+    unmockWebLocks()
   })
 
   it('shows a silent notification for a new inbound ringing call while the window is unfocused', async () => {
@@ -327,6 +335,47 @@ describe('useCtiCallNotification', () => {
 
     expect(first.close).toHaveBeenCalledOnce()
     expect(second.close).not.toHaveBeenCalled()
+  })
+
+  it('leaves the notifications to the tab the agent used last', async () => {
+    mockWebLocks()
+
+    const otherTab = holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK)
+
+    await renderHost()
+
+    await pushRingingCalls([inboundCall])
+
+    expect(NotificationStub.instances).toHaveLength(0)
+
+    // The other tab is closed, so the next call is this tab's to notify about.
+    otherTab.release()
+    await waitForNextTick(true)
+
+    await pushRingingCalls([inboundCall, anotherInboundCall])
+
+    expect(NotificationStub.instances.map((notification) => notification.title)).toEqual([
+      'Call from Bob Smith for Support',
+    ])
+  })
+
+  it('closes its notifications when another tab takes over', async () => {
+    mockWebLocks()
+
+    await renderHost()
+
+    await pushRingingCalls([inboundCall])
+
+    const [notification] = NotificationStub.instances
+
+    holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK, true)
+    await waitForNextTick(true)
+
+    expect(notification.close).toHaveBeenCalledOnce()
+
+    await pushRingingCalls([inboundCall, anotherInboundCall])
+
+    expect(NotificationStub.instances).toHaveLength(1)
   })
 
   it('closes all notifications when the window gets focus', async () => {

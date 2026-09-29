@@ -5,13 +5,20 @@ import { defineComponent, h } from 'vue'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { resetGlobalStates } from '#tests/support/mock-globalState.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import {
+  holdLockFromAnotherTab,
+  mockWebLocks,
+  unmockWebLocks,
+} from '#tests/support/mock-webLocks.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import {
+  BROWSER_NOTIFICATION_LOCK,
   useBrowserNotification,
   useBrowserNotificationPermissionRequest,
+  useBrowserNotificationTab,
 } from '../useBrowserNotification.ts'
 
 // The shared instance snapshots the permission when it is created, so every
@@ -187,5 +194,91 @@ describe('useBrowserNotificationPermissionRequest', () => {
     await interact()
 
     expect(requestPermissionSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe('useBrowserNotificationTab', () => {
+  beforeEach(() => {
+    resetGlobalStates()
+    mockWebLocks()
+    vi.spyOn(document, 'hasFocus').mockReturnValue(false)
+  })
+
+  afterEach(() => {
+    unmockWebLocks()
+  })
+
+  it('shows the notifications as the only tab', async () => {
+    const { isNotifyingTab } = useBrowserNotificationTab()
+
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(true)
+  })
+
+  it('waits its turn behind the tab that shows them', async () => {
+    const otherTab = holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK)
+
+    const { isNotifyingTab } = useBrowserNotificationTab()
+
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(false)
+
+    // The other tab is closed.
+    otherTab.release()
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(true)
+  })
+
+  it('takes over when it is in front from the start', async () => {
+    vi.spyOn(document, 'hasFocus').mockReturnValue(true)
+
+    const otherTab = holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK)
+
+    const { isNotifyingTab } = useBrowserNotificationTab()
+
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(true)
+    expect(otherTab.lost).toHaveBeenCalledOnce()
+  })
+
+  it('takes over when the window gets focus', async () => {
+    const otherTab = holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK)
+
+    const { isNotifyingTab } = useBrowserNotificationTab()
+
+    await waitForNextTick(true)
+
+    window.dispatchEvent(new Event('focus'))
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(true)
+    expect(otherTab.lost).toHaveBeenCalledOnce()
+  })
+
+  it('hands over to the tab that got focus and is next in line', async () => {
+    const { isNotifyingTab } = useBrowserNotificationTab()
+
+    await waitForNextTick(true)
+
+    const otherTab = holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK, true)
+
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(false)
+
+    otherTab.release()
+    await waitForNextTick(true)
+
+    expect(isNotifyingTab.value).toBe(true)
+  })
+
+  it('shows the notifications in a browser without the Web Locks API', () => {
+    unmockWebLocks()
+
+    expect(useBrowserNotificationTab().isNotifyingTab.value).toBe(true)
   })
 })
