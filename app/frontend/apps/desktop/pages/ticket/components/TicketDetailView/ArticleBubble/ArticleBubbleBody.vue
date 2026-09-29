@@ -1,13 +1,18 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef, watch, nextTick, onMounted, useTemplateRef } from 'vue'
+import { useTimeoutFn } from '@vueuse/core'
+import { computed, ref, toRef, watch, nextTick, onMounted, useTemplateRef } from 'vue'
 
 import { useArticleToggleMore } from '#shared/composables/useArticleToggleMore.ts'
 import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import {
+  NO_RESULT_ERROR,
+  NO_TARGET_LOCALE_ERROR,
+} from '#shared/entities/ticket-article/composables/useTicketArticleTranslation.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
 import { i18n } from '#shared/i18n.ts'
 import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
@@ -49,6 +54,48 @@ const displayedTranslation = computed(() =>
 
 const isAiTranslation = computed(() => displayedTranslation.value?.backend === 'ai')
 
+const pendingTranslation = computed(() =>
+  translation.value?.status === 'pending' ? translation.value : null,
+)
+
+// A regeneration keeps the current translation on screen, and waits the same way.
+const isTranslationInProgress = computed(
+  () => !!pendingTranslation.value || !!displayedTranslation.value?.regenerating,
+)
+
+// Shown only for a translation that takes a while, so a fast answer never flashes, and kept until
+// it resolves, so a borderline one does not flicker.
+const TRANSLATION_PROGRESS_DELAY = 500
+
+const showsTranslationProgress = ref(false)
+
+const { start: startTranslationProgress, stop: stopTranslationProgress } = useTimeoutFn(
+  () => {
+    showsTranslationProgress.value = true
+  },
+  TRANSLATION_PROGRESS_DELAY,
+  { immediate: false },
+)
+
+watch(
+  isTranslationInProgress,
+  (inProgress) => {
+    if (inProgress) {
+      if (!showsTranslationProgress.value) startTranslationProgress()
+      return
+    }
+
+    stopTranslationProgress()
+    showsTranslationProgress.value = false
+  },
+  { immediate: true },
+)
+
+// Unknown until the server answered the request; the provider is never named, only drawn.
+const isAiTranslationProgress = computed(
+  () => (pendingTranslation.value ?? displayedTranslation.value)?.backend === 'ai',
+)
+
 const translationAttribution = computed(() => {
   if (!displayedTranslation.value) return ''
 
@@ -58,6 +105,20 @@ const translationAttribution = computed(() => {
 })
 
 const translationAnalytics = computed(() => displayedTranslation.value?.analytics)
+
+const isTranslationFailed = computed(() => translation.value?.status === 'error')
+
+// The server's reason is for the administrator, not for the agent reading the ticket; the client's
+// own reasons are written for the agent.
+const translationFailureReason = computed(() => {
+  if (translation.value?.status !== 'error') return ''
+
+  const { error } = translation.value
+
+  return error === NO_TARGET_LOCALE_ERROR || error === NO_RESULT_ERROR
+    ? error
+    : __('Failed to translate article content.')
+})
 
 const translationFeedback = useTemplateRef('translation-feedback')
 
@@ -206,9 +267,13 @@ onMounted(() => {
         BubbleGradient: !shownMore,
       }"
     />
+    <!-- Present before it has anything to say, so screen readers announce the change. -->
+    <span class="sr-only" role="status" data-test-id="article-translation-status">
+      {{ showsTranslationProgress ? $t('Translation in progress…') : '' }}
+    </span>
     <div
-      v-if="hasShowMore || displayedTranslation"
-      class="flex flex-wrap items-center gap-x-2.5 gap-y-1 py-1 print:hidden"
+      v-if="hasShowMore || displayedTranslation || showsTranslationProgress || isTranslationFailed"
+      class="flex flex-wrap items-center gap-1 py-1 print:hidden"
       data-test-id="article-body-toolbar"
     >
       <CommonLink
@@ -223,8 +288,40 @@ onMounted(() => {
         {{ shownMore ? $t('See less') : $t('See more') }}
       </CommonLink>
 
+      <!-- Named to assistive technology by the status region above. -->
+      <div
+        v-if="showsTranslationProgress"
+        class="ms-auto flex flex-col gap-0.5"
+        aria-hidden="true"
+        data-test-id="article-translation-progress"
+      >
+        <CommonLabel
+          class="text-stone-200! dark:text-neutral-500!"
+          size="xs"
+          tag="p"
+          prefix-icon="translate"
+        >
+          {{ $t('Translation in progress…') }}
+        </CommonLabel>
+        <span
+          class="translation-stripe motion-reduce:animate-none"
+          :class="{ 'translation-stripe-machine': !isAiTranslationProgress }"
+          data-test-id="article-translation-progress-stripe"
+        />
+      </div>
+
+      <CommonAlert
+        v-else-if="isTranslationFailed"
+        variant="danger"
+        class="ms-auto"
+        data-test-id="article-translation-error"
+      >
+        {{ $t(translationFailureReason) }}
+        {{ $t('Please contact your administrator.') }}
+      </CommonAlert>
+
       <CommonLabel
-        v-if="displayedTranslation"
+        v-else-if="displayedTranslation"
         class="ms-auto text-stone-200! dark:text-neutral-500!"
         size="xs"
         tag="p"
@@ -234,21 +331,27 @@ onMounted(() => {
         {{ $t(translationAttribution) }}
       </CommonLabel>
 
+      <!-- A failed translation has nothing to rate; asking again is its way to recover. -->
       <CommonAIFeedback
-        v-if="translationAnalytics?.run?.id"
+        v-if="(translationAnalytics?.run?.id || isTranslationFailed) && !showsTranslationProgress"
         ref="translation-feedback"
         :class="{ 'w-full': isTranslationFeedbackCommenting }"
-        :analytics-meta="translationAnalytics"
+        :analytics-meta="translationAnalytics ?? {}"
         no-usage-tracking
+        :no-rating="isTranslationFailed"
         regenerate-variant="neutral"
         data-test-id="article-translation-feedback"
         :no-ai-based="!isAiTranslation"
         :regenerating="displayedTranslation?.regenerating"
         @rated="articleTranslation.markTranslationRated(article.id)"
-        @regenerate="articleTranslation.regenerateTranslation(article.id)"
+        @regenerate="
+          isTranslationFailed
+            ? articleTranslation.showTranslation(article.id)
+            : articleTranslation.regenerateTranslation(article.id)
+        "
       >
         <template #success>
-          <CommonLabel class="-ms-2 flex! text-stone-200! dark:text-neutral-500!" size="xs">
+          <CommonLabel class="flex! text-stone-200! dark:text-neutral-500!" size="xs">
             {{ $t('Thank you for your feedback.') }}
           </CommonLabel>
         </template>

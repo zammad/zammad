@@ -47,6 +47,9 @@ const articleId = convertToGraphQLId('Ticket::Article', 1)
 const otherArticleId = convertToGraphQLId('Ticket::Article', 2)
 const analyticsRunId = convertToGraphQLId('AIAnalyticsRun', 1)
 
+// Whoever started it, and whichever service produces it.
+const expectPending = expect.objectContaining({ status: 'pending' })
+
 const mockTargetLocales = (locales = ['de-de', 'en-us', 'fr-fr']) =>
   mockTicketArticleTranslationTargetLocalesQuery({
     ticketArticleTranslationTargetLocales: locales.map((locale) => ({
@@ -66,6 +69,7 @@ const mockAvailability = (availableIn: (locale: string) => string[]) =>
         translated: null,
       })),
       pendingArticleIds: variables.generateMissing ? [articleId, otherArticleId] : [],
+      pendingBackend: 'ai',
     },
   }))
 
@@ -159,12 +163,17 @@ const deferredAll = () =>
     ticketArticleTranslateMany: {
       results: [],
       pendingArticleIds: [articleId, otherArticleId],
+      pendingBackend: 'ai',
     },
   })
 
 const deferred = () =>
   mockTicketArticleTranslateMutation({
-    ticketArticleTranslate: { article: { id: articleId, translation: null }, translation: null },
+    ticketArticleTranslate: {
+      article: { id: articleId, translation: null },
+      translation: null,
+      pendingBackend: 'ai',
+    },
   })
 
 const immediate = (content = '<p>Hallo</p>') =>
@@ -260,7 +269,7 @@ describe('useTicketArticleTranslation', () => {
       await openSubscription()
       await pending
 
-      expect(second.translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(second.translation.translationFor(articleId)).toEqual(expectPending)
       expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(2)
     })
 
@@ -271,7 +280,7 @@ describe('useTicketArticleTranslation', () => {
       const translating = translation.showTranslation(articleId)
       await waitForNextTick(true)
 
-      expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(articleId)).toEqual(expectPending)
       expect(getTicketArticleTranslationUpdatesSubscriptionHandler()).toBeDefined()
       expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
       expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(false)
@@ -282,7 +291,7 @@ describe('useTicketArticleTranslation', () => {
       const calls = await waitForTicketArticleTranslateMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual({ articleId, targetLocale: 'de-de', force: true })
-      expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(articleId)).toEqual(expectPending)
       expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
 
       await subscription.trigger({
@@ -322,7 +331,7 @@ describe('useTicketArticleTranslation', () => {
         },
       })
 
-      expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(articleId)).toEqual(expectPending)
       // Not asked for, so not shown - but known once it is.
       expect(translation.translationFor(otherArticleId)).toBeUndefined()
       expect(translation.hasDirectTranslationAction(otherArticleId)).toBe(true)
@@ -349,6 +358,12 @@ describe('useTicketArticleTranslation', () => {
 
       expect(translation.translationFor(articleId)).toEqual({ status: 'error', error: message })
       expect(translation.isTranslationActive(articleId)).toBe(false)
+      // The direct button shows the failure until it is put away; then the menu asks again.
+      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
+
+      translation.showOriginal(articleId)
+
+      expect(translation.translationFor(articleId)).toBeUndefined()
       expect(translation.hasDirectTranslationAction(articleId)).toBe(false)
     })
 
@@ -397,7 +412,7 @@ describe('useTicketArticleTranslation', () => {
       await waitFor(async () =>
         expect(await waitForTicketArticleTranslateMutationCalls()).toHaveLength(3),
       )
-      expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(articleId)).toEqual(expectPending)
     })
 
     it('records a refused request without a notification', async () => {
@@ -743,6 +758,7 @@ describe('useTicketArticleTranslation', () => {
             },
           ],
           pendingArticleIds: [],
+          pendingBackend: 'ai',
         },
       })
       await waitForNextTick(true)
@@ -947,7 +963,7 @@ describe('useTicketArticleTranslation', () => {
         generateMissing: true,
       })
       expect(useArticleTranslationStore().isAutoEnabled).toBe(true)
-      expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(articleId)).toEqual(expectPending)
     })
 
     // Every open tab follows the one setting, so a ticket in another tab returns to its originals.
@@ -971,6 +987,7 @@ describe('useTicketArticleTranslation', () => {
       mockTicketArticleTranslateManyMutation({
         ticketArticleTranslateMany: {
           pendingArticleIds: [otherArticleId],
+          pendingBackend: 'ai',
           results: [
             {
               article: {
@@ -992,7 +1009,7 @@ describe('useTicketArticleTranslation', () => {
         }),
       )
       // Still on its way, so the original stays on screen without a direct answer.
-      expect(translation.translationFor(otherArticleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(otherArticleId)).toEqual(expectPending)
     })
 
     it('carries the run of a stored translation, so it can be rated', async () => {
@@ -1004,6 +1021,7 @@ describe('useTicketArticleTranslation', () => {
       mockTicketArticleTranslateManyMutation({
         ticketArticleTranslateMany: {
           pendingArticleIds: [],
+          pendingBackend: 'ai',
           results: [
             {
               article: {
@@ -1053,6 +1071,7 @@ describe('useTicketArticleTranslation', () => {
             __typename: 'TicketArticleTranslateManyPayload',
             results: [],
             pendingArticleIds: [articleId],
+            pendingBackend: 'ai',
           },
         })
 
@@ -1073,6 +1092,7 @@ describe('useTicketArticleTranslation', () => {
           __typename: 'TicketArticleTranslateManyPayload',
           results: [],
           pendingArticleIds: [articleId],
+          pendingBackend: 'ai',
         },
       })
       await waitForNextTick(true)
@@ -1104,10 +1124,11 @@ describe('useTicketArticleTranslation', () => {
           __typename: 'TicketArticleTranslateManyPayload',
           results: [],
           pendingArticleIds: [otherArticleId],
+          pendingBackend: 'ai',
         },
       })
       await waitFor(() => expect(translation.isTranslating.value).toBe(false))
-      expect(translation.translationFor(otherArticleId)).toEqual({ status: 'pending' })
+      expect(translation.translationFor(otherArticleId)).toEqual(expectPending)
     })
 
     it('covers every retained page on a target change', async () => {
@@ -1166,6 +1187,7 @@ describe('useTicketArticleTranslation', () => {
       mockTicketArticleTranslateManyMutation({
         ticketArticleTranslateMany: {
           pendingArticleIds: [otherArticleId],
+          pendingBackend: 'ai',
           results: [
             {
               article: {
@@ -1211,7 +1233,7 @@ describe('useTicketArticleTranslation', () => {
         translation.showOriginal(articleId)
 
         expect(translation.translationFor(articleId)).toBeUndefined()
-        expect(translation.translationFor(otherArticleId)).toEqual({ status: 'pending' })
+        expect(translation.translationFor(otherArticleId)).toEqual(expectPending)
 
         if (trigger === 'target change') store.setTargetLocale('fr-fr')
         else emitter.emit('reconnected')
@@ -1288,7 +1310,7 @@ describe('useTicketArticleTranslation', () => {
             generateMissing: true,
           })
         })
-        expect(translation.translationFor(articleId)).toEqual({ status: 'pending' })
+        expect(translation.translationFor(articleId)).toEqual(expectPending)
       },
     )
 
@@ -1421,6 +1443,7 @@ describe('useTicketArticleTranslation', () => {
             },
           ],
           pendingArticleIds: [],
+          pendingBackend: 'ai',
         },
       })
       store.setAutoEnabled(true)
@@ -1432,6 +1455,8 @@ describe('useTicketArticleTranslation', () => {
       lookup.resolve({
         ticketArticleTranslateMany: {
           __typename: 'TicketArticleTranslateManyPayload',
+          pendingArticleIds: [],
+          pendingBackend: null,
           results: [
             {
               __typename: 'TicketArticleTranslationResult',
@@ -1524,6 +1549,150 @@ describe('useTicketArticleTranslation', () => {
           generateMissing: false,
         })
       })
+    })
+  })
+
+  describe('translations started elsewhere', () => {
+    // A lookup finding the translation of an article queued or running on the server.
+    const mockInProgress = (ids: string[]) =>
+      mockTicketArticleTranslateManyMutation({
+        ticketArticleTranslateMany: {
+          results: [articleId, otherArticleId].map((id) => ({
+            article: { id, translationAvailable: false },
+            translated: null,
+          })),
+          pendingArticleIds: ids,
+          pendingBackend: ids.length ? 'ai' : null,
+        },
+      })
+
+    const resolve = (subscription: Awaited<ReturnType<typeof openSubscription>>) =>
+      subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          error: null,
+        },
+      })
+
+    it('shows the article as translating, with the service producing it', async () => {
+      const { translation } = setup()
+      mockInProgress([articleId])
+
+      await waitFor(() =>
+        expect(translation.translationFor(articleId)).toEqual({
+          status: 'pending',
+          backend: 'ai',
+          origin: 'server',
+        }),
+      )
+      expect(translation.translationFor(otherArticleId)).toBeUndefined()
+      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
+      expect(translation.isTranslationActive(articleId)).toBe(true)
+    })
+
+    it('keeps the original when the translation arrives, one click away', async () => {
+      const { translation } = setup()
+      mockInProgress([articleId])
+      await waitFor(() => expect(translation.translationFor(articleId)).toEqual(expectPending))
+
+      await resolve(await openSubscription())
+
+      expect(translation.translationFor(articleId)).toBeUndefined()
+      expect(translation.hasDirectTranslationAction(articleId)).toBe(true)
+
+      await translation.showTranslation(articleId)
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        status: 'done',
+        content: '<p>Hallo</p>',
+      })
+      expect(getGraphQLMockCalls('mutation', 'ticketArticleTranslate')).toHaveLength(0)
+    })
+
+    it('looks again once listening, so a translation finished in between does not stay pending', async () => {
+      const { translation } = setup()
+      mockInProgress([articleId])
+      await waitFor(() => expect(translation.translationFor(articleId)).toEqual(expectPending))
+
+      mockInProgress([])
+      await openSubscription()
+
+      await waitFor(() => expect(translation.translationFor(articleId)).toBeUndefined())
+      expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(2)
+    })
+
+    it('does not look again when it was listening already', async () => {
+      const { translation } = setup()
+      await openSubscription()
+      await waitForTicketArticleTranslateManyMutationCalls()
+
+      mockInProgress([articleId])
+      loadedArticleSelections.value = [selection(), selection(3)]
+
+      await waitFor(() => expect(translation.translationFor(articleId)).toEqual(expectPending))
+      await waitForNextTick(true)
+      // The first lookup, and one per page of the new selection - nothing after.
+      expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(3)
+    })
+
+    it('does not replace a translation this tab has', async () => {
+      const { translation } = setup()
+      await openSubscription()
+      immediate()
+      await translation.showTranslation(articleId)
+      expect(translation.translationFor(articleId)).toMatchObject({ status: 'done' })
+
+      mockInProgress([articleId])
+      emitter.emit('reconnected')
+      await openSubscription()
+      // Before listening again, and once more after.
+      await waitFor(async () =>
+        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(3),
+      )
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        status: 'done',
+        content: '<p>Hallo</p>',
+      })
+    })
+
+    it('picks the state up again after reconnecting', async () => {
+      const { translation } = setup()
+      mockInProgress([articleId])
+      await openSubscription()
+      await waitFor(async () =>
+        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(2),
+      )
+
+      emitter.emit('reconnected')
+      await waitFor(async () =>
+        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(3),
+      )
+      await waitFor(() =>
+        expect(translation.translationFor(articleId)).toMatchObject({ origin: 'server' }),
+      )
+
+      await openSubscription()
+
+      await waitFor(async () =>
+        expect(await waitForTicketArticleTranslateManyMutationCalls()).toHaveLength(4),
+      )
+      expect(translation.translationFor(articleId)).toMatchObject({ origin: 'server' })
+    })
+
+    it('carries the service of a translation this tab requested', async () => {
+      const { translation } = setup()
+      deferred()
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      expect(translation.translationFor(articleId)).toEqual({ status: 'pending', backend: 'ai' })
     })
   })
 

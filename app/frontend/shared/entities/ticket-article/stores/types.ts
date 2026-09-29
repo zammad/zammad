@@ -24,7 +24,14 @@ export interface ArticleTranslationResult {
 }
 
 export type ArticleTranslation =
-  | { status: 'pending' }
+  | {
+      status: 'pending'
+      // The service producing it, e.g. "ai"; unknown until the server answered the request.
+      backend?: Maybe<string>
+      // Started elsewhere, not requested in this tab: the article waits for it without being
+      // switched to its translation.
+      origin?: 'server'
+    }
   | ({ status: 'done' } & ArticleTranslationResult)
   | { status: 'error'; error: string }
 

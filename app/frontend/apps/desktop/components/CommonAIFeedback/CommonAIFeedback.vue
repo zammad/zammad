@@ -21,6 +21,8 @@ interface Props {
   analyticsMeta: DeepPartial<AiAnalyticsMetadata>
   label?: string
   noRegeneration?: boolean
+  // Only the way to recover, where there is no result to rate.
+  noRating?: boolean
   // A regeneration is on its way; asking for another one is refused until it arrives.
   regenerating?: boolean
   // Opt out where one view holds many controls: a ticket of translated articles would otherwise
@@ -107,10 +109,14 @@ const cancelComment = () => {
   uiState.value = 'success'
 }
 
-const showActions = computed(() => uiState.value === 'idle' && !hasProvidedFeedback.value)
+const showActions = computed(
+  () => !props.noRating && uiState.value === 'idle' && !hasProvidedFeedback.value,
+)
 // A consumer may record the rating that opens this field, so it must not depend on that flag.
-const showCommentField = computed(() => uiState.value === 'comment')
-const showSuccess = computed(() => uiState.value === 'success' || !hasProvidedFeedback.value)
+const showCommentField = computed(() => !props.noRating && uiState.value === 'comment')
+const showSuccess = computed(
+  () => !props.noRating && (uiState.value === 'success' || !hasProvidedFeedback.value),
+)
 const canRegenerate = computed(() => !props.noRegeneration && uiState.value !== 'comment')
 
 // An empty row still reserves its height next to whatever holds the component.
@@ -170,7 +176,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div v-else class="flex-1">
+      <div v-else-if="!noRating" class="flex-1">
         <slot v-if="showSuccess" name="success">
           <CommonLabel size="small">
             {{ $t('Thank you for your feedback.') }}
@@ -185,6 +191,7 @@ onMounted(async () => {
         :class="{
           'ai-stripe before:absolute before:bottom-0 before:left-1/2 before:h-px before:w-[.7em] before:-translate-x-1/2 hover:animate-ai-stripe focus-visible:animate-ai-stripe':
             !noAiBased,
+          'border! border-neutral-100 dark:border-gray-900': regenerateVariant === 'neutral',
         }"
         :variant="regenerateVariant"
         :disabled="regenerating"

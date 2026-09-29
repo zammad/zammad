@@ -24,6 +24,7 @@ module Gql::Mutations
     field :results, [Gql::Types::Ticket::Article::TranslationResultType], null: false, description: 'Translation availability and outcomes for all selected articles'
 
     field :pending_article_ids, [GraphQL::Types::ID], null: false, description: 'Articles whose translations will arrive through the subscription'
+    field :pending_backend, String, null: true, description: 'The service producing the pending translations, e.g. "ai"'
 
     def resolve(ticket:, target_locale:, generate_missing:, lookahead:, first_articles_count:, load_first_articles:, page_size: nil, before_cursor: nil, after_cursor: nil)
       scope = Service::Ticket::Article::List.with_current_user(context.current_user).execute(ticket:)
@@ -39,15 +40,20 @@ module Gql::Mutations
         context.scoped_set!(:article_translation_content_locale, target_locale)
       end
 
+      pending = translations.select { |entry| pending?(entry) }
+
       {
         results:             translations.map { |entry| result(entry) },
-        pending_article_ids: translations.filter_map do |entry|
-          Gql::ZammadSchema.id_from_object(entry[:article]) if entry.key?(:translation) && entry[:translation].nil?
-        end,
+        pending_article_ids: pending.map { |entry| Gql::ZammadSchema.id_from_object(entry[:article]) },
+        pending_backend:     pending.any? ? Service::ContentTranslation::Backend.configured&.backend_name : nil,
       }
     end
 
     private
+
+    def pending?(entry)
+      entry[:pending] || (entry.key?(:translation) && entry[:translation].nil?)
+    end
 
     def result(entry)
       translation = entry[:translation]

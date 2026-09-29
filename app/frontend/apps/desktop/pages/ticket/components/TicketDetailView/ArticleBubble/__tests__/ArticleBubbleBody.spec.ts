@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
+import { waitFor, within } from '@testing-library/vue'
 import { defineComponent, nextTick, reactive, ref } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
@@ -11,6 +11,10 @@ import { useNotifications } from '#shared/components/CommonNotifications/useNoti
 import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import {
+  NO_RESULT_ERROR,
+  NO_TARGET_LOCALE_ERROR,
+} from '#shared/entities/ticket-article/composables/useTicketArticleTranslation.ts'
 import type { ArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
 import { AiAnalyticsUsageDocument } from '#shared/graphql/mutations/aiAnalyticsUsage.api.ts'
 import { waitForAiAnalyticsUsageMutationCalls } from '#shared/graphql/mutations/aiAnalyticsUsage.mocks.ts'
@@ -356,7 +360,139 @@ describe('ArticleBubbleBody', () => {
       )
     })
 
-    // The waiting is shown on the translate button, not in place of the article.
+    describe('while translating', () => {
+      beforeEach(() => {
+        vi.useFakeTimers()
+      })
+
+      afterEach(() => {
+        vi.useRealTimers()
+      })
+
+      const renderTranslating = (translation: ArticleTranslation | undefined) => {
+        const state = ref(translation)
+        articleTranslation.translationFor = () => state.value
+
+        const wrapper = renderBody(
+          createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+          false,
+        )
+
+        return { state, wrapper }
+      }
+
+      const progress = (wrapper: ReturnType<typeof renderBody>) =>
+        wrapper.queryByTestId('article-translation-progress')
+
+      it('shows nothing for a translation that resolves quickly', async () => {
+        const { state, wrapper } = renderTranslating({ status: 'pending', backend: 'ai' })
+
+        await vi.advanceTimersByTimeAsync(400)
+        state.value = { status: 'done', content: 'Hallo', backend: 'ai', translated: true }
+        await vi.advanceTimersByTimeAsync(1000)
+
+        expect(progress(wrapper)).not.toBeInTheDocument()
+        expect(wrapper.getByTestId('article-translation-attribution')).toBeInTheDocument()
+      })
+
+      it.each([
+        ['ai', false],
+        ['deepl', true],
+        [undefined, true],
+      ])(
+        'names the state once it takes a while, with the stripe of %s',
+        async (backend, machine) => {
+          const { wrapper } = renderTranslating({ status: 'pending', backend })
+
+          const status = wrapper.getByTestId('article-translation-status')
+
+          await vi.advanceTimersByTimeAsync(400)
+          expect(progress(wrapper)).not.toBeInTheDocument()
+          expect(status).toBeEmptyDOMElement()
+
+          await vi.advanceTimersByTimeAsync(100)
+          // The same region, announced as it changes; the visible label is not read twice.
+          expect(wrapper.getByTestId('article-translation-status')).toBe(status)
+          expect(status).toHaveAttribute('role', 'status')
+          expect(status).toHaveTextContent('Translation in progress…')
+          expect(progress(wrapper)).toHaveAttribute('aria-hidden', 'true')
+          expect(progress(wrapper)).toHaveTextContent('Translation in progress…')
+          expect(progress(wrapper)).not.toHaveTextContent(/AI|deepl/i)
+
+          const stripe = wrapper.getByTestId('article-translation-progress-stripe')
+          expect(stripe).toHaveClass('translation-stripe')
+          expect(stripe.classList.contains('translation-stripe-machine')).toBe(machine)
+
+          // The original stays readable, and so does its toolbar.
+          expect(wrapper.getByText('Hello')).toBeInTheDocument()
+          expect(wrapper.getByTestId('article-content')).toBeVisible()
+        },
+      )
+
+      it('gives way to the attribution when the translation lands', async () => {
+        const { state, wrapper } = renderTranslating({ status: 'pending', backend: 'ai' })
+        await vi.advanceTimersByTimeAsync(500)
+        expect(progress(wrapper)).toBeInTheDocument()
+
+        state.value = { status: 'done', content: 'Hallo', backend: 'ai', translated: true }
+        await nextTick()
+
+        expect(progress(wrapper)).not.toBeInTheDocument()
+        expect(wrapper.getByTestId('article-translation-attribution')).toBeInTheDocument()
+      })
+
+      it('goes when the translation fails, and waits again for the next one', async () => {
+        const { state, wrapper } = renderTranslating({ status: 'pending', backend: 'ai' })
+        await vi.advanceTimersByTimeAsync(500)
+
+        state.value = { status: 'error', error: 'Provider down' }
+        await nextTick()
+        expect(progress(wrapper)).not.toBeInTheDocument()
+
+        state.value = { status: 'pending', backend: 'ai' }
+        await vi.advanceTimersByTimeAsync(400)
+        expect(progress(wrapper)).not.toBeInTheDocument()
+        await vi.advanceTimersByTimeAsync(100)
+        expect(progress(wrapper)).toBeInTheDocument()
+      })
+
+      it('shows the same state while a shown translation is regenerated', async () => {
+        const translated = {
+          status: 'done',
+          content: 'Hallo',
+          backend: 'ai',
+          translated: true,
+          analytics: { run: { id: convertToGraphQLId('AIAnalyticsRun', 1) } },
+        } as const
+        const { state, wrapper } = renderTranslating({ ...translated, regenerating: true })
+
+        await vi.advanceTimersByTimeAsync(400)
+        expect(progress(wrapper)).not.toBeInTheDocument()
+        expect(wrapper.getByTestId('article-translation-attribution')).toBeInTheDocument()
+
+        await vi.advanceTimersByTimeAsync(100)
+        // In place of the attribution and the feedback, over the translation it replaces.
+        expect(progress(wrapper)).toHaveTextContent('Translation in progress…')
+        expect(wrapper.getByTestId('article-translation-progress-stripe')).not.toHaveClass(
+          'translation-stripe-machine',
+        )
+        expect(wrapper.getByTestId('article-translation-status')).toHaveTextContent(
+          'Translation in progress…',
+        )
+        expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+        expect(wrapper.queryByTestId('article-translation-feedback')).not.toBeInTheDocument()
+        expect(wrapper.getByText('Hallo')).toBeInTheDocument()
+
+        state.value = { ...translated, content: 'Hallo!' }
+        await nextTick()
+
+        expect(progress(wrapper)).not.toBeInTheDocument()
+        expect(wrapper.getByTestId('article-translation-attribution')).toBeInTheDocument()
+        expect(wrapper.getByTestId('article-translation-feedback')).toBeInTheDocument()
+      })
+    })
+
+    // The original stays in place: no skeleton, no overlay.
     it('keeps the original body while translating', async () => {
       mockTranslation({ status: 'pending' })
 
@@ -388,6 +524,88 @@ describe('ArticleBubbleBody', () => {
 
       expect(await wrapper.findByText('Hello')).toBeInTheDocument()
       expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+    })
+
+    describe('when the translation failed', () => {
+      it('names the failure inline, without the reason the server gave', async () => {
+        mockTranslation({ status: 'error', error: 'Provider down' })
+
+        const wrapper = renderBody(
+          createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+          false,
+        )
+
+        const error = await wrapper.findByTestId('article-translation-error')
+        expect(error).toHaveAttribute('role', 'alert')
+        expect(error).toHaveTextContent(
+          'Failed to translate article content. Please contact your administrator.',
+        )
+        expect(wrapper.queryByText('Provider down')).not.toBeInTheDocument()
+        expect(wrapper.getByTestId('article-body-toolbar')).toContainElement(error)
+        expect(wrapper.getByText('Hello')).toBeInTheDocument()
+      })
+
+      it.each([NO_TARGET_LOCALE_ERROR, NO_RESULT_ERROR])(
+        'names the reason the client found itself: %s',
+        async (reason) => {
+          mockTranslation({ status: 'error', error: reason })
+
+          const wrapper = renderBody(
+            createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+            false,
+          )
+
+          const error = await wrapper.findByTestId('article-translation-error')
+          expect(error).toHaveTextContent(`${reason} Please contact your administrator.`)
+          expect(error).not.toHaveTextContent('Failed to translate article content.')
+        },
+      )
+
+      it('asks for the translation again to recover', async () => {
+        mockTranslation({ status: 'error', error: 'Provider down' })
+
+        const wrapper = renderBody(
+          createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+          false,
+        )
+
+        const feedback = await wrapper.findByTestId('article-translation-feedback')
+        // Nothing to rate: only the way to recover.
+        expect(
+          within(feedback).queryByRole('button', { name: 'Positive feedback' }),
+        ).not.toBeInTheDocument()
+
+        await wrapper.events.click(within(feedback).getByRole('button', { name: 'Regenerate' }))
+
+        expect(articleTranslation.showTranslation).toHaveBeenCalledTimes(1)
+        expect(articleTranslation.regenerateTranslation).not.toHaveBeenCalled()
+      })
+
+      it('gives way to the progress of the next attempt', async () => {
+        vi.useFakeTimers()
+
+        try {
+          const translation = ref<ArticleTranslation | undefined>({
+            status: 'error',
+            error: 'Provider down',
+          })
+          articleTranslation.translationFor = () => translation.value
+
+          const wrapper = renderBody(
+            createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+            false,
+          )
+
+          translation.value = { status: 'pending', backend: 'ai' }
+          await nextTick()
+          expect(wrapper.queryByTestId('article-translation-error')).not.toBeInTheDocument()
+
+          await vi.advanceTimersByTimeAsync(500)
+          expect(wrapper.getByTestId('article-translation-progress')).toBeInTheDocument()
+        } finally {
+          vi.useRealTimers()
+        }
+      })
     })
 
     it('keeps the original when the translation failed', async () => {

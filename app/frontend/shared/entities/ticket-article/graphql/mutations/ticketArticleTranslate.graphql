@@ -24,5 +24,6 @@ mutation ticketArticleTranslate(
         userHasProvidedFeedback
       }
     }
+    pendingBackend
   }
 }

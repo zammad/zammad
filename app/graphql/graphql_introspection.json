@@ -30458,6 +30458,18 @@
               "deprecationReason": null
             },
             {
+              "name": "pendingBackend",
+              "description": "The service producing the pending translations, e.g. \"ai\"",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "results",
               "description": "Translation availability and outcomes for all selected articles",
               "args": [],
@@ -30536,6 +30548,18 @@
                     "ofType": null
                   }
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pendingBackend",
+              "description": "The service producing the translation while it is pending, e.g. \"ai\"",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

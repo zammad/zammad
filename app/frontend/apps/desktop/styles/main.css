@@ -809,6 +809,29 @@
   }
 }
 
+/* The same stripe for every translation service; only its colours and pace name the kind. */
+@utility translation-stripe {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-blue-800),
+    var(--color-pink-200),
+    var(--color-blue-800)
+  );
+  background-size: 200% auto;
+  animation: gradient 1.8s linear infinite;
+}
+
+@utility translation-stripe-machine {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-blue-800),
+    var(--color-blue-200),
+    var(--color-blue-800)
+  );
+  animation-duration: 2.6s;
+}
+
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/word-break#break-word */
 @utility break-word {
   overflow-wrap: anywhere !important;

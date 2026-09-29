@@ -118,6 +118,18 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
     end
   end
 
+  context 'with a translation someone else started' do
+    before { ContentTranslationJob.perform_later(articles.first, target_locale, service: 'Service::ContentTranslation::TicketArticle') }
+
+    it 'marks it as pending on a lookup' do
+      expect(service.execute(articles:, target_locale:)).to eq([{ article: articles.first, pending: true }, { article: articles.last }])
+    end
+
+    it 'does not mark it for another locale' do
+      expect(service.execute(articles:, target_locale: 'fr-fr')).to eq(articles.map { |article| { article: } })
+    end
+  end
+
   context 'when article translation is disabled' do
     before { Setting.set('content_translation_ticket_article', false) }
 

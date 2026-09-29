@@ -28,6 +28,7 @@ export const TicketArticleTranslateDocument = gql`
         userHasProvidedFeedback
       }
     }
+    pendingBackend
   }
 }
     ${TicketArticleTranslationFragmentDoc}`;

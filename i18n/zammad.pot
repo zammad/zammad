@@ -352,11 +352,11 @@ msgstr ""
 msgid "%s required!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:411
 msgid "%s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:411
 msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
@@ -618,7 +618,7 @@ msgstr ""
 msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:149
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
@@ -1086,7 +1086,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:396
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:401
 msgid "Actions"
 msgstr ""
 
@@ -1319,7 +1319,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:683
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:686
 msgid "Add answer"
 msgstr ""
 
@@ -1334,7 +1334,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:666
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:669
 msgid "Add category"
 msgstr ""
 
@@ -1636,7 +1636,7 @@ msgstr ""
 msgid "Alarm"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:412
 msgid "All %s result(s) selected"
 msgstr ""
 
@@ -1690,7 +1690,7 @@ msgid "All groups will be considered for dispatching tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:165
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:103
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:102
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
 msgid "All notifications will be deleted. This action cannot be undone."
 msgstr ""
@@ -2227,7 +2227,7 @@ msgstr ""
 msgid "Article could not be deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr ""
@@ -2507,7 +2507,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:178
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:239
 msgid "Author name and article creation date"
 msgstr ""
 
@@ -2584,7 +2584,7 @@ msgstr ""
 msgid "Automatic reminders"
 msgstr ""
 
-#: app/services/service/content_translation/ticket_article/translate_many.rb:38
+#: app/services/service/content_translation/ticket_article/translate_many.rb:49
 #: app/services/service/user/content_translation_auto.rb:27
 msgid "Automatic translation of ticket articles is not available for you."
 msgstr ""
@@ -3058,6 +3058,7 @@ msgid "Call from %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:118
+#: app/frontend/apps/desktop/entities/cti/composables/useCtiCallNotification.ts:53
 msgid "Call from %s for %s"
 msgstr ""
 
@@ -3698,7 +3699,7 @@ msgid "Clear all filters"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:105
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 msgid "Clear all notifications"
 msgstr ""
@@ -3722,7 +3723,7 @@ msgid "Clear search"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:430
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:435
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
@@ -3794,7 +3795,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:317
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:40
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:42
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -3828,7 +3829,7 @@ msgstr ""
 msgid "Close current tab"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:155
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:153
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:35
 msgid "Close dialog"
 msgstr ""
@@ -3999,7 +4000,7 @@ msgstr ""
 msgid "Config"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:113
 msgid "Config has changed"
 msgstr ""
 
@@ -4271,7 +4272,7 @@ msgstr ""
 msgid "Continue anyway"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:38
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:40
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -5996,7 +5997,7 @@ msgid "Delete User"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:67
 msgid "Delete all"
 msgstr ""
@@ -6396,6 +6397,7 @@ msgstr ""
 msgid "Dislikes count"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:53
 #: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
 msgid "Dismiss alert"
 msgstr ""
@@ -6516,7 +6518,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue:145
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue:141
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:261
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:169
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:139
@@ -7871,7 +7873,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
 msgid "Failed to translate article content."
 msgstr ""
 
@@ -10186,7 +10188,7 @@ msgstr ""
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:643
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:646
 msgid "Knowledge base actions"
 msgstr ""
 
@@ -10827,7 +10829,7 @@ msgstr ""
 msgid "MAC address (unique identifier of the report)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:104
 msgid "Machine-translated, some formatting may be lost."
 msgstr ""
 
@@ -11904,7 +11906,7 @@ msgstr ""
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:148
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:154
 msgid "Negative feedback"
 msgstr ""
 
@@ -12080,7 +12082,7 @@ msgstr ""
 msgid "New User Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:148
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:150
 msgid "New Version"
 msgstr ""
 
@@ -12358,7 +12360,7 @@ msgstr ""
 msgid "No checklist templates have been created yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:165
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:171
 msgid "No comment"
 msgstr ""
 
@@ -12546,7 +12548,7 @@ msgstr ""
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:79
-#: app/controllers/ticket_articles_controller.rb:246
+#: app/controllers/ticket_articles_controller.rb:240
 #: app/controllers/tickets_controller.rb:461
 #: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
@@ -13992,7 +13994,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:612
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:320
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -14136,7 +14138,7 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:141
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:147
 msgid "Positive feedback"
 msgstr ""
 
@@ -14689,7 +14691,7 @@ msgstr ""
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:183
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:189
 msgid "Regenerate"
 msgstr ""
 
@@ -14765,7 +14767,7 @@ msgstr ""
 msgid "Relevance score threshold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:131
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr ""
@@ -15198,7 +15200,7 @@ msgstr ""
 msgid "Resize column"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:261
 msgid "Resize frame"
 msgstr ""
 
@@ -16064,7 +16066,7 @@ msgstr ""
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:126
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:128
 msgid "Security token verification failed"
 msgstr ""
 
@@ -16079,7 +16081,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:223
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:288
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr ""
@@ -16090,7 +16092,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:223
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:288
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr ""
@@ -16103,11 +16105,11 @@ msgstr ""
 msgid "See your tickets from within your favorite calendar by adding the subscription URL to your calendar app."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:306
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:311
 msgid "Select"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:420
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:425
 msgid "Select %s result(s)"
 msgstr ""
 
@@ -16128,7 +16130,7 @@ msgstr ""
 msgid "Select Template"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:421
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:426
 msgid "Select all %s results"
 msgstr ""
 
@@ -16750,7 +16752,7 @@ msgstr ""
 msgid "Show notifications"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:55
 msgid "Show original"
 msgstr ""
 
@@ -16952,11 +16954,11 @@ msgstr ""
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr ""
 
-#: app/models/store/provider/s3.rb:96
+#: app/models/store/provider/s3.rb:115
 msgid "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
 
-#: app/models/store/provider/s3.rb:72
+#: app/models/store/provider/s3.rb:91
 msgid "Simple Storage Service not reachable."
 msgstr ""
 
@@ -17027,11 +17029,11 @@ msgstr ""
 msgid "Some Text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:69
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
 msgid "Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:88
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 
@@ -17057,11 +17059,11 @@ msgstr ""
 msgid "Sort alphabetically"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:279
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:280
 msgid "Sort by %s ascending"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:283
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:284
 msgid "Sort by %s descending"
 msgstr ""
 
@@ -17352,10 +17354,6 @@ msgstr ""
 msgid "Stop after match enabled"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:65
-msgid "Stop translating the article"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr ""
@@ -17448,7 +17446,7 @@ msgstr ""
 msgid "Submit Comment"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:168
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:174
 msgid "Submit comment"
 msgstr ""
 
@@ -17876,8 +17874,8 @@ msgid "Textarea field"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:176
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:252
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:355
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -17891,7 +17889,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:160
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:166
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
@@ -18266,7 +18264,7 @@ msgstr ""
 msgid "The chosen unit will be used for display only and will not affect stored values."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:112
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
@@ -18368,7 +18366,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/ai_analytics_download.coffee:26
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 msgid "The download could not be started. Please try again later."
 msgstr ""
 
@@ -18527,7 +18525,7 @@ msgstr ""
 msgid "The import was successful."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:127
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
 msgid "The included security token is invalid. This may be just a temporary error, please reload your browser, and try again."
 msgstr ""
 
@@ -18707,7 +18705,7 @@ msgstr ""
 msgid "The phone number is invalid."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:286
+#: app/controllers/ticket_articles_controller.rb:280
 msgid "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
@@ -19015,7 +19013,7 @@ msgstr ""
 msgid "The response could not be processed."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:277
+#: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
 msgstr ""
 
@@ -19555,7 +19553,7 @@ msgstr ""
 msgid "This answer has been updated. Submitting will replace those changes."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:198
+#: app/controllers/ticket_articles_controller.rb:192
 msgid "This article does not have a raw copy available."
 msgstr ""
 
@@ -20467,7 +20465,7 @@ msgstr ""
 msgid "Tickets bulk edit"
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:239
+#: app/controllers/ticket_articles_controller.rb:233
 #: app/controllers/tickets_controller.rb:454
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
@@ -20704,7 +20702,7 @@ msgstr ""
 msgid "Toggle AM/PM mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:174
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
 msgid "Toggle article meta information"
 msgstr ""
 
@@ -20826,7 +20824,7 @@ msgstr ""
 msgid "Translate all articles"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:52
 msgid "Translate article"
 msgstr ""
 
@@ -20842,11 +20840,7 @@ msgstr ""
 msgid "Translate ticket articles into another language."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:43
-msgid "Translate to %s"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:103
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
@@ -20864,6 +20858,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee:80
 msgid "Translation Source"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:272
+msgid "Translation in progress…"
 msgstr ""
 
 #: app/models/setting/validation/content_translation_service_config.rb:10
@@ -21276,7 +21274,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:206
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:202
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -23037,7 +23035,7 @@ msgstr ""
 msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:68
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:70
 msgid "Zammad is restarting…"
 msgstr ""
 
@@ -23045,7 +23043,7 @@ msgstr ""
 msgid "Zammad looks like this for \"%s\""
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:87
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:89
 msgid "Zammad requires a restart!"
 msgstr ""
 
@@ -23172,7 +23170,7 @@ msgstr ""
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
@@ -23780,7 +23778,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4

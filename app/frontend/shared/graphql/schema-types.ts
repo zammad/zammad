@@ -5595,6 +5595,8 @@ export type TicketArticleTranslateManyPayload = {
   errors?: Maybe<Array<UserError>>;
   /** Articles whose translations will arrive through the subscription */
   pendingArticleIds: Array<Scalars['ID']['output']>;
+  /** The service producing the pending translations, e.g. "ai" */
+  pendingBackend?: Maybe<Scalars['String']['output']>;
   /** Translation availability and outcomes for all selected articles */
   results: Array<TicketArticleTranslationResult>;
 };
@@ -5608,6 +5610,8 @@ export type TicketArticleTranslatePayload = {
   article: TicketArticle;
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
+  /** The service producing the translation while it is pending, e.g. "ai" */
+  pendingBackend?: Maybe<Scalars['String']['output']>;
   /** The translation, if one is available already */
   translation?: Maybe<ContentTranslation>;
 };

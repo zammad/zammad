@@ -276,6 +276,23 @@ describe('CommonAIFeedback', () => {
     expect(wrapper.queryByRole('button', { name: 'Negative feedback' })).not.toBeInTheDocument()
   })
 
+  it('offers only the regeneration with noRating prop', async () => {
+    const wrapper = renderCommonAIFeedback({
+      analyticsMeta: {},
+      noRating: true,
+      noUsageTracking: true,
+    })
+
+    expect(wrapper.queryByRole('button', { name: 'Positive feedback' })).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Negative feedback' })).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Thank you for your feedback.')).not.toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Regenerate' }))
+
+    expect(wrapper.emitted('regenerate')).toHaveLength(1)
+    expect(getGraphQLMockCalls('mutation', 'aiAnalyticsUsage')).toHaveLength(0)
+  })
+
   it('renders nothing for a result rated earlier that cannot be regenerated', () => {
     const wrapper = renderCommonAIFeedback({
       analyticsMeta: { run: { id: RUN_ID }, usage: { userHasProvidedFeedback: true } },

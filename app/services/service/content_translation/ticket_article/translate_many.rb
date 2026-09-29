@@ -13,20 +13,31 @@ class Service::ContentTranslation::TicketArticle::TranslateMany < Service::Base
     @generate_missing = generate_missing
   end
 
-  # Only attempted translations include :translation; nil means the result is pending.
+  # Only attempted translations include :translation; nil means the result is pending. A lookup
+  # attempts none, and marks the articles whose translation someone else started with :pending.
   def execute
     Service::CheckFeatureEnabled.execute(name: 'content_translation_service')
     Service::CheckFeatureEnabled.execute(name: 'content_translation_ticket_article')
-    ensure_allowed! if generate_missing
+    return lookup if !generate_missing
+
+    ensure_allowed!
 
     articles.map do |article|
-      next { article: } if !generate_missing || !translatable?(article)
+      next { article: } if !translatable?(article)
 
       { article:, translation: translate(article) }
     end
   end
 
   private
+
+  def lookup
+    in_progress = Service::ContentTranslation::InProgress.execute(objects: articles, target_locale:).to_set
+
+    articles.map do |article|
+      in_progress.include?(article) ? { article:, pending: true } : { article: }
+    end
+  end
 
   def translatable?(article)
     return false if article.preferences[:delivery_message]

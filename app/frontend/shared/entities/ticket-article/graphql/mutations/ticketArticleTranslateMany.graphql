@@ -18,7 +18,8 @@ mutation ticketArticleTranslateMany(
     targetLocale: $targetLocale
     generateMissing: $generateMissing
   ) {
-    pendingArticleIds @include(if: $generateMissing)
+    pendingArticleIds
+    pendingBackend
     results {
       article {
         ...ticketArticleTranslationAvailability

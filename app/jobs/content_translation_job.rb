@@ -11,8 +11,14 @@ class ContentTranslationJob < AIJob
   # requests hitting the unique index of the stored result.
   EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR = :dismiss_running
 
+  # Also what tells a client that a translation is still running, see
+  # Service::ContentTranslation::InProgress.
+  def self.lock_key_for(object, target_locale)
+    "#{name}/#{object.class.name}/#{object.id}/#{target_locale}"
+  end
+
   def lock_key
-    "#{self.class.name}/#{arguments[0].class.name}/#{arguments[0].id}/#{arguments[1]}"
+    self.class.lock_key_for(arguments[0], arguments[1])
   end
 
   # No current user: nothing a translation writes is attributed to one, and an automatic

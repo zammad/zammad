@@ -19,6 +19,7 @@ module Gql::Mutations
     field :article, Gql::Types::Ticket::ArticleType, null: false, description: 'The article whose translation was requested'
     field :translation, Gql::Types::ContentTranslationType, null: true, description: 'The translation, if one is available already'
     field :analytics, Gql::Types::AI::Analytics::MetadataType, null: true, description: 'Analytics metadata'
+    field :pending_backend, String, null: true, description: 'The service producing the translation while it is pending, e.g. "ai"'
 
     def resolve(article:, target_locale:, force:, regeneration_of: nil)
       # RunPolicy only authorizes the run against its own article, which may be a different one.
@@ -58,8 +59,9 @@ module Gql::Mutations
 
     def pending
       {
-        translation: nil,
-        analytics:   nil,
+        translation:     nil,
+        analytics:       nil,
+        pending_backend: Service::ContentTranslation::Backend.configured&.backend_name,
       }
     end
   end

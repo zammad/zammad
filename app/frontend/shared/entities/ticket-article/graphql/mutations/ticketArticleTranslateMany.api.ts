@@ -19,7 +19,8 @@ export const TicketArticleTranslateManyDocument = gql`
     targetLocale: $targetLocale
     generateMissing: $generateMissing
   ) {
-    pendingArticleIds @include(if: $generateMissing)
+    pendingArticleIds
+    pendingBackend
     results {
       article {
         ...ticketArticleTranslationAvailability

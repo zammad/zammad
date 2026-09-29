@@ -24,6 +24,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
           beforeCursor: $beforeCursor, afterCursor: $afterCursor, generateMissing: $generateMissing
         ) {
           pendingArticleIds
+          pendingBackend
           results {
             article {
               id
@@ -88,6 +89,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
         gql.execute(query, variables:)
 
         expect(gql.result.data[:pendingArticleIds]).to eq([gql.id(articles.last)])
+        expect(gql.result.data[:pendingBackend]).to eq('ai')
         expect(Service::ContentTranslation::TicketArticle).to have_received(:stored_translations).with([skipped_article], target_locale).once
         expect(gql.result.data[:results]).to contain_exactly(
           {
@@ -149,6 +151,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
       gql.execute(query, variables: variables.except(:generateMissing).merge(includeContent: false))
 
       expect(gql.result.data[:pendingArticleIds]).to be_empty
+      expect(gql.result.data[:pendingBackend]).to be_nil
       expect(gql.result.data[:results]).to contain_exactly(
         { 'article' => { 'id' => gql.id(articles.first), 'translationAvailable' => true }, 'translated' => nil },
         { 'article' => { 'id' => gql.id(articles.last), 'translationAvailable' => false }, 'translated' => nil }
@@ -159,6 +162,16 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
       expect(ContentTranslationJob).not_to have_been_enqueued
     ensure
       ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
+
+    it 'reports translations someone else started on a lookup' do
+      ContentTranslationJob.perform_later(articles.last, target_locale, service: 'Service::ContentTranslation::TicketArticle')
+
+      gql.execute(query, variables: variables.except(:generateMissing).merge(includeContent: false))
+
+      expect(gql.result.data[:pendingArticleIds]).to eq([gql.id(articles.last)])
+      expect(gql.result.data[:pendingBackend]).to eq('ai')
+      expect(gql.result.data[:results].map { |entry| entry['article']['translationAvailable'] }).to all(be(false))
     end
 
     context 'with paginated articles' do

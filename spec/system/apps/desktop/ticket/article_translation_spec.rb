@@ -68,6 +68,39 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     end
   end
 
+  context 'with a translation started elsewhere', performs_jobs: true do
+    let(:pending_article) { create(:ticket_article, ticket:, body: 'Anything new?', content_type: 'text/plain') }
+
+    before do
+      allow_any_instance_of(AI::Provider::ZammadAI).to receive(:ask).and_return('Gibt es etwas Neues?')
+
+      ContentTranslationJob.perform_later(pending_article, 'de-de', service: 'Service::ContentTranslation::TicketArticle')
+
+      # As in a second tab, or after a reload: nothing about the request lives in this one.
+      page.refresh
+      wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
+    end
+
+    it 'shows it as running on the original, and resolves it without switching the article' do
+      within "[data-test-id=\"article-bubble-container-#{pending_article.id}\"]" do
+        expect(page).to have_css('[data-test-id="article-translation-progress"]', text: 'Translation in progress…')
+        expect(page).to have_css('[data-test-id="article-translation-toggle"][aria-disabled="true"][aria-busy="true"]')
+        expect(page).to have_text('Anything new?')
+      end
+
+      perform_enqueued_jobs(only: ContentTranslationJob)
+
+      within "[data-test-id=\"article-bubble-container-#{pending_article.id}\"]" do
+        expect(page).to have_no_css('[data-test-id="article-translation-progress"]')
+        expect(page).to have_text('Anything new?')
+
+        find('[data-test-id="article-translation-toggle"]').click
+
+        expect(page).to have_text('Gibt es etwas Neues?')
+      end
+    end
+  end
+
   context 'with the personal setting already on' do
     let(:auto) { true }
 

@@ -26,7 +26,7 @@ export const NO_TARGET_LOCALE_ERROR = __('No supported target language is availa
 export const NO_RESULT_ERROR = __('The translation returned no usable content.')
 
 type TranslationState =
-  | { status: 'pending' }
+  | { status: 'pending'; backend?: Maybe<string>; origin?: 'server' }
   | { status: 'done'; translated: boolean; analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>> }
   | { status: 'error'; error: string }
 
@@ -49,12 +49,12 @@ const useSubscriptionReadiness = () => {
     readyLocale = undefined
   }
 
-  const until = (locale: string) =>
-    readyLocale === locale
-      ? Promise.resolve()
-      : new Promise<void>((resolve) => waiting.push(resolve))
+  const isReady = (locale: string) => readyLocale === locale
 
-  return { answered, reset, until }
+  const until = (locale: string) =>
+    isReady(locale) ? Promise.resolve() : new Promise<void>((resolve) => waiting.push(resolve))
+
+  return { answered, reset, isReady, until }
 }
 
 // The translations of one ticket tab's articles. Created once by the ticket view, which the tab
@@ -221,6 +221,8 @@ export const useTicketArticleTranslation = (
 
       // No translation yet means it is generated in the background; the subscription delivers it.
       if (payload?.translation) applyUpdate(articleId, locale, payload)
+      else if (!regenerationOfId)
+        translations.value.set(key, { status: 'pending', backend: payload?.pendingBackend })
     } catch (error) {
       if (!isCurrent()) return
       applyUpdate(articleId, locale, {
@@ -309,6 +311,9 @@ export const useTicketArticleTranslation = (
 
     requests.value.set(requestKey, generateMissing)
 
+    // A translation someone else started can finish before this tab listens for its result.
+    const listening = readiness.isReady(locale)
+
     try {
       if (generateMissing) await readiness.until(locale)
 
@@ -340,7 +345,26 @@ export const useTicketArticleTranslation = (
         })
       })
       if (payload && !generateMissing) completedLookups.add(selection)
-      payload?.pendingArticleIds?.forEach((articleId) => {
+
+      const pendingArticleIds = new Set(payload?.pendingArticleIds)
+      // Started elsewhere: in another tab, before a reload, or by the ticket-wide request of
+      // another agent. The article shows it without being switched to its translation.
+      const origin = generateMissing ? undefined : 'server'
+
+      // Reported before, finished or given up since - without this tab hearing of it.
+      payload?.results.forEach(({ article }) => {
+        const key = translationKey(article.id, locale)
+        const current = translations.value.get(key)
+        if (
+          current?.status === 'pending' &&
+          current.origin === 'server' &&
+          current === previous.get(key) &&
+          !pendingArticleIds.has(article.id)
+        )
+          translations.value.delete(key)
+      })
+
+      pendingArticleIds.forEach((articleId) => {
         const key = translationKey(articleId, locale)
         const current = translations.value.get(key)
         // A background result can arrive before the mutation acknowledges the queued job.
@@ -349,9 +373,23 @@ export const useTicketArticleTranslation = (
           (current?.status !== 'done' ||
             (current.translated && !translationCache.read(articleId, locale)))
         ) {
-          translations.value.set(key, { status: 'pending' })
+          translations.value.set(key, {
+            status: 'pending',
+            backend: payload?.pendingBackend,
+            origin: current?.status === 'pending' ? current.origin : origin,
+          })
         }
       })
+
+      // Asked again once the subscription listens, so a result published in between is not missed.
+      if (!generateMissing && !listening && pendingArticleIds.size) {
+        readiness.until(locale).then(() => {
+          if (requestGeneration !== generation) return
+
+          completedLookups.delete(selection)
+          requestSelection(selection)
+        })
+      }
     } catch {
       // Generating requests report failures; metadata lookups retry on the next change.
     } finally {
@@ -425,10 +463,16 @@ export const useTicketArticleTranslation = (
     shown.value.has(articleId) || (allArticlesEnabled.value && !original.value.has(articleId))
 
   const translationFor = (articleId: string) => {
-    if (!store.isAvailable || !isShown(articleId)) return undefined
+    if (!store.isAvailable) return undefined
 
     const locale = targetLocale.value ?? ''
     const key = translationKey(articleId, locale)
+
+    // Running for the article, whoever started it; everything else is shown only on request.
+    if (!isShown(articleId)) {
+      const state = translations.value.get(key)
+      return state?.status === 'pending' && state.origin === 'server' ? state : undefined
+    }
     const state =
       translations.value.get(key) ?? translations.value.get(translationKey(articleId, ''))
     if (state?.status !== 'done' || !state.translated) return state
@@ -456,9 +500,7 @@ export const useTicketArticleTranslation = (
   // and turns the original back on; for a failed one it is off and asks again.
   const isTranslationActive = (articleId: string) => isTranslation(translationFor(articleId))
 
-  // Whether the article carries the direct translate button: a translation is stored for it, or
-  // one is on its way or shown. Everything else, a failed request included, translates from the
-  // article menu.
+  // Whether a translation for the article is stored, on its way, shown, or failed on request.
   const hasDirectTranslationAction = (articleId: string) => {
     const locale = targetLocale.value
     if (!store.isAvailable || !locale) return false
@@ -468,7 +510,8 @@ export const useTicketArticleTranslation = (
     return (
       !!translationCache.readAvailability(articleId, locale) ||
       (known?.status === 'done' && isTranslation(known)) ||
-      isTranslationActive(articleId)
+      isTranslationActive(articleId) ||
+      translationFor(articleId)?.status === 'error'
     )
   }
 

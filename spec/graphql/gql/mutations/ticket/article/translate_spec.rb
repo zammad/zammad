@@ -33,6 +33,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
               userHasProvidedFeedback
             }
           }
+          pendingBackend
         }
       }
     MUTATION
@@ -64,6 +65,8 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
       it 'returns it without a background job or a second stored-result lookup' do
         allow(Service::ContentTranslation::TicketArticle).to receive(:stored_translations).and_call_original
         expect { gql.execute(query, variables:) }.not_to have_enqueued_job(ContentTranslationJob)
+
+        expect(gql.result.data[:pendingBackend]).to be_nil
 
         expect(gql.result.data[:translation])
           .to include('content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true)
@@ -109,10 +112,11 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
     end
 
     context 'without a stored translation' do
-      it 'returns no translation yet' do
+      it 'returns no translation yet, and the service producing it' do
         gql.execute(query, variables:)
 
         expect(gql.result.data[:translation]).to be_nil
+        expect(gql.result.data[:pendingBackend]).to eq('ai')
       end
     end
 

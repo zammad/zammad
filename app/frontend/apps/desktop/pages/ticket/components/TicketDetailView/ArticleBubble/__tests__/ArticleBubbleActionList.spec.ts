@@ -236,8 +236,7 @@ describe('ArticleBubbleActionList', () => {
   })
 
   describe('with article translation', () => {
-    // `available` stands for the server's answer for the current language, as the tab reports it.
-    const enableTranslation = (available?: boolean) => {
+    const enableTranslation = () => {
       mockApplicationConfig({
         content_translation_service: true,
         content_translation_ticket_article: true,
@@ -255,13 +254,11 @@ describe('ArticleBubbleActionList', () => {
       // What the tab does on creation: asks the server whether it can translate.
       store.loadTargetLocales()
 
-      if (available !== undefined) articleTranslation.hasDirectTranslationAction = () => available
-
       return store
     }
 
-    it('shows the direct button for an article with a stored translation, and no menu entry', async () => {
-      enableTranslation(true)
+    it('shows the translate control, and no menu entry', async () => {
+      enableTranslation()
 
       const wrapper = renderArticleBubbleActionList({})
 
@@ -273,41 +270,8 @@ describe('ArticleBubbleActionList', () => {
       expect(wrapper.queryByRole('menuitem', { name: /Translate/ })).not.toBeInTheDocument()
     })
 
-    it('offers the menu entry for an article without one, and no direct button', async () => {
-      enableTranslation(false)
-
-      const wrapper = renderArticleBubbleActionList({})
-
-      await waitFor(() =>
-        expect(
-          wrapper.queryByRole('button', { name: 'Translate article' }),
-        ).not.toBeInTheDocument(),
-      )
-
-      await wrapper.events.click(wrapper.getByRole('button', { name: 'Action menu button' }))
-
-      expect(
-        await wrapper.findByRole('menuitem', { name: 'Translate to English' }),
-      ).toBeInTheDocument()
-    })
-
-    it('translates the article from the menu', async () => {
-      enableTranslation(false)
-
-      const wrapper = renderArticleBubbleActionList({
-        // Performing an action reads the reply form, which the ticket mock does not carry.
-        provideOverrides: { form: ref() },
-      })
-
-      await wrapper.events.click(wrapper.getByRole('button', { name: 'Action menu button' }))
-      // The click handler sits on the button inside the menu item.
-      await wrapper.events.click(await wrapper.findByText('Translate to English'))
-
-      expect(articleTranslation.showTranslation).toHaveBeenCalledTimes(1)
-    })
-
-    it('translates the article with the direct button', async () => {
-      enableTranslation(true)
+    it('translates the article with the translate control', async () => {
+      enableTranslation()
 
       const wrapper = renderArticleBubbleActionList({})
 
@@ -316,55 +280,37 @@ describe('ArticleBubbleActionList', () => {
       expect(articleTranslation.showTranslation).toHaveBeenCalledTimes(1)
     })
 
-    // The article keeps its content while translating, so the button is what shows the waiting.
-    it('pulses and offers to stop while the translation is on its way', async () => {
-      enableTranslation(true)
+    // The article body names the running translation; the button only refuses it.
+    it.each([
+      ['on its way', { status: 'pending' } as const],
+      [
+        'regenerated for the shown one',
+        { status: 'done', content: 'Hallo', translated: true, regenerating: true } as const,
+      ],
+    ])('is busy and refuses the press while a translation is %s', async (_, state) => {
+      enableTranslation()
       articleTranslation.isTranslationActive = () => true
-      articleTranslation.translationFor = () => ({ status: 'pending' })
+      articleTranslation.translationFor = () => state
 
       const wrapper = renderArticleBubbleActionList({})
 
-      const toggle = await wrapper.findByRole('button', {
-        name: 'Stop translating the article',
-      })
+      const toggle = await wrapper.findByRole('button', { name: 'Translate article' })
 
       expect(toggle).toHaveAttribute('aria-busy', 'true')
-
-      // Only the icon pulses; the button itself stays still.
-      const icon = toggle.querySelector('.icon-square-fill')
-      expect(icon).toBeInTheDocument()
-      expect(icon).toHaveClass('animate-pulse')
+      expect(toggle).toHaveAttribute('aria-disabled', 'true')
+      expect(toggle).toHaveAttribute('aria-pressed', 'false')
+      expect(toggle).toHaveClass('text-[#8E9299]!')
 
       await wrapper.events.click(toggle)
 
-      expect(articleTranslation.showOriginal).toHaveBeenCalledTimes(1)
+      expect(articleTranslation.showOriginal).not.toHaveBeenCalled()
+      expect(articleTranslation.showTranslation).not.toHaveBeenCalled()
     })
 
-    it('pulses while another translation is regenerated for the shown one', async () => {
-      enableTranslation(true)
-      articleTranslation.isTranslationActive = () => true
-      articleTranslation.translationFor = () => ({
-        status: 'done',
-        content: 'Hallo',
-        translated: true,
-        regenerating: true,
-      })
-
-      const wrapper = renderArticleBubbleActionList({})
-
-      const toggle = await wrapper.findByRole('button', {
-        name: 'Stop translating the article',
-      })
-
-      expect(toggle).toHaveAttribute('aria-busy', 'true')
-      expect(toggle.querySelector('.icon-square-fill')).toHaveClass('animate-pulse')
-    })
-
-    it('keeps the direct button while the translation is shown, to switch back', async () => {
+    it('keeps the translate control while the translation is shown, to switch back', async () => {
       enableTranslation()
       const active = ref(true)
       articleTranslation.isTranslationActive = () => active.value
-      articleTranslation.hasDirectTranslationAction = () => active.value
 
       const wrapper = renderArticleBubbleActionList({})
 
@@ -377,28 +323,56 @@ describe('ArticleBubbleActionList', () => {
       active.value = false
 
       await waitFor(() =>
-        expect(
-          wrapper.queryByRole('button', { name: /original|Translate article/ }),
-        ).not.toBeInTheDocument(),
+        expect(wrapper.getByRole('button', { name: 'Translate article' })).toHaveAttribute(
+          'aria-pressed',
+          'false',
+        ),
       )
     })
 
-    it('offers to translate again after a failure, with the original back in the bubble', async () => {
-      enableTranslation(true)
+    it('shows a failure, and puts it away on press', async () => {
+      enableTranslation()
       articleTranslation.translationFor = () => ({ status: 'error', error: 'Provider down' })
 
       const wrapper = renderArticleBubbleActionList({})
 
-      const toggle = await wrapper.findByRole('button', { name: 'Translate article' })
+      const toggle = await wrapper.findByRole('button', {
+        name: 'Dismiss alert',
+      })
       expect(toggle).toHaveAttribute('aria-pressed', 'false')
+      expect(toggle).not.toHaveAttribute('aria-disabled')
+      expect(toggle).toHaveClass('border-red-500!', 'text-red-500!')
 
       await wrapper.events.click(toggle)
 
-      expect(articleTranslation.showTranslation).toHaveBeenCalledTimes(1)
+      expect(articleTranslation.showOriginal).toHaveBeenCalledTimes(1)
+      expect(articleTranslation.showTranslation).not.toHaveBeenCalled()
     })
 
-    it('offers the direct button to read-only agents', async () => {
-      enableTranslation(true)
+    it('keeps the same button in every state', async () => {
+      enableTranslation()
+      const state = ref<ReturnType<typeof articleTranslation.translationFor>>()
+      articleTranslation.translationFor = () => state.value
+      articleTranslation.isTranslationActive = () =>
+        state.value?.status === 'pending' || state.value?.status === 'done'
+
+      const wrapper = renderArticleBubbleActionList({})
+      const toggle = await wrapper.findByRole('button', { name: 'Translate article' })
+
+      const expectState = async (next: typeof state.value, name: string) => {
+        state.value = next
+        await waitFor(() => expect(wrapper.getByRole('button', { name })).toBe(toggle))
+        expect(toggle.querySelector('.icon-translate')).toBeInTheDocument()
+      }
+
+      await expectState({ status: 'pending' }, 'Translate article')
+      await expectState({ status: 'done', content: 'Hallo', translated: true }, 'Show original')
+      await expectState({ status: 'error', error: 'Provider down' }, 'Dismiss alert')
+      await expectState(undefined, 'Translate article')
+    })
+
+    it('offers the translate control to read-only agents', async () => {
+      enableTranslation()
 
       const wrapper = renderArticleBubbleActionList({
         editable: false,
@@ -409,7 +383,7 @@ describe('ArticleBubbleActionList', () => {
     })
 
     it('offers nothing to customers', async () => {
-      const store = enableTranslation(true)
+      const store = enableTranslation()
 
       const wrapper = renderArticleBubbleActionList({
         // A ticket the agent has no agent access to is shown in the customer view.

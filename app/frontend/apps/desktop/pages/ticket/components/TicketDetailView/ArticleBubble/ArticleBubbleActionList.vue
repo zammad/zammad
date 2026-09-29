@@ -27,25 +27,8 @@ const translationStore = useArticleTranslationStore()
 
 const isTicketAgent = computed(() => !!ticket.value && getTicketView(ticket.value).isTicketAgent)
 
-// The direct button belongs to articles with a stored translation; the others translate from the
-// menu. Translating changes nothing on the ticket, so reading suffices.
-const showTranslationToggle = computed(
-  () => isTicketAgent.value && articleTranslation.hasDirectTranslationAction(props.article.id),
-)
-
-const translateMenuItem = computed<MenuItem | undefined>(() => {
-  if (!isTicketAgent.value || !translationStore.isAvailable) return
-  if (articleTranslation.hasDirectTranslationAction(props.article.id)) return
-
-  return {
-    key: 'translate',
-    icon: 'translate',
-    label: __('Translate to %s'),
-    separatorTop: true,
-    labelPlaceholder: [translationStore.targetLocaleName],
-    onClick: () => articleTranslation.showTranslation(props.article.id),
-  }
-})
+// Translating changes nothing on the ticket, so reading suffices.
+const showTranslationToggle = computed(() => isTicketAgent.value && translationStore.isAvailable)
 
 const isTranslationActive = computed(() => articleTranslation.isTranslationActive(props.article.id))
 
@@ -59,46 +42,64 @@ const isTranslationPending = computed(() => {
   )
 })
 
-// The article keeps its original content while the translation is on its way, so the button carries
-// the waiting: it pulses, and offers to stop waiting for it.
+const isTranslationFailed = computed(
+  () => articleTranslation.translationFor(props.article.id)?.status === 'error',
+)
+
+// One control in all states, always named by its action: the article body names a running
+// translation and the failure. A running translation cannot be stopped, aria-busy says so.
 const translationToggleLabel = computed(() => {
-  if (isTranslationPending.value) return __('Stop translating the article')
+  if (isTranslationPending.value) return __('Translate article')
+  if (isTranslationFailed.value) return __('Dismiss alert')
 
   return isTranslationActive.value ? __('Show original') : __('Translate article')
 })
 
 // Styled like the menu button next to it (CommonActionMenu's neutral variants); active = blue icon.
 const translationToggleClasses = computed(() => {
-  const base =
-    'outline-offset-0! hover:outline-none! border! border-neutral-100! dark:border-gray-900! dark:hover:border-blue-700! hover:border-blue-800!'
+  const base = 'outline-offset-0! hover:outline-none! border!'
 
-  const color =
-    isTranslationActive.value && !isTranslationPending.value
-      ? 'text-blue-800! dark:text-blue-800!'
-      : 'text-gray-100! dark:text-neutral-400!'
+  const border = isTranslationFailed.value
+    ? 'border-red-500! dark:border-red-500!'
+    : 'border-neutral-100! dark:border-gray-900!'
+
+  const hover = isTranslationPending.value
+    ? 'cursor-default'
+    : 'dark:hover:border-blue-700! hover:border-blue-800!'
+
+  const color = (() => {
+    if (isTranslationPending.value) return 'text-[#8E9299]! dark:text-[#8E9299]!'
+    if (isTranslationFailed.value) return 'text-red-500! dark:text-red-500!'
+    if (isTranslationActive.value) return 'text-blue-800! dark:text-blue-800!'
+
+    return 'text-gray-100! dark:text-neutral-400!'
+  })()
 
   const background =
     props.position === 'left'
       ? 'bg-neutral-50! hover:bg-white! hover:dark:bg-gray-500! dark:bg-gray-500!'
       : 'bg-blue-100! dark:bg-stone-500!'
 
-  return `${base} ${color} ${background}`
+  return `${base} ${border} ${hover} ${color} ${background}`
 })
 
-const toggleTranslation = () =>
-  isTranslationActive.value
-    ? articleTranslation.showOriginal(props.article.id)
-    : articleTranslation.showTranslation(props.article.id)
+// A failure is put away like a translation; the menu asks again.
+const toggleTranslation = () => {
+  if (isTranslationPending.value) return
+
+  if (isTranslationActive.value || isTranslationFailed.value)
+    articleTranslation.showOriginal(props.article.id)
+  else articleTranslation.showTranslation(props.article.id)
+}
 
 const buttonVariantBaseClasses =
   'border! border-neutral-100! outline-transparent! hover:border-blue-700! text-gray-100! dark:border-gray-900! dark:text-neutral-400!'
 
-const buttonVariantClassExtension = computed(() => {
-  if (props.position === 'left')
-    return `${buttonVariantBaseClasses} hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white! dark:bg-gray-500!`
-
-  return `${buttonVariantBaseClasses} dark:hover:border-blue-700! bg-blue-100! dark:bg-stone-500!`
-})
+const buttonVariantClassExtension = computed(() =>
+  props.position === 'left'
+    ? `${buttonVariantBaseClasses} hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white! dark:bg-gray-500!`
+    : `${buttonVariantBaseClasses} dark:hover:border-blue-700! bg-blue-100! dark:bg-stone-500!`,
+)
 
 const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
   form,
@@ -180,8 +181,6 @@ const actions = computed(() => {
     }
   })
 
-  if (translateMenuItem.value) popoverActions.push(translateMenuItem.value)
-
   return {
     alwaysVisibleActions,
     popoverActions,
@@ -215,17 +214,19 @@ const actions = computed(() => {
       </CommonButton>
     </div>
 
-    <!-- Next to the menu button, on the side of the reply buttons; active = blue icon only, as in the design. -->
+    <!-- Next to the menu button, on the side of the reply buttons; active = blue icon only, as in the design.
+      Not `disabled` while busy: that takes the pointer events, and with them the tooltip naming it. -->
     <CommonButton
       v-if="showTranslationToggle"
       v-tooltip="$t(translationToggleLabel)"
       :class="[translationToggleClasses, position === 'right' ? '-order-1' : 'order-1']"
       variant="neutral"
-      :aria-pressed="isTranslationActive"
+      :aria-pressed="isTranslationActive && !isTranslationPending"
       :aria-busy="isTranslationPending"
+      :aria-disabled="isTranslationPending || undefined"
       data-test-id="article-translation-toggle"
-      :icon-class="`${isTranslationPending ? 'animate-pulse' : ''} size-4! p-0.5`"
-      :icon="isTranslationPending ? 'square-fill' : 'translate'"
+      icon-class="size-4! p-0.5"
+      icon="translate"
       size="medium"
       @click="toggleTranslation"
     />
