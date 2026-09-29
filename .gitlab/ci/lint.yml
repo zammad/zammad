@@ -21,6 +21,7 @@
 'lint: shellcheck':
   extends:
     - .template_lint
+  timeout: 2 minutes
   image: koalaman/shellcheck-alpine:stable
   cache: []
   before_script: []
@@ -31,6 +32,7 @@
 'lint: i18n & rails':
   extends:
     - .template_lint_rails
+  timeout: 8 minutes
   cache: !reference [.cache, read_only_full]
   script:
     - !reference [.scripts, pnpm_install]
@@ -47,6 +49,7 @@
 'lint: ruby & security':
   extends:
     - .template_lint
+  timeout: 10 minutes
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]
@@ -78,6 +81,7 @@
 'lint: markdown, coffee & css':
   extends:
     - .template_lint
+  timeout: 5 minutes
   cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, pnpm_install]
@@ -92,6 +96,7 @@
 'lint: js':
   extends:
     - .template_lint
+  timeout: 10 minutes
   cache:
     - !reference [.cache, read_only_nodejs]
     - !reference [.cache, read_write_eslint]
@@ -118,6 +123,7 @@
 'lint: orphaned ruby gems':
   extends:
     - .template_lint_rails
+  timeout: 2 minutes
   allow_failure: true
   rules:
     - !reference [.rule_fragments, variable_filters]
@@ -128,6 +134,7 @@
 'update CI variables':
   extends:
     - .template_lint_rails
+  timeout: 4 minutes
   rules:
     - !reference [.rule_fragments, variable_filters]
     - !reference [.rule_fragments, then_manual_unless_scheduled]
@@ -140,12 +147,22 @@
     name: 'zricethezav/gitleaks:latest'
     entrypoint: ['']
   cache: []
+  timeout: 2 minutes
+  variables:
+    # Go uses all CPUs by default.
+    GOMAXPROCS: 1
   before_script: []
   script:
-    # Since we clone with GIT_DEPTH=1, the commit has the entire codebase as a diff.
-    # Otherwise, we'd need to use --no-git to scan the entire codebase, but that is slower
-    #   as it also traverses directories not scanned by git.
-    - gitleaks detect --report-path secret-detection-report.json --verbose
+    # Deep enough to contain the pipeline's base commit, so only the new commits are scanned.
+    #   Setting GIT_DEPTH for this job has no effect, the checkout keeps the depth of 1.
+    - git fetch --quiet --deepen=99 origin "$CI_COMMIT_SHA"
+    # Scan only the commits the pipeline adds. Without a base commit in the checkout
+    #   (scheduled pipelines, new branches, force pushes), scan only the current commit.
+    - BASE="${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}"
+    - git merge-base --is-ancestor "$BASE" HEAD 2>/dev/null || BASE='HEAD~1'
+    - set -o pipefail; gitleaks git --log-opts="${BASE}..HEAD" --report-path secret-detection-report.json --verbose --no-color 2>&1 | tee gitleaks.log
+    # gitleaks only logs errors of the git commands it runs and still exits successfully.
+    - if grep -qE '(^| )ERR ' gitleaks.log; then echo 'gitleaks reported errors, failing.'; exit 1; fi
   after_script: []
   # # GitLab can show this in a security widget, but that seems to be useless at this point (offers empty file for download).
   # artifacts:
