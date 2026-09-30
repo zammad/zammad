@@ -271,8 +271,16 @@ class ChannelInboundEdit extends App.ControllerModal
       { name: 'group_id',                display: __('Destination Group'),       tag: 'tree_select', null: false, relation: 'Group', filter: { active: true } },
       { name: 'group_email_address_id',  display: __('Destination group > Sending email address'), tag: 'select', null: false, options: @emailAddressOptions(@item.id, @item.group_id), note: __("This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply.") },
       { name: 'options::folder_id',      display: __('Folder'),                  tag: 'tree_select', null: true, options: @folderOptions, nulloption: true, default: '', help: __('Specify which folder to fetch from, or leave empty to fetch from ||inbox||.') },
-      { name: 'options::keep_on_server', display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false },
+      { name: 'options::post_import_action', display: __('After importing messages'), tag: 'select', null: false, options: { mark_read: __('Mark as read'), delete: __('Delete'), move: __('Move to folder') }, translate: true, default: 'delete' },
+      { name: 'options::move_to_folder_id', display: __('Destination folder'), tag: 'tree_select', null: true, options: @folderOptions, nulloption: true, default: '', help: __('Select a different folder when moving imported messages.') },
     ]
+    showMoveDestination = (params, attribute, attributes, classname, form, ui) ->
+      return if !params
+      if params.options?.post_import_action is 'move'
+        ui.show('options::move_to_folder_id')
+      else
+        ui.hide('options::move_to_folder_id')
+
     @form = new App.ControllerForm(
       model:
         configure_attributes: configureAttributesBase
@@ -281,8 +289,9 @@ class ChannelInboundEdit extends App.ControllerModal
         group_id: @item.group_id,
         options:
           folder_id: @item.options.inbound.options.folder_id,
-          keep_on_server: @item.options.inbound.options.keep_on_server,
-      handlers: [@destinationGroupEmailAddressFormHandler(@item)]
+          post_import_action: @item.options.inbound.options.post_import_action or (if @item.options.inbound.options.keep_on_server in [true, 'true', 1, '1'] then 'mark_read' else 'delete'),
+          move_to_folder_id: @item.options.inbound.options.move_to_folder_id,
+      handlers: [@destinationGroupEmailAddressFormHandler(@item), showMoveDestination]
     )
     @form.form
 

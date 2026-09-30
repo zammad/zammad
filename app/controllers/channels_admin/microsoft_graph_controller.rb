@@ -33,4 +33,25 @@ class ChannelsAdmin::MicrosoftGraphController < ChannelsAdmin::BaseController
 
     render json: { folders:, error: }
   end
+
+  private
+
+  def inbound_prepare_channel(channel)
+    super
+
+    posted_options = params[:options] || {}
+    %w[post_import_action move_to_folder_id].each do |key|
+      next if posted_options[key].nil?
+
+      channel.options[:inbound][:options][key] = posted_options[key]
+    end
+
+    options = channel.options[:inbound][:options]
+    if posted_options[:post_import_action].nil? && !posted_options[:keep_on_server].nil? && options[:post_import_action].present?
+      options[:post_import_action] = ActiveModel::Type::Boolean.new.cast(posted_options[:keep_on_server]) ? 'mark_read' : 'delete'
+    end
+
+    Channel::Driver::MicrosoftGraphInbound.validate_post_import_options!(options)
+    options[:keep_on_server] = options[:post_import_action] == 'mark_read' if options[:post_import_action].present?
+  end
 end

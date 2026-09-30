@@ -9,6 +9,10 @@ class ExternalCredential::MicrosoftGraph < ExternalCredential::MicrosoftBase
     __('No Microsoft Graph app configured!')
   end
 
+  def self.inbound_options_to_preserve
+    super + %i[folder_id post_import_action move_to_folder_id]
+  end
+
   def self.authorize_scope
     'offline_access openid profile email mail.readwrite mail.readwrite.shared mail.send mail.send.shared'
   end

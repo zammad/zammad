@@ -137,11 +137,11 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
             in_modal do
               check_tree_select_field_value('group_id', group1.id.to_s)
               check_tree_select_field_value('options::folder_id', folder_id1)
-              check_select_field_value('options::keep_on_server', 'true')
+              check_select_field_value('options::post_import_action', 'mark_read')
 
               set_tree_select_value('group_id', group2.id.to_s)
               set_tree_select_value('options::folder_id', folder_id2)
-              set_select_field_label('options::keep_on_server', 'no')
+              set_select_field_label('options::post_import_action', 'Delete')
 
               click_on 'Save'
             end
@@ -158,11 +158,12 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
               options:  include(
                 inbound: include(
                   options: include(
-                    folder_id:        folder_id2,
-                    keep_on_server:   false,
-                    archive:          true,
-                    archive_state_id: state.id.to_s,
-                    archive_before:   '2024-12-01T08:00:00.000Z'
+                    folder_id:          folder_id2,
+                    keep_on_server:     false,
+                    post_import_action: 'delete',
+                    archive:            true,
+                    archive_state_id:   state.id.to_s,
+                    archive_before:     '2024-12-01T08:00:00.000Z'
                   ),
                 ),
               ),
@@ -182,15 +183,27 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
           find('.js-editInbound', text: 'Edit').click
         end
 
+        it 'moves imported messages to a selected destination folder' do
+          in_modal do
+            set_select_field_label('options::post_import_action', 'Move to folder')
+            set_tree_select_value('options::move_to_folder_id', folder_id2)
+            click_on 'Save'
+          end
+
+          in_modal { click_on 'Submit' }
+
+          expect(channel.reload.options.dig(:inbound, :options)).to include(post_import_action: 'move', move_to_folder_id: folder_id2, keep_on_server: false)
+        end
+
         it 'displays inbound configuration dialog' do
           in_modal do
             check_tree_select_field_value('group_id', group1.id.to_s)
             check_tree_select_field_value('options::folder_id', folder_id1)
-            check_select_field_value('options::keep_on_server', 'true')
+            check_select_field_value('options::post_import_action', 'mark_read')
 
             set_tree_select_value('group_id', group2.id.to_s)
             set_tree_select_value('options::folder_id', folder_id2)
-            set_select_field_label('options::keep_on_server', 'no')
+            set_select_field_label('options::post_import_action', 'Delete')
 
             click_on 'Save'
           end
@@ -211,11 +224,12 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
             options:  include(
               inbound: include(
                 options: include(
-                  folder_id:        folder_id2,
-                  keep_on_server:   false,
-                  archive:          false,
-                  archive_state_id: state.id.to_s,
-                  archive_before:   '2024-12-01T08:00:00.000Z'
+                  folder_id:          folder_id2,
+                  keep_on_server:     false,
+                  post_import_action: 'delete',
+                  archive:            false,
+                  archive_state_id:   state.id.to_s,
+                  archive_before:     '2024-12-01T08:00:00.000Z'
                 ),
               ),
             ),
@@ -337,7 +351,7 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
 
           set_tree_select_value('group_id', group.id.to_s)
           set_tree_select_value('options::folder_id', folder_id)
-          set_select_field_label('options::keep_on_server', 'yes')
+          set_select_field_label('options::post_import_action', 'Mark as read')
 
           click_on 'Save'
         end
@@ -347,8 +361,9 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
           options:  include(
             inbound: include(
               options: include(
-                folder_id:      folder_id,
-                keep_on_server: true,
+                folder_id:          folder_id,
+                keep_on_server:     true,
+                post_import_action: 'mark_read',
               ),
             ),
           ),

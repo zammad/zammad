@@ -111,8 +111,11 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
         channel.options[:inbound][:options][:keep_on_server] = true
         channel.save
 
+        channel.options[:inbound][:options].merge!(folder_id: 'source', post_import_action: 'move', move_to_folder_id: 'destination')
+        channel.save!
+
         channel = described_class.link_account(request_token, authorization_payload.merge(channel_id: channel.id))
-        expect(channel.reload.options[:inbound][:options][:keep_on_server]).to be(true)
+        expect(channel.reload.options[:inbound][:options]).to include(keep_on_server: true, folder_id: 'source', post_import_action: 'move', move_to_folder_id: 'destination')
       end
 
       context 'when users do not match', :aggregate_failures do

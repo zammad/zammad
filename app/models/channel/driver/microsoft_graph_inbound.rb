@@ -2,6 +2,21 @@
 
 class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
 
+  def self.post_import_action(options)
+    options[:post_import_action].presence || (ActiveModel::Type::Boolean.new.cast(options[:keep_on_server]) ? 'mark_read' : 'delete')
+  end
+
+  def self.validate_post_import_options!(options)
+    action = post_import_action(options)
+    raise Exceptions::UnprocessableContent, __('Invalid action after importing messages.') if %w[mark_read delete move].exclude?(action)
+
+    return if action != 'move'
+
+    destination = options[:move_to_folder_id]
+    raise Exceptions::UnprocessableContent, __('Please select a destination folder.') if destination.blank?
+    raise Exceptions::UnprocessableContent, __('The destination folder must differ from the source folder.') if destination == (options[:folder_id].presence || 'inbox')
+  end
+
   # Fetches emails from Microsfot 365 account via Graph API
   #
   # @param options [Hash]
@@ -61,7 +76,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     raise 'Microsoft Graph email channel is never verified. Thus this method is not implemented.' # rubocop:disable Zammad/DetectTranslatableString
   end
 
-  def fetch_single_message(message_id, count, count_all) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
+  def fetch_single_message(message_id, count, count_all) # rubocop:disable Metrics/AbcSize
     message_meta = @graph.get_message_basic_details(message_id)
 
     message_validator = MessageValidator.new(message_meta[:headers], message_meta[:size])
@@ -74,14 +89,9 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     end
 
     # ignore already imported
-    if message_validator.already_imported?(@keep_on_server, @channel)
-      begin
-        @graph.mark_message_as_read(message_id)
-        Rails.logger.info "Ignore message #{count}/#{count_all}, because message message id already imported. Graph API Message ID: #{message_id}."
-      rescue MicrosoftGraph::ApiError => e
-        Rails.logger.error "Unable to mark email as read #{count}/#{count_all} from Microsoft Graph server (#{@options[:user]}). Graph API Message ID: #{message_id}. #{e.inspect}"
-        raise e
-      end
+    if message_validator.already_imported?(@keep_on_server || @post_import_action == 'move', @channel)
+      post_import_message(message_id)
+      Rails.logger.info "Ignore message #{count}/#{count_all}, because message message id already imported. Graph API Message ID: #{message_id}."
 
       return MessageResult.new(success: false)
     end
@@ -112,21 +122,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
       process(@channel, msg, false)
     end
 
-    if @keep_on_server
-      begin
-        @graph.mark_message_as_read(message_id)
-      rescue MicrosoftGraph::ApiError => e
-        Rails.logger.error "Unable to mark email as read #{count}/#{count_all} from Microsoft Graph server (#{@options[:user]}). Graph API Message ID: #{message_id}. #{e.inspect}"
-        raise e
-      end
-    else
-      begin
-        @graph.delete_message(message_id)
-      rescue MicrosoftGraph::ApiError => e
-        Rails.logger.error "Unable to delete #{count}/#{count_all} from Microsoft Graph server (#{@options[:user]}). Graph API Message ID: #{message_id}. #{e.inspect}"
-        raise e
-      end
-    end
+    post_import_message(message_id)
 
     MessageResult.new(success: true, after_action: after_action)
   end
@@ -134,7 +130,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   def messages_iterator(keep_on_server, options)
     if options[:folder_id].present?
       folder_id = options[:folder_id]
-      verify_folder!(folder_id, options)
+      verify_folder!(folder_id, options) if @post_import_action != 'move'
     end
 
     # Taking first page of messages only effectivelly applies 1000-messages-in-one-go limit
@@ -152,12 +148,38 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   private
 
   def setup_connection(options)
+    self.class.validate_post_import_options!(options)
+    @post_import_action = self.class.post_import_action(options)
+    @keep_on_server = @post_import_action == 'mark_read'
+
     access_token = options[:password]
     mailbox      = options[:shared_mailbox].presence || options[:user]
 
     setup_connection_server_log(options)
 
-    @graph = MicrosoftGraph.new access_token:, mailbox:
+    @graph = MicrosoftGraph.new(access_token:, mailbox:)
+
+    return if @post_import_action != 'move'
+
+    source = verify_folder!(options[:folder_id].presence || 'inbox', options)
+    destination = verify_folder!(options[:move_to_folder_id], options)
+    return if source[:id] != destination[:id]
+
+    raise Exceptions::UnprocessableContent, __('The destination folder must differ from the source folder.')
+  end
+
+  def post_import_message(message_id)
+    case @post_import_action
+    when 'move'
+      @graph.move_message(message_id, @options[:move_to_folder_id])
+    when 'mark_read'
+      @graph.mark_message_as_read(message_id)
+    else
+      @graph.delete_message(message_id)
+    end
+  rescue MicrosoftGraph::ApiError => e
+    Rails.logger.error "Unable to complete #{@post_import_action} for Microsoft Graph message #{message_id} (#{@options[:user]}). #{e.inspect}"
+    raise
   end
 
   def setup_connection_server_log(options)
@@ -173,9 +195,9 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   def verify_folder!(id, options)
     @graph.get_message_folder_details(id)
   rescue MicrosoftGraph::ApiError => e
-    raise e if e.error_code != 'ErrorInvalidIdMalformed'
+    raise e if %w[ErrorInvalidIdMalformed ErrorItemNotFound].exclude?(e.error_code)
 
     Rails.logger.error "Unable to fetch email from folder at Microsoft Graph/#{options[:user]} Folder does not exist: #{id}"
-    raise "Microsoft Graph email folder does not exist: #{id}"
+    raise "Microsoft Graph email folder does not exist: #{id}. #{e.message}"
   end
 end

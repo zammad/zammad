@@ -21,6 +21,10 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     raise NotImplementedError
   end
 
+  def self.inbound_options_to_preserve
+    %i[folder keep_on_server]
+  end
+
   def self.channel_migration_possible?
     false
   end
@@ -123,8 +127,9 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       end
 
       channel_options[:inbound][:options][:shared_mailbox] = shared_mailbox if shared_mailbox.present?
-      channel_options[:inbound][:options][:folder]         = existing_channel.options[:inbound][:options][:folder]
-      channel_options[:inbound][:options][:keep_on_server] = existing_channel.options[:inbound][:options][:keep_on_server]
+      inbound_options_to_preserve.each do |key|
+        channel_options[:inbound][:options][key] = existing_channel.options[:inbound][:options][key]
+      end
 
       existing_channel.update!(
         options: channel_options,
