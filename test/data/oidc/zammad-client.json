@@ -1,0 +1,42 @@
+{
+  "clientId": "zammad-oidc",
+  "name": "Zammad",
+  "protocol": "openid-connect",
+  "enabled": true,
+  "publicClient": true,
+  "standardFlowEnabled": true,
+  "directAccessGrantsEnabled": false,
+  "fullScopeAllowed": true,
+  "redirectUris": [
+    "#ZAMMAD_BASE_URL/auth/openid_connect/callback"
+  ],
+  "webOrigins": [
+    "#ZAMMAD_BASE_URL"
+  ],
+  "attributes": {
+    "pkce.code.challenge.method": "S256",
+    "post.logout.redirect.uris": "#ZAMMAD_BASE_URL/*"
+  },
+  "defaultClientScopes": [
+    "basic",
+    "profile",
+    "email"
+  ],
+  "optionalClientScopes": [],
+  "protocolMappers": [
+    {
+      "name": "zammad_roles",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-client-role-mapper",
+      "config": {
+        "usermodel.clientRoleMapping.clientId": "zammad-oidc",
+        "claim.name": "zammad_roles",
+        "multivalued": "true",
+        "jsonType.label": "String",
+        "id.token.claim": "true",
+        "userinfo.token.claim": "true",
+        "access.token.claim": "true"
+      }
+    }
+  ]
+}

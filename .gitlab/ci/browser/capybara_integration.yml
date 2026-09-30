@@ -37,7 +37,10 @@ capybara:integration:saml:
     - !reference [.services, auth]
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration_standalone:saml spec/system
+    # Separate runs, since a repeated tag filter replaces the previous one. Both run even if the first one fails.
+    - bundle exec rspec -t integration_standalone:saml spec/system || SAML_FAILED=1
+    - bundle exec rspec -t integration_standalone:oidc spec/system
+    - test -z "$SAML_FAILED"
 
 .template_capybara_integration_otrs:
   extends:
