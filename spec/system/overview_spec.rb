@@ -686,4 +686,26 @@ RSpec.describe 'Overview', type: :system do
       expect(all('.table-overview table b').map(&:text)).to include('äöüß & Test Organization')
     end
   end
+
+  context 'when overview name contains underscores', authenticated_as: :admin do
+    let(:admin)    { create(:admin) }
+    let(:overview) { create(:overview, name: 'This_is_one_jolly_overview') }
+
+    it 'shows the name without inline markup' do
+      visit "ticket/view/#{overview.link}"
+
+      within :active_content do
+        expect(page).to have_css('.sidebar .nav a', text: 'This_is_one_jolly_overview')
+        expect(page).to have_css('.page-header h2', text: 'This_is_one_jolly_overview')
+        expect(page).to have_no_css('.sidebar .nav u, .page-header h2 u')
+
+        click '.page-header [data-type=settings]'
+      end
+
+      in_modal do
+        expect(page).to have_css('.modal-title', text: 'Edit: This_is_one_jolly_overview')
+        expect(page).to have_no_css('.modal-title u')
+      end
+    end
+  end
 end

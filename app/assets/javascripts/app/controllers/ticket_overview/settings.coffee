@@ -3,6 +3,7 @@ class App.TicketOverviewSettings extends App.ControllerModal
   buttonCancel: true
   buttonSubmit: true
   headPrefix: 'Edit'
+  headMarkup: false
 
   content: =>
     @overview = App.Overview.find(@overview_id)

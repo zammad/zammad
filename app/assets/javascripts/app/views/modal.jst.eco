@@ -12,7 +12,7 @@
   <% if @head: %>
         <h1 class="modal-title">
             <% if @headIcon: %><span class="<%- @headIconClass %> icon"><%- @Icon(@headIcon) %></span><% end %>
-            <% if @headPrefix: %><%- @T(@headPrefix) %>: <% end %><%- @T(@head) %>
+            <% if @headPrefix: %><%- @T(@headPrefix) %>: <% end %><% if @headMarkup: %><%- @T(@head) %><% else: %><%- @Ti(@head) %><% end %>
         </h1>
   <% end %>
       </div>
