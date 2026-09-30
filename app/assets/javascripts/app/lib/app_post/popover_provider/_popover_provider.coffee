@@ -27,10 +27,10 @@ class App.PopoverProvider
 
   build: (buildParams) ->
     return if !@checkPermissions()
-    @clear(@popovers)
+    @clear()
     @bind() if !buildParams.doNotBind
     return if buildParams.isTouchDevice is true
-    @popovers = @buildPopovers()
+    @buildPopovers()
 
   checkPermissions: ->
     @params.parentController.permissionCheck(@constructor.permission)
@@ -49,7 +49,7 @@ class App.PopoverProvider
 
     selector = supplementaryData.selector || ".#{@cssClass()}"
 
-    @params.parentController.el.find(selector).popover('destroy').popover(
+    elements = @params.parentController.el.find(selector).popover('destroy').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
@@ -62,16 +62,21 @@ class App.PopoverProvider
       content: ->
         context.buildContentFor(@, supplementaryData)
     )
-    @params.parentController.el.find(selector).on('show.bs.popover', (e) -> context.onShow(e, @))
-    @params.parentController.el.find(selector).on('hide.bs.popover', (e) -> context.onHide(e, @))
+    elements.on('show.bs.popover', (e) -> context.onShow(e, @))
+    elements.on('hide.bs.popover', (e) -> context.onHide(e, @))
+
+    # A re-render strips the old trigger elements' data, so `popover('destroy')` on them is a no-op
+    # and leaves an already shown tip behind in the body.
+    @popoverInstances = elements.map(-> $(@).data('bs.popover')).get()
 
   clear: ->
-    return if !@popovers
-    @popovers.popover('destroy')
+    return if !@popoverInstances
+    popover.destroy() for popover in @popoverInstances when popover.$element
+    @popoverInstances = null
 
   hide: ->
-    return if !@popovers
-    @popovers.popover('hide')
+    return if !@popoverInstances
+    popover.hide() for popover in @popoverInstances
 
   buildTitleFor: (elem) ->
     'title'

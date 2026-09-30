@@ -19,8 +19,9 @@ class UserTicket extends App.PopoverProviderAjax
 
   build: (buildParams) ->
     return if !@checkPermissions()
+    @clear()
     @buildParams = buildParams
-    @popovers    = @buildPopovers(ticketList: {}, selector: buildParams.selector)
+    @buildPopovers(ticketList: {}, selector: buildParams.selector)
 
   buildContentFor: (elem, supplementaryData) ->
     return super if _.isEmpty(supplementaryData.ticketList)

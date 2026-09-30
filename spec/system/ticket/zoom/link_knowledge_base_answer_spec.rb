@@ -676,4 +676,58 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       end
     end
   end
+
+  describe 'Answer popover', authenticated_as: :authenticate do
+    let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:translation) { published_answer.translations.first }
+
+    def authenticate
+      create(:link, from: ticket, to: translation)
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      within :active_content, '.link_kb_answers' do
+        # A hash route change keeps the pointer where the previous example left it. Sitting still on
+        #   the freshly rendered answer is no mouseenter, so step away before hovering it.
+        find('label', text: %r{related knowledge}i).hover
+        find('.kb-answer-popover', text: translation.title).hover
+      end
+    end
+
+    it 'closes the popover when the answer is unlinked' do
+      # The popover is attached to the body, outside of the widget.
+      expect(page).to have_css('.popover', text: translation.title)
+
+      within :active_content, '.link_kb_answers' do
+        find('.js-delete').click
+
+        expect(page).to have_no_text(translation.title)
+      end
+
+      expect(page).to have_no_css('.popover', text: translation.title)
+    end
+
+    # Any pushed ticket change re-renders the list, so the answer can also go while its popover is
+    #   open and the pointer still rests on it.
+    it 'closes the popover when the answer is unlinked elsewhere' do
+      expect(page).to have_css('.popover', text: translation.title)
+
+      Link.remove(
+        link_type:                'normal',
+        link_object_source:       'KnowledgeBase::Answer::Translation',
+        link_object_source_value: translation.id,
+        link_object_target:       'Ticket',
+        link_object_target_value: ticket.id,
+      )
+
+      within :active_content, '.link_kb_answers' do
+        expect(page).to have_no_text(translation.title)
+      end
+
+      expect(page).to have_no_css('.popover', text: translation.title)
+    end
+  end
 end
