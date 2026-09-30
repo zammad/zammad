@@ -2,38 +2,9 @@
 
 module ZammadSpecSupportSAML
 
+  # Returns the ID of the client, e.g. to assign client roles to the user.
   def saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:)
-    token       = saml_keycloak_admin_token
-    clients_url = "#{ENV['KEYCLOAK_BASE_URL']}/admin/realms/zammad/clients"
-
-    # Force create Zammad client in Keycloak.
-    clients = saml_keycloak_request!(:get, "#{clients_url}?clientId=#{CGI.escape(zammad_saml_metadata)}", {}, { json: true, bearer_token: token }).data
-    clients.each do |client|
-      saml_keycloak_request!(:delete, "#{clients_url}/#{client['id']}", {}, { bearer_token: token })
-    end
-    saml_keycloak_request!(:post, clients_url, JSON.parse(saml_client_json), { json: true, jsonParseDisable: true, bearer_token: token })
-  end
-
-  def saml_keycloak_admin_token
-    response = saml_keycloak_request!(
-      :post,
-      "#{ENV['KEYCLOAK_BASE_URL']}/realms/master/protocol/openid-connect/token",
-      {
-        grant_type: 'password',
-        client_id:  'admin-cli',
-        username:   ENV['KC_BOOTSTRAP_ADMIN_USERNAME'],
-        password:   ENV['KC_BOOTSTRAP_ADMIN_PASSWORD'],
-      },
-    )
-
-    JSON.parse(response.body)['access_token']
-  end
-
-  def saml_keycloak_request!(method, url, params = {}, options = {})
-    response = UserAgent.public_send(method, url, params, options)
-    raise "Keycloak request #{method.upcase} #{url} failed: #{response.code} #{response.body}" if !response.success?
-
-    response
+    keycloak_recreate_client(client_id: zammad_saml_metadata, client_json: saml_client_json)
   end
 
   def saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:, name_identifier_format: nil, uid_attribute: nil, idp_slo_service_url: true, security: nil)
@@ -70,18 +41,7 @@ module ZammadSpecSupportSAML
   end
 
   def saml_login_keycloak
-    find_by_id('kc-form')
-    expect(page).to have_current_path(%r{/realms/zammad/protocol/saml\?SAMLRequest=.+})
-    expect(page).to have_css('#kc-form-login')
-
-    within '#kc-form-login' do
-      fill_in 'username', with: 'john.doe'
-      fill_in 'password', with: 'test'
-
-      click_on 'Sign In'
-    end
-
-    expect(page).to have_no_text('Sign In')
+    keycloak_login(path: %r{/realms/zammad/protocol/saml\?SAMLRequest=.+})
   end
 
 end

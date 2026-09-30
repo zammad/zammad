@@ -15,7 +15,7 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
     assertion_consumer_service_url = "#{http_type}://#{fqdn}/auth/saml/callback"
     single_logout_service_url      = "#{http_type}://#{fqdn}/auth/saml/slo"
 
-    config = auth_saml_credentials.compact_blank
+    config = auth_saml_credentials.except(Authorization::RoleMapping::CREDENTIALS_KEY).compact_blank
       .merge(
         assertion_consumer_service_url: assertion_consumer_service_url,
         attribute_service_name:         Setting.get('product_name'),

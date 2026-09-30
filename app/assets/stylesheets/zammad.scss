@@ -16333,6 +16333,27 @@ div.accounted-time-value {
   }
 }
 
+.key-relation-map {
+  .settings-list {
+    width: 100%;
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 40%;
+  }
+
+  th:last-child,
+  td:last-child {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  .js-key {
+    width: 100%;
+  }
+}
+
 .ai-feedback {
   gap: 8px;
 

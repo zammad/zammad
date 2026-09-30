@@ -170,6 +170,114 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
       end
     end
 
+    shared_examples 'configuring the role mapping' do |credentials:, reloads_browser: false|
+      context 'for the role mapping', authenticated_as: true do
+        let(:credentials_setting) { "#{app_setting}_credentials" }
+        let(:agent_role)          { Role.find_by(name: 'Agent') }
+        let(:customer_role)       { Role.find_by(name: 'Customer') }
+        let(:role_mapping)        { {} }
+        let(:saving_reloads)      { reloads_browser }
+
+        # Without validation, e.g. the TLS check of SAML would reach out to the identity provider.
+        before do
+          setting = Setting.find_by(name: credentials_setting)
+          setting.state_current = { value: credentials.merge('role_mapping' => role_mapping) }
+          setting.save!(validate: false)
+        end
+
+        def open_credentials
+          visit '/#settings/security'
+
+          within :active_content do
+            click 'a[href="#third_party_auth"]'
+          end
+
+          find("form[data-name='#{credentials_setting}']")
+        end
+
+        def pick_role(row, name)
+          row.find('.js-input').click
+          row.find(".js-option[data-display-name='#{name}']").click
+        end
+
+        def saved_role_mapping
+          Setting.get(credentials_setting)['role_mapping']
+        end
+
+        def submit_credentials
+          within("form[data-name='#{credentials_setting}']") { click_on 'Submit' }
+          await_empty_ajax_queue
+          return if !saving_reloads
+
+          in_modal { click_on 'Continue session' }
+        end
+
+        it 'saves values mapped to roles together with the credentials' do
+          within open_credentials do
+            fill_in 'role_mapping::attribute', with: 'zammad_roles'
+            click_on 'Add'
+
+            row = find('.js-row')
+            row.find('.js-key').fill_in with: 'zammad-agent'
+            pick_role(row, 'Agent')
+            pick_role(row, 'Customer')
+
+            select 'Deny login', from: 'role_mapping::unmatched'
+          end
+
+          submit_credentials
+
+          expect(Setting.get(credentials_setting)).to include(credentials).and include(
+            'role_mapping' => {
+              'attribute' => 'zammad_roles',
+              'map'       => { 'zammad-agent' => [agent_role.id, customer_role.id] },
+              'unmatched' => 'deny',
+            }
+          )
+        end
+
+        context 'with an existing role mapping' do
+          let(:role_mapping) { { 'attribute' => 'zammad_roles', 'map' => { 'zammad-agent' => [agent_role.id, customer_role.id] }, 'unmatched' => 'deny' } }
+
+          it 'shows the mapped roles' do
+            within open_credentials do
+              expect(page).to have_field('role_mapping::attribute', with: 'zammad_roles')
+              expect(find('.js-row .js-key').value).to eq('zammad-agent')
+              expect(find('.js-row')).to have_css('.token', text: 'Agent').and have_css('.token', text: 'Customer')
+            end
+          end
+
+          it 'removes a role and a mapping' do
+            within open_credentials do
+              find('.js-row .token', text: 'Customer').find('.js-remove').click
+            end
+
+            submit_credentials
+            expect(saved_role_mapping['map']).to eq('zammad-agent' => [agent_role.id])
+
+            within open_credentials do
+              click_on 'Remove'
+            end
+
+            submit_credentials
+            expect(saved_role_mapping['map']).to eq({})
+          end
+        end
+
+        it 'rejects a value without a role' do
+          within open_credentials do
+            fill_in 'role_mapping::attribute', with: 'zammad_roles'
+            click_on 'Add'
+            find('.js-row .js-key').fill_in with: 'zammad-agent'
+            click_on 'Submit'
+          end
+
+          expect(page).to have_text('Each role mapping needs a value and at least one role.')
+          expect(saved_role_mapping).to be_blank
+        end
+      end
+    end
+
     describe 'Authentication via Facebook' do
       let(:app_name)    { 'Facebook' }
       let(:app_setting) { 'auth_facebook' }
@@ -232,6 +340,24 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
       include_examples 'for third-party applications button in login page', display_name: 'Security Assertion Markup Language'
       include_examples 'for third-party applications settings'
       include_examples 'Display callback urls for third-party applications #3622'
+      include_examples 'configuring the role mapping', credentials: {
+        'idp_sso_target_url'     => 'http://idp.example.com/sso',
+        'idp_slo_service_url'    => 'http://idp.example.com/slo',
+        'idp_cert'               => 'certificate',
+        'name_identifier_format' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+      }, reloads_browser: true
+    end
+
+    describe 'Authentication via OpenID Connect' do
+      let(:app_name)    { 'OpenID Connect' }
+      let(:app_setting) { 'auth_openid_connect' }
+
+      include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
+      include_examples 'configuring the role mapping', credentials: {
+        'identifier' => 'zammad',
+        'issuer'     => 'https://idp.example.com/realms/zammad',
+      }
     end
 
     describe 'Authentication via SSO' do
