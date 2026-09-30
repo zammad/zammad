@@ -19,8 +19,8 @@ importers:
         specifier: ^7.6.2
         version: 7.6.2(eslint@10.11.0(supports-color@8.1.1))
       eslint-plugin-n:
-        specifier: ^18.3.0
-        version: 18.3.0(eslint@10.11.0(supports-color@8.1.1))
+        specifier: ^18.4.0
+        version: 18.4.0(eslint@10.11.0(supports-color@8.1.1))
       mocha:
         specifier: ^12.0.2
         version: 12.0.2
@@ -184,8 +184,8 @@ packages:
     peerDependencies:
       eslint: '>=9.0.0'
 
-  eslint-plugin-n@18.3.0:
-    resolution: {integrity: sha512-cPVguuDe6DrIPb/qUXHf8P89MaVTUmiYWwpt5gX5AILsvRIiZAxMFXcFR6QHYBksqKJpjfUBlL/RleCJUWcD7w==}
+  eslint-plugin-n@18.4.0:
+    resolution: {integrity: sha512-TEm6Nqn9+l7EWfJXOL6pmrEdpiM2ZTgo4fNMRDvBTM70jeQ7x3X3Akcx+sRCIRfpcSVwMypH3ZAA33PLyNKmYw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=8.57.1'
@@ -629,7 +629,7 @@ snapshots:
       eslint: 10.11.0(supports-color@8.1.1)
       estraverse: 5.3.0
 
-  eslint-plugin-n@18.3.0(eslint@10.11.0(supports-color@8.1.1)):
+  eslint-plugin-n@18.4.0(eslint@10.11.0(supports-color@8.1.1)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.11.0(supports-color@8.1.1))
       enhanced-resolve: 5.24.5
@@ -639,6 +639,7 @@ snapshots:
       globals: 15.15.0
       globrex: 0.1.2
       ignore: 5.3.2
+      js-yaml: 5.4.1
       semver: 7.8.5
 
   eslint-scope@9.1.2:
