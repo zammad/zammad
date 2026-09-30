@@ -113,12 +113,7 @@ class SessionsController < ApplicationController
       return
     end
 
-    # Create a new user or add an auth to existing user, depending on
-    # whether there is already a user signed in.
-    authorization = Authorization.find_from_hash(auth)
-    if !authorization
-      authorization = Authorization.create_from_hash(auth, current_user)
-    end
+    authorization = omniauth_authorization(auth)
 
     if in_maintenance_mode?(authorization.user)
       redirect_to redirect_url
@@ -418,6 +413,21 @@ class SessionsController < ApplicationController
     render json: { url: url }
   rescue => e
     Rails.logger.error "SAML SLO failed: #{e.message}"
+  end
+
+  def omniauth_authorization(auth)
+    # Linking an account while signed in leaves the roles alone until the next third-party login.
+    # An already linked identity signs in its own user instead, so it is mapped even with a session.
+    linking      = current_user.present? && !Authorization.exists?(provider: auth['provider'], uid: auth['uid'])
+    role_mapping = Authorization::RoleMapping.new(auth) if !linking
+    role_mapping&.verify!
+
+    # Create a new user or add an auth to existing user, depending on
+    # whether there is already a user signed in.
+    authorization = Authorization.find_from_hash(auth) || Authorization.create_from_hash(auth, current_user)
+
+    role_mapping&.apply(authorization.user)
+    authorization
   end
 
   def omniauth_redirect_path

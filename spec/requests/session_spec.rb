@@ -603,6 +603,112 @@ RSpec.describe 'Sessions endpoints', type: :request do
     end
   end
 
+  describe 'GET /auth/openid_connect/callback (omniauth) with a role mapping' do
+    let(:agent_role) { create(:role, :agent) }
+    let(:unmatched)  { 'signup_roles' }
+    let(:roles)      { ['zammad-agent'] }
+    let(:uid)        { 'jdoe' }
+
+    before do
+      Setting.set('auth_openid_connect_credentials', {
+                    'role_mapping' => {
+                      'attribute' => 'roles',
+                      'map'       => { 'zammad-agent' => [agent_role.id] },
+                      'unmatched' => unmatched,
+                    },
+                  })
+    end
+
+    around do |example|
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
+        provider:    'openid_connect',
+        uid:         uid,
+        info:        { email: 'jdoe@example.com', name: 'John Doe' },
+        credentials: {},
+        extra:       { raw_info: { roles: roles } },
+      )
+
+      example.run
+    ensure
+      OmniAuth.config.mock_auth.delete(:openid_connect)
+      OmniAuth.config.test_mode = false
+    end
+
+    it 'creates the user with the mapped roles' do
+      get '/auth/openid_connect/callback'
+
+      expect(User.find_by(login: uid).roles).to contain_exactly(agent_role)
+    end
+
+    context 'with an already linked user' do
+      let(:user) { create(:customer) }
+
+      before { create(:authorization, user: user, provider: 'openid_connect', uid: uid) }
+
+      it 'replaces the roles of the user' do
+        get '/auth/openid_connect/callback'
+
+        expect(user.reload.roles).to contain_exactly(agent_role)
+      end
+    end
+
+    context 'when no role is mapped and logins without a mapped role are denied' do
+      let(:roles)     { ['unknown'] }
+      let(:unmatched) { 'deny' }
+
+      it 'denies the login without creating the user', :aggregate_failures do
+        expect { get '/auth/openid_connect/callback' }.not_to change(User, :count)
+
+        expect(response).to have_http_status(:forbidden)
+        expect(request.session[:user_id]).to be_nil
+      end
+    end
+
+    context 'with an existing user being linked automatically by email' do
+      let!(:user) { create(:customer, email: 'jdoe@example.com') }
+
+      before { Setting.set('auth_third_party_auto_link_at_inital_login', true) }
+
+      it 'replaces the roles of the user' do
+        get '/auth/openid_connect/callback'
+
+        expect(user.reload.roles).to contain_exactly(agent_role)
+      end
+    end
+
+    context 'when an already linked identity signs in while another user is signed in' do
+      let(:roles)      { ['unknown'] }
+      let(:unmatched)  { 'deny' }
+      let(:user)       { create(:agent) }
+      let(:other_user) { create(:customer, password: 'dummy') }
+
+      before do
+        create(:authorization, user: user, provider: 'openid_connect', uid: uid)
+        authenticated_as(other_user, via: :browser, password: 'dummy')
+      end
+
+      it 'denies the login', :aggregate_failures do
+        expect { get '/auth/openid_connect/callback' }.not_to change { user.reload.role_ids }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(request.session[:user_id]).to eq(other_user.id)
+      end
+    end
+
+    context 'when an account is linked while signed in' do
+      let(:user) { create(:customer, password: 'dummy') }
+
+      before { authenticated_as(user, via: :browser, password: 'dummy') }
+
+      it 'keeps the roles of the user', :aggregate_failures do
+        expect { get '/auth/openid_connect/callback' }.not_to change { user.reload.role_ids }
+
+        expect(Authorization.find_by(provider: 'openid_connect', uid: uid).user).to eq(user)
+      end
+    end
+  end
+
   describe 'POST /auth/two_factor_itwo_factor_method_enablednitiate_authentication/:method' do
     let(:user)                       { create(:user, password: 'dummy') }
     let(:params)                     { {} }
