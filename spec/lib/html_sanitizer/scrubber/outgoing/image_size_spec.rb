@@ -82,6 +82,34 @@ RSpec.describe HtmlSanitizer::Scrubber::Outgoing::ImageSize do
       it { is_expected.to eq target }
     end
 
+    context 'when style is written in uppercase' do
+      let(:input)  { '<img style="HEIGHT: 100PX;">' }
+      let(:target) { '<img style="HEIGHT: 100PX;" height="100">' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when a style declaration has no value' do
+      let(:input)  { '<img style="width:;">' }
+      let(:target) { '<img style="width:;">' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when a style declaration has no colon' do
+      let(:input)  { '<img style="width">' }
+      let(:target) { '<img style="width">' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when valid and malformed style declarations are mixed' do
+      let(:input)  { '<img style="height: 25px;; width:;">' }
+      let(:target) { '<img style="height: 25px;; width:;" height="25">' }
+
+      it { is_expected.to eq target }
+    end
+
     context 'when height and width are present in style and are also set as tags' do
       let(:input)  { '<img style="height: 25px; width: 50px" height="25" width="50">' }
       let(:target) { '<img style="height: 25px; width: 50px" height="25" width="50">' }

@@ -24,13 +24,10 @@ class HtmlSanitizer
           return if node[key].present?
 
           split_style(node).each do |elem|
-            attr, value = elem.split(':')
-
-            attr.strip!
-            value.strip!
+            attr, value = elem.split(':', 2).map(&:strip)
 
             next if attr != key
-            next if !value.downcase.ends_with?('px')
+            next if value.blank? || !value.ends_with?('px')
 
             node[key] = value.include?('.') ? value.to_f : value.to_i
           end

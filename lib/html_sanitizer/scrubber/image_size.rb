@@ -30,8 +30,7 @@ class HtmlSanitizer
           .split(';')
           .each_with_object(style) do |elem, memo|
             key, value = elem.split(':')
-
-            key.strip!
+            key = key&.strip
 
             next if key.blank?
 
