@@ -149,6 +149,7 @@ RSpec.describe 'Error handling', type: :request do
 
       let(:user) { :agent }
 
+      include_examples 'handles exception', ActionController::BadRequest, :bad_request, '400: Bad Request', '400: The request could not be processed.'
       include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
       include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
       include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
@@ -163,6 +164,7 @@ RSpec.describe 'Error handling', type: :request do
 
       let(:user) { :admin }
 
+      include_examples 'handles exception', ActionController::BadRequest, :bad_request, '400: Bad Request', '400: The request could not be processed.'
       include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
       include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
       include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
@@ -180,6 +182,7 @@ RSpec.describe 'Error handling', type: :request do
 
         let(:user) { :agent }
 
+        include_examples 'handles exception', ActionController::BadRequest, :bad_request, '400: Bad Request', '400'
         include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401'
         include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403'
         include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403', 'Not authorized'
@@ -193,6 +196,7 @@ RSpec.describe 'Error handling', type: :request do
 
         let(:user) { :admin }
 
+        include_examples 'handles exception', ActionController::BadRequest, :bad_request, '400: Bad Request', '400'
         include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401'
         include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403'
         include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403', 'Not authorized'

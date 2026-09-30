@@ -32,7 +32,7 @@ class TestsController < ApplicationController
     message    = params.fetch(:message, 'no message provided')
 
     # Emulate the originating controller.
-    params[:controller] = origin if origin
+    request.path_parameters[:controller] = origin if origin
 
     klass = exception.safe_constantize
 

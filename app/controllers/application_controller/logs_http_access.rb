@@ -5,17 +5,21 @@ module ApplicationController::LogsHttpAccess
 
   included do
     after_action :http_log
+
+    class_attribute :http_log_support, instance_writer: false
+  end
+
+  class_methods do
+    def http_log_config(config)
+      self.http_log_support = config
+    end
   end
 
   private
 
-  def http_log_config(config)
-    @http_log_support = config
-  end
-
   # log http access
   def http_log
-    return if !@http_log_support
+    return if !http_log_support
 
     # request
     request_data = {
@@ -57,7 +61,7 @@ module ApplicationController::LogsHttpAccess
     response_data[:content] = response_data[:content].slice(0, 8000)
     record = {
       direction: 'in',
-      facility:  @http_log_support[:facility],
+      facility:  http_log_support[:facility],
       url:       url_for(only_path: false, overwrite_params: {}),
       status:    response.status,
       ip:        request.remote_ip,

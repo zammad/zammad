@@ -6,6 +6,8 @@ class Integration::PlacetelController < ApplicationController
   skip_before_action :verify_csrf_token
   before_action :check_configured, :check_token
 
+  http_log_config facility: 'placetel'
+
   # notify about inbound call / block inbound call
   def event
 
@@ -48,8 +50,6 @@ class Integration::PlacetelController < ApplicationController
   end
 
   def check_configured
-    http_log_config facility: 'placetel'
-
     if !Setting.get('placetel_integration')
       response_error(__('Feature is disabled, please contact your administrator!'))
       return

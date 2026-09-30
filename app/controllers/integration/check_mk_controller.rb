@@ -4,6 +4,8 @@ class Integration::CheckMkController < ApplicationController
   skip_before_action :verify_csrf_token
   before_action :check_configured
 
+  http_log_config facility: 'check_mk'
+
   def update
 
     # check params
@@ -137,8 +139,6 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
   private
 
   def check_configured
-    http_log_config facility: 'check_mk'
-
     if !Setting.get('check_mk_integration')
       raise Exceptions::UnprocessableContent, __('Feature is disabled, please contact your administrator!')
     end

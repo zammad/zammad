@@ -6,6 +6,8 @@ class Integration::SipgateController < ApplicationController
   skip_before_action :verify_csrf_token
   before_action :check_configured, :check_token
 
+  http_log_config facility: 'sipgate.io'
+
   # notify about inbound call / block inbound call
   def event
 
@@ -48,8 +50,6 @@ class Integration::SipgateController < ApplicationController
   end
 
   def check_configured
-    http_log_config facility: 'sipgate.io'
-
     if !Setting.get('sipgate_integration')
       xml_error(__('Feature is disabled, please contact your administrator!'))
       return

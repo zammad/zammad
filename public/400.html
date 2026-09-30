@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html class="dark">
+<meta charset="utf-8">
+<title>400: Bad Request</title>
+<link rel="stylesheet" href="/assets/error/style.css">
+<body <% if @traceback %>class="error-message"<% end %>>
+  <h1>400: The request could not be processed.</h1>
+<% if @message.present? %>
+  <div><%= @message %></div>
+<% end %>
+<% if !@traceback %>
+  <div class="error-image" style="background-image: url(/assets/error/error-1.svg)"></div>
+  <p>The request was malformed, e.g. it used an invalid parameter encoding.</p>
+<% else %>
+  <% if @exception.message != @message %>
+    <div><%= @exception.message %></div>
+  <% end %>
+  <% if @exception.backtrace %>
+    <div>Traceback:</div>
+    <% @exception.backtrace.each {|row| %>
+      <%= row %><br>
+    <% } %>
+  <% end %>
+<% end %>
+</html>

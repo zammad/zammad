@@ -17,6 +17,17 @@ module ApplicationController::HandlesErrors
     rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized_error
     rescue_from 'Store::Provider::S3::Error', with: :unprocessable_content
     rescue_from Exceptions::MissingAttribute, Exceptions::InvalidAttribute, ActionController::ParameterMissing, with: :unprocessable_content
+    rescue_from ActionController::BadRequest, ActionDispatch::Http::Parameters::ParseError, with: :bad_request
+  end
+
+  def bad_request(e)
+    logger.error e
+    # unreadable params also hide the format default of the route
+    if (format = request.path_parameters[:format])
+      request.set_header('action_dispatch.request.formats', [Mime::Type.lookup_by_extension(format)])
+    end
+    respond_to_exception(e, :bad_request)
+    http_log
   end
 
   def not_found(e)
@@ -72,6 +83,13 @@ module ApplicationController::HandlesErrors
 
   private
 
+  # Rails raises these while parsing the params, before rescue_from handlers are reachable.
+  def process_action(*)
+    super
+  rescue ActionController::BadRequest, ActionDispatch::Http::Parameters::ParseError => e
+    bad_request(e)
+  end
+
   def respond_to_exception(e, status)
     status_code = Rack::Utils.status_code(status)
 
@@ -82,7 +100,7 @@ module ApplicationController::HandlesErrors
         @exception = e
         @message = errors[:error_human] || errors[:error] || param[:message]
         @traceback = !Rails.env.production?
-        file = Rails.public_path.join("#{status_code}#{'-mobile' if params[:controller] == 'mobile'}.html").open('r')
+        file = Rails.public_path.join("#{status_code}#{'-mobile' if request.path_parameters[:controller] == 'mobile'}.html").open('r')
         render inline: file.read, status: status, content_type: 'text/html' # rubocop:disable Rails/RenderInline
       end
     end
@@ -115,7 +133,7 @@ module ApplicationController::HandlesErrors
     elsif e.is_a?(Exceptions::InvalidCSRFToken)
       data[:error_human] = data[:error]
       data[:invalid_csrf_token] = true
-    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::NotAuthorized, Exceptions::Forbidden, Store::Provider::S3::Error, Authorization::Provider::AccountError, Exceptions::MissingAttribute, ActionController::ParameterMissing].include?(e.class)
+    elsif [ActionController::RoutingError, ActionController::BadRequest, ActionDispatch::Http::Parameters::ParseError, ActiveRecord::RecordNotFound, Exceptions::NotAuthorized, Exceptions::Forbidden, Store::Provider::S3::Error, Authorization::Provider::AccountError, Exceptions::MissingAttribute, ActionController::ParameterMissing].include?(e.class)
       data[:error_human] = data[:error]
     end
 

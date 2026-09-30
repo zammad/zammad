@@ -4,6 +4,8 @@ class Integration::CtiController < ApplicationController
   skip_before_action :verify_csrf_token
   before_action :check_configured, :check_token
 
+  http_log_config facility: 'cti'
+
   # notify about inbound call / block inbound call
   def event
     local_params = ActiveSupport::HashWithIndifferentAccess.new(params.permit!.to_h)
@@ -49,8 +51,6 @@ class Integration::CtiController < ApplicationController
   end
 
   def check_configured
-    http_log_config facility: 'cti'
-
     if !Setting.get('cti_integration')
       response_error(__('Feature is disabled, please contact your administrator!'))
       return

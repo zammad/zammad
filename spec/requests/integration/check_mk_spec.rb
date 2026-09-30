@@ -31,6 +31,20 @@ RSpec.describe 'Integration Check MK', type: :request do
       expect(json_response['error']).to eq('The provided token is invalid.')
     end
 
+    it 'does fail with invalid parameter encoding and logs the request', :aggregate_failures do
+      post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: 'event_id=1&host=a%DFb&state=down', headers: { 'CONTENT_TYPE' => 'application/x-www-form-urlencoded' }
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response['error']).to include('Invalid encoding for parameter')
+      expect(HttpLog.where(facility: 'check_mk', status: 400).count).to eq(1)
+    end
+
+    it 'does fail with malformed JSON body and logs the request', :aggregate_failures do
+      post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: '{"event_id":', headers: { 'CONTENT_TYPE' => 'application/json' }
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response['error']).to eq('Error occurred while parsing request parameters')
+      expect(HttpLog.where(facility: 'check_mk', status: 400).count).to eq(1)
+    end
+
     context 'service check' do
       it 'does create ticket with customer email' do
         params = {
