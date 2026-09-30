@@ -8,11 +8,15 @@ capybara:firefox:
     - .template_browser-core_capybara_firefox
   parallel: 16
 
-# Shadow lane for the Playwright driver evaluation: runs automatically in every
-#   pipeline next to capybara:chrome, so each commit yields a comparable pair,
-#   and never gates - allow_failure keeps a red lane from blocking the pipeline.
+# Shadow lane for the Playwright driver evaluation: runs automatically on develop
+#   and in scheduled pipelines next to capybara:chrome, is only started on demand
+#   in merge requests, and never gates - allow_failure keeps a red lane from
+#   blocking the pipeline.
 capybara:playwright:
   extends:
     - .template_browser-core_capybara_playwright
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   allow_failure: true
   parallel: 16

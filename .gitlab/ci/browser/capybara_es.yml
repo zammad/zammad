@@ -63,4 +63,7 @@ capybara:es:firefox:
 capybara:es:playwright:
   extends:
     - .template_browser-core_capybara_playwright_es
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   allow_failure: true
