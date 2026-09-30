@@ -1,14 +1,13 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class MicrosoftGraph
-  BASE_URL = 'https://graph.microsoft.com/v1.0/'.freeze
-
   attr_reader :bearer_token, :mailbox
 
-  def initialize(access_token:, mailbox:)
+  def initialize(access_token:, mailbox:, cloud: nil)
     super()
     @bearer_token = access_token
     @mailbox      = mailbox
+    @cloud        = MicrosoftCloud.new(cloud)
   end
 
   def send_message(mail)
@@ -120,7 +119,7 @@ class MicrosoftGraph
     options[:json] = json
     options[:log]  = { facility: 'MicrosoftGraph', log_only_on_error: true }
 
-    uri = URI(path).host.present? ? path : "#{BASE_URL}#{mailbox_path}#{path}"
+    uri = request_uri(path)
 
     response = UserAgent.send(method, uri, params, options)
 
@@ -133,6 +132,19 @@ class MicrosoftGraph
     end
 
     response.body
+  end
+
+  def request_uri(path)
+    uri = URI(path)
+    if uri.host.blank? && uri.scheme.blank?
+      return "#{@cloud.graph_base_url}#{mailbox_path}#{path}"
+    end
+
+    if uri.scheme != 'https' || uri.host != @cloud.graph_host || uri.port != 443 || uri.userinfo.present? || !uri.path.start_with?('/v1.0/')
+      raise ArgumentError, __('Invalid Microsoft Graph pagination URL.')
+    end
+
+    uri.to_s
   end
 
   def handle_error!(response)

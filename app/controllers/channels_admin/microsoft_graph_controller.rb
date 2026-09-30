@@ -20,7 +20,11 @@ class ChannelsAdmin::MicrosoftGraphController < ChannelsAdmin::BaseController
 
     channel.refresh_xoauth2!(force: true)
 
-    graph = ::MicrosoftGraph.new access_token: channel.options.dig('auth', 'access_token'), mailbox: channel_mailbox
+    graph = ::MicrosoftGraph.new(
+      access_token: channel.options.dig('auth', 'access_token'),
+      mailbox:      channel_mailbox,
+      cloud:        channel.options.dig('inbound', 'options', 'cloud'),
+    )
 
     begin
       folders = graph.get_message_folders_tree

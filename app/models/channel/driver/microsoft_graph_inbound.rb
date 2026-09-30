@@ -157,7 +157,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
 
     setup_connection_server_log(options)
 
-    @graph = MicrosoftGraph.new access_token:, mailbox:
+    @graph = MicrosoftGraph.new(access_token:, mailbox:, cloud: options[:cloud])
   end
 
   def setup_connection_server_log(options)

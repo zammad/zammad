@@ -85,13 +85,15 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
           'inbound'  => {
             adapter: 'microsoft_graph_inbound',
             options: {
-              'user' => email_address,
+              'user'  => email_address,
+              'cloud' => 'global',
             }
           },
           'outbound' => {
             adapter: 'microsoft_graph_outbound',
             options: {
-              'user' => email_address,
+              'user'  => email_address,
+              'cloud' => 'global',
             }
           },
           'auth'     => include(

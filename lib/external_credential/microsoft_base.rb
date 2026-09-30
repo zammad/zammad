@@ -9,7 +9,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     raise NotImplementedError
   end
 
-  def self.authorize_scope
+  def self.authorize_scope(_credentials = {})
     raise NotImplementedError
   end
 
@@ -45,6 +45,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       if !credentials.key? :client_tenant
         credentials[:client_tenant] = external_credential.credentials['client_tenant']
       end
+      credentials[:cloud] = external_credential.credentials['cloud'] if !credentials.key?(:cloud)
       # multi_tenant_app may be false. Set only if key is nonexistent at all
       if !credentials.key? :multi_tenant_app
         credentials[:multi_tenant_app] = external_credential.credentials['multi_tenant_app']
@@ -53,6 +54,11 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank? && !using_multi_tenant_app?(credentials)
+
+    cloud = MicrosoftCloud.new(credentials[:cloud])
+    if using_multi_tenant_app?(credentials) && cloud.name != 'global'
+      raise Exceptions::UnprocessableContent, __('The shared Microsoft app only supports the Global cloud.')
+    end
 
     if using_multi_tenant_app?(credentials)
       code_verifier  = generate_code_verifier
@@ -87,7 +93,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     user_data = user_info(response[:id_token])
     raise Exceptions::UnprocessableContent, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
 
-    account_data = {}
+    account_data = { cloud: MicrosoftCloud.new(external_credential.credentials[:cloud]).name }
 
     # Restore shared mailbox information from session and clean it up.
     if params[:shared_mailbox].present?
@@ -104,6 +110,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
           client_id:     external_credential.credentials[:client_id],
           client_secret: external_credential.credentials[:client_secret],
           client_tenant: external_credential.credentials[:client_tenant],
+          cloud:         account_data[:cloud],
         }.compact,
       ),
     }
@@ -136,9 +143,9 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     end
 
     if channel_migration_possible?
-      migration_channel = find_migration_channel(user_data)
+      migration_channel = find_migration_channel(user_data, account_data)
 
-      return execute_channel_migration(migrate_channel, channel_options) if migration_channel
+      return execute_channel_migration(migration_channel, channel_options) if migration_channel
     end
 
     email_address = {
@@ -191,11 +198,11 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     SecureRandom.urlsafe_base64
   end
 
-  def self.generate_authorize_url(credentials, scope: authorize_scope, state: nil, code_challenge: nil)
+  def self.generate_authorize_url(credentials, scope: nil, state: nil, code_challenge: nil)
     params = {
       'client_id'             => credentials[:client_id],
       'redirect_uri'          => redirect_uri(credentials),
-      'scope'                 => scope,
+      'scope'                 => scope || authorize_scope(credentials),
       'response_type'         => 'code',
       'access_type'           => 'offline',
       'prompt'                => credentials[:prompt] || 'login',
@@ -207,7 +214,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     tenant = credentials[:client_tenant].presence || 'common'
 
     uri = URI::HTTPS.build(
-      host:  'login.microsoftonline.com',
+      host:  MicrosoftCloud.new(credentials[:cloud]).login_host,
       path:  "/#{tenant}/oauth2/v2.0/authorize",
       query: params.to_query
     )
@@ -216,7 +223,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
   end
 
   def self.authorize_tokens(credentials, authorization_code, code_verifier: nil)
-    uri    = authorize_tokens_uri(credentials[:client_tenant])
+    uri    = authorize_tokens_uri(credentials[:client_tenant], cloud: credentials[:cloud])
     params = authorize_tokens_params(credentials, authorization_code, code_verifier: code_verifier)
 
     response = UserAgent.post(uri.to_s, params)
@@ -246,9 +253,9 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     }.compact
   end
 
-  def self.authorize_tokens_uri(tenant)
+  def self.authorize_tokens_uri(tenant, cloud: nil)
     URI::HTTPS.build(
-      host: 'login.microsoftonline.com',
+      host: MicrosoftCloud.new(cloud).login_host,
       path: "/#{tenant.presence || 'common'}/oauth2/v2.0/token",
     )
   end
@@ -288,7 +295,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     tenant = credentials[:client_tenant].presence || 'common'
 
     URI::HTTPS.build(
-      host: 'login.microsoftonline.com',
+      host: MicrosoftCloud.new(credentials[:cloud]).login_host,
       path: "/#{tenant}/oauth2/v2.0/token",
     )
   end

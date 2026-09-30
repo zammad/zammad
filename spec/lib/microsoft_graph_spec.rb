@@ -259,7 +259,7 @@ RSpec.describe MicrosoftGraph, :aggregate_failures, integration: true, required_
     end
   end
 
-  describe 'retry-after handling', required_envs: [], use_vcr: false do
+  describe 'retry-after handling', integration: false, required_envs: [], use_vcr: false do
     let(:client) { described_class.new(access_token: 'token', mailbox: 'me') }
     let(:body) do
       '{
@@ -276,8 +276,7 @@ RSpec.describe MicrosoftGraph, :aggregate_failures, integration: true, required_
     end
 
     before do
-      stub_const("#{described_class}::BASE_URL", 'http://localhost/')
-      stub_request(:post, 'http://localhost/users/me/sendMail')
+      stub_request(:post, 'https://graph.microsoft.com/v1.0/users/me/sendMail')
         .to_return(status: status_code, body:, headers: { 'Retry-After' => retry_after_header }.compact)
 
       freeze_time
@@ -337,16 +336,12 @@ RSpec.describe MicrosoftGraph, :aggregate_failures, integration: true, required_
     end
   end
 
-  describe 'HTTP logging', required_envs: [], use_vcr: false do
+  describe 'HTTP logging', integration: false, required_envs: [], use_vcr: false do
     let(:client) { described_class.new(access_token: 'token', mailbox: 'me') }
-
-    before do
-      stub_const("#{described_class}::BASE_URL", 'http://localhost/')
-    end
 
     context 'when the request fails' do
       before do
-        stub_request(:post, 'http://localhost/users/me/sendMail')
+        stub_request(:post, 'https://graph.microsoft.com/v1.0/users/me/sendMail')
           .to_return(status: 500, body: '{"error":{"code":"Boom","message":"Server error"}}')
       end
 
@@ -359,7 +354,7 @@ RSpec.describe MicrosoftGraph, :aggregate_failures, integration: true, required_
 
     context 'when the request succeeds' do
       before do
-        stub_request(:post, 'http://localhost/users/me/sendMail')
+        stub_request(:post, 'https://graph.microsoft.com/v1.0/users/me/sendMail')
           .to_return(status: 202, body: '')
       end
 
