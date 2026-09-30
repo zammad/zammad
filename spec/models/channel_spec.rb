@@ -129,6 +129,18 @@ RSpec.describe Channel, type: :model do
         end
       end
 
+      context 'when token refresh succeeds' do
+        before do
+          Setting.set('system_init_done', true)
+
+          allow(ExternalCredential).to receive(:refresh_token).and_return(channel.options[:auth].merge(access_token: 'S3CR3T', created_at: Time.zone.now))
+        end
+
+        it 'does not create an audit log entry' do
+          expect { channel.refresh_xoauth2!(force: true) }.not_to change(AuditLog.where(auditable: channel), :count)
+        end
+      end
+
       context 'when non-XOAUTH2 channels are present' do
 
         let!(:email_address) { create(:email_address, channel: create(:channel, area: 'Some::Other')) }
