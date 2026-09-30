@@ -1,0 +1,12 @@
+<tr class="js-row">
+  <td class="settings-list-middle">
+    <input type="text" class="form-control form-control--small js-key" value="<%= @key %>" placeholder="<%= @keyPlaceholder %>" aria-label="<%- @Ti(@keyDisplay) %>">
+  </td>
+  <td class="js-relation settings-list-middle"></td>
+  <td class="settings-list-middle">
+    <button type="button" class="btn btn--text btn--primary js-removeRow">
+      <%- @Icon('trash') %>
+      <%- @T('Remove') %>
+    </button>
+  </td>
+</tr>
