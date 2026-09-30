@@ -702,6 +702,8 @@ GEM
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
     rspec-support (3.13.7)
+    rspec_junit_formatter (0.6.0)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rszr (1.5.0)
     rubocop (1.91.0)
       json (>= 2.3)
@@ -1021,6 +1023,7 @@ DEPENDENCIES
   rotp
   rspec-rails
   rspec-retry
+  rspec_junit_formatter
   rszr
   rubocop
   rubocop-capybara

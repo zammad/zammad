@@ -29,6 +29,10 @@ variables:
   # Record the runtime of each test file, used to keep .gitlab/ci/timings/ up to date.
   CI_TEST_TIMINGS_PATH: 'tmp/test_timings/timings.yml'
 
+  # Write JUnit reports for the test reports of GitLab, see spec/support/junit_report.rb and
+  #   .artifacts_with_test_report.
+  CI_JUNIT_REPORT_DIR: 'tmp/junit'
+
   # Branches that are only ever built through their merge request: feature branches of
   #   developers (private/*) and branches created by automation (cherry-picks, reverts,
   #   dependency updates). Used in rules with `=~`, which requires the pattern to be

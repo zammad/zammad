@@ -1,5 +1,8 @@
 performance:
   stage: test
+  needs:
+    - !reference [.needs, lint]
+  timeout: 45 minutes
   rules:
     - !reference [.rule_fragments, variable_filters]
     - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
@@ -18,16 +21,15 @@ performance:
   services:
     - !reference [.services, postgresql]
     - !reference [.services, redis]
-  cache: []
   before_script:
     # Copy performance checking code to tmp/ so that it survives branch switching
     - cp -rv .gitlab/performance tmp/
 
     # First, checkout stable and set it up.
-    - git fetch --unshallow >/dev/null 2>&1
-    - git checkout stable-6.0
+    - git fetch --depth=1 origin stable-6.0
+    - git checkout FETCH_HEAD
     - !reference [.scripts, source_rvm]
-    - rvm use 3.1.3
+    - rvm use $(cat .ruby-version)
     - bundle config set without mysql
     - !reference [.scripts, bundle_install]
     - !reference [.scripts, configure_environment]
@@ -39,7 +41,7 @@ performance:
     - bundle exec rails r tmp/performance/run_tests.rb || true
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
-    - rvm use 3.4.9
+    - rvm use $(cat .ruby-version)
     - !reference [.scripts, bundle_install]
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis

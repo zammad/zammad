@@ -4,7 +4,14 @@ include:
 .template_rspec:
   stage: test
   extends:
+    - .template_ruby
     - .job_rules_default
+    - .artifacts_with_test_report
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, database]
+    - !reference [.needs, lint]
+  timeout: 40 minutes
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration
@@ -19,9 +26,16 @@ include:
 rspec:integration:
   stage: test
   extends:
+    - .template_ruby
     - .variables_proxy
     - .variables_mattermost
     - .variables_s3
+    - .artifacts_with_test_report
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, database]
+    - !reference [.needs, lint]
+  timeout: 30 minutes
   allow_failure: true
   # Squid permits CONNECT to 443, 8443 and 3001 only (configs/squid-ci.conf in
   #   docker/zammad-proxies), so the SSL server of spec/lib/user_agent_spec.rb

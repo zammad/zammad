@@ -1,0 +1,16 @@
+# For the jobs writing JUnit reports (see CI_JUNIT_REPORT_DIR): upload the artifacts of
+#   passed jobs, too, so that the test reports of pipelines and merge requests contain
+#   all tests and not only the failed ones. The default after_script removes the logs and
+#   screenshots of passed jobs, so that only the report of these is uploaded.
+.artifacts_with_test_report:
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      - tmp/screenshot*
+      - tmp/screenshots/*
+      # Recorded by spec/support/capybara/playwright_traces.rb in the Playwright lanes.
+      - tmp/playwright-traces/*
+      - log/*.log
+    reports:
+      junit: tmp/junit/*.xml

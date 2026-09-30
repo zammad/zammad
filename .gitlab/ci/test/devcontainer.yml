@@ -6,11 +6,12 @@
   # The job only needs the repository checkout. Without this, it implicitly
   # depends on the artifacts of all earlier stages, so retrying it after those
   # artifacts expired fails with `missing_dependency_failure`.
-  needs: []
+  needs:
+    - !reference [.needs, lint]
+  timeout: 15 minutes
   variables:
     DOCKER_HOST: unix:///var/run/docker.sock
     DEVCONTAINERS_CLI_VERSION: '0.89.0'
-  cache: []
   before_script:
     - apk add --no-cache docker-cli docker-cli-buildx docker-compose
   after_script: []

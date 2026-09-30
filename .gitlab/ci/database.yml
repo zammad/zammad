@@ -5,8 +5,10 @@
 'write database dumps':
   stage: lint
   extends:
+    - .template_ruby
     - .job_rules_default
   timeout: 6 minutes
+  needs: !reference [.needs, ruby]
   services:
     - !reference [.services, postgresql]
   variables:

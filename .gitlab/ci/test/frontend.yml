@@ -3,13 +3,19 @@
   extends:
     - .job_rules_default
     - .no_artifact_dependencies
+    - .artifacts_with_test_report
+  needs:
+    - !reference [.needs, nodejs]
+    - !reference [.needs, lint]
+  timeout: 15 minutes
   cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, pnpm_install]
     - !reference [.scripts, pnpm_install_eslint_plugin_zammad]
   script:
     # Only run one worker to avoid load peaks affecting other jobs.
-    - pnpm test --max-workers=1 --shard $CI_NODE_INDEX/$CI_NODE_TOTAL
+    # Vitest resolves a relative output file against app/frontend, its root.
+    - pnpm test --max-workers=1 --shard $CI_NODE_INDEX/$CI_NODE_TOTAL --reporter=default --reporter=junit --outputFile.junit=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest.xml
     # Stop here, except on the first shard.
     - "[[ $CI_NODE_INDEX = 1 ]] || exit 0"
     - echo "Also test eslint-plugin-zammad…"
@@ -27,6 +33,10 @@ frontend:cypress:
     - .job_rules_default
     - .tags_docker_low_concurrency
     - .no_artifact_dependencies
+  needs:
+    - !reference [.needs, nodejs]
+    - !reference [.needs, lint]
+  timeout: 15 minutes
   cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, pnpm_install_cypress]

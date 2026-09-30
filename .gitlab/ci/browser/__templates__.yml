@@ -1,8 +1,16 @@
 .template_browser-core_capybara:
   stage: browser
   extends:
+    - .template_ruby
     - .job_rules_default
     - .tags_docker_low_concurrency
+    - .artifacts_with_test_report
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, database]
+    - !reference [.needs, assets]
+    - !reference [.needs, lint]
+  timeout: 40 minutes
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t ~searchindex spec/system
@@ -37,13 +45,3 @@
     - !reference [.services, postgresql]
     - !reference [.services, playwright]
     - !reference [.services, redis]
-  # A job-level artifacts block replaces the global default one entirely -
-  #   repeat its paths and add the traces recorded by playwright_traces.rb.
-  artifacts:
-    expire_in: 1 week
-    when: on_failure
-    paths:
-      - tmp/screenshot*
-      - tmp/screenshots/*
-      - tmp/playwright-traces/*
-      - log/*.log

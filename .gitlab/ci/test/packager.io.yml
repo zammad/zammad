@@ -3,6 +3,9 @@
   stage: test
   extends:
     - .no_artifact_dependencies
+  needs:
+    - !reference [.needs, lint]
+  timeout: 30 minutes
   interruptible: false
   allow_failure: true
   retry: 2
@@ -16,8 +19,6 @@
       when: on_success
     - when: never
   services: []
-  cache: []
-  before_script: []
   script:
     - .gitlab/packager.io/run_scenarios.sh
   after_script:

@@ -1,6 +1,7 @@
 .template_browser-core_capybara_es:
   extends:
     - .template_browser-core_capybara
+  timeout: 30 minutes
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t searchindex spec/system
@@ -38,16 +39,6 @@
     - !reference [.services, elasticsearch]
     - !reference [.services, playwright]
     - !reference [.services, redis]
-  # A job-level artifacts block replaces the global default one entirely -
-  #   repeat its paths and add the traces recorded by playwright_traces.rb.
-  artifacts:
-    expire_in: 1 week
-    when: on_failure
-    paths:
-      - tmp/screenshot*
-      - tmp/screenshots/*
-      - tmp/playwright-traces/*
-      - log/*.log
 
 capybara:es:chrome:
   extends:

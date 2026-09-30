@@ -56,7 +56,7 @@
     # Build/update docker image and publish it to the GitLab container registry.
     - |
       echo "Build docker image…"
-      docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+      echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
       echo -e "\\e[0Ksection_start:`date +%s`:docker_build[collapsed=true]\\r\\e[0Kdocker build"
       if [ ! "${SKIP_DOCKER_BUILD}" ]
       then
@@ -231,7 +231,6 @@
   tags:
     - review-apps
   stage: pre
-  cache: []
   variables:
     SERVER_NAME: review-apps.dc.zammad.com
     APP_SLUG: $CI_COMMIT_REF_SLUG
@@ -242,6 +241,8 @@
   environment:
     name: ${APP_NAME}
     url: https://${APP_FQDN}#getting_started/auto_wizard
+  # Deploying, stopping and restarting the same review app must not overlap.
+  resource_group: ${APP_NAME}
   rules:
     - !reference [.rule_fragments, main_repository_only]
     - if: $CI_MERGE_REQUEST_ID

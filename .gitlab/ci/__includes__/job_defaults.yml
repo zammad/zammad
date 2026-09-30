@@ -4,9 +4,6 @@ default:
   tags:
     - docker
 
-  # Most jobs execute ruby commands, so take that as default.
-  cache: !reference [.cache, read_only_ruby]
-
   # Artifacts are stored for failed jobs
   artifacts:
     expire_in: 1 week
@@ -18,16 +15,20 @@ default:
 
   interruptible: true
 
-  # Initialize application env
-  before_script:
-    - !reference [.scripts, source_rvm]
-    - !reference [.scripts, bundle_install]
-    - !reference [.scripts, configure_environment]
-
   after_script:
-    - .gitlab/environment_info.sh > log/environment_info.log
     # Copy logs from other containers to store them as artifacts.
     - cp /builds/*.log log/ || true
     # Print recorded test runtimes for script/build/update_test_timings.rb. The script is
     #   missing if an older commit is checked out, e.g. in rspec:migration.
     - if [ -x .gitlab/print_test_timings.sh ]; then .gitlab/print_test_timings.sh; fi
+    # Logs and screenshots are only needed for failed jobs, see .artifacts_with_test_report.
+    - if [ "$CI_JOB_STATUS" = success ]; then rm -rf log/*.log tmp/screenshot* tmp/playwright-traces; fi
+
+# For jobs running the application's Ruby code: read the gem cache and initialize the
+#   application environment.
+.template_ruby:
+  cache: !reference [.cache, read_only_ruby]
+  before_script:
+    - !reference [.scripts, source_rvm]
+    - !reference [.scripts, bundle_install]
+    - !reference [.scripts, configure_environment]

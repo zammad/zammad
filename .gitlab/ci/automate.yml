@@ -3,14 +3,12 @@
   image:
     name: alpine/curl:latest
     entrypoint: ['']
-  cache: []
   rules:
     - !reference [.rule_fragments, main_repository_only]
     # Don't apply job filter here.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /weblate-merge$/ && $CI_MERGE_REQUEST_SQUASH_ON_MERGE == "true"'
       when: on_success
     - when: never
-  before_script: []
   script:
     - echo "⚠️ Disabling squash option for this MR..."
     - |
@@ -81,7 +79,6 @@
 #   GITLAB_API_TOKEN                - read_api token for the MR query (defaults to RENOVATE_TOKEN)
 'dependency digest':
   stage: automate
-  cache: []
   rules:
     - !reference [.rule_fragments, main_repository_only]
     - !reference [.rule_fragments, variable_filters_without_force]
@@ -108,14 +105,12 @@
   image:
     name: ghcr.io/updatecli/updatecli:latest
     entrypoint: ['']
-  cache: []
   rules:
     - !reference [.rule_fragments, main_repository_only]
     - !reference [.rule_fragments, variable_filters_without_force]
     - if: ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME == "develop"
       when: on_success
     - when: never
-  before_script: []
   script:
     - updatecli pipeline apply --config .dev/updatecli.yaml --values .dev/updatecli-values-enable-gitlab.yaml
   after_script: []

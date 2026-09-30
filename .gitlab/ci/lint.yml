@@ -3,16 +3,18 @@
   stage: lint
   extends:
     - .job_rules_default
+  # Start right away: the caches written in the pre stage only change with the lock
+  #   files, so they are usually filled already.
+  needs: []
 
 .template_lint_rails:
   extends:
     - .template_lint
+    - .template_ruby
   services:
     - !reference [.services, postgresql]
   before_script:
-    - !reference [.scripts, source_rvm]
-    - !reference [.scripts, bundle_install]
-    - !reference [.scripts, configure_environment]
+    - !reference [.template_ruby, before_script]
     - !reference [.scripts, zammad_db_init]
   variables:
     ZAMMAD_SAFE_MODE: 1
@@ -23,10 +25,8 @@
     - .template_lint
   timeout: 2 minutes
   image: koalaman/shellcheck-alpine:stable
-  cache: []
-  before_script: []
   script:
-    - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
+    - find . \( -name vendor -o -name node_modules \) -prune -o \( -name '*.sh' -o -name functions \) -print0 | xargs -0 shellcheck -S warning
   after_script: []
 
 'lint: i18n & rails':
@@ -49,6 +49,7 @@
 'lint: ruby & security':
   extends:
     - .template_lint
+    - .template_ruby
   timeout: 10 minutes
   before_script:
     - !reference [.scripts, source_rvm]
@@ -146,12 +147,10 @@
   image:
     name: 'zricethezav/gitleaks:latest'
     entrypoint: ['']
-  cache: []
   timeout: 2 minutes
   variables:
     # Go uses all CPUs by default.
     GOMAXPROCS: 1
-  before_script: []
   script:
     # Deep enough to contain the pipeline's base commit, so only the new commits are scanned.
     #   Setting GIT_DEPTH for this job has no effect, the checkout keeps the depth of 1.

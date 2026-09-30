@@ -11,4 +11,10 @@ workflow:
     # Don't create branch pipelines for pushes to private branches (as there will also be a MR for them).
     - if: $CI_COMMIT_BRANCH =~ $CI_ZAMMAD_MR_ONLY_BRANCH_PATTERN && $CI_PIPELINE_SOURCE == "push"
       when: never
+    # A dependency update that breaks one job almost always breaks many others, so the
+    #   first failure is enough and the remaining jobs are canceled.
+    - if: $CI_COMMIT_REF_NAME =~ /^renovate\//
+      when: always
+      auto_cancel:
+        on_job_failure: all
     - when: always

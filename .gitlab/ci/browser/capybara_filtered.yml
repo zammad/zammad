@@ -4,6 +4,8 @@
   #   replaced, not merged).
   rules:
     - !reference [.rule_fragments, then_browser_test_filter_only]
+  # Looping a single spec takes much longer than a regular slice of the suite.
+  timeout: 2 hours
   variables:
     BROWSER_TEST_FILTER_LOOP_COUNT: 50
   script:

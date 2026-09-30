@@ -2,6 +2,9 @@ include:
   - '.gitlab/ci/test/integration/*.yml'
 
 .template_integration:
+  extends:
+    - .template_ruby
+    - .artifacts_with_test_report
   # These tests partly talk to live third party services. On private branches their
   #   signal is advisory only, so a failure does not block the pipeline.
   rules:
@@ -16,3 +19,8 @@ include:
     - !reference [.services, redis]
     - !reference [.services, memcached]
   stage: test
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, database]
+    - !reference [.needs, lint]
+  timeout: 15 minutes

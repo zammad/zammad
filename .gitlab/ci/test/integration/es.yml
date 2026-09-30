@@ -1,10 +1,18 @@
 .template_integration_es:
+  extends:
+    - .template_ruby
+    - .artifacts_with_test_report
   services:
     - !reference [.services, postgresql]
     - !reference [.services, redis]
     - !reference [.services, memcached]
     - !reference [.services, elasticsearch]
   stage: test
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, database]
+    - !reference [.needs, lint]
+  timeout: 30 minutes
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --tag searchindex --tag ~type:system

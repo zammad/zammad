@@ -1,7 +1,12 @@
 .template_supabase:
   stage: test
   extends:
+    - .template_ruby
     - .no_artifact_dependencies
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, lint]
+  timeout: 10 minutes
   tags:
     - push-to-ftp # use only allow-listed ci runners
   services:

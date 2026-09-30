@@ -1,9 +1,15 @@
 assets:build:
   stage: test
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, nodejs]
+    - !reference [.needs, lint]
+  timeout: 15 minutes
   # No `rules:` on purpose: the browser jobs of a filtered pipeline ($JOB_FILTER,
   #   $BROWSER_TEST_FILTER) still need the assets built here, as the specs
   #   themselves skip the compilation ($CI_SKIP_ASSETS_PRECOMPILE).
   extends:
+    - .template_ruby
     - .no_artifact_dependencies
   services:
     - !reference [.services, postgresql]
@@ -33,8 +39,14 @@ assets:build:
 assets:build:pwa:
   stage: test
   extends:
+    - .template_ruby
     - .job_rules_default
     - .no_artifact_dependencies
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, nodejs]
+    - !reference [.needs, lint]
+  timeout: 15 minutes
   services:
     - !reference [.services, postgresql]
   cache: !reference [.cache, read_only_full]

@@ -1,6 +1,14 @@
 # Run back-end subscription add-on tests to check if it is still compatible.
 addon:subscription:
   stage: test
+  extends:
+    - .template_ruby
+    - .artifacts_with_test_report
+  needs:
+    - !reference [.needs, ruby]
+    - !reference [.needs, database]
+    - !reference [.needs, lint]
+  timeout: 15 minutes
   rules:
     - !reference [.rule_fragments, main_repository_only]
     - !reference [.rule_fragments, variable_filters]

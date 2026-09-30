@@ -3,6 +3,9 @@
   stage: test
   extends:
     - .no_artifact_dependencies
+  needs:
+    - !reference [.needs, lint]
+  timeout: 30 minutes
   interruptible: false
   rules:
     - !reference [.rule_fragments, main_repository_only]
@@ -12,13 +15,12 @@
       allow_failure: true
     - when: on_success
   services: []
-  cache: []
   variables:
     ZAMMAD_IMAGE_TAG: "ci-${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
     ZAMMAD_IMAGE_REPO: "zammad"
     ZAMMAD_IMAGE: "${ZAMMAD_IMAGE_REPO}:${ZAMMAD_IMAGE_TAG}"
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     - git clone --depth=1 https://github.com/zammad/zammad-docker-compose.git
     # Make the stack use the image that was just built.
     - echo "IMAGE_REPO=${ZAMMAD_IMAGE_REPO}" > zammad-docker-compose/.env

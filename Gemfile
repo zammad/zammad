@@ -217,6 +217,7 @@ gem 'elasticsearch', '8.11.2', require: false
 group :development, :test do
 
   # test frameworks
+  gem 'rspec_junit_formatter'
   gem 'rspec-rails'
   gem 'rspec-retry'
   gem 'shoulda-matchers'

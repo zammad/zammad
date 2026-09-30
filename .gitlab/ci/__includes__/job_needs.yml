@@ -1,0 +1,48 @@
+# Building blocks for `needs:`, combined per job:
+#
+#   needs:
+#     - !reference [.needs, ruby]
+#     - !reference [.needs, lint]
+#
+# A job with `needs:` starts as soon as the listed jobs have finished, instead of waiting
+#   for all jobs of the earlier stages, and downloads the artifacts of the listed jobs only.
+#
+# Jobs of the test and browser stages need `lint`, so that none of them is started for a
+#   commit that fails linting. The manual lint jobs are not listed, a job needing them
+#   would wait for them forever.
+#
+# Jobs with rules of their own are optional, because filtered pipelines ($JOB_FILTER,
+#   $BROWSER_TEST_FILTER) do not contain them, and needing a job that is missing from the
+#   pipeline fails its creation. Without 'write database dumps', .gitlab/init_database.sh
+#   initializes the database from scratch.
+.needs:
+  ruby:
+    - job: 'write cache: ruby'
+      artifacts: false
+  nodejs:
+    - job: 'write cache: nodejs'
+      artifacts: false
+  database:
+    - job: 'write database dumps'
+      optional: true
+  assets:
+    - job: 'assets:build'
+  lint:
+    - job: 'lint: shellcheck'
+      artifacts: false
+      optional: true
+    - job: 'lint: i18n & rails'
+      artifacts: false
+      optional: true
+    - job: 'lint: ruby & security'
+      artifacts: false
+      optional: true
+    - job: 'lint: markdown, coffee & css'
+      artifacts: false
+      optional: true
+    - job: 'lint: js'
+      artifacts: false
+      optional: true
+    - job: 'lint: secret_detection'
+      artifacts: false
+      optional: true
