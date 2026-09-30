@@ -45,6 +45,12 @@ RSpec.describe HtmlSanitizer::Scrubber::ImageSize do
       expect(scrubber.send(:build_style, input)).to eq 'max-width:100%;attr:value;another:value;'
     end
 
+    it 'skips empty declarations' do
+      input = 'attr:value;;another:value;'
+
+      expect(scrubber.send(:build_style, input)).to eq 'max-width:100%;attr:value;another:value;'
+    end
+
     it 'renames height to max-height' do
       input = ' height: 20px'
 
