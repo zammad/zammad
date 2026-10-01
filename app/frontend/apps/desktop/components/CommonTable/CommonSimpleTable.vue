@@ -159,7 +159,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
                 v-tooltip.truncate="getTooltipText(item, header)"
                 v-bind="item[header.key] as CommonLinkProps"
                 :class="{
-                  'text-contrast': isRowSelected,
+                  'text-white! group-hover:text-white!': isRowSelected,
                 }"
                 class="truncate text-sm group-hover:text-contrast! group-focus-visible:text-white group-active:text-white hover:no-underline!"
                 @click.stop
@@ -172,7 +172,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
                 class="inline! text-normal group-hover:text-contrast group-focus-visible:text-white group-active:text-white"
                 :class="[
                   {
-                    'text-contrast': isRowSelected,
+                    'text-white!': isRowSelected,
                   },
                 ]"
               >

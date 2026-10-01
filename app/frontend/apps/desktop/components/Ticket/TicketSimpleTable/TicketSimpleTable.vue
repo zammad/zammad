@@ -81,7 +81,7 @@ const handleRowClick = (row: TableItem) => {
       <template #column-cell-createdAt="{ item, isRowSelected }">
         <CommonDateTime
           class="text-normal group-hover:text-contrast group-focus-visible:text-white group-active:text-white group-active:dark:text-white"
-          :class="{ 'text-contrast': isRowSelected }"
+          :class="{ 'text-white!': isRowSelected }"
           :date-time="item['createdAt'] as string"
           type="absolute"
           absolute-format="date"
@@ -92,7 +92,7 @@ const handleRowClick = (row: TableItem) => {
         <CommonTicketStateIndicatorIcon
           class="shrink-0 group-hover:text-contrast group-focus-visible:text-white group-active:text-white group-active:dark:text-white"
           :class="{
-            'text-contrast': isRowSelected,
+            'text-white!': isRowSelected,
           }"
           :color-code="(item as TicketById).stateColorCode"
           :label="(item as TicketById).state.name"
