@@ -140,7 +140,7 @@ const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollap
                 {
                   $cmp: 'CommonLabel',
                   props: {
-                    class: 'text-black dark:text-white',
+                    class: 'text-contrast',
                   },
                   children: [
                     {
@@ -163,7 +163,7 @@ const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollap
                 {
                   $cmp: 'CommonLabel',
                   props: {
-                    class: 'text-stone-200 dark:text-neutral-500',
+                    class: 'text-muted',
                   },
                   children: i18n.t(option.description),
                 },
@@ -227,7 +227,7 @@ const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollap
                     {
                       $cmp: 'CommonLabel',
                       props: {
-                        class: 'text-black dark:text-white',
+                        class: 'text-contrast',
                       },
                       children: [
                         {
@@ -250,7 +250,7 @@ const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollap
                     {
                       $cmp: 'CommonLabel',
                       props: {
-                        class: 'text-stone-200 dark:text-neutral-500',
+                        class: 'text-muted',
                       },
                       children: i18n.t(childOption.description),
                     },

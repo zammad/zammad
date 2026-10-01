@@ -23,8 +23,7 @@ const truncatedArticle: RenderPlaceholder = {
   type: 'label',
   props: {
     size: 'medium',
-    class:
-      'cursor-text rounded bg-neutral-200 px-0.5 font-mono text-black dark:bg-gray-400 dark:text-white',
+    class: 'cursor-text rounded bg-neutral-200 px-0.5 font-mono text-contrast dark:bg-gray-400',
   },
   content: event.details || '',
 }
@@ -56,7 +55,7 @@ const actionName2Placeholder: Record<string, RenderPlaceholder[]> = {
 <template>
   <span>
     <CommonTranslateRenderer
-      class="text-sm/snug text-gray-100 dark:text-neutral-400"
+      class="text-sm/snug text-normal"
       :source="actionName2Source[event.actionName]"
       :placeholders="actionName2Placeholder[event.actionName]"
     />

@@ -83,7 +83,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
 
           <slot v-else :name="`column-header-${header.key}`" :header="header">
             <CommonLabel
-              class="font-normal text-stone-200 dark:text-neutral-500"
+              class="font-normal text-muted!"
               :class="[
                 cellAlignmentClasses[header.alignContent || 'left'],
                 header.labelClass || '',
@@ -97,7 +97,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
           <slot :name="`header-suffix-${header.key}`" :item="header" />
         </th>
         <th v-if="actions" class="h-10 w-0 p-2.5 text-center">
-          <CommonLabel class="font-normal text-stone-200! dark:text-neutral-500!" size="small"
+          <CommonLabel class="font-normal text-muted!" size="small"
             >{{ $t('Actions') }}
           </CommonLabel>
         </th>
@@ -121,7 +121,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
               header.columnSeparator && columnSeparatorClasses,
               cellAlignmentClasses[header.alignContent || 'left'],
               {
-                'max-w-32 truncate text-black dark:text-white': header.truncate,
+                'max-w-32 truncate text-contrast': header.truncate,
                 'size-10': hasCheckboxColumn && header.key === 'checkbox',
               },
             ]"
@@ -139,7 +139,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
                 decorator:
                   'group-active:formkit-checked:border-white group-hover:dark:border-white group-hover:group-active:border-white group-hover:group-active:peer-hover:border-white group-hover:formkit-checked:border-black group-hover:dark:formkit-checked:border-white group-hover:dark:peer-hover:border-white  ltr:group-hover:dark:group-hover:peer-hover:formkit-checked:border-white ltr:group-hover:peer-hover:dark:border-white rtl:group-hover:peer-hover:dark:border-white ltr:group-hover:peer-hover:border-black rtl:group-hover:peer-hover:border-black  group-hover:border-black',
                 decoratorIcon:
-                  'group-active:formkit-checked:text-white group-hover:formkit-checked:text-black group-hover:formkit-checked:dark:text-white',
+                  'group-active:formkit-checked:text-white group-hover:formkit-checked:text-contrast',
               }"
               :disabled="!!item.disabled"
               :model-value="hasCheckboxId(item.id)"
@@ -159,9 +159,9 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
                 v-tooltip.truncate="getTooltipText(item, header)"
                 v-bind="item[header.key] as CommonLinkProps"
                 :class="{
-                  'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
+                  'text-contrast': isRowSelected,
                 }"
-                class="truncate text-sm group-hover:text-black! group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white!"
+                class="truncate text-sm group-hover:text-contrast! group-focus-visible:text-white group-active:text-white hover:no-underline!"
                 @click.stop
                 @keydown.stop
                 >{{ (item[header.key] as TableItemLinkValue).label }}
@@ -169,10 +169,10 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
               <CommonLabel
                 v-else
                 v-tooltip.truncate="getTooltipText(item, header)"
-                class="inline! text-gray-100 group-hover:text-black group-focus-visible:text-white group-active:text-white dark:text-neutral-400 group-hover:dark:text-white"
+                class="inline! text-normal group-hover:text-contrast group-focus-visible:text-white group-active:text-white"
                 :class="[
                   {
-                    'text-black dark:text-white': isRowSelected,
+                    'text-contrast': isRowSelected,
                   },
                 ]"
               >

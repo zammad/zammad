@@ -9,10 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <caption
-    class="mb-2 text-left text-sm/snug text-gray-100 dark:text-neutral-400"
-    :class="{ 'sr-only absolute': !show }"
-  >
+  <caption class="mb-2 text-left text-sm/snug text-normal" :class="{ 'sr-only absolute': !show }">
     <slot />
   </caption>
 </template>

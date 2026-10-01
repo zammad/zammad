@@ -192,7 +192,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
       <template #prefix>
         <CommonBadge
           v-if="filterCount > 0"
-          class="flex gap-1.5 rounded-sm bg-white px-1.5! py-0.5! text-black dark:bg-gray-200 dark:text-white"
+          class="flex gap-1.5 rounded-sm bg-white px-1.5! py-0.5! text-contrast dark:bg-gray-200"
           variant="custom"
         >
           <CommonButton
@@ -205,7 +205,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
           </CommonButton>
           <CommonButton
             v-tooltip="$t('Clear all filters')"
-            class="p-0! text-stone-200 hover:text-black hover:outline-0! dark:text-neutral-500 dark:hover:text-white"
+            class="p-0! text-muted! hover:text-contrast! hover:outline-0!"
             variant="neutral"
             icon="x-lg"
             size="small"

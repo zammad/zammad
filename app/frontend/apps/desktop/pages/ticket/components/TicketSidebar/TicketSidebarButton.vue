@@ -54,7 +54,7 @@ const badgeColor = computed(() => {
     <CommonButton
       v-tooltip="$t(label)"
       :class="{
-        'text-black! outline-1! outline-offset-1 outline-blue-800! dark:text-white!': selected,
+        'text-contrast! outline-1! outline-offset-1 outline-blue-800!': selected,
       }"
       size="large"
       variant="neutral"
@@ -69,7 +69,7 @@ const badgeColor = computed(() => {
     <CommonLabel
       v-if="badge"
       size="xs"
-      class="pointer-events-none absolute -bottom-2 block! max-w-10 min-w-4 truncate rounded-full border-2 border-white p-0.5 text-center font-bold text-white ltr:-right-1.5 rtl:-left-1.5 dark:border-gray-500"
+      class="pointer-events-none absolute -bottom-2 block! max-w-10 min-w-4 truncate rounded-full border-2 border-white p-0.5 text-center font-bold ltr:-right-1.5 rtl:-left-1.5 dark:border-gray-500"
       :class="[badgeColor]"
       :aria-label="$t(badge.label)"
       role="status"

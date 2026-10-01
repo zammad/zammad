@@ -131,7 +131,7 @@ const captureImage = () => {
 
       <div
         v-if="!image"
-        class="relative size-64 min-h-64 min-w-64 overflow-hidden rounded-full border border-black bg-blue-200 text-stone-200 dark:border-white dark:bg-gray-700 dark:text-neutral-500"
+        class="relative size-64 min-h-64 min-w-64 overflow-hidden rounded-full border border-black bg-blue-200 text-muted dark:border-white dark:bg-gray-700"
       >
         <CommonIcon
           :name="cameraIcon"

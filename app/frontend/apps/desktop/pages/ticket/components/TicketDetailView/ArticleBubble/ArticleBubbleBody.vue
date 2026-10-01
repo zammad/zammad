@@ -309,12 +309,7 @@ onMounted(() => {
         aria-hidden="true"
         data-test-id="article-translation-progress"
       >
-        <CommonLabel
-          class="text-stone-200! dark:text-neutral-500!"
-          size="xs"
-          tag="p"
-          prefix-icon="translate"
-        >
+        <CommonLabel class="text-muted!" size="xs" tag="p" prefix-icon="translate">
           {{ $t('Translation in progress…') }}
         </CommonLabel>
         <span
@@ -336,7 +331,7 @@ onMounted(() => {
 
       <CommonLabel
         v-else-if="displayedTranslation"
-        class="ms-auto text-stone-200! dark:text-neutral-500!"
+        class="ms-auto text-muted!"
         size="xs"
         tag="p"
         prefix-icon="translate"
@@ -376,7 +371,7 @@ onMounted(() => {
         "
       >
         <template #success>
-          <CommonLabel class="flex! text-stone-200! dark:text-neutral-500!" size="xs">
+          <CommonLabel class="flex! text-muted!" size="xs">
             {{ $t('Thank you for your feedback.') }}
           </CommonLabel>
         </template>

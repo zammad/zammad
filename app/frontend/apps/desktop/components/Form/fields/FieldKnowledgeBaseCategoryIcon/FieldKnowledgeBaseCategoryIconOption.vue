@@ -33,7 +33,7 @@ const select = () => emit('select', option.value)
     :class="
       selected
         ? 'bg-blue-800 text-white'
-        : 'text-gray-100 hover:bg-blue-600 hover:text-black dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white'
+        : 'text-normal hover:bg-blue-600 hover:text-contrast dark:hover:bg-blue-900'
     "
     tabindex="0"
     role="option"

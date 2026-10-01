@@ -425,7 +425,7 @@ const hasTopElement = computed(
             <div v-if="hasTopElement" class="flex w-full justify-between gap-2 px-2.5 py-1.5">
               <CommonLabel
                 v-if="currentPath.length"
-                class="text-blue-800! focus-visible-app-default hover:text-black! focus-visible:rounded-xs dark:hover:text-white!"
+                class="text-blue-800! focus-visible-app-default hover:text-contrast! focus-visible:rounded-xs"
                 :prefix-icon="locale.localeData?.dir === 'rtl' ? 'chevron-right' : 'chevron-left'"
                 :aria-label="$t('Back to previous page')"
                 size="small"
@@ -439,7 +439,7 @@ const hasTopElement = computed(
               </CommonLabel>
               <CommonLabel
                 v-if="multiple && hasMoreSelectableOptions"
-                class="ms-auto text-blue-800! focus-visible-app-default hover:text-black! focus-visible:rounded-xs dark:hover:text-white!"
+                class="ms-auto text-blue-800! focus-visible-app-default hover:text-contrast! focus-visible:rounded-xs"
                 prefix-icon="check-all"
                 size="small"
                 role="button"

@@ -89,7 +89,7 @@ const { transitions } = useTransitionConfig()
             size="medium"
             variant="tertiary"
             icon="arrow-up-short"
-            class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-gray-100 dark:border-gray-900 dark:text-neutral-400"
+            class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-normal dark:border-gray-900"
             @click="emit('scroll-to-start')"
           />
         </div>
@@ -105,7 +105,7 @@ const { transitions } = useTransitionConfig()
             size="medium"
             variant="tertiary"
             icon="arrow-down-short"
-            class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-gray-100 dark:border-gray-900 dark:text-neutral-400"
+            class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-normal dark:border-gray-900"
             @click="showUnreadCount ? emit('scroll-to-unread') : emit('scroll-to-end')"
           />
 

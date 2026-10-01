@@ -74,7 +74,7 @@ describe('breadcrumb', () => {
 
     const lastItem = wrapper.getByText('Settings')
 
-    expect(lastItem.parentElement).toHaveClass('last:dark:text-white last:text-black')
+    expect(lastItem.parentElement).toHaveClass('last:text-contrast')
   })
 
   it('supports different text sizes', async () => {
@@ -155,7 +155,7 @@ describe('breadcrumb', () => {
     })
 
     expect(wrapper.getByRole('heading', { name: 'Settings', level: 1 })).toHaveClass(
-      'text-black dark:text-white',
+      'text-contrast',
     )
   })
 

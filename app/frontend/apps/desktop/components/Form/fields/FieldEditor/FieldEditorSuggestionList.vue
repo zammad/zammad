@@ -96,15 +96,15 @@ const emptyMessage = computed(() => {
     >
       <div v-if="type === 'knowledge-base'" class="flex flex-col gap-px">
         <CommonLabel
-          class="inline! truncate text-stone-200 group-hover:text-black dark:text-neutral-500 dark:group-hover:text-white"
-          :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
+          class="inline! truncate text-muted! group-hover:text-contrast!"
+          :class="{ 'text-contrast!': selectedIndex === index }"
           size="small"
         >
           {{ getKnowledgeBaseItemBreadcrumb(item as MentionKnowledgeBaseItem) }}
         </CommonLabel>
         <CommonLabel
-          class="inline! truncate group-hover:text-black dark:group-hover:text-white"
-          :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
+          class="inline! truncate group-hover:text-contrast"
+          :class="{ 'text-contrast!': selectedIndex === index }"
         >
           {{ (item as MentionKnowledgeBaseItem).title }}
           {{
@@ -116,14 +116,14 @@ const emptyMessage = computed(() => {
       </div>
       <div v-else-if="type === 'text'" class="flex items-center gap-2">
         <CommonLabel
-          class="inline! truncate group-hover:text-black dark:group-hover:text-white"
-          :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
+          class="inline! truncate group-hover:text-contrast"
+          :class="{ 'text-contrast!': selectedIndex === index }"
           >{{ (item as MentionTextItem).name }}</CommonLabel
         >
         <span
           v-if="(item as MentionTextItem).keywords"
-          class="truncate rounded-sm bg-white p-1 font-mono text-xs text-stone-200 group-hover:text-black dark:bg-black dark:text-neutral-500 dark:group-hover:text-white"
-          :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
+          class="truncate rounded-sm bg-white p-1 font-mono text-xs text-muted group-hover:text-contrast dark:bg-black"
+          :class="{ 'text-contrast!': selectedIndex === index }"
         >
           {{ (item as MentionTextItem).keywords }}
         </span>
@@ -137,22 +137,22 @@ const emptyMessage = computed(() => {
           size="xs"
         />
         <CommonLabel
-          class="inline! truncate group-hover:text-black dark:group-hover:text-white"
-          :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
+          class="inline! truncate group-hover:text-contrast"
+          :class="{ 'text-contrast!': selectedIndex === index }"
         >
           {{ (item as MentionUserItem).fullname }}
         </CommonLabel>
         <CommonLabel
           v-if="(item as MentionUserItem).email"
-          class="truncate text-stone-200 group-hover:text-black dark:text-neutral-500 dark:group-hover:text-white"
-          :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
+          class="truncate text-muted! group-hover:text-contrast!"
+          :class="{ 'text-contrast!': selectedIndex === index }"
         >
           – {{ (item as MentionUserItem).email }}
         </CommonLabel>
       </div>
     </li>
     <li v-if="!items.length" class="px-4 py-2">
-      <CommonLabel class="inline! truncate text-stone-200 dark:text-neutral-500">
+      <CommonLabel class="inline! truncate text-muted!">
         {{ emptyMessage }}
       </CommonLabel>
     </li>

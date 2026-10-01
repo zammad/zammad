@@ -196,11 +196,11 @@ const selectOption = async (option: RadioListOption, event?: Event) => {
         />
 
         <div class="flex flex-col" tabindex="-1">
-          <CommonLabel class="text-black! dark:text-white!">
+          <CommonLabel class="text-contrast!">
             {{ $t(option.label) }}
           </CommonLabel>
 
-          <CommonLabel v-if="option.description" class="text-stone-200! dark:text-neutral-500!">
+          <CommonLabel v-if="option.description" class="text-muted!">
             {{ $t(option.description) }}
           </CommonLabel>
         </div>

@@ -230,7 +230,7 @@
   }
 
   .tooltip {
-    @apply fixed z-60 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-gray-100 opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
+    @apply fixed z-60 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-normal opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700;
   }
 
   .tooltip-animate {
@@ -341,7 +341,7 @@
     }
 
     .video-widget-chip-caption {
-      @apply h-8.5 truncate border-t border-neutral-100 p-2 text-center text-xs leading-snug text-gray-100 dark:border-gray-900 dark:text-neutral-400;
+      @apply h-8.5 truncate border-t border-neutral-100 p-2 text-center text-xs leading-snug text-normal dark:border-gray-900;
     }
 
     table.zammad-table,
@@ -728,7 +728,7 @@
 }
 
 @utility group-block {
-  @apply rounded-3xl bg-neutral-50 p-5 text-black dark:bg-gray-500 dark:text-white;
+  @apply rounded-3xl bg-neutral-50 p-5 text-contrast dark:bg-gray-500;
 }
 
 @utility backface-hidden {

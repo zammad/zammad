@@ -16,7 +16,7 @@ const { createdAt } = defineProps<Props>()
       class="flex-initial rounded-t-lg border border-b-0 border-neutral-100 bg-blue-200 dark:border-gray-700 dark:bg-gray-700 print:border-black"
     >
       <CommonLabel
-        class="m-1 rounded-sm p-1 text-black dark:text-white"
+        class="m-1 rounded-sm p-1 text-contrast!"
         prefix-icon="calendar-date-time"
         size="medium"
       >

@@ -35,11 +35,9 @@ const metaAddress = computed(() => {
           v-if="meta.name || meta.emailAddress"
           class="flex max-w-full shrink items-center overflow-hidden"
         >
-          <CommonLabel
-            v-if="meta.name"
-            class="me-1 block! max-w-full truncate text-black! dark:text-white!"
-            >{{ meta.name }}</CommonLabel
-          >
+          <CommonLabel v-if="meta.name" class="me-1 block! max-w-full truncate text-contrast!">{{
+            meta.name
+          }}</CommonLabel>
           <CommonLabel v-if="meta.emailAddress" class="block! max-w-full truncate">{{
             `<${meta.emailAddress}>`
           }}</CommonLabel>
@@ -48,7 +46,7 @@ const metaAddress = computed(() => {
     </template>
     <CommonLabel
       v-else-if="metaAddress?.raw"
-      class="me-2 block! max-w-full truncate text-black! dark:text-white!"
+      class="me-2 block! max-w-full truncate text-contrast!"
       >{{ metaAddress?.raw }}</CommonLabel
     >
   </div>

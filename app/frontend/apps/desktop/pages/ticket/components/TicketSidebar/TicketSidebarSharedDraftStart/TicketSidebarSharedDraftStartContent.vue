@@ -190,7 +190,7 @@ const openFlyout = (sharedDraftStartId: string) => {
             >
               {{ sharedDraftStart.name }}
             </CommonLink>
-            <CommonLabel class="line-clamp-1 text-stone-200! dark:text-neutral-500!" size="small">
+            <CommonLabel class="line-clamp-1 text-muted!" size="small">
               <CommonDateTime :date-time="sharedDraftStart.updatedAt" />
               <template v-if="sharedDraftStart.updatedBy">
                 <span v-tooltip="sharedDraftStart.updatedBy.fullname">
@@ -209,7 +209,7 @@ const openFlyout = (sharedDraftStartId: string) => {
           />
         </div>
       </div>
-      <CommonLabel v-else class="text-stone-200! dark:text-neutral-500!" size="small">
+      <CommonLabel v-else class="text-muted!" size="small">
         {{ $t('No shared drafts yet') }}
       </CommonLabel>
     </div>

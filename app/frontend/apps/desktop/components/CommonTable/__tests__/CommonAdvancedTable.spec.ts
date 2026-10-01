@@ -324,7 +324,7 @@ describe('CommonAdvancedTable', () => {
     expect(row).toHaveClass('bg-blue-800!')
 
     expect(within(row).getAllByRole('cell')[1].children[0].children[0]).toHaveClass(
-      'text-black! dark:text-white!',
+      'text-contrast!',
     )
   })
 

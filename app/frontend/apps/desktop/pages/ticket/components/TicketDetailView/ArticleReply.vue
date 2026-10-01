@@ -102,10 +102,7 @@ const showNoteReplyForm = () => {
             {{ $t(noteArticleType.label) }}
           </CommonButton>
 
-          <CommonLabel
-            size="small"
-            class="text-center text-sm text-stone-200 dark:text-neutral-500"
-          >
+          <CommonLabel size="small" class="text-center text-sm text-muted!">
             {{ $t('or use the reply actions on articles.') }}
           </CommonLabel>
         </div>

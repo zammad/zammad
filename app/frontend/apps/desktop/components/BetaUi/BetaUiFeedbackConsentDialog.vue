@@ -62,10 +62,10 @@ const dummySchema = defineFormSchema([
       class="flex justify-center gap-3 rounded-sm border border-neutral-100 bg-blue-200 p-3 dark:border-gray-900 dark:bg-gray-700"
     >
       <div class="basis-full">
-        <CommonLabel class="text-black dark:text-white">
+        <CommonLabel class="text-contrast!">
           {{ $t('The data we need to collect consists of:') }}
         </CommonLabel>
-        <ul class="list-disc ps-6 text-gray-100 dark:text-neutral-400">
+        <ul class="list-disc ps-6 text-normal">
           <li>
             <CommonLabel>
               {{

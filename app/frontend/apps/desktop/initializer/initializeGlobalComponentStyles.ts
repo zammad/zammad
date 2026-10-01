@@ -19,10 +19,10 @@ export const initializeGlobalComponentStyles = () => {
     base: 'inline-flex justify-center items-center border-0',
     success: 'bg-green-300 text-green-500 dark:bg-green-900 dark:text-green-500',
     info: 'bg-blue-500 text-blue-800 dark:bg-blue-950 dark:text-blue-800',
-    tertiary: 'bg-blue-200 text-stone-200 dark:bg-gray-700  dark:text-neutral-500',
+    tertiary: 'bg-blue-200 text-muted dark:bg-gray-700',
     warning: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
     danger: 'bg-pink-100 text-red-500 dark:bg-red-900 dark:text-red-500',
-    neutral: 'text-gray-100 bg-neutral-50 dark:text-neutral-400 dark:bg-gray-500',
+    neutral: 'text-normal bg-neutral-50 dark:bg-gray-500',
     highlight: 'bg-pink-500 text-white',
     custom: 'badge-custom',
   })
@@ -91,7 +91,7 @@ export const initializeGlobalComponentStyles = () => {
     colorSchemeList: {
       base: 'gap-1',
       button: 'w-4',
-      autoButton: 'h-4 bg-blue-200 text-black dark:bg-gray-700 dark:text-white',
+      autoButton: 'h-4 bg-blue-200 text-contrast dark:bg-gray-700',
       autoButtonIcon: '',
     },
   })
@@ -114,13 +114,13 @@ export const initializeGlobalComponentStyles = () => {
       base: 'min-w-[13.5rem] rounded-xl overflow-hidden',
       item: '',
       button:
-        'text-sm outline-none p-3 text-left active:text-white active:bg-blue-800 dark:active:bg-blue-800 dark:hover:text-white hover:text-black inline-block w-full dark:text-neutral-400 focus-visible:bg-blue-800 focus-visible:text-white hover:bg-blue-600 dark:hover:bg-blue-900 text-gray-100',
+        'text-sm outline-none p-3 text-left active:text-white active:bg-blue-800 dark:active:bg-blue-800 hover:text-contrast inline-block w-full focus-visible:bg-blue-800 focus-visible:text-white hover:bg-blue-600 dark:hover:bg-blue-900 text-normal',
     },
   })
 
   initializeAiAssistantTextToolsLoadingBannerClasses({
     icon: 'text-blue-800',
-    label: 'text-black! dark:text-white!',
+    label: 'text-contrast!',
     button: 'text-blue-800',
   })
 

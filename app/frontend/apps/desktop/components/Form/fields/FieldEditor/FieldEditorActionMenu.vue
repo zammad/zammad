@@ -133,7 +133,7 @@ defineExpose({ close })
       <template v-for="action in slotActionsConfig" :key="action.key" #[`itemRight-${action.key}`]>
         <CommonIcon
           v-if="action.hasSubmenu"
-          class="fill-gray-100 group-hover:fill-white last:mr-2.5 dark:fill-neutral-400"
+          class="fill-normal group-hover:fill-white last:mr-2.5"
           name="chevron-down"
           size="tiny"
         />

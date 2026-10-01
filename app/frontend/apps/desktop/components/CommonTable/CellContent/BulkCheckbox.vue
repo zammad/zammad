@@ -63,7 +63,7 @@ const updateBulkItems = (event: MouseEvent | KeyboardEvent) => {
     role="checkbox"
     class="group/checkbox flex size-full cursor-pointer items-center justify-center text-stone-200 group-hover:text-black! group-active:text-white! hover:text-black focus-visible:rounded-xs focus-visible:outline focus-visible:outline-none dark:text-neutral-500 group-hover:dark:text-white! dark:hover:text-white"
     :class="{
-      'text-gray-100! dark:text-neutral-400!': hasPartialSelection || hasFullSelection,
+      'text-normal!': hasPartialSelection || hasFullSelection,
       'cursor-not-allowed! opacity-50': disabled,
     }"
     :aria-disabled="props.disabled ? 'true' : 'false'"

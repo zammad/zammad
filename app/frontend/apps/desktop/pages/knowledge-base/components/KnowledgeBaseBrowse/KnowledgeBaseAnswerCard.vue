@@ -115,12 +115,12 @@ const actions = computed<MenuItem[]>(() => {
         name="grip-vertical"
         size="small"
         decorative
-        class="shrink-0 fill-stone-200 dark:fill-neutral-500"
+        class="shrink-0 fill-muted"
       />
 
       <KnowledgeBaseAnswerIcon :visibility="visibility" size="tiny" />
 
-      <CommonLabel size="medium" tag="h3" class="line-clamp-1! grow text-black! dark:text-white!">
+      <CommonLabel size="medium" tag="h3" class="line-clamp-1! grow text-contrast!">
         {{ title }}
       </CommonLabel>
 

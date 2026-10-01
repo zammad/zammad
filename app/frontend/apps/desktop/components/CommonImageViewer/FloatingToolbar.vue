@@ -13,7 +13,7 @@ const emit = defineEmits<{
 }>()
 
 const buttonClass =
-  'rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-gray-100 dark:border-gray-900 dark:text-neutral-400'
+  'rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-normal dark:border-gray-900'
 </script>
 
 <template>

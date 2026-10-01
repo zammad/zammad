@@ -35,7 +35,7 @@ const {
       v-if="isEncrypted"
       v-tooltip="encryptionMessage"
       :prefix-icon="encryptionIcon"
-      class="text-black! dark:text-white!"
+      class="text-contrast!"
     >
       {{ $t(encryptedStatusMessage) }}
     </CommonLabel>
@@ -44,7 +44,7 @@ const {
       v-if="isSigned"
       v-tooltip="signingMessage"
       :prefix-icon="signingIcon"
-      class="text-black! dark:text-white!"
+      class="text-contrast!"
     >
       {{ $t(signedStatusMessage) }}
     </CommonLabel>

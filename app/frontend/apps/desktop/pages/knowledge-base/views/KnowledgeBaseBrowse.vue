@@ -579,17 +579,12 @@ watch(browsedPage, () => {
               class="flex flex-col items-center justify-center gap-4 py-8"
               role="status"
             >
-              <CommonIcon
-                decorative
-                name="folder"
-                size="medium"
-                class="text-stone-200! dark:text-neutral-500!"
-              />
+              <CommonIcon decorative name="folder" size="medium" class="text-muted!" />
               <div class="flex max-w-prose flex-col items-center">
-                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                <CommonLabel tag="p" class="text-muted!">
                   {{ $t('There are no categories to arrange yet.') }}
                 </CommonLabel>
-                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                <CommonLabel tag="p" class="text-muted!">
                   {{ $t('The sorting mode you save here will apply to categories added later.') }}
                 </CommonLabel>
               </div>
@@ -599,16 +594,12 @@ watch(browsedPage, () => {
               v-if="showsEmptyState"
               class="flex grow flex-col items-center justify-center gap-2"
             >
-              <CommonIcon
-                name="book"
-                size="medium"
-                class="text-stone-200! dark:text-neutral-500!"
-              />
+              <CommonIcon name="book" size="medium" class="text-muted!" />
               <div class="flex flex-col">
-                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                <CommonLabel tag="p" class="text-muted!">
                   {{ $t('No knowledge base content is available yet.') }}
                 </CommonLabel>
-                <CommonLabel tag="p" class="text-stone-200! dark:text-neutral-500!">
+                <CommonLabel tag="p" class="text-muted!">
                   {{ $t('Please contact your administrator.') }}
                 </CommonLabel>
               </div>

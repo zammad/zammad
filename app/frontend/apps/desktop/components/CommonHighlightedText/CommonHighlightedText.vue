@@ -13,11 +13,9 @@ defineProps<Props>()
 
 <template>
   <template v-for="(segment, index) in segments" :key="index">
-    <mark
-      v-if="segment.highlight"
-      class="bg-(--article-highlight-blue) text-black dark:text-white"
-      >{{ segment.text }}</mark
-    >
+    <mark v-if="segment.highlight" class="bg-(--article-highlight-blue) text-contrast">{{
+      segment.text
+    }}</mark>
     <template v-else>{{ segment.text }}</template>
   </template>
 </template>

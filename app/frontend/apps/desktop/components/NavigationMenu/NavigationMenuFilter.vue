@@ -74,7 +74,7 @@ const { transitions } = useTransitionConfig()
       v-model.trim="searchText"
       :placeholder="$t('Apply filter…')"
       :aria-label="$t('Navigation filter')"
-      class="w-0 bg-transparent text-sm text-black transition-[width] duration-200 focus:outline-hidden dark:text-white"
+      class="w-0 bg-transparent text-sm text-contrast transition-[width] duration-200 focus:outline-hidden"
       :class="{ 'w-full': filterFieldOpen }"
       type="text"
       role="searchbox"
@@ -85,7 +85,7 @@ const { transitions } = useTransitionConfig()
         v-tooltip="$t('Clear filter')"
         icon="x-lg"
         variant="neutral"
-        class="hover:text-black hover:outline-hidden hover:outline-transparent hover:dark:text-white"
+        class="hover:text-contrast hover:outline-hidden hover:outline-transparent"
         @click="closeFilterField"
       />
     </Transition>

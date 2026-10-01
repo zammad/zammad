@@ -1794,7 +1794,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
             <div class="mb-1 flex grow flex-col gap-1">
               <div class="flex justify-between">
                 <CommonLabel size="small">Organizations</CommonLabel>
-                <CommonLabel class="text-stone-200 dark:text-neutral-500" size="small">
+                <CommonLabel class="text-muted!" size="small">
                   {{ progressBarValue }} of 100
                 </CommonLabel>
               </div>
@@ -2187,7 +2187,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
           </template>
         </Form>
         <pre
-          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-wrap text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
+          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-wrap text-normal dark:bg-gray-700"
         >
           {{ formValues }}</pre>
       </div>

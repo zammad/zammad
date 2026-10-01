@@ -311,7 +311,7 @@ const legendNode = (attribute: FilterAttribute): FormKitSchemaNode => {
     $el: 'legend',
     attrs: {
       // `cursor-default` so the clickable legend matches a field label.
-      class: 'mb-1 block w-fit cursor-default text-sm text-gray-100 dark:text-neutral-400',
+      class: 'mb-1 block w-fit cursor-default text-sm text-normal',
       // A `<legend>` has no native click-to-focus (a `<label for>` would
       // double-label the first input), so focus it ourselves.
       onClick: () => focusFieldInput(attribute.name),

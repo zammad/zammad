@@ -18,7 +18,7 @@ export const visibilityMeta = {
   [EnumKnowledgeBaseVisibility.Draft]: {
     icon: 'kb-draft',
     label: __('Draft'),
-    class: 'text-stone-200! dark:text-neutral-500!',
+    class: 'text-muted!',
   },
   [EnumKnowledgeBaseVisibility.Internal]: {
     icon: 'kb-internal',
@@ -36,7 +36,7 @@ export const visibilityMeta = {
     icon: 'kb-archived',
     label: __('Archived'),
     timestampLabel: __('Archived'),
-    class: 'text-gray-100! dark:text-neutral-400!',
+    class: 'text-normal!',
   },
 } as const satisfies Record<
   EnumKnowledgeBaseVisibility,

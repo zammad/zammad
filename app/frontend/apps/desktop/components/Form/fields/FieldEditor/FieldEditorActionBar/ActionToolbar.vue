@@ -199,7 +199,7 @@ whenever(
             :id="targetId"
             v-tooltip="$t('Overflow menu')"
             type="button"
-            class="rounded-lg p-1.5! focus-visible-app-default hover:bg-blue-600 hover:text-black dark:hover:bg-blue-900 dark:hover:text-white"
+            class="rounded-lg p-1.5! focus-visible-app-default hover:bg-blue-600 hover:text-contrast dark:hover:bg-blue-900"
             :class="{
               'bg-blue-800! text-white!': isOpen,
             }"

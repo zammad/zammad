@@ -11,7 +11,7 @@ const props = defineProps<CellContentProps>()
     v-if="props.value"
     class="group-focus-visible:text-white"
     :class="{
-      'text-black dark:text-white': isRowSelected,
+      'text-contrast': isRowSelected,
     }"
     :date-time="props.value as string"
   />

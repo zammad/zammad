@@ -49,9 +49,8 @@ const emitToggle = (event: MouseEvent | KeyboardEvent) => {
     :class="{
       'before:absolute before:top-0 before:z-20 before:h-full before:w-2 before:bg-blue-800 ltr:before:left-0 rtl:before:right-0':
         hasRowId,
-      'text-gray-100! dark:text-neutral-400!': hasRowId,
-      'cursor-not-allowed! opacity-50 group-hover:text-gray-100! group-hover:dark:text-neutral-400!':
-        disabled,
+      'text-normal!': hasRowId,
+      'cursor-not-allowed! opacity-50 group-hover:text-normal!': disabled,
     }"
     :tabindex="disabled ? -1 : 0"
     :aria-disabled="!!disabled"

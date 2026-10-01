@@ -52,6 +52,7 @@ const routerRoutes = [
 
 let api: ReturnType<typeof useKnowledgeBaseAnswer>
 
+// eslint-disable-next-line vue/one-component-per-file
 const TestComponent = defineComponent({
   props: {
     answerId: { type: String, default: undefined },
@@ -109,6 +110,7 @@ const mountKeptAlive = (props: { answerId?: string; locale?: string } = {}) => {
 //   per listed answer. Seeding the fragments by hand would prove only that the reads compose, not
 //   that anything actually writes what they ask for.
 const browseCategory = async () => {
+  // eslint-disable-next-line vue/one-component-per-file
   const CategoryPage = defineComponent({
     setup() {
       useKnowledgeBaseCategorySubcategories({
@@ -131,6 +133,7 @@ const browseCategory = async () => {
 const browseCategoryAnswersFirst = async () => {
   const showCategorySubcategories = ref(false)
 
+  // eslint-disable-next-line vue/one-component-per-file
   const CategorySubcategories = defineComponent({
     setup() {
       useKnowledgeBaseCategorySubcategories({
@@ -141,6 +144,7 @@ const browseCategoryAnswersFirst = async () => {
     },
   })
 
+  // eslint-disable-next-line vue/one-component-per-file
   const CategoryPage = defineComponent({
     setup() {
       useKnowledgeBaseAnswers({

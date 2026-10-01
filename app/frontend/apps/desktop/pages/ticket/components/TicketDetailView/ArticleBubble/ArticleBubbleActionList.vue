@@ -72,7 +72,7 @@ const translationToggleClasses = computed(() => {
     if (isTranslationFailed.value) return 'text-red-500! dark:text-red-500!'
     if (isTranslationActive.value) return 'text-blue-800! dark:text-blue-800!'
 
-    return 'text-gray-100! dark:text-neutral-400!'
+    return 'text-normal!'
   })()
 
   const background =
@@ -93,7 +93,7 @@ const toggleTranslation = () => {
 }
 
 const buttonVariantBaseClasses =
-  'border! border-neutral-100! outline-transparent! hover:border-blue-700! text-gray-100! dark:border-gray-900! dark:text-neutral-400!'
+  'border! border-neutral-100! outline-transparent! hover:border-blue-700! text-normal! dark:border-gray-900!'
 
 const buttonVariantClassExtension = computed(() =>
   props.position === 'left'

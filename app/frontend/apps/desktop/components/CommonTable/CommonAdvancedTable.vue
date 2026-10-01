@@ -446,7 +446,7 @@ const getLinkColorClasses = (item: TableAdvancedItem) => {
     case 'high-priority':
       return 'text-red-500'
     case 'low-priority':
-      return 'text-stone-200 dark:text-neutral-500'
+      return 'text-muted'
     default:
       return ''
   }
@@ -615,11 +615,11 @@ watch(
                     :internal="tableAttribute.columnPreferences.link.internal"
                     :class="[
                       {
-                        'text-black dark:text-white': isRowSelected,
+                        'text-contrast': isRowSelected,
                       },
                       getLinkColorClasses(item),
                     ]"
-                    class="block! truncate text-sm group-hover:text-black! group-focus-visible:text-white group-active:text-white! hover:no-underline! group-hover:dark:text-white! group-active:dark:text-white!"
+                    class="block! truncate text-sm group-hover:text-contrast! group-focus-visible:text-white group-active:text-white! hover:no-underline! group-active:dark:text-white!"
                     @click.stop
                     @keydown.stop
                   >
@@ -632,10 +632,10 @@ watch(
                   <CommonLabel
                     v-else
                     v-tooltip.truncate="getTooltipText(item, tableAttribute)"
-                    class="block! truncate text-gray-100! group-hover:text-black! group-focus-visible:text-white! group-active:text-white! dark:text-neutral-400! group-hover:dark:text-white! group-active:dark:text-white!"
+                    class="block! truncate text-normal! group-hover:text-contrast! group-focus-visible:text-white! group-active:text-white! group-active:dark:text-white!"
                     :class="[
                       {
-                        'text-black! dark:text-white!': isRowSelected,
+                        'text-contrast!': isRowSelected,
                       },
                     ]"
                   >
@@ -689,11 +689,7 @@ watch(
     </tbody>
   </table>
 
-  <CommonLabel
-    v-if="endOfListMessage"
-    class="py-2.5 text-stone-200! dark:text-neutral-500!"
-    size="small"
-  >
+  <CommonLabel v-if="endOfListMessage" class="py-2.5 text-muted!" size="small">
     {{ endOfListMessage }}
   </CommonLabel>
 </template>

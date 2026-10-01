@@ -80,7 +80,7 @@ const select = (option: SelectOption) => {
       "
       variant="tertiary-light"
       size="small"
-      class="px-1! py-0! h-full! -outline-offset-1!"
+      class="h-full! px-1! py-0! -outline-offset-1!"
       :class="{
         'outline-1! outline-blue-800!': isOpen,
       }"
@@ -91,16 +91,11 @@ const select = (option: SelectOption) => {
       @click="toggle(true)"
     >
       <span
-        class="inline-flex items-center gap-1 text-xs whitespace-nowrap text-black dark:text-white"
+        class="inline-flex items-center gap-1 text-xs whitespace-nowrap text-contrast"
         aria-hidden="true"
       >
         {{ localeCode }}
-        <CommonIcon
-          class="text-stone-200 dark:text-neutral-500"
-          decorative
-          size="xs"
-          name="chevron-down"
-        />
+        <CommonIcon class="text-muted" decorative size="xs" name="chevron-down" />
       </span>
     </CommonButton>
   </div>
@@ -111,7 +106,7 @@ const select = (option: SelectOption) => {
     orientation="autoVertical"
     placement="arrowEnd"
   >
-    <div class="flex w-72 flex-col overflow-clip rounded-b-xl">
+    <div class="flex w-72 flex-col overflow-clip rounded-b-[11px]">
       <FormKit
         v-if="store.isAutoAvailable"
         type="toggle"
@@ -128,7 +123,7 @@ const select = (option: SelectOption) => {
       <div class="flex flex-col gap-1.5 px-2.5 pt-2.5 pb-2">
         <CommonLabel
           :id="languageHeadingId"
-          class="cursor-default text-stone-200! dark:text-neutral-500!"
+          class="cursor-default text-muted!"
           size="small"
           role="heading"
           aria-level="2"
@@ -157,7 +152,7 @@ const select = (option: SelectOption) => {
           :option="option"
           :selected="option.value === currentLocale"
           no-label-translate
-          class="last:rounded-b-xl!"
+          class="last:rounded-b-[11px]!"
           @select="select"
         />
 

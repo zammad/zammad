@@ -32,7 +32,7 @@ const translationStore = useArticleTranslationStore()
     :class="{ '@7xl:grid-cols-[1fr_minmax(0,56rem)_1fr]': ticket?.organization }"
   >
     <div class="col-start-1 row-start-1 flex items-center gap-1.5">
-      <h1 class="line-clamp-1 text-xs break-all text-black dark:text-white">
+      <h1 class="line-clamp-1 text-xs break-all text-contrast">
         {{ ticketNumberWithTicketHook }}
       </h1>
       <CommonButton

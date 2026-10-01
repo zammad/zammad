@@ -233,7 +233,7 @@ const everyTabHasIcon = computed(() => props.tabs.every((tab) => tab.icon))
     v-tooltip="$t('Scroll towards start')"
     variant="none"
     :icon="iconNamePerDirectionStart"
-    class="absolute inset-s-1 top-1/2 z-10 h-[calc(100%-8px)]! w-11! -translate-y-1/2 rounded-full! bg-neutral-50/80! text-black -outline-offset-1! backdrop-blur-xs dark:bg-gray-500/80! dark:text-white"
+    class="absolute inset-s-1 top-1/2 z-10 h-[calc(100%-8px)]! w-11! -translate-y-1/2 rounded-full! bg-neutral-50/80! text-contrast -outline-offset-1! backdrop-blur-xs dark:bg-gray-500/80!"
     @click="beginScroll('start')"
   />
 
@@ -285,7 +285,7 @@ const everyTabHasIcon = computed(() => props.tabs.every((tab) => tab.icon))
     v-tooltip="$t('Scroll towards end')"
     variant="none"
     :icon="iconNamePerDirectionEnd"
-    class="absolute inset-e-1 top-1/2 z-10 h-[calc(100%-8px)]! w-11! -translate-y-1/2 rounded-full! bg-neutral-50/80! text-black -outline-offset-1! backdrop-blur-xs dark:bg-gray-500/80! dark:text-white"
+    class="absolute inset-e-1 top-1/2 z-10 h-[calc(100%-8px)]! w-11! -translate-y-1/2 rounded-full! bg-neutral-50/80! text-contrast -outline-offset-1! backdrop-blur-xs dark:bg-gray-500/80!"
     @click="beginScroll('end')"
   />
 </template>

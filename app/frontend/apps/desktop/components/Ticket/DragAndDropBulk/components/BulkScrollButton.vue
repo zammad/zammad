@@ -55,7 +55,7 @@ const iconNamePerDirection = computed(() => {
     @mouseleave="$emit('scroll-stop')"
   >
     <div
-      class="flex size-9 items-center justify-center rounded-lg bg-blue-600 text-black group-hover:bg-blue-800 group-hover:text-white dark:bg-blue-900 dark:text-white"
+      class="flex size-9 items-center justify-center rounded-lg bg-blue-600 text-contrast group-hover:bg-blue-800 group-hover:text-white dark:bg-blue-900"
     >
       <CommonIcon :name="iconNamePerDirection" size="small" decorative />
     </div>

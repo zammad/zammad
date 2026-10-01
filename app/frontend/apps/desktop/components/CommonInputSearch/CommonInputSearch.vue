@@ -83,7 +83,7 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
           v-bind="$attrs"
           :placeholder="$t(placeholder)"
           :aria-label="$t('Search…')"
-          class="w-full text-black outline-hidden dark:text-white"
+          class="w-full text-contrast outline-hidden"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
             'bg-neutral-50 dark:bg-gray-500': alternativeBackground,

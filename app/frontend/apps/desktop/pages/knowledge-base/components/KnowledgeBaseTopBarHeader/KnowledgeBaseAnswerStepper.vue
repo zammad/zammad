@@ -61,7 +61,7 @@ const nextAnswer = computed<AnswerNavigationEntry>((currentAnswer) => {
         </CommonLink>
       </li>
 
-      <li class="flex px-1 text-stone-200 dark:text-neutral-500">
+      <li class="flex px-1 text-muted">
         <CommonLabel size="small">
           {{ navigation.index }}
         </CommonLabel>

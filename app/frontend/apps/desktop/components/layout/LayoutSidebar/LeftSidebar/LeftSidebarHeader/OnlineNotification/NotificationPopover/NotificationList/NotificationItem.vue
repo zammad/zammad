@@ -67,13 +67,13 @@ const handleLinkClick = (notification: OnlineNotification) => {
         <CommonLabel
           :id="`notification-${notification.id}`"
           tag="p"
-          class="inline! text-lg/snug wrap-anywhere text-black dark:text-white"
+          class="inline! text-lg/snug wrap-anywhere text-contrast!"
           :class="{ 'group-hover/link:underline': notification.createdBy }"
           v-html="highlightedMessage"
         />
 
         <CommonDateTime
-          class="col-start-2 row-2 text-xs text-gray-100 dark:text-neutral-500"
+          class="col-start-2 row-2 text-xs text-muted"
           :date-time="notification.createdAt"
           type="relative"
         />

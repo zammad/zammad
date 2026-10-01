@@ -123,8 +123,7 @@ const actionItems = computed(() =>
         v-bind="$attrs"
         class="group"
         :class="{
-          'hover:bg-blue-600! hover:text-black dark:hover:bg-blue-900! dark:hover:text-white':
-            !isOpen,
+          'hover:bg-blue-600! hover:text-contrast dark:hover:bg-blue-900!': !isOpen,
           'bg-blue-800! text-white! outline! outline-offset-1! outline-blue-800! hover:bg-blue-800!':
             isOpen,
         }"
@@ -139,10 +138,10 @@ const actionItems = computed(() =>
           <CommonIcon
             size="small"
             decorative
-            class="pointer-events-none shrink-0 text-stone-200 dark:text-neutral-500 dark:group-hover:text-white"
+            class="pointer-events-none shrink-0 text-muted dark:group-hover:text-white"
             :class="{
               'text-white dark:text-white': isOpen,
-              'group-hover:text-black dark:group-hover:text-white': !isOpen,
+              'group-hover:text-contrast': !isOpen,
             }"
             name="chevron-up"
           />

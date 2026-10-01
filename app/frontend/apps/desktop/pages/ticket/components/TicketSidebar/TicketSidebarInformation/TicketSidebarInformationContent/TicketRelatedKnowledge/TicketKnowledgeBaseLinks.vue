@@ -22,7 +22,7 @@ defineEmits<{
 const { isTouchDevice } = useTouchDevice()
 </script>
 <template>
-  <CommonLabel tag="h3" size="small" class="text-stone-200! dark:text-neutral-500!">
+  <CommonLabel tag="h3" size="small" class="text-muted!">
     {{ $t('Linked') }}
   </CommonLabel>
 

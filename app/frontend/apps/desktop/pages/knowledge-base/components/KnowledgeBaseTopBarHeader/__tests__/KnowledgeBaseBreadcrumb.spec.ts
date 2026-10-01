@@ -86,9 +86,7 @@ describe('KnowledgeBaseBreadcrumb', () => {
   it('emphasizes the last item', () => {
     const view = renderBreadcrumb({ emphasizeLastItem: true })
 
-    expect(view.getByText('Some Category').parentElement).toHaveClass(
-      'last:dark:text-white last:text-black',
-    )
+    expect(view.getByText('Some Category').parentElement).toHaveClass('last:text-contrast')
   })
 
   it('supports different text sizes', async () => {
@@ -117,7 +115,7 @@ describe('KnowledgeBaseBreadcrumb', () => {
     })
 
     expect(view.getByRole('heading', { name: 'Some Category', level: 1 })).toHaveClass(
-      'text-black dark:text-white',
+      'text-contrast',
     )
   })
 

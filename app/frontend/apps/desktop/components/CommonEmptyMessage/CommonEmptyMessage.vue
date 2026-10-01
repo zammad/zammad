@@ -18,11 +18,7 @@ defineProps<Props>()
       src="./assets/confetti.svg"
       alt="confetti"
     />
-    <CommonLabel
-      tag="h2"
-      size="xl"
-      class="flex items-center justify-center gap-2 text-black dark:text-white"
-    >
+    <CommonLabel tag="h2" size="xl" class="flex items-center justify-center gap-2 text-contrast!">
       <!--   prefix-icon prop can not be used without changing the size regarding the icon   -->
       <CommonIcon v-if="icon" size="small" :name="icon" />
       <span>

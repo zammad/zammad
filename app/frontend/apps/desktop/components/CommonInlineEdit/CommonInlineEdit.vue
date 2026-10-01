@@ -313,7 +313,7 @@ defineExpose({
           key="editable-content-key"
           v-model.trim="inputValue"
           v-focus
-          class="block w-full shrink-0 bg-transparent text-gray-100 outline-hidden dark:text-neutral-400"
+          class="block w-full shrink-0 bg-transparent text-normal outline-hidden"
           :class="[{ grow: block }, classes?.input || '']"
           :disabled="disabled || loading"
           :placeholder="placeholder"

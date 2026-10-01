@@ -26,7 +26,7 @@ const headingId = `knowledge-base-scheduled-visibility-${getUuid()}`
 
 <template>
   <section :id="id" data-type="popover" class="flex flex-col gap-3 p-3">
-    <CommonLabel :id="headingId" tag="h3" size="small" class="text-stone-200 dark:text-neutral-500">
+    <CommonLabel :id="headingId" tag="h3" size="small" class="text-muted!">
       {{ $t('Scheduled visibility') }}
     </CommonLabel>
 

@@ -29,11 +29,7 @@ defineProps<Props>()
       </CommonLabel>
     </div>
 
-    <CommonLabel
-      v-if="translation.content.bodyExcerpt"
-      tag="p"
-      class="text-stone-200! dark:text-neutral-500!"
-    >
+    <CommonLabel v-if="translation.content.bodyExcerpt" tag="p" class="text-muted!">
       {{ translation.content.bodyExcerpt }}
     </CommonLabel>
 

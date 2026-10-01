@@ -61,7 +61,7 @@ const showDivider = computed(() => shownUnits.value.length > 1) // If more than 
         <CommonLabel
           :id="`accounted-time-${name}`"
           size="small"
-          class="text-black! dark:text-white!"
+          class="text-contrast!"
           :class="{ uppercase: index === 0 }"
           >{{ $t(name) }}</CommonLabel
         >
@@ -69,13 +69,13 @@ const showDivider = computed(() => shownUnits.value.length > 1) // If more than 
           size="small"
           :aria-labelledby="`accounted-time-label-${name}`"
           :aria-describedby="`accounted-time-unit-${name}`"
-          class="text-black! ltr:ml-auto rtl:mr-auto dark:text-white!"
+          class="text-contrast! ltr:ml-auto rtl:mr-auto"
           >{{ timeUnit?.toFixed(2) }}</CommonLabel
         >
         <CommonLabel
           :id="`accounted-time-unit-${name}`"
           size="small"
-          class="text-stone-200! dark:text-neutral-500!"
+          class="text-muted!"
           :aria-description="$t('Accounted time unit')"
           >{{ timeAccountingDisplayUnit }}</CommonLabel
         >

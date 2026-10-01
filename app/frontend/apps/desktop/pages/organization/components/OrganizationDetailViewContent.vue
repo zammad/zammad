@@ -152,7 +152,7 @@ const scrollTo = (position: 'start' | 'end' = 'end') => {
                 :label="__('Members')"
                 :entity="organizationMembers"
                 label-size="medium"
-                label-class="text-black! dark:text-white! mb-2.5"
+                label-class="text-contrast! mb-2.5"
                 label-tag="h2"
                 list-class="grid grid-cols-2 gap-3"
                 has-popover

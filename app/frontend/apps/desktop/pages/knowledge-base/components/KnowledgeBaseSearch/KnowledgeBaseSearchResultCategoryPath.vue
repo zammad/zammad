@@ -14,10 +14,7 @@ const locale = useLocaleStore()
   <!-- Each segment truncates on its own via line-clamp-1 (like CommonBreadcrumb), so a long path
        still shows its full shape instead of the whole line being cut off after the first segment
        or two; a truncated segment reveals its full title as a tooltip on hover. -->
-  <div
-    v-if="categoryPath.length"
-    class="flex min-w-0 items-center gap-1 text-xs/snug text-stone-200 dark:text-neutral-500"
-  >
+  <div v-if="categoryPath.length" class="flex min-w-0 items-center gap-1 text-xs/snug text-muted">
     <template v-for="(segment, index) in categoryPath" :key="segment.id">
       <CommonIcon
         v-if="index"

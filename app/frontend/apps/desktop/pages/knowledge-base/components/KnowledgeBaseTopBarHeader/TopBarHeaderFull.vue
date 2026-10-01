@@ -78,7 +78,7 @@ const selectedLocale = defineModel<DropdownItem>('selectedLocale')
     >
       <CommonLabel
         v-if="title"
-        class="mx-auto w-full text-xl font-medium text-black dark:text-white"
+        class="mx-auto w-full text-xl font-medium text-contrast!"
         :class="contentWidthClass"
         tag="h2"
       >

@@ -118,8 +118,7 @@ describe('TicketLiveUsers', () => {
     expect(customerAvatar).toHaveClass('opacity-60')
 
     expect(getByIconName(customerAvatar.parentElement!, 'user-idle-2')).toHaveClasses([
-      'fill-stone-200',
-      'dark:fill-neutral-500',
+      'fill-muted',
     ])
 
     const adminAvatar = wrapper.getByRole('img', {
@@ -128,10 +127,7 @@ describe('TicketLiveUsers', () => {
 
     expect(adminAvatar).not.toHaveClass('opacity-60')
 
-    expect(getByIconName(adminAvatar.parentElement!, 'pencil')).toHaveClasses([
-      'text-black',
-      'dark:text-white',
-    ])
+    expect(getByIconName(adminAvatar.parentElement!, 'pencil')).toHaveClasses(['text-contrast'])
 
     const agent1Avatar = wrapper.getByRole('img', {
       name: 'Avatar (Agent 1 Test)',
@@ -139,10 +135,7 @@ describe('TicketLiveUsers', () => {
 
     expect(agent1Avatar).not.toHaveClass('opacity-60')
 
-    expect(getByIconName(agent1Avatar.parentElement!, 'phone')).toHaveClasses([
-      'text-black',
-      'dark:text-white',
-    ])
+    expect(getByIconName(agent1Avatar.parentElement!, 'phone')).toHaveClasses(['text-contrast'])
 
     const agent2Avatar = wrapper.getByRole('img', {
       name: 'Avatar (Agent 2 Test)',
@@ -150,10 +143,7 @@ describe('TicketLiveUsers', () => {
 
     expect(agent2Avatar).toHaveClass('opacity-60')
 
-    expect(getByIconName(agent2Avatar.parentElement!, 'phone-pencil')).toHaveClasses([
-      'fill-stone-200',
-      'dark:fill-neutral-500',
-    ])
+    expect(getByIconName(agent2Avatar.parentElement!, 'phone-pencil')).toHaveClasses(['fill-muted'])
   })
 
   describe('Ai Agent', () => {

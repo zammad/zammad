@@ -36,6 +36,7 @@ const setupList = (
   let keyboard!: ReturnType<typeof useKeyboardKeysForDragAndDrop<Item>>
 
   renderComponent(
+    // eslint-disable-next-line vue/one-component-per-file
     defineComponent({
       setup() {
         keyboard = useKeyboardKeysForDragAndDrop<Item>({
@@ -179,6 +180,7 @@ describe('useKeyboardKeysForDragAndDrop', () => {
     let keyboard!: ReturnType<typeof useKeyboardKeysForDragAndDrop<Item>>
 
     renderComponent(
+      // eslint-disable-next-line vue/one-component-per-file
       defineComponent({
         setup() {
           keyboard = useKeyboardKeysForDragAndDrop<Item>({

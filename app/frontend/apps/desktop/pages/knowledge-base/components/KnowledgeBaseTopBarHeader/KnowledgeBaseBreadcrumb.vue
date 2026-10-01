@@ -27,7 +27,7 @@ const props = withDefaults(
 const locale = useLocaleStore()
 
 const lastItemClasses = computed(() => {
-  return props.emphasizeLastItem ? ['last:dark:text-white last:text-black'] : []
+  return props.emphasizeLastItem ? [' last:text-contrast'] : []
 })
 
 const sizeClasses = computed(() => {
@@ -74,7 +74,7 @@ const displayItems = computed(() =>
         <CommonLink
           v-if="item.route && item.iconOnly"
           v-tooltip="item.displayLabel"
-          class="inline-flex items-center p-1 text-gray-100 focus-visible-app-default hover:text-black dark:text-neutral-400 hover:dark:text-white"
+          class="inline-flex items-center p-1 text-normal focus-visible-app-default hover:text-contrast"
           :link="item.route"
           internal
         >
@@ -122,10 +122,7 @@ const displayItems = computed(() =>
             :class="item.iconClass"
           />
 
-          <CommonLabel
-            class="line-clamp-1! break-all hover:text-black hover:dark:text-white"
-            :size="size"
-          >
+          <CommonLabel class="line-clamp-1! break-all hover:text-contrast" :size="size">
             {{ item.displayLabel }}
           </CommonLabel>
         </CommonLink>
@@ -136,7 +133,7 @@ const displayItems = computed(() =>
           v-tooltip.supportive="item.displayLabel"
           class="line-clamp-1"
           :class="{
-            'text-black dark:text-white': item.isActive,
+            'text-contrast': item.isActive,
             'break-all': displayItems.at(-1) === item,
           }"
           aria-current="page"
@@ -157,7 +154,7 @@ const displayItems = computed(() =>
           v-if="idx !== displayItems.length - 1"
           :name="locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'"
           size="xs"
-          class="mx-0.5 inline-flex shrink-0 text-stone-200 dark:text-neutral-500"
+          class="mx-0.5 inline-flex shrink-0 text-muted"
         />
 
         <!-- Add a slot at the end of the last item. -->

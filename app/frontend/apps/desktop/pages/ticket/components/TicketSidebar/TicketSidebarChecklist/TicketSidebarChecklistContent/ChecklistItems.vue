@@ -135,7 +135,7 @@ defineExpose({
           <template v-if="!item.ticketReference">
             <CommonIcon
               tabindex="0"
-              class="ms-1 me-0.5 mt-1 text-gray-100 outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+              class="ms-1 me-0.5 mt-1 text-normal outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
               size="xs"
               role="checkbox"
               aria-readonly="true"
@@ -147,7 +147,7 @@ defineExpose({
               :id="`checklist-item-${getIdFromGraphQLId(item.id)}`"
               detect-links
               :classes="{
-                label: 'dark:text-white text-black',
+                label: ' text-contrast',
               }"
               disabled
               :value="item.text || '-'"
@@ -180,7 +180,7 @@ defineExpose({
       </template>
     </TransitionGroup>
 
-    <CommonLabel v-else class="col-span-2 text-neutral-500" size="small">
+    <CommonLabel v-else class="col-span-2 text-muted!" size="small">
       {{ $t('No checklist items yet') }}
     </CommonLabel>
 

@@ -22,12 +22,7 @@ const props = defineProps<Props>()
       'bg-blue-200 dark:bg-gray-700': props.alternativeBackground,
     }"
   >
-    <CommonLabel
-      v-if="!noHeading"
-      size="medium"
-      class="mb-2.5 text-black! dark:text-white!"
-      tag="h2"
-    >
+    <CommonLabel v-if="!noHeading" size="medium" class="mb-2.5 text-contrast!" tag="h2">
       {{ label }}
     </CommonLabel>
     <slot />

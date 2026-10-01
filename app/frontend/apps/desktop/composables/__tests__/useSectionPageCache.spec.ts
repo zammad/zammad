@@ -22,6 +22,7 @@ import type { RouteRecordRaw } from 'vue-router'
 const log: string[] = []
 
 const page = (name: string) =>
+  // eslint-disable-next-line vue/one-component-per-file
   defineComponent({
     name,
     setup() {
@@ -35,6 +36,7 @@ const page = (name: string) =>
   })
 
 // A section, wired the way the real ones are.
+// eslint-disable-next-line vue/one-component-per-file
 const SectionWithCache = defineComponent({
   name: 'SectionWithCache',
   setup() {
@@ -54,6 +56,7 @@ const SectionWithCache = defineComponent({
 
 // Stands in for LayoutPage: it keeps a permanent section itself, which is what makes the section's
 //   own cache matter in the first place.
+// eslint-disable-next-line vue/one-component-per-file
 const Shell = defineComponent({
   name: 'Shell',
   setup() {
@@ -67,6 +70,7 @@ const Shell = defineComponent({
 
 const routerRoutes: RouteRecordRaw[] = [
   // Where the harness mounts before the test navigates.
+  // eslint-disable-next-line vue/one-component-per-file
   { path: '/', name: 'Start', component: defineComponent({ setup: () => () => h('div') }) },
   {
     path: '/section',

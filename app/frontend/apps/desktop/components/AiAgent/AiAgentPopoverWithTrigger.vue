@@ -19,7 +19,7 @@ defineProps<CommonPopoverWithTriggerProps>()
   >
     <template #popover-content="{ popoverId }">
       <div :id="popoverId" class="p-3">
-        <CommonLabel class="block! text-base! text-black! dark:text-white!" tag="h3">
+        <CommonLabel class="block! text-base! text-contrast!" tag="h3">
           {{ $t('AI agent') }}
         </CommonLabel>
 
@@ -35,7 +35,7 @@ defineProps<CommonPopoverWithTriggerProps>()
       >
         <CommonIcon
           :aria-label="$t('User is editing')"
-          class="text-black dark:text-white"
+          class="text-contrast"
           size="xs"
           name="avatar-indicator-editing-desktop"
         />

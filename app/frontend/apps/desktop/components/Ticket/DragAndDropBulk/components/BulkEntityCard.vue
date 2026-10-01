@@ -35,7 +35,7 @@ const showInsideGroupAction = computed(() => !props.circle && isGroup.value)
 const rootClass = computed(() => [
   'flex flex-col group',
   props.circle
-    ? 'size-40 items-center justify-center rounded-full border-2 border-dashed border-stone-200 bg-blue-200 dark:border-neutral-500 dark:bg-gray-500'
+    ? 'size-40 items-center justify-center rounded-full border-2 border-dashed border-muted bg-blue-200 dark:bg-gray-500'
     : 'w-40 rounded-lg',
   { 'h-full': showInsideGroupAction.value },
 ])
@@ -43,7 +43,7 @@ const rootClass = computed(() => [
 const hoverClass = computed(() =>
   props.circle
     ? ''
-    : 'hover:border-blue-800 hover:text-black dark:hover:text-white hover:bg-blue-600 hover:dark:bg-blue-900',
+    : 'hover:border-blue-800 hover:text-contrast hover:bg-blue-600 hover:dark:bg-blue-900',
 )
 
 const figureClass = computed(() => [
@@ -51,7 +51,7 @@ const figureClass = computed(() => [
   hoverClass.value,
   {
     'rounded-b-none border-b-0!': isGroup.value,
-    'border-2 border-dashed border-stone-200 dark:border-neutral-500': !props.circle,
+    'border-2 border-dashed border-muted': !props.circle,
     'bg-blue-800! drop-success-scale': props.dropSuccessActive,
     'border-blue-800!': props.dropSuccessActive && !props.circle,
   },
@@ -63,7 +63,7 @@ const isSystemUser = computed(() => props.entityInternalId === 1 && isOwner.valu
 const iconContainerClass = computed(() => {
   if (isMacro.value) return 'bg-yellow-300'
   if (isSystemUser.value)
-    return 'rounded-full! border border-stone-200 text-stone-200 dark:border-neutral-500 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-hover:border-black dark:group-hover:border-white'
+    return 'rounded-full! border border-muted text-muted group-hover:text-contrast group-hover:border-black dark:group-hover:border-white'
   if (isGroup.value) return 'bg-green-500'
   return ''
 })
@@ -93,7 +93,7 @@ whenever(isInsideGroupHovered, () => {
         v-if="!circle"
         v-tooltip="parentLabel"
         size="small"
-        class="me-auto line-clamp-1! h-4 break-all text-stone-200 group-hover:text-black dark:text-neutral-500 dark:group-hover:text-white"
+        class="me-auto line-clamp-1! h-4 break-all text-muted! group-hover:text-contrast!"
         :class="{ 'text-white!': dropSuccessActive }"
         >{{ parentLabel }}
       </CommonLabel>
@@ -109,7 +109,7 @@ whenever(isInsideGroupHovered, () => {
       <figcaption :class="{ 'h-10': !circle }">
         <CommonLabel
           v-tooltip="label"
-          class="line-clamp-2! text-center break-word group-hover:text-black dark:group-hover:text-white"
+          class="line-clamp-2! text-center break-word group-hover:text-contrast"
           :class="{ 'text-white!': dropSuccessActive }"
           >{{ label }}</CommonLabel
         >
@@ -120,7 +120,7 @@ whenever(isInsideGroupHovered, () => {
       v-if="showInsideGroupAction"
       ref="inside-group"
       v-tooltip="$t('Go inside group')"
-      class="relative flex h-20 w-full shrink-0 flex-col items-center border-x-2 border-t-0 border-dashed border-stone-200 px-2 before:w-full before:border-t-2 before:border-dotted before:border-stone-200 dark:border-neutral-500 before:dark:border-neutral-500"
+      class="relative flex h-20 w-full shrink-0 flex-col items-center border-x-2 border-t-0 border-dashed border-muted px-2 before:w-full before:border-t-2 before:border-dotted before:border-muted"
       :class="hoverClass"
     >
       <CommonIcon class="my-auto" name="arrow-down-short" />

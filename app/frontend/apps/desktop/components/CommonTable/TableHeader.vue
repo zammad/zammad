@@ -362,14 +362,13 @@ useKeepAliveHooks({
               "
             >
               <CommonLabel
-                class="relative block! truncate font-normal text-gray-100! select-none dark:text-neutral-400!"
+                class="relative block! truncate font-normal text-normal! select-none"
                 :class="[
                   tableAttribute.headerPreferences?.labelClass,
                   {
                     'sr-only': tableAttribute.headerPreferences?.hideLabel,
-                    'text-black! dark:text-white!': isSorted(tableAttribute.name),
-                    'hover:text-black! dark:hover:text-white!':
-                      !tableAttribute.headerPreferences?.noSorting,
+                    'text-contrast!': isSorted(tableAttribute.name),
+                    'hover:text-contrast!': !tableAttribute.headerPreferences?.noSorting,
                   },
                 ]"
                 size="small"
@@ -397,9 +396,7 @@ useKeepAliveHooks({
         />
       </th>
       <th v-if="actions" id="actions-header" scope="col" class="h-10 w-0 p-2.5 text-center">
-        <CommonLabel class="font-normal text-stone-200! dark:text-neutral-500!" size="small"
-          >{{ $t('Actions') }}
-        </CommonLabel>
+        <CommonLabel class="font-normal text-muted!" size="small">{{ $t('Actions') }} </CommonLabel>
       </th>
     </tr>
     <tr v-if="selectAllLoadedActive && !hasLoadedAllItems" data-test-id="tableMetaHeader">

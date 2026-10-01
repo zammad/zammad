@@ -12,21 +12,21 @@ export interface CallerLogStatusDisplay {
 }
 
 const MUTED_COLORS = {
-  iconClass: 'text-stone-200 dark:text-neutral-500',
-  labelClass: 'text-gray-100 dark:text-neutral-400',
+  iconClass: 'text-muted',
+  labelClass: 'text-normal',
 }
 
 // A call in progress colors its icon only; the label stays muted like every finished call.
 const CONNECTED_COLORS = {
   iconClass: 'text-green-400',
-  labelClass: 'text-gray-100 dark:text-neutral-400',
+  labelClass: 'text-normal',
 }
 
 // Ringing is the only status the design takes out of the muted palette completely,
 //   and the only one that moves.
 const RINGING_COLORS = {
   iconClass: 'text-yellow-500 animate-vibrate motion-reduce:animate-none',
-  labelClass: 'text-black! dark:text-white!',
+  labelClass: 'text-contrast!',
 }
 
 // Same mapping as the old caller log, but with sentence-case source strings.

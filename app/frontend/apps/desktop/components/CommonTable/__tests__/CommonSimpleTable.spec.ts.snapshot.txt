@@ -12,7 +12,7 @@
       >
         
         <common-label-stub
-          class="font-normal text-stone-200 dark:text-neutral-500 text-left"
+          class="font-normal text-muted! text-left"
           size="small"
           tag="span"
         />
@@ -25,7 +25,7 @@
       >
         
         <common-label-stub
-          class="font-normal text-stone-200 dark:text-neutral-500 text-left"
+          class="font-normal text-muted! text-left"
           size="small"
           tag="span"
         />
@@ -38,7 +38,7 @@
         class="h-10 w-0 p-2.5 text-center"
       >
         <common-label-stub
-          class="font-normal text-stone-200! dark:text-neutral-500!"
+          class="font-normal text-muted!"
           size="small"
           tag="span"
         />

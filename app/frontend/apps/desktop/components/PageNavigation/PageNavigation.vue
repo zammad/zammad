@@ -76,7 +76,7 @@ const isRouteActive = (name: string) =>
               <CommonButton
                 v-if="collapsed"
                 v-tooltip="$t('Open quick search')"
-                class="shrink-0 text-neutral-400 hover:outline-blue-900"
+                class="shrink-0 text-neutral-400! hover:outline-blue-900"
                 size="large"
                 variant="neutral"
                 icon="search"

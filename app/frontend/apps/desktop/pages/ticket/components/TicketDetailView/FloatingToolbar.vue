@@ -74,7 +74,7 @@ const handleShowArticleForm = () => {
         size="medium"
         :variant="isAgentUser ? 'tertiary' : 'primary'"
         :icon="isAgentUser ? 'pencil-square' : 'web'"
-        class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-gray-100 dark:border-gray-900 dark:text-neutral-400"
+        class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 text-normal dark:border-gray-900"
         @click="handleShowArticleForm"
       />
     </template>

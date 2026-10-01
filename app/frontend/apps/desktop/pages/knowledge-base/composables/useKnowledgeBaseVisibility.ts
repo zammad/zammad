@@ -11,13 +11,13 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/schema-types.ts'
 export const knowledgeBaseVisibilityMeta = {
   [EnumKnowledgeBaseVisibility.Draft]: {
     icon: 'pencil-fill',
-    class: 'text-stone-200! dark:text-neutral-500!',
+    class: 'text-muted!',
   },
   [EnumKnowledgeBaseVisibility.Internal]: { icon: 'lock-fill', class: 'text-blue-800!' },
   [EnumKnowledgeBaseVisibility.Published]: { icon: 'unlock-fill', class: 'text-green-400!' },
   [EnumKnowledgeBaseVisibility.Archived]: {
     icon: 'archive-fill',
-    class: 'text-gray-100! dark:text-neutral-400!',
+    class: 'text-normal!',
   },
 } as const
 

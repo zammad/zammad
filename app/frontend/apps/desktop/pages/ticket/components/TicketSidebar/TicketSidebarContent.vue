@@ -20,7 +20,7 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   titleClass: '',
-  iconClass: 'text-stone-200 dark:text-neutral-500',
+  iconClass: 'text-muted',
 })
 
 const scrollPosition = defineModel<number>({
@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
 
     <CommonActionMenu
       v-if="actions"
-      class="text-gray-100 dark:text-neutral-400"
+      class="text-normal"
       no-single-action-mode
       placement="arrowEnd"
       :entity="entity"

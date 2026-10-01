@@ -44,7 +44,7 @@ const flexGapClassMap = {
 <template>
   <component
     :is="tag"
-    class="inline-flex items-center justify-start text-gray-100 dark:text-neutral-400"
+    class="inline-flex items-center justify-start text-normal"
     :class="[fontSizeClassMap[props.size], flexGapClassMap[props.size]]"
     data-test-id="common-label"
   >

@@ -86,12 +86,9 @@ const canCreateTicket = computed(() => props.isSidebar && hasTicketAccess.value)
   <div class="flex min-h-10 grow items-center gap-1">
     <div v-if="additionalMatches.length" class="flex grow flex-col">
       <!-- Indented past the avatar stack, so the number lines up with the single-caller rows. -->
-      <CommonLabel
-        v-if="isSidebar"
-        class="line-clamp-1! ps-9 break-all text-stone-200! dark:text-neutral-500!"
-        size="small"
-        >{{ numberPretty || number }}</CommonLabel
-      >
+      <CommonLabel v-if="isSidebar" class="line-clamp-1! ps-9 break-all text-muted!" size="small">{{
+        numberPretty || number
+      }}</CommonLabel>
       <CommonLink
         v-else
         class="line-clamp-1 ps-9 break-all"
@@ -137,7 +134,7 @@ const canCreateTicket = computed(() => props.isSidebar && hasTicketAccess.value)
             <section data-type="popover" class="flex flex-col gap-1 p-2">
               <CommonLabel
                 :id="`${popoverId}-label`"
-                class="px-1 py-0.5 text-stone-200! dark:text-neutral-500!"
+                class="px-1 py-0.5 text-muted!"
                 size="small"
                 tag="h3"
               >
@@ -192,12 +189,9 @@ const canCreateTicket = computed(() => props.isSidebar && hasTicketAccess.value)
         decorative
       />
       <div class="flex grow flex-col">
-        <CommonLabel
-          v-if="isSidebar"
-          class="line-clamp-1! break-all text-stone-200 dark:text-neutral-500"
-          size="small"
-          >{{ numberPretty || number }}</CommonLabel
-        >
+        <CommonLabel v-if="isSidebar" class="line-clamp-1! break-all text-muted!" size="small">{{
+          numberPretty || number
+        }}</CommonLabel>
         <CommonLink
           v-else
           class="line-clamp-1 break-all"

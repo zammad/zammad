@@ -203,16 +203,10 @@ const { tabs, activeTab } = usePersonalSettingTabs()
             :key="twoFactorMethod.name"
             class="flex items-start gap-1.5 p-2.5"
           >
-            <CommonIcon
-              class="text-stone-200 dark:text-neutral-500"
-              :name="twoFactorMethod.icon"
-              size="small"
-            />
+            <CommonIcon class="text-muted" :name="twoFactorMethod.icon" size="small" />
             <div class="flex grow flex-col gap-0.5">
               <div class="flex grow gap-1.5">
-                <CommonLabel class="text-black dark:text-white"
-                  >{{ $t(twoFactorMethod.label) }}
-                </CommonLabel>
+                <CommonLabel class="text-contrast!">{{ $t(twoFactorMethod.label) }} </CommonLabel>
                 <CommonBadge v-if="twoFactorMethod.configured" variant="success">
                   {{ $t('Active') }}
                 </CommonBadge>
@@ -220,10 +214,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
                   >{{ $t('Default') }}
                 </CommonBadge>
               </div>
-              <CommonLabel
-                v-if="twoFactorMethod.description"
-                class="text-stone-200 dark:text-neutral-500"
-                size="small"
+              <CommonLabel v-if="twoFactorMethod.description" class="text-muted!" size="small"
                 >{{ $t(twoFactorMethod.description) }}
               </CommonLabel>
             </div>

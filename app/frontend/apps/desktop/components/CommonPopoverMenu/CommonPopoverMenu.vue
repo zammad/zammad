@@ -69,10 +69,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
   <section class="flex max-w-64 min-w-58 flex-col gap-0.5">
     <div v-if="showHeaderLabel" role="heading" aria-level="2" class="px-2 py-1.5">
       <slot name="header">
-        <CommonLabel
-          class="line-clamp-1 cursor-default text-stone-200! dark:text-neutral-500!"
-          size="small"
-        >
+        <CommonLabel class="line-clamp-1 cursor-default text-muted!" size="small">
           {{ i18n.t(headerLabel) }}
         </CommonLabel>
       </slot>
@@ -84,12 +81,12 @@ const getHoverFocusStyles = (variant?: Variant) => {
           <template v-for="(item, index) in filteredMenuItems" :key="item.key">
             <li
               v-if="'array' in item"
-              class="group flex flex-col overflow-clip pt-2.5 last:rounded-b-[10px] nth-[n+2]:border-t nth-[n+2]:border-neutral-100 nth-[n+2]:dark:border-gray-900"
+              class="group flex flex-col overflow-clip pt-2.5 last:rounded-b-[11px] nth-[n+2]:border-t nth-[n+2]:border-neutral-100 nth-[n+2]:dark:border-gray-900"
               role="menuitem"
             >
               <CommonLabel
                 size="small"
-                class="line-clamp-1 px-2 text-stone-200! dark:text-neutral-500!"
+                class="line-clamp-1 px-2 text-muted!"
                 role="heading"
                 aria-level="3"
                 >{{ item.groupLabel }}</CommonLabel
@@ -98,11 +95,12 @@ const getHoverFocusStyles = (variant?: Variant) => {
                 <slot :name="`item-${subItem.key}`" v-bind="subItem">
                   <component
                     :is="subItem.component || CommonPopoverMenuItem"
-                    class="flex grow rounded-lg p-2.5"
+                    class="flex grow p-2.5"
                     :class="[
                       getHoverFocusStyles(subItem.variant),
                       {
-                        'last:rounded-b-xl': index === filteredMenuItems?.length - 1,
+                        'first:rounded-t-[11px]': index === 0 && !item.groupLabel,
+                        'last:rounded-b-[11px]': index === filteredMenuItems?.length - 1,
                       },
                     ]"
                     :label="subItem.label"
@@ -122,10 +120,10 @@ const getHoverFocusStyles = (variant?: Variant) => {
             <li
               v-else
               role="menuitem"
-              class="group flex items-center justify-between last:rounded-b-[10px]"
+              class="group flex items-center justify-between last:rounded-b-[11px]"
               :class="[
                 {
-                  'first:rounded-t-[10px]': !showHeaderLabel,
+                  'first:rounded-t-[11px]': !showHeaderLabel,
                   'border-t border-neutral-100 dark:border-gray-900': item.separatorTop,
                 },
                 getHoverFocusStyles(item.variant),
@@ -136,8 +134,8 @@ const getHoverFocusStyles = (variant?: Variant) => {
                   :is="item.component || CommonPopoverMenuItem"
                   class="flex grow p-2.5 focus-visible-app-default focus-visible:-outline-offset-1!"
                   :class="{
-                    'rounded-t-lg!': index === 0 && !showHeaderLabel,
-                    'rounded-b-lg!': index === filteredMenuItems?.length - 1,
+                    'rounded-t-[11px]!': index === 0 && !showHeaderLabel,
+                    'rounded-b-[11px]!': index === filteredMenuItems?.length - 1,
                   }"
                   :label="item.label"
                   :variant="item.variant"

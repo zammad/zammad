@@ -26,14 +26,14 @@ const props = defineProps<Props>()
 const variantClass = computed(() => {
   if (props.variant === 'secondary') return 'text-blue-800 dark:text-blue-800'
   if (props.variant === 'danger') return 'text-red-500 dark:text-red-500'
-  return 'group-hover:text-black dark:group-hover:text-white'
+  return 'group-hover/item:text-contrast'
 })
 
 const iconColor = computed(() => {
   if (props.iconClass) return props.iconClass
   if (props.variant === 'secondary') return 'text-blue-800 dark:text-blue-800'
   if (props.variant === 'danger') return 'text-red-500 dark:text-red-500'
-  return 'text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white'
+  return 'text-muted group-hover/item:text-contrast'
 })
 </script>
 
@@ -43,7 +43,7 @@ const iconColor = computed(() => {
     :link="link"
     :external="link && linkExternal"
     :open-in-new-tab="link && openInNewTab"
-    class="group cursor-pointer leading-snug hover:no-underline!"
+    class="group/item cursor-pointer leading-snug hover:no-underline!"
     data-test-id="popover-menu-item"
   >
     <slot name="leading" />

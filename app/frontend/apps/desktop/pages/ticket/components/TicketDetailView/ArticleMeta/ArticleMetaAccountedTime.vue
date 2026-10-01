@@ -23,7 +23,7 @@ const activityTypeSentence = computed(() => formatAccountedTimeType(props.contex
 </script>
 
 <template>
-  <CommonLabel class="min-w-0 text-black! dark:text-white!">
+  <CommonLabel class="min-w-0 text-contrast!">
     <span class="shrink-0">{{ accountedTime }}</span>
     <!-- The activity type is admin defined and can be long, so keep the sentence inside the row. -->
     <!-- The markup helper escapes the sentence before it turns the markers into tags. -->
@@ -31,7 +31,7 @@ const activityTypeSentence = computed(() => formatAccountedTimeType(props.contex
     <span
       v-if="activityTypeSentence"
       v-tooltip.truncate.supportive="cleanupMarkup(activityTypeSentence)"
-      class="min-w-0 truncate text-stone-200! *:font-normal *:text-black dark:text-neutral-500! *:dark:text-white"
+      class="min-w-0 truncate text-muted! *:font-normal *:text-contrast"
       v-html="markup(activityTypeSentence)"
     />
   </CommonLabel>

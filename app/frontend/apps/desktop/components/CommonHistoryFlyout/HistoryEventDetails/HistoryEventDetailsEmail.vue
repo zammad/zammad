@@ -15,7 +15,7 @@ const { event } = defineProps<Props>()
 <template>
   <span>
     <CommonTranslateRenderer
-      class="text-sm/snug text-gray-100 dark:text-neutral-400"
+      class="text-sm/snug text-normal"
       :source="__('Email sent to %s')"
       :placeholders="[
         {
@@ -23,7 +23,7 @@ const { event } = defineProps<Props>()
           props: {
             size: 'medium',
             class:
-              'cursor-text rounded bg-neutral-200 px-0.5 font-mono text-black dark:bg-gray-400 dark:text-white',
+              'cursor-text rounded bg-neutral-200 px-0.5 font-mono text-contrast dark:bg-gray-400',
           },
           content: event.details || '',
         },

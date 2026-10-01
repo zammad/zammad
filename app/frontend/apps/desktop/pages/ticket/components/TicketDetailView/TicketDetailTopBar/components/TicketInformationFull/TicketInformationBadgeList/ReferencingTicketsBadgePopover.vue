@@ -56,7 +56,7 @@ const { getTicketNumberWithHook } = useTicketNumberAndTitle()
     </template>
 
     <ChecklistBadge class="h-7 cursor-pointer" tag="div">
-      <CommonLabel size="small" class="text-black! dark:text-white!">
+      <CommonLabel size="small" class="text-contrast!">
         {{
           referencingTicketsCount === 1
             ? getTicketNumberWithHook(referencingTickets[0].number)

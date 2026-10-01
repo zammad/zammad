@@ -86,14 +86,9 @@ const {
           'outline -outline-offset-1 outline-blue-800!': index == selectedItemIndex,
         }"
       >
-        <CommonIcon
-          class="mt-1 shrink-0 fill-stone-200 dark:fill-neutral-500"
-          name="grip-vertical"
-          size="tiny"
-          decorative
-        />
+        <CommonIcon class="mt-1 shrink-0 fill-muted" name="grip-vertical" size="tiny" decorative />
         <div class="grow">
-          <CommonLabel class="inline text-black dark:text-white">
+          <CommonLabel class="inline text-contrast!">
             {{ $t(value.name) }}
           </CommonLabel>
           <CommonBadge v-if="value.organizationShared" variant="info" class="ms-1.5">{{

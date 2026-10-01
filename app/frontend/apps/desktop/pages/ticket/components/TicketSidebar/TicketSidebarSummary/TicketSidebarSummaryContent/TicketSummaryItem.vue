@@ -14,13 +14,8 @@ defineProps<Props>()
 
 <template>
   <div class="flex flex-col">
-    <CommonLabel class="mb-3 block! text-black! dark:text-white!" tag="h3">{{
-      $t(label)
-    }}</CommonLabel>
-    <ol
-      v-if="type === 'list' && Array.isArray(summary)"
-      class="space-y-3 text-gray-100 dark:text-neutral-400"
-    >
+    <CommonLabel class="mb-3 block! text-contrast!" tag="h3">{{ $t(label) }}</CommonLabel>
+    <ol v-if="type === 'list' && Array.isArray(summary)" class="space-y-3 text-normal">
       <li
         v-for="content in summary"
         :key="content"

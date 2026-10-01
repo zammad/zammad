@@ -37,7 +37,7 @@ const completedGroup = computed(() => {
     <td :colspan="tableColumnLength">
       <CommonDivider class="mt-2 mb-1 group-first:mt-0" />
       <div class="h-10 px-2.5 py-1">
-        <CommonLabel class="cursor-default truncate text-stone-200! dark:text-neutral-500!">
+        <CommonLabel class="cursor-default truncate text-muted!">
           <ObjectAttributeContent
             mode="table"
             :attribute="attribute as unknown as ObjectAttribute"

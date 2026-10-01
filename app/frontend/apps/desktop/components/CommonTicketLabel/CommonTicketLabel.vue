@@ -41,7 +41,7 @@ const { getTicketNumberWithTitle } = useTicketNumberAndTitle()
 <template>
   <div v-if="unauthorized" class="flex grow items-center gap-2">
     <CommonIcon class="shrink-0 text-red-500" size="tiny" name="x-lg" />
-    <CommonLabel class="text-black! dark:text-white!">{{ $t('Access denied') }}</CommonLabel>
+    <CommonLabel class="text-contrast!">{{ $t('Access denied') }}</CommonLabel>
   </div>
   <component
     :is="component"
@@ -76,7 +76,7 @@ const { getTicketNumberWithTitle } = useTicketNumberAndTitle()
       >
         {{ ticket?.title }}
       </CommonLabel>
-      <CommonLabel class="self-start text-stone-200 dark:text-neutral-500">
+      <CommonLabel class="self-start text-muted!">
         <CommonDateTime :date-time="ticket?.createdAt!" />
       </CommonLabel>
     </div>

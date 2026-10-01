@@ -89,14 +89,14 @@ const { delegateFocus } = useDelegateFocus(
               {
                 $cmp: 'CommonLabel',
                 props: {
-                  class: 'text-black dark:text-white',
+                  class: 'text-contrast',
                 },
                 children: '$label',
               },
               {
                 $cmp: 'CommonLabel',
                 props: {
-                  class: 'text-stone-200 dark:text-neutral-500',
+                  class: 'text-muted',
                 },
                 children: i18n.t(option.description),
               },

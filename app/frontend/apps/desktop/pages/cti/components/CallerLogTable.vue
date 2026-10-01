@@ -163,9 +163,8 @@ const { openCallerUserCreateFlyout } = useCallerUserCreate()
             role="checkbox"
             class="group/checkbox flex size-full cursor-pointer items-center justify-center text-stone-200 group-hover:text-black! group-active:text-white! focus-visible:outline-none dark:text-neutral-500 group-hover:dark:text-white!"
             :class="{
-              'text-gray-100! dark:text-neutral-400!': item.done,
-              'cursor-not-allowed! opacity-50 group-hover:text-gray-100! group-hover:dark:text-neutral-400!':
-                isDoneDisabled(item),
+              'text-normal!': item.done,
+              'cursor-not-allowed! opacity-50 group-hover:text-normal!': isDoneDisabled(item),
             }"
             :tabindex="isDoneDisabled(item) ? -1 : 0"
             :aria-disabled="isDoneDisabled(item)"
@@ -231,13 +230,13 @@ const { openCallerUserCreateFlyout } = useCallerUserCreate()
         </template>
 
         <template #column-cell-waiting="{ item }">
-          <CommonLabel class="text-gray-100 dark:text-neutral-400">
+          <CommonLabel class="text-normal">
             {{ formatDuration((item as CallerLogEntry).durationWaitingTime) || '-' }}
           </CommonLabel>
         </template>
 
         <template #column-cell-duration="{ item }">
-          <CommonLabel class="text-gray-100 dark:text-neutral-400">
+          <CommonLabel class="text-normal">
             {{ formatDuration((item as CallerLogEntry).durationTalkingTime) || '-' }}
           </CommonLabel>
         </template>

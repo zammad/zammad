@@ -180,9 +180,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
             :data-priority-ui-color="(item as TicketByList).priority?.uiColor ?? undefined"
             :ui-color="(item as TicketByList).priority?.uiColor"
             with-text-color
-            class="shrink-0 outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
+            class="shrink-0 outline-offset-0! group-hover:text-contrast group-active:text-white group-active:dark:text-white"
             :class="{
-              'text-black! dark:text-white!': isRowSelected,
+              'text-contrast!': isRowSelected,
             }"
           />
         </template>
@@ -198,9 +198,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
             no-trigger-link
           >
             <CommonLabel
-              class="block! shrink-0 truncate outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
+              class="block! shrink-0 truncate outline-offset-0! group-hover:text-contrast group-active:text-white group-active:dark:text-white"
               :class="{
-                'text-black! dark:text-white!': isRowSelected,
+                'text-contrast!': isRowSelected,
               }"
             >
               <ObjectAttributeContent
@@ -219,9 +219,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
             no-link
           >
             <CommonLabel
-              class="block! shrink-0 truncate outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
+              class="block! shrink-0 truncate outline-offset-0! group-hover:text-contrast group-active:text-white group-active:dark:text-white"
               :class="{
-                'text-black! dark:text-white!': isRowSelected,
+                'text-contrast!': isRowSelected,
               }"
             >
               <ObjectAttributeContent
@@ -244,9 +244,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
           <CommonTicketStateIndicatorIcon
             v-else
             :data-state-color-code="(item as TicketByList).stateColorCode"
-            class="shrink-0 outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
+            class="shrink-0 outline-offset-0! group-hover:text-contrast group-active:text-white group-active:dark:text-white"
             :class="{
-              'text-black! dark:text-white!': isRowSelected,
+              'text-contrast!': isRowSelected,
             }"
             :color-code="(item as TicketByList).stateColorCode"
             :label="(item as TicketByList).state.name"

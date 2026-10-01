@@ -51,7 +51,7 @@ const formSchema = buildTimeAccountingFormSchema(
             children: i18n.t(timeAccountingDisplayUnit.value),
             attrs: {
               class:
-                'py-2.5 px-2.5 outline outline-1 -outline-offset-1 outline-blue-200 dark:outline-gray-700 bg-neutral-50 dark:bg-gray-500 rounded-e-md text-gray-100 dark:text-neutral-400',
+                'py-2.5 px-2.5 outline outline-1 -outline-offset-1 outline-blue-200 dark:outline-gray-700 bg-neutral-50 dark:bg-gray-500 rounded-e-md text-normal',
             },
           },
         },

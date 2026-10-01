@@ -85,7 +85,7 @@ export const initializeFormFields = () => {
         'gap-1 p-2 focus:outline focus:outline-1 focus:outline-offset-2 rounded-md focus:outline-blue-800',
       tableMenuGrid: 'gap-1',
       button: {
-        base: 'focus-visible-app-default dark:hover:bg-blue-900 hover:bg-blue-600 rounded-lg dark:hover:text-white hover:text-black transition-color',
+        base: 'focus-visible-app-default dark:hover:bg-blue-900 hover:bg-blue-600 rounded-lg hover:text-contrast transition-color',
       },
     },
     input: {
@@ -94,8 +94,7 @@ export const initializeFormFields = () => {
       inlineContainer: 'px-1.5! py-1!',
     },
     tableMenu: {
-      triggerButton:
-        'w-6 h-6 flex items-center justify-center bg-blue-800/80 text-black dark:text-white',
+      triggerButton: 'w-6 h-6 flex items-center justify-center bg-blue-800/80 text-contrast',
     },
   })
 

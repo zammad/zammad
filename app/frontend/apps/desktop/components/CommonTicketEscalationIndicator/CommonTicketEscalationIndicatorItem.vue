@@ -34,7 +34,7 @@ const colorClasses = computed(() => {
     class="flex flex-col"
     :aria-labelledby="labelId"
   >
-    <CommonLabel :id="labelId" size="small" class="text-stone-200 dark:text-neutral-500">
+    <CommonLabel :id="labelId" size="small" class="text-muted!">
       {{ $t(label) }}
     </CommonLabel>
 

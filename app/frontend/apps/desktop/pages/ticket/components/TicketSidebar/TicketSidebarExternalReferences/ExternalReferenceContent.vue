@@ -11,7 +11,7 @@ defineProps<Props>()
 
 <template>
   <div class="flex flex-col gap-0.5">
-    <CommonLabel size="small" class="block text-stone-200 dark:text-neutral-500">
+    <CommonLabel size="small" class="block text-muted!">
       {{ label }}
     </CommonLabel>
     <slot>
@@ -21,7 +21,7 @@ defineProps<Props>()
             v-for="(value, index) in values"
             :key="value"
             role="listitem"
-            class="text-gray-100 dark:text-neutral-400"
+            class="text-normal"
           >
             {{ `${value}${index < values.length - 1 ? ',' : ''}` }}
           </CommonLabel>

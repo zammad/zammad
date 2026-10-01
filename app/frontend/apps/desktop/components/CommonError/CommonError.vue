@@ -28,7 +28,7 @@ const errorImage = computed(() => {
 
 <template>
   <img class="max-h-96 w-135" :alt="$t('Error')" :src="errorImage" />
-  <h1 class="text-center text-xl/snug text-black dark:text-white">
+  <h1 class="text-center text-xl/snug text-contrast">
     {{ $t(options?.title) }}
   </h1>
   <CommonLabel class="mx-auto max-w-prose text-center" tag="p">

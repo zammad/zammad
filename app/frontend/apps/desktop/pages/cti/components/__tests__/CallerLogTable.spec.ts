@@ -255,24 +255,18 @@ describe('CallerLogTable', () => {
     expect(within(ringingRow).getByLabelText('Inbound call')).toHaveClass(
       'text-yellow-500 animate-vibrate motion-reduce:animate-none',
     )
-    expect(within(ringingRow).getByText('Ringing…')).toHaveClass('text-black! dark:text-white!')
+    expect(within(ringingRow).getByText('Ringing…')).toHaveClass('text-contrast!')
 
     // A call in progress colors the icon only, its label stays muted.
     const connectedRow = getRow(wrapper, callFromUnknown)
 
     expect(within(connectedRow).getByLabelText('Inbound call')).toHaveClass('text-green-400')
-    expect(within(connectedRow).getByText('Connected')).toHaveClass(
-      'text-gray-100 dark:text-neutral-400',
-    )
+    expect(within(connectedRow).getByText('Connected')).toHaveClass('text-normal')
 
     const missedRow = getRow(wrapper, missedCall)
 
-    expect(within(missedRow).getByLabelText('Inbound call')).toHaveClass(
-      'text-stone-200 dark:text-neutral-500',
-    )
-    expect(within(missedRow).getByText('Not reached')).toHaveClass(
-      'text-gray-100 dark:text-neutral-400',
-    )
+    expect(within(missedRow).getByLabelText('Inbound call')).toHaveClass('text-muted')
+    expect(within(missedRow).getByText('Not reached')).toHaveClass('text-normal')
   })
 
   it('shows the call direction next to the status', async () => {

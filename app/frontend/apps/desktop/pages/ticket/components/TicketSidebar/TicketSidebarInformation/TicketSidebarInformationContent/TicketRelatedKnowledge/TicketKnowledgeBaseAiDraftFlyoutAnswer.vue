@@ -45,16 +45,13 @@ defineProps<Props>()
         v-if="showRelevanceScore"
         v-tooltip.supportive="$t('Relevance score')"
         size="small"
-        class="shrink-0 text-stone-200! dark:text-neutral-500!"
+        class="shrink-0 text-muted!"
       >
         {{ `${answer.score}%` }}
       </CommonLabel>
     </div>
 
-    <CommonLabel
-      v-if="answer.translation.content.bodyExcerpt"
-      class="text-stone-200! dark:text-neutral-500!"
-    >
+    <CommonLabel v-if="answer.translation.content.bodyExcerpt" class="text-muted!">
       {{ answer.translation.content.bodyExcerpt }}
     </CommonLabel>
 

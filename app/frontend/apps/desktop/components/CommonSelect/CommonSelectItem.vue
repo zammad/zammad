@@ -55,7 +55,7 @@ const locale = useLocaleStore()
     tabindex="0"
     :aria-selected="selected"
     :aria-description="option.disabled ? $t('This item expands to show more options') : undefined"
-    class="group flex h-9 cursor-pointer items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-hidden focus-visible:shadow-[inset_0_0_0_1px_var(--color-blue-800)] dark:text-white"
+    class="group flex h-9 cursor-pointer items-center gap-1.5 self-stretch px-2.5 text-sm text-contrast outline-hidden focus-visible:shadow-[inset_0_0_0_1px_var(--color-blue-800)]"
     role="option"
     data-test-id="select-item"
     :data-value="option.value"
@@ -66,8 +66,7 @@ const locale = useLocaleStore()
     <CommonIcon
       v-if="multiple && !noSelectionIndicator"
       :class="{
-        'fill-gray-100 group-hover:fill-black dark:fill-neutral-400 dark:group-hover:fill-white':
-          !option.disabled,
+        'fill-normal group-hover:fill-black dark:group-hover:fill-white': !option.disabled,
         'fill-stone-200 group-hover:fill-white dark:fill-neutral-500': option.disabled,
       }"
       size="xs"
@@ -77,7 +76,7 @@ const locale = useLocaleStore()
     />
     <CommonIcon
       v-else-if="!noSelectionIndicator"
-      class="shrink-0 fill-gray-100 group-hover:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
+      class="shrink-0 fill-normal group-hover:fill-black dark:group-hover:fill-white"
       :class="{
         invisible: !selected,
         'fill-stone-200 group-hover:fill-white dark:fill-neutral-500': option.disabled,
@@ -95,7 +94,7 @@ const locale = useLocaleStore()
         'fill-stone-200 group-hover:fill-white dark:fill-neutral-500': option.disabled,
       }"
       decorative
-      class="shrink-0 fill-gray-100 group-hover:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
+      class="shrink-0 fill-normal group-hover:fill-black dark:group-hover:fill-white"
     />
     <div v-if="filter" v-tooltip="label + (heading ? ` – ${heading}` : '')" class="grow truncate">
       <!-- eslint-disable vue/no-v-html -->
@@ -103,17 +102,16 @@ const locale = useLocaleStore()
         :class="{
           'text-stone-200 dark:text-neutral-500':
             option.disabled && !(option as AutoCompleteOption).children?.length,
-          'text-gray-100 dark:text-neutral-400':
-            option.disabled && (option as AutoCompleteOption).children?.length,
+          'text-normal': option.disabled && (option as AutoCompleteOption).children?.length,
           'group-hover:text-white': option.disabled,
         }"
         v-html="(option as MatchedSelectOption).matchedLabel"
       />
       <span
         v-if="heading"
-        class="text-stone-200 dark:text-neutral-500"
+        class="text-muted"
         :class="{
-          'group-hover:text-black group-hover:dark:text-white': !option.disabled,
+          'group-hover:text-contrast': !option.disabled,
           'group-hover:text-white': option.disabled,
         }"
         >&nbsp;– {{ heading }}</span
@@ -130,9 +128,9 @@ const locale = useLocaleStore()
       {{ label }}
       <span
         v-if="heading"
-        class="text-stone-200 dark:text-neutral-500"
+        class="text-muted"
         :class="{
-          'group-hover:text-black group-hover:dark:text-white': !option.disabled,
+          'group-hover:text-contrast': !option.disabled,
           'group-hover:text-white': option.disabled,
         }"
         >– {{ heading }}</span

@@ -82,7 +82,7 @@ export const useInlineMode = (
     { ignore: ['.editor-action-popover', '.editor-overflow-popover'] },
   )
 
-  const labelInlineDesktopClasses = 'text-stone-200! dark:text-neutral-500!'
+  const labelInlineDesktopClasses = 'text-muted!'
 
   const wrapperInlineDesktopClasses = computed(() =>
     appName === 'desktop'

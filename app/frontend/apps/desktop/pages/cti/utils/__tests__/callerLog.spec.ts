@@ -32,19 +32,19 @@ describe('getCallerLogStatus', () => {
 
 describe('getCallerLogStatusDisplay', () => {
   const muted = {
-    iconClass: 'text-stone-200 dark:text-neutral-500',
-    labelClass: 'text-gray-100 dark:text-neutral-400',
+    iconClass: 'text-muted',
+    labelClass: 'text-normal',
   }
 
   // A call in progress keeps its own icon color, the label stays muted like every other status.
   const connected = {
     iconClass: 'text-green-400',
-    labelClass: 'text-gray-100 dark:text-neutral-400',
+    labelClass: 'text-normal',
   }
 
   const ringing = {
     iconClass: 'text-yellow-500 animate-vibrate motion-reduce:animate-none',
-    labelClass: 'text-black! dark:text-white!',
+    labelClass: 'text-contrast!',
   }
 
   it.each([

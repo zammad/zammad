@@ -81,7 +81,7 @@ const horizontalArrowKey = (direction?: 'start' | 'end') => {
       <CommonIcon
         class="absolute h-4 w-5.5 text-transparent"
         :class="{
-          'animate-ping-once text-black! dark:text-white!': star === (Number(localValue) || 0),
+          'animate-ping-once text-contrast!': star === (Number(localValue) || 0),
           invisible: hover === null || hover !== star,
         }"
         name="star-fill"
@@ -93,8 +93,7 @@ const horizontalArrowKey = (direction?: 'start' | 'end') => {
         class="relative h-4 w-5.5 cursor-pointer outline-0 formkit-disabled:opacity-50"
         :data-test-id="`field-rating-star-${star}`"
         :class="{
-          'text-black dark:text-white':
-            hover !== null ? star <= hover : star <= (Number(localValue) || 0),
+          'text-contrast': hover !== null ? star <= hover : star <= (Number(localValue) || 0),
         }"
         :name="getIconNameFor(star)"
         size="tiny"

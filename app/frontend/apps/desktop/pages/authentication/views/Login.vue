@@ -287,7 +287,7 @@ const { switchValue, toggleBetaUiSwitch } = useBetaUi()
         v-if="!showPasswordLogin"
         class="inline-flex flex-wrap items-center justify-center p-2 text-sm"
       >
-        <CommonLabel class="text-center text-stone-200 dark:text-neutral-500">
+        <CommonLabel class="text-center text-muted!">
           {{
             $t(
               'If you have problems with the third-party login you can request a one-time password login as an admin.',
@@ -299,10 +299,7 @@ const { switchValue, toggleBetaUiSwitch } = useBetaUi()
         }}</CommonLink>
       </div>
 
-      <CommonLabel
-        v-if="loginFlow.state === '2fa-select'"
-        class="my-3 text-stone-200 dark:text-neutral-500"
-      >
+      <CommonLabel v-if="loginFlow.state === '2fa-select'" class="my-3 text-muted!">
         {{ $t('Contact the administrator if you have any problems logging in.') }}
       </CommonLabel>
 

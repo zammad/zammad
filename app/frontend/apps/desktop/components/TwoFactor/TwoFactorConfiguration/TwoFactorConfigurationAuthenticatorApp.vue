@@ -206,7 +206,7 @@ const { transitions } = useTransitionConfig()
 
 <template>
   <CommonLoader :loading="loading" :error="initiationError" />
-  <div v-show="!loading" class="space-y-2 text-sm text-gray-100 dark:text-neutral-400">
+  <div v-show="!loading" class="space-y-2 text-sm text-normal">
     <CommonLabel
       >{{ $t('To set up an authenticator app for your account, follow the steps below:') }}
     </CommonLabel>

@@ -27,7 +27,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   titleClass: '',
-  iconClass: 'text-stone-200 dark:text-neutral-500',
+  iconClass: 'text-muted',
 })
 
 const { isSidebarCollapsed, toggleSidebar } = useSidebarDisplay(props.name)
@@ -54,7 +54,7 @@ const translatedTitle = computed(() => i18n.t(props.title))
 
         <CommonActionMenu
           v-if="actions?.length"
-          class="text-gray-100 dark:text-neutral-400"
+          class="text-normal"
           no-single-action-mode
           placement="arrowEnd"
           :custom-menu-button-label="$t('Additional actions')"
@@ -74,7 +74,7 @@ const translatedTitle = computed(() => i18n.t(props.title))
     >
       <CommonButton
         v-tooltip="translatedTitle"
-        class="text-black! outline-1! outline-offset-1 outline-blue-800! dark:text-white!"
+        class="text-contrast! outline-1! outline-offset-1 outline-blue-800!"
         size="large"
         variant="neutral"
         :icon="icon"

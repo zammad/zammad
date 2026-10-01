@@ -94,7 +94,7 @@ defineExpose({
           )
         }}</CommonLabel>
         <div
-          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
+          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-normal dark:bg-gray-700"
           data-test-id="recovery-codes"
         >
           <div v-for="recoveryCode in recoveryCodes" :key="recoveryCode" class="grow">

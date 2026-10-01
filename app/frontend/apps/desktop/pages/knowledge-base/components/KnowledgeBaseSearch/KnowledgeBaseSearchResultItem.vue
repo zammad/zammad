@@ -71,7 +71,7 @@ const titleSegments = computed(() =>
         size="medium"
       />
 
-      <CommonLabel size="medium" class="line-clamp-2! text-center text-black! dark:text-white!">
+      <CommonLabel size="medium" class="line-clamp-2! text-center text-contrast!">
         <CommonHighlightedText :segments="titleSegments" />
       </CommonLabel>
 
@@ -97,7 +97,7 @@ const titleSegments = computed(() =>
       />
 
       <div class="flex min-w-0 grow flex-col gap-0.5">
-        <CommonLabel size="medium" class="line-clamp-1! text-black! dark:text-white!">
+        <CommonLabel size="medium" class="line-clamp-1! text-contrast!">
           <CommonHighlightedText :segments="titleSegments" />
         </CommonLabel>
 

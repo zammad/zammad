@@ -81,7 +81,7 @@ const { popover, popoverTarget, isOpen: isPopoverOpen, toggle: togglePopover, cl
         v-tooltip="$t('Show more tabs')"
         variant="none"
         icon="three-dots-vertical"
-        class="z-10 aspect-square h-full! rounded-sm! bg-neutral-50/80 p-1.5! text-black -outline-offset-1! backdrop-blur-xs dark:bg-gray-500/80 dark:text-white"
+        class="z-10 aspect-square h-full! rounded-sm! bg-neutral-50/80 p-1.5! text-contrast -outline-offset-1! backdrop-blur-xs dark:bg-gray-500/80"
         :class="[{ 'bg-blue-800! text-white!': isPopoverOpen }]"
         :disabled="!overflowTabsData.length"
         :aria-expanded="isPopoverOpen"

@@ -56,7 +56,7 @@ const collapseButtonIcon = computed(() => {
 // :TODO think if we add this variant as a Variant of CommonButton
 const variantClass = computed(() => {
   if (props.variant === 'tertiary-gray')
-    return 'bg-neutral-500 focus-visible:bg-blue-800 active:dark:bg-blue-800 active:bg-blue-800 hover:bg-blue-600 hover:dark:bg-blue-900 text-black dark:bg-gray-200 dark:text-white'
+    return 'bg-neutral-500 focus-visible:bg-blue-800 active:dark:bg-blue-800 active:bg-blue-800 hover:bg-blue-600 hover:dark:bg-blue-900 text-contrast dark:bg-gray-200'
 
   return ''
 })

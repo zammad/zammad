@@ -59,7 +59,7 @@ const finish = () => {
       {{ $t('Your Zammad has the following email address:') }}
     </CommonLabel>
 
-    <ul class="list-disc gap-1 text-sm text-gray-100 ltr:ml-5 rtl:mr-5 dark:text-neutral-400">
+    <ul class="list-disc gap-1 text-sm text-normal ltr:ml-5 rtl:mr-5">
       <li v-for="address in emailAddresses" :key="address.email">
         {{ address.name }} &lt;{{ address.email }}&gt;
       </li>

@@ -25,7 +25,7 @@ const locale = useLocaleStore()
 // TODO: Missing handling when there is not enough space for the breadcrumb
 
 const lastItemClasses = computed(() => {
-  return props.emphasizeLastItem ? ['last:dark:text-white last:text-black'] : []
+  return props.emphasizeLastItem ? [' last:text-contrast'] : []
 })
 
 const sizeClasses = computed(() => {
@@ -90,10 +90,7 @@ const displayItems = computed(() =>
             :class="item.iconClass"
           />
 
-          <CommonLabel
-            class="line-clamp-1! break-all hover:text-black hover:dark:text-white"
-            :size="size"
-          >
+          <CommonLabel class="line-clamp-1! break-all hover:text-contrast" :size="size">
             {{ item.displayLabel }}
           </CommonLabel>
         </CommonLink>
@@ -104,7 +101,7 @@ const displayItems = computed(() =>
           v-tooltip.supportive="item.displayLabel"
           class="line-clamp-1"
           :class="{
-            'text-black dark:text-white': item.isActive,
+            'text-contrast': item.isActive,
             'break-all': displayItems.at(-1) === item,
           }"
           :aria-current="displayItems.at(-1) === item ? 'page' : undefined"
@@ -125,7 +122,7 @@ const displayItems = computed(() =>
           v-if="idx !== displayItems.length - 1"
           :name="locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'"
           size="xs"
-          class="mx-1 inline-flex shrink-0 text-stone-200 dark:text-neutral-500"
+          class="mx-1 inline-flex shrink-0 text-muted"
         />
 
         <!-- Add a slot at the end of the last item. -->

@@ -36,7 +36,7 @@ describe('Form - Field - Rating', () => {
     await view.events.click(starIcon)
 
     expect(node.context?.value).toEqual(star.toString())
-    expect(starIcon).toHaveClasses(['text-black', 'dark:text-white', 'icon-star-fill'])
+    expect(starIcon).toHaveClasses(['text-contrast', 'icon-star-fill'])
   })
 
   it.each([
@@ -104,7 +104,7 @@ describe('Form - Field - Rating', () => {
 
     await waitFor(() => {
       expect(node.context?.value).toBe(newValue)
-      expect(starIcon).toHaveClasses(['text-black', 'dark:text-white', 'icon-star-fill'])
+      expect(starIcon).toHaveClasses(['text-contrast', 'icon-star-fill'])
     })
 
     // Decrease rating.
@@ -136,7 +136,7 @@ describe('Form - Field - Rating', () => {
 
     await waitFor(() => {
       expect(node.context?.value).toBe(newValue)
-      expect(starIcon).toHaveClasses(['text-black', 'dark:text-white', 'icon-star-fill'])
+      expect(starIcon).toHaveClasses(['text-contrast', 'icon-star-fill'])
     })
 
     // Decrease rating.

@@ -153,7 +153,7 @@ const onPrimaryClick = () => {
       />
       <div
         v-else
-        class="flex size-9 shrink-0 items-center justify-center rounded-[3px] text-stone-200 dark:text-neutral-500"
+        class="flex size-9 shrink-0 items-center justify-center rounded-[3px] text-muted"
         :class="{
           'border border-neutral-100 group-active:text-white dark:border-gray-900': canPreview,
         }"
@@ -162,7 +162,7 @@ const onPrimaryClick = () => {
       </div>
 
       <div
-        class="flex min-w-0 flex-1 flex-col text-sm/snug text-black dark:text-white"
+        class="flex min-w-0 flex-1 flex-col text-sm/snug text-contrast"
         :class="{ 'group-active:text-white': canPreview }"
       >
         <div class="flex">
@@ -173,7 +173,7 @@ const onPrimaryClick = () => {
         <CommonLabel
           v-if="fileSizeLabel"
           size="small"
-          class="line-clamp-1 leading-snug text-stone-200 dark:text-neutral-500"
+          class="line-clamp-1 leading-snug text-muted!"
           :class="{ 'group-active:text-white': canPreview }"
         >
           {{ fileSizeLabel }}
@@ -189,9 +189,9 @@ const onPrimaryClick = () => {
       <CommonLink
         v-tooltip="downloadAction.label"
         v-bind="downloadAction.attrs"
-        class="rounded-xs p-0.5 text-stone-200! focus-visible-app-default hover:text-black! dark:text-neutral-500! dark:hover:text-white!"
+        class="rounded-xs p-0.5 text-muted! focus-visible-app-default hover:text-contrast!"
         :class="{
-          'group-hover:text-black! dark:group-hover:text-white!': !canPreview,
+          'group-hover:text-contrast!': !canPreview,
           'group-active:text-white!': canPreview,
         }"
         @mousedown.stop

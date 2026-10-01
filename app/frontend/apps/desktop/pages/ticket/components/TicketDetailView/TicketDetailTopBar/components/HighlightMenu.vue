@@ -65,7 +65,7 @@ const colorSwatchBackgroundClassMap: Record<string, string> = {
 }
 
 const activeColorClass = computed(
-  () => `${highlightBackgroundClassMap[activeMenuItem.value.key]} text-black! dark:text-white!`,
+  () => `${highlightBackgroundClassMap[activeMenuItem.value.key]} text-contrast!`,
 )
 
 const activeColorSwatchClass = computed(() => colorSwatchTextClassMap[activeMenuItem.value.key])
@@ -121,11 +121,11 @@ onUnmounted(() => {
         >
           <template v-for="(item, index) in items" #[`item-${item.key}`] :key="item.key">
             <button
-              class="flex w-full grow items-center gap-2 p-2.5 text-gray-100 focus-visible-app-default -outline-offset-1! focus:outline-hidden dark:text-neutral-400"
+              class="flex w-full grow items-center gap-2 p-2.5 text-normal focus-visible-app-default -outline-offset-1! focus:outline-hidden"
               :class="{
                 'bg-blue-800! text-white!': item.key === activeMenuItem?.key,
-                'rounded-t-lg': index === 0,
-                'rounded-b-lg': index === items.length - 1,
+                'rounded-t-[11px]': index === 0,
+                'rounded-b-[11px]': index === items.length - 1,
               }"
               :aria-pressed="item.key === activeMenuItem?.key"
               @click="

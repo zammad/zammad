@@ -124,8 +124,8 @@ const indicator = computed(() => {
 })
 
 const indicatorClass = computed(() => {
-  if (isMuted.value) return 'fill-stone-200 dark:fill-neutral-500'
-  return 'text-black dark:text-white'
+  if (isMuted.value) return 'fill-muted'
+  return 'text-contrast'
 })
 
 const indicatorSizes = {

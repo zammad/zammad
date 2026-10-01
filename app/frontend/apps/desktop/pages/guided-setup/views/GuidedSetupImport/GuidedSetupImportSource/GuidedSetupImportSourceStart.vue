@@ -79,9 +79,7 @@ const startImport = () => {
         }}
       </CommonLabel>
 
-      <ul
-        class="flex list-disc flex-col gap-1.5 text-sm text-gray-100 ltr:ml-5 rtl:mr-5 dark:text-neutral-400"
-      >
+      <ul class="flex list-disc flex-col gap-1.5 text-sm text-normal ltr:ml-5 rtl:mr-5">
         <li v-for="hint in sourcePlugin.preStartHints" :key="hint">
           {{ $t(hint) }}
         </li>

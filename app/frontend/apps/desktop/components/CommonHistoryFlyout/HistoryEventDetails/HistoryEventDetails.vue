@@ -28,23 +28,23 @@ const descriptionOutput = computed(() => {
 
 <template>
   <div>
-    <CommonLabel v-if="event.sentenceDescription" class="me-1 text-gray-100 dark:text-neutral-400">
+    <CommonLabel v-if="event.sentenceDescription" class="me-1 text-normal">
       {{ $t(event.sentenceDescription) }}
     </CommonLabel>
 
     <template v-else>
-      <CommonLabel class="me-1 text-gray-100 dark:text-neutral-400">
+      <CommonLabel class="me-1 text-normal">
         {{ capitalize($t(event.actionName)) }}
       </CommonLabel>
 
-      <CommonLabel v-if="descriptionOutput" class="text-gray-100 dark:text-neutral-400">{{
+      <CommonLabel v-if="descriptionOutput" class="text-normal">{{
         descriptionOutput
       }}</CommonLabel>
     </template>
 
     <CommonLabel
       v-if="event.details"
-      class="max-w-md cursor-text rounded-sm bg-neutral-200 px-0.5 font-mono break-word text-black dark:bg-gray-400 dark:text-white"
+      class="max-w-md cursor-text rounded-sm bg-neutral-200 px-0.5 font-mono break-word text-contrast! dark:bg-gray-400"
       :class="{
         'me-1': event.showSeparator || event.additionalDetails,
         'ms-1': descriptionOutput,
@@ -54,7 +54,7 @@ const descriptionOutput = computed(() => {
 
     <CommonLabel
       v-if="event.showSeparator && event.details && event.additionalDetails"
-      class="text-gray-100 dark:text-neutral-400"
+      class="text-normal"
       :class="{
         'me-1': event.details || event.additionalDetails,
       }"
@@ -63,7 +63,7 @@ const descriptionOutput = computed(() => {
 
     <CommonLabel
       v-if="event.additionalDetails"
-      class="cursor-text rounded-sm bg-neutral-200 px-0.5 font-mono break-word text-black dark:bg-gray-400 dark:text-white"
+      class="cursor-text rounded-sm bg-neutral-200 px-0.5 font-mono break-word text-contrast! dark:bg-gray-400"
       >{{ event.additionalDetails }}</CommonLabel
     >
   </div>

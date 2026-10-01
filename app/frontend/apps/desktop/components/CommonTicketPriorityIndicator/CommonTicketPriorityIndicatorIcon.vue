@@ -28,7 +28,7 @@ const textColor = computed(() => {
     case 'high-priority':
       return 'text-red-500 dark:text-red-500'
     case 'low-priority':
-      return 'text-stone-200 dark:text-neutral-500'
+      return 'text-muted'
     default:
       return 'text-blue-800'
   }

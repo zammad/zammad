@@ -29,7 +29,7 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
           :prefix-icon="field.icon && !field.component ? field.icon : undefined"
           v-bind="field.props || {}"
           :context="{ field, article }"
-          class="max-w-full shrink text-black! dark:text-white!"
+          class="max-w-full shrink text-contrast!"
         >
           {{ field.value }}
         </Component>

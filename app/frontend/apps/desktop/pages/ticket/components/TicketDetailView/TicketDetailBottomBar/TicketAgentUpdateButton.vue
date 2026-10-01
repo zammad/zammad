@@ -95,7 +95,7 @@ const actionItems = computed(() => {
     label: macro.name,
     groupLabel: groupLabels.macros,
     icon: 'play-circle',
-    iconClass: 'text-yellow-300',
+    iconClass: 'text-yellow-300 group-hover/item:text-contrast!',
     onClick: () => emit('execute-macro', macro),
   }))
 

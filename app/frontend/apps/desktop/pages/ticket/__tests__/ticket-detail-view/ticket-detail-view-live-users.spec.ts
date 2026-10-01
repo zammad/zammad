@@ -54,8 +54,7 @@ describe('Ticket detail view live users handling', () => {
     expect(customerAvatar).toHaveClass('opacity-60')
 
     expect(getByIconName(customerAvatar.parentElement!, 'user-idle-2')).toHaveClasses([
-      'fill-stone-200',
-      'dark:fill-neutral-500',
+      'fill-muted',
     ])
 
     await getTicketLiveUserUpdatesSubscriptionHandler().trigger({
@@ -144,10 +143,7 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(getByIconName(customerAvatar.parentElement!, 'pencil')).toHaveClasses([
-      'text-black',
-      'dark:text-white',
-    ])
+    expect(getByIconName(customerAvatar.parentElement!, 'pencil')).toHaveClasses(['text-contrast'])
   })
 
   it('displays icon on user avatar if they are on mobile', async () => {
@@ -207,10 +203,7 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(getByIconName(customerAvatar.parentElement!, 'phone')).toHaveClasses([
-      'text-black',
-      'dark:text-white',
-    ])
+    expect(getByIconName(customerAvatar.parentElement!, 'phone')).toHaveClasses(['text-contrast'])
   })
 
   it('hides the user avatar if they leave the ticket', async () => {

@@ -3,7 +3,7 @@
 // Shared styling for the items rendered inside a CommonScrollList (CommonTab buttons
 // and CommonNavigationTabs links), so both stay visually in sync.
 export const tabItemClasses =
-  'inline-flex w-full cursor-pointer disabled:cursor-not-allowed items-center gap-1 border-0 bg-transparent text-nowrap text-gray-100 dark:text-neutral-400'
+  'inline-flex w-full cursor-pointer disabled:cursor-not-allowed items-center gap-1 border-0 bg-transparent text-nowrap text-normal'
 
 /**
  * The container width at which a tab strip stops being a row of equally stretched icons and
@@ -95,9 +95,9 @@ export const tabItemIconSize = {
  *   doesn't (multiselect options) the active item paints its own background.
  */
 export const tabItemColorClasses = (active: boolean, disabled?: boolean, hasMarker = true) => {
-  if (active) return `${hasMarker ? '' : 'bg-white dark:bg-gray-200'} text-black! dark:text-white!`
+  if (active) return `${hasMarker ? '' : 'bg-white dark:bg-gray-200'} text-contrast!`
 
   if (disabled) return 'text-stone-200 dark:text-neutral-500'
 
-  return 'not-disabled:hover:text-black not-disabled:hover:dark:text-white'
+  return 'not-disabled:hover:text-contrast'
 }

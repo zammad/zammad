@@ -39,7 +39,7 @@ const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
-  <CommonLabel tag="h3" size="small" class="text-stone-200! dark:text-neutral-500!">
+  <CommonLabel tag="h3" size="small" class="text-muted!">
     {{ $t('Suggested knowledge') }}
   </CommonLabel>
   <div v-if="hasError" class="flex flex-col items-end gap-3">
@@ -72,7 +72,7 @@ const { isTouchDevice } = useTouchDevice()
           <CommonLabel
             v-tooltip.supportive="$t('Relevance score')"
             size="small"
-            class="text-stone-200! dark:text-neutral-500!"
+            class="text-muted!"
           >
             {{ `${answer.score}%` }}
           </CommonLabel>
@@ -96,7 +96,7 @@ const { isTouchDevice } = useTouchDevice()
 
     <!-- Not "no answers found": the best matches may all be linked already, and those are listed
     above rather than suggested again. -->
-    <CommonLabel v-else size="small" class="text-stone-200! dark:text-neutral-500!">
+    <CommonLabel v-else size="small" class="text-muted!">
       {{ $t('No suggestions.') }}
     </CommonLabel>
 

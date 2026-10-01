@@ -19,13 +19,7 @@ const { articleDeliveryStatus } = useWhatsapp(toRef(props.context, 'article'))
 
 <template>
   <div class="flex items-center gap-1.5">
-    <CommonIcon
-      text-neutral-950
-      class="text-black! dark:text-white!"
-      width="16"
-      height="16"
-      name="whatsapp"
-    />
+    <CommonIcon text-neutral-950 class="text-contrast!" width="16" height="16" name="whatsapp" />
 
     <CommonLabel class="text-neutral-950! dark:text-white!">
       {{ $t('whatsapp message') }}

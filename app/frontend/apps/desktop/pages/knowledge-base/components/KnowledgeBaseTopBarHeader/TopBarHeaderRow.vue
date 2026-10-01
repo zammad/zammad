@@ -123,7 +123,7 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
             <CommonIcon
               size="xs"
               decorative
-              class="text-gray-100 dark:text-neutral-400"
+              class="text-normal"
               :name="isOpen ? 'chevron-up' : 'chevron-down'"
             />
           </template>

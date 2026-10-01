@@ -36,7 +36,7 @@ const backgroundVariantClasses = computed(() => {
 <template>
   <main
     ref="scroll-container"
-    class="size-full text-gray-100 dark:text-neutral-400"
+    class="size-full text-normal"
     :class="[
       backgroundVariantClasses,
       {

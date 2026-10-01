@@ -15,12 +15,7 @@ import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
     fullscreen
   >
     <div class="flex justify-center">
-      <CommonIcon
-        name="wifi-off"
-        size="medium"
-        class="text-stone-200 dark:text-neutral-500"
-        animation="pulse"
-      />
+      <CommonIcon name="wifi-off" size="medium" class="text-muted" animation="pulse" />
     </div>
     <CommonLabel size="large">{{ $t('Trying to reconnect…') }}</CommonLabel>
   </CommonDialog>

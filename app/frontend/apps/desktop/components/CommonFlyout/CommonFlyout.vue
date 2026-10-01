@@ -346,7 +346,7 @@ const { transitions } = useTransitionConfig()
             class="min-h-7 grow gap-1.5"
             size="large"
             :prefix-icon="headerIcon"
-            icon-color="text-stone-200 dark:text-neutral-500"
+            icon-color="text-muted"
           >
             {{ $t(headerTitle) }}
           </CommonLabel>

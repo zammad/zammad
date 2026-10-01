@@ -15,7 +15,7 @@ const renderStatus = (props = {}) =>
 
 const statuses = [
   { status: 'published', icon: 'unlock-fill', color: 'text-green-400!' },
-  { status: 'draft', icon: 'pencil-fill', color: 'text-stone-200! dark:text-neutral-500!' },
+  { status: 'draft', icon: 'pencil-fill', color: 'text-muted!' },
 ] as const
 
 describe('KnowledgeBaseIconStatus', () => {

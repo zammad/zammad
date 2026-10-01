@@ -42,6 +42,7 @@ const mountConsumer = () => {
   const updates: string[][] = []
   const onScreen = ref(true)
 
+  // eslint-disable-next-line vue/one-component-per-file
   const Consumer = defineComponent({
     setup() {
       useKnowledgeBaseContentUpdates((affectedCategoryIds) => updates.push(affectedCategoryIds))
@@ -50,6 +51,7 @@ const mountConsumer = () => {
     },
   })
 
+  // eslint-disable-next-line vue/one-component-per-file
   const Host = defineComponent({
     setup() {
       return () => h(KeepAlive, null, { default: () => (onScreen.value ? h(Consumer) : null) })

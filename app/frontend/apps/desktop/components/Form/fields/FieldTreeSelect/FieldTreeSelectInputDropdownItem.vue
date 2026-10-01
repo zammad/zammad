@@ -66,7 +66,7 @@ const handleNextPageOrSelect = () =>
   <div
     role="option"
     :aria-selected="selected"
-    class="group flex h-9 cursor-pointer items-center self-stretch text-sm text-black outline-hidden dark:text-white"
+    class="group flex h-9 cursor-pointer items-center self-stretch text-sm text-contrast outline-hidden"
     :class="{
       'hover:bg-blue-800 has-focus-visible:shadow-[inset_0_0_0_1px_var(--color-blue-800)]':
         option.disabled,
@@ -82,7 +82,7 @@ const handleNextPageOrSelect = () =>
       :class="{
         'group/button focus-visible-app-default -outline-offset-1! hover:bg-blue-600 dark:hover:bg-blue-900':
           !option.disabled,
-        'outline-none hover:text-black dark:hover:text-white': option.disabled,
+        'outline-none hover:text-contrast': option.disabled,
         'rounded-tl-[7px]!': !hasTopButton && hasDirectionUp && isFirstItem,
         'rounded-bl-[7px]': !hasDirectionUp && isLastItem,
       }"
@@ -97,12 +97,12 @@ const handleNextPageOrSelect = () =>
         size="xs"
         decorative
         :name="selected ? 'check-square' : 'square'"
-        class="m-0.5 shrink-0 fill-gray-100 group-hover/button:fill-black dark:fill-neutral-400 dark:group-hover/button:fill-white"
+        class="m-0.5 shrink-0 fill-normal group-hover/button:fill-black dark:group-hover/button:fill-white"
         :class="{ 'group-hover:fill-white': option.disabled }"
       />
       <CommonIcon
         v-else-if="!noSelectionIndicator"
-        class="shrink-0 fill-gray-100 group-hover:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
+        class="shrink-0 fill-normal group-hover:fill-black dark:group-hover:fill-white"
         :class="{
           invisible: !selected,
           'group-hover:fill-white': option.disabled,
@@ -116,7 +116,7 @@ const handleNextPageOrSelect = () =>
         :name="option.icon"
         size="tiny"
         decorative
-        class="shrink-0 fill-gray-100 group-hover/button:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
+        class="shrink-0 fill-normal group-hover/button:fill-black dark:group-hover:fill-white"
       />
       <!--      eslint-disable vue/no-v-html -->
       <span
@@ -125,13 +125,13 @@ const handleNextPageOrSelect = () =>
         :class="{
           'pointer-events-none text-stone-200 dark:text-neutral-500': option.disabled,
         }"
-        class="grow truncate group-hover/button:text-black dark:group-hover/button:text-white"
+        class="grow truncate group-hover/button:text-contrast"
         v-html="(option as MatchedFlatSelectOption).matchedPath"
       />
       <span
         v-else
         v-tooltip="label"
-        class="grow truncate group-hover/button:text-black dark:group-hover/button:text-white"
+        class="grow truncate group-hover/button:text-contrast"
         :class="{ 'group-hover:text-white': option.disabled }"
       >
         {{ label }}

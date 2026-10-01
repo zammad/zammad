@@ -101,8 +101,8 @@ const tableAttributes: TableAttribute[] = [
               size="tiny"
             />
             <CommonLabel
-              class="truncate text-gray-100! group-hover:text-black! group-active:text-white! dark:text-neutral-400! group-hover:dark:text-white!"
-              :class="{ 'text-black! dark:text-white!': isRowSelected }"
+              class="truncate text-normal! group-hover:text-contrast! group-active:text-white!"
+              :class="{ 'text-contrast!': isRowSelected }"
             >
               {{ $t(visibilityMeta[(item as KnowledgeBaseAnswerTranslation).visibility].label) }}
             </CommonLabel>

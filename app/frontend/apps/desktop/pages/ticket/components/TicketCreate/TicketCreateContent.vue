@@ -110,7 +110,7 @@ const formSchema = defineFormSchema([
         isLayout: true,
         element: 'h1',
         attrs: {
-          class: 'py-2.5 text-center text-xl font-medium leading-snug text-black dark:text-white',
+          class: 'py-2.5 text-center text-xl font-medium leading-snug text-contrast',
           ariaCurrent: 'page',
         },
         children: '$values.title || $t($defaultTitle)',

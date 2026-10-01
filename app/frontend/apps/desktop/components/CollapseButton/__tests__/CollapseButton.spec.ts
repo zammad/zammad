@@ -190,9 +190,8 @@ describe('CollapseButton', () => {
         'active:bg-blue-800',
         'hover:bg-blue-600',
         'hover:dark:bg-blue-900',
-        'text-black',
+        'text-contrast',
         'dark:bg-gray-200',
-        'dark:text-white',
       ])
     }
     expect(wrapper.getByRole('button')).toHaveClasses([])

@@ -87,7 +87,7 @@ defineExpose({
 
 <template>
   <li
-    class="flex min-h-10 gap-2 overflow-x-clip rounded-lg bg-blue-200 p-2 text-stone-200 dark:bg-gray-700 dark:text-neutral-500"
+    class="flex min-h-10 gap-2 overflow-x-clip rounded-lg bg-blue-200 p-2 text-muted dark:bg-gray-700"
     :class="{ 'items-center': isEditing }"
   >
     <template v-if="isReordering">
@@ -95,7 +95,7 @@ defineExpose({
       <CommonIcon
         v-if="!isTicketItem"
         tabindex="0"
-        class="mt-1.5 shrink-0 text-gray-100 outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+        class="mt-1.5 shrink-0 text-normal outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
         size="xs"
         role="checkbox"
         aria-readonly="true"
@@ -141,8 +141,8 @@ defineExpose({
       :placeholder="$t('Text or ticket identifier')"
       :class="{ 'pointer-events-none': isReordering }"
       :classes="{
-        label: 'dark:text-white text-black',
-        input: 'dark:text-white text-black',
+        label: ' text-contrast',
+        input: ' text-contrast',
       }"
       :disabled="isReordering"
       @submit-edit="editItem"

@@ -22,11 +22,11 @@ defineProps<Props>()
     }"
     :data-type="attribute?.dataType ? attribute.dataType : undefined"
   >
-    <CommonLabel size="small" class="text-stone-200! dark:text-neutral-500!">
+    <CommonLabel size="small" class="text-muted!">
       {{ $t(label) }}
     </CommonLabel>
 
-    <CommonLabel tag="div" size="medium" class="break-word text-gray-100! dark:text-neutral-400!">
+    <CommonLabel tag="div" size="medium" class="break-word text-normal!">
       <slot>{{ body }}</slot>
     </CommonLabel>
   </div>

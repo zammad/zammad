@@ -40,7 +40,7 @@ const isCompleted = computed(() => checklist.value?.completed)
         {{ $t('checked') }}
       </CommonLabel>
     </template>
-    <CommonLabel size="small" class="text-black! dark:text-white!">
+    <CommonLabel size="small" class="text-contrast!">
       {{ $t('%s of %s', completedItemsCount, totalItemsCount) }}
     </CommonLabel>
   </ChecklistBadge>

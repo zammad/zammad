@@ -70,10 +70,10 @@ const buttonVariantClassExtension = computed(() => {
   const hoverClass = 'dark:hover:border-blue-700! hover:border-blue-800!'
 
   if (props.defaultButtonVariant === 'neutral-dark')
-    return `${outlineClass} border! border-neutral-100! bg-neutral-50! hover:bg-white! hover:dark:bg-gray-500! text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400! ${hoverClass}`
+    return `${outlineClass} border! border-neutral-100! bg-neutral-50! hover:bg-white! hover:dark:bg-gray-500! text-normal! dark:border-gray-900! dark:bg-gray-500! ${hoverClass}`
 
   if (props.defaultButtonVariant === 'neutral-light')
-    return `${outlineClass} border! border-neutral-100! bg-blue-100! text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400! ${hoverClass}`
+    return `${outlineClass} border! border-neutral-100! bg-blue-100! text-normal! dark:border-gray-900! dark:bg-stone-500! ${hoverClass}`
 
   return ''
 })
@@ -87,7 +87,7 @@ const singleActionMode = computed(() => {
 const variantClasses = computed(() => {
   if (singleMenuItem.value?.variant === 'secondary') return 'text-blue-800!'
   if (singleMenuItem.value?.variant === 'danger') return 'text-red-500!'
-  return 'text-stone-200! dark:text-neutral-500!'
+  return 'text-muted!'
 })
 
 const router = useRouter()

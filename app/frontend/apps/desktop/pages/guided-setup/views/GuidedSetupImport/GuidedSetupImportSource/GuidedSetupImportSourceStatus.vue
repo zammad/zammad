@@ -203,7 +203,7 @@ const goToLogin = () => {
 
           <CommonLabel
             v-if="item.processed !== undefined && item.total !== undefined"
-            class="text-stone-200 dark:text-neutral-500"
+            class="text-muted!"
           >
             {{ $t('%s of %s', item.processed, item.total) }}
           </CommonLabel>

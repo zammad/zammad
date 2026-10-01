@@ -143,7 +143,7 @@ const { transitions } = useTransitionConfig()
         >
           <div class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500">
             <slot name="header">
-              <div class="flex items-center gap-2 text-xl/snug text-gray-100 dark:text-neutral-400">
+              <div class="flex items-center gap-2 text-xl/snug text-normal">
                 <CommonIcon v-if="headerIcon" size="small" :name="headerIcon" />
                 <h3 :id="`${dialogId}-title`">{{ $t(headerTitle) }}</h3>
               </div>

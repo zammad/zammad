@@ -276,7 +276,7 @@ setupMissingOrDisabledOptionHandling()
         ref="output"
         role="combobox"
         :name="context.node.name"
-        class="relative flex grow items-center gap-2.5 overflow-hidden px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
+        class="relative flex grow items-center gap-2.5 overflow-hidden px-2.5 py-2 text-contrast focus:outline-hidden"
         tabindex="0"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled ? 'true' : undefined"
@@ -313,12 +313,12 @@ setupMissingOrDisabledOptionHandling()
             role="listitem"
           >
             <div
-              class="inline-flex cursor-default items-center gap-1 rounded-sm bg-white px-1.5 py-0.5 text-xs/snug text-black dark:bg-gray-200 dark:text-white formkit-alternative-background:bg-neutral-100 dark:formkit-alternative-background:bg-gray-200"
+              class="inline-flex cursor-default items-center gap-1 rounded-sm bg-white px-1.5 py-0.5 text-xs/snug text-contrast dark:bg-gray-200 formkit-alternative-background:bg-neutral-100 dark:formkit-alternative-background:bg-gray-200"
             >
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"
                 :name="getSelectedOptionIcon(selectedValue)"
-                class="shrink-0 fill-gray-100 dark:fill-neutral-400"
+                class="shrink-0 fill-normal"
                 size="xs"
                 decorative
               />
@@ -359,7 +359,7 @@ setupMissingOrDisabledOptionHandling()
             <CommonIcon
               v-if="getSelectedOptionIcon(currentValue)"
               :name="getSelectedOptionIcon(currentValue)"
-              class="shrink-0 fill-gray-100 dark:fill-neutral-400"
+              class="shrink-0 fill-normal"
               size="tiny"
               decorative
             />
