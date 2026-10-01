@@ -124,7 +124,7 @@ Stories are refined and broken down into task issues before this lifecycle
 starts (`/refine-story` → `/plan-story`). Bugs skip that and enter it directly.
 
 Lifecycle: Understand → Research → Plan → Branch (`/prepare-issue-branch`) →
-Implement → Test → Commit → Review → MR (`/create-mr`) → Cherry-pick
+Implement → Test → Review → Commit → MR (`/create-mr`) → Cherry-pick
 (`/cherry-pick-to-stable`)
 
 See `.dev/agent_docs/development_workflow.md` for the full lifecycle and
@@ -157,7 +157,7 @@ You MUST read the relevant file(s) below before responding when working on that 
 ## CodeGraph
 
 In repositories indexed by CodeGraph (a `.codegraph/` directory exists at the repo
-root), reach for it BEFORE grep/find or reading files when you need to understand
+root), reach for it before grep/find or reading files when you need to understand
 or locate code:
 
 - **MCP tool** (when available): `codegraph_explore` answers most code questions

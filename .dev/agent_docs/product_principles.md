@@ -170,13 +170,13 @@ existing code.
 - **UI-6 (proposed)** — Should new UI be required to compose existing design-system components and
   tokens, with a new primitive treated as a decision rather than a detail?
 - **UI-7 (proposed)** — Should a resumable view offer its own taskbar-behaviour-on-update setting,
-  stored independently per view? Seen once, in
-  `zammad/coordination-desktop-view#785`; unclear whether it generalises.
+  stored independently per view? Seen once, in the story that introduced editing knowledge base
+  answers; unclear whether it generalises.
 - **When is a new setting justified?** `DEFAULT-2` states the preference but not the test. There are
   ~300 settings today, so a usable criterion would have real leverage.
 - **Are bulk or batch variants expected** for single-record actions, or added only on demand?
-- **Where does deferred or scheduled state belong** in the interface? `#785` grew a whole scheduled
-  visibility capability, which suggests there is no settled pattern for it yet.
+- **Where does deferred or scheduled state belong** in the interface? The same story grew a whole
+  scheduled visibility capability, which suggests there is no settled pattern for it yet.
 - **How much of the legacy interface does a new feature have to reach**, and when is parity
   explicitly not required?
 - **How custom file overrides and packages are meant to work in a container**, given `DEPLOY-1`.

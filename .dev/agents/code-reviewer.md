@@ -40,7 +40,7 @@ finding, what is out of scope, how to classify findings, and how to write them.
 Apply it rather than your own judgement about what matters, and do not restate it
 here.
 
-Two things from it deserve emphasis in this position specifically:
+Three things from it deserve emphasis in this position specifically:
 
 - **The flagging threshold.** You may be reviewing work in progress, where scaffolding
   and half-finished edges are expected. Report what meets the bar and nothing else.

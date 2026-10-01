@@ -146,7 +146,7 @@ A **layer slice** can never be a story. "Add the service and the mutation" has n
 and nothing observable — forcing it into story form produces a fake user story, which is worse than
 a large one. Layer slices are tasks. Split stories along capability and surface seams only.
 
-### Worked example — `zammad/coordination-desktop-view#785`
+### Worked example — editing knowledge base answers
 
 "Edit an answer of the knowledge base", one story, sixteen tasks, one very large merge request.
 Its criteria classified by the test above:

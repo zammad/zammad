@@ -36,8 +36,8 @@ is not enough.
 
 ### Skeleton
 
-Minimal concern following `app/models/mention/assets.rb` and
-`app/models/audit_log/assets.rb` (belongs_to user + polymorphic relation):
+Minimal concern following `app/models/mention/assets.rb` (belongs_to user +
+polymorphic relation):
 
 ```ruby
 class MyModel
@@ -67,7 +67,6 @@ end
 ### Reference examples
 
 - `app/models/mention/assets.rb` — user + polymorphic `mentionable`
-- `app/models/audit_log/assets.rb` — optional user + polymorphic `auditable`
 - `app/models/online_notification/assets.rb` — lookup tables + created/updated by
 - `app/models/group/assets.rb` — attribute filtering and per-user authorization
 

@@ -78,8 +78,8 @@ make a review look thorough is not.
 
 Also out of scope in every review:
 
-- Style and formatting a linter owns (RuboCop, ESLint, Prettier), unless it actively obscures
-  meaning or breaks a documented standard.
+- Style and formatting a linter or formatter owns (RuboCop, ESLint, oxlint, Oxfmt, Stylelint),
+  unless it actively obscures meaning or breaks a documented standard.
 - Naming preferences not covered by a convention doc.
 - Speculative future requirements that are not in the issue.
 - Pre-existing code visible in diff context but untouched by the change.

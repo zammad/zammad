@@ -9,7 +9,7 @@ Resolvers are thin wrappers. Business logic lives in `app/services/service/`:
 
 ```ruby
 def resolve(...)
-  Service::SomeAction.new(...).execute
+  Service::SomeAction.execute(...)
 end
 ```
 
