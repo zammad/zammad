@@ -90,6 +90,20 @@ RSpec.describe ExternalCredential, :aggregate_failures, current_user_id: 1, type
       end
     end
 
+    it 'can refresh an existing commercial channel after switching the app configuration to GCC High' do
+      auth = credentials.merge(provider: provider, type: 'XOAUTH2', created_at: 1.hour.ago, expires_in: 3600, refresh_token: 'refresh', access_token: 'expired')
+      channel.update!(options: { auth: auth, inbound: { options: {} }, outbound: { options: {} } })
+      credential.update!(credentials: { client_id: 'government-app', client_secret: 'government-secret', client_tenant: 'government-tenant', cloud: 'us_gov' })
+      request = stub_request(:post, 'https://login.microsoftonline.com/tenant/oauth2/v2.0/token')
+        .with(body: hash_including('client_id' => 'app', 'client_secret' => 'old', 'refresh_token' => 'refresh'))
+        .to_return(body: { access_token: 'renewed', expires_in: 3600 }.to_json)
+
+      channel.reload.refresh_xoauth2!(force: true)
+
+      expect(request).to have_been_requested.once
+      expect(channel.reload.options[:auth]).to include(client_id: 'app', client_secret: 'old', cloud: 'global', access_token: 'renewed')
+    end
+
     it 'treats missing cloud metadata as Global during secret rotation' do
       channel.update!(options: { auth: credentials.except(:cloud) })
 
