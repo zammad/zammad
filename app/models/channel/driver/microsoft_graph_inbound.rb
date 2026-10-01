@@ -107,6 +107,8 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   end
 
   def messages_iterator(keep_on_server, options)
+    verify_move_folders!(options) if @post_import_action == 'move'
+
     if options[:folder_id].present?
       folder_id = options[:folder_id]
       verify_folder!(folder_id, options) if @post_import_action != 'move'
@@ -191,20 +193,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     }.with_indifferent_access
   end
 
-  def setup_connection(options)
-    self.class.validate_post_import_options!(options)
-    @post_import_action = self.class.post_import_action(options)
-    @keep_on_server = @post_import_action == 'mark_read'
-
-    access_token = options[:password]
-    mailbox      = options[:shared_mailbox].presence || options[:user]
-
-    setup_connection_server_log(options)
-
-    @graph = MicrosoftGraph.new(access_token:, mailbox:)
-
-    return if @post_import_action != 'move'
-
+  def verify_move_folders!(options)
     source = verify_folder!(options[:folder_id].presence || 'inbox', options)
     destination = verify_folder!(options[:move_to_folder_id], options)
     return if source[:id] != destination[:id]
@@ -224,6 +213,19 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   rescue MicrosoftGraph::ApiError => e
     Rails.logger.error "Unable to complete #{@post_import_action} for Microsoft Graph message #{message_id} (#{@options[:user]}). #{e.inspect}"
     raise
+  end
+
+  def setup_connection(options)
+    self.class.validate_post_import_options!(options)
+    @post_import_action = self.class.post_import_action(options)
+    @keep_on_server = @post_import_action == 'mark_read'
+
+    access_token = options[:password]
+    mailbox      = options[:shared_mailbox].presence || options[:user]
+
+    setup_connection_server_log(options)
+
+    @graph = MicrosoftGraph.new access_token:, mailbox:
   end
 
   def setup_connection_server_log(options)
