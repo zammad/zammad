@@ -55,11 +55,11 @@ class _webSocketSingleton extends App.Controller
 
     @backend = @Config.get('websocket_backend') || 'websocket'
 
-    # on auth, send new auth data to server
+    # on auth, reconnect so the server picks up the new session cookie
     App.Event.bind(
       'auth'
       (data) =>
-        @auth()
+        @reconnect()
       'ws'
     )
 
@@ -113,6 +113,22 @@ class _webSocketSingleton extends App.Controller
       event: 'login'
       fingerprint: App.Browser.fingerprint()
     @send(data)
+
+  # The server authenticates a connection from the session cookie of its handshake,
+  #   so an already open connection does not notice a login or logout.
+  reconnect: =>
+    return @auth() if @backend is 'ajax'
+    return if !@ws
+    return if @connectionKeepDown
+
+    ws = @ws
+    ws.onopen = ws.onmessage = ws.onclose = ws.onerror = null
+    ws.close()
+
+    @connectionEstablished = false
+    for key in ['websocket-try-reconnect-after-x-sec', 'websocket-ping-check', 'websocket-pong']
+      App.Delay.clear(key, 'ws')
+    @connect()
 
   close: ( params = {} ) =>
     if params['force']

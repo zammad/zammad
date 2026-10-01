@@ -22,6 +22,33 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
 
       expect(page).to have_css('#login .alert')
     end
+
+    # The logout resets the session, so the cookie sent with the initial websocket
+    #   handshake no longer belongs to the session of the second login. The page
+    #   must not be reloaded in between, which would open a new connection anyway.
+    it 'authenticates the websocket connection after logging in again' do
+      admin = User.find_by(login: 'admin@example.com')
+
+      sign_in = lambda do
+        within('#login') do
+          fill_in 'username', with: 'admin@example.com'
+          fill_in 'password', with: 'test'
+
+          click_on('Sign in')
+        end
+
+        expect(page).to have_no_css('#login')
+      end
+
+      sign_in.call
+      wait_for_authenticated_session(user: admin)
+      pre_logout_sessions = Sessions.sessions
+
+      logout
+      sign_in.call
+
+      expect { wait_for_authenticated_session(user: admin, except: pre_logout_sessions) }.not_to raise_error
+    end
   end
 
   context 'with enabled two factor authentication' do
