@@ -1,6 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoauth2
+  def self.credential_identity(credentials)
+    credentials = credentials.with_indifferent_access
+    [credentials[:client_id], credentials[:client_tenant].presence, MicrosoftCloud.new(credentials[:cloud]).name]
+  end
+
   def self.provider_name
     name.demodulize.underscore
   end

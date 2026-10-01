@@ -452,7 +452,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       create(:microsoft_graph_channel)
     end
 
-    let(:external_credential) { create(:external_credential, name: provider, credentials: { client_id: 'id1337', client_secret: 'dummy' }) }
+    let(:external_credential) { create(:external_credential, name: provider, credentials: { client_id: 'id1337', client_tenant: 'xxx', client_secret: 'dummy' }) }
 
     context 'when client_secret was updated' do
       context 'when secret is different' do
@@ -462,7 +462,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
         end
 
         it 'does not update the channel' do
-          external_credential.update!(credentials: { client_id: 'id1337', client_secret: 'dummy-new' })
+          external_credential.update!(credentials: { client_id: 'id1337', client_tenant: 'xxx', client_secret: 'dummy-new' })
 
           expect(channel.reload.options[:auth][:client_secret]).to eq('dummy-other')
         end
@@ -471,7 +471,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       context 'when secret is the same' do
         it 'updates the setting' do
           channel
-          external_credential.update!(credentials: { client_id: 'id1337', client_secret: 'dummy-new' })
+          external_credential.update!(credentials: { client_id: 'id1337', client_tenant: 'xxx', client_secret: 'dummy-new' })
 
           expect(channel.reload.options[:auth][:client_secret]).to eq('dummy-new')
         end
