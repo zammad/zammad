@@ -24,11 +24,12 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
 
   # The ticket zoom may render its sidebar again once the checklist has loaded, which resets it
   #   to the first tab and drops an earlier click. Clicking the active tab would collapse it.
-  def open_checklist_sidebar(checklist)
+  #   Checks for the checklist itself, the factory's checklist name is blank and found anywhere.
+  def open_checklist_sidebar
     wait(30).until do
       click '.tabsSidebar-tab[data-tab=checklist]' if page.has_no_css?('.tabsSidebar-tab.active[data-tab=checklist]', wait: 0)
 
-      page.has_text?(checklist.name.upcase, wait: 1) # checklist name is shown in all-caps
+      page.has_css?('.sidebar[data-tab=checklist] .checklistShow', wait: 1)
     end
   end
 
@@ -78,7 +79,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       #   Refresh (a real fetch, independent of that push) and reopen the tab if that happens.
       refresh if page.has_button?('Add empty checklist', wait: 5)
 
-      open_checklist_sidebar(checklist)
+      open_checklist_sidebar
       await_empty_ajax_queue
     end
 
