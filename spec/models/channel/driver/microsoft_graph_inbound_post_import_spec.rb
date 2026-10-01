@@ -6,7 +6,7 @@ RSpec.describe Channel::Driver::MicrosoftGraphInbound, :aggregate_failures do
   subject(:driver) { described_class.new }
 
   let(:graph)     { instance_double(MicrosoftGraph) }
-  let(:channel)   { build_stubbed(:channel) }
+  let(:channel)   { create(:channel, options: { inbound: { options: options } }) }
   let(:options)   { { user: 'mailbox@example.com', password: 'token', post_import_action: 'move', move_to_folder_id: 'destination' } }
   let(:validator) { instance_double(Channel::Driver::BaseEmailInbound::MessageValidator, fresh_verify_message?: false, too_large?: false) }
 
@@ -77,19 +77,91 @@ RSpec.describe Channel::Driver::MicrosoftGraphInbound, :aggregate_failures do
     expect(graph).not_to have_received(:move_message)
   end
 
-  it 'uses the real Message-ID lookup to retry cleanup of an imported message' do
+  it 'imports a distinct message even when its Message-ID already exists' do
     allow(Channel::Driver::BaseEmailInbound::MessageValidator).to receive(:new).and_call_original
-    allow(graph).to receive_messages(get_message_basic_details: { headers: { 'Message-ID' => '<retry@example.com>' }, size: 100 }, move_message: { id: 'moved' })
+    allow(graph).to receive(:get_message_basic_details).and_return({ headers: { 'Message-ID' => '<reused@example.com>' }, size: 100 })
     ticket = create(:ticket, preferences: { channel_id: channel.id })
-    create(:ticket_article, ticket: ticket, message_id: '<retry@example.com>')
+    article = create(:ticket_article, ticket: ticket, message_id: '<reused@example.com>')
+    article.save_as_raw('different original body and attachment')
 
+    driver.fetch(options, channel)
+
+    expect(graph).to have_received(:get_raw_message).with('message')
+    expect(driver).to have_received(:process).with(channel, 'mail', false)
+  end
+
+  it 'stores a real colliding message and retries its move without a second article' do
+    raw = "From: sender@example.com\r\nTo: mailbox@example.com\r\nSubject: Retry\r\nMessage-ID: <collision@example.com>\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\nDistinct body"
+    ticket = create(:ticket, preferences: { channel_id: channel.id })
+    create(:ticket_article, ticket: ticket, message_id: '<collision@example.com>').save_as_raw('Original content')
+    allow(driver).to receive(:process).and_call_original
+    allow(graph).to receive_messages(get_raw_message: raw, get_message_basic_details: { headers: { 'Message-ID' => '<collision@example.com>' }, size: raw.bytesize })
     allow(graph).to receive(:move_message).and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
-    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+
+    expect { expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError) }
+      .to change { Ticket::Article.where(message_id: '<collision@example.com>').count }.by(1)
     allow(graph).to receive(:move_message).and_return({ id: 'moved' })
 
-    expect(driver.fetch(options, channel)).to include(fetched: 0)
-    expect(driver).not_to have_received(:process)
-    expect(graph).to have_received(:move_message).with('message', 'destination').twice
+    expect { described_class.new.fetch(options, channel.reload) }.not_to change(Ticket::Article, :count)
+    expect(Ticket::Article.where(message_id: '<collision@example.com>').reorder(:id).last.body).to include('Distinct body')
+  end
+
+  it 'imports changed content instead of skipping a pending message with the same ID' do
+    allow(graph).to receive(:move_message).and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    allow(graph).to receive_messages(get_raw_message: 'different body and attachment', move_message: { id: 'moved' })
+
+    driver.fetch(options, channel)
+
+    expect(driver).to have_received(:process).with(channel, 'mail', false)
+    expect(driver).to have_received(:process).with(channel, 'different body and attachment', false)
+  end
+
+  it 'keeps retry receipts independent when two receiving channels share a Message-ID' do
+    second_channel = create(:channel, options: { inbound: { options: options } })
+    allow(graph).to receive(:get_message_basic_details).with('message').and_return({ headers: { 'Message-ID' => '<shared@example.com>' }, size: 100 })
+    allow(graph).to receive(:move_message).and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    expect { driver.fetch(options, second_channel) }.to raise_error(MicrosoftGraph::ApiError)
+    allow(graph).to receive(:move_message).and_return({ id: 'moved' })
+
+    expect(driver.fetch(options, channel.reload)).to include(fetched: 0)
+    expect(driver.fetch(options, second_channel.reload)).to include(fetched: 0)
+    expect(driver).to have_received(:process).with(channel, 'mail', false).once
+    expect(driver).to have_received(:process).with(second_channel, 'mail', false).once
+  end
+
+  it 'retries a failed move after a restart even without a Message-ID' do
+    allow(graph).to receive(:move_message).and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    restarted_driver = described_class.new
+    allow(restarted_driver).to receive(:process)
+    allow(graph).to receive(:move_message).and_return({ id: 'moved' })
+
+    expect(restarted_driver.fetch(options, channel.reload)).to include(fetched: 0)
+    expect(restarted_driver).not_to have_received(:process)
+    expect(channel.reload.preferences[:microsoft_graph_pending_move]).to be_nil
+  end
+
+  it 'stores an unparseable message only once when its move is retried' do
+    allow(driver).to receive(:process).and_call_original
+    allow(driver).to receive(:process_with_timeout).and_raise('unparseable')
+    allow(graph).to receive(:move_message).and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+
+    expect do
+      2.times { expect { driver.fetch(options, channel.reload) }.to raise_error(MicrosoftGraph::ApiError) }
+    end.to change(FailedEmail, :count).by(1)
+  end
+
+  it 'rolls back processing if its retry receipt cannot be saved' do
+    allow(driver).to receive(:process).and_call_original
+    allow(driver).to receive(:process_with_timeout).and_raise('unparseable')
+    allow(channel).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
+
+    expect { expect { driver.fetch(options, channel) }.to raise_error(ActiveRecord::RecordInvalid) }
+      .not_to change(FailedEmail, :count)
+    expect(graph).not_to have_received(:move_message)
+    expect(channel.preferences[:microsoft_graph_pending_move]).to be_nil
   end
 
   it 'does not move fresh verification messages' do

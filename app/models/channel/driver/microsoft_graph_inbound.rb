@@ -76,7 +76,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     raise 'Microsoft Graph email channel is never verified. Thus this method is not implemented.' # rubocop:disable Zammad/DetectTranslatableString
   end
 
-  def fetch_single_message(message_id, count, count_all) # rubocop:disable Metrics/AbcSize
+  def fetch_single_message(message_id, count, count_all)
     message_meta = @graph.get_message_basic_details(message_id)
 
     message_validator = MessageValidator.new(message_meta[:headers], message_meta[:size])
@@ -88,43 +88,22 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
       return MessageResult.new(success: false)
     end
 
+    return fetch_and_move_message(message_id, message_validator, count, count_all) if @post_import_action == 'move'
+
     # ignore already imported
-    if message_validator.already_imported?(@keep_on_server || @post_import_action == 'move', @channel)
+    if message_validator.already_imported?(@keep_on_server, @channel)
       post_import_message(message_id)
       Rails.logger.info "Ignore message #{count}/#{count_all}, because message message id already imported. Graph API Message ID: #{message_id}."
 
       return MessageResult.new(success: false)
     end
 
-    # delete email from server after article was created
-    begin
-      msg = @graph.get_raw_message(message_id)
-    rescue MicrosoftGraph::ApiError => e
-      Rails.logger.error "Unable to fetch email #{count}/#{count_all} from Microsoft Graph server (#{@options[:user]}). Graph API Message ID: #{message_id}. #{e.inspect}"
-      raise e
-    end
-
-    # do not process too big messages, instead download & send postmaster reply
-    too_large_info = message_validator.too_large?
-    if too_large_info
-      if Setting.get('postmaster_send_reject_if_mail_too_large') == true
-        info = "  - download message #{count}/#{count_all} - ignore message because it's too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB) - Graph API Message ID: #{message_id}"
-        Rails.logger.info info
-        after_action = [:notice, "#{info}\n"]
-        process_oversized_mail(@channel, msg)
-      else
-        info = "  - ignore message #{count}/#{count_all} - because message is too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB) - Graph API Message ID: #{message_id}"
-        Rails.logger.info info
-
-        return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
-      end
-    else
-      process(@channel, msg, false)
-    end
+    msg = fetch_raw_message(message_id, count, count_all)
+    result = process_fetched_message(msg, message_id, message_validator, count, count_all)
+    return result if !result.success
 
     post_import_message(message_id)
-
-    MessageResult.new(success: true, after_action: after_action)
+    result
   end
 
   def messages_iterator(keep_on_server, options)
@@ -146,6 +125,71 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   end
 
   private
+
+  def fetch_raw_message(message_id, count, count_all)
+    @graph.get_raw_message(message_id)
+  rescue MicrosoftGraph::ApiError => e
+    Rails.logger.error "Unable to fetch email #{count}/#{count_all} from Microsoft Graph server (#{@options[:user]}). Graph API Message ID: #{message_id}. #{e.inspect}"
+    raise
+  end
+
+  def process_fetched_message(msg, message_id, message_validator, count, count_all)
+    # do not process too big messages, instead download & send postmaster reply
+    too_large_info = message_validator.too_large?
+    if too_large_info
+      if Setting.get('postmaster_send_reject_if_mail_too_large') == true
+        info = "  - download message #{count}/#{count_all} - ignore message because it's too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB) - Graph API Message ID: #{message_id}"
+        Rails.logger.info info
+        after_action = [:notice, "#{info}\n"]
+        process_oversized_mail(@channel, msg)
+      else
+        info = "  - ignore message #{count}/#{count_all} - because message is too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB) - Graph API Message ID: #{message_id}"
+        Rails.logger.info info
+
+        return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
+      end
+    else
+      process(@channel, msg, false)
+    end
+
+    MessageResult.new(success: true, after_action: after_action)
+  end
+
+  def fetch_and_move_message(message_id, message_validator, count, count_all)
+    msg = fetch_raw_message(message_id, count, count_all)
+    receipt = move_receipt(message_id, msg)
+    result = Channel.transaction do
+      if @channel.preferences[:microsoft_graph_pending_move] == receipt
+        MessageResult.new(success: false)
+      else
+        processed = process_fetched_message(msg, message_id, message_validator, count, count_all)
+        if processed.success
+          @channel.preferences[:microsoft_graph_pending_move] = receipt
+          @channel.save!
+        end
+        processed
+      end
+    end
+    return result if result.after_action&.first == :too_large_ignored
+
+    post_import_message(message_id)
+    @channel.preferences.delete(:microsoft_graph_pending_move)
+    @channel.save!
+    result
+  rescue
+    @channel.reload
+    raise
+  end
+
+  def move_receipt(message_id, msg)
+    {
+      message_id:    message_id,
+      sha256:        Digest::SHA256.hexdigest(msg),
+      mailbox:       (@options[:shared_mailbox].presence || @options[:user]).downcase,
+      cloud:         @options[:cloud].presence || 'global',
+      client_tenant: @channel.options.dig(:auth, :client_tenant).presence,
+    }.with_indifferent_access
+  end
 
   def setup_connection(options)
     self.class.validate_post_import_options!(options)
