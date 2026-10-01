@@ -62,6 +62,46 @@ RSpec.describe Sessions::Store::File do
   end
 
   describe '#create' do
+    context 'when the session exists already' do
+      let(:client_id) { '190384' }
+
+      before do
+        instance.create(client_id, { user: {}, meta: {} }.to_json)
+      end
+
+      after do
+        instance.destroy(client_id)
+      end
+
+      it 'replaces the session data' do
+        instance.create(client_id, { user: { 'id' => 1 }, meta: {} }.to_json)
+
+        expect(instance.get(client_id)).to include(user: { 'id' => 1 })
+      end
+
+      it 'leaves only the session file' do
+        instance.create(client_id, { user: { 'id' => 1 }, meta: {} }.to_json)
+
+        expect(Dir.children(instance.send(:safe_session_path, client_id))).to eq(['session'])
+      end
+
+      # The login creates the session again, while broadcasts read every session.
+      it 'keeps the session while it is read at the same time' do
+        lost = 200.times.count do
+          reader = Thread.new { 20.times { instance.get(client_id) } }
+          instance.create(client_id, { user: { 'id' => 1 }, meta: {} }.to_json)
+          reader.join
+
+          next false if instance.session_exists?(client_id)
+
+          instance.create(client_id, { user: {}, meta: {} }.to_json)
+          true
+        end
+
+        expect(lost).to be_zero
+      end
+    end
+
     context 'when client_id contains path traversal' do
       it 'raises ArgumentError' do
         expect { instance.create('../malicious', '{}') }

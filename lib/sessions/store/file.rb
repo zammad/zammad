@@ -14,18 +14,18 @@ class Sessions::Store::File
   end
 
   def create(client_id, content)
-    path         = safe_session_path(client_id)
+    path = safe_session_path(client_id)
+
+    # The login creates the session of a connected client again. Destroying it first would let a
+    #   concurrent #get find the directory without its file, take it as broken and destroy the new one.
+    return if File.exist?(path) && replace_session_file(path, content)
+
     path_tmp     = File.join(@path, 'tmp', File.basename(path))
     session_file = File.join(path_tmp, 'session')
 
     # store session data in session file
     FileUtils.mkpath path_tmp
     File.binwrite(session_file, content)
-
-    # destroy old session if needed
-    if File.exist?(path)
-      destroy(client_id)
-    end
 
     # move to destination directory
     FileUtils.mv(path_tmp, path)
@@ -244,6 +244,19 @@ class Sessions::Store::File
     raise ArgumentError, "Path traversal detected for client_id: #{client_id}" if !path.start_with?("#{@path}/")
 
     path
+  end
+
+  # Renaming over the old file is atomic, readers get either the old or the new session data.
+  #   Returns false if the session was destroyed in the meantime.
+  def replace_session_file(path, content)
+    tmp_file = "#{path}/session-#{SecureRandom.hex(8)}.tmp"
+
+    File.binwrite(tmp_file, content)
+    File.rename(tmp_file, "#{path}/session")
+
+    true
+  rescue Errno::ENOENT
+    false
   end
 
   def write_with_lock(filename, data)
