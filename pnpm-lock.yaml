@@ -370,8 +370,8 @@ importers:
         specifier: ^1.85.0
         version: 1.85.0(oxlint@1.85.0)
       eslint-plugin-security:
-        specifier: ^4.0.1
-        version: 4.0.1
+        specifier: ^4.1.0
+        version: 4.1.0
       eslint-plugin-vue:
         specifier: ^10.11.1
         version: 10.11.1(@typescript-eslint/parser@8.70.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(vue-eslint-parser@10.4.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2))
@@ -3919,8 +3919,8 @@ packages:
     peerDependencies:
       oxlint: ~1.85.0
 
-  eslint-plugin-security@4.0.1:
-    resolution: {integrity: sha512-/lZCkOxPOWaf1jXAqgICrS8St3BMBccIPvhOSUYuV6VCr1o5nFVG998FnTLt6w2Nxb8Uo0nM8fzmnhp+GY/aEg==}
+  eslint-plugin-security@4.1.0:
+    resolution: {integrity: sha512-cB4H72o/w8C0cm4uHJOnXMJz7MYTTuOwhn2X7PMuzZwfwqUoHK/ASHT6WKP+95lFk5Hkf3xfpiXB8a1+cef4rg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   eslint-plugin-vue@10.11.1:
@@ -10400,7 +10400,7 @@ snapshots:
       jsonc-parser: 3.3.1
       oxlint: 1.85.0
 
-  eslint-plugin-security@4.0.1:
+  eslint-plugin-security@4.1.0:
     dependencies:
       safe-regex: 2.1.1
 
