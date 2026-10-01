@@ -129,6 +129,13 @@ describe UserPolicy do
       it { is_expected.to permit_only_actions(%i[show nested_show]) }
     end
 
+    context 'when record is both partial admin and customer' do
+      let(:partial_admin_role) { create(:role).tap { |role| role.permission_grant('admin.channel_email') } }
+      let(:record)             { create(:customer, role_ids: Role.signup_role_ids.push(partial_admin_role.id)) }
+
+      it { is_expected.to permit_only_actions(%i[show nested_show]) }
+    end
+
   end
 
   context 'when user is a phone agent without ticket permissions' do

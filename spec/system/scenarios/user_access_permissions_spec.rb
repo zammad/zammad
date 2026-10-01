@@ -14,6 +14,10 @@ RSpec.describe 'Scenario > User access permissions of an agent', authenticated_a
   let(:customer_ticket) { create(:ticket, group:, customer: customer_user) }
   let(:admin_ticket)    { create(:ticket, group:, customer: admin_user) }
 
+  let(:partial_admin_role) { create(:role).tap { |role| role.permission_grant('admin.channel_email') } }
+  # Eager, because the client loads all roles once at session start and needs this one to evaluate permissions.
+  let!(:partial_admin_user) { create(:customer, role_ids: Role.signup_role_ids.push(partial_admin_role.id)) }
+
   it 'allows editing customer users but never admin users' do
     # User profile of a customer: edit action is offered, saved values show up again.
     visit "#user/profile/#{customer_user.id}"
@@ -43,6 +47,17 @@ RSpec.describe 'Scenario > User access permissions of an agent', authenticated_a
 
     within(:active_content) do
       expect(page).to have_css('.profile-window', text: admin_user.email)
+
+      click '.js-action .icon-arrow-down'
+
+      expect(page).to have_no_css('.js-action [data-type="edit"]')
+    end
+
+    # User profile of a customer with a scoped admin permission: no edit action is offered.
+    visit "#user/profile/#{partial_admin_user.id}"
+
+    within(:active_content) do
+      expect(page).to have_css('.profile-window', text: partial_admin_user.email)
 
       click '.js-action .icon-arrow-down'
 

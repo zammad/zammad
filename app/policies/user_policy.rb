@@ -35,7 +35,7 @@ class UserPolicy < ApplicationPolicy
     return false if !user.permissions?('ticket.agent')
 
     # allow agents to change customers only
-    return false if record.permissions?(['admin.user', 'ticket.agent'])
+    return false if record.permissions?(['admin.*', 'ticket.agent'])
 
     record.permissions?('ticket.customer')
   end
