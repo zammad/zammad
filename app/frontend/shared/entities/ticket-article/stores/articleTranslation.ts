@@ -1,16 +1,19 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { isEqual } from 'lodash-es'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, ref, toRef, watch } from 'vue'
 
 import { useTicketArticleTranslationTargetLocalesLazyQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.api.ts'
 import { useUserCurrentContentTranslationAutoMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts'
+import { useUserCurrentContentTranslationExcludedLanguagesMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.api.ts'
 import { useUserCurrentContentTranslationTargetLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.api.ts'
 import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import type { ArticleTranslationTargetLocale } from './types.ts'
+import type { JsonValue } from 'type-fest'
 
 // What every ticket tab shares: whether the service can translate, which languages it offers, and
 // the one target language of the agent - a personal preference, so changing it anywhere changes it
@@ -25,6 +28,19 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
       !!config.value.content_translation_service &&
       !!config.value.content_translation_ticket_article,
   )
+
+  // Applied at once, saved in the background: the preference is the agent's, so it survives the
+  //   tab and the session. A failed save puts the previous value back, so the same choice can be
+  //   made again; a newer choice made in the meantime stays.
+  const savePreference = (name: string, value: JsonValue, save: () => Promise<unknown>) => {
+    const previous = session.user?.preferences?.[name] ?? null
+    session.setUserPreference(name, value)
+
+    save().catch(() => {
+      if (isEqual(session.user?.preferences?.[name], value))
+        session.setUserPreference(name, previous)
+    })
+  }
 
   // Target locales
 
@@ -93,8 +109,30 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
   const setAutoEnabled = (enabled: boolean) => {
     if (isAutoEnabled.value === enabled) return
 
-    session.setUserPreference('content_translation_auto', enabled)
-    autoMutation.send({ enabled })
+    savePreference('content_translation_auto', enabled, () => autoMutation.send({ enabled }))
+  }
+
+  // "Translate all" skips articles by their detected language, so without detection there is
+  // nothing to exclude.
+  const isExclusionAvailable = computed(
+    () => isAutoAvailable.value && !!config.value.language_detection_article,
+  )
+
+  const excludedLanguages = computed(
+    () => (session.user?.preferences?.content_translation_excluded_languages as string[]) ?? [],
+  )
+
+  const excludedLanguagesMutation = new MutationHandler(
+    useUserCurrentContentTranslationExcludedLanguagesMutation(),
+    { errorNotificationMessage: __('The translation setting could not be saved.') },
+  )
+
+  const setExcludedLanguages = (languages: string[]) => {
+    if (isEqual(excludedLanguages.value, languages)) return
+
+    savePreference('content_translation_excluded_languages', languages, () =>
+      excludedLanguagesMutation.send({ languages }),
+    )
   }
 
   // The answer can change with the settings: ask again, if anyone asked before.
@@ -138,13 +176,13 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
     { errorNotificationMessage: __('The translation language could not be saved.') },
   )
 
-  // Applied at once, saved in the background: the preference is the agent's, so it survives the
-  // tab and the session. The open tabs follow the change on their own.
+  // The open tabs follow the change on their own.
   const setTargetLocale = (locale: string) => {
     if (targetLocale.value === locale) return
 
-    session.setUserPreference('content_translation_target_locale', locale)
-    targetLocaleMutation.send({ targetLocale: locale })
+    savePreference('content_translation_target_locale', locale, () =>
+      targetLocaleMutation.send({ targetLocale: locale }),
+    )
   }
 
   return {
@@ -153,6 +191,9 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
     isAutoAvailable,
     isAutoEnabled,
     setAutoEnabled,
+    isExclusionAvailable,
+    excludedLanguages,
+    setExcludedLanguages,
     targetLocales,
     loadTargetLocales,
     targetLocale,

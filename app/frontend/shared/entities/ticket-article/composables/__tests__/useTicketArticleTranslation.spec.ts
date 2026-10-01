@@ -28,9 +28,11 @@ import { getTicketArticleTranslationUpdatesSubscriptionHandler } from '#shared/e
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
 import type { TicketArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
 import { mockUserCurrentContentTranslationAutoMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.mocks.ts'
+import { mockUserCurrentContentTranslationExcludedLanguagesMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.mocks.ts'
 import { mockUserCurrentContentTranslationTargetLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.mocks.ts'
 import {
   EnumTextDirection,
+  EnumTicketArticleTranslationSkipReason,
   type TicketArticlesQueryVariables,
   type TicketArticleTranslateManyMutation,
 } from '#shared/graphql/types.ts'
@@ -1221,6 +1223,263 @@ describe('useTicketArticleTranslation', () => {
       expect(translation.translationFor(articleId)).toMatchObject({
         content: '<p>Hallo</p>',
         translated: true,
+      })
+    })
+
+    describe('excluded languages', () => {
+      const skippedByPreference = (...ids: string[]) =>
+        mockTicketArticleTranslateManyMutation({
+          ticketArticleTranslateMany: {
+            pendingArticleIds: [],
+            results: ids.map((id) => ({
+              article: { id, translation: null },
+              translated: false,
+              skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+            })),
+          },
+        })
+
+      const exclude = (languages: string[]) => {
+        mockUserCurrentContentTranslationExcludedLanguagesMutation({
+          userCurrentContentTranslationExcludedLanguages: { success: true, errors: null },
+        })
+        useArticleTranslationStore().setExcludedLanguages(languages)
+      }
+
+      it('tells an article skipped by the exclusions from one already in the target language', async () => {
+        const { translation } = setup()
+        mockTicketArticleTranslateManyMutation({
+          ticketArticleTranslateMany: {
+            pendingArticleIds: [],
+            results: [
+              {
+                article: { id: articleId, translation: null },
+                translated: false,
+                skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+              },
+              {
+                article: { id: otherArticleId, translation: null },
+                translated: false,
+                skipReason: null,
+              },
+            ],
+          },
+        })
+
+        await enable()
+
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({
+            status: 'done',
+            translated: false,
+            skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+          }),
+        )
+        expect(translation.translationFor(otherArticleId)).toMatchObject({
+          status: 'done',
+          translated: false,
+          skipReason: null,
+        })
+      })
+
+      it('translates a skipped article once its language is no longer excluded', async () => {
+        const { translation } = setup()
+        skippedByPreference(articleId)
+
+        await enable()
+        exclude(['en'])
+
+        await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(2))
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({
+            skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+          }),
+        )
+
+        deferredAll()
+        exclude([])
+
+        await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(3))
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({ status: 'pending' }),
+        )
+      })
+
+      it('shows a newly excluded article in its original, unless the agent asked for it', async () => {
+        const { translation } = setup()
+        mockTicketArticleTranslateManyMutation({
+          ticketArticleTranslateMany: {
+            pendingArticleIds: [],
+            results: [articleId, otherArticleId].map((id) => ({
+              article: {
+                id,
+                translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+              },
+              translated: true,
+            })),
+          },
+        })
+
+        await enable()
+
+        await waitFor(() =>
+          expect(translation.translationFor(otherArticleId)).toMatchObject({ translated: true }),
+        )
+
+        immediate()
+        await translation.showTranslation(articleId)
+
+        skippedByPreference(articleId, otherArticleId)
+        exclude(['en'])
+
+        await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(2))
+        await waitFor(() =>
+          expect(translation.translationFor(otherArticleId)).toMatchObject({
+            translated: false,
+            skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+          }),
+        )
+        expect(translation.translationFor(articleId)).toMatchObject({
+          content: '<p>Hallo</p>',
+          translated: true,
+        })
+      })
+
+      it('translates a skipped article on request', async () => {
+        const { translation } = setup()
+        skippedByPreference(articleId)
+
+        await enable()
+
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({
+            skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+          }),
+        )
+
+        immediate()
+        await translation.showTranslation(articleId)
+
+        const calls = await waitForTicketArticleTranslateMutationCalls()
+        expect(calls.at(-1)?.variables).toMatchObject({ articleId, force: true })
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({
+            content: '<p>Hallo</p>',
+            translated: true,
+            skipReason: undefined,
+          }),
+        )
+      })
+
+      it('keeps a requested translation whose answer arrives after the exclusions', async () => {
+        const { translation } = setup()
+        skippedByPreference(articleId)
+
+        await enable()
+
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({
+            skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+          }),
+        )
+
+        let release: (() => void) | undefined
+        const { send } = MutationHandler.prototype
+        vi.spyOn(MutationHandler.prototype, 'send').mockImplementation(async function (
+          this: MutationHandler,
+          variables,
+          options,
+        ) {
+          if (variables && 'force' in variables)
+            await new Promise<void>((resolve) => {
+              release = resolve
+            })
+          return send.call(this, variables, options)
+        })
+
+        immediate()
+        const translating = translation.showTranslation(articleId)
+        await waitFor(() => expect(release).toBeDefined())
+
+        exclude(['en'])
+
+        await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(2))
+        await waitFor(() => expect(translation.isTranslating.value).toBe(false))
+        expect(translation.translationFor(articleId)).toEqual(expectPending)
+
+        release!()
+        await translating
+
+        expect(translation.translationFor(articleId)).toMatchObject({
+          status: 'done',
+          content: '<p>Hallo</p>',
+          translated: true,
+        })
+      })
+
+      it('ignores a translation arriving after the article was skipped, until the agent asks for it', async () => {
+        const { translation } = setup()
+        deferredAll()
+
+        const subscription = await enable()
+        await waitFor(() => expect(translation.translationFor(articleId)).toEqual(expectPending))
+
+        skippedByPreference(articleId)
+        exclude(['en'])
+
+        await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(2))
+        await waitFor(() =>
+          expect(translation.translationFor(articleId)).toMatchObject({
+            skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+          }),
+        )
+
+        const arrive = () =>
+          subscription.trigger({
+            ticketArticleTranslationUpdates: {
+              article: {
+                id: articleId,
+                translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+              },
+              translation: { translated: true },
+              error: null,
+            },
+          })
+
+        // Requested by the whole-ticket mode before the language was excluded.
+        await arrive()
+
+        expect(translation.translationFor(articleId)).toMatchObject({
+          status: 'done',
+          translated: false,
+          skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+        })
+
+        deferred()
+        await translation.showTranslation(articleId)
+        await arrive()
+
+        expect(translation.translationFor(articleId)).toMatchObject({
+          status: 'done',
+          content: '<p>Hallo</p>',
+          translated: true,
+        })
+      })
+
+      it('asks nothing again when the session changes without touching the exclusions', async () => {
+        setup()
+        deferredAll()
+
+        await enable()
+        await waitFor(async () => expect(await waitForGenerationCalls()).toHaveLength(1))
+
+        mockUserCurrent({
+          preferences: { locale: 'de-de', content_translation_auto: true, notification: {} },
+          hasContentTranslationAutoAvailable: true,
+        })
+        await waitForNextTick(true)
+
+        expect(await waitForGenerationCalls()).toHaveLength(1)
       })
     })
 

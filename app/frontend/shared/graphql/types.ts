@@ -1763,7 +1763,7 @@ export type TicketArticleTranslateManyMutationVariables = Exact<{
 }>;
 
 
-export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds: Array<string>, pendingBackend: string | null | undefined, results: Array<{ __typename: 'TicketArticleTranslationResult', translated?: boolean | null | undefined, article: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } & { __typename: 'TicketArticle', id?: string, translation?: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, analytics?: { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined }> } | null | undefined };
+export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds: Array<string>, pendingBackend: string | null | undefined, results: Array<{ __typename: 'TicketArticleTranslationResult', translated?: boolean | null | undefined, skipReason?: Types.EnumTicketArticleTranslationSkipReason | null | undefined, article: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } & { __typename: 'TicketArticle', id?: string, translation?: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, analytics?: { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined }> } | null | undefined };
 
 export type TicketArticleTranslationTargetLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2058,6 +2058,13 @@ export type UserCurrentContentTranslationAutoMutationVariables = Exact<{
 
 export type UserCurrentContentTranslationAutoMutation = { userCurrentContentTranslationAuto: { __typename: 'UserCurrentContentTranslationAutoPayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
+export type UserCurrentContentTranslationExcludedLanguagesMutationVariables = Exact<{
+  languages: Array<string> | string;
+}>;
+
+
+export type UserCurrentContentTranslationExcludedLanguagesMutation = { userCurrentContentTranslationExcludedLanguages: { __typename: 'UserCurrentContentTranslationExcludedLanguagesPayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
 export type UserCurrentContentTranslationTargetLocaleMutationVariables = Exact<{
   targetLocale: string;
 }>;
@@ -2298,7 +2305,7 @@ export type LocalesQueryVariables = Exact<{
 }>;
 
 
-export type LocalesQuery = { locales: Array<{ __typename: 'Locale', locale: string, alias: string | null | undefined, name: string, dir: Types.EnumTextDirection, active: boolean }> };
+export type LocalesQuery = { locales: Array<{ __typename: 'Locale', locale: string, alias: string | null | undefined, name: string, dir: Types.EnumTextDirection, active: boolean, language: string }> };
 
 export type MacrosQueryVariables = Exact<{
   selector: Types.TicketMacrosSelectorInput;

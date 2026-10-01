@@ -13,19 +13,11 @@ class Service::User::ContentTranslationAuto < Service::Base
   end
 
   def execute
-    ensure_allowed!
+    # A preference nobody may act on must not be storable either - the interface hides the switch
+    # from the same answer.
+    Service::ContentTranslation::TicketArticle::CheckAutoAllowed.execute(user: current_user)
 
     current_user.preferences['content_translation_auto'] = enabled
     current_user.save!
-  end
-
-  private
-
-  # A preference nobody may act on must not be storable either - the interface hides the switch
-  # from the same answer.
-  def ensure_allowed!
-    return if Service::ContentTranslation::TicketArticle::AutoAllowed.execute(user: current_user)
-
-    raise Exceptions::Forbidden, __('Automatic translation of ticket articles is not available for you.')
   end
 end

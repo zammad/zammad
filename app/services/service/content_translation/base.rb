@@ -6,9 +6,9 @@
 # Callers authorize: the mutation loads the object with its Pundit method, as the ticket summary
 # does. Every object type has its own read rule, so this class validates the request only.
 class Service::ContentTranslation::Base < Service::Base
-  attr_reader :object, :target_locale, :source_language, :force, :background, :persistence_strategy, :regeneration_of
+  attr_reader :object, :target_locale, :source_language, :excluded_languages, :force, :background, :persistence_strategy, :regeneration_of
 
-  Result = Struct.new(:content, :backend, :translated, :fresh, :analytics_run, keyword_init: true)
+  Result = Struct.new(:content, :backend, :translated, :fresh, :analytics_run, :skip_reason, keyword_init: true)
 
   class InvalidTargetLocaleError < StandardError
     def initialize(target_locale)
@@ -31,15 +31,19 @@ class Service::ContentTranslation::Base < Service::Base
   #   stored for it.
   # @param source_language [String, NilClass] language or locale code of the content; the object's
   #   own detection is used when nothing is given.
-  # @param force [Boolean] translate even when the source language matches the target. Unrelated to
-  #   the store: a stored translation is still served, use `regeneration_of` to bypass that.
+  # @param excluded_languages [Array<String>] languages, as Locale.language_of names them, whose
+  #   content stays in the original.
+  # @param force [Boolean] translate even when the source language matches the target or is
+  #   excluded. Unrelated to the store: a stored translation is still served, use `regeneration_of`
+  #   to bypass that.
   # @param background [Boolean, Symbol] :auto follows the backend preference; true always defers
   #   generation, false runs it in place. An explicit `persistence_strategy` overrides it.
   # @param persistence_strategy [Symbol, NilClass] @see Service::AI::Feature#initialize
-  def initialize(object:, target_locale:, source_language: nil, force: false, background: :auto, persistence_strategy: :stored_or_request, regeneration_of: nil)
+  def initialize(object:, target_locale:, source_language: nil, excluded_languages: [], force: false, background: :auto, persistence_strategy: :stored_or_request, regeneration_of: nil)
     @object               = object
     @target_locale        = target_locale
     @source_language      = source_language
+    @excluded_languages   = excluded_languages
     @force                = force
     @background           = background
     @persistence_strategy = persistence_strategy
@@ -59,6 +63,7 @@ class Service::ContentTranslation::Base < Service::Base
 
     return untranslated_result if content.blank?
     return untranslated_result if same_language?
+    return untranslated_result(skip_reason: 'excluded_language') if excluded_language?
 
     translate
   end
@@ -92,33 +97,28 @@ class Service::ContentTranslation::Base < Service::Base
   end
 
   def same_language?
-    return false if force
+    return false if force || content_language.nil?
 
+    content_language == Locale.language_of(locale.locale)
+  end
+
+  # Checked after #same_language?, so content in the target language is never reported as excluded.
+  def excluded_language?
+    return false if force || content_language.nil?
+
+    excluded_languages.include?(content_language)
+  end
+
+  def content_language
     source = source_language.presence || source_language_hint
 
-    return false if source.blank?
-    return false if primary_language(source) != primary_language(locale.locale)
-
-    script(source) == script(locale.locale)
+    Locale.language_of(source) if source.present?
   end
 
-  def primary_language(code)
-    code.to_s.split('-').first
-  end
-
-  # Locales of one language can differ by writing system rather than by region (Chinese, Serbian),
-  # and a source language often names no script at all - CLDR fills in the likely one, so
-  # Simplified content is not taken for Traditional.
-  def script(code)
-    TwitterCldr::Shared::Locale.parse(code).maximize.script
-  rescue
-    nil
-  end
-
-  # Nothing was translated - the content is empty, or it is already in the target language. The
+  # Nothing was translated - the content is empty, already in the target language, or excluded. The
   # caller still gets the content, so it has something to render.
-  def untranslated_result
-    Result.new(content: content.to_s, backend: nil, translated: false, fresh: false, analytics_run: nil)
+  def untranslated_result(skip_reason: nil)
+    Result.new(content: content.to_s, backend: nil, translated: false, fresh: false, analytics_run: nil, skip_reason:)
   end
 
   # A stored translation is the configured backend's own, and serving it does not need that service

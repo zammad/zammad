@@ -200,8 +200,8 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
-  preferences: {},
-  frontend:    false
+  preferences: { authentication: true },
+  frontend:    true
 )
 Setting.create_if_not_exists(
   title:       __('Timezone'),

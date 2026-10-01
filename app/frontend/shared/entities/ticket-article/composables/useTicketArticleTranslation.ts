@@ -27,7 +27,12 @@ export const NO_RESULT_ERROR = __('The translation returned no usable content.')
 
 type TranslationState =
   | { status: 'pending'; backend?: Maybe<string>; origin?: 'server' }
-  | { status: 'done'; translated: boolean; analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>> }
+  | {
+      status: 'done'
+      translated: boolean
+      skipReason?: ArticleTranslationResult['skipReason']
+      analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>>
+    }
   | { status: 'error'; error: string }
 
 const translationKey = (articleId: string, locale: string) => `${articleId}:${locale}`
@@ -120,7 +125,7 @@ export const useTicketArticleTranslation = (
     locale: string,
     update: {
       article?: Maybe<Partial<TicketArticleTranslationFragment>>
-      translation?: Maybe<Pick<ArticleTranslationResult, 'translated'>>
+      translation?: Maybe<Pick<ArticleTranslationResult, 'translated' | 'skipReason'>>
       error?: Maybe<{ message: string }>
       // A sibling of the translation in both payloads, not a part of it.
       analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>>
@@ -151,7 +156,12 @@ export const useTicketArticleTranslation = (
 
     const translated = translation.translated !== false
     if (translated) translationCache.write(articleId, locale, translation)
-    translations.value.set(key, { status: 'done', translated, analytics: update.analytics })
+    translations.value.set(key, {
+      status: 'done',
+      translated,
+      skipReason: update.translation?.skipReason,
+      analytics: update.analytics,
+    })
   }
 
   subscription.onResult(({ data }) => {
@@ -160,6 +170,9 @@ export const useTicketArticleTranslation = (
 
     const update = data?.ticketArticleTranslationUpdates
     if (!update?.article || !locale) return
+
+    const current = translations.value.get(translationKey(update.article.id, locale))
+    if (current?.status === 'done' && current.skipReason) return
 
     applyUpdate(update.article.id, locale, update)
   })
@@ -331,17 +344,23 @@ export const useTicketArticleTranslation = (
       const payload = result?.ticketArticleTranslateMany
       translationCache.batch(() => {
         payload?.results.forEach((entry) => {
-          const { article, translated, analytics } = entry
+          const { article, translated, skipReason, analytics } = entry
           const key = translationKey(article.id, locale)
           const current = translations.value.get(key)
           if (current !== previous.get(key) || regenerations.has(key)) return
           translationCache.writeAvailability(article.id, locale, article.translationAvailable)
 
           if (!generateMissing || translated == null) return
-          // An unforced batch must not replace a translation the agent explicitly requested.
-          if (!translated && current?.status === 'done' && current.translated) return
+          // An explicit request of the agent is forced, so the unforced batch has nothing to say
+          //   about it. A newly excluded language does replace a translation the whole-ticket mode brought.
+          if (!translated && shown.value.has(article.id)) return
+          if (!translated && !skipReason && current?.status === 'done' && current.translated) return
 
-          applyUpdate(article.id, locale, { article, translation: { translated }, analytics })
+          applyUpdate(article.id, locale, {
+            article,
+            translation: { translated, skipReason },
+            analytics,
+          })
         })
       })
       if (payload && !generateMissing) completedLookups.add(selection)
@@ -371,6 +390,8 @@ export const useTicketArticleTranslation = (
         if (
           current === previous.get(key) &&
           (current?.status !== 'done' ||
+            // An article the agent's exclusions left untranslated before, translatable by now.
+            !!current.skipReason ||
             (current.translated && !translationCache.read(articleId, locale)))
         ) {
           translations.value.set(key, {
@@ -399,6 +420,9 @@ export const useTicketArticleTranslation = (
 
   const requestSelections = () => options.loadedArticleSelections.value.forEach(requestSelection)
 
+  // A key rather than the list: the store hands out a new empty list whenever the session changes.
+  const excludedLanguagesKey = computed(() => store.excludedLanguages.join(','))
+
   watch(
     [
       ticketId,
@@ -407,6 +431,7 @@ export const useTicketArticleTranslation = (
       allArticlesEnabled,
       options.loadedArticleSelections,
       isActive,
+      excludedLanguagesKey,
     ],
     (
       [ticket, locale, serviceAvailable, enabled],
@@ -489,7 +514,7 @@ export const useTicketArticleTranslation = (
   }
 
   // A failed one leaves the original on screen, and so does a result for an article already in the
-  // target language: neither is a translation the article could show.
+  // target language or in an excluded one: neither is a translation the article could show.
   const isTranslation = (translation?: ArticleTranslation) => {
     if (!translation || translation.status === 'error') return false
 

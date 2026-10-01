@@ -2,6 +2,7 @@
 
 import type {
   AiAnalyticsMetadata,
+  EnumTicketArticleTranslationSkipReason,
   TicketArticleTranslationTargetLocalesQuery,
 } from '#shared/graphql/types.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
@@ -14,8 +15,11 @@ export type ArticleTranslationTargetLocale =
 export interface ArticleTranslationResult {
   content?: Maybe<string>
   backend?: Maybe<string>
-  // False when the article is already in the target language, so nothing was translated.
+  // False when nothing was translated: the article is already in the target language, or in one
+  // the agent excluded.
   translated?: Maybe<boolean>
+  // Why the whole-ticket translation left it untranslated, when that was the agent's choice.
+  skipReason?: Maybe<EnumTicketArticleTranslationSkipReason>
   // The analytics run the translation came from, which a rating attaches to - recorded by every
   // translation service. Absent for a translation stored before that, which offers no feedback control.
   analytics?: Maybe<DeepPartial<AiAnalyticsMetadata>>

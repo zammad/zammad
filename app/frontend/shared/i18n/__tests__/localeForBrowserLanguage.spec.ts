@@ -23,6 +23,7 @@ describe('localeFinder', () => {
       dir: EnumTextDirection.Ltr,
       locale: 'de-de',
       name: 'Deutsch',
+      language: 'de',
     },
     {
       __typename: 'Locale' as const,
@@ -31,6 +32,7 @@ describe('localeFinder', () => {
       dir: EnumTextDirection.Ltr,
       locale: 'es-es',
       name: 'Español',
+      language: 'es',
     },
     {
       __typename: 'Locale' as const,
@@ -39,6 +41,7 @@ describe('localeFinder', () => {
       dir: EnumTextDirection.Ltr,
       locale: 'es-co',
       name: 'Español (Colombia)',
+      language: 'es',
     },
   ]
 
@@ -61,6 +64,7 @@ describe('localeFinder', () => {
       dir: EnumTextDirection.Ltr,
       locale: 'en-us',
       name: 'English (United States)',
+      language: 'en',
     })
   })
 })

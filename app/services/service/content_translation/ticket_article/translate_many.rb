@@ -20,7 +20,7 @@ class Service::ContentTranslation::TicketArticle::TranslateMany < Service::Base
     Service::CheckFeatureEnabled.execute(name: 'content_translation_ticket_article')
     return lookup if !generate_missing
 
-    ensure_allowed!
+    Service::ContentTranslation::TicketArticle::CheckAutoAllowed.execute(user: current_user)
 
     articles.map do |article|
       next { article: } if !translatable?(article)
@@ -45,18 +45,21 @@ class Service::ContentTranslation::TicketArticle::TranslateMany < Service::Base
     article.sender.name != 'System' || article.type.name == 'note'
   end
 
-  def ensure_allowed!
-    return if Service::ContentTranslation::TicketArticle::AutoAllowed.execute(user: current_user)
-
-    raise Exceptions::Forbidden, __('Automatic translation of ticket articles is not available for you.')
+  # Articles created while detection was on keep their language, so the setting decides.
+  def excluded_languages
+    @excluded_languages ||= if Setting.get('language_detection_article').blank?
+                              []
+                            else
+                              current_user.preferences.fetch('content_translation_excluded_languages', [])
+                            end
   end
 
-  # Unforced, so an article already in the target language is not sent to the service: the agent
-  # asked for the ticket, not for this one article.
+  # Unforced, so an article already in the target language or in an excluded one is not sent to the
+  # service: the agent asked for the ticket, not for this one article.
   #
   # No batch lookup of the stored translations in front of this loop: a stored translation is
   # served with its content, which such a lookup would have to read a second time anyway.
   def translate(article)
-    Service::ContentTranslation::TicketArticle.execute(object: article, target_locale:, force: false, background: true)
+    Service::ContentTranslation::TicketArticle.execute(object: article, target_locale:, excluded_languages:, force: false, background: true)
   end
 end

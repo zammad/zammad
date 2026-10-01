@@ -59,9 +59,10 @@ module Gql::Mutations
       translation = entry[:translation]
 
       {
-        article:    entry[:article],
-        translated: translation&.translated,
-        analytics:  translation && {
+        article:     entry[:article],
+        translated:  translation&.translated,
+        skip_reason: translation&.skip_reason,
+        analytics:   translation && {
           run:   translation.analytics_run,
           usage: translation.analytics_run&.usage_by(context.current_user),
         },

@@ -42,6 +42,24 @@ sync locales from config/locales.yml
     Setting.get('locale_default') || 'en-us'
   end
 
+  #  The language of a locale or of a detected article language, without region. Chinese and
+  #  Serbian locales differ by writing system instead, so these keep it (the likely one if the
+  #  code names none, so Simplified content is not taken for Traditional).
+  #
+  #  @example
+  #    Locale.language_of('en-gb')      # => 'en'
+  #    Locale.language_of('zh-TW')      # => 'zh-Hant'
+  #    Locale.language_of('sr-latn-rs') # => 'sr-Latn'
+  def self.language_of(code)
+    language = code.split('-').first
+    # Language detection tells Bokmål and Nynorsk apart, the only Norwegian locale is no-no.
+    language = 'no' if %w[nb nn].include?(language)
+
+    return language if %w[zh sr].exclude?(language)
+
+    "#{language}-#{TwitterCldr::Shared::Locale.parse(code).maximize.script}"
+  end
+
   private_class_method def self.to_database(data)
     ActiveRecord::Base.transaction do
       data.each do |locale|

@@ -1690,7 +1690,7 @@ msgid "All groups will be considered for dispatching tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:165
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:102
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
 msgid "All notifications will be deleted. This action cannot be undone."
 msgstr ""
@@ -2507,7 +2507,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:247
 msgid "Author name and article creation date"
 msgstr ""
 
@@ -2584,8 +2584,9 @@ msgstr ""
 msgid "Automatic reminders"
 msgstr ""
 
-#: app/services/service/content_translation/ticket_article/translate_many.rb:49
+#: app/services/service/content_translation/ticket_article/translate_many.rb:70
 #: app/services/service/user/content_translation_auto.rb:27
+#: app/services/service/user/content_translation_excluded_languages.rb:27
 msgid "Automatic translation of ticket articles is not available for you."
 msgstr ""
 
@@ -3058,7 +3059,7 @@ msgid "Call from %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:118
-#: app/frontend/apps/desktop/entities/cti/composables/useCtiCallNotification.ts:53
+#: app/frontend/apps/desktop/entities/cti/composables/useCtiCallNotification.ts:58
 msgid "Call from %s for %s"
 msgstr ""
 
@@ -3699,7 +3700,7 @@ msgid "Clear all filters"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:105
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:110
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 msgid "Clear all notifications"
 msgstr ""
@@ -4233,6 +4234,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:107
+msgid "Content written in any of these languages is shown in its original form instead of being automatically translated."
 msgstr ""
 
 #: app/assets/javascripts/app/views/system_report.jst.eco:11
@@ -5997,7 +6002,7 @@ msgid "Delete User"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:111
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:67
 msgid "Delete all"
 msgstr ""
@@ -6288,7 +6293,7 @@ msgstr ""
 msgid "Did you know that system translations can be contributed and shared with the community on our public platform %l? It sports a very convenient user interface based on Weblate, give it a try!"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:40
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:76
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
 msgid "Did you know?"
 msgstr ""
@@ -7873,7 +7878,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:128
 msgid "Failed to translate article content."
 msgstr ""
 
@@ -10302,9 +10307,17 @@ msgstr ""
 msgid "Language Detection Service"
 msgstr ""
 
+#: app/services/service/user/content_translation_excluded_languages.rb:34
+msgid "Language could not be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:115
 #: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Languages"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:105
+msgid "Languages you understand"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
@@ -10829,7 +10842,7 @@ msgstr ""
 msgid "MAC address (unique identifier of the report)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:112
 msgid "Machine-translated, some formatting may be lost."
 msgstr ""
 
@@ -12732,6 +12745,10 @@ msgstr ""
 msgid "Not reached"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:356
+msgid "Not translated due to your preferences."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:58
 #: app/assets/javascripts/app/models/ai_agent.coffee:9
@@ -13994,7 +14011,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:612
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:320
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:334
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -15101,7 +15118,7 @@ msgstr ""
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr ""
 
-#: app/controllers/reports_controller.rb:125
+#: app/controllers/reports_controller.rb:124
 msgid "Required parameter 'profile' is missing."
 msgstr ""
 
@@ -16081,7 +16098,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:288
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr ""
@@ -16092,7 +16109,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:288
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr ""
@@ -17875,7 +17892,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:182
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:355
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:380
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -18835,7 +18852,7 @@ msgstr ""
 msgid "The report could not be generated"
 msgstr ""
 
-#: app/controllers/reports_controller.rb:139
+#: app/controllers/reports_controller.rb:138
 msgid "The reporting profile could not be found."
 msgstr ""
 
@@ -19247,7 +19264,7 @@ msgstr ""
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:138
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:162
 msgid "The translation language could not be saved."
 msgstr ""
 
@@ -19272,7 +19289,7 @@ msgstr ""
 msgid "The translation service refused the configured credentials."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:90
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:92
 msgid "The translation setting could not be saved."
 msgstr ""
 
@@ -20579,7 +20596,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee:14
 #: app/assets/javascripts/app/models/trigger.coffee:13
 #: db/seeds/settings.rb:207
-#: lib/excel_sheet.rb:116
+#: lib/excel_sheet.rb:138
 msgid "Timezone"
 msgstr ""
 
@@ -20840,7 +20857,7 @@ msgstr ""
 msgid "Translate ticket articles into another language."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:103
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:111
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
@@ -20860,7 +20877,7 @@ msgstr ""
 msgid "Translation Source"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:272
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:280
 msgid "Translation in progress…"
 msgstr ""
 
@@ -21274,7 +21291,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:202
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:214
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -21807,6 +21824,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:555
 msgid "User information could not be retrieved, please check your bind user permissions."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:75
+msgid "User interface language"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:37
@@ -22633,7 +22654,7 @@ msgstr ""
 msgid "You can generate a personal access token for each application you use that needs access to the Zammad API."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:42
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:64
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:159
 msgid "You can help translating Zammad."
 msgstr ""
@@ -22963,10 +22984,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feedback_widget.coffee:53
 msgid "Your feedback could not be recorded, please try again later."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:32
-msgid "Your language"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:143

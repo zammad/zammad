@@ -27,6 +27,7 @@ export const TicketArticleTranslateManyDocument = gql`
         ...ticketArticleTranslation @include(if: $generateMissing)
       }
       translated @include(if: $generateMissing)
+      skipReason @include(if: $generateMissing)
       analytics @include(if: $generateMissing) {
         run {
           id

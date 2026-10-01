@@ -32,6 +32,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
               translation(targetLocale: $targetLocale) @include(if: $includeContent) { content backend translated }
             }
             translated
+            skipReason
             analytics @include(if: $includeContent) {
               run {
                 id
@@ -95,19 +96,38 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
           {
             'article'    => { 'id' => gql.id(articles.first), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true } },
             'translated' => true,
+            'skipReason' => nil,
             'analytics'  => { 'run' => nil, 'usage' => nil },
           },
           {
             'article'    => { 'id' => gql.id(skipped_article), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Manuell</p>', 'backend' => 'ai', 'translated' => true } },
             'translated' => false,
+            'skipReason' => nil,
             'analytics'  => { 'run' => nil, 'usage' => nil },
           },
           {
             'article'    => { 'id' => gql.id(articles.last), 'translationAvailable' => false, 'translation' => nil },
             'translated' => nil,
+            'skipReason' => nil,
             'analytics'  => nil,
           }
         )
+      end
+    end
+
+    context 'with an article in a language the agent reads in the original' do
+      let(:agent) { create(:agent, groups: [ticket.group], preferences: { content_translation_excluded_languages: %w[en] }) }
+
+      before do
+        Setting.set('language_detection_article', 'cld')
+        articles.first.update!(detected_language: 'en')
+      end
+
+      it 'returns it untranslated with the reason' do
+        gql.execute(query, variables:)
+
+        expect(gql.result.data[:pendingArticleIds]).to eq([gql.id(articles.last)])
+        expect(gql.result.data[:results].first).to include('translated' => false, 'skipReason' => 'excluded_language')
       end
     end
 
@@ -153,8 +173,8 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
       expect(gql.result.data[:pendingArticleIds]).to be_empty
       expect(gql.result.data[:pendingBackend]).to be_nil
       expect(gql.result.data[:results]).to contain_exactly(
-        { 'article' => { 'id' => gql.id(articles.first), 'translationAvailable' => true }, 'translated' => nil },
-        { 'article' => { 'id' => gql.id(articles.last), 'translationAvailable' => false }, 'translated' => nil }
+        { 'article' => { 'id' => gql.id(articles.first), 'translationAvailable' => true }, 'translated' => nil, 'skipReason' => nil },
+        { 'article' => { 'id' => gql.id(articles.last), 'translationAvailable' => false }, 'translated' => nil, 'skipReason' => nil }
       )
       expect(queries.size).to eq(1)
       expect(queries.first).not_to include('"ai_stored_results"."content"')

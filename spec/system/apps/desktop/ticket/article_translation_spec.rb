@@ -7,10 +7,11 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
   let(:auto)     { false }
   # German as the translation target, not as the interface language: every string this spec clicks
   # and reads is the English source, which a loaded German catalog would replace.
-  let(:agent)    { create(:agent, groups: [group], preferences: { content_translation_target_locale: 'de-de', content_translation_auto: auto }) }
-  let(:ticket)   { create(:ticket, group:) }
-  let(:locale)   { Locale.find_by(locale: 'de-de') }
-  let(:articles) { [create(:ticket_article, ticket:, body: 'Hello world.', content_type: 'text/plain'), create(:ticket_article, ticket:, body: 'How are you?', content_type: 'text/plain')] }
+  let(:agent)    { create(:agent, groups: [group], preferences: { content_translation_target_locale: 'de-de', content_translation_auto: auto, content_translation_excluded_languages: excluded_languages }) }
+  let(:excluded_languages) { [] }
+  let(:ticket)             { create(:ticket, group:) }
+  let(:locale)             { Locale.find_by(locale: 'de-de') }
+  let(:articles)           { [create(:ticket_article, ticket:, body: 'Hello world.', content_type: 'text/plain'), create(:ticket_article, ticket:, body: 'How are you?', content_type: 'text/plain')] }
 
   # Stored translations, so the round trip does not depend on a translation service answering.
   def store_translations
@@ -34,6 +35,7 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     setup_ai_provider
     setup_content_translation
     Setting.set('content_translation_ticket_article_auto', true)
+    Setting.set('language_detection_article', 'cld') if excluded_languages.present?
 
     store_translations
 
@@ -112,6 +114,34 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
       open_translation_menu('All articles translated to Deutsch - German')
 
       expect(find('[data-test-id="translate-all-articles"]')).to match_selector('[aria-checked="true"]')
+    end
+  end
+
+  context 'with a language the agent reads in the original' do
+    let(:auto)               { true }
+    let(:excluded_languages) { %w[en] }
+
+    # Detection runs on create and would replace the language the example needs.
+    let(:articles) do
+      { 'en' => 'Hello world.', 'fr' => 'How are you?' }.map do |language, body|
+        create(:ticket_article, ticket:, body:, content_type: 'text/plain').tap do |article|
+          article.update!(detected_language: language)
+        end
+      end
+    end
+
+    it 'keeps that article in its original, and translates it on request' do
+      expect(page).to have_text('Wie geht es dir?')
+
+      find("#article-#{articles.first.id}").hover
+      within "#article-#{articles.first.id}" do
+        expect(page).to have_text('Hello world.').and(have_text('Not translated due to your preferences.'))
+
+        click_on 'Translate article'
+
+        expect(page).to have_text('Hallo Welt.')
+        expect(page).to have_no_text('Not translated due to your preferences.')
+      end
     end
   end
 

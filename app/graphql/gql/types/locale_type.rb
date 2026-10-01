@@ -11,10 +11,15 @@ module Gql::Types
     field :name, String, null: false
     field :dir, Gql::Types::Enum::TextDirectionType, null: false
     field :active, Boolean, null: false
+    field :language, String, null: false, description: 'The language of the locale without region, as Locale.language_of names it, e.g. "en" or "zh-Hant"'
 
     # Custom resolver is needed as there is a conflict with a built-in 'alias' method.
     def resolve_alias
       @object.alias
+    end
+
+    def language
+      Locale.language_of(@object.locale)
     end
   end
 end

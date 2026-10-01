@@ -205,6 +205,21 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
           .to include('content' => '<p>Hallo Welt.</p>', 'backend' => 'libre_translate', 'translated' => true)
         expect(gql.result.data[:analytics][:run]).to include('id' => be_present)
       end
+
+      context 'with an article in a language the agent reads in the original' do
+        let(:agent) { create(:agent, groups: [ticket.group], preferences: { content_translation_excluded_languages: %w[en] }) }
+
+        before do
+          Setting.set('language_detection_article', 'cld')
+          article.update!(detected_language: 'en')
+        end
+
+        it 'still translates it on request' do
+          gql.execute(query, variables: variables.merge(force: true))
+
+          expect(gql.result.data[:translation]).to include('translated' => true)
+        end
+      end
     end
 
     # LibreTranslate answers in place rather than through the subscription, so the mutation is where

@@ -5,5 +5,6 @@ query locales($onlyActive: Boolean = false) {
     name
     dir
     active
+    language
   }
 }

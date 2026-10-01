@@ -617,6 +617,45 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     end
   end
 
+  context 'when the detected language is a Norwegian written standard' do
+    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'nb') }
+
+    it 'skips a request for the Norwegian locale' do
+      expect(translate(target_locale: 'no-no'))
+        .to have_attributes(translated: false, skip_reason: nil)
+    end
+  end
+
+  context 'with excluded languages' do
+    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'en') }
+
+    it 'returns the original content with the reason' do
+      expect(translate(excluded_languages: %w[en]))
+        .to have_attributes(content: body, translated: false, backend: nil, skip_reason: 'excluded_language')
+    end
+
+    it 'asks no provider' do
+      translate(excluded_languages: %w[en])
+
+      expect(provider_calls).to be_empty
+    end
+
+    it 'translates a language that is not excluded' do
+      expect(translate(excluded_languages: %w[fr]))
+        .to have_attributes(translated: true, skip_reason: nil)
+    end
+
+    it 'translates when forced' do
+      expect(translate(excluded_languages: %w[en], force: true))
+        .to have_attributes(translated: true)
+    end
+
+    it 'gives no reason for content that is already in the target language' do
+      expect(translate(excluded_languages: %w[de], source_language: 'de'))
+        .to have_attributes(translated: false, skip_reason: nil)
+    end
+  end
+
   context 'with a given source language' do
     it 'skips without the article being detected' do
       expect(translate(source_language: 'de'))

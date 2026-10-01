@@ -6,6 +6,7 @@ module Gql::Types
 
     field :article, Gql::Types::Ticket::ArticleType, null: false, description: 'The article the translation belongs to'
     field :translated, Boolean, null: true, description: 'True when translated, false when skipped, and null without a completed translation request'
+    field :skip_reason, Gql::Types::Enum::Ticket::Article::TranslationSkipReasonType, null: true, description: 'Why the article was skipped, if it is one of the listed reasons'
     field :analytics, Gql::Types::AI::Analytics::MetadataType, null: true, description: 'Analytics metadata of the translation, if one is available'
   end
 end

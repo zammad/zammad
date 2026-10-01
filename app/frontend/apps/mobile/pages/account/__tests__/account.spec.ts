@@ -19,6 +19,7 @@ const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {
     __typename: 'Locale',
     locale: 'de-de',
+    language: 'de',
     name: 'Deutsch',
     dir: EnumTextDirection.Ltr,
     alias: 'de',
@@ -27,6 +28,7 @@ const locales: Record<string, LocalesQuery['locales'][number]> = {
   ar: {
     __typename: 'Locale',
     locale: 'ar',
+    language: 'ar',
     name: 'Arabic',
     dir: EnumTextDirection.Rtl,
     alias: null,

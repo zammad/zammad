@@ -13,6 +13,7 @@ export const LocalesDocument = gql`
     name
     dir
     active
+    language
   }
 }
     `;

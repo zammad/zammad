@@ -30,6 +30,7 @@ const localeForBrowserLanguage = (
     name: 'English (United States)',
     dir: EnumTextDirection.Ltr,
     active: true,
+    language: 'en',
   }
 }
 

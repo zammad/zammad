@@ -16,6 +16,7 @@ const mockQueryResult = (): LocalesQuery => {
       {
         __typename: 'Locale',
         locale: 'de-de',
+        language: 'de',
         name: 'Deutsch',
         dir: EnumTextDirection.Ltr,
         alias: 'de',
@@ -24,6 +25,7 @@ const mockQueryResult = (): LocalesQuery => {
       {
         __typename: 'Locale',
         locale: 'ar',
+        language: 'ar',
         name: 'Arabic',
         dir: EnumTextDirection.Rtl,
         alias: null,

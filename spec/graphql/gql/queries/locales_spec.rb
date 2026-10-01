@@ -15,6 +15,7 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
             name
             dir
             active
+            language
           }
         }
       QUERY
@@ -23,11 +24,12 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
     let(:variables) { { onlyActive: false } }
     let(:target_locale) do
       {
-        'locale' => 'de-de',
-        'alias'  => 'de',
-        'name'   => 'Deutsch - German',
-        'dir'    => 'ltr',
-        'active' => active,
+        'locale'   => 'de-de',
+        'alias'    => 'de',
+        'name'     => 'Deutsch - German',
+        'dir'      => 'ltr',
+        'active'   => active,
+        'language' => 'de',
       }
     end
 

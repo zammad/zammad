@@ -1,0 +1,8 @@
+mutation userCurrentContentTranslationExcludedLanguages($languages: [String!]!) {
+  userCurrentContentTranslationExcludedLanguages(languages: $languages) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

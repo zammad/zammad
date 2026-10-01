@@ -18,6 +18,7 @@ import {
 import type { ArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
 import { AiAnalyticsUsageDocument } from '#shared/graphql/mutations/aiAnalyticsUsage.api.ts'
 import { waitForAiAnalyticsUsageMutationCalls } from '#shared/graphql/mutations/aiAnalyticsUsage.mocks.ts'
+import { EnumTicketArticleTranslationSkipReason } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 
@@ -624,6 +625,38 @@ describe('ArticleBubbleBody', () => {
       expect(wrapper.getByTestId('article-content')).toBeVisible()
       expect(wrapper.getByText('Hello')).toBeInTheDocument()
       expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+    })
+
+    describe('skipped by the whole-ticket translation', () => {
+      it('explains an article left in its original by the agent preferences', () => {
+        mockTranslation({
+          status: 'done',
+          translated: false,
+          skipReason: EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
+        })
+
+        const article = createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' })
+
+        const wrapper = renderBody(article, false)
+
+        expect(wrapper.getByText('Hello')).toBeInTheDocument()
+        expect(wrapper.getByTestId('article-translation-skipped')).toHaveTextContent(
+          'Not translated due to your preferences.',
+        )
+        expect(wrapper.queryByTestId('article-translation-attribution')).not.toBeInTheDocument()
+      })
+
+      it('explains nothing for an article already in the target language', () => {
+        mockTranslation({ status: 'done', translated: false, skipReason: null })
+
+        const wrapper = renderBody(
+          createDummyArticle({ bodyWithUrls: 'Hello', contentType: 'text/plain' }),
+          false,
+        )
+
+        expect(wrapper.getByText('Hello')).toBeInTheDocument()
+        expect(wrapper.queryByTestId('article-translation-skipped')).not.toBeInTheDocument()
+      })
     })
 
     it('shows the original when the original is asked for', () => {

@@ -84,6 +84,76 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
     end
   end
 
+  context 'with languages the agent reads in the original' do
+    let(:agent)              { create(:agent, groups: [ticket.group], preferences: { content_translation_excluded_languages: excluded_languages }) }
+    let(:excluded_languages) { %w[en zh-Hant] }
+    let(:articles)           { [article_in('en'), article_in('fr')] }
+
+    # Detection runs on create and would replace the language the example needs.
+    def article_in(language)
+      create(:ticket_article, ticket:, body: 'Hello world.', content_type: 'text/plain').tap do |article|
+        article.update!(detected_language: language)
+      end
+    end
+
+    before { Setting.set('language_detection_article', 'cld') }
+
+    it 'skips the article in an excluded language and translates the others', :aggregate_failures do
+      expect { translate }.to have_enqueued_job(ContentTranslationJob).once
+      expect(translate).to match(
+        [
+          { article: articles.first, translation: have_attributes(content: 'Hello world.', translated: false, skip_reason: 'excluded_language') },
+          { article: articles.last, translation: nil },
+        ]
+      )
+    end
+
+    it 'does not serve a stored translation of an excluded article' do
+      Service::ContentTranslation::TicketArticle
+        .execute(object: articles.first, target_locale:, background: false)
+
+      expect(translate.first).to include(translation: have_attributes(translated: false, skip_reason: 'excluded_language'))
+    end
+
+    context 'with Chinese' do
+      let(:articles) { [article_in('zh-TW'), article_in('zh')] }
+
+      it 'skips only the excluded writing system' do
+        expect(translate).to match(
+          [
+            { article: articles.first, translation: have_attributes(translated: false, skip_reason: 'excluded_language') },
+            { article: articles.last, translation: nil },
+          ]
+        )
+      end
+    end
+
+    context 'when the target language is excluded too' do
+      let(:excluded_languages) { %w[de] }
+      let(:articles)           { [article_in('de')] }
+
+      it 'skips the article without a reason, as it is already in the target language' do
+        expect(translate).to match([{ article: articles.first, translation: have_attributes(translated: false, skip_reason: nil) }])
+      end
+    end
+
+    context 'without excluded languages' do
+      let(:excluded_languages) { [] }
+
+      it 'translates every article' do
+        expect(translate).to eq(articles.map { |article| { article:, translation: nil } })
+      end
+    end
+
+    context 'when language detection is switched off' do
+      before { Setting.set('language_detection_article', '') }
+
+      it 'translates every article' do
+        expect(translate).to eq(articles.map { |article| { article:, translation: nil } })
+      end
+    end
+  end
+
   context 'with system and delivery notices' do
     let(:articles) do
       [

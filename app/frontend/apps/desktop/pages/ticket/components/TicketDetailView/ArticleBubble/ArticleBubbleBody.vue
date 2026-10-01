@@ -14,6 +14,7 @@ import {
   NO_TARGET_LOCALE_ERROR,
 } from '#shared/entities/ticket-article/composables/useTicketArticleTranslation.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
+import { EnumTicketArticleTranslationSkipReason } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
@@ -50,6 +51,13 @@ const translation = computed(() => articleTranslation.translationFor(props.artic
 // A finished translation; an empty article gets none and keeps its original.
 const displayedTranslation = computed(() =>
   translation.value?.status === 'done' && translation.value.translated ? translation.value : null,
+)
+
+// Only the agent's own exclusions are explained: an article already in the target language is not.
+const isSkippedByPreference = computed(
+  () =>
+    translation.value?.status === 'done' &&
+    translation.value.skipReason === EnumTicketArticleTranslationSkipReason.ExcludedLanguage,
 )
 
 const isAiTranslation = computed(() => displayedTranslation.value?.backend === 'ai')
@@ -272,8 +280,14 @@ onMounted(() => {
       {{ showsTranslationProgress ? $t('Translation in progress…') : '' }}
     </span>
     <div
-      v-if="hasShowMore || displayedTranslation || showsTranslationProgress || isTranslationFailed"
-      class="flex flex-wrap items-center gap-1 py-1 print:hidden"
+      v-if="
+        hasShowMore ||
+        displayedTranslation ||
+        showsTranslationProgress ||
+        isTranslationFailed ||
+        isSkippedByPreference
+      "
+      class="flex min-h-9 flex-wrap items-center gap-1 py-1 print:hidden"
       data-test-id="article-body-toolbar"
     >
       <CommonLink
@@ -329,6 +343,17 @@ onMounted(() => {
         data-test-id="article-translation-attribution"
       >
         {{ $t(translationAttribution) }}
+      </CommonLabel>
+
+      <CommonLabel
+        v-else-if="isSkippedByPreference"
+        class="ms-auto text-stone-200! dark:text-neutral-500!"
+        size="xs"
+        tag="p"
+        prefix-icon="translate"
+        data-test-id="article-translation-skipped"
+      >
+        {{ $t('Not translated due to your preferences.') }}
       </CommonLabel>
 
       <!-- A failed translation has nothing to rate; asking again is its way to recover. -->

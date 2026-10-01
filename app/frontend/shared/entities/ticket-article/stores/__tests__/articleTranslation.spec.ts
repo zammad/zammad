@@ -14,13 +14,21 @@ import {
 import { UserCurrentContentTranslationAutoDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts'
 import {
   mockUserCurrentContentTranslationAutoMutation,
+  mockUserCurrentContentTranslationAutoMutationError,
   waitForUserCurrentContentTranslationAutoMutationCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.mocks.ts'
 import {
+  mockUserCurrentContentTranslationExcludedLanguagesMutation,
+  mockUserCurrentContentTranslationExcludedLanguagesMutationError,
+  waitForUserCurrentContentTranslationExcludedLanguagesMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.mocks.ts'
+import {
   mockUserCurrentContentTranslationTargetLocaleMutation,
+  mockUserCurrentContentTranslationTargetLocaleMutationError,
   waitForUserCurrentContentTranslationTargetLocaleMutationCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.mocks.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -209,6 +217,124 @@ describe('useArticleTranslationStore', () => {
 
       expect(getGraphQLMockCalls(UserCurrentContentTranslationAutoDocument)).toHaveLength(0)
     })
+
+    it('puts the previous setting back when saving fails', async () => {
+      const store = setup({}, withCapability() as Partial<UserData>)
+      mockTargetLocales()
+      await available(store)
+      mockUserCurrentContentTranslationAutoMutationError('Saving failed.', {
+        type: GraphQLErrorTypes.UnknownError,
+      })
+
+      store.setAutoEnabled(true)
+
+      expect(store.isAutoEnabled).toBe(true)
+      await waitFor(() => expect(store.isAutoEnabled).toBe(false))
+    })
+
+    describe('excluded languages', () => {
+      it('are available with language detection', async () => {
+        const store = setup(
+          { language_detection_article: 'cld' },
+          withCapability() as Partial<UserData>,
+        )
+        mockTargetLocales()
+        await available(store)
+
+        expect(store.isExclusionAvailable).toBe(true)
+      })
+
+      it('are not available without language detection', async () => {
+        const store = setup(
+          { language_detection_article: '' },
+          withCapability() as Partial<UserData>,
+        )
+        mockTargetLocales()
+        await available(store)
+
+        expect(store.isExclusionAvailable).toBe(false)
+      })
+
+      it('are not available for an agent the configured roles do not allow', async () => {
+        const store = setup({ language_detection_article: 'cld' })
+        mockTargetLocales()
+        await available(store)
+
+        expect(store.isExclusionAvailable).toBe(false)
+      })
+
+      it('saves a change as a personal preference', async () => {
+        const store = setup(
+          { language_detection_article: 'cld' },
+          withCapability() as Partial<UserData>,
+        )
+        mockUserCurrentContentTranslationExcludedLanguagesMutation({
+          userCurrentContentTranslationExcludedLanguages: { success: true, errors: null },
+        })
+
+        expect(store.excludedLanguages).toEqual([])
+
+        store.setExcludedLanguages(['en', 'zh-Hant'])
+
+        expect(store.excludedLanguages).toEqual(['en', 'zh-Hant'])
+
+        const calls = await waitForUserCurrentContentTranslationExcludedLanguagesMutationCalls()
+        expect(calls.at(-1)?.variables).toEqual({ languages: ['en', 'zh-Hant'] })
+      })
+
+      it('puts the previous choice back when saving fails, so it can be made again', async () => {
+        const store = setup(
+          { language_detection_article: 'cld' },
+          withCapability({ content_translation_excluded_languages: ['fr'] }) as Partial<UserData>,
+        )
+        mockUserCurrentContentTranslationExcludedLanguagesMutationError('Saving failed.', {
+          type: GraphQLErrorTypes.UnknownError,
+        })
+
+        store.setExcludedLanguages(['en'])
+
+        expect(store.excludedLanguages).toEqual(['en'])
+        await waitFor(() => expect(store.excludedLanguages).toEqual(['fr']))
+
+        mockUserCurrentContentTranslationExcludedLanguagesMutation({
+          userCurrentContentTranslationExcludedLanguages: { success: true, errors: null },
+        })
+        store.setExcludedLanguages(['en'])
+
+        await waitFor(async () => {
+          const calls = await waitForUserCurrentContentTranslationExcludedLanguagesMutationCalls()
+          // The error mock records an empty call of its own.
+          expect(calls.filter(({ variables }) => variables.languages)).toHaveLength(2)
+        })
+        expect(store.excludedLanguages).toEqual(['en'])
+      })
+
+      it('keeps a newer choice when an earlier save fails', async () => {
+        const store = setup(
+          { language_detection_article: 'cld' },
+          withCapability({ content_translation_excluded_languages: ['fr'] }) as Partial<UserData>,
+        )
+
+        let fail!: () => void
+        vi.spyOn(MutationHandler.prototype, 'send')
+          .mockImplementationOnce(
+            () =>
+              new Promise((_resolve, reject) => {
+                fail = () => reject(new Error('Saving failed.'))
+              }),
+          )
+          .mockResolvedValueOnce({})
+
+        store.setExcludedLanguages(['en'])
+        store.setExcludedLanguages(['de'])
+        fail()
+
+        await waitFor(() => expect(MutationHandler.prototype.send).toHaveBeenCalledTimes(2))
+        await new Promise((resolve) => setTimeout(resolve))
+
+        expect(store.excludedLanguages).toEqual(['de'])
+      })
+    })
   })
 
   describe('target locale', () => {
@@ -268,6 +394,21 @@ describe('useArticleTranslationStore', () => {
 
       const calls = await waitForUserCurrentContentTranslationTargetLocaleMutationCalls()
       expect(calls.at(-1)?.variables).toEqual({ targetLocale: 'fr-fr' })
+    })
+
+    it('puts the previous target back when saving fails', async () => {
+      const store = setup()
+
+      mockTargetLocales()
+      await store.loadTargetLocales()
+      mockUserCurrentContentTranslationTargetLocaleMutationError('Saving failed.', {
+        type: GraphQLErrorTypes.UnknownError,
+      })
+
+      store.setTargetLocale('fr-fr')
+
+      expect(store.targetLocale).toBe('fr-fr')
+      await waitFor(() => expect(store.targetLocale).toBe('de-de'))
     })
   })
 })

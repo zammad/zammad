@@ -21,6 +21,29 @@ RSpec.describe Locale, type: :model do
     end
   end
 
+  describe '.language_of' do
+    {
+      'en-gb'      => 'en',
+      'en'         => 'en',
+      'pt-BR'      => 'pt',
+      'zh-cn'      => 'zh-Hans',
+      'zh'         => 'zh-Hans',
+      'zh-tw'      => 'zh-Hant',
+      'zh-TW'      => 'zh-Hant',
+      'sr-cyrl-rs' => 'sr-Cyrl',
+      'sr'         => 'sr-Cyrl',
+      'sr-latn-rs' => 'sr-Latn',
+      'sr-ME'      => 'sr-Latn',
+      'no-no'      => 'no',
+      'nb'         => 'no',
+      'nn'         => 'no',
+    }.each do |code, language|
+      it "returns #{language} for #{code}" do
+        expect(described_class.language_of(code)).to eq(language)
+      end
+    end
+  end
+
   describe '.sync()' do
     context 'when importing locales' do
       before do
