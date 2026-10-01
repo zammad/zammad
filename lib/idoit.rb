@@ -19,6 +19,9 @@ returns
 
     params = {
       apikey: api_token,
+      filter: {
+              enabled: true,
+      },
     }
 
     _query('cmdb.object_types', params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
@@ -93,7 +96,12 @@ or with filter:
 
     params = {
       apikey: setting[:api_token],
+      language: _current_language,
     }
+
+    filter ||= {}
+    filter = filter.merge(enabled: true) if method == 'cmdb.object_types'
+
     if filter.present?
       params[:filter] = filter
     end
@@ -152,5 +160,14 @@ or with filter:
 
     url.gsub!(%r{src/jsonrpc.php}, '')
     url.gsub(%r{([^:])//+}, '\\1/')
+  end
+
+  def self._current_language
+    locale = UserInfo.current_user&.preferences&.dig(:locale) ||
+             UserInfo.current_user&.preferences&.dig('locale') ||
+             Setting.get('locale_default') ||
+             'en'
+
+    locale.to_s.split(/[-_]/).first
   end
 end
