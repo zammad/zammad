@@ -41,6 +41,7 @@ RSpec.describe Setting::Validation::ContentTranslationServiceConfig do
     let(:config)             { { 'provider' => 'libre_translate', 'url' => url } }
 
     before do
+      stub_hostname_resolution(url)
       stub_request(:get, languages_endpoint)
         .to_return(status: 200, body: [{ code: 'en' }, { code: 'de' }].to_json, headers: { 'Content-Type' => 'application/json' })
       stub_request(:post, translate_endpoint)

@@ -195,6 +195,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
         stub_request(:post, "#{url}/translate")
           .to_return(status: 200, body: { translatedText: '<p>Hallo Welt.</p>' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
+        stub_hostname_resolution(url)
         setup_content_translation(provider: 'libre_translate', url:)
       end
 
@@ -235,6 +236,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
         stub_request(:post, "#{url}/translate")
           .to_return(status: 200, body: { translatedText: 'Zammad' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
+        stub_hostname_resolution(url)
         setup_content_translation(provider: 'libre_translate', url:)
       end
 

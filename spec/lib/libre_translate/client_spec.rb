@@ -9,6 +9,8 @@ RSpec.describe LibreTranslate::Client do
   let(:api_key)            { nil }
   let(:client)             { described_class.new(url:, api_key:) }
 
+  before { stub_hostname_resolution(url) }
+
   # What the instance answers, in the shape UserAgent parses as JSON.
   def stub_translate(text)
     stub_request(:post, endpoint)
@@ -92,6 +94,11 @@ RSpec.describe LibreTranslate::Client do
 
     it 'maps a URL no request can be built from onto unreachable' do
       expect { described_class.new(url: 'translate.example.com').translate(text: 'Hello', target: 'de', format: 'text') }
+        .to raise_error(described_class::UnreachableError)
+    end
+
+    it 'maps a URL with another scheme than HTTP onto unreachable' do
+      expect { described_class.new(url: 'ftp://translate.example.com').translate(text: 'Hello', target: 'de', format: 'text') }
         .to raise_error(described_class::UnreachableError)
     end
 
@@ -213,6 +220,96 @@ RSpec.describe LibreTranslate::Client do
         2.times { suppress(described_class::Error) { client.languages } }
 
         expect(WebMock).to have_requested(:get, languages_endpoint).twice
+      end
+    end
+  end
+
+  # The URL is what an admin configured, and the HTTP log keeps every answer - so a request must
+  # not end up anywhere else than where that URL leads.
+  describe 'where a request may go' do
+    let(:elsewhere) { 'https://elsewhere.example.com/translate' }
+
+    before { stub_hostname_resolution(elsewhere) }
+
+    context 'when the instance redirects a translation' do
+      before do
+        stub_request(:post, endpoint).to_return(status: 302, headers: { 'Location' => elsewhere })
+        stub_request(:get, %r{elsewhere\.example\.com})
+          .to_return(status: 200, body: { translatedText: 'Hallo Welt.' }.to_json, headers: { 'Content-Type' => 'application/json' })
+      end
+
+      it 'raises unreachable' do
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+
+      it 'does not follow it' do
+        suppress(described_class::Error) { translate }
+
+        expect(WebMock).not_to have_requested(:get, %r{elsewhere\.example\.com})
+      end
+    end
+
+    context 'when the instance redirects the language listing' do
+      before do
+        stub_request(:get, languages_endpoint).to_return(status: 302, headers: { 'Location' => elsewhere })
+        stub_request(:get, %r{elsewhere\.example\.com})
+          .to_return(status: 200, body: [{ code: 'en' }].to_json, headers: { 'Content-Type' => 'application/json' })
+      end
+
+      it 'raises unreachable' do
+        expect { client.languages }.to raise_error(described_class::UnreachableError)
+      end
+
+      it 'does not follow it' do
+        suppress(described_class::Error) { client.languages }
+
+        expect(WebMock).not_to have_requested(:get, %r{elsewhere\.example\.com})
+      end
+    end
+
+    {
+      'a link-local address'                         => '169.254.169.254',
+      'a link-local address in IPv6 notation'        => '::ffff:169.254.169.254',
+      'the IPv6 address of a cloud metadata service' => 'fd00:ec2::254',
+    }.each do |destination, ip|
+      context "when the hostname leads to #{destination}" do
+        before do
+          stub_hostname_resolution(url, ip:)
+          stub_translate('Hallo Welt.')
+        end
+
+        it 'raises unreachable' do
+          expect { translate }.to raise_error(described_class::UnreachableError)
+        end
+
+        it 'asks nothing' do
+          suppress(described_class::Error) { translate }
+
+          expect(WebMock).not_to have_requested(:post, endpoint)
+        end
+      end
+    end
+
+    # A self-hosted instance commonly sits on the local network, or on this very host.
+    context 'when the hostname leads to a private address' do
+      before do
+        stub_hostname_resolution(url, ip: '10.0.0.5')
+        stub_translate('Hallo Welt.')
+      end
+
+      it 'asks it' do
+        expect(translate).to eq('Hallo Welt.')
+      end
+    end
+
+    context 'when the hostname leads to a loopback address' do
+      before do
+        stub_hostname_resolution(url, ip: '127.0.0.1')
+        stub_translate('Hallo Welt.')
+      end
+
+      it 'asks it' do
+        expect(translate).to eq('Hallo Welt.')
       end
     end
   end

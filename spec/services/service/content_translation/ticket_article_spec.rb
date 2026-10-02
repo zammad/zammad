@@ -325,6 +325,8 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     let(:response)           { '<p>Hallo <strong>Welt</strong>.</p>' }
 
     before do
+      stub_hostname_resolution(url)
+
       stub_request(:get, languages_endpoint)
         .to_return(status: 200, body: languages.map { |code| { code: } }.to_json, headers: { 'Content-Type' => 'application/json' })
 

@@ -207,6 +207,7 @@ RSpec.describe 'Settings', type: :request do
     it 'masks the API key of the translation service but not its URL' do
       url = 'https://translate.example.com'
 
+      stub_hostname_resolution(url)
       stub_request(:get, "#{url}/languages")
         .to_return(status: 200, body: [{ code: 'en' }].to_json, headers: { 'Content-Type' => 'application/json' })
       stub_request(:post, "#{url}/translate")

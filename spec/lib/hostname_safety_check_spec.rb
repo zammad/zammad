@@ -83,4 +83,107 @@ RSpec.describe HostnameSafetyCheck do
       end
     end
   end
+
+  # An IPv4 address may be resolved in IPv6 notation, which must not change what it counts as.
+  context 'when hostname points to a link-local IP in IPv6 notation' do
+    let(:hostname)    { 'linklocal.example.com' }
+    let(:resolved_ip) { '::ffff:169.254.169.254' }
+
+    context 'when allowing link-local IPs' do
+      let(:allow_link_local) { true }
+
+      it 'returns the resolved IP' do
+        expect(validate).to eq(resolved_ip)
+      end
+    end
+
+    context 'when disallowing link-local IPs' do
+      it 'raises a SafetyError' do
+        expect { validate }
+          .to raise_error(HostnameSafetyCheck::LinkLocalIpError, %r{The hostname is a link-local IP})
+      end
+    end
+  end
+
+  context 'when hostname points to a link-local IP in IPv4-compatible IPv6 notation' do
+    let(:hostname)    { 'linklocal.example.com' }
+    let(:resolved_ip) { '::169.254.169.254' }
+
+    it 'raises a SafetyError' do
+      expect { validate }
+        .to raise_error(HostnameSafetyCheck::LinkLocalIpError, %r{The hostname is a link-local IP})
+    end
+  end
+
+  context 'when hostname points to a loopback IP in IPv6 notation' do
+    let(:hostname)    { 'localhost' }
+    let(:resolved_ip) { '::ffff:127.0.0.1' }
+
+    it 'raises a SafetyError' do
+      expect { validate }
+        .to raise_error(HostnameSafetyCheck::LoopbackIpError, %r{The hostname is a loopback IP})
+    end
+  end
+
+  context 'when hostname points to a private IP in IPv6 notation' do
+    let(:hostname)    { 'private.example.com' }
+    let(:resolved_ip) { '::ffff:10.0.0.1' }
+
+    context 'when allowing private IPs' do
+      let(:allow_private) { true }
+
+      it 'returns the resolved IP' do
+        expect(validate).to eq(resolved_ip)
+      end
+    end
+
+    context 'when disallowing private IPs' do
+      it 'raises a SafetyError' do
+        expect { validate }
+          .to raise_error(HostnameSafetyCheck::PrivateIpError, %r{The hostname is a private IP})
+      end
+    end
+  end
+
+  context 'when hostname points to a unique local IPv6 address' do
+    let(:hostname)    { 'private.example.com' }
+    let(:resolved_ip) { 'fd12:3456:789a::1' }
+
+    context 'when allowing private IPs' do
+      let(:allow_private) { true }
+
+      it 'returns the resolved IP' do
+        expect(validate).to eq(resolved_ip)
+      end
+    end
+
+    context 'when disallowing private IPs' do
+      it 'raises a SafetyError' do
+        expect { validate }
+          .to raise_error(HostnameSafetyCheck::PrivateIpError, %r{The hostname is a private IP})
+      end
+    end
+  end
+
+  # A unique local address like any other, so allowing private IPs must not admit it.
+  context 'when hostname points to the metadata service of a cloud provider' do
+    let(:hostname)    { 'metadata.example.com' }
+    let(:resolved_ip) { 'fd00:ec2::254' }
+
+    it 'raises a SafetyError' do
+      expect { validate }
+        .to raise_error(HostnameSafetyCheck::MetadataIpError, %r{The hostname is a cloud metadata service})
+    end
+
+    context 'when allowing every kind of address' do
+      let(:allow_private)    { true }
+      let(:allow_loopback)   { true }
+      let(:allow_link_local) { true }
+
+      it 'still raises a SafetyError' do
+        expect { validate }
+          .to raise_error(HostnameSafetyCheck::MetadataIpError)
+      end
+    end
+  end
 end

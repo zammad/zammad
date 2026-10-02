@@ -72,11 +72,12 @@ class LibreTranslate::Client
 
   private
 
-  # UserAgent builds the request before its own error handling, so a URL Ruby cannot parse would
-  # leave the errors above as an exception of its own.
+  # UserAgent builds the request and checks its address before its own error handling, so a URL
+  # Ruby cannot parse, or one leading where no request may go, would leave the errors above as an
+  # exception of its own.
   def request
     yield
-  rescue URI::Error, ArgumentError
+  rescue URI::Error, ArgumentError, HostnameSafetyCheck::SafetyError
     raise UnreachableError
   end
 
@@ -103,9 +104,13 @@ class LibreTranslate::Client
 
   def request_options
     {
-      verify_ssl: true,
-      json:       true,
-      log:        { facility: LOG_FACILITY },
+      verify_ssl:              true,
+      json:                    true,
+      log:                     { facility: LOG_FACILITY },
+      # Only the configured URL may say where a request goes. A self-hosted instance commonly sits
+      # on the local network.
+      do_not_follow_redirects: true,
+      validate_safety:         { allow_private: true, allow_loopback: true },
     }
   end
 end

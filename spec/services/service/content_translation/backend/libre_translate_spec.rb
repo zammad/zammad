@@ -42,6 +42,7 @@ RSpec.describe Service::ContentTranslation::Backend::LibreTranslate do
     # the instance and fill the language cache before the examples below have said anything.
     Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url, 'api_key' => api_key }.compact, validate: false)
 
+    stub_hostname_resolution(url)
     stub_languages(languages)
     stub_translate(translation)
   end

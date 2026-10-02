@@ -32,6 +32,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
 
       before do
         Setting.set('content_translation_service_config', { provider:, api_key: 'test', tier: 'free', url: 'https://translate.example.com' }, validate: false)
+        stub_hostname_resolution('https://translate.example.com')
         stub_request(:get, 'https://translate.example.com/languages')
           .to_return_json(body: [{ code: 'en' }, { code: 'de' }])
         stub_request(:post, endpoint).to_return_json(body: response)

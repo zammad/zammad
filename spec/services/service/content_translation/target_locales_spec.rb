@@ -60,6 +60,7 @@ RSpec.describe Service::ContentTranslation::TargetLocales do
       # Without the validation, because saving the config runs the connection test.
       Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url }, validate: false)
 
+      stub_hostname_resolution(url)
       stub_request(:get, "#{url}/languages")
         .to_return(status: 200, body: %w[en de].map { |code| { code: } }.to_json, headers: { 'Content-Type' => 'application/json' })
     end

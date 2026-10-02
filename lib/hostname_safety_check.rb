@@ -1,6 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module HostnameSafetyCheck
+  # The AWS instance metadata service answers over IPv6 at fd00:ec2::254 - a unique local address,
+  # which counts as private rather than link-local, so allowing private addresses would admit it.
+  METADATA_ENDPOINTS = [IPAddr.new('fd00:ec2::/64')].freeze
+
   # Checks if hostname resolves to a safe IP address
   # This is to prevent Server-Side Request Forgery (SSRF) attacks
   # Domains can resolve to any IP. And IP itself can be in various obfuscated forms to mask an offensive address.
@@ -19,7 +23,13 @@ module HostnameSafetyCheck
   # @raise [StandardError] if hostname is not safe or cannot be resolved
   def self.validate!(hostname, allow_private: false, allow_loopback: false, allow_link_local: false)
     resolved = IPSocket.getaddress(hostname)
-    ip       = IPAddr.new(resolved)
+    # An IPv4 address in IPv6 notation (::ffff:169.254.169.254, ::169.254.169.254) is judged as the
+    # IPv4 address it stands for.
+    ip       = IPAddr.new(resolved).native
+
+    if METADATA_ENDPOINTS.any? { |network| network.include?(ip) }
+      raise MetadataIpError.new(hostname, ip)
+    end
 
     if !allow_private && ip.private?
       raise PrivateIpError.new(hostname, ip)
@@ -67,6 +77,12 @@ module HostnameSafetyCheck
   class LinkLocalIpError < SafetyError
     def self.message
       'The hostname is a link-local IP' # rubocop:disable Zammad/DetectTranslatableString
+    end
+  end
+
+  class MetadataIpError < SafetyError
+    def self.message
+      'The hostname is a cloud metadata service' # rubocop:disable Zammad/DetectTranslatableString
     end
   end
 end
