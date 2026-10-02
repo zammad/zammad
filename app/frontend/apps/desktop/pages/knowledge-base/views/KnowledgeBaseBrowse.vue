@@ -629,10 +629,7 @@ watch(browsedPage, () => {
       <CommonIndicator v-model="isReachingBottom" />
 
       <!-- Not while sorting: the bottom bar takes over there, and adding is not on offer. -->
-      <div
-        v-if="!isSortingArmed"
-        class="pointer-events-none sticky bottom-3 h-0 w-full print:hidden"
-      >
+      <div v-if="!isSortingArmed" class="sticky bottom-3 h-0 w-full print:hidden">
         <CommonFloatingToolbar
           :label="$t('Knowledge base actions')"
           :is-reaching-bottom="isReachingBottom"
