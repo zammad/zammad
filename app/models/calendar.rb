@@ -237,12 +237,12 @@ returns
       if event.rrule.present?
 
         # loop till days
-        interval_frame_start = Date.parse("#{1.year.ago}-01-01")
-        interval_frame_end   = Date.parse("#{3.years.from_now}-12-31")
+        interval_frame_start = 1.year.ago.beginning_of_year.to_date
+        interval_frame_end   = 3.years.from_now.end_of_year.to_date
         occurrences          = event.occurrences_between(interval_frame_start, interval_frame_end)
         if occurrences.present?
           occurrences.each do |occurrence|
-            result = Calendar.day_and_comment_by_event(event, occurrence.start_time)
+            result = Calendar.day_and_comment_by_event(event, Calendar.occurrence_start_time(event, occurrence))
             next if !result
 
             events[result[0]] = result[1]
@@ -258,6 +258,17 @@ returns
       events[result[0]] = result[1]
     end
     events.sort.to_h
+  end
+
+  # The recurrence gem starts all-day events at local midnight and returns
+  # occurrences in UTC, which lands them on the previous day east of UTC.
+  def self.occurrence_start_time(event, occurrence)
+    start_time = occurrence.start_time
+    return start_time.getlocal if event.dtstart.is_a?(Icalendar::Values::Date)
+
+    # A TZID known only from a VTIMEZONE block resolves to a fixed offset without a zone.
+    zone = event.dtstart.value.try(:time_zone)
+    zone ? start_time.in_time_zone(zone) : start_time.getlocal(event.dtstart.value.utc_offset)
   end
 
   # get day and comment by event

@@ -2,16 +2,14 @@
 
 RSpec.configure do |config|
   config.around(:each, :time_zone) do |example|
-    # RSpec System/Capybara tests use TZ environment variable to set timezone in the browser.
-    if example.metadata[:type] == :system
-      old_tz = ENV['TZ']
-      ENV['TZ'] = example.metadata[:time_zone]
-    end
+    old_tz = ENV['TZ']
 
-    # Other RSpec tests run inside the same process and don't take TZ variable into account.
-    #   However, they should still have mocking of the test time zone for the Time object applied.
+    # Rails' Time.zone does not reach Ruby's own local Time, gems built on it,
+    #   or the browser in system specs, which all follow TZ instead.
+    ENV['TZ'] = example.metadata[:time_zone]
+
     Time.use_zone(example.metadata[:time_zone]) { example.run }
   ensure
-    ENV['TZ'] = old_tz if example.metadata[:type] == :system
+    ENV['TZ'] = old_tz
   end
 end

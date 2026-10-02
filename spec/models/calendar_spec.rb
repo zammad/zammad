@@ -3,8 +3,6 @@
 require 'rails_helper'
 require 'models/concerns/has_audit_logs_examples'
 
-# Without `export TZ="Europe/London"` in the environment, the tests will fail. :(
-
 RSpec.describe Calendar, type: :model do
   subject(:calendar) { create(:calendar) }
 
@@ -77,6 +75,8 @@ RSpec.describe Calendar, type: :model do
           .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
         stub_request(:get, 'http://test/calendar3.ics')
           .to_return(body: Rails.root.join('test/data/calendar/calendar3.ics').read)
+        stub_request(:get, 'http://test/calendar4.ics')
+          .to_return(body: Rails.root.join('test/data/calendar/calendar4.ics').read)
         travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
       end
 
@@ -87,7 +87,14 @@ RSpec.describe Calendar, type: :model do
             '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
           )
+        end
+
+        context 'when the host time zone is east of UTC', time_zone: 'Europe/Berlin' do
+          it 'keeps recurring all-day events on their day' do
+            expect(calendar.public_holidays.keys).to eq(%w[2016-12-24 2017-12-24 2018-12-24 2019-12-24 2020-12-24])
+          end
         end
 
         context 'with one-time and n-time (recurring) events' do
@@ -103,10 +110,30 @@ RSpec.describe Calendar, type: :model do
               '2017-01-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
               '2017-02-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
               '2017-03-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
-              '2017-04-25' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
+              '2017-04-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
               '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
               '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
               '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            )
+          end
+        end
+
+        context 'with timed recurring events' do
+          subject(:calendar) do
+            create(:calendar, ical_url: 'http://test/calendar4.ics')
+          end
+
+          it 'stores each occurrence on its day in the event time zone' do
+            expect(calendar.public_holidays).to eq(
+              '2017-01-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
+              '2017-01-12' => { 'active' => true, 'summary' => 'custom zone shift', 'feed' => feed },
+              '2017-01-19' => { 'active' => true, 'summary' => 'evening shift', 'feed' => feed },
+              '2017-02-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
+              '2017-02-12' => { 'active' => true, 'summary' => 'custom zone shift', 'feed' => feed },
+              '2017-02-19' => { 'active' => true, 'summary' => 'evening shift', 'feed' => feed },
+              '2017-03-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
+              '2017-04-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
             )
           end
         end
@@ -181,6 +208,7 @@ RSpec.describe Calendar, type: :model do
             '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2021-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
           )
         end
 
@@ -203,6 +231,8 @@ RSpec.describe Calendar, type: :model do
               '2018-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
               '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
               '2019-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
+              '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2020-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
             )
         end
       end
