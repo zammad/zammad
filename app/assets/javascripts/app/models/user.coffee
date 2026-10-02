@@ -389,7 +389,7 @@ class App.User extends App.Model
     # forbid non-agents to change users
     return false if !requester.permission('ticket.agent')
     # allow agents to change customers only
-    return false if @permission(['admin.user', 'ticket.agent'])
+    return false if @permission(['admin.*', 'ticket.agent'])
     @permission('ticket.customer')
 
   isDeleteableBy: (requester) ->
