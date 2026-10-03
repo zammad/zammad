@@ -20,9 +20,12 @@ import type {
 
 const canReplyAll = (article: TicketArticle) => {
   const addresses = [article.to, article.cc]
-  if (article.sender?.name === EnumTicketArticleSenderName.Customer) {
+  const recipientIsSystem = article.to?.parsed?.some((address) => address.isSystemAddress)
+
+  if (article.sender?.name === EnumTicketArticleSenderName.Customer || recipientIsSystem) {
     addresses.push(article.from)
   }
+
   const foreignRecipients = addresses
     .flatMap((address) => address?.parsed || [])
     .filter((address) => address.emailAddress && !address.isSystemAddress)
