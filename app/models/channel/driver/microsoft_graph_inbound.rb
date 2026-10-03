@@ -77,7 +77,8 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   end
 
   def fetch_single_message(message_id, count, count_all)
-    message_meta = @graph.get_message_basic_details(message_id)
+    message_meta = message_details(message_id)
+    return MessageResult.new(success: false) if !message_meta
 
     message_validator = MessageValidator.new(message_meta[:headers], message_meta[:size])
 
@@ -88,7 +89,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
       return MessageResult.new(success: false)
     end
 
-    return fetch_and_move_message(message_id, message_validator, count, count_all) if @post_import_action == 'move'
+    return fetch_and_move_message(message_id, message_validator, count, count_all) if @post_import_action == 'move' || message_id == pending_move_id
 
     # ignore already imported
     if message_validator.already_imported?(@keep_on_server, @channel)
@@ -117,7 +118,9 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     # Taking first page of messages only effectivelly applies 1000-messages-in-one-go limit
     messages_details = @graph.list_messages(unread_only: keep_on_server, folder_id:, follow_pagination: false)
 
-    ids   = messages_details.fetch(:items).pluck(:id)
+    ids = messages_details.fetch(:items).pluck(:id)
+    pending = pending_move_id
+    ids.unshift(pending).uniq! if pending
     count = messages_details.fetch(:total_count)
 
     [ids, count]
@@ -127,6 +130,48 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   end
 
   private
+
+  def process_with_timeout(channel, msg)
+    return super if @post_import_action != 'move' && pending_move_id.blank?
+
+    # The parser rescues failures outside this savepoint; partial imports must roll back first.
+    Channel.transaction(requires_new: true) { super }
+  end
+
+  def message_details(message_id)
+    @graph.get_message_basic_details(message_id)
+  rescue MicrosoftGraph::ApiError => e
+    raise if e.error_code != 'ErrorItemNotFound' || message_id != pending_move_id
+
+    clear_pending_move!
+    nil
+  end
+
+  def clear_pending_move!
+    @channel.preferences.delete(:microsoft_graph_pending_move)
+    persist_move_receipt!
+  rescue
+    @channel.reload
+    raise
+  end
+
+  def persist_move_receipt!
+    # Receipt writes must not run email-address cleanup for every imported message.
+    saved = @channel.update_column(:preferences, @channel.preferences) # rubocop:disable Rails/SkipsModelValidations
+    raise ActiveRecord::RecordNotSaved if !saved
+  end
+
+  def pending_move_id
+    return if !@channel
+
+    pending = @channel.preferences[:microsoft_graph_pending_move]
+    return if pending.blank?
+
+    context_keys = %i[mailbox cloud client_tenant]
+    return if pending.slice(*context_keys) != move_receipt(nil, '').slice(*context_keys)
+
+    pending[:message_id]
+  end
 
   def fetch_raw_message(message_id, count, count_all)
     @graph.get_raw_message(message_id)
@@ -167,7 +212,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
         processed = process_fetched_message(msg, message_id, message_validator, count, count_all)
         if processed.success
           @channel.preferences[:microsoft_graph_pending_move] = receipt
-          @channel.save!
+          persist_move_receipt!
         end
         processed
       end
@@ -175,8 +220,7 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     return result if result.after_action&.first == :too_large_ignored
 
     post_import_message(message_id)
-    @channel.preferences.delete(:microsoft_graph_pending_move)
-    @channel.save!
+    clear_pending_move!
     result
   rescue
     @channel.reload

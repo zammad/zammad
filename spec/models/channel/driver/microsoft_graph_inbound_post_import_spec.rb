@@ -156,12 +156,99 @@ RSpec.describe Channel::Driver::MicrosoftGraphInbound, :aggregate_failures do
   it 'rolls back processing if its retry receipt cannot be saved' do
     allow(driver).to receive(:process).and_call_original
     allow(driver).to receive(:process_with_timeout).and_raise('unparseable')
-    allow(channel).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
+    allow(channel).to receive(:update_column).and_raise(ActiveRecord::RecordInvalid)
 
     expect { expect { driver.fetch(options, channel) }.to raise_error(ActiveRecord::RecordInvalid) }
       .not_to change(FailedEmail, :count)
     expect(graph).not_to have_received(:move_message)
     expect(channel.preferences[:microsoft_graph_pending_move]).to be_nil
+  end
+
+  it 'rolls back processing when the receipt update does not persist' do
+    allow(driver).to receive(:process).and_call_original
+    allow(driver).to receive(:process_with_timeout).and_raise('unparseable')
+    allow(channel).to receive(:update_column).and_return(false)
+
+    expect { expect { driver.fetch(options, channel) }.to raise_error(ActiveRecord::RecordNotSaved) }
+      .not_to change(FailedEmail, :count)
+    expect(graph).not_to have_received(:move_message)
+    expect(channel.preferences[:microsoft_graph_pending_move]).to be_nil
+  end
+
+  it 'rolls back an article when raw storage fails before recording its move receipt' do
+    raw = "From: sender@example.com\r\nTo: mailbox@example.com\r\nSubject: Storage failure\r\nMessage-ID: <storage-failure@example.com>\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\nBody"
+    allow(driver).to receive(:process).and_call_original
+    allow(graph).to receive(:get_raw_message).and_return(raw)
+    allow_any_instance_of(Ticket::Article).to receive(:save_as_raw).and_raise('storage failed')
+    article_count = Ticket::Article.count
+
+    expect { driver.fetch(options, channel) }.to change(FailedEmail, :count).by(1)
+    expect(Ticket::Article.count).to eq(article_count)
+    expect(graph).to have_received(:move_message).with('message', 'destination')
+  end
+
+  it 'stores a FailedEmail and receipt after a database error rolls back a partial import' do
+    raw = "From: sender@example.com\r\nTo: mailbox@example.com\r\nSubject: Database failure\r\nMessage-ID: <database-failure@example.com>\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\nBody"
+    allow(driver).to receive(:process).and_call_original
+    allow(graph).to receive(:get_raw_message).and_return(raw)
+    allow_any_instance_of(Ticket::Article).to receive(:save_as_raw) { Channel.connection.execute("SELECT 'invalid'::integer") }
+    article_count = Ticket::Article.count
+    ticket_count = Ticket.count
+
+    expect { driver.fetch(options, channel) }.to change(FailedEmail, :count).by(1)
+    expect(Ticket::Article.count).to eq(article_count)
+    expect(Ticket.count).to eq(ticket_count)
+    expect(graph).to have_received(:move_message).with('message', 'destination')
+  end
+
+  it 'retries pending cleanup before an older restored message can overwrite its receipt' do
+    allow(graph).to receive(:move_message).with('message', 'destination')
+      .and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    allow(graph).to receive_messages(list_messages: { items: [{ id: 'older' }, { id: 'message' }], total_count: 2 }, move_message: { id: 'moved' })
+
+    expect(driver.fetch(options, channel.reload)).to include(fetched: 1)
+    expect(driver).to have_received(:process).twice
+    expect(graph).to have_received(:move_message).with('message', 'destination').twice
+  end
+
+  it 'retries a pending message before a full page of older restored messages' do
+    allow(graph).to receive(:move_message).with('message', 'destination')
+      .and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    allow(graph).to receive_messages(list_messages: { items: [{ id: 'older' }], total_count: 1001 }, move_message: { id: 'moved' })
+
+    expect(driver.fetch(options, channel.reload)).to include(fetched: 1)
+    expect(graph).to have_received(:get_raw_message).with('message').twice
+    expect(driver).to have_received(:process).twice
+  end
+
+  it 'clears a pending receipt if its remote message has already been removed' do
+    allow(graph).to receive(:move_message).with('message', 'destination')
+      .and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    allow(graph).to receive_messages(list_messages: { items: [{ id: 'older' }], total_count: 1 }, move_message: { id: 'moved' })
+    allow(graph).to receive(:get_message_basic_details).with('message')
+      .and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorItemNotFound', message: 'Gone' }))
+
+    expect(driver.fetch(options, channel.reload)).to include(fetched: 1)
+    expect(channel.reload.preferences[:microsoft_graph_pending_move]).to be_nil
+    expect(graph).to have_received(:get_message_basic_details).with('message').twice
+    expect(driver).to have_received(:process).twice
+  end
+
+  %w[delete mark_read].each do |action|
+    it "uses its pending receipt after switching to #{action}" do
+      allow(graph).to receive(:move_message).with('message', 'destination')
+        .and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+      expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+
+      expect(driver.fetch(options.merge(post_import_action: action), channel.reload)).to include(fetched: 0)
+      expect(driver).to have_received(:process).once
+      expect(channel.reload.preferences[:microsoft_graph_pending_move]).to be_nil
+      cleanup = action == 'delete' ? :delete_message : :mark_message_as_read
+      expect(graph).to have_received(cleanup).with('message')
+    end
   end
 
   it 'does not move fresh verification messages' do
