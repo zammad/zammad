@@ -64,13 +64,17 @@ RSpec.describe ExternalCredential, :aggregate_failures, current_user_id: 1, type
   end
 
   shared_examples 'Microsoft app secret rotation' do |provider|
-    let(:app_differences) { [{ client_id: 'other' }, { client_tenant: 'other' }, { cloud: 'us_gov' }] }
+    let(:app_differences) { [{ client_id: 'other' }, { cloud: 'us_gov' }] }
     let(:credentials) { { client_id: 'app', client_tenant: 'tenant', client_secret: 'old', cloud: 'global' } }
     let(:credential)  { create(:external_credential, name: provider, credentials:) }
     let(:area)        { provider == 'microsoft_graph' ? 'MicrosoftGraph::Account' : 'Microsoft365::Account' }
     let!(:channel)    { create(:channel, area:, options: { auth: credentials }) }
 
-    it 'rotates the secret only for the same app, tenant and cloud' do
+    before do
+      stub_request(:post, %r{\Ahttps://login\.microsoftonline\.(?:com|us)/}).to_raise('Unexpected Microsoft token request')
+    end
+
+    it 'rotates the secret only for the same app and cloud' do
       other_channels = app_differences.map do |difference|
         create(:channel, area:, options: { auth: credentials.merge(difference) })
       end
@@ -81,13 +85,36 @@ RSpec.describe ExternalCredential, :aggregate_failures, current_user_id: 1, type
       other_channels.each { |other| expect(other.reload.options[:auth][:client_secret]).to eq('old') }
     end
 
-    %i[client_id client_tenant cloud].each do |attribute|
+    %i[client_id cloud].each do |attribute|
       it "leaves linked credentials unchanged when switching #{attribute}" do
         difference = { attribute => attribute == :cloud ? 'us_gov' : 'other' }
         credential.update!(credentials: credentials.merge(difference).merge(client_secret: 'new'))
 
         expect(channel.reload.options[:auth]).to eq(credentials.with_indifferent_access)
       end
+    end
+
+    it 'rotates the same app secret across tenant authorities without changing them' do
+      other = create(:channel, area:, options: { auth: credentials.merge(client_tenant: 'common') })
+
+      credential.update!(credentials: credentials.merge(client_secret: 'new'))
+
+      expect(channel.reload.options[:auth]).to include(client_secret: 'new', client_tenant: 'tenant')
+      expect(other.reload.options[:auth]).to include(client_secret: 'new', client_tenant: 'common')
+    end
+
+    it 'refreshes with the rotated app secret after changing the configured tenant authority' do
+      auth = credentials.merge(provider: provider, type: 'XOAUTH2', created_at: 1.hour.ago, expires_in: 3600, refresh_token: 'refresh', access_token: 'expired')
+      channel.update!(options: { auth: auth, inbound: { options: {} }, outbound: { options: {} } })
+      credential.update!(credentials: credentials.merge(client_tenant: 'new-tenant', client_secret: 'new'))
+      request = stub_request(:post, 'https://login.microsoftonline.com/tenant/oauth2/v2.0/token')
+        .with(body: hash_including('client_id' => 'app', 'client_secret' => 'new', 'refresh_token' => 'refresh'))
+        .to_return(body: { access_token: 'renewed', expires_in: 3600 }.to_json)
+
+      channel.reload.refresh_xoauth2!(force: true)
+
+      expect(request).to have_been_requested.once
+      expect(channel.reload.options[:auth]).to include(client_secret: 'new', client_tenant: 'tenant', cloud: 'global')
     end
 
     it 'can refresh an existing commercial channel after switching the app configuration to GCC High' do

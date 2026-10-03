@@ -34,7 +34,7 @@
     </div>
     <div class="controls">
       <select id="cloud" name="cloud" class="form-control">
-        <% for value, label of {global: 'Global', us_gov: 'US Government (GCC High)'}: %>
+        <% for value, label of {global: 'Global cloud', us_gov: 'US Government (GCC High)'}: %>
           <option value="<%= value %>" <% if (@external_credential?.credentials?.cloud || 'global') is value: %>selected<% end %>><%- @T(label) %></option>
         <% end %>
       </select>

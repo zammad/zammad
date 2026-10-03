@@ -1814,7 +1814,7 @@ Setting.create_if_not_exists(
         name:      'cloud',
         tag:       'select',
         options:   {
-          'global' => __('Global'),
+          'global' => __('Global cloud'),
           'us_gov' => __('US Government (GCC High)'),
         },
         translate: true,

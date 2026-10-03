@@ -8549,7 +8549,7 @@ msgid "Given time zone is not valid."
 msgstr ""
 
 #: db/seeds/settings.rb:1816
-msgid "Global"
+msgid "Global cloud"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee:28

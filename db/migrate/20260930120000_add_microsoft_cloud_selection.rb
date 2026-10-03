@@ -29,7 +29,7 @@ class AddMicrosoftCloudSelection < ActiveRecord::Migration[8.0]
       name:      'cloud',
       tag:       'select',
       options:   {
-        'global' => 'Global',
+        'global' => 'Global cloud',
         'us_gov' => 'US Government (GCC High)',
       },
       translate: true,
