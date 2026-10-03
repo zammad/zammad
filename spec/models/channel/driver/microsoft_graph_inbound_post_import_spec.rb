@@ -260,11 +260,26 @@ RSpec.describe Channel::Driver::MicrosoftGraphInbound, :aggregate_failures do
   it 'moves oversized messages after storing a rejection' do
     allow(validator).to receive(:too_large?).and_return([20, 10])
     Setting.set('postmaster_send_reject_if_mail_too_large', true)
-    allow(driver).to receive(:process_oversized_mail)
+    outer_transactions = Channel.connection.open_transactions
+    allow(driver).to receive(:process_oversized_mail) do
+      expect(Channel.connection.open_transactions).to eq(outer_transactions)
+    end
     driver.fetch(options, channel)
 
     expect(driver).to have_received(:process_oversized_mail).with(channel, 'mail')
     expect(graph).to have_received(:move_message)
+  end
+
+  it 'retries an oversized message move without sending a second rejection' do
+    allow(validator).to receive(:too_large?).and_return([20, 10])
+    Setting.set('postmaster_send_reject_if_mail_too_large', true)
+    allow(driver).to receive(:process_oversized_mail)
+    allow(graph).to receive(:move_message).and_raise(MicrosoftGraph::ApiError.new({ code: 'ErrorAccessDenied', message: 'Denied' }))
+    expect { driver.fetch(options, channel) }.to raise_error(MicrosoftGraph::ApiError)
+    allow(graph).to receive(:move_message).and_return({ id: 'moved' })
+
+    expect(driver.fetch(options, channel.reload)).to include(fetched: 0)
+    expect(driver).to have_received(:process_oversized_mail).once
   end
 
   it 'leaves oversized messages untouched when rejection is disabled' do

@@ -180,9 +180,8 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
     raise
   end
 
-  def process_fetched_message(msg, message_id, message_validator, count, count_all)
+  def process_fetched_message(msg, message_id, message_validator, count, count_all, too_large_info: message_validator.too_large?)
     # do not process too big messages, instead download & send postmaster reply
-    too_large_info = message_validator.too_large?
     if too_large_info
       if Setting.get('postmaster_send_reject_if_mail_too_large') == true
         info = "  - download message #{count}/#{count_all} - ignore message because it's too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB) - Graph API Message ID: #{message_id}"
@@ -205,11 +204,17 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
   def fetch_and_move_message(message_id, message_validator, count, count_all)
     msg = fetch_raw_message(message_id, count, count_all)
     receipt = move_receipt(message_id, msg)
+    too_large_info = message_validator.too_large?
+    if too_large_info && @channel.preferences[:microsoft_graph_pending_move] != receipt
+      processed = process_fetched_message(msg, message_id, message_validator, count, count_all, too_large_info:)
+      return processed if !processed.success
+    end
+
     result = Channel.transaction do
       if @channel.preferences[:microsoft_graph_pending_move] == receipt
         MessageResult.new(success: false)
       else
-        processed = process_fetched_message(msg, message_id, message_validator, count, count_all)
+        processed ||= process_fetched_message(msg, message_id, message_validator, count, count_all, too_large_info: nil)
         if processed.success
           @channel.preferences[:microsoft_graph_pending_move] = receipt
           persist_move_receipt!
