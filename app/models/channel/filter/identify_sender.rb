@@ -2,6 +2,7 @@
 
 class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
   def self.run(_channel, mail, _transaction_params)
+    return true if ['true', true].include?(mail[:'x-zammad-ignore'])
 
     customer_user_id = mail[ :'x-zammad-ticket-customer_id' ]
     customer_user = nil
