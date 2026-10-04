@@ -70,7 +70,7 @@ class ChannelsSmsController < ApplicationController
         return
       end
 
-      content_type, content = channel.process(params.permit!.to_h)
+      content_type, content = channel.process(webhook_params)
       send_data content, type: content_type
     end
   end
@@ -83,6 +83,15 @@ class ChannelsSmsController < ApplicationController
 
   def test_options
     params.permit(:recipient, :message)
+  end
+
+  # Drivers verifying a request signature need the body bytes exactly as sent, which parsed params cannot restore.
+  def webhook_params
+    params.permit!.to_h.merge(
+      raw_body:       request.raw_post,
+      request_method: request.request_method,
+      headers:        request.headers,
+    )
   end
 
   def channel_params

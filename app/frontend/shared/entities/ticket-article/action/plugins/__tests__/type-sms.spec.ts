@@ -36,6 +36,34 @@ describe('sms type', () => {
   })
 
   describe('reply parameters', () => {
+    it('sets the correct to field based on "from"', () => {
+      mockPermissions(['ticket.agent'])
+      const ticket = createTicket({
+        createArticleType: {
+          name: 'sms',
+        },
+        preferences: {
+          sms: {
+            from: '+441234567890',
+          },
+        },
+      })
+
+      const types = createTestArticleTypes(ticket)
+
+      const smsType: AppSpecificTicketArticleType | undefined = types.find(
+        (type) => type.value === 'sms',
+      )
+
+      const performReplyResult = smsType?.performReply?.(ticket)
+
+      expect(performReplyResult).toEqual(
+        expect.objectContaining({
+          to: ['+441234567890'],
+        }),
+      )
+    })
+
     it('sets the correct to field based on "From"', () => {
       mockPermissions(['ticket.agent'])
       const ticket = createTicket({

@@ -336,6 +336,30 @@ FactoryBot.define do
       end
     end
 
+    factory :sms_telnyx_channel do
+      area { 'Sms::Account' }
+      status_in { 'ok' }
+      status_out { 'ok' }
+
+      options do
+        {
+          adapter:       'sms/telnyx',
+          webhook:       "http://localhost:3000/api/v1/sms_webhook/#{webhook_token}",
+          sender:        '+4915700000000',
+          token:         token,
+          public_key:    public_key,
+          webhook_token: webhook_token,
+        }.deep_merge(custom_options)
+      end
+
+      transient do
+        custom_options { {} }
+        token          { "KEY#{Faker::Alphanumeric.alphanumeric(number: 32)}" }
+        public_key     { Base64.strict_encode64(OpenSSL::PKey.generate_key('ED25519').public_to_der.last(32)) }
+        webhook_token  { Faker::Crypto.md5 }
+      end
+    end
+
     factory :telegram_channel do
       area { 'Telegram::Bot' }
 

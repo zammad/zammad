@@ -36,6 +36,7 @@ it.
 - [How to setup LDAP integration](cookbook/how-to-setup-ldap-integration.md)
 - [How to setup PGP integration](cookbook/how-to-setup-pgp-integration.md)
 - [How to setup S/MIME integration](cookbook/how-to-setup-smime-integration.md)
+- [How to setup Telnyx SMS integration](cookbook/how-to-setup-telnyx-sms-integration.md)
 
 ## How to Contribute
 
