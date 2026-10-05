@@ -2351,8 +2351,8 @@ msgid "Attendees"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:21
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:73
-#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:66
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:77
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:71
 msgid "Attention! Changing the organization will update the user's most recent tickets to the new organization."
 msgstr ""
 
@@ -2482,7 +2482,7 @@ msgstr ""
 msgid "Author name and article creation date"
 msgstr ""
 
-#: app/controllers/application_controller/handles_errors.rb:107
+#: app/controllers/application_controller/handles_errors.rb:124
 msgid "Authorization failed"
 msgstr ""
 
@@ -6703,7 +6703,7 @@ msgstr ""
 msgid "Edit ticket title"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:58
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:60
 msgid "Edit user"
 msgstr ""
 
@@ -9647,9 +9647,9 @@ msgstr ""
 msgid "Intro"
 msgstr ""
 
-#: app/controllers/integration/cti_controller.rb:30
-#: app/controllers/integration/placetel_controller.rb:28
-#: app/controllers/integration/sipgate_controller.rb:28
+#: app/controllers/integration/cti_controller.rb:32
+#: app/controllers/integration/placetel_controller.rb:30
+#: app/controllers/integration/sipgate_controller.rb:30
 msgid "Invalid 'direction'!"
 msgstr ""
 
@@ -9783,9 +9783,9 @@ msgstr ""
 msgid "Invalid signature format: expected a PGP signature"
 msgstr ""
 
-#: app/controllers/integration/cti_controller.rb:41
-#: app/controllers/integration/placetel_controller.rb:40
-#: app/controllers/integration/sipgate_controller.rb:40
+#: app/controllers/integration/cti_controller.rb:43
+#: app/controllers/integration/placetel_controller.rb:42
+#: app/controllers/integration/sipgate_controller.rb:42
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -12515,7 +12515,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
-#: app/controllers/application_controller/handles_errors.rb:61
+#: app/controllers/application_controller/handles_errors.rb:72
 #: app/services/service/ticket/article/create.rb:136
 msgid "Not authorized"
 msgstr ""
@@ -18996,6 +18996,11 @@ msgstr ""
 msgid "The user token could not be generated."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/user/form_handler_user_password_change_hint.coffee:19
+#: app/frontend/shared/entities/user/composables/useUserPasswordChangeHint.ts:27
+msgid "The user will be notified of the password change by email."
+msgstr ""
+
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:88
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -19536,7 +19541,7 @@ msgstr ""
 msgid "This new desktop BETA UI is currently in development and not ready for production use. It may contain bugs or incomplete features."
 msgstr ""
 
-#: app/controllers/application_controller/handles_errors.rb:100
+#: app/controllers/application_controller/handles_errors.rb:117
 #: app/graphql/gql/zammad_schema.rb:113
 msgid "This object already exists."
 msgstr ""
@@ -21384,8 +21389,8 @@ msgstr ""
 msgid "User could not be created."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:85
-#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:80
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:89
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:85
 msgid "User could not be updated."
 msgstr ""
 

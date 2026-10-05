@@ -2,6 +2,7 @@
 
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import { useUserFormSchema } from '#shared/entities/user/composables/useUserFormSchema.ts'
+import { useUserPasswordChangeHint } from '#shared/entities/user/composables/useUserPasswordChangeHint.ts'
 import { useUserUpdateMutation } from '#shared/entities/user/graphql/mutations/update.api.ts'
 import type { EditableUser } from '#shared/entities/user/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
@@ -50,12 +51,16 @@ export const useUserEdit = () => {
       },
     }
 
+    const { updatePasswordChangeHint } = useUserPasswordChangeHint(user, formChangeFields)
+
     dialog.openDialog({
       object: user,
       mutation: useUserUpdateMutation,
       schema,
       formChangeFields,
       onChangedField: (fieldName, newValue) => {
+        updatePasswordChangeHint(fieldName, newValue)
+
         if (
           fieldName === 'organization_id' &&
           application.config.ticket_organization_reassignment

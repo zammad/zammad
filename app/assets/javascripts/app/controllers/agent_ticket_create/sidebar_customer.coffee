@@ -72,6 +72,7 @@ class SidebarCustomer extends App.Controller
         object:  __('User')
         objects: __('Users')
       container: @elSidebar.closest('.content')
+      handlers: [App.FormHandlerUserPasswordChangeHint.run]
     )
 
 App.Config.set('200-Customer', SidebarCustomer, 'TicketCreateSidebar')

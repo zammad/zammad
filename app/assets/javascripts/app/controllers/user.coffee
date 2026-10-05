@@ -176,7 +176,7 @@ class App.ControllerGenericIndexUser extends App.ControllerGenericIndex
           navupdate: '#users'
         genericObject: 'User'
         container: @el.closest('.content')
-        handlers: [removeGroupPermissions, hideOrganizationHelp]
+        handlers: [removeGroupPermissions, hideOrganizationHelp, App.FormHandlerUserPasswordChangeHint.run]
         screen: 'edit'
         veryLarge: true
         contentFormParams: ->

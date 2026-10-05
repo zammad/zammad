@@ -343,6 +343,44 @@ RSpec.describe 'Manage > Users', type: :system do
       end
     end
 
+    describe 'password change hint' do
+      let(:hint) { 'The user will be notified of the password change by email.' }
+
+      it 'shows the hint while a password is entered' do
+        in_modal do
+          expect(page).to have_no_text(hint)
+
+          fill_in 'password', with: 'vXqXseF9L2ab'
+          expect(page).to have_text(hint)
+
+          fill_in 'password', with: ''
+          expect(page).to have_no_text(hint)
+        end
+      end
+
+      context 'when user has no email' do
+        let(:user) { create(:admin, login: 'no-email-admin', email: '') }
+
+        it 'shows the hint only once an email is entered' do
+          in_modal do
+            fill_in 'password', with: 'vXqXseF9L2ab'
+            expect(page).to have_no_text(hint)
+
+            fill_in 'Email', with: 'no-email-admin@example.com'
+            expect(page).to have_text(hint)
+          end
+        end
+      end
+
+      context 'when user edits themselves', authenticated_as: -> { user } do
+        it 'does not show the hint' do
+          in_modal do
+            fill_in 'password', with: 'vXqXseF9L2ab'
+            expect(page).to have_no_text(hint)
+          end
+        end
+      end
+    end
   end
 
   describe 'check user edit permissions', authenticated_as: -> { user } do

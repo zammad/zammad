@@ -63,6 +63,17 @@ RSpec.describe 'Ticket zoom', type: :system do
       modal_ready
     end
 
+    it 'shows the password change hint when editing the customer' do
+      click '.tabsSidebar-tab[data-tab=customer]'
+      click '#userAction'
+      click_on 'Edit Customer'
+
+      in_modal do
+        fill_in 'password', with: 'vXqXseF9L2ab'
+        expect(page).to have_text('The user will be notified of the password change by email.')
+      end
+    end
+
     it 'does show the edit link for the organization' do
       click '.tabsSidebar-tab[data-tab=organization]'
       click '#userAction'
