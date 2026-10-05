@@ -831,11 +831,11 @@ msgstr "%s% zostało ponownie otwartych"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} może mieć pełny lub szczegółowy dostęp do grupy"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "%{name} już istnieje"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} jest słowem zastrzeżonym"
 
@@ -1826,7 +1826,7 @@ msgstr "Dodaj wszystkie wartości"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:680
 #, fuzzy
 #| msgid "Edit Answer"
 msgid "Add answer"
@@ -1843,7 +1843,7 @@ msgstr "Dodaj listę punktową"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:663
 #, fuzzy
 #| msgid "Edit Category"
 msgid "Add category"
@@ -2175,7 +2175,7 @@ msgstr "Czat agenta"
 msgid "Agent idle timeout"
 msgstr "Limit czasu bezczynności agenta"
 
-#: app/models/role.rb:182 app/models/user.rb:789
+#: app/models/role.rb:182 app/models/user.rb:801
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Przekroczono limit agentów, sprawdź ustawienia konta."
 
@@ -2415,7 +2415,7 @@ msgstr ""
 "Wysłaliśmy e-mail do _%s_. Kliknij link w e-mailu, aby zweryfikować swoje "
 "konto."
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2531,7 +2531,7 @@ msgid "Answer"
 msgstr "Odpowiedź"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:223
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer actions"
@@ -2857,7 +2857,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Jesteś pewny? Masz niezapisane zmiany, które zostaną utracone."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:153
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Jesteś pewny? Twoje ustawienia powiadomień zostaną przywrócone do domyślnych."
@@ -2983,7 +2983,7 @@ msgstr ""
 "Czas przypisania w minutach w przypadku bezczynności agenta. Zgłoszenie "
 "będzie oznaczone jako nieprzypisane."
 
-#: app/models/user.rb:691
+#: app/models/user.rb:703
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -3004,7 +3004,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Musisz wybrać co najmniej jeden obiekt."
 
-#: app/models/role.rb:159 app/models/user.rb:768
+#: app/models/role.rb:159 app/models/user.rb:780
 msgid "At least one user needs to have admin permissions."
 msgstr "Przynajmniej jeden użytkownik musi mieć uprawnienia administratora."
 
@@ -3437,7 +3437,7 @@ msgid "Back to previous page"
 msgstr "Powrót do poprzedniej strony"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Back to search results"
 msgstr "Powrót do wyników wyszukiwania"
 
@@ -3922,7 +3922,7 @@ msgstr "Anuluj i wyloguj się"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3950,7 +3950,7 @@ msgstr "Nie można usunąć rekordu, ponieważ istnieje zależny %{record}"
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "Nie można usunąć rekordu, ponieważ istnieje zależny %{record}"
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -4015,7 +4015,7 @@ msgstr "Układ kategorii"
 msgid "Category feed"
 msgstr "Kategoria"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:537
 #, fuzzy
 #| msgid "Overview order list"
 msgid "Category order list"
@@ -5205,7 +5205,7 @@ msgstr "Kopiuj"
 msgid "Copy URL"
 msgstr "Skopiuj adres URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:168
 #, fuzzy
 #| msgid "Copy secret"
 msgid "Copy answer title"
@@ -7361,7 +7361,7 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Najpierw usuń wszystkie istniejące rekordy."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:226
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 #, fuzzy
@@ -7768,7 +7768,7 @@ msgstr "Odrzuć migawkę"
 msgid "Discard unsaved reply"
 msgstr "Odrzuć niezapisaną odpowiedź"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -8387,7 +8387,7 @@ msgstr "Konto e-mail"
 msgid "Email address"
 msgstr "Adres e-mail"
 
-#: app/models/user.rb:701
+#: app/models/user.rb:713
 msgid "Email address '%{email}' is already used for another user."
 msgstr "Adres e-mail '%{email}' jest już używany przez innego użytkownika."
 
@@ -9090,7 +9090,7 @@ msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 "Błąd podczas pobierania informacji i-doit. Skontaktuj się z administratorem."
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 #, fuzzy
 #| msgid ""
 #| "Error fetching i-doit information. Please contact your administrator."
@@ -10286,8 +10286,8 @@ msgstr "Idź do domu"
 msgid "Go inside group"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:96
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:69
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Go to knowledge base"
@@ -11639,7 +11639,7 @@ msgstr "Wewnętrzny"
 msgid "Internal Knowledge Base feed:"
 msgstr "Kanał wewnętrznej bazy wiedzy:"
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -11741,7 +11741,7 @@ msgstr "Nieprawidłowy identyfikator klienta w pętli odbioru!"
 msgid "Invalid client_id received!"
 msgstr "Otrzymano nieprawidłowy identyfikator klienta!"
 
-#: app/models/user.rb:640
+#: app/models/user.rb:652
 msgid "Invalid email '%{email}'"
 msgstr "Nieprawidłowy e-mail '%{email}'"
 
@@ -12088,7 +12088,7 @@ msgstr "Słowa kluczowe"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
@@ -12167,7 +12167,7 @@ msgstr "Baza wiedzy i odpowiedzi"
 msgid "Knowledge Base multilingual support"
 msgstr "Wielojęzyczna obsługa bazy wiedzy"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:640
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base actions"
@@ -12176,8 +12176,8 @@ msgstr "Baza wiedzy aktywna"
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:250
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "Knowledge base answer"
@@ -12195,7 +12195,7 @@ msgstr "Zgłoszenie zostało pomyślnie zaktualizowane."
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr "Ustawienie ekranu zgłoszenia zostało pomyślnie zaktualizowane"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
 #, fuzzy
 #| msgid "Ticket updated successfully."
 msgid "Knowledge base answer updated successfully."
@@ -13742,7 +13742,7 @@ msgstr "Nastrój"
 msgid "More information can be found here."
 msgstr "Więcej informacji można znaleźć tutaj."
 
-#: app/models/user.rb:720
+#: app/models/user.rb:732
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Więcej niż 250 drugorzędnych organizacji jest niedozwolonych."
 
@@ -13982,7 +13982,7 @@ msgstr ""
 "Potrzebujesz identyfikatora użytkownika lub identyfikatora organizacji jako "
 "parametru"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 #, fuzzy
 #| msgid "Negative Feedback"
 msgid "Negative feedback"
@@ -14523,7 +14523,7 @@ msgstr "Brak jeszcze elementów listy kontrolnej"
 msgid "No checklist templates have been created yet."
 msgstr "Nie utworzono jeszcze żadnych szablonów list kontrolnych."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
 #, fuzzy
 #| msgid "No Comment"
 msgid "No comment"
@@ -14552,7 +14552,7 @@ msgstr "Brak wersji roboczych"
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr "Brak e-mail!"
 
@@ -14599,7 +14599,7 @@ msgstr "Żaden import nie jest w toku."
 msgid "No items available"
 msgstr "Brak dostępnych elementów"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:606
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "No knowledge base content is available yet."
@@ -14730,7 +14730,7 @@ msgstr "Nie udostępniono jeszcze żadnych wersji roboczych"
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr "Nie przesłano danych źródłowych!"
 
@@ -14763,15 +14763,15 @@ msgstr "Nie utworzono jeszcze szablonu."
 msgid "No tickets in this state."
 msgstr "W tym stanie nie ma zgłoszeń."
 
-#: app/controllers/users_controller.rb:254
+#: app/controllers/users_controller.rb:256
 msgid "No token!"
 msgstr "Brak tokena!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 #, fuzzy
 #| msgid "No translation for this locale available"
@@ -14901,8 +14901,8 @@ msgstr "Nie skonfigurowany"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -15019,19 +15019,19 @@ msgstr "Nadawca powiadomień"
 msgid "Notification sent to"
 msgstr "powiadomienie wysłane do '%s'"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
 msgid "Notification settings could not be reset."
 msgstr "Nie można zresetować ustawień powiadomień."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:124
 msgid "Notification settings could not be saved."
 msgstr "Nie można zapisać ustawień powiadomień."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:187
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
 msgid "Notification settings have been reset to default."
 msgstr "Ustawienia powiadomień zostały przywrócone do wartości domyślnych."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:142
 msgid "Notification settings have been saved successfully."
 msgstr "Ustawienia powiadomień zostały pomyślnie zapisane."
 
@@ -16129,6 +16129,7 @@ msgstr "Poziom uprawnień do wyszukiwania zgłoszeń"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "uprawnienia"
@@ -16288,7 +16289,7 @@ msgid "Please configure import source before running."
 msgstr "Proszę skonfigurować źródło importu przed uruchomieniem."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
 msgid "Please contact your administrator."
 msgstr "Skontaktuj się z administratorem."
 
@@ -16366,13 +16367,13 @@ msgstr "Przejdź do logowania"
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Podaj odbiorcę w polu „DO” lub „DW”."
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 msgid "Please provide your current password."
 msgstr "Proszę podać aktualne hasło."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 msgid "Please provide your new password."
 msgstr "Proszę podać nowe hasło."
 
@@ -16457,7 +16458,7 @@ msgstr "Port"
 msgid "Position"
 msgstr "Pozycja"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 #, fuzzy
 #| msgid "Positive Feedback"
 msgid "Positive feedback"
@@ -17077,7 +17078,7 @@ msgstr ""
 "Referencje — szukaj dalszych informacji również w nagłówkach w odpowiedzi na "
 "pytania lub referencjach."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
 msgid "Regenerate"
 msgstr "Regeneracja"
 
@@ -17614,7 +17615,7 @@ msgstr "Przywróć ustawienia domyślne"
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 msgid "Reset to default settings"
 msgstr "Przywróć ustawienia domyślne"
 
@@ -18129,10 +18130,10 @@ msgstr "Zapisz konfigurację"
 msgid "Save draft"
 msgstr "Zapisz szkic"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:226
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
 #, fuzzy
 #| msgid "Save Notifications"
-msgid "Save notifications"
+msgid "Save notification settings"
 msgstr "Zapisywanie powiadomień"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
@@ -18552,7 +18553,7 @@ msgstr "Szukaj…"
 msgid "Secondary organizations"
 msgstr "Drugorzędna organizacja"
 
-#: app/models/user.rb:708
+#: app/models/user.rb:720
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -18560,7 +18561,7 @@ msgstr ""
 "Organizacje drugorzędne są dozwolone tylko wtedy, gdy podana jest "
 "organizacja podstawowa."
 
-#: app/models/user.rb:714
+#: app/models/user.rb:726
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Organizacja drugorzędna nie może obejmować organizacji podstawowej."
 
@@ -20217,7 +20218,7 @@ msgstr "Akceptuj"
 msgid "Submit Comment"
 msgstr "Prześlij komentarz"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 #, fuzzy
 #| msgid "Submit Comment"
 msgid "Submit comment"
@@ -20697,7 +20698,7 @@ msgid "Textarea field"
 msgstr "Pole tekstowe wielowierszowe"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Thank you for your feedback."
 msgstr "Dziękujemy Ci za Twoją opinię."
 
@@ -20713,7 +20714,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Dziękujemy za dołączenie, e-mail wysłany do \"%s\"."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "Dziękujemy za opinię. Co poszło nie tak?"
 
@@ -20866,7 +20867,7 @@ msgstr "Ładunek webhook WhatsApp nie mógł zostać przetworzony."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "Ładunek webhooka WhatsApp nie mógł zostać zweryfikowany."
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -21045,7 +21046,7 @@ msgstr "Certyfikat dla %s nie został znaleziony."
 msgid "The certificate for this private key could not be found."
 msgstr "Nie można znaleźć certyfikatu dla tego klucza prywatnego."
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 msgid "The certificate for verification could not be found."
 msgstr "Certyfikat do weryfikacji nie mógł być znaleziony."
 
@@ -21200,7 +21201,7 @@ msgid "The context window size must be a positive number."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr "Hasło podane przez ciebie jest nieprawidłowe."
@@ -21286,7 +21287,7 @@ msgstr "Dzielnik między TicketHook a numerem zgłoszenia. Np. ':'."
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 msgid "The download could not be started. Please try again later."
 msgstr "Nie można rozpocząć pobierania. Spróbuj ponownie później."
 
@@ -21302,7 +21303,7 @@ msgstr ""
 "import_mode jest włączone."
 
 #: app/services/service/auth/send_admin_token.rb:38
-#: app/services/service/user/password_reset/update.rb:40
+#: app/services/service/user/password_reset/update.rb:34
 msgid "The email could not be sent to the user."
 msgstr "E-mail nie mógł zostać wysłany do użytkownika."
 
@@ -21690,7 +21691,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "Prywatny klucz PGP nie mógł być znaleziony."
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 msgid "The private key for decryption could not be found."
 msgstr "Klucz prywatny do odszyfrowania nie mógł być znaleziony."
 
@@ -21791,7 +21792,7 @@ msgstr "Podany ładunek jest nieprawidłowy. Sprawdź swoją składnię."
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
@@ -21881,7 +21882,7 @@ msgstr "Brakuje wymaganej wartości '%{attribute}' dla %{key}, %{inner}!"
 msgid "The required PGP passphrase is missing."
 msgstr "Brakuje wymaganego hasła PGP."
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:660
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr "Brakuje wymaganego atrybutu \"E-mail\"."
@@ -21953,7 +21954,7 @@ msgstr "Wymagany parametr „group_id” jest nieprawidłowy."
 msgid "The required parameter 'group_id' is missing."
 msgstr "Brak wymaganego parametru „group_id”."
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr "Brak wymaganego parametru „id”."
 
@@ -21985,7 +21986,7 @@ msgstr "Brak wymaganego parametru „options.adapter”."
 msgid "The required parameter 'params' is missing."
 msgstr "Brak wymaganego parametru „params”."
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr "Brak wymaganego parametru „hasło”."
 
@@ -22001,7 +22002,7 @@ msgstr "Brak wymaganego parametru „payload->screen”."
 msgid "The required parameter 'permission' is missing."
 msgstr "Brak wymaganego parametru „permission”."
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:653
 msgid "The required parameter 'signup' is missing."
 msgstr "Brak wymaganego parametru „signup”."
 
@@ -22161,7 +22162,7 @@ msgstr "Podpis został pomyślnie zweryfikowany."
 msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
@@ -22500,7 +22501,7 @@ msgstr "Nie skonfigurowano godzin pracy."
 msgid "There are no business hours configured."
 msgstr "Nie skonfigurowano godzin pracy."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:587
 msgid "There are no categories to arrange yet."
 msgstr ""
 
@@ -23009,13 +23010,13 @@ msgstr "To nie jest ważny certyfikat X509. Sprawdź format certyfikatu."
 msgid "This item expands to show more options"
 msgstr "Ten element rozwija się, aby wyświetlić więcej opcji"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "This knowledge base answer is not available."
 msgstr "Usługa Simple Storage jest niedostępna."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "This knowledge base category is not available."
@@ -23065,7 +23066,7 @@ msgstr ""
 "Ta wiadomość zawiera obrazy lub inne treści hostowane przez zewnętrzne "
 "źródło. Została ona zablokowana, ale ty możesz pobrać oryginalny format."
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr "Ta wiadomość nie jest podpisana przez nadawcę."
 
@@ -24236,7 +24237,7 @@ msgstr "Metainformacje o artykule"
 msgid "Toggle dark mode"
 msgstr "Przełącz tryb ciemny"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
 #, fuzzy
 #| msgid "Toggle Group"
 msgid "Toggle group"
@@ -24867,7 +24868,7 @@ msgstr "Nadchodzące wydarzenia"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
@@ -25816,7 +25817,7 @@ msgid "View"
 msgstr "Widok"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
 #, fuzzy
 #| msgid "New Answer"
 msgid "View answer"
@@ -26669,6 +26670,7 @@ msgstr ""
 "obsługi klienta zamyka się %s."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
+#: app/services/service/ai/analytics/upsert_usage.rb:45
 msgid "You have already provided feedback, thank you."
 msgstr "Ty już przekazałeś informację zwrotną, dziękujemy."
 
@@ -27204,16 +27206,16 @@ msgstr "przypisz zgłoszenia"
 msgid "at"
 msgstr "o"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 msgid "at least one letter is required"
 msgstr "wymagana jest co najmniej jedna litera"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "załącznik,załączony,w załączeniu,załączenie"
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 msgid "attribute is not editable"
 msgstr "atrybutu nie można edytować"
 
@@ -27247,7 +27249,7 @@ msgstr "zajęty"
 msgid "camera,image,photo,picture"
 msgstr "aparat,obraz,zdjęcie,obraz"
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -27261,13 +27263,13 @@ msgstr "nie może być puste"
 msgid "can't be empty"
 msgstr "nie może być pusty"
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "nie może być pusty"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "nie można użyć, ponieważ *_id i *_ids są niedozwolone"
 
@@ -27846,7 +27848,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -27944,7 +27946,7 @@ msgstr "nie jest kolorem. Obsługiwane są tylko kolory Hex, RGB i HSL."
 msgid "is not a number"
 msgstr "nie jest liczbą"
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "is not a supported AI provider"
@@ -27993,7 +27995,7 @@ msgstr "ma nieprawidłową długość (powinna wynosić %{count} znaków)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "ma nieprawidłową długość (powinna wynosić 1 znak)"
 
-#: app/models/user.rb:907
+#: app/models/user.rb:919
 msgid "is too long"
 msgstr "jest za długie"
 
@@ -28324,7 +28326,7 @@ msgstr "zgłoszenia,zgłoszenia"
 msgid "now"
 msgstr "teraz"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "dozwolone są tylko małe litery, cyfry i znak „_”"
 
@@ -28586,7 +28588,7 @@ msgstr "pominięte"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr "spacje są niedozwolone"
 

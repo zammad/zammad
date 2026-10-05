@@ -819,11 +819,11 @@ msgid "%{model} can have full or granular access to group"
 msgstr ""
 "%{model}은 그룹에 대한 전체 또는 세분화된 액세스 권한을 가질 수 있습니다"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "%{name} 이(가) 이미 존재합니다"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} 은 예약어입니다"
 
@@ -1826,7 +1826,7 @@ msgstr "모든 값 추가"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:680
 #, fuzzy
 #| msgid "Edit Answer"
 msgid "Add answer"
@@ -1843,7 +1843,7 @@ msgstr "글머리 기호 목록 추가"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:663
 #, fuzzy
 #| msgid "Edit Category"
 msgid "Add category"
@@ -2178,7 +2178,7 @@ msgstr "에이전트 채팅"
 msgid "Agent idle timeout"
 msgstr "상담원 유휴 시간 제한"
 
-#: app/models/role.rb:182 app/models/user.rb:789
+#: app/models/role.rb:182 app/models/user.rb:801
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니다."
 
@@ -2402,7 +2402,7 @@ msgstr ""
 "%s 주소로 이메일을 전송했습니다. 계정을 인증하려면 이메일에 있는 링크를 클릭"
 "해 주세요."
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2520,7 +2520,7 @@ msgid "Answer"
 msgstr "답변"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:223
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer actions"
@@ -2849,7 +2849,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "정말 진행하시겠습니까? 저장되지 않은 변경사항이 손실됩니다."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:153
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "정말 진행하시겠습니까? 알림 설정이 기본값으로 재설정됩니다."
 
@@ -2974,7 +2974,7 @@ msgstr ""
 "분 할당 시간 초과 할당 된 에이전트가 작동하지 않은 경우. Ticket은 unassigend"
 "로 표시됩니다."
 
-#: app/models/user.rb:691
+#: app/models/user.rb:703
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2996,7 +2996,7 @@ msgstr "최소 하나의 일치 규칙이 필요하지만 제공되지 않았습
 msgid "At least one object must be selected."
 msgstr "최소 하나의 항목을 선택해야 합니다."
 
-#: app/models/role.rb:159 app/models/user.rb:768
+#: app/models/role.rb:159 app/models/user.rb:780
 msgid "At least one user needs to have admin permissions."
 msgstr "최소 한 명의 사용자가 관리자 권한을 가져야 합니다."
 
@@ -3427,7 +3427,7 @@ msgid "Back to previous page"
 msgstr "이전 페이지로 돌아가기"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Back to search results"
 msgstr "검색 결과로 돌아가기"
 
@@ -3908,7 +3908,7 @@ msgstr "취소 및 로그아웃"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3940,7 +3940,7 @@ msgstr "종속된 %{record}가 존재하므로 레코드를 삭제할 수 없습
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "종속된 %{record}가 존재하므로 레코드를 삭제할 수 없습니다"
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -4005,7 +4005,7 @@ msgstr "카테고리 페이지 레이아웃"
 msgid "Category feed"
 msgstr "범주"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:537
 #, fuzzy
 #| msgid "Overview navigation list"
 msgid "Category order list"
@@ -5194,7 +5194,7 @@ msgstr "복사"
 msgid "Copy URL"
 msgstr "URL 복사"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:168
 #, fuzzy
 #| msgid "Copy Secret"
 msgid "Copy answer title"
@@ -7247,7 +7247,7 @@ msgstr "모든 하위 카테고리와 답변을 삭제한 뒤 다시 시도하�
 msgid "Delete all existing records first."
 msgstr "먼저 기존의 모든 기록을 삭제합니다."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:226
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 #, fuzzy
@@ -7657,7 +7657,7 @@ msgstr "스냅샷 취소"
 msgid "Discard unsaved reply"
 msgstr "저장되지 않은 답장을 버리기"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -8284,7 +8284,7 @@ msgstr "이메일 계정"
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: app/models/user.rb:701
+#: app/models/user.rb:713
 msgid "Email address '%{email}' is already used for another user."
 msgstr "이메일 주소 '%{email}'는 이미 다른 사용자가 사용 중입니다."
 
@@ -8965,7 +8965,7 @@ msgstr "자동 마법사를 실행하는 중 오류가 발생했습니다."
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "i-doit 정보를 가져오는 중 오류가 발생했습니다. 관리자에게 문의하세요."
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 #, fuzzy
 #| msgid ""
 #| "Error fetching i-doit information. Please contact your administrator."
@@ -10155,8 +10155,8 @@ msgstr "홈으로"
 msgid "Go inside group"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:96
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:69
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Go to knowledge base"
@@ -11484,7 +11484,7 @@ msgstr "내부"
 msgid "Internal Knowledge Base feed:"
 msgstr "내부 지식 베이스 피드:"
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -11584,7 +11584,7 @@ msgstr "수신 루프의 client_id가 잘못되었습니다!"
 msgid "Invalid client_id received!"
 msgstr "잘못된 client_id를 받았습니다!"
 
-#: app/models/user.rb:640
+#: app/models/user.rb:652
 msgid "Invalid email '%{email}'"
 msgstr "잘못된 이메일 '%{email}'"
 
@@ -11924,7 +11924,7 @@ msgstr "키워드"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
@@ -12003,7 +12003,7 @@ msgstr "지식 베이스 답변"
 msgid "Knowledge Base multilingual support"
 msgstr "지식 베이스 다국어 지원"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:640
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base actions"
@@ -12012,8 +12012,8 @@ msgstr "지식 베이스 활성화"
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:250
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "Knowledge base answer"
@@ -12031,7 +12031,7 @@ msgstr "테스트 실행 성공했습니다."
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr "티켓 화면 동작이 성공적으로 업데이트되었습니다"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Knowledge base answer updated successfully."
@@ -13579,7 +13579,7 @@ msgstr "기분"
 msgid "More information can be found here."
 msgstr "자세한 정보는 여기에서 확인할 수 있습니다."
 
-#: app/models/user.rb:720
+#: app/models/user.rb:732
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "250개 이상의 보조 조직은 허용되지 않습니다."
 
@@ -13815,7 +13815,7 @@ msgstr "session_id가 필요합니다."
 msgid "Need user_id or organization_id as param"
 msgstr "user_id 또는 organization_id 매개변수가 필요합니다"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 #, fuzzy
 #| msgid "Negative Feedback"
 msgid "Negative feedback"
@@ -14356,7 +14356,7 @@ msgstr "아직 체크리스트 항목이 없습니다"
 msgid "No checklist templates have been created yet."
 msgstr "아직 체크리스트 템플릿이 생성되지 않았습니다."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
 #, fuzzy
 #| msgid "No Comment"
 msgid "No comment"
@@ -14385,7 +14385,7 @@ msgstr "초안 없음"
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr "이메일 없음!"
 
@@ -14434,7 +14434,7 @@ msgstr "진행 중인 가져오기 없음."
 msgid "No items available"
 msgstr "사용 가능한 매크로 없음."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:606
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "No knowledge base content is available yet."
@@ -14563,7 +14563,7 @@ msgstr "아직 공유 초안 없음"
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr "소스 데이터가 제출되지 않았습니다!"
 
@@ -14596,15 +14596,15 @@ msgstr "아직 템플릿이 생성되지 않았습니다."
 msgid "No tickets in this state."
 msgstr "이 상태의 티켓 없음."
 
-#: app/controllers/users_controller.rb:254
+#: app/controllers/users_controller.rb:256
 msgid "No token!"
 msgstr "토큰 없음!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 #, fuzzy
 #| msgid "No translation for this locale available"
@@ -14732,8 +14732,8 @@ msgstr "구성되지 않음"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -14849,19 +14849,19 @@ msgstr "알림 발신자"
 msgid "Notification sent to"
 msgstr "'%s'에게 알림 전송됨"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
 msgid "Notification settings could not be reset."
 msgstr "알림 설정을 재설정할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:124
 msgid "Notification settings could not be saved."
 msgstr "알림 설정을 저장할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:187
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
 msgid "Notification settings have been reset to default."
 msgstr "알림 설정이 기본값으로 재설정되었습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:142
 msgid "Notification settings have been saved successfully."
 msgstr "알림 설정이 성공적으로 저장되었습니다."
 
@@ -15946,6 +15946,7 @@ msgstr "티켓 조회 권한 수준"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "권한"
@@ -16105,7 +16106,7 @@ msgid "Please configure import source before running."
 msgstr "실행하기 전에 가져오기 소스를 구성하세요."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
 msgid "Please contact your administrator."
 msgstr "관리자에게 문의하세요."
 
@@ -16181,13 +16182,13 @@ msgstr "로그인을 진행하세요"
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "\"받는 사람\" 또는 \"참조\"에 수신자를 제공하세요."
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 msgid "Please provide your current password."
 msgstr "현재 비밀번호를 입력하세요."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 msgid "Please provide your new password."
 msgstr "새 비밀번호를 입력하세요."
 
@@ -16266,7 +16267,7 @@ msgstr "포트"
 msgid "Position"
 msgstr "위치"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 #, fuzzy
 #| msgid "Positive Feedback"
 msgid "Positive feedback"
@@ -16879,7 +16880,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr "참조 - In-Reply-To 또는 References 헤더에서도 후속 작업을 검색합니다."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
 msgid "Regenerate"
 msgstr "재생성"
 
@@ -17418,7 +17419,7 @@ msgstr "기본값으로 재설정"
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 msgid "Reset to default settings"
 msgstr "기본 설정으로 재설정"
 
@@ -17930,10 +17931,10 @@ msgstr "구성 저장"
 msgid "Save draft"
 msgstr "초안 저장"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:226
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
 #, fuzzy
 #| msgid "Save Notifications"
-msgid "Save notifications"
+msgid "Save notification settings"
 msgstr "알림 저장"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
@@ -18349,13 +18350,13 @@ msgstr "검색…"
 msgid "Secondary organizations"
 msgstr "보조 조직"
 
-#: app/models/user.rb:708
+#: app/models/user.rb:720
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr "보조 조직은 주 조직이 지정된 경우에만 허용됩니다."
 
-#: app/models/user.rb:714
+#: app/models/user.rb:726
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "보조 조직에는 주 조직을 포함할 수 없습니다."
 
@@ -19981,7 +19982,7 @@ msgstr "제출"
 msgid "Submit Comment"
 msgstr "댓글 제출"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 #, fuzzy
 #| msgid "Submit Comment"
 msgid "Submit comment"
@@ -20460,7 +20461,7 @@ msgid "Textarea field"
 msgstr "텍스트 영역 필드"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Thank you for your feedback."
 msgstr "피드백을 주셔서 감사합니다."
 
@@ -20475,7 +20476,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "가입해 주셔서 감사합니다. 이메일을 \"%s\"로 보냈습니다."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "피드백을 주셔서 감사합니다. 무엇이 잘못되었는지 설명해 주시겠습니까?"
 
@@ -20627,7 +20628,7 @@ msgstr "WhatsApp 웹훅 페이로드를 처리할 수 없습니다."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "WhatsApp 웹훅 페이로드를 검증할 수 없습니다."
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -20804,7 +20805,7 @@ msgstr "%s에 대한 인증서를 찾을 수 없습니다."
 msgid "The certificate for this private key could not be found."
 msgstr "이 개인 키에 대한 인증서를 찾을 수 없습니다."
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 msgid "The certificate for verification could not be found."
 msgstr "확인용 인증서를 찾을 수 없습니다."
 
@@ -20953,7 +20954,7 @@ msgid "The context window size must be a positive number."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr "제공한 현재 비밀번호가 올바르지 않습니다."
@@ -21035,7 +21036,7 @@ msgstr "TicketHook과 티켓 번호 사이의 구분자입니다. 예: ': '."
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 msgid "The download could not be started. Please try again later."
 msgstr "다운로드를 시작할 수 없습니다. 나중에 다시 시도하세요."
 
@@ -21049,7 +21050,7 @@ msgid ""
 msgstr "import_mode 설정이 켜져 있어 사용자에게 이메일을 보낼 수 없습니다."
 
 #: app/services/service/auth/send_admin_token.rb:38
-#: app/services/service/user/password_reset/update.rb:40
+#: app/services/service/user/password_reset/update.rb:34
 msgid "The email could not be sent to the user."
 msgstr "사용자에게 이메일을 보낼 수 없습니다."
 
@@ -21430,7 +21431,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "%s 객체 (들) 업데이트됩니다."
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 msgid "The private key for decryption could not be found."
 msgstr "알림이 전송 될 때."
 
@@ -21532,7 +21533,7 @@ msgstr "제공된 페이로드가 유효하지 않습니다. 구문을 확인하
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
@@ -21620,7 +21621,7 @@ msgstr "%{key}, %{inner}에 필요한 '%{attribute}' 값이 없습니다!"
 msgid "The required PGP passphrase is missing."
 msgstr "필수 PGP 암호문이 없습니다."
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:660
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr "필수 속성 'email'이(가) 없습니다."
@@ -21692,7 +21693,7 @@ msgstr "필수 매개변수 'group_id'이(가) 유효하지 않습니다."
 msgid "The required parameter 'group_id' is missing."
 msgstr "필수 매개변수 'group_id'이(가) 없습니다."
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr "필수 매개변수 'id'이(가) 없습니다."
 
@@ -21724,7 +21725,7 @@ msgstr "필수 매개변수 'options.adapter'이(가) 없습니다."
 msgid "The required parameter 'params' is missing."
 msgstr "필수 매개변수 'params'이(가) 없습니다."
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr "필수 매개변수 'password'이(가) 없습니다."
 
@@ -21740,7 +21741,7 @@ msgstr "필수 매개변수 'payload->screen'이(가) 없습니다."
 msgid "The required parameter 'permission' is missing."
 msgstr "필수 매개변수 'permission'이(가) 없습니다."
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:653
 msgid "The required parameter 'signup' is missing."
 msgstr "필수 매개변수 'signup'이(가) 없습니다."
 
@@ -21897,7 +21898,7 @@ msgstr "서명이 성공적으로 확인되었습니다."
 msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
@@ -22219,7 +22220,7 @@ msgstr "영업 시간이 구성되지 않았습니다."
 msgid "There are no business hours configured."
 msgstr "영업 시간이 구성되지 않았습니다."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:587
 msgid "There are no categories to arrange yet."
 msgstr ""
 
@@ -22705,13 +22706,13 @@ msgstr "이것은 유효한 X509 인증서가 아닙니다. 인증서 형식을 
 msgid "This item expands to show more options"
 msgstr "이 항목을 확장하여 더 많은 옵션 표시"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "This knowledge base answer is not available."
 msgstr "심플 스토리지 서비스를 사용할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "This knowledge base category is not available."
@@ -22759,7 +22760,7 @@ msgstr ""
 "이 메시지는 외부 소스에서 호스팅하는 이미지나 기타 콘텐츠를 포함하고 있습니"
 "다. 차단되었지만 원본 형식을 다운로드할 수 있습니다."
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr "이 메시지는 발신자에 의해 서명되지 않았습니다."
 
@@ -23873,7 +23874,7 @@ msgstr "기사 메타 정보"
 msgid "Toggle dark mode"
 msgstr "다크 모드 전환"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
 #, fuzzy
 #| msgid "Toggle Group"
 msgid "Toggle group"
@@ -24499,7 +24500,7 @@ msgstr "예정된 이벤트"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
@@ -25440,7 +25441,7 @@ msgid "View"
 msgstr "보기"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
 #, fuzzy
 #| msgid "New Answer"
 msgid "View answer"
@@ -26271,6 +26272,7 @@ msgstr ""
 "스 기간은 %s에 종료됩니다."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
+#: app/services/service/ai/analytics/upsert_usage.rb:45
 msgid "You have already provided feedback, thank you."
 msgstr "이미 피드백을 제공해주셨습니다. 감사합니다."
 
@@ -26789,16 +26791,16 @@ msgstr "티켓 할당"
 msgid "at"
 msgstr "에"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 msgid "at least one letter is required"
 msgstr "최소 하나의 문자가 필요합니다"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "첨부,첨부됨,동봉,동봉물"
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 msgid "attribute is not editable"
 msgstr "속성을 편집할 수 없습니다"
 
@@ -26832,7 +26834,7 @@ msgstr "통화 중"
 msgid "camera,image,photo,picture"
 msgstr "카메라,이미지,사진,그림"
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -26846,13 +26848,13 @@ msgstr "비워둘 수 없습니다"
 msgid "can't be empty"
 msgstr "비어있을 수 없습니다"
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "비어있을 수 없습니다"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "*_id 및 *_ids는 허용되지 않으므로 사용할 수 없습니다"
 
@@ -27432,7 +27434,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -27530,7 +27532,7 @@ msgstr "색상이 아닙니다. Hex, RGB 및 HSL 색상만 지원됩니다."
 msgid "is not a number"
 msgstr "숫자가 아닙니다"
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "is not a supported AI provider"
@@ -27579,7 +27581,7 @@ msgstr "길이가 잘못되었습니다 (%{count}자여야 함)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "길이가 잘못되었습니다 (1자여야 함)"
 
-#: app/models/user.rb:907
+#: app/models/user.rb:919
 msgid "is too long"
 msgstr "너무 깁니다"
 
@@ -27906,7 +27908,7 @@ msgstr "알림,티켓"
 msgid "now"
 msgstr "지금"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "소문자, 숫자 및 '_'만 허용됩니다"
 
@@ -28168,7 +28170,7 @@ msgstr "건너뜀"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr "공백은 허용되지 않습니다"
 

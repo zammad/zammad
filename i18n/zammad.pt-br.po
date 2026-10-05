@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-21 22:12+0000\n"
+"PO-Revision-Date: 2026-09-30 22:12+0000\n"
 "Last-Translator: Igor Costa <igor_sfx@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -401,7 +401,7 @@ msgstr "%s Atributo"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:49
 msgid "%s Checklist"
-msgstr "Lista de verificação %s"
+msgstr "Checklist %s"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:90
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:204
@@ -745,11 +745,11 @@ msgstr "%s% estão sendo reabertos"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} pode ter acesso total ou granular ao grupo"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "%{name} já existe"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} é uma palavra reservada"
 
@@ -1715,7 +1715,7 @@ msgstr "Adicionar todos os valores"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:680
 msgid "Add answer"
 msgstr "Adicionar resposta"
 
@@ -1730,7 +1730,7 @@ msgstr "Adicionar marcadores"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:663
 msgid "Add category"
 msgstr "Adicionar categoria"
 
@@ -1750,7 +1750,7 @@ msgstr "Adicionar e-mail"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:5
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
 msgid "Add empty checklist"
-msgstr "Adicionar lista de verificação vazia"
+msgstr "Adicionar checklist vazio"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:550
 msgid "Add filter"
@@ -2056,7 +2056,7 @@ msgstr "Chat do agente"
 msgid "Agent idle timeout"
 msgstr "Tempo de inatividade do agente"
 
-#: app/models/role.rb:182 app/models/user.rb:789
+#: app/models/role.rb:182 app/models/user.rb:801
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Limite de agentes excedido, verifique as configurações da sua conta."
 
@@ -2289,7 +2289,7 @@ msgstr ""
 "Um email foi enviado para _%s_. Clique no link no email para verificar sua "
 "conta."
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2405,7 +2405,7 @@ msgid "Answer"
 msgstr "Resposta"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:223
 msgid "Answer actions"
 msgstr "Ações da resposta"
 
@@ -2716,7 +2716,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Tem certeza? Você tem alterações não salvas que serão perdidas."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:153
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Tem certeza? Suas configurações de notificação serão redefinidas para o "
@@ -2839,7 +2839,7 @@ msgstr ""
 "Tempo limite de atribuição se o agente não está trabalhando nele. O ticket "
 "será exibido como não atribuído."
 
-#: app/models/user.rb:691
+#: app/models/user.rb:703
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2860,7 +2860,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Pelo menos um objeto precisa ser selecionado."
 
-#: app/models/role.rb:159 app/models/user.rb:768
+#: app/models/role.rb:159 app/models/user.rb:780
 msgid "At least one user needs to have admin permissions."
 msgstr "Pelo menos um usuário precisa ter permissões de administrador."
 
@@ -3288,7 +3288,7 @@ msgid "Back to previous page"
 msgstr "Voltar à página anterior"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Back to search results"
 msgstr "Voltar aos resultados da pesquisa"
 
@@ -3769,7 +3769,7 @@ msgstr "Cancelar e sair"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3798,7 +3798,7 @@ msgstr ""
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "Não é possível excluir o registro porque existem %{record} dependentes"
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr "Não é possível excluir a conexão de IA do Zammad neste sistema."
 
@@ -3857,7 +3857,7 @@ msgstr "Número de categorias: %s"
 msgid "Category feed"
 msgstr "Feed da categoria"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:537
 msgid "Category order list"
 msgstr "Lista de ordem das categorias"
 
@@ -4098,46 +4098,44 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:23
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
-msgstr "Lista de verificação"
+msgstr "Checklist"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
 msgid "Checklist Item"
-msgstr "Item da lista de verificação"
+msgstr "Item do checklist"
 
 #: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
 msgid "Checklist Item Label"
-msgstr "Rótulo do item da lista de verificação"
+msgstr "Rótulo do item do checklist"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:29
 msgid "Checklist Template"
-msgstr "Modelo de lista de verificação"
+msgstr "Modelo de checklist"
 
 #: app/models/checklist_template.rb:17
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
-"Os itens do modelo de lista de verificação são limitados a 100 itens por "
-"lista."
+"Os itens do modelo de checklist são limitados a 100 itens por checklist."
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/checklist-item-checked.ts:10
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventEntityNames.ts:10
 msgid "Checklist item"
-msgstr "Item da lista de verificação"
+msgstr "Item do checklist"
 
 #: app/models/checklist/item.rb:105
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr "Os itens da lista de verificação são limitados a 100 itens por lista."
+msgstr "Os itens do checklist são limitados a 100 itens por checklist."
 
 #: app/models/checklist.rb:100
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
-"O modelo de lista de verificação deve estar ativo para ser usado como ponto "
-"de partida."
+"O modelo de checklist deve estar ativo para ser usado como ponto de partida."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
 #: db/seeds/permissions.rb:353 db/seeds/settings.rb:6167
 msgid "Checklists"
-msgstr "Listas de verificação"
+msgstr "Checklists"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:3
 msgid "Checkmk"
@@ -5026,7 +5024,7 @@ msgstr "Copiar"
 msgid "Copy URL"
 msgstr "Copiar URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:168
 msgid "Copy answer title"
 msgstr "Copiar título da resposta"
 
@@ -5313,13 +5311,12 @@ msgstr "Criar ticket de teste"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:210
 msgid "Create a new checklist item"
-msgstr "Criar um novo item de lista de verificação"
+msgstr "Criar um novo item de checklist"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
 msgid "Create a new checklist template in the admin interface."
-msgstr ""
-"Criar um novo modelo de lista de verificação na interface de administração."
+msgstr "Criar um novo modelo de checklist na interface de administração."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
@@ -7138,7 +7135,7 @@ msgstr "Exclua todas as categorias e respostas filhas e tente novamente."
 msgid "Delete all existing records first."
 msgstr "Exclua todos os registros existentes primeiro."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:226
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 msgid "Delete answer"
@@ -7536,7 +7533,7 @@ msgstr "Descartar snapshot"
 msgid "Discard unsaved reply"
 msgstr "Descartar resposta não gravada"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -7923,7 +7920,7 @@ msgstr "Editar categoria"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:121
 msgid "Edit checklist title"
-msgstr "Editar título da lista de verificação"
+msgstr "Editar título do checklist"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:80
 msgid "Edit customer"
@@ -8127,7 +8124,7 @@ msgstr "Conta de email"
 msgid "Email address"
 msgstr "Endereço de email"
 
-#: app/models/user.rb:701
+#: app/models/user.rb:713
 msgid "Email address '%{email}' is already used for another user."
 msgstr "O endereço de email '%{email}' já está sendo usado por outro usuário."
 
@@ -8299,7 +8296,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:6170
 msgid "Enable checklists."
-msgstr "Ativar listas de verificação."
+msgstr "Ativar checklists."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:154
 msgid "Enable debugging for implementation."
@@ -8834,7 +8831,7 @@ msgstr "Erro durante a execução do assistente automático."
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "Erro ao buscar informações do i-doit. Contate seu administrador."
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 msgid "Error while verifying signature, please contact your administrator."
 msgstr "Erro ao verificar a assinatura, contate seu administrador."
 
@@ -9213,11 +9210,11 @@ msgstr "Tarefas com falha"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:133
 msgid "Failed to add new checklist item."
-msgstr "Falha ao adicionar novo item à lista de verificação."
+msgstr "Falha ao adicionar novo item ao checklist."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
 msgid "Failed to delete checklist item."
-msgstr "Falha ao excluir item da lista de verificação."
+msgstr "Falha ao excluir item do checklist."
 
 #: app/controllers/channels_google_controller.rb:40
 #: app/controllers/channels_microsoft365_controller.rb:40
@@ -9239,12 +9236,11 @@ msgstr "Falha ao reverter a migração do canal!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:138
 msgid "Failed to save checklist order."
-msgstr "Falha ao salvar a ordem da lista de verificação."
+msgstr "Falha ao salvar a ordem do checklist."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:160
 msgid "Failed to save the order of the checklist items. Please try again."
-msgstr ""
-"Falha ao salvar a ordem dos itens da lista de verificação. Tente novamente."
+msgstr "Falha ao salvar a ordem dos itens do checklist. Tente novamente."
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/resendVerificationEmail.ts:50
 msgid "Failed to send email to \"%s\". Please contact an administrator."
@@ -9256,7 +9252,7 @@ msgstr "Falha ao configurar o código QR. Tente novamente."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
-msgstr "Falha ao atualizar o item da lista de verificação."
+msgstr "Falha ao atualizar o item do checklist."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
@@ -9977,8 +9973,8 @@ msgstr "Ir para o início"
 msgid "Go inside group"
 msgstr "Entrar no grupo"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:96
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:69
 msgid "Go to knowledge base"
 msgstr "Ir para a base de conhecimento"
 
@@ -11073,11 +11069,11 @@ msgstr "Versão incompatível do Elasticsearch"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
 msgid "Incomplete Ticket Checklist"
-msgstr "Lista de verificação de ticket incompleta"
+msgstr "Checklist de ticket incompleto"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklist.vue:30
 msgid "Incomplete checklist items"
-msgstr "Itens da lista de verificação incompletos"
+msgstr "Itens do checklist incompletos"
 
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
@@ -11087,7 +11083,7 @@ msgstr "Credenciais incompletas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
 msgid "Incomplete ticket checklist"
-msgstr "Lista de verificação do ticket incompleta"
+msgstr "Checklist do ticket incompleto"
 
 #: db/seeds/settings.rb:2495
 msgid "Increment (SystemID.Counter)"
@@ -11302,7 +11298,7 @@ msgstr "Interno"
 msgid "Internal Knowledge Base feed:"
 msgstr "Feed da base de conhecimento interna:"
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 msgid "Internal attributes cannot be deleted"
 msgstr "Atributos internos não podem ser excluídos"
 
@@ -11398,7 +11394,7 @@ msgstr "Client_id inválido no loop de recebimento!"
 msgid "Invalid client_id received!"
 msgstr "Client_id inválido recebido!"
 
-#: app/models/user.rb:640
+#: app/models/user.rb:652
 msgid "Invalid email '%{email}'"
 msgstr "Email inválido '%{email}'"
 
@@ -11734,7 +11730,7 @@ msgstr "Palavras-chave"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
@@ -11799,15 +11795,15 @@ msgstr "Idioma da base de conhecimento"
 msgid "Knowledge Base multilingual support"
 msgstr "Suporte multilíngue da base de conhecimento"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:640
 msgid "Knowledge base actions"
 msgstr "Ações da base de conhecimento"
 
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:250
 msgid "Knowledge base answer"
 msgstr "Resposta da base de conhecimento"
 
@@ -11821,7 +11817,7 @@ msgstr ""
 "Comportamento da tela de resposta da base de conhecimento atualizado com "
 "sucesso."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
 msgid "Knowledge base answer updated successfully."
 msgstr "Resposta da base de conhecimento atualizada com sucesso."
 
@@ -12548,11 +12544,11 @@ msgstr "Gerencie as configurações da interface BETA do seu sistema."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:30
 msgid "Manage Checklist Template"
-msgstr "Gerenciar modelo de lista de verificação"
+msgstr "Gerenciar modelo de checklist"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:31
 msgid "Manage Checklist Templates"
-msgstr "Gerenciar modelos de lista de verificação"
+msgstr "Gerenciar modelos de checklist"
 
 #: db/seeds/permissions.rb:168
 msgid "Manage Facebook channel of your system."
@@ -12758,7 +12754,7 @@ msgstr ""
 
 #: db/seeds/permissions.rb:354
 msgid "Manage ticket checklists of your system."
-msgstr "Gerenciar listas de verificação de tickets do seu sistema."
+msgstr "Gerenciar checklists de tickets do seu sistema."
 
 #: db/seeds/permissions.rb:228
 msgid "Manage ticket duplicate detection settings of your system."
@@ -13311,7 +13307,7 @@ msgstr "Estado de espírito"
 msgid "More information can be found here."
 msgstr "Mais informações podem ser encontradas aqui."
 
-#: app/models/user.rb:720
+#: app/models/user.rb:732
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Não são permitidas mais de 250 organizações secundárias."
 
@@ -13549,7 +13545,7 @@ msgstr "Precisa de session_id."
 msgid "Need user_id or organization_id as param"
 msgstr "Precisa de user_id ou organization_id como parâmetro"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 msgid "Negative feedback"
 msgstr "Feedback negativo"
 
@@ -13629,7 +13625,7 @@ msgstr "Nova categoria"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:39
 msgid "New Checklist Template"
-msgstr "Novo modelo de lista de verificação"
+msgstr "Novo modelo de checklist"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
@@ -14051,18 +14047,18 @@ msgstr "Nenhuma alteração."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:440
 msgid "No checklist added to this ticket yet."
-msgstr "Nenhuma lista de verificação adicionada a este ticket ainda."
+msgstr "Nenhum checklist adicionado a este ticket ainda."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 msgid "No checklist items yet"
-msgstr "Nenhum item de lista de verificação ainda"
+msgstr "Nenhum item de checklist ainda"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
 msgid "No checklist templates have been created yet."
-msgstr "Nenhum modelo de lista de verificação foi criado ainda."
+msgstr "Nenhum modelo de checklist foi criado ainda."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
 msgid "No comment"
 msgstr "Sem comentário"
 
@@ -14089,7 +14085,7 @@ msgstr "Sem rascunhos"
 msgid "No editable knowledge base categories available."
 msgstr "Nenhuma categoria editável da base de conhecimento disponível."
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr "Nenhum email!"
 
@@ -14139,7 +14135,7 @@ msgstr "Nenhuma importação em andamento."
 msgid "No items available"
 msgstr "Nenhum item disponível"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:606
 msgid "No knowledge base content is available yet."
 msgstr "Nenhum conteúdo da base de conhecimento está disponível ainda."
 
@@ -14262,7 +14258,7 @@ msgstr "Nenhum rascunho compartilhado ainda"
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr "Nenhum dado de origem enviado!"
 
@@ -14293,15 +14289,15 @@ msgstr "Nenhum modelo criado ainda."
 msgid "No tickets in this state."
 msgstr "Nenhum ticket neste estado."
 
-#: app/controllers/users_controller.rb:254
+#: app/controllers/users_controller.rb:256
 msgid "No token!"
 msgstr "Sem token!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 msgid "No translation available for this locale"
 msgstr "Nenhuma tradução para esta localidade disponível"
@@ -14428,8 +14424,8 @@ msgstr "Não configurado"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -14542,19 +14538,19 @@ msgstr "Remetente de notificações"
 msgid "Notification sent to"
 msgstr "Notificação enviada para"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
 msgid "Notification settings could not be reset."
 msgstr "As configurações de notificações não puderam ser redefinidas."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:124
 msgid "Notification settings could not be saved."
 msgstr "As configurações de notificações não puderam ser salvas."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:187
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
 msgid "Notification settings have been reset to default."
 msgstr "As configurações de notificações foram redefinidas para o padrão."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:142
 msgid "Notification settings have been saved successfully."
 msgstr "As configurações de notificações foram salvas com sucesso."
 
@@ -14908,7 +14904,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:31
 msgid "Open checklist"
-msgstr "Abrir lista de verificação"
+msgstr "Abrir checklist"
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:95
 msgid "Open file: %s"
@@ -15031,7 +15027,7 @@ msgstr "Opções ou relação são obrigatórias."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:21
 msgid "Or choose a checklist template."
-msgstr "Ou escolha um modelo de lista de verificação."
+msgstr "Ou escolha um modelo de checklist."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:67
 msgid "Or migrate from another system"
@@ -15614,6 +15610,7 @@ msgstr "Nível de permissão para consultar tickets"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "Permissões"
@@ -15739,7 +15736,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:56
 msgid "Please add at least one item to the checklist."
-msgstr "Adicione pelo menos um item à lista de verificação."
+msgstr "Adicione pelo menos um item ao checklist."
 
 #: app/views/knowledge_base/public/categories/index.html.erb:18
 msgid "Please add categories and/or answers"
@@ -15769,7 +15766,7 @@ msgid "Please configure import source before running."
 msgstr "Configure a fonte de importação antes de executar."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
 msgid "Please contact your administrator."
 msgstr "Entre em contato com seu administrador."
 
@@ -15848,13 +15845,13 @@ msgstr "Prossiga para fazer login"
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Forneça um destinatário em \"TO\" ou \"CC\"."
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 msgid "Please provide your current password."
 msgstr "Forneça sua senha atual."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 msgid "Please provide your new password."
 msgstr "Forneça sua nova senha."
 
@@ -15870,7 +15867,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:76
 msgid "Please select a checklist template."
-msgstr "Selecione um modelo de lista de verificação."
+msgstr "Selecione um modelo de checklist."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:55
 msgid "Please select a ticket to merge into."
@@ -15936,7 +15933,7 @@ msgstr "Porta"
 msgid "Position"
 msgstr "Posição"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 msgid "Positive feedback"
 msgstr "Feedback positivo"
 
@@ -16018,7 +16015,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:16
 msgid "Preview"
-msgstr "Pré-visualizar"
+msgstr "Prévia"
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:65
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:88
@@ -16514,7 +16511,7 @@ msgstr ""
 "Referências - Pesquise por acompanhamento também nos cabeçalhos Em-Resposta "
 "ou Referências."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
 msgid "Regenerate"
 msgstr "Gerar novamente"
 
@@ -16694,7 +16691,7 @@ msgstr "Remover aplicativo de autenticação"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:38
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:380
 msgid "Remove checklist"
-msgstr "Remover lista de verificação"
+msgstr "Remover checklist"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
 msgid "Remove element"
@@ -16801,7 +16798,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:373
 msgid "Rename checklist"
-msgstr "Renomear lista de verificação"
+msgstr "Renomear checklist"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:9
 msgid "Renew Access Token"
@@ -17021,7 +17018,7 @@ msgstr "Redefinir para o padrão"
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 msgid "Reset to default settings"
 msgstr "Redefinir para as configurações padrão"
 
@@ -17527,9 +17524,9 @@ msgstr "Salvar configuração"
 msgid "Save draft"
 msgstr "Salvar rascunho"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:226
-msgid "Save notifications"
-msgstr "Salvar notificações"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
+msgid "Save notification settings"
+msgstr "Salvar configurações de notificação"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
 msgid "Save out of office"
@@ -17709,7 +17706,7 @@ msgstr "Pesquisar logs de auditoria"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:32
 msgid "Search for checklist templates"
-msgstr "Pesquisar modelos de lista de verificação"
+msgstr "Pesquisar modelos de checklist"
 
 #: app/assets/javascripts/app/controllers/group.coffee:23
 msgid "Search for groups"
@@ -17910,7 +17907,7 @@ msgstr "Pesquisar…"
 msgid "Secondary organizations"
 msgstr "Organizações secundárias"
 
-#: app/models/user.rb:708
+#: app/models/user.rb:720
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17918,7 +17915,7 @@ msgstr ""
 "Organizações secundárias só são permitidas quando a organização primária é "
 "fornecida."
 
-#: app/models/user.rb:714
+#: app/models/user.rb:726
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Organizações secundárias não podem incluir a organização primária."
 
@@ -18802,7 +18799,7 @@ msgstr "Mostrar tickets de rastreamento"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:120
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:110
 msgid "Shown records in caller log."
-msgstr "Registros exibidos no registro de chamadas."
+msgstr "Registros exibidos no log de chamadas."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:95
 msgid "Shown when the chat is closed."
@@ -19468,7 +19465,7 @@ msgstr "Enviar"
 msgid "Submit Comment"
 msgstr "Enviar comentário"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 msgid "Submit comment"
 msgstr "Enviar comentário"
 
@@ -19926,7 +19923,7 @@ msgid "Textarea field"
 msgstr "Área de texto"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Thank you for your feedback."
 msgstr "Obrigado pelo seu feedback."
 
@@ -19941,7 +19938,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Obrigado por se juntar a nós. Email enviado para \"%s\"."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "Obrigado pelo feedback. Por favor, explique o que deu errado?"
 
@@ -20094,7 +20091,7 @@ msgstr "A carga útil do webhook do WhatsApp não pôde ser processada."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "A carga útil do webhook do WhatsApp não pôde ser validada."
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -20313,7 +20310,7 @@ msgstr "O certificado para %s não foi encontrado."
 msgid "The certificate for this private key could not be found."
 msgstr "O certificado para esta chave privada não foi encontrado."
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 msgid "The certificate for verification could not be found."
 msgstr "O certificado para verificação não pôde ser encontrado."
 
@@ -20407,7 +20404,7 @@ msgstr ""
 #: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
 #: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
 msgid "The checklist feature is not active"
-msgstr "O recurso de lista de verificação não está ativo"
+msgstr "O recurso de checklist não está ativo"
 
 #: app/models/group.rb:111
 msgid "The chosen parent group is part of a circular reference."
@@ -20468,7 +20465,7 @@ msgid "The context window size must be a positive number."
 msgstr "O tamanho da janela de contexto deve ser um número positivo."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr "A senha atual fornecida está incorreta."
@@ -20558,7 +20555,7 @@ msgstr "O divisor entre o TicketHook e o número do ticket. Ex.: ': '."
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 msgid "The download could not be started. Please try again later."
 msgstr "Não foi possível iniciar o download. Tente novamente mais tarde."
 
@@ -20574,7 +20571,7 @@ msgstr ""
 "está ativa."
 
 #: app/services/service/auth/send_admin_token.rb:38
-#: app/services/service/user/password_reset/update.rb:40
+#: app/services/service/user/password_reset/update.rb:34
 msgid "The email could not be sent to the user."
 msgstr "O email não pôde ser enviado para o usuário."
 
@@ -20681,9 +20678,7 @@ msgstr "O artigo fornecido não é um artigo de mídia."
 
 #: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:13
 msgid "The given checklist item does not belong to the given checklist."
-msgstr ""
-"O item da lista de verificação fornecido não pertence à lista de verificação "
-"fornecida."
+msgstr "O item de checklist fornecido não pertence ao checklist fornecido."
 
 #: app/services/service/user/two_factor/set_default_method.rb:18
 msgid "The given two-factor authentication method is not configured."
@@ -20971,7 +20966,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "A chave privada PGP não pôde ser encontrada."
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 msgid "The private key for decryption could not be found."
 msgstr "A chave privada para descriptografia não pôde ser encontrada."
 
@@ -21067,7 +21062,7 @@ msgstr "A carga útil fornecida é inválida. Verifique sua sintaxe."
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
@@ -21150,7 +21145,7 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr "A senha PGP necessária está faltando."
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:660
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr "O atributo necessário 'email' está faltando."
@@ -21223,7 +21218,7 @@ msgstr "O parâmetro obrigatório 'group_id' é inválido."
 msgid "The required parameter 'group_id' is missing."
 msgstr "O parâmetro obrigatório 'group_id' está ausente."
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr "O parâmetro obrigatório 'id' está ausente."
 
@@ -21255,7 +21250,7 @@ msgstr "O parâmetro obrigatório 'options.adapter' está ausente."
 msgid "The required parameter 'params' is missing."
 msgstr "O parâmetro necessário 'params' está ausente."
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr "O parâmetro obrigatório 'password' está faltando."
 
@@ -21271,7 +21266,7 @@ msgstr "O parâmetro obrigatório 'payload->screen' está ausente."
 msgid "The required parameter 'permission' is missing."
 msgstr "O parâmetro necessário 'permission' está ausente."
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:653
 msgid "The required parameter 'signup' is missing."
 msgstr "O parâmetro obrigatório 'signup' está ausente."
 
@@ -21436,7 +21431,7 @@ msgstr ""
 "O modo de ordenação que você salvar aqui será aplicado a respostas "
 "adicionadas posteriormente."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 "O modo de ordenação que você salvar aqui será aplicado a categorias "
@@ -21582,7 +21577,7 @@ msgstr ""
 
 #: app/services/service/ticket/update/validator/checklist_completed.rb:17
 msgid "The ticket checklist is incomplete."
-msgstr "A lista de verificação do ticket está incompleta."
+msgstr "O checklist do ticket está incompleto."
 
 #: app/services/service/ticket/update/validator/time_accounting.rb:19
 msgid "The ticket time accounting condition is met."
@@ -21763,7 +21758,7 @@ msgstr "Ainda não há respostas para organizar."
 msgid "There are no business hours configured."
 msgstr "Não há horário comercial configurado."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:587
 msgid "There are no categories to arrange yet."
 msgstr "Ainda não há categorias para organizar."
 
@@ -22274,11 +22269,11 @@ msgstr ""
 msgid "This item expands to show more options"
 msgstr "Este item se expande para mostrar mais opções"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
 msgid "This knowledge base answer is not available."
 msgstr "Esta resposta da base de conhecimento não está disponível."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
 msgid "This knowledge base category is not available."
 msgstr "Esta categoria da base de conhecimento não está disponível."
 
@@ -22324,7 +22319,7 @@ msgstr ""
 "Essa mensagem contém imagens ou outros conteúdos hospedados por uma fonte "
 "externa. Foi bloqueada, mas você pode baixar a formatação original."
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr "Esta mensagem não foi assinada pelo remetente."
 
@@ -22531,7 +22526,7 @@ msgstr ""
 
 #: app/models/ticket/checklists.rb:38
 msgid "This ticket already has a checklist."
-msgstr "Este ticket já possui uma lista de verificação."
+msgstr "Este ticket já possui um checklist."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:15
 msgid ""
@@ -23448,7 +23443,7 @@ msgstr "Alternar metainformações do artigo"
 msgid "Toggle dark mode"
 msgstr "Alternar para modo escuro"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
 msgid "Toggle group"
 msgstr "Alternar grupo"
 
@@ -24040,7 +24035,7 @@ msgstr "Próximos eventos"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
@@ -24955,7 +24950,7 @@ msgid "View"
 msgstr "Visualização"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
 msgid "View answer"
 msgstr "Ver resposta"
 
@@ -25301,23 +25296,23 @@ msgid ""
 "With checklist templates it is possible to pre-fill new checklists with "
 "initial items."
 msgstr ""
-"Com os modelos de lista de verificação, é possível preencher automaticamente "
-"novas listas de verificação com itens iniciais."
+"Com os modelos de checklist, é possível preencher automaticamente novos "
+"checklists com itens iniciais."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
 msgid "With checklist templates you can pre-fill your checklists."
 msgstr ""
-"Com os modelos de lista de verificação, você pode preencher suas listas de "
-"verificação com itens iniciais."
+"Com os modelos de checklist, você pode preencher seus checklists com itens "
+"iniciais."
 
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:12
 msgid ""
 "With checklists you can keep track of the progress of your ticket related "
 "tasks."
 msgstr ""
-"Com as listas de verificação, você pode acompanhar o progresso das tarefas "
-"relacionadas aos seus tickets."
+"Com os checklists, você pode acompanhar o progresso das tarefas relacionadas "
+"aos seus tickets."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:14
 msgid ""
@@ -25454,7 +25449,7 @@ msgstr "Sim, adicione anexos agora"
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:466
 msgid "Yes, open the checklist"
-msgstr "Sim, abra a lista de verificação"
+msgstr "Sim, abra o checklist"
 
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
@@ -25777,6 +25772,7 @@ msgstr ""
 "conversa. A janela de atendimento ao cliente se encerra em %s."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
+#: app/services/service/ai/analytics/upsert_usage.rb:45
 msgid "You have already provided feedback, thank you."
 msgstr "Você já forneceu feedback, obrigado."
 
@@ -25860,15 +25856,15 @@ msgstr "Você tem que permitir o acesso à sua webcam."
 
 #: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:2
 msgid "You have unchecked items in the checklist."
-msgstr "Você tem itens desmarcados na lista de verificação."
+msgstr "Você tem itens desmarcados no checklist."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
 msgstr ""
-"Você tem itens não marcados na lista de verificação. Deseja tratá-los antes "
-"de fechar este ticket?"
+"Você tem itens não marcados no checklist. Deseja tratá-los antes de fechar "
+"este ticket?"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/concurrentChange.ts:47
 msgid ""
@@ -26306,16 +26302,16 @@ msgstr "Atribuir tickets"
 msgid "at"
 msgstr "às"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 msgid "at least one letter is required"
 msgstr "pelo menos uma letra é necessária"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "anexo,anexado,incluso,inclusão"
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 msgid "attribute is not editable"
 msgstr "atributo não é editável"
 
@@ -26349,7 +26345,7 @@ msgstr "ocupado"
 msgid "camera,image,photo,picture"
 msgstr "câmera,imagem,foto,imagem"
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -26363,11 +26359,11 @@ msgstr "não pode estar em branco"
 msgid "can't be empty"
 msgstr "não pode estar vazio"
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 msgid "can't be modified"
 msgstr "não pode ser modificado"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "não pode ser usado porque *_id e *_ids não são permitidos"
 
@@ -26386,7 +26382,7 @@ msgstr "marcado"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
-msgstr "marcou o item da lista de verificação '%s'"
+msgstr "marcou o item do checklist '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:27
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:27
@@ -26929,7 +26925,7 @@ msgid "in range"
 msgstr "no intervalo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -27027,7 +27023,7 @@ msgstr "não é uma cor. Apenas as cores Hex, RGB e HSL são suportadas."
 msgid "is not a number"
 msgstr "não é um número"
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 msgid "is not a supported AI provider"
 msgstr "não é um provedor de IA compatível"
 
@@ -27074,7 +27070,7 @@ msgstr "o comprimento está incorreto (deve ser %{count} caracteres)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "o comprimento está incorreto (deve ser de 1 caractere)"
 
-#: app/models/user.rb:907
+#: app/models/user.rb:919
 msgid "is too long"
 msgstr "é muito longo"
 
@@ -27383,7 +27379,7 @@ msgstr "notificações,tickets"
 msgid "now"
 msgstr "agora"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "apenas letras minúsculas, números e '_' são permitidos"
 
@@ -27481,7 +27477,7 @@ msgstr "códigos de recuperação"
 
 #: app/models/checklist/item.rb:99
 msgid "reference must not be the checklist ticket."
-msgstr "A referência não deve ser o ticket da lista de verificação."
+msgstr "A referência não deve ser o ticket do checklist."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:111
 msgid "relative"
@@ -27643,7 +27639,7 @@ msgstr "pulado"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr "espaços não são permitidos"
 
@@ -27795,7 +27791,7 @@ msgstr "desassociar usuário"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
-msgstr "desmarcou o item da lista de verificação '%s'"
+msgstr "desmarcou o item do checklist '%s'"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"

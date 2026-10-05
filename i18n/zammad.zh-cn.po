@@ -812,11 +812,11 @@ msgstr "%s% 的工单已被重新打开"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model}可以具有对群组的完全或粒度访问权限"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "%{name} 已存在"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} 是一个保留词"
 
@@ -1819,7 +1819,7 @@ msgstr "添加所有值"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:680
 #, fuzzy
 #| msgid "Edit Answer"
 msgid "Add answer"
@@ -1836,7 +1836,7 @@ msgstr "添加项目符号列表"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:663
 #, fuzzy
 #| msgid "Edit Category"
 msgid "Add category"
@@ -2187,7 +2187,7 @@ msgstr "客服对话"
 msgid "Agent idle timeout"
 msgstr "客服空闲超时"
 
-#: app/models/role.rb:182 app/models/user.rb:789
+#: app/models/role.rb:182 app/models/user.rb:801
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "已超出客服限制，请检查您的帐户设置。"
 
@@ -2407,7 +2407,7 @@ msgid ""
 "account."
 msgstr "一封电子邮件已发送到_％s_。单击电子邮件中的链接以验证您的帐户。"
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2527,7 +2527,7 @@ msgid "Answer"
 msgstr "回答"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:223
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer actions"
@@ -2859,7 +2859,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "你确定吗？您有未保存的更改，这些更改将会丢失。"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:153
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "你确定吗？您的通知设置将重置为默认值。"
 
@@ -2990,7 +2990,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr "如果客服坐席不在工作岗位上，分配会很快超时，工单将显示为未分配。"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:703
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -3010,7 +3010,7 @@ msgstr "至少需要一条匹配规则，但你目前没有提供。"
 msgid "At least one object must be selected."
 msgstr "至少必须选择一个对象。"
 
-#: app/models/role.rb:159 app/models/user.rb:768
+#: app/models/role.rb:159 app/models/user.rb:780
 msgid "At least one user needs to have admin permissions."
 msgstr "至少有一个用户需要拥有admin权限。"
 
@@ -3448,7 +3448,7 @@ msgid "Back to previous page"
 msgstr "返回上一页"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Back to search results"
 msgstr "返回搜索结果"
 
@@ -3921,7 +3921,7 @@ msgstr "取消并注销登录"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3953,7 +3953,7 @@ msgstr "无法删除记录，因为存在依赖：%{record}记录"
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "无法删除记录，因为依赖 %{record} 存在"
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -4020,7 +4020,7 @@ msgstr "类别页面布局"
 msgid "Category feed"
 msgstr "类别"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:537
 #, fuzzy
 #| msgid "Overviews"
 msgid "Category order list"
@@ -5238,7 +5238,7 @@ msgstr "复制"
 msgid "Copy URL"
 msgstr "复制URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:168
 #, fuzzy
 #| msgid "Copy Secret"
 msgid "Copy answer title"
@@ -7263,7 +7263,7 @@ msgstr "删除所有的子类别和回答，并重试。"
 msgid "Delete all existing records first."
 msgstr "首先删除现存的所有记录。"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:226
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 #, fuzzy
@@ -7678,7 +7678,7 @@ msgstr "放弃快照"
 msgid "Discard unsaved reply"
 msgstr "放弃未保存的改动"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -8323,7 +8323,7 @@ msgstr "電子郵件帳號"
 msgid "Email address"
 msgstr "电子邮件"
 
-#: app/models/user.rb:701
+#: app/models/user.rb:713
 msgid "Email address '%{email}' is already used for another user."
 msgstr "电子邮件地址“％{email}”已经用于另一个用户。"
 
@@ -8993,7 +8993,7 @@ msgstr "自动向导执行期间的错误。"
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "出了些问题。请联系您的管理员。"
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 #, fuzzy
 #| msgid "Something went wrong. Please contact your administrator."
 msgid "Error while verifying signature, please contact your administrator."
@@ -10229,8 +10229,8 @@ msgstr "回家"
 msgid "Go inside group"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:96
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:69
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Go to knowledge base"
@@ -11558,7 +11558,7 @@ msgstr "內部"
 msgid "Internal Knowledge Base feed:"
 msgstr "内部知识库提要："
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -11658,7 +11658,7 @@ msgstr "无效的client_id在接收循环中！"
 msgid "Invalid client_id received!"
 msgstr "接收到无效的client_id！"
 
-#: app/models/user.rb:640
+#: app/models/user.rb:652
 msgid "Invalid email '%{email}'"
 msgstr "无效的电子邮件'％{email}'"
 
@@ -12012,7 +12012,7 @@ msgstr "关键词"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
@@ -12091,7 +12091,7 @@ msgstr "知识库答案"
 msgid "Knowledge Base multilingual support"
 msgstr "知识库多语言支持"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:640
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base actions"
@@ -12100,8 +12100,8 @@ msgstr "激活知识库"
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:250
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "Knowledge base answer"
@@ -12119,7 +12119,7 @@ msgstr "測試運行成功"
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr "測試運行成功"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Knowledge base answer updated successfully."
@@ -13811,7 +13811,7 @@ msgstr "状态"
 msgid "More information can be found here."
 msgstr "更多信息可以在这里找到。"
 
-#: app/models/user.rb:720
+#: app/models/user.rb:732
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "不允许有250多个二级组织。"
 
@@ -14063,7 +14063,7 @@ msgstr "需要session_id。"
 msgid "Need user_id or organization_id as param"
 msgstr "需要user_id或agrishital_id作为param"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 #, fuzzy
 #| msgid "Feedback"
 msgid "Negative feedback"
@@ -14692,7 +14692,7 @@ msgstr ""
 msgid "No checklist templates have been created yet."
 msgstr "暂时还没有模板."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
 #, fuzzy
 #| msgid "Comment"
 msgid "No comment"
@@ -14725,7 +14725,7 @@ msgstr "草稿"
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr "没有电子邮件！"
 
@@ -14782,7 +14782,7 @@ msgstr "正在处理"
 msgid "No items available"
 msgstr "無法翻譯此語言環境"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:606
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "No knowledge base content is available yet."
@@ -14933,7 +14933,7 @@ msgstr "已分享"
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr "没有提交的源数据！"
 
@@ -14968,15 +14968,15 @@ msgstr "暂时还没有模板."
 msgid "No tickets in this state."
 msgstr "匹配符合以下条件的工单"
 
-#: app/controllers/users_controller.rb:254
+#: app/controllers/users_controller.rb:256
 msgid "No token!"
 msgstr "不象征！"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 #, fuzzy
 #| msgid "No translation for this locale available"
@@ -15115,8 +15115,8 @@ msgstr "未配置"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -15243,19 +15243,19 @@ msgstr "通知寄件人"
 msgid "Notification sent to"
 msgstr "通知寄件人"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Notification settings could not be reset."
 msgstr "％s 对象已更新。"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:124
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Notification settings could not be saved."
 msgstr "％s 对象已更新。"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:187
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
 #, fuzzy
 #| msgid ""
 #| "Are you sure you want to reload? You have unsaved changes that will get "
@@ -15263,7 +15263,7 @@ msgstr "％s 对象已更新。"
 msgid "Notification settings have been reset to default."
 msgstr "请确认是否需要重新加载？没有保存的改动会丢失"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:142
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Notification settings have been saved successfully."
@@ -16449,6 +16449,7 @@ msgstr "查找机票的许可级别"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "权限"
@@ -16610,7 +16611,7 @@ msgid "Please configure import source before running."
 msgstr "请在运行前配置导入源。"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
 msgid "Please contact your administrator."
 msgstr "请联系您的管理员。"
 
@@ -16682,13 +16683,13 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "请在“TO”或“CC”中提供收件人。"
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 msgid "Please provide your current password."
 msgstr "请提供您当前的密码。"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 msgid "Please provide your new password."
 msgstr "请提供您的新密码。"
 
@@ -16771,7 +16772,7 @@ msgstr "端口"
 msgid "Position"
 msgstr "位置"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 #, fuzzy
 #| msgid "Feedback"
 msgid "Positive feedback"
@@ -17403,7 +17404,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr "参考 - 在重新或参考标题中也搜索后续行动。"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
 #, fuzzy
 #| msgid "Reopening rate"
 msgid "Regenerate"
@@ -17976,7 +17977,7 @@ msgstr "Reset to default"
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 msgid "Reset to default settings"
 msgstr "重置为默认设置"
 
@@ -18501,10 +18502,10 @@ msgstr "保存配置"
 msgid "Save draft"
 msgstr "保存草稿"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:226
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Save notifications"
+msgid "Save notification settings"
 msgstr "阻止通知"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
@@ -18954,13 +18955,13 @@ msgstr "搜索…"
 msgid "Secondary organizations"
 msgstr "二级组织"
 
-#: app/models/user.rb:708
+#: app/models/user.rb:720
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr "仅在给出主要组织时才允许二级组织。"
 
-#: app/models/user.rb:714
+#: app/models/user.rb:726
 #, fuzzy
 #| msgid ""
 #| "Secondary organizations are only allowed when the primary organization is "
@@ -20624,7 +20625,7 @@ msgstr "提交"
 msgid "Submit Comment"
 msgstr "注释"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 #, fuzzy
 #| msgid "Comment"
 msgid "Submit comment"
@@ -21119,7 +21120,7 @@ msgid "Textarea field"
 msgstr "文本区域字段"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -21134,7 +21135,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "谢谢你的加入。电子邮件已发送到“%s”。"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
@@ -21287,7 +21288,7 @@ msgstr "无法处理 WhatsApp Webhook 负载。"
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "无法验证 WhatsApp Webhook 负载。"
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -21471,7 +21472,7 @@ msgstr "未找到 %s 的证书。"
 msgid "The certificate for this private key could not be found."
 msgstr "找不到此私钥的证书。"
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 msgid "The certificate for verification could not be found."
 msgstr "找不到用于验证的证书。"
 
@@ -21610,7 +21611,7 @@ msgid "The context window size must be a positive number."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr "您提供的当前密码不正确。"
@@ -21692,7 +21693,7 @@ msgstr "Tickethook和票证号之间的分隔线。E. g。'：'。"
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 #, fuzzy
 #| msgid "Media download failed. Please try again later."
 msgid "The download could not be started. Please try again later."
@@ -21712,7 +21713,7 @@ msgid ""
 msgstr "电子邮件无法发送给用户。"
 
 #: app/services/service/auth/send_admin_token.rb:38
-#: app/services/service/user/password_reset/update.rb:40
+#: app/services/service/user/password_reset/update.rb:34
 msgid "The email could not be sent to the user."
 msgstr "电子邮件无法发送给用户。"
 
@@ -22111,7 +22112,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "找不到 PGP 私钥。"
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 msgid "The private key for decryption could not be found."
 msgstr "无法找到用于解密的私钥。"
 
@@ -22208,7 +22209,7 @@ msgstr "提供的有效载荷无效。请检查您的语法。"
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
@@ -22290,7 +22291,7 @@ msgstr "%{key}、%{inner} 缺少所需的“%{attribute}”值！"
 msgid "The required PGP passphrase is missing."
 msgstr "缺少所需的PGP密码。"
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:660
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr "缺少所需的属性“电子邮件”。"
@@ -22362,7 +22363,7 @@ msgstr "所需的参数“ group_id”无效。"
 msgid "The required parameter 'group_id' is missing."
 msgstr "缺少所需的参数“ group_id”。"
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr "缺少所需的参数“ ID”。"
 
@@ -22396,7 +22397,7 @@ msgstr "所需的参数“ options.Adapter”缺少。"
 msgid "The required parameter 'params' is missing."
 msgstr "缺少所需的参数“参数”。"
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr "缺少所需的参数“密码”。"
 
@@ -22412,7 +22413,7 @@ msgstr "缺少所需的参数“有效载荷 - >屏幕”。"
 msgid "The required parameter 'permission' is missing."
 msgstr "缺少所需的参数“权限”。"
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:653
 msgid "The required parameter 'signup' is missing."
 msgstr "缺少所需的参数“注册”。"
 
@@ -22570,7 +22571,7 @@ msgstr "签名已成功验证。"
 msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
@@ -22920,7 +22921,7 @@ msgstr "没有任何工作时间配置。"
 msgid "There are no business hours configured."
 msgstr "没有任何工作时间配置。"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:587
 msgid "There are no categories to arrange yet."
 msgstr ""
 
@@ -23474,13 +23475,13 @@ msgstr "这不是有效的X509证书。请检查证书格式。"
 msgid "This item expands to show more options"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "This knowledge base answer is not available."
 msgstr "简单的存储服务不可用。"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
 #, fuzzy
 #| msgid "The Simple Storage Service is not available."
 msgid "This knowledge base category is not available."
@@ -23527,7 +23528,7 @@ msgid ""
 msgstr ""
 "此消息包含由外部源托管的图像或其他内容。它已被阻止，但您可以下载原始格式。"
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr "此消息没有由发件人签署。"
 
@@ -24795,7 +24796,7 @@ msgstr "文章元信息"
 msgid "Toggle dark mode"
 msgstr "切换暗光模式"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
 #, fuzzy
 #| msgid "Parent"
 msgid "Toggle group"
@@ -25486,7 +25487,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
@@ -26542,7 +26543,7 @@ msgid "View"
 msgstr "看法"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
 #, fuzzy
 #| msgid "New User"
 msgid "View answer"
@@ -27398,6 +27399,7 @@ msgid ""
 msgstr "您有一个24小时的窗口在此对话中发送WhatsApp消息。客户服务窗口关闭％s。"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
+#: app/services/service/ai/analytics/upsert_usage.rb:45
 msgid "You have already provided feedback, thank you."
 msgstr ""
 
@@ -27979,18 +27981,18 @@ msgstr "分配工单"
 msgid "at"
 msgstr "在"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 #, fuzzy
 #| msgid "At least one letter is required"
 msgid "at least one letter is required"
 msgstr "至少需要一个字母"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 #, fuzzy
 #| msgid "Attribute not editable!"
 msgid "attribute is not editable"
@@ -28026,7 +28028,7 @@ msgstr "忙碌"
 msgid "camera,image,photo,picture"
 msgstr "相机、图像、照片、图片"
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -28038,13 +28040,13 @@ msgstr "不能空白"
 msgid "can't be empty"
 msgstr "不能空"
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "不能空"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "无法使用，因为 *_id和 *_id不允许"
 
@@ -28681,7 +28683,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -28795,7 +28797,7 @@ msgstr "不是一种颜色。仅支持 Hex、RGB 和 HSL 颜色。"
 msgid "is not a number"
 msgstr "最小號碼大小"
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "is not a supported AI provider"
@@ -28850,7 +28852,7 @@ msgstr "是错误的长度（应该为％{count}字符）"
 msgid "is the wrong length (should be 1 character)"
 msgstr "是错误的长度（应该是1个字符）"
 
-#: app/models/user.rb:907
+#: app/models/user.rb:919
 msgid "is too long"
 msgstr "太长"
 
@@ -29201,7 +29203,7 @@ msgstr "通知"
 msgid "now"
 msgstr "未设置"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "只允许使用小写字母、数字和“_”"
 
@@ -29493,7 +29495,7 @@ msgstr "已跳过"
 msgid "sms"
 msgstr "短信"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr "不允许使用空格"
 

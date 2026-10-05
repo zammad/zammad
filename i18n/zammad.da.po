@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-21 22:12+0000\n"
+"PO-Revision-Date: 2026-09-25 22:12+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -738,11 +738,11 @@ msgstr "%s% er blevet genåbnet"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} kan have fuld eller detaljeret adgang til gruppe"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "%{name} eksisterer allerede"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "%{name} er et reserveret ord"
 
@@ -1691,7 +1691,7 @@ msgstr "Tilføj alle værdier"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:680
 msgid "Add answer"
 msgstr "Tilføj svar"
 
@@ -1706,7 +1706,7 @@ msgstr "Tilføj punktliste"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:663
 msgid "Add category"
 msgstr "Tilføj kategori"
 
@@ -2033,7 +2033,7 @@ msgstr "Agentchat"
 msgid "Agent idle timeout"
 msgstr "Timeout for inaktiv agent"
 
-#: app/models/role.rb:182 app/models/user.rb:789
+#: app/models/role.rb:182 app/models/user.rb:801
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agentgrænse overskredet, se dine kontoindstillinger."
 
@@ -2254,7 +2254,7 @@ msgstr ""
 "Der er sendt en email til _%s_. Klik på linket i emailen for at bekræfte din "
 "konto."
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2370,7 +2370,7 @@ msgid "Answer"
 msgstr "Svar"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:223
 msgid "Answer actions"
 msgstr "Svarhandlinger"
 
@@ -2682,7 +2682,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Er du sikker? Der er ikke-gemte ændringer, som vi gå tabt."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:153
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "Er du sikker? Dine notifikationsindstillinger vil blive nulstillet."
 
@@ -2803,7 +2803,7 @@ msgstr ""
 "Timeout for tildeling i minutter, hvis den tildelte agent ikke arbejder på "
 "sagen. Sagen vises som ikke-tildelt."
 
-#: app/models/user.rb:691
+#: app/models/user.rb:703
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2823,7 +2823,7 @@ msgstr "Mindst én matchregel er påkrævet, men ingen blev angivet."
 msgid "At least one object must be selected."
 msgstr "Mindst ét objekt skal vælges."
 
-#: app/models/role.rb:159 app/models/user.rb:768
+#: app/models/role.rb:159 app/models/user.rb:780
 msgid "At least one user needs to have admin permissions."
 msgstr "Mindst én bruger skal have administratortilladelser."
 
@@ -3250,7 +3250,7 @@ msgid "Back to previous page"
 msgstr "Tilbage til forrige side"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Back to search results"
 msgstr "Tilbage til søgeresultater"
 
@@ -3728,7 +3728,7 @@ msgstr "Annullér og log ud"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -3756,7 +3756,7 @@ msgstr "Kan ikke slette posten, fordi der findes en afhængig %{record}"
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "Kan ikke slette posten, fordi der findes afhængige %{record}"
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr "Kan ikke slette Zammad AI-forbindelsen på dette system."
 
@@ -3813,7 +3813,7 @@ msgstr "Antal kategorier: %s"
 msgid "Category feed"
 msgstr "Kategori-feed"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:537
 msgid "Category order list"
 msgstr "Liste over kategorirækkefølge"
 
@@ -4976,7 +4976,7 @@ msgstr "Kopiér"
 msgid "Copy URL"
 msgstr "Kopiér URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:168
 msgid "Copy answer title"
 msgstr "Kopiér svartitel"
 
@@ -7052,7 +7052,7 @@ msgstr "Slet alle underordnede kategorier og svar, og prøv derefter igen."
 msgid "Delete all existing records first."
 msgstr "Slet alle eksisterende poster først."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:226
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 msgid "Delete answer"
@@ -7447,7 +7447,7 @@ msgstr "Kassér øjebliksbillede"
 msgid "Discard unsaved reply"
 msgstr "Kassér ikke-gemt svar"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -8039,7 +8039,7 @@ msgstr "Emailkonto"
 msgid "Email address"
 msgstr "Emailadresse"
 
-#: app/models/user.rb:701
+#: app/models/user.rb:713
 msgid "Email address '%{email}' is already used for another user."
 msgstr "Emailadressen \"%{email}\" bruges allerede af en anden bruger."
 
@@ -8724,7 +8724,7 @@ msgstr "Fejl under udførelse af den automatiske guide."
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "Fejl ved hentning af i-doit-oplysninger. Kontakt din administrator."
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 msgid "Error while verifying signature, please contact your administrator."
 msgstr "Fejl under verificering af signaturen. Kontakt din administrator."
 
@@ -9856,8 +9856,8 @@ msgstr "Gå til start"
 msgid "Go inside group"
 msgstr "Gå ind i gruppe"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:96
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:69
 msgid "Go to knowledge base"
 msgstr "Gå til vidensbase"
 
@@ -11166,7 +11166,7 @@ msgstr "Intern"
 msgid "Internal Knowledge Base feed:"
 msgstr "Internt vidensbase-feed:"
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 msgid "Internal attributes cannot be deleted"
 msgstr "Interne attributter kan ikke slettes"
 
@@ -11261,7 +11261,7 @@ msgstr "Ugyldigt client_id i modtagelsesloop!"
 msgid "Invalid client_id received!"
 msgstr "Ugyldig client_id modtaget!"
 
-#: app/models/user.rb:640
+#: app/models/user.rb:652
 msgid "Invalid email '%{email}'"
 msgstr "Ugyldig email '%{email}'"
 
@@ -11599,7 +11599,7 @@ msgstr "Nøgleord"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
@@ -11664,15 +11664,15 @@ msgstr "Vidensbasesprog"
 msgid "Knowledge Base multilingual support"
 msgstr "Flersproget understøttelse i vidensbasen"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:640
 msgid "Knowledge base actions"
 msgstr "Vidensbasehandlinger"
 
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:250
 msgid "Knowledge base answer"
 msgstr "Vidensbasesvar"
 
@@ -11684,7 +11684,7 @@ msgstr "Vidensbasesvar slettet."
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr "Adfærd for vidensbasesvar-visningen opdateret."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
 msgid "Knowledge base answer updated successfully."
 msgstr "Vidensbasesvar opdateret."
 
@@ -13166,7 +13166,7 @@ msgstr "Humør"
 msgid "More information can be found here."
 msgstr "Du kan finde flere oplysninger her."
 
-#: app/models/user.rb:720
+#: app/models/user.rb:732
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Mere end 250 sekundære organisationer er ikke tilladt."
 
@@ -13402,7 +13402,7 @@ msgstr "Parameteren 'session_id' mangler."
 msgid "Need user_id or organization_id as param"
 msgstr "Parameteren 'user_id' eller 'organization_id' mangler"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 msgid "Negative feedback"
 msgstr "Negativ feedback"
 
@@ -13914,7 +13914,7 @@ msgstr "Ingen punkter på tjeklisten endnu"
 msgid "No checklist templates have been created yet."
 msgstr "Der er endnu ikke oprettet nogen tjeklisteskabeloner."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
 msgid "No comment"
 msgstr "Ingen kommentar"
 
@@ -13941,7 +13941,7 @@ msgstr "Ingen kladder"
 msgid "No editable knowledge base categories available."
 msgstr "Ingen redigerbare vidensbasekategorier tilgængelige."
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr "Ingen email!"
 
@@ -13991,7 +13991,7 @@ msgstr "Ingen igangværende import."
 msgid "No items available"
 msgstr "Ingen elementer tilgængelige"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:606
 msgid "No knowledge base content is available yet."
 msgstr "Intet vidensbaseindhold er tilgængeligt endnu."
 
@@ -14112,7 +14112,7 @@ msgstr "Ingen delte kladder endnu"
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr "Ingen kildedata indsendt!"
 
@@ -14143,15 +14143,15 @@ msgstr "Der er endnu ikke oprettet nogen skabelon."
 msgid "No tickets in this state."
 msgstr "Ingen sager i denne status."
 
-#: app/controllers/users_controller.rb:254
+#: app/controllers/users_controller.rb:256
 msgid "No token!"
 msgstr "Ingen token!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 msgid "No translation available for this locale"
 msgstr "Ingen oversættelse tilgængelig for denne sprogindstilling"
@@ -14276,8 +14276,8 @@ msgstr "Ikke konfigureret"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -14390,19 +14390,19 @@ msgstr "Notifikationsafsender"
 msgid "Notification sent to"
 msgstr "Notifikation sendt til"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
 msgid "Notification settings could not be reset."
 msgstr "Notifikationsindstillinger kunne ikke nulstilles."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:124
 msgid "Notification settings could not be saved."
 msgstr "Notifikationsindstillinger kunne ikke gemmes."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:187
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
 msgid "Notification settings have been reset to default."
 msgstr "Notifikationsindstillinger er blevet nulstillet til standard."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:142
 msgid "Notification settings have been saved successfully."
 msgstr "Notifikationsindstillinger er blevet gemt."
 
@@ -15446,6 +15446,7 @@ msgstr "Tilladelsesniveau for opslag af sager"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "Tilladelser"
@@ -15600,7 +15601,7 @@ msgid "Please configure import source before running."
 msgstr "Konfigurér importkilden inden kørsel."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
 msgid "Please contact your administrator."
 msgstr "Kontakt din administrator."
 
@@ -15678,13 +15679,13 @@ msgstr "Fortsæt til login"
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Angiv en modtager i \"TIL\" eller \"CC\"."
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 msgid "Please provide your current password."
 msgstr "Angiv din nuværende adgangskode."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 msgid "Please provide your new password."
 msgstr "Angiv din nye adgangskode."
 
@@ -15765,7 +15766,7 @@ msgstr "Port"
 msgid "Position"
 msgstr "Position"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 msgid "Positive feedback"
 msgstr "Positiv feedback"
 
@@ -16342,7 +16343,7 @@ msgstr ""
 "Referencer - Søg efter opfølgning også i In-Reply-To eller References-"
 "headere."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
 msgid "Regenerate"
 msgstr "Generér igen"
 
@@ -16846,7 +16847,7 @@ msgstr "Nulstil til standard"
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 msgid "Reset to default settings"
 msgstr "Nulstil til standardindstillinger"
 
@@ -17354,8 +17355,10 @@ msgstr "Gem konfiguration"
 msgid "Save draft"
 msgstr "Gem kladde"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:226
-msgid "Save notifications"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
+#, fuzzy
+#| msgid "Save notifications"
+msgid "Save notification settings"
 msgstr "Gem notifikationer"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
@@ -17735,14 +17738,14 @@ msgstr "Søg…"
 msgid "Secondary organizations"
 msgstr "Sekundære organisationer"
 
-#: app/models/user.rb:708
+#: app/models/user.rb:720
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
 "Sekundære organisationer er kun tilladt når primær organisation er angivet."
 
-#: app/models/user.rb:714
+#: app/models/user.rb:726
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Sekundære organisationer kan ikke inkludere den primære organisation."
 
@@ -19270,7 +19273,7 @@ msgstr "Gem"
 msgid "Submit Comment"
 msgstr "Send kommentar"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 msgid "Submit comment"
 msgstr "Send kommentar"
 
@@ -19724,7 +19727,7 @@ msgid "Textarea field"
 msgstr "Flerlinjet tekstfelt"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Thank you for your feedback."
 msgstr "Tak for din feedback."
 
@@ -19739,7 +19742,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Tak fordi du tilmeldte dig. Email sendt til \"%s\"."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "Tak for feedbacken. Forklar hvad der gik galt?"
 
@@ -19890,7 +19893,7 @@ msgstr "WhatsApp-webhook-payload kunne ikke behandles."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "WhatsApp-webhook-payload kunne ikke valideres."
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -20109,7 +20112,7 @@ msgstr "Certifikatet til %s blev ikke fundet."
 msgid "The certificate for this private key could not be found."
 msgstr "Certifikatet til denne private nøgle kunne ikke findes."
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 msgid "The certificate for verification could not be found."
 msgstr "Certifikatet til verificering kunne ikke findes."
 
@@ -20259,7 +20262,7 @@ msgid "The context window size must be a positive number."
 msgstr "Kontekstvinduets størrelse skal være et positivt tal."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr "Den nuværende adgangskode du har angivet er forkert."
@@ -20347,7 +20350,7 @@ msgstr "Skilletegnet mellem TicketHook og sagsnummer. F.eks. ': '."
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 msgid "The download could not be started. Please try again later."
 msgstr "Downloadet kunne ikke startes. Prøv igen senere."
 
@@ -20363,7 +20366,7 @@ msgstr ""
 "aktiveret."
 
 #: app/services/service/auth/send_admin_token.rb:38
-#: app/services/service/user/password_reset/update.rb:40
+#: app/services/service/user/password_reset/update.rb:34
 msgid "The email could not be sent to the user."
 msgstr "Emailen kunne ikke sendes til brugeren."
 
@@ -20752,7 +20755,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "Den private PGP-nøgle kunne ikke findes."
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 msgid "The private key for decryption could not be found."
 msgstr "Den private dekrypteringsnøgle kunne ikke findes."
 
@@ -20847,7 +20850,7 @@ msgstr "Det angivne payload er ugyldigt. Kontrollér din syntaks."
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
@@ -20929,7 +20932,7 @@ msgstr "Den påkrævede '%{attribute}'-værdi for %{key}, %{inner} mangler!"
 msgid "The required PGP passphrase is missing."
 msgstr "Den påkrævede PGP-adgangssætning mangler."
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:660
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr "Den påkrævede attribut 'email' mangler."
@@ -21001,7 +21004,7 @@ msgstr "Den påkrævede parameter 'group_id' er ugyldig."
 msgid "The required parameter 'group_id' is missing."
 msgstr "Den påkrævede parameter 'group_id' mangler."
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr "Den påkrævede parameter 'id' mangler."
 
@@ -21033,7 +21036,7 @@ msgstr "Den påkrævede parameter 'options.adapter' mangler."
 msgid "The required parameter 'params' is missing."
 msgstr "Den påkrævede parameter 'params' mangler."
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr "Den påkrævede parameter 'password' mangler."
 
@@ -21049,7 +21052,7 @@ msgstr "Den påkrævede parameter 'payload->screen' mangler."
 msgid "The required parameter 'permission' is missing."
 msgstr "Den påkrævede parameter 'permission' mangler."
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:653
 msgid "The required parameter 'signup' is missing."
 msgstr "Den påkrævede parameter 'signup' mangler."
 
@@ -21212,7 +21215,7 @@ msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 "Den sorteringstilstand du gemmer her, vil gælde for svar der tilføjes senere."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 "Den sorteringstilstand du gemmer her, vil gælde for kategorier der tilføjes "
@@ -21534,7 +21537,7 @@ msgstr "Der er endnu ingen svar at arrangere."
 msgid "There are no business hours configured."
 msgstr "Der er ingen åbningstider konfigureret."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:587
 msgid "There are no categories to arrange yet."
 msgstr "Der er endnu ingen kategorier at arrangere."
 
@@ -22035,11 +22038,11 @@ msgstr ""
 msgid "This item expands to show more options"
 msgstr "Dette element udvides for at vise flere indstillinger"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
 msgid "This knowledge base answer is not available."
 msgstr "Dette vidensbasesvar er ikke tilgængeligt."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
 msgid "This knowledge base category is not available."
 msgstr "Denne vidensbasekategori er ikke tilgængelig."
 
@@ -22085,7 +22088,7 @@ msgstr ""
 "Denne besked indeholder billeder eller andet indhold hostet af en ekstern "
 "kilde. Det blev blokeret, men du kan downloade den originale formatering."
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr "Denne besked er ikke signeret af afsenderen."
 
@@ -23190,7 +23193,7 @@ msgstr "Vis/skjul artiklens metaoplysninger"
 msgid "Toggle dark mode"
 msgstr "Skift mørk/lys tilstand"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
 msgid "Toggle group"
 msgstr "Vis/skjul gruppe"
 
@@ -23780,7 +23783,7 @@ msgstr "Kommende begivenheder"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
@@ -24687,7 +24690,7 @@ msgid "View"
 msgstr "Vis"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
 msgid "View answer"
 msgstr "Se svar"
 
@@ -25504,6 +25507,7 @@ msgstr ""
 "Kundeservicevinduet lukker %s."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
+#: app/services/service/ai/analytics/upsert_usage.rb:45
 msgid "You have already provided feedback, thank you."
 msgstr "Du har allerede givet feedback, tak."
 
@@ -26029,16 +26033,16 @@ msgstr "tildel sager"
 msgid "at"
 msgstr "kl."
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 msgid "at least one letter is required"
 msgstr "Mindst et bogstav er påkrævet"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "vedhæftet,vedhæftede,vedhæftning,vedlagt,bilag"
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 msgid "attribute is not editable"
 msgstr "attributten kan ikke redigeres"
 
@@ -26072,7 +26076,7 @@ msgstr "optaget"
 msgid "camera,image,photo,picture"
 msgstr "kamera,billede,foto,profilbillede"
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -26086,11 +26090,11 @@ msgstr "kan ikke være tom"
 msgid "can't be empty"
 msgstr "kan ikke være tom"
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 msgid "can't be modified"
 msgstr "kan ikke ændres"
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "kan ikke bruges, fordi *_id og *_ids ikke er tilladt"
 
@@ -26653,7 +26657,7 @@ msgid "in range"
 msgstr "inden for interval"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -26751,7 +26755,7 @@ msgstr "er ikke en farve. Kun Hex-, RGB- og HSL-farver understøttes."
 msgid "is not a number"
 msgstr "er ikke et tal"
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 msgid "is not a supported AI provider"
 msgstr "er ikke en understøttet AI-udbyder"
 
@@ -26798,7 +26802,7 @@ msgstr "har den forkerte længde (skal være %{count} tegn)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "er den forkerte længde (skal være 1 tegn)"
 
-#: app/models/user.rb:907
+#: app/models/user.rb:919
 msgid "is too long"
 msgstr "er for lang"
 
@@ -27106,7 +27110,7 @@ msgstr "notifikationer,sager"
 msgid "now"
 msgstr "nu"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "kun små bogstaver, tal og \"_\" er tilladt"
 
@@ -27367,7 +27371,7 @@ msgstr "sprunget over"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr "mellemrum er ikke tilladt"
 

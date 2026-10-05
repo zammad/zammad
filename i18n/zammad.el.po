@@ -836,11 +836,11 @@ msgstr "Τα %s% έχουν ξανανοίξει"
 msgid "%{model} can have full or granular access to group"
 msgstr "Το %{model} μπορεί να έχει πλήρη ή περιορισμένη πρόσβαση στην ομάδα"
 
-#: app/models/object_manager/attribute.rb:639
+#: app/models/object_manager/attribute.rb:631
 msgid "%{name} already exists"
 msgstr "Το %{name} υπάρχει ήδη"
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:615
 msgid "%{name} is a reserved word"
 msgstr "Το %{name} είναι μια λέξη που έχει δεσμευτεί"
 
@@ -1833,7 +1833,7 @@ msgstr "Προσθέστε όλες τις τιμές"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:672
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:680
 #, fuzzy
 #| msgid "Add Answer"
 msgid "Add answer"
@@ -1850,7 +1850,7 @@ msgstr "Προσθήκη λίστας με κουκκίδες"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:655
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:663
 msgid "Add category"
 msgstr "Προσθήκη κατηγορίας"
 
@@ -2190,7 +2190,7 @@ msgstr "Συνομιλία με τον συνεργάτη"
 msgid "Agent idle timeout"
 msgstr "Χρονικό όριο αδράνειας χειριστή"
 
-#: app/models/role.rb:182 app/models/user.rb:789
+#: app/models/role.rb:182 app/models/user.rb:801
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Υπέρβαση του ορίου εκπροσώπου, ελέγξτε τις ρυθμίσεις λογαριασμού σας."
 
@@ -2417,7 +2417,7 @@ msgid ""
 "account."
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:294
+#: app/models/ai/provider_connection.rb:302
 msgid ""
 "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
@@ -2530,7 +2530,7 @@ msgid "Answer"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:223
 #, fuzzy
 #| msgid "Answers"
 msgid "Answer actions"
@@ -2880,7 +2880,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:153
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 
@@ -3023,7 +3023,7 @@ msgstr ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
 
-#: app/models/user.rb:691
+#: app/models/user.rb:703
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -3043,7 +3043,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:159 app/models/user.rb:768
+#: app/models/role.rb:159 app/models/user.rb:780
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -3527,7 +3527,7 @@ msgid "Back to previous page"
 msgstr "Πίσω στην προβολή μου"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:215
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:219
 msgid "Back to search results"
 msgstr "Πίσω στα αποτελέσματα αναζήτησης"
 
@@ -4038,7 +4038,7 @@ msgstr "Εξοδος"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:675
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
@@ -4070,7 +4070,7 @@ msgstr ""
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:438
+#: app/models/ai/provider_connection.rb:446
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -4137,7 +4137,7 @@ msgstr "Δημιουργήστε τον λογαριασμό μου"
 msgid "Category feed"
 msgstr "Κατηγορία"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:529
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:537
 #, fuzzy
 #| msgid "Overviews"
 msgid "Category order list"
@@ -5417,7 +5417,7 @@ msgstr ""
 msgid "Copy URL"
 msgstr "Προσαρμοσμένη διεύθυνση URL"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:139
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:168
 #, fuzzy
 #| msgid "App Secret"
 msgid "Copy answer title"
@@ -7543,7 +7543,7 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Διαγραφή πρώτα όλων των υπαρχουσών εγγραφών."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:226
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:100
 #, fuzzy
@@ -7994,7 +7994,7 @@ msgstr "Απόρριψη Αλλαγών"
 msgid "Discard unsaved reply"
 msgstr "Απόρριψη των μη αποθηκευμένων αλλαγών."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:671
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
@@ -8669,7 +8669,7 @@ msgstr "Email Account"
 msgid "Email address"
 msgstr "Email Address"
 
-#: app/models/user.rb:701
+#: app/models/user.rb:713
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -9403,7 +9403,7 @@ msgstr ""
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "Unable to verify email. Please contact your administrator."
 
-#: lib/secure_mailing/smime/incoming.rb:107
+#: lib/secure_mailing/smime/incoming.rb:110
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "Error while verifying signature, please contact your administrator."
@@ -10680,8 +10680,8 @@ msgstr ""
 msgid "Go inside group"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:65
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:96
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:69
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Go to knowledge base"
@@ -12145,7 +12145,7 @@ msgstr "Εσωτερικός"
 msgid "Internal Knowledge Base feed:"
 msgstr "Διαγραφή βάσης γνώσεων"
 
-#: app/models/object_manager/attribute.rb:713
+#: app/models/object_manager/attribute.rb:705
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Internal attributes cannot be deleted"
@@ -12245,7 +12245,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:640
+#: app/models/user.rb:652
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -12600,7 +12600,7 @@ msgstr "Λέξεις-κλειδιά"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:87
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:112
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:29
 #: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBrowsedTitle.ts:23
@@ -12679,7 +12679,7 @@ msgstr "Βάση γνώσεων"
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:632
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:640
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base actions"
@@ -12688,8 +12688,8 @@ msgstr "Βάση γνώσεων"
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:246
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:250
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Knowledge base answer"
@@ -12707,7 +12707,7 @@ msgstr "Επιτυχής Ενημέρωση "
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr "Επιτυχής Ενημέρωση "
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:490
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
 #, fuzzy
 #| msgid "Update successful!"
 msgid "Knowledge base answer updated successfully."
@@ -14457,7 +14457,7 @@ msgstr "ΔΙΑΘΕΣΗ"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:720
+#: app/models/user.rb:732
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -14719,7 +14719,7 @@ msgstr ""
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 #, fuzzy
 #| msgid "Feedback"
 msgid "Negative feedback"
@@ -15284,7 +15284,7 @@ msgstr ""
 msgid "No checklist templates have been created yet."
 msgstr "Δεν έχει δημιουργηθεί ακόμη πρότυπο."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:142
 #, fuzzy
 #| msgid "Comment"
 msgid "No comment"
@@ -15317,7 +15317,7 @@ msgstr "πρόχειρο"
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr ""
 
@@ -15374,7 +15374,7 @@ msgstr "Αίτημα υπό επεξεργασία"
 msgid "No items available"
 msgstr "Δεν υπάρχει διαθέσιμη μετάφραση για αυτήν την τοποθεσία"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:598
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:606
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "No knowledge base content is available yet."
@@ -15523,7 +15523,7 @@ msgstr "Κοινοποιημένα"
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr ""
 
@@ -15558,15 +15558,15 @@ msgstr "Δεν έχει δημιουργηθεί ακόμη πρότυπο."
 msgid "No tickets in this state."
 msgstr "Ταιριάξτε όλα τα παρακάτω"
 
-#: app/controllers/users_controller.rb:254
+#: app/controllers/users_controller.rb:256
 msgid "No token!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:116
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:132
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
 #, fuzzy
 #| msgid "No translation for this locale available"
@@ -15698,8 +15698,8 @@ msgstr "Δεν έχει διαμορφωθεί"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:85
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:59
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:90
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:63
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:30
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
@@ -15824,23 +15824,23 @@ msgstr "Ειδοποίηση Αποστολέα"
 msgid "Notification sent to"
 msgstr "Ειδοποίηση Αποστολέα"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Notification settings could not be reset."
 msgstr "%s Object(s) are updated."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:124
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Notification settings could not be saved."
 msgstr "%s Object(s) are updated."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:187
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
 msgid "Notification settings have been reset to default."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:142
 #, fuzzy
 #| msgid "Update successful!"
 msgid "Notification settings have been saved successfully."
@@ -17062,6 +17062,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:91
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "Δικαιώματα"
@@ -17235,7 +17236,7 @@ msgid "Please configure import source before running."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:601
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -17311,7 +17312,7 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 #, fuzzy
 #| msgid "Choose your new password."
 msgid "Please provide your current password."
@@ -17319,7 +17320,7 @@ msgstr "Eπιλέξτε τον νέο σας κωδικό πρόσβασης."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 #, fuzzy
 #| msgid "Choose your new password."
 msgid "Please provide your new password."
@@ -17402,7 +17403,7 @@ msgstr "Πόρτα"
 msgid "Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 #, fuzzy
 #| msgid "Feedback"
 msgid "Positive feedback"
@@ -18064,7 +18065,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:158
 #, fuzzy
 #| msgid "Integrations"
 msgid "Regenerate"
@@ -18673,7 +18674,7 @@ msgstr "ορισμός σε εσωτερικό"
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 #, fuzzy
 #| msgid "Personal Settings"
 msgid "Reset to default settings"
@@ -19175,10 +19176,10 @@ msgstr ""
 msgid "Save draft"
 msgstr "Πρόχειρο"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:226
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Save notifications"
+msgid "Save notification settings"
 msgstr "Αποκλεισμός ειδοποιήσεων"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
@@ -19656,13 +19657,13 @@ msgstr "Αναζήτηση"
 msgid "Secondary organizations"
 msgstr "Κοινός οργανισμός"
 
-#: app/models/user.rb:708
+#: app/models/user.rb:720
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
 
-#: app/models/user.rb:714
+#: app/models/user.rb:726
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -21417,7 +21418,7 @@ msgstr "Αποστολή"
 msgid "Submit Comment"
 msgstr "Σχόλιο"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 #, fuzzy
 #| msgid "Comment"
 msgid "Submit comment"
@@ -21916,7 +21917,7 @@ msgid "Textarea field"
 msgstr "Κείμενο"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -21932,7 +21933,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Thanks for joining. Email sent to \"%s\"."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:137
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
@@ -22108,7 +22109,7 @@ msgstr "%s Object(s) are created."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "%s Object(s) are created."
 
-#: app/models/ai/provider_connection.rb:448
+#: app/models/ai/provider_connection.rb:456
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -22314,7 +22315,7 @@ msgstr "Ηχος Ειδοποίησης"
 msgid "The certificate for this private key could not be found."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:77
+#: lib/secure_mailing/smime/incoming.rb:84
 #, fuzzy
 #| msgid "Notification Sound"
 msgid "The certificate for verification could not be found."
@@ -22464,7 +22465,7 @@ msgid "The context window size must be a positive number."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr ""
@@ -22541,7 +22542,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1694
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The download could not be started. Please try again later."
@@ -22559,7 +22560,7 @@ msgid ""
 msgstr "%s Object(s) are created."
 
 #: app/services/service/auth/send_admin_token.rb:38
-#: app/services/service/user/password_reset/update.rb:40
+#: app/services/service/user/password_reset/update.rb:34
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The email could not be sent to the user."
@@ -22997,7 +22998,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "%s Object(s) are updated."
 
-#: lib/secure_mailing/smime/incoming.rb:44
+#: lib/secure_mailing/smime/incoming.rb:45
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The private key for decryption could not be found."
@@ -23091,7 +23092,7 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
@@ -23177,7 +23178,7 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:660
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr ""
@@ -23249,7 +23250,7 @@ msgstr ""
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
@@ -23281,7 +23282,7 @@ msgstr ""
 msgid "The required parameter 'params' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr ""
 
@@ -23297,7 +23298,7 @@ msgstr ""
 msgid "The required parameter 'permission' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:653
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
@@ -23459,7 +23460,7 @@ msgstr ""
 msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
@@ -23802,7 +23803,7 @@ msgstr ""
 msgid "There are no business hours configured."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:579
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:587
 msgid "There are no categories to arrange yet."
 msgstr ""
 
@@ -24337,13 +24338,13 @@ msgstr ""
 msgid "This item expands to show more options"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:86
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "This knowledge base answer is not available."
 msgstr "Βάση γνώσεων"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:60
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "This knowledge base category is not available."
@@ -24383,7 +24384,7 @@ msgid ""
 "It was blocked, but you can download the original formatting."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:94
+#: lib/secure_mailing/smime/incoming.rb:97
 msgid "This message was not signed by its sender."
 msgstr ""
 
@@ -25496,7 +25497,7 @@ msgstr "Αποκλεισμός ειδοποιήσεων"
 msgid "Toggle dark mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
 #, fuzzy
 #| msgid "Parent"
 msgid "Toggle group"
@@ -26183,7 +26184,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:687
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
@@ -27118,7 +27119,7 @@ msgid "View"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:582
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
 #, fuzzy
 #| msgid "New User"
 msgid "View answer"
@@ -27885,6 +27886,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
+#: app/services/service/ai/analytics/upsert_usage.rb:45
 msgid "You have already provided feedback, thank you."
 msgstr ""
 
@@ -28395,16 +28397,16 @@ msgstr "assign tickets"
 msgid "at"
 msgstr "στις"
 
-#: app/models/object_manager/attribute.rb:619
+#: app/models/object_manager/attribute.rb:611
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1059
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1077
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:652
+#: app/models/object_manager/attribute.rb:644
 msgid "attribute is not editable"
 msgstr ""
 
@@ -28439,7 +28441,7 @@ msgstr "απασχολημένος"
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:702
+#: app/models/object_manager/attribute.rb:694
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -28451,13 +28453,13 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:709
+#: app/models/object_manager/attribute.rb:701
 #, fuzzy
 #| msgid "Account not verified"
 msgid "can't be modified"
 msgstr "O λογαριασμός δεν επαληθεύτηκε."
 
-#: app/models/object_manager/attribute.rb:610
+#: app/models/object_manager/attribute.rb:602
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -29080,7 +29082,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1452
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -29186,7 +29188,7 @@ msgstr ""
 msgid "is not a number"
 msgstr "δεν είναι αριθμός"
 
-#: app/models/ai/provider_connection.rb:242
+#: app/models/ai/provider_connection.rb:250
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "is not a supported AI provider"
@@ -29237,7 +29239,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:907
+#: app/models/user.rb:919
 msgid "is too long"
 msgstr ""
 
@@ -29573,7 +29575,7 @@ msgstr "Ειδοποιήσεις"
 msgid "now"
 msgstr "οχι"
 
-#: app/models/object_manager/attribute.rb:616
+#: app/models/object_manager/attribute.rb:608
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -29863,7 +29865,7 @@ msgstr "skipped"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:613
+#: app/models/object_manager/attribute.rb:605
 msgid "spaces are not allowed"
 msgstr ""
 
