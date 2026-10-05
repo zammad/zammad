@@ -2380,8 +2380,8 @@ msgid "Attendees"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:21
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:73
-#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:66
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:77
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:71
 msgid "Attention! Changing the organization will update the user's most recent tickets to the new organization."
 msgstr ""
 
@@ -2406,7 +2406,7 @@ msgstr ""
 msgid "Attribute that uniquely identifies the user. If unset, the name identifier returned by the IDP is used."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:32
 #: app/assets/javascripts/app/models/overview.coffee:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:134
 msgid "Attributes"
@@ -2511,7 +2511,7 @@ msgstr ""
 msgid "Author name and article creation date"
 msgstr ""
 
-#: app/controllers/application_controller/handles_errors.rb:107
+#: app/controllers/application_controller/handles_errors.rb:124
 msgid "Authorization failed"
 msgstr ""
 
@@ -3163,7 +3163,7 @@ msgid "Cancel"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:386
-#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
+#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:121
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:55
@@ -6807,7 +6807,7 @@ msgstr ""
 msgid "Edit ticket title"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:58
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:60
 msgid "Edit user"
 msgstr ""
 
@@ -8734,12 +8734,12 @@ msgstr ""
 msgid "Group selection for ticket creation"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:60
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:61
 #: app/assets/javascripts/app/models/overview.coffee:42
 msgid "Grouping by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:70
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:71
 #: app/assets/javascripts/app/models/overview.coffee:57
 msgid "Grouping order"
 msgstr ""
@@ -9781,9 +9781,9 @@ msgstr ""
 msgid "Intro"
 msgstr ""
 
-#: app/controllers/integration/cti_controller.rb:30
-#: app/controllers/integration/placetel_controller.rb:28
-#: app/controllers/integration/sipgate_controller.rb:28
+#: app/controllers/integration/cti_controller.rb:32
+#: app/controllers/integration/placetel_controller.rb:30
+#: app/controllers/integration/sipgate_controller.rb:30
 msgid "Invalid 'direction'!"
 msgstr ""
 
@@ -9917,9 +9917,9 @@ msgstr ""
 msgid "Invalid signature format: expected a PGP signature"
 msgstr ""
 
-#: app/controllers/integration/cti_controller.rb:41
-#: app/controllers/integration/placetel_controller.rb:40
-#: app/controllers/integration/sipgate_controller.rb:40
+#: app/controllers/integration/cti_controller.rb:43
+#: app/controllers/integration/placetel_controller.rb:42
+#: app/controllers/integration/sipgate_controller.rb:42
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -10023,7 +10023,7 @@ msgstr ""
 msgid "Items"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:16
 msgid "Items per page"
 msgstr ""
 
@@ -12705,7 +12705,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
-#: app/controllers/application_controller/handles_errors.rb:61
+#: app/controllers/application_controller/handles_errors.rb:72
 #: app/services/service/ticket/article/create.rb:136
 msgid "Not authorized"
 msgstr ""
@@ -17110,7 +17110,7 @@ msgstr ""
 msgid "Sorted %s to position %s."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:41
 #: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
 msgstr ""
@@ -17119,7 +17119,7 @@ msgstr ""
 msgid "Sorting mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:50
 #: app/assets/javascripts/app/models/overview.coffee:31
 msgid "Sorting order"
 msgstr ""
@@ -18465,7 +18465,7 @@ msgstr ""
 msgid "The following contents are provided in the system report:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:202
+#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:204
 msgid "The form content has been changed. Do you want to close it and lose your changes?"
 msgstr ""
 
@@ -19326,6 +19326,11 @@ msgstr ""
 msgid "The user token could not be generated."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/user/form_handler_user_password_change_hint.coffee:19
+#: app/frontend/shared/entities/user/composables/useUserPasswordChangeHint.ts:27
+msgid "The user will be notified of the password change by email."
+msgstr ""
+
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:88
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -19867,7 +19872,7 @@ msgstr ""
 msgid "This new desktop BETA UI is currently in development and not ready for production use. It may contain bugs or incomplete features."
 msgstr ""
 
-#: app/controllers/application_controller/handles_errors.rb:100
+#: app/controllers/application_controller/handles_errors.rb:117
 #: app/graphql/gql/zammad_schema.rb:113
 msgid "This object already exists."
 msgstr ""
@@ -21796,8 +21801,8 @@ msgstr ""
 msgid "User could not be created."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:85
-#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:80
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:89
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:85
 msgid "User could not be updated."
 msgstr ""
 
@@ -23169,7 +23174,7 @@ msgstr ""
 msgid "archived"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "ascending"
@@ -23429,7 +23434,7 @@ msgstr ""
 msgid "delivered to the customer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:57
 #: app/assets/javascripts/app/models/overview.coffee:38
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"

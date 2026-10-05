@@ -27,7 +27,7 @@ class App.UserProfileActionRow extends App.ControllerObserverActionRow
           object: __('User')
           objects: __('Users')
         container: @el.closest('.content')
-        handlers: [hideOrganizationHelp]
+        handlers: [hideOrganizationHelp, App.FormHandlerUserPasswordChangeHint.run]
       )
     )
 

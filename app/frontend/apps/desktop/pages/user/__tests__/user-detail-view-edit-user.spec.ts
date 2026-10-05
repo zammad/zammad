@@ -2,6 +2,7 @@
 
 import { within } from '@testing-library/vue'
 
+import userObjectAttributes from '#tests/graphql/factories/fixtures/user-object-attributes.ts'
 import FormUpdaterUser from '#tests/graphql/factories/types/FormUpdaterUser.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -127,6 +128,61 @@ describe('User Detail View - Edit User', () => {
     expect(calls.at(-1)?.variables.input).toMatchObject({
       firstname: 'Thomas',
     })
+  })
+
+  it('shows a hint that the user will be notified of the password change', async () => {
+    mockPermissions(['admin.user'])
+
+    const { attributes, screens } = userObjectAttributes()
+
+    screens.find((screen) => screen.name === 'edit')?.attributes.push('password')
+
+    mockObjectManagerFrontendAttributesQuery({
+      objectManagerFrontendAttributes: {
+        attributes: [
+          ...attributes,
+          {
+            name: 'password',
+            display: 'Password',
+            dataType: 'input',
+            dataOption: {
+              type: 'password',
+              maxlength: 1001,
+              null: true,
+              autocomplete: 'new-password',
+            },
+            isInternal: true,
+            screens: {},
+            __typename: 'ObjectManagerFrontendAttribute',
+          },
+        ],
+        screens,
+      },
+    })
+
+    mockFormUpdaterQuery({
+      formUpdater: FormUpdaterUser(),
+    })
+
+    const view = await visitView('/users/2')
+
+    const topHeader = within(view.getByTestId('user-detail-top-bar-full-details'))
+
+    await view.events.click(topHeader.getByRole('button', { name: 'Additional actions' }))
+
+    const popover = await view.findByRole('region', { name: 'Additional actions' })
+
+    await view.events.click(within(popover).getByRole('button', { name: 'Edit' }))
+
+    const flyout = await view.findByRole('complementary', { name: 'Edit user' })
+
+    const hint = 'The user will be notified of the password change by email.'
+
+    expect(within(flyout).queryByText(hint)).not.toBeInTheDocument()
+
+    await view.events.type(await within(flyout).findByLabelText('Password'), 'vXqXseF9L2ab')
+
+    expect(await within(flyout).findByText(hint)).toBeInTheDocument()
   })
 
   it('does not allow agent to toggle customer role', async () => {

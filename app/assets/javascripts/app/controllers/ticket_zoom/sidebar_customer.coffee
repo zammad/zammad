@@ -90,6 +90,7 @@ class SidebarCustomer extends App.Controller
         object:  __('User')
         objects: __('Users')
       container: @elSidebar.closest('.content')
+      handlers: [App.FormHandlerUserPasswordChangeHint.run]
     )
 
   changeCustomer: =>
