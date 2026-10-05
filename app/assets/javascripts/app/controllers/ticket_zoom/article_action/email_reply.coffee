@@ -225,6 +225,9 @@ class EmailReply extends App.Controller
 
   # Selection.containsNode is not supported in IE, hence check
   @containsNode: (node) ->
+    # HTML articles with an empty body render no content element
+    return false if !node
+
     selected = App.ClipBoard.getSelectedObject()
     if typeof selected.containsNode == 'function'
       return selected.containsNode(node, false)

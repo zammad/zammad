@@ -220,6 +220,55 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
         end
       end
     end
+
+    context 'for ticket reply' do
+      let(:ticket)  { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let(:article) { create(:ticket_article, ticket: ticket) }
+
+      before do
+        article
+
+        visit "#ticket/zoom/#{ticket.id}"
+      end
+
+      it 'opens the email reply without a prior mouse click' do
+        send_keys(['r'])
+
+        within :active_content do
+          expect(page).to have_css('.article-new .js-selectableTypes[data-type="email"]')
+        end
+      end
+
+      it 'opens the email reply via keyboard activation of the article action' do
+        find('.ticket-article-item .js-ArticleAction[data-type="emailReply"]').execute_script('this.focus()')
+
+        send_keys(:enter)
+
+        within :active_content do
+          expect(page).to have_css('.article-new .js-selectableTypes[data-type="email"]')
+        end
+      end
+
+      context 'with an HTML article without body content' do
+        # Incoming email skips the body validation, so such articles can exist.
+        let(:article) { super().tap { |article| article.update_columns(content_type: 'text/html', body: '') } }
+
+        it 'opens the email reply while a selection outside of the article exists' do
+          find('.ticketZoom-header .js-objectNumber').execute_script(<<~JAVASCRIPT)
+            let range = document.createRange()
+            range.selectNodeContents(this)
+            window.getSelection().removeAllRanges()
+            window.getSelection().addRange(range)
+          JAVASCRIPT
+
+          send_keys(['r'])
+
+          within :active_content do
+            expect(page).to have_css('.article-new .js-selectableTypes[data-type="email"]')
+          end
+        end
+      end
+    end
   end
 
   context 'Translations shortcut' do
