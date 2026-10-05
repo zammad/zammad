@@ -101,5 +101,14 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
         expect(linked_issue.send(:variables, issue_url)[:fullpath]).to eq('group/project')
       end
     end
+
+    describe 'work_items URL format' do
+      let(:linked_issue) { GitLab::LinkedIssue.new(instance.client) }
+      let(:work_item_url) { "https://#{URI.parse(ENV['GITLAB_ISSUE_LINK']).host}/group/project/-/work_items/42" }
+
+      it 'accepts work_items URLs in addition to issues URLs' do
+        expect(linked_issue.send(:variables, work_item_url)).to include(fullpath: 'group/project', issue_id: '42')
+      end
+    end
   end
 end

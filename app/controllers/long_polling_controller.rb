@@ -29,7 +29,6 @@ class LongPollingController < ApplicationController
         payload:   data,
         session:   session_data,
         client_id: client_id,
-        clients:   {},
         options:   {},
       )
       if message

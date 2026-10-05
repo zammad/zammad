@@ -4,8 +4,14 @@ require 'rails_helper'
 
 RSpec.describe Sessions::Event::Base do
 
+  describe '#initialize' do
+    it 'does not accept unknown params' do
+      expect { described_class.new(clients: {}, user_id: 1) }.to raise_error(ArgumentError)
+    end
+  end
+
   describe '#remote_ip' do
-    let(:instance) { described_class.new(headers:, clients: {}) }
+    let(:instance) { described_class.new(headers:) }
 
     context 'without X-Forwarded-For' do
       let(:headers) { {} }

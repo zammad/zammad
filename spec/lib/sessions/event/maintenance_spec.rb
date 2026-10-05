@@ -111,9 +111,7 @@ RSpec.describe Sessions::Event::Maintenance do
   def run_event(data)
     described_class.new(
       payload:   { 'data' => data },
-      user_id:   user.id,
       client_id: 'sess_id',
-      clients:   {},
       session:   { 'id' => user.id }
     ).run
   end

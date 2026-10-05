@@ -62,9 +62,6 @@
     - echo "Rubocop check…"
     - bundle exec .dev/rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
-    - echo "bundler-audit security check…"
-    - gem exec bundle-audit update
-    - gem exec bundle-audit
     - echo "Brakeman security check…"
     - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Checking if yard can generate documentation…"
@@ -74,6 +71,20 @@
     - if [[ ! -z "$GEM_FILES" ]]; then echo $GEM_FILES; exit 1; fi # Raise error if files were found.
     - echo "Finally, ensure cleanup.sh passes…"
     - script/build/cleanup.sh
+
+# Unsupported stable branches do not receive dependency updates any more,
+# so known gem vulnerabilities must not block the rest of the pipeline.
+'lint: bundle audit':
+  extends:
+    - .template_lint
+  allow_failure: true
+  before_script:
+    - !reference [.scripts, source_rvm]
+  after_script: []
+  script:
+    - echo "bundler-audit security check…"
+    - gem exec bundle-audit update
+    - gem exec bundle-audit
 
 'lint: coffee & css':
   extends:

@@ -43,9 +43,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     Sessions.queue(client_id)
     described_class.new(
       payload:   { 'data' => chat_session.session_id },
-      user_id:   agent.id,
       client_id: client_id,
-      clients:   {},
       session:   { 'id' => agent.id },
     )
   end
@@ -66,9 +64,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
       Sessions.queue(client_id)
       described_class.new(
         payload:   { 'data' => chat_session.session_id },
-        user_id:   customer.id,
         client_id: client_id,
-        clients:   {},
         session:   { 'id' => customer.id },
       )
     end
@@ -92,9 +88,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     let(:subject_with_invalid_session_id) do
       described_class.new(
         payload:   { 'data' => 'not_existing_chat_session_id' },
-        user_id:   agent.id,
         client_id: client_id,
-        clients:   {},
         session:   { 'id' => agent.id },
       )
     end
