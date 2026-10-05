@@ -120,6 +120,11 @@ class App.CustomerChat extends App.Controller
       chat_sessions: list
     )
 
+  # Bootstrap's popover sanitizer has no <time> in its allowlist and would drop
+  #   the relative time rendered by the humanTime helper together with its text.
+  chatSessionListWhiteList: ->
+    $.extend({}, $.fn.popover.Constructor.DEFAULTS.whiteList, time: ['datetime', 'title'])
+
 
   show: (params) =>
     @title(__('Customer Chat'), true)
@@ -253,6 +258,7 @@ class App.CustomerChat extends App.Controller
           @popovers.push @el.find(".js-waitingCustomers[data-chat-id=#{chat.id}] .js-info").popover(
             trigger:    'hover'
             html:       true
+            whiteList:  @chatSessionListWhiteList()
             animation:  false
             delay:      0
             placement:  'bottom'
@@ -267,6 +273,7 @@ class App.CustomerChat extends App.Controller
       @popovers.push @el.find('.js-waitingCustomers .js-totalInfo').popover(
         trigger:    'hover'
         html:       true
+        whiteList:  @chatSessionListWhiteList()
         animation:  false
         delay:      0
         placement:  'bottom'
@@ -289,6 +296,7 @@ class App.CustomerChat extends App.Controller
     @popovers.push @el.find('.js-chattingCustomers .js-info').popover(
       trigger:    'hover'
       html:       true
+      whiteList:  @chatSessionListWhiteList()
       animation:  false
       delay:      0
       placement:  'bottom'

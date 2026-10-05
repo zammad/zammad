@@ -417,6 +417,35 @@ RSpec.describe 'Chat Handling', type: :system do
     end
   end
 
+  context 'when hovering over the waiting and chatting customers info' do
+    it 'shows the relative time of the chat session', authenticated_as: :authenticate do
+      visit '/'
+
+      enable_agent_chat
+
+      using_session :customer do
+        visit chat_url
+        open_chat_dialog
+      end
+
+      expect(page).to have_css('.active .js-waitingCustomers .js-badgeWaitingCustomers', text: '1')
+
+      find('.active .js-waitingCustomers .js-totalInfo').hover
+
+      # Bootstrap's popover sanitizer has no <time> in its allowlist and drops the
+      #   element together with its text unless the allowlist is extended.
+      expect(page).to have_css('.popover time.humanTimeFromNow', text: %r{ago|just now})
+
+      accept_chat
+
+      expect(page).to have_css('.active .js-chattingCustomers .js-badgeChattingCustomers', text: '1')
+
+      find('.active .js-chattingCustomers .js-info').hover
+
+      expect(page).to have_css('.popover time.humanTimeFromNow', text: %r{ago|just now})
+    end
+  end
+
   context 'when jquery variant is used' do
     before do
       visit '/'
