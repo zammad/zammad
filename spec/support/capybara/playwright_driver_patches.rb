@@ -15,21 +15,41 @@ if Gem.loaded_specs['capybara-playwright-driver'].version != Gem::Version.new('0
         "#{__FILE__} against the new version, then adjust the version pin."
 end
 
-module ZammadCapybaraPlaywrightNodePatches
-  # Capybara reads - #text, #[], #visible? - run hundreds of times per example,
-  #   and the gem spends 2-4 browser round trips on each one: #assert_element_
-  #   not_stale fires a bare `enabled?` liveness probe before every read,
-  #   #visible_text additionally calls #visible? (another probe + evaluate)
-  #   before extracting the text, and #[] splits property and attribute lookup
-  #   over three calls. Selenium needs one WebDriver command for each of these;
-  #   measured on one desktop example the difference is 7,319 vs 1,195 round
-  #   trips, and in CI every round trip crosses the Docker network to the
-  #   browser service container. Fold each read into a single evaluate.
-  #
-  # The staleness contract stays intact: for a detached element the JS throws
-  #   the exact message the gem's own rescue translates into
-  #   StaleReferenceError, so Capybara's synchronize machinery reloads the node
-  #   and retries the same as before.
+# Messages the browser reports when the element or its document went away
+#   mid-operation. The gem translates most of them into StaleReferenceError,
+#   which is one of the driver's invalid_element_errors and therefore makes
+#   Capybara reload the node and retry - but it misses three cases:
+#
+#   - its Firefox pattern expects the channel name `content::page`, while the
+#     browser actually reports `content::85/124/3` and the like, so the error
+#     falls through untranslated;
+#   - page-level finds run through the gem's #assert_page_alive, which retries a
+#     few of them but raises the raw error once its retries are used up, so a
+#     navigation during e.g. a `have_css?` wait can abort the wait instead of
+#     retrying it;
+#   - a few node methods evaluate in the page without going through the
+#     translating wrapper at all (see the patches below).
+module ZammadCapybaraPlaywrightStaleErrors
+  MESSAGES = Regexp.union(
+    'Execution context was destroyed, most likely because of a navigation',
+    'Element is not attached to the DOM',
+    'Cannot find context with specified id',
+    'Unable to adopt element handle from a different document',
+    %r{exception while running method "adoptNode"},
+  ).freeze
+
+  # Re-raises as StaleReferenceError when the message says the element or its
+  #   document went away, and re-raises unchanged otherwise.
+  def self.translate(error)
+    raise error if !MESSAGES.match?(error.message)
+
+    raise Capybara::Playwright::Node::StaleReferenceError, error
+  end
+end
+
+# The JS the read overrides below run in the page. Kept in their own module so
+#   the patch module stays about behaviour.
+module ZammadCapybaraPlaywrightReadScripts
   STALE_GUARD_JS = <<~JS.freeze
     if (!el.isConnected) throw new Error('Element is not attached to the DOM');
   JS
@@ -73,20 +93,19 @@ module ZammadCapybaraPlaywrightNodePatches
     }
   JS
 
+  # The gem reads innerText, which differs from the WebDriver element text the
+  #   Selenium drivers return - most visibly in line breaks, a <p> boundary is
+  #   two there - so exact multi-line expectations only held under Selenium.
+  #   Uses Selenium's own algorithm instead, see playwright_visible_text.js.
+  #   The formatter guards the file's leading parenthesis with a semicolon.
+  WEBDRIVER_TEXT_JS = File.read(File.join(__dir__, 'playwright_visible_text.js'))
+                          .lines.drop_while { |line| line.start_with?('//') || line.strip.empty? }
+                          .join.delete_prefix(';').freeze
+
   VISIBLE_TEXT_JS = <<~JS.freeze
     (el) => {
       #{STALE_GUARD_JS}
-      #{IS_VISIBLE_JS}
-      if (!isVisible(el)) {
-        return '';
-      }
-      if (el.nodeName == 'TEXTAREA') {
-        return el.textContent;
-      }
-      if (el instanceof SVGElement) {
-        return el.textContent.replace(/\\n+/g, '\\n');
-      }
-      return el.innerText;
+      return (#{WEBDRIVER_TEXT_JS})(el);
     }
   JS
 
@@ -113,16 +132,77 @@ module ZammadCapybaraPlaywrightNodePatches
       return value;
     }
   JS
+end
 
+module ZammadCapybaraPlaywrightNodePatches
+  include ZammadCapybaraPlaywrightReadScripts
+
+  # Most node operations are wrapped in the gem's #assert_element_not_stale,
+  #   which translates raw Playwright errors for detached/navigated-away
+  #   elements into StaleReferenceError - a member of the driver's
+  #   invalid_element_errors, which Capybara's synchronize machinery rescues,
+  #   reloads the node for and retries (just like Selenium's
+  #   StaleElementReferenceError). Its own patterns miss the Firefox message
+  #   (see above), so route what it re-raises through the broader translation.
+  def assert_element_not_stale(&)
+    super
+  rescue ::Playwright::Error => e
+    ZammadCapybaraPlaywrightStaleErrors.translate(e)
+  end
+
+  # These read methods evaluate in the page without that wrapper, and
+  #   Capybara already has a rescue waiting for each of them - but only for the
+  #   translated error:
+  #
+  #   - #== is called per candidate node while filtering a query
+  #     (Queries::SelectorQuery#matches_filters?), which rescues
+  #     invalid_element_errors and drops the node from the result set;
+  #   - #tag_name is called by Node::Element#inspect, which rescues them into
+  #     "Obsolete #<Capybara::Node::Element>". Untranslated it raises *while
+  #     Capybara builds a failure message*, replacing the real failure with a
+  #     navigation error - the reason a stale <select> reports
+  #     "Execution context was destroyed" instead of what did not match;
+  #   - the predicates back Capybara's own #disabled?/#readonly? etc., where a
+  #     stale node means the enclosing synchronize should retry.
+  #
+  # Translated rather than wrapped in #assert_element_not_stale, because that
+  #   wrapper spends a liveness round trip per call and these run per candidate
+  #   node per query. Selenium raises its own StaleElementReferenceError here,
+  #   which is what those rescues were written for (#== not even that: it
+  #   compares element ids client-side without touching the browser).
+  #
+  # Still unguarded, but with no observed failures: the mutating #set, #drop,
+  #   #scroll_by, #trigger, #unselect_option and #shadow_root.
+  %i[== tag_name disabled? readonly? multiple?].each do |method_name|
+    define_method(method_name) do |*args|
+      super(*args)
+    rescue ::Playwright::Error => e
+      ZammadCapybaraPlaywrightStaleErrors.translate(e)
+    end
+  end
+
+  # Capybara reads - #text, #[], #visible? - run hundreds of times per example,
+  #   and the gem spends 2-4 browser round trips on each one: #assert_element_
+  #   not_stale fires a bare `enabled?` liveness probe before every read,
+  #   #visible_text additionally calls #visible? (another probe + evaluate)
+  #   before extracting the text, and #[] splits property and attribute lookup
+  #   over three calls. Selenium needs one WebDriver command for each of these;
+  #   measured on one desktop example the difference is 7,319 vs 1,195 round
+  #   trips, and in CI every round trip crosses the Docker network to the
+  #   browser service container. Fold each read into a single evaluate.
+  #
+  # The staleness contract stays intact: for a detached element the JS throws
+  #   the exact message the gem's own rescue translates into
+  #   StaleReferenceError, so Capybara's synchronize machinery reloads the node
+  #   and retries the same as before.
   def visible?
     read_in_one_round_trip(VISIBLE_JS)
   end
 
+  # Already trimmed and with non-breaking spaces replaced, as Selenium returns
+  #   it - trimming again would drop a trailing space Selenium keeps.
   def visible_text
-    text = read_in_one_round_trip(VISIBLE_TEXT_JS)
-    text.to_s.scrub.gsub(%r{\A[[:space:]&&[^\u00a0]]+}, '')
-        .gsub(%r{[[:space:]&&[^\u00a0]]+\z}, '')
-        .tr("\u00a0", ' ')
+    read_in_one_round_trip(VISIBLE_TEXT_JS).to_s.scrub
   end
 
   def all_text
@@ -150,3 +230,19 @@ module ZammadCapybaraPlaywrightNodePatches
 end
 
 Capybara::Playwright::Node.prepend(ZammadCapybaraPlaywrightNodePatches)
+
+module ZammadCapybaraPlaywrightBrowserPatches
+  # Page-level finds use the gem's #assert_page_alive, which retries a few
+  #   staleness errors but raises the raw Playwright::Error once its retries are
+  #   used up, so a navigation while Capybara waits for a selector can abort the
+  #   wait instead of being retried.
+  %i[find_css find_xpath].each do |method_name|
+    define_method(method_name) do |*args, **options, &block|
+      super(*args, **options, &block)
+    rescue ::Playwright::Error => e
+      ZammadCapybaraPlaywrightStaleErrors.translate(e)
+    end
+  end
+end
+
+Capybara::Playwright::Browser.prepend(ZammadCapybaraPlaywrightBrowserPatches)

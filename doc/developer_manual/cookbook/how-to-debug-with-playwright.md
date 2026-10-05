@@ -19,6 +19,13 @@ pnpm playwright:install
 
 Without it, the first driver call fails with `Executable doesn't exist ... chrome-headless-shell`.
 
+The Firefox driver (`SELENIUM_BROWSER=playwright_firefox`) uses Playwright's own Firefox build, which this script does
+not download. Install it once as well if you want to use that driver:
+
+```sh
+pnpm exec playwright install firefox
+```
+
 ### In the Devcontainer
 
 There is no Playwright service container - the browser is launched inside the devcontainer itself, so the download
@@ -61,7 +68,9 @@ SELENIUM_BROWSER_HEADLESS=1 SELENIUM_BROWSER=playwright bundle exec rspec spec/s
 In the devcontainer there is no display to show the browser on, so the variable is required there. The `with-selenium`
 stack already sets it for the whole container; the default stack does not.
 
-Only Chromium is available. Examples tagged with `mobile_user_agent` automatically use the mobile variant of the driver.
+`SELENIUM_BROWSER=playwright` runs Chromium, `SELENIUM_BROWSER=playwright_firefox` runs Playwright's Firefox build
+(see the one-time setup above). Examples tagged with `mobile_user_agent` automatically use the mobile variant of the
+driver.
 
 ## Traces
 

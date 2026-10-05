@@ -64,12 +64,6 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     60 # both sources combined (forwarding a phone article)
   end
 
-  # FIXME: The Playwright driver reads the editor text with extra blank lines between paragraphs,
-  #   unlike the Selenium drivers, so the exact text checks fail.
-  before do
-    skip 'Skipping due to differing editor text in the Playwright driver' if %i[zammad_playwright zammad_playwright_mobile].include?(Capybara.current_driver)
-  end
-
   # we test article creation mostly on the backend because Node.js doesn't support prose-mirror
   context 'when article was created as email' do
     let(:signature) { create(:signature, active: true, body: "\#{user.firstname}<br>Signature!") }

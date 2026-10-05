@@ -186,8 +186,11 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
       script_timeout_retried = true
       retry
     end
-  rescue Selenium::WebDriver::Error::TimeoutError, Selenium::WebDriver::Error::JavascriptError
+  rescue Selenium::WebDriver::Error::TimeoutError, Selenium::WebDriver::Error::JavascriptError, Playwright::Error
     nil # Page may navigate away mid-check (e.g. SAML redirect), making App undefined.
+    #   Playwright::Error is the equivalent of both Selenium classes here: the
+    #   guard above cannot prevent this, as the document can be replaced between
+    #   it and the check below, and Playwright::TimeoutError subclasses it.
   end
 
   # Waits until all pending Core Workflow requests of the legacy frontend are

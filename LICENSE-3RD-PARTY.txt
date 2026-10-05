@@ -133,6 +133,12 @@ Copyright: Faruk Ates (https://twitter.com/KuraFire)
            Richard Herrera (https://twitter.com/doctyper)
 License: MIT license & BSD license
 -----------------------------------------------------------------------------
+playwright_visible_text.js
+Source: https://github.com/SeleniumHQ/selenium
+Copyright: 2011-2026 Software Freedom Conservancy
+           2004-2011 Selenium committers
+License: Apache License, Version 2.0
+-----------------------------------------------------------------------------
 qrcodegen.js
 Source: https://www.nayuki.io/page/qr-code-generator-library
 Copyright: 2022, Project Nayuki

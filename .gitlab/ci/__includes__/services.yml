@@ -34,6 +34,11 @@
     #   here instead of at the server's version handshake.
     PLAYWRIGHT_VERSION: '1.63.0'
 
+.variables_playwright_firefox:
+  extends: .variables_playwright
+  variables:
+    SELENIUM_BROWSER: 'playwright_firefox'
+
 .variables_proxy:
   variables:
     CI_PROXY_URL: 'ci-service-proxy:3128'

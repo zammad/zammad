@@ -45,3 +45,12 @@
     - !reference [.services, postgresql]
     - !reference [.services, playwright]
     - !reference [.services, redis]
+
+.template_browser-core_capybara_playwright_firefox:
+  extends:
+    - .template_browser-core_capybara
+    - .variables_playwright_firefox
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, playwright]
+    - !reference [.services, redis]

@@ -20,3 +20,13 @@ capybara:playwright:
     - !reference [.rule_fragments, then_manual_in_mr]
   allow_failure: true
   parallel: 16
+
+# Evaluation lane for Playwright's Firefox, not decided yet whether it stays -
+#   only started on demand and never gates.
+capybara:firefox:playwright:
+  extends:
+    - .template_browser-core_capybara_playwright_firefox
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual]
+  parallel: 16
