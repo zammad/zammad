@@ -2377,7 +2377,7 @@ msgstr ""
 msgid "Attribute that uniquely identifies the user. If unset, the name identifier returned by the IDP is used."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:32
 #: app/assets/javascripts/app/models/overview.coffee:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:134
 msgid "Attributes"
@@ -3094,7 +3094,7 @@ msgid "Cancel"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:386
-#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
+#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:121
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:55
@@ -8612,12 +8612,12 @@ msgstr ""
 msgid "Group selection for ticket creation"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:60
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:61
 #: app/assets/javascripts/app/models/overview.coffee:42
 msgid "Grouping by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:70
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:71
 #: app/assets/javascripts/app/models/overview.coffee:57
 msgid "Grouping order"
 msgstr ""
@@ -9889,7 +9889,7 @@ msgstr ""
 msgid "Items"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:16
 msgid "Items per page"
 msgstr ""
 
@@ -16870,7 +16870,7 @@ msgstr ""
 msgid "Sorted %s to position %s."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:41
 #: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
 msgstr ""
@@ -16879,7 +16879,7 @@ msgstr ""
 msgid "Sorting mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:50
 #: app/assets/javascripts/app/models/overview.coffee:31
 msgid "Sorting order"
 msgstr ""
@@ -18170,7 +18170,7 @@ msgstr ""
 msgid "The following contents are provided in the system report:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:202
+#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:204
 msgid "The form content has been changed. Do you want to close it and lose your changes?"
 msgstr ""
 
@@ -22741,7 +22741,7 @@ msgstr ""
 msgid "archived"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "ascending"
@@ -23001,7 +23001,7 @@ msgstr ""
 msgid "delivered to the customer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:57
 #: app/assets/javascripts/app/models/overview.coffee:38
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
