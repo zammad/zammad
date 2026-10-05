@@ -552,6 +552,7 @@ set new attributes of model (remove already available attributes)
   ###
   @fetchFull: (callback, params = {}) ->
     url = "#{@url}/?full=true"
+    url += "&per_page=#{@fetchFullPerPage}" if @fetchFullPerPage
     App.Log.debug('Model', "fetchFull collection #{@className}", url)
 
     # request already active, queue callback

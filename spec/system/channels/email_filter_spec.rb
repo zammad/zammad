@@ -13,6 +13,24 @@ RSpec.describe 'Manage > Channels > Email > Filters', type: :system do
     end
   end
 
+  context 'when there are more than 500 filters', authenticated_as: :authenticate do
+    def authenticate
+      create_list(:postmaster_filter, 500)
+      create(:postmaster_filter, name: 'AAA newest filter')
+      true
+    end
+
+    it 'shows also the filters beyond the first 500' do
+      visit '/#channels/email'
+
+      click 'a[href="#c-filter"]'
+
+      within '#c-filter' do
+        expect(page).to have_css('td', text: 'AAA newest filter')
+      end
+    end
+  end
+
   context 'when the filter has a single match condition' do
     let(:filter) do
       create(:postmaster_filter, match: { 'subject' => { 'operator' => 'contains', 'value' => 'important' } })
