@@ -16,7 +16,7 @@ import { type EnumTwoFactorAuthenticationMethod, type LoginInput } from '#shared
 import { i18n } from '#shared/i18n.ts'
 import { clearApolloClientStore } from '#shared/server/apollo/client.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { cancelActiveSubscriptions } from '#shared/server/apollo/link/trackSubscriptions.ts'
+import { cancelActiveOperations } from '#shared/server/apollo/link/trackOperations.ts'
 import { setAuthenticationInvalidated } from '#shared/server/apollo/utils/authenticationState.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import testFlags from '#shared/utils/testFlags.ts'
@@ -58,10 +58,11 @@ export const useAuthenticationStore = defineStore(
         logoutCleanup.forEach((cleanupCallback) => cleanupCallback())
       }
 
-      // Cancel all running subscriptions before the session is reset, because
-      //  resetting it reopens the web socket connection, which would execute
-      //  them again on the then unauthenticated connection.
-      cancelActiveSubscriptions()
+      // Cancel all running operations before the session is reset: resetting it
+      //  reopens the web socket connection, which would execute the subscriptions
+      //  again on the then unauthenticated connection, and late query results
+      //  would end up in the cache of the next session.
+      cancelActiveOperations()
 
       await clearApolloClientStore()
 
@@ -111,7 +112,7 @@ export const useAuthenticationStore = defineStore(
 
       // Stop talking to the server before the session is destroyed, so that the
       //  subscriptions are also removed on the server side.
-      cancelActiveSubscriptions()
+      cancelActiveOperations()
 
       logoutCleanup.forEach((cleanupCallback) => cleanupCallback())
 

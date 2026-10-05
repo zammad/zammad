@@ -9,9 +9,9 @@ import { useNotifications } from '#shared/components/CommonNotifications/index.t
 import { LogoutDocument } from '#shared/graphql/mutations/logout.api.ts'
 import { ApplicationConfigDocument } from '#shared/graphql/queries/applicationConfig.api.ts'
 import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdates.api.ts'
-import trackSubscriptionsLink, {
-  cancelActiveSubscriptions,
-} from '#shared/server/apollo/link/trackSubscriptions.ts'
+import trackOperationsLink, {
+  cancelActiveOperations,
+} from '#shared/server/apollo/link/trackOperations.ts'
 import {
   authenticationInvalidated,
   setAuthenticationInvalidated,
@@ -25,6 +25,14 @@ vi.mock('#shared/server/apollo/client.ts', () => {
     clearApolloClientStore: () => Promise.resolve(),
   }
 })
+
+const queryDocument = gql`
+  query sample {
+    sample {
+      id
+    }
+  }
+`
 
 const subscriptionDocument = gql`
   subscription sampleUpdates {
@@ -59,8 +67,23 @@ const startTrackedSubscription = () => {
 
   const terminatingLink = new ApolloLink(() => new Observable(() => teardownSpy))
 
-  execute(ApolloLink.from([trackSubscriptionsLink, terminatingLink]), {
+  execute(ApolloLink.from([trackOperationsLink, terminatingLink]), {
     query: subscriptionDocument,
+  }).subscribe(() => {})
+
+  return teardownSpy
+}
+
+// Starts a query through the real tracking link, so that the logout has
+//  something to cancel. Its teardown is what aborts the HTTP request in the
+//  application.
+const startTrackedQuery = () => {
+  const teardownSpy = vi.fn()
+
+  const terminatingLink = new ApolloLink(() => new Observable(() => teardownSpy))
+
+  execute(ApolloLink.from([trackOperationsLink, terminatingLink]), {
+    query: queryDocument,
   }).subscribe(() => {})
 
   return teardownSpy
@@ -75,7 +98,7 @@ describe('Authentication Store', () => {
 
   afterEach(() => {
     // Make sure no state of a previous example is left behind.
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
     setAuthenticationInvalidated(false)
   })
 
@@ -122,6 +145,32 @@ describe('Authentication Store', () => {
 
     expect(teardownSpy).toHaveBeenCalledOnce()
     expect(authenticationInvalidated()).toBe(true)
+  })
+
+  it('cancels the running queries during a logout', async () => {
+    mockGraphQLApi(LogoutDocument).willResolve({
+      logout: {
+        success: true,
+        errors: null,
+        externalLogoutUrl: null,
+      },
+    })
+
+    const authentication = authenticateStore()
+    const teardownSpy = startTrackedQuery()
+
+    await authentication.logout()
+
+    expect(teardownSpy).toHaveBeenCalledOnce()
+  })
+
+  it('cancels the running queries when the authentication is cleared', async () => {
+    const authentication = authenticateStore()
+    const teardownSpy = startTrackedQuery()
+
+    await authentication.clearAuthentication()
+
+    expect(teardownSpy).toHaveBeenCalledOnce()
   })
 
   it('clears the authentication even when the logout mutation fails', async () => {

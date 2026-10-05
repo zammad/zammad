@@ -15,7 +15,7 @@ import errorLink from './link/error.ts'
 import setAuthorizationLink from './link/setAuthorization.ts'
 import skipSubscriptionsLink from './link/skipSubscriptions.ts'
 import testFlagsLink from './link/testFlags.ts'
-import trackSubscriptionsLink from './link/trackSubscriptions.ts'
+import trackOperationsLink from './link/trackOperations.ts'
 import { browserTabId } from './utils/browserTabId.ts'
 import { createUuid } from './utils/createUuid.ts'
 import getBatchContext from './utils/getBatchContext.ts'
@@ -107,7 +107,7 @@ const link = from([
   skipSubscriptionsLink,
   debugLink,
   removeTypenameFromVariables(),
-  trackSubscriptionsLink,
+  trackOperationsLink,
   splitLink,
 ])
 

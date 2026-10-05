@@ -1,11 +1,18 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, execute, gql, Observable } from '@apollo/client/core'
+import {
+  ApolloClient,
+  ApolloLink,
+  execute,
+  gql,
+  InMemoryCache,
+  Observable,
+} from '@apollo/client/core'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
-import trackSubscriptionsLink, { cancelActiveSubscriptions } from '../trackSubscriptions.ts'
+import trackOperationsLink, { cancelActiveOperations } from '../trackOperations.ts'
 
-import type { DefaultContext } from '@apollo/client/core'
+import type { DefaultContext, FetchResult } from '@apollo/client/core'
 
 const subscriptionDocument = gql`
   subscription sampleUpdates {
@@ -19,6 +26,15 @@ const queryDocument = gql`
   query sample {
     sample {
       id
+      name
+    }
+  }
+`
+
+const mutationDocument = gql`
+  mutation sampleUpdate {
+    sampleUpdate {
+      id
     }
   }
 `
@@ -27,10 +43,11 @@ const setup = () => {
   const teardownSpy = vi.fn()
 
   // Terminating link which never emits, but records its teardown - which is
-  //  what the Action Cable link uses to unsubscribe its channel.
+  //  what aborts the HTTP request of a query and unsubscribes the Action Cable
+  //  channel of a subscription in the application.
   const terminatingLink = new ApolloLink(() => new Observable(() => teardownSpy))
 
-  const link = ApolloLink.from([trackSubscriptionsLink, terminatingLink])
+  const link = ApolloLink.from([trackOperationsLink, terminatingLink])
 
   const start = (query = subscriptionDocument, context?: DefaultContext) =>
     execute(link, { query, context }).subscribe(() => {})
@@ -38,10 +55,10 @@ const setup = () => {
   return { start, teardownSpy }
 }
 
-describe('trackSubscriptionsLink', () => {
+describe('trackOperationsLink', () => {
   afterEach(() => {
-    // Make sure no subscription of a previous example is left behind.
-    cancelActiveSubscriptions()
+    // Make sure no operation of a previous example is left behind.
+    cancelActiveOperations()
   })
 
   it('cancels a running subscription', () => {
@@ -51,19 +68,19 @@ describe('trackSubscriptionsLink', () => {
 
     expect(teardownSpy).not.toHaveBeenCalled()
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
 
     expect(teardownSpy).toHaveBeenCalledOnce()
   })
 
-  it('cancels all running subscriptions', () => {
+  it('cancels all running queries and subscriptions', () => {
     const { start, teardownSpy } = setup()
 
     start()
-    start()
-    start()
+    start(queryDocument)
+    start(queryDocument)
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
 
     expect(teardownSpy).toHaveBeenCalledTimes(3)
   })
@@ -73,39 +90,39 @@ describe('trackSubscriptionsLink', () => {
 
     start(subscriptionDocument, { subscription: { keepAliveOnLogout: true } })
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
 
     expect(teardownSpy).not.toHaveBeenCalled()
   })
 
-  it('does not cancel queries', () => {
+  it('does not cancel mutations', () => {
     const { start, teardownSpy } = setup()
 
-    start(queryDocument)
+    start(mutationDocument)
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
 
     expect(teardownSpy).not.toHaveBeenCalled()
   })
 
-  it('does not cancel a subscription which was already stopped', () => {
+  it('does not cancel an operation which was already stopped', () => {
     const { start, teardownSpy } = setup()
 
     start().unsubscribe()
 
     expect(teardownSpy).toHaveBeenCalledOnce()
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
 
     expect(teardownSpy).toHaveBeenCalledOnce()
   })
 
-  it('does not cancel a subscription twice', () => {
+  it('does not cancel an operation twice', () => {
     const { start, teardownSpy } = setup()
 
     const subscription = start()
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
     subscription.unsubscribe()
 
     expect(teardownSpy).toHaveBeenCalledOnce()
@@ -122,7 +139,7 @@ describe('trackSubscriptionsLink', () => {
     const cable = { subscriptions: { create: vi.fn(() => channel) } }
 
     const link = ApolloLink.from([
-      trackSubscriptionsLink,
+      trackOperationsLink,
       new ActionCableLink({ cable: cable as never }),
     ])
 
@@ -131,8 +148,43 @@ describe('trackSubscriptionsLink', () => {
     expect(cable.subscriptions.create).toHaveBeenCalledOnce()
     expect(unsubscribeSpy).not.toHaveBeenCalled()
 
-    cancelActiveSubscriptions()
+    cancelActiveOperations()
 
     expect(unsubscribeSpy).toHaveBeenCalledOnce()
+  })
+
+  // Clearing the Apollo store cancels a running query only in a following task,
+  //  so its result could still land in the emptied cache.
+  it('keeps the result of a cancelled query out of the cleared cache', async () => {
+    let deliverResult: (result: FetchResult) => void = () => {}
+
+    const terminatingLink = new ApolloLink(
+      () =>
+        new Observable<FetchResult>((observer) => {
+          deliverResult = (result) => {
+            observer.next(result)
+            observer.complete()
+          }
+        }),
+    )
+
+    const client = new ApolloClient({
+      link: ApolloLink.from([trackOperationsLink, terminatingLink]),
+      cache: new InMemoryCache(),
+    })
+
+    client.watchQuery({ query: queryDocument }).subscribe(() => {})
+
+    await new Promise((resolve) => {
+      setTimeout(resolve)
+    })
+
+    cancelActiveOperations()
+
+    await client.clearStore()
+
+    deliverResult({ data: { sample: { __typename: 'Sample', id: '1', name: 'Previous session' } } })
+
+    expect(client.cache.extract()).toEqual({})
   })
 })
