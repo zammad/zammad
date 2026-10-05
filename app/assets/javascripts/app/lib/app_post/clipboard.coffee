@@ -113,7 +113,7 @@ class _Singleton
 
   # get current selection original object
   getSelectedObject: ->
-    @selection['sel']
+    @selection['sel'] || @_getSelected('sel')
 
   # get latest selection
   getSelectedLast: (type) ->
