@@ -130,7 +130,7 @@ describe('Ticket detail view', () => {
 
       await view.events.click(view.getByTestId('article-bubble-body-1'))
 
-      // NB: Click handler has a built-in timeout (200ms) to catch double click behavior.
+      // NB: Click handler has a built-in timeout (500ms) to catch double click behavior.
       await waitFor(
         () => expect(view.queryByLabelText('Article meta information')).toHaveClass('hidden'), //. we test for the class as in js-dom toBeVisible won't work as expected
       )

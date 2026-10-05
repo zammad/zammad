@@ -34,6 +34,24 @@ describe('ArticleBubble', () => {
     expect(await wrapper.findByLabelText('Article meta information')).toBeInTheDocument()
   })
 
+  it('toggles meta information immediately with the keyboard', async () => {
+    const wrapper = renderWrapper()
+
+    const toggleButton = wrapper.getByRole('button', {
+      name: 'Toggle article meta information',
+    })
+
+    toggleButton.focus()
+
+    await wrapper.events.keyboard('{Enter}')
+
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'true')
+
+    await wrapper.events.keyboard(' ')
+
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'false')
+  })
+
   it('shows agent articles on the left', () => {
     const wrapper = renderWrapper({
       senderName: EnumTicketArticleSenderName.Agent,

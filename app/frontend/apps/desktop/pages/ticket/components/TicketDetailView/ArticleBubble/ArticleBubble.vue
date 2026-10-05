@@ -32,11 +32,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { showMetaInformation, toggleHeader } = useBubbleHeader()
-
-const toggleHeaderFromKeyboard = () => {
-  toggleHeader(new MouseEvent('click'))
-}
+const { showMetaInformation, toggle, toggleHeader } = useBubbleHeader()
 
 const metaInformationRegionId = computed(
   () => `article-meta-information-${props.article.internalId}`,
@@ -172,8 +168,8 @@ const { hasReducedMotion } = useReducedMotion()
           :aria-label="$t('Toggle article meta information')"
           :aria-expanded="showMetaInformation"
           :aria-controls="metaInformationRegionId"
-          @keydown.enter.prevent="toggleHeaderFromKeyboard"
-          @keydown.space.prevent="toggleHeaderFromKeyboard"
+          @keydown.enter.prevent="toggle"
+          @keydown.space.prevent="toggle"
         />
 
         <ArticleBubbleBody
