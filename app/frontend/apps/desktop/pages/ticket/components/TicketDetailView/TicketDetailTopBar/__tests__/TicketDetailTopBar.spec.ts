@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { EnumChannelArea } from '#shared/graphql/types.ts'
 import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
@@ -11,6 +13,29 @@ import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
+
+// jsdom has no layout and never scrolls, so the top bar measures 0 everywhere. Drive its inputs
+// instead: every measured element reports `measuredHeight`, the title line of the compact header
+// ends `titleLineBottom` below its top edge, and `scrollY` stands in for the scroll position of the
+// content container. The defaults leave the page at the top, with the compact header still undocked.
+const measuredWidth = ref(0)
+const measuredHeight = ref(0)
+const titleLineBottom = ref(0)
+const scrollY = ref(0)
+
+vi.mock('@vueuse/core', async (importOriginal) => {
+  const modules = await importOriginal<typeof import('@vueuse/core')>()
+
+  return {
+    ...modules,
+    useElementSize: () => ({ width: measuredWidth, height: measuredHeight }),
+    useScroll: () => ({ y: scrollY, directions: {} }),
+  }
+})
+
+vi.mock('#desktop/composables/useOffsetBottomWithin.ts', () => ({
+  useOffsetBottomWithin: () => titleLineBottom,
+}))
 
 const withChannelAlert = (
   overrides: Partial<typeof testOptionsTopBar> = {},
@@ -50,6 +75,11 @@ const renderTicketDetailTopBar = ({
 
 describe('TicketDetailTopBar', () => {
   beforeEach(() => {
+    measuredWidth.value = 0
+    measuredHeight.value = 0
+    titleLineBottom.value = 0
+    scrollY.value = 0
+
     mockApplicationConfig({
       fqdn: 'zammad.example.com',
       http_type: 'http',
@@ -160,5 +190,80 @@ describe('TicketDetailTopBar', () => {
     expect(view.queryByTestId('common-alert')).not.toBeInTheDocument()
     expect(view.getByTestId('ticket-detail-top-bar-clipped-details')).toBeInTheDocument()
     expect(view.getByTestId('ticket-detail-top-bar-full-details')).toBeInTheDocument()
+  })
+
+  describe('when the content is too short to scroll the full header away', () => {
+    const getHeader = (view: ReturnType<typeof renderTicketDetailTopBar>, testId: string) => {
+      const element = view.getByTestId(testId)
+
+      return element.tagName === 'HEADER' ? element : element.querySelector('header')!
+    }
+
+    // jsdom has no `inert` property, so Vue renders the binding as a plain attribute value.
+    const expectInert = (header: HTMLElement, inert: boolean) => {
+      expect(header).toHaveAttribute('inert', String(inert))
+    }
+
+    // Each measured element is 100px high, so the compact header would only dock past 70px of
+    // scrolling (100px minus the head start of 30px) - or 170px with a channel alert, whose
+    // wrapper and alert both count.
+    beforeEach(() => {
+      measuredHeight.value = 100
+    })
+
+    it('lets the compact header take over as soon as any of its title line is in view', async () => {
+      const view = renderTicketDetailTopBar()
+
+      titleLineBottom.value = 40
+      scrollY.value = 50
+      await waitForNextTick()
+
+      const compactHeader = getHeader(view, 'ticket-detail-top-bar-clipped-details')
+
+      expectInert(compactHeader, false)
+      expect(compactHeader, 'still sliding in').toHaveStyle({ transform: 'translateY(-20px)' })
+      expectInert(getHeader(view, 'ticket-detail-top-bar-full-details'), true)
+    })
+
+    it('keeps the full header interactive while the compact title line is out of view', async () => {
+      const view = renderTicketDetailTopBar()
+
+      titleLineBottom.value = 40
+      scrollY.value = 20
+      await waitForNextTick()
+
+      expectInert(getHeader(view, 'ticket-detail-top-bar-clipped-details'), true)
+      expectInert(getHeader(view, 'ticket-detail-top-bar-full-details'), false)
+    })
+
+    it('keeps the compact header inert while the full header with a channel alert covers its title line', async () => {
+      const view = renderTicketDetailTopBar({ ticket: withChannelAlert() })
+
+      // The title line reaches 10px into the viewport (80 - 170 + 100), but the full header
+      // stacked above still covers the top 20px (100 - 80).
+      titleLineBottom.value = 100
+      scrollY.value = 80
+      await waitForNextTick()
+
+      expectInert(getHeader(view, 'ticket-detail-top-bar-clipped-details'), true)
+      expectInert(getHeader(view, 'ticket-detail-top-bar-full-details'), false)
+    })
+
+    it('raises the compact header above the full header with a channel alert once it takes over', async () => {
+      const view = renderTicketDetailTopBar({ ticket: withChannelAlert() })
+
+      const compactWrapper = view.getByTestId('ticket-detail-top-bar-clipped-details')
+
+      expect(compactWrapper).toHaveClass('z-10')
+
+      titleLineBottom.value = 100
+      scrollY.value = 90
+      await waitForNextTick()
+
+      expectInert(getHeader(view, 'ticket-detail-top-bar-clipped-details'), false)
+      expectInert(getHeader(view, 'ticket-detail-top-bar-full-details'), true)
+      expect(compactWrapper).toHaveClass('z-40')
+      expect(compactWrapper).toHaveStyle({ transform: 'translateY(-80px)' })
+    })
   })
 })

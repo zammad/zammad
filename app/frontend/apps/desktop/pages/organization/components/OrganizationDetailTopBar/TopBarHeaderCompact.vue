@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
+import { toRef, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { Organization } from '#shared/graphql/types.ts'
@@ -23,11 +23,15 @@ const router = useRouter()
 
 const { copyOrganizationDisplayNameToClipboard, allowedTopLevelActions, secondLevelActions } =
   useTopBarHeader(toRef(props))
+
+const titleLine = useTemplateRef('title-line')
+
+defineExpose({ titleLine })
 </script>
 
 <template>
   <header class="border-b border-neutral-100 p-2 dark:border-gray-900">
-    <div class="mx-auto flex size-full max-w-278">
+    <div ref="title-line" class="mx-auto flex size-full max-w-278">
       <OrganizationInfo :organization="organization" size="small" title-size="large" no-link>
         <template #label-trailing>
           <CommonButton

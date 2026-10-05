@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTemplateRef } from 'vue'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import OrganizationPopoverWithTrigger from '#desktop/components/Organization/OrganizationPopoverWithTrigger.vue'
@@ -19,6 +21,10 @@ const {
   isUpdatingTitle,
   updateTitle,
 } = useTopBarHeader()
+
+const titleLine = useTemplateRef('title-line')
+
+defineExpose({ titleLine })
 </script>
 
 <template>
@@ -46,6 +52,7 @@ const {
     <!-- 48rem for the middle grid to align with the content area -->
     <div
       v-if="ticket"
+      ref="title-line"
       class="col-start-1 row-start-2 grid max-w-4xl grid-cols-[1fr_minmax(0,48rem)_1fr] items-center gap-3 justify-self-center @4xl:col-span-2 @7xl:col-start-2 @7xl:row-start-1 @7xl:max-w-none @7xl:justify-self-start"
     >
       <div
