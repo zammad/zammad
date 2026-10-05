@@ -1,6 +1,38 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchKnowledgeBaseBackend
+  # Private Use Area code points to mark the matched runs of a highlighted fragment with.
+  # Elasticsearch's default is <em>…</em>, which cannot be told apart from the same characters
+  # occurring in the indexed text - that text is plain, so it can contain literal angle brackets.
+  # These cannot, which is what lets a caller escape a fragment and turn only the marks into markup
+  # afterwards.
+  HIGHLIGHT_START = "\u{E000}".freeze
+  HIGHLIGHT_END   = "\u{E001}".freeze
+
+  # Applied unless the caller passes its own :highlight_options, which win key by key.
+  DEFAULT_HIGHLIGHT_OPTIONS = {
+    pre_tags:  [HIGHLIGHT_START],
+    post_tags: [HIGHLIGHT_END],
+  }.freeze
+
+  # For the text on its way into the index: the guarantee above only holds if the marks cannot
+  #   arrive from the text itself. Nothing keeps an editor from pasting an icon-font glyph, and those
+  #   fonts map their glyphs to the same code point range.
+  def self.without_highlight_marks(text)
+    text.delete(HIGHLIGHT_START + HIGHLIGHT_END)
+  end
+
+  # For text that is not HTML but may still carry markup: a title is a text input, but nothing
+  #   validates it against markup, so a stored one can read `<b>Bold</b> topic`. The index and every
+  #   search preview show the plain text instead; the column itself keeps what was written to it.
+  #
+  # Parsed rather than run through String#html2text: that one is regex-based and drops any run
+  #   between a `<` and the next `>`, turning `RAM < 8 GB > 4 GB` into `RAM 4 GB`. A parser reads
+  #   `< 8` as text, since a tag has to start with a letter.
+  def self.plain_text(text)
+    without_highlight_marks(Loofah.fragment(text.to_s).text(encode_special_chars: false))
+  end
+
   attr_reader :knowledge_base
 
   # @param [Hash] params the paramsused to initialize search instance
@@ -11,9 +43,10 @@ class SearchKnowledgeBaseBackend
   # @option params [String, Array<String>] :index (nil) indexes to limit search to, searches all indexes if nil
   # @option params [Integer] :limit per page param for paginatin
   # @option params [Boolean] :highlight_enabled (true) highlight matching text
-  # @option params [Hash] :highlight_options (nil) Elasticsearch highlight settings (pre_tags, post_tags,
-  #   fragment_size, number_of_fragments, no_match_size, ...) applied to every highlighted field.
-  #   Without it Elasticsearch's defaults apply, i.e. up to five 100 character <em> marked fragments.
+  # @option params [Hash] :highlight_options (nil) Elasticsearch highlight settings (fragment_size,
+  #   number_of_fragments, no_match_size, pre_tags, post_tags, ...) applied to every highlighted field,
+  #   merged over DEFAULT_HIGHLIGHT_OPTIONS key by key. Without it Elasticsearch's defaults apply, i.e.
+  #   up to five 100 character fragments, marked with HIGHLIGHT_START/END.
   # @option params [Hash<String=>String>, Hash<Symbol=>Symbol>] :order_by hash with column => asc/desc
 
   def initialize(params)
@@ -69,33 +102,11 @@ class SearchKnowledgeBaseBackend
     results = SearchIndexBackend
       .search(query, indexes, options(query, pagination: pagination))
       .map do |hash|
-        hash[:id]        = hash[:id].to_i
-        hash[:highlight] = repair_highlighted_entities(hash[:highlight]) if hash[:highlight]
+        hash[:id] = hash[:id].to_i
         hash
       end
 
     sort_by_relevance results
-  end
-
-  # The texts are indexed HTML-escaped (see the translations' #search_index_attribute_lookup), so
-  #   `&amp;` carries an `amp` term of its own. A query that matches every term — `*` — marks that
-  #   one too and tears the entity apart, as `&<em>amp</em>;`, which no consumer decodes back to
-  #   `&`. Those terms exist only because of the escaping, so drop the tags inside an entity.
-  def repair_highlighted_entities(highlight)
-    tags   = Regexp.union(highlight_tags)
-    entity = %r{&(?:#{tags})*\w+(?:#{tags})*;}
-
-    highlight.transform_values do |fragments|
-      fragments.map { |fragment| fragment.gsub(entity) { |match| match.gsub(tags, '') } }
-    end
-  end
-
-  # Elasticsearch applies its `<em>` defaults per tag, so a caller naming only one of them still
-  #   gets the other one's default.
-  def highlight_tags
-    highlight_options = @params[:highlight_options].to_h
-
-    (highlight_options[:pre_tags].presence || ['<em>']) + (highlight_options[:post_tags].presence || ['</em>'])
   end
 
   # Elasticsearch is asked once per index and the responses are concatenated
@@ -260,12 +271,7 @@ class SearchKnowledgeBaseBackend
       'KnowledgeBase::Translation':           %w[title]
     }
 
-    # Opt-in rather than a new default: the legacy knowledge base search dropdown and the public
-    #   help site render these fragments as raw HTML, so they need Elasticsearch's <em> defaults to
-    #   keep working. Only callers that parse the fragments themselves pass their own settings.
-    return if @params[:highlight_options].blank?
-
-    hash[:highlight_options] = @params[:highlight_options]
+    hash[:highlight_options] = DEFAULT_HIGHLIGHT_OPTIONS.merge(@params[:highlight_options].to_h)
   end
 
   def options_apply_scope(hash)

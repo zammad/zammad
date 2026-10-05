@@ -47,10 +47,7 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
   end
 
   def body_text_only
-    body
-      .gsub(%r{<br\s*/?>}i, "\n")
-      .gsub(%r{<div\s*>}i, "\n")
-      .then { ActionController::Base.helpers.strip_tags(it) }
+    SearchKnowledgeBaseBackend.without_highlight_marks(HasExcerpt.to_plain_text(body))
   end
 
   private

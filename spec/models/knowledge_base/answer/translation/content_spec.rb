@@ -24,6 +24,44 @@ RSpec.describe KnowledgeBase::Answer::Translation::Content, current_user_id: 1, 
     end
   end
 
+  describe '#body_text_only' do
+    def body_text_only_of(body)
+      described_class.new(body: body).body_text_only
+    end
+
+    it 'breaks paragraphs apart' do
+      expect(body_text_only_of('<p>first</p><p>second</p>')).to eq("first\nsecond")
+    end
+
+    it 'breaks list items apart' do
+      expect(body_text_only_of('<ul><li>one</li><li>two</li></ul>')).to eq("* one\n* two")
+    end
+
+    it 'keeps the text of a link and drops its address' do
+      expect(body_text_only_of('See <a href="https://example.com">the docs</a>.')).to eq('See the docs.')
+    end
+
+    it 'decodes an entity' do
+      expect(body_text_only_of('Q&amp;A session')).to eq('Q&A session')
+    end
+
+    it 'removes the highlight marks' do
+      expect(body_text_only_of("Marked \u{E000}run\u{E001} here")).to eq('Marked run here')
+    end
+
+    it 'returns an empty string for a nil body' do
+      expect(body_text_only_of(nil)).to eq('')
+    end
+  end
+
+  describe '#search_index_attribute_lookup' do
+    it 'indexes the plain body' do
+      content = create(:knowledge_base_answer_translation_content, body: '<p>first</p><p>second</p>')
+
+      expect(content.search_index_attribute_lookup['body']).to eq("first\nsecond")
+    end
+  end
+
   describe '#touch_translation' do
     let(:translation) { content.translation }
 

@@ -282,8 +282,8 @@ RSpec.describe SearchKnowledgeBaseBackend do
         searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
       end
 
-      it 'marks the term with the requested tags instead of the <em> default' do
-        expect(highlight_for(title_only_match)['title'].first).to include('[HL]Marimba[/HL]').and(not_include('<em>'))
+      it 'marks the term with the requested tags instead of the default marks' do
+        expect(highlight_for(title_only_match)['title'].first).to include('[HL]Marimba[/HL]').and(not_include(described_class::HIGHLIGHT_START))
       end
 
       it 'returns a single fragment even where the default would return several' do
@@ -295,9 +295,13 @@ RSpec.describe SearchKnowledgeBaseBackend do
       end
     end
 
-    # The texts are indexed HTML-escaped, so `&amp;` carries an `amp` term of its own that a query
-    #   matching every term marks too - https://github.com/zammad/zammad/issues/6369
+    # A query that matches every term - `*` - marks each of them, and the characters between them
+    #   have to come through as themselves. https://github.com/zammad/zammad/issues/6369
     describe '#search with a query that matches every term' do
+      def marked(text)
+        "#{described_class::HIGHLIGHT_START}#{text}#{described_class::HIGHLIGHT_END}"
+      end
+
       let(:options) do
         {
           knowledge_base:    knowledge_base,
@@ -320,14 +324,36 @@ RSpec.describe SearchKnowledgeBaseBackend do
         searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
       end
 
-      it 'keeps the entity intact' do
+      it 'keeps the ampersand between the marked terms' do
         highlight = instance
           .search('*', user: user)
           .find { |elem| elem[:id] == translation_id(ampersand_answer) }
           .dig(:highlight, 'title')
 
-        expect(highlight.first).to eq('<em>Kalimba</em> &amp; <em>castanets</em>')
+        expect(highlight.first).to eq("#{marked('Kalimba')} & #{marked('castanets')}")
       end
+    end
+  end
+
+  describe '.plain_text' do
+    it 'keeps plain text as it is' do
+      expect(described_class.plain_text('Warranty & Returns <3')).to eq('Warranty & Returns <3')
+    end
+
+    it 'removes markup and keeps its text' do
+      expect(described_class.plain_text('<b>Bold</b> topic')).to eq('Bold topic')
+    end
+
+    it 'keeps a lone angle bracket, which is text rather than a tag' do
+      expect(described_class.plain_text('RAM < 8 GB > 4 GB')).to eq('RAM < 8 GB > 4 GB')
+    end
+
+    it 'removes the highlight marks' do
+      expect(described_class.plain_text("Marked \u{E000}run\u{E001} here")).to eq('Marked run here')
+    end
+
+    it 'returns an empty string for nil' do
+      expect(described_class.plain_text(nil)).to eq('')
     end
   end
 
@@ -369,8 +395,23 @@ RSpec.describe SearchKnowledgeBaseBackend do
     end
 
     context 'without highlight options' do
-      it 'sends none, so Elasticsearch keeps its <em> defaults' do
-        expect(built).not_to have_key(:highlight_options)
+      it 'asks for the highlight marks, which the callers turn into markup themselves' do
+        expect(built[:highlight_options]).to eq({ pre_tags: [described_class::HIGHLIGHT_START], post_tags: [described_class::HIGHLIGHT_END] })
+      end
+    end
+
+    context 'with highlighting off' do
+      let(:options) do
+        {
+          knowledge_base:    knowledge_base,
+          locale:            primary_locale,
+          scope:             nil,
+          highlight_enabled: false,
+        }
+      end
+
+      it 'asks for no highlighting at all' do
+        expect(built.keys).not_to include(:highlight_options, :highlight_fields_by_indexes)
       end
     end
 
@@ -403,8 +444,8 @@ RSpec.describe SearchKnowledgeBaseBackend do
         }
       end
 
-      it 'passes them to the search index backend' do
-        expect(built[:highlight_options]).to eq({ pre_tags: ['[HL]'], number_of_fragments: 1 })
+      it 'merges them over the defaults, so a caller can override the marks' do
+        expect(built[:highlight_options]).to eq({ pre_tags: ['[HL]'], post_tags: [described_class::HIGHLIGHT_END], number_of_fragments: 1 })
       end
     end
   end

@@ -109,6 +109,35 @@ impersonated session is only exempt when the administrator who switched into it 
 
 **Related issue:** [#6237](https://github.com/zammad/zammad/issues/6237)
 
+### The knowledge base search index was switched from HTML-escaped text to plain text
+
+**Who is affected?** Admins of instances with Elasticsearch enabled that use the knowledge base, and
+integrations that call `POST /api/v1/knowledge_bases/search`.
+
+Knowledge base titles and answer bodies were written into the search index HTML-escaped, so a
+category named `Warranty & Returns` was indexed as `Warranty &amp; Returns`. The escape sequences
+were searchable in their own right: `amp`, `lt`, `gt` and `nbsp` matched content that contains no
+such word, and a search matching one of them, the wildcard `*` among them, highlighted it and left
+the sequence visible in the result list ([#6369](https://github.com/zammad/zammad/issues/6369)).
+Both texts are now indexed as plain text. Markup in a title is still dropped on its way into the
+index, and the title columns themselves keep what was written to them.
+
+The details returned by `POST /api/v1/knowledge_bases/search` changed with it: `title`, `body` and
+`subtitle` are now always HTML, with every character escaped and, when `highlight_enabled` is on,
+`<em>` marking the matched runs. Previously only a highlighted fragment was guaranteed to look like
+this. A detail without a match in its field came back the way its fallback produced it: HTML-escaped
+for the answer `body`, the category and knowledge base `title` and the `subtitle`, and as written
+for the answer `title`, with highlighting on or off.
+
+The `result` list no longer carries the `highlight` key of each hit. The raw fragments it held mark
+their matches with characters that only the `details` rendering above knows how to interpret.
+
+⚠️ Integrations that read the answer `title` as text have to decode it as HTML, like every other detail.
+
+⚠️ Rebuild the search index after the update: `zammad run rake zammad:searchindex:rebuild`
+
+**Related issue:** [#6399](https://github.com/zammad/zammad/issues/6399)
+
 ### Deleting organizations via API requires the `admin.organization` permission
 
 **Who is affected?** Integrations that call `DELETE /api/v1/organizations/:id` with a token that only

@@ -5,7 +5,6 @@ class KnowledgeBase::SearchController < ApplicationController
   prepend_before_action :authentication_check_only
 
   include KnowledgeBaseHelper
-  include ActionView::Helpers::SanitizeHelper
   include CanPaginate
 
   # POST /api/v1/knowledge_bases/search
@@ -31,7 +30,7 @@ class KnowledgeBase::SearchController < ApplicationController
       flavor:            params[:flavor],
       index:             params[:index],
       limit:             params[:limit],
-      highlight_enabled: params[:highlight_enabled],
+      highlight_enabled: highlight_enabled?,
       order_by:          { updated_at: :desc }
     )
 
@@ -48,12 +47,37 @@ class KnowledgeBase::SearchController < ApplicationController
     details = result.map { |item| public_item_details(item, include_locale) }
 
     render json: {
-      result:  result,
+      result:  result_without_highlight_fragments(result),
       details: details,
     }
   end
 
   private
+
+  # The raw fragments stay internal: they carry the highlight marks as invisible code points, which
+  #   only #displayable knows how to turn into the markup the details hold.
+  def result_without_highlight_fragments(result)
+    result.map { |meta| meta.except(:highlight) }
+  end
+
+  # Absent means enabled, which is what SearchKnowledgeBaseBackend defaults to. Cast because a
+  #   form-encoded request carries the flag as the string "false".
+  def highlight_enabled?
+    ActiveModel::Type::Boolean.new.cast(params[:highlight_enabled]) != false
+  end
+
+  # The details are markup whether highlighting is on or not, while the index holds plain text: the
+  #   text is escaped and only the marks SearchKnowledgeBaseBackend asked Elasticsearch for become
+  #   tags, so a title reading `5 < 10` stays `5 < 10` on screen instead of losing the rest of the
+  #   line to a bogus tag.
+  def displayable(text)
+    return if text.nil?
+
+    ERB::Util.html_escape(text)
+      .to_str
+      .gsub(SearchKnowledgeBaseBackend::HIGHLIGHT_START, '<em>')
+      .gsub(SearchKnowledgeBaseBackend::HIGHLIGHT_END, '</em>')
+  end
 
   def public_item_details(meta, include_locale)
     object = get_prefetched_object(meta[:type], meta[:id])
@@ -75,6 +99,8 @@ class KnowledgeBase::SearchController < ApplicationController
   end
 
   def public_item_details_answer(meta, object)
+    body = meta.dig(:highlight, 'content.body')&.first || object.content.body_text_only.truncate(100)
+
     url = case url_type
           when :public
             category_translation = get_prefetched_category_translation(object.answer.category, object.kb_locale)
@@ -91,9 +117,8 @@ class KnowledgeBase::SearchController < ApplicationController
       icon:  'knowledge-base-answer',
       date:  object.updated_at,
       url:   url,
-      title: meta.dig(:highlight, 'title')&.first || object.title,
-      body:  strip_repeating_whitespace(meta.dig(:highlight, 'content.body')&.first ||
-                                        object.content.body_text_only.truncate(100))
+      title: displayable(meta.dig(:highlight, 'title')&.first || SearchKnowledgeBaseBackend.plain_text(object.title)),
+      body:  strip_repeating_whitespace(displayable(body))
     }
 
     if params[:include_tags]
@@ -124,13 +149,13 @@ class KnowledgeBase::SearchController < ApplicationController
       date:     object.updated_at,
       url:      url,
       icon:     object.category.category_icon,
-      title:    meta.dig(:highlight, 'title')&.first || strip_tags(object.title)
+      title:    displayable(meta.dig(:highlight, 'title')&.first || SearchKnowledgeBaseBackend.plain_text(object.title))
     }
 
     if params[:include_subtitle]
       parent_category_translation = get_prefetched_category_translation(object.category.parent, object.kb_locale)
 
-      hash[:subtitle] = strip_tags(parent_category_translation&.title.presence)
+      hash[:subtitle] = displayable(SearchKnowledgeBaseBackend.plain_text(parent_category_translation&.title).presence)
     end
 
     hash
@@ -152,7 +177,7 @@ class KnowledgeBase::SearchController < ApplicationController
       icon:  'knowledge-base',
       date:  object.updated_at,
       url:   url,
-      title: meta.dig(:highlight, 'title')&.first || strip_tags(object.title)
+      title: displayable(meta.dig(:highlight, 'title')&.first || SearchKnowledgeBaseBackend.plain_text(object.title))
     }
   end
 
@@ -169,9 +194,11 @@ class KnowledgeBase::SearchController < ApplicationController
       return @answer_categories_path_cache[cache_key]
     end
 
+    # Escaped per title rather than once over the joined path, so the ` > ` separators stay
+    #   separators instead of reading `&gt;`.
     categories = category
       .self_with_parents
-      .map { strip_tags(get_prefetched_category_translation(it, kb_locale).title) }
+      .map { displayable(SearchKnowledgeBaseBackend.plain_text(get_prefetched_category_translation(it, kb_locale).title)) }
       .reverse
 
     path = if categories.count <= 2

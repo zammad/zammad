@@ -686,9 +686,10 @@
             .result
             .map(function(elem) {
               if(result = _.find(data.details, function(detailElem) { return detailElem.type == elem.type && detailElem.id == elem.id })) {
+                // The details are escaped HTML, while the list below shows them as text.
                 return {
-                  'category': result.subtitle,
-                  'name':     result.title,
+                  'category': App.Utils.html2text(result.subtitle),
+                  'name':     App.Utils.html2text(result.title),
                   'value':    elem.id,
                   'url':      result.url
                 }

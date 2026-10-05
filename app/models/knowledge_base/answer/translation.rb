@@ -67,7 +67,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs['title']             = ActionController::Base.helpers.strip_tags(title)
+    attrs['title']             = SearchKnowledgeBaseBackend.plain_text(title)
     attrs['content']           = content&.search_index_attribute_lookup
     attrs['scope_id']          = answer.category_id
     attrs['tags']              = answer.tag_list

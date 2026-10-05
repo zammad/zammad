@@ -201,12 +201,18 @@ RSpec.describe Service::KnowledgeBase::Search do
       expect(highlighted(result_for(body_only_answer).body_preview)).to eq(['ocarina'])
     end
 
-    # The index holds the texts HTML-escaped for the legacy consumers, which render the fragments as
-    #   markup; the segments are plain text, so `&amp;` must come back as `&` — and `&nbsp;`, which
-    #   the indexer emits for a non-breaking space, as that space.
+    # The segments are plain text, so these characters have to survive indexing as themselves.
     context 'with HTML special characters in the title' do
+      def title_of(answer, query)
+        search(query).find { |result| result.item == answer }&.title_preview&.map(&:text)&.join
+      end
+
+      # A body of its own: the factory's Lorem body may contain `amplus`, which `amp` matches as
+      #   the backend appends a wildcard to the query.
       let(:ampersand_answer) do
-        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Ocarina & order' })
+        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Ocarina & order' }).tap do |answer|
+          answer.translations.first.content.update!(body: 'Sheet music for both.')
+        end
       end
 
       let(:nbsp_answer) do
@@ -220,19 +226,20 @@ RSpec.describe Service::KnowledgeBase::Search do
       end
 
       it 'previews an ampersand unescaped' do
-        expect(result_for(ampersand_answer).title_preview.map(&:text).join).to eq('Ocarina & order')
+        expect(title_of(ampersand_answer, 'ocarina')).to eq('Ocarina & order')
+      end
+
+      # https://github.com/zammad/zammad/issues/6369
+      it 'previews an ampersand unescaped for a wildcard search' do
+        expect(title_of(ampersand_answer, '*')).to eq('Ocarina & order')
+      end
+
+      it 'does not find the answer by the entity name of its ampersand' do
+        expect(search('amp').map(&:item)).not_to include(ampersand_answer)
       end
 
       it 'previews a non-breaking space and an angle bracket unescaped' do
         expect(result_for(nbsp_answer).title_preview.map(&:text).join).to eq("Ocarina\u00A0<3")
-      end
-
-      # The escaping leaves an `amp` term in the index, which a query that matches every term marks
-      #   as a hit of its own - https://github.com/zammad/zammad/issues/6369
-      it 'previews an ampersand unescaped for a query that matches every term' do
-        result = search('*').find { |elem| elem.item == ampersand_answer }
-
-        expect(result.title_preview.map(&:text).join).to eq('Ocarina & order')
       end
     end
 

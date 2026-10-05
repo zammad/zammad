@@ -36,6 +36,17 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
     end
   end
 
+  context 'when answer title contains an ampersand' do
+    let(:answer) { create(:knowledge_base_answer, :published, category:, translation_attributes: { title: 'Warranty & Returns' }) }
+
+    it 'lists the title as text' do
+      open_page
+      search_kb_answer(target_translation, field)
+
+      expect(find(:text_module, target_translation.id)).to have_text('Warranty & Returns')
+    end
+  end
+
   context 'when answer with image' do
     let(:answer) { create(:knowledge_base_answer, :with_image, published_at: 1.week.ago) }
 
@@ -65,9 +76,13 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
   end
 
   def insert_kb_answer(translation, target_field)
-    target_field.send_keys('??')
-    translation.title.slice(0, 3).chars.each { |letter| target_field.send_keys(letter) }
+    search_kb_answer(translation, target_field)
 
     find(:text_module, translation.id).click
+  end
+
+  def search_kb_answer(translation, target_field)
+    target_field.send_keys('??')
+    translation.title.slice(0, 3).chars.each { |letter| target_field.send_keys(letter) }
   end
 end

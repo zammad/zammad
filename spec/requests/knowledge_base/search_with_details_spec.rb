@@ -253,4 +253,128 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
       include_examples 'test scoping'
     end
   end
+
+  # The details are markup whether highlighting is on or not, while the index holds plain text - so
+  #   the controller escapes everything but the marks it asked Elasticsearch for.
+  context 'when the title contains HTML special characters' do
+    let(:answer_title)   { 'Warranty & Returns <3' }
+    let(:category_title) { 'Repairs & Spare parts' }
+    let(:answer_body)    { '<p>5 &lt; 10 &amp; more</p>' }
+
+    before do |example|
+      published_answer.translations.first.update!(title: answer_title)
+      category.translations.first.update!(title: category_title)
+
+      next if !example.metadata[:searchindex]
+
+      searchindex_model_reload([KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+    end
+
+    it 'escapes the title of a matched term' do
+      post endpoint, params: { query: 'Warranty' }
+
+      expect(json_response['details'][0]['title']).to eq('<em>Warranty</em> &amp; Returns &lt;3')
+    end
+
+    # https://github.com/zammad/zammad/issues/6369
+    it 'escapes the title of a wildcard search' do
+      post endpoint, params: { query: '*' }
+
+      expect(json_response['details'][0]['title']).to eq('<em>Warranty</em> &amp; <em>Returns</em> &lt;<em>3</em>')
+    end
+
+    it 'escapes the title of a category hit' do
+      post endpoint, params: { query: 'Repairs', index: 'KnowledgeBase::Category::Translation' }
+
+      expect(json_response['details'][0]['title']).to eq('<em>Repairs</em> &amp; Spare parts')
+    end
+
+    it 'escapes the category path of an answer', authenticated_as: -> { create(:admin) } do
+      post endpoint, params: { query: 'Warranty', include_subtitle: true }
+
+      expect(json_response['details'][0]['subtitle']).to eq('Repairs &amp; Spare parts')
+    end
+
+    # No fragment at all here, so every detail is the plain database text - which the same escaping
+    #   has to reach.
+    it 'escapes the title without Elasticsearch', searchindex: false do
+      post endpoint, params: { query: 'Warranty' }
+
+      expect(json_response['details'][0]['title']).to eq('Warranty &amp; Returns &lt;3')
+    end
+
+    it 'escapes the body of a matched term' do
+      post endpoint, params: { query: 'more' }
+
+      expect(json_response['details'][0]['body']).to eq('5 &lt; 10 &amp; <em>more</em>')
+    end
+
+    it 'escapes the body without a matched term' do
+      post endpoint, params: { query: 'Warranty' }
+
+      expect(json_response['details'][0]['body']).to eq('5 &lt; 10 &amp; more')
+    end
+
+    it 'escapes the body without Elasticsearch', searchindex: false do
+      post endpoint, params: { query: 'Warranty' }
+
+      expect(json_response['details'][0]['body']).to eq('5 &lt; 10 &amp; more')
+    end
+
+    it 'escapes the title without marks when highlighting is off' do
+      post endpoint, params: { query: 'Warranty', highlight_enabled: false }, as: :json
+
+      expect(json_response['details'][0]['title']).to eq('Warranty &amp; Returns &lt;3')
+    end
+
+    # Form-encoded, the flag arrives as the string "false".
+    it 'escapes the title without marks when highlighting is off in a form-encoded request' do
+      post endpoint, params: { query: 'Warranty', highlight_enabled: false }
+
+      expect(json_response['details'][0]['title']).to eq('Warranty &amp; Returns &lt;3')
+    end
+
+    it 'escapes the body without marks when highlighting is off' do
+      post endpoint, params: { query: 'more', highlight_enabled: false }, as: :json
+
+      expect(json_response['details'][0]['body']).to eq('5 &lt; 10 &amp; more')
+    end
+
+    it 'omits the raw fragments from the result list' do
+      post endpoint, params: { query: 'Warranty' }
+
+      expect(json_response['result'][0]).not_to include('highlight')
+    end
+  end
+
+  # Nothing validates a title against markup, so the index and the details leave it out - with and
+  #   without a fragment to show.
+  context 'when the title contains markup' do
+    before do |example|
+      published_answer.translations.first.update!(title: '<b>Bold</b> topic')
+      category.translations.first.update!(title: 'Repairs <i>and</i> spare parts')
+
+      next if !example.metadata[:searchindex]
+
+      searchindex_model_reload([KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+    end
+
+    it 'finds and previews the title without its markup' do
+      post endpoint, params: { query: 'Bold' }
+
+      expect(json_response['details'][0]['title']).to eq('<em>Bold</em> topic')
+    end
+
+    it 'previews the title without its markup without Elasticsearch', searchindex: false do
+      post endpoint, params: { query: 'Bold' }
+
+      expect(json_response['details'][0]['title']).to eq('Bold topic')
+    end
+
+    it 'shows the category path without its markup', authenticated_as: -> { create(:admin) } do
+      post endpoint, params: { query: 'Bold', include_subtitle: true }
+
+      expect(json_response['details'][0]['subtitle']).to eq('Repairs and spare parts')
+    end
+  end
 end

@@ -2,11 +2,14 @@
 
 require 'rails_helper'
 require 'models/contexts/factory_context'
+require 'models/knowledge_base/plain_title_index_examples'
 
 RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :model do
   subject { create(:knowledge_base_answer_translation) }
 
   include_context 'factory'
+
+  it_behaves_like 'indexing the plain title'
 
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_uniqueness_of(:kb_locale_id).scoped_to(:answer_id).with_message(%r{}) }

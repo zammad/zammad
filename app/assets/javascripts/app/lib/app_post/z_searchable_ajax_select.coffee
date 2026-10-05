@@ -109,13 +109,14 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
   renderResponseItemAjax: (elem, data) ->
     result = _.find(data.details, (detailElem) -> detailElem.type == elem.type and detailElem.id == elem.id)
 
+    # The details are escaped HTML, while the option template escapes what it is given.
     category = undefined
     if result.type is 'KnowledgeBase::Answer::Translation' && result.subtitle
-      category = result.subtitle
+      category = App.Utils.html2text(result.subtitle)
     if result
       {
         category: category
-        name:     result.title
+        name:     App.Utils.html2text(result.title)
         value:    elem.id
       }
 

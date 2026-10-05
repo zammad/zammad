@@ -35,18 +35,9 @@ class Service::KnowledgeBase::Search < Service::Base
   # cannot crowd the categories out of their own count.
   MAX_RESULTS = 200
 
-  # Private Use Area code points. Elasticsearch's default is <em>…</em>, which cannot be told apart
-  # from the same characters occurring in the body text; the body is indexed as plain text (see
-  # KnowledgeBase::Answer::Translation::Content#search_index_attribute_lookup), so it can contain
-  # literal angle brackets. These cannot, which is what lets #segments split on them unambiguously.
-  HIGHLIGHT_START = "\u{E000}".freeze
-  HIGHLIGHT_END   = "\u{E001}".freeze
-
   # One fragment per field, long enough to read as a preview, and no_match_size so an answer whose
   # title matched still comes with the opening of its body rather than nothing.
   HIGHLIGHT_OPTIONS = {
-    pre_tags:            [HIGHLIGHT_START],
-    post_tags:           [HIGHLIGHT_END],
     number_of_fragments: 1,
     fragment_size:       200,
     no_match_size:       200,
@@ -247,10 +238,6 @@ class Service::KnowledgeBase::Search < Service::Base
   #   unhighlighted segment — which is also the whole story on the SQL fallback, where there are no
   #   highlights at all.
   #
-  # The index holds the texts HTML-escaped (the translations run them through `strip_tags` for the
-  #   legacy consumers, which render fragments as markup), so a fragment reads `Law &amp; order`.
-  #   The segments are plain text the client escapes itself, so undo that here — the fallback comes
-  #   straight from the database and is not escaped.
   # The fallback is a block rather than an argument because it costs: the body excerpt loads the
   #   translation's content row and runs the whole HTML body through html2text. As an argument Ruby
   #   evaluated it before this method could decide it was not wanted - per hit, for a preview the
@@ -261,7 +248,7 @@ class Service::KnowledgeBase::Search < Service::Base
 
     fragment = hit.dig(:highlight, field)&.first
 
-    return segments(unescape(fragment)) if fragment.present?
+    return segments(fragment) if fragment.present?
 
     fallback = yield
     return [] if fallback.blank?
@@ -275,22 +262,13 @@ class Service::KnowledgeBase::Search < Service::Base
   # Empty runs are dropped, so adjacent highlights do not produce a blank segment between them, and
   #   a sentinel without its closing counterpart marks the rest of the fragment rather than raising.
   def segments(fragment)
-    fragment.split(HIGHLIGHT_START).flat_map.with_index do |chunk, index|
+    fragment.split(SearchKnowledgeBaseBackend::HIGHLIGHT_START).flat_map.with_index do |chunk, index|
       next plain(chunk) if index.zero?
 
-      highlighted, _, rest = chunk.partition(HIGHLIGHT_END)
+      highlighted, _, rest = chunk.partition(SearchKnowledgeBaseBackend::HIGHLIGHT_END)
 
       marked(highlighted).concat(plain(rest))
     end
-  end
-
-  # Decoded by the same parser that escaped it on the way into the index (Rails strip_tags =
-  #   Loofah = Nokogiri) so every entity it emits (`&amp;`, `&lt;`, `&gt;`, and `&nbsp;` for a
-  #   non-breaking space, which CGI.unescapeHTML does not know) comes back as its character. The
-  #   fragment carries no tags — they were stripped before indexing — and the highlight sentinels
-  #   are private-use characters, untouched by it.
-  def unescape(fragment)
-    Nokogiri::HTML.fragment(fragment).text
   end
 
   def marked(text)

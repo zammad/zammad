@@ -2,11 +2,14 @@
 
 require 'rails_helper'
 require 'models/contexts/factory_context'
+require 'models/knowledge_base/plain_title_index_examples'
 
 RSpec.describe KnowledgeBase::Category::Translation, type: :model do
   subject { create(:knowledge_base_category_translation) }
 
   include_context 'factory'
+
+  it_behaves_like 'indexing the plain title'
 
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_uniqueness_of(:kb_locale_id).scoped_to(:category_id).with_message(%r{}) }
