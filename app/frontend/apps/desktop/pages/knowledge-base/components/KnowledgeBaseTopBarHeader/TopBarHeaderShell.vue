@@ -10,6 +10,7 @@ import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
+import { useOffsetBottomWithin } from '#desktop/composables/useOffsetBottomWithin.ts'
 
 import { HEADER_CONTENT_OUTER_CLASSES, HEADER_CONTENT_WIDTH_CLASSES } from './headerClasses.ts'
 import { type HeaderContentWidth } from './types.ts'
@@ -42,13 +43,11 @@ const { height: fullBlockHeight } = useElementSize(useTemplateRef('full-wrapper'
   box: 'border-box',
 })
 
-const { height: compactBlockHeight } = useElementSize(
-  useTemplateRef('compact-wrapper'),
-  undefined,
-  {
-    box: 'border-box',
-  },
-)
+const compactWrapperElement = useTemplateRef('compact-wrapper')
+
+const { height: compactBlockHeight } = useElementSize(compactWrapperElement, undefined, {
+  box: 'border-box',
+})
 
 const { y } = useElementScroll(toRef(props, 'contentContainerElement') as Ref<HTMLDivElement>)
 
@@ -76,21 +75,35 @@ const hasMeasuredHeaderHeights = computed(
   () => fullBlockHeight.value > 0 && compactBlockHeight.value > 0,
 )
 
-// The compact header is stacked above the full header (higher z-index), so once it has fully
-// slid into place it takes over. Visibility and interactivity/a11y exposure are switched over
-// at the exact same point, so exactly one header is ever shown/focusable/clickable/announced.
-const isCompactHeaderVisible = computed(
-  () => hasMeasuredHeaderHeights.value && compactHeaderOffset.value > 0,
+// The breadcrumb is the title line of the compact header, whichever header fills the slot.
+const titleLineBottom = useOffsetBottomWithin(
+  () => (props.loading ? null : compactWrapperElement.value?.querySelector('nav')),
+  compactWrapperElement,
 )
 
-const absoluteContainerOffset = computed(
-  () => `${isCompactHeaderVisible.value ? 0 : compactHeaderOffset.value}px`,
+// The compact header is stacked above the full header (higher z-index), so it takes over as soon
+// as any of its title line is in view, before it has fully slid into place - content may be too
+// short to scroll that far. Interactivity/a11y exposure switches at the same point, so exactly
+// one header is ever focusable/clickable/announced.
+const isCompactHeaderVisible = computed(
+  () => hasMeasuredHeaderHeights.value && compactHeaderOffset.value + titleLineBottom.value > 0,
 )
+
+const compactBlockTop = computed(() => Math.min(0, compactHeaderOffset.value))
+
+const absoluteContainerOffset = computed(() => `${compactBlockTop.value}px`)
+
+const fullBlockOffset = computed(() => Math.max(0, Math.min(y.value, fullBlockHeight.value)))
 
 // Pull the whole block — header plus any docked alert — clear of the viewport, so
 //   none of it lingers behind the compact header, whose background is translucent.
-const stickyContainerTop = computed(
-  () => `${-Math.max(0, Math.min(y.value, fullBlockHeight.value))}px`,
+const stickyContainerTop = computed(() => `${-fullBlockOffset.value}px`)
+
+const isFullBlockCovered = computed(
+  () =>
+    isCompactHeaderVisible.value &&
+    compactBlockTop.value + compactBlockHeight.value >=
+      fullBlockHeight.value - fullBlockOffset.value,
 )
 
 const alertBaseClasses = 'rounded-none bg-transparent! md:grid-cols-none md:justify-center'
@@ -124,14 +137,16 @@ useStickyTopCalculator(compactBlockHeight, { offset: -1 }) // avoid joining with
   </div>
 
   <CommonLoader class="w-full" :loading="loading">
-    <!-- The compact header docks 30px before this block has fully slid out, and its
+    <!-- The compact header covers this block before it has fully slid out, and its
          translucent background would let the remainder — most visibly a docked alert —
          show through. Hide it rather than shrink that head start, so the compact header
-         still appears early. `visibility` keeps the block measured. -->
+         still appears early, but not before the remainder is covered, or the content
+         would flash through below the compact header. `visibility` keeps the block
+         measured. -->
     <div
       ref="full-wrapper"
       class="sticky inset-x-0 top-0 z-10 w-full print:visible! print:static"
-      :class="{ invisible: isCompactHeaderVisible }"
+      :class="{ invisible: isFullBlockCovered }"
       data-test-id="knowledge-base-header-full"
       :style="{
         top: stickyContainerTop,

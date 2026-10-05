@@ -12,6 +12,7 @@ import emitter from '#shared/utils/emitter.ts'
 
 import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
+import { useOffsetBottomWithin } from '#desktop/composables/useOffsetBottomWithin.ts'
 import TopBarHeaderCompact from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue'
 import TopBarHeaderFull from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -83,11 +84,32 @@ const hasMeasuredCompactHeaderThreshold = computed(() => {
   return headerHeight.value > 0
 })
 
-// The compact header ends up as the persistent, fully docked header once scrolled far enough,
-// while the full header slides away. Interactivity/a11y exposure is switched over at the exact
-// same point, so exactly one header is ever focusable/clickable/announced at a time.
+const fullHeaderScrollThreshold = computed(() =>
+  shouldShowChannelAlert.value
+    ? wrapperHeight.value + NEGATIVE_PADDING + alertHeight.value
+    : headerHeight.value,
+)
+
+const fullHeaderOffset = computed(() => Math.min(y.value, fullHeaderScrollThreshold.value))
+
+// With a channel alert, the full header is stacked above the compact one and hides it down to
+// its own bottom edge, so the title line only comes into view below that.
+const compactHeaderUncoveredFrom = computed(() =>
+  shouldShowChannelAlert.value ? Math.max(0, wrapperHeight.value - fullHeaderOffset.value) : 0,
+)
+
+const titleLineBottom = useOffsetBottomWithin(
+  () => headerWithHiddenDetails.value?.titleLine,
+  headerWithHiddenDetails,
+)
+
+// The compact header takes over as soon as any of its title line is in view, before it has fully
+// slid into place - content may be too short to scroll that far. Interactivity/a11y exposure switches
+// at the same point, so exactly one header is ever exposed.
 const isCompactHeaderVisible = computed(
-  () => hasMeasuredCompactHeaderThreshold.value && compactHeaderOffset.value > 0,
+  () =>
+    hasMeasuredCompactHeaderThreshold.value &&
+    compactHeaderOffset.value + titleLineBottom.value > compactHeaderUncoveredFrom.value,
 )
 
 // Both headers keep their own copy of the action menus mounted, and their popovers are
@@ -98,19 +120,9 @@ watch(isCompactHeaderVisible, () => {
   emitter.emit('close-popover')
 })
 
-const absoluteContainerOffset = computed(
-  () => `${isCompactHeaderVisible.value ? 0 : compactHeaderOffset.value}px`,
-)
+const absoluteContainerOffset = computed(() => `${Math.min(0, compactHeaderOffset.value)}px`)
 
-const stickyContainerTop = computed(() => {
-  const threshold = shouldShowChannelAlert.value
-    ? wrapperHeight.value + NEGATIVE_PADDING + alertHeight.value
-    : headerHeight.value
-
-  if (y.value < threshold) return `-${y.value}px`
-
-  return `-${threshold}px`
-})
+const stickyContainerTop = computed(() => `-${fullHeaderOffset.value}px`)
 
 const headerBaseClasses = 'border-b border-neutral-100 dark:border-gray-900'
 const headerBackgroundClasses = (withBlur: boolean) =>
@@ -144,9 +156,11 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
 
 <template>
   <template v-if="shouldShowChannelAlert">
+    <!-- Raised above the full header once it has taken over, which is stacked above it otherwise. -->
     <div
       ref="wrapper-compact"
-      class="absolute inset-x-0 top-0 z-10 print:hidden"
+      class="absolute inset-x-0 top-0 print:hidden"
+      :class="isCompactHeaderVisible ? 'z-40' : 'z-10'"
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
         transform: `translateY(${absoluteContainerOffset})`,
@@ -154,6 +168,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
       }"
     >
       <TopBarHeaderCompact
+        ref="header-compact"
         :class="[headerBaseClasses, headerBackgroundClasses(true), 'p-3']"
         :inert="!isCompactHeaderVisible"
       />

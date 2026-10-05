@@ -8,6 +8,7 @@ import type { Organization } from '#shared/graphql/types.ts'
 
 import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
+import { useOffsetBottomWithin } from '#desktop/composables/useOffsetBottomWithin.ts'
 import TopBarHeaderCompact from '#desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue'
 import TopBarHeaderFull from '#desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue'
 
@@ -50,16 +51,19 @@ const hasMeasuredHeaderHeights = computed(
   () => headerWithDetailsHeight.value > 0 && headerWithHiddenDetailsHeight.value > 0,
 )
 
-// The compact header is stacked above the full header (higher z-index), so once it has fully
-// slid into place it visually covers the full header. Interactivity/a11y exposure is switched
-// over at the exact same point, so exactly one header is ever focusable/clickable/announced.
-const isCompactHeaderVisible = computed(
-  () => hasMeasuredHeaderHeights.value && compactHeaderOffset.value > 0,
+const titleLineBottom = useOffsetBottomWithin(
+  () => headerWithHiddenDetailsElement.value?.titleLine,
+  headerWithHiddenDetailsElement,
 )
 
-const absoluteContainerOffset = computed(
-  () => `${isCompactHeaderVisible.value ? 0 : Math.min(0, compactHeaderOffset.value)}px`,
+// The compact header is stacked above the full header, so it takes over as soon as any of its title
+// line is in view, before it has fully slid into place - content may be too short to scroll that far.
+// Interactivity/a11y exposure switches at the same point, so exactly one header is ever exposed.
+const isCompactHeaderVisible = computed(
+  () => hasMeasuredHeaderHeights.value && compactHeaderOffset.value + titleLineBottom.value > 0,
 )
+
+const absoluteContainerOffset = computed(() => `${Math.min(0, compactHeaderOffset.value)}px`)
 
 const stickyContainerTop = computed(() => {
   if (y.value < headerWithDetailsHeight.value) return `-${y.value}px`
@@ -77,6 +81,7 @@ useStickyTopCalculator(headerWithHiddenDetailsHeight, { offset: 7 })
     :inert="!isCompactHeaderVisible"
     :organization="organization"
     :organization-display-name="organizationDisplayName"
+    data-test-id="organization-detail-top-bar-clipped-details"
     :style="{
       transform: `translateY(${absoluteContainerOffset})`,
       width: containerWidth,
