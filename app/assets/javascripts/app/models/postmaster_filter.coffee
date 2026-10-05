@@ -3,6 +3,9 @@ class App.PostmasterFilter extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/postmaster_filters'
 
+  # The admin list is paginated client-side, so it needs more than the default of 500 records.
+  @fetchFullPerPage: 1000
+
   @configure_attributes = [
     { name: 'name',           display: __('Name'),              tag: 'input', type: 'text', limit: 250, 'null': false },
     { name: 'channel',        display: __('Channel'),           type: 'input', readonly: 1 },
