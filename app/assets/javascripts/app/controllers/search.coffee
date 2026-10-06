@@ -166,6 +166,7 @@ class App.Search extends App.Controller
         parent:   @
         parentEl: elLocal
         appEl:    @appEl
+        dragEnabled: => @model is 'Ticket'
         batchSuccess: =>
           @search(0, true)
       )

@@ -75,6 +75,8 @@ class App.TicketBatch extends App.Controller
     ))
 
   startDragItem: (event) =>
+    return if @dragEnabled && !@dragEnabled()
+
     event.preventDefault()
 
     App.TicketOverviewCollection.fetch()

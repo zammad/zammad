@@ -248,6 +248,7 @@ class App.TicketOverviewTable extends App.Controller
         attribute =
           name:         'icon_priority'
           display:      ''
+          parentClass:  'table-priority-icon'
           translation:  false
           width:        '24px'
           displayWidth: 24
