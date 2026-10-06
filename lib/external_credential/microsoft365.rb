@@ -9,20 +9,21 @@ class ExternalCredential::Microsoft365 < ExternalCredential::MicrosoftBase
     __('No Microsoft 365 app configured!')
   end
 
-  def self.authorize_scope
-    'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email'
+  def self.authorize_scope(credentials = {})
+    resource = MicrosoftCloud.new(credentials[:cloud]).outlook_resource
+    "#{resource}/IMAP.AccessAsUser.All #{resource}/SMTP.Send offline_access openid profile email"
   end
 
   def self.channel_migration_possible?
     true
   end
 
-  def self.channel_options_inbound(user_data, _account_data)
+  def self.channel_options_inbound(user_data, account_data)
     {
       adapter: 'imap',
       options: {
         auth_type:  'XOAUTH2',
-        host:       'outlook.office365.com',
+        host:       MicrosoftCloud.new(account_data[:cloud]).imap_host,
         ssl:        'ssl',
         ssl_verify: true,
         user:       user_data[:preferred_username],
@@ -30,11 +31,11 @@ class ExternalCredential::Microsoft365 < ExternalCredential::MicrosoftBase
     }
   end
 
-  def self.channel_options_outbound(user_data, _account_data)
+  def self.channel_options_outbound(user_data, account_data)
     {
       adapter: 'smtp',
       options: {
-        host:           'smtp.office365.com',
+        host:           MicrosoftCloud.new(account_data[:cloud]).smtp_host,
         port:           587,
         user:           user_data[:preferred_username],
         authentication: 'xoauth2',
@@ -43,11 +44,12 @@ class ExternalCredential::Microsoft365 < ExternalCredential::MicrosoftBase
     }
   end
 
-  def self.find_migration_channel(user_data)
+  def self.find_migration_channel(user_data, account_data = {})
+    cloud = MicrosoftCloud.new(account_data[:cloud])
     migrate_channel = nil
     Channel.where(area: 'Email::Account').find_each do |channel|
-      next if channel.options.dig(:inbound, :options, :host)&.downcase != 'outlook.office365.com'
-      next if channel.options.dig(:outbound, :options, :host)&.downcase != 'smtp.office365.com'
+      next if channel.options.dig(:inbound, :options, :host)&.downcase != cloud.imap_host
+      next if channel.options.dig(:outbound, :options, :host)&.downcase != cloud.smtp_host
       next if channel.options.dig(:outbound, :options, :user)&.downcase != user_data[:preferred_username].downcase && channel.options.dig(:outbound, :email)&.downcase != user_data[:preferred_username].downcase
 
       migrate_channel = channel

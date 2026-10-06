@@ -8548,6 +8548,10 @@ msgstr ""
 msgid "Given time zone is not valid."
 msgstr ""
 
+#: db/seeds/settings.rb:1816
+msgid "Global cloud"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee:28
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:11
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:96
@@ -9817,6 +9821,10 @@ msgstr ""
 
 #: lib/gitlab/linked_issue.rb:122
 msgid "Invalid GitLab issue link format"
+msgstr ""
+
+#: lib/microsoft_graph.rb:144
+msgid "Invalid Microsoft Graph pagination URL."
 msgstr ""
 
 #: lib/external_credential/exchange.rb:43
@@ -11517,6 +11525,12 @@ msgstr ""
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
 msgid "Microsoft Teams Notifications"
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:33
+#: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:33
+#: db/seeds/settings.rb:1810
+msgid "Microsoft cloud"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:56
@@ -19113,6 +19127,10 @@ msgstr ""
 msgid "The setup has already been started. Please wait until it is finished."
 msgstr ""
 
+#: lib/external_credential/microsoft_base.rb:60
+msgid "The shared Microsoft app only supports the Global cloud."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:96
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
@@ -21188,6 +21206,10 @@ msgstr ""
 msgid "URL (OCR)"
 msgstr ""
 
+#: db/seeds/settings.rb:1817
+msgid "US Government (GCC High)"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:140
 msgid "Unassign owner"
 msgstr ""
@@ -21226,6 +21248,11 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:129
 #: app/models/user_device/notification_presenter.rb:11
 msgid "Unknown"
+msgstr ""
+
+#: app/models/setting/validation/microsoft_office365_credentials.rb:6
+#: lib/microsoft_cloud.rb:25
+msgid "Unknown Microsoft cloud."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:185

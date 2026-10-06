@@ -28,6 +28,18 @@
       <input id="client_tenant" type="text" name="client_tenant" value="<%= @external_credential?.credentials?.client_tenant %>" class="form-control" required autocomplete="off" placeholder="common">
     </div>
   </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="cloud"><%- @T('Microsoft cloud') %></label>
+    </div>
+    <div class="controls">
+      <select id="cloud" name="cloud" class="form-control">
+        <% for value, label of {global: 'Global cloud', us_gov: 'US Government (GCC High)'}: %>
+          <option value="<%= value %>" <% if (@external_credential?.credentials?.cloud || 'global') is value: %>selected<% end %>><%- @T(label) %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
   <h2><%- @T('Your callback URL') %></h2>
   <div class="input form-group">
     <div class="controls controls--button ignore-readonly">

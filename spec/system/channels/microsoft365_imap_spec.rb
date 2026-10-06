@@ -20,6 +20,8 @@ RSpec.describe 'Manage > Channels > Microsoft 365 IMAP Email', time_zone: 'Europ
         fill_in 'client_id', with: client_id
         fill_in 'client_secret', with: client_secret
         fill_in 'client_tenant', with: client_tenant
+        check_select_field_value('cloud', 'global')
+        set_select_field_value('cloud', 'us_gov')
 
         check_input_field_value('callback_url', callback_url, attr: 'id')
 
@@ -28,7 +30,7 @@ RSpec.describe 'Manage > Channels > Microsoft 365 IMAP Email', time_zone: 'Europ
 
       expect(ExternalCredential.last).to have_attributes(
         name:        'microsoft365',
-        credentials: include(client_id:, client_secret:, client_tenant:)
+        credentials: include(client_id:, client_secret:, client_tenant:, cloud: 'us_gov')
       )
     end
   end

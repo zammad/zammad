@@ -33,7 +33,7 @@ class Channel::Driver::MicrosoftGraphOutbound < Channel::Driver::BaseEmailOutbou
       mailbox      = @settings[:shared_mailbox].presence || @settings[:user]
 
       MicrosoftGraph
-        .new(access_token:, mailbox:)
+        .new(access_token:, mailbox:, cloud: @settings[:cloud])
         .send_message(mail)
     end
   end

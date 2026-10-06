@@ -55,7 +55,15 @@ class ExternalCredential < ApplicationModel
     backend = ExternalCredential.load_backend(name)
     return if !backend.respond_to?(:update_client_secret)
 
-    backend.update_client_secret(previous_client_secret, current_client_secret)
+    if backend.respond_to?(:credential_identity)
+      previous_credentials, current_credentials = saved_changes['credentials']
+      identity = backend.credential_identity(current_credentials)
+      return if backend.credential_identity(previous_credentials) != identity
+
+      backend.update_client_secret(previous_client_secret, current_client_secret, credential_identity: identity)
+    else
+      backend.update_client_secret(previous_client_secret, current_client_secret)
+    end
   end
 
 end

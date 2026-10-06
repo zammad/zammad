@@ -62,6 +62,22 @@ RSpec.describe 'Microsoft Graph channel admin API endpoints', aggregate_failures
       expect(json_response).to include('folders' => folders)
     end
 
+    context 'with a national cloud mailbox' do
+      let!(:channel) { create(:microsoft_graph_channel, inbound_options: { cloud: 'us_gov' }) }
+      let(:graph) { instance_double(MicrosoftGraph, get_message_folders_tree: folders) }
+
+      before do
+        allow(MicrosoftGraph).to receive(:new).and_return(graph)
+      end
+
+      it 'uses that cloud when listing folders' do
+        get "/api/v1/channels/admin/microsoft_graph/#{channel.id}/folders"
+
+        expect(response).to have_http_status(:ok)
+        expect(MicrosoftGraph).to have_received(:new).with(access_token: anything, mailbox: anything, cloud: 'us_gov')
+      end
+    end
+
     context 'when API raises an error' do
       before do
         allow_any_instance_of(MicrosoftGraph).to receive(:get_message_folders_tree).and_raise(MicrosoftGraph::ApiError, { message: 'Error message', code: 'Error code' })
