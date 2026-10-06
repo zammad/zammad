@@ -36,6 +36,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ui_ticket_zoom_article_email_subject',
           'system_id',
           'fqdn',
+          'alternative_fqdn',
           'websocket_backend',
           'websocket_port',
           'http_type',

@@ -12,7 +12,7 @@ in the same way ApplicationCable::Connection does it. Any session identifier
 supplied in the event payload is ignored.
 
 Like ActionCable, the cookie is only trusted when the handshake Origin header
-matches the configured Zammad origin (or a localhost origin). This prevents a
+matches a configured Zammad origin (or a localhost origin). This prevents a
 page on a sibling origin, which browsers still send the SameSite=Lax session
 cookie to, from adopting the user's websocket session.
 
@@ -92,11 +92,7 @@ To execute this manually, just paste the following into the browser console
     return false if request_origin.blank?
     return true if LOCALHOST_ORIGIN.match?(request_origin)
 
-    request_origin.casecmp?(zammad_origin)
-  end
-
-  def zammad_origin
-    "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
+    Zammad::WebSocketOrigins.configured.any? { |origin| request_origin.casecmp?(origin) }
   end
 
   def session_cookie_value
