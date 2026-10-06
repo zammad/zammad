@@ -27,6 +27,10 @@ class App.UiElement.postmaster_set extends App.UiElement.ApplicationAction
             if !row.readonly
               config = _.clone(row)
 
+              # values may contain placeholders like #{regexp.NAME}, which fail the native field validation
+              if config.type is 'email' || config.type is 'tel' || config.type is 'url'
+                config.type = 'text'
+
               switch config.tag
                 when 'date'
                   config.operator = ['static', 'relative']
