@@ -113,6 +113,10 @@ class MicrosoftGraph
     make_request("messages/#{message_id}", method: :delete)
   end
 
+  def move_message(message_id, destination_id)
+    make_request("messages/#{message_id}/move", method: :post, params: { destinationId: destination_id })
+  end
+
   private
 
   def make_request(path, method: :get, json: true, params: {}, options: {})

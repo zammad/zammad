@@ -111,8 +111,11 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
         channel.options[:inbound][:options][:keep_on_server] = true
         channel.save
 
+        channel.options[:inbound][:options].merge!(folder_id: 'source', post_import_action: 'move', move_to_folder_id: 'destination')
+        channel.save!
+
         channel = described_class.link_account(request_token, authorization_payload.merge(channel_id: channel.id))
-        expect(channel.reload.options[:inbound][:options][:keep_on_server]).to be(true)
+        expect(channel.reload.options[:inbound][:options]).to include(keep_on_server: true, folder_id: 'source', post_import_action: 'move', move_to_folder_id: 'destination')
       end
 
       context 'when users do not match', :aggregate_failures do
@@ -476,4 +479,35 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       end
     end
   end
+
+  describe '.inbound_options_to_preserve', :aggregate_failures do
+    let(:options) { { inbound: { options: { user: 'mailbox@example.com' } }, auth: { client_tenant: 'tenant', cloud: 'global' } }.with_indifferent_access }
+    let(:channel) { build_stubbed(:channel, options:) }
+
+    it 'preserves folders and action in the same mailbox' do
+      expect(described_class.inbound_options_to_preserve(channel, options))
+        .to include(:folder_id, :move_to_folder_id, :post_import_action)
+    end
+
+    %i[client_tenant cloud].each do |key|
+      it "requires fresh folders after changing #{key}" do
+        changed = options.deep_dup
+        changed[:auth][key] = 'different'
+
+        preserved = described_class.inbound_options_to_preserve(channel, changed)
+        expect(preserved).to include(:post_import_action)
+        expect(preserved).not_to include(:folder_id, :move_to_folder_id)
+      end
+    end
+
+    it 'requires fresh folders after changing the shared mailbox' do
+      changed = options.deep_dup
+      changed[:inbound][:options][:shared_mailbox] = 'shared@example.com'
+
+      preserved = described_class.inbound_options_to_preserve(channel, changed)
+      expect(preserved).to include(:post_import_action)
+      expect(preserved).not_to include(:folder_id, :move_to_folder_id)
+    end
+  end
+
 end
