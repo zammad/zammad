@@ -6,6 +6,9 @@ dnf update -y
 
 dnf install -y systemd epel-release
 
+# A background metadata refresh races with the scenario's dnf calls on the lock file.
+systemctl mask dnf-makecache.timer dnf-makecache.service
+
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 echo "[elasticsearch-8.x]
 name=Elasticsearch repository for 8.x packages
