@@ -150,6 +150,43 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
           expect(page).to have_css('.batch-overlay-circle--top.js-batch-macro-circle')
             .and(have_css('.batch-overlay-circle--bottom.js-batch-assign-circle'))
         end
+
+        context 'with priority icons enabled' do
+          let(:before_authenticate) { Setting.set('ui_ticket_priority_icons', true) }
+
+          it 'shows the ticket number in the dragged row' do
+            within(:active_content, '.main .table') do
+              element = page.find(:table_row, ticket_1.id).native
+              click_and_hold(element)
+              move_mouse_by(0, 5)
+              move_mouse_by(0, 7)
+            end
+
+            expect(page).to have_css('.batch-dragger', text: ticket_1.number)
+          ensure
+            release_mouse
+          end
+        end
+      end
+
+      context 'when a row on a non-ticket tab is dragged' do
+        let(:customer)            { create(:customer, firstname: 'Testing') }
+        let(:before_authenticate) { customer }
+
+        it 'does not show the batch actions' do
+          find('[data-tab-content=User]').click
+
+          within(:active_content, '.main .table') do
+            element = page.find(:table_row, customer.id).native
+            click_and_hold(element)
+            move_mouse_by(0, 5)
+            move_mouse_by(0, 7)
+          end
+
+          expect(page).to have_no_css('.batch-dragger', visible: :all)
+        ensure
+          release_mouse
+        end
       end
     end
   end

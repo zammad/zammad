@@ -14410,6 +14410,16 @@ output {
       &:nth-child(n + 4) {
         display: none;
       }
+
+      // The priority icon column pushes the ticket number one cell further.
+      &.table-priority-icon ~ td:nth-child(3) {
+        flex-shrink: 0;
+      }
+
+      &.table-priority-icon ~ td:nth-child(4) {
+        display: block;
+        flex-shrink: 1;
+      }
     }
 
     .checkbox-replacement > .icon,
