@@ -74,6 +74,29 @@ RSpec.describe Sessions::Event::Login do
       include_examples 'starting a session for the user'
     end
 
+    context 'with an alternative FQDN configured' do
+      let(:alternative_fqdn) { 'support.example.org' }
+
+      before do
+        allow(Setting).to receive(:get).and_call_original
+        allow(Setting).to receive(:get).with('alternative_fqdn').and_return(alternative_fqdn)
+      end
+
+      include_examples 'starting a session for the user'
+
+      context 'with the alternative origin' do
+        let(:origin) { "#{Setting.get('http_type')}://#{alternative_fqdn}" }
+
+        include_examples 'starting a session for the user'
+      end
+
+      context 'with an origin only sharing the prefix of the alternative origin' do
+        let(:origin) { "#{Setting.get('http_type')}://#{alternative_fqdn}.evil.example.org" }
+
+        include_examples 'starting a session without a user'
+      end
+    end
+
     context 'with a localhost origin' do
       let(:headers) { { 'Origin' => 'https://localhost:3001', 'Cookie' => session_cookie } }
 

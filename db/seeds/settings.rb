@@ -336,6 +336,18 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
+  title:       __('Alternative fully qualified domain name'),
+  name:        'alternative_fqdn',
+  area:        'System::WebSocket',
+  description: __('Defines an additional fully qualified domain name of the system, which is accepted as an origin for WebSocket connections.'),
+  state:       '',
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin.system'],
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       __('WebSocket backend'),
   name:        'websocket_backend',
   area:        'System::WebSocket',
