@@ -162,9 +162,10 @@ RSpec.describe TextEncoding, :aggregate_failures do
         let(:input_encoding) { Encoding::ISO_8859_1 }
 
         it 'detects the input encoding' do
-          Timeout.timeout(1) do
-            expect(described_class.utf8_encode(string, from: 'iso-8859-1')).to eq(original_string)
-          end
+          result = nil
+
+          expect { result = described_class.utf8_encode(string, from: 'iso-8859-1') }.to take_less_cpu_time_than(1)
+          expect(result).to eq(original_string)
         end
       end
 
@@ -173,9 +174,10 @@ RSpec.describe TextEncoding, :aggregate_failures do
         let(:input_encoding) { Encoding::UTF_8 }
 
         it 'detects the input encoding' do
-          Timeout.timeout(1) do
-            expect(described_class.utf8_encode(string, from: 'utf-8')).to eq(original_string)
-          end
+          result = nil
+
+          expect { result = described_class.utf8_encode(string, from: 'utf-8') }.to take_less_cpu_time_than(1)
+          expect(result).to eq(original_string)
         end
       end
 
@@ -184,9 +186,10 @@ RSpec.describe TextEncoding, :aggregate_failures do
         let(:input_encoding) { Encoding::ISO_8859_1 }
 
         it 'detects the input encoding' do
-          Timeout.timeout(18) do
-            expect(described_class.utf8_encode(string, from: 'utf-8')).to eq(original_string)
-          end
+          result = nil
+
+          expect { result = described_class.utf8_encode(string, from: 'utf-8') }.to take_less_cpu_time_than(18)
+          expect(result).to eq(original_string)
         end
       end
     end

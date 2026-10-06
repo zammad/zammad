@@ -633,7 +633,7 @@ RSpec.describe String do
       end
 
       it 'converts a 1076-byte unicode file in under 2s' do
-        expect { Timeout.timeout(2) { <<~HTML.chomp.html2text } }.not_to raise_error
+        expect { <<~HTML.chomp.html2text }.to take_less_cpu_time_than(2)
           <html>
           <title>some title</title>
           <body>
@@ -647,7 +647,7 @@ RSpec.describe String do
       end
 
       it 'converts a 2.21 MiB unicode file in under 2s' do
-        expect { Timeout.timeout(2) { <<~HTML.chomp.html2text } }.not_to raise_error
+        expect { <<~HTML.chomp.html2text }.to take_less_cpu_time_than(2)
           <html>
           <title>some title</title>
           <body>
