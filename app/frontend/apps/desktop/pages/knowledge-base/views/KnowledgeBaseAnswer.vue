@@ -111,7 +111,6 @@ const actions = computed<MenuItem[]>(() => {
       key: 'delete-answer',
       label: __('Delete answer'),
       icon: 'trash3',
-      variant: 'danger',
       separatorTop: true,
       // Deleting the page being read, so it hands over where to go instead.
       onClick: () =>

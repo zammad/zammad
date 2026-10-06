@@ -168,7 +168,6 @@ const tableActions = computed((): MenuItem[] => [
   {
     key: 'delete',
     icon: 'trash3',
-    variant: 'danger',
     ariaLabel: (provider) => i18n.t('Remove account link on %s', provider?.application),
     show: (provider) => !!provider?.username,
     onClick: (provider) => unlinkAccount(provider as LinkedAccountTableItem),
@@ -215,7 +214,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
               v-tooltip="$t((action?.ariaLabel as Function)(item))"
               :icon="action.icon"
               :disabled="loading"
-              :class="{ 'bg-transparent!': action.variant === 'danger' }"
+              :class="{ 'text-muted!': !action.variant }"
               size="medium"
               :variant="action.variant"
               @click="action.onClick?.(item)"

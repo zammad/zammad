@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
@@ -166,6 +167,15 @@ describe('KnowledgeBaseCategoryCard', () => {
       expect(await wrapper.findByText('Add sub-category')).toBeInTheDocument()
       expect(wrapper.queryByText('Edit category')).not.toBeInTheDocument()
       expect(wrapper.queryByText('Delete category')).not.toBeInTheDocument()
+    })
+
+    // Deleting asks first, so the menu item is not red.
+    it('offers deleting without the danger variant', async () => {
+      const wrapper = await openMenu()
+
+      const deleteItem = await wrapper.findByRole('button', { name: 'Delete category' })
+
+      expect(getByIconName(deleteItem, 'trash3')).not.toHaveClass('text-red-500')
     })
 
     it('lists creating before the actions on the category itself', async () => {

@@ -3,6 +3,7 @@
 import { within } from '@testing-library/vue'
 import { ref } from 'vue'
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -92,9 +93,14 @@ describe('TicketDetailBottomBar', () => {
     }
 
     if (eventName === 'discard') {
-      await wrapper.events.click(
-        wrapper.getByRole('button', { name: 'Discard your unsaved changes' }),
-      )
+      const discardButton = wrapper.getByRole('button', { name: 'Discard your unsaved changes' })
+
+      // Discarding asks first, so the button is not red.
+      expect(discardButton).toHaveClass('bg-green-200')
+      expect(discardButton).not.toHaveClass('bg-pink-100')
+      expect(getByIconName(discardButton, 'trash3')).toBeInTheDocument()
+
+      await wrapper.events.click(discardButton)
 
       expect(wrapper.emitted('discard')).toBeTruthy()
     }

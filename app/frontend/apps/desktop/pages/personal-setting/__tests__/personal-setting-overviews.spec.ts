@@ -2,6 +2,7 @@
 
 import { getAllByRole } from '@testing-library/vue'
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -88,13 +89,22 @@ describe('personal settings for token access', () => {
 
     expect(resetButton).toBeVisible()
 
+    // The trigger only opens the dialog, so it is not red; the confirm button inside is.
+    expect(resetButton).toHaveClass('bg-green-200')
+    expect(resetButton).not.toHaveClass('bg-pink-100')
+    expect(getByIconName(resetButton, 'arrow-counterclockwise')).toBeInTheDocument()
+
     await view.events.click(resetButton)
 
     await waitForNextTick()
 
     expect(await view.findByRole('dialog', { name: 'Confirmation' })).toBeVisible()
 
-    await view.events.click(view.getByRole('button', { name: 'Yes' }))
+    const confirmButton = view.getByRole('button', { name: 'Yes' })
+
+    expect(confirmButton).toHaveClass('bg-pink-100')
+
+    await view.events.click(confirmButton)
 
     await waitForNextTick()
 

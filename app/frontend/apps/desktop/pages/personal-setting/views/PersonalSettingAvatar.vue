@@ -345,10 +345,10 @@ const { tabs, activeTab } = usePersonalSettingTabs()
                   v-if="avatar.deletable"
                   v-tooltip="$t('Delete this avatar')"
                   :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
-                  class="absolute -inset-e-2 -top-1 text-white group-hover/avatar:opacity-100 focus:opacity-100"
+                  class="absolute -inset-e-2 -top-1 group-hover/avatar:opacity-100 focus:opacity-100"
                   icon="x-lg"
                   size="small"
-                  variant="remove"
+                  variant="tertiary"
                   @click.stop="confirmDeleteAvatar(avatar)"
                 />
               </div>

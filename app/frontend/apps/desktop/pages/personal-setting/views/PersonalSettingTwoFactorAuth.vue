@@ -178,7 +178,7 @@ const actions = computed<MenuItem[]>(() => [
     label: __('Remove'),
     ariaLabel: (entity) => lookUpA11yActionLabel(entity!, 'remove'),
     icon: 'trash3',
-    variant: 'danger',
+    separatorTop: true,
     show: (entity) => Boolean(entity?.configured),
     onClick: (entity) => submitTwoFactorMethodRemoval(entity),
   },

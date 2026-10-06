@@ -46,7 +46,7 @@ const editItem = async (newValue: string) => {
 
 const isEditing = ref(false)
 
-const actions: MenuItem[] = [
+const actions = computed<MenuItem[]>(() => [
   {
     key: 'check',
     label: __('Check item'),
@@ -71,11 +71,14 @@ const actions: MenuItem[] = [
   {
     key: 'remove',
     label: __('Remove item'),
-    variant: 'danger',
     icon: 'trash3',
+    separatorTop: true,
+    // An empty item is removed on the click itself, without the question a filled one gets, so
+    //   only then is this action the point of no return.
+    variant: props.item.text?.length ? undefined : 'danger',
     onClick: () => removeItem(),
   },
-]
+])
 
 defineExpose({
   focusInput: () => inlineEditInstance.value?.activateEditing(),

@@ -1,5 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
+
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -81,6 +84,39 @@ describe('ChecklistItems', () => {
     // Actions
     expect(wrapper.getByRole('button', { name: 'Reorder' }))
     expect(wrapper.getByIconName('plus-square-fill')).toBeInTheDocument()
+  })
+
+  // Removing asks first, so the menu item is not red.
+  it('offers removing an item without the danger variant', async () => {
+    const wrapper = renderChecklistItems(items)
+
+    await wrapper.events.click(wrapper.getAllByRole('button', { name: 'Action menu button' })[0])
+
+    const removeItem = within(await wrapper.findByRole('menu')).getByRole('button', {
+      name: 'Remove item',
+    })
+
+    expect(getByIconName(removeItem, 'trash3')).not.toHaveClass('text-red-500')
+  })
+
+  // An empty item is removed without a question, so there the action stays red.
+  it('keeps the danger variant on removing an item that is still empty', async () => {
+    const wrapper = renderChecklistItems([
+      {
+        id: convertToGraphQLId('ChecklistItem', 4),
+        text: '',
+        ticketReference: null,
+        checked: false,
+      },
+    ])
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Action menu button' }))
+
+    const removeItem = within(await wrapper.findByRole('menu')).getByRole('button', {
+      name: 'Remove item',
+    })
+
+    expect(getByIconName(removeItem, 'trash3')).toHaveClass('text-red-500')
   })
 
   it('displays of ticket checklist item', async () => {
@@ -186,7 +222,12 @@ describe('ChecklistItems', () => {
 
     expect(wrapper.queryByLabelText('Action menu button')).not.toBeInTheDocument()
 
-    expect(wrapper.getByLabelText('Remove item')).toBeInTheDocument()
+    // Removing asks first, so the trigger is not red.
+    const removeButton = wrapper.getByLabelText('Remove item')
+
+    expect(removeButton).toBeInTheDocument()
+    expect(removeButton).toHaveClass('text-muted!')
+    expect(removeButton).not.toHaveClass('text-red-500!')
   })
 
   it('displays content in readonly mode', async () => {

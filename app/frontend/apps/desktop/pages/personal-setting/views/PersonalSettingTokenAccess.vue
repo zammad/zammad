@@ -146,7 +146,6 @@ const tableActions: MenuItem[] = [
     key: 'delete',
     label: __('Delete this access token'),
     icon: 'trash3',
-    variant: 'danger',
     onClick: (data) => {
       confirmDeleteDevice(data as Token)
     },

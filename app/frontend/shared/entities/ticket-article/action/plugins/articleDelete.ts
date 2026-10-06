@@ -77,6 +77,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Delete article'),
       name: 'articleDelete',
       icon: 'trash',
+      separatorTop: true,
       perform: () => deleteAction(article),
       view: {
         agent: ['change'],

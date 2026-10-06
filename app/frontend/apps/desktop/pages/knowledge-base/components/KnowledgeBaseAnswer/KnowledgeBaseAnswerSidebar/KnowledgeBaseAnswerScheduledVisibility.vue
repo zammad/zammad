@@ -125,7 +125,7 @@ const removeSchedule = async (visibility: EnumKnowledgeBaseSchedulableVisibility
               class="group-hover:opacity-100 focus:opacity-100"
               icon="x-lg"
               size="small"
-              variant="remove"
+              variant="tertiary"
               @click.stop="removeSchedule(schedule.visibility)"
             />
           </KnowledgeBaseAnswerScheduledVisibilityItem>

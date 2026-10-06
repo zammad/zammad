@@ -153,6 +153,10 @@ describe('avatar personal settings', () => {
     })
     expect(deleteButton).toBeInTheDocument()
 
+    // Deleting asks first, so the trigger is not red; the confirm button inside the dialog is.
+    expect(deleteButton).toHaveClass('bg-green-200')
+    expect(deleteButton).not.toHaveClass('bg-red-400')
+
     mockUserCurrentAvatarDeleteMutation({
       userCurrentAvatarDelete: {
         success: true,
@@ -165,7 +169,11 @@ describe('avatar personal settings', () => {
 
     expect(await view.findByRole('dialog', { name: 'Delete object' })).toBeInTheDocument()
 
-    await view.events.click(view.getByRole('button', { name: 'Delete object' }))
+    const confirmButton = view.getByRole('button', { name: 'Delete object' })
+
+    expect(confirmButton).toHaveClass('bg-pink-100')
+
+    await view.events.click(confirmButton)
 
     const calls = await waitForUserCurrentAvatarDeleteMutationCalls()
     expect(calls).toHaveLength(1)

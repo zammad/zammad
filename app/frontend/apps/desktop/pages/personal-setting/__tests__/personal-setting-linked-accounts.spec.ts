@@ -70,13 +70,23 @@ describe('linked accounts page', () => {
     it('removes an authorization provider', async () => {
       const view = await visitView('/personal-setting/linked-accounts')
 
-      await view.events.click(view.getByLabelText('Remove account link on GitHub'))
+      // Removing asks first, so the trigger is not red; the confirm button inside the dialog is.
+      const removeButton = view.getByLabelText('Remove account link on GitHub')
+
+      expect(removeButton).toHaveClass('text-muted!')
+      expect(removeButton).not.toHaveClass('text-red-500')
+
+      await view.events.click(removeButton)
 
       expect(await view.findByRole('dialog', { name: 'Delete object' })).toBeInTheDocument()
 
       expect(view.getByText('Are you sure you want to delete this object?')).toBeInTheDocument()
 
-      await view.events.click(view.getByRole('button', { name: 'Delete object' }))
+      const confirmButton = view.getByRole('button', { name: 'Delete object' })
+
+      expect(confirmButton).toHaveClass('bg-pink-100')
+
+      await view.events.click(confirmButton)
 
       const mockCalls = await waitForUserCurrentRemoveLinkedAccountMutationCalls()
 

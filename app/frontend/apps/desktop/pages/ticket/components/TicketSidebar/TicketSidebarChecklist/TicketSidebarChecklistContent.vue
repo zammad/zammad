@@ -378,8 +378,8 @@ const checklistActions: MenuItem[] = [
   {
     key: 'remove',
     label: __('Remove checklist'),
-    variant: 'danger',
     icon: 'trash3',
+    separatorTop: true,
     onClick: () => removeChecklist(),
     show: () => !!checklist.value,
   },

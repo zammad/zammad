@@ -131,13 +131,23 @@ describe('knowledge base delete category', () => {
     await view.events.click(await view.findByRole('button', { name: 'Category actions' }))
 
     // The click handler sits on the item's button, not on the `menuitem` wrapper.
-    await view.events.click(await view.findByText('Delete category'))
+    const deleteItem = await view.findByText('Delete category')
+
+    // Deleting asks first, so the menu item is not red.
+    expect(deleteItem).not.toHaveClass('text-red-500')
+
+    await view.events.click(deleteItem)
   }
 
   const confirmDeletion = async (view: Awaited<ReturnType<typeof visitView>>) => {
-    await view.events.click(
-      within(await view.findByRole('dialog')).getByRole('button', { name: 'Delete object' }),
-    )
+    const confirmButton = within(await view.findByRole('dialog')).getByRole('button', {
+      name: 'Delete object',
+    })
+
+    // The decisive button is the red one.
+    expect(confirmButton).toHaveClass('bg-pink-100')
+
+    await view.events.click(confirmButton)
   }
 
   describe('from a category card', () => {
@@ -156,6 +166,9 @@ describe('knowledge base delete category', () => {
       // An informational dialog only: there is nothing to cancel.
       const dialog = within(view.getByRole('dialog'))
       expect(dialog.queryByRole('button', { name: 'Cancel & go back' })).not.toBeInTheDocument()
+
+      // Nothing can be lost here, so the button keeps the primary variant.
+      expect(dialog.getByRole('button', { name: 'OK' })).toHaveClass('bg-blue-800')
 
       await view.events.click(dialog.getByRole('button', { name: 'OK' }))
 
@@ -238,7 +251,13 @@ describe('knowledge base delete category', () => {
     const deleteOpenedCategory = async (view: Awaited<ReturnType<typeof visitView>>) => {
       const header = within(await view.findByTestId('knowledge-base-header-full'))
       await view.events.click(header.getByRole('button', { name: 'Additional actions' }))
-      await view.events.click(await view.findByText('Delete category'))
+
+      const deleteItem = await view.findByText('Delete category')
+
+      // Deleting asks first, so the menu item is not red.
+      expect(deleteItem).not.toHaveClass('text-red-500')
+
+      await view.events.click(deleteItem)
 
       await confirmDeletion(view)
       await waitForKnowledgeBaseCategoryDeleteMutationCalls()

@@ -222,13 +222,19 @@ describe('KnowledgeBaseAnswerScheduledVisibility', () => {
     it('names the state it is about in the prompt', async () => {
       const view = renderSection([internalInTwoDays], true)
 
-      await view.events.click(
-        view.getByRole('button', { name: 'Remove this scheduled visibility change' }),
-      )
+      const removeButton = view.getByRole('button', {
+        name: 'Remove this scheduled visibility change',
+      })
+
+      // Removing asks first, so the button is not red; the prompt's delete variant is.
+      expect(removeButton).toHaveClass('bg-green-200')
+      expect(removeButton).not.toHaveClass('bg-red-400')
+
+      await view.events.click(removeButton)
 
       expect(mockWaitForConfirmation).toHaveBeenCalledWith(
         'Do you really want to remove the scheduled change to %s?',
-        expect.objectContaining({ textPlaceholder: ['Internal'] }),
+        expect.objectContaining({ confirmationVariant: 'delete', textPlaceholder: ['Internal'] }),
       )
     })
 

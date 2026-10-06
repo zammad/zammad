@@ -5,6 +5,7 @@ import { beforeEach } from 'vitest'
 
 import ticketArticleCustomerObjectAttributes from '#tests/graphql/factories/fixtures/ticket-article-customer-object-attributes.ts'
 import ticketCustomerObjectAttributes from '#tests/graphql/factories/fixtures/ticket-customer-object-attributes.ts'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -299,7 +300,14 @@ describe('ticket create view', () => {
         expect(view.queryByRole('button', { name: 'Cancel & go back' })).not.toBeInTheDocument(),
       )
 
-      await view.events.click(await view.findByRole('button', { name: 'Discard changes' }))
+      // The trigger only opens the dialog, so it is not red; the confirm button inside is.
+      const discardButton = await view.findByRole('button', { name: 'Discard changes' })
+
+      expect(discardButton).toHaveClass('bg-green-200')
+      expect(discardButton).not.toHaveClass('bg-pink-100')
+      expect(getByIconName(discardButton, 'trash3')).toBeInTheDocument()
+
+      await view.events.click(discardButton)
 
       const dialog = await view.findByRole('dialog', {
         name: 'Unsaved changes',
@@ -313,7 +321,11 @@ describe('ticket create view', () => {
         await dialogView.findByText('Are you sure? You have unsaved changes that will get lost.'),
       )
 
-      await view.events.click(dialogView.getByRole('button', { name: 'Discard changes' }))
+      const confirmButton = dialogView.getByRole('button', { name: 'Discard changes' })
+
+      expect(confirmButton).toHaveClass('bg-pink-100')
+
+      await view.events.click(confirmButton)
 
       // should not be in the document anymore
       await waitFor(() => expect(view.queryByLabelText('Title')).not.toBeInTheDocument())

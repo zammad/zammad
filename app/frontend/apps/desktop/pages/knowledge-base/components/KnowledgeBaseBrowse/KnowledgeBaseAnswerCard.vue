@@ -87,7 +87,6 @@ const actions = computed<MenuItem[]>(() => {
       key: 'delete-answer',
       label: __('Delete answer'),
       icon: 'trash3',
-      variant: 'danger',
       separatorTop: true,
       // The category is handed over for the cache scope, not to navigate: a card is never the
       //   answer being read, so this page stays. It is what lowers the count of a *cached* listing

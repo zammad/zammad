@@ -407,7 +407,8 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         <CommonButton
           v-if="isDirty"
           size="large"
-          variant="danger"
+          variant="tertiary"
+          prefix-icon="trash3"
           :disabled="isDisabled"
           @click="discardChanges"
           >{{ $t('Discard changes') }}</CommonButton

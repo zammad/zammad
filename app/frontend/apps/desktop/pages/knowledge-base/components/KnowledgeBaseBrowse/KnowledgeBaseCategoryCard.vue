@@ -120,7 +120,6 @@ const actions = computed<MenuItem[]>(() => {
       key: 'delete-category',
       label: __('Delete category'),
       icon: 'trash3',
-      variant: 'danger',
       separatorTop: true,
       show: () => props.policy.destroy,
       onClick: () =>

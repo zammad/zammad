@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
+import { waitFor, within } from '@testing-library/vue'
 import { computed, ref } from 'vue'
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { type ExtendedRenderResult, renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -466,6 +467,30 @@ describe('TicketSidebarChecklist', () => {
       await openMenuAndClickAction(wrapper, 'Check item')
 
       await verifyChecked(checkboxes, false)
+    })
+
+    // Removing asks first, so the menu item is not red.
+    it('offers removing the checklist without the danger variant', async () => {
+      mockTicketChecklistQuery({
+        ticketChecklist: {
+          id: convertToGraphQLId('Checklist', 1),
+          name: 'Checklist title',
+          items: checklistItemsMock,
+        },
+      })
+      const wrapper = await renderChecklist()
+
+      await wrapper.findByRole('heading', { level: 3, name: 'Checklist title' })
+
+      await wrapper.events.click(
+        wrapper.getAllByRole('button', { name: 'Action menu button' }).at(0) as HTMLElement,
+      )
+
+      const removeItem = within(await wrapper.findByRole('menu')).getByRole('button', {
+        name: 'Remove checklist',
+      })
+
+      expect(getByIconName(removeItem, 'trash3')).not.toHaveClass('text-red-500')
     })
 
     it('removes entire checklist', async () => {

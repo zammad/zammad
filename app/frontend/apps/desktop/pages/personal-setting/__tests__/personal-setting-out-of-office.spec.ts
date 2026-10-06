@@ -124,7 +124,7 @@ describe('Out of Office page', () => {
     it('shows success notification', async () => {
       const view = await visitView('/personal-setting/out-of-office')
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       expect(
         view.getByText('Out of office settings have been saved successfully'),
@@ -137,7 +137,7 @@ describe('Out of Office page', () => {
       const input = view.getByLabelText('Reason for absence')
       await view.events.clear(input)
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
@@ -157,7 +157,7 @@ describe('Out of Office page', () => {
       const button = getByRole(input.parentElement!, 'button')
       await view.events.click(button)
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       expect(input).toBeDescribedBy('This field is required.')
     })
@@ -169,7 +169,7 @@ describe('Out of Office page', () => {
       const button = getByRole(input, 'button')
       await view.events.click(button)
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       expect(input).toBeDescribedBy('This field is required.')
     })
@@ -204,7 +204,7 @@ describe('Out of Office page', () => {
       const input = view.getByLabelText('Active')
       await view.events.click(input)
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
@@ -234,7 +234,7 @@ describe('Out of Office page', () => {
       const buttonAgent = getByRole(inputAgent, 'button')
       await view.events.click(buttonAgent)
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
@@ -282,7 +282,7 @@ describe('Out of Office page', () => {
       await view.events.type(input, '2024-01-02 - 2024-02-02')
       await view.events.keyboard('{Enter}')
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
@@ -315,7 +315,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getAllByRole('option')[0])
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
@@ -354,7 +354,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getAllByRole('option')[0])
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
@@ -376,7 +376,7 @@ describe('Out of Office page', () => {
       const input = view.getByLabelText('Active')
       await view.events.click(input)
 
-      await view.events.click(view.getByText('Save out of office'))
+      await view.events.click(view.getByText('Save changes'))
 
       const inputDate = view.getByLabelText('Start and end date')
       expect(inputDate).toBeDescribedBy('This field is required.')

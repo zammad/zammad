@@ -160,7 +160,12 @@ describe('Two-factor Authentication - Security Keys', () => {
       userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Remove' }))
+    // Removing a credential happens on the click itself, with no dialog, so the button stays red.
+    const removeButton = view.getByRole('button', { name: 'Remove' })
+
+    expect(removeButton).toHaveClass('text-red-500!')
+
+    await view.events.click(removeButton)
 
     await waitForUserCurrentTwoFactorRemoveMethodCredentialsMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()

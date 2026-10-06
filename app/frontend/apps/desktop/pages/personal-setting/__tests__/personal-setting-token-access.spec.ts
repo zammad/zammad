@@ -137,6 +137,10 @@ describe('personal settings for token access', () => {
       name: 'Delete this access token',
     })
 
+    // Deleting asks first, so the trigger is not red.
+    expect(deleteButton).toHaveClass('text-muted!')
+    expect(deleteButton).not.toHaveClass('text-red-500!')
+
     mockUserCurrentAccessTokenDeleteMutation({
       userCurrentAccessTokenDelete: {
         success: true,

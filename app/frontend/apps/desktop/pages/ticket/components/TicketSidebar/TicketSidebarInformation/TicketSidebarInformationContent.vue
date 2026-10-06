@@ -67,17 +67,6 @@ const actions = computed<MenuItem[]>(() => [
     onClick: () => openTicketHistoryFlyout(ticket.value!.id),
   },
   {
-    key: ticketMergeFlyoutName,
-    label: __('Merge'),
-    icon: 'merge',
-    show: () => isTicketAgent.value && isTicketEditable.value,
-    onClick: () =>
-      openTicketMergeFlyout({
-        ticket,
-        currentTaskbarTabId: props.context.currentTaskbarTabId,
-      }),
-  },
-  {
     key: ticketChangeCustomerFlyoutName,
     label: __('Change customer'),
     icon: 'user',
@@ -85,6 +74,18 @@ const actions = computed<MenuItem[]>(() => [
     onClick: () =>
       openChangeCustomerFlyout({
         ticket,
+      }),
+  },
+  {
+    key: ticketMergeFlyoutName,
+    label: __('Merge'),
+    icon: 'merge',
+    separatorTop: true,
+    show: () => isTicketAgent.value && isTicketEditable.value,
+    onClick: () =>
+      openTicketMergeFlyout({
+        ticket,
+        currentTaskbarTabId: props.context.currentTaskbarTabId,
       }),
   },
 ])

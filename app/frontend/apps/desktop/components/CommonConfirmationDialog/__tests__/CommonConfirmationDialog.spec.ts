@@ -71,8 +71,38 @@ describe('dialog confirm behaviour', () => {
 
     expect(wrapper.getByRole('dialog', { name: 'Delete object' })).toBeInTheDocument()
     expect(wrapper.getByText('Are you sure you want to delete this object?')).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Delete object' })).toHaveClass('bg-pink-100')
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Delete object' }))
+    expect(confirmCallbackSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders the unsaved changes variant with a danger confirm button', async () => {
+    const confirmCallbackSpy = vi.fn()
+
+    const wrapper = renderComponent(CommonConfirmationDialog, {
+      props: {
+        uniqueId: 'confirmation',
+      },
+      router: true,
+    })
+
+    confirmationOptions.value.set('confirmation', {
+      confirmationVariant: 'unsaved',
+      confirmCallback: confirmCallbackSpy,
+      cancelCallback: vi.fn(),
+      closeCallback: vi.fn(),
+    })
+
+    await waitForNextTick()
+
+    expect(wrapper.getByRole('dialog', { name: 'Unsaved changes' })).toBeInTheDocument()
+    expect(
+      wrapper.getByText('Are you sure? You have unsaved changes that will get lost.'),
+    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Discard changes' })).toHaveClass('bg-pink-100')
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Discard changes' }))
     expect(confirmCallbackSpy).toHaveBeenCalledTimes(1)
   })
 

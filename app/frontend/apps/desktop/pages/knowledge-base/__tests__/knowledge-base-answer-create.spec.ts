@@ -2,6 +2,7 @@
 
 import { within } from '@testing-library/vue'
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { type ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -303,6 +304,27 @@ describe('knowledge base answer create', () => {
       view.queryByRole('heading', { name: 'New knowledge base answer' }),
       'the static fallback is only for a draft with no title yet',
     ).not.toBeInTheDocument()
+  })
+
+  // Discarding asks first, so the trigger is not red; the confirm button inside the dialog is.
+  it('offers a discard button that is not red once there is something to discard', async () => {
+    const view = await visitCreateView()
+
+    await view.events.type(await view.findByLabelText('Title'), 'How to reset a password')
+
+    const discardButton = await view.findByRole('button', { name: 'Discard changes' })
+
+    expect(discardButton).toHaveClass('bg-green-200')
+    expect(discardButton).not.toHaveClass('bg-pink-100')
+    expect(getByIconName(discardButton, 'trash3')).toBeInTheDocument()
+
+    await view.events.click(discardButton)
+
+    const dialog = await view.findByRole('dialog', { name: 'Unsaved changes' })
+
+    expect(within(dialog).getByRole('button', { name: 'Discard changes' })).toHaveClass(
+      'bg-pink-100',
+    )
   })
 
   // The breadcrumb is this view's heading, and the category it names comes from a form field.

@@ -95,6 +95,10 @@ describe('devices personal settings', () => {
       name: 'Delete this device',
     })
 
+    // Deleting asks first, so the trigger is not red.
+    expect(deleteButton).toHaveClass('text-muted!')
+    expect(deleteButton).not.toHaveClass('text-red-500!')
+
     mockUserCurrentDeviceDeleteMutation({
       userCurrentDeviceDelete: {
         success: true,

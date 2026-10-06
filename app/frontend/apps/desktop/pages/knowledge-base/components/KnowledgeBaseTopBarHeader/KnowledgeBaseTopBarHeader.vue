@@ -196,7 +196,6 @@ const actions = computed<MenuItem[]>(() => {
       key: 'delete-category',
       label: __('Delete category'),
       icon: 'trash3',
-      variant: 'danger',
       separatorTop: true,
       // Deleting the page the user is standing on: hand over the breadcrumb parent as
       //   the navigation target — the localised root when the category is top level.

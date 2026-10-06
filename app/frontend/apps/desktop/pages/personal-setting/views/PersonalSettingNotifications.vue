@@ -151,6 +151,7 @@ const onSubmit = async (form: FormSubmitData<NotificationFormData>) => {
 const onResetToDefaultSettings = async () => {
   const confirmed = await waitForConfirmation(
     __('Are you sure? Your notifications settings will be reset to default.'),
+    { buttonVariant: 'danger' },
   )
 
   if (!confirmed) return
@@ -209,14 +210,15 @@ const { tabs, activeTab } = usePersonalSettingTabs()
           <div class="flex justify-end gap-2">
             <CommonButton
               size="medium"
-              variant="danger"
+              variant="tertiary"
+              prefix-icon="arrow-counterclockwise"
               :disabled="loading"
               @click="onResetToDefaultSettings"
             >
-              {{ $t('Reset to default settings') }}
+              {{ $t('Reset to defaults') }}
             </CommonButton>
             <CommonButton size="medium" type="submit" variant="submit" :disabled="loading">
-              {{ $t('Save notification settings') }}
+              {{ $t('Save changes') }}
             </CommonButton>
           </div>
         </template>

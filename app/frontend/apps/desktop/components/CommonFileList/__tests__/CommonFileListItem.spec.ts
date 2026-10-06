@@ -155,7 +155,13 @@ describe('CommonFileListItem', () => {
     it('emits remove when the remove button is used', async () => {
       const view = renderItem(image)
 
-      await view.events.click(view.getByRole('button', { name: 'Remove file: IMG_1234.png' }))
+      const removeButton = view.getByRole('button', { name: 'Remove file: IMG_1234.png' })
+
+      // The field asks before it removes, so the button is not red.
+      expect(removeButton).toHaveClass('bg-green-200')
+      expect(removeButton).not.toHaveClass('bg-red-400')
+
+      await view.events.click(removeButton)
 
       expect(view.emitted().remove).toBeTruthy()
     })

@@ -67,6 +67,13 @@ small methods are preferred over explanation.
 - Translatable strings: use complete, meaningful source strings,
   sentence case for English source strings, and check for existing
   near-duplicate strings before adding new ones.
+- Red marks the point of no return: `danger` and `remove` stay only on
+  controls that act immediately. A trigger that only opens a confirmation
+  dialog or a confirming flyout is not red: a button becomes `tertiary`
+  with an icon naming the action (`trash3` for delete and discard,
+  `arrow-counterclockwise` for reset), a menu item carries no variant, a
+  `remove` icon button keeps its icon and takes the variant UX names per
+  place. The decisive button in the dialog or flyout is `danger`.
 
 ## Essential Commands
 

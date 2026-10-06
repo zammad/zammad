@@ -82,7 +82,7 @@ const { notify } = useNotifications()
 const confirmRemoveRecentSearch = async (searchQuery: string) => {
   const confirmed = await waitForConfirmation(
     __('Are you sure? This recent search will be lost.'),
-    { fullscreen: true },
+    { fullscreen: true, buttonVariant: 'danger' },
   )
 
   if (!confirmed) return
@@ -99,7 +99,7 @@ const confirmRemoveRecentSearch = async (searchQuery: string) => {
 const confirmClearRecentSearches = async () => {
   const confirmed = await waitForConfirmation(
     __('Are you sure? Your recent searches will be lost.'),
-    { fullscreen: true },
+    { fullscreen: true, buttonVariant: 'danger' },
   )
 
   if (!confirmed) return
@@ -118,7 +118,7 @@ const recentCloseResetMutation = new MutationHandler(useUserCurrentRecentCloseRe
 const confirmClearRecentlyClosed = async () => {
   const confirmed = await waitForConfirmation(
     __('Are you sure? Your recently closed items will get lost.'),
-    { fullscreen: true },
+    { fullscreen: true, buttonVariant: 'danger' },
   )
 
   if (!confirmed) return
@@ -183,7 +183,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
                     class="absolute inset-e-2 top-3 justify-end group-hover/recent-search:opacity-100 focus:opacity-100"
                     icon="x-lg"
                     size="small"
-                    variant="remove"
+                    variant="tertiary"
                     @click.stop.prevent="confirmRemoveRecentSearch(searchQuery)"
                   />
                 </CommonLink>

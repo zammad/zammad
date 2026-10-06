@@ -110,7 +110,7 @@ const resetOverviewOrder = () => {
 }
 
 const confirmResetOverviewOrder = async () => {
-  const confirmed = await waitForVariantConfirmation('confirm')
+  const confirmed = await waitForVariantConfirmation('confirm', { buttonVariant: 'danger' })
 
   if (confirmed) resetOverviewOrder()
 }
@@ -144,7 +144,8 @@ const { tabs, activeTab } = usePersonalSettingTabs()
         <div class="flex flex-col items-end">
           <CommonButton
             class="mt-4"
-            variant="danger"
+            variant="tertiary"
+            prefix-icon="arrow-counterclockwise"
             size="medium"
             @click.stop="confirmResetOverviewOrder"
           >

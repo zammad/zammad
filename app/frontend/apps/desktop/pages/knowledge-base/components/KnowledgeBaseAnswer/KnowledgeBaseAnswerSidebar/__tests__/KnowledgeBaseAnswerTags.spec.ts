@@ -122,7 +122,12 @@ describe('KnowledgeBaseAnswerTags', () => {
 
       const view = renderTags(['vip', 'billing'], true)
 
-      await view.events.click(view.getAllByRole('button', { name: 'Remove this tag' })[0])
+      const removeButton = view.getAllByRole('button', { name: 'Remove this tag' })[0]
+
+      // The click itself removes the tag, with no dialog, so the button stays red.
+      expect(removeButton).toHaveClass('bg-red-400')
+
+      await view.events.click(removeButton)
 
       const calls = await waitForTagAssignmentRemoveMutationCalls()
 

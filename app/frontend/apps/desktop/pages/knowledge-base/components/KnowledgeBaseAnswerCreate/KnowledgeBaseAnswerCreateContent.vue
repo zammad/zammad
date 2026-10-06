@@ -227,7 +227,8 @@ const submitCreateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerCreate
         <CommonButton
           v-if="isDirty"
           size="large"
-          variant="danger"
+          variant="tertiary"
+          prefix-icon="trash3"
           :disabled="isDisabled"
           @click="discardChanges"
         >

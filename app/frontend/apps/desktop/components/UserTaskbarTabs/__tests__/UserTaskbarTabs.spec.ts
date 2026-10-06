@@ -413,6 +413,10 @@ describe('UserTaskbarTabs.vue', () => {
     expect(tabs[0]).toHaveTextContent('First ticket')
     expect(tabs[1]).toHaveTextContent('Second ticket')
 
+    // Neither tab has anything to lose, so closing needs no question and the buttons stay red.
+    expect(getByRole(tabs[0], 'button', { name: 'Close this tab' })).toHaveClass('bg-red-400')
+    expect(getByRole(tabs[1], 'button', { name: 'Close this tab' })).toHaveClass('bg-red-400')
+
     // Reorder tabs.
     await getUserCurrentTaskbarItemListUpdatesSubscriptionHandler().trigger({
       userCurrentTaskbarItemListUpdates: {
@@ -566,7 +570,13 @@ describe('UserTaskbarTabs.vue', () => {
 
     const tab = wrapper.getByRole('treeitem')
 
-    await wrapper.events.click(getByRole(tab, 'button', { name: 'Close this tab' }))
+    const closeButton = getByRole(tab, 'button', { name: 'Close this tab' })
+
+    // A dirty tab asks before it closes, so its button is not red.
+    expect(closeButton).toHaveClass('bg-green-200')
+    expect(closeButton).not.toHaveClass('bg-red-400')
+
+    await wrapper.events.click(closeButton)
 
     const calls = await waitForUserCurrentTaskbarItemDeleteMutationCalls()
 

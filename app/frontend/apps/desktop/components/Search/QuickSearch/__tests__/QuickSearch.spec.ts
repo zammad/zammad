@@ -22,6 +22,19 @@ import { getUserCurrentRecentCloseUpdatesSubscriptionHandler } from '#desktop/en
 import { mockQuickSearchQuery } from '../../graphql/queries/quickSearch.mocks.ts'
 import QuickSearch from '../QuickSearch.vue'
 
+// The recent-search prompts go through the shared composable; the dialog itself is not mounted
+//   here, so the examples assert what it is asked with.
+const mockWaitForConfirmation = vi.hoisted(() => vi.fn())
+
+vi.mock('#shared/composables/useConfirmation.ts', () => ({
+  useConfirmation: () => ({ waitForConfirmation: mockWaitForConfirmation }),
+}))
+
+beforeEach(() => {
+  mockWaitForConfirmation.mockReset()
+  mockWaitForConfirmation.mockResolvedValue(true)
+})
+
 const renderQuickSearch = async (search: string = '') => {
   const wrapper = renderComponent(QuickSearch, {
     props: {
@@ -118,6 +131,40 @@ describe('QuickSearch', () => {
       removeIcons = wrapper.getAllByIconName('x-lg')
       expect(removeIcons.length).toBe(1)
     })
+
+    // Removing asks first, so the trigger is not red; the confirm button inside the dialog is.
+    it('asks before removing a recent search, with a danger confirm button', async () => {
+      const wrapper = await renderQuickSearch()
+
+      addSearch('Foobar')
+      await waitForNextTick()
+
+      const removeButton = wrapper.getByRole('button', { name: 'Delete this recent search' })
+
+      expect(removeButton).toHaveClass('bg-green-200')
+      expect(removeButton).not.toHaveClass('bg-red-400')
+
+      await wrapper.events.click(removeButton)
+
+      expect(mockWaitForConfirmation).toHaveBeenCalledWith(
+        'Are you sure? This recent search will be lost.',
+        expect.objectContaining({ buttonVariant: 'danger' }),
+      )
+    })
+
+    it('asks before clearing the recent searches, with a danger confirm button', async () => {
+      const wrapper = await renderQuickSearch()
+
+      addSearch('Foobar')
+      await waitForNextTick()
+
+      await wrapper.events.click(wrapper.getByRole('link', { name: 'Clear recent searches' }))
+
+      expect(mockWaitForConfirmation).toHaveBeenCalledWith(
+        'Are you sure? Your recent searches will be lost.',
+        expect.objectContaining({ buttonVariant: 'danger' }),
+      )
+    })
   })
 
   describe('recently closed items', () => {
@@ -164,6 +211,24 @@ describe('QuickSearch', () => {
       expect(wrapper.getByRole('link', { name: 'User 1' })).toBeInTheDocument()
 
       expect(wrapper.getByRole('link', { name: 'Organization 1' })).toBeInTheDocument()
+    })
+
+    // The same loss as clearing the recent searches, so this dialog confirms in danger as well.
+    it('asks before clearing the recently closed items, with a danger confirm button', async () => {
+      mockPermissions(['ticket.agent'])
+      mockUserCurrentRecentCloseListQuery({
+        userCurrentRecentCloseList: recentlyClosedItems,
+      })
+      mockWaitForConfirmation.mockResolvedValue(false)
+
+      const wrapper = await renderQuickSearch()
+
+      await wrapper.events.click(wrapper.getByRole('link', { name: 'Clear recently closed' }))
+
+      expect(mockWaitForConfirmation).toHaveBeenCalledWith(
+        'Are you sure? Your recently closed items will get lost.',
+        expect.objectContaining({ buttonVariant: 'danger' }),
+      )
     })
 
     it('allows clearing all recently closed items', async () => {

@@ -112,7 +112,6 @@ const tableActions: MenuItem[] = [
     key: 'delete',
     label: __('Delete this device'),
     icon: 'trash3',
-    variant: 'danger',
     show: (data) => !data?.current,
     onClick: (data) => {
       confirmDeleteDevice(data as UserDevice)

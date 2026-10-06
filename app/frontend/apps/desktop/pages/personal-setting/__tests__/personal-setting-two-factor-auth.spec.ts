@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
@@ -76,6 +77,33 @@ describe('password personal settings', () => {
         )
 
         expect(flyout).not.toBeInTheDocument()
+      })
+
+      // Removing asks for the password first, so the menu item is not red.
+      it('offers removal without the danger variant', async () => {
+        const view = await visitView('/personal-setting/two-factor-auth')
+
+        await getUserCurrentTwoFactorUpdatesSubscriptionHandler().trigger({
+          userCurrentTwoFactorUpdates: {
+            configuration: {
+              enabledAuthenticationMethods: [
+                {
+                  authenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+                  configured: true,
+                },
+              ],
+              recoveryCodesExist: false,
+            },
+          },
+        })
+
+        await view.events.click(
+          view.getByRole('button', { name: 'Action menu button for authenticator app' }),
+        )
+
+        const removeItem = view.getByRole('button', { name: 'Remove' })
+
+        expect(getByIconName(removeItem, 'trash3')).not.toHaveClass('text-red-500')
       })
 
       it('edit', async () => {

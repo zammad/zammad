@@ -4,6 +4,7 @@ import '#tests/graphql/builders/mocks.ts'
 
 import { flushPromises } from '@vue/test-utils'
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
 
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
@@ -87,5 +88,16 @@ describe('KnowledgeBaseAnswerCard', () => {
     const wrapper = await renderCard({ translationMissing: false })
 
     expect(wrapper.queryByIconName('translate')).not.toBeInTheDocument()
+  })
+
+  // Deleting asks first, so the menu item is not red.
+  it('offers deleting without the danger variant', async () => {
+    const wrapper = await renderCard({ canDelete: true })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Answer actions' }))
+
+    const deleteItem = await wrapper.findByRole('button', { name: 'Delete answer' })
+
+    expect(getByIconName(deleteItem, 'trash3')).not.toHaveClass('text-red-500')
   })
 })

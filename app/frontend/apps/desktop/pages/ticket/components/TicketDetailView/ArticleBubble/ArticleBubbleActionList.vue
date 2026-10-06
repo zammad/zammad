@@ -158,6 +158,7 @@ const actions = computed(() => {
       label: action.label,
       icon: action.icon,
       link: action.link,
+      separatorTop: action.separatorTop,
       ...(action.perform
         ? {
             onClick: () => {

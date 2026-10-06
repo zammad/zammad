@@ -3,6 +3,7 @@
 import { within } from '@testing-library/vue'
 
 import { getGraphQLMockCalls, mockedApolloClient } from '#tests/graphql/builders/mocks.ts'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -162,9 +163,14 @@ describe('knowledge base delete answer', () => {
     })
 
   const confirmDeletion = async (view: Awaited<ReturnType<typeof visitView>>) => {
-    await view.events.click(
-      within(await view.findByRole('dialog')).getByRole('button', { name: 'Delete object' }),
-    )
+    const confirmButton = within(await view.findByRole('dialog')).getByRole('button', {
+      name: 'Delete object',
+    })
+
+    // The decisive button is the red one.
+    expect(confirmButton).toHaveClass('bg-pink-100')
+
+    await view.events.click(confirmButton)
   }
 
   describe('from the answer view', () => {
@@ -188,7 +194,12 @@ describe('knowledge base delete answer', () => {
       mockSuccessfulDelete()
 
       const menu = await openHeaderMenu(view)
-      await view.events.click(menu.getByRole('button', { name: 'Delete answer' }))
+      const deleteItem = menu.getByRole('button', { name: 'Delete answer' })
+
+      // Deleting asks first, so the menu item is not red.
+      expect(getByIconName(deleteItem, 'trash3')).not.toHaveClass('text-red-500')
+
+      await view.events.click(deleteItem)
 
       expect(
         await view.findByText(`Do you really want to delete "${ANSWER_TITLE}"?`),

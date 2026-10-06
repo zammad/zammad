@@ -351,11 +351,11 @@ msgstr ""
 msgid "%s required!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:411
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:408
 msgid "%s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:411
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:408
 msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
@@ -1002,7 +1002,7 @@ msgid "Accounted Time"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:133
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:186
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:128
 #: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
@@ -1085,7 +1085,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:401
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "Actions"
 msgstr ""
 
@@ -1114,7 +1114,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/macro.coffee:15
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:9
 #: app/assets/javascripts/app/models/overview.coffee:66
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:13
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:16
 #: app/assets/javascripts/app/models/report_profile.js.coffee:10
 #: app/assets/javascripts/app/models/role.coffee:11
 #: app/assets/javascripts/app/models/signature.coffee:27
@@ -1132,12 +1132,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:8
 #: app/assets/javascripts/app/views/profile/password.jst.eco:29
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:70
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:217
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:211
 #: db/seeds/object_manager_attributes.rb:1704
 msgid "Active"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:311
+#: app/assets/javascripts/app/controllers/chat.coffee:319
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
 msgstr ""
@@ -1318,7 +1318,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:686
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:674
 msgid "Add answer"
 msgstr ""
 
@@ -1333,7 +1333,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:669
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:657
 msgid "Add category"
 msgstr ""
 
@@ -1459,9 +1459,9 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:60
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:140
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:64
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:65
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:82
 msgid "Additional actions"
 msgstr ""
@@ -1635,7 +1635,7 @@ msgstr ""
 msgid "Alarm"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:412
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:409
 msgid "All %s result(s) selected"
 msgstr ""
 
@@ -1676,7 +1676,7 @@ msgstr ""
 msgid "All colleagues are busy."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:135
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:134
 msgid "All computers and browsers from which you logged in to Zammad appear here."
 msgstr ""
 
@@ -1887,12 +1887,12 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:235
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:143
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:234
 msgid "Answer actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:212
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:202
 msgid "Answer count: %s"
 msgstr ""
 
@@ -2226,7 +2226,7 @@ msgstr ""
 msgid "Article could not be deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 msgid "Article meta information"
 msgstr ""
@@ -2407,7 +2407,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:32
 #: app/assets/javascripts/app/models/overview.coffee:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:134
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:135
 msgid "Attributes"
 msgstr ""
 
@@ -2583,9 +2583,7 @@ msgstr ""
 msgid "Automatic reminders"
 msgstr ""
 
-#: app/services/service/content_translation/ticket_article/translate_many.rb:70
-#: app/services/service/user/content_translation_auto.rb:27
-#: app/services/service/user/content_translation_excluded_languages.rb:27
+#: app/services/service/content_translation/ticket_article/check_auto_allowed.rb:14
 msgid "Automatic translation of ticket articles is not available for you."
 msgstr ""
 
@@ -2732,7 +2730,7 @@ msgid "Back to previous page"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:231
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:230
 msgid "Back to search results"
 msgstr ""
 
@@ -2797,7 +2795,7 @@ msgstr ""
 msgid "Before creating a new knowledge base answer, please check whether an existing answer already covers the solution for this ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:806
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:807
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:107
 msgid "Before you mention a user, please select a group."
 msgstr ""
@@ -2806,7 +2804,7 @@ msgstr ""
 msgid "Before you start, make sure to check the following points to ensure a smooth migration and usage of your Zammad instance:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:262
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
 msgid "Begin forwarded message"
 msgstr ""
@@ -3135,7 +3133,7 @@ msgid "Can't update password, your entered passwords do not match. Please try ag
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:463
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -3189,9 +3187,9 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:237
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:238
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:416
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:417
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 msgid "Cancel & go back"
@@ -3263,11 +3261,11 @@ msgstr ""
 msgid "Category Attribute"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:231
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:216
 msgid "Category actions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:197
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:192
 msgid "Category count: %s"
 msgstr ""
 
@@ -3323,7 +3321,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:82
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
 msgid "Change customer"
@@ -3430,7 +3428,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:60
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:68
 #: app/assets/javascripts/app/models/email_address.coffee:34
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:8
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:124
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
@@ -3477,7 +3475,7 @@ msgstr ""
 msgid "Chat closed by %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:372
+#: app/assets/javascripts/app/controllers/chat.coffee:380
 msgid "Chat not answered, automatically set to offline."
 msgstr ""
 
@@ -3485,7 +3483,7 @@ msgstr ""
 msgid "Chats"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:297
+#: app/assets/javascripts/app/controllers/chat.coffee:305
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:29
 msgid "Chatting Customers"
 msgstr ""
@@ -3723,7 +3721,7 @@ msgid "Clear search"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:435
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:432
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:680
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:313
@@ -3872,7 +3870,7 @@ msgstr ""
 msgid "Close the time picker"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:70
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:76
 msgid "Close this tab"
 msgstr ""
 
@@ -4193,7 +4191,7 @@ msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:306
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:303
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
@@ -4235,7 +4233,7 @@ msgstr ""
 msgid "Content was changed since loading"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:107
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:96
 msgid "Content written in any of these languages is shown in its original form instead of being automatically translated."
 msgstr ""
 
@@ -4290,7 +4288,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:73
 #: app/assets/javascripts/app/views/login.jst.eco:125
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/continue-to-mobile.ts:14
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:316
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:313
 msgid "Continue to mobile"
 msgstr ""
 
@@ -4338,7 +4336,7 @@ msgstr ""
 msgid "Copy article permalink"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:242
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:241
 msgid "Copy category title"
 msgstr ""
 
@@ -4354,7 +4352,7 @@ msgstr ""
 msgid "Copy knowledge base name"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:34
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:38
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:47
 msgid "Copy organization display name"
 msgstr ""
@@ -4367,7 +4365,7 @@ msgstr ""
 msgid "Copy text"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
 msgstr ""
@@ -4392,7 +4390,7 @@ msgstr ""
 msgid "Copy token"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:34
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:38
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:43
 msgid "Copy user display name"
 msgstr ""
@@ -4513,7 +4511,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:251
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
@@ -4656,7 +4654,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee:22
 #: app/assets/javascripts/app/models/ldap_source.coffee:8
 #: app/assets/javascripts/app/models/overview.coffee:68
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:14
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:17
 #: app/assets/javascripts/app/models/role.coffee:12
 #: app/assets/javascripts/app/models/signature.coffee:28
 #: app/assets/javascripts/app/models/sla.coffee:10
@@ -4732,7 +4730,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ldap_source.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:8
 #: app/assets/javascripts/app/models/overview.coffee:68
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:14
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:17
 #: app/assets/javascripts/app/models/role.coffee:12
 #: app/assets/javascripts/app/models/signature.coffee:28
 #: app/assets/javascripts/app/models/sla.coffee:10
@@ -4836,7 +4834,7 @@ msgstr ""
 msgid "Currently processing this ticket…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:161
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:162
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:160
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
@@ -4903,7 +4901,7 @@ msgstr ""
 msgid "Customer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:125
+#: app/assets/javascripts/app/controllers/chat.coffee:130
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
 msgid "Customer Chat"
 msgstr ""
@@ -5094,7 +5092,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:9
 #: app/assets/javascripts/app/views/profile/password.jst.eco:44
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:220
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:214
 #: db/seeds/settings.rb:891
 msgid "Default"
 msgstr ""
@@ -5961,7 +5959,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:45
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:221
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:11
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:149
@@ -6292,7 +6290,7 @@ msgstr ""
 msgid "Did you know that system translations can be contributed and shared with the community on our public platform %l? It sports a very convenient user interface based on Weblate, give it a try!"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:76
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:65
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
 msgid "Did you know?"
 msgstr ""
@@ -6366,8 +6364,8 @@ msgid "Discard article"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:234
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:413
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:414
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
@@ -6386,7 +6384,7 @@ msgid "Discard unsaved reply"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:686
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
 msgid "Discard your unsaved changes"
@@ -6801,7 +6799,7 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:111
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr ""
@@ -8406,7 +8404,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:241
 #: app/assets/javascripts/app/views/profile/password.jst.eco:113
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:262
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:253
 msgid "Generate recovery codes"
 msgstr ""
 
@@ -8821,7 +8819,7 @@ msgstr ""
 msgid "Has processed"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:160
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:158
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:167
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:308
 msgid "Has submenu"
@@ -9255,7 +9253,7 @@ msgid "If you have problems with the third-party login you can request a one-tim
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:106
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:251
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:242
 msgid "If you lose your recovery codes it's possible to generate new ones. This action is going to invalidate previous recovery codes."
 msgstr ""
 
@@ -10196,15 +10194,15 @@ msgstr ""
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:646
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:634
 msgid "Knowledge base actions"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/plugins/knowledgeBaseAnswer.ts:14
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/KnowledgeBase/KnowledgeBaseAnswerEdit.vue:50
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:214
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:262
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:503
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:261
 msgid "Knowledge base answer"
 msgstr ""
 
@@ -10216,7 +10214,7 @@ msgstr ""
 msgid "Knowledge base answer screen behavior updated successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:504
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:503
 msgid "Knowledge base answer updated successfully."
 msgstr ""
 
@@ -10310,7 +10308,7 @@ msgstr ""
 msgid "Language Detection Service"
 msgstr ""
 
-#: app/services/service/user/content_translation_excluded_languages.rb:34
+#: app/services/service/user/content_translation_excluded_languages.rb:29
 msgid "Language could not be found."
 msgstr ""
 
@@ -10319,7 +10317,7 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:94
 msgid "Languages you understand"
 msgstr ""
 
@@ -10583,7 +10581,7 @@ msgstr ""
 msgid "Link URL"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:180
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:179
 msgid "Link account on %s"
 msgstr ""
 
@@ -10653,7 +10651,7 @@ msgid "Linked Accounts"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:196
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:195
 msgid "Linked accounts"
 msgstr ""
 
@@ -10833,7 +10831,7 @@ msgstr ""
 msgid "Lost network connection"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:349
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:365
 msgid "Lost network connection!"
 msgstr ""
 
@@ -11256,7 +11254,7 @@ msgstr ""
 msgid "Match all (AND)"
 msgstr ""
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:9
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:12
 msgid "Match all of the following"
 msgstr ""
 
@@ -11404,7 +11402,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:121
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:81
 msgid "Merge"
 msgstr ""
 
@@ -11725,7 +11723,7 @@ msgstr ""
 msgid "Moved out"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:144
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:141
 msgid "Multiple matches"
 msgstr ""
 
@@ -11792,7 +11790,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:42
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:328
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
-#: app/assets/javascripts/app/controllers/chat.coffee:560
+#: app/assets/javascripts/app/controllers/chat.coffee:568
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:79
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
@@ -11817,7 +11815,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:6
 #: app/assets/javascripts/app/models/organization.coffee:6
 #: app/assets/javascripts/app/models/overview.coffee:6
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:7
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:10
 #: app/assets/javascripts/app/models/report_profile.js.coffee:6
 #: app/assets/javascripts/app/models/role.coffee:6
 #: app/assets/javascripts/app/models/signature.coffee:7
@@ -12144,7 +12142,7 @@ msgid "New password"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:126
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:196
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:195
 msgid "New personal access token"
 msgstr ""
 
@@ -12163,7 +12161,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
-#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:249
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:243
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:81
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:19
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts:11
@@ -12181,7 +12179,7 @@ msgid "New ticket: %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
-#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:226
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
 msgstr ""
@@ -12444,11 +12442,11 @@ msgstr ""
 msgid "No import in progress."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue:159
+#: app/frontend/apps/desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue:157
 msgid "No items available"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:609
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:600
 msgid "No knowledge base content is available yet."
 msgstr ""
 
@@ -12482,7 +12480,7 @@ msgstr ""
 msgid "No organizations found"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:158
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:159
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:157
 msgid "No overviews"
 msgstr ""
@@ -12516,14 +12514,14 @@ msgstr ""
 msgid "No results for this query."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:716
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:717
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:452
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:161
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
@@ -12603,14 +12601,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditHeader.vue:137
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:129
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:162
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:128
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:161
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:161
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:235
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:234
 msgid "No translation available for this locale"
 msgstr ""
 
-#: app/services/service/content_translation/base.rb:65
+#: app/services/service/content_translation/base.rb:70
 #: app/services/service/content_translation/target_locales.rb:7
 msgid "No translation service is configured."
 msgstr ""
@@ -12748,7 +12746,7 @@ msgstr ""
 msgid "Not reached"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:356
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:351
 msgid "Not translated due to your preferences."
 msgstr ""
 
@@ -12761,7 +12759,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:14
 #: app/assets/javascripts/app/models/job.coffee:15
 #: app/assets/javascripts/app/models/macro.coffee:13
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:11
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:14
 #: app/assets/javascripts/app/models/role.coffee:10
 #: app/assets/javascripts/app/models/signature.coffee:26
 #: app/assets/javascripts/app/models/text_module.coffee:27
@@ -12845,7 +12843,7 @@ msgstr ""
 msgid "Notification sent to"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:163
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:164
 msgid "Notification settings could not be reset."
 msgstr ""
 
@@ -12853,7 +12851,7 @@ msgstr ""
 msgid "Notification settings could not be saved."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:180
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:181
 msgid "Notification settings have been reset to default."
 msgstr ""
 
@@ -13027,7 +13025,7 @@ msgstr ""
 msgid "Ollama"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:496
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr ""
@@ -13129,12 +13127,12 @@ msgid "Only visible to editors"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:98
 msgid "Only when out of office replacement"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:95
 msgid "Only when shared organization member"
 msgstr ""
 
@@ -13839,7 +13837,7 @@ msgstr ""
 msgid "People who create Tickets ask for help."
 msgstr ""
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:10
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:13
 msgid "Perform actions"
 msgstr ""
 
@@ -13890,7 +13888,7 @@ msgstr ""
 msgid "Personal access token has been deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:211
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:210
 msgid "Personal access tokens"
 msgstr ""
 
@@ -13933,7 +13931,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:173
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:172
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
@@ -14013,8 +14011,8 @@ msgid "Please configure import source before running."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:612
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:334
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:603
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:329
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -14076,7 +14074,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
@@ -14688,7 +14686,7 @@ msgid "Recovery code"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:104
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:244
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:235
 msgid "Recovery codes can be used to access your account in the event you lose access to other two-factor authentication methods."
 msgstr ""
 
@@ -14720,7 +14718,7 @@ msgid "Regenerate"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:111
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:262
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:253
 msgid "Regenerate recovery codes"
 msgstr ""
 
@@ -14760,7 +14758,7 @@ msgid "Related Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:163
 msgid "Related knowledge"
 msgstr ""
 
@@ -14773,7 +14771,7 @@ msgid "Related knowledge base answer creation has already been started for given
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:154
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
 msgstr ""
@@ -14801,7 +14799,7 @@ msgid "Reload application"
 msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
-#: app/frontend/shared/stores/authentication.ts:200
+#: app/frontend/shared/stores/authentication.ts:201
 msgid "Reload now"
 msgstr ""
 
@@ -14864,7 +14862,7 @@ msgstr ""
 msgid "Remove a configured two-factor authentication method"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:172
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:171
 msgid "Remove account link on %s"
 msgstr ""
 
@@ -15174,7 +15172,7 @@ msgid "Reset feedback"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:151
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:152
 msgid "Reset overview order"
 msgstr ""
 
@@ -15196,8 +15194,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:161
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
 msgid "Reset to default settings"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:218
+msgid "Reset to defaults"
 msgstr ""
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
@@ -15621,6 +15622,8 @@ msgid "Save as draft"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue:32
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:221
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
 msgid "Save changes"
 msgstr ""
 
@@ -15635,14 +15638,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:61
 msgid "Save draft"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
-msgid "Save notification settings"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
-msgid "Save out of office"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:115
@@ -16094,7 +16089,7 @@ msgstr ""
 msgid "Security token verification failed"
 msgstr ""
 
-#: app/frontend/shared/stores/authentication.ts:195
+#: app/frontend/shared/stores/authentication.ts:196
 msgid "Security token verification failed. This may be just temporary, please reload and try again. Reloading in %s second(s)…"
 msgstr ""
 
@@ -16133,7 +16128,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:425
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:422
 msgid "Select %s result(s)"
 msgstr ""
 
@@ -16154,7 +16149,7 @@ msgstr ""
 msgid "Select Template"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:426
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:423
 msgid "Select all %s results"
 msgstr ""
 
@@ -16593,7 +16588,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
-#: app/assets/javascripts/app/controllers/chat.coffee:870
+#: app/assets/javascripts/app/controllers/chat.coffee:878
 #: app/assets/javascripts/app/controllers/manage.coffee:49
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
@@ -17234,7 +17229,7 @@ msgstr ""
 msgid "Start typing to search for text modules…"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:763
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:764
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:67
 msgid "Start typing to search for users…"
 msgstr ""
@@ -17508,7 +17503,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:194
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:195
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:169
 msgid "Subscribers"
 msgstr ""
@@ -17596,7 +17591,7 @@ msgstr ""
 msgid "Switch to new layout"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:325
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:322
 msgid "Switch to old interface"
 msgstr ""
 
@@ -17710,7 +17705,7 @@ msgstr ""
 msgid "Tagged %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:561
+#: app/assets/javascripts/app/controllers/chat.coffee:569
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
@@ -17721,7 +17716,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:144
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -17752,7 +17747,7 @@ msgstr ""
 msgid "Target Language"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:136
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:131
 msgid "Target language"
 msgstr ""
 
@@ -17854,7 +17849,7 @@ msgstr ""
 msgid "Text field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:462
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr ""
@@ -17872,7 +17867,7 @@ msgstr ""
 msgid "Text modules are …"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:480
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
 msgid "Text needed"
 msgstr ""
 
@@ -17881,7 +17876,7 @@ msgid "Text or attachment is required"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:141
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:144
 msgid "Text or ticket identifier"
 msgstr ""
 
@@ -17899,7 +17894,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:182
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:380
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:375
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -19142,7 +19137,7 @@ msgstr ""
 msgid "The sorting mode you save here will apply to answers added later."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:593
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:588
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
@@ -19271,7 +19266,7 @@ msgstr ""
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:162
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:176
 msgid "The translation language could not be saved."
 msgstr ""
 
@@ -19296,7 +19291,7 @@ msgstr ""
 msgid "The translation service refused the configured credentials."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:92
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:106
 msgid "The translation setting could not be saved."
 msgstr ""
 
@@ -19416,11 +19411,11 @@ msgstr ""
 msgid "There are no answers to arrange yet."
 msgstr ""
 
-#: app/models/calendar.rb:313
+#: app/models/calendar.rb:322
 msgid "There are no business hours configured."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:590
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:585
 msgid "There are no categories to arrange yet."
 msgstr ""
 
@@ -19606,8 +19601,8 @@ msgstr ""
 msgid "This class gets added to the button on initialization and will be removed once the chat connection is established."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:166
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:216
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:165
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:215
 msgid "This device"
 msgstr ""
 
@@ -20666,7 +20661,7 @@ msgstr ""
 msgid "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication process was aborted."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:198
+#: app/assets/javascripts/app/controllers/chat.coffee:203
 msgid "To be able to chat you need to select at least one chat topic from below!"
 msgstr ""
 
@@ -20731,7 +20726,7 @@ msgstr ""
 msgid "Toggle AM/PM mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:168
 msgid "Toggle article meta information"
 msgstr ""
 
@@ -20849,7 +20844,7 @@ msgstr ""
 msgid "Transfer conversation to another chat:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:116
 msgid "Translate all articles"
 msgstr ""
 
@@ -20996,8 +20991,8 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:352
-#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:368
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:20
 msgid "Trying to reconnect…"
 msgstr ""
 
@@ -21230,12 +21225,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:39
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/eventHelpers.ts:11
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:129
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:128
 #: app/models/user_device/notification_presenter.rb:11
 msgid "Unknown"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:185
+#: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:182
 msgid "Unknown caller"
 msgstr ""
 
@@ -21371,7 +21366,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:83
 msgid "Update"
 msgstr ""
 
@@ -21478,7 +21473,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/macro.coffee:12
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:11
 #: app/assets/javascripts/app/models/overview.coffee:70
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:12
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:15
 #: app/assets/javascripts/app/models/report_profile.js.coffee:9
 #: app/assets/javascripts/app/models/role.coffee:14
 #: app/assets/javascripts/app/models/signature.coffee:30
@@ -21523,7 +21518,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ldap_source.coffee:10
 #: app/assets/javascripts/app/models/organization.coffee:10
 #: app/assets/javascripts/app/models/overview.coffee:70
-#: app/assets/javascripts/app/models/postmaster_filter.coffee:16
+#: app/assets/javascripts/app/models/postmaster_filter.coffee:19
 #: app/assets/javascripts/app/models/role.coffee:14
 #: app/assets/javascripts/app/models/signature.coffee:30
 #: app/assets/javascripts/app/models/sla.coffee:12
@@ -21699,7 +21694,7 @@ msgstr ""
 msgid "Used anywhere (admin only)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:157
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:156
 msgid "Used devices"
 msgstr ""
 
@@ -21838,7 +21833,7 @@ msgstr ""
 msgid "User information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:75
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:64
 msgid "User interface language"
 msgstr ""
 
@@ -22130,7 +22125,7 @@ msgid "View"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:597
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:596
 msgid "View answer"
 msgstr ""
 
@@ -22207,7 +22202,7 @@ msgstr ""
 msgid "Waiting"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/chat.coffee:153
+#: app/assets/javascripts/app/controllers/chat.coffee:158
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:5
 msgid "Waiting Customers"
 msgstr ""
@@ -22662,11 +22657,11 @@ msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:171
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:170
 msgid "You can generate a personal access token for each application you use that needs access to the Zammad API."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:64
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:54
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:159
 msgid "You can help translating Zammad."
 msgstr ""
@@ -22768,7 +22763,7 @@ msgstr ""
 msgid "You do not have administrator permission."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:59
+#: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:58
 msgid "You do not have permission to update"
 msgstr ""
 
@@ -24082,7 +24077,7 @@ msgstr ""
 msgid "must be a positive number"
 msgstr ""
 
-#: app/models/calendar.rb:247
+#: app/models/calendar.rb:256
 msgid "must be a valid HTTP(S) URL"
 msgstr ""
 
@@ -24176,7 +24171,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:49
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:122
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:56
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:82
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
@@ -24288,7 +24283,7 @@ msgstr ""
 msgid "or sign in using"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:109
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:106
 msgid "or use the reply actions on articles."
 msgstr ""
 
@@ -24612,7 +24607,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
-#: app/assets/javascripts/app/controllers/chat.coffee:758
+#: app/assets/javascripts/app/controllers/chat.coffee:766
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:68
 msgid "today"
 msgstr ""
@@ -24715,7 +24710,7 @@ msgstr ""
 msgid "welcome message"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaWhatsappMessageStatus.vue:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaWhatsappMessageStatus.vue:25
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:9
 #: db/seeds/ticket_article_types.rb:17
 msgid "whatsapp message"
@@ -24763,7 +24758,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:122
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:55
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13

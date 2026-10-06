@@ -308,6 +308,19 @@ or translation quality for some users.
     other `$t(...)` / `i18n.t(...)` calls or the base locale file. If a near-identical string
     exists, flag the new one as a duplicate and suggest reusing it — every distinct string adds
     translator workload across all supported languages.
+- **Danger styling and confirmations** — `danger` and `remove` (which counts as danger) mark the
+  click that cannot be undone, so they stay only on controls that act immediately. Flag a `danger`
+  or `remove` trigger whose handler ends in `waitForConfirmation` / `waitForVariantConfirmation`,
+  or opens a flyout that asks first. What replaces it depends on the kind of trigger: a `danger`
+  button becomes `tertiary` with an icon naming the action (`trash3` for delete and discard,
+  `arrow-counterclockwise` for reset); a menu item carries no variant at all, icon included; a
+  `remove` icon button loses the variant, keeps its icon, and takes the variant UX decides per
+  place (`tertiary` so far), so do not assume one. Flag a confirmation for irrecoverable loss
+  (deleting records, resetting user settings, discarding unsaved changes, clearing filters or
+  recent lists) whose confirm button is not `danger`: the `delete` and `unsaved` variants of
+  `CommonConfirmationDialog` already render one, so only the default `confirm` variant needs
+  `buttonVariant: 'danger'`. A control that asks only in some states (a dirty taskbar tab) follows
+  the state.
   - Never flag a change to `i18n/*.po` as the fix. Those files are managed externally.
 
 ### Backend — `[backend]`

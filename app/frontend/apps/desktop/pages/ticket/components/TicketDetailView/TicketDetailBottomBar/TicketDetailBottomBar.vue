@@ -52,7 +52,8 @@ const { ticket } = useTicketInformation()
     <CommonButton
       v-if="dirty"
       size="large"
-      variant="danger"
+      variant="tertiary"
+      prefix-icon="trash3"
       :disabled="disabled"
       @click="$emit('discard', $event)"
       >{{ $t('Discard your unsaved changes') }}

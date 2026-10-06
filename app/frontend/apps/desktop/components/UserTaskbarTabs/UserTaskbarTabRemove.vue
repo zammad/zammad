@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
+import { computed, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
@@ -27,6 +27,12 @@ const activeTaskbarTabEntityKey = toRef(taskbarTabStore, 'activeTaskbarTabEntity
 const { isTouchDevice } = useTouchDevice()
 
 const router = useRouter()
+
+// Red only where the click closes the tab right away: a dirty tab of a plugin that asks first
+//   gets the question below, so its button is not the point of no return.
+const variant = computed(() =>
+  props.plugin?.confirmTabRemove && props.dirty ? 'tertiary' : 'remove',
+)
 
 const confirmRemoveUserTaskbarTab = async () => {
   if (!props.taskbarTab.taskbarTabId) return
@@ -72,7 +78,7 @@ const confirmRemoveUserTaskbarTab = async () => {
     class="absolute inset-e-2 top-3 group-hover/tab:opacity-100 focus:opacity-100"
     icon="x-lg"
     size="small"
-    variant="remove"
+    :variant="variant"
     @click.stop="confirmRemoveUserTaskbarTab"
   />
 </template>

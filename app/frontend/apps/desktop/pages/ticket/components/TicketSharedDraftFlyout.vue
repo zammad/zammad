@@ -217,7 +217,12 @@ const headerTitle = computed(() => {
         <CommonButton size="large" variant="secondary" @click="close">
           {{ $t('Cancel & go back') }}
         </CommonButton>
-        <CommonButton size="large" variant="danger" @click="deleteSharedDraft(sharedDraftId)">
+        <CommonButton
+          size="large"
+          variant="tertiary"
+          prefix-icon="trash3"
+          @click="deleteSharedDraft(sharedDraftId)"
+        >
           {{ $t('Delete') }}
         </CommonButton>
         <CommonButton size="large" variant="primary" @click="applySharedDraft(sharedDraftId)">

@@ -80,7 +80,13 @@ describe('FieldFileList', () => {
   it('emits remove with the original file object', async () => {
     const view = renderFileList()
 
-    await view.events.click(view.getByRole('button', { name: 'Remove file: IMG_1234.png' }))
+    const removeButton = view.getByRole('button', { name: 'Remove file: IMG_1234.png' })
+
+    // The field asks before it removes, so the button is not red.
+    expect(removeButton).toHaveClass('bg-green-200')
+    expect(removeButton).not.toHaveClass('bg-red-400')
+
+    await view.events.click(removeButton)
 
     // The very same object goes back out, so the field can drop it from its own list.
     expect(view.emitted().remove).toEqual([[image]])

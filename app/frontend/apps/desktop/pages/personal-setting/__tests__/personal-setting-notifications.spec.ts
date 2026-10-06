@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
@@ -197,7 +198,14 @@ describe('personal notifications settings', () => {
       },
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Reset to default settings' }))
+    // The trigger only opens the dialog, so it is not red; the confirm button inside is.
+    const resetButton = view.getByRole('button', { name: 'Reset to defaults' })
+
+    expect(resetButton).toHaveClass('bg-green-200')
+    expect(resetButton).not.toHaveClass('bg-pink-100')
+    expect(getByIconName(resetButton, 'arrow-counterclockwise')).toBeInTheDocument()
+
+    await view.events.click(resetButton)
 
     expect(await view.findByRole('dialog', { name: 'Confirmation' })).toBeInTheDocument()
 
@@ -205,7 +213,11 @@ describe('personal notifications settings', () => {
       view.getByText('Are you sure? Your notifications settings will be reset to default.'),
     ).toBeInTheDocument()
 
-    await view.events.click(view.getByRole('button', { name: 'Yes' }))
+    const confirmButton = view.getByRole('button', { name: 'Yes' })
+
+    expect(confirmButton).toHaveClass('bg-pink-100')
+
+    await view.events.click(confirmButton)
 
     const mocks = await waitForUserCurrentNotificationPreferencesResetMutationCalls()
 
@@ -240,7 +252,7 @@ describe('personal notifications settings', () => {
       },
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Save notification settings' }))
+    await view.events.click(view.getByRole('button', { name: 'Save changes' }))
 
     const previousMockedData = mockPersonalSettings()
 

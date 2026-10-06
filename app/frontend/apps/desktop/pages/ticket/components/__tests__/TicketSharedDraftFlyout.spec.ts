@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
@@ -127,11 +128,14 @@ describe('TicketSharedDraftFlyout.vue', () => {
   it('supports deleting shared draft', async () => {
     const wrapper = await renderTicketSharedDraftFlyout()
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', {
-        name: 'Delete',
-      }),
-    )
+    // The button only asks first, so it is not red.
+    const deleteButton = wrapper.getByRole('button', { name: 'Delete' })
+
+    expect(deleteButton).toHaveClass('bg-green-200')
+    expect(deleteButton).not.toHaveClass('bg-pink-100')
+    expect(getByIconName(deleteButton, 'trash3')).toBeInTheDocument()
+
+    await wrapper.events.click(deleteButton)
 
     const calls = await waitForTicketSharedDraftStartDeleteMutationCalls()
 

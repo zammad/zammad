@@ -204,7 +204,7 @@ const onPrimaryClick = () => {
         v-tooltip="$t('Remove file: %s', file.name)"
         icon="x-lg"
         size="small"
-        variant="remove"
+        variant="tertiary"
         @click.stop="$emit('remove')"
         @mousedown.stop
       />

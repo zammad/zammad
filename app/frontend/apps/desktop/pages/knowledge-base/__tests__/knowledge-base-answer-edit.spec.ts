@@ -9,6 +9,7 @@ import {
   mockedApolloClient,
   waitForGraphQLMockCalls,
 } from '#tests/graphql/builders/mocks.ts'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -705,12 +706,21 @@ describe('knowledge base answer edit', () => {
     const router = getTestRouter()
     router.mockMethods()
 
-    await view.events.click(
-      await view.findByRole('button', { name: 'Discard your unsaved changes' }),
-    )
+    // The trigger only opens the dialog, so it is not red; the confirm button inside is.
+    const discardButton = await view.findByRole('button', { name: 'Discard your unsaved changes' })
+
+    expect(discardButton).toHaveClass('bg-green-200')
+    expect(discardButton).not.toHaveClass('bg-pink-100')
+    expect(getByIconName(discardButton, 'trash3')).toBeInTheDocument()
+
+    await view.events.click(discardButton)
 
     const dialog = await view.findByRole('dialog', { name: 'Unsaved changes' })
-    await view.events.click(within(dialog).getByRole('button', { name: 'Discard changes' }))
+    const confirmButton = within(dialog).getByRole('button', { name: 'Discard changes' })
+
+    expect(confirmButton).toHaveClass('bg-pink-100')
+
+    await view.events.click(confirmButton)
 
     await waitFor(() => expect(title).toHaveDisplayValue(TITLE))
     expect(view.getByRole('radio', { name: 'Public' })).toBeChecked()
@@ -738,9 +748,14 @@ describe('knowledge base answer edit', () => {
 
       await view.events.click(within(sidebar).getByRole('button', { name: 'Additional actions' }))
 
-      expect(
-        within(await view.findByRole('menu')).getByRole('button', { name: 'Delete answer' }),
-      ).toBeInTheDocument()
+      const deleteItem = within(await view.findByRole('menu')).getByRole('button', {
+        name: 'Delete answer',
+      })
+
+      expect(deleteItem).toBeInTheDocument()
+
+      // Deleting asks first, so the menu item is not red.
+      expect(getByIconName(deleteItem, 'trash3')).not.toHaveClass('text-red-500')
     })
 
     it('does not offer deleting when the policy denies it', async () => {

@@ -135,8 +135,7 @@ onMounted(() => {
             >
               <CommonButton
                 v-tooltip="$t('Discard unsaved reply')"
-                class="text-red-500"
-                variant="none"
+                variant="neutral"
                 icon="trash"
                 @click="$emit('discard-form')"
               />

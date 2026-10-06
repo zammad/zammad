@@ -225,7 +225,6 @@ const sidebarActions = computed<MenuItem[]>(() => {
       key: 'delete-answer',
       label: __('Delete answer'),
       icon: 'trash3',
-      variant: 'danger',
       onClick: () =>
         confirmAnswerDelete(
           { id: currentAnswer.id, title: currentAnswer.translation?.title },
@@ -679,7 +678,8 @@ const submitUpdateAnswer = async (data: FormSubmitData<KnowledgeBaseAnswerEditFo
       <CommonButton
         v-if="isInitialSettled && isDirty"
         size="large"
-        variant="danger"
+        variant="tertiary"
+        prefix-icon="trash3"
         :disabled="isDisabled"
         @click="discardChanges"
       >

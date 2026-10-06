@@ -10,7 +10,8 @@ export default <DetailViewActionPlugin>{
   key: 'delete-user',
   label: __('Delete'),
   icon: 'trash',
-  order: 400,
+  separatorTop: true,
+  order: 500,
   permission: ['admin.data_privacy', 'admin.user'],
   onClick: (user?: User) => {
     if (!user) return

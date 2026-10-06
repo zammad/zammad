@@ -74,6 +74,7 @@ export interface TicketArticleAction {
   view: TicketViewPolicyMap
   link?: string
   alwaysVisible?: boolean
+  separatorTop?: boolean // desktop popover menu only
 
   perform?(ticket: TicketById, article: TicketArticle, options: TicketArticlePerformOptions): void
 }
