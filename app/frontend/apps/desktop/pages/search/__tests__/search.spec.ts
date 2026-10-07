@@ -54,14 +54,6 @@ const visitSearchViewWithTicketTitleFilterAndNoSearchTerm = async (value: string
 let ticket: Ticket
 
 describe('search view', () => {
-  beforeEach(() => {
-    // Without this, `application.config.ui_task_mananger_max_task_count` is
-    // `undefined` in tests, which breaks the taskbar's max-open-tabs guard
-    // (`length <= undefined` is always `false`) and causes it to evict the
-    // search view's own taskbar tab under load, see #taskbarTabs.ts.
-    mockApplicationConfig({ ui_task_mananger_max_task_count: 30 })
-  })
-
   describe('agent user', () => {
     beforeEach(() => {
       mockPermissions(['ticket.agent'])
@@ -589,10 +581,7 @@ describe('search view', () => {
   describe('knowledge base answers', () => {
     beforeEach(() => {
       mockPermissions(['ticket.agent', 'knowledge_base.reader'])
-      mockApplicationConfig({
-        ui_task_mananger_max_task_count: 30,
-        kb_active: true,
-      })
+      mockApplicationConfig({ kb_active: true })
 
       // Empty on purpose: this file checks the tab, the query and the controls around it. Rendering
       //   the rows is `KnowledgeBaseAnswerTable.spec.ts`'s job, and one detail-search mock answers
