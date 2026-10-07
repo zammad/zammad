@@ -20,7 +20,9 @@ class Checklist::Item < ApplicationModel
   validate :detect_ticket_loop_reference, unless: -> { ticket.blank? }
   validate :validate_item_count, on: :create, unless: :initial_clone
 
+  before_save :lock_ticket
   after_update :history_update_checked, if: -> { saved_change_to_checked? }
+  before_destroy :lock_ticket
   after_destroy :update_checklist_on_destroy
   after_destroy :update_referenced_ticket
   after_save :update_checklist_on_save, unless: :initial_clone
@@ -60,6 +62,11 @@ class Checklist::Item < ApplicationModel
   end
 
   private
+
+  # Takes the ticket row ahead of the item and checklist rows for the single lock order Checklist keeps.
+  def lock_ticket
+    Checklist.lock_ticket_of(checklist_id)
+  end
 
   def update_checklist_on_save
     checklist.sorted_item_ids |= [id.to_s]

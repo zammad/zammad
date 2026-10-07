@@ -13,7 +13,8 @@ module Ticket::PerformChanges
                                      :notification_sms,
                                      :notification_webhook,
                                      :article_note,
-                                     :ai_agent
+                                     :ai_agent,
+                                     :checklist_add_from_template
   end
 
   def pre_execute(perform_changes_data)
@@ -29,9 +30,8 @@ module Ticket::PerformChanges
   end
 
   def additional_object_action(object_name, object_key, action_value, _prepared_actions)
-    return if object_name != 'article'
-    return if %w[note].exclude?(object_key)
+    return if %w[article.note checklist.add_from_template].exclude?("#{object_name}.#{object_key}")
 
-    { name: :"article_#{object_key.to_sym}", value: action_value }
+    { name: :"#{object_name}_#{object_key}", value: action_value }
   end
 end

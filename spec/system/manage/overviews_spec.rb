@@ -472,4 +472,16 @@ RSpec.describe 'Manage > Overviews', type: :system do
       expect(overview.reload.out_of_office).to be(false)
     end
   end
+
+  context 'when the checklist feature is enabled' do
+    it 'does not offer the checklist condition' do
+      visit '/#manage/overviews'
+      click_on 'New Overview'
+
+      in_modal do
+        expect(page).to have_css('.ticket_selector .js-attributeSelector option[value="ticket.state_id"]')
+        expect(page).to have_no_css('.ticket_selector .js-attributeSelector option[value="ticket.checklist_existing"]')
+      end
+    end
+  end
 end

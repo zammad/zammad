@@ -74,6 +74,18 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
             )
         end
       end
+
+      context 'when macro adds a checklist template' do
+        let(:template) { create(:checklist_template, items: ['Template item 1', 'Template item 2']) }
+        let(:macro)    { create(:macro, perform: { 'checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s } }) }
+
+        it 'adds the checklist via macro', :aggregate_failures do
+          service_result
+
+          expect(ticket.reload.checklist).to have_attributes(name: template.name, created_by_id: user.id)
+          expect(ticket.checklist.sorted_items.map(&:text)).to eq(['Template item 1', 'Template item 2'])
+        end
+      end
     end
 
     describe 'shared draft handling' do

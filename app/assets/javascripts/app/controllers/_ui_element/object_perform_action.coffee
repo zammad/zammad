@@ -31,6 +31,11 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
         model: 'AI'
         model_show: ['Ticket']
 
+    if attribute.checklist
+      groups.checklist =
+        name: __('Checklists')
+        model_show: ['Ticket']
+
     if attribute.object_name is undefined
       attribute.object_name = params.object or 'Ticket'
 
@@ -58,6 +63,8 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
             elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
           when 'ai'
             elements["#{groupKey}.ai_agent"] = { name: 'ai_agent', display: __('AI Agent') }
+          when 'checklist'
+            elements["#{groupKey}.add_from_template"] = { name: 'add_from_template', display: __('Add checklist template') }
       else
 
         for row in App[groupMeta.model].configure_attributes

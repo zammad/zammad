@@ -679,8 +679,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:42
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:83
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:65
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
 #: app/models/ai/agent.rb:108
 msgid "AI Agent"
@@ -1029,9 +1029,9 @@ msgid "Accounts"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:744
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:129
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:125
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
@@ -1200,7 +1200,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:58
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:21
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:20
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:17
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:18
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco:58
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:44
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:51
@@ -1292,7 +1292,7 @@ msgstr ""
 msgid "Add a Personal Access Token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:121
 msgid "Add a data privacy deletion task"
 msgstr ""
 
@@ -1335,6 +1335,11 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:657
 msgid "Add category"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:85
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:67
+msgid "Add checklist template"
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:48
@@ -1623,7 +1628,7 @@ msgstr ""
 msgid "Agents"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:525
 msgid "Agents with \"%s\" permission"
 msgstr ""
 
@@ -1648,15 +1653,15 @@ msgstr ""
 msgid "All Tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:131
 msgid "All affected tickets will be deleted immediately when this job is run, without a history entry. There is no rollback of this deletion possible."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:125
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:132
 msgid "All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:145
 msgid "All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
 
@@ -3524,6 +3529,7 @@ msgid "Checklist Item Label"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:29
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/checklist.jst.eco:3
 msgid "Checklist Template"
 msgstr ""
 
@@ -3536,14 +3542,17 @@ msgstr ""
 msgid "Checklist item"
 msgstr ""
 
-#: app/models/checklist/item.rb:105
+#: app/models/checklist.rb:152
+#: app/models/checklist/item.rb:111
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 
-#: app/models/checklist.rb:100
+#: app/models/checklist.rb:166
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:69
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:36
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
 #: db/seeds/permissions.rb:353
@@ -4800,7 +4809,7 @@ msgstr ""
 msgid "Current Token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:787
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:830
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:20
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
@@ -4877,7 +4886,7 @@ msgid "Custom instructions"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -6049,7 +6058,7 @@ msgstr ""
 msgid "Delete existing data of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
 msgid "Delete immediately"
 msgstr ""
 
@@ -6441,11 +6450,11 @@ msgstr ""
 msgid "Do not change email address (%s)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:662
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:671
 msgid "Do not encrypt email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:648
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:657
 msgid "Do not sign email"
 msgstr ""
 
@@ -6882,8 +6891,8 @@ msgid "Elasticsearch version"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:59
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:44
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
@@ -7284,11 +7293,11 @@ msgstr ""
 msgid "Encrypt"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:663
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:672
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:664
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:673
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -7710,15 +7719,15 @@ msgstr ""
 msgid "Execution Time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:293
 msgid "Existing members"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:265
 msgid "Existing tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:262
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:270
 msgid "Existing tickets (open)"
 msgstr ""
 
@@ -8353,7 +8362,7 @@ msgstr ""
 msgid "Frontend"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:525
 #: app/assets/javascripts/app/models/group.coffee:48
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:54
 msgid "Full"
@@ -8821,6 +8830,11 @@ msgstr ""
 
 #: app/models/system_report/plugin/hardware.rb:4
 msgid "Hardware (e.g. CPU cores, memory, disk space)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:188
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
+msgid "Has checklist"
 msgstr ""
 
 #: app/assets/javascripts/app/models/job.coffee:18
@@ -9471,8 +9485,8 @@ msgstr ""
 msgid "Inbound"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:145
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:156
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:34
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:6
 msgid "Inbound Call"
@@ -10380,21 +10394,21 @@ msgstr ""
 msgid "Last closing time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:49
 #: app/graphql/gql/types/overview_type.rb:106
 msgid "Last contact"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:56
 #: app/graphql/gql/types/overview_type.rb:107
 msgid "Last contact (agent)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:248
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:63
 #: app/graphql/gql/types/overview_type.rb:108
@@ -10405,7 +10419,7 @@ msgstr ""
 msgid "Last created at of database objects (e.g. when was the last trigger created)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 msgid "Last login"
 msgstr ""
 
@@ -12377,6 +12391,10 @@ msgstr ""
 msgid "No checklist items yet"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/checklist_notice.jst.eco:2
+msgid "No checklist template available, please create a new one or activate an existing one at \"Manage > Checklists\""
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
 msgid "No checklist templates have been created yet."
@@ -12437,8 +12455,8 @@ msgstr ""
 msgid "No file formats allowed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:654
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:668
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:804
 msgid "No filter was configured."
 msgstr ""
 
@@ -12758,8 +12776,8 @@ msgstr ""
 msgid "Not translated due to your preferences."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:58
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:81
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:63
 #: app/assets/javascripts/app/models/ai_agent.coffee:9
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:29
 #: app/assets/javascripts/app/models/chat.coffee:252
@@ -13505,8 +13523,8 @@ msgstr ""
 msgid "Outbound"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:140
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:146
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:157
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
 msgid "Outbound Call"
 msgstr ""
@@ -13584,7 +13602,7 @@ msgstr ""
 msgid "Overwrite draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:513
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:522
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:79
@@ -14835,7 +14853,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:15
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:34
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:14
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:15
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco:25
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:39
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:46
@@ -15337,7 +15355,7 @@ msgid "Rocket Chat Notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
@@ -15472,8 +15490,8 @@ msgid "SLAs"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:74
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:55
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/sms.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:44
 #: db/seeds/permissions.rb:137
@@ -16373,8 +16391,8 @@ msgstr ""
 msgid "Sender Format Separator"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:134
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:144
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:140
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:151
 msgid "Sender Type"
 msgstr ""
 
@@ -16382,7 +16400,7 @@ msgstr ""
 msgid "Sender based on Reply-To header"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:521
 msgid "Sender of last article"
 msgstr ""
 
@@ -16871,11 +16889,11 @@ msgstr ""
 msgid "Sign built-in system notification emails if possible."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:649
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:658
 msgid "Sign email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:650
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:659
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -17487,10 +17505,10 @@ msgstr ""
 msgid "Submit your changes"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:147
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:153
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:311
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:164
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:52
@@ -17926,7 +17944,7 @@ msgstr ""
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
-#: lib/validations/verify_perform_rules_validator.rb:107
+#: lib/validations/verify_perform_rules_validator.rb:108
 msgid "The \"Pending till\" attribute is required for the selected state action."
 msgstr ""
 
@@ -18884,7 +18902,7 @@ msgstr ""
 msgid "The requested %s could not be found."
 msgstr ""
 
-#: lib/validations/verify_perform_rules_validator.rb:136
+#: lib/validations/verify_perform_rules_validator.rb:137
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr ""
 
@@ -21326,8 +21344,8 @@ msgstr ""
 msgid "Unset default"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:157
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:163
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:174
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:52
 msgid "Unsubscribe"
@@ -21506,7 +21524,7 @@ msgstr ""
 msgid "Updated At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:252
 #: app/assets/javascripts/app/models/checklist.coffee:10
 #: app/assets/javascripts/app/models/checklist_item.coffee:9
 #: app/assets/javascripts/app/models/checklist_template.coffee:11
@@ -21738,7 +21756,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:417
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:179
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:24
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:15
@@ -22023,7 +22041,7 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:562
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:571
 msgid "Variables"
 msgstr ""
 
@@ -22163,7 +22181,7 @@ msgstr ""
 msgid "Viewing ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:712
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:755
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:8
@@ -22273,8 +22291,8 @@ msgid "WebSocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:201
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:75
-#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:56
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:61
 #: app/assets/javascripts/app/controllers/webhook.coffee:3
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:42
 #: db/seeds/permissions.rb:89
@@ -22406,7 +22424,7 @@ msgstr ""
 msgid "When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the JavaScript console."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:679
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:693
 msgid "Where"
 msgstr ""
 
@@ -22552,7 +22570,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:622
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:631
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
@@ -23153,7 +23171,7 @@ msgstr ""
 msgid "after (absolute)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:497
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -23165,7 +23183,7 @@ msgstr ""
 msgid "again"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:439
 msgid "all subscribers"
 msgstr ""
 
@@ -23227,7 +23245,7 @@ msgstr ""
 msgid "before (absolute)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:494
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -23377,15 +23395,15 @@ msgstr ""
 msgid "created %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:152
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:158
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:558
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "current user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:550
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:445
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:564
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "current user organization"
 msgstr ""
 
@@ -23648,7 +23666,7 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:490
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:499
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -23817,13 +23835,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1471
+#: app/assets/javascripts/app/models/checklist_template.coffee:27
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
 msgid "inactive"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:613
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:622
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 #: app/helpers/knowledge_base_visibility_note_helper.rb:25
 msgid "internal"
@@ -24057,7 +24076,7 @@ msgstr ""
 msgid "merged into"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:632
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
 msgid "message"
 msgstr ""
 
@@ -24243,8 +24262,8 @@ msgstr ""
 msgid "not set"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:547
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:561
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:635
 msgid "not set (not defined)"
 msgstr ""
 
@@ -24328,7 +24347,7 @@ msgstr ""
 msgid "phone"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:613
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:622
 msgid "public"
 msgstr ""
 
@@ -24363,11 +24382,11 @@ msgstr ""
 msgid "recovery codes"
 msgstr ""
 
-#: app/models/checklist/item.rb:99
+#: app/models/checklist/item.rb:105
 msgid "reference must not be the checklist ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:117
 msgid "relative"
 msgstr ""
 
@@ -24531,15 +24550,15 @@ msgstr ""
 msgid "spaces are not allowed"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:551
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:446
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:565
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:639
 msgid "specific organization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:426
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:559
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "specific user"
 msgstr ""
 
@@ -24602,7 +24621,7 @@ msgstr ""
 msgid "ticket %s was merged into this ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:489
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:498
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24671,7 +24690,7 @@ msgstr ""
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:441
 msgid "unassign user"
 msgstr ""
 
@@ -24738,7 +24757,7 @@ msgstr ""
 msgid "will be deleted"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:496
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24746,7 +24765,7 @@ msgstr ""
 msgid "within last (relative)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:495
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52

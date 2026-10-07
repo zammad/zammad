@@ -3274,6 +3274,31 @@ RSpec.describe 'Ticket', type: :request do
     end
   end
 
+  describe 'performs the checklist macro action requested by the legacy ticket view', current_user_id: 1 do
+    let(:ticket)   { create(:ticket) }
+    let(:agent)    { create(:agent, groups: [ticket.group]) }
+    let(:template) { create(:checklist_template, items: ['Template item 1', 'Template item 2']) }
+    let(:macro)    { create(:macro, perform: { 'checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s } }) }
+
+    let(:params) do
+      {
+        'title'                 => 'Updated title',
+        'macro.id'              => macro.id,
+        'macro.perform_changes' => ['checklist.add_from_template'],
+      }
+    end
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'adds the checklist from the template', :aggregate_failures do
+        put "/api/v1/tickets/#{ticket.id}", params:, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(ticket.reload.title).to eq('Updated title')
+        expect(ticket.checklist.sorted_items.map(&:text)).to eq(['Template item 1', 'Template item 2'])
+      end
+    end
+  end
+
   describe 'group with no email address configured' do
     let(:group)  { create(:group, email_address: nil) }
     let(:agent)  { create(:agent, groups: [group]) }

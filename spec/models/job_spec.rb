@@ -221,6 +221,57 @@ RSpec.describe Job, type: :model do
               expect { nonmatching_ticket.reload }.not_to raise_error
             end
           end
+
+          describe 'use case: adding a checklist template', current_user_id: 1 do
+            let(:template) { create(:checklist_template, items: ['Template item 1', 'Template item 2']) }
+            let(:perform)  { { 'checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s } } }
+
+            it 'adds the checklist to matching tickets only' do
+              job.run
+
+              expect(matching_ticket.reload.checklist).to have_attributes(name: template.name, created_by_id: 1)
+              expect(matching_ticket.checklist.sorted_items.map(&:text)).to eq(['Template item 1', 'Template item 2'])
+              expect(nonmatching_ticket.reload.checklist).to be_nil
+            end
+
+            context 'when the checklist write fails validation on one of the tickets' do
+              let!(:rejecting_ticket) { create(:ticket, state: Ticket::State.lookup(name: 'new'), created_at: 3.days.ago) }
+
+              before do
+                allow(Checklist).to receive(:add_from_template!).and_wrap_original do |original, ticket, template|
+                  if ticket == rejecting_ticket
+                    ticket.errors.add(:base, 'rejected the checklist')
+                    raise ActiveRecord::RecordInvalid, ticket
+                  end
+
+                  original.call(ticket, template)
+                end
+              end
+
+              it 'skips that ticket, serves the others and finishes the run' do
+                job.run
+
+                expect(rejecting_ticket.reload.checklist).to be_nil
+                expect(matching_ticket.reload.checklist).to be_present
+                expect(job.reload).to have_attributes(running: false, last_run_at: be_present)
+              end
+            end
+          end
+
+          describe 'use case: selecting tickets by checklist presence', current_user_id: 1 do
+            let(:condition) { { 'ticket.checklist_existing' => { 'operator' => 'is', 'value' => 'true' } } }
+
+            before do
+              create(:checklist, ticket: matching_ticket)
+              create(:checklist, :empty, ticket: nonmatching_ticket)
+            end
+
+            it 'performs changes on tickets with a non-empty checklist only' do
+              expect { job.run }
+                .to change { matching_ticket.reload.state }
+                .and not_change { nonmatching_ticket.reload.state }
+            end
+          end
         end
 
         context 'and not due yet' do
@@ -267,7 +318,7 @@ RSpec.describe Job, type: :model do
       end
 
       context 'when job has pre_condition:current_user.id in selector' do
-        let!(:matching_ticket) { create(:ticket, owner_id: 1) }
+        let!(:matching_ticket)    { create(:ticket, owner_id: 1) }
         let!(:nonmatching_ticket) { create(:ticket, owner_id: create(:agent).id) }
 
         let(:condition) do

@@ -864,3 +864,232 @@ QUnit.test( "ticket_perform_action allows to load data from external data source
 
   assert.deepEqual(params, test_params, 'form param check')
 });
+
+QUnit.test( "ticket_perform_action check checklist template action", assert => {
+  var checklistSetting = App.Config.get('checklist')
+  App.Config.set('checklist', true)
+
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+    { id: 2, name: 'Inactive template', active: false },
+  ], { clear: true })
+
+  $('#forms').append('<hr><h1>ticket_perform_action check checklist template action</h1><form id="form10"></form>')
+  var el = $('#form10')
+  var defaults = {
+    ticket_perform_action10: {
+      'checklist.add_from_template': {
+        checklist_template_id: '1'
+      }
+    }
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:      'ticket_perform_action10',
+          display:   'TicketPerformAction10',
+          tag:       'ticket_perform_action',
+          null:      true,
+          checklist: true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  assert.equal(el.find('.js-attributeSelector optgroup[label="Checklists"] option[value="checklist.add_from_template"]').text(), 'Add checklist template', 'form offers the checklist action')
+  assert.deepEqual(el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray(), ['Active template'], 'form offers active templates only')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    'ticket_perform_action10': {
+      'checklist.add_from_template': {
+        'checklist_template_id': '1'
+      }
+    }
+  }
+  assert.deepEqual(params, test_params, 'form param check')
+
+  App.Config.set('checklist', checklistSetting)
+});
+
+QUnit.test( "ticket_perform_action check checklist template action without available templates", assert => {
+  var checklistSetting = App.Config.get('checklist')
+  App.Config.set('checklist', true)
+
+  App.ChecklistTemplate.refresh([
+    { id: 2, name: 'Inactive template', active: false },
+  ], { clear: true })
+
+  $('#forms').append('<hr><h1>ticket_perform_action check checklist template action without available templates</h1><form id="form11"></form>')
+  var el = $('#form11')
+  var defaults = {
+    ticket_perform_action11: {
+      'checklist.add_from_template': {}
+    }
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:      'ticket_perform_action11',
+          display:   'TicketPerformAction11',
+          tag:       'ticket_perform_action',
+          null:      true,
+          checklist: true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    'ticket_perform_action11': {
+      'checklist.add_from_template': {
+        'checklist_template_id': ''
+      }
+    }
+  }
+  assert.deepEqual(params, test_params, 'form keeps the action with an empty template so the server rejects it')
+
+  assert.notOk(el.find('.js-setChecklist select').length, 'form shows no template selection when no checklist template is available')
+
+  var testNoticeMessage = 'No checklist template available, please create a new one or activate an existing one at "Manage > Checklists"'
+  var noticeMessage = el.find('.js-setChecklist .js-checklist-templates .help-block').text()
+  assert.equal(noticeMessage, testNoticeMessage, 'form shows message when no checklist template is available')
+
+  App.Config.set('checklist', checklistSetting)
+});
+
+QUnit.test( "ticket_perform_action check checklist template action when the checklist feature is disabled", assert => {
+  var checklistSetting = App.Config.get('checklist')
+  App.Config.set('checklist', false)
+
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+  ], { clear: true })
+
+  $('#forms').append('<hr><h1>ticket_perform_action check checklist template action when the checklist feature is disabled</h1><form id="form12"></form>')
+  var el = $('#form12')
+  var defaults = {
+    ticket_perform_action12: {
+      'checklist.add_from_template': {
+        checklist_template_id: '1'
+      }
+    }
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:      'ticket_perform_action12',
+          display:   'TicketPerformAction12',
+          tag:       'ticket_perform_action',
+          null:      true,
+          checklist: true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  assert.ok(el.find('.js-attributeSelector option[value="checklist.add_from_template"]').length, 'form offers the checklist action while the checklist feature is disabled')
+  assert.deepEqual(el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray(), ['Active template'], 'form offers the templates while the checklist feature is disabled')
+  assert.deepEqual(App.ControllerForm.params(el), { ticket_perform_action12: { 'checklist.add_from_template': { checklist_template_id: '1' } } }, 'form keeps the stored template while the checklist feature is disabled')
+
+  App.Config.set('checklist', checklistSetting)
+});
+
+QUnit.test( "ticket_perform_action hides checklist template action when the element does not enable it", assert => {
+  var checklistSetting = App.Config.get('checklist')
+  App.Config.set('checklist', true)
+
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+  ], { clear: true })
+
+  $('#forms').append('<hr><h1>ticket_perform_action hides checklist template action when the element does not enable it</h1><form id="form13"></form>')
+  var el = $('#form13')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'ticket_perform_action13', display: 'TicketPerformAction13', tag: 'ticket_perform_action', null: true },
+      ]
+    },
+    params: {},
+    autofocus: true
+  })
+
+  assert.notOk(el.find('.js-attributeSelector option[value="checklist.add_from_template"]').length, 'form hides the checklist action when the element does not enable it')
+
+  App.Config.set('checklist', checklistSetting)
+});
+
+QUnit.test( "ticket_perform_action check checklist template action with a stored template that is no longer active", assert => {
+  var checklistSetting = App.Config.get('checklist')
+  App.Config.set('checklist', true)
+
+  App.ChecklistTemplate.refresh([
+    { id: 2, name: 'Inactive template', active: false },
+  ], { clear: true })
+
+  var render = (formId, checklistTemplateId) => {
+    $('#forms').append(`<hr><h1>ticket_perform_action check checklist template action with a stored template that is no longer active</h1><form id="${formId}"></form>`)
+    var el = $(`#${formId}`)
+    new App.ControllerForm({
+      el:        el,
+      model:     {
+        configure_attributes: [
+          { name: formId, display: formId, tag: 'ticket_perform_action', null: true, checklist: true },
+        ]
+      },
+      params: { [formId]: { 'checklist.add_from_template': { checklist_template_id: checklistTemplateId } } },
+      autofocus: true
+    })
+
+    return el
+  }
+
+  var options = (el) => el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray()
+  var testNoticeMessage = 'No checklist template available, please create a new one or activate an existing one at "Manage > Checklists"'
+
+  var el = render('form14', '2')
+  assert.deepEqual(options(el), ['Inactive template (inactive)'], 'form lists only the stored inactive template marked as inactive when no other is available')
+  assert.equal(el.find('.js-setChecklist select').val(), '2', 'form keeps the stored inactive template selected when no other is available')
+  assert.notOk(el.find('.js-setChecklist select').prop('disabled'), 'form keeps the selection enabled when no other template is available')
+  assert.notOk(el.find('.js-setChecklist .js-checklist-templates .help-block').length, 'form shows no message when the stored inactive template is listed')
+  assert.deepEqual(App.ControllerForm.params(el), { form14: { 'checklist.add_from_template': { checklist_template_id: '2' } } }, 'form keeps the inactive template of the stored action')
+
+  el = render('form15', '99')
+  assert.notOk(el.find('.js-setChecklist select').length, 'form shows no template selection when the stored template is deleted and no other is available')
+  assert.equal(el.find('.js-setChecklist .js-checklist-templates .help-block').text(), testNoticeMessage, 'form shows message when the stored template is deleted and no other is available')
+  assert.deepEqual(App.ControllerForm.params(el), { form15: { 'checklist.add_from_template': { checklist_template_id: '99' } } }, 'form keeps the deleted template of the stored action')
+
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+    { id: 2, name: 'Inactive template', active: false },
+  ], { clear: true })
+
+  el = render('form16', '2')
+  assert.deepEqual(options(el), ['Active template', 'Inactive template (inactive)'], 'form lists the stored inactive template marked as inactive next to the active templates')
+  assert.equal(el.find('.js-setChecklist select').val(), '2', 'form keeps the stored inactive template selected')
+  assert.notOk(el.find('.js-setChecklist select').prop('disabled'), 'form keeps the selection enabled when another template is active')
+  assert.notOk(el.find('.js-setChecklist .js-checklist-templates .help-block').length, 'form shows no message when another template is active')
+  assert.deepEqual(App.ControllerForm.params(el), { form16: { 'checklist.add_from_template': { checklist_template_id: '2' } } }, 'form submits the stored inactive template, which the action skips at run time')
+
+  el = render('form17', '99')
+  assert.deepEqual(options(el), ['-', 'Active template'], 'form offers the active templates behind an empty placeholder when the stored template is deleted')
+  assert.equal(el.find('.js-setChecklist select').val(), '', 'form preselects the empty placeholder when the stored template is deleted')
+  assert.deepEqual(App.ControllerForm.params(el), { form17: { 'checklist.add_from_template': { checklist_template_id: '' } } }, 'form submits an empty template for the deleted one')
+
+  App.Config.set('checklist', checklistSetting)
+});

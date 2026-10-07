@@ -21,3 +21,7 @@ class App.ChecklistTemplate extends App.Model
   ]
 
   @description = __('With checklist templates it is possible to pre-fill new checklists with initial items.')
+
+  displayName: ->
+    return @name if @active isnt false
+    "#{@name} (#{App.i18n.translateInline('inactive')})"

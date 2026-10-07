@@ -212,3 +212,191 @@ QUnit.test('supports user object', (assert) => {
   // Alert
   assert.equal(el.find('.js-alert').text(), 'All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible.', 'has proper warning shown')
 })
+
+QUnit.test('offers the checklist action for the ticket object', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'checklist', value: true }])
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+  ], { clear: true })
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    perform: {
+      'checklist.add_from_template': {
+        checklist_template_id: '1',
+      },
+    },
+    object: 'Ticket',
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'perform',  display: 'Perform', tag: 'object_perform_action', checklist: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    perform: {
+      'checklist.add_from_template': {
+        checklist_template_id: '1',
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+  assert.deepEqual(el.find('.js-attributeSelector').find('optgroup').map(function () { return $(this).attr('label') }).toArray(), ['Ticket', 'Article', 'Checklists'], 'has correct groups')
+  assert.deepEqual(el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray(), ['Active template'], 'offers the templates')
+})
+
+QUnit.test('hides the checklist action for the user and organization objects', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'checklist', value: true }])
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+  ], { clear: true })
+
+  for (const object of ['User', 'Organization']) {
+    var testFormId = `form${testCount}-${object.toLowerCase()}`
+    $('#forms').append(`<hr><h1>${testName} #${testCount} ${object}</h1><form id="${testFormId}"></form>`)
+    var el = $(`#${testFormId}`)
+    new App.ControllerForm({
+      el,
+      model: {
+        configure_attributes: [
+          { name: 'perform',  display: 'Perform', tag: 'object_perform_action', checklist: true },
+        ]
+      },
+      params: { object },
+      autofocus: true
+    })
+    assert.deepEqual(el.find('.js-attributeSelector').find('optgroup').map(function () { return $(this).attr('label') }).toArray(), [object], `has correct groups for ${object}`)
+  }
+})
+
+QUnit.test('drops a stored action the selected object does not offer', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'checklist', value: true }])
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+  ], { clear: true })
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    perform: {
+      'checklist.add_from_template': {
+        checklist_template_id: '1',
+      },
+    },
+    object: 'User',
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'perform',  display: 'Perform', tag: 'object_perform_action', checklist: true, skip_unknown_attributes: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  assert.deepEqual(App.ControllerForm.params(el), { perform: { 'user.active': { value: true } } }, 'falls back to the default action')
+  assert.notOk(el.find('.js-setChecklist select').length, 'renders no template selection')
+  assert.equal(el.find('.js-filterElement').length, 1, 'renders a single row')
+})
+
+QUnit.test('offers the checklist action with its templates when the checklist feature is disabled', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'checklist', value: false }])
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+  ], { clear: true })
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    perform: {
+      'checklist.add_from_template': {
+        checklist_template_id: '1',
+      },
+    },
+    object: 'Ticket',
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'perform',  display: 'Perform', tag: 'object_perform_action', checklist: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  assert.deepEqual(el.find('.js-attributeSelector').find('optgroup').map(function () { return $(this).attr('label') }).toArray(), ['Ticket', 'Article', 'Checklists'], 'has correct groups')
+  assert.deepEqual(el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray(), ['Active template'], 'offers the templates')
+  assert.deepEqual(App.ControllerForm.params(el), { perform: { 'checklist.add_from_template': { checklist_template_id: '1' } } }, 'keeps the stored template')
+})
+
+QUnit.test('keeps a stored inactive checklist template selected and marked', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'checklist', value: true }])
+  App.ChecklistTemplate.refresh([
+    { id: 1, name: 'Active template', active: true },
+    { id: 2, name: 'Inactive template', active: false },
+  ], { clear: true })
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    perform: {
+      'checklist.add_from_template': {
+        checklist_template_id: '2',
+      },
+    },
+    object: 'Ticket',
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'perform',  display: 'Perform', tag: 'object_perform_action', checklist: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  assert.deepEqual(el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray(), ['Active template', 'Inactive template (inactive)'], 'lists the stored inactive template marked as inactive')
+  assert.deepEqual(App.ControllerForm.params(el), { perform: { 'checklist.add_from_template': { checklist_template_id: '2' } } }, 'keeps the stored inactive template selected')
+})
+
+QUnit.test('keeps a stored inactive checklist template selected and marked when no other template is active', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'checklist', value: true }])
+  App.ChecklistTemplate.refresh([
+    { id: 2, name: 'Inactive template', active: false },
+  ], { clear: true })
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    perform: {
+      'checklist.add_from_template': {
+        checklist_template_id: '2',
+      },
+    },
+    object: 'Ticket',
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'perform',  display: 'Perform', tag: 'object_perform_action', checklist: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  assert.deepEqual(el.find('.js-setChecklist select option').map(function () { return $(this).text() }).toArray(), ['Inactive template (inactive)'], 'lists only the stored inactive template marked as inactive')
+  assert.equal(el.find('.js-setChecklist select').val(), '2', 'keeps the stored inactive template selected')
+  assert.notOk(el.find('.js-setChecklist .help-block').length, 'shows no notice')
+  assert.deepEqual(App.ControllerForm.params(el), { perform: { 'checklist.add_from_template': { checklist_template_id: '2' } } }, 'submits the stored inactive template')
+})

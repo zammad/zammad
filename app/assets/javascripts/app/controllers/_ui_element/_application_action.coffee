@@ -38,7 +38,7 @@ UI Element options:
 
 **attribute.skip_unknown_attributes**
 
-- Skips rendering of unknown attributes (default: false)
+- Skips rendering of unknown attributes and renders the defaults when none is left (default: false)
 
 ###
 
@@ -64,6 +64,10 @@ class App.UiElement.ApplicationAction
         name: __('AI')
         model: 'AI'
 
+    if attribute.checklist
+      groups.checklist =
+        name: __('Checklists')
+
     # merge config
     elements = {}
     for groupKey, groupMeta of groups
@@ -77,6 +81,8 @@ class App.UiElement.ApplicationAction
             elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
           when 'ai'
             elements["#{groupKey}.ai_agent"] = { name: 'ai_agent', display: __('AI Agent') }
+          when 'checklist'
+            elements["#{groupKey}.add_from_template"] = { name: 'add_from_template', display: __('Add checklist template') }
       else
         for row in App[groupMeta.model].configure_attributes
 
@@ -243,7 +249,10 @@ class App.UiElement.ApplicationAction
     )
 
     # build initial params
-    if _.isEmpty(params[attribute.name])
+    paramValue = params[attribute.name]
+    paramValue = _.pick(paramValue, _.keys(elements)) if attribute.skip_unknown_attributes
+
+    if _.isEmpty(paramValue)
 
       for groupAndAttribute in defaults
 
@@ -255,9 +264,7 @@ class App.UiElement.ApplicationAction
 
     else
 
-      for groupAndAttribute, meta of params[attribute.name]
-        # Skip unknown attributes.
-        continue if attribute.skip_unknown_attributes and !_.includes(_.keys(elements), groupAndAttribute)
+      for groupAndAttribute, meta of paramValue
 
         # build and append
         element = @placeholder(item, attribute, params, groups, elements)
@@ -328,7 +335,7 @@ class App.UiElement.ApplicationAction
 
     groupAndTypeMatch = groupAndAttribute.match(/^([\w]+)\.([\w]+)$/) || []
 
-    for elem in ['Notification', 'Attribute', 'Article', 'AI']
+    for elem in ['Notification', 'Attribute', 'Article', 'AI', 'Checklist']
       if groupAndTypeMatch[1] isnt elem.toLowerCase()
         elementRow.find(".js-set#{elem}").html('').addClass('hide')
 
@@ -336,6 +343,8 @@ class App.UiElement.ApplicationAction
       @buildNotificationArea(groupAndTypeMatch[2], elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     else if groupAndTypeMatch[1] == 'ai'
       @buildAIArea(groupAndTypeMatch[2], elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    else if groupAndTypeMatch[1] == 'checklist'
+      @buildChecklistArea(groupAndTypeMatch[2], elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     else if groupAndTypeMatch[1] == 'article' && !attribute.article_body_cc_only
       @buildArticleArea(groupAndTypeMatch[2], elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     else
@@ -697,6 +706,42 @@ class App.UiElement.ApplicationAction
     aiElement.find('.js-ai-agents').html(aiAgentSelection)
 
     elementRow.find('.js-setAI').html(aiElement).removeClass('hide')
+
+  @buildChecklistArea: (checklistType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    elementRow.find('.js-setChecklist').empty()
+
+    name = "#{attribute.name}::checklist.#{checklistType}"
+
+    checklistElement = $( App.view('generic/ticket_perform_action/checklist')() )
+
+    templateId    = meta?.checklist_template_id
+    storedExists  = Boolean(templateId) && App.ChecklistTemplate.exists(templateId)
+    storedDeleted = Boolean(templateId) && !storedExists
+
+    templateSelection = if App.ChecklistTemplate.search(filter: { active: true }).length isnt 0 || storedExists
+      # A stored template that is inactive by now stays selected, marked by its display name, as
+      #   a stored webhook does, also when it is the only one left to list. A deleted one is not
+      #   offered again: the empty placeholder is preselected, so the rule cannot be saved until
+      #   an active one is picked.
+      App.UiElement.select.render(
+        name: "#{name}::checklist_template_id"
+        multiple: false
+        nulloption: storedDeleted
+        relation: 'ChecklistTemplate'
+        value: if storedDeleted then '' else templateId
+        translate: false
+      )
+    else
+      # The hidden input keeps the stored id, so the action survives an edit of the rule, and a new
+      #   one without a template fails validation instead of silently dropping out of the payload.
+      App.view('generic/ticket_perform_action/checklist_notice')(
+        name: name
+        value: templateId || ''
+      )
+
+    checklistElement.find('.js-checklist-templates').html(templateSelection)
+
+    elementRow.find('.js-setChecklist').html(checklistElement).removeClass('hide')
 
   @buildArticleArea: (articleType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 

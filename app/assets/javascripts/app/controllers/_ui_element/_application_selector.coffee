@@ -182,6 +182,14 @@ class App.UiElement.ApplicationSelector
       translate: true
       operator: [__('is'), __('is not')]
 
+    if attribute.executionTime
+      elements['ticket.checklist_existing'] =
+        name: 'checklist_existing'
+        display: __('Has checklist')
+        tag: 'boolean'
+        null: false
+        operator: [__('is')]
+
     [defaults, groups, elements]
 
   @rowContainer: (groups, elements, attribute) ->
@@ -443,6 +451,11 @@ class App.UiElement.ApplicationSelector
   @mapOperatorDisplayName: (operator) ->
     return operator
 
+  # A single operator leaves nothing to choose, so its picker stays hidden.
+  @toggleOperatorPicker: (elementRow, attributeConfig) ->
+    hidden = attributeConfig.operator?.length is 1
+    elementRow.find('.js-operator').closest('.controls').toggleClass('hide', hidden)
+
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
 
@@ -489,6 +502,7 @@ class App.UiElement.ApplicationSelector
       selection
 
     elementRow.find('.js-operator select').replaceWith(selection)
+    @toggleOperatorPicker(elementRow, attributeConfig)
 
     if @HasPreCondition()
       @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)

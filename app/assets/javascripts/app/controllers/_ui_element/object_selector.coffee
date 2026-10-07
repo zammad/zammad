@@ -210,6 +210,14 @@ class App.UiElement.object_selector extends App.UiElement.ApplicationSelectorExp
         translate: true
         operator: [__('is'), __('is not')]
 
+      if attribute.executionTime
+        elements['ticket.checklist_existing'] =
+          name: 'checklist_existing'
+          display: __('Has checklist')
+          tag: 'boolean'
+          null: false
+          operator: [__('is')]
+
     if attribute.object_name is 'User'
       elements['user.role_ids'] =
         name: 'role_ids'

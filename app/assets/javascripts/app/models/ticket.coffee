@@ -196,8 +196,8 @@ class App.Ticket extends App.Model
         for articleKey, aricleValue of content
           params.article[articleKey] = aricleValue
 
-      # perform AI agent or notification changes later
-      else if attributes[0] is 'ai' or attributes[0] is 'notification'
+      # perform AI agent, notification or checklist changes later
+      else if ['ai', 'notification', 'checklist'].includes(attributes[0])
         params.ticket['macro.perform_changes'] ||= []
         params.ticket['macro.perform_changes'].push "#{attributes[0]}.#{attributes[1]}"
 

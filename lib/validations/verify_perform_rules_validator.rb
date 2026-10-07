@@ -7,6 +7,7 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
     'notification.sms'            => %w[body recipient],
     'notification.webhook'        => %w[webhook_id],
     'ai.ai_agent'                 => %w[ai_agent_id],
+    'checklist.add_from_template' => %w[checklist_template_id],
     'x-zammad-ticket-owner_id'    => %w[value], # PostmasterFilter
     'x-zammad-ticket-customer_id' => %w[value], # PostmasterFilter
   }.freeze

@@ -1,0 +1,2 @@
+<input type="hidden" name="<%= @name %>::checklist_template_id" value="<%= @value %>">
+<p class="help-block"><%- @T('No checklist template available, please create a new one or activate an existing one at "Manage > Checklists"') %></p>

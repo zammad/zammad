@@ -1,0 +1,6 @@
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Checklist Template') %></label>
+  </div>
+  <div class="controls js-checklist-templates"></div>
+</div>

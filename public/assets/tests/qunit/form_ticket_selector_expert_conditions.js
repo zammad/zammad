@@ -1595,6 +1595,77 @@ QUnit.test('handles external data source attribute without any errors #5298', (a
   assert.deepEqual(params, test_params, 'params structure')
 })
 
+QUnit.test('supports checklist condition for triggers', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: true }, { name: 'checklist', value: true }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      operator: 'AND',
+      conditions: [
+        {
+          name: 'ticket.checklist_existing',
+          operator: 'is',
+          value: 'true',
+        },
+      ],
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', action: true, hasChanged: true, executionTime: true, preview: false, always_expert_mode: true, hasReached: true },
+      ],
+    },
+    params: clone(defaults),
+    autofocus: true,
+  })
+  var params = App.ControllerForm.params(el)
+  assert.deepEqual(params, defaults, 'params structure')
+
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-attributeSelector select option:selected').text(), 'Has checklist', 'checklist attribute selected')
+  assert.notOk(el.find('.js-filterElement:nth-child(2) .js-operator select').is(':visible'), 'hides the operator picker')
+  assert.deepEqual(el.find('.js-filterElement:nth-child(2) .js-operator select option').map(function () { return $(this).text() }).toArray(), ['is'], 'keeps the is operator only')
+  assert.deepEqual(el.find('.js-filterElement:nth-child(2) .js-value select option').map(function () { return $(this).text() }).toArray(), ['yes', 'no'], 'offers yes and no values')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-value select option:selected').text(), 'yes', 'yes value selected')
+
+  el.find('.js-filterElement:nth-child(2) .js-attributeSelector select').val('ticket.title').trigger('change')
+  assert.ok(el.find('.js-filterElement:nth-child(2) .js-operator select').is(':visible'), 'shows the operator picker again for other attributes')
+})
+
+QUnit.test('hides checklist condition without execution time, offers it with the checklist feature off', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: true }, { name: 'checklist', value: true }])
+
+  var render = (formId, checklistEnabled, attributeConfig) => {
+    App.Config.set('checklist', checklistEnabled)
+
+    $('#forms').append(`<hr><h1>${testName} #${testCount} ${formId}</h1><form id="${formId}"></form>`)
+    var el = $(`#${formId}`)
+    new App.ControllerForm({
+      el,
+      model: {
+        configure_attributes: [
+          Object.assign({ name: 'condition', display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true }, attributeConfig),
+        ],
+      },
+      params: {},
+      autofocus: true,
+    })
+
+    return el
+  }
+
+  var el = render(`form${testCount}-overview`, true, { out_of_office: true })
+  assert.ok(el.find('.js-attributeSelector option[value="ticket.state_id"]').length, 'renders the attribute selector without execution time')
+  assert.notOk(el.find('.js-attributeSelector option[value="ticket.checklist_existing"]').length, 'hides the checklist attribute without execution time')
+
+  el = render(`form${testCount}-feature-off`, false, { action: true, hasChanged: true, executionTime: true, hasReached: true })
+  assert.ok(el.find('.js-attributeSelector option[value="ticket.state_id"]').length, 'renders the attribute selector when the checklist feature is off')
+  assert.ok(el.find('.js-attributeSelector option[value="ticket.checklist_existing"]').length, 'offers the checklist attribute when the checklist feature is off')
+})
+
 /*
  * Examples in this group are with expert conditions turned off.
  */

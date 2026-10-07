@@ -52,6 +52,18 @@ RSpec.describe 'TicketsMass', authenticated_as: :user, type: :request do
 
       expect(response).to have_http_status(:unprocessable_content)
     end
+
+    context 'with a checklist template action', current_user_id: 1 do
+      let(:template) { create(:checklist_template, items: ['Template item 1', 'Template item 2']) }
+      let(:macro)    { create(:macro, perform: { 'checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s } }) }
+
+      it 'adds the checklist to every selected ticket' do
+        post '/api/v1/tickets/mass_macro', params: { macro_id: macro.id, ticket_ids: [ticket_a.id, ticket_b.id] }
+
+        expect([ticket_a, ticket_b].map { |ticket| ticket.reload.checklist.sorted_items.map(&:text) })
+          .to all(eq(['Template item 1', 'Template item 2']))
+      end
+    end
   end
 
   describe 'POST /tickets/mass_update' do

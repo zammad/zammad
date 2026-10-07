@@ -2025,4 +2025,155 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  describe 'Add checklist template perform action', current_user_id: 1 do
+    let(:ticket)   { create(:ticket) }
+    let(:template) { create(:checklist_template, items: ['Template item 1', 'Template item 2']) }
+
+    let(:execution_condition_mode) { 'always' }
+
+    let(:condition) do
+      { 'ticket.priority_id' => { 'operator' => 'is', 'value' => ticket.priority_id.to_s } }
+    end
+
+    let(:perform) do
+      { 'checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s } }
+    end
+
+    before { ticket && trigger }
+
+    shared_examples 'adding the checklist once' do
+      it 'adds the checklist once although assigning it saves the ticket again' do
+        expect { TransactionDispatcher.commit }.to change(Checklist, :count).by(1)
+
+        expect(ticket.reload.checklist.sorted_items.map(&:text)).to eq(['Template item 1', 'Template item 2'])
+      end
+    end
+
+    include_examples 'adding the checklist once'
+
+    context 'with recursive triggers' do
+      before { Setting.set('ticket_trigger_recursive', true) }
+
+      include_examples 'adding the checklist once'
+    end
+  end
+
+  describe 'Ticket has a checklist condition', current_user_id: 1 do
+    let!(:ticket) { create(:ticket) }
+    let(:value)   { 'true' }
+
+    let(:condition) do
+      { 'ticket.checklist_existing' => { 'operator' => 'is', 'value' => value } }
+    end
+
+    context 'when the ticket is created' do
+      before { trigger }
+
+      context 'when the ticket has no checklist' do
+        it 'does not trigger' do
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+
+      context 'when the ticket has an empty checklist' do
+        before { create(:checklist, :empty, ticket:) }
+
+        it 'does not trigger' do
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+
+      context 'when the ticket has a checklist with items' do
+        before { create(:checklist, ticket:) }
+
+        it 'does trigger' do
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+    end
+
+    context 'when the ticket is updated' do
+      let(:checklist) { nil }
+
+      # The trigger is created after the ticket and its checklist are set up, so that only the update
+      #   under test is evaluated. Dispatching resets the current user, so it is restored for the update.
+      before do
+        checklist
+        TransactionDispatcher.commit
+        UserInfo.current_user_id = 1
+        trigger
+      end
+
+      context 'when a checklist with items is added' do
+        it 'does trigger' do
+          create(:checklist, ticket:)
+
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+
+      context 'when an empty checklist is added' do
+        it 'does not trigger' do
+          create(:checklist, :empty, ticket:)
+
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+
+      context 'when the first item is added to an empty checklist' do
+        let(:checklist) { create(:checklist, :empty, ticket:) }
+
+        it 'does trigger' do
+          create(:checklist_item, checklist:)
+
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+
+      context 'when an item of a checklist with items is checked' do
+        let(:checklist) { create(:checklist, ticket:) }
+
+        it 'does not trigger' do
+          checklist.items.first.update!(checked: true)
+
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+
+      context "with value 'false'" do
+        let(:value) { 'false' }
+
+        context 'when the last item is removed' do
+          let(:checklist) { create(:checklist, ticket:, item_count: 1) }
+
+          it 'does trigger' do
+            checklist.items.first.destroy!
+
+            expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+          end
+        end
+
+        context 'when one of several items is removed' do
+          let(:checklist) { create(:checklist, ticket:) }
+
+          it 'does not trigger' do
+            checklist.items.first.destroy!
+
+            expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+          end
+        end
+
+        context 'when the checklist is removed' do
+          let(:checklist) { create(:checklist, ticket:) }
+
+          it 'does trigger' do
+            checklist.destroy!
+
+            expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+          end
+        end
+      end
+    end
+  end
 end

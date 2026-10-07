@@ -579,6 +579,7 @@ class App.UiElement.ApplicationSelectorExpert extends App.UiElement.ApplicationS
       selection
 
     elementRow.find('.js-operator select').replaceWith(selection)
+    @toggleOperatorPicker(elementRow, attributeConfig)
 
     if @HasPreCondition()
       @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)

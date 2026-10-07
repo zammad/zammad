@@ -340,6 +340,12 @@ class Selector::Sql < Selector::Base
                else
                  "users.id NOT IN (SELECT DISTINCT #{distinct_column} FROM tickets#{query_where})"
                end
+    elsif attribute_table == 'ticket' && attribute_name == 'checklist_existing'
+      query << if (block_condition[:operator] == 'is' && block_condition[:value].to_s == 'true') || (block_condition[:operator] == 'is not' && block_condition[:value].to_s != 'true')
+                 'EXISTS (SELECT 1 FROM checklist_items WHERE checklist_items.checklist_id = tickets.checklist_id)'
+               else
+                 'NOT EXISTS (SELECT 1 FROM checklist_items WHERE checklist_items.checklist_id = tickets.checklist_id)'
+               end
     elsif block_condition[:operator] == 'starts with'
       query << "#{attribute} ILIKE (?)"
       bind_params.push "#{SqlHelper.quote_like(block_condition[:value])}%"

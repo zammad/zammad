@@ -97,3 +97,22 @@ QUnit.module("ticket macro pending time check", hooks => {
     assert.equal(calculate_travel_on_ticket_diff(rules, 'custom_date'), 60 * 3 * 1000)
   });
 })
+
+QUnit.module("ticket macro server-side actions", () => {
+  QUnit.test("defers checklist, AI agent and notification actions to the server", assert => {
+    var ticket = new App.Ticket()
+
+    App.Ticket.macro({
+      ticket: ticket,
+      macro: {
+        'ticket.title': { value: 'Macro title' },
+        'checklist.add_from_template': { checklist_template_id: '1' },
+        'ai.ai_agent': { ai_agent_id: ['1'] },
+        'notification.email': { recipient: ['ticket_customer'], subject: 'subject', body: 'body' },
+      },
+    })
+
+    assert.equal(ticket.title, 'Macro title', 'applies ticket changes in the client')
+    assert.deepEqual(ticket['macro.perform_changes'], ['checklist.add_from_template', 'ai.ai_agent', 'notification.email'], 'collects the actions the server performs')
+  })
+})

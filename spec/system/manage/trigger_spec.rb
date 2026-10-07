@@ -78,6 +78,114 @@ RSpec.describe 'Manage > Trigger', type: :system do
         click '.js-submit'
       end
     end
+
+    context 'Checklist' do
+      context 'when the admin holds the trigger permission only', authenticated_as: :trigger_admin do
+        let(:trigger_admin) { create(:user, roles: [create(:role, permission_names: %w[admin.trigger])]) }
+
+        it 'offers the checklist condition for both activators, saves it and shows it again' do
+          open_new_trigger_dialog
+
+          in_modal(disappears: true) do
+            fill_in 'Name', with: 'Checklist trigger'
+
+            within '.ticket_selector' do
+              find('.js-attributeSelector select').select 'Has checklist'
+
+              expect(page).to have_no_select('condition::ticket.checklist_existing::operator')
+
+              select 'no', from: 'condition::ticket.checklist_existing::value'
+            end
+
+            find_field('activator').select 'Time event'
+
+            within '.ticket_selector' do
+              expect(page).to have_select('condition::ticket.checklist_existing::value', selected: 'no')
+            end
+
+            find_field('activator').select 'Action'
+
+            click_on 'Submit'
+          end
+
+          expect(Trigger.last.condition).to eq('ticket.checklist_existing' => { 'operator' => 'is', 'value' => false })
+
+          find('tr', text: 'Checklist trigger').click
+
+          in_modal do
+            within '.ticket_selector' do
+              expect(page).to have_no_select('condition::ticket.checklist_existing::operator')
+              expect(page).to have_select('condition::ticket.checklist_existing::value', selected: 'no')
+            end
+          end
+        end
+      end
+
+      context 'when the checklist feature is disabled' do
+        before { Setting.set('checklist', false) }
+
+        it 'still offers the checklist condition' do
+          open_new_trigger_dialog
+
+          in_modal do
+            expect(page).to have_css('.ticket_selector .js-attributeSelector option[value="ticket.checklist_existing"]')
+          end
+        end
+
+        context 'with a stored checklist condition' do
+          let(:condition) { { 'ticket.checklist_existing' => { 'operator' => 'is', 'value' => true } } }
+          let(:trigger)   { create(:trigger, name: 'Checklist trigger', condition: condition) }
+
+          before { trigger }
+
+          it 'keeps the stored condition when the trigger is edited' do
+            visit '/#manage/trigger'
+            find('tr', text: 'Checklist trigger').click
+
+            in_modal(disappears: true) do
+              within '.ticket_selector' do
+                expect(page).to have_select('condition::ticket.checklist_existing::value', selected: 'yes')
+              end
+
+              fill_in 'Name', with: 'Renamed checklist trigger'
+              click_on 'Submit'
+            end
+
+            expect(trigger.reload).to have_attributes(name: 'Renamed checklist trigger', condition: condition)
+          end
+
+          context 'with expert conditions' do
+            let(:condition) do
+              {
+                'operator'   => 'OR',
+                'conditions' => [
+                  { 'name' => 'ticket.checklist_existing', 'operator' => 'is', 'value' => 'true' },
+                ],
+              }
+            end
+
+            before { Setting.set('ticket_allow_expert_conditions', true) }
+
+            it 'keeps the stored condition when the trigger is edited' do
+              visit '/#manage/trigger'
+              find('tr', text: 'Checklist trigger').click
+
+              in_modal(disappears: true) do
+                within '.ticket_selector' do
+                  expect(find('.js-attributeSelector select').value).to eq('ticket.checklist_existing')
+                  expect(find('.js-expertConditions input', visible: :all).value).to include('ticket.checklist_existing')
+                end
+
+                fill_in 'Name', with: 'Renamed checklist trigger'
+                click_on 'Submit'
+              end
+
+              expect(trigger.reload).to have_attributes(name: 'Renamed checklist trigger', condition: condition)
+            end
+          end
+        end
+      end
+    end
   end
 
   context 'Perform' do
@@ -100,6 +208,59 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
         # widget is shown within modal, but placed outside of modal in DOM tree.
         expect(page).to have_css('.ui-autocomplete.ui-widget-content') { |elem| !elem.obscured? }
+      end
+    end
+
+    context 'Checklist', current_user_id: 1 do
+      let(:template) { create(:checklist_template, name: 'Onboarding checklist') }
+
+      before { template }
+
+      context 'when the admin holds the trigger permission only', authenticated_as: :trigger_admin do
+        let(:trigger_admin) { create(:user, roles: [create(:role, permission_names: %w[admin.trigger])]) }
+
+        it 'saves the checklist action with the chosen template and shows it again' do
+          open_new_trigger_dialog
+
+          in_modal do
+            fill_in 'Name', with: 'Checklist trigger'
+
+            within '.ticket_selector' do
+              find('.js-value select').select 'new'
+            end
+
+            within '.ticket_perform_action' do
+              find('.js-attributeSelector select').select 'Add checklist template'
+              select 'Onboarding checklist', from: 'perform::checklist.add_from_template::checklist_template_id'
+            end
+
+            click_on 'Submit'
+          end
+
+          expect(Trigger.last.perform).to eq('checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s })
+
+          find('tr', text: 'Checklist trigger').click
+
+          in_modal do
+            expect(page).to have_select('perform::checklist.add_from_template::checklist_template_id', selected: 'Onboarding checklist')
+          end
+        end
+      end
+
+      context 'when the checklist feature is disabled' do
+        before { Setting.set('checklist', false) }
+
+        it 'still offers the checklist action with its templates' do
+          open_new_trigger_dialog
+
+          in_modal do
+            within '.ticket_perform_action' do
+              find('.js-attributeSelector select').select 'Add checklist template'
+
+              expect(page).to have_select('perform::checklist.add_from_template::checklist_template_id', options: ['Onboarding checklist'])
+            end
+          end
+        end
       end
     end
   end
@@ -156,7 +317,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
                        name:        'multiselect'
     end
 
-    let(:group) { create(:group) }
+    let(:group)   { create(:group) }
     let(:owner)   { create(:admin, group_ids: [group.id]) }
     let!(:ticket) { create(:ticket, group: group,) }
 

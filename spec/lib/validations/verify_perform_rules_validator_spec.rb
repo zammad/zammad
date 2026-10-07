@@ -52,6 +52,15 @@ RSpec.describe Validations::VerifyPerformRulesValidator do
       )
     end
 
+    it 'is invalid when the checklist template id is missing' do
+      instance.sample = { 'checklist.add_from_template' => { 'checklist_template_id' => '' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: match(%r{The required 'sample' value for checklist.add_from_template, checklist_template_id is missing!})))
+      )
+    end
+
     it 'is valid when a multi-value action contains entries' do
       instance.sample = { 'notification.webhook' => { 'webhook_id' => %w[1 2] } }
       expect(instance).to be_valid

@@ -1120,11 +1120,111 @@ RSpec.describe Selector::Sql do
         end
       end
     end
+
+    describe 'ticket.checklist_existing', current_user_id: 1 do
+      let(:name) { 'ticket.checklist_existing' }
+
+      shared_examples 'finding tickets with a non-empty checklist' do
+        context 'when the ticket has no checklist' do
+          before { ticket }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'when the ticket has an empty checklist' do
+          before { create(:checklist, :empty, ticket:) }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'when the ticket has a checklist with items' do
+          before { create(:checklist, ticket:) }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
+      shared_examples 'finding tickets without a non-empty checklist' do
+        context 'when the ticket has no checklist' do
+          before { ticket }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when the ticket has an empty checklist' do
+          before { create(:checklist, :empty, ticket:) }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when the ticket has a checklist with items' do
+          before { create(:checklist, ticket:) }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'is'" do
+        let(:operator) { 'is' }
+
+        context "with value 'true'" do
+          let(:value) { 'true' }
+
+          include_examples 'finding tickets with a non-empty checklist'
+        end
+
+        context 'with value true' do
+          let(:value) { true }
+
+          include_examples 'finding tickets with a non-empty checklist'
+        end
+
+        context "with value 'false'" do
+          let(:value) { 'false' }
+
+          include_examples 'finding tickets without a non-empty checklist'
+        end
+
+        context 'with value false' do
+          let(:value) { false }
+
+          include_examples 'finding tickets without a non-empty checklist'
+        end
+      end
+
+      describe "operator 'is not'" do
+        let(:operator) { 'is not' }
+
+        context "with value 'true'" do
+          let(:value) { 'true' }
+
+          include_examples 'finding tickets without a non-empty checklist'
+        end
+
+        context 'with value true' do
+          let(:value) { true }
+
+          include_examples 'finding tickets without a non-empty checklist'
+        end
+
+        context "with value 'false'" do
+          let(:value) { 'false' }
+
+          include_examples 'finding tickets with a non-empty checklist'
+        end
+
+        context 'with value false' do
+          let(:value) { false }
+
+          include_examples 'finding tickets with a non-empty checklist'
+        end
+      end
+    end
   end
 
   describe '.valid?' do
     let(:block_operator) { 'AND' }
-    let(:instance) { described_class.new(selector: { operator: block_operator, conditions: [ condition ] }, options: {}) }
+    let(:instance)       { described_class.new(selector: { operator: block_operator, conditions: [ condition ] }, options: {}) }
 
     context 'with valid conditions' do
       let(:condition) do
@@ -1132,6 +1232,20 @@ RSpec.describe Selector::Sql do
           name:          'ticket.organization_id',
           operator:      'is',
           pre_condition: 'not_set',
+        }
+      end
+
+      it 'validates' do
+        expect(instance.valid?).to be true
+      end
+    end
+
+    context 'with checklist existing condition' do
+      let(:condition) do
+        {
+          name:     'ticket.checklist_existing',
+          operator: 'is',
+          value:    'true',
         }
       end
 
