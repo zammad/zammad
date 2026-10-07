@@ -114,6 +114,16 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
 
       wait_for_setting('form_ticket_create_group_id', group.id.to_s)
     end
+
+    it 'does not persist captcha options while no provider is selected' do
+      Setting.set('form_ticket_create_captcha_options', { 'secret' => 'unchanged' })
+
+      # simulate the change events a browser password manager fires on the hidden credential fields
+      execute_script("$('.js-spamProtection [name=secret]').trigger('change')")
+      await_empty_ajax_queue
+
+      expect(Setting.get('form_ticket_create_captcha_options')).to eq({ 'secret' => 'unchanged' })
+    end
   end
 
   context 'with in-app form' do
