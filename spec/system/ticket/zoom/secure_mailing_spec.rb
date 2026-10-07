@@ -202,7 +202,12 @@ RSpec.describe 'Ticket zoom > Secure mailing', authenticated_as: :authenticate, 
           create(secure_mailing_factory_name, :with_private, fixture: system_email_address)
 
           visit "#ticket/zoom/#{ticket.id}"
-          expect(page).to have_no_css('.article-content', text: 'somebody with some text')
+          expect(page).to have_css('.js-securityRetryProcess')
+            .and have_no_css('.article-content', text: 'somebody with some text')
+
+          # The retried article reaches the page only by push.
+          wait_for_authenticated_session
+
           click '.js-securityRetryProcess'
           expect(page).to have_css('.article-content', text: 'somebody with some text')
         end

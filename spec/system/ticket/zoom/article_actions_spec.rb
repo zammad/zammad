@@ -363,6 +363,9 @@ RSpec.describe 'Ticket zoom > Article actions', type: :system do
           visit 'dashboard'
         end
 
+        # The modified marker of the background tab is set by push.
+        wait_for_authenticated_session
+
         # create a new article
         article_id = create(:'ticket/article', ticket: ticket, body: "#{SecureRandom.uuid} #{"lorem ipsum\n" * 200}")
 

@@ -20,7 +20,9 @@ RSpec.describe 'Mobile > Ticket', app: :mobile, authenticated_as: :agent, type: 
       #   the actual subscription (seen in CI as 'ticketUpdates 1 not set').
       wait_for_subscription_start 'ticketUpdates', entity: ticket
 
-      ticket.update!(title: 'New Title')
+      # The connection is shared with the server threads: joining one of their open
+      #   transactions would swallow the after_commit that triggers the subscription.
+      Ticket.transaction(requires_new: true) { ticket.update!(title: 'New Title') }
       wait_for_subscription_update 'ticketUpdates'
 
       expect(page).to have_text('New Title')

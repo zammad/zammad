@@ -22,8 +22,11 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
       find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
       click_on 'Save'
 
+      # Let the page settle before the next example starts.
+      expect(page).to have_no_css('#dialog-ticket-change-customer')
+
       wait.until do
-        ticket.reload.customer == customer && ticket.organization = organization
+        ticket.reload.customer == customer && ticket.organization == organization
       end
     end
   end
@@ -37,6 +40,9 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
       find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
       find_autocomplete('Organization').search_for_option(secondary_orgs.last.name)
       click_on 'Save'
+
+      # Let the page settle before the next example starts.
+      expect(page).to have_no_css('#dialog-ticket-change-customer')
 
       wait.until do
         ticket.reload.customer == customer && ticket.organization == secondary_orgs.last

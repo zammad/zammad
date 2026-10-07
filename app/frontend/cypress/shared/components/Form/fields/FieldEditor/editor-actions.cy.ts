@@ -50,6 +50,9 @@ const testAction = (
   })
 }
 
+// The action bar keeps its own popup in the DOM, only an opened one is visible.
+const openPopup = '[data-test-id="popupWindow"][aria-hidden="false"]'
+
 const testTableAction = (
   actionLabel: string,
   { trCount, tdCount, thCount }: { trCount: number; tdCount: number; thCount?: number },
@@ -65,7 +68,7 @@ const testTableAction = (
 
     cy.findByRole('button', { name: 'Table options' }).click()
 
-    cy.findAllByRole('presentation').should('exist')
+    cy.get(openPopup).should('exist')
 
     if (actionLabel === 'Merge cells' || actionLabel === 'Split cells') {
       // Not testable since we would have to select two cells, but Cypress does not support it
@@ -74,8 +77,7 @@ const testTableAction = (
       return
     }
 
-    // Sometimes the cleanup still doesn't work that's why this workaround stabilize the test
-    cy.findAllByLabelText(actionLabel).last().click({ force: true }) // can be out of viewport scrollable
+    cy.get(openPopup).findByLabelText(actionLabel).click({ force: true }) // can be out of viewport scrollable
 
     cy.findByRole('table').find('td').should('have.length', tdCount)
     cy.findByRole('table').find('tr').should('have.length', trCount)
@@ -217,7 +219,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/2062')
   })
 
-  describe.only('table', () => {
+  describe('table', () => {
     it('inserts a table', () => {
       mountEditor()
 
@@ -236,18 +238,6 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     })
 
     describe('actions', () => {
-      beforeEach(() => {
-        // Somehow cypress won't cleanup the DOM properly between tests
-        // Clearing the DOM has side effect on view components loosing state
-        cy.get('body').then(($body) => {
-          const cancelButtons = $body.find('button:contains("Cancel")')
-          if (cancelButtons.length > 0) {
-            // All section popup buttons
-            cy.get('button:contains("Cancel")').first().click({ force: true })
-          }
-        })
-      })
-
       testTableAction('Insert row above', { trCount: 4, tdCount: 9 })
       testTableAction('Insert row below', { trCount: 4, tdCount: 9 })
       testTableAction('Delete row', { trCount: 2, tdCount: 3 })
@@ -282,10 +272,9 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
 
         cy.findByRole('button', { name: 'Table options' }).click()
 
-        cy.findAllByRole('presentation').should('exist')
+        cy.get(openPopup).should('exist')
 
-        // Sometimes the cleanup still doesn't work that's why this workaround stabilize the test
-        cy.findAllByLabelText('Delete table').last().click({ force: true }) // can be out of viewport scrollable
+        cy.get(openPopup).findByLabelText('Delete table').click({ force: true }) // can be out of viewport scrollable
 
         cy.findByRole('table').should('not.exist')
       })
@@ -318,12 +307,12 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     cy.findByLabelText('Indent text').click()
 
     cy.findByRole('textbox').shouldContainNormalizedHtml(
-      '<li dir="auto" style="margin-left: 1rem"><p dir="auto">Third</p></li>',
+      '<li dir="auto" style="margin-left: 1rem;"><p dir="auto">Third</p></li>',
     )
 
     cy.findByLabelText('Indent text').click()
     cy.findByRole('textbox').shouldContainNormalizedHtml(
-      '<li dir="auto" style="margin-left: 2rem"><p dir="auto">Third</p></li>',
+      '<li dir="auto" style="margin-left: 2rem;"><p dir="auto">Third</p></li>',
     )
   })
 
@@ -338,7 +327,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     cy.findByLabelText('Indent text').click()
 
     cy.findByRole('textbox').shouldContainNormalizedHtml(
-      '<li dir="auto" style="margin-left: 1rem"><p dir="auto">Third</p></li>',
+      '<li dir="auto" style="margin-left: 1rem;"><p dir="auto">Third</p></li>',
     )
 
     cy.findByLabelText('Outdent text').click()
@@ -360,7 +349,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     )
 
     cy.findByRole('textbox').shouldContainNormalizedHtml(
-      '<span style="color: rgb(239, 68, 68)">world</span>',
+      '<span style="color: rgb(239, 68, 68);">world</span>',
     )
   })
 })

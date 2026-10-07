@@ -233,9 +233,10 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       end
 
       it 'shows the sidebar once the ticket starts matching, without a page refresh' do
-        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=summary]')
+        expect(page).to have_text(ticket.title)
+          .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
 
-        ensure_websocket
+        wait_for_authenticated_session(user: agent)
 
         ticket.update!(priority: Ticket::Priority.find_by(name: '3 high'))
 
@@ -265,7 +266,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'hides the sidebar once the ticket stops matching, without a page refresh' do
         expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
 
-        ensure_websocket
+        wait_for_authenticated_session(user: agent)
 
         ticket.update!(priority: Ticket::Priority.find_by(name: '2 normal'))
 
@@ -279,7 +280,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
         expect(page).to have_css('.tabsSidebar-tab[data-tab=summary].active')
 
-        ensure_websocket
+        wait_for_authenticated_session(user: agent)
 
         ticket.update!(priority: Ticket::Priority.find_by(name: '2 normal'))
 

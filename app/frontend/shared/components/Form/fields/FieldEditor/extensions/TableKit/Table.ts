@@ -57,6 +57,10 @@ export const Table = TableTipTap.extend({
 
     const pluginKey = new PluginKey('table-trigger-button')
 
+    // Kept outside the plugin state, which is gone already when the view of a
+    //   reconfigured editor gets destroyed.
+    let triggerComponent: VueRenderer | null = null
+
     return [
       ...parent(),
       new Plugin({
@@ -64,7 +68,6 @@ export const Table = TableTipTap.extend({
         state: {
           init() {
             return {
-              triggerComponent: null as VueRenderer | null,
               isColumnResizing: false,
             }
           },
@@ -90,9 +93,8 @@ export const Table = TableTipTap.extend({
           // - column resizing is active
           if (!editor.isActive(TableTipTap.name) || pluginState.isColumnResizing) return true
 
-          // Create the component once, and store it as a plugin state.
-          if (!pluginState.triggerComponent)
-            pluginState.triggerComponent = createTriggerComponent(editor)
+          // Create the component once and reuse it.
+          triggerComponent ||= createTriggerComponent(editor)
 
           return true
         },
@@ -101,7 +103,7 @@ export const Table = TableTipTap.extend({
             update: (view) => {
               const pluginState = pluginKey.getState(view.state)
 
-              const { triggerComponent, isColumnResizing } = pluginState
+              const { isColumnResizing } = pluginState
 
               // We don't need to show the trigger if:
               // - the table node is not active
@@ -128,12 +130,14 @@ export const Table = TableTipTap.extend({
               // Position calculation has to happen AFTER the transaction is applied
               calculateTriggerPosition(editor, triggerElement, tableWrapper)
             },
+            // Without it the trigger component of a destroyed editor would keep
+            //   listening for clicks and open its menu together with the current one.
+            destroy: () => {
+              cleanupTriggers(editor.options.element as HTMLElement)
+              triggerComponent?.destroy()
+              triggerComponent = null
+            },
           }
-        },
-        destroy() {
-          cleanupTriggers(editor.options.element as HTMLElement)
-          const { triggerComponent } = pluginKey.getState(editor.state)
-          triggerComponent?.destroy()
         },
       }),
     ]

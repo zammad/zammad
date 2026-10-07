@@ -16,6 +16,12 @@ globalThis.process.env = {
 
 Cypress.Screenshot.defaults({ capture: 'viewport' })
 
+// Benign browser warning when a resize observer callback changes the layout again.
+Cypress.on('uncaught:exception', (err) => {
+  // eslint-disable-next-line zammad/zammad-detect-translatable-string
+  if (err.message.includes('ResizeObserver loop')) return false
+})
+
 if (Cypress.env('CY_CI')) {
   Cypress.config('defaultCommandTimeout', 20000)
 }
