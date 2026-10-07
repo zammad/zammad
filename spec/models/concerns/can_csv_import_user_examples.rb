@@ -195,6 +195,19 @@ RSpec.shared_examples 'CanCsvImport - User specific tests', :aggregate_failures 
       end
     end
 
+    context 'when swapping primary and secondary organizations' do
+      let(:try)            { false }
+      let(:organization_a) { create(:organization, name: 'organization-swap-import1') }
+      let(:organization_b) { create(:organization, name: 'organization-swap-import2') }
+      let(:user)           { create(:user, login: 'user-swap-import1', organization: organization_a) }
+      let(:csv_string)     { "login;organization;organizations\n#{user.login};#{organization_b.name};#{organization_a.name}\n" }
+
+      it 'moves the primary organization to the secondary ones', :aggregate_failures do
+        expect(result).to include({ try: try, result: 'success', stats: { created: 0, updated: 1 } })
+        expect(user.reload).to have_attributes(organization: organization_b, organizations: [organization_a])
+      end
+    end
+
     context 'with roles and fixed params' do
       let(:result) { User.csv_import(**params, fixed_params: { note: 'some note' }) }
       let(:csv_string) do

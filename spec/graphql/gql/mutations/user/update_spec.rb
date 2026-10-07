@@ -117,6 +117,26 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
       end
     end
 
+    context 'when swapping primary and secondary organizations' do
+      let(:organization_a) { create(:organization) }
+      let(:organization_b) { create(:organization) }
+      let(:user)           { create(:user, organization: organization_a) }
+
+      let(:input) do
+        {
+          organizationIds: [gql.id(organization_a)],
+          organizationId:  gql.id(organization_b),
+        }
+      end
+
+      it 'moves the primary organization to the secondary ones', :aggregate_failures do
+        gql.execute(query, variables: variables)
+
+        expect(gql.result.data[:errors]).to be_nil
+        expect(user.reload).to have_attributes(organization: organization_b, organizations: [organization_a])
+      end
+    end
+
     context 'without permission', authenticated_as: :user do
       context 'with not authorized agent' do
         let(:user) { create(:admin, roles: [role]) }

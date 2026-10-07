@@ -25,7 +25,7 @@ class Organization < ApplicationModel
   default_scope { order(:id) }
 
   has_many :members, class_name: 'User', after_add: :member_update, after_remove: :member_update
-  has_and_belongs_to_many :secondary_members, class_name: 'User', after_add: :member_update, after_remove: :member_update
+  has_and_belongs_to_many :secondary_members, class_name: 'User', before_add: %i[check_secondary_member_uniqueness check_secondary_members_on_commit], after_add: :member_update, after_remove: :member_update
   has_many :tickets, class_name: 'Ticket'
 
   before_create :domain_cleanup
@@ -37,6 +37,7 @@ class Organization < ApplicationModel
   # the transaction dispatcher must be run after the workflow checks!
   include ChecksCoreWorkflow
   include HasTransactionDispatcher
+  include ChecksSecondaryOrganizationsOnCommit
 
   core_workflow_screens 'create', 'edit'
   core_workflow_admin_screens 'create', 'edit'
@@ -110,6 +111,20 @@ class Organization < ApplicationModel
     end
 
     user&.touch # rubocop:disable Rails/SkipsModelValidations
+  end
+
+  def check_secondary_member_uniqueness(user)
+    return if secondary_member_ids.exclude?(user.id)
+
+    errors.add :base, __('Secondary organizations cannot include the same organization twice.')
+
+    raise ActiveRecord::RecordInvalid, self
+  end
+
+  def check_secondary_members_on_commit(_user)
+    return if new_record?
+
+    check_secondary_organizations_on_commit(User.where(organization_id: id))
   end
 
   def unset_associations

@@ -1606,7 +1606,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:808
+#: app/models/user.rb:809
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2302,7 +2302,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:710
+#: app/models/user.rb:711
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2319,7 +2319,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:787
+#: app/models/user.rb:788
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -6969,7 +6969,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:720
+#: app/models/user.rb:721
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -9843,7 +9843,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:659
+#: app/models/user.rb:660
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -11686,7 +11686,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:739
+#: app/models/user.rb:740
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -16005,12 +16005,18 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:727
+#: app/models/user.rb:728
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:733
+#: app/models/concerns/checks_secondary_organizations_on_commit.rb:21
+#: app/models/user.rb:734
 msgid "Secondary organizations cannot include the primary organization."
+msgstr ""
+
+#: app/models/organization.rb:116
+#: app/models/user.rb:968
+msgid "Secondary organizations cannot include the same organization twice."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:67
@@ -23955,7 +23961,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:926
+#: app/models/user.rb:927
 msgid "is too long"
 msgstr ""
 

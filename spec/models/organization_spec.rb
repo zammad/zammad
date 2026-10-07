@@ -259,6 +259,49 @@ RSpec.describe Organization, type: :model do
 
   end
 
+  describe 'Guarding secondary organization members', :aggregate_failures do
+    let(:customer)               { create(:customer, organization: organization) }
+    let(:secondary_organization) { create(:organization) }
+
+    %i[<< push append concat].each do |method|
+      it "is not allowed to add a member whose primary organization it is via ##{method}" do
+        expect { organization.secondary_members.public_send(method, customer) }
+          .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+        expect(customer.reload.organizations).to be_empty
+      end
+    end
+
+    it 'is not allowed to add the same member twice' do
+      secondary_organization.secondary_members << customer
+
+      expect { secondary_organization.secondary_members << customer }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the same organization twice.')
+      expect(customer.reload.organizations).to eq([secondary_organization])
+    end
+
+    it 'is not allowed to assign the same member twice' do
+      expect { secondary_organization.update!(secondary_member_ids: [customer.id, customer.id]) }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the same organization twice.')
+      expect(customer.reload.organizations).to be_empty
+    end
+
+    it 'allows to add a member with another primary organization' do
+      expect { secondary_organization.secondary_members << customer }.not_to raise_error
+      expect(customer.reload.organizations).to eq([secondary_organization])
+    end
+
+    it 'is not allowed to assign a member whose primary organization it is' do
+      expect { organization.secondary_member_ids = [customer.id] }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+      expect(customer.reload.organizations).to be_empty
+    end
+
+    it 'allows to move a member from primary to secondary regardless of attribute order' do
+      expect { organization.update!(secondary_member_ids: [customer.id], member_ids: []) }.not_to raise_error
+      expect(customer.reload).to have_attributes(organization: nil, organizations: [organization])
+    end
+  end
+
   describe '#all_members' do
     let!(:primary_user) { create(:user, organization:, organizations: create_list(:organization, 3)) }
     let!(:secondary_user) { create(:user, organization: create(:organization), organizations: [organization]) }

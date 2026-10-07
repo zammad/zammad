@@ -34,7 +34,7 @@ class User < ApplicationModel
 
   SENSITIVE_FIELDS = %i[password].freeze
 
-  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], before_add: %i[check_organization_uniqueness], class_name: 'Organization'
+  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], before_add: %i[check_organization_uniqueness ensure_different_organizations_on_commit], class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
@@ -76,6 +76,7 @@ class User < ApplicationModel
   # the transaction dispatcher must be run after the workflow checks!
   include ChecksCoreWorkflow
   include HasTransactionDispatcher
+  include ChecksSecondaryOrganizationsOnCommit
 
   core_workflow_screens 'create', 'edit', 'invite_agent'
   core_workflow_admin_screens 'create', 'edit'
@@ -1222,10 +1223,16 @@ raise 'At least one user need to have admin permissions'
   end
 
   def check_organization_uniqueness(new_organization)
-    return if organization != new_organization && organization_ids.exclude?(new_organization.id)
+    return if organization_ids.exclude?(new_organization.id)
 
-    errors.add :base, __('Secondary organizations cannot include the primary organization.')
+    errors.add :base, __('Secondary organizations cannot include the same organization twice.')
 
     raise ActiveRecord::RecordInvalid, self
+  end
+
+  def ensure_different_organizations_on_commit(_new_organization)
+    return if new_record?
+
+    check_secondary_organizations_on_commit(User.where(id: id))
   end
 end

@@ -2529,11 +2529,14 @@ RSpec.describe User, type: :model do
       expect { create(:user, organization_id: organizations.first.id, organization_ids: [organizations.first.id, organizations.second.id]) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
     end
 
-    it 'is not allowed to add one of the secondary orgaizations as primary' do
-      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+    %i[<< push append concat].each do |method|
+      it "is not allowed to add the primary organization as secondary via ##{method}" do
+        user = create(:user, organization: organizations.first, organizations: [organizations.second])
 
-      expect { user.organizations << organizations.first }
-        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+        expect { user.organizations.public_send(method, organizations.first) }
+          .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+        expect(user.reload.organizations).to eq([organizations.second])
+      end
     end
 
     it 'allows to move organization from secondary to primary' do
@@ -2541,6 +2544,67 @@ RSpec.describe User, type: :model do
 
       expect { user.update!(organization: organizations.second, organizations: [organizations.first]) }
         .not_to raise_error
+      expect(user.reload).to have_attributes(organization: organizations.second, organizations: [organizations.first])
+    end
+
+    it 'allows to move organization from primary to secondary regardless of attribute order' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.update!(organization_ids: [organizations.first.id], organization_id: organizations.second.id) }
+        .not_to raise_error
+      expect(user.reload).to have_attributes(organization: organizations.second, organizations: [organizations.first])
+    end
+
+    it 'allows to move organization from primary to secondary regardless of association order' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.update!(organizations: [organizations.first], organization: organizations.second) }
+        .not_to raise_error
+      expect(user.reload).to have_attributes(organization: organizations.second, organizations: [organizations.first])
+    end
+
+    it 'is not allowed to replace the secondary organizations with the primary one' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.update!(organizations: [organizations.second, organizations.first]) }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+      expect(user.reload.organizations).to eq([organizations.second])
+    end
+
+    it 'is not allowed to replace the secondary organizations with the primary one without a save' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.organization_ids = [organizations.second.id, organizations.first.id] }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+      expect(user.reload.organizations).to eq([organizations.second])
+    end
+
+    it 'allows to move organization from primary to secondary by appending it inside a transaction' do
+      user = create(:user, organization: organizations.first)
+
+      expect do
+        described_class.transaction do
+          user.organizations << organizations.first
+          user.update!(organization: organizations.second)
+        end
+      end.not_to raise_error
+      expect(user.reload).to have_attributes(organization: organizations.second, organizations: [organizations.first])
+    end
+
+    it 'is not allowed to append a secondary organization twice' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.organizations << organizations.second }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the same organization twice.')
+      expect(user.reload.organizations).to eq([organizations.second])
+    end
+
+    it 'is not allowed to assign a secondary organization twice' do
+      user = create(:user, organization: organizations.first)
+
+      expect { user.update!(organization_ids: [organizations.second.id, organizations.second.id]) }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the same organization twice.')
+      expect(user.reload.organizations).to be_empty
     end
   end
 

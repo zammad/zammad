@@ -1862,6 +1862,16 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
           expect(response).to have_http_status(:unprocessable_content)
         end
       end
+
+      context 'when swapping primary and secondary organizations' do
+        let(:agent)  { create(:agent, organization: primary_org) }
+        let(:params) { { organization_id: secondary_org.id, organization_ids: [primary_org.id] } }
+
+        it 'moves the primary organization to the secondary ones', :aggregate_failures do
+          expect(response).to have_http_status(:success)
+          expect(agent.reload).to have_attributes(organization: secondary_org, organizations: [primary_org])
+        end
+      end
     end
 
     context 'with a password change' do
