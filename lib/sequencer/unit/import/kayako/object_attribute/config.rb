@@ -10,6 +10,12 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::Config < Sequencer::Unit
   provides :config
 
   def process
+    if attribute_type_class.nil?
+      logger.info { "Skipping. Unsupported field type '#{resource['type']}' for field '#{resource['key']}'." }
+      state.provide(:action, :skipped)
+      return
+    end
+
     attribute_config = attribute_type.config
 
     state.provide(:config) do
@@ -19,13 +25,16 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::Config < Sequencer::Unit
       }.merge(attribute_config)
     end
   rescue => e
-    logger.error "The custom field type '#{resource['type']}' can not be mapped to an internal field."
     handle_failure(e)
   end
 
   private
 
   def attribute_type
-    "Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::#{resource['type'].capitalize}".constantize.new(resource, default_language, model_class)
+    attribute_type_class.new(resource, default_language, model_class)
+  end
+
+  def attribute_type_class
+    @attribute_type_class ||= "Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::#{resource['type'].capitalize}".safe_constantize
   end
 end

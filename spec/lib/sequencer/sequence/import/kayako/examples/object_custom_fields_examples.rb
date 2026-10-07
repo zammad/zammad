@@ -73,6 +73,34 @@ RSpec.shared_examples 'Object custom fields' do |klass:|
     include_examples 'import skipped custom field'
   end
 
+  context 'when custom field type is unsupported' do
+    let(:resource) do
+      {
+        'id'                        => 80_000_387_410,
+        'fielduuid'                 => '82e5393b-e036-45d1-beb9-46f96ebd697b',
+        'title'                     => 'Unknown',
+        'type'                      => 'UNKNOWN',
+        'key'                       => 'custom_unknown',
+        'is_visible_to_customers'   => false,
+        'required_for_agents'       => true,
+        'is_customer_editable'      => false,
+        'is_required_for_customers' => false,
+        'regular_expression'        => nil,
+        'sort_order'                => 1,
+        'is_enabled'                => true,
+        'options'                   => [],
+        'created_at'                => '2021-08-16T19:34:35+00:00',
+        'updated_at'                => '2021-08-16T19:34:35+00:00',
+      }
+    end
+
+    include_examples 'import skipped custom field'
+
+    it 'skips the custom field instead of failing' do
+      expect(Sequencer.process(described_class.name, parameters: process_payload, expecting: [:action])).to eq(action: :skipped)
+    end
+  end
+
   context "when custom field type is 'SELECT'" do
     let(:resource) do
       {

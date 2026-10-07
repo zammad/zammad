@@ -202,5 +202,39 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::User, db_strategy: :reset, 
         expect(User.last).to have_attributes(imported_user)
       end
     end
+
+    context 'with a value for an unmapped field' do
+      let(:merge_resource) do
+        {
+          'user_fields' => {
+            'custom_dropdown'   => '2',
+            'lieblingstier'     => 'Hundä',
+            'test::example'     => '1',
+            'standard::manager' => '1234',
+          },
+        }
+      end
+
+      it 'ignores the value of the unmapped field' do
+        process(process_payload)
+        expect(User.last).to have_attributes(imported_user)
+      end
+    end
+
+    context 'without any imported user field' do
+      let(:field_map) { {} }
+
+      let(:merge_resource) do
+        {
+          'user_fields' => {
+            'standard::manager' => '1234',
+          },
+        }
+      end
+
+      it 'imports user correctly (increased user count)' do
+        expect { process(process_payload) }.to change(User, :count).by(1)
+      end
+    end
   end
 end
