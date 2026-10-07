@@ -256,8 +256,8 @@ importers:
         version: 7.4.1
     devDependencies:
       '@colbymchenry/codegraph':
-        specifier: ^1.6.1
-        version: 1.6.1
+        specifier: ^1.6.2
+        version: 1.6.2
       '@faker-js/faker':
         specifier: ^10.6.0
         version: 10.6.0
@@ -1017,38 +1017,38 @@ packages:
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
 
-  '@colbymchenry/codegraph-darwin-arm64@1.6.1':
-    resolution: {integrity: sha512-PCyaJg40RDjuZIH42IaMZfpSFC8Of8INzGCQI0CvIL2l5JD+89oBzTmeeqoJCJPCVYEmUg0ZX2RWdH6nTbM7kA==}
+  '@colbymchenry/codegraph-darwin-arm64@1.6.2':
+    resolution: {integrity: sha512-r2gMjnZCyIABkAi5WdQ9cADHIDhfEU1K6K7DelR0Un9lDp+BFK+2ocLyfgMFfLJQeFPCiu4TL5npJRVT3tnchQ==}
     cpu: [arm64]
     os: [darwin]
 
-  '@colbymchenry/codegraph-darwin-x64@1.6.1':
-    resolution: {integrity: sha512-G+WMLhf67ocEKB9WF4W2DGOF/jkRfVDAgXMCvMCFvB9hI+A0lpZ2rUVSm58FQDq8NfX+V7KnTt17uymRlQbiOw==}
+  '@colbymchenry/codegraph-darwin-x64@1.6.2':
+    resolution: {integrity: sha512-28WglI4BwqxLXNFYlkvZXs5Ye3WYdMLeoFRKFmRA/NwlnH4if8IKGVt6oS7YiQ8qspB9nWo18O+8IDhxkFXXqA==}
     cpu: [x64]
     os: [darwin]
 
-  '@colbymchenry/codegraph-linux-arm64@1.6.1':
-    resolution: {integrity: sha512-6/SAflhcucR+H3V7FlUKcCRxl4VzRkK9D+Z9GjWHw8E3Bs03Ssbfm6Wps7xR+EQ8h4UO4DMeXsPAsLWn4IbeTQ==}
+  '@colbymchenry/codegraph-linux-arm64@1.6.2':
+    resolution: {integrity: sha512-4sUICiYzHgC3brCKw4FDiY10jVQ79oIm2wwE978IOAXj36sDxji6d9l5SEvGyHyolgSXsLImLtagTsIEN2Pvnw==}
     cpu: [arm64]
     os: [linux]
 
-  '@colbymchenry/codegraph-linux-x64@1.6.1':
-    resolution: {integrity: sha512-ekkXHFI71jtFzKxJiWVhu+St7S+lh4B9KZdMFzIyBeqyOwtTqdum/ivUQyJo7zwWAuf7VFykVBQairJLKieDQg==}
+  '@colbymchenry/codegraph-linux-x64@1.6.2':
+    resolution: {integrity: sha512-DJWizz1qHNr1MsbK6fz1mjVUQjeTH3T+L0D2BGaLkygWzBnNMG30MvLq1ae0m6cUV414U8aEow5Eb/kIORA8+w==}
     cpu: [x64]
     os: [linux]
 
-  '@colbymchenry/codegraph-win32-arm64@1.6.1':
-    resolution: {integrity: sha512-FuGOkKtd3EjqHaW/W27hf8oXp+psHVQkzWj0iqzUPjn+VNfvv4t00an60UVtBKv6OlozK2QKbCdED4k7WZ7FhQ==}
+  '@colbymchenry/codegraph-win32-arm64@1.6.2':
+    resolution: {integrity: sha512-Gl3zS0VlWfBSqbJ9zzBByrH3Mjqzq81Ub33llTmShK1UUQOO7EtC9GE5fOR3YU43CnBTws2d7lcfy+KPIsmy8Q==}
     cpu: [arm64]
     os: [win32]
 
-  '@colbymchenry/codegraph-win32-x64@1.6.1':
-    resolution: {integrity: sha512-qUcpAR32HgKMcrkZAOAXwY6vCV9TztF1YE61/SGC6TRNqPkJGHMD22yNe2VmrCmSmPNf0/aQIWS/BKGJ3ZFDPA==}
+  '@colbymchenry/codegraph-win32-x64@1.6.2':
+    resolution: {integrity: sha512-3psrtVSdZIoqHLmdeL1b9OCPeKtuPKmVjg2/3XcOLaBwu0osMRwYFHG6uN1iSKQOKfre8jL+t2KXV8fYl1VxAQ==}
     cpu: [x64]
     os: [win32]
 
-  '@colbymchenry/codegraph@1.6.1':
-    resolution: {integrity: sha512-kdyJ7Y9Q7oAMioThrNlRvm/23JRMMTlfydqsUx07eYK6EZIKlOLPgX9yA/h0TGaorQ6sWkrvzqocpoY7DgFUQw==}
+  '@colbymchenry/codegraph@1.6.2':
+    resolution: {integrity: sha512-hODH/mGnCf3IUMs6rzktv/zbecJIKJfdZAYHZ9mqecb0G7ZkHaA8CZafDVnswANFEL1YFcG+lfAwc5SIXzUH6Q==}
     hasBin: true
 
   '@csstools/color-helpers@6.1.1':
@@ -7392,32 +7392,32 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@colbymchenry/codegraph-darwin-arm64@1.6.1':
+  '@colbymchenry/codegraph-darwin-arm64@1.6.2':
     optional: true
 
-  '@colbymchenry/codegraph-darwin-x64@1.6.1':
+  '@colbymchenry/codegraph-darwin-x64@1.6.2':
     optional: true
 
-  '@colbymchenry/codegraph-linux-arm64@1.6.1':
+  '@colbymchenry/codegraph-linux-arm64@1.6.2':
     optional: true
 
-  '@colbymchenry/codegraph-linux-x64@1.6.1':
+  '@colbymchenry/codegraph-linux-x64@1.6.2':
     optional: true
 
-  '@colbymchenry/codegraph-win32-arm64@1.6.1':
+  '@colbymchenry/codegraph-win32-arm64@1.6.2':
     optional: true
 
-  '@colbymchenry/codegraph-win32-x64@1.6.1':
+  '@colbymchenry/codegraph-win32-x64@1.6.2':
     optional: true
 
-  '@colbymchenry/codegraph@1.6.1':
+  '@colbymchenry/codegraph@1.6.2':
     optionalDependencies:
-      '@colbymchenry/codegraph-darwin-arm64': 1.6.1
-      '@colbymchenry/codegraph-darwin-x64': 1.6.1
-      '@colbymchenry/codegraph-linux-arm64': 1.6.1
-      '@colbymchenry/codegraph-linux-x64': 1.6.1
-      '@colbymchenry/codegraph-win32-arm64': 1.6.1
-      '@colbymchenry/codegraph-win32-x64': 1.6.1
+      '@colbymchenry/codegraph-darwin-arm64': 1.6.2
+      '@colbymchenry/codegraph-darwin-x64': 1.6.2
+      '@colbymchenry/codegraph-linux-arm64': 1.6.2
+      '@colbymchenry/codegraph-linux-x64': 1.6.2
+      '@colbymchenry/codegraph-win32-arm64': 1.6.2
+      '@colbymchenry/codegraph-win32-x64': 1.6.2
 
   '@csstools/color-helpers@6.1.1': {}
 
