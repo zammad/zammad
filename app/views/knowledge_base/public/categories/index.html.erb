@@ -14,8 +14,10 @@
     <% if !@categories.present? && !@answers&.present? %>
       <div class="sections-empty">
         <%= zt('No content to show') %>
-        <br>
-        <%= zt('Please add categories and/or answers') %>
+        <% if can_preview? %>
+          <br>
+          <%= zt('Please add categories and/or answers') %>
+        <% end %>
       </div>
     <% else %>
       <% if @categories&.present? %>

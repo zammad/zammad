@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
+require 'models/concerns/has_translations_examples'
 require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase, type: :model do
@@ -31,6 +32,59 @@ RSpec.describe KnowledgeBase, type: :model do
   it 'keeps a sorting mode it was created with' do
     expect(create(:knowledge_base, category_sorting_mode: 'last_update').category_sorting_mode)
       .to eq('last_update')
+  end
+
+  describe 'HasTranslations' do
+    include_context 'basic Knowledge Base'
+
+    let!(:record) { knowledge_base }
+    let(:add_translation) do
+      ->(locale) { create(:knowledge_base_translation, knowledge_base: record, kb_locale: locale) }
+    end
+
+    it_behaves_like 'HasTranslations'
+  end
+
+  describe '.available_in' do
+    include_context 'basic Knowledge Base'
+
+    let(:browsed) { alternative_locale.system_locale }
+
+    it 'includes a knowledge base translated to the locale' do
+      create(:knowledge_base_translation, kb_locale: alternative_locale)
+
+      expect(described_class.available_in(browsed)).to include(knowledge_base)
+    end
+
+    it 'includes an untranslated knowledge base holding a published answer translated to the locale' do
+      create(:knowledge_base_answer_translation, answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+
+      expect(described_class.available_in(browsed)).to include(knowledge_base)
+    end
+
+    it 'leaves out an untranslated knowledge base with nothing translated to the locale' do
+      published_answer
+
+      expect(described_class.available_in(browsed)).not_to include(knowledge_base)
+    end
+
+    it 'leaves out an untranslated knowledge base whose only translated content is unpublished' do
+      create(:knowledge_base_answer_translation, answer: draft_answer, kb_locale: alternative_locale)
+
+      expect(described_class.available_in(browsed)).not_to include(knowledge_base)
+    end
+
+    it 'loads the knowledge base under its primary translation when it has none in the locale' do
+      create(:knowledge_base_answer_translation, answer: published_answer, kb_locale: alternative_locale)
+
+      expect(described_class.available_in(browsed).find(knowledge_base.id).translation.kb_locale).to eq(primary_locale)
+    end
+
+    it 'matches nothing without a locale, whatever content there is' do
+      published_answer
+
+      expect(described_class.available_in(nil)).not_to exist
+    end
   end
 
   describe 'audit log' do

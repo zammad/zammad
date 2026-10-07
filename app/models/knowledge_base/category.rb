@@ -96,6 +96,73 @@ class KnowledgeBase::Category < ApplicationModel
     end
   }
 
+  # The categories the help site shows in the given locale, each loaded with the one translation it
+  #   is shown under (HasTranslations.with_preferred_translation).
+  #
+  # A category is shown where it is translated to, and wherever it holds published content
+  #   translated to (.with_public_content_in): there it stands in for the content below it, under
+  #   its preferred translation — the browsed locale, then the primary one, then any — like the
+  #   ordering above and the desktop view (Service::KnowledgeBase::CategoryContent). Listing only
+  #   the translated ones, as `localed` does, hid such content behind a not-found page in every
+  #   locale the language picker offered but the category was not translated to. The knowledge base
+  #   itself is served by the same rule (KnowledgeBase.available_in).
+  #   See https://github.com/zammad/zammad/issues/6368
+  #
+  # The translation check comes first so that the OR short-circuits: a translated category is shown
+  #   either way and pays nothing for the content check, which walks one subtree per row it does
+  #   reach (.public_content_below_sql). Nothing without a locale, as KnowledgeBase.available_in.
+  scope :available_in, lambda { |system_locale_or_id|
+    next none if system_locale_or_id.blank?
+
+    translated_to_system_locale(system_locale_or_id)
+      .or(with_public_content_in(system_locale_or_id))
+      .with_preferred_translation(system_locale_or_id)
+  }
+
+  # The categories holding published content translated to the given locale — a published answer,
+  #   or a subcategory with one, anywhere below them: #public_content? asked of a whole listing at
+  #   once.
+  scope :with_public_content_in, ->(system_locale_or_id) { where(public_content_below_sql(system_locale_or_id)) }
+
+  # The same in any locale — #public_content? without one, as KnowledgeBase::CategoryPolicy asks it.
+  scope :with_public_content, -> { where(public_content_below_sql) }
+
+  # Whether a published answer — translated to the given locale, or to any — lies at or below the
+  #   category of the row, as a correlated EXISTS for a WHERE. Walks that one subtree, from the row
+  #   down, and reaches the answers through it: the cost follows the subtree, not the knowledge
+  #   base, and a listing pays it only for the rows whose other conditions leave the question open.
+  #   Guarded against a parent_id cycle like HasRecursiveCteQuery; a string for the reason given at
+  #   KnowledgeBase::Answer.published_translated_sql, which also explains the `OFFSET 0`.
+  def self.public_content_below_sql(system_locale_or_id = nil)
+    <<~SQL.squish
+      EXISTS (
+        SELECT 1 FROM (#{subtree_ids_sql('knowledge_base_categories.id')}) AS subtree
+         WHERE EXISTS (SELECT 1 FROM knowledge_base_answers
+                        WHERE knowledge_base_answers.category_id = subtree.id
+                          AND #{KnowledgeBase::Answer.published_translated_sql(system_locale_or_id)}
+                        OFFSET 0)
+         LIMIT 1
+      )
+    SQL
+  end
+
+  # SQL: the ids of the subtree below the category `root_sql` names (an id, or a column of an
+  #   enclosing query), the root included — the walk .public_content_below_sql and KnowledgeBase::
+  #   Locale.available_for share, guarded against a parent_id cycle like HasRecursiveCteQuery.
+  def self.subtree_ids_sql(root_sql)
+    <<~SQL.squish
+      WITH RECURSIVE subtree AS (
+        SELECT #{root_sql} AS id, ARRAY[#{root_sql}] AS path, 0 AS depth
+        UNION ALL
+        SELECT child.id, subtree.path || child.id, subtree.depth + 1
+          FROM knowledge_base_categories child
+          JOIN subtree ON child.parent_id = subtree.id
+         WHERE NOT child.id = ANY(subtree.path) AND subtree.depth < #{HasRecursiveCteQuery::MAX_DEPTH_LIMIT}
+      )
+      SELECT id FROM subtree
+    SQL
+  end
+
   acts_as_list scope: :parent, top_of_list: 0
 
   alias assets_essential assets
@@ -126,26 +193,6 @@ class KnowledgeBase::Category < ApplicationModel
 
   def self.max_depth
     100
-  end
-
-  # The value of one column of the translation the category is *shown* under, as a scalar subquery
-  #   usable in ORDER BY, with the same three-level fallback as
-  #   Service::KnowledgeBase::CategoryContent#preferred_translation (requested locale, then the
-  #   primary locale, then any). See KnowledgeBase::Answer.preferred_translation_sql for why this
-  #   is a correlated subquery and why it is keyed on the system locale.
-  def self.preferred_translation_sql(column, system_locale_or_id)
-    ActiveRecord::Base.sanitize_sql_array(
-      [
-        <<~SQL.squish,
-          (SELECT translations.#{connection.quote_column_name(column)}
-             FROM knowledge_base_category_translations translations
-            WHERE translations.category_id = knowledge_base_categories.id
-            ORDER BY (translations.kb_locale_id IN (:browsed)) DESC, (translations.kb_locale_id IN (:primary)) DESC, translations.id ASC
-            LIMIT 1)
-        SQL
-        ::KnowledgeBase::Locale.translation_preference_ids(system_locale_or_id),
-      ]
-    )
   end
 
   # Returns self and all descendants (any depth) as a single relation, using a recursive CTE
@@ -286,11 +333,22 @@ class KnowledgeBase::Category < ApplicationModel
   end
 
   def public_content?(kb_locale = nil)
+    return @public_content if kb_locale.nil? && !@public_content.nil?
+
     scope = self_with_children_answers.published
 
     scope = scope.localed(kb_locale.system_locale) if kb_locale
 
     scope.any?
+  end
+
+  # Settles #public_content? for a whole listing in one query. KnowledgeBase::CategoryPolicy
+  #   #show_public? asks it once per category, and a listing checks every category it shows: two
+  #   queries per category, which on a category with thirty subcategories was half the page.
+  def self.preload_public_content(categories)
+    ids = where(id: categories.map(&:id)).with_public_content.pluck(:id)
+
+    categories.each { |category| category.public_content = ids.include?(category.id) }
   end
 
   def internal_content?(kb_locale = nil)
@@ -362,6 +420,9 @@ class KnowledgeBase::Category < ApplicationModel
     attrs[:permissions_effective] = permissions_effective
     attrs
   end
+
+  # Written by .preload_public_content alone: the answer to #public_content? settled for a listing.
+  attr_writer :public_content
 
   private
 

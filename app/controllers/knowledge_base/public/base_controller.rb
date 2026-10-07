@@ -12,10 +12,15 @@ class KnowledgeBase::Public::BaseController < ApplicationController
 
   private
 
+  # `load.first` rather than `first!`: with the translation eager-loaded, a LIMIT makes Rails select
+  #   the matching ids in a query of their own first.
   def load_kb
     @knowledge_base = policy_scope(KnowledgeBase)
-                      .localed(guess_locale_via_uri)
-                      .first!
+                      .available_in(guess_locale_via_uri)
+                      .load
+                      .first
+
+    raise ActiveRecord::RecordNotFound if @knowledge_base.nil?
   end
 
   def all_locales
@@ -44,8 +49,16 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     @guess_locale_via_uri ||= params[:locale].present? ? ::Locale.find_by(locale: params[:locale]) : nil
   end
 
+  # Memoized per request: the breadcrumb asks for the category the action already looked up (the
+  #   answer page's own, and the parent chain on every page). Nothing to look up without an id — the
+  #   breadcrumb also asks for the parent of a top level category.
   def find_category(id)
-    @knowledge_base.load_category(system_locale_via_uri, id)
+    return if id.blank?
+
+    key = id.respond_to?(:id) ? id.id : id.to_s.to_i
+
+    @found_categories ||= {}
+    @found_categories.fetch(key) { |k| @found_categories[k] = @knowledge_base.load_category(system_locale_via_uri, id) }
   end
 
   def find_locales(object)
@@ -58,11 +71,19 @@ class KnowledgeBase::Public::BaseController < ApplicationController
   # `sorting_node` is the knowledge base or category whose categories are being listed, and
   #   therefore the one holding their sorting mode. Nil where the listing spans categories and no
   #   single mode applies (the tag page), which leaves it on the hand-arranged order.
+  # The knowledge base is preloaded for the policy, which asks every category whether its knowledge
+  #   base is active: from the query cache that is a fresh record per category, which on a listing
+  #   of thirty cost more than the listing query.
   def categories_filter(list, sorting_node = nil)
-    list
-      .localed(system_locale_via_uri)
+    categories = list
+      .available_in(system_locale_via_uri)
       .sorted_by_mode(sorting_node&.category_sorting_mode, system_locale_or_id: system_locale_via_uri)
-      .select { |category| policy(category).show_public? }
+      .preload(:knowledge_base)
+      .to_a
+
+    KnowledgeBase::Category.preload_public_content(categories)
+
+    categories.select { |category| policy(category).show_public? }
   end
 
   # `sorting_node` is the category whose answers are being listed, holding their own sorting mode —
@@ -106,8 +127,11 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     nil
   end
 
+  # Asked once per listed item by the view; `||=` would ask the policy again each time for a guest.
   def can_preview?
-    @can_preview ||= policy(@knowledge_base).update?
+    return @can_preview if defined?(@can_preview)
+
+    @can_preview = policy(@knowledge_base).update?
   end
 
   def not_found(e)

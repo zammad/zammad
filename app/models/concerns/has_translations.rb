@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-module HasTranslations
+module HasTranslations # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   included do
@@ -18,6 +18,19 @@ module HasTranslations
       where(id: translation_class.where(kb_locale: kb_locale).select(reflect_on_association(:translations).foreign_key))
     }
 
+    # Translated to the given *system* locale — what `localed` filters by, composable with `.or`.
+    #
+    # Not `translated_to`'s `id IN (subquery)`: the help site asks this of one row at a time (the
+    #   knowledge base, a category lookup, the breadcrumb, the adjacent-answer walk), and PostgreSQL
+    #   answers that form by first hashing every translation of the locale — about 7 ms for one of
+    #   10,000 categories, against 0.1 ms for a probe of the (kb_locale_id, owner id) index. The
+    #   locale ids are literal (KnowledgeBase::Locale.translation_preference_ids) so that index
+    #   serves the whole probe, and `OFFSET 0` keeps the planner from rewriting the EXISTS back into
+    #   the hashed form, which it did on a listing of thirty.
+    scope :translated_to_system_locale, lambda { |system_locale_or_id|
+      where(translated_to_system_locale_sql(system_locale_or_id))
+    }
+
     # returns objects with single translation according to given locale.
     # If no locale is given, defaults to Knowledge Base's primary locale
     scope :localed, lambda { |system_locale_or_id|
@@ -28,6 +41,14 @@ module HasTranslations
       else
         output.where('knowledge_base_locales.system_locale_id' => -1)
       end
+    }
+
+    # Loads each record with the single translation it is *shown* under — the given locale's, then
+    #   the primary one, then any — so `#translation` on it is that one, as it is after `localed`,
+    #   which unlike this drops the records not translated to the locale.
+    scope :with_preferred_translation, lambda { |system_locale_or_id|
+      eager_load(:translations)
+        .where("#{translation_class.table_name}.id = (#{preferred_translation_sql(:id, system_locale_or_id)})")
     }
   end
 
@@ -54,6 +75,47 @@ module HasTranslations
 
     def translation_class
       translation_class_name.constantize
+    end
+
+    # The check of .translated_to_system_locale as a correlated EXISTS on the row of `table_name`,
+    #   for a WHERE — see there.
+    def translated_to_system_locale_sql(system_locale_or_id)
+      foreign_key = reflect_on_association(:translations).foreign_key
+
+      ActiveRecord::Base.sanitize_sql_array(
+        [
+          <<~SQL.squish,
+            EXISTS (SELECT 1 FROM #{translation_class.table_name} translations
+                     WHERE translations.#{connection.quote_column_name(foreign_key)} = #{table_name}.id
+                       AND translations.kb_locale_id IN (:browsed)
+                     OFFSET 0)
+          SQL
+          { browsed: ::KnowledgeBase::Locale.translation_preference_ids(system_locale_or_id)[:browsed] },
+        ]
+      )
+    end
+
+    # The value of one column of the translation a record is *shown* under, as a scalar subquery
+    #   usable in a WHERE or an ORDER BY: the three levels of Gql::Types::KnowledgeBase::AnswerType
+    #   #preferred_translation (requested locale, then the primary locale, then any) as one
+    #   preference chain — a join would drop the records without a translation in the browsed locale.
+    # The preference is compared against kb_locale ids resolved once for the whole listing rather
+    #   than joined per row — see KnowledgeBase::Locale.translation_preference_ids.
+    def preferred_translation_sql(column, system_locale_or_id)
+      foreign_key = reflect_on_association(:translations).foreign_key
+
+      ActiveRecord::Base.sanitize_sql_array(
+        [
+          <<~SQL.squish,
+            (SELECT translations.#{connection.quote_column_name(column)}
+               FROM #{translation_class.table_name} translations
+              WHERE translations.#{connection.quote_column_name(foreign_key)} = #{table_name}.id
+              ORDER BY (translations.kb_locale_id IN (:browsed)) DESC, (translations.kb_locale_id IN (:primary)) DESC, translations.id ASC
+              LIMIT 1)
+          SQL
+          ::KnowledgeBase::Locale.translation_preference_ids(system_locale_or_id),
+        ]
+      )
     end
 
     # Preferred translation for many [owner_id, kb_locale_id] pairs at once, resolved with the same

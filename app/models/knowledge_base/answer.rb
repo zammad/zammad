@@ -194,33 +194,29 @@ class KnowledgeBase::Answer < ApplicationModel
   after_touch :touch_translations
 
   class << self
-    # The value of one column of the translation an answer is *shown* under, as a scalar subquery
-    #   usable in ORDER BY.
-    #
-    # A correlated subquery rather than a join, for two reasons. `localed` (which
-    #   .sorted_by_published uses) inner-joins and would drop every answer without a translation in
-    #   the browsed locale — editors have to keep seeing those. And the fallback needs the three
-    #   levels of Gql::Types::KnowledgeBase::AnswerType#preferred_translation (requested locale,
-    #   then the primary locale, then any), which the ORDER BY below expresses as one preference
-    #   chain instead of one outer join per level.
-    #
-    # The preference is compared against kb_locale ids resolved once for the whole listing rather
-    #   than joined per row — see KnowledgeBase::Locale.translation_preference_ids, which also
-    #   explains why each preference is a set. With no locale browsed the first set is empty, so
-    #   the primary-locale translation wins, exactly as it does for the displayed one.
-    def preferred_translation_sql(column, system_locale_or_id)
-      ActiveRecord::Base.sanitize_sql_array(
+    # SQL: the `knowledge_base_answers` row is published and, given a locale, translated to it. For
+    #   the correlated content checks of KnowledgeBase.available_in and KnowledgeBase::Category
+    #   .available_in, which have to be strings — built as relations and rendered, they cost more to
+    #   build than the query costs to run. The translation is looked up per answer, and `OFFSET 0`
+    #   keeps PostgreSQL from pulling that up into a join it would answer by first hashing every
+    #   translated answer of the knowledge base (0.8 ms of a 1.5 ms root listing against 400
+    #   answers) rather than probing the few below one subtree.
+    def published_translated_sql(system_locale_or_id = nil)
+      return published_sql if system_locale_or_id.nil?
+
+      translated = sanitize_sql_array(
         [
           <<~SQL.squish,
-            (SELECT translations.#{connection.quote_column_name(column)}
-               FROM knowledge_base_answer_translations translations
-              WHERE translations.answer_id = knowledge_base_answers.id
-              ORDER BY (translations.kb_locale_id IN (:browsed)) DESC, (translations.kb_locale_id IN (:primary)) DESC, translations.id ASC
-              LIMIT 1)
+            EXISTS (SELECT 1 FROM knowledge_base_answer_translations
+                     WHERE knowledge_base_answer_translations.answer_id = knowledge_base_answers.id
+                       AND knowledge_base_answer_translations.kb_locale_id IN (SELECT id FROM knowledge_base_locales WHERE system_locale_id = ?)
+                     OFFSET 0)
           SQL
-          ::KnowledgeBase::Locale.translation_preference_ids(system_locale_or_id),
+          system_locale_or_id.try(:id) || system_locale_or_id,
         ]
       )
+
+      "#{published_sql} AND #{translated}"
     end
 
     # When an answer became visible to the audience doing the browsing — the counterpart of the

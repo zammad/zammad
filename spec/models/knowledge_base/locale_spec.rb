@@ -19,6 +19,34 @@ RSpec.describe KnowledgeBase::Locale, type: :model do
     end
   end
 
+  describe '.available_for' do
+    include_context 'basic Knowledge Base'
+
+    it 'lists the locales the object is translated to' do
+      create(:knowledge_base_answer_translation, answer: published_answer, kb_locale: alternative_locale)
+
+      expect(described_class.available_for(published_answer)).to contain_exactly(primary_locale, alternative_locale)
+    end
+
+    it 'lists the locales a category holds published content in, translated or not' do
+      create(:knowledge_base_answer_translation, answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+
+      expect(described_class.available_for(category)).to contain_exactly(primary_locale, alternative_locale)
+    end
+
+    it 'does not count unpublished content' do
+      create(:knowledge_base_answer_translation, answer: draft_answer, kb_locale: alternative_locale)
+
+      expect(described_class.available_for(category)).to contain_exactly(primary_locale)
+    end
+
+    it 'lists the locales a knowledge base holds published content in, translated or not' do
+      create(:knowledge_base_answer_translation, answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+
+      expect(described_class.available_for(knowledge_base)).to contain_exactly(primary_locale, alternative_locale)
+    end
+  end
+
   describe 'audit log' do
     before { Setting.set('system_init_done', true) }
 

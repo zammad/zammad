@@ -82,6 +82,37 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
         expect(page).to have_breadcrumb_item(translated_title).at_index(1)
       end
     end
+
+    # The reporter's path: a category translated to the primary locale only, whose subcategory and
+    #   answer are translated to the second one as well.
+    #   See https://github.com/zammad/zammad/issues/6368
+    context 'when looking at a translated subcategory below an untranslated category' do
+      let(:translated_subcategory_title) { Faker::Lorem.sentence }
+
+      before do
+        create(:knowledge_base_translation,
+               knowledge_base:, kb_locale: alternative_locale)
+
+        create(:knowledge_base_category_translation,
+               category: subcategory, title: translated_subcategory_title, kb_locale: alternative_locale)
+
+        create(:knowledge_base_answer_translation,
+               answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+
+        visit help_root_path(alternative_locale.system_locale.locale)
+      end
+
+      it 'reaches the subcategory through the category shown under its primary title', :aggregate_failures do
+        click_on category.translation_primary.title
+
+        expect(page).to have_breadcrumb_item(category.translation_primary.title).at_index(1)
+
+        click_on translated_subcategory_title
+
+        expect(page).to have_css('h1', text: translated_subcategory_title)
+        expect(page).to have_breadcrumb_item(category.translation_primary.title).at_index(1)
+      end
+    end
   end
 
   context 'answer' do

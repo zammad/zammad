@@ -40,8 +40,8 @@
 #   listing again, which is the one thing this class exists to prevent. It would also not serve the
 #   categories, where the walk wants a run of siblings rather than the next one.
 #
-#   Note that the obvious lazy forms are not available either: `localed` eager-loads the
-#   translations, and PostgreSQL rejects `SELECT DISTINCT` with an ORDER BY expression that is not in
+#   Note that the obvious lazy forms are not available either: `localed` and `available_in` eager-load
+#   the translations, and PostgreSQL rejects `SELECT DISTINCT` with an ORDER BY expression that is not in
 #   the select list, so `.first`/`.limit(1)` raise on every mode but `manual` — and `.last` raises
 #   ActiveRecord::IrreversibleOrderError, a raw order having nothing to reverse.
 class KnowledgeBase::AdjacentAnswer
@@ -114,16 +114,25 @@ class KnowledgeBase::AdjacentAnswer
       .pluck(:id)
   end
 
-  # Load the answer and its category in the browsed locale for the link title and breadcrumb.
-  # The category keeps its existing translation when it has none in this locale.
+  # Load the answer and its category in the browsed locale for the link title and breadcrumb: the
+  #   category under the translation the site shows it under there, which is a fallback when it has
+  #   none of its own (KnowledgeBase::Category.available_in). A category the site does not show in
+  #   this locale at all — reachable only by an editor walking unpublished content — keeps the
+  #   translation it was loaded with.
   def answer_by_id(id)
     return if id.nil?
 
     ::KnowledgeBase::Answer.localed(locale).find_by(id: id)&.tap do |answer|
-      localed_category = ::KnowledgeBase::Category.localed(locale).find_by(id: answer.category_id)
+      shown_category = shown_category_by_id(answer.category_id)
 
-      answer.category = localed_category if localed_category
+      answer.category = shown_category if shown_category
     end
+  end
+
+  # Memoized: the two neighbours of an answer are usually its siblings, in the same category.
+  def shown_category_by_id(id)
+    @shown_categories ||= {}
+    @shown_categories.fetch(id) { |key| @shown_categories[key] = ::KnowledgeBase::Category.where(id: key).available_in(locale).load.first }
   end
 
   # The ids of the categories listed inside one node, in the mode that node stores for them. `node`
@@ -138,7 +147,7 @@ class KnowledgeBase::AdjacentAnswer
     children = node.is_a?(::KnowledgeBase) ? node.categories.root : node.children
 
     children
-      .localed(locale)
+      .available_in(locale)
       .sorted_by_mode(node.category_sorting_mode, system_locale_or_id: locale)
       .pluck(:id)
   end
@@ -172,11 +181,12 @@ class KnowledgeBase::AdjacentAnswer
   #   for `:next`, the ones before it — nearest first — for `:previous`. Without a breakpoint the
   #   whole level is walked, which is how #previous descends into the current category's children.
   #
-  # A breakpoint the level does not contain leaves nothing to walk here. It has no translation in the
-  #   browsed locale, so the site does not list it on this level either, and an ordered list offers no
-  #   index to step from — where the `position` comparison this replaced still had a number to
-  #   compare. The caller moves up a level instead, rather than walking a whole level of which half
-  #   may lie on the wrong side of the answer being viewed.
+  # A breakpoint the level does not contain leaves nothing to walk here. The site does not list it on
+  #   this level either — nothing below it is shown in the browsed locale, which an editor walking
+  #   unpublished content can still arrive from — and an ordered list offers no index to step from,
+  #   where the `position` comparison this replaced still had a number to compare. The caller moves
+  #   up a level instead, rather than walking a whole level of which half may lie on the wrong side
+  #   of the answer being viewed.
   def sibling_categories(parent_category, breakpoint, direction)
     siblings = ordered_category_ids(parent_category || breakpoint.knowledge_base)
     index    = breakpoint && siblings.index(breakpoint.id)

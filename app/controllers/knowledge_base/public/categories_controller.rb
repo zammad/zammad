@@ -3,13 +3,12 @@
 class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseController
   skip_before_action :load_kb, only: :forward_root
 
+  # An empty listing is not a missing page: #load_kb already required a knowledge base translated to
+  #   the browsed locale, so its root exists there even while nothing is translated to it yet. The
+  #   view renders that as its empty state.
   def index
     @categories     = categories_filter(@knowledge_base.categories.root, @knowledge_base)
     @object_locales = find_locales(@knowledge_base)
-
-    authorize(@categories, policy_class: Controllers::KnowledgeBase::Public::CategoriesControllerPolicy)
-  rescue Pundit::NotAuthorizedError
-    raise ActiveRecord::RecordNotFound
   end
 
   def show

@@ -33,6 +33,29 @@ RSpec.describe 'KnowledgeBase public preloading', type: :request do
     ActiveSupport::Notifications.unsubscribe(subscriber)
   end
 
+  # Every category a listing shows is asked whether it has published content below it
+  #   (KnowledgeBase::CategoryPolicy#show_public?), a recursive tree walk and an exists query per
+  #   category until KnowledgeBase::Category.preload_public_content settled it for the whole listing.
+  describe 'a category listing' do
+    def create_root_category_with_answer
+      create(:knowledge_base_answer, :published, category: create(:knowledge_base_category, knowledge_base:))
+    end
+
+    def request_root_page
+      category_query_count { get help_root_path(locale_name) }
+    end
+
+    it 'settles the public content of the listed categories in a constant number of queries' do
+      create_root_category_with_answer
+      baseline = request_root_page
+
+      UserInfo.current_user_id = 1
+      3.times { create_root_category_with_answer }
+
+      expect(request_root_page).to eq(baseline)
+    end
+  end
+
   describe 'a tag listing' do
     def create_tagged_answer_in_own_category
       create(:knowledge_base_answer, :published, :with_tag,

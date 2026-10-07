@@ -189,4 +189,198 @@ RSpec.describe 'KnowledgeBase public categories', type: :request do
       end
     end
   end
+
+  # The language picker offers every locale the knowledge base is translated to, so each of them
+  #   has to lead somewhere — and content translated to a locale has to be reachable there, whether
+  #   or not the category above it is.
+  #   See https://github.com/zammad/zammad/issues/6368
+  describe 'browsing a locale the category above the content is not translated to' do
+    let(:alternative_locale_name) { alternative_locale.system_locale.locale }
+
+    # Fixed titles rather than the factory's, to be found in the page verbatim.
+    let(:category) do
+      create(:knowledge_base_category, knowledge_base:, translations: [build(:knowledge_base_category_translation, title: 'Primary Only Category', kb_locale: primary_locale)])
+    end
+
+    before { create(:knowledge_base_translation, kb_locale: alternative_locale) }
+
+    shared_examples 'a category shown under its primary title' do
+      it 'lists the category on the start page under its primary title, linked in the browsed locale', :aggregate_failures do
+        get help_root_path(alternative_locale_name)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('Primary Only Category')
+        expect(response.body).to include(help_category_path(alternative_locale_name, category.translation_primary))
+      end
+
+      it 'shows the category under its primary title' do
+        get help_category_path(alternative_locale_name, category)
+
+        expect(response.body).to include('<h1>', 'Primary Only Category')
+      end
+
+      it 'offers the browsed locale in the language picker of the category' do
+        get help_category_path(alternative_locale_name, category)
+
+        expect(response.body).to include(%(hreflang="#{alternative_locale_name}"))
+      end
+    end
+
+    context 'when a published answer in the category is translated to the browsed locale' do
+      before { create(:knowledge_base_answer_translation, answer: published_answer, kb_locale: alternative_locale, title: 'Translated Answer') }
+
+      it_behaves_like 'a category shown under its primary title'
+
+      it 'lists the translated answer in the category' do
+        get help_category_path(alternative_locale_name, category)
+
+        expect(response.body).to include('Translated Answer')
+      end
+
+      # The page offering the answer in other languages lists its titles too, so what tells the two
+      #   apart is its error layout.
+      it 'serves the translated answer, rather than offering it in other languages', :aggregate_failures do
+        get help_answer_path(alternative_locale_name, category, published_answer)
+
+        expect(response.body).to include('Translated Answer')
+        expect(response.body).not_to include('main--error')
+      end
+    end
+
+    context 'when a subcategory holds a published answer translated to the browsed locale' do
+      before do
+        create(:knowledge_base_category_translation, category: subcategory, kb_locale: alternative_locale, title: 'Translated Subcategory')
+        create(:knowledge_base_answer_translation, answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+      end
+
+      it_behaves_like 'a category shown under its primary title'
+
+      it 'lists the translated subcategory in the category' do
+        get help_category_path(alternative_locale_name, category)
+
+        expect(response.body).to include('Translated Subcategory')
+      end
+
+      it 'shows the category under its primary title in the breadcrumb of the subcategory' do
+        get help_category_path(alternative_locale_name, subcategory)
+
+        expect(response.body).to include('class="breadcrumb"', 'Primary Only Category')
+      end
+    end
+
+    context 'when nothing below the category is translated to the browsed locale' do
+      before { published_answer }
+
+      # The empty state is asserted by its markup: its copy is rendered in the browsed locale.
+      it 'answers the start page with its empty state instead of not found', :aggregate_failures do
+        get help_root_path(alternative_locale_name)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('class="sections-empty"')
+        expect(response.body).not_to include('Primary Only Category')
+      end
+
+      it 'keeps the category itself unreachable' do
+        get help_category_path(alternative_locale_name, category)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when only an unpublished answer below the category is translated to the browsed locale' do
+      before { create(:knowledge_base_answer_translation, answer: draft_answer, kb_locale: alternative_locale) }
+
+      it 'leaves the category off the start page' do
+        get help_root_path(alternative_locale_name)
+
+        expect(response.body).not_to include('Primary Only Category')
+      end
+    end
+
+    it 'still answers not found for a locale the knowledge base is not configured for' do
+      get help_root_path('de-de')
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    # Rather than the whole site again under a made-up address, which the content check alone
+    #   would serve.
+    it 'answers not found for a locale that does not exist at all', :aggregate_failures do
+      published_answer
+
+      get help_root_path('xx-yy')
+      expect(response).to have_http_status(:not_found)
+
+      get help_category_path('xx-yy', category)
+      expect(response).to have_http_status(:not_found)
+
+      get help_answer_path('xx-yy', category, published_answer)
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  # The knowledge base itself follows the rule its categories do: a configured locale it is not
+  #   translated to is served once it holds published content translated to it, under the fallback
+  #   title — the language picker on that content offers the locale, so the root has to answer there.
+  describe 'browsing a configured locale the knowledge base itself is not translated to' do
+    let(:alternative_locale_name) { alternative_locale.system_locale.locale }
+    let(:primary_title)           { CGI.escapeHTML(knowledge_base.translation_primary.title) }
+
+    before { alternative_locale }
+
+    context 'when it holds a published answer translated to that locale' do
+      before do
+        create(:knowledge_base_category_translation, category:, kb_locale: alternative_locale, title: 'Translated Category')
+        create(:knowledge_base_answer_translation, answer: published_answer, kb_locale: alternative_locale)
+      end
+
+      it 'serves the start page under the primary title, listing the translated category', :aggregate_failures do
+        get help_root_path(alternative_locale_name)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(primary_title, 'Translated Category')
+      end
+
+      it 'offers the locale in the language picker' do
+        get help_root_path(alternative_locale_name)
+
+        expect(response.body).to include(%(hreflang="#{alternative_locale_name}"))
+      end
+
+      it 'serves the category page' do
+        get help_category_path(alternative_locale_name, category)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when nothing is translated to that locale' do
+      before { published_answer }
+
+      it 'answers not found' do
+        get help_root_path(alternative_locale_name)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  # The line telling the visitor to add content is an instruction only an editor can follow, and the
+  #   empty start page is what a guest now lands on for a locale nothing is translated to yet.
+  describe 'the empty state of a listing' do
+    it 'tells a guest that there is no content, and nothing more', :aggregate_failures do
+      get help_root_path(locale_name)
+
+      expect(response.body).to include('No content to show')
+      expect(response.body).not_to include('Please add categories and/or answers')
+    end
+
+    it 'tells an editor to add content' do
+      authenticated_as(create(:admin), via: :browser)
+
+      get help_root_path(locale_name)
+
+      expect(response.body).to include('Please add categories and/or answers')
+    end
+  end
 end

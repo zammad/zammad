@@ -94,7 +94,7 @@ nullsLast = (left, right) ->
 
 # The title the interface shows a record under, which is therefore the one it has to sort under. The
 #   fallback chain behind it (the browsed locale, then the primary one, then any) is the one
-#   KnowledgeBase::Answer.preferred_translation_sql expresses in SQL.
+#   HasTranslations.preferred_translation_sql expresses in SQL.
 sortableTitle = (item, kb_locale) ->
   shownTranslation(item, kb_locale)?.title?.toLowerCase() ? null
 

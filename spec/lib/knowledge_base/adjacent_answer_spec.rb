@@ -408,8 +408,9 @@ RSpec.describe KnowledgeBase::AdjacentAnswer do
     let(:translation) { answer.translations.find_by(kb_locale: alternative_locale) }
     let(:answer)      { answer_a_1_1_third }
 
-    # Only the walked branch is translated: an untranslated record is not listed in this locale, so
-    #   everything the walk has to step over has to exist in it.
+    # Only the walked branch is translated: an untranslated answer is not listed in this locale, and
+    #   a category only once something below it is, so everything the walk has to step over has to
+    #   exist in it.
     before do
       [category_a_1_1, category_a_1_2].each do |category|
         create(:knowledge_base_category_translation, category:, kb_locale: alternative_locale, title: "#{category.translations.first.title} (lt)")
@@ -440,8 +441,29 @@ RSpec.describe KnowledgeBase::AdjacentAnswer do
       end
     end
 
-    # Stepping out of a category walks up into ones the site does not list in this locale, and the
-    #   link still has to render a breadcrumb for the answer it lands on.
+    # The site lists a category holding content translated to the browsed locale whether or not the
+    #   category itself is (KnowledgeBase::Category.available_in), so the walk has to step into such
+    #   a category and back out of it just the same.
+    context 'when the neighbour is in an untranslated sibling category' do
+      before { category_a_1_2.translations.find_by!(kb_locale: alternative_locale).destroy! }
+
+      it 'steps into it' do
+        expect(adjacent_answer.next).to eq(answer_a_1_2_first)
+      end
+
+      it 'reads its category under its primary translation' do
+        expect(adjacent_answer.next.category.translation).to eq(category_a_1_2.translation_primary)
+      end
+
+      it 'steps back out of it' do
+        translation = answer_a_1_2_first.translations.find_by!(kb_locale: alternative_locale)
+
+        expect(described_class.new(translation).previous).to eq(answer_a_1_1_third)
+      end
+    end
+
+    # Stepping out of a category walks up into one shown under a fallback title in this locale, and
+    #   the link still has to render a breadcrumb for the answer it lands on.
     context 'when the category of the neighbour is untranslated' do
       let(:answer) { answer_a_1_2_first }
 
@@ -455,8 +477,8 @@ RSpec.describe KnowledgeBase::AdjacentAnswer do
         expect(adjacent_answer.next).to eq(answer_a_1_first)
       end
 
-      it 'keeps the translation the category came with' do
-        expect(adjacent_answer.next.category.translation).to eq(category_a_1.translations.first)
+      it 'reads its category under its primary translation' do
+        expect(adjacent_answer.next.category.translation).to eq(category_a_1.translation_primary)
       end
     end
   end

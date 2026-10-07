@@ -355,6 +355,141 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
     include_examples 'verify visibility in given state', state: :archived,  is_visible: false
   end
 
+  describe '.available_in' do
+    include_context 'basic Knowledge Base'
+
+    let(:browsed_locale)      { alternative_locale }
+    let(:browsed)             { browsed_locale.system_locale }
+    let(:untranslated)        { create(:knowledge_base_category, knowledge_base:) }
+    let(:untranslated_parent) { create(:knowledge_base_category, knowledge_base:) }
+    let(:translated)          { create(:knowledge_base_category, knowledge_base:, translations: [build(:knowledge_base_category_translation, kb_locale: browsed_locale)]) }
+
+    # Translated to the primary locale by the factory, and to the browsed one here.
+    def answer_in(category, state = :published)
+      create(:knowledge_base_answer, state, category:).tap do |answer|
+        create(:knowledge_base_answer_translation, answer:, kb_locale: browsed_locale)
+      end
+    end
+
+    it 'includes a category translated to the locale, with nothing below it' do
+      expect(described_class.available_in(browsed)).to include(translated)
+    end
+
+    it 'includes an untranslated category holding a published answer translated to the locale' do
+      answer_in(untranslated)
+
+      expect(described_class.available_in(browsed)).to include(untranslated)
+    end
+
+    it 'includes the untranslated categories above such an answer' do
+      answer_in(create(:knowledge_base_category, parent: untranslated_parent))
+
+      expect(described_class.available_in(browsed)).to include(untranslated_parent)
+    end
+
+    it 'leaves out an untranslated category with nothing translated to the locale below it' do
+      create(:knowledge_base_answer, :published, category: untranslated)
+
+      expect(described_class.available_in(browsed)).not_to include(untranslated)
+    end
+
+    %i[draft internal archived].each do |state|
+      it "leaves out an untranslated category whose only translated content is #{state}" do
+        answer_in(untranslated, state)
+
+        expect(described_class.available_in(browsed)).not_to include(untranslated)
+      end
+    end
+
+    # The content check is SQL of its own, so it has to agree with KnowledgeBase::Answer.published
+    #   about scheduling.
+    it 'leaves out an untranslated category whose translated answer is scheduled for later' do
+      create(:knowledge_base_answer_translation, answer: create(:knowledge_base_answer, category: untranslated, published_at: 1.day.from_now), kb_locale: browsed_locale)
+
+      expect(described_class.available_in(browsed)).not_to include(untranslated)
+    end
+
+    it 'includes an untranslated category whose translated answer is only scheduled for archiving' do
+      create(:knowledge_base_answer_translation, answer: create(:knowledge_base_answer, category: untranslated, published_at: 1.day.ago, archived_at: 1.day.from_now), kb_locale: browsed_locale)
+
+      expect(described_class.available_in(browsed)).to include(untranslated)
+    end
+
+    it 'matches nothing without a locale, whatever content there is' do
+      answer_in(untranslated)
+
+      expect(described_class.available_in(nil)).not_to exist
+    end
+  end
+
+  describe '.preload_public_content' do
+    include_context 'basic Knowledge Base'
+
+    def counting_queries
+      queries    = 0
+      subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |event|
+        queries += 1 if !event.payload[:cached] && event.payload[:name] != 'SCHEMA'
+      end
+
+      yield
+
+      queries
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
+
+    it 'settles #public_content? for the given categories without further queries', :aggregate_failures do
+      published_answer_in_subcategory
+      other_category
+
+      categories = [category, other_category]
+      described_class.preload_public_content(categories)
+
+      results = nil
+      queries = counting_queries { results = categories.map(&:public_content?) }
+
+      expect(results).to eq([true, false])
+      expect(queries).to eq(0)
+    end
+
+    it 'leaves #public_content? asking the database for a locale' do
+      published_answer
+      described_class.preload_public_content([category])
+
+      expect(counting_queries { category.public_content?(alternative_locale) }).to be_positive
+    end
+  end
+
+  describe '.with_public_content_in' do
+    include_context 'basic Knowledge Base'
+
+    let(:browsed) { alternative_locale.system_locale }
+
+    before do
+      create(:knowledge_base_answer_translation, answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+    end
+
+    it 'includes the category of the answer and every category above it' do
+      expect(described_class.with_public_content_in(browsed)).to contain_exactly(category, subcategory)
+    end
+
+    # The walk goes down from the categories asked about, so a root is included for what lies two
+    #   levels below it.
+    it 'includes a listed category for content deep below it' do
+      expect(knowledge_base.categories.root.with_public_content_in(browsed)).to contain_exactly(category)
+    end
+
+    it 'looks a single category up by its own subtree' do
+      expect(described_class.where(id: category.id).with_public_content_in(browsed)).to contain_exactly(category)
+    end
+
+    it 'leaves out categories whose published content is translated to other locales only' do
+      published_answer_in_other_category
+
+      expect(described_class.with_public_content_in(browsed)).not_to include(other_category)
+    end
+  end
+
   describe '#assets', current_user_id: -> { user.id } do
     subject(:assets) { another_category_answer && internal_answer && category.assets }
 

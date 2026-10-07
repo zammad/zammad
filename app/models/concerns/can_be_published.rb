@@ -172,6 +172,14 @@ module CanBePublished
         .date_later_or_nil(:archived_at, timestamp)
     }
 
+    # The `.published` condition as SQL on this table, for a correlated subquery that has to be a
+    #   string. The same two comparisons the scope makes, rendered from the same Arel.
+    def self.published_sql(timestamp = Time.zone.now)
+      arel_table[:published_at].lt(timestamp)
+        .and(arel_table[:archived_at].gt(timestamp).or(arel_table[:archived_at].eq(nil)))
+        .to_sql
+    end
+
     scope :date_earlier, lambda { |field, timestamp|
       where arel_table[field].lt(timestamp)
     }

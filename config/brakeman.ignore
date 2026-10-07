@@ -365,6 +365,29 @@
       "note": "Reflections come from the models themselves and are thus safe to use."
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "55419ab9d2d0951b6234824e1462e07cc8f1f02e3822e004df1f5044f32cbfbb",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/knowledge_base.rb",
+      "line": 112,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"EXISTS (SELECT 1 FROM knowledge_base_answers\\n          JOIN knowledge_base_categories ON knowledge_base_categories.id = knowledge_base_answers.category_id\\n         WHERE knowledge_base_categories.knowledge_base_id = knowledge_bases.id\\n           AND #{KnowledgeBase::Answer.published_translated_sql(system_locale_or_id)}\\n         OFFSET 0)\\n\".squish)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "KnowledgeBase",
+        "method": "with_public_content_in"
+      },
+      "user_input": "KnowledgeBase::Answer.published_translated_sql(system_locale_or_id)",
+      "confidence": "High",
+      "cwe_id": [
+        89
+      ],
+      "note": "SQL assembled from constants only: .published_translated_sql binds the locale id through sanitize_sql_array and renders the publication condition from Arel in .published_sql."
+    },
+    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "582df3b442a09879f0c035b50f6c4fce9aa8285c907737476f16004246c67bc6",
@@ -479,6 +502,52 @@
         185
       ],
       "note": "Admin configured RegExp"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "82a90dfbbfc2648d9aa5157a4c48569ffc4eb92d18d7f3d5aec026aa9afaaeed",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/knowledge_base/locale.rb",
+      "line": 77,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"EXISTS (SELECT 1 FROM knowledge_base_answer_translations\\n          JOIN knowledge_base_answers ON knowledge_base_answers.id = knowledge_base_answer_translations.answer_id\\n         WHERE knowledge_base_answer_translations.kb_locale_id = knowledge_base_locales.id\\n           AND knowledge_base_answers.category_id IN (#{(KnowledgeBase::Category.subtree_ids_sql(Integer(KnowledgeBase::Category.id)) or sanitize_sql_array([\"SELECT id FROM knowledge_base_categories WHERE knowledge_base_id = ?\", KnowledgeBase.id]))})\\n           AND #{KnowledgeBase::Answer.published_sql}\\n         OFFSET 0)\\n\".squish)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "KnowledgeBase::Locale",
+        "method": "available_for"
+      },
+      "user_input": "KnowledgeBase::Category.subtree_ids_sql(Integer(KnowledgeBase::Category.id))",
+      "confidence": "High",
+      "cwe_id": [
+        89
+      ],
+      "note": "SQL assembled from constants only: the category subtree is built from Integer(object.id), the knowledge base variant binds its id through sanitize_sql_array, and .published_sql renders the publication condition from Arel."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "da792521ebb34fcee3625126747222dae19e77ddae1c25c71a66528283827a0a",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/has_translations.rb",
+      "line": 43,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "eager_load(:translations).where(\"#{translation_class.table_name}.id = (#{preferred_translation_sql(:id, system_locale_or_id)})\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HasTranslations",
+        "method": null
+      },
+      "user_input": "preferred_translation_sql(:id, system_locale_or_id)",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": "SQL assembled from constants only: the table name is the model's own translation table, and .preferred_translation_sql quotes the literal column with quote_column_name and binds the locale ids through sanitize_sql_array."
     },
     {
       "warning_type": "SQL Injection",

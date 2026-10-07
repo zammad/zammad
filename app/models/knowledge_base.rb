@@ -89,6 +89,37 @@ class KnowledgeBase < ApplicationModel
 
   scope :active, -> { where(active: true) }
 
+  # The knowledge base as the help site serves it in the given locale, loaded with the translation
+  #   it is shown under (HasTranslations.with_preferred_translation) — by the rule its categories
+  #   are shown by (KnowledgeBase::Category.available_in): where it is translated to, and wherever
+  #   it holds published content translated to, under a fallback title then. A locale the site can
+  #   show content in is one it has to serve, or the language picker on that content leads nowhere.
+  #
+  # Nothing without a locale: the content check alone takes none to mean any
+  #   (KnowledgeBase::Answer.published_translated_sql), which served the whole site under any made-up
+  #   locale segment of the URL (`/help/xx-yy`), where `localed` answered not found.
+  scope :available_in, lambda { |system_locale_or_id|
+    next none if system_locale_or_id.blank?
+
+    translated_to_system_locale(system_locale_or_id)
+      .or(with_public_content_in(system_locale_or_id))
+      .with_preferred_translation(system_locale_or_id)
+  }
+
+  # The knowledge bases holding a published answer translated to the given locale — #public_content?
+  #   asked of the scope rather than of a record. Correlated, so that the OR in .available_in
+  #   short-circuits for a translated knowledge base; a string and `OFFSET 0` for the reasons given
+  #   at KnowledgeBase::Answer.published_translated_sql.
+  scope :with_public_content_in, lambda { |system_locale_or_id|
+    where(<<~SQL.squish)
+      EXISTS (SELECT 1 FROM knowledge_base_answers
+                JOIN knowledge_base_categories ON knowledge_base_categories.id = knowledge_base_answers.category_id
+               WHERE knowledge_base_categories.knowledge_base_id = knowledge_bases.id
+                 AND #{KnowledgeBase::Answer.published_translated_sql(system_locale_or_id)}
+               OFFSET 0)
+    SQL
+  }
+
   alias assets_essential assets
 
   def assets(data)
@@ -223,8 +254,10 @@ class KnowledgeBase < ApplicationModel
     Rails.application.routes.url_helpers.knowledge_base_path(self)
   end
 
+  # `load.first` rather than `find_by`: with the translation eager-loaded, a LIMIT makes Rails select
+  #   the matching ids in a query of their own first.
   def load_category(locale, id)
-    categories.localed(locale).find_by(id: id)
+    categories.where(id: id).available_in(locale).load.first
   end
 
   def self.with_multiple_locales_exists?
