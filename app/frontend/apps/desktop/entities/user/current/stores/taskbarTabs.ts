@@ -3,7 +3,7 @@
 import { tryOnScopeDispose } from '@vueuse/shared'
 import { isEqual, keyBy } from 'lodash-es'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter, type RouteLocationNormalizedGeneric } from 'vue-router'
 
 import {
@@ -305,6 +305,89 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
     }),
   )
 
+  const taskbarDeleteMutation = new MutationHandler(useUserCurrentTaskbarItemDeleteMutation())
+
+  // A handler of its own rather than a flag on the one above: a tab the user closes stays able to
+  //   report its error while a tab closed for them - which they did not ask for and should not be
+  //   told about - is in flight.
+  const silencedTaskbarDeleteMutation = new MutationHandler(
+    useUserCurrentTaskbarItemDeleteMutation(),
+    { errorCallback: () => false },
+  )
+
+  const deleteTaskbarTab = (taskbarTabId: ID, silenceError?: boolean) => {
+    taskbarTabIDsInDeletion.value.push(taskbarTabId)
+
+    const tabEntityKey = taskbarTabList.value.find(
+      (taskbarTab) => taskbarTab.taskbarTabId === taskbarTabId,
+    )?.tabEntityKey
+
+    const mutation = silenceError ? silencedTaskbarDeleteMutation : taskbarDeleteMutation
+
+    mutation
+      .send({
+        id: taskbarTabId,
+      })
+      .then(() => {
+        // Drop the stored context, it is no longer needed once the tab is gone.
+        if (tabEntityKey) delete taskbarTabContexts.value[tabEntityKey]
+      })
+      .catch(() => {
+        taskbarTabIDsInDeletion.value = taskbarTabIDsInDeletion.value.filter(
+          (inDeletionTaskbarTabId) => inDeletionTaskbarTabId !== taskbarTabId,
+        )
+      })
+  }
+
+  // Enforced when a tab is added, and not by a watcher on the list: only the window that adds a tab
+  //   knows which tab is the new one. A watcher runs in every other window of the same user too,
+  //   where the new tab is neither the active nor a touched one - and since the list can only stay
+  //   over the limit while nothing older is closable, the new tab is the sole candidate there.
+  const closeTaskbarTabsOverLimit = (addedTabEntityKey: string) => {
+    const maxTaskCount = application.config.ui_task_mananger_max_task_count
+
+    // `0` and an unset maximum both switch the limit off: nothing is ever closed and the list
+    //   grows unbounded. Keep the check - without it `0` would put the list over the limit by its
+    //   full length, and one add would close every untouched tab bar the active one.
+    if (!(maxTaskCount > 0)) return
+
+    const overLimitCount = taskbarTabList.value.length - maxTaskCount
+    if (overLimitCount <= 0) return
+
+    // Only tabs older than the one just added are candidates. A tab that is not older was opened by
+    //   another window at about the same time, where it is the new tab - and closing it would throw
+    //   that window out of the tab it has just opened, the very symptom of #6356.
+    const addedTab = taskbarTabList.value.find(
+      (taskbarTab) => taskbarTab.tabEntityKey === addedTabEntityKey,
+    )
+
+    if (!addedTab?.updatedAt) return
+
+    const addedAt = new Date(addedTab.updatedAt).getTime()
+
+    taskbarTabList.value
+      .filter(
+        (taskbarTab) =>
+          taskbarTab.taskbarTabId &&
+          taskbarTab.tabEntityKey !== addedTabEntityKey &&
+          taskbarTab.tabEntityKey !== activeTaskbarTabEntityKey.value &&
+          taskbarTab.updatedAt &&
+          new Date(taskbarTab.updatedAt).getTime() < addedAt &&
+          !taskbarTab.changed &&
+          !taskbarTab.dirty,
+      )
+      .sort((a, b) => new Date(a.updatedAt!).getTime() - new Date(b.updatedAt!).getTime())
+      .slice(0, overLimitCount)
+      .forEach((taskbarTab) => {
+        log.info(
+          `More than the allowed maximum number of tasks are open (${maxTaskCount}), closing the oldest untouched task now.`,
+          taskbarTab.tabEntityKey,
+        )
+
+        deleteTaskbarTab(taskbarTab.taskbarTabId!, true)
+      })
+  }
+
   const addTaskbarTab = async (
     taskbarTabEntity: EnumTaskbarEntity,
     tabEntityKey: string,
@@ -355,6 +438,8 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
           (tab) => tab.tabEntityKey !== tabEntityKey,
         )
       })
+
+    closeTaskbarTabsOverLimit(tabEntityKey)
   }
 
   const taskbarUpdateMutation = new MutationHandler(useUserCurrentTaskbarItemUpdateMutation())
@@ -420,73 +505,6 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
     activeTaskbarTabEntityKey.value = undefined
   }
-
-  let silenceTaskbarDeleteError = false
-
-  const taskbarDeleteMutation = new MutationHandler(useUserCurrentTaskbarItemDeleteMutation(), {
-    errorCallback: () => {
-      if (silenceTaskbarDeleteError) return false
-    },
-  })
-
-  const deleteTaskbarTab = (taskbarTabId: ID, silenceError?: boolean) => {
-    taskbarTabIDsInDeletion.value.push(taskbarTabId)
-
-    if (silenceError) silenceTaskbarDeleteError = true
-
-    const tabEntityKey = taskbarTabList.value.find(
-      (taskbarTab) => taskbarTab.taskbarTabId === taskbarTabId,
-    )?.tabEntityKey
-
-    taskbarDeleteMutation
-      .send({
-        id: taskbarTabId,
-      })
-      .then(() => {
-        // Drop the stored context, it is no longer needed once the tab is gone.
-        if (tabEntityKey) delete taskbarTabContexts.value[tabEntityKey]
-      })
-      .catch(() => {
-        taskbarTabIDsInDeletion.value = taskbarTabIDsInDeletion.value.filter(
-          (inDeletionTaskbarTabId) => inDeletionTaskbarTabId !== taskbarTabId,
-        )
-      })
-      .finally(() => {
-        if (silenceError) silenceTaskbarDeleteError = false
-      })
-  }
-
-  watch(taskbarTabList, (newTaskbarTabList) => {
-    const maxTaskCount = application.config.ui_task_mananger_max_task_count
-
-    // Without a configured (positive) maximum there is nothing to enforce. Note that
-    // `newTaskbarTabList.length <= undefined` is always `false`, so skipping this check
-    // would otherwise make every list change fall through to the eviction logic below.
-    if (!newTaskbarTabList || !(maxTaskCount > 0) || newTaskbarTabList.length <= maxTaskCount)
-      return
-
-    const sortedTaskbarTabList = newTaskbarTabList
-      .filter(
-        (taskbarTab) =>
-          taskbarTab.taskbarTabId !== activeTaskbarTab.value?.taskbarTabId &&
-          taskbarTab.updatedAt &&
-          !taskbarTab.changed &&
-          !taskbarTab.dirty,
-      )
-      .sort((a, b) => new Date(a.updatedAt!).getTime() - new Date(b.updatedAt!).getTime())
-
-    if (!sortedTaskbarTabList.length) return
-
-    const oldestTaskbarTab = sortedTaskbarTabList.at(0)
-    if (!oldestTaskbarTab?.taskbarTabId) return
-
-    log.info(
-      `More than the allowed maximum number of tasks are open (${application.config.ui_task_mananger_max_task_count}), closing the oldest untouched task now.`,
-      oldestTaskbarTab.tabEntityKey,
-    )
-
-    deleteTaskbarTab(oldestTaskbarTab.taskbarTabId, true)
-  })
 
   const waitForTaskbarListLoaded = () => {
     return new Promise<void>((resolve) => {
