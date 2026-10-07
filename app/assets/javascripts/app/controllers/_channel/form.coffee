@@ -179,6 +179,9 @@ class ChannelForm extends App.ControllerSubContent
     @$('.js-captchaScore').toggleClass('hide', !@captchaNeedsScore(provider))
 
   updateCaptchaOptions: =>
+    # ignore change events from browser autofill on the hidden credential fields while no provider is selected (#6425)
+    return if !@$('.js-spamProtection [name=form_ticket_create_captcha_provider]').val()
+
     options = {}
     for field in ['sitekey', 'secret', 'project_id', 'api_key']
       value = @$(".js-spamProtection [name=#{field}]:visible").val()

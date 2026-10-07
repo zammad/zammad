@@ -67,7 +67,7 @@
             <label for="form-captcha-secret"><%- @T('Secret') %></label>
           </div>
           <div class="controls">
-            <input type="password" id="form-captcha-secret" name="secret" value="<%= @captchaSecret %>" autocomplete="off">
+            <input type="password" id="form-captcha-secret" name="secret" value="<%= @captchaSecret %>" autocomplete="new-password">
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@
             <label for="form-captcha-api-key"><%- @T('API key') %></label>
           </div>
           <div class="controls">
-            <input type="password" id="form-captcha-api-key" name="api_key" value="<%= @captchaApiKey %>" autocomplete="off">
+            <input type="password" id="form-captcha-api-key" name="api_key" value="<%= @captchaApiKey %>" autocomplete="new-password">
           </div>
         </div>
       </div>
