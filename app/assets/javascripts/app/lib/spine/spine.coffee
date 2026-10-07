@@ -370,7 +370,8 @@ class Model extends Module
   changeID: (id) ->
     return if id is @id
     records = @constructor.irecords
-    records[id] = records[@id]
+    # A full fetch in between may have replaced the record under its temporary id already.
+    records[id] = records[@id] if records[@id]
     delete records[@id] unless @cid is @id
     @id = id
     #@save()

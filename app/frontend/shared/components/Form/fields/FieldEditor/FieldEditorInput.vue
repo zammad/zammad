@@ -295,10 +295,15 @@ const setEditorContent = (
   })
 }
 
+// tiptap creates the editor only on mount, a value written before is applied then.
+let contentWrittenBeforeMount: string | undefined
+
 // Set the new editor content, when the value was changed from outside (e.g. form schema update).
 const updateValueKey = props.context.node.on('input', ({ payload: newContent }) => {
-  // Early return when no editor exists, keep this in mind, when we have real initial value problems.
-  if (!editor.value) return
+  if (!editor.value) {
+    contentWrittenBeforeMount = newContent
+    return
+  }
 
   const currentContent = getEditorContent(editor.value, contentType.value)
 
@@ -377,6 +382,12 @@ onMounted(() => {
   const onLoad = props.context.onLoad as ((context: FieldEditorContext) => void)[]
   onLoad.forEach((fn) => fn(editorCustomContext))
   onLoad.length = 0
+
+  if (contentWrittenBeforeMount !== undefined) {
+    setEditorContent(contentWrittenBeforeMount, contentType.value, true)
+    contentWrittenBeforeMount = undefined
+    userHasEditedContent = false
+  }
 
   // The editor may mount after the article form is already set up (async import,
   //   late dialog rendering) - reconcile the signature it may have missed (#804).

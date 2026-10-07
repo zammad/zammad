@@ -118,6 +118,9 @@ class App.TaskManagerSingleton extends App.Controller
     if params.init && @workers[params.key]
       return
 
+    # a delayed startup scheduled before a logout cannot start without a session
+    return if params.init && !App.Session.get()
+
     # if we have init task startups, let the controller know this
     if params.init
       params.params.init = true

@@ -101,6 +101,7 @@ RSpec.describe 'System > Objects', type: :system do
           pre_reload_sessions = Sessions.sessions
           refresh_with_wait
           wait_for_authenticated_session(except: pre_reload_sessions)
+          ensure_websocket_push_delivery
 
           # Update
           click 'tbody tr:last-child'
@@ -128,6 +129,7 @@ RSpec.describe 'System > Objects', type: :system do
           # After the reload, we must explictly wait for the app to be completely ready.
           wait_for_loading_to_complete(wait_ws: true)
           wait_for_authenticated_session(except: pre_reload_sessions)
+          ensure_websocket_push_delivery
 
           # Delete
           click 'tbody tr:last-child .js-delete'
@@ -932,6 +934,7 @@ RSpec.describe 'System > Objects', type: :system do
         attribute
         visit '/#system/object_manager'
         click "tr[data-id='#{attribute.id}']"
+        modal_ready
       end
 
       it_behaves_like 'showing preview table below data options'

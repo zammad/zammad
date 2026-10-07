@@ -551,15 +551,15 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       end
 
       it 'does switch search results properly' do
-        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
-        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
+        expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 2')
         expect(current_url).to include('Testing%20Ticket%201')
 
         # switch by global search
         fill_in id: 'global-search', with: '"Testing Ticket 2"'
         click_on 'Show Search Details'
-        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
-        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 2')
+        expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 1')
         expect(current_url).to include('Testing%20Ticket%202')
       end
     end
@@ -570,14 +570,14 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       end
 
       it 'does switch search results properly' do
-        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
-        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
+        expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 2')
         expect(current_url).to include('Testing%20Ticket%201')
 
         # switch by url
         visit '#search/"Testing Ticket 2"'
-        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
-        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
+        expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 2')
+        expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 1')
         expect(current_url).to include('Testing%20Ticket%202')
       end
     end

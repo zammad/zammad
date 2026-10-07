@@ -825,7 +825,10 @@ RSpec.describe 'AI > Provider Connections', type: :system do
       before do
         connection_one && connection_two
 
-        refresh
+        # Status changes reach the page only by push, which needs an authenticated websocket session.
+        pre_reload_sessions = Sessions.sessions
+        refresh_with_wait
+        wait_for_authenticated_session(except: pre_reload_sessions)
       end
 
       it 'sets another connection as the chat default' do
@@ -998,7 +1001,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         it 'names the error of a failed provider call' do
           connection_two.record_status_error!('quota exceeded "<img src=x>" & more')
 
-          refresh
+          expect(find('tr', text: 'second-connection')).to have_css('.icon-status.superbad-color')
 
           expect(tooltip)
             .to match(%r{\AConnection failed\.\nquota exceeded "<img src=x>" & more\nLast status at: \S})

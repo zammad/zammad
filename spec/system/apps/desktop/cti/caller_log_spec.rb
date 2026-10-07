@@ -67,7 +67,7 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
 
     it 'shows a new call and its state changes without reloading' do
       visit '/cti'
-      wait_for_subscription_start('ctiLogUpdates')
+      wait_for_subscription_start('ctiLogUpdates', scope: agent)
 
       within 'main' do
         expect(page).to have_css('[data-item-id]', count: 1)
@@ -99,7 +99,9 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
 
       it 'shows a ringing call in the navigation until it is answered' do
         visit '/cti'
-        wait_for_subscription_start('ctiSidebarUpdates')
+        # The push replaces the query result as a whole, a late initial answer would hide the call.
+        wait_for_query('ctiSidebar')
+        wait_for_subscription_start('ctiSidebarUpdates', scope: agent)
 
         within '#page-navigation' do
           expect(page).to have_no_css('ul[aria-label="Ringing calls"]')
@@ -123,7 +125,7 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
 
       it 'creates a user for the caller, opens a ticket for them and names them in the entry' do
         visit '/cti'
-        wait_for_subscription_start('ctiLogUpdates')
+        wait_for_subscription_start('ctiLogUpdates', scope: agent)
 
         within 'main' do
           expect(page).to have_link('+49 30 100099999', href: 'tel:4930100099999')

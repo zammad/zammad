@@ -353,7 +353,7 @@ RSpec.describe 'Manage > Users', type: :system do
           fill_in 'password', with: 'vXqXseF9L2ab'
           expect(page).to have_text(hint)
 
-          fill_in 'password', with: ''
+          fill_in 'password', with: '', fill_options: { clear: :backspace }
           expect(page).to have_no_text(hint)
         end
       end
@@ -566,7 +566,7 @@ RSpec.describe 'Manage > Users', type: :system do
     it 'does not clear group permissions when setting user as active (#5727)' do
       expect(user.reload).to have_attributes(
         active: false,
-        groups: groups,
+        groups: match_array(groups),
       )
 
       click "tr[data-id='#{user.id}']"
@@ -585,7 +585,7 @@ RSpec.describe 'Manage > Users', type: :system do
 
       expect(user.reload).to have_attributes(
         active: true,
-        groups: groups,
+        groups: match_array(groups),
       )
     end
   end
