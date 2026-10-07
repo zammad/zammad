@@ -80,4 +80,13 @@ RSpec.describe ExternalCredential::Exchange do
       end
     end
   end
+
+  describe '.user_info' do
+    it 'extracts user information from an unpadded base64url encoded id_token' do
+      payload = Base64.urlsafe_encode64(JSON.generate({ email: 'j.mueller@example.com', name: 'Jürgen Müller?' }), padding: false)
+
+      info = described_class.user_info("header.#{payload}.signature")
+      expect(info).to include(email: 'j.mueller@example.com', name: 'Jürgen Müller?')
+    end
+  end
 end
