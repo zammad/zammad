@@ -280,7 +280,7 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     split = id_token.split('.')[1]
     return if split.blank?
 
-    JSON.parse(Base64.decode64(split)).symbolize_keys
+    JSON.parse(Base64.urlsafe_decode64(split)).symbolize_keys
   end
 
   def self.generate_state

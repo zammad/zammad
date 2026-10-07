@@ -215,7 +215,7 @@ class ExternalCredential::Exchange
     split = id_token.split('.')[1]
     return if split.blank?
 
-    JSON.parse(Base64.decode64(split)).symbolize_keys
+    JSON.parse(Base64.urlsafe_decode64(split)).symbolize_keys
   end
 
   def self.update_client_secret(previous_client_secret, current_client_secret)
