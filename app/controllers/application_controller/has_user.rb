@@ -54,6 +54,8 @@ module ApplicationController::HasUser
     @_user_on_behalf
   end
 
+  # Checked against the token owner on purpose, not the token's permission list: a token only
+  #   restricts its own actions.
   def impersonate!
     return if SessionsPolicy.new(current_user_real, Sessions).impersonate?
 
