@@ -467,12 +467,6 @@ is not served while addon packages or their migrations are still being applied.
     end
   end
 
-  def self.app_frontend_files?
-    Auth::RequestCache.fetch_value('Package/app_frontend_files') do
-      Package.all_files.values.flatten.any? { |f| f.starts_with?('app/frontend') }
-    end
-  end
-
   def self.gem_files?
     Dir['Gemfile.local.*'].present?
   end
