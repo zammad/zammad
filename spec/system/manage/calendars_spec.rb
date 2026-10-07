@@ -14,7 +14,7 @@ RSpec.describe 'Manage > Calendars', time_zone: 'America/Sao_Paulo', type: :syst
     let(:calendar_title) { "test calendar #{SecureRandom.uuid}" }
 
     # The hostname safety check resolves the feed host for real, VCR does not cover DNS lookups.
-    before { stub_hostname_resolution('https://calendar.google.com/') }
+    before { allow(IPSocket).to receive(:getaddress).with('calendar.google.com').and_return('203.0.113.10') }
 
     it 'show festivity dates correctly far away from UTC' do
       visit '/#manage/calendars'
