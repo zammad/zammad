@@ -4,6 +4,7 @@ import { keyBy } from 'lodash-es'
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 
 import { EXTENSION_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
+import type { MentionKnowledgeBaseRelatedAnswers } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
   ChangedField,
@@ -29,6 +30,11 @@ import type { Ref } from 'vue'
 export const useTicketEditForm = (
   ticket: Ref<TicketById | undefined>,
   form: Ref<FormRef | undefined>,
+  {
+    knowledgeBaseRelatedAnswers,
+  }: {
+    knowledgeBaseRelatedAnswers?: () => MentionKnowledgeBaseRelatedAnswers
+  } = {},
 ) => {
   const appName = useAppName()
 
@@ -69,6 +75,7 @@ export const useTicketEditForm = (
       },
       mentionKnowledgeBase: {
         attachmentsNodeName: 'attachments',
+        ...(knowledgeBaseRelatedAnswers && { relatedAnswers: knowledgeBaseRelatedAnswers }),
       },
       [TEXT_TOOL_PLUGIN_NAME]: {
         groupNodeName: 'group_id',

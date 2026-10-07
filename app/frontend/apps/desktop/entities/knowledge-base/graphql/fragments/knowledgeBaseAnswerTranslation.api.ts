@@ -5,6 +5,7 @@ export const KnowledgeBaseAnswerTranslationFragmentDoc = gql`
     fragment knowledgeBaseAnswerTranslation on KnowledgeBaseAnswerTranslation {
   id
   title
+  maybeLocale
   visibility
   categoryTreeTranslation {
     id

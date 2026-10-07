@@ -58,7 +58,14 @@ describe('Testing "knowledge base" popup: "??" command', () => {
 
     mountEditorWithAttachments(['ticket.agent'])
 
-    cy.findByRole('textbox').type('??How to c') // supports space
+    // Without related answers handed over, nothing is offered before a search term is typed.
+    cy.findByRole('textbox').type('??')
+    cy.findByTestId('mention-knowledge-base')
+      .should('contain.text', 'Start typing to search in knowledge base…')
+      .findAllByRole('option')
+      .should('not.exist')
+
+    cy.findByRole('textbox').type('How to c') // supports space
 
     cy.findByTestId('mention-knowledge-base')
       .should('exist')

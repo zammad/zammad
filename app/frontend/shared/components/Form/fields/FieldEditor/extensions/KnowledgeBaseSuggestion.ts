@@ -13,13 +13,24 @@ import { debouncedQuery, htmlCleanup } from '#shared/utils/helpers.ts'
 import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api.ts'
 import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api.ts'
 
-import type { FieldEditorProps, MentionKnowledgeBaseItem } from '../types.ts'
+import type {
+  FieldEditorProps,
+  MentionKnowledgeBaseItem,
+  MentionKnowledgeBaseRelatedAnswer,
+  MentionKnowledgeBaseRelatedItem,
+  MentionKnowledgeBaseRelatedSection,
+} from '../types.ts'
 import type { CommandProps } from '@tiptap/core'
 import type { Ref } from 'vue'
 
 export const EXTENSION_NAME = 'mentionKnowledgeBase'
 
 const ACTIVATOR = '??'
+
+const toRelatedMention = (
+  answer: MentionKnowledgeBaseRelatedAnswer,
+  section: MentionKnowledgeBaseRelatedSection,
+): MentionKnowledgeBaseRelatedItem => ({ ...answer, section })
 
 export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   const queryHandler = new QueryHandler(
@@ -31,6 +42,24 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   const getKnowledgeBaseMentions = async (query: string) => {
     const { data } = await queryHandler.query({ variables: { query } })
     return data?.knowledgeBaseAnswerSuggestions || []
+  }
+
+  const searchKnowledgeBaseMentions = debouncedQuery(
+    async ({ query }: { query: string }) => getKnowledgeBaseMentions(query),
+    [],
+    200,
+  )
+
+  // Offered before a search term is typed: the answers linked to the edited record first, then the
+  //   suggested ones.
+  const getRelatedMentions = (): MentionKnowledgeBaseRelatedItem[] => {
+    const relatedAnswers = context.value.meta?.[EXTENSION_NAME]?.relatedAnswers?.()
+    if (!relatedAnswers) return []
+
+    return [
+      ...relatedAnswers.linked.map((answer) => toRelatedMention(answer, 'linked')),
+      ...relatedAnswers.suggested.map((answer) => toRelatedMention(answer, 'suggested')),
+    ]
   }
 
   const translateHandler = new MutationHandler(
@@ -53,12 +82,12 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       }
     },
   }).configure({
-    suggestion: buildMentionSuggestion({
+    suggestion: buildMentionSuggestion<MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem>({
       activator: ACTIVATOR,
       type: 'knowledge-base',
       label: __('Knowledge base articles'),
       placeholder: __('Start typing to search in knowledge base…'),
-      async insert(props: MentionKnowledgeBaseItem) {
+      async insert(props: MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem) {
         const { meta: editorMeta = {}, formId } = context.value
         const meta = editorMeta[EXTENSION_NAME] || {}
 
@@ -81,14 +110,11 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
 
         return htmlCleanup(result?.knowledgeBaseAnswerSuggestionContentTransform?.body || '')
       },
-      items: debouncedQuery(
-        async ({ query }) => {
-          if (!query) return []
-          return getKnowledgeBaseMentions(query)
-        },
-        [],
-        200,
-      ),
+      // The related answers are at hand, so they skip the debounce. A search still on its way when the
+      //   term is cleared is discarded by the suggestion plugin.
+      items: ({ query }) => (query ? searchKnowledgeBaseMentions({ query }) : getRelatedMentions()),
+      // The related answers may still be loading when `??` opens.
+      defaultListSource: getRelatedMentions,
     }),
   })
 }

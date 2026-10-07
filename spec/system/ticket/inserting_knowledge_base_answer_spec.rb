@@ -69,6 +69,152 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
     end
   end
 
+  context 'when creating a ticket' do
+    let(:answer) { published_answer }
+
+    it 'shows only the hint before a search term is typed' do
+      open_page
+      field.send_keys('??')
+
+      expect(page).to have_css('.shortcut > ul > li', count: 1, text: 'Start typing to search in Knowledge Base…')
+    end
+  end
+
+  context 'when replying to a ticket with a linked and a suggested answer', authenticated_as: :authenticate do
+    let(:answer)                { published_answer }
+    let(:ticket)                { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:suggested_translation) { internal_answer.translations.first }
+    let(:suggestions_enabled)   { true }
+    let(:found_suggestions)     { { answers: [{ translation: suggested_translation, score: 0.9 }], pending: false } }
+    let(:suggestions)           { found_suggestions }
+    let(:category_title)        { category.translations.first.title }
+    let(:several_locales)       { false }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', true)
+      Setting.set('ai_assistance_kb_answer_suggestions', suggestions_enabled)
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      # The knowledge base answer factory triggers the vector index callback, which must not reach
+      #   Elasticsearch in this spec.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return(suggestions)
+
+      create(:link, from: ticket, to: target_translation)
+      alternative_locale if several_locales
+
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      # The `??` list reads the sidebar's answers, so wait until they are there.
+      within :active_content do
+        find('.link_kb_answers', text: target_translation.title)
+        find('.link_kb_answers', text: suggested_translation.title) if suggestions_enabled && !suggestions[:pending]
+      end
+    end
+
+    it 'lists the linked answer, then the suggested one, below the hint, each with its category' do
+      field.send_keys('??')
+
+      expect(page).to have_selector(:text_module, target_translation.id)
+      expect(all('.shortcut > ul > li').map(&:text)).to eq [
+        'Start typing to search in Knowledge Base…',
+        'Related knowledge',
+        "#{category_title}\n#{target_translation.title}",
+        'Suggested knowledge',
+        "#{category_title}\n#{suggested_translation.title}",
+      ]
+    end
+
+    it 'inserts a listed answer with its attachment' do
+      field.send_keys('??')
+      find(:text_module, target_translation.id).click
+
+      expect(field).to have_text(target_translation.content.body)
+
+      within(:active_content) do
+        expect(page).to have_css('.attachments .attachment--row', text: 'hello_world.txt')
+      end
+    end
+
+    it 'skips the section headers with the arrow keys' do
+      field.send_keys('??')
+      expect(page).to have_css('.shortcut li.is-active', text: target_translation.title)
+
+      field.send_keys(:down)
+      expect(page).to have_css('.shortcut li.is-active', text: suggested_translation.title)
+
+      field.send_keys(:enter)
+      expect(field).to have_text(suggested_translation.content.body)
+    end
+
+    it 'replaces the list with the search results when typing' do
+      field.send_keys('??')
+      expect(page).to have_css('.shortcut li.dropdown-header', text: 'Related knowledge')
+
+      target_translation.title.slice(0, 3).chars.each { |letter| field.send_keys(letter) }
+
+      expect(page).to have_css(".shortcut > ul > li.with-category[data-id='#{target_translation.id}']")
+      expect(page).to have_no_css('.shortcut li.dropdown-header', text: 'Related knowledge')
+    end
+
+    context 'when the knowledge base has several locales' do
+      let(:several_locales) { true }
+
+      it 'shows the locale next to the title, as the search results do' do
+        field.send_keys('??')
+
+        locale = target_translation.kb_locale.system_locale.locale.upcase
+
+        expect(page).to have_selector(:text_module, target_translation.id, text: "#{target_translation.title} (#{locale})")
+      end
+    end
+
+    context 'when suggestions are switched off' do
+      let(:suggestions_enabled) { false }
+
+      it 'lists the linked answer only' do
+        field.send_keys('??')
+
+        expect(page).to have_selector(:text_module, target_translation.id)
+        expect(page).to have_no_css('.shortcut li', text: 'Suggested knowledge')
+        expect(page).to have_no_selector(:text_module, suggested_translation.id)
+      end
+    end
+
+    context 'when the suggestions are still being searched' do
+      let(:suggestions) { { answers: [], pending: true } }
+
+      it 'lists the linked answer only, and adds the suggestions to the open list once they are found' do
+        field.send_keys('??')
+
+        expect(page).to have_selector(:text_module, target_translation.id)
+        expect(page).to have_no_css('.shortcut li', text: 'Suggested knowledge')
+
+        allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).to receive(:execute).and_return(found_suggestions)
+        page.execute_script("App.Event.trigger('ticket::related_knowledge_base_answers::ping', { ticket_id: #{ticket.id} })")
+
+        expect(page).to have_selector(:text_module, suggested_translation.id)
+        expect(page).to have_css('.shortcut li.is-active', text: target_translation.title)
+      end
+    end
+
+    it 'drops the suggestions from the open list when they fail' do
+      field.send_keys('??')
+      expect(page).to have_selector(:text_module, suggested_translation.id)
+
+      page.execute_script("App.Event.trigger('ticket::related_knowledge_base_answers::ping', { ticket_id: #{ticket.id}, error: true })")
+
+      expect(page).to have_no_selector(:text_module, suggested_translation.id)
+      expect(page).to have_selector(:text_module, target_translation.id)
+    end
+  end
+
   private
 
   def open_page

@@ -17,6 +17,7 @@ import TicketKnowledgeBaseAiSuggested from './TicketRelatedKnowledge/TicketKnowl
 import TicketKnowledgeBaseAnswerSkeleton from './TicketRelatedKnowledge/TicketKnowledgeBaseAnswerSkeleton.vue'
 import TicketKnowledgeBaseLinks from './TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue'
 import TicketNewKnowledgeBaseAnswer from './TicketRelatedKnowledge/TicketNewKnowledgeBaseAnswer.vue'
+import { excludeLinkedAnswers } from './TicketRelatedKnowledge/utils.ts'
 
 import type { RelatedAnswer } from './TicketRelatedKnowledge/types.ts'
 
@@ -46,16 +47,9 @@ const config = toRef(useApplicationStore(), 'config')
 const { ticketId, isTicketEditable } = useTicketInformation()
 const { hasPermission } = useSessionStore()
 
-// An already-linked answer is no suggestion. The server drops them from the search result, but that
-//   result arrives asynchronously, so keep the two lists disjoint here as well. Matched on the
-//   answer rather than the translation, mirroring the server: linking one locale covers all of them.
-const unlinkedAiSuggestedAnswers = computed(() => {
-  const linkedAnswers = new Set(props.linkedAnswers.map((translation) => translation.answer.id))
-
-  return props.aiSuggestedAnswers.filter(
-    (answer) => !linkedAnswers.has(answer.translation.answer.id),
-  )
-})
+const unlinkedAiSuggestedAnswers = computed(() =>
+  excludeLinkedAnswers(props.aiSuggestedAnswers, props.linkedAnswers),
+)
 
 const { unlinkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetType)
 

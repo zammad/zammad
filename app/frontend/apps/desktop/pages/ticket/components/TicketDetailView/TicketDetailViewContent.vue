@@ -75,6 +75,7 @@ import {
   initializeTicketInformation,
   provideTicketInformation,
 } from '../../composables/useTicketInformation.ts'
+import { useTicketRelatedKnowledge } from '../../composables/useTicketRelatedKnowledge.ts'
 import { useTicketSidebar, useProvideTicketSidebar } from '../../composables/useTicketSidebar.ts'
 import { type TicketSidebarContext, TicketSidebarScreenType } from '../../types/sidebar.ts'
 import TicketSidebar from '../TicketSidebar.vue'
@@ -241,6 +242,8 @@ const groupId = computed(() =>
     : undefined,
 )
 
+const relatedKnowledge = useTicketRelatedKnowledge(ticket, ticketId)
+
 const {
   ticketSchema,
   articleSchema,
@@ -255,7 +258,9 @@ const {
   articleTypeHandler,
   articleTypeSelectHandler,
   additionalAddArticleNotes,
-} = useTicketEditForm(ticket, form)
+} = useTicketEditForm(ticket, form, {
+  knowledgeBaseRelatedAnswers: relatedKnowledge.editorRelatedAnswers,
+})
 
 const {
   isArticleFormGroupValid,
@@ -330,6 +335,7 @@ provideTicketInformation({
     isEraserActive: false,
   }),
   articleTranslation,
+  relatedKnowledge,
   ...ticketInformation,
 })
 

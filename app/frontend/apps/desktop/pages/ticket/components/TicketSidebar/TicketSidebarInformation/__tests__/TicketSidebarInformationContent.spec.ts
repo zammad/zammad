@@ -2,7 +2,7 @@
 
 import { flushPromises } from '@vue/test-utils'
 import { beforeEach } from 'vitest'
-import { computed, ref } from 'vue'
+import { computed, defineComponent, h, inject, provide, ref } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -12,6 +12,7 @@ import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 // The plugin registry globs all plugin modules eagerly, and the sidebar content below reaches
 //   `useTicketSidebar` (which imports the registry) again. Pull the registry in first, so the glob
@@ -22,20 +23,45 @@ import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkLi
 import plugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/information.ts'
 import TicketSidebarInformationContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { useTicketRelatedKnowledge } from '#desktop/pages/ticket/composables/useTicketRelatedKnowledge.ts'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import { TicketAiRelatedKnowledgeBaseAnswersDocument } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.api.ts'
 import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
-import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
+import {
+  TicketSidebarScreenType,
+  type TicketSidebarContentProps,
+} from '#desktop/pages/ticket/types/sidebar.ts'
 
 const defaultTicket = createDummyTicket()
 
 mockRouterHooks()
 
+// The ticket detail view loads the related knowledge once per tab and provides it with the ticket.
+const TicketSidebarInformationContentInTicketTab = defineComponent({
+  setup(_, { attrs }) {
+    const ticketInformation = inject(TICKET_KEY)!
+
+    provide(TICKET_KEY, {
+      ...ticketInformation,
+      relatedKnowledge: useTicketRelatedKnowledge(
+        ticketInformation.ticket,
+        ticketInformation.ticketId,
+      ),
+    })
+
+    return () =>
+      h(
+        TicketSidebarInformationContent,
+        attrs as unknown as TicketSidebarContentProps & { modelValue: ObjectLike },
+      )
+  },
+})
+
 const renderInformationSidebar = (
   ticket = defaultTicket,
   { isTicketEditable = true }: { isTicketEditable?: boolean } = {},
 ) =>
-  renderComponent(TicketSidebarInformationContent, {
+  renderComponent(TicketSidebarInformationContentInTicketTab, {
     props: {
       context: {
         screenType: TicketSidebarScreenType.TicketDetailView,

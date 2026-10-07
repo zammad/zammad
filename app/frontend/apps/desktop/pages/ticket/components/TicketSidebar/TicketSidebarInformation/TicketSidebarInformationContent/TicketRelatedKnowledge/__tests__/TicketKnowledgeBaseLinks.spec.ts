@@ -24,6 +24,7 @@ const linkedAnswer = (
   __typename: 'KnowledgeBaseAnswerTranslation',
   id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
   title,
+  maybeLocale: null,
   visibility,
   categoryTreeTranslation: [
     {

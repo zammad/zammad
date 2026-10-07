@@ -23,7 +23,10 @@ export const mountEditor = (
   })
 }
 
-export const mountEditorWithAttachments = (permissions?: string[]) => {
+export const mountEditorWithAttachments = (
+  permissions?: string[],
+  knowledgeBaseMeta: Record<string, unknown> = {},
+) => {
   const props = {
     schema: [
       {
@@ -37,6 +40,7 @@ export const mountEditorWithAttachments = (permissions?: string[]) => {
               meta: {
                 mentionKnowledgeBase: {
                   attachmentsNodeName: 'attachments',
+                  ...knowledgeBaseMeta,
                 },
               },
             },

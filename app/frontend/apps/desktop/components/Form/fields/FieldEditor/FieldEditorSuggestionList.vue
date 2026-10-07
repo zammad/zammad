@@ -3,20 +3,21 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import useNavigateOptions from '#shared/components/Form/fields/FieldEditor/composables/useNavigateOptions.ts'
 import { useSuggestionTyping } from '#shared/components/Form/fields/FieldEditor/composables/useSuggestionTyping.ts'
 import type {
-  MentionKnowledgeBaseItem,
-  MentionTextItem,
+  MentionKnowledgeBaseRelatedItem,
+  MentionKnowledgeBaseRelatedSection,
   MentionType,
-  MentionUserItem,
 } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import type { SuggestionKeyDownProps } from '@tiptap/suggestion'
+import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 
-type PossibleItem = MentionUserItem | MentionKnowledgeBaseItem | MentionTextItem
+import FieldEditorSuggestionOption from './FieldEditorSuggestionList/FieldEditorSuggestionOption.vue'
+
+import type { PossibleItem } from './FieldEditorSuggestionList/types.ts'
+import type { SuggestionKeyDownProps } from '@tiptap/suggestion'
 
 interface Props {
   loading?: boolean
@@ -35,21 +36,9 @@ const optionId = (index: number) => `${props.listboxId}-option-${index}`
 
 const { selectItem, selectedIndex, onKeyDown } = useNavigateOptions(
   toRef(props, 'items'),
-  (item) => props.command(item as MentionUserItem),
+  (item) => props.command(item as PossibleItem),
   optionId,
 )
-
-const getKnowledgeBaseItemBreadcrumb = (item: MentionKnowledgeBaseItem) =>
-  item.categoryTreeTranslation
-    .reduce((acc, component, index) => {
-      if (index === 0 || index === item.categoryTreeTranslation.length - 1) {
-        acc.push(component.title)
-      } else if (!acc.includes('…')) {
-        acc.push('\u2026') // ellipsis (…)
-      }
-      return acc
-    }, [] as string[])
-    .join(' \u203A ') // guillemet (›)
 
 defineExpose({
   onKeyDown: (props: SuggestionKeyDownProps) => {
@@ -70,91 +59,89 @@ const emptyMessage = computed(() => {
   if (props.query) return i18n.t('No results found')
   return i18n.t(props.placeholder)
 })
+
+const relatedSectionLabels: Record<MentionKnowledgeBaseRelatedSection, string> = {
+  linked: __('Linked'),
+  suggested: __('Suggested knowledge'),
+}
+
+const isRelatedItem = (item: PossibleItem): item is MentionKnowledgeBaseRelatedItem =>
+  'section' in item
+
+// The section headers label groups of options and are no options themselves: the options keep
+//   their index in the flat item list, which the keyboard navigation and the active descendant use.
+// Decided on the items rather than the query: while the first search runs, the related answers are
+//   still the ones on display.
+const relatedSections = computed(() => {
+  if (props.type !== 'knowledge-base' || !props.items.some(isRelatedItem)) return []
+
+  return (['linked', 'suggested'] as const)
+    .map((section) => ({
+      section,
+      label: relatedSectionLabels[section],
+      headerId: `${props.listboxId}-section-${section}`,
+      entries: props.items
+        .map((item, index) => ({ item, index }))
+        .filter(({ item }) => isRelatedItem(item) && item.section === section),
+    }))
+    .filter(({ entries }) => entries.length)
+})
 </script>
 
 <template>
   <ul
     :id="listboxId"
     class="z-50 max-h-79 max-w-154 overflow-y-auto rounded-xl border border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
+    :class="{ 'pb-2': relatedSections.length }"
     :data-test-id="`mention-${type}`"
     role="listbox"
     :aria-label="$t(label)"
   >
-    <!-- Options are intentionally not focusable and have no key handler: the editor keeps -->
-    <!-- focus and drives selection via aria-activedescendant (ARIA combobox pattern). -->
-    <!-- eslint-disable-next-line vuejs-accessibility/interactive-supports-focus, vuejs-accessibility/click-events-have-key-events -->
-    <li
-      v-for="(item, index) in items as
-        MentionKnowledgeBaseItem[] | MentionTextItem[] | MentionUserItem[]"
-      :id="optionId(index)"
-      :key="item.id"
-      class="group cursor-pointer px-4 py-2 hover:bg-blue-600 dark:hover:bg-blue-900"
-      :class="{ 'bg-blue-600 dark:bg-blue-900': selectedIndex === index }"
-      role="option"
-      :aria-selected="selectedIndex === index"
-      @click="selectItem(index)"
-    >
-      <div v-if="type === 'knowledge-base'" class="flex flex-col gap-px">
-        <CommonLabel
-          class="inline! truncate text-muted! group-hover:text-contrast!"
-          :class="{ 'text-contrast!': selectedIndex === index }"
-          size="small"
-        >
-          {{ getKnowledgeBaseItemBreadcrumb(item as MentionKnowledgeBaseItem) }}
+    <template v-if="relatedSections.length">
+      <li class="px-4 pt-3" role="presentation">
+        <CommonLabel class="inline! truncate text-muted!" size="small">
+          {{ $t(placeholder) }}
         </CommonLabel>
-        <CommonLabel
-          class="inline! truncate group-hover:text-contrast"
-          :class="{ 'text-contrast!': selectedIndex === index }"
-        >
-          {{ (item as MentionKnowledgeBaseItem).title }}
-          {{
-            (item as MentionKnowledgeBaseItem).maybeLocale
-              ? `(${(item as MentionKnowledgeBaseItem).maybeLocale})`
-              : ''
-          }}
+      </li>
+      <li
+        v-for="(relatedSection, sectionIndex) in relatedSections"
+        :key="relatedSection.section"
+        role="presentation"
+      >
+        <CommonDivider :class="sectionIndex ? 'my-2' : 'my-3'" aria-hidden="true" />
+        <div class="mb-2 px-4">
+          <CommonLabel :id="relatedSection.headerId">
+            {{ $t(relatedSection.label) }}
+          </CommonLabel>
+        </div>
+        <ul role="group" :aria-labelledby="relatedSection.headerId">
+          <FieldEditorSuggestionOption
+            v-for="{ item, index } in relatedSection.entries"
+            :id="optionId(index)"
+            :key="item.id"
+            :item="item"
+            :type="type"
+            :selected="selectedIndex === index"
+            @select="selectItem(index)"
+          />
+        </ul>
+      </li>
+    </template>
+    <template v-else>
+      <FieldEditorSuggestionOption
+        v-for="(item, index) in items"
+        :id="optionId(index)"
+        :key="item.id"
+        :item="item"
+        :type="type"
+        :selected="selectedIndex === index"
+        @select="selectItem(index)"
+      />
+      <li v-if="!items.length" class="px-4 py-2">
+        <CommonLabel class="inline! truncate text-muted!">
+          {{ emptyMessage }}
         </CommonLabel>
-      </div>
-      <div v-else-if="type === 'text'" class="flex items-center gap-2">
-        <CommonLabel
-          class="inline! truncate group-hover:text-contrast"
-          :class="{ 'text-contrast!': selectedIndex === index }"
-          >{{ (item as MentionTextItem).name }}</CommonLabel
-        >
-        <span
-          v-if="(item as MentionTextItem).keywords"
-          class="truncate rounded-sm bg-white p-1 font-mono text-xs text-muted group-hover:text-contrast dark:bg-black"
-          :class="{ 'text-contrast!': selectedIndex === index }"
-        >
-          {{ (item as MentionTextItem).keywords }}
-        </span>
-      </div>
-      <div v-else-if="type === 'user'" class="flex items-center gap-2">
-        <CommonUserAvatar
-          :entity="item"
-          :class="{
-            'opacity-30': !(item as MentionUserItem).active,
-          }"
-          size="xs"
-        />
-        <CommonLabel
-          class="inline! truncate group-hover:text-contrast"
-          :class="{ 'text-contrast!': selectedIndex === index }"
-        >
-          {{ (item as MentionUserItem).fullname }}
-        </CommonLabel>
-        <CommonLabel
-          v-if="(item as MentionUserItem).email"
-          class="truncate text-muted! group-hover:text-contrast!"
-          :class="{ 'text-contrast!': selectedIndex === index }"
-        >
-          – {{ (item as MentionUserItem).email }}
-        </CommonLabel>
-      </div>
-    </li>
-    <li v-if="!items.length" class="px-4 py-2">
-      <CommonLabel class="inline! truncate text-muted!">
-        {{ emptyMessage }}
-      </CommonLabel>
-    </li>
+      </li>
+    </template>
   </ul>
 </template>

@@ -24,6 +24,14 @@ class App.WidgetTextModule extends App.Controller
       @update()
     )
 
+    if @relatedKnowledgeBaseAnswers
+      @controllerBind('ui::ticket::related_knowledge_base_answers::update', (data) =>
+        return if data.ticket_id?.toString() isnt @data.ticket?.id?.toString()
+
+        for element in @bindElements
+          $(element).data().plugin_textmodule?.refreshResults()
+      )
+
   release: =>
     App.TextModule.unsubscribe(@subscribeId)
 
@@ -65,3 +73,5 @@ class App.WidgetTextModule extends App.Controller
 
         $(element).data().plugin_textmodule.searchCondition = @searchCondition
         $(element).data().plugin_textmodule.collection      = @all
+
+        $(element).data().plugin_textmodule.relatedKnowledgeBaseAnswers = @relatedKnowledgeBaseAnswers

@@ -2,6 +2,7 @@
 
 import { PluginKey } from '@tiptap/pm/state'
 import { VueRenderer } from '@tiptap/vue-3'
+import { watch, type WatchSource, type WatchStopHandle } from 'vue'
 
 import type { MentionType } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { setFloatingPopover } from '#shared/components/Form/fields/FieldEditor/utils.ts'
@@ -20,6 +21,9 @@ interface MentionOptions<T> {
   // list on open). Such types get a loading state on open; query-driven types
   // show their placeholder immediately instead.
   showsDefaultList?: boolean
+  // Reactive source of the list for an empty query. The suggestion plugin asks for items only when
+  // the query changes, so a change of this source refreshes such a list while it is open.
+  defaultListSource?: WatchSource
 
   items(props: { query: string; editor: Editor }): T[] | Promise<T[]>
 
@@ -81,6 +85,8 @@ export default function buildMentionExtension<T>(
       let editor: Editor | null = null
       let itemCount = 0
       let lastItems: SuggestionProps['items'] = []
+      let lastProps: SuggestionProps | null = null
+      let stopDefaultListWatch: WatchStopHandle | undefined
 
       const syncActiveDescendant = () => {
         if (!editor || !listboxId) return
@@ -99,6 +105,8 @@ export default function buildMentionExtension<T>(
           setEditorAttr(editor, 'aria-haspopup', null)
           setEditorAttr(editor, 'aria-activedescendant', null)
         }
+        stopDefaultListWatch?.()
+        stopDefaultListWatch = undefined
         component?.el?.remove()
         component?.destroy()
         component = null
@@ -106,9 +114,27 @@ export default function buildMentionExtension<T>(
         editor = null
         itemCount = 0
         lastItems = []
+        lastProps = null
+      }
+
+      const refreshDefaultList = async () => {
+        const props = lastProps
+        if (!props || props.query) return
+
+        const items = await options.items({ query: '', editor: props.editor })
+
+        // The plugin has rendered or closed the list in the meantime.
+        if (props !== lastProps || !component) return
+
+        lastItems = items
+        itemCount = items.length
+        component.updateProps({ loading: false, items })
+        syncActiveDescendant()
       }
 
       const renderFn = (type: Type) => (props: SuggestionProps) => {
+        lastProps = props
+
         // Query updates are always a loading state. The initial open is only a
         // loading state for types that show a default list — otherwise it would
         // just flash before the placeholder of a query-driven type.
@@ -148,6 +174,9 @@ export default function buildMentionExtension<T>(
           setEditorAttr(props.editor, 'aria-controls', listboxId)
           setEditorAttr(props.editor, 'aria-expanded', 'true')
           setEditorAttr(props.editor, 'aria-haspopup', 'listbox')
+
+          if (options.defaultListSource)
+            stopDefaultListWatch = watch(options.defaultListSource, refreshDefaultList)
         } else {
           component?.updateProps({
             loading,

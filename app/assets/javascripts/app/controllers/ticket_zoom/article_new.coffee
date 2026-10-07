@@ -277,6 +277,7 @@ class App.TicketZoomArticleNew extends App.Controller
           user:   App.Session.get()
           config: App.Config.all()
         taskKey: @taskKey
+        relatedKnowledgeBaseAnswers: -> App.WidgetLinkKbAnswer.relatedAnswersForInsertion(ticket.id)
       )
       if !@subscribeIdTextModule
         callback = (ticket) =>

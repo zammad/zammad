@@ -103,8 +103,11 @@ export const updateSelectedContent = (editor: Editor, content: string) => {
  */
 export const updatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
   const reference = anchor || {
+    // Measured asynchronously, by when the editor may be gone.
     getBoundingClientRect: () =>
-      posToDOMRect(editor.view, editor.state.selection.from, editor.state.selection.to),
+      editor.isDestroyed
+        ? new DOMRect()
+        : posToDOMRect(editor.view, editor.state.selection.from, editor.state.selection.to),
   }
 
   computePosition(reference, element, {
@@ -137,7 +140,7 @@ export const setAutoUpdate = (editor: Editor, element: HTMLElement, anchor?: HTM
 
 export const autoUpdatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
   updatePosition(editor, element, anchor)
-  setAutoUpdate(editor, element, anchor)
+  return setAutoUpdate(editor, element, anchor)
 }
 
 const createHandleCloseOnClick = (editor: Editor, options?: SetFloatingPopoverOptions) => {
@@ -185,11 +188,34 @@ export const setFloatingPopover = <T extends object>(
 
   document.body.appendChild(virtualComponent.element)
 
-  autoUpdatePosition(editor, virtualComponent.element as HTMLElement, options?.anchor)
+  const stopAutoUpdate = autoUpdatePosition(
+    editor,
+    virtualComponent.element as HTMLElement,
+    options?.anchor,
+  )
 
   const clickHandler = createHandleCloseOnClick(editor, options)
 
   document.addEventListener('click', clickHandler)
+
+  // Every caller destroys the popover when it closes, so this is where the position updates and the
+  //   click handler stop.
+  const destroy = virtualComponent.destroy.bind(virtualComponent)
+
+  // Callers close the popover only through editor commands, which a destroyed editor no longer runs.
+  const handleEditorDestroy = () => {
+    virtualComponent.element?.remove()
+    virtualComponent.destroy()
+  }
+
+  virtualComponent.destroy = () => {
+    stopAutoUpdate?.()
+    document.removeEventListener('click', clickHandler)
+    editor.off('destroy', handleEditorDestroy)
+    destroy()
+  }
+
+  editor.on('destroy', handleEditorDestroy)
 
   return virtualComponent
 }

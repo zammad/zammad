@@ -54,6 +54,7 @@ const buildLinkedAnswer = (
   __typename: 'KnowledgeBaseAnswerTranslation',
   id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
   title,
+  maybeLocale: null,
   visibility: EnumKnowledgeBaseVisibility.Published,
   categoryTreeTranslation: [
     {

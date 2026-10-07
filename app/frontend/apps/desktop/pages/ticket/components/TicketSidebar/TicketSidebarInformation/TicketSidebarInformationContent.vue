@@ -1,10 +1,9 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef, useTemplateRef } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -19,9 +18,6 @@ import {
 } from '../../TicketDetailView/actions/useTicketHistory.ts'
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
-import { useAiSuggestedAnswersAvailability } from './TicketSidebarInformationContent/composables/useAiSuggestedAnswersAvailability.ts'
-import { useKnowledgeBaseAiSuggestedAnswers } from './TicketSidebarInformationContent/composables/useKnowledgeBaseAiSuggestedAnswers.ts'
-import { useKnowledgeBaseLinkList } from './TicketSidebarInformationContent/composables/useKnowledgeBaseLinkList.ts'
 import TicketAccountedTime from './TicketSidebarInformationContent/TicketAccountedTime.vue'
 import TicketLinks from './TicketSidebarInformationContent/TicketLinks.vue'
 import TicketRelatedKnowledge from './TicketSidebarInformationContent/TicketRelatedKnowledge.vue'
@@ -32,9 +28,7 @@ const props = defineProps<TicketSidebarContentProps>()
 
 const persistentStates = defineModel<ObjectLike>({ required: true })
 
-const { ticket, ticketId } = useTicketInformation()
-
-const config = toRef(useApplicationStore(), 'config')
+const { ticket, relatedKnowledge } = useTicketInformation()
 
 const ticketLinksInstance = useTemplateRef('ticket-links')
 
@@ -90,36 +84,22 @@ const actions = computed<MenuItem[]>(() => [
   },
 ])
 
-// Agent read access is a per-ticket matter: an agent who is the customer of a ticket in a group
-//   they cannot access sees it in the customer view, where the knowledge base is not theirs to work
-//   with — and where the server would deny both the link list and the suggestions search.
-const isKbActive = computed(() => config.value.kb_active && isTicketAgent.value)
-
 const {
+  isKbActive,
   linkedAnswerIds,
   linkedAnswers,
   targetType,
-  isLoading: isKnowledgeBaseLinkListLoading,
-} = useKnowledgeBaseLinkList(ticketId, {
-  enabled: isKbActive,
-})
-
-const { showAiSuggestedAnswers, showRelevanceScore } =
-  useAiSuggestedAnswersAvailability(isTicketAgent)
-
-const {
-  answers: aiSuggestedAnswers,
-  loading: isAiSuggestedAnswersLoading,
-  pending: isAiSuggestedAnswersPending,
-  hasError: hasAiSuggestedAnswersError,
-  errorDetail: aiSuggestedAnswersErrorDetail,
-  retrySearch: retryAiSuggestedAnswersSearch,
-  refreshKeepingAnswers: refreshAiSuggestedAnswers,
-} = useKnowledgeBaseAiSuggestedAnswers(ticketId, {
-  queryEnabled: showAiSuggestedAnswers,
-  subscriptionEnabled: showAiSuggestedAnswers,
-  articleCount: () => ticket.value?.articleCount,
-})
+  isLinkListLoading: isKnowledgeBaseLinkListLoading,
+  showAiSuggestedAnswers,
+  showRelevanceScore,
+  aiSuggestedAnswers,
+  isAiSuggestedAnswersLoading,
+  isAiSuggestedAnswersPending,
+  hasAiSuggestedAnswersError,
+  aiSuggestedAnswersErrorDetail,
+  retryAiSuggestedAnswersSearch,
+  refreshAiSuggestedAnswers,
+} = relatedKnowledge
 </script>
 
 <template>

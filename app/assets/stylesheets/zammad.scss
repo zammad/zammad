@@ -10124,6 +10124,13 @@ li.list-item-none {
   display: block;
 }
 
+// The `??` list mixes these with single-line entries and section headers, so they get the same
+// vertical rhythm instead of the compact height.
+.dropdown.dropdown--actions .text-modules-box li.with-category {
+  height: auto;
+  padding: 8px 15px;
+}
+
 .dropdown li:not(:first-child) {
   box-shadow: 0 1px rgba(255, 255, 255, 0.13) inset;
 }

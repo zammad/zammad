@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 
@@ -8,12 +9,15 @@ import { nullableMock } from '#tests/support/utils.ts'
 
 import type {
   MentionKnowledgeBaseItem,
+  MentionKnowledgeBaseRelatedItem,
   MentionTextItem,
   MentionUserItem,
 } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import FieldEditorSuggestionList from '../FieldEditorSuggestionList.vue'
+
+import type { PossibleItem } from '../FieldEditorSuggestionList/types.ts'
 
 const baseProps = {
   label: 'Suggestions',
@@ -373,5 +377,155 @@ describe('accessibility (combobox + listbox wiring)', () => {
     const options = view.getAllByRole('option')
     expect(options[0]).toHaveAttribute('id', 'custom-listbox-option-0')
     expect(options[1]).toHaveAttribute('id', 'custom-listbox-option-1')
+  })
+})
+
+describe('answers related to the edited record', () => {
+  const relatedItem = (
+    id: number,
+    title: string,
+    section: MentionKnowledgeBaseRelatedItem['section'],
+  ): MentionKnowledgeBaseRelatedItem => ({
+    id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
+    title,
+    maybeLocale: null,
+    categoryTreeTranslation: [
+      {
+        __typename: 'KnowledgeBaseCategoryTranslation',
+        id: convertToGraphQLId('KnowledgeBase::Category::Translation', 1),
+        title: 'Network',
+      },
+    ],
+    section,
+  })
+
+  const items = [
+    relatedItem(1, 'VPN setup on company notebooks (Windows)', 'linked'),
+    relatedItem(2, 'VPN setup on company notebooks (macOS)', 'linked'),
+    relatedItem(3, 'VPN troubleshooting', 'suggested'),
+  ]
+
+  const renderRelatedList = (props: { query?: string; items?: PossibleItem[] } = {}) => {
+    const listExposed = ref<{ onKeyDown: (e: any) => void }>()
+    const command = vi.fn()
+
+    const view = renderComponent(
+      {
+        components: { FieldEditorSuggestionList },
+        template: `<FieldEditorSuggestionList v-bind="$props" ref="listExposed" />`,
+        setup: () => ({ listExposed }),
+      },
+      {
+        props: {
+          query: '',
+          items,
+          type: 'knowledge-base',
+          command,
+          ...baseProps,
+          placeholder: 'Start typing to search in knowledge base…',
+          ...props,
+        },
+      },
+    )
+
+    const triggerKey = async (key: string) => {
+      listExposed.value?.onKeyDown({ event: { key } })
+      await flushPromises()
+    }
+
+    return { view, command, triggerKey }
+  }
+
+  it('lists the linked answers first and the suggested ones second, below the search hint', () => {
+    const { view } = renderRelatedList()
+
+    expect(view.getByText('Start typing to search in knowledge base…')).toBeInTheDocument()
+
+    const linked = view.getByRole('group', { name: 'Linked' })
+    const suggested = view.getByRole('group', { name: 'Suggested knowledge' })
+
+    expect(
+      within(linked)
+        .getAllByRole('option')
+        .map((option) => option.textContent?.trim()),
+    ).toEqual([
+      expect.stringContaining('VPN setup on company notebooks (Windows)'),
+      expect.stringContaining('VPN setup on company notebooks (macOS)'),
+    ])
+    expect(within(suggested).getByRole('option')).toHaveTextContent('VPN troubleshooting')
+
+    expect(view.getAllByRole('option').map((option) => option.id)).toEqual([
+      'mention-listbox-test-option-0',
+      'mention-listbox-test-option-1',
+      'mention-listbox-test-option-2',
+    ])
+  })
+
+  it('shows the breadcrumb and, when handed over, the locale', () => {
+    const { view } = renderRelatedList({
+      items: [
+        relatedItem(1, 'VPN setup on company notebooks (Windows)', 'linked'),
+        { ...relatedItem(3, 'VPN troubleshooting', 'suggested'), maybeLocale: 'DE-DE' },
+        relatedItem(4, 'VPN for contractors', 'suggested'),
+      ],
+    })
+
+    expect(
+      view.getByRole('option', { name: 'NetworkVPN setup on company notebooks (Windows)' }),
+    ).toBeInTheDocument()
+    expect(
+      view.getByRole('option', { name: 'NetworkVPN troubleshooting (DE-DE)' }),
+    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'NetworkVPN for contractors' })).toBeInTheDocument()
+  })
+
+  it('keeps the sections while the first search term is still being searched for', () => {
+    const { view } = renderRelatedList({ query: 'v' })
+
+    expect(view.getByRole('group', { name: 'Linked' })).toBeInTheDocument()
+    expect(view.getByRole('group', { name: 'Suggested knowledge' })).toBeInTheDocument()
+  })
+
+  it('leaves out a section without answers', () => {
+    const { view } = renderRelatedList({
+      items: [relatedItem(1, 'VPN setup on company notebooks (Windows)', 'linked')],
+    })
+
+    expect(view.getByRole('group', { name: 'Linked' })).toBeInTheDocument()
+    expect(view.queryByRole('group', { name: 'Suggested knowledge' })).not.toBeInTheDocument()
+  })
+
+  it('shows only the search hint when there is nothing to offer', () => {
+    const { view } = renderRelatedList({ items: [] })
+
+    expect(view.getByText('Start typing to search in knowledge base…')).toBeInTheDocument()
+    expect(view.queryByRole('group')).not.toBeInTheDocument()
+    expect(view.queryByRole('option')).not.toBeInTheDocument()
+  })
+
+  it('moves across both sections with the arrow keys, skipping the headers', async () => {
+    const { view, command, triggerKey } = renderRelatedList()
+
+    const options = view.getAllByRole('option')
+
+    expect(options[0]).toHaveAttribute('aria-selected', 'true')
+
+    await triggerKey('ArrowDown')
+    await triggerKey('ArrowDown')
+
+    expect(options[2]).toHaveAttribute('aria-selected', 'true')
+
+    await triggerKey('Enter')
+
+    expect(command).toHaveBeenCalledWith(items[2])
+  })
+
+  it('inserts the clicked answer, the first one included', async () => {
+    const { view, command, triggerKey } = renderRelatedList()
+
+    await triggerKey('ArrowDown')
+    await view.events.click(view.getAllByRole('option')[0])
+
+    expect(command).toHaveBeenCalledWith(items[0])
   })
 })

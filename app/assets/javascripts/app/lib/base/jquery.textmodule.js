@@ -82,7 +82,7 @@
 
         // as fallback first element
         if (!elem) {
-          elem = this.$widget.find('.dropdown-menu li:first-child')[0]
+          elem = this.$widget.find('.dropdown-menu li:not(.dropdown-header)')[0]
         }
         this.take(elem)
         return
@@ -102,11 +102,15 @@
         var active = this.$widget.find('.dropdown-menu li.is-active')
         active.removeClass('is-active')
 
-        if (e.keyCode == 38 && active.prev().length) {
-          active = active.prev()
+        // section headers are no entries
+        var prev = active.prevAll('li:not(.dropdown-header)').first()
+        var next = active.nextAll('li:not(.dropdown-header)').first()
+
+        if (e.keyCode == 38 && prev.length) {
+          active = prev
         }
-        else if (e.keyCode == 40 && active.next().length) {
-          active = active.next()
+        else if (e.keyCode == 40 && next.length) {
+          active = next
         }
 
         active.addClass('is-active')
@@ -500,6 +504,22 @@
     trigger.renderResults(this, term)
   }
 
+  // re-render a list that shows data from outside the editor, keeping the active entry
+  Plugin.prototype.refreshResults = function() {
+    if (!this.isActive()) return
+    if (!this.$widget.find('.js-refreshable').length) return
+
+    var activeId = this.$widget.find('.dropdown-menu li.is-active').data('id')
+
+    this.result(this.findTrigger(this.buffer))
+
+    var active = this.$widget.find('.dropdown-menu li').filter(function() { return $(this).data('id') == activeId })
+    if (!activeId || !active.length) return
+
+    this.$widget.find('.dropdown-menu li.is-active').removeClass('is-active')
+    active.addClass('is-active')
+  }
+
   Plugin.prototype.emptyResultsContainer = function() {
     this.$widget.find('ul').empty()
   }
@@ -655,8 +675,8 @@
       return
     }
     if(!term) {
-      var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base…'))
-      textmodule.appendResults(element)
+      App.Delay.clear('textmoduleKbAnswerDelay', 'textmodule')
+      KbAnswer.renderRelatedAnswers(textmodule)
 
       return
     }
@@ -680,6 +700,9 @@
         }),
         processData: true,
         success: function(data, status, xhr) {
+          // the term changed or was cleared while searching
+          if (textmodule.buffer !== KbAnswer.trigger + term) return
+
           textmodule.emptyResultsContainer()
 
           var items = data
@@ -697,14 +720,7 @@
             })
             .filter(function(elem){ return elem != undefined })
             .map(function(elem, index, array) {
-              var element = $('<li>')
-                .attr('data-id',  elem.value)
-                .attr('data-url', elem.url)
-                .addClass('u-clickable u-textTruncate with-category')
-
-              element.append($('<small>').text(elem.category))
-              element.append('<br>')
-              element.append($('<span>').text(elem.name))
+              var element = KbAnswer.renderItem(elem.value, elem.url, elem.category, elem.name)
 
               if (index == array.length-1) {
                 element.addClass('is-active')
@@ -721,6 +737,48 @@
         }
       })
     }, 200, 'textmoduleKbAnswerDelay', 'textmodule')
+  }
+
+  // Before a search term is typed, the answers linked to and suggested for the ticket are offered
+  // below the hint, labelled and ordered top-down as in the sidebar, instead of bottom-up like the
+  // search results.
+  KbAnswer.renderRelatedAnswers = function(textmodule) {
+    var hint    = $('<li>').addClass('js-refreshable').text(App.i18n.translateInline('Start typing to search in Knowledge Base…'))
+    var related = textmodule.relatedKnowledgeBaseAnswers ? textmodule.relatedKnowledgeBaseAnswers() : { linked: [], suggested: [] }
+
+    if (!related.linked.length && !related.suggested.length) {
+      textmodule.appendResults(hint)
+      return
+    }
+
+    var section = function(label, answers) {
+      if (!answers.length) return []
+
+      var items = answers.map(function(answer) {
+        return KbAnswer.renderItem(answer.id, answer.url, answer.category, answer.title)
+      })
+
+      return [$('<li>').addClass('dropdown-header').text(label)].concat(items)
+    }
+
+    var elements = [hint.addClass('dropdown-header')]
+      .concat(section(App.i18n.translateInline('Related knowledge'), related.linked))
+      .concat(section(App.i18n.translateInline('Suggested knowledge'), related.suggested))
+
+    textmodule.appendResults(elements)
+
+    textmodule.$widget.find('.dropdown-menu li:not(.dropdown-header)').first().addClass('is-active')
+    textmodule.$widget.find('.dropdown-menu').scrollTop(0)
+  }
+
+  KbAnswer.renderItem = function(id, url, category, title) {
+    return $('<li>')
+      .attr('data-id',  id)
+      .attr('data-url', url)
+      .addClass('u-clickable u-textTruncate with-category')
+      .append($('<small>').text(category))
+      .append('<br>')
+      .append($('<span>').text(title))
   }
 
   KbAnswer.trigger = '??'

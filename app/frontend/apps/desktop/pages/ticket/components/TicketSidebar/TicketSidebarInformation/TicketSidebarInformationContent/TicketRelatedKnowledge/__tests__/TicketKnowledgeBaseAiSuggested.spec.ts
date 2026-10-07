@@ -76,6 +76,7 @@ const relatedAnswer = (id: number, title: string, score = 90): RelatedAnswer => 
     __typename: 'KnowledgeBaseAnswerTranslation',
     id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
     title,
+    maybeLocale: null,
     visibility: EnumKnowledgeBaseVisibility.Published,
     categoryTreeTranslation: [
       {

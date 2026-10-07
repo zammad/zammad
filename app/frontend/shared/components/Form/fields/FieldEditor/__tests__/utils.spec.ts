@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computePosition } from '@floating-ui/dom'
+import { autoUpdate, computePosition } from '@floating-ui/dom'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
@@ -14,7 +14,7 @@ import {
 } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 
 // Positioning is floating-ui's business and needs a layout jsdom has none of; what is under test
-//   here is which clicks the popover treats as outside itself.
+//   here is which clicks the popover treats as outside itself, and that it stops listening.
 vi.mock('@floating-ui/dom', () => ({
   computePosition: vi.fn(() => Promise.resolve({ x: 0, y: 0, strategy: 'fixed' })),
   autoUpdate: vi.fn(() => vi.fn()),
@@ -133,5 +133,71 @@ describe('setFloatingPopover', () => {
     expect(onClose).not.toHaveBeenCalled()
 
     editor.destroy()
+  })
+
+  it('stops updating its position and listening for clicks once destroyed', () => {
+    const { editor, onClose, popover } = openPopover()
+
+    const stopAutoUpdate = vi.mocked(autoUpdate).mock.results.at(-1)!.value
+
+    popover!.destroy()
+
+    expect(stopAutoUpdate).toHaveBeenCalled()
+
+    clickOn(appendToBody('<button type="button">Elsewhere</button>'))
+
+    expect(onClose).not.toHaveBeenCalled()
+
+    editor.destroy()
+  })
+})
+
+describe('updatePosition after the editor is gone', () => {
+  it('measures nothing instead of failing', async () => {
+    const editor = new Editor({
+      extensions: [Document, Paragraph, Text, Link],
+      content: '<p>Hello</p>',
+    })
+
+    updatePosition(editor, document.createElement('div'))
+
+    const [reference] = vi.mocked(computePosition).mock.calls.at(-1)!
+
+    editor.destroy()
+
+    expect(() => reference.getBoundingClientRect()).not.toThrow()
+  })
+})
+
+describe('setFloatingPopover after the editor is gone', () => {
+  it('ignores clicks instead of closing through the editor', () => {
+    const { editor, onClose } = openPopover()
+
+    editor.destroy()
+
+    expect(() => clickOn(appendToBody('<button type="button">Elsewhere</button>'))).not.toThrow()
+    expect(onClose).not.toHaveBeenCalled()
+  })
+
+  it('stops updating its position and leaves the page', () => {
+    const { editor, popover } = openPopover()
+
+    const stopAutoUpdate = vi.mocked(autoUpdate).mock.results.at(-1)!.value
+
+    editor.destroy()
+
+    expect(stopAutoUpdate).toHaveBeenCalledOnce()
+    expect(document.body.contains(popover!.element)).toBe(false)
+  })
+
+  it('does not clean up again for a popover that was already closed', () => {
+    const { editor, popover } = openPopover()
+
+    const stopAutoUpdate = vi.mocked(autoUpdate).mock.results.at(-1)!.value
+
+    popover!.destroy()
+    editor.destroy()
+
+    expect(stopAutoUpdate).toHaveBeenCalledOnce()
   })
 })

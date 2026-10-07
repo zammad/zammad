@@ -38,7 +38,7 @@ export default function useNavigateOptions(
   }
 
   const selectItem = (index?: number) => {
-    const item = items.value[index || selectedIndex.value]
+    const item = items.value[index ?? selectedIndex.value]
     if (item) {
       onSelect(item)
       return true
