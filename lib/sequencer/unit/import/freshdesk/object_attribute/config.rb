@@ -10,6 +10,7 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
 
   def process
     if !data_type
+      logger.info { "Skipping. Unsupported field type '#{resource['type']}' for field '#{resource['name']}'." }
       state.provide(:action, :skipped)
       return
     end
@@ -55,13 +56,6 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
 
   def data_type
     @data_type ||= DATA_TYPE_MAP[resource['type']]
-
-    if !@data_type
-      Rails.logger.debug { "The custom field type '#{resource['type']}' cannot be mapped to an internal field, skipping." }
-      return
-    end
-
-    @data_type
   end
 
   def data_option

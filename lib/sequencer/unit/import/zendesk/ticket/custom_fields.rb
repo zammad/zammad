@@ -6,6 +6,11 @@ class Sequencer::Unit::Import::Zendesk::Ticket::CustomFields < Sequencer::Unit::
 
   private
 
+  # remote_fields are already keyed by the local attribute name
+  def local_name_for(key)
+    key
+  end
+
   def remote_fields
     custom_fields = resource.custom_fields
     return {} if custom_fields.blank?

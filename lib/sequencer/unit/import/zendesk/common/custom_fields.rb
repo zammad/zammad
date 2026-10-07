@@ -27,14 +27,15 @@ class Sequencer::Unit::Import::Zendesk::Common::CustomFields < Sequencer::Unit::
     fields.each_with_object({}) do |(key, value), result|
       next if value.nil?
 
-      if custom_fields_map.nil?
-        result[key] = value
-      else
-        local_name = custom_fields_map[key]
-        result[ local_name.to_sym ] = value
-      end
+      local_name = local_name_for(key)
+      next if local_name.nil?
 
+      result[ local_name.to_sym ] = value
     end
+  end
+
+  def local_name_for(key)
+    custom_fields_map&.[](key)
   end
 
   def custom_fields_map
