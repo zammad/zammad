@@ -100,6 +100,53 @@ RSpec.describe VideoEmbed do
     end
   end
 
+  describe '.watch_url' do
+    it 'builds the YouTube watch URL' do
+      expect(described_class.watch_url(provider: 'youtube', id: 'abc-123'))
+        .to eq('https://www.youtube.com/watch?v=abc-123')
+    end
+
+    it 'builds the Vimeo watch URL' do
+      expect(described_class.watch_url(provider: 'vimeo', id: '987654'))
+        .to eq('https://vimeo.com/987654')
+    end
+
+    context 'with a self-hosted provider' do
+      before do
+        allow(Setting).to receive(:get).with('kb_self_hosted_video_servers')
+          .and_return([{ 'host' => 'video.example.com:8080', 'name' => 'Video' }])
+      end
+
+      it 'builds the PeerTube watch URL when the host is whitelisted' do
+        expect(described_class.watch_url(provider: 'peertube', id: 'uuid-1', host: 'video.example.com:8080'))
+          .to eq('https://video.example.com:8080/videos/watch/uuid-1')
+      end
+
+      it 'builds the MediaCMS watch URL when the host is whitelisted' do
+        expect(described_class.watch_url(provider: 'mediacms', id: 'token1', host: 'video.example.com:8080'))
+          .to eq('https://video.example.com:8080/view?m=token1')
+      end
+
+      it 'returns nil when the host is not whitelisted' do
+        expect(described_class.watch_url(provider: 'peertube', id: 'uuid-1', host: 'evil.example.com'))
+          .to be_nil
+      end
+    end
+
+    it 'returns nil for an unknown provider' do
+      expect(described_class.watch_url(provider: 'dailymotion', id: 'x')).to be_nil
+    end
+
+    it 'returns nil without an ID' do
+      expect(described_class.watch_url(provider: 'youtube', id: nil)).to be_nil
+    end
+
+    it 'escapes an ID containing markup' do
+      expect(described_class.watch_url(provider: 'youtube', id: %q{'"><script>alert(1)</script>}))
+        .not_to include('<script>')
+    end
+  end
+
   describe '.frame_src' do
     it 'always includes the built-in origins' do
       expect(described_class.frame_src)

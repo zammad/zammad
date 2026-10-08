@@ -46,8 +46,11 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     attrs
   end
 
+  # A video widget marker is an editor placeholder, it must not end up in a search result snippet.
   def body_text_only
-    SearchKnowledgeBaseBackend.without_highlight_marks(HasExcerpt.to_plain_text(body))
+    text = HasExcerpt.to_plain_text(body).gsub(KnowledgeBaseRichText::VIDEO_WIDGET_MARKER, '')
+
+    SearchKnowledgeBaseBackend.without_highlight_marks(text)
   end
 
   private

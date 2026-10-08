@@ -5,5 +5,9 @@ class VideoEmbed
     def embed_url
       "https://www.youtube.com/embed/#{id}"
     end
+
+    def watch_url
+      "https://www.youtube.com/watch?v=#{id}"
+    end
   end
 end

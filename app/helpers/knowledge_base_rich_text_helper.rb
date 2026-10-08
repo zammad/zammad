@@ -37,7 +37,7 @@ module KnowledgeBaseRichTextHelper
       .scrub!(scrubber_link)
       .scrub!(scrubber_images)
       .to_s
-      .gsub(%r{\((\s*)widget:(\s*)video\W([\s\S])+?\)}, '')
+      .gsub(KnowledgeBaseRichText::VIDEO_WIDGET_MARKER, '')
       .strip
       .html_safe # rubocop:disable Rails/OutputSafety
   end

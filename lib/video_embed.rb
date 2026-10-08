@@ -5,12 +5,25 @@ class VideoEmbed
 
   # Returns the embed URL for a stored video widget
   def self.embed_url(provider:, id:, host: nil)
+    build_backend(provider:, id:, host:)&.embed_url
+  end
+
+  # Returns the URL of the video's own page, for places that cannot embed a player (e.g. emails).
+  def self.watch_url(provider:, id:, host: nil)
+    # Without an ID the link would point to the provider's front page.
+    return if id.blank?
+
+    build_backend(provider:, id:, host:)&.watch_url
+  end
+
+  def self.build_backend(provider:, id:, host:)
     backend_class = lookup_provider(provider)
     return if !backend_class
     return if backend_class.self_hosted? && !self_hosted_host_allowed?(host)
 
-    backend_class.new(id:, host:).embed_url
+    backend_class.new(id:, host:)
   end
+  private_class_method :build_backend
 
   def self.lookup_provider(provider)
     backends.find { it.key == provider.to_s }

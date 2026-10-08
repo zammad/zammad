@@ -69,6 +69,18 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
     end
   end
 
+  context 'when answer with video' do
+    let(:answer) { create(:knowledge_base_answer, :with_video, published_at: 1.week.ago) }
+
+    it 'inserts a link to the video instead of the video marker' do
+      open_page
+      insert_kb_answer(target_translation, field)
+
+      expect(field).to have_link('https://www.youtube.com/watch?v=vTTzwJsHpU8', href: 'https://www.youtube.com/watch?v=vTTzwJsHpU8')
+      expect(field).to have_no_text('widget: video')
+    end
+  end
+
   context 'when creating a ticket' do
     let(:answer) { published_answer }
 

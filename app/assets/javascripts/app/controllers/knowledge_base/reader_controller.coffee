@@ -128,51 +128,9 @@ class App.KnowledgeBaseReaderController extends App.Controller
 
     $('<container>').append(input).html()
 
-  # An admin-approved server may carry an explicit port (see
-  # Setting::Validation::KbSelfHostedVideoServers), which must stay a literal ':'
-  # delimiter - escaping it would point the iframe at a host that does not exist, and
-  # no longer match the origin allowed via the CSP frame-src. The host name itself is
-  # still escaped, so a value that somehow entered the setting without passing its
-  # validation cannot break out of the surrounding attribute.
-  @escapeVideoHost: (host) ->
-    index = host.lastIndexOf(':')
-    name  = host.slice(0, index)
-    port  = host.slice(index + 1)
-
-    return encodeURIComponent(host) if index < 1 || !/^\d+$/.test(port)
-
-    "#{encodeURIComponent(name)}:#{port}"
-
   @prepareVideos: (input) ->
-    input.replace /\(([\s]*)widget:([\s]*)video[\W]([\s\S])+?\)/g, (match) ->
-      settings = match
-        .slice(1, -1)
-        .split(',')
-        .map (pair) ->
-          [key, rest...] = pair.split(':')
-          [key.trim(), rest.join(':').trim()]
-        .reduce (memo, elem) ->
-          memo[elem[0]] = elem[1]
-          return memo
-        , {}
-
-      id   = encodeURIComponent(settings.id ? '')
-      host = App.KnowledgeBaseReaderController.escapeVideoHost(settings.host ? '')
-
-      hostAllowed = App.KnowledgeBaseVideo.hostAllowed(settings.host)
-
-      # coffeelint: disable=indentation
-      url = switch settings.provider
-            when 'youtube'
-              "https://www.youtube.com/embed/#{id}"
-            when 'vimeo'
-              "https://player.vimeo.com/video/#{id}"
-            when 'peertube'
-              "https://#{host}/videos/embed/#{id}" if hostAllowed
-            when 'mediacms'
-              "https://#{host}/embed?m=#{id}" if hostAllowed
-      # coffeelint: enable=indentation
-
+    App.KnowledgeBaseVideo.replaceMarkers input, (settings) ->
+      url = App.KnowledgeBaseVideo.embedUrl(settings)
       return '' if !url
 
       idAttribute = App.Utils.htmlEscape("#{settings.provider}#{settings.id ? ''}")

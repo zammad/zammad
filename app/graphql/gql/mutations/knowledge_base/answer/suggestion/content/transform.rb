@@ -18,7 +18,7 @@ module Gql::Mutations
       translation = Gql::ZammadSchema.authorized_object_from_id(translation_id, type: ::KnowledgeBase::Answer::Translation, user: context.current_user)
 
       {
-        body:        convert_body(translation, form_id),
+        body:        KnowledgeBaseRichText.link_video_widgets(convert_body(translation, form_id)),
         attachments: clone_attachments(translation, form_id)
       }
     end

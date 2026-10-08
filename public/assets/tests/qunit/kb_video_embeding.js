@@ -105,3 +105,73 @@ QUnit.test('kb reader video marker rendering', assert => {
   assert.notOk(html.includes("srcdoc='"), 'escapes an attribute breakout attempt in the id')
   assert.notOk(html.includes('<img'), 'does not emit injected markup')
 })
+
+QUnit.test('kb video markers are linked when an answer is inserted', assert => {
+  var klass = App.KnowledgeBaseAnswerTranslationContent;
+  var videoServers = App.Config.get('kb_self_hosted_video_servers')
+
+  assert.equal(
+    klass.linkVideoWidgets('<p>( widget: video, provider: youtube, id: vTTzwJsHpU8 )</p>'),
+    '<p><a href="https://www.youtube.com/watch?v=vTTzwJsHpU8">https://www.youtube.com/watch?v=vTTzwJsHpU8</a></p>'
+  )
+
+  assert.equal(
+    klass.linkVideoWidgets('a ( widget: video, provider: vimeo, id: 111 ) b'),
+    'a <a href="https://vimeo.com/111">https://vimeo.com/111</a> b'
+  )
+
+  App.Config.set('kb_self_hosted_video_servers', [{host: 'demo.mediacms.io', name: 'MediaCMS'}])
+
+  assert.equal(
+    klass.linkVideoWidgets('( widget: video, provider: mediacms, host: demo.mediacms.io, id: hDHXkdwy0 )'),
+    '<a href="https://demo.mediacms.io/view?m=hDHXkdwy0">https://demo.mediacms.io/view?m=hDHXkdwy0</a>'
+  )
+
+  assert.equal(
+    klass.linkVideoWidgets('<p>( widget: video, provider: peertube, host: video.example.com, id: uuid-1 )</p>'),
+    '<p></p>',
+    'removes a self-hosted video on a server that is not whitelisted'
+  )
+
+  App.Config.set('kb_self_hosted_video_servers', [{name: 'Entry without host'}])
+
+  assert.equal(
+    klass.linkVideoWidgets('<p>( widget: video, provider: peertube, id: uuid-1 )</p>'),
+    '<p></p>',
+    'removes a hostless self-hosted video despite a malformed allow-list entry'
+  )
+
+  assert.equal(
+    klass.linkVideoWidgets('<p>( widget: video, provider: dailymotion, id: x )</p>'),
+    '<p></p>',
+    'removes a video of an unknown provider'
+  )
+
+  assert.equal(
+    klass.linkVideoWidgets('<p>( widget: video, provider: constructor, id: x )</p>'),
+    '<p></p>',
+    'removes a video whose provider names an object prototype member'
+  )
+
+  var html = klass.linkVideoWidgets('( widget: video, provider: youtube, id: a&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt; )')
+
+  assert.notOk(html.includes('<script>'), 'escapes markup in the video id')
+  assert.ok(
+    html.includes('<a href="https://www.youtube.com/watch?v=a%22%3E%3Cscript%3Ealert(1">'),
+    'keeps the encoded video id in the link'
+  )
+
+  assert.equal(
+    klass.linkVideoWidgets('<p><img alt="( widget: video, provider: youtube, id: x )" src="image.png"></p>'),
+    '<p><img alt="( widget: video, provider: youtube, id: x )" src="image.png"></p>',
+    'leaves a marker in an attribute value alone'
+  )
+
+  assert.equal(
+    klass.linkVideoWidgets('<p><span title="( widget: video, provider: vimeo, id: 1 )">( widget: video, provider: vimeo, id: 2 )</span></p>'),
+    '<p><span title="( widget: video, provider: vimeo, id: 1 )"><a href="https://vimeo.com/2">https://vimeo.com/2</a></span></p>',
+    'links a marker in the text of an element whose attribute carries one, too'
+  )
+
+  App.Config.set('kb_self_hosted_video_servers', videoServers)
+})

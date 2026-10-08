@@ -71,6 +71,53 @@ RSpec.describe KnowledgeBaseRichText do
     end
   end
 
+  describe '.link_video_widgets' do
+    it 'replaces a marker with a link to the video page' do
+      result = described_class.link_video_widgets('<p>( widget: video, provider: youtube, id: vTTzwJsHpU8 )</p>')
+      expect(result).to eq("<p><a href='https://www.youtube.com/watch?v=vTTzwJsHpU8'>https://www.youtube.com/watch?v=vTTzwJsHpU8</a></p>")
+    end
+
+    it 'links a self-hosted video on a whitelisted server' do
+      allow(Setting).to receive(:get).with('kb_self_hosted_video_servers')
+        .and_return([{ 'host' => 'demo.mediacms.io', 'name' => 'CMS' }])
+
+      marker = '( widget: video, provider: mediacms, host: demo.mediacms.io, id: hDHXkdwy0 )'
+      expect(described_class.link_video_widgets(marker))
+        .to include("href='https://demo.mediacms.io/view?m=hDHXkdwy0'")
+    end
+
+    it 'links multiple markers in the same input' do
+      input  = 'a ( widget: video, provider: youtube, id: aaa ) b ( widget: video, provider: vimeo, id: 111 ) c'
+      result = described_class.link_video_widgets(input)
+      expect(result)
+        .to include("href='https://www.youtube.com/watch?v=aaa'")
+        .and include("href='https://vimeo.com/111'")
+    end
+
+    it 'escapes an attribute breakout attempt' do
+      marker = "( widget: video, provider: youtube, id: a' onmouseover='alert(1) )"
+      expect(described_class.link_video_widgets(marker)).not_to include("' onmouseover='")
+    end
+
+    it 'tolerates a marker part without a key' do
+      expect(described_class.link_video_widgets('( widget: video, provider: youtube, id: abc, )'))
+        .to include("href='https://www.youtube.com/watch?v=abc'")
+    end
+
+    it 'removes a marker without an ID' do
+      expect(described_class.link_video_widgets('<p>( widget: video, provider: youtube )</p>')).to eq('<p></p>')
+    end
+
+    it 'removes a marker of an unrecognized provider' do
+      expect(described_class.link_video_widgets('<p>( widget: video, provider: dailymotion, id: x )</p>')).to eq('<p></p>')
+    end
+
+    it 'removes a marker of a self-hosted video on a server that is not whitelisted' do
+      marker = '( widget: video, provider: peertube, host: video.example.com, id: uuid-1 )'
+      expect(described_class.link_video_widgets(marker)).to eq('')
+    end
+  end
+
   describe '.prepare' do
     it 'resolves links and expands video markers in one pass', :aggregate_failures do
       translation = create(:knowledge_base_answer).translation_primary

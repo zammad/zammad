@@ -9,5 +9,9 @@ class VideoEmbed
     def embed_url
       "https://#{host}/embed?m=#{id}"
     end
+
+    def watch_url
+      "https://#{host}/view?m=#{id}"
+    end
   end
 end

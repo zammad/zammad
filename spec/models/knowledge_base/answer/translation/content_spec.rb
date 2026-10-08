@@ -49,6 +49,13 @@ RSpec.describe KnowledgeBase::Answer::Translation::Content, current_user_id: 1, 
       expect(body_text_only_of("Marked \u{E000}run\u{E001} here")).to eq('Marked run here')
     end
 
+    it 'drops a video widget marker', :aggregate_failures do
+      text = body_text_only_of('<p>Watch this:</p><p>( widget: video, provider: mediacms, host: demo.mediacms.io, id: hDHXkdwy0 )</p><p>Done.</p>')
+
+      expect(text).to include('Watch this:').and include('Done.')
+      expect(text).not_to include('widget')
+    end
+
     it 'returns an empty string for a nil body' do
       expect(body_text_only_of(nil)).to eq('')
     end

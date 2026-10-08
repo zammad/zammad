@@ -96,7 +96,7 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
     attributes
 
   bodyWithPublicURLs: ->
-    parsed = $("<div>#{@body}</div>")
+    parsed = $("<div>#{@constructor.linkVideoWidgets(@body)}</div>")
 
     for linkDom in parsed.find('a').addBack('a').toArray()
       switch $(linkDom).attr('data-target-type')
@@ -105,5 +105,20 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
             $(linkDom).attr 'href', object.publicBaseUrl()
           else
             $(linkDom).attr 'href', '#'
+
+    parsed[0].innerHTML
+
+  # Mirrors KnowledgeBaseRichText.link_video_widgets: the body leaves the knowledge base for a
+  #   place without an embedded player, e.g. an article sent by email.
+  @linkVideoWidgets: (body) ->
+    return body if !body
+
+    parsed = $("<div>#{body}</div>")
+
+    App.KnowledgeBaseVideo.replaceMarkersInText parsed, (settings) ->
+      url = App.KnowledgeBaseVideo.watchUrl(settings)
+      return if !url
+
+      $('<a>').attr('href', url).text(url)[0]
 
     parsed[0].innerHTML

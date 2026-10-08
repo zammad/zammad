@@ -27,6 +27,11 @@ class VideoEmbed
       raise NotImplementedError
     end
 
+    # The URL of the video's own page on the provider. Must be implemented by subclasses.
+    def watch_url
+      raise NotImplementedError
+    end
+
     private
 
     # An admin-approved server may carry an explicit port (see

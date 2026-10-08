@@ -52,6 +52,15 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
         expect(gql.result.data[:body]).to include("src=\"/api/v1/attachments/#{copied_inline_attachments.first.id}")
       end
 
+      context 'with an embedded video' do
+        let(:knowledge_base_answer) { create(:knowledge_base_answer, :published, :with_video) }
+
+        it 'replaces the video marker with a link to the video', :aggregate_failures do
+          expect(gql.result.data[:body]).to include("<a href='https://www.youtube.com/watch?v=vTTzwJsHpU8'>")
+          expect(gql.result.data[:body]).not_to include('widget: video')
+        end
+      end
+
       it 'contains attachments' do
         attachment = copied_attached_attachments.first
         expect(gql.result.data[:attachments]).to match_array(include(
