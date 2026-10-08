@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Security fixes are provided for the [current stable version of Zammad](https://zammad.com/releases) only.
+Security fixes are provided for the [current stable version of Zammad](https://zammad.com/en/product/releases) only.
 Any older version is not supported and needs to be updated first before reporting security issues.
 
 ## Reporting a Vulnerability
@@ -25,7 +25,7 @@ security advisory.
 
 - Potential security issues can be reported via [security@zammad.com](mailto:security@zammad.com).
 - We evaluate them and provide timely feedback to the reporter.
-- There may be security releases created if needed, e.g. [Zammad 6.3.1](https://zammad.com/en/releases/6-3-1).
+- There may be security releases created if needed, e.g. [Zammad 6.3.1](https://zammad.com/en/product/releases/6-3-1).
 - We publish security advisories for every acknowledged issue via [GitHub Security Advisories](https://github.com/zammad/zammad/security/advisories).
 - After their publication, we request CVE identifiers to be assigned to the advisories.
 
