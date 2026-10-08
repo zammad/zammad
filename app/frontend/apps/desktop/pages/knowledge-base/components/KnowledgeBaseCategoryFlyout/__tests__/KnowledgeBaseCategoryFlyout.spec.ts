@@ -500,8 +500,11 @@ describe('KnowledgeBaseCategoryFlyout', () => {
 
         const wrapper = renderFlyout({ category: CATEGORY })
 
-        await wrapper.events.clear(await wrapper.findByLabelText('Title'))
-        await wrapper.events.type(wrapper.getByLabelText('Title'), 'Printers')
+        const title = await wrapper.findByLabelText('Title')
+        await waitFor(() => expect(title).toBeVisible())
+
+        await wrapper.events.clear(title)
+        await wrapper.events.type(title, 'Printers')
 
         await wrapper.events.click(wrapper.getByRole('button', { name: 'Update' }))
 

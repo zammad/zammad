@@ -4,6 +4,7 @@ import { getNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
 
 import renderComponent, { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import {
   mockFormUpdaterQuery,
@@ -161,8 +162,11 @@ describe('KnowledgeBaseEditFlyout', () => {
 
       const wrapper = renderFlyout()
 
-      await wrapper.events.clear(await wrapper.findByLabelText('Title'))
-      await wrapper.events.type(wrapper.getByLabelText('Title'), 'Help Center')
+      const title = await wrapper.findByLabelText('Title')
+      await waitFor(() => expect(title).toBeVisible())
+
+      await wrapper.events.clear(title)
+      await wrapper.events.type(title, 'Help Center')
       await wrapper.events.clear(wrapper.getByLabelText('Footer note'))
       await wrapper.events.type(wrapper.getByLabelText('Footer note'), 'Updated footer')
       await wrapper.events.click(wrapper.getByRole('button', { name: 'Update' }))

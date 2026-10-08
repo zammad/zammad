@@ -6,6 +6,7 @@ import userObjectAttributes from '#tests/graphql/factories/fixtures/user-object-
 import FormUpdaterUser from '#tests/graphql/factories/types/FormUpdaterUser.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
@@ -111,6 +112,7 @@ describe('User Detail View - Edit User', () => {
     const flyout = await view.findByRole('complementary', { name: 'Edit user' })
 
     const firstname = await within(flyout).findByLabelText('First name')
+    await waitFor(() => expect(firstname).toBeVisible())
 
     await view.events.clear(firstname)
     await view.events.type(firstname, 'Thomas')

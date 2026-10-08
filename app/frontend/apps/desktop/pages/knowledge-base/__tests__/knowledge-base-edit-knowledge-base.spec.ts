@@ -80,6 +80,8 @@ describe('knowledge base edit knowledge base', () => {
     ).toBeInTheDocument()
 
     const title = await view.findByLabelText('Title')
+    await waitFor(() => expect(title).toBeVisible())
+
     await view.events.clear(title)
     await view.events.type(title, 'Help Center')
 
