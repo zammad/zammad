@@ -7,11 +7,6 @@ RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
   let!(:logs)     { create_list(:cti_log, 5, direction: :in, from: phone) }
   let(:log_prefs) { logs.each(&:reload).map { |log| log.preferences[:from] } }
 
-  it 'accepts a phone number' do
-    expect { described_class.perform_now(phone) }
-      .not_to raise_error
-  end
-
   context 'with no user matching provided phone number' do
     it 'updates Cti::Logs from that number with "preferences" => {}' do
       described_class.perform_now(phone)
@@ -26,7 +21,7 @@ RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
     it 'updates Cti::Logs from that number with valid "preferences" hash' do
       described_class.perform_now(phone)
 
-      expect(log_prefs).not_to eq(Array.new(5) { nil })
+      expect(log_prefs).to all(be_present)
     end
 
     # The telephony backend decides the stored format; the caller id is always plain digits.

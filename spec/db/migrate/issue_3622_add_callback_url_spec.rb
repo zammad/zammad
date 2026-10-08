@@ -14,10 +14,16 @@ RSpec.describe Issue3622AddCallbackUrl, type: :db_migration do
   end
 
   before do
-    migrate
+    Setting.where("name LIKE 'auth_%_credentials'").each do |setting|
+      setting.options['form'].reject! { |form_field| form_field['name'] == 'callback_url' }
+      setting.save!
+    end
   end
 
   it 'does update settings correctly' do
-    expect(Setting.find_by(name: 'auth_twitter_credentials').options['form']).to include(field)
+    expect { migrate }
+      .to change { Setting.find_by(name: 'auth_twitter_credentials').options['form'] }
+      .from(not_include(field))
+      .to(include(field))
   end
 end

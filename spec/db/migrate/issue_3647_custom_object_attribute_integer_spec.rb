@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Issue3647CustomObjectAttributeInteger, type: :db_migration do
-  let(:integer_valid) { create(:object_manager_attribute_integer) }
+  let!(:integer_valid) { create(:object_manager_attribute_integer) }
   let(:integer_max_over_max) do
     object = build(:object_manager_attribute_integer, data_option: { default: 0, min: 0, max: 9_999_999_999 })
     object.save(validate: false)
@@ -17,7 +17,7 @@ RSpec.describe Issue3647CustomObjectAttributeInteger, type: :db_migration do
 
   it 'leaves valid integer intact' do
     expect { migrate }
-      .not_to change { integer_valid.data_option[:max] }
+      .not_to change { integer_valid.reload.data_option[:max] }
   end
 
   it 'lowers max if it is too big' do

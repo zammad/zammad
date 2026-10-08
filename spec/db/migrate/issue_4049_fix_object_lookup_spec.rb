@@ -10,7 +10,8 @@ RSpec.describe Issue4049FixObjectLookup, type: :db_migration do
   end
 
   it 'does fix the broken object lookup' do
-    migrate
-    expect(ObjectLookup.by_name('SMIMECertificate')).not_to be_nil
+    expect { migrate }
+      .to change { ObjectLookup.exists?(name: 'SMIMECertificate') }.from(false).to(true)
+      .and change { ObjectLookup.exists?(name: 'SmimeCertificate') }.from(true).to(false)
   end
 end

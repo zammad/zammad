@@ -29,14 +29,16 @@ RSpec.describe SearchIndexAssociationsJob, performs_jobs: true, searchindex: tru
 
   it 'does update objects until there are no conflicts or unprocessed left' do
     organization.update(name: SecureRandom.uuid)
-    result = false
-    30.times do
+
+    result = nil
+    5.times do
       result = described_class.perform_now('Organization', organization.id)
-      puts 'Waiting for elastic search to complete mass update...'
       break if result == true
 
-      sleep 1
+      # Each pass has to see the documents updated by the previous one.
+      SearchIndexBackend.refresh
     end
+
     expect(result).to be(true)
   end
 end

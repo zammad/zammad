@@ -115,7 +115,7 @@ RSpec.describe InputFieldsOperatorRenaming, type: :db_migration do
     end
 
     it 'does not migrate the workflows that do not use new input operators' do
-      expect { migrate }.to not_change(workflow_unchanged, :reload)
+      expect { migrate }.to not_change { workflow_unchanged.reload.attributes }
     end
 
     it 'does migrate the workflows', :aggregate_failures do

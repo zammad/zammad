@@ -20,21 +20,9 @@ RSpec.describe TicketUserTicketCounterJob, type: :job do
     }
   end
 
-  it 'checks if customer has no ticket count in preferences' do
-    customer.reload
-    expect(customer[:preferences][:tickets_open]).to be_falsey
-    expect(customer[:preferences][:tickets_closed]).to be_falsey
-  end
-
   it 'checks if customer ticket count has been updated in preferences' do
-    described_class.perform_now(
-      customer.id,
-      nil,
-      customer.id,
-    )
-    customer.reload
-
-    expect(customer[:preferences][:tickets_open]).to be tickets[:open].count
-    expect(customer[:preferences][:tickets_closed]).to be tickets[:closed].count
+    expect { described_class.perform_now(customer.id, nil, customer.id) }
+      .to change { customer.reload.preferences[:tickets_open] }.from(nil).to(tickets[:open].count)
+      .and change { customer.reload.preferences[:tickets_closed] }.from(nil).to(tickets[:closed].count)
   end
 end

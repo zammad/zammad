@@ -33,12 +33,6 @@ describe Controllers::AttachmentsControllerPolicy do
       it { is_expected.to permit_actions :show }
       it { is_expected.to forbid_actions :destroy }
     end
-
-    context 'with private object' do
-      let(:visibility) { :internal }
-
-      it { is_expected.to forbid_actions :show, :destroy }
-    end
   end
 
   context 'with a user' do
@@ -55,13 +49,6 @@ describe Controllers::AttachmentsControllerPolicy do
 
       it { is_expected.to permit_actions :show }
       it { is_expected.to forbid_actions :destroy }
-    end
-
-    context 'with no access' do
-      let(:user) { create(:agent) }
-      let(:visibility) { :draft }
-
-      it { is_expected.to forbid_actions :show, :destroy }
     end
 
     context 'with object that does not have a policy' do

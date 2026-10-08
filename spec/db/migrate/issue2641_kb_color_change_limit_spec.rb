@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Issue2641KbColorChangeLimit, db_strategy: :reset, type: :db_migration do
-  subject(:knowledge_base) { create(:knowledge_base) }
+  subject!(:knowledge_base) { create(:knowledge_base) }
 
   before do
     Setting.create_if_not_exists(
@@ -39,6 +39,6 @@ RSpec.describe Issue2641KbColorChangeLimit, db_strategy: :reset, type: :db_migra
 
   it "doesn't change value for existing KB" do
     expect { migrate }
-      .to not_change { knowledge_base.color_header }.and not_change { knowledge_base.color_highlight }
+      .to not_change { knowledge_base.reload.color_header }.and not_change { knowledge_base.reload.color_highlight }
   end
 end

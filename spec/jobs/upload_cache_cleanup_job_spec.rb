@@ -49,8 +49,8 @@ RSpec.describe UploadCacheCleanupJob, type: :job do
   end
 
   context 'when upload cache does not exist' do
-    it 'does not crash' do
-      expect { described_class.perform_now }.not_to raise_error
+    it 'does not remove any store items' do
+      expect { described_class.perform_now }.not_to change(Store, :count)
     end
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe TicketEscalationRebuildJob, type: :job do
     end
   end
 
-  context 'when not relevant Ticket is present' do
+  context 'when no SLA applies to the Ticket' do
 
     subject(:ticket) { create(:ticket) }
 
@@ -34,8 +34,23 @@ RSpec.describe TicketEscalationRebuildJob, type: :job do
       travel(1.hour)
     end
 
-    it 'does not not change escalation_at' do
-      expect { described_class.perform_now }.to change { ticket.reload.escalation_at }
+    it 'removes the stale escalation_at' do
+      expect { described_class.perform_now }.to change { ticket.reload.escalation_at }.to(nil)
+    end
+  end
+
+  context 'when the Ticket is not open' do
+
+    subject(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'closed')) }
+
+    before do
+      create(:sla, :condition_blank, first_response_time: 60, update_time: 120, solution_time: 180)
+      ticket.update_column(:escalation_at, 2.hours.ago)
+      travel(1.hour)
+    end
+
+    it 'does not change escalation_at' do
+      expect { described_class.perform_now }.not_to change { ticket.reload.escalation_at }
     end
   end
 

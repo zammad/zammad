@@ -201,7 +201,7 @@ RSpec.describe TicketBulkUpdateJob do
       end
 
       context 'when the job is currently performing' do
-        it 'returns status as pending, and the counts' do
+        it 'returns status as running, and the counts' do
           Delayed::Job.last.update! locked_at: 1.minute.ago, locked_by: 'test-worker'
 
           expect(described_class.fetch_running_status(user))
@@ -210,7 +210,7 @@ RSpec.describe TicketBulkUpdateJob do
       end
 
       context 'when the kick-off job is waiting to be performed' do
-        it 'returns status as running, and the counts' do
+        it 'returns status as pending, and the counts' do
           expect(described_class.fetch_running_status(user))
             .to include(status: 'pending', total: 3, processed_count: 0)
         end

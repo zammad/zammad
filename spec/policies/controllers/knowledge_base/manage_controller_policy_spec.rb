@@ -29,13 +29,6 @@ RSpec.describe Controllers::KnowledgeBase::ManageControllerPolicy do
     it { is_expected.to permit_actions(*actions) }
   end
 
-  # The regression this policy was rewritten for. It used to inherit
-  #   `permit! %i[create update destroy], to: 'knowledge_base.editor'` from a shared base policy,
-  #   and its own `default_permit!` could not displace those keys - a Hash key beats a Hash
-  #   default. A content editor could therefore create a knowledge base, rewrite every one of its
-  #   attributes (#params_for_permission is `params.permit!`) and destroy it outright
-  #   (#destroy is `full_destroy!`), while the neighbouring #activate / #deactivate correctly
-  #   refused them. See zammad/coordination-security#153.
   context 'when user is a knowledge base editor without admin.knowledge_base' do
     let(:user) { create(:user, roles: [role]) }
     let(:role) { create(:role, permission_names: ['knowledge_base.editor']) }

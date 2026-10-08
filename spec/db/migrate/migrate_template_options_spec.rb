@@ -7,7 +7,7 @@ RSpec.describe MigrateTemplateOptions, type: :db_migration do
 
   context 'with new options' do
     it 'keeps new options unchanged' do
-      expect { migrate }.not_to change(template, :options)
+      expect { migrate }.not_to change { template.reload.options }
     end
   end
 

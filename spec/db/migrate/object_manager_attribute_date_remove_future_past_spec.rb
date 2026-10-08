@@ -4,47 +4,25 @@ require 'rails_helper'
 
 RSpec.describe ObjectManagerAttributeDateRemoveFuturePast, type: :db_migration do
   context 'when Date ObjectManager::Attribute exists' do
+    let(:attribute)   { create(:object_manager_attribute_date) }
+    let(:data_option) { attribute.data_option.merge(future: false, past: false) }
+
+    before do
+      # The factory does not contain the obsolete options anymore.
+      attribute.update_columns(data_option: data_option)
+    end
 
     it 'removes future and past data_option' do
-      subject = build(:object_manager_attribute_date)
-
-      # add data_options manually because the factory doesn't contain them anymore
-      subject.data_option = subject.data_option.merge(
-        future: false,
-        past:   false,
-      )
-
-      # mock interfaces to save time
-      # otherwise we would have to reseed the database
-      allow(ObjectManager::Attribute).to receive(:where).and_return([subject])
-      allow(subject).to receive(:save!)
-
-      migrate
-
-      expect(subject.data_option).not_to include(:past, :future)
+      expect { migrate }.to change { attribute.reload.data_option.keys }
+        .from(include('future', 'past'))
+        .to(not_include('future', 'past'))
     end
 
     context 'when incomplete data_option is given' do
+      let(:data_option) { attribute.data_option.merge(future: false, past: false).except(:diff) }
 
       it 'adds missing :diff option' do
-        subject = build(:object_manager_attribute_date)
-
-        # add data_options manually because the factory doesn't contain them anymore
-        subject.data_option = subject.data_option.merge(
-          future: false,
-          past:   false,
-        )
-
-        # remove diff option as for some attributes
-        # from older Zammad installations
-        subject.data_option.delete(:diff)
-
-        # mock interfaces to save time
-        # otherwise we would have to reseed the database
-        allow(ObjectManager::Attribute).to receive(:where).and_return([subject])
-        # expect(subject).to receive(:save!)
-
-        expect { migrate }.not_to raise_error
+        expect { migrate }.to change { attribute.reload.data_option[:diff] }.from(nil).to(24)
       end
     end
   end

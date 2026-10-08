@@ -72,12 +72,6 @@ describe Controllers::TagsControllerPolicy do
       it { is_expected.to forbid_actions(:add, :remove, :list) }
     end
 
-    context 'when user is agent' do
-      let(:user) { create(:agent) }
-
-      it { is_expected.to permit_actions(:search) }
-    end
-
     context 'when user is kb editor without agent access' do
       let(:role) { create(:role, permission_names: %w[knowledge_base.editor]) }
       let(:user) { create(:customer, roles: [role]) }

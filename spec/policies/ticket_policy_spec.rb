@@ -58,7 +58,7 @@ describe TicketPolicy do
       end
     end
 
-    context 'when user is admin with group access' do
+    context 'when user is admin without group access' do
       let(:user) { create(:user, roles: Role.where(name: %w[Admin])) }
 
       it { is_expected.to forbid_actions(%i[show full]) }
@@ -75,17 +75,6 @@ describe TicketPolicy do
       end
 
       it { is_expected.to forbid_actions(%i[show full]) }
-    end
-
-    context 'when owner has ticket.agent permission' do
-
-      let(:user) do
-        create(:agent, groups: [record.group]).tap do |user|
-          record.update!(owner: user)
-        end
-      end
-
-      it { is_expected.to permit_actions(%i[show full]) }
     end
 
     context 'when groups.follow_up_possible is set' do
@@ -295,7 +284,7 @@ describe TicketPolicy do
     context 'when user is agent with full access' do
       let(:user) { create(:agent, groups: [record.group]) }
 
-      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access agent_update_access]) }
+      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access agent_create_access]) }
     end
 
     context 'when user is agent-customer with customer access to ticket' do

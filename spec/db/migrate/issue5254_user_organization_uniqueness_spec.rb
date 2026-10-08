@@ -16,7 +16,7 @@ RSpec.describe Issue5254UserOrganizationUniqueness, type: :db_migration do
     it 'removes non-unique organizations from users' do
       expect { migrate }
         .to change { user1.reload.organizations.include?(user1.organization) }.from(true).to(false)
-        .and change(user1, :updated_at)
+        .and change { user1.reload.updated_at }
         .and not_change { user2.reload.organizations.count }.from(3)
         .and not_change { user3.reload.organization }.from(user3.organization)
         .and not_change { user4.reload.organization.nil? }.from(true)

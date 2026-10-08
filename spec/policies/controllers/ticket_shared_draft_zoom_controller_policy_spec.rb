@@ -40,10 +40,6 @@ describe Controllers::TicketSharedDraftZoomControllerPolicy do
     end
   end
 
-  context 'when has no access to ticket' do
-    it { is_expected.to forbid_actions(:show, :create, :update, :destroy, :import_attachments) }
-  end
-
   context 'when user has no access to ticket' do
     it { is_expected.to forbid_all_actions }
   end

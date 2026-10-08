@@ -55,7 +55,7 @@ RSpec.describe CalendarPublicHolidayCleanup, type: :db_migration do
   end
 
   it 'does not update calendars without public holidays/ical_urls' do
-    expect { migrate }.to not_change { calendar_without_public_holiday }.and not_change { calendar_without_ical_url }
+    expect { migrate }.to not_change { calendar_without_public_holiday.reload.public_holidays }.and not_change { calendar_without_ical_url.reload.public_holidays }
   end
 
   it 'does remove duplicates' do

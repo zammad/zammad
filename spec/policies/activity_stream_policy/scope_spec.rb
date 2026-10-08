@@ -50,7 +50,7 @@ RSpec.describe ActivityStreamPolicy::Scope do
 
       it 'does not include groups’ agent ActivityStreams' do
         expect(scope.resolve)
-          .not_to include([activity_streams[:agent][:grouped]])
+          .not_to include(activity_streams[:agent][:grouped])
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe ActivityStreamPolicy::Scope do
 
       it 'does not include groups’ agent ActivityStreams' do
         expect(scope.resolve)
-          .not_to include([activity_streams[:admin][:grouped]])
+          .not_to include(activity_streams[:admin][:grouped])
       end
     end
 

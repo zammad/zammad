@@ -179,7 +179,7 @@ describe Controllers::LinksControllerPolicy do
     context 'with target knowledge base answer and source ticket' do
       let(:ticket_source)    { create(:ticket) }
       let(:kb_answer_target) { internal_answer.translations.first }
-      let(:action_name)      { :remove }
+      let(:action_name)      { :add }
       let(:params) do
         {
           link_object_source:        'Ticket',
@@ -190,7 +190,7 @@ describe Controllers::LinksControllerPolicy do
       end
 
       context 'when user has full permission on target and accces on source' do
-        let(:role) { create(:role, permission_names: %w[knowledge_base.editor]) }
+        let(:role) { create(:role, permission_names: %w[knowledge_base.editor ticket.agent]) }
         let(:user) { create(:agent, groups: [ticket_source.group], roles: [role]) }
 
         it { is_expected.to permit_action(action_name) }
@@ -204,11 +204,11 @@ describe Controllers::LinksControllerPolicy do
       end
 
       context 'when user has no accces on source' do
-        let(:role)          { create(:role, permission_names: %w[knowledge_base.editor]) }
+        let(:role)          { create(:role, permission_names: %w[knowledge_base.editor ticket.agent]) }
         let(:ticket_source) { create(:ticket, group: create(:group)) }
         let(:user)          { create(:agent, roles: [role]) }
 
-        it { is_expected.to permit_action(action_name) }
+        it { is_expected.to forbid_action(action_name) }
       end
     end
   end

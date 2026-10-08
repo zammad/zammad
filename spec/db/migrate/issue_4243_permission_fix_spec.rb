@@ -18,15 +18,11 @@ RSpec.describe Issue4243PermissionFix, type: :db_migration do
     role
   end
 
-  before do
-    migrate
-  end
-
   it 'does remove the groups if the role does not have the ticket.agent permissions' do
-    expect(test_role.reload.groups).to eq([])
+    expect { migrate }.to change { test_role.reload.groups.to_a }.from([Group.first]).to([])
   end
 
   it 'does nothing if the role does have the ticket.agent permissions' do
-    expect(agent_role.reload.groups).to be_present
+    expect { migrate }.not_to change { agent_role.reload.groups.to_a }.from([Group.first])
   end
 end

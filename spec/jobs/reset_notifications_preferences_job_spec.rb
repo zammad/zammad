@@ -34,7 +34,7 @@ RSpec.describe ResetNotificationsPreferencesJob do
     before { customer && agent_customer }
 
     it 'returns agents and agent-customers only' do
-      expect(described_class.new.send(:users_scope)).to eq([agent, agent_customer])
+      expect(described_class.new.send(:users_scope)).to contain_exactly(agent, agent_customer)
     end
   end
 end

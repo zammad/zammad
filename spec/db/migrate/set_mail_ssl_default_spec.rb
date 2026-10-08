@@ -80,6 +80,6 @@ RSpec.describe SetMailSSLDefault, :aggregate_failures, type: :db_migration do
       )
     )
 
-    expect(email_notification_sendmail.options[:outbound]).not_to have_key('options')
+    expect(email_notification_sendmail.reload.options[:outbound]).not_to have_key('options')
   end
 end

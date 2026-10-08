@@ -45,6 +45,22 @@ RSpec.describe DataPrivacyTask, type: :model do
         task.perform
 
         expect(User).not_to exist(deletable.id)
+        expect(task.reload.state).to eq('completed')
+      end
+
+      context 'when the task was created by an admin' do
+        let(:admin) { create(:admin) }
+        let(:task)  { create(:data_privacy_task, deletable: deletable, created_by: admin) }
+
+        before { Setting.set('system_init_done', true) }
+
+        it 'logs the completion to the activity stream of the admin' do
+          task
+          travel 15.minutes
+          task.perform
+
+          expect(admin.activity_stream(20).map { |entry| entry.type.name }).to include('completed')
+        end
       end
 
       context 'when the user is the customer of a ticket with caller IDs' do
@@ -80,6 +96,26 @@ RSpec.describe DataPrivacyTask, type: :model do
 
           context 'when a member is the customer of a ticket with caller IDs' do
             it_behaves_like 'erasure removes caller IDs from tickets'
+          end
+
+          context 'when the organization is a secondary organization of another user' do
+            let(:other_user) { create(:user) }
+            let(:viewer)     { create(:admin) }
+
+            def organization_ids_in_assets
+              UserInfo.with_user_id(viewer.id) do
+                other_user.reload.assets({}).dig(:User, other_user.id, 'organization_ids')
+              end
+            end
+
+            before do
+              other_user.organizations << organization
+            end
+
+            it 'removes the organization from the assets of the other user' do
+              expect { task.perform }
+                .to change { organization_ids_in_assets }.from(include(organization.id)).to(not_include(organization.id))
+            end
           end
 
           context 'when organization has more members' do
