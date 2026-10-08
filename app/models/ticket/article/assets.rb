@@ -57,4 +57,10 @@ returns
     end
     data
   end
+
+  def filter_unauthorized_attributes(attributes)
+    return super if UserInfo.assets.agent?
+
+    super.except('detected_language')
+  end
 end

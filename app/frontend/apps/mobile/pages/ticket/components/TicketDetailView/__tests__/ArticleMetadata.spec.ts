@@ -69,6 +69,7 @@ describe('visuals for metadata', () => {
         name: 'article',
         article,
         ticketInternalId: 2,
+        isTicketAgent: true,
       },
       router: true,
       store: true,
@@ -116,6 +117,24 @@ describe('visuals for metadata', () => {
     )
 
     expect(view.queryByRole('region', { name: 'Security' })).not.toBeInTheDocument()
+  })
+
+  it('does not render the detected language in the customer view', () => {
+    const view = renderComponent(ArticleMetadataDialog, {
+      props: {
+        name: 'article',
+        article: nullableMock<TicketArticle>({
+          ...defaultArticles().firstArticles!.edges[0].node,
+          detectedLanguage: 'de',
+        }),
+        ticketInternalId: 2,
+        isTicketAgent: false,
+      },
+      router: true,
+      store: true,
+    })
+
+    expect(view.queryByRole('region', { name: 'Detected language' })).not.toBeInTheDocument()
   })
 })
 

@@ -3,7 +3,9 @@
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
+import type { TicketView } from '#shared/entities/ticket/types.ts'
+
+import { defaultArticles, mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 beforeAll(async () => {
   await import('../components/TicketDetailView/ArticleMetadataDialog.vue')
@@ -32,5 +34,25 @@ describe('actions inside article context', () => {
     expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(/2022-01-29 00:00/)
 
     // content is tested inside unit test
+  })
+
+  test.each<[TicketView, boolean]>([
+    ['agent', true],
+    ['customer', false],
+  ])('shows the detected language in the %s view: %s', async (ticketView, shown) => {
+    const articles = defaultArticles()
+    articles.firstArticles!.edges[0].node.detectedLanguage = 'de'
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({ ticketView, articles })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getAllByRole('button', { name: 'Article actions' })[0])
+    await view.events.click(view.getByText('Show meta data'))
+
+    expect(view.getByText('Meta data')).toBeInTheDocument()
+    expect(!!view.queryByRole('region', { name: 'Detected language' })).toBe(shown)
   })
 })
