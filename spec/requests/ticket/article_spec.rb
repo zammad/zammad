@@ -824,6 +824,41 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     end
   end
 
+  describe 'GET article endpoints with a detected language' do
+    let(:ticket)   { create(:ticket, group: Group.first, customer:) }
+    let!(:article) { create(:ticket_article, ticket:, detected_language: 'de') }
+
+    def article_payloads
+      get "/api/v1/ticket_articles/#{article.id}", as: :json
+      show = json_response
+
+      get "/api/v1/ticket_articles/#{article.id}", params: { full: true }, as: :json
+      show_full = json_response.dig('assets', 'TicketArticle', article.id.to_s)
+
+      get "/api/v1/ticket_articles/by_ticket/#{ticket.id}", as: :json
+      by_ticket = json_response.find { |item| item['id'] == article.id }
+
+      get "/api/v1/ticket_articles/by_ticket/#{ticket.id}", params: { full: true }, as: :json
+      by_ticket_full = json_response.dig('assets', 'TicketArticle', article.id.to_s)
+
+      { show:, show_full:, by_ticket:, by_ticket_full: }
+    end
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'returns the detected language' do
+        expect(article_payloads.transform_values { it['detected_language'] })
+          .to eq(show: 'de', show_full: 'de', by_ticket: 'de', by_ticket_full: 'de')
+      end
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      it 'returns no detected language' do
+        expect(article_payloads.transform_values { it.key?('detected_language') })
+          .to eq(show: false, show_full: false, by_ticket: false, by_ticket_full: false)
+      end
+    end
+  end
+
   describe 'GET /api/v1/ticket_article_plain/:id', authenticated_as: :agent do
     let(:ticket)  { create(:ticket, group: Group.first) }
     let(:article) { create(:ticket_article, ticket: ticket) }

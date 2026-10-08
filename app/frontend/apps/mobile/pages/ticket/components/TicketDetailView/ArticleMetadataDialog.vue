@@ -24,6 +24,7 @@ interface Props {
   name: string
   article: TicketArticle
   ticketInternalId: number
+  isTicketAgent?: boolean
 }
 
 const props = defineProps<Props>()
@@ -99,7 +100,10 @@ const activityTypeSentence = computed(() => formatAccountedTimeType(props.articl
       <CommonSectionMenuItem v-if="article.subject" :label="__('Subject')">
         <div>{{ article.subject }}</div>
       </CommonSectionMenuItem>
-      <CommonSectionMenuItem v-if="article.detectedLanguage" :label="__('Detected language')">
+      <CommonSectionMenuItem
+        v-if="isTicketAgent && article.detectedLanguage"
+        :label="__('Detected language')"
+      >
         <ObjectAttributeContent
           v-if="detectedLanguageAttribute"
           :attribute="detectedLanguageAttribute"

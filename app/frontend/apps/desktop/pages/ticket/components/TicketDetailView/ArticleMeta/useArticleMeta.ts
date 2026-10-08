@@ -3,6 +3,7 @@
 import { computed, type Ref } from 'vue'
 
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
@@ -11,6 +12,7 @@ import ArticleMetaAccountedTime from '#desktop/pages/ticket/components/TicketDet
 import ArticleMetaAddress from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue'
 import ArticleMetaDetectedLanguage from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaDetectedLanguage.vue'
 import type { ChannelMetaField } from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/types.ts'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const getNestedProperty = (article: TicketArticle, nestedKeys: string[]) => {
   return nestedKeys.reduce((accumulator, currentKey) => {
@@ -64,6 +66,9 @@ const getMetaAddressLabel = (
 }
 
 export const useArticleMeta = (article: Ref<TicketArticle>) => {
+  const { ticket } = useTicketInformation()
+  const { isTicketAgent } = useTicketView(ticket)
+
   const links = computed(() => article.value.preferences?.links || [])
   const fields = computed(() => {
     const plugin = lookupArticlePlugin(article.value.type?.name as string)
@@ -117,7 +122,7 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         label: __('Detected language'),
         name: 'detectedLanguage',
         component: ArticleMetaDetectedLanguage,
-        show: () => !!article.value.detectedLanguage?.length,
+        show: () => isTicketAgent.value && !!article.value.detectedLanguage?.length,
         order: 375,
       },
       {

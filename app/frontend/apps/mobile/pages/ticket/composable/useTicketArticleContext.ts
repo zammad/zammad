@@ -4,6 +4,7 @@ import { computed, ref, shallowRef } from 'vue'
 
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts'
+import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
 import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
 import log from '#shared/utils/log.ts'
@@ -83,6 +84,7 @@ export const useTicketArticleContext = () => {
             name: metadataDialog.name,
             article,
             ticketInternalId: ticket.internalId,
+            isTicketAgent: getTicketView(ticket).isTicketAgent,
           })
         },
       },

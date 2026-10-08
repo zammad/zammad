@@ -7,6 +7,7 @@ import { type ExtendedRenderResult, renderComponent } from '#tests/support/compo
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { type createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
+import { type createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
 import iconAliasMapRaw from '#desktop/initializer/desktopIconsAliasesMap.ts'
 import { mockDetailViewSetup } from '#desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts'
@@ -34,12 +35,16 @@ const hasAdditionalFields = (wrapper: ExtendedRenderResult, field: ArticleTypeNa
 
 const renderWrapper = (
   articleType: ArticleTypeName,
-  options?: { articleData?: Parameters<typeof createDummyArticle>[0] },
+  options?: {
+    articleData?: Parameters<typeof createDummyArticle>[0]
+    ticketData?: Parameters<typeof createDummyTicket>[0]
+  },
 ) => {
   return renderComponent(
     {
       setup() {
         const { article } = mockDetailViewSetup({
+          ticket: options?.ticketData,
           article: {
             articleType,
             ...options?.articleData,
@@ -127,6 +132,19 @@ describe('ArticleBubbleMetaFields', () => {
       await waitFor(() => {
         expect(wrapper.getByText('German')).toBeInTheDocument()
       })
+    })
+
+    it('does not display the detected language in the customer view', () => {
+      const wrapper = renderWrapper('web', {
+        articleData: {
+          detectedLanguage: 'de',
+        },
+        ticketData: {
+          defaultPolicy: { update: true, agentReadAccess: false },
+        },
+      })
+
+      expect(wrapper.queryByText('Detected language')).not.toBeInTheDocument()
     })
 
     it('displays the accounted time and its activity type in one line if available', () => {

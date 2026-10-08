@@ -28,7 +28,6 @@ module Gql::Types::Ticket
     field :body_with_urls, String, null: false, description: 'Body with cid: URLs replaced for inline images in HTML articles.'
     field :body_rendering_error, Boolean, null: false, description: 'True when the body could not be rendered due to HTML processing issues and contains an untranslated error message.'
     field :internal, Boolean, null: false
-    field :detected_language, String
 
     field :preferences, ::GraphQL::Types::JSON
     field :security_state, Gql::Types::Ticket::Article::SecurityStateType
@@ -44,6 +43,7 @@ module Gql::Types::Ticket
 
     internal_fields do
       field :highlighted_texts, [Gql::Types::Ticket::Article::HighlightedTextType]
+      field :detected_language, String
     end
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
