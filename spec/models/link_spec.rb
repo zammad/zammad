@@ -8,10 +8,6 @@ RSpec.describe Link, type: :model do
   let(:from) { create(:ticket) }
   let(:to)   { create(:ticket) }
 
-  it 'can be saved' do
-    expect(link).to be_persisted
-  end
-
   it 'Validates link uniqueness' do
     link # create a matching link
 

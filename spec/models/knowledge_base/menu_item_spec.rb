@@ -1,12 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase::MenuItem, type: :model do
   subject(:kb_menu_item) { create(:knowledge_base_menu_item) }
-
-  include_context 'factory'
 
   context 'item' do
     it { is_expected.to validate_presence_of  :title }

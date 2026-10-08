@@ -1,13 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase::Permission, type: :model do
   subject(:kb_category_permission) { create(:knowledge_base_permission) }
 
   include_context 'basic Knowledge Base'
-  include_context 'factory'
 
   describe '#permissionable' do
     it { is_expected.to belong_to(:permissionable).touch(true) }

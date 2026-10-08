@@ -11,10 +11,6 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
 
     describe '#role_access?' do
 
-      it 'responds to role_access?' do
-        expect(subject).to respond_to(:role_access?)
-      end
-
       context 'active Role' do
         before do
           role.group_names_access_map = {
@@ -94,10 +90,6 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
 
         subject.roles.push(role)
         subject.save
-      end
-
-      it 'responds to role_access_ids' do
-        expect(described_class).to respond_to(:role_access_ids)
       end
 
       it 'lists only active instance IDs' do

@@ -595,7 +595,7 @@ RSpec.describe Transaction::Notification, type: :model do
       end
     end
 
-    it 'sends notifications based on ticket ownership, group membership and article visibility', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+    it 'notifies the group agents about a customer ticket, but not the agent who changes it', :aggregate_failures do
       ApplicationHandleInfo.use('application_server') do
         ticket1 = Ticket.create!(
           title:         'some notification test 3',
@@ -619,8 +619,6 @@ RSpec.describe Transaction::Notification, type: :model do
           updated_by_id: customer.id,
           created_by_id: customer.id,
         )
-        expect(ticket1).to be_truthy
-
         perform_enqueued_jobs commit_transaction: true
 
         # verify notifications to agent1 + agent2
@@ -678,8 +676,11 @@ RSpec.describe Transaction::Notification, type: :model do
         # verify notifications not to agent1 but to agent2
         expect(NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email')).to eq(2)
         expect(NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email')).to eq(3)
+      end
+    end
 
-        # create ticket with agent1 as owner
+    it 'notifies the owner only about changes made by another agent', :aggregate_failures do
+      ApplicationHandleInfo.use('application_server') do
         ticket2 = Ticket.create!(
           title:         'some notification test 4',
           group:         group,
@@ -705,7 +706,6 @@ RSpec.describe Transaction::Notification, type: :model do
         )
 
         perform_enqueued_jobs commit_transaction: true
-        expect(ticket2).to be_truthy
 
         # verify notifications to no one
         expect(NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email')).to eq(0)
@@ -734,8 +734,11 @@ RSpec.describe Transaction::Notification, type: :model do
         # verify notifications to agent1 and not to agent2
         expect(NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email')).to eq(1)
         expect(NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email')).to eq(0)
+      end
+    end
 
-        # create ticket with agent2 as creator and agent1 as owner
+    it 'notifies the owner about a ticket created by another agent, but not about an article becoming internal', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      ApplicationHandleInfo.use('application_server') do
         ticket3 = Ticket.create!(
           title:         'some notification test 5',
           group:         group,
@@ -761,7 +764,6 @@ RSpec.describe Transaction::Notification, type: :model do
         )
 
         perform_enqueued_jobs commit_transaction: true
-        expect(ticket3).to be_truthy
 
         # verify notifications to agent1 and not to agent2
         expect(NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email')).to eq(1)
@@ -800,10 +802,6 @@ RSpec.describe Transaction::Notification, type: :model do
         # verify notifications not to agent1 and not to agent2
         expect(NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email')).to eq(2)
         expect(NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email')).to eq(0)
-
-        expect(ticket1.destroy).to be_truthy
-        expect(ticket2.destroy).to be_truthy
-        expect(ticket3.destroy).to be_truthy
       end
     end
 
@@ -840,429 +838,155 @@ RSpec.describe Transaction::Notification, type: :model do
       expect(NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email')).to eq(0)
     end
 
-    it 'respects each agent\'s notification_config matrix criteria, group scoping and channels', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
-      ApplicationHandleInfo.use('scheduler.postmaster') do
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = false
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = false
-        agent1.save!
-
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent2.save!
-
-        # create ticket in group
-        ticket1 = Ticket.create!(
-          title:         'some notification test - z preferences tests 1',
-          group:         group,
-          customer:      customer,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket1.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email')).to eq(1)
-
-        # update ticket attributes
-        ticket1.title    = "#{ticket1.title} - #2"
-        ticket1.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket1.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email')).to eq(2)
-
-        # create ticket in group
-        ticket2 = Ticket.create!(
-          title:         'some notification test - z preferences tests 2',
-          group:         group,
-          customer:      customer,
-          owner:         agent1,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket2.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email')).to eq(1)
-        expect(NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email')).to eq(1)
-
-        # update ticket attributes
-        ticket2.title    = "#{ticket2.title} - #2"
-        ticket2.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket2.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email')).to eq(2)
-        expect(NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email')).to eq(2)
-
-        # create ticket in group
-        ticket3 = Ticket.create!(
-          title:         'some notification test - z preferences tests 3',
-          group:         group,
-          customer:      customer,
-          owner:         agent2,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket3.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email')).to eq(1)
-
-        # update ticket attributes
-        ticket3.title    = "#{ticket3.title} - #2"
-        ticket3.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket3.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email')).to eq(2)
-
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent1.preferences['notification_config']['group_ids'] = [group.id.to_s]
-        agent1.save!
-
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent1.preferences['notification_config']['group_ids'] = ['-']
-        agent2.save!
-
-        travel 1.minute # to skip lookup cache in Transaction::Notification
-        if Rails.application.config.cache_store.first.eql? :mem_cache_store
-          # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-          Rails.cache.clear
-        end
-
-        # create ticket in group
-        ticket4 = Ticket.create!(
-          title:         'some notification test - z preferences tests 4',
-          group:         group,
-          customer:      customer,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket4.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email')).to eq(1)
-        expect(NotificationFactory::Mailer.already_sent?(ticket4, agent2, 'email')).to eq(1)
-
-        # update ticket attributes
-        ticket4.title    = "#{ticket4.title} - #2"
-        ticket4.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket4.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email')).to eq(2)
-        expect(NotificationFactory::Mailer.already_sent?(ticket4, agent2, 'email')).to eq(2)
-
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent1.preferences['notification_config']['group_ids'] = [group.id.to_s]
-        agent1.save!
-
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent2.preferences['notification_config']['group_ids'] = [99]
-        agent2.save!
-
-        travel 1.minute # to skip lookup cache in Transaction::Notification
-        if Rails.application.config.cache_store.first.eql? :mem_cache_store
-          # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-          Rails.cache.clear
-        end
-
-        # create ticket in group
-        ticket5 = Ticket.create!(
-          title:         'some notification test - z preferences tests 5',
-          group:         group,
-          customer:      customer,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket5.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email')).to eq(1)
-        expect(NotificationFactory::Mailer.already_sent?(ticket5, agent2, 'email')).to eq(0)
-
-        # update ticket attributes
-        ticket5.title    = "#{ticket5.title} - #2"
-        ticket5.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket5.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email')).to eq(2)
-        expect(NotificationFactory::Mailer.already_sent?(ticket5, agent2, 'email')).to eq(0)
-
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent1.preferences['notification_config']['group_ids'] = [999]
-        agent1.save!
-
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent2.preferences['notification_config']['group_ids'] = [999]
-        agent2.save!
-
-        travel 1.minute # to skip lookup cache in Transaction::Notification
-        if Rails.application.config.cache_store.first.eql? :mem_cache_store
-          # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-          Rails.cache.clear
-        end
-
-        # create ticket in group
-        ticket6 = Ticket.create!(
-          title:         'some notification test - z preferences tests 6',
-          group:         group,
-          customer:      customer,
-          owner:         agent1,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket6.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email')).to eq(1)
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'online')).to eq(1)
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'online')).to eq(0)
-
-        # update ticket attributes
-        ticket6.title    = "#{ticket6.title} - #2"
-        ticket6.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket6.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email')).to eq(2)
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'online')).to eq(2)
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'online')).to eq(0)
-
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent1.preferences['notification_config']['matrix']['create']['channel']['email'] = false
-        agent1.preferences['notification_config']['matrix']['create']['channel']['online'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent1.preferences['notification_config']['matrix']['update']['channel']['email'] = false
-        agent1.preferences['notification_config']['matrix']['update']['channel']['online'] = true
-        agent1.preferences['notification_config']['group_ids'] = [999]
-        agent1.save!
-
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-        agent2.preferences['notification_config']['matrix']['create']['channel']['email'] = false
-        agent2.preferences['notification_config']['matrix']['create']['channel']['online'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-        agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-        agent2.preferences['notification_config']['matrix']['update']['channel']['email'] = false
-        agent2.preferences['notification_config']['matrix']['update']['channel']['online'] = true
-        agent2.preferences['notification_config']['group_ids'] = [999]
-        agent2.save!
-
-        travel 1.minute # to skip lookup cache in Transaction::Notification
-        if Rails.application.config.cache_store.first.eql? :mem_cache_store
-          # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-          Rails.cache.clear
-        end
-
-        # create ticket in group
-        ticket7 = Ticket.create!(
-          title:         'some notification test - z preferences tests 7',
-          group:         group,
-          customer:      customer,
-          owner:         agent1,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-        Ticket::Article.create!(
-          ticket_id:     ticket7.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message',
-          internal:      false,
-          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-          type:          Ticket::Article::Type.where(name: 'email').first,
-          updated_by_id: customer.id,
-          created_by_id: customer.id,
-        )
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'online')).to eq(1)
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'online')).to eq(0)
-
-        # update ticket attributes
-        ticket7.title    = "#{ticket7.title} - #2"
-        ticket7.priority = Ticket::Priority.lookup(name: '3 high')
-        ticket7.save!
-
-        perform_enqueued_jobs commit_transaction: true
-
-        # verify notifications to agent1 + agent2
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'online')).to eq(2)
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'email')).to eq(0)
-        expect(NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'online')).to eq(0)
+    context 'with notification_config matrix preferences' do
+      around do |example|
+        ApplicationHandleInfo.use('scheduler.postmaster') { example.run }
       end
-    ensure
-      travel_back
+
+      def configure_matrix(agent, owned_by_me:, all_tickets:, group_ids: nil, channel: nil)
+        %w[create update].each do |type|
+          matrix = agent.preferences['notification_config']['matrix'][type]
+          matrix['criteria'].merge!('owned_by_me' => owned_by_me, 'owned_by_nobody' => false, 'no' => all_tickets)
+          matrix['channel'].merge!(channel) if channel
+        end
+        agent.preferences['notification_config']['group_ids'] = group_ids if group_ids
+        agent.save!
+      end
+
+      def create_customer_ticket(owner: nil)
+        ticket = Ticket.create!(
+          title:         'some notification test - preferences',
+          group:         group,
+          customer:      customer,
+          owner_id:      owner&.id || 1,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          updated_by_id: customer.id,
+          created_by_id: customer.id,
+        )
+        Ticket::Article.create!(
+          ticket_id:     ticket.id,
+          from:          'some_sender@example.com',
+          to:            'some_recipient@example.com',
+          subject:       'some subject',
+          message_id:    'some@id',
+          body:          'some message',
+          internal:      false,
+          sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+          type:          Ticket::Article::Type.where(name: 'email').first,
+          updated_by_id: customer.id,
+          created_by_id: customer.id,
+        )
+
+        perform_enqueued_jobs commit_transaction: true
+
+        ticket
+      end
+
+      def update_ticket(ticket)
+        ticket.title    = "#{ticket.title} - #2"
+        ticket.priority = Ticket::Priority.lookup(name: '3 high')
+        ticket.save!
+
+        perform_enqueued_jobs commit_transaction: true
+      end
+
+      def sent(ticket, agent, channel = 'email')
+        NotificationFactory::Mailer.already_sent?(ticket, agent, channel)
+      end
+
+      context 'when agent1 wants notifications about own tickets only and agent2 about all tickets' do
+        before do
+          configure_matrix(agent1, owned_by_me: true, all_tickets: false)
+          configure_matrix(agent2, owned_by_me: false, all_tickets: true)
+        end
+
+        it 'notifies only agent2 about an unowned ticket', :aggregate_failures do
+          ticket = create_customer_ticket
+
+          expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([0, 1])
+
+          update_ticket(ticket)
+
+          expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([0, 2])
+        end
+
+        it 'notifies both agents about a ticket owned by agent1', :aggregate_failures do
+          ticket = create_customer_ticket(owner: agent1)
+
+          expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([1, 1])
+
+          update_ticket(ticket)
+
+          expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([2, 2])
+        end
+
+        it 'notifies only agent2 about a ticket owned by agent2', :aggregate_failures do
+          ticket = create_customer_ticket(owner: agent2)
+
+          expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([0, 1])
+
+          update_ticket(ticket)
+
+          expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([0, 2])
+        end
+      end
+
+      it 'notifies an agent whose group filter includes the ticket group', :aggregate_failures do
+        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [group.id.to_s])
+        configure_matrix(agent2, owned_by_me: false, all_tickets: true)
+
+        ticket = create_customer_ticket
+
+        expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([1, 1])
+
+        update_ticket(ticket)
+
+        expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([2, 2])
+      end
+
+      it 'does not notify an agent whose group filter excludes the ticket group', :aggregate_failures do
+        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [group.id.to_s])
+        configure_matrix(agent2, owned_by_me: false, all_tickets: true, group_ids: [99])
+
+        ticket = create_customer_ticket
+
+        expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([1, 0])
+
+        update_ticket(ticket)
+
+        expect([sent(ticket, agent1), sent(ticket, agent2)]).to eq([2, 0])
+      end
+
+      it 'notifies the owner even if the group filter excludes the ticket group', :aggregate_failures do
+        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [999])
+        configure_matrix(agent2, owned_by_me: true, all_tickets: true, group_ids: [999])
+
+        ticket = create_customer_ticket(owner: agent1)
+
+        expect([sent(ticket, agent1), sent(ticket, agent1, 'online')]).to eq([1, 1])
+        expect([sent(ticket, agent2), sent(ticket, agent2, 'online')]).to eq([0, 0])
+
+        update_ticket(ticket)
+
+        expect([sent(ticket, agent1), sent(ticket, agent1, 'online')]).to eq([2, 2])
+        expect([sent(ticket, agent2), sent(ticket, agent2, 'online')]).to eq([0, 0])
+      end
+
+      it 'notifies only via the enabled channels', :aggregate_failures do
+        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [999], channel: { 'email' => false, 'online' => true })
+        configure_matrix(agent2, owned_by_me: true, all_tickets: true, group_ids: [999], channel: { 'email' => false, 'online' => true })
+
+        ticket = create_customer_ticket(owner: agent1)
+
+        expect([sent(ticket, agent1), sent(ticket, agent1, 'online')]).to eq([0, 1])
+        expect([sent(ticket, agent2), sent(ticket, agent2, 'online')]).to eq([0, 0])
+
+        update_ticket(ticket)
+
+        expect([sent(ticket, agent1), sent(ticket, agent1, 'online')]).to eq([0, 2])
+        expect([sent(ticket, agent2), sent(ticket, agent2, 'online')]).to eq([0, 0])
+      end
     end
 
     it 'merges buffered ticket changes into a single uniq change set per attribute', :aggregate_failures do

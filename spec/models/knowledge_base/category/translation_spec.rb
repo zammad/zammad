@@ -1,13 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/contexts/factory_context'
 require 'models/knowledge_base/plain_title_index_examples'
 
 RSpec.describe KnowledgeBase::Category::Translation, type: :model do
   subject { create(:knowledge_base_category_translation) }
-
-  include_context 'factory'
 
   it_behaves_like 'indexing the plain title'
 

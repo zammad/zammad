@@ -31,8 +31,8 @@ RSpec.describe CoreWorkflow::Custom::TicketTimeAccountingCheck, type: :model do
       action_user.update(groups: create_list(:group, 3))
     end
 
-    it 'does not show for customers' do
-      expect { result }.not_to raise_error(NoMethodError)
+    it 'does not show for an unsaved ticket' do
+      expect(result.dig(:flags, :time_accounting)).to be_nil
     end
   end
 

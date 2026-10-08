@@ -2387,7 +2387,10 @@ RSpec.describe User, type: :model do
       end
 
       it 'does not allow creation with more than 250 organizations' do
-        expect { create(:agent, organization: create(:organization), organizations: create_list(:organization, 251)) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: More than 250 secondary organizations are not allowed.')
+        user = build(:agent, organization: create(:organization))
+        allow(user).to receive(:organization_ids).and_return(Array.new(251) { |i| i + 1_000_000 })
+
+        expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: More than 250 secondary organizations are not allowed.')
       end
     end
   end
@@ -2833,15 +2836,6 @@ RSpec.describe User, type: :model do
             }
           },
         ]
-      end
-
-      around do |example|
-        default_disable_in_test_env = Service::Image::Zammad.const_get(:DISABLE_IN_TEST_ENV)
-        silence_warnings { Service::Image::Zammad.const_set(:DISABLE_IN_TEST_ENV, false) }
-
-        example.run
-
-        silence_warnings { Service::Image::Zammad.const_set(:DISABLE_IN_TEST_ENV, default_disable_in_test_env) }
       end
 
       it 'derives fullname/firstname/lastname/email/login per test case', :aggregate_failures do

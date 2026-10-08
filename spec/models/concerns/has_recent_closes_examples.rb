@@ -3,7 +3,7 @@
 RSpec.shared_examples 'HasRecentCloses' do
   subject { create(described_class.name.underscore) }
 
-  describe '#destroy_recent_closes' do
+  describe '#recent_close_destroy' do
     it 'destroys recent closes' do
       recent_close = create(:recent_close, recently_closed_object: subject)
       subject.destroy

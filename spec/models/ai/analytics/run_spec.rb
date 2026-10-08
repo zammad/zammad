@@ -5,10 +5,6 @@ require 'rails_helper'
 RSpec.describe AI::Analytics::Run, type: :model do
   subject(:ai_analytics_run) { create(:ai_analytics_run) }
 
-  it 'has a valid factory' do
-    expect(ai_analytics_run).to be_valid
-  end
-
   it { is_expected.to validate_presence_of(:identifier) }
   it { is_expected.to validate_presence_of(:ai_service_name) }
   it { is_expected.to belong_to(:locale).optional }

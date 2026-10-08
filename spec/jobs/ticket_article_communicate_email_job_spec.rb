@@ -58,6 +58,123 @@ RSpec.describe TicketArticleCommunicateEmailJob, type: :job do
     end
   end
 
+  describe 'delivery status', :aggregate_failures, performs_jobs: true do
+    let(:ticket)  { create(:ticket, state_name: 'closed') }
+    let(:article) { create(:ticket_article, :outbound_email, ticket: ticket) }
+
+    before do
+      freeze_time
+      allow_any_instance_of(Channel).to receive(:deliver).and_raise(StandardError, 'delivery failed')
+      article
+      clear_jobs
+      described_class.perform_later(article.id)
+    end
+
+    it 'retries a failing delivery in expected intervals' do
+      expect { perform_enqueued_jobs }.to have_performed_job(described_class)
+
+      expect(article.reload.preferences).to include(delivery_retry:          1,
+                                                    delivery_status:         'fail',
+                                                    delivery_status_date:    be_present,
+                                                    delivery_status_message: 'delivery failed')
+      expect(ticket.reload.articles.count).to eq(1)
+      expect(ticket.state.name).to eq('closed')
+
+      expect { perform_enqueued_jobs }.to have_performed_job(described_class).at(25.seconds.from_now)
+
+      expect(article.reload.preferences).to include(delivery_retry: 2, delivery_status: 'fail')
+      expect(ticket.reload.articles.count).to eq(1)
+      expect(ticket.state.name).to eq('closed')
+
+      expect { perform_enqueued_jobs }.to have_performed_job(described_class).at(50.seconds.from_now)
+
+      expect(article.reload.preferences).to include(delivery_retry: 3, delivery_status: 'fail')
+      expect(ticket.reload.articles.count).to eq(1)
+      expect(ticket.state.name).to eq('closed')
+
+      expect { perform_enqueued_jobs }
+        .to raise_error(RuntimeError, 'delivery failed')
+        .and have_performed_job(described_class).at(75.seconds.from_now)
+
+      expect(article.reload.preferences).to include(delivery_retry: 4, delivery_status: 'fail')
+      expect(ticket.reload.articles.count).to eq(2)
+      expect(ticket.state).to eq(Ticket::State.find_by(default_follow_up: true))
+      expect(ticket.articles.last).to have_attributes(sender:      Ticket::Article::Sender.lookup(name: 'System'),
+                                                      preferences: include(delivery_message:            true,
+                                                                           delivery_article_id_related: article.id,
+                                                                           notification:                true))
+    end
+  end
+
+  describe 'delivery status with changing channel options', :aggregate_failures, integration: true, required_envs: %w[MAIL_SERVER MAIL_ADDRESS MAIL_PASS] do
+    let(:server_host)     { ENV['MAIL_SERVER'] }
+    let(:server_login)    { ENV['MAIL_ADDRESS'] }
+    let(:server_password) { ENV['MAIL_PASS'] }
+    let(:email_address)   { create(:email_address, name: 'me Helpdesk', email: "some-zammad-#{server_login}") }
+    let(:group)           { create(:group, name: 'DeliverTest', email_address: email_address) }
+    let(:channel)         { create(:email_channel, group: group, outbound: { adapter: 'sendmail' }) }
+    let(:ticket)          { create(:ticket, title: 'some delivery test', group: group) }
+    let(:article)         { create(:ticket_article, :outbound_email, ticket: ticket, to: Faker::Internet.unique.email, subject: 'some subject', message_id: 'some@id', body: 'some message delivery test') }
+
+    before do
+      email_address.update!(channel_id: channel.id)
+      article
+    end
+
+    it 'updates article delivery preferences' do
+      expect(article.preferences).not_to include(:delivery_retry,
+                                                 :delivery_status,
+                                                 :delivery_status_date,
+                                                 :delivery_status_message)
+
+      described_class.new.perform(article.id)
+
+      expect(article.reload.preferences).to include(delivery_retry:          1,
+                                                    delivery_status:         'success',
+                                                    delivery_status_date:    be_present,
+                                                    delivery_status_message: be_nil)
+
+      channel.options['outbound'] = {
+        adapter: 'smtp',
+        options: {
+          host:      'mx1.example.com',
+          port:      25,
+          start_tls: true,
+          user:      'not_existing',
+          password:  'not_existing',
+        },
+      }
+      channel.save!
+
+      expect { described_class.new.perform(article.id) }.to raise_error(RuntimeError)
+
+      expect(article.reload.preferences).to include(delivery_retry:          2,
+                                                    delivery_status:         'fail',
+                                                    delivery_status_date:    be_present,
+                                                    delivery_status_message: be_present)
+
+      channel.options['outbound'] = {
+        adapter: 'smtp',
+        options: {
+          host:       server_host,
+          port:       25,
+          start_tls:  true,
+          user:       server_login,
+          password:   server_password,
+          ssl_verify: false,
+        },
+      }
+      channel.save!
+
+      described_class.new.perform(article.id)
+
+      expect(article.reload.preferences).to include(delivery_retry:          3,
+                                                    delivery_status:         'success',
+                                                    delivery_status_date:    be_present,
+                                                    delivery_status_message: be_nil)
+    end
+  end
+
   describe 'MicrosoftGraph::ApiError handling' do
     let(:job) { described_class.perform_later(article.id) }
     let(:article) { create(:ticket_article, :outbound_email) }

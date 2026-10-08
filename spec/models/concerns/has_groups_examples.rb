@@ -10,24 +10,13 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     describe '.group_through_identifier' do
 
-      it 'responds to group_through_identifier' do
-        expect(described_class).to respond_to(:group_through_identifier)
-      end
-
       it 'returns a Symbol as identifier' do
         expect(described_class.group_through_identifier).to be_a(Symbol)
       end
 
-      it 'instance responds to group_through_identifier method' do
-        expect(subject).to respond_to(described_class.group_through_identifier)
-      end
     end
 
     describe '.group_through' do
-
-      it 'responds to group_through' do
-        expect(described_class).to respond_to(:group_through)
-      end
 
       it 'returns the Reflection instance of the has_many :through relation' do
         expect(described_class.group_through).to be_a(ActiveRecord::Reflection::HasManyReflection)
@@ -36,15 +25,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     describe '#groups' do
 
-      it 'responds to groups' do
-        expect(subject).to respond_to(:groups)
-      end
-
       describe '#groups.access' do
-
-        it 'responds to groups.access' do
-          expect(subject.groups).to respond_to(:access)
-        end
 
         describe 'result' do
 
@@ -61,7 +42,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
           end
 
           it 'adds join table attribute(s like) access' do
-            expect(subject.groups.access.first).to respond_to(:access)
+            expect(subject.groups.access.find(group_read.id).access).to eq('read')
           end
 
           it 'filters for given access parameter' do
@@ -85,10 +66,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
         subject.group_names_access_map = {
           group_read.name => 'read',
         }
-      end
-
-      it 'responds to group_access?' do
-        expect(subject).to respond_to(:group_access?)
       end
 
       context 'Group ID parameter' do
@@ -130,10 +107,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
         subject.group_names_access_map = {
           group_read.name => 'read',
         }
-      end
-
-      it 'responds to group_ids_access' do
-        expect(subject).to respond_to(:group_ids_access)
       end
 
       it 'lists only active Group IDs' do
@@ -185,10 +158,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     describe '#groups_access' do
 
-      it 'responds to groups_access' do
-        expect(subject).to respond_to(:groups_access)
-      end
-
       it 'wraps #group_ids_access' do
         expect(subject).to receive(:group_ids_access)
         subject.groups_access('read')
@@ -204,10 +173,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     end
 
     describe '#group_names_access_map=' do
-
-      it 'responds to group_names_access_map=' do
-        expect(subject).to respond_to(:group_names_access_map=)
-      end
 
       context 'existing instance' do
 
@@ -306,10 +271,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     describe '#group_names_access_map' do
 
-      it 'responds to group_names_access_map' do
-        expect(subject).to respond_to(:group_names_access_map)
-      end
-
       it 'returns instance Group name => access relations as Hash' do
         expected = {
           group_full.name => ['full'],
@@ -346,10 +307,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     end
 
     describe '#saved_group_names_access_map' do
-
-      it 'responds to saved_group_names_access_map' do
-        expect(subject).to respond_to(:saved_group_names_access_map)
-      end
 
       it 'returns instance Group name => access relations as Hash' do
         expected = {
@@ -389,10 +346,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     end
 
     describe '#group_ids_access_map=' do
-
-      it 'responds to group_ids_access_map=' do
-        expect(subject).to respond_to(:group_ids_access_map=)
-      end
 
       context 'existing instance' do
 
@@ -473,10 +426,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     describe '#group_ids_access_map' do
 
-      it 'responds to group_ids_access_map' do
-        expect(subject).to respond_to(:group_ids_access_map)
-      end
-
       it 'returns instance Group ID => access relations as Hash' do
         expected = {
           group_full.id => ['full'],
@@ -513,10 +462,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     end
 
     describe '#saved_group_ids_access_map' do
-
-      it 'responds to saved_group_ids_access_map' do
-        expect(subject).to respond_to(:saved_group_ids_access_map)
-      end
 
       it 'returns instance Group ID => access relations as Hash' do
         expected = {
@@ -638,10 +583,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
         }
       end
 
-      it 'responds to group_access' do
-        expect(described_class).to respond_to(:group_access)
-      end
-
       it 'lists only active instances' do
         subject.update!(active: false)
 
@@ -667,10 +608,6 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     end
 
     describe '.group_access_ids' do
-
-      it 'responds to group_access_ids' do
-        expect(described_class).to respond_to(:group_access_ids)
-      end
 
       it 'wraps .group_access' do
         expect(described_class).to receive(:group_access).and_call_original

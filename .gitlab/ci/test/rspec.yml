@@ -60,6 +60,7 @@ rspec:integration:
         - spec/integration/**/*
         - test/data/vcr_cassettes/**/*
         - spec/support/{imap,required_envs,vcr}.rb
+        - spec/jobs/ticket_article_communicate_email_job_spec.rb
         - spec/lib/{email_helper_spec.rb,email_helper/**/*}
         - spec/lib/{facebook,microsoft_graph,user_agent}_spec.rb
         - spec/lib/ai/provider/**/*

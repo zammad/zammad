@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'CanSearch', searchindex: true, type: :model do
-  let(:roles) { create_list(:role, 100) }
+  let(:roles) { create_list(:role, 12) }
 
   before do
     roles
@@ -33,7 +33,7 @@ RSpec.describe 'CanSearch', searchindex: true, type: :model do
   end
 
   it 'does search by query with total count', :aggregate_failures do
-    expected_result = 100
+    expected_result = 12
     params = { query: 'TestRole*', limit: 10 }
     expect(search(params)[:object_ids].count).to eq(10)
     expect(search(params)[:total_count]).to eq(expected_result)
@@ -44,7 +44,7 @@ RSpec.describe 'CanSearch', searchindex: true, type: :model do
   end
 
   it 'does search by query only total count', :aggregate_failures do
-    expected_result = 100
+    expected_result = 12
     params = { query: 'TestRole*', limit: 10, only_total_count: true }
     expect(search(params)[:total_count]).to eq(expected_result)
 

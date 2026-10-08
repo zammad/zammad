@@ -24,6 +24,12 @@ RSpec.describe Overview, type: :model do
   it_behaves_like 'Association clears cache', association: :roles
   it_behaves_like 'Association clears cache', association: :users
 
+  describe 'validation' do
+    subject { build(:overview) }
+
+    it { is_expected.to validate_presence_of(:roles) }
+  end
+
   context 'link generation' do
 
     it 'generates from name' do

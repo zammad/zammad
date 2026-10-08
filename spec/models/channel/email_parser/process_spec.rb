@@ -7,7 +7,7 @@ RSpec.describe 'Channel::EmailParser process simple', aggregate_failures: true, 
     Ticket.destroy_all
   end
 
-  let(:files) do
+  def self.files
     [
       {
         data:    'From: me@example.com
@@ -21,19 +21,22 @@ Some Text',
         success: true,
       },
       {
-        data:    "From: my_own_zammad@example.com
+        data:    lambda {
+          "From: my_own_zammad@example.com
 To: customer_which_is_routed_into_my_zammad@example.com
 Subject: some subject
 Message-ID: <1234@#{Setting.get('fqdn')}>
 
-Some Text",
+Some Text"
+        },
         channel: {
           trusted: false,
         },
         success: true,
       },
       {
-        data:    "From: my_own_zammad@example.com
+        data:    lambda {
+          "From: my_own_zammad@example.com
 To: customer_which_is_routed_into_my_zammad@example.com
 Subject: some subject
 Message-ID: <1234@#{Setting.get('fqdn')}>
@@ -42,7 +45,8 @@ Precedence: bulk
 Auto-Submitted: auto-generated
 X-Auto-Response-Suppress: All
 
-Some Text",
+Some Text"
+        },
         channel: {
           trusted: false,
         },
@@ -137,8 +141,8 @@ Some Textäöü",
             {
               firstname: '',
               lastname:  '',
-              fullname:  'me@example.com',
-              email:     'me@example.com',
+              fullname:  'me_sender@example.com',
+              email:     'me_sender@example.com',
             },
             {
               firstname: '',
@@ -3267,22 +3271,19 @@ Content-Type: text/html; charset=us-ascii; format=flowed
     ]
   end
 
-  it 'processes the mails as expected' do
-    assert_process(files)
-  end
-
-  def assert_process(files)
-    files.each do |file|
-      result = Channel::EmailParser.new.process(file[:channel] || {}, file[:data], false)
+  files.each.with_index(1) do |file, index|
+    it "processes mail #{index} as expected" do
+      data   = file[:data].respond_to?(:call) ? file[:data].call : file[:data]
+      result = Channel::EmailParser.new.process(file[:channel] || {}, data, false)
 
       if file[:success]
         expect(result).to be_a(Array)
-        expect(result[1]).to be_truthy, 'ticket not created'
+        expect(result[1]).to be_present, 'ticket not created'
 
         assert_process_result(file, result)
         assert_process_users(file)
       else
-        expect(result[1]).to be_falsey, 'ticket should not be created but is created'
+        expect(result[1]).to be_nil, 'ticket should not be created but is created'
       end
     end
   end

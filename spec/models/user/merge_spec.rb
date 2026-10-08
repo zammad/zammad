@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe '.merge', searchindex: true, type: :model do
+RSpec.describe '.merge', type: :model do
   let(:user_1) { create(:agent, groups: Group.all) }
   let(:user_2) { create(:agent, groups: Group.all) }
   let(:ticket_1) do
@@ -18,8 +18,16 @@ RSpec.describe '.merge', searchindex: true, type: :model do
     ticket_1
   end
 
-  it 'does merge users' do
-    expect { user_2.merge(user_1.id) }.not_to raise_error
+  it 'drops the duplicate mention of the merged user' do
+    user_2.merge(user_1.id)
+
+    expect(Mention.where(mentionable: ticket_1).pluck(:user_id)).to contain_exactly(user_2.id)
+  end
+
+  it 'moves the tickets of the merged user' do
+    user_2.merge(user_1.id)
+
+    expect(ticket_1.reload.owner).to eq(user_2)
   end
 
   context 'when both users has taskbars #5613' do
@@ -28,8 +36,10 @@ RSpec.describe '.merge', searchindex: true, type: :model do
       create(:taskbar, user_id: user_2.id, app: 'desktop', key: 'Ticket-123')
     end
 
-    it 'does merge users' do
-      expect { user_2.merge(user_1.id) }.not_to raise_error
+    it 'drops the duplicate taskbar of the merged user' do
+      user_2.merge(user_1.id)
+
+      expect(Taskbar.where(key: 'Ticket-123', app: 'desktop').pluck(:user_id)).to contain_exactly(user_2.id)
     end
   end
 end

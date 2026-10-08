@@ -3,15 +3,12 @@
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/concerns/has_translations_examples'
-require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase, type: :model do
   subject(:knowledge_base) { create(:knowledge_base) }
 
   # make sure there's no KBs from seed data
   before { described_class.all.each(&:full_destroy!) }
-
-  include_context 'factory'
 
   it_behaves_like 'ChecksKbClientNotification'
 

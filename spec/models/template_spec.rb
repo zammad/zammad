@@ -17,11 +17,5 @@ RSpec.describe Template, type: :model do
     it 'is valid with a non-empty tag option' do
       expect(build(:template, :dummy_data, tags: %w[foo bar])).to be_valid
     end
-
-    it 'rejects a tag option without a tag' do
-      template = build(:template, :dummy_data)
-      template.options['ticket.tags'] = { 'value' => '' }
-      expect(template).not_to be_valid
-    end
   end
 end

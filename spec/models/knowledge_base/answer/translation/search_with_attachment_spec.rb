@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
-require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: -> { user.id }, searchindex: 1, type: :model do
   # include_context 'basic Knowledge Base'

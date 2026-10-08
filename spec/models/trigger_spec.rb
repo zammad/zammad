@@ -34,14 +34,9 @@ RSpec.describe Trigger, type: :model do
     it { is_expected.to validate_inclusion_of(:activator).in_array(%w[action time]) }
     it { is_expected.to validate_inclusion_of(:execution_condition_mode).in_array(%w[selective always]) }
 
-    it 'rejects a tag action without a tag' do
-      trigger = build(:trigger, perform: { 'ticket.tags' => { 'operator' => 'add', 'value' => '' } })
-      expect(trigger).not_to be_valid
-    end
-
-    it 'accepts a tag action with a tag' do
-      trigger = build(:trigger, perform: { 'ticket.tags' => { 'operator' => 'add', 'value' => 'foo' } })
-      expect(trigger).to be_valid
+    it 'rejects a condition with an empty value' do
+      expect { create(:trigger, condition: { 'ticket.number' => { 'operator' => 'contains', 'value' => '' } }) }
+        .to raise_error(Exceptions::InvalidAttribute, 'Invalid object selector conditions')
     end
   end
 

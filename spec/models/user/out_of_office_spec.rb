@@ -149,8 +149,6 @@ RSpec.describe User::OutOfOffice, type: :model do
     end
 
     describe '#out_of_office_agent' do
-      it { is_expected.to respond_to(:out_of_office_agent) }
-
       context 'when user has no designated substitute' do
         it 'returns nil' do
           expect(user.out_of_office_agent).to be_nil

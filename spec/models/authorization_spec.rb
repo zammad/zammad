@@ -19,144 +19,152 @@ RSpec.describe Authorization, type: :model do
     end
   end
 
-  describe 'Account linking' do
+  describe 'Account linking', :aggregate_failures do
+    let(:existing_user) { create(:admin, email: 'admin@example.com') }
+    let(:provider)      { 'microsoft_office365' }
+    let(:uid)           { SecureRandom.uuid }
+    let(:extra)         { {} }
+
     let(:auth_hash) do
       {
-        'info'        => auth_info,
-        'uid'         => auth_uid,
         'provider'    => provider,
+        'uid'         => uid,
+        'info'        => { 'email' => existing_user.email },
         'extra'       => extra,
-        'credentials' => auth_credentials,
+        'credentials' => { 'token' => '1234', 'secret' => '1234' },
       }
     end
-    let(:auth_info) { {} }
-    let(:auth_uid)  { SecureRandom.uuid }
-    let(:extra)     { {} }
-    let(:auth_credentials) do
-      {
-        'token'  => '1234',
-        'secret' => '1234',
-      }
-    end
-    let(:provider) { 'saml' }
-    let(:user) { create(:user, login: auth_uid) }
 
     before do
       Setting.set('auth_third_party_auto_link_at_inital_login', true)
-
-      user
+      existing_user
     end
 
-    shared_examples 'links account with email address', :aggregate_failures do
-      it 'linked account' do
-        authorization = described_class.create_from_hash(auth_hash)
+    # Linking by email is rejected, so a new user is attempted, which then
+    # fails on the address that is already taken.
+    shared_examples 'not linking the account' do
+      it 'does not link the existing account' do
+        expect { described_class.create_from_hash(auth_hash, nil) }
+          .to raise_error(Exceptions::UnprocessableContent, %r{Email address.*is already used})
+          .and not_change(User, :count)
 
-        expect(authorization.user_id).to eq(user.id)
+        expect(described_class.find_by(provider: auth_hash['provider'], uid: auth_hash['uid'])).to be_nil
+      end
+    end
+
+    shared_examples 'linking the account' do
+      it 'links the existing account' do
+        authorization = described_class.create_from_hash(auth_hash, nil)
+
+        expect(authorization.user).to eq(existing_user)
         expect(authorization.provider).to eq(provider)
       end
     end
 
-    context 'when saml is the provider' do
-      context 'when auth provider provides no email address' do
-        it 'linked account with uid' do
-          authorization = described_class.create_from_hash(auth_hash)
+    # These providers have no reliable email verification signal, so they
+    # link purely on a matching email address.
+    context 'when the provider has no email verification signal' do
+      %w[github gitlab google_oauth2 facebook linkedin twitter weibo openid_connect].each do |prov|
+        context "when \"#{prov}\" is the provider" do
+          let(:provider) { prov }
 
-          expect(authorization.user_id).to eq(user.id)
+          include_examples 'linking the account'
         end
       end
     end
 
-    shared_examples 'does not link account with unverified email address', :aggregate_failures do
-      it 'does not link the existing account' do
-        expect { described_class.create_from_hash(auth_hash) }
-          .to raise_error(Exceptions::UnprocessableContent, %r{Email address.*is already used})
-          .and not_change(User, :count)
+    context 'when MS365 id_token explicitly marks xms_edov true' do
+      let(:extra) { { 'id_token_claims' => { 'xms_edov' => true } } }
 
-        expect(described_class.find_by(provider: provider, uid: auth_uid)).to be_nil
+      include_examples 'linking the account'
+    end
+
+    context 'when MS365 id_token explicitly marks xms_edov false' do
+      let(:extra) { { 'id_token_claims' => { 'xms_edov' => false } } }
+
+      include_examples 'not linking the account'
+    end
+
+    # Azure omits "xms_edov" instead of sending false for an unverified
+    # domain, so the default mode treats a missing claim as no signal.
+    context 'when MS365 id_token is not available' do
+      include_examples 'linking the account'
+    end
+
+    context 'when MS365 strict verification is enabled (require_verified_email_domain)' do
+      before do
+        Setting.set('auth_microsoft_office365_credentials', { 'require_verified_email_domain' => true })
+      end
+
+      context 'when xms_edov is true and the "email" claim matches' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => existing_user.email } } }
+
+        include_examples 'linking the account'
+      end
+
+      context 'when xms_edov is true and the "email" claim matches in a different case' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => existing_user.email.upcase } } }
+
+        include_examples 'linking the account'
+      end
+
+      context 'when xms_edov is false' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => false } } }
+
+        include_examples 'not linking the account'
+      end
+
+      context 'when xms_edov is absent' do
+        include_examples 'not linking the account'
+      end
+
+      # "xms_edov" only vouches for the ID token's "email" claim, not for the
+      # separate Graph "/me" address in "info.email" that actually gets linked.
+      context 'when xms_edov is true but the "email" claim is a different address' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => 'somebody.else@example.com' } } }
+
+        include_examples 'not linking the account'
+      end
+
+      context 'when xms_edov is true but the "email" claim is absent' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true } } }
+
+        include_examples 'not linking the account'
+      end
+
+      context 'when xms_edov is true but the "email" claim is blank' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => '' } } }
+
+        include_examples 'not linking the account'
       end
     end
 
-    context 'when auth provider provides an email address' do
-      let(:email) { 'john.doe@example.com' }
-      let(:auth_info) do
-        { 'email' => email }
-      end
-      let(:user) { create(:user, login: auth_uid, email: email) }
+    context 'with SAML' do
+      let(:provider) { 'saml' }
 
-      # GitHub, GitLab, Google OAuth2, Facebook, Twitter, LinkedIn and Weibo
-      # have no reliable email-verification signal in production (see
-      # Authorization::Provider and spec/models/authorization/
-      # authorization_sso_account_linking_spec.rb for why), so they link
-      # purely on a matching email address, regardless of any
-      # "email_verified" value. This is an accepted trade-off, not an
-      # oversight - Microsoft 365 is the only provider that actually
-      # verifies (see below).
-      context 'when the provider has no email verification signal' do
-        %w[github gitlab google_oauth2 facebook twitter linkedin weibo].each do |prov|
-          context "when \"#{prov}\" is the provider" do
-            let(:provider) { prov }
+      context 'when NameID matches an existing login' do
+        before { existing_user.update!(login: uid) }
 
-            include_examples 'links account with email address'
-          end
+        include_examples 'linking the account'
+
+        context 'when auth provider provides no email address' do
+          let(:auth_hash) { super().merge('info' => {}) }
+
+          include_examples 'linking the account'
         end
       end
 
-      context 'when microsoft_office365 id_token explicitly marks xms_edov false' do
-        let(:provider) { 'microsoft_office365' }
-        let(:extra)    { { 'id_token_claims' => { 'xms_edov' => false } } }
+      context 'when NameID does not match any login' do
+        include_examples 'linking the account'
+      end
+    end
 
-        include_examples 'does not link account with unverified email address'
+    context 'when auto-link is disabled' do
+      before do
+        Setting.set('auth_third_party_auto_link_at_inital_login', false)
       end
 
-      context 'when microsoft_office365 id_token has no xms_edov claim at all' do
-        let(:provider) { 'microsoft_office365' }
-
-        include_examples 'links account with email address'
-      end
-
-      # In testing, Azure only ever sends "xms_edov" as true or omits it -
-      # never an explicit false for an unverified domain (see
-      # authorization_sso_account_linking_spec.rb). "require_verified_email_domain"
-      # is the opt-in, fail-closed alternative for admins who've configured the
-      # "email"/"xms_edov" optional claims on the app registration: unlike the
-      # default above, a missing claim blocks linking instead of allowing it.
-      context 'when microsoft_office365 strict verification is enabled' do
-        let(:provider) { 'microsoft_office365' }
-
-        before do
-          Setting.set('auth_microsoft_office365_credentials', { 'require_verified_email_domain' => true })
-        end
-
-        context 'when xms_edov is true and the "email" claim matches' do
-          let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => email } } }
-
-          include_examples 'links account with email address'
-        end
-
-        context 'when xms_edov is false' do
-          let(:extra) { { 'id_token_claims' => { 'xms_edov' => false } } }
-
-          include_examples 'does not link account with unverified email address'
-        end
-
-        context 'when xms_edov is absent' do
-          include_examples 'does not link account with unverified email address'
-        end
-
-        # "xms_edov" only vouches for the ID token's "email" claim, not for the
-        # separate Graph "/me" address in "info.email" that actually gets linked.
-        context 'when xms_edov is true but the "email" claim is a different address' do
-          let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => 'somebody.else@example.com' } } }
-
-          include_examples 'does not link account with unverified email address'
-        end
-
-        context 'when xms_edov is true but the "email" claim is absent' do
-          let(:extra) { { 'id_token_claims' => { 'xms_edov' => true } } }
-
-          include_examples 'does not link account with unverified email address'
-        end
-      end
+      include_examples 'not linking the account'
     end
   end
 

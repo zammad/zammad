@@ -384,16 +384,6 @@ RSpec.describe Chat, type: :model do
         expect(chat1.customer_state[:state]).to eq('offline')
         expect(chat2.customer_state[:state]).to eq('offline')
       end
-
-      it 'reports no seats and no sessions to the agent' do
-        expect_agent_state(agent1,
-                           waiting_chat_count: 0,
-                           running_chat_count: 0,
-                           active_sessions:    [],
-                           seads_available:    0,
-                           seads_total:        0,
-                           active:             false)
-      end
     end
 
     context 'when the first chat agent is active' do

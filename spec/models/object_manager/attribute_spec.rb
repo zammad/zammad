@@ -618,4 +618,65 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       expect { described_class.migration_execute }.not_to raise_error
     end
   end
+
+  describe 'ticket attribute columns', :aggregate_failures do
+    context 'with a text attribute', db_strategy: :reset do
+      before { attribute }
+
+      let(:attribute) do
+        attribute = create(:object_manager_attribute_text)
+        described_class.migration_execute
+
+        attribute
+      end
+      let(:ticket) { create(:ticket) }
+
+      it 'stores a value in the added column' do
+        ticket.update(attribute.name => 'Bazinga!')
+        expect(ticket.reload).to have_attributes(attribute.name => 'Bazinga!')
+      end
+
+      it 'drops the column of a removed attribute' do
+        ticket.update!(attribute.name => 'Bazinga!')
+
+        attribute_name = attribute.name
+        described_class.remove(
+          object: 'Ticket',
+          name:   attribute_name
+        )
+        described_class.migration_execute
+        expect(ticket.reload.attributes).not_to include(attribute_name)
+      end
+    end
+
+    describe 'set unexpected defaults', db_strategy: :reset do
+      before { attribute }
+
+      let(:attribute) do
+        attribute = create(:object_manager_attribute_text, data_option: { type: 'text', maxlength: 100, default: false })
+        described_class.migration_execute
+
+        attribute
+      end
+      let(:ticket) { create(:ticket) }
+
+      it 'is successful' do
+        expect(ticket.attributes[attribute.name]).to eq('f')
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/5666
+    describe 'external data attribute is initialized correctly', db_strategy: :reset do
+      let(:attribute) { create(:object_manager_attribute_autocompletion_ajax_external_data_source) }
+
+      it 'initializes with the correct value' do
+        attribute
+        described_class.migration_execute
+
+        ticket = build(:ticket)
+
+        expect(ticket.attributes[attribute.name]).to eq({})
+      end
+    end
+  end
 end

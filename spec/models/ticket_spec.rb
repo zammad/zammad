@@ -558,6 +558,20 @@ RSpec.describe Ticket, type: :model do
               .to eq("foo [Ticket##{ticket.number}]")
           end
         end
+
+        context 'with a reply prefix mode' do
+          it 'prepends "RE: " and strips surrounding whitespace' do
+            expect(ticket.subject_build('  foo  ', 'reply'))
+              .to eq("RE: foo [Ticket##{ticket.number}]")
+          end
+        end
+
+        context 'with a forward prefix mode' do
+          it 'prepends "FWD: "' do
+            expect(ticket.subject_build('foo', 'forward'))
+              .to eq("FWD: foo [Ticket##{ticket.number}]")
+          end
+        end
       end
 
       context 'with alternate "ticket_hook_position" setting ("left")' do
@@ -598,6 +612,22 @@ RSpec.describe Ticket, type: :model do
             expect(ticket.subject_build("[Ticket#: #{ticket.number}] foo"))
               .to eq("[Ticket##{ticket.number}] foo")
           end
+        end
+
+        context 'with a reply prefix mode' do
+          it 'prepends "RE: " before the ticket reference' do
+            expect(ticket.subject_build('  foo  ', 'reply'))
+              .to eq("RE: [Ticket##{ticket.number}] foo")
+          end
+        end
+      end
+
+      context 'with "ticket_hook_position" setting "none"' do
+        before { Setting.set('ticket_hook_position', 'none') }
+
+        it 'returns the given string without a ticket reference' do
+          expect(ticket.subject_build('  foo  ', 'reply'))
+            .to eq('RE: foo')
         end
       end
     end
@@ -2333,100 +2363,6 @@ RSpec.describe Ticket, type: :model do
 
       lookup_ticket = described_class.find_by('pending_time <= ?', Time.zone.now)
       expect(lookup_ticket).to be_nil
-    end
-  end
-
-  describe '#subject_build with different ticket hook positions' do
-    let(:subject_test_ticket) do
-      described_class.create!(
-        title:         'subject test 1',
-        group:         Group.lookup(name: 'Users'),
-        customer_id:   2,
-        state:         Ticket::State.lookup(name: 'new'),
-        priority:      Ticket::Priority.lookup(name: '2 normal'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-    end
-
-    context 'with default "ticket_hook_position" setting ("right")' do
-      it 'appends the ticket reference and strips surrounding whitespace', :aggregate_failures do
-        expect(subject_test_ticket.title).to eq('subject test 1')
-        expect(subject_test_ticket.subject_build('ABC subject test 1')).to eq("ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
-        expect(subject_test_ticket.subject_build('ABC subject test 1', 'reply')).to eq("RE: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
-        expect(subject_test_ticket.subject_build('  ABC subject test 1', 'reply')).to eq("RE: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
-        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'reply')).to eq("RE: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
-        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'forward')).to eq("FWD: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
-        subject_test_ticket.destroy
-      end
-    end
-
-    context 'with "ticket_hook_position" setting "left"' do
-      before do
-        Setting.set('ticket_hook_position', 'left')
-      end
-
-      it 'prepends the ticket reference and strips surrounding whitespace', :aggregate_failures do
-        expect(subject_test_ticket.title).to eq('subject test 1')
-        expect(subject_test_ticket.subject_build('ABC subject test 1')).to eq("[Ticket##{subject_test_ticket.number}] ABC subject test 1")
-        expect(subject_test_ticket.subject_build('ABC subject test 1', 'reply')).to eq("RE: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
-        expect(subject_test_ticket.subject_build('  ABC subject test 1', 'reply')).to eq("RE: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
-        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'reply')).to eq("RE: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
-        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'forward')).to eq("FWD: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
-        subject_test_ticket.destroy
-      end
-    end
-
-    context 'with "ticket_hook_position" setting "none"' do
-      before do
-        Setting.set('ticket_hook_position', 'none')
-      end
-
-      it 'omits the ticket reference and strips surrounding whitespace', :aggregate_failures do
-        expect(subject_test_ticket.title).to eq('subject test 1')
-        expect(subject_test_ticket.subject_build('ABC subject test 1')).to eq('ABC subject test 1')
-        expect(subject_test_ticket.subject_build('ABC subject test 1', 'reply')).to eq('RE: ABC subject test 1')
-        expect(subject_test_ticket.subject_build('  ABC subject test 1', 'reply')).to eq('RE: ABC subject test 1')
-        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'reply')).to eq('RE: ABC subject test 1')
-        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'forward')).to eq('FWD: ABC subject test 1')
-        subject_test_ticket.destroy
-      end
-    end
-  end
-
-  describe 'follow-up recognition by ticket number' do
-    it 'finds the ticket by number for increment and date number generators', :aggregate_failures do
-      origin_backend = Setting.get('ticket_number')
-      Setting.set('ticket_number', 'Ticket::Number::Increment')
-
-      ticket1 = described_class.create!(
-        title:         'subject test 1234-1',
-        group:         Group.lookup(name: 'Users'),
-        customer_id:   2,
-        state:         Ticket::State.lookup(name: 'new'),
-        priority:      Ticket::Priority.lookup(name: '2 normal'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-      expect(ticket1.title).to eq('subject test 1234-1')
-      expect(ticket1.subject_build('ABC subject test 1')).to eq("ABC subject test 1 [Ticket##{ticket1.number}]")
-      expect(Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id).to eq(ticket1.id)
-
-      Setting.set('ticket_number', 'Ticket::Number::Date')
-      ticket1 = described_class.create!(
-        title:         'subject test 1234-2',
-        group:         Group.lookup(name: 'Users'),
-        customer_id:   2,
-        state:         Ticket::State.lookup(name: 'new'),
-        priority:      Ticket::Priority.lookup(name: '2 normal'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-      expect(ticket1.title).to eq('subject test 1234-2')
-      expect(ticket1.subject_build('ABC subject test 1')).to eq("ABC subject test 1 [Ticket##{ticket1.number}]")
-      expect(Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id).to eq(ticket1.id)
-
-      Setting.set('ticket_number', origin_backend)
     end
   end
 

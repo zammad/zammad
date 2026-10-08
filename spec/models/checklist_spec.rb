@@ -6,14 +6,6 @@ RSpec.describe Checklist, :aggregate_failures, current_user_id: 1, type: :model 
   let(:ticket)    { create(:ticket) }
   let(:checklist) { create(:checklist, item_count: 0, ticket:) }
 
-  describe 'validations' do
-    context 'with valid attributes' do
-      it 'succeeds creation' do
-        expect(create(:checklist)).to be_persisted
-      end
-    end
-  end
-
   describe '#complete' do
     it 'returns zero if list is empty' do
       expect(checklist.complete).to be_zero

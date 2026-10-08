@@ -605,539 +605,137 @@ RSpec.describe Ticket::Overviews do
       end
     end
 
-    describe 'creating an overview' do
-      it 'raises an error when the role is missing' do
-        Ticket.destroy_all
-
-        expect do
-          Overview.create!(
-            name:                'new overview',
-            link:                'new_overview',
-            prio:                1200,
-            user_ids:            [customer2.id],
-            organization_shared: true,
-            condition:           {
-              'ticket.state_id'        => {
-                operator: 'is',
-                value:    [1, 2, 3],
-              },
-              'ticket.organization_id' => {
-                operator:      'is',
-                pre_condition: 'current_user.organization_id',
-              },
-            },
-            order:               {
-              by:        'created_at',
-              direction: 'DESC',
-            },
-            view:                {
-              d:                 %w[title customer state created_at],
-              s:                 %w[number title customer state created_at],
-              m:                 %w[number title customer state created_at],
-              view_mode_default: 's',
-            },
-          )
-        end.to raise_error(Exception)
-      end
-    end
-
     describe '.index' do
-      it 'returns the overview contents matching conditions and order', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
-        Ticket.destroy_all
+      before { Ticket.destroy_all }
 
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-        expect(result[2][:count]).to eq(0)
+      def index_summary(user)
+        described_class.index(user).first(3).map do |entry|
+          [entry[:overview][:view], entry[:tickets].pluck(:id), entry[:count]]
+        end
+      end
 
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        ticket1 = Ticket.create!(
-          title:         'overview test 1',
+      def create_overview_ticket(title, priority:, sender:, type:)
+        ticket = Ticket.create!(
+          title:         title,
           group:         Group.lookup(name: 'OverviewTest'),
           customer_id:   2,
           state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          priority:      Ticket::Priority.lookup(name: priority),
           updated_by_id: 1,
           created_by_id: 1,
         )
         Ticket::Article.create!(
-          ticket_id:     ticket1.id,
+          ticket_id:     ticket.id,
           from:          'some_sender@example.com',
           to:            'some_recipient@example.com',
           subject:       'some subject',
           message_id:    'some@id',
           body:          'some message... 123',
           internal:      false,
-          sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
-          type:          Ticket::Article::Type.find_by(name: 'email'),
+          sender:        Ticket::Article::Sender.find_by(name: sender),
+          type:          Ticket::Article::Type.find_by(name: type),
           updated_by_id: 1,
           created_by_id: 1,
         )
+        ticket
+      end
 
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket1.id)
-        expect(result[1][:count]).to eq(1)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-        expect(result[2][:count]).to eq(0)
+      let(:ticket1) { create_overview_ticket('overview test 1', priority: '2 normal', sender: 'Customer', type: 'email') }
+      let(:ticket2) { travel_to(1.second.from_now) { create_overview_ticket('overview test 2', priority: '3 high', sender: 'Agent', type: 'note') } }
+      let(:ticket3) { travel_to(2.seconds.from_now) { create_overview_ticket('overview test 3', priority: '1 low', sender: 'Customer', type: 'email') } }
 
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
+      let(:empty_agent2_summary) do
+        [
+          ['my_assigned', [], 0],
+          ['all_unassigned', [], 0],
+          ['my_tickets_2', [], 0],
+        ]
+      end
 
-        travel 1.second
-        ticket2 = Ticket.create!(
-          title:         'overview test 2',
-          group:         Group.lookup(name: 'OverviewTest'),
-          customer_id:   2,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '3 high'),
-          updated_by_id: 1,
-          created_by_id: 1,
+      it 'returns the overviews of the user without tickets', :aggregate_failures do
+        expect(index_summary(agent1)).to eq(
+          [
+            ['my_assigned', [], 0],
+            ['all_unassigned', [], 0],
+            ['my_tickets_onyl_with_note', [], 0],
+          ]
         )
-        Ticket::Article.create!(
-          ticket_id:     ticket2.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message... 123',
-          internal:      false,
-          sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
-          type:          Ticket::Article::Type.find_by(name: 'note'),
-          updated_by_id: 1,
-          created_by_id: 1,
+        expect(index_summary(agent2)).to eq(empty_agent2_summary)
+      end
+
+      it 'lists new tickets as unassigned in creation order', :aggregate_failures do
+        ticket1
+        expect(index_summary(agent1)).to eq(
+          [
+            ['my_assigned', [], 0],
+            ['all_unassigned', [ticket1.id], 1],
+            ['my_tickets_onyl_with_note', [], 0],
+          ]
         )
 
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket1.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket2.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-        expect(result[2][:count]).to eq(0)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        ticket2.owner_id = agent1.id
-        ticket2.save!
-
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket1.id)
-        expect(result[1][:count]).to eq(1)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        travel 1.second
-        ticket3 = Ticket.create!(
-          title:         'overview test 3',
-          group:         Group.lookup(name: 'OverviewTest'),
-          customer_id:   2,
-          state:         Ticket::State.lookup(name: 'new'),
-          priority:      Ticket::Priority.lookup(name: '1 low'),
-          updated_by_id: 1,
-          created_by_id: 1,
+        ticket2
+        expect(index_summary(agent1)).to eq(
+          [
+            ['my_assigned', [], 0],
+            ['all_unassigned', [ticket1.id, ticket2.id], 2],
+            ['my_tickets_onyl_with_note', [], 0],
+          ]
         )
-        Ticket::Article.create!(
-          ticket_id:     ticket3.id,
-          from:          'some_sender@example.com',
-          to:            'some_recipient@example.com',
-          subject:       'some subject',
-          message_id:    'some@id',
-          body:          'some message... 123',
-          internal:      false,
-          sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
-          type:          Ticket::Article::Type.find_by(name: 'email'),
-          updated_by_id: 1,
-          created_by_id: 1,
+        expect(index_summary(agent2)).to eq(empty_agent2_summary)
+      end
+
+      it 'lists an assigned ticket in the overviews of the owner only', :aggregate_failures do
+        ticket1
+        ticket2.update!(owner_id: agent1.id)
+
+        expect(index_summary(agent1)).to eq(
+          [
+            ['my_assigned', [ticket2.id], 1],
+            ['all_unassigned', [ticket1.id], 1],
+            ['my_tickets_onyl_with_note', [ticket2.id], 1],
+          ]
         )
-        travel_back
+        expect(index_summary(agent2)).to eq(empty_agent2_summary)
+      end
 
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket1.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket3.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:id]).to eq(overview4.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
+      context 'with an assigned and two unassigned tickets' do
+        before do
+          ticket1
+          ticket2.update!(owner_id: agent1.id)
+          ticket3
+        end
 
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:id]).to eq(overview3.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
+        it 'orders the tickets by the configured order of the overview', :aggregate_failures do
+          expect(index_summary(agent1)).to eq(
+            [
+              ['my_assigned', [ticket2.id], 1],
+              ['all_unassigned', [ticket1.id, ticket3.id], 2],
+              ['my_tickets_onyl_with_note', [ticket2.id], 1],
+            ]
+          )
+          expect(index_summary(agent2)).to eq(empty_agent2_summary)
+        end
 
-        overview2.order = {
-          by:        'created_at',
-          direction: 'DESC',
-        }
-        overview2.save!
+        {
+          { by: 'created_at', direction: 'DESC' }  => %i[ticket3 ticket1],
+          { by: 'priority_id', direction: 'DESC' } => %i[ticket1 ticket3],
+          { by: 'priority_id', direction: 'ASC' }  => %i[ticket3 ticket1],
+          { by: 'priority', direction: 'DESC' }    => %i[ticket1 ticket3],
+          { by: 'priority', direction: 'ASC' }     => %i[ticket3 ticket1],
+        }.each do |order, expected_tickets|
+          it "orders the tickets by #{order[:by]} #{order[:direction]}", :aggregate_failures do
+            overview2.update!(order: order)
 
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket3.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket1.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:id]).to eq(overview4.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:id]).to eq(overview3.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        overview2.order = {
-          by:        'priority_id',
-          direction: 'DESC',
-        }
-        overview2.save!
-
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket1.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket3.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:id]).to eq(overview4.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:id]).to eq(overview3.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        overview2.order = {
-          by:        'priority_id',
-          direction: 'ASC',
-        }
-        overview2.save!
-
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket3.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket1.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:id]).to eq(overview4.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:id]).to eq(overview3.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        overview2.order = {
-          by:        'priority',
-          direction: 'DESC',
-        }
-        overview2.save!
-
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket1.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket3.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:id]).to eq(overview4.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:id]).to eq(overview3.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
-
-        overview2.order = {
-          by:        'priority',
-          direction: 'ASC',
-        }
-        overview2.save!
-
-        result = described_class.index(agent1)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[0][:count]).to eq(1)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).not_to be_blank
-        expect(result[1][:tickets][0][:id]).to eq(ticket3.id)
-        expect(result[1][:tickets][1][:id]).to eq(ticket1.id)
-        expect(result[1][:count]).to eq(2)
-        expect(result[2][:overview][:id]).to eq(overview4.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets only with Note')
-        expect(result[2][:overview][:view]).to eq('my_tickets_onyl_with_note')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets][0][:id]).to eq(ticket2.id)
-        expect(result[2][:count]).to eq(1)
-
-        result = described_class.index(agent2)
-        expect(result[0][:overview][:id]).to eq(overview1.id)
-        expect(result[0][:overview][:name]).to eq('My Assigned Tickets')
-        expect(result[0][:overview][:view]).to eq('my_assigned')
-        expect(result[0][:count]).to eq(0)
-        expect(result[0][:tickets]).to be_an(Array)
-        expect(result[0][:tickets]).to be_blank
-        expect(result[1][:overview][:id]).to eq(overview2.id)
-        expect(result[1][:overview][:name]).to eq('Unassigned & Open')
-        expect(result[1][:overview][:view]).to eq('all_unassigned')
-        expect(result[1][:tickets]).to be_an(Array)
-        expect(result[1][:tickets]).to be_blank
-        expect(result[1][:count]).to eq(0)
-        expect(result[2][:overview][:id]).to eq(overview3.id)
-        expect(result[2][:overview][:name]).to eq('My Tickets 2')
-        expect(result[2][:overview][:view]).to eq('my_tickets_2')
-        expect(result[2][:tickets]).to be_an(Array)
-        expect(result[2][:tickets]).to be_blank
+            expect(index_summary(agent1)).to eq(
+              [
+                ['my_assigned', [ticket2.id], 1],
+                ['all_unassigned', expected_tickets.map { |name| public_send(name).id }, 2],
+                ['my_tickets_onyl_with_note', [ticket2.id], 1],
+              ]
+            )
+            expect(index_summary(agent2)).to eq(empty_agent2_summary)
+          end
+        end
       end
 
       context 'when any owner / no owner is set' do

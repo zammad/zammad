@@ -5,7 +5,6 @@ require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/concerns/has_tags_examples'
 require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_translations_examples'
-require 'models/contexts/factory_context'
 require 'models/concerns/can_lookup_search_index_attributes_with_attachments_examples'
 
 RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
@@ -14,8 +13,6 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
   it_behaves_like 'HasTags'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'CanLookupSearchIndexAttributesWithAttachments'
-
-  include_context 'factory'
 
   it_behaves_like 'ChecksKbClientNotification'
 
