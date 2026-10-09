@@ -61,6 +61,14 @@ Doorkeeper.configure do
   # Issue access tokens with refresh token (disabled by default)
   use_refresh_token
 
+  # Native applications (CLI tools, desktop apps) receive the authorization code
+  # on a loopback interface redirect URI, where TLS is not practical.
+  # RFC 8252 section 7.3 requires authorization servers to allow http for loopback
+  # redirect URIs; every other redirect URI must still use https in production.
+  force_ssl_in_redirect_uri do |uri|
+    !Rails.env.development? && !(uri.scheme == 'http' && %w[127.0.0.1 ::1 localhost].include?(uri.hostname))
+  end
+
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter confirmation: true (default false) if you want to enforce ownership of
   # a registered application
