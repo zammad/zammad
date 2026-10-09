@@ -66,7 +66,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
     end
 
     context 'with existing ticket channel' do
-      context 'with missing recipient phone number in ticket prefernces' do
+      context 'with missing recipient phone number and BSUID in ticket preferences' do
         before do
           ticket = Ticket.find(article.ticket_id)
           ticket.preferences['whatsapp']['from']['phone_number'] = nil
@@ -101,6 +101,33 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
           end
 
           it_behaves_like 'successful delivery'
+
+          it 'sends to the phone number' do
+            expect_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text)
+              .with(hash_including(recipient_number: be_present, recipient: nil))
+              .and_return(internal_response)
+
+            service_result
+          end
+        end
+
+        context 'with a BSUID only customer' do
+          let(:bsuid)           { "MY.#{Faker::Number.unique.number(digits: 15)}" }
+          let(:factory_options) { { from_phone_number: nil, from_user_id: bsuid } }
+
+          before do
+            allow_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text).and_return(internal_response)
+          end
+
+          it_behaves_like 'successful delivery'
+
+          it 'sends to the BSUID' do
+            expect_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text)
+              .with(hash_including(recipient_number: nil, recipient: bsuid))
+              .and_return(internal_response)
+
+            service_result
+          end
         end
 
         context 'with an media whatsapp article (image)' do

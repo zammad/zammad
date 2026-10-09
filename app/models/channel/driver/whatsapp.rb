@@ -7,7 +7,8 @@ class Channel::Driver::Whatsapp
     message = "Whatsapp::Outgoing::Message::#{attr[:message_type].capitalize}".constantize.new(
       access_token:     options[:access_token],
       phone_number_id:  options[:phone_number_id],
-      recipient_number: attr[:recipient_number]
+      recipient_number: attr[:recipient_number],
+      recipient:        attr[:recipient]
     )
 
     if attr[:message_type] == 'text'
