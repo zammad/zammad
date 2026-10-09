@@ -707,6 +707,9 @@ returns
       params.delete(:edited_channel_post) # discard unused :edited_channel_post hash
     end
 
+    # Other update types (e.g. my_chat_member when a user blocks the bot) carry nothing to import.
+    return if !params[:message] && !params[:edited_message]
+
     # prevent multiple update
     return if !params[:edited_message] && Ticket::Article.exists?(message_id: TelegramHelper.message_id(params))
 
