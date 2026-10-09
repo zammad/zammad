@@ -113,6 +113,7 @@ returns
       api_token:      token,
       welcome:        params[:welcome],
       goodbye:        params[:goodbye],
+      message_thread_id_as_chat_id: !!params[:message_thread_id_as_chat_id]
     }
     channel.group_id = group.id
     channel.active = true
@@ -179,7 +180,7 @@ returns
 
 =end
 
-  def self.message_id(params)
+  def self.message_id(params, channel = nil)
     message_id = nil
     %i[message edited_message].each do |key|
       next if !params[key]
@@ -190,11 +191,15 @@ returns
     end
     if message_id
       %i[message edited_message].each do |key|
-        next if !params[key]
-        next if !params[key][:chat]
-        next if !params[key][:chat][:id]
+        chat_id = if channel && channel.options[:message_thread_id_as_chat_id]
+                    params.dig(key, :message_thread_id) || params.dig(key, :chat, :id)
+                  else
+                    params.dig(key, :chat, :id)
+                  end
 
-        message_id = "#{message_id}.#{params[key][:chat][:id]}"
+        next unless chat_id
+
+        message_id = "#{message_id}.#{chat_id}"
       end
     end
     if !message_id
@@ -353,12 +358,18 @@ returns
         channel_id: channel.id,
         telegram:   {
           bid:     params['bid'],
-          chat_id: params[:message][:chat][:id]
+          chat_id: fetch_initial_chat_id(channel, params)
         }
       },
     )
     ticket.save!
     ticket
+  end
+
+  def fetch_initial_chat_id(channel, params)
+    return params[:message][:chat][:id] unless channel.options[:message_thread_id_as_chat_id]
+    
+    params[:message][:message_thread_id] || params[:message][:chat][:id]
   end
 
   def to_article(params, user, ticket, channel, article = nil)
@@ -390,7 +401,7 @@ returns
         sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
         from:        user(params)[:username],
         to:          "@#{channel[:options][:bot][:username]}",
-        message_id:  TelegramHelper.message_id(params),
+        message_id:  TelegramHelper.message_id(params, channel),
         internal:    false,
         preferences: {
           message:   {
