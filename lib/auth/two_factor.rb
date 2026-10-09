@@ -52,7 +52,7 @@ class Auth::TwoFactor
   def initiate_authentication(method)
     return {} if method.nil?
 
-    method_object = method_object(method)
+    method_object = authentication_method_object(method)
     return {} if method_object.nil?
 
     result = method_object.initiate_authentication
