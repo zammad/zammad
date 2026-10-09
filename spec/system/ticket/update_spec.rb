@@ -103,6 +103,22 @@ RSpec.describe 'Ticket Update', type: :system do
     end
   end
 
+  context 'when updating a ticket with an empty tree select attribute that has a default', db_strategy: :reset do
+    let!(:attribute) { create_attribute(:object_manager_attribute_tree_select, :shown_screen, default: 'Incident::Hardware::Mouse') }
+
+    # Without the explicit nil, SetDefaults would store the default on the new ticket.
+    let(:ticket) { create(:ticket, group: group, attribute.name => nil) }
+
+    it 'does not apply the default' do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      within(:active_content) do
+        expect(page).to have_css('.js-objectNumber', text: ticket.number)
+        check_tree_select_field_value(attribute.name, '')
+      end
+    end
+  end
+
   context 'when updating a ticket with macro' do
     context 'when required tree_select field is present' do
       it 'performs no validation (#2492)', db_strategy: :reset do

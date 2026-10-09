@@ -62,6 +62,35 @@ describe('FieldResolverMultiTreeselect', () => {
     })
   })
 
+  it('should use the default as value', () => {
+    const fieldResolver = new FieldResolverMultiTreeselect(EnumObjectManagerObjects.Ticket, {
+      dataType: 'multi_tree_select',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        options: [
+          {
+            name: 'Category 1',
+            value: 'Category 1',
+            children: [
+              {
+                name: 'Category 1.1',
+                value: 'Category 1::Category 1.1',
+              },
+            ],
+          },
+        ],
+        default: ['Category 1', 'Category 1::Category 1.1'],
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.fieldAttributes().value).toEqual([
+      'Category 1',
+      'Category 1::Category 1.1',
+    ])
+  })
+
   it('provides `contains one` filter operator props with type=treeselect', () => {
     // Multi-tree-select switches the operator name (inherits `contains one`
     // from FieldResolverMultiselect's pattern) and the rendered field type

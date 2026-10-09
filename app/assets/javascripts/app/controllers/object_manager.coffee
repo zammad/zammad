@@ -1,6 +1,7 @@
 # coffeelint: disable=duplicate_key
 treeParams = (e, params) ->
   tree = []
+  defaults = []
   lastLevels = []
   previousValueLevels = []
 
@@ -37,10 +38,15 @@ treeParams = (e, params) ->
     item.value = valueLevels.join('::')
     lastLevels[level] = item
     previousValueLevels = valueLevels
+
+    # Inactive options can't be picked on a ticket, so they can't be the default either.
+    if !item.disabled && $row.find('.js-selected').is(':checked')
+      defaults.push(item.value)
   if tree[0]
     if !params.data_option
       params.data_option = {}
     params.data_option.options = tree
+    params.data_option.default = if params.data_type is 'multi_tree_select' then defaults else (defaults[0] || '')
   params
 
 multiselectParams = (params) ->

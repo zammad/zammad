@@ -1771,4 +1771,86 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       end
     end
   end
+
+  describe 'Tree select default values', db_strategy: :reset do
+    let(:tree_field_name)       { SecureRandom.hex(10) }
+    let(:multi_tree_field_name) { SecureRandom.hex(10) }
+
+    def setup_attributes
+      create(:object_manager_attribute_tree_select, :shown_screen, name: tree_field_name, display: tree_field_name, default: 'Incident::Hardware::Mouse')
+      create(:object_manager_attribute_multi_tree_select, :shown_screen, name: multi_tree_field_name, display: multi_tree_field_name, default: ['Incident', 'Incident::Hardware::Mouse'])
+      ObjectManager::Attribute.migration_execute
+    end
+
+    shared_examples 'prefilling the default values' do
+      it 'prefills the default values' do
+        check_tree_select_field_value(tree_field_name, 'Incident::Hardware::Mouse')
+
+        expect(page).to have_css("div[data-attribute-name='#{multi_tree_field_name}'] span.token-label", exact_text: 'Incident')
+        expect(page).to have_css("div[data-attribute-name='#{multi_tree_field_name}'] span.token-label", exact_text: 'Incident › Hardware › Mouse')
+        expect(find("select[name='#{multi_tree_field_name}']", visible: :all).value).to contain_exactly('Incident', 'Incident::Hardware::Mouse')
+      end
+    end
+
+    context 'when agent', authenticated_as: :authenticate do
+      let(:customer) { create(:customer) }
+
+      def authenticate
+        setup_attributes
+        customer
+        true
+      end
+
+      before do
+        visit 'ticket/create'
+        wait_for_core_workflow
+      end
+
+      include_examples 'prefilling the default values'
+
+      it 'saves the changed tree select value' do
+        set_tree_select_value(tree_field_name, 'Incident::Hardware::Keyboard')
+        check_tree_select_field_value(tree_field_name, 'Incident::Hardware::Keyboard')
+
+        fill_in 'Title', with: 'test'
+        find('.richtext-content').send_keys 'test'
+        set_tree_select_value('group_id', Group.first.name)
+
+        find('[name=customer_id_completion]').fill_in with: customer.firstname
+        find("li.recipientList-entry.js-object[data-object-id='#{customer.id}']").click
+
+        click '.js-submit'
+        wait.until { Ticket.last[tree_field_name] == 'Incident::Hardware::Keyboard' }
+      end
+    end
+
+    context 'when customer', authenticated_as: :authenticate do
+      def authenticate
+        setup_attributes
+        create(:customer)
+      end
+
+      before do
+        visit 'customer_ticket_new'
+        wait_for_core_workflow
+      end
+
+      include_examples 'prefilling the default values'
+
+      it 'saves the changed multi tree select value' do
+        within("div[data-attribute-name='#{multi_tree_field_name}']") do
+          find(".token[data-value='Incident'] .js-remove").click
+          find(".token[data-value='Incident::Hardware::Mouse'] .js-remove").click
+        end
+        page.evaluate_script("document.querySelector(\"div[data-attribute-name='#{multi_tree_field_name}'] .js-optionsList li[data-value='Change request'] .searchableSelect-option-text\").click()")
+
+        fill_in 'Title', with: 'test'
+        find('.richtext-content').send_keys 'test'
+        set_tree_select_value('group_id', Group.first.name)
+
+        click '.js-submit'
+        wait.until { Ticket.last[multi_tree_field_name] == ['Change request'] }
+      end
+    end
+  end
 end

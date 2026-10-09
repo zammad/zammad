@@ -3,13 +3,15 @@
 require 'rails_helper'
 
 DEFAULT_VALUES = {
-  textarea: 'rspec',
-  text:     'rspec',
-  boolean:  true,
-  date:     24,  # in hours, so 1 day
-  datetime: 720, # in minutes, so 12 hours
-  integer:  123,
-  select:   'key_1'
+  textarea:          'rspec',
+  text:              'rspec',
+  boolean:           true,
+  date:              24,  # in hours, so 1 day
+  datetime:          720, # in minutes, so 12 hours
+  integer:           123,
+  select:            'key_1',
+  tree_select:       'Incident::Hardware',
+  multi_tree_select: ['Incident', 'Incident::Hardware::Mouse'],
 }.freeze
 
 RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London', type: :model do
@@ -134,6 +136,24 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London'
       end
 
       it { is_expected.to have_attributes(rspec_select: 'key_1') }
+    end
+
+    context 'when type is tree_select' do
+      before do
+        create_field(:tree_select)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it { is_expected.to have_attributes(rspec_tree_select: 'Incident::Hardware') }
+    end
+
+    context 'when type is multi_tree_select' do
+      before do
+        create_field(:multi_tree_select)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it { is_expected.to have_attributes(rspec_multi_tree_select: ['Incident', 'Incident::Hardware::Mouse']) }
     end
 
     context 'when overriding default to empty value' do

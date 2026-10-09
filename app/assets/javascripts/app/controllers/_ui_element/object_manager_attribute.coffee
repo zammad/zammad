@@ -497,11 +497,13 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     element.find('.js-key').attr('level', level)
     element.find('td:nth-child(2)').first().css('padding-left', "#{(level * 20) + 10}px")
 
-  @buildRow: (element, child, level = 0, parentElement) ->
+  @buildRow: (element, child, level = 0, parentElement, defaults = []) ->
     newRow = element.find('.js-template').clone().removeClass('js-template')
     newRow.find('.js-key').attr('level', level)
     newRow.find('.js-key').val(child.name)
     newRow.find('.js-active').prop('checked', !child.disabled)
+    newRow.find('.js-selected').prop('checked', !child.disabled && _.contains(defaults, child.value))
+    newRow.find('.js-selected').prop('disabled', !!child.disabled)
     @setRowLevel(newRow, level)
     if level is 5
       newRow.find('.js-addChild').addClass('hide')
@@ -513,7 +515,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     element.find('.js-treeTable').append(newRow)
     if child.children
       for subChild in child.children
-        @buildRow(element, subChild, level + 1)
+        @buildRow(element, subChild, level + 1, undefined, defaults)
 
   @findParent: (element, level, mode) ->
     parent = $(element).closest('tr')
@@ -543,8 +545,32 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     if _.isEmpty(params.data_option.options)
       @buildRow(item, {})
     else
+      defaults = params.data_option.default
+      defaults = [defaults] if !_.isArray(defaults)
       for child in params.data_option.options
-        @buildRow(item, child)
+        @buildRow(item, child, 0, undefined, defaults)
+
+    lastSelected = item.find('.js-treeTable .js-selected:checked').get(0)
+
+    # The radios are unnamed (treeParams reads them), so the browser does not group them.
+    if localParams.data_type is 'tree_select'
+      item.on('click', '.js-selected', (e) ->
+        if lastSelected is e.target
+          $(e.target).prop('checked', false)
+          lastSelected = undefined
+          return
+        item.find('.js-treeTable .js-selected').not(e.target).prop('checked', false)
+        lastSelected = e.target
+      )
+
+    item.on('change', '.js-active', (e) ->
+      selected = $(e.target).closest('tr').find('.js-selected')
+      selected.prop('disabled', !e.target.checked)
+      return if e.target.checked
+      selected.prop('checked', false)
+
+      lastSelected = undefined if lastSelected is selected.get(0)
+    )
 
     item.on('click', '.js-addRow', (e) =>
       e.stopPropagation()

@@ -140,4 +140,44 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
       expect(Tag.tag_list(object: 'Ticket', o_id: Ticket.last.id)).to eq(%w[foo bar])
     end
   end
+
+  context 'when tree select attributes have a default', db_strategy: :reset do
+    before do
+      create(:object_manager_attribute_tree_select, :shown_screen, display: 'Category', default: 'Incident::Hardware::Mouse')
+      create(:object_manager_attribute_multi_tree_select, :shown_screen, display: 'Topics', default: ['Incident', 'Incident::Hardware::Mouse'])
+      ObjectManager::Attribute.migration_execute
+
+      visit '/ticket/create'
+      wait_for_form_to_settle('ticket-create')
+    end
+
+    # Checked on `.element`, since the field wrapper's `find` searches the whole page.
+    it 'prefills the default values' do
+      expect(find_treeselect('Category').element).to have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
+      expect(find_treeselect('Topics').element).to have_css('[role="listitem"]', exact_text: 'Incident')
+        .and have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
+    end
+  end
+
+  context 'when user tree select attributes have a default', db_strategy: :reset do
+    before do
+      screens = { create: { '-all-' => { shown: true } } }
+      create(:object_manager_attribute_tree_select, object_name: 'User', screens:, display: 'Category', default: 'Incident::Hardware::Mouse')
+      create(:object_manager_attribute_multi_tree_select, object_name: 'User', screens:, display: 'Topics', default: ['Incident', 'Incident::Hardware::Mouse'])
+      ObjectManager::Attribute.migration_execute
+
+      visit '/ticket/create'
+      wait_for_form_to_settle('ticket-create')
+    end
+
+    it 'prefills the default values when creating a new customer' do
+      find('a[aria-label="Create new customer"]').click
+
+      within '#flyout-user-create-flyout' do
+        expect(find_treeselect('Category').element).to have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
+        expect(find_treeselect('Topics').element).to have_css('[role="listitem"]', exact_text: 'Incident')
+          .and have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
+      end
+    end
+  end
 end

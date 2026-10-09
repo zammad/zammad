@@ -46,6 +46,33 @@ RSpec.describe 'Manage > Organizations', type: :system do
         end
       end
     end
+
+    context 'with tree select defaults', db_strategy: :reset do
+      let(:screens)               { { create: { '-all-' => { shown: true } } } }
+      let!(:tree_attribute)       { create(:object_manager_attribute_tree_select, object_name: 'Organization', screens: screens, default: 'Incident::Hardware::Mouse') }
+      let!(:multi_tree_attribute) { create(:object_manager_attribute_multi_tree_select, object_name: 'Organization', screens: screens, default: ['Incident', 'Incident::Hardware::Mouse']) }
+
+      before do
+        ObjectManager::Attribute.migration_execute
+        refresh
+
+        visit 'manage/organizations'
+
+        within(:active_content) do
+          click '[data-type="new"]'
+        end
+      end
+
+      it 'prefills the default values' do
+        in_modal do
+          check_tree_select_field_value(tree_attribute.name, 'Incident::Hardware::Mouse')
+
+          expect(page).to have_css("div[data-attribute-name='#{multi_tree_attribute.name}'] span.token-label", exact_text: 'Incident')
+          expect(page).to have_css("div[data-attribute-name='#{multi_tree_attribute.name}'] span.token-label", exact_text: 'Incident › Hardware › Mouse')
+          expect(find("select[name='#{multi_tree_attribute.name}']", visible: :all).value).to contain_exactly('Incident', 'Incident::Hardware::Mouse')
+        end
+      end
+    end
   end
 
   context 'when ajax pagination' do

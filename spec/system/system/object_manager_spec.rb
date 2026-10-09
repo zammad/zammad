@@ -503,6 +503,52 @@ RSpec.describe 'System > Objects', type: :system do
       expect(ObjectManager::Attribute.find_by(name: 'tree1').data_option).to eq(expected_data_options)
     end
 
+    it 'stores the last marked row of a new tree select as default' do
+      fill_in 'Name', with: 'tree2'
+      fill_in 'Display', with: 'tree2'
+      page.find('select[name=data_type]').select('Single tree selection field')
+
+      first_add_child = page.first('div.js-addChild')
+      first_add_child.click
+      first_add_child.click
+
+      # Mark the rows before naming them, as the path of a row is only built on submit.
+      radios = page.all('.js-treeTable .js-selected', count: 3)
+      radios[1].click
+      radios[2].click
+
+      page.all('input.js-key').zip(%w[1 2 3]).each { |input, name| input.send_keys(name) }
+
+      page.find('.js-submit').click
+      await_empty_ajax_queue
+
+      attribute = wait(60).until { ObjectManager::Attribute.find_by(name: 'tree2') }
+      expect(attribute.data_option['default']).to eq('1::3')
+    end
+
+    it 'stores the marked active rows of a new multi tree select as default' do
+      fill_in 'Name', with: 'multitree1'
+      fill_in 'Display', with: 'multitree1'
+      page.find('select[name=data_type]').select('Multiple tree selection field')
+
+      first_add_child = page.first('div.js-addChild')
+      first_add_child.click
+      first_add_child.click
+      page.first('div.js-addRow').click
+
+      checkboxes = page.all('.js-treeTable .js-selected', count: 4)
+      [0, 2, 3].each { |index| checkboxes[index].click }
+      page.all('.js-treeTable .js-active')[3].click
+
+      page.all('input.js-key').zip(%w[1 2 3 4]).each { |input, name| input.send_keys(name) }
+
+      page.find('.js-submit').click
+      await_empty_ajax_queue
+
+      attribute = wait(60).until { ObjectManager::Attribute.find_by(name: 'multitree1') }
+      expect(attribute.data_option['default']).to eq(['1', '1::3'])
+    end
+
     it 'checks smart defaults for select field' do
       fill_in 'Name', with: 'select1'
       find('input[name=display]').set('select1')
@@ -613,6 +659,91 @@ RSpec.describe 'System > Objects', type: :system do
       tr.click
 
       expect(page).to have_checked_field('data_option::default', with: 'true')
+    end
+  end
+
+  context 'when editing the default of tree select fields' do
+    before do
+      attribute
+      visit '/#system/object_manager'
+      click "tr[data-id='#{attribute.id}']"
+    end
+
+    def checked_keys
+      page.all('.js-treeTable .js-selected:checked').map { |input| input.ancestor('tr').find('.js-key').value }
+    end
+
+    def row(key)
+      page.all('.js-treeTable .js-key').find { |input| input.value == key }.ancestor('tr')
+    end
+
+    context 'with a single tree selection field' do
+      let(:attribute) { create(:object_manager_attribute_tree_select, default: 'Incident::Hardware::Mouse') }
+
+      it 'shows the stored default and clears it with one click' do
+        in_modal disappears: true do
+          expect(page).to have_css('.js-treeTable .js-selected:checked', count: 1)
+          expect(checked_keys).to eq(['Mouse'])
+
+          find('.js-treeTable .js-selected:checked').click
+          expect(page).to have_no_css('.js-treeTable .js-selected:checked')
+
+          click '.js-submit'
+        end
+
+        expect(attribute.reload.data_option_new['default']).to eq('')
+      end
+
+      it 'marks the default of a reactivated row again with one click' do
+        in_modal disappears: true do
+          row('Mouse').find('.js-active').click
+          expect(row('Mouse')).to have_css('.js-selected:disabled:not(:checked)')
+
+          row('Mouse').find('.js-active').click
+          row('Mouse').find('.js-selected').click
+          expect(checked_keys).to eq(['Mouse'])
+
+          click '.js-submit'
+        end
+
+        expect(attribute.reload.data_option_new['default']).to eq('Incident::Hardware::Mouse')
+      end
+    end
+
+    context 'with a multi tree selection field' do
+      let(:attribute) { create(:object_manager_attribute_multi_tree_select, default: ['Incident', 'Incident::Hardware::Mouse']) }
+
+      it 'shows the stored defaults and clears them' do
+        in_modal disappears: true do
+          expect(page).to have_css('.js-treeTable .js-selected:checked', count: 2)
+          expect(checked_keys).to eq(%w[Incident Mouse])
+
+          page.all('.js-treeTable .js-selected:checked').each(&:click)
+          expect(page).to have_no_css('.js-treeTable .js-selected:checked')
+
+          click '.js-submit'
+        end
+
+        expect(attribute.reload.data_option_new['default']).to eq([])
+      end
+
+      it 'clears and disables the default of an inactive row' do
+        in_modal disappears: true do
+          row('Mouse').find('.js-active').click
+          expect(row('Mouse')).to have_css('.js-selected:disabled:not(:checked)')
+
+          click '.js-submit'
+        end
+
+        expect(attribute.reload.data_option_new['default']).to eq(['Incident'])
+
+        click "tr[data-id='#{attribute.id}']"
+
+        in_modal do
+          expect(checked_keys).to eq(['Incident'])
+          expect(row('Mouse')).to have_css('.js-selected:disabled')
+        end
+      end
     end
   end
 

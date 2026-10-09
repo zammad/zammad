@@ -61,6 +61,32 @@ describe('FieldResolverTreeselect', () => {
     })
   })
 
+  it('should use the default as value', () => {
+    const fieldResolver = new FieldResolverTreeselect(EnumObjectManagerObjects.Ticket, {
+      dataType: 'tree_select',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        options: [
+          {
+            name: 'Category 1',
+            value: 'Category 1',
+            children: [
+              {
+                name: 'Category 1.1',
+                value: 'Category 1::Category 1.1',
+              },
+            ],
+          },
+        ],
+        default: 'Category 1::Category 1.1',
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.fieldAttributes().value).toBe('Category 1::Category 1.1')
+  })
+
   it('should return the correct field attributes for relations', () => {
     const fieldResolver = new FieldResolverTreeselect(EnumObjectManagerObjects.Ticket, {
       dataType: 'treeselect',
