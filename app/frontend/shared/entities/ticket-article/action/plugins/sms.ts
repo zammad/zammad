@@ -69,7 +69,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       performReply(ticket) {
         const { preferences } = ticket
         return {
-          to: [preferences?.sms?.originator || preferences?.sms?.From],
+          to: [preferences?.sms?.originator || preferences?.sms?.From || preferences?.sms?.from],
         }
       },
     }
