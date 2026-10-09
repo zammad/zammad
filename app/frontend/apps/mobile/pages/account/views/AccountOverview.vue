@@ -22,6 +22,8 @@ import CommonSectionMenuLink from '#mobile/components/CommonSectionMenu/CommonSe
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import { useHeader } from '#mobile/composables/useHeader.ts'
 
+import AccountPushNotifications from '../components/AccountPushNotifications.vue'
+
 const router = useRouter()
 
 const logout = () => {
@@ -137,6 +139,8 @@ const { forceDesktop } = useForceDesktop()
         {{ $t('Continue to desktop') }}
       </CommonSectionMenuLink>
     </CommonSectionMenu>
+
+    <AccountPushNotifications />
 
     <!--
       The shorthand "no-options-label-translation" is not working currently because of a FormKit limitation,

@@ -8,7 +8,7 @@ class Setting < ApplicationModel
 
   include Setting::HasAuditLogs
 
-  SENSITIVE_SETTING_NAMES = %w[secret auth_ password pw credential endpoint_key _config _token recovery_codes pwd captcha_options].freeze
+  SENSITIVE_SETTING_NAMES = %w[secret auth_ password pw credential endpoint_key _config _token recovery_codes pwd captcha_options private_key].freeze
 
   store         :options
   store         :state_current

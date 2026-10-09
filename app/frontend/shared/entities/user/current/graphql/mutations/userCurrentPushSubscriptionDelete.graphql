@@ -1,0 +1,8 @@
+mutation userCurrentPushSubscriptionDelete($endpoint: String!) {
+  userCurrentPushSubscriptionDelete(endpoint: $endpoint) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -41,6 +41,7 @@ class User < ApplicationModel
   has_many                :online_notifications,   dependent: :destroy
   has_many                :taskbars,               dependent: :destroy
   has_many                :user_devices,           dependent: :destroy
+  has_many                :push_subscriptions,     dependent: :destroy
   has_one                 :chat_agent_created_by,  class_name: 'Chat::Agent', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
   has_one                 :chat_agent_updated_by,  class_name: 'Chat::Agent', foreign_key: :updated_by_id, dependent: :destroy, inverse_of: :updated_by
   has_many                :chat_sessions,          class_name: 'Chat::Session', dependent: :destroy

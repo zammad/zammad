@@ -254,7 +254,8 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'content_translation_service',
           'content_translation_ticket_article',
           'content_translation_ticket_article_auto',
-          'content_translation_ticket_article_auto_role_ids'
+          'content_translation_ticket_article_auto_role_ids',
+          'web_push_vapid_public_key'
         ]
       end
 

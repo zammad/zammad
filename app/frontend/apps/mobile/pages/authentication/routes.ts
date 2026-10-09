@@ -38,16 +38,26 @@ const route: RouteRecordRaw[] = [
     name: 'Logout',
     component: {
       async beforeRouteEnter() {
-        const [{ useAuthenticationStore }, { useNotifications }] = await Promise.all([
-          import('#shared/stores/authentication.ts'),
-          import('#shared/components/CommonNotifications/useNotifications.ts'),
-        ])
+        const [{ useAuthenticationStore }, { useNotifications }, { usePushNotificationsStore }] =
+          await Promise.all([
+            import('#shared/stores/authentication.ts'),
+            import('#shared/components/CommonNotifications/useNotifications.ts'),
+            import('#mobile/entities/user/current/stores/pushNotifications.ts'),
+          ])
 
         const { clearAllNotifications } = useNotifications()
 
         const authentication = useAuthenticationStore()
 
         clearAllNotifications()
+
+        // Needs the session, so it has to happen before the logout itself.
+        //   A device that keeps receiving the notifications of a user who
+        //   logged out must not happen, but a failure must not block the logout.
+        await usePushNotificationsStore()
+          .unregisterDevice()
+          .catch((error) => console.error(error))
+
         await authentication.logout()
 
         if (authentication.externalLogout) return false

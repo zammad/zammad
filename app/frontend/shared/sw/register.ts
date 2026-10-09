@@ -2,6 +2,8 @@
 
 import noop from 'lodash-es/noop'
 
+import { isStandalone } from '#shared/utils/pwa.ts'
+
 import type { RegisterSWOptions } from './types.ts'
 
 // should service worker be updated automatically without a prompt
@@ -32,10 +34,12 @@ export const registerSW = (options: RegisterSWOptions) => {
     sw.ontriggerupdate = () => {
       onNeedRefresh?.()
     }
-    // you can disable service worker in development mode by running in console: pwa.enable()
-    // you can enable service worker, it will point to /public/assets/frontend/vite-dev/sw.js
-    // don't forget to unregister service worker, when you are done in console: pwa.disable()
-    if (!sw.isEnabled()) {
+    // you can enable the service worker in the console with `sw.allow()`,
+    //   it will point to /public/assets/frontend/vite-dev/sw.js
+    // don't forget to unregister the service worker when you are done: `sw.unregister()`
+    // An app installed to the home screen has no console, so it always gets the worker: that is
+    //   the only way to test push notifications on a device against the development stack.
+    if (!sw.isEnabled() && !isStandalone()) {
       return () => {
         console.log('Updating service worker...')
         window.location.reload()

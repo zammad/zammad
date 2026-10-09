@@ -1393,6 +1393,7 @@ RSpec.describe User, type: :model do
         'Ticket::State'                      => { 'created_by_id' => 1, 'updated_by_id' => 1 },
         'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'PublicLink'                         => { 'created_by_id' => 1, 'updated_by_id' => 0 },
+        'PushSubscription'                   => { 'user_id' => 0 },
         'User::TwoFactorPreference'          => { 'created_by_id' => 1, 'updated_by_id' => 1, 'user_id' => 1 },
         'OnlineNotification'                 => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
         'Ticket'                             => { 'created_by_id' => 0, 'updated_by_id' => 0, 'owner_id' => 1, 'customer_id' => 3 },

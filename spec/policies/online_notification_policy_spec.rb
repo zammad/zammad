@@ -15,6 +15,10 @@ describe OnlineNotificationPolicy do
     it 'returns true for show columns' do
       expect(policy.show?).to a_kind_of(TrueClass)
     end
+
+    it 'grants access to the related object' do
+      expect(policy.related_accessible?).to be(true)
+    end
   end
 
   context 'when user is owner, but has no access to related object' do
@@ -25,6 +29,10 @@ describe OnlineNotificationPolicy do
 
     it 'returns permitted columns' do
       expect(policy.show?).to a_kind_of(ApplicationPolicy::FieldScope)
+    end
+
+    it 'denies access to the related object' do
+      expect(policy.related_accessible?).to be(false)
     end
   end
 
@@ -38,5 +46,9 @@ describe OnlineNotificationPolicy do
     let(:record) { create(:online_notification, :with_bulk_job, user:) }
 
     it { is_expected.to permit_actions(%i[show destroy update]) }
+
+    it 'grants access to the related object' do
+      expect(policy.related_accessible?).to be(true)
+    end
   end
 end

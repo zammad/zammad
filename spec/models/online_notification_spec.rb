@@ -16,6 +16,67 @@ RSpec.describe OnlineNotification, type: :model do
     end
   end
 
+  describe '#push_tag' do
+    let(:ticket) { create(:ticket) }
+
+    it 'names the ticket of a ticket notification' do
+      notification = create(:online_notification, o: ticket)
+
+      expect(notification.push_tag).to eq("ticket-#{ticket.id}")
+    end
+
+    it 'names the ticket of an article notification, so both share one push' do
+      article      = create(:ticket_article, ticket:)
+      notification = create(:online_notification, o: article)
+
+      expect(notification.push_tag).to eq("ticket-#{ticket.id}")
+    end
+
+    it 'names the notification itself when it is about no ticket' do
+      notification = create(:online_notification, :with_bulk_job)
+
+      expect(notification.push_tag).to eq("online-notification-#{notification.id}")
+    end
+
+    it 'names the notification itself when the ticket is gone' do
+      notification = create(:online_notification, o: ticket)
+      ticket.destroy!
+
+      expect(notification.push_tag).to eq("online-notification-#{notification.id}")
+    end
+  end
+
+  describe '.push_tags' do
+    let(:notifications) do
+      [
+        create(:online_notification, o: ticket),
+        create(:online_notification, o: create(:ticket_article, ticket:)),
+        create(:online_notification, :with_bulk_job),
+        *create_list(:online_notification, 5),
+      ]
+    end
+    let(:queries) { [] }
+    let(:tags) do
+      callback = ->(*, payload) { queries << payload[:sql] if payload[:name] != 'SCHEMA' }
+
+      ActiveSupport::Notifications.subscribed(callback, 'sql.active_record') do
+        described_class.push_tags(described_class.where(id: notifications))
+      end
+    end
+
+    before { notifications }
+
+    it 'resolves the tag of every notification' do
+      expect(tags).to eq(notifications.to_h { |notification| [notification.id, notification.push_tag] })
+    end
+
+    it 'runs a fixed number of queries whatever the number of notifications' do
+      tags
+
+      expect(queries.size).to be <= 5
+    end
+  end
+
   describe '.add' do
     describe 'validations' do
       describe 'referenced object' do

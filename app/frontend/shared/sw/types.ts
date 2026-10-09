@@ -25,3 +25,17 @@ export interface RegisterSWOptions {
   ) => void
   onRegisterError?: (error: unknown) => void
 }
+
+// Contract between the backend push payload, the service worker and the app.
+export interface PushNotificationPayload {
+  title: string
+  body: string
+  // Route inside the mobile app, e.g. `/tickets/1`.
+  path: string
+  tag?: string
+}
+
+export interface PushNotificationClickMessage {
+  type: 'PUSH_NOTIFICATION_CLICK'
+  path: string
+}

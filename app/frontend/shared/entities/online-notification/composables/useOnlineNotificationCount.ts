@@ -7,6 +7,8 @@ import { SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 
 export const useOnlineNotificationCount = () => {
   const unseenCount = ref<number>()
+  // Tags of the web pushes whose notifications are still unseen, see the mobile app.
+  const unseenPushTags = ref<string[]>()
 
   const notificationsCountSubscription = new SubscriptionHandler(
     useOnlineNotificationsCountSubscription(),
@@ -18,10 +20,12 @@ export const useOnlineNotificationCount = () => {
     if (!data) return
 
     unseenCount.value = data.onlineNotificationsCount.unseenCount
+    unseenPushTags.value = data.onlineNotificationsCount.unseenPushTags
   })
 
   return {
     notificationsCountSubscription,
     unseenCount,
+    unseenPushTags,
   }
 }

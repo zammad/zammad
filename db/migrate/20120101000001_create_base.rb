@@ -617,6 +617,17 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :user_devices, [:created_at]
     add_foreign_key :user_devices, :users
 
+    create_table :push_subscriptions do |t|
+      t.references :user,             null: false
+      t.string  :endpoint,             limit: 2000, null: false
+      t.string  :p256dh,               limit: 200, null: false
+      t.string  :auth,                 limit: 100, null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :push_subscriptions, [:user_id]
+    add_index :push_subscriptions, [:endpoint], unique: true
+    add_foreign_key :push_subscriptions, :users
+
     create_table :external_credentials do |t|
       t.string :name
       t.string :credentials, limit: 2500, null: false

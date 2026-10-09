@@ -1,0 +1,8 @@
+mutation userCurrentPushSubscriptionAdd($input: UserPushSubscriptionInput!) {
+  userCurrentPushSubscriptionAdd(input: $input) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

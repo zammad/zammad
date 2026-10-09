@@ -22,6 +22,9 @@ import { registerSW } from '#shared/sw/register.ts'
 import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
 import CommonImageViewer from '#mobile/components/CommonImageViewer/CommonImageViewer.vue'
 import { useConnection } from '#mobile/composables/useConnection.ts'
+import { usePushNotificationClick } from '#mobile/composables/usePushNotificationClick.ts'
+import { usePushNotificationsSync } from '#mobile/composables/usePushNotificationsSync.ts'
+import { SERVICE_WORKER_SCOPE } from '#mobile/sw/registration.ts'
 
 import { useTicketOverviewsStore } from './entities/ticket/stores/ticketOverviews.ts'
 
@@ -44,11 +47,14 @@ onMounted(() => {
 
 const updateServiceWorker = registerSW({
   path: '/mobile/sw.js',
-  scope: '/mobile/',
+  scope: SERVICE_WORKER_SCOPE,
 })
 
 useAppMaintenanceCheck({ onNeedRefresh: () => updateServiceWorker(true) })
 usePushMessages()
+
+usePushNotificationClick()
+usePushNotificationsSync()
 
 // Add a check for authenticated changes (e.g. login/logout in a other
 // browser tab or maintenance mode switch).

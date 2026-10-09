@@ -203,6 +203,9 @@ gem 'macaddr'
 # watch file changes (also relevant for graphql generation in context of CDs)
 gem 'listen'
 
+# web push notifications
+gem 'web-push'
+
 # language detection
 gem 'cld'
 

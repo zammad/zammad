@@ -1,5 +1,6 @@
 subscription onlineNotificationsCount {
   onlineNotificationsCount {
     unseenCount
+    unseenPushTags
   }
 }

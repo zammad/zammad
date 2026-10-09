@@ -9,6 +9,7 @@ export const OnlineNotificationsCountDocument = gql`
     subscription onlineNotificationsCount {
   onlineNotificationsCount {
     unseenCount
+    unseenPushTags
   }
 }
     `;

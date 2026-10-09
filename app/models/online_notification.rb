@@ -5,6 +5,7 @@ class OnlineNotification < ApplicationModel
 
   include OnlineNotification::Assets
   include OnlineNotification::TriggersSubscriptions
+  include OnlineNotification::SendsWebPush
 
   belongs_to :user, optional: true
   # rubocop:disable Rails/InverseOf
@@ -39,6 +40,34 @@ add a new online notification for this user
       .by_id(object_lookup_id)
       &.safe_constantize
       &.find(o_id)
+  end
+
+  # The tag of a web push about this notification. Notifications of one ticket
+  #   share it, so a device keeps one push per ticket.
+  def push_tag
+    self.class.push_tags([self])[id]
+  end
+
+  # Push tags by notification id, for a relation or loaded notifications,
+  #   resolved with a fixed number of queries whatever their number.
+  def self.push_tags(notifications)
+    ticket_lookup  = ObjectLookup.by_name('Ticket')
+    article_lookup = ObjectLookup.by_name('Ticket::Article')
+    rows           = notifications.pluck(:id, :object_lookup_id, :o_id)
+
+    article_ids     = rows.filter_map { |_, lookup, o_id| o_id if lookup == article_lookup }
+    article_tickets = Ticket::Article.where(id: article_ids).pluck(:id, :ticket_id).to_h
+    ticket_ids      = rows.filter_map { |_, lookup, o_id| o_id if lookup == ticket_lookup }
+    existing        = Ticket.where(id: ticket_ids + article_tickets.values).pluck(:id).to_set
+
+    rows.to_h do |id, lookup, o_id|
+      ticket_id = case lookup
+                  when ticket_lookup  then o_id
+                  when article_lookup then article_tickets[o_id]
+                  end
+
+      [id, existing.include?(ticket_id) ? "ticket-#{ticket_id}" : "online-notification-#{id}"]
+    end
   end
 
   def self.add(data)

@@ -16,12 +16,8 @@ class OnlineNotificationPolicy < ApplicationPolicy
     owner?
   end
 
-  private
-
-  def owner?
-    user == record.user
-  end
-
+  # Whether the user may see the object the notification is about, not only
+  #   that the notification exists.
   def related_accessible?
     return false if !record.related_object
 
@@ -33,6 +29,12 @@ class OnlineNotificationPolicy < ApplicationPolicy
         .policy(user, record.related_object)
         .show?
     end
+  end
+
+  private
+
+  def owner?
+    user == record.user
   end
 
   def without_relation_permission_field_scope

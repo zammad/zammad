@@ -183,6 +183,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:26
+#: app/models/online_notification/push_payload.rb:26
 msgid "%s created article for |%s|"
 msgstr ""
 
@@ -208,6 +209,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:112
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:21
+#: app/models/online_notification/push_payload.rb:14
 msgid "%s created ticket |%s|"
 msgstr ""
 
@@ -340,6 +342,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
+#: app/models/online_notification/push_payload.rb:28
 msgid "%s reacted with a %s to message from %s |%s|"
 msgstr ""
 
@@ -403,6 +406,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
+#: app/models/online_notification/push_payload.rb:27
 msgid "%s updated article for |%s|"
 msgstr ""
 
@@ -428,6 +432,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:114
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:23
+#: app/models/online_notification/push_payload.rb:15
 msgid "%s updated ticket |%s|"
 msgstr ""
 
@@ -964,7 +969,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:45
 #: app/frontend/apps/mobile/pages/account/routes.ts:8
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:32
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:33
 msgid "Account"
 msgstr ""
 
@@ -1887,6 +1892,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:124
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
+#: app/models/online_notification/push_payload.rb:20
 msgid "Another ticket was merged into ticket |%s|"
 msgstr ""
 
@@ -2658,7 +2664,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:197
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
 #: db/seeds/permissions.rb:463
@@ -2901,6 +2907,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/online_notification_standalone.coffee:12
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:28
+#: app/models/online_notification/push_payload.rb:36
 msgid "Bulk action completed for |%s| ticket(s): %s successful, %s failed"
 msgstr ""
 
@@ -4293,7 +4300,7 @@ msgstr ""
 msgid "Continue session"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:137
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:214
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr ""
@@ -5813,6 +5820,14 @@ msgstr ""
 msgid "Defines the port of the WebSocket server."
 msgstr ""
 
+#: db/seeds/settings.rb:6568
+msgid "Defines the private key used to sign web push notifications."
+msgstr ""
+
+#: db/seeds/settings.rb:6581
+msgid "Defines the public key browsers use to subscribe to web push notifications."
+msgstr ""
+
 #: db/seeds/settings.rb:7
 msgid "Defines the random application secret."
 msgstr ""
@@ -6308,7 +6323,7 @@ msgid "Did you know that system translations can be contributed and shared with 
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:65
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:253
 msgid "Did you know?"
 msgstr ""
 
@@ -7865,6 +7880,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/online_notification_standalone.coffee:15
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:37
+#: app/models/online_notification/push_payload.rb:37
 msgid "Failed to generate knowledge base draft for \"%s\": %s"
 msgstr ""
 
@@ -9709,7 +9725,7 @@ msgstr ""
 msgid "Inserts text module"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:205
 msgid "Install App"
 msgstr ""
 
@@ -10165,6 +10181,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:45
+#: app/models/online_notification/push_payload.rb:32
 msgid "Knowledge Base Answer \"|%s|\" has been created"
 msgstr ""
 
@@ -10321,7 +10338,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:97
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:245
 #: db/seeds/permissions.rb:456
 msgid "Language"
 msgstr ""
@@ -12897,9 +12914,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:48
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
 #: db/seeds/permissions.rb:515
 msgid "Notifications"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:48
+msgid "Notifications are turned off for this app in the settings of this device."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:130
@@ -13846,6 +13868,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:116
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
+#: app/models/online_notification/push_payload.rb:16
 msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
 
@@ -14548,6 +14571,42 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:16
 msgid "Purple"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:34
+msgid "Push notifications are not available because the app is not fully loaded. Please reload the app."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:31
+msgid "Push notifications are not set up on this system. Please contact your administrator."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:27
+msgid "Push notifications are only available after adding this app to the home screen."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:37
+msgid "Push notifications become available once the app has finished loading. This can take a moment."
+msgstr ""
+
+#: app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts:103
+msgid "Push notifications could not be disabled."
+msgstr ""
+
+#: app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts:240
+msgid "Push notifications could not be enabled."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:24
+msgid "Push notifications need a secure connection. Open this app via HTTPS."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:102
+msgid "Push notifications on this device"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:51
+msgid "Push notifications stopped working on this device. Turn them on again to keep receiving them."
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:27
@@ -16926,7 +16985,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/logout.coffee:6
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts:7
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:179
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:275
 msgid "Sign out"
 msgstr ""
 
@@ -18780,7 +18839,7 @@ msgstr ""
 msgid "The private key is not valid for S/MIME usage. Please check the key format and the secret."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:49
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:50
 msgid "The product version could not be fetched."
 msgstr ""
 
@@ -19621,6 +19680,14 @@ msgstr ""
 msgid "This bot already exists."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:39
+msgid "This browser cannot register for push notifications."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:29
+msgid "This browser does not support push notifications."
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:11
 msgid "This category including sub-categories feed:"
 msgstr ""
@@ -19835,7 +19902,7 @@ msgid "This host cannot be reached."
 msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco:6
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:166
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:262
 msgid "This is Zammad version %s"
 msgstr ""
 
@@ -20462,16 +20529,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:118
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
+#: app/models/online_notification/push_payload.rb:17
 msgid "Ticket |%s| has escalated!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:122
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
+#: app/models/online_notification/push_payload.rb:19
 msgid "Ticket |%s| was merged into another ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:120
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
+#: app/models/online_notification/push_payload.rb:18
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
 
@@ -20709,7 +20779,7 @@ msgstr ""
 msgid "To find out more about the 24-hour customer service window see %l."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:76
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:77
 msgid "To install %s as an app, press the %s \"Share\" button and then the %s \"Add to Home Screen\" button."
 msgstr ""
 
@@ -21046,6 +21116,10 @@ msgstr ""
 #: app/views/init/index.html.erb:41
 #: app/views/init/spinner-loading.html.erb:272
 msgid "Turn on JavaScript to use Zammad."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:56
+msgid "Turn on to get notified on this device about updates to your tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:285
@@ -22118,7 +22192,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/version.coffee:3
 #: app/assets/javascripts/app/views/package.jst.eco:67
 #: app/assets/javascripts/app/views/version.jst.eco:2
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:261
 #: lib/excel_sheet/ai/analytics/errors.rb:25
 #: lib/excel_sheet/ai/analytics/with_usage.rb:25
 msgid "Version"
@@ -22275,6 +22349,14 @@ msgstr ""
 
 #: app/models/report.rb:171
 msgid "Web (in)"
+msgstr ""
+
+#: db/seeds/settings.rb:6565
+msgid "Web Push VAPID Private Key"
+msgstr ""
+
+#: db/seeds/settings.rb:6578
+msgid "Web Push VAPID Public Key"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:160
@@ -22694,7 +22776,7 @@ msgid "You can generate a personal access token for each application you use tha
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:54
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:159
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:255
 msgid "You can help translating Zammad."
 msgstr ""
 
@@ -22807,9 +22889,17 @@ msgstr ""
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:54
+msgid "You get notified on this device about updates to your tickets."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:29
 #: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:35
 msgid "You have a 24 hour window to send WhatsApp messages in this conversation. The customer service window closes %s."
+msgstr ""
+
+#: app/models/online_notification/push_payload.rb:83
+msgid "You have a new notification."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
@@ -23058,7 +23148,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:134
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:124
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:101
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:78
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:79
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:24
 msgid "Zammad"
 msgstr ""
@@ -23940,6 +24030,18 @@ msgstr ""
 msgid "is not a valid URL"
 msgstr ""
 
+#: app/models/push_subscription.rb:64
+msgid "is not a valid key"
+msgstr ""
+
+#: app/models/push_subscription.rb:43
+msgid "is not an HTTPS URL"
+msgstr ""
+
+#: app/models/push_subscription.rb:51
+msgid "is not an endpoint of a known push service"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
@@ -24206,6 +24308,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:49
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:56
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:19
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:82
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:13
@@ -24793,6 +24896,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:55
+#: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:18
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:12

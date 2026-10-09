@@ -6578,3 +6578,32 @@ Setting.create_if_not_exists(
   preferences: { online_service_disable: true, permission: ['admin.package'] },
   frontend:    false,
 )
+
+web_push_vapid_key = WebPush.generate_key
+
+Setting.create_if_not_exists(
+  title:       __('Web Push VAPID Private Key'),
+  name:        'web_push_vapid_private_key',
+  area:        'Core::WebPush',
+  description: __('Defines the private key used to sign web push notifications.'),
+  options:     {},
+  state:       web_push_vapid_key.private_key,
+  preferences: {
+    permission: ['admin'],
+    protected:  true,
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Web Push VAPID Public Key'),
+  name:        'web_push_vapid_public_key',
+  area:        'Core::WebPush',
+  description: __('Defines the public key browsers use to subscribe to web push notifications.'),
+  options:     {},
+  state:       web_push_vapid_key.public_key,
+  preferences: {
+    permission: ['admin'],
+    protected:  true,
+  },
+  frontend:    true
+)

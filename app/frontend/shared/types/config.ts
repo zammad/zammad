@@ -241,6 +241,7 @@ export interface ConfigList {
   user_name_format: 'first_last' | 'last_first' | 'last_first_comma'
   user_show_password_login?: boolean | null
   vectordb_enabled: boolean
+  web_push_vapid_public_key: string
   websocket_backend: string
   websocket_port: string
   // This is also required for packages (addons) in docker environments, as their settings cannot be part of this generated file (no database at image build time).

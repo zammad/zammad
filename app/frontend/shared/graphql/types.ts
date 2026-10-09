@@ -1608,7 +1608,7 @@ export type OnlineNotificationsQuery = { onlineNotifications: { __typename: 'Onl
 export type OnlineNotificationsCountSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnlineNotificationsCountSubscription = { onlineNotificationsCount: { __typename: 'OnlineNotificationsCountPayload', unseenCount: number } };
+export type OnlineNotificationsCountSubscription = { onlineNotificationsCount: { __typename: 'OnlineNotificationsCountPayload', unseenCount: number, unseenPushTags: Array<string> } };
 
 export type OrganizationAttributesFragment = { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, shared: boolean | null | undefined, domain: string | null | undefined, domainAssignment: boolean | null | undefined, active: boolean | null | undefined, note: string | null | undefined, vip: boolean | null | undefined, objectAttributeValues: Array<{ __typename: 'ObjectAttributeValue', value: any, renderedLink: string | null | undefined, attribute: { __typename: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null | undefined };
 
@@ -2078,6 +2078,20 @@ export type UserCurrentLocaleMutationVariables = Exact<{
 
 
 export type UserCurrentLocaleMutation = { userCurrentLocale: { __typename: 'UserCurrentLocalePayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type UserCurrentPushSubscriptionAddMutationVariables = Exact<{
+  input: Types.UserPushSubscriptionInput;
+}>;
+
+
+export type UserCurrentPushSubscriptionAddMutation = { userCurrentPushSubscriptionAdd: { __typename: 'UserCurrentPushSubscriptionAddPayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type UserCurrentPushSubscriptionDeleteMutationVariables = Exact<{
+  endpoint: string;
+}>;
+
+
+export type UserCurrentPushSubscriptionDeleteMutation = { userCurrentPushSubscriptionDelete: { __typename: 'UserCurrentPushSubscriptionDeletePayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type UserCurrentTwoFactorConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
