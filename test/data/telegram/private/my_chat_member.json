@@ -1,0 +1,39 @@
+{
+  "update_id":2,
+  "my_chat_member":{
+    "chat": {
+      "id":111111,
+      "first_name":"Test Firstname",
+      "last_name":"Test Lastname",
+      "username":"Testusername",
+      "type":"private"
+    },
+    "from": {
+      "id":111111,
+      "is_bot":false,
+      "first_name":"Test Firstname",
+      "last_name":"Test Lastname",
+      "username":"Testusername"
+    },
+    "date":1441645600,
+    "old_chat_member": {
+      "user": {
+        "id":222222,
+        "is_bot":true,
+        "first_name":"Chrispresso Customer Service",
+        "username":"ChrispressoBot"
+      },
+      "status":"member"
+    },
+    "new_chat_member": {
+      "user": {
+        "id":222222,
+        "is_bot":true,
+        "first_name":"Chrispresso Customer Service",
+        "username":"ChrispressoBot"
+      },
+      "status":"kicked",
+      "until_date":0
+    }
+  }
+}
