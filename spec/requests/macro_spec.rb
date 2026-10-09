@@ -61,16 +61,18 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
     context 'when user is not allowed to create macro' do
       let(:user) { create(:agent) }
 
-      it 'does not create macro' do
+      it 'does not create macro', :aggregate_failures do
         expect(response).to have_http_status(:forbidden)
+        expect(Macro.find_by(name: successful_params[:name])).to be_nil
       end
     end
 
     context 'when user is allowed to create macros' do
       let(:user) { create(:admin) }
 
-      it 'creates macro' do
+      it 'creates macro', :aggregate_failures do
         expect(response).to have_http_status(:created)
+        expect(Macro.find(json_response['id'])).to have_attributes(name: successful_params[:name])
       end
     end
 
@@ -192,7 +194,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
       end
 
       it 'macro is not destroyed' do
-        expect(macro).not_to be_destroyed
+        expect(Macro).to exist(macro.id)
       end
     end
 
@@ -268,8 +270,9 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
       context 'when user has acess to this group' do
         let(:user) { create(:agent, groups: macro.groups) }
 
-        it 'returns macro when user has access to related group' do
+        it 'returns macro when user has access to related group', :aggregate_failures do
           expect(response).to have_http_status(:ok)
+          expect(json_response).to include('id' => macro.id)
         end
       end
     end
@@ -277,8 +280,9 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
     context 'when user is admin only' do
       let(:user) { create(:admin_only) }
 
-      it 'returns array of macros' do
+      it 'returns the macro', :aggregate_failures do
         expect(response).to have_http_status(:ok)
+        expect(json_response).to include('id' => macro.id)
       end
     end
   end

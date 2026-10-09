@@ -169,7 +169,7 @@ RSpec.describe 'Form', type: :request do
       expect(response).to have_http_status(:too_many_requests)
     end
 
-    it 'does customer_ticket_create false disables form' do
+    it 'does form_ticket_create false disable form even if customer_ticket_create is true' do
       Setting.set('form_ticket_create', false)
       Setting.set('customer_ticket_create', true)
 
@@ -187,8 +187,8 @@ RSpec.describe 'Form', type: :request do
         body:        'hello'
       }
 
-      post '/api/v1/form_submit', params: params, as: :json
-
+      expect { post '/api/v1/form_submit', params: params, as: :json }
+        .not_to change(Ticket, :count)
       expect(response).to have_http_status(:forbidden)
     end
 

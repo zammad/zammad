@@ -91,17 +91,19 @@ RSpec.describe Template, type: :request do
     end
 
     context 'when creating template' do
-      it 'returns created' do
+      it 'creates the template', :aggregate_failures do
         post '/api/v1/templates.json', params: { name: 'Foo', options: { 'ticket.title': { value: 'Bar' }, 'ticket.customer_id': { value: customer.id.to_s, value_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } } }
 
         expect(response).to have_http_status(:created)
+        expect(described_class.find_by(name: 'Foo').options).to include('ticket.title' => { 'value' => 'Bar' })
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           post '/api/v1/templates.json', params: { name: 'Foo', options: { 'ticket.title': { value: 'Bar' } } }
 
           expect(response).to have_http_status(:forbidden)
+          expect(described_class.find_by(name: 'Foo')).to be_nil
         end
       end
     end
@@ -109,15 +111,17 @@ RSpec.describe Template, type: :request do
     context 'when updating template' do
       let!(:template) { create(:template) }
 
-      it 'returns ok' do
+      it 'updates the template', :aggregate_failures do
         put "/api/v1/templates/#{template.id}.json", params: { options: { 'ticket.title': { value: 'Foo' } } }
 
         expect(response).to have_http_status(:ok)
+        expect(template.reload.options).to eq('ticket.title' => { 'value' => 'Foo' })
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
-          put "/api/v1/templates/#{template.id}.json", params: { options: { 'ticket.title': { value: 'Foo' } } }
+        it 'request is forbidden', :aggregate_failures do
+          expect { put "/api/v1/templates/#{template.id}.json", params: { options: { 'ticket.title': { value: 'Foo' } } } }
+            .not_to change { template.reload.options }
 
           expect(response).to have_http_status(:forbidden)
         end
@@ -127,17 +131,19 @@ RSpec.describe Template, type: :request do
     context 'when destroying template' do
       let!(:template) { create(:template) }
 
-      it 'returns ok' do
+      it 'destroys the template', :aggregate_failures do
         delete "/api/v1/templates/#{template.id}.json"
 
         expect(response).to have_http_status(:ok)
+        expect(template).not_to exist_in_database
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           delete "/api/v1/templates/#{template.id}.json"
 
           expect(response).to have_http_status(:forbidden)
+          expect(template).to exist_in_database
         end
       end
     end

@@ -133,14 +133,16 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
         expect(Ticket::SharedDraftStart).to exist json_response['shared_draft_id']
       end
 
-      it 'raises error when user has no create permission on any group', authenticated_as: :other_agent do
-        post path, params: base_params, as: :json
+      it 'raises error when user has no create permission on any group', :aggregate_failures, authenticated_as: :other_agent do
+        expect { post path, params: base_params, as: :json }
+          .not_to change(Ticket::SharedDraftStart, :count)
 
         expect(response).to have_http_status(:forbidden)
       end
 
-      it 'raises error when user has no permissions', authenticated_as: :customer do
-        post path, params: base_params, as: :json
+      it 'raises error when user has no permissions', :aggregate_failures, authenticated_as: :customer do
+        expect { post path, params: base_params, as: :json }
+          .not_to change(Ticket::SharedDraftStart, :count)
 
         expect(response).to have_http_status(:forbidden)
       end
@@ -189,10 +191,11 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
         expect(json_response).to include 'shared_draft_id' => draft_a.id
       end
 
-      it 'verifies user has access to given groups' do
+      it 'verifies user has access to given groups', :aggregate_failures do
         patch path_draft_a, params: base_params.merge(group_id: group_b.id), as: :json
 
         expect(response).to have_http_status(:unprocessable_content)
+        expect(draft_a.reload.group).to eq(group_a)
       end
 
       it 'grants access via role groups' do
@@ -201,10 +204,11 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
         expect(json_response).to include 'shared_draft_id' => draft_d.id
       end
 
-      it 'returns error when user has no permissions', authenticated_as: :customer do
+      it 'returns error when user has no permissions', :aggregate_failures, authenticated_as: :customer do
         patch path_draft_a, params: base_params, as: :json
 
         expect(response).to have_http_status(:forbidden)
+        expect(draft_a.reload.content).not_to eq(base_params[:content])
       end
     end
 
@@ -227,16 +231,18 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
         expect(response).to have_http_status(:not_found)
       end
 
-      it 'returns 404 when user has no permissions to this draft' do
+      it 'returns 404 when user has no permissions to this draft', :aggregate_failures do
         delete path_draft_b, as: :json
 
         expect(response).to have_http_status(:not_found)
+        expect(Ticket::SharedDraftStart).to exist draft_b.id
       end
 
-      it 'returns error when user has no permissions', authenticated_as: :customer do
+      it 'returns error when user has no permissions', :aggregate_failures, authenticated_as: :customer do
         delete path_draft_b, as: :json
 
         expect(response).to have_http_status(:forbidden)
+        expect(Ticket::SharedDraftStart).to exist draft_b.id
       end
     end
 
@@ -265,10 +271,11 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
           .by(1)
       end
 
-      it 'returns success if draft has no attachments' do
+      it 'returns success if draft has no attachments', :aggregate_failures do
         post import_path_a, params: import_params, as: :json
 
         expect(response).to have_http_status(:ok)
+        expect(Store.list(object: 'UploadCache', o_id: form_id)).to be_empty
       end
     end
   end

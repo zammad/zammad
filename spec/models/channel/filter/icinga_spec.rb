@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Icinga integration', :aggregate_failures do # rubocop:disable RSpec/DescribeClass
+RSpec.describe Channel::Filter::Icinga, :aggregate_failures do
 
   # according
   # https://github.com/Icinga/icinga2/blob/master/etc/icinga2/scripts/mail-service-notification.sh
@@ -14,10 +14,13 @@ RSpec.describe 'Icinga integration', :aggregate_failures do # rubocop:disable RS
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
   end
 
-  it 'processes service and host notifications and closes tickets on recovery' do # rubocop:disable RSpec/ExampleLength
+  context 'with a sequence of notifications' do
+    def process_email(raw)
+      Channel::EmailParser.new.process({}, raw).first
+    end
 
-    # RBL check
-    email_raw_string = "To: support@example.com
+    let(:rbl_problem) do
+      "To: support@example.com
 Subject: [PROBLEM] RBL check on apn4711.dc.example.com is CRITICAL!
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -37,18 +40,9 @@ When:    2017-08-06 22:18:43 +0200
 Service: RBL check (Display Name: \"RBL check\")
 Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
 IPv4:    127.0.0.1="
-
-    ticket_0, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_0.state.name).to eq('new')
-    expect(ticket_0.preferences).to be_truthy
-    expect(ticket_0.preferences['icinga']).to be_truthy
-    expect(ticket_0.preferences['icinga']['host']).to eq('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")')
-    expect(ticket_0.preferences['icinga']['info']).to eq('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)')
-    expect(ticket_0.preferences['icinga']['service']).to eq('RBL check (Display Name: "RBL check")')
-    expect(ticket_0.preferences['icinga']['state']).to eq('CRITICAL')
-
-    # RBL check II
-    email_raw_string = "To: support@example.com
+    end
+    let(:rbl_problem_repeated) do
+      "To: support@example.com
 Subject: [PROBLEM] RBL check on apn4711.dc.example.com is CRITICAL!
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -68,18 +62,9 @@ When:    2017-08-06 22:18:43 +0200
 Service: RBL check (Display Name: \"RBL check\")
 Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
 IPv4:    127.0.0.1="
-
-    ticket_0_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_0_1.state.name).to eq('new')
-    expect(ticket_0_1.preferences).to be_truthy
-    expect(ticket_0_1.preferences['icinga']).to be_truthy
-    expect(ticket_0_1.preferences['icinga']['host']).to eq('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")')
-    expect(ticket_0_1.preferences['icinga']['info']).to eq('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)')
-    expect(ticket_0_1.preferences['icinga']['service']).to eq('RBL check (Display Name: "RBL check")')
-    expect(ticket_0_1.preferences['icinga']['state']).to eq('CRITICAL')
-    expect(ticket_0.id).to eq(ticket_0_1.id)
-
-    email_raw_string = "To: support@example.com
+    end
+    let(:rbl_recovery) do
+      "To: support@example.com
 Subject: [PROBLEM] RBL check on apn4711.dc.example.com is OK!
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -99,19 +84,9 @@ When:    2017-08-06 22:18:43 +0200
 Service: RBL check (Display Name: \"RBL check\")
 Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
 IPv4:    127.0.0.1="
-
-    ticket_0_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_0_2.state.name).to eq('closed')
-    expect(ticket_0_2.preferences).to be_truthy
-    expect(ticket_0_2.preferences['icinga']).to be_truthy
-    expect(ticket_0_2.preferences['icinga']['host']).to eq('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")')
-    expect(ticket_0_2.preferences['icinga']['info']).to eq('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)')
-    expect(ticket_0_2.preferences['icinga']['service']).to eq('RBL check (Display Name: "RBL check")')
-    expect(ticket_0_2.preferences['icinga']['state']).to eq('CRITICAL')
-    expect(ticket_0.id).to eq(ticket_0_2.id)
-
-    # matching sender - CPU Load/host.internal.loc
-    email_raw_string = "To: support@example.com
+    end
+    let(:cpu_problem) do
+      "To: support@example.com
 Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -135,17 +110,9 @@ Additional Info: WARNING - load average: 3.44, 0.99, 0.35
 
 Comment: [] =
 "
-
-    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_1.state.name).to eq('new')
-    expect(ticket_1.preferences).to be_truthy
-    expect(ticket_1.preferences['icinga']).to be_truthy
-    expect(ticket_1.preferences['icinga']['host']).to eq('host.internal.loc')
-    expect(ticket_1.preferences['icinga']['service']).to eq('CPU Load')
-    expect(ticket_1.preferences['icinga']['state']).to eq('WARNING')
-
-    # matching sender - Disk Usage 123/host.internal.loc
-    email_raw_string = "To: support@example.com
+    end
+    let(:disk_problem) do
+      "To: support@example.com
 Subject: PROBLEM - host.internal.loc - Disk Usage 123 is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -169,18 +136,9 @@ Additional Info: WARNING - load average: 3.44, 0.99, 0.35
 
 Comment: [] =
 "
-
-    ticket_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_2.state.name).to eq('new')
-    expect(ticket_2.preferences).to be_truthy
-    expect(ticket_2.preferences['icinga']).to be_truthy
-    expect(ticket_2.preferences['icinga']['host']).to eq('host.internal.loc')
-    expect(ticket_2.preferences['icinga']['service']).to eq('Disk Usage 123')
-    expect(ticket_2.preferences['icinga']['state']).to eq('WARNING')
-    expect(ticket_1.id).not_to eq(ticket_2.id)
-
-    # matching sender - follow-up - CPU Load/host.internal.loc
-    email_raw_string = "To: support@example.com
+    end
+    let(:cpu_problem_repeated) do
+      "To: support@example.com
 Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -204,18 +162,9 @@ Additional Info: WARNING - load average: 3.44, 0.99, 0.35
 
 Comment: [] =
 "
-
-    ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_1_1.state.name).to eq('new')
-    expect(ticket_1_1.preferences).to be_truthy
-    expect(ticket_1_1.preferences['icinga']).to be_truthy
-    expect(ticket_1_1.preferences['icinga']['host']).to eq('host.internal.loc')
-    expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
-    expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
-    expect(ticket_1_1.id).to eq(ticket_1.id)
-
-    # matching sender - follow-up - recovery - CPU Load/host.internal.loc
-    email_raw_string = "To: support@example.com
+    end
+    let(:cpu_recovery) do
+      "To: support@example.com
 Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -239,18 +188,9 @@ Additional Info: OK - load average: 1.62, 1.17, 0.49
 
 Comment: [] =
 "
-
-    ticket_1_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_1_2.id).to eq(ticket_1.id)
-    expect(ticket_1_2.state.name).to eq('closed')
-    expect(ticket_1_2.preferences).to be_truthy
-    expect(ticket_1_2.preferences['icinga']).to be_truthy
-    expect(ticket_1_2.preferences['icinga']['host']).to eq('host.internal.loc')
-    expect(ticket_1_2.preferences['icinga']['service']).to eq('CPU Load')
-    expect(ticket_1_2.preferences['icinga']['state']).to eq('WARNING')
-
-    # host down
-    email_raw_string = "To: support@example.com
+    end
+    let(:host_down) do
+      "To: support@example.com
 Subject: PROBLEM - apn4711.dc.example.com is DOWN
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -273,17 +213,9 @@ Additional Info: CRITICAL - Host Unreachable (127.0.0.1)
 
 Comment: [] =
 "
-    ticket_3, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_3.state.name).to eq('new')
-    expect(ticket_3.preferences).to be_truthy
-    expect(ticket_3.preferences['icinga']).to be_truthy
-    expect(ticket_3.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
-    expect(ticket_3.preferences['icinga']['service']).to be_nil
-    expect(ticket_3.preferences['icinga']['state']).to eq('DOWN')
-    expect(ticket_1.id).not_to eq(ticket_3.id)
-
-    # host up
-    email_raw_string = "To: support@example.com
+    end
+    let(:host_up) do
+      "To: support@example.com
 Subject: RECOVERY - apn4711.dc.example.com is UP
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -306,17 +238,9 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 
 Comment: [] =
 "
-    ticket_3_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_3_1.id).to eq(ticket_3.id)
-    expect(ticket_3_1.state.name).to eq('closed')
-    expect(ticket_3_1.preferences).to be_truthy
-    expect(ticket_3_1.preferences['icinga']).to be_truthy
-    expect(ticket_3.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
-    expect(ticket_3_1.preferences['icinga']['service']).to be_nil
-    expect(ticket_3_1.preferences['icinga']['state']).to eq('DOWN')
-
-    # ping down
-    email_raw_string = "To: support@example.com
+    end
+    let(:ping_problem) do
+      "To: support@example.com
 Subject: [PROBLEM] Ping IPv4 on apn4711.dc.example.com is WARNING!
 From: icinga2@monitoring.example.com (icinga)
 
@@ -330,18 +254,9 @@ When:    2017-09-28 09:41:03 +0200
 Service: Ping IPv4
 Host:    apn4711.dc.example.com
 IPv4:    127.0.0.1="
-
-    ticket_4, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_4.state.name).to eq('new')
-    expect(ticket_4.preferences).to be_truthy
-    expect(ticket_4.preferences['icinga']).to be_truthy
-    expect(ticket_4.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
-    expect(ticket_4.preferences['icinga']['service']).to eq('Ping IPv4')
-    expect(ticket_4.preferences['icinga']['state']).to eq('WARNING')
-    expect(ticket_1.id).not_to eq(ticket_4.id)
-
-    # ping up
-    email_raw_string = "To: support@example.com
+    end
+    let(:ping_recovery) do
+      "To: support@example.com
 Subject: [RECOVERY] Ping IPv4 on apn4711.dc.example.com is OK!
 From: icinga2@monitoring.example.com (icinga)
 
@@ -355,18 +270,9 @@ When:    2017-09-28 11:42:01 +0200
 Service: Ping IPv4
 Host:    apn4711.dc.example.com
 IPv4:    127.0.0.1="
-
-    ticket_4_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_4_1.id).to eq(ticket_4.id)
-    expect(ticket_4_1.state.name).to eq('closed')
-    expect(ticket_4_1.preferences).to be_truthy
-    expect(ticket_4_1.preferences['icinga']).to be_truthy
-    expect(ticket_4.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
-    expect(ticket_4.preferences['icinga']['service']).to eq('Ping IPv4')
-    expect(ticket_4_1.preferences['icinga']['state']).to eq('WARNING')
-
-    # host down
-    email_raw_string = "To: support@example.com
+    end
+    let(:other_host_down) do
+      "To: support@example.com
 Subject: [PROBLEM] Host apn4709.dc.example.com is DOWN!
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -384,18 +290,9 @@ Info:    CRITICAL - Plugin timed out
 When:    2017-09-29 14:19:40 +0200
 Host:    apn4709.dc.example.com
 IPv4:=09 127.0.0.1="
-
-    ticket_5, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_5.state.name).to eq('new')
-    expect(ticket_5.preferences).to be_truthy
-    expect(ticket_5.preferences['icinga']).to be_truthy
-    expect(ticket_5.preferences['icinga']['host']).to eq('apn4709.dc.example.com')
-    expect(ticket_5.preferences['icinga']['service']).to be_nil
-    expect(ticket_5.preferences['icinga']['state']).to eq('DOWN')
-    expect(ticket_1.id).not_to eq(ticket_5.id)
-
-    # host up
-    email_raw_string = "To: support@example.com
+    end
+    let(:other_host_up) do
+      "To: support@example.com
 Subject: [RECOVERY] Host apn4709.dc.example.com is UP!
 User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
@@ -413,15 +310,81 @@ When:    2017-09-29 14:23:36 +0200
 Host:    apn4709.dc.example.com
 IPv4:=09 127.0.0.1=
 "
-    ticket_5_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    expect(ticket_5_1.id).to eq(ticket_5.id)
-    expect(ticket_5_1.state.name).to eq('closed')
-    expect(ticket_5_1.preferences).to be_truthy
-    expect(ticket_5_1.preferences['icinga']).to be_truthy
-    expect(ticket_5.preferences['icinga']['host']).to eq('apn4709.dc.example.com')
-    expect(ticket_5_1.preferences['icinga']['service']).to be_nil
-    expect(ticket_5_1.preferences['icinga']['state']).to eq('DOWN')
+    end
 
+    it 'opens a ticket for a service problem with display names' do
+      expect(process_email(rbl_problem)).to have_attributes(state: have_attributes(name: 'new'), preferences: include('icinga' => include('host' => 'apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', 'service' => 'RBL check (Display Name: "RBL check")', 'state' => 'CRITICAL')))
+    end
+
+    it 'adds a repeated problem with display names to the open ticket' do
+      rbl_ticket = process_email(rbl_problem)
+
+      expect(process_email(rbl_problem_repeated)).to have_attributes(id: rbl_ticket.id, state: have_attributes(name: 'new'))
+    end
+
+    it 'closes the ticket with display names on recovery' do
+      rbl_ticket = process_email(rbl_problem)
+
+      expect(process_email(rbl_recovery)).to have_attributes(id: rbl_ticket.id, state: have_attributes(name: 'closed'), preferences: include('icinga' => include('host' => 'apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', 'service' => 'RBL check (Display Name: "RBL check")', 'state' => 'CRITICAL')))
+    end
+
+    it 'opens a ticket for a service problem' do
+      expect(process_email(cpu_problem)).to have_attributes(state: have_attributes(name: 'new'), preferences: include('icinga' => include('host' => 'host.internal.loc', 'service' => 'CPU Load', 'state' => 'WARNING')))
+    end
+
+    it 'opens a separate ticket for a problem of another service' do
+      cpu_ticket = process_email(cpu_problem)
+
+      expect(process_email(disk_problem)).to have_attributes(
+        id:          not_eq(cpu_ticket.id),
+        preferences: include('icinga' => include('host' => 'host.internal.loc', 'service' => 'Disk Usage 123', 'state' => 'WARNING'))
+      )
+    end
+
+    it 'adds a repeated problem to the open ticket' do
+      cpu_ticket = process_email(cpu_problem)
+
+      expect(process_email(cpu_problem_repeated)).to have_attributes(id: cpu_ticket.id, state: have_attributes(name: 'new'))
+    end
+
+    it 'closes the ticket on recovery' do
+      cpu_ticket = process_email(cpu_problem)
+
+      expect(process_email(cpu_recovery)).to have_attributes(id: cpu_ticket.id, state: have_attributes(name: 'closed'), preferences: include('icinga' => include('host' => 'host.internal.loc', 'service' => 'CPU Load', 'state' => 'WARNING')))
+    end
+
+    it 'opens a ticket for a host problem' do
+      expect(process_email(host_down)).to have_attributes(
+        state:       have_attributes(name: 'new'),
+        preferences: include('icinga' => include('host' => 'apn4711.dc.example.com', 'state' => 'DOWN').and(not_include('service')))
+      )
+    end
+
+    it 'closes the host ticket once the host is up' do
+      host_ticket = process_email(host_down)
+
+      expect(process_email(host_up)).to have_attributes(id: host_ticket.id, state: have_attributes(name: 'closed'))
+    end
+
+    it 'opens and closes a ticket for a ping problem' do
+      ping_ticket = process_email(ping_problem)
+      expect(ping_ticket).to have_attributes(
+        state:       have_attributes(name: 'new'),
+        preferences: include('icinga' => include('host' => 'apn4711.dc.example.com', 'service' => 'Ping IPv4', 'state' => 'WARNING'))
+      )
+
+      expect(process_email(ping_recovery)).to have_attributes(id: ping_ticket.id, state: have_attributes(name: 'closed'))
+    end
+
+    it 'opens and closes a ticket for a host problem in the bracketed subject format' do
+      host_ticket = process_email(other_host_down)
+      expect(host_ticket).to have_attributes(
+        state:       have_attributes(name: 'new'),
+        preferences: include('icinga' => include('host' => 'apn4709.dc.example.com', 'state' => 'DOWN').and(not_include('service')))
+      )
+
+      expect(process_email(other_host_up)).to have_attributes(id: host_ticket.id, state: have_attributes(name: 'closed'))
+    end
   end
 
   it 'does not set icinga preferences when the sender does not match' do # rubocop:disable RSpec/ExampleLength
@@ -454,8 +417,7 @@ Comment: [] =
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_p.state.name).to eq('new')
-    expect(ticket_p.preferences).to be_truthy
-    expect(ticket_p.preferences['icinga']).to be_falsey
+    expect(ticket_p.preferences).not_to have_key('icinga')
 
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
 
@@ -487,8 +449,7 @@ Comment: [] =
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_p.state.name).to eq('new')
-    expect(ticket_p.preferences).to be_truthy
-    expect(ticket_p.preferences['icinga']).to be_falsey
+    expect(ticket_p.preferences).not_to have_key('icinga')
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -518,8 +479,7 @@ Comment: [] =
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_p.state.name).to eq('new')
-    expect(ticket_p.preferences).to be_truthy
-    expect(ticket_p.preferences['icinga']).to be_falsey
+    expect(ticket_p.preferences).not_to have_key('icinga')
   end
 
   it 'sets icinga preferences when the sender matches' do # rubocop:disable RSpec/ExampleLength
@@ -552,8 +512,6 @@ Comment: [] =
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_1_1.state.name).to eq('new')
-    expect(ticket_1_1.preferences).to be_truthy
-    expect(ticket_1_1.preferences['icinga']).to be_truthy
     expect(ticket_1_1.preferences['icinga']['host']).to eq('host.internal.loc')
     expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
     expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
@@ -588,8 +546,6 @@ Comment: [] =
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_1_1.state.name).to eq('new')
-    expect(ticket_1_1.preferences).to be_truthy
-    expect(ticket_1_1.preferences['icinga']).to be_truthy
     expect(ticket_1_1.preferences['icinga']['host']).to eq('host1.internal.loc')
     expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
     expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
@@ -624,8 +580,6 @@ Comment: [] =
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_1_1.state.name).to eq('new')
-    expect(ticket_1_1.preferences).to be_truthy
-    expect(ticket_1_1.preferences['icinga']).to be_truthy
     expect(ticket_1_1.preferences['icinga']['host']).to eq('host2.internal.loc')
     expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
     expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
@@ -702,8 +656,6 @@ IPv4:	 192.168.1.8
 ------MIME delimiter for sendEmail-587258.191387267--'
     ticket_0, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_0.state.name).to eq('new')
-    expect(ticket_0.preferences).to be_truthy
-    expect(ticket_0.preferences['icinga']).to be_truthy
     expect(ticket_0.preferences['icinga']['state']).to eq('DOWN')
 
     email_raw_string = 'Return-Path: <support@example.com>
@@ -743,8 +695,6 @@ IPv4:	 192.168.1.8
     '
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_1.state.name).to eq('closed')
-    expect(ticket_1.preferences).to be_truthy
-    expect(ticket_1.preferences['icinga']).to be_truthy
     expect(ticket_1.preferences['icinga']['state']).to eq('DOWN')
 
   end
@@ -786,8 +736,6 @@ Host:    host.example.com'
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     expect(ticket_1.state.name).to eq('new')
-    expect(ticket_1.preferences).to be_truthy
-    expect(ticket_1.preferences['icinga']).to be_truthy
     expect(ticket_1.preferences['icinga']['state']).to eq('CRITICAL')
     expect(ticket_1.preferences['icinga']['info']).to eq('CHECK_UPDATES CRITICAL - 12 non-critical updates available')
     expect(ticket_1.preferences['icinga']['service']).to eq('OS Updates (yum)')

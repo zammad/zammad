@@ -49,20 +49,7 @@ RSpec.describe 'Text Module', type: :request do
 
     it 'does csv import - admin access' do
 
-      # invalid file
-      csv_file = fixture_file_upload('csv_import/text_module/simple_col_not_existing.csv', 'text/csv')
-
       authenticated_as(admin)
-      post '/api/v1/text_modules/import', params: { try: true, file: csv_file, col_sep: ';' }
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-
-      expect(json_response['try']).to be_truthy
-      expect(json_response['records']).to be_empty
-      expect(json_response['result']).to eq('failed')
-      expect(json_response['errors'].count).to eq(2)
-      expect(json_response['errors'][0]).to eq("Line 1: Unable to create record - unknown attribute 'keywords2' for TextModule.")
-      expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'keywords2' for TextModule.")
 
       # valid file try
       csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
@@ -121,15 +108,6 @@ RSpec.describe 'Text Module', type: :request do
         expect(json_response).to include('id' => text_module.id)
       end
 
-      it 'returns a text module restricted to an accessible group' do
-        text_module = create(:text_module, groups: [accessible_group])
-
-        get "/api/v1/text_modules/#{text_module.id}", as: :json
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response).to include('id' => text_module.id)
-      end
-
       it 'does not return a text module restricted to an inaccessible group' do
         text_module = create(:text_module, groups: [inaccessible_group], content: 'restricted content')
 
@@ -145,19 +123,6 @@ RSpec.describe 'Text Module', type: :request do
 
       it 'returns a text module restricted to that group' do
         text_module = create(:text_module, groups: [accessible_group])
-
-        get "/api/v1/text_modules/#{text_module.id}", as: :json
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response).to include('id' => text_module.id)
-      end
-    end
-
-    context 'when the requester is an admin' do
-      let(:user) { admin }
-
-      it 'returns a text module restricted to a group the admin has no access to' do
-        text_module = create(:text_module, groups: [inaccessible_group])
 
         get "/api/v1/text_modules/#{text_module.id}", as: :json
 

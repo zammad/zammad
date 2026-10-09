@@ -77,6 +77,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_content)
+      expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'test_empty_display')).to be_nil
     end
 
     it 'does add new ticket text object - no default' do
@@ -454,464 +455,60 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['data_type']).to eq('boolean')
     end
 
-    it 'does ticket attributes cannot be removed when it is referenced by an overview (03)', db_strategy: :reset do
+    context 'when deleting an attribute referenced by another object', db_strategy: :reset do
+      let(:attribute_name) { 'test_attribute_referenced' }
+      let(:condition)      { { "ticket.#{attribute_name}" => { operator: 'contains', value: 'DUMMY' } } }
 
-      # 1. create a new ticket attribute and execute migration
-      ObjectManager::Attribute.migration_execute
-
-      params = {
-        name:        'test_attribute_referenced_by_an_overview',
-        object:      'Ticket',
-        display:     'Test Attribute',
-        active:      true,
-        data_type:   'input',
-        data_option: {
-          default:   '',
-          type:      'text',
-          maxlength: 120,
-          null:      true,
-          options:   {},
-          relation:  ''
-        },
-        screens:     {
-          create_middle: {
-            'ticket.customer': {
-              shown:      true,
-              item_class: 'column'
-            },
-            'ticket.agent':    {
-              shown:      true,
-              item_class: 'column'
-            }
-          },
-          edit:          {
-            'ticket.customer': {
-              shown: true
-            },
-            'ticket.agent':    {
-              shown: true
-            }
-          }
-        },
-      }
-
-      authenticated_as(admin)
-      post '/api/v1/object_manager_attributes', params: params, as: :json
-
-      migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to be(true)
-
-      # 2. create an overview that uses the attribute
-      params = {
-        name:      'test_overview',
-        roles:     Role.where(name: 'Agent').pluck(:name),
-        condition: {
-          'ticket.state_id':                                 {
-            operator: 'is',
-            value:    Ticket::State.pluck(:id),
-          },
-          'ticket.test_attribute_referenced_by_an_overview': {
-            operator: 'contains',
-            value:    'DUMMY'
-          },
-        },
-        order:     {
-          by:        'created_at',
-          direction: 'DESC',
-        },
-        view:      {
-          d:                 %w[title customer state created_at],
-          s:                 %w[number title customer state created_at],
-          m:                 %w[number title customer state created_at],
-          view_mode_default: 's',
-        },
-        user_ids:  [ '1' ],
-      }
-
-      if Overview.where('name like ?', '%test%').empty?
-        post '/api/v1/overviews', params: params, as: :json
-        expect(response).to have_http_status(:created)
-        expect(Hash).to eq(json_response.class)
-        expect(json_response['name']).to eq('test_overview')
+      before do
+        create(:object_manager_attribute_text, object_name: 'Ticket', name: attribute_name)
+        ObjectManager::Attribute.migration_execute
+        authenticated_as(admin)
       end
 
-      # 3. attempt to delete the ticket attribute
-      get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(:ok)
-      target_attribute = json_response.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' && x['object'] == 'Ticket' }
-      expect(target_attribute.size).to eq(1)
-      target_id = target_attribute[0]['id']
-
-      delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include('Overview')
-      expect(response.body).to include('test_overview')
-      expect(response.body).to include('cannot be deleted!')
-    end
-
-    it 'does ticket attributes cannot be removed when it is referenced by a trigger (04)', db_strategy: :reset do
-
-      # 1. create a new ticket attribute and execute migration
-      ObjectManager::Attribute.migration_execute
-
-      params = {
-        name:        'test_attribute_referenced_by_a_trigger',
-        object:      'Ticket',
-        display:     'Test Attribute',
-        active:      true,
-        data_type:   'input',
-        data_option: {
-          default:   '',
-          type:      'text',
-          maxlength: 120,
-          null:      true,
-          options:   {},
-          relation:  ''
-        },
-        screens:     {
-          create_middle: {
-            'ticket.customer': {
-              shown:      true,
-              item_class: 'column'
-            },
-            'ticket.agent':    {
-              shown:      true,
-              item_class: 'column'
-            }
-          },
-          edit:          {
-            'ticket.customer': {
-              shown: true
-            },
-            'ticket.agent':    {
-              shown: true
-            }
-          }
-        },
-      }
-
-      authenticated_as(admin)
-      post '/api/v1/object_manager_attributes', params: params, as: :json
-
-      migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to be(true)
-
-      # 2. create an trigger that uses the attribute
-      params = {
-        name:      'test_trigger',
-        condition: {
-          'ticket.test_attribute_referenced_by_a_trigger': {
-            operator: 'contains',
-            value:    'DUMMY'
-          }
-        },
-        perform:   {
-          'ticket.state_id': {
-            value: '2'
-          }
-        },
-        active:    true,
-        id:        'c-3'
-      }
-
-      if Trigger.where('name like ?', '%test%').empty?
-        post '/api/v1/triggers', params: params, as: :json
-        expect(response).to have_http_status(:created)
-        expect(Hash).to eq(json_response.class)
-        expect(json_response['name']).to eq('test_trigger')
+      def delete_attribute(object_name)
+        attribute = ObjectManager::Attribute.get(object: object_name, name: attribute_name)
+        delete "/api/v1/object_manager_attributes/#{attribute.id}", as: :json
       end
 
-      # 3. attempt to delete the ticket attribute
-      get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(:ok)
-      target_attribute = json_response.select { |x| x['name'] == 'test_attribute_referenced_by_a_trigger' && x['object'] == 'Ticket' }
-      expect(target_attribute.size).to eq(1)
-      target_id = target_attribute[0]['id']
+      shared_examples 'refusing to delete the attribute' do |factory, reference_type|
+        it 'refuses to delete the attribute' do
+          reference = create(factory, condition:)
+          delete_attribute('Ticket')
 
-      delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include('Trigger')
-      expect(response.body).to include('test_trigger')
-      expect(response.body).to include('cannot be deleted!')
-    end
-
-    it 'does ticket attributes cannot be removed when it is referenced by a scheduler (05)', db_strategy: :reset do
-
-      # 1. create a new ticket attribute and execute migration
-      ObjectManager::Attribute.migration_execute
-
-      params = {
-        name:        'test_attribute_referenced_by_a_scheduler',
-        object:      'Ticket',
-        display:     'Test Attribute',
-        active:      true,
-        data_type:   'input',
-        data_option: {
-          default:   '',
-          type:      'text',
-          maxlength: 120,
-          null:      true,
-          options:   {},
-          relation:  ''
-        },
-        screens:     {
-          create_middle: {
-            'ticket.customer': {
-              shown:      true,
-              item_class: 'column'
-            },
-            'ticket.agent':    {
-              shown:      true,
-              item_class: 'column'
-            }
-          },
-          edit:          {
-            'ticket.customer': {
-              shown: true
-            },
-            'ticket.agent':    {
-              shown: true
-            }
-          }
-        },
-      }
-
-      authenticated_as(admin)
-      post '/api/v1/object_manager_attributes', params: params, as: :json
-
-      migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to be(true)
-
-      # 2. create a scheduler that uses the attribute
-      params = {
-        name:                 'test_scheduler',
-        object:               'Ticket',
-        timeplan:             {
-          days:    {
-            Mon: true,
-            Tue: false,
-            Wed: false,
-            Thu: false,
-            Fri: false,
-            Sat: false,
-            Sun: false
-          },
-          hours:   {
-            '0':  true,
-            '1':  false,
-            '2':  false,
-            '3':  false,
-            '4':  false,
-            '5':  false,
-            '6':  false,
-            '7':  false,
-            '8':  false,
-            '9':  false,
-            '10': false,
-            '11': false,
-            '12': false,
-            '13': false,
-            '14': false,
-            '15': false,
-            '16': false,
-            '17': false,
-            '18': false,
-            '19': false,
-            '20': false,
-            '21': false,
-            '22': false,
-            '23': false
-          },
-          minutes: {
-            '0':  true,
-            '10': false,
-            '20': false,
-            '30': false,
-            '40': false,
-            '50': false
-          }
-        },
-        condition:            {
-          'ticket.test_attribute_referenced_by_a_scheduler': {
-            operator: 'contains',
-            value:    'DUMMY'
-          }
-        },
-        perform:              {
-          'ticket.state_id': {
-            value: '2'
-          }
-        },
-        disable_notification: true,
-        note:                 '',
-        active:               true,
-        id:                   'c-0'
-      }
-
-      if Job.where('name like ?', '%test%').empty?
-        post '/api/v1/jobs', params: params, as: :json
-        expect(response).to have_http_status(:created)
-        expect(Hash).to eq(json_response.class)
-        expect(json_response['name']).to eq('test_scheduler')
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(json_response['error']).to include(reference_type, reference.name, 'cannot be deleted!')
+          expect(ObjectManager::Attribute.get(object: 'Ticket', name: attribute_name)).to be_present
+        end
       end
 
-      # 3. attempt to delete the ticket attribute
-      get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(:ok)
-      target_attribute = json_response.select { |x| x['name'] == 'test_attribute_referenced_by_a_scheduler' && x['object'] == 'Ticket' }
-      expect(target_attribute.size).to eq(1)
-      target_id = target_attribute[0]['id']
-
-      delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include('Job')
-      expect(response.body).to include('test_scheduler')
-      expect(response.body).to include('cannot be deleted!')
-    end
-
-    it 'does ticket attributes can be removed when it is referenced by an overview but by user object (06)', db_strategy: :reset do
-
-      # 1. create a new ticket attribute and execute migration
-      ObjectManager::Attribute.migration_execute
-
-      params = {
-        name:        'test_attribute_referenced_by_an_overview',
-        object:      'Ticket',
-        display:     'Test Attribute',
-        active:      true,
-        data_type:   'input',
-        data_option: {
-          default:   '',
-          type:      'text',
-          maxlength: 120,
-          null:      true,
-          options:   {},
-          relation:  ''
-        },
-        screens:     {
-          create_middle: {
-            'ticket.customer': {
-              shown:      true,
-              item_class: 'column'
-            },
-            'ticket.agent':    {
-              shown:      true,
-              item_class: 'column'
-            }
-          },
-          edit:          {
-            'ticket.customer': {
-              shown: true
-            },
-            'ticket.agent':    {
-              shown: true
-            }
-          }
-        },
-      }
-
-      authenticated_as(admin)
-      post '/api/v1/object_manager_attributes', params: params, as: :json
-
-      params = {
-        name:        'test_attribute_referenced_by_an_overview',
-        object:      'User',
-        display:     'Test Attribute',
-        active:      true,
-        data_type:   'input',
-        data_option: {
-          default:   '',
-          type:      'text',
-          maxlength: 120,
-          null:      true,
-          options:   {},
-          relation:  ''
-        },
-        screens:     {
-          create_middle: {
-            'ticket.customer': {
-              shown:      true,
-              item_class: 'column'
-            },
-            'ticket.agent':    {
-              shown:      true,
-              item_class: 'column'
-            }
-          },
-          edit:          {
-            'ticket.customer': {
-              shown: true
-            },
-            'ticket.agent':    {
-              shown: true
-            }
-          }
-        },
-      }
-
-      post '/api/v1/object_manager_attributes', params: params, as: :json
-
-      migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to be(true)
-
-      # 2. create an overview that uses the attribute
-      params = {
-        name:      'test_overview',
-        roles:     Role.where(name: 'Agent').pluck(:name),
-        condition: {
-          'ticket.state_id':                                 {
-            operator: 'is',
-            value:    Ticket::State.pluck(:id),
-          },
-          'ticket.test_attribute_referenced_by_an_overview': {
-            operator: 'contains',
-            value:    'DUMMY'
-          },
-        },
-        order:     {
-          by:        'created_at',
-          direction: 'DESC',
-        },
-        view:      {
-          d:                 %w[title customer state created_at],
-          s:                 %w[number title customer state created_at],
-          m:                 %w[number title customer state created_at],
-          view_mode_default: 's',
-        },
-        user_ids:  [ '1' ],
-      }
-
-      if Overview.where('name like ?', '%test%').empty?
-        post '/api/v1/overviews', params: params, as: :json
-        expect(response).to have_http_status(:created)
-        expect(Hash).to eq(json_response.class)
-        expect(json_response['name']).to eq('test_overview')
+      context 'with an overview' do
+        include_examples 'refusing to delete the attribute', :overview, 'Overview'
       end
 
-      # 3. attempt to delete the ticket attribute
-      get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(:ok)
-      all_json_response = json_response
+      context 'with a trigger' do
+        include_examples 'refusing to delete the attribute', :trigger, 'Trigger'
+      end
 
-      target_attribute = all_json_response.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' && x['object'] == 'User' }
-      expect(target_attribute.size).to eq(1)
-      target_id = target_attribute[0]['id']
+      context 'with a scheduler' do
+        include_examples 'refusing to delete the attribute', :job, 'Job'
+      end
 
-      delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:ok)
+      context 'with a user attribute of the same name' do
+        before do
+          create(:object_manager_attribute_text, object_name: 'User', name: attribute_name)
+          ObjectManager::Attribute.migration_execute
+          create(:overview, condition:)
+        end
 
-      target_attribute = all_json_response.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' && x['object'] == 'Ticket' }
-      expect(target_attribute.size).to eq(1)
-      target_id = target_attribute[0]['id']
+        it 'deletes only the unreferenced user attribute' do
+          delete_attribute('User')
+          expect(response).to have_http_status(:ok)
+          expect(ObjectManager::Attribute.get(object: 'User', name: attribute_name)).to have_attributes(to_delete: true)
 
-      delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include('Overview')
-      expect(response.body).to include('test_overview')
-      expect(response.body).to include('cannot be deleted!')
-
-      migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to be(true)
+          delete_attribute('Ticket')
+          expect(response).to have_http_status(:unprocessable_content)
+        end
+      end
     end
 
     it 'does verify if attribute type can not be changed (07)', db_strategy: :reset do
@@ -1059,6 +656,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       # update the object
       put '/api/v1/object_manager_attributes/abc', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_content)
+      expect(ObjectManager::Attribute.get(object: 'User', name: 'attribute_that_doesnt_exist')).to be_nil
     end
 
     context 'position handling', authenticated_as: -> { admin } do

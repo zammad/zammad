@@ -120,8 +120,9 @@ RSpec.describe LdapSourcesController, type: :request do
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           expect(response).to have_http_status(:forbidden)
+          expect(LdapSource.find_by(name: 'Test LDAP')).to be_nil
         end
       end
     end
@@ -134,8 +135,9 @@ RSpec.describe LdapSourcesController, type: :request do
         put "/api/v1/ldap_sources/#{ldap_source.id}.json", params: params
       end
 
-      it 'returns ok' do
+      it 'updates the ldap source', :aggregate_failures do
         expect(response).to have_http_status(:ok)
+        expect(ldap_source.reload.name).to eq('Updated LDAP')
       end
 
       it 'masks sensitive fields in response' do
@@ -189,8 +191,9 @@ RSpec.describe LdapSourcesController, type: :request do
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           expect(response).to have_http_status(:forbidden)
+          expect(ldap_source.reload.name).not_to eq('Updated LDAP')
         end
       end
     end
@@ -202,13 +205,15 @@ RSpec.describe LdapSourcesController, type: :request do
         delete "/api/v1/ldap_sources/#{ldap_source.id}.json"
       end
 
-      it 'returns ok' do
+      it 'destroys the ldap source', :aggregate_failures do
         expect(response).to have_http_status(:ok)
+        expect(ldap_source).not_to exist_in_database
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           expect(response).to have_http_status(:forbidden)
+          expect(ldap_source).to exist_in_database
         end
       end
     end

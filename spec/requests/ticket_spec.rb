@@ -829,149 +829,85 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['error']).to eq('Not authorized')
     end
 
-    it 'does ticket with correct ticket id (02.04)', performs_jobs: true do
-      title = "ticket with corret ticket id testagent#{SecureRandom.uuid}"
-      ticket = create(
-        :ticket,
-        title:       title,
-        group:       ticket_group,
-        customer_id: customer.id,
-        preferences: {
-          some_key1: 123,
-        },
-      )
-      authenticated_as(agent)
-      get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['id']).to eq(ticket.id)
-      expect(json_response['title']).to eq(title)
-      expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(1)
-      expect(json_response['created_by_id']).to eq(1)
-      expect(json_response['preferences']['some_key1']).to eq(123)
+    context 'with an agent working on a ticket (02.04)' do
+      let(:title)  { "ticket with corret ticket id testagent#{SecureRandom.uuid}" }
+      let(:ticket) { create(:ticket, title:, group: ticket_group, customer_id: customer.id, preferences: { some_key1: 123 }) }
 
-      params = {
-        title:       "#{title} - 2",
-        customer_id: agent.id,
-        preferences: {
-          some_key2: 'abc',
-        },
-      }
-      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['id']).to eq(ticket.id)
-      expect(json_response['title']).to eq("#{title} - 2")
-      expect(json_response['customer_id']).to eq(agent.id)
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(1)
-      expect(json_response['preferences']['some_key1']).to eq(123)
-      expect(json_response['preferences']['some_key2']).to eq('abc')
+      before { authenticated_as(agent) }
 
-      params = {
-        ticket_id: ticket.id,
-        subject:   'some subject',
-        body:      'some body',
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      article_json_response = json_response
-      expect(article_json_response).to be_a(Hash)
-      expect(article_json_response['ticket_id']).to eq(ticket.id)
-      expect(article_json_response['from']).to eq('Tickets Agent')
-      expect(article_json_response['subject']).to eq('some subject')
-      expect(article_json_response['body']).to eq('some body')
-      expect(article_json_response['content_type']).to eq('text/plain')
-      expect(article_json_response['internal']).to be(false)
-      expect(article_json_response['created_by_id']).to eq(agent.id)
-      expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
-      expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
+      def create_article(**params)
+        post '/api/v1/ticket_articles', params: { ticket_id: ticket.id, subject: 'some subject', body: 'some body' }.merge(params), as: :json
+        expect(response).to have_http_status(:created)
+        json_response
+      end
 
-      perform_enqueued_jobs
-      get "/api/v1/tickets/search?query=#{CGI.escape(title)}&full=true", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['record_ids'][0]).to eq(ticket.id)
-      expect(json_response['record_ids'].count).to eq(1)
+      it 'shows the ticket' do
+        get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
 
-      params = {
-        condition: {
-          'ticket.title' => {
-            operator: 'contains',
-            value:    title,
-          },
-        },
-      }
-      post '/api/v1/tickets/search?full=true', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['record_ids'][0]).to eq(ticket.id)
-      expect(json_response['record_ids'].count).to eq(1)
+        expect(json_response).to include(
+          'id' => ticket.id, 'title' => title, 'customer_id' => customer.id,
+          'updated_by_id' => 1, 'created_by_id' => 1, 'preferences' => include('some_key1' => 123)
+        )
+      end
 
-      delete "/api/v1/ticket_articles/#{article_json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
+      it 'updates title, customer and preferences, keeping existing preferences' do
+        put "/api/v1/tickets/#{ticket.id}", params: { title: "#{title} - 2", customer_id: agent.id, preferences: { some_key2: 'abc' } }, as: :json
 
-      params = {
-        to:        Faker::Internet.unique.email,
-        from:      'something which should not be changed on server side',
-        ticket_id: ticket.id,
-        subject:   'some subject',
-        body:      'some body',
-        type:      'email',
-        internal:  true,
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['ticket_id']).to eq(ticket.id)
-      expect(json_response['from']).to eq(%(Tickets Agent via #{ticket_group.email_address.name} <#{ticket_group.email_address.email}>))
-      expect(json_response['subject']).to eq('some subject')
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to be(true)
-      expect(json_response['created_by_id']).to eq(agent.id)
-      expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
-      expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
+        expect(json_response).to include(
+          'title' => "#{title} - 2", 'customer_id' => agent.id, 'updated_by_id' => agent.id, 'created_by_id' => 1,
+          'preferences' => include('some_key1' => 123, 'some_key2' => 'abc')
+        )
+      end
 
-      params = {
-        subject: 'new subject',
-      }
-      put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['ticket_id']).to eq(ticket.id)
-      expect(json_response['from']).to eq(%(Tickets Agent via #{ticket_group.email_address.name} <#{ticket_group.email_address.email}>))
-      expect(json_response['subject']).not_to eq('new subject')
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to be(true)
-      expect(json_response['created_by_id']).to eq(agent.id)
-      expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
-      expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
+      it 'creates a note as agent' do
+        expect(create_article).to include(
+          'ticket_id' => ticket.id, 'from' => 'Tickets Agent', 'subject' => 'some subject', 'body' => 'some body',
+          'content_type' => 'text/plain', 'internal' => false, 'created_by_id' => agent.id,
+          'sender_id' => Ticket::Article::Sender.lookup(name: 'Agent').id, 'type_id' => Ticket::Article::Type.lookup(name: 'note').id
+        )
+      end
 
-      params = {
-        to:        Faker::Internet.unique.email,
-        from:      'something which should not be changed on server side',
-        ticket_id: ticket.id,
-        subject:   'some subject',
-        body:      'some body',
-        type:      'email',
-        internal:  false,
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response['internal']).to be(false)
+      it 'finds the ticket by query and by condition', :aggregate_failures, performs_jobs: true do
+        # The database search fallback only finds tickets with articles.
+        create(:ticket_article, ticket:)
+        perform_enqueued_jobs
 
-      delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (communication articles cannot be deleted)!')
+        get "/api/v1/tickets/search?query=#{CGI.escape(title)}&full=true", params: {}, as: :json
+        expect(json_response['record_ids']).to eq([ticket.id])
 
-      delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+        post '/api/v1/tickets/search?full=true', params: { condition: { 'ticket.title' => { operator: 'contains', value: title } } }, as: :json
+        expect(json_response['record_ids']).to eq([ticket.id])
+      end
+
+      it 'creates an email with the server side sender and keeps its subject', :aggregate_failures do
+        email = create_article(to: Faker::Internet.unique.email, from: 'something which should not be changed on server side', type: 'email', internal: true)
+
+        expect(email).to include(
+          'from' => %(Tickets Agent via #{ticket_group.email_address.name} <#{ticket_group.email_address.email}>),
+          'internal' => true, 'type_id' => Ticket::Article::Type.lookup(name: 'email').id
+        )
+
+        put "/api/v1/ticket_articles/#{email['id']}", params: { subject: 'new subject' }, as: :json
+        expect(response).to have_http_status(:ok)
+        expect(Ticket::Article.find(email['id']).subject).to eq('some subject')
+      end
+
+      it 'does not delete a public email', :aggregate_failures do
+        email = create_article(to: Faker::Internet.unique.email, type: 'email', internal: false)
+
+        delete "/api/v1/ticket_articles/#{email['id']}", params: {}, as: :json
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (communication articles cannot be deleted)!')
+        expect(Ticket::Article).to exist(email['id'])
+      end
+
+      it 'does not delete the ticket', :aggregate_failures do
+        delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+        expect(ticket).to exist_in_database
+      end
     end
 
     it 'does ticket with correct ticket id (02.05)' do
@@ -1237,140 +1173,83 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['error']).to eq('Not authorized')
     end
 
-    it 'does ticket with correct ticket id (03.05)', performs_jobs: true do
-      title = "ticket with corret ticket id testme#{SecureRandom.uuid}"
-      ticket = create(
-        :ticket,
-        title:       title,
-        group:       ticket_group,
-        customer_id: customer.id,
-      )
-      authenticated_as(customer)
-      get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['id']).to eq(ticket.id)
-      expect(json_response['title']).to eq(title)
-      expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(1)
-      expect(json_response['created_by_id']).to eq(1)
+    context 'with a customer working on a ticket (03.05)' do
+      let(:title)  { "ticket with corret ticket id testme#{SecureRandom.uuid}" }
+      let(:ticket) { create(:ticket, title:, group: ticket_group, customer_id: customer.id) }
 
-      params = {
-        title:       "#{title} - 2",
-        customer_id: agent.id,
-      }
-      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['id']).to eq(ticket.id)
-      expect(json_response['title']).to eq("#{title} - 2")
-      expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(customer.id)
-      expect(json_response['created_by_id']).to eq(1)
+      before { authenticated_as(customer) }
 
-      params = {
-        ticket_id: ticket.id,
-        subject:   'some subject',
-        body:      'some body',
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      article_json_response = json_response
-      expect(article_json_response).to be_a(Hash)
-      expect(article_json_response['ticket_id']).to eq(ticket.id)
-      expect(article_json_response['from']).to eq('Tickets Customer1')
-      expect(article_json_response['subject']).to eq('some subject')
-      expect(article_json_response['body']).to eq('some body')
-      expect(article_json_response['content_type']).to eq('text/plain')
-      expect(article_json_response['created_by_id']).to eq(customer.id)
-      expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
-      expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
+      def create_article(**params)
+        post '/api/v1/ticket_articles', params: { ticket_id: ticket.id, subject: 'some subject', body: 'some body' }.merge(params), as: :json
+        expect(response).to have_http_status(:created)
+        json_response
+      end
 
-      perform_enqueued_jobs
-      get "/api/v1/tickets/search?query=#{CGI.escape(title)}&full=true", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['record_ids'][0]).to eq(ticket.id)
-      expect(json_response['record_ids'].count).to eq(1)
+      it 'shows the ticket' do
+        get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
 
-      params = {
-        condition: {
-          'ticket.title' => {
-            operator: 'contains',
-            value:    title,
-          },
-        },
-      }
-      post '/api/v1/tickets/search?full=true', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['record_ids'][0]).to eq(ticket.id)
-      expect(json_response['record_ids'].count).to eq(1)
+        expect(json_response).to include('id' => ticket.id, 'title' => title, 'customer_id' => customer.id)
+      end
 
-      delete "/api/v1/ticket_articles/#{article_json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (agent permission required)!')
+      it 'updates the title but not the customer' do
+        put "/api/v1/tickets/#{ticket.id}", params: { title: "#{title} - 2", customer_id: agent.id }, as: :json
 
-      params = {
-        ticket_id: ticket.id,
-        subject:   'some subject',
-        body:      'some body',
-        type:      'email',
-        sender:    'Agent',
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['ticket_id']).to eq(ticket.id)
-      expect(json_response['from']).to eq('Tickets Customer1')
-      expect(json_response['subject']).to eq('some subject')
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['created_by_id']).to eq(customer.id)
-      expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
-      expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
+        expect(json_response).to include('title' => "#{title} - 2", 'customer_id' => customer.id, 'updated_by_id' => customer.id)
+      end
 
-      delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (agent permission required)!')
+      it 'creates a note as customer' do
+        expect(create_article).to include(
+          'from' => 'Tickets Customer1', 'created_by_id' => customer.id,
+          'sender_id' => Ticket::Article::Sender.lookup(name: 'Customer').id, 'type_id' => Ticket::Article::Type.lookup(name: 'note').id
+        )
+      end
 
-      params = {
-        from:      'something which should not be changed on server side',
-        ticket_id: ticket.id,
-        subject:   'some subject',
-        body:      'some body',
-        type:      'web',
-        sender:    'Agent',
-        internal:  true,
-      }
+      it 'turns a requested agent email into a customer note' do
+        expect(create_article(type: 'email', sender: 'Agent')).to include(
+          'from' => 'Tickets Customer1',
+          'sender_id' => Ticket::Article::Sender.lookup(name: 'Customer').id, 'type_id' => Ticket::Article::Type.lookup(name: 'note').id
+        )
+      end
 
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['ticket_id']).to eq(ticket.id)
-      expect(json_response['from']).to eq('Tickets Customer1 <tickets-customer1@example.com>')
-      expect(json_response['subject']).to eq('some subject')
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to be(false)
-      expect(json_response['created_by_id']).to eq(customer.id)
-      expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
-      expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'web').id)
+      it 'turns a requested internal agent web article into a public customer one' do
+        expect(create_article(from: 'something which should not be changed on server side', type: 'web', sender: 'Agent', internal: true)).to include(
+          'from' => 'Tickets Customer1 <tickets-customer1@example.com>', 'internal' => false,
+          'sender_id' => Ticket::Article::Sender.lookup(name: 'Customer').id, 'type_id' => Ticket::Article::Type.lookup(name: 'web').id
+        )
+      end
 
-      params = {
-        subject: 'new subject',
-      }
-      put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized')
+      it 'finds the ticket by query and by condition', :aggregate_failures, performs_jobs: true do
+        # The database search fallback only finds tickets with articles.
+        create(:ticket_article, ticket:)
+        perform_enqueued_jobs
 
-      delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+        get "/api/v1/tickets/search?query=#{CGI.escape(title)}&full=true", params: {}, as: :json
+        expect(json_response['record_ids']).to eq([ticket.id])
+
+        post '/api/v1/tickets/search?full=true', params: { condition: { 'ticket.title' => { operator: 'contains', value: title } } }, as: :json
+        expect(json_response['record_ids']).to eq([ticket.id])
+      end
+
+      it 'does not change or delete articles', :aggregate_failures do
+        article = create_article
+
+        put "/api/v1/ticket_articles/#{article['id']}", params: { subject: 'new subject' }, as: :json
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized')
+
+        delete "/api/v1/ticket_articles/#{article['id']}", params: {}, as: :json
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (agent permission required)!')
+        expect(Ticket::Article).to exist(article['id'])
+      end
+
+      it 'does not delete the ticket', :aggregate_failures do
+        delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+        expect(ticket).to exist_in_database
+      end
     end
 
     it 'does ticket create with agent - minimal article with customer hash with article.origin_by (03.6)' do
@@ -2623,7 +2502,6 @@ RSpec.describe 'Ticket', type: :request do
   describe '/api/v1/tickets' do
     subject(:ticket) { create(:ticket, state_name: 'closed') }
 
-    let(:admin) { create(:admin, groups: [ticket.group]) }
     let(:agent)    { create(:agent, groups: [ticket.group]) }
     let(:customer) { ticket.customer }
 
@@ -2650,28 +2528,8 @@ RSpec.describe 'Ticket', type: :request do
         end
       end
 
-      context 'when ticket.group.follow_up_possible = "yes"' do
-        before { ticket.group.update(follow_up_possible: 'yes') }
-
-        context 'as admin', authenticated_as: -> { admin } do
-          include_examples 'successfully reopen a ticket'
-        end
-
-        context 'as agent', authenticated_as: -> { agent } do
-          include_examples 'successfully reopen a ticket'
-        end
-
-        context 'as customer', authenticated_as: -> { customer } do
-          include_examples 'successfully reopen a ticket'
-        end
-      end
-
       context 'when ticket.group.follow_up_possible = "new_ticket"' do
         before { ticket.group.update(follow_up_possible: 'new_ticket') }
-
-        context 'as admin', authenticated_as: -> { admin } do
-          include_examples 'successfully reopen a ticket'
-        end
 
         context 'as agent', authenticated_as: -> { agent } do
           include_examples 'successfully reopen a ticket'
@@ -2702,12 +2560,13 @@ RSpec.describe 'Ticket', type: :request do
         context 'when the user does not have agent access' do
           let(:target_ticket) { create(:ticket) } # in a group the agent has no access to
 
-          it 'returns forbidden' do
+          it 'returns forbidden', :aggregate_failures do
             post '/api/v1/tickets',
                  params: base_params.merge(links: { Ticket: { normal: [target_ticket.id] } }),
                  as:     :json
 
             expect(response).to have_http_status(:forbidden)
+            expect(Ticket.find_by(title: base_params[:title])).to be_nil
           end
         end
 
@@ -2720,6 +2579,8 @@ RSpec.describe 'Ticket', type: :request do
                  as:     :json
 
             expect(response).to have_http_status(:created)
+            expect(Link.list(link_object: 'Ticket', link_object_value: json_response['id']))
+              .to include(include('link_object' => 'Ticket', 'link_object_value' => target_ticket.id))
           end
         end
       end
@@ -2733,24 +2594,27 @@ RSpec.describe 'Ticket', type: :request do
           let(:role)  { create(:role, permission_names: %w[ticket.agent]) }
           let(:agent) { create(:user, groups: [group], roles: [role]) }
 
-          it 'returns forbidden' do
+          it 'returns forbidden', :aggregate_failures do
             post '/api/v1/tickets',
                  params: base_params.merge(links: { 'KnowledgeBase::Answer::Translation' => { normal: [translation.id] } }),
                  as:     :json
 
             expect(response).to have_http_status(:forbidden)
+            expect(Ticket.find_by(title: base_params[:title])).to be_nil
           end
         end
 
         context 'when the user reader access to the KB answer' do
           let(:agent) { create(:agent, groups: [group]) }
 
-          it 'returns success' do
+          it 'creates the ticket with the link' do
             post '/api/v1/tickets',
                  params: base_params.merge(links: { 'KnowledgeBase::Answer::Translation' => { normal: [translation.id] } }),
                  as:     :json
 
             expect(response).to have_http_status(:created)
+            expect(Link.list(link_object: 'Ticket', link_object_value: json_response['id']))
+              .to include(include('link_object' => 'KnowledgeBase::Answer::Translation', 'link_object_value' => translation.id))
           end
         end
 
@@ -2764,6 +2628,8 @@ RSpec.describe 'Ticket', type: :request do
                  as:     :json
 
             expect(response).to have_http_status(:created)
+            expect(Link.list(link_object: 'Ticket', link_object_value: json_response['id']))
+              .to include(include('link_object' => 'KnowledgeBase::Answer::Translation', 'link_object_value' => translation.id))
           end
         end
       end
@@ -2933,14 +2799,14 @@ RSpec.describe 'Ticket', type: :request do
     let(:user)              { create(:agent_and_customer) }
 
     before do
-      skip 'This test requires some changes to the metadata concerns for the Ticket::Article model which are not done yet.'
-
       user.group_names_access_map = {
         group_only_create.name => %w[create],
       }
     end
 
     it 'contains correct information for sender if agent sets himself as customer and responds' do
+      pending 'Article metadata does not treat agents acting as their own customer as customer yet.'
+
       params = {
         title:       'Test title for issue #4647',
         group_id:    group_only_create.id,

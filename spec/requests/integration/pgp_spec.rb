@@ -153,6 +153,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
             it 'creates a key if copy-pasted value has leading whitespace' do
               expect(response).to have_http_status(:created)
+              expect(PGPKey.sole).to have_attributes(fingerprint:, secret: false)
             end
           end
 
@@ -274,6 +275,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
       context 'with admin user' do
         it 'deletes the key' do
           expect(response).to have_http_status(:ok)
+          expect(PGPKey).not_to exist(pgp_key.id)
         end
       end
 

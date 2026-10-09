@@ -107,8 +107,9 @@ RSpec.describe 'KnowledgeBase categories reorder', authenticated_as: :current_us
     context 'when the user only reads the parent of that list' do
       let(:current_user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
 
-      it 'refuses to order it' do
-        reorder url, { sorting_mode: 'alphabetical' }
+      it 'refuses to order it', :aggregate_failures do
+        expect { reorder url, { sorting_mode: 'alphabetical' } }
+          .not_to change { node.reload[sorting_mode_attribute] }
 
         expect(response).to have_http_status(:forbidden)
       end
@@ -215,22 +216,26 @@ RSpec.describe 'KnowledgeBase categories reorder', authenticated_as: :current_us
     end
 
     it 'orders the lists of that category', :aggregate_failures do
-      reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{category.id}/reorder_categories", { sorting_mode: 'alphabetical' }
+      reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{category.id}/reorder_categories", { sorting_mode: 'last_update' }
       expect(response).to have_http_status(:ok)
 
-      reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{category.id}/reorder_answers", { sorting_mode: 'alphabetical' }
+      reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{category.id}/reorder_answers", { sorting_mode: 'last_update' }
       expect(response).to have_http_status(:ok)
+
+      expect(category.reload).to have_attributes(category_sorting_mode: 'last_update', answer_sorting_mode: 'last_update')
     end
 
-    it 'refuses the list of a category it only reads' do
-      reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{other_category.id}/reorder_categories", { sorting_mode: 'alphabetical' }
+    it 'refuses the list of a category it only reads', :aggregate_failures do
+      expect { reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{other_category.id}/reorder_categories", { sorting_mode: 'last_update' } }
+        .not_to change { other_category.reload.category_sorting_mode }
 
       expect(response).to have_http_status(:forbidden)
     end
 
     # Being an editor of a category says nothing about the level that category is listed on.
-    it 'refuses the top level' do
-      reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/reorder_root_categories", { sorting_mode: 'alphabetical' }
+    it 'refuses the top level', :aggregate_failures do
+      expect { reorder "/api/v1/knowledge_bases/#{knowledge_base.id}/categories/reorder_root_categories", { sorting_mode: 'last_update' } }
+        .not_to change { knowledge_base.reload.category_sorting_mode }
 
       expect(response).to have_http_status(:forbidden)
     end

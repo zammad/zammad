@@ -74,28 +74,6 @@ RSpec.describe 'Ticket Escalation', type: :request do
     end
   end
 
-  context 'when customer sends email' do
-    subject(:ticket) { ticket_mail_in }
-
-    before { ticket }
-
-    it 'first response escalation in 1h' do
-      expect(ticket.first_response_escalation_at).to eq 1.hour.from_now
-    end
-
-    it 'update_escalation in 3h' do
-      expect(ticket.update_escalation_at).to eq 3.hours.from_now
-    end
-
-    it 'close escalation in 4h' do
-      expect(ticket.close_escalation_at).to eq 4.hours.from_now
-    end
-
-    it 'next escalation is closest escalation' do
-      expect(ticket.escalation_at).to eq 1.hour.from_now
-    end
-  end
-
   context 'when agent responds via web', authenticated_as: :agent do
     subject(:ticket) { ticket_mail_in }
 

@@ -23,8 +23,11 @@ RSpec.describe 'KnowledgeBase manage authorization', type: :request do
       expect(user.permissions?('admin.knowledge_base')).to be false
     end
 
-    it 'refuses to create a knowledge base' do
-      post '/api/v1/knowledge_bases/manage', params: { homepage_layout: 'grid' }, as: :json
+    it 'refuses to create a knowledge base', :aggregate_failures do
+      knowledge_base
+
+      expect { post '/api/v1/knowledge_bases/manage', params: { homepage_layout: 'grid' }, as: :json }
+        .not_to change(KnowledgeBase, :count)
 
       expect(response).to have_http_status(:forbidden)
     end
@@ -55,10 +58,11 @@ RSpec.describe 'KnowledgeBase manage authorization', type: :request do
     # These two always required `admin.knowledge_base`, which is what made the gap visible:
     #   switching the knowledge base off was refused while updating it - which can set `active` -
     #   was not.
-    it 'refuses to deactivate a knowledge base' do
+    it 'refuses to deactivate a knowledge base', :aggregate_failures do
       knowledge_base
 
-      patch "/api/v1/knowledge_bases/manage/#{knowledge_base.id}/deactivate", as: :json
+      expect { patch "/api/v1/knowledge_bases/manage/#{knowledge_base.id}/deactivate", as: :json }
+        .not_to change { knowledge_base.reload.active }
 
       expect(response).to have_http_status(:forbidden)
     end

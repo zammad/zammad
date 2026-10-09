@@ -88,8 +88,9 @@ RSpec.describe 'ChecklistTemplates', current_user_id: 1, type: :request do
     end
 
     context 'when user is not authenticated', authenticated_as: :unauthorized_user do
-      it 'returns forbidden status' do
+      it 'returns forbidden status', :aggregate_failures do
         expect(response).to have_http_status(:forbidden)
+        expect(ChecklistTemplate.find_by(name: checklist_template_params[:name])).to be_nil
       end
     end
 
@@ -131,8 +132,9 @@ RSpec.describe 'ChecklistTemplates', current_user_id: 1, type: :request do
     end
 
     context 'when user is not authenticated', authenticated_as: :unauthorized_user do
-      it 'returns forbidden status' do
+      it 'returns forbidden status', :aggregate_failures do
         expect(response).to have_http_status(:forbidden)
+        expect(checklist_template.reload.name).not_to eq('Updated Checklist')
       end
     end
 
@@ -142,8 +144,9 @@ RSpec.describe 'ChecklistTemplates', current_user_id: 1, type: :request do
       end
 
       context 'when checklist template was updated' do
-        it 'returns updated checklist template' do
+        it 'returns updated checklist template', :aggregate_failures do
           expect(json_response.except(:created_at, :updated_at)).to include(checklist_template_params)
+          expect(checklist_template.reload).to have_attributes(name: 'Updated Checklist', active: false)
         end
       end
 
@@ -165,18 +168,19 @@ RSpec.describe 'ChecklistTemplates', current_user_id: 1, type: :request do
     end
 
     context 'when user is not authenticated', authenticated_as: :unauthorized_user do
-      it 'returns forbidden status' do
+      it 'returns forbidden status', :aggregate_failures do
         expect(response).to have_http_status(:forbidden)
+        expect(checklist_template).to exist_in_database
       end
     end
 
     context 'when user is authenticated', authenticated_as: :authorized_user do
-      it 'returns no content status' do
+      it 'returns ok status' do
         expect(response).to have_http_status(:ok)
       end
 
       context 'when checklist template was destroyed' do
-        it 'returns no content status' do
+        it 'destroys the checklist template' do
           expect { checklist_template.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end

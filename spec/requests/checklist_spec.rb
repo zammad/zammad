@@ -49,29 +49,35 @@ RSpec.describe 'Checklist', authenticated_as: :agent_1, current_user_id: 1, type
     expect(Checklist.last.items.count).to eq(0)
   end
 
-  it 'does not create checklist' do
+  it 'does not create checklist', :aggregate_failures do
     post '/api/v1/checklists', params: { name: SecureRandom.uuid, ticket_id: ticket_2_empty.id }, as: :json
     expect(response).to have_http_status(:forbidden)
+    expect(ticket_2_empty.reload.checklist).to be_nil
   end
 
   it 'does update checklist', :aggregate_failures do
-    put "/api/v1/checklists/#{checklist_1.id}", params: { name: SecureRandom.uuid }, as: :json
+    name = SecureRandom.uuid
+    put "/api/v1/checklists/#{checklist_1.id}", params: { name: }, as: :json
     expect(response).to have_http_status(:ok)
     expect(json_response).to include('id' => checklist_1.id)
+    expect(checklist_1.reload.name).to eq(name)
   end
 
-  it 'does not update checklist' do
-    put "/api/v1/checklists/#{checklist_2.id}", params: { name: SecureRandom.uuid }, as: :json
+  it 'does not update checklist', :aggregate_failures do
+    expect { put "/api/v1/checklists/#{checklist_2.id}", params: { name: SecureRandom.uuid }, as: :json }
+      .not_to change { checklist_2.reload.name }
     expect(response).to have_http_status(:forbidden)
   end
 
-  it 'does destroy checklist' do
+  it 'does destroy checklist', :aggregate_failures do
     delete "/api/v1/checklists/#{checklist_1.id}", params: {}, as: :json
     expect(response).to have_http_status(:ok)
+    expect(checklist_1).not_to exist_in_database
   end
 
-  it 'does not destroy checklist' do
+  it 'does not destroy checklist', :aggregate_failures do
     delete "/api/v1/checklists/#{checklist_2.id}", params: {}, as: :json
     expect(response).to have_http_status(:forbidden)
+    expect(checklist_2).to exist_in_database
   end
 end

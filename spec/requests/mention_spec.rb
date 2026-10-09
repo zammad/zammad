@@ -107,7 +107,8 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
 
     context 'when user has no access' do
       it 'fails' do
-        post '/api/v1/mentions', params: params, as: :json
+        expect { post '/api/v1/mentions', params: params, as: :json }
+          .not_to change(Mention, :count)
 
         expect(response).to have_http_status(:forbidden)
       end
@@ -141,6 +142,7 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
         delete "/api/v1/mentions/#{other_mention.id}", as: :json
 
         expect(response).to have_http_status(:forbidden)
+        expect(other_mention).to exist_in_database
       end
     end
 

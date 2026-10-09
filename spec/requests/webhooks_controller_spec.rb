@@ -118,8 +118,9 @@ RSpec.describe WebhooksController, type: :request do
         post '/api/v1/webhooks.json', params: { name: 'Foo', endpoint: 'http://example.com/endpoint', ssl_verify: true, active: true }
       end
 
-      it 'returns created' do
+      it 'creates the webhook', :aggregate_failures do
         expect(response).to have_http_status(:created)
+        expect(Webhook.find_by(name: 'Foo')).to have_attributes(endpoint: 'http://example.com/endpoint')
       end
 
       it 'does not mask unset sensitive fields' do
@@ -131,8 +132,9 @@ RSpec.describe WebhooksController, type: :request do
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           expect(response).to have_http_status(:forbidden)
+          expect(Webhook.find_by(name: 'Foo')).to be_nil
         end
       end
     end
@@ -145,8 +147,9 @@ RSpec.describe WebhooksController, type: :request do
         put "/api/v1/webhooks/#{webhook.id}.json", params:
       end
 
-      it 'returns ok' do
+      it 'updates the webhook', :aggregate_failures do
         expect(response).to have_http_status(:ok)
+        expect(webhook.reload.name).to eq('Foo')
       end
 
       context 'with masked fields' do
@@ -175,8 +178,9 @@ RSpec.describe WebhooksController, type: :request do
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           expect(response).to have_http_status(:forbidden)
+          expect(webhook.reload.name).not_to eq('Foo')
         end
       end
     end
@@ -188,13 +192,15 @@ RSpec.describe WebhooksController, type: :request do
         delete "/api/v1/webhooks/#{webhook.id}.json"
       end
 
-      it 'returns ok' do
+      it 'destroys the webhook', :aggregate_failures do
         expect(response).to have_http_status(:ok)
+        expect(webhook).not_to exist_in_database
       end
 
       context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
+        it 'request is forbidden', :aggregate_failures do
           expect(response).to have_http_status(:forbidden)
+          expect(webhook).to exist_in_database
         end
       end
     end

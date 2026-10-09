@@ -67,6 +67,12 @@ RSpec.describe 'KnowledgeBase access via a deactivated role', authenticated_as: 
     end
 
     include_examples 'an action the deactivated role must not authorize', authorized_status: :ok
+
+    it 'keeps the answer unchanged' do
+      internal_answer
+
+      expect { perform_request }.not_to change { internal_answer.reload.internal_note }
+    end
   end
 
   describe 'DELETE /answers/:id' do
@@ -108,6 +114,10 @@ RSpec.describe 'KnowledgeBase access via a deactivated role', authenticated_as: 
     end
 
     include_examples 'an action the deactivated role must not authorize', authorized_status: :ok
+
+    it 'keeps the category unchanged' do
+      expect { perform_request }.not_to change { category.reload.category_icon }
+    end
   end
 
   # Creating a top level category and ordering the root list both resolve their access against the
@@ -126,6 +136,12 @@ RSpec.describe 'KnowledgeBase access via a deactivated role', authenticated_as: 
     end
 
     include_examples 'an action the deactivated role must not authorize', authorized_status: :created
+
+    it 'does not create the category' do
+      knowledge_base
+
+      expect { perform_request }.not_to change(KnowledgeBase::Category, :count)
+    end
   end
 
   describe 'PATCH /categories/reorder_root_categories' do
@@ -139,6 +155,10 @@ RSpec.describe 'KnowledgeBase access via a deactivated role', authenticated_as: 
     before { category && other_category }
 
     include_examples 'an action the deactivated role must not authorize', authorized_status: :ok
+
+    it 'keeps the order of the root categories' do
+      expect { perform_request }.not_to change { knowledge_base.categories.root.reorder(position: :asc).pluck(:id) }
+    end
   end
 
   describe 'DELETE /categories/:id' do
@@ -215,15 +235,28 @@ RSpec.describe 'KnowledgeBase access via a deactivated role', authenticated_as: 
     end
 
     include_examples 'an action the deactivated role must not authorize', authorized_status: :ok
+
+    it 'leaves the answer unarchived' do
+      internal_answer
+
+      expect { perform_request }.not_to change { internal_answer.reload.archived_at }
+    end
   end
 
   describe 'POST /answers/:id/has_publishing_update' do
     subject(:perform_request) do
-      post "/api/v1/knowledge_bases/#{knowledge_base.id}/answers/#{internal_answer.id}/has_publishing_update", as: :json
+      post "/api/v1/knowledge_bases/#{knowledge_base.id}/answers/#{internal_answer.id}/has_publishing_update",
+           params: { published_at: '--now--' }, as: :json
 
       response
     end
 
     include_examples 'an action the deactivated role must not authorize', authorized_status: :ok
+
+    it 'leaves the answer unpublished' do
+      internal_answer
+
+      expect { perform_request }.not_to change { internal_answer.reload.published_at }
+    end
   end
 end

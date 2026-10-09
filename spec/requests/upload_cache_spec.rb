@@ -17,13 +17,14 @@ RSpec.describe 'UploadCache', type: :request do
         authenticated_as(auth)
       end
 
-      it 'adds items to UploadCache' do
+      it 'adds items to UploadCache', :aggregate_failures do
         params = {
           File: fixture_file_upload('upload/hello_world.txt', 'text/plain')
         }
         post "/api/v1/upload_caches/#{form_id}", params: params
 
         expect(response).to have_http_status(:ok)
+        expect(upload_cache.attachments(created_by_id: user.id).map(&:filename)).to eq(['hello_world.txt'])
       end
 
       it 'detects Content-Type for binary uploads' do
@@ -62,10 +63,11 @@ RSpec.describe 'UploadCache', type: :request do
       context 'with invalid user' do
         let(:auth) { create(:customer) }
 
-        it 'returns forbidden' do
+        it 'returns forbidden', :aggregate_failures do
           delete "/api/v1/upload_caches/#{form_id}", as: :json
 
           expect(response).to have_http_status(:forbidden)
+          expect(upload_cache.attachments(created_by_id: user.id).count).to eq(2)
         end
       end
     end
@@ -99,11 +101,12 @@ RSpec.describe 'UploadCache', type: :request do
       context 'with invalid user' do
         let(:auth) { create(:customer) }
 
-        it 'returns forbidden' do
+        it 'returns forbidden', :aggregate_failures do
           store_id = upload_cache.attachments.first.id
           delete "/api/v1/upload_caches/#{form_id}/items/#{store_id}", as: :json
 
           expect(response).to have_http_status(:forbidden)
+          expect(Store).to exist(store_id)
         end
       end
     end
@@ -128,11 +131,12 @@ RSpec.describe 'UploadCache', type: :request do
       )
     end
 
-    it 'forbids partial owner from destroying mixed-owner cache' do
+    it 'forbids partial owner from destroying mixed-owner cache', :aggregate_failures do
       authenticated_as(owner)
       delete "/api/v1/upload_caches/#{form_id}", as: :json
 
       expect(response).to have_http_status(:forbidden)
+      expect(UploadCache.new(form_id).attachments(created_by_id: nil).map(&:created_by_id)).to contain_exactly(owner.id, other_owner.id)
     end
   end
 
@@ -155,20 +159,22 @@ RSpec.describe 'UploadCache', type: :request do
       )
     end
 
-    it 'forbids partial owner from removing other users file' do
+    it 'forbids partial owner from removing other users file', :aggregate_failures do
       authenticated_as(owner)
       other_file = UploadCache.new(form_id).attachments(created_by_id: nil).find { |a| a.created_by_id == other_owner.id }
       delete "/api/v1/upload_caches/#{form_id}/items/#{other_file.id}", as: :json
 
       expect(response).to have_http_status(:forbidden)
+      expect(Store).to exist(other_file.id)
     end
 
-    it 'forbids partial owner from removing their own file too' do
+    it 'forbids partial owner from removing their own file too', :aggregate_failures do
       authenticated_as(owner)
       own_file = UploadCache.new(form_id).attachments(created_by_id: owner.id).first
       delete "/api/v1/upload_caches/#{form_id}/items/#{own_file.id}", as: :json
 
       expect(response).to have_http_status(:forbidden)
+      expect(Store).to exist(own_file.id)
     end
 
     it 'leaves every file in a mixed-owner cache untouched after a forbidden removal attempt' do

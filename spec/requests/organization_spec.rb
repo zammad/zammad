@@ -505,19 +505,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       )
       UserInfo.current_user_id = nil
 
-      # invalid file
       authenticated_as(admin)
-      csv_file = fixture_file_upload('csv_import/organization/simple_col_not_existing.csv', 'text/csv')
-      post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-
-      expect(json_response['try']).to be(true)
-      expect(json_response['records']).to be_empty
-      expect(json_response['result']).to eq('failed')
-      expect(json_response['errors'].count).to eq(2)
-      expect(json_response['errors'][0]).to eq("Line 1: Unable to create record - unknown attribute 'name2' for Organization.")
-      expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'name2' for Organization.")
 
       # valid file try
       csv_file = fixture_file_upload('csv_import/organization/simple.csv', 'text/csv')

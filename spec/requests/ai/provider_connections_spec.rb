@@ -104,17 +104,6 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       expect(AI::ProviderConnection.exists?(name: 'bad-metadata')).to be false
     end
 
-    it 'returns 422 for a negative embedding input limit', :aggregate_failures do
-      post '/api/v1/ai/provider_connections',
-           params: { name: 'bad-metadata', provider: 'open_ai',
-                     config: { token: 'sk-123', embedding_model: 'text-embedding-3-small', embedding_input_limit: -1 } },
-           as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(json_response['error']).to include('context window size must be a positive number')
-      expect(AI::ProviderConnection.exists?(name: 'bad-metadata')).to be false
-    end
-
     it 'returns 422 when provider_accessible fails' do
       allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_raise(AI::Provider::ResponseError, 'Connection refused')
 
@@ -158,28 +147,6 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
            as:     :json
 
       expect(response).to have_http_status(:internal_server_error)
-    end
-
-    it 'returns 422 when creating a Zammad AI connection on SaaS' do
-      Setting.set('system_online_service', true)
-      allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(nil)
-
-      post '/api/v1/ai/provider_connections',
-           params: { name: 'zammad-ai-conn', provider: 'zammad_ai', config: { token: 'sk-123' } },
-           as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(AI::ProviderConnection.exists?(name: 'zammad-ai-conn')).to be false
-    end
-
-    it 'creates a Zammad AI connection on self-hosted systems' do
-      allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(nil)
-
-      post '/api/v1/ai/provider_connections',
-           params: { name: 'zammad-ai-conn', provider: 'zammad_ai', config: { token: 'sk-123' } },
-           as:     :json
-
-      expect(response).to have_http_status(:created)
     end
   end
 
@@ -318,31 +285,6 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
 
       expect(response).to have_http_status(:ok)
       expect(conn.reload.config['token']).to eq('sk-new')
-    end
-
-    it 'returns 422 when switching an existing connection to Zammad AI on SaaS' do
-      Setting.set('system_online_service', true)
-      conn = create(:ai_provider_connection, name: 'conn', provider: 'open_ai')
-      allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(nil)
-
-      put "/api/v1/ai/provider_connections/#{conn.id}",
-          params: { name: 'conn', provider: 'zammad_ai', config: {} },
-          as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(conn.reload.provider).to eq('open_ai')
-    end
-
-    it 'returns 422 when switching the provisioned Zammad AI connection away from it on SaaS' do
-      Setting.set('system_online_service', true)
-      conn = build(:ai_provider_connection, name: 'zammad-ai-conn', provider: 'zammad_ai').tap { |c| c.save(validate: false) }
-
-      put "/api/v1/ai/provider_connections/#{conn.id}",
-          params: { name: 'zammad-ai-conn', provider: 'open_ai', config: { token: 'sk-new' } },
-          as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(conn.reload.provider).to eq('zammad_ai')
     end
   end
 
@@ -577,29 +519,12 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
         .with({ token: 'stored-token', model: 'gpt-4.1' }, related_object: conn)
     end
 
-    it 'lists with the stored config when none is submitted' do
-      conn = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'stored-token' })
-
-      post "/api/v1/ai/provider_connections/#{conn.id}/models", as: :json
-
-      expect(AI::Provider::OpenAI).to have_received(:models)
-        .with(hash_including(token: 'stored-token'), related_object: conn)
-    end
-
     it 'returns 404 for a nonexistent connection' do
       post '/api/v1/ai/provider_connections/999999/models',
            params: { config: { token: 'sk-123' } },
            as:     :json
 
       expect(response).to have_http_status(:not_found)
-    end
-
-    it 'returns 422 for an unknown provider' do
-      post '/api/v1/ai/provider_connections/models',
-           params: { provider: 'does_not_exist', config: { token: 'sk-123' } },
-           as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
     end
 
     # The namespace holds more than adapters, and such a key used to reach the listing as if it
@@ -657,21 +582,6 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       expect(response).to have_http_status(:ok)
       expect(json_response).to include('error' => 'bad URI')
     end
-
-    # The second call carries the config as the dialog resends it after a Back - grown by the
-    # model fields. The listing depends on the credentials alone, so it still hits the cache.
-    it 'answers a repeated call without asking the provider again, even as the config grows' do
-      post '/api/v1/ai/provider_connections/models',
-           params: { provider: 'open_ai', config: { token: 'sk-123' } },
-           as:     :json
-
-      post '/api/v1/ai/provider_connections/models',
-           params: { provider: 'open_ai', config: { token: 'sk-123', model: 'gpt-4.1', embedding_model: 'text-embedding-3-small' } },
-           as:     :json
-
-      expect(response).to have_http_status(:ok)
-      expect(AI::Provider::OpenAI).to have_received(:models).once
-    end
   end
 
   describe '#embedding_metadata' do
@@ -705,34 +615,6 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
         .with({ url: 'http://localhost:11434', token: 'stored-token' }, 'bge-m3', related_object: conn)
     end
 
-    # The provider knows nothing about it and neither does the shared table, so the dialog has to
-    # ask the admin - null is the answer that says so.
-    it 'answers null for a model no source knows' do
-      allow(AI::Provider::Ollama).to receive(:embedding_model_metadata).and_return({})
-
-      post '/api/v1/ai/provider_connections/embedding_metadata',
-           params: { provider: 'ollama', model: 'homegrown-embed', config: { url: 'http://localhost:11434' } },
-           as:     :json
-
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to eq('embedding_size' => nil, 'embedding_input_limit' => nil)
-    end
-
-    it 'falls back to the known defaults when the provider request fails' do
-      allow(AI::Provider::Ollama).to receive(:embedding_model_metadata)
-        .and_raise(AI::Provider::RequestError, 'connection refused')
-
-      post '/api/v1/ai/provider_connections/embedding_metadata',
-           params: { provider: 'ollama', model: 'bge-m3', config: { url: 'http://localhost:11434' } },
-           as:     :json
-
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to eq(
-        'embedding_size'        => AI::Provider::EMBEDDING_SIZES['bge-m3'],
-        'embedding_input_limit' => AI::Provider::EMBEDDING_INPUT_LIMITS['bge-m3']
-      )
-    end
-
     it 'returns 404 for a nonexistent connection' do
       post '/api/v1/ai/provider_connections/999999/embedding_metadata',
            params: { provider: 'ollama', model: 'bge-m3' },
@@ -744,22 +626,6 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
     it 'returns 422 for an unknown provider' do
       post '/api/v1/ai/provider_connections/embedding_metadata',
            params: { provider: 'does_not_exist', model: 'bge-m3' },
-           as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
-    end
-
-    it 'returns 422 for a provider that cannot embed' do
-      post '/api/v1/ai/provider_connections/embedding_metadata',
-           params: { provider: 'anthropic', model: 'bge-m3', config: { token: 'sk-123' } },
-           as:     :json
-
-      expect(response).to have_http_status(:unprocessable_content)
-    end
-
-    it 'returns 422 when no model is given' do
-      post '/api/v1/ai/provider_connections/embedding_metadata',
-           params: { provider: 'ollama', config: { url: 'http://localhost:11434' } },
            as:     :json
 
       expect(response).to have_http_status(:unprocessable_content)

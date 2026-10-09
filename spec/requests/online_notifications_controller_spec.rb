@@ -392,11 +392,16 @@ RSpec.describe OnlineNotificationsController, type: :request do
         end
 
         include_examples 'forbidding all render modes'
+
+        it 'does not mark the notification as seen' do
+          expect { submit_request }.not_to change { online_notification.reload.seen }.from(false)
+        end
       end
 
-      it 'is not listed in the index' do
+      it 'is not listed in the index', :aggregate_failures do
         get '/api/v1/online_notifications', as: :json
 
+        expect(response).to have_http_status(:ok)
         expect(json_response.pluck('id')).not_to include(online_notification.id)
       end
 

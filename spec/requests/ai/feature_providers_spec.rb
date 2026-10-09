@@ -46,6 +46,7 @@ RSpec.describe 'AI::FeatureProvider', :aggregate_failures, authenticated_as: :us
            as:     :json
 
       expect(response).to have_http_status(:unprocessable_content)
+      expect(AI::FeatureProvider.find_by(identifier: 'does_not_exist')).to be_nil
     end
 
     it 'returns 422 for a duplicate identifier' do
@@ -56,6 +57,7 @@ RSpec.describe 'AI::FeatureProvider', :aggregate_failures, authenticated_as: :us
            as:     :json
 
       expect(response).to have_http_status(:unprocessable_content)
+      expect(AI::FeatureProvider.where(identifier: 'text_tool').pluck(:provider_connection_id)).to eq([conn_a.id])
     end
   end
 

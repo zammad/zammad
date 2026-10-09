@@ -38,19 +38,21 @@ RSpec.describe 'TicketsMass', authenticated_as: :user, type: :request do
 
       post '/api/v1/tickets/mass_macro', params: { macro_id: macro.id, ticket_ids: [ticket_a.id, ticket_b.id] }, as: :json
 
-      expect(ticket_a.reload.articles).not_to eq 3
+      expect(ticket_a.reload.priority_id).not_to eq 3
     end
 
-    it 'returns error if macro not applicable to at least one ticket' do
+    it 'returns error if macro not applicable to at least one ticket', :aggregate_failures do
       post '/api/v1/tickets/mass_macro', params: { macro_id: macro_groups.id, ticket_ids: [ticket_a.id, ticket_b.id] }
 
       expect(response).to have_http_status(:unprocessable_content)
+      expect(ticket_a.reload.priority_id).not_to eq 3
     end
 
-    it 'checks if user has write access to tickets' do
+    it 'checks if user has write access to tickets', :aggregate_failures do
       post '/api/v1/tickets/mass_macro', params: { macro_id: macro_groups.id, ticket_ids: [ticket_a.id, ticket_c.id] }
 
       expect(response).to have_http_status(:unprocessable_content)
+      expect(ticket_a.reload.priority_id).not_to eq 3
     end
 
     context 'with a checklist template action', current_user_id: 1 do
@@ -93,10 +95,11 @@ RSpec.describe 'TicketsMass', authenticated_as: :user, type: :request do
       expect(ticket_a.reload.priority_id).not_to eq 3
     end
 
-    it 'checks if user has write access to tickets' do
+    it 'checks if user has write access to tickets', :aggregate_failures do
       post '/api/v1/tickets/mass_update', params: { attributes: { priority_id: 3 }, ticket_ids: [ticket_a.id, ticket_c.id] }
 
       expect(response).to have_http_status(:unprocessable_content)
+      expect(ticket_a.reload.priority_id).not_to eq 3
     end
   end
 end

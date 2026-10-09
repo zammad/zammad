@@ -182,7 +182,8 @@ RSpec.describe 'HTTP Logs endpoints', aggregate_failures: true, type: :request d
 
     context 'when customer', authenticated_as: :customer do
       it 'forbids creating http logs' do
-        post '/api/v1/http_logs', params: payload, as: :json
+        expect { post '/api/v1/http_logs', params: payload, as: :json }
+          .not_to change(HttpLog, :count)
 
         expect(response).to have_http_status(:forbidden)
       end

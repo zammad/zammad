@@ -110,6 +110,8 @@ RSpec.describe 'Ticket::Article API > Time Accounting', :aggregate_failures, typ
 
       it 'does not create ticket article' do
         expect(response).to have_http_status(:forbidden)
+        expect(ticket.reload.articles).to be_empty
+        expect(Ticket::TimeAccounting.count).to be_zero
       end
     end
 

@@ -290,9 +290,10 @@ RSpec.describe 'KnowledgeBase public categories', type: :request do
     context 'when only an unpublished answer below the category is translated to the browsed locale' do
       before { create(:knowledge_base_answer_translation, answer: draft_answer, kb_locale: alternative_locale) }
 
-      it 'leaves the category off the start page' do
+      it 'leaves the category off the start page', :aggregate_failures do
         get help_root_path(alternative_locale_name)
 
+        expect(response).to have_http_status(:ok)
         expect(response.body).not_to include('Primary Only Category')
       end
     end
@@ -347,10 +348,11 @@ RSpec.describe 'KnowledgeBase public categories', type: :request do
         expect(response.body).to include(%(hreflang="#{alternative_locale_name}"))
       end
 
-      it 'serves the category page' do
+      it 'serves the category page', :aggregate_failures do
         get help_category_path(alternative_locale_name, category)
 
         expect(response).to have_http_status(:ok)
+        expect(response.body).to include('<h1>', 'Translated Category')
       end
     end
 

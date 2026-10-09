@@ -86,7 +86,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(1)
       user_device_first = UserDevice.last
-      sleep 2
+      travel 2.seconds
 
       params = {}
       get '/api/v1/users', params: params, as: :json
@@ -367,7 +367,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
       expect(UserDevice.where(user_id: admin.id).count).to eq(2)
       expect(json_response).to be_a(Array)
       user_device_first = UserDevice.last
-      sleep 2
+      travel 2.seconds
 
       params = {}
       get '/api/v1/users', params: params, as: :json

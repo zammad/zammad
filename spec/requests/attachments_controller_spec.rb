@@ -81,15 +81,17 @@ RSpec.describe AttachmentsController, type: :request do
              preferences: { 'Content-Type' => 'text/plain' })
     end
 
-    it 'customer cannot download internal article attachment' do
+    it 'customer cannot download internal article attachment', :aggregate_failures do
       authenticated_as(customer)
       get "/api/v1/attachments/#{internal_store.id}"
       expect(response).to have_http_status(:not_found)
+      expect(response.body).not_to include('secret data')
     end
 
-    it 'agent downloads internal article attachment' do
+    it 'agent downloads internal article attachment', :aggregate_failures do
       get "/api/v1/attachments/#{internal_store.id}"
       expect(response).to have_http_status(:ok)
+      expect(response.body).to eq('secret data')
     end
 
     it 'streams the attachment content', :aggregate_failures do
@@ -165,16 +167,18 @@ RSpec.describe AttachmentsController, type: :request do
       expect(response).to have_http_status(:not_found)
     end
 
-    it 'returns 404 when no access', authenticated_as: -> { create(:agent) } do
+    it 'returns 404 when no access', :aggregate_failures, authenticated_as: -> { create(:agent) } do
       delete "/api/v1/attachments/#{attachment_id}"
 
       expect(response).to have_http_status(:not_found)
+      expect(Store).to exist(attachment_id)
     end
 
-    it 'returns ok on success', authenticated_as: -> { create(:admin) } do
+    it 'returns ok on success', :aggregate_failures, authenticated_as: -> { create(:admin) } do
       delete "/api/v1/attachments/#{attachment_id}"
 
       expect(response).to have_http_status(:ok)
+      expect(Store).not_to exist(attachment_id)
     end
   end
 
@@ -183,16 +187,17 @@ RSpec.describe AttachmentsController, type: :request do
     let(:attacker) { create(:customer) }
     let(:form_id)  { SecureRandom.uuid }
 
-    it 'allows upload to own empty cache' do
+    it 'allows upload to own empty cache', :aggregate_failures do
       authenticated_as(owner)
       params = { File: fixture_file_upload('upload/hello_world.txt', 'text/plain'), form_id: form_id }
 
       post '/api/v1/attachments', params: params
 
       expect(response).to have_http_status(:ok)
+      expect(UploadCache.new(form_id).attachments(created_by_id: owner.id).map(&:filename)).to eq(['hello_world.txt'])
     end
 
-    it 'forbids upload to foreign populated cache' do
+    it 'forbids upload to foreign populated cache', :aggregate_failures do
       UploadCache.new(form_id).add(
         filename:      'victim.txt',
         data:          'victim data',
@@ -206,14 +211,15 @@ RSpec.describe AttachmentsController, type: :request do
       post '/api/v1/attachments', params: params
 
       expect(response).to have_http_status(:not_found)
+      expect(UploadCache.new(form_id).attachments(created_by_id: nil).map(&:filename)).to eq(['victim.txt'])
     end
 
-    it 'forbids upload without a form_id' do
+    it 'forbids upload without a form_id', :aggregate_failures do
       authenticated_as(owner)
       params = { File: fixture_file_upload('upload/hello_world.txt', 'text/plain') }
 
-      post '/api/v1/attachments', params: params
-
+      expect { post '/api/v1/attachments', params: params }
+        .not_to change(Store, :count)
       expect(response).to have_http_status(:not_found)
     end
   end

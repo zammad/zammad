@@ -51,11 +51,12 @@ RSpec.describe 'User Overview sorting', authenticated_as: :user, type: :request 
   end
 
   describe 'PUT /user_overview_sortings/:id' do
-    it 'does not update sorting of another user' do
+    it 'does not update sorting of another user', :aggregate_failures do
       put "/api/v1/user_overview_sortings/#{other_overview_sorting.id}",
           params: { prio: 42 }
 
       expect(response).to have_http_status(:not_found)
+      expect(other_overview_sorting.reload.prio).not_to eq(42)
     end
 
     it 'does not allow reassigning own sorting to another user', :aggregate_failures do

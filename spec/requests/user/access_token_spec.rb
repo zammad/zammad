@@ -43,8 +43,9 @@ RSpec.describe 'User Access token', authenticated_as: :user, type: :request do
     context 'when token access is enabled' do
       let(:enabled) { true }
 
-      it 'checks if name is present' do
-        post '/api/v1/user_access_token', params: { name: '', permission: %w[ticket.agent] }, as: :json
+      it 'checks if name is present', :aggregate_failures do
+        expect { post '/api/v1/user_access_token', params: { name: '', permission: %w[ticket.agent] }, as: :json }
+          .not_to change(Token, :count)
         expect(response).to have_http_status(:unprocessable_content)
       end
 
@@ -69,8 +70,9 @@ RSpec.describe 'User Access token', authenticated_as: :user, type: :request do
     context 'when token access is disabled' do
       let(:enabled) { false }
 
-      it 'throws error' do
-        post '/api/v1/user_access_token', params: {}, as: :json
+      it 'throws error', :aggregate_failures do
+        expect { post '/api/v1/user_access_token', params: { name: 'test', permission: %w[ticket.agent] }, as: :json }
+          .not_to change(Token, :count)
         expect(response).to have_http_status(:unprocessable_content)
       end
     end

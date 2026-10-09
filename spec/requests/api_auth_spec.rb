@@ -44,7 +44,6 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
       expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
     end
 
     it 'does basic auth - agent' do
@@ -63,7 +62,6 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
       expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
     end
 
     it 'does basic auth - customer' do
@@ -82,7 +80,6 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
       expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
     end
 
     context 'when using BasicAuth with TwoFactor' do
@@ -97,155 +94,92 @@ RSpec.describe 'Api Auth', type: :request do
       end
     end
 
-    it 'does token auth - admin', last_admin_check: false do
+    context 'with an admin token', last_admin_check: false do
+      let(:permission)  { ['admin.session'] }
+      let(:admin_token) { create(:token, action: 'api', persistent: true, user_id: admin.id, preferences: { permission: }) }
 
-      admin_token = create(
-        :token,
-        action:      'api',
-        persistent:  true,
-        user_id:     admin.id,
-        preferences: {
-          permission: ['admin.session'],
-        },
-      )
+      before do
+        Setting.set('api_token_access', true)
+        authenticated_as(admin, token: admin_token)
+      end
 
-      authenticated_as(admin, token: admin_token)
+      it 'is refused while token access is disabled', :aggregate_failures do
+        Setting.set('api_token_access', false)
+        get '/api/v1/sessions', params: {}, as: :json
 
-      Setting.set('api_token_access', false)
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(response.header).not_to be_key('Access-Control-Allow-Origin')
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('API token access disabled!')
+        expect(response).to have_http_status(:forbidden)
+        expect(response.header).not_to be_key('Access-Control-Allow-Origin')
+        expect(json_response['error']).to eq('API token access disabled!')
+      end
 
-      Setting.set('api_token_access', true)
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('no-store')
+      it 'is accepted while token access is enabled', :aggregate_failures do
+        get '/api/v1/sessions', params: {}, as: :json
 
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
+        expect(response).to have_http_status(:ok)
+        expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+        expect(response.header['Cache-Control']).to eq('no-store')
+        expect(json_response).to have_key('sessions')
+      end
 
-      admin_token.preferences[:permission] = ['admin.session_not_existing']
-      admin_token.save!
+      it 'is refused for an endpoint outside its permissions', :aggregate_failures do
+        get '/api/v1/roles', params: {}, as: :json
 
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Token authorization failed.')
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Token authorization failed.')
+      end
 
-      admin_token.preferences[:permission] = []
-      admin_token.save!
+      it 'is refused for an inactive user', :aggregate_failures do
+        admin.update!(active: false)
+        get '/api/v1/sessions', params: {}, as: :json
 
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Token authorization failed.')
+        expect(response).to have_http_status(:unauthorized)
+        expect(json_response['error']).to eq('Login failed. Have you double-checked your credentials and completed the email verification step?')
+      end
 
-      admin.active = false
-      admin.save!
+      [['admin.session_not_existing'], []].each do |token_permission|
+        context "with the permissions #{token_permission.inspect}" do
+          let(:permission) { token_permission }
 
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Login failed. Have you double-checked your credentials and completed the email verification step?')
+          it 'is refused', :aggregate_failures do
+            get '/api/v1/sessions', params: {}, as: :json
 
-      admin_token.preferences[:permission] = ['admin.session']
-      admin_token.save!
+            expect(response).to have_http_status(:forbidden)
+            expect(json_response['error']).to eq('Token authorization failed.')
+          end
+        end
+      end
 
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Login failed. Have you double-checked your credentials and completed the email verification step?')
+      context 'with an unknown and a known permission' do
+        let(:permission) { ['admin.session_not_existing', 'admin.role'] }
 
-      admin.active = true
-      admin.save!
+        it 'is accepted for the known one', :aggregate_failures do
+          get '/api/v1/roles', params: {}, as: :json
 
-      get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
+          expect(response).to have_http_status(:ok)
+          expect(json_response.pluck('name')).to include('Admin', 'Agent', 'Customer')
+        end
+      end
 
-      get '/api/v1/roles', params: {}, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Token authorization failed.')
+      %w[ticket.agent admin.organization admin].each do |token_permission|
+        context "with the permission #{token_permission}" do
+          let(:permission) { [token_permission] }
 
-      admin_token.preferences[:permission] = ['admin.session_not_existing', 'admin.role']
-      admin_token.save!
+          it 'lists, creates and updates organizations', :aggregate_failures do
+            get '/api/v1/organizations', params: {}, as: :json
+            expect(response).to have_http_status(:ok)
+            expect(json_response).to be_a(Array)
 
-      get '/api/v1/roles', params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
+            name = "some org name #{SecureRandom.uuid}"
+            post '/api/v1/organizations', params: { name: }, as: :json
+            expect(response).to have_http_status(:created)
+            expect(Organization.find(json_response['id']).name).to eq(name)
 
-      admin_token.preferences[:permission] = ['ticket.agent']
-      admin_token.save!
-
-      get '/api/v1/organizations', params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
-
-      name = "some org name #{SecureRandom.uuid}"
-      post '/api/v1/organizations', params: { name: name }, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['name']).to eq(name)
-      expect(json_response).to be_truthy
-
-      name = "some org name #{SecureRandom.uuid} - 2"
-      put "/api/v1/organizations/#{json_response['id']}", params: { name: name }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['name']).to eq(name)
-      expect(json_response).to be_truthy
-
-      admin_token.preferences[:permission] = ['admin.organization']
-      admin_token.save!
-
-      get '/api/v1/organizations', params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
-
-      name = "some org name #{SecureRandom.uuid}"
-      post '/api/v1/organizations', params: { name: name }, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['name']).to eq(name)
-      expect(json_response).to be_truthy
-
-      name = "some org name #{SecureRandom.uuid} - 2"
-      put "/api/v1/organizations/#{json_response['id']}", params: { name: name }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['name']).to eq(name)
-      expect(json_response).to be_truthy
-
-      admin_token.preferences[:permission] = ['admin']
-      admin_token.save!
-
-      get '/api/v1/organizations', params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
-
-      name = "some org name #{SecureRandom.uuid}"
-      post '/api/v1/organizations', params: { name: name }, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['name']).to eq(name)
-      expect(json_response).to be_truthy
-
-      name = "some org name #{SecureRandom.uuid} - 2"
-      put "/api/v1/organizations/#{json_response['id']}", params: { name: name }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['name']).to eq(name)
-      expect(json_response).to be_truthy
-
+            put "/api/v1/organizations/#{json_response['id']}", params: { name: "#{name} - 2" }, as: :json
+            expect(response).to have_http_status(:ok)
+            expect(Organization.find(json_response['id']).name).to eq("#{name} - 2")
+          end
+        end
+      end
     end
 
     it 'does token auth - agent' do
@@ -272,12 +206,10 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
       expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
 
       get '/api/v1/organizations', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
 
       name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
@@ -309,12 +241,10 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Cache-Control']).to eq('no-store')
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
 
       get '/api/v1/organizations', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
 
       name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
@@ -393,7 +323,6 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
       expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
-      expect(json_response).to be_truthy
 
       admin_token.reload
       expect(admin_token.last_used_at).to be_within(1.second).of(Time.zone.now)
@@ -413,7 +342,6 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
     end
 
     context 'when using session auth with TwoFactor' do

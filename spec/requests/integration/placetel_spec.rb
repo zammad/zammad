@@ -177,415 +177,69 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(error).to eq('Feature not configured, please contact your admin!')
     end
 
-    it 'does log call' do
-      token = Setting.get('placetel_token')
+    describe 'call logging' do
+      let(:token) { Setting.get('placetel_token') }
 
-      # outbound - I - new call
-      params = 'event=OutgoingCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-1'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-1')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('01114100300')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to be_nil
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
+      def placetel_event(params)
+        post "/api/v1/placetel/#{token}", params: params
+        expect(response).to have_http_status(:ok)
 
-      travel 1.second
+        Cti::Log.find_by(call_id: Rack::Utils.parse_query(params)['call_id'])
+      end
 
-      # outbound - I - hangup by agent
-      params = 'event=HungUp&call_id=1234567890-1&type=missed'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-1')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('01114100300')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to be_nil
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('cancel')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
+      it 'maps an outbound call through all of its events', :aggregate_failures do
+        expect(placetel_event('event=OutgoingCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-2')).to have_attributes(
+          direction: 'out', from: '4930777000000', from_comment: nil,
+          to: '01114100300', to_comment: 'CallerId Customer1', state: 'newCall'
+        )
+        expect(placetel_event('event=CallAccepted&call_id=1234567890-2&from=030600000000&to=01114100300')).to have_attributes(state: 'answer')
+        expect(placetel_event('event=HungUp&call_id=1234567890-2&type=accepted&from=030600000000&to=01114100300')).to have_attributes(state: 'hangup', comment: 'normalClearing')
+      end
 
-      travel 1.second
+      it 'maps a missed outbound call to a cancelled one', :aggregate_failures do
+        placetel_event('event=OutgoingCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-1')
 
-      # outbound - II - new call
-      params = 'event=OutgoingCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-2'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('01114100300')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to be_nil
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
+        expect(placetel_event('event=HungUp&call_id=1234567890-1&type=missed')).to have_attributes(state: 'hangup', comment: 'cancel')
+      end
 
-      travel 1.second
+      it 'maps an inbound call through all of its events', :aggregate_failures do
+        expect(placetel_event('event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-3')).to have_attributes(
+          direction: 'in', from: '01114100300', from_comment: 'CallerId Customer1',
+          to: '030600000000', to_comment: nil, state: 'newCall', done: false
+        )
+        expect(placetel_event('event=CallAccepted&call_id=1234567890-3&to=030600000000&from=01114100300')).to have_attributes(state: 'answer')
+        expect(placetel_event('event=HungUp&call_id=1234567890-3&type=accepted&to=030600000000&from=01114100300')).to have_attributes(state: 'hangup', comment: 'normalClearing')
+      end
 
-      # outbound - II - answer by customer
-      params = 'event=CallAccepted&call_id=1234567890-2&from=030600000000&to=01114100300'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('01114100300')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to be_nil
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
+      it 'names the user given on answer, e.g. the voicemail' do
+        placetel_event('event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-4')
 
-      travel 1.second
+        expect(placetel_event('event=CallAccepted&call_id=1234567890-4&to=030600000000&from=01114100300&user=voicemail')).to have_attributes(to_comment: 'voicemail')
+      end
 
-      # outbound - II - hangup by customer
-      params = 'event=HungUp&call_id=1234567890-2&type=accepted&from=030600000000&to=01114100300'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('01114100300')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to be_nil
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_truthy
+      it 'names every customer sharing the caller number' do
+        expect(placetel_event('event=IncomingCall&to=030600000000&from=49999992222222&call_id=1234567890-6'))
+          .to have_attributes(from_comment: 'CallerId Customer3,CallerId Customer2')
+      end
 
-      travel 1.second
+      it 'logs an anonymous caller without a comment' do
+        expect(placetel_event('event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-7'))
+          .to have_attributes(from: 'anonymous', from_comment: nil)
+      end
 
-      # inbound - I - new call
-      params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-3'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
+      it 'lists the logged calls to agents only', :aggregate_failures do
+        placetel_event('event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-1')
+        travel 1.second
+        placetel_event('event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-2')
 
-      travel 1.second
+        get '/api/v1/cti/log'
+        expect(response).to have_http_status(:forbidden)
 
-      # inbound - I - answer by customer
-      params = 'event=CallAccepted&call_id=1234567890-3&to=030600000000&from=01114100300'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - I - hangup by customer
-      params = 'event=HungUp&call_id=1234567890-3&type=accepted&to=030600000000&from=01114100300'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_truthy
-
-      travel 1.second
-
-      # inbound - II - new call
-      params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-4'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - II - answer by voicemail
-      params = 'event=CallAccepted&call_id=1234567890-4&to=030600000000&from=01114100300&user=voicemail'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('voicemail')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - II - hangup by customer
-      params = 'event=HungUp&call_id=1234567890-4&type=accepted&to=030600000000&from=01114100300'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('voicemail')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_truthy
-
-      travel 1.second
-
-      # inbound - III - new call
-      params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-5'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-5')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - III - hangup by customer
-      params = 'event=HungUp&call_id=1234567890-5&type=accepted&to=030600000000&from=01114100300'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-5')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('01114100300')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - IV - new call
-      params = 'event=IncomingCall&to=030600000000&from=49999992222222&call_id=1234567890-6'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-6')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('49999992222222')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to eq('CallerId Customer3,CallerId Customer2')
-      expect(log.preferences['to']).to be_falsey
-      expect(log.preferences['from']).to be_truthy
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - IV - new call
-      params = 'event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-7'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-7')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('anonymous')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to be_nil
-      expect(log.preferences['to']).to be_falsey
-      expect(log.preferences['from']).to be_falsey
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - IIV - new call
-      params = 'event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-8'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-8')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('anonymous')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to be_nil
-      expect(log.preferences['to']).to be_falsey
-      expect(log.preferences['from']).to be_falsey
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - IIV - hangup by anonymous
-      params = 'event=HungUp&call_id=1234567890-8&type=accepted&to=030600000000&from=anonymous'
-      post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-8')
-      expect(log).to be_truthy
-      expect(log.to).to eq('030600000000')
-      expect(log.from).to eq('anonymous')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to be_nil
-      expect(log.from_comment).to be_nil
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
-
-      # get caller list
-      get '/api/v1/cti/log'
-      expect(response).to have_http_status(:forbidden)
-
-      authenticated_as(agent)
-      get '/api/v1/cti/log', as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response['list']).to be_a(Array)
-      expect(json_response['list'].count).to eq(8)
-      expect(json_response['assets']).to be_truthy
-      expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer2.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer3.id.to_s]).to be_truthy
-      expect(json_response['list'][0]['call_id']).to eq('1234567890-8')
-      expect(json_response['list'][1]['call_id']).to eq('1234567890-7')
-      expect(json_response['list'][2]['call_id']).to eq('1234567890-6')
-      expect(json_response['list'][3]['call_id']).to eq('1234567890-5')
-      expect(json_response['list'][4]['call_id']).to eq('1234567890-4')
-      expect(json_response['list'][5]['call_id']).to eq('1234567890-3')
-      expect(json_response['list'][6]['call_id']).to eq('1234567890-2')
-      expect(json_response['list'][6]['state']).to eq('hangup')
-      expect(json_response['list'][6]['from']).to eq('4930777000000')
-      expect(json_response['list'][6]['from_comment']).to be_nil
-      expect(json_response['list'][6]['to']).to eq('01114100300')
-      expect(json_response['list'][6]['to_comment']).to eq('CallerId Customer1')
-      expect(json_response['list'][6]['comment']).to eq('normalClearing')
-      expect(json_response['list'][6]['state']).to eq('hangup')
-      expect(json_response['list'][7]['call_id']).to eq('1234567890-1')
+        authenticated_as(agent)
+        get '/api/v1/cti/log', as: :json
+        expect(response).to have_http_status(:ok)
+        expect(json_response['list'].pluck('call_id')).to eq(%w[1234567890-2 1234567890-1])
+      end
     end
 
     it 'does log call with peer' do

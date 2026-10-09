@@ -53,15 +53,17 @@ RSpec.describe 'ActivityStream', type: :request do
         expect(json_response.pluck('id')).not_to include(*entry_ids)
       end
 
-      it 'does not list the entries in the expanded representation' do
+      it 'does not list the entries in the expanded representation', :aggregate_failures do
         get '/api/v1/activity_stream?expand=true', as: :json
 
+        expect(response).to have_http_status(:ok)
         expect(json_response.pluck('id')).not_to include(*entry_ids)
       end
 
       it 'does not ship the assets of the ticket and its article', :aggregate_failures do
         get '/api/v1/activity_stream?full=true', as: :json
 
+        expect(response).to have_http_status(:ok)
         expect(json_response.dig('assets', 'Ticket', ticket.id.to_s)).to be_nil
         expect(json_response.dig('assets', 'TicketArticle', article.id.to_s)).to be_nil
       end

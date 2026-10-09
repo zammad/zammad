@@ -104,10 +104,11 @@ RSpec.describe 'GraphQL', type: :request do
       authenticated_as(user, via: :browser)
     end
 
-    it 'accepts a session of an active user' do
+    it 'accepts a session of an active user', :aggregate_failures do
       post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
 
       expect(response).to have_http_status(:ok)
+      expect(json_response.dig('data', 'currentUser', 'id')).to eq(user.to_global_id.to_s)
     end
 
     # Bypasses the callback that drops the user's sessions (see User::TerminatesSessions), so
@@ -144,10 +145,11 @@ RSpec.describe 'GraphQL', type: :request do
         get "/api/v1/sessions/switch/#{agent.id}", as: :json
       end
 
-      it 'accepts it while the admin is active' do
+      it 'accepts it while the admin is active', :aggregate_failures do
         post '/graphql', params: { query: '{ currentUser { id } }' }, as: :json
 
         expect(response).to have_http_status(:ok)
+        expect(json_response.dig('data', 'currentUser', 'id')).to eq(agent.to_global_id.to_s)
       end
 
       # Bypasses the callback that drops the admin's sessions, as above.

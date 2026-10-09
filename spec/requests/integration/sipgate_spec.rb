@@ -215,273 +215,57 @@ RSpec.describe 'Integration Sipgate', type: :request do
 
     end
 
-    it 'does log call' do
-      token = Setting.get('sipgate_token')
+    describe 'call logging' do
+      let(:token) { Setting.get('sipgate_token') }
 
-      # outbound - I - new call
-      params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-1&user%5B%5D=user+1'
-      post "/api/v1/sipgate/#{token}/out", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-1')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(true)
+      def sipgate_event(direction, params)
+        post "/api/v1/sipgate/#{token}/#{direction}", params: params
+        expect(response).to have_http_status(:ok)
 
-      travel 1.second
+        Cti::Log.find_by(call_id: Rack::Utils.parse_query(params)['callId'])
+      end
 
-      # outbound - I - hangup by agent
-      params = 'event=hangup&direction=out&callId=1234567890-1&cause=cancel'
-      post "/api/v1/sipgate/#{token}/out", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-1')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('cancel')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
+      it 'maps an outbound call through all of its events', :aggregate_failures do
+        expect(sipgate_event('out', 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-2&user%5B%5D=user+1')).to have_attributes(
+          direction: 'out', from: '4930777000000', from_comment: 'user 1',
+          to: '4912347114711', to_comment: 'CallerId Customer1', state: 'newCall'
+        )
+        expect(sipgate_event('out', 'event=answer&direction=out&callId=1234567890-2&from=4930600000000&to=4912347114711')).to have_attributes(state: 'answer')
+        expect(sipgate_event('out', 'event=hangup&direction=out&callId=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711')).to have_attributes(state: 'hangup', comment: 'normalClearing')
+      end
 
-      travel 1.second
+      it 'maps an inbound call through all of its events', :aggregate_failures do
+        expect(sipgate_event('in', 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-3&user%5B%5D=user+1')).to have_attributes(
+          direction: 'in', from: '4912347114711', from_comment: 'CallerId Customer1',
+          to: '4930600000000', to_comment: 'user 1', state: 'newCall', done: false
+        )
+        expect(sipgate_event('in', 'event=answer&direction=in&callId=1234567890-3&to=4930600000000&from=4912347114711')).to have_attributes(state: 'answer')
+        expect(sipgate_event('in', 'event=hangup&direction=in&callId=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711')).to have_attributes(state: 'hangup', comment: 'normalClearing')
+      end
 
-      # outbound - II - new call
-      params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-2&user%5B%5D=user+1'
-      post "/api/v1/sipgate/#{token}/out", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(true)
+      it 'names the user given on answer, e.g. the voicemail', :aggregate_failures do
+        expect(sipgate_event('in', 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-4&user%5B%5D=user+1,user+2')).to have_attributes(to_comment: 'user 1,user 2')
+        expect(sipgate_event('in', 'event=answer&direction=in&callId=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail')).to have_attributes(to_comment: 'voicemail')
+      end
 
-      travel 1.second
+      it 'names every customer sharing the caller number' do
+        expect(sipgate_event('in', 'event=newCall&direction=in&to=4930600000000&from=49999992222222&callId=1234567890-6&user%5B%5D=user+1,user+2'))
+          .to have_attributes(from_comment: 'CallerId Customer3,CallerId Customer2')
+      end
 
-      # outbound - II - answer by customer
-      params = 'event=answer&direction=out&callId=1234567890-2&from=4930600000000&to=4912347114711'
-      post "/api/v1/sipgate/#{token}/out", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
+      it 'lists the logged calls to agents only', :aggregate_failures do
+        sipgate_event('in', 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-1&user%5B%5D=user+1')
+        travel 1.second
+        sipgate_event('in', 'event=newCall&direction=in&to=4930600000000&from=49999992222222&callId=1234567890-2&user%5B%5D=user+1')
 
-      travel 1.second
+        get '/api/v1/cti/log'
+        expect(response).to have_http_status(:forbidden)
 
-      # outbound - II - hangup by customer
-      params = 'event=hangup&direction=out&callId=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
-      post "/api/v1/sipgate/#{token}/out", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-
-      travel 1.second
-
-      # inbound - I - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-3&user%5B%5D=user+1'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-
-      travel 1.second
-
-      # inbound - I - answer by customer
-      params = 'event=answer&direction=in&callId=1234567890-3&to=4930600000000&from=4912347114711'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-
-      travel 1.second
-
-      # inbound - I - hangup by customer
-      params = 'event=hangup&direction=in&callId=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-
-      travel 1.second
-
-      # inbound - II - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-4&user%5B%5D=user+1,user+2'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-
-      travel 1.second
-
-      # inbound - II - answer by voicemail
-      params = 'event=answer&direction=in&callId=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('voicemail')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-
-      travel 1.second
-
-      # inbound - II - hangup by customer
-      params = 'event=hangup&direction=in&callId=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('voicemail')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-
-      travel 1.second
-
-      # inbound - III - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-5&user%5B%5D=user+1,user+2'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-5')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-
-      travel 1.second
-
-      # inbound - III - hangup by customer
-      params = 'event=hangup&direction=in&callId=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-5')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-
-      travel 1.second
-
-      # inbound - IV - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=49999992222222&callId=1234567890-6&user%5B%5D=user+1,user+2'
-      post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-6')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('49999992222222')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer3,CallerId Customer2')
-      expect(log.preferences['to']).to be_falsey
-      expect(log.preferences['from']).to be_truthy
-      expect(log.comment).to be_nil
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-
-      # get caller list
-      get '/api/v1/cti/log'
-      expect(response).to have_http_status(:forbidden)
-
-      authenticated_as(agent)
-      get '/api/v1/cti/log', as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response['list']).to be_a(Array)
-      expect(json_response['list'].count).to eq(6)
-      expect(json_response['assets']).to be_truthy
-      expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer2.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer3.id.to_s]).to be_truthy
-      expect(json_response['list'][0]['call_id']).to eq('1234567890-6')
-      expect(json_response['list'][1]['call_id']).to eq('1234567890-5')
-      expect(json_response['list'][2]['call_id']).to eq('1234567890-4')
-      expect(json_response['list'][3]['call_id']).to eq('1234567890-3')
-      expect(json_response['list'][4]['call_id']).to eq('1234567890-2')
-      expect(json_response['list'][4]['state']).to eq('hangup')
-      expect(json_response['list'][4]['from']).to eq('4930777000000')
-      expect(json_response['list'][4]['from_comment']).to eq('user 1')
-      expect(json_response['list'][4]['to']).to eq('4912347114711')
-      expect(json_response['list'][4]['to_comment']).to eq('CallerId Customer1')
-      expect(json_response['list'][4]['comment']).to eq('normalClearing')
-      expect(json_response['list'][4]['state']).to eq('hangup')
-      expect(json_response['list'][5]['call_id']).to eq('1234567890-1')
+        authenticated_as(agent)
+        get '/api/v1/cti/log', as: :json
+        expect(response).to have_http_status(:ok)
+        expect(json_response['list'].pluck('call_id')).to eq(%w[1234567890-2 1234567890-1])
+      end
     end
 
     it 'alternative fqdn' do

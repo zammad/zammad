@@ -421,6 +421,49 @@ RSpec.describe Cti::Log do
       end
     end
 
+    context 'with the timing of a whole call' do
+      let(:event) { 'newCall' }
+
+      def process(event, **extra)
+        described_class.process(attributes.merge('event' => event, **extra))
+      end
+
+      it 'records waiting and talking time of an answered call', :aggregate_failures do
+        freeze_time
+        process('newCall')
+        travel 2.seconds
+        process('answer')
+
+        expect(described_class.last).to have_attributes(start_at: Time.zone.now, duration_waiting_time: 2, end_at: nil, duration_talking_time: nil)
+
+        travel 3.seconds
+        process('hangup', 'cause' => 'normalClearing')
+
+        expect(described_class.last).to have_attributes(end_at: Time.zone.now, duration_waiting_time: 2, duration_talking_time: 3, comment: 'normalClearing')
+      end
+
+      it 'records only the waiting time of an unanswered call', :aggregate_failures do
+        freeze_time
+        process('newCall')
+        travel 2.seconds
+        process('hangup', 'cause' => 'cancel')
+
+        expect(described_class.last).to have_attributes(start_at: nil, end_at: Time.zone.now, duration_waiting_time: 2, duration_talking_time: nil)
+      end
+
+      it 'marks an outbound call as done right away' do
+        process('newCall', 'direction' => 'out')
+
+        expect(described_class.last).to have_attributes(done: true, queue: '49123456', from_comment: 'user 1')
+      end
+
+      it 'joins a list of users into one comment' do
+        process('newCall', 'user' => ['user 1', 'user 2'])
+
+        expect(described_class.last.to_comment).to eq('user 1, user 2')
+      end
+    end
+
     context 'for preferences.from verification', performs_jobs: true do
       subject(:log) do
         described_class.process(attributes)

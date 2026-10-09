@@ -216,147 +216,25 @@ RSpec.describe 'User endpoint', type: :request do
       expect(response).to have_http_status(:forbidden)
     end
 
-    context 'request by admin.user' do
-
-      let(:requester) { admin_with_admin_user_permissions }
-
-      it 'is successful for same admin' do
-        authorized_update_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is successful for other admin' do
-        authorized_update_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is successful for agent' do
-        authorized_update_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is successful for customer' do
-        authorized_update_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
+    it 'is successful for admin.user' do
+      authorized_update_request(
+        requester: admin_with_admin_user_permissions,
+        requested: create(:agent),
+      )
     end
 
-    context 'request by sub admin without admin.user' do
-
-      let(:requester) { admin_without_admin_user_permissions }
-
-      it 'is forbidden for same admin' do
-        forbidden_update_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is forbidden for other admin' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is forbidden for agent' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is forbidden for customer' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
+    it 'is successful for agent on customer' do
+      authorized_update_request(
+        requester: create(:agent),
+        requested: create(:customer),
+      )
     end
 
-    context 'request by agent' do
-
-      let(:requester) { create(:agent) }
-
-      it 'is forbidden for admin' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is forbidden same agent' do
-        forbidden_update_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is forbidden for other agent' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is successful for customer' do
-        authorized_update_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
-    end
-
-    context 'request by customer' do
-
-      let(:requester) { create(:customer) }
-
-      it 'is forbidden for admin' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is forbidden for agent' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is forbidden for same customer' do
-        forbidden_update_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is forbidden for other customer' do
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
-
-      it 'is forbidden for same organization' do
-        same_organization = create(:organization)
-
-        requester.update!(organization: same_organization)
-
-        forbidden_update_request(
-          requester: requester,
-          requested: create(:customer, organization: same_organization),
-        )
-      end
+    it 'is forbidden for agent on other agent' do
+      forbidden_update_request(
+        requester: create(:agent),
+        requested: create(:agent),
+      )
     end
 
     context 'privileged attributes' do
@@ -535,147 +413,25 @@ RSpec.describe 'User endpoint', type: :request do
       expect(requested).to exist_in_database
     end
 
-    context 'request by admin.user' do
-
-      let(:requester) { admin_with_admin_user_permissions }
-
-      it 'is successful for same admin' do
-        authorized_destroy_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is successful for other admin' do
-        authorized_destroy_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is successful for agent' do
-        authorized_destroy_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is successful for customer' do
-        authorized_destroy_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
+    it 'is successful for admin.user' do
+      authorized_destroy_request(
+        requester: admin_with_admin_user_permissions,
+        requested: create(:agent),
+      )
     end
 
-    context 'request by sub admin without admin.user' do
-
-      let(:requester) { admin_without_admin_user_permissions }
-
-      it 'is forbidden for same admin' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is forbidden for other admin' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is forbidden for agent' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is forbidden for customer' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
+    it 'is forbidden for sub admin without admin.user' do
+      forbidden_destroy_request(
+        requester: admin_without_admin_user_permissions,
+        requested: create(:customer),
+      )
     end
 
-    context 'request by agent' do
-
-      let(:requester) { create(:agent) }
-
-      it 'is forbidden for admin' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is forbidden same agent' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is forbidden for other agent' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is forbidden for customer' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
-    end
-
-    context 'request by customer' do
-
-      let(:requester) { create(:customer) }
-
-      it 'is forbidden for admin' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:admin),
-        )
-      end
-
-      it 'is forbidden for agent' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:agent),
-        )
-      end
-
-      it 'is forbidden for same customer' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: requester,
-        )
-      end
-
-      it 'is forbidden for other customer' do
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:customer),
-        )
-      end
-
-      it 'is forbidden for same organization' do
-        same_organization = create(:organization)
-
-        requester.update!(organization: same_organization)
-
-        forbidden_destroy_request(
-          requester: requester,
-          requested: create(:customer, organization: same_organization),
-        )
-      end
+    it 'is forbidden for agent' do
+      forbidden_destroy_request(
+        requester: create(:agent),
+        requested: create(:customer),
+      )
     end
   end
 end

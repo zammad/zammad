@@ -123,10 +123,13 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
         expect(response).to have_http_status(:not_found)
       end
 
-      it 'raises error when user has no permissions', authenticated_as: :other_agent do
+      it 'raises error when user has no permissions', :aggregate_failures, authenticated_as: :other_agent do
+        draft = create(:ticket_shared_draft_zoom, ticket: ticket)
+
         delete path, as: :json
 
         expect(response).to have_http_status(:forbidden)
+        expect(Ticket::SharedDraftZoom).to exist(draft.id)
       end
     end
 
@@ -148,12 +151,13 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
           .by(1)
       end
 
-      it 'returns success if draft has no attachments' do
+      it 'returns success if draft has no attachments', :aggregate_failures do
         create(:ticket_shared_draft_zoom, ticket: ticket)
 
         post import_path, params: params, as: :json
 
         expect(response).to have_http_status(:ok)
+        expect(Store.list(object: 'UploadCache', o_id: form_id)).to be_empty
       end
     end
   end

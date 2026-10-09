@@ -48,6 +48,7 @@ RSpec.describe 'GettingStarted', :aggregate_failures, type: :request do
 
         get '/api/v1/getting_started', as: :json
 
+        expect(json_response).to include('import_mode' => true)
         expect(json_response.keys).not_to include('groups', 'addresses', 'config', 'channel_driver')
       end
 
@@ -72,6 +73,7 @@ RSpec.describe 'GettingStarted', :aggregate_failures, type: :request do
           get '/api/v1/getting_started', as: :json
 
           expect(response).to have_http_status(:ok)
+          expect(json_response).to include('import_mode' => true)
           expect(json_response.keys).not_to include('groups', 'addresses', 'config', 'channel_driver')
         end
       end
@@ -256,6 +258,7 @@ RSpec.describe 'GettingStarted', :aggregate_failures, type: :request do
 
         get '/api/v1/getting_started/auto_wizard', as: :json
 
+        expect(json_response).to include('import_mode' => true)
         expect(json_response.keys).not_to include('groups', 'addresses', 'config', 'channel_driver')
       end
     end

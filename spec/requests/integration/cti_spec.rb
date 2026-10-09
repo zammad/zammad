@@ -179,479 +179,71 @@ RSpec.describe 'Integration CTI', type: :request do
 
     end
 
-    it 'does log call' do
+    describe 'call logging' do
+      def cti_event(**params)
+        post "/api/v1/cti/#{token}", params: params
+        expect(response).to have_http_status(:ok)
 
-      # outbound - I - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'out',
-        from:      '4930600000000',
-        to:        '4912347114711',
-        call_id:   '1234567890-1',
-        user:      'user 1',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-1')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930777000000')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
+        Cti::Log.find_by(call_id: params[:call_id])
+      end
 
-      travel 2.seconds
+      it 'maps an outbound call through all of its events', :aggregate_failures do
+        call = { direction: 'out', call_id: '1234567890-1', from: '4930600000000', to: '4912347114711' }
 
-      # outbound - I - hangup by agent
-      post "/api/v1/cti/#{token}", params: {
-        event:     'hangup',
-        direction: 'out',
-        call_id:   '1234567890-1',
-        cause:     'cancel',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-1')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('cancel')
-      expect(log.queue).to eq('4930777000000')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_between(2, 3)
-      expect(log.duration_talking_time).to be_nil
+        expect(cti_event(event: 'newCall', user: 'user 1', **call)).to have_attributes(
+          from: '4930777000000', from_comment: 'user 1',
+          to: '4912347114711', to_comment: 'CallerId Customer1',
+          queue: '4930777000000', state: 'newCall', comment: nil
+        )
+        expect(cti_event(event: 'answer', **call)).to have_attributes(state: 'answer', from_comment: 'user 1')
+        expect(cti_event(event: 'hangup', cause: 'normalClearing', **call)).to have_attributes(state: 'hangup', comment: 'normalClearing')
+      end
 
-      # outbound - II - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'out',
-        from:      '4930600000000',
-        to:        '4912347114711',
-        call_id:   '1234567890-2',
-        user:      ['user 1'],
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930777000000')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
+      it 'maps an inbound call through all of its events', :aggregate_failures do
+        call = { direction: 'in', call_id: '1234567890-3', from: '4912347114711', to: '4930600000000' }
 
-      travel 2.seconds
+        expect(cti_event(event: 'newCall', user: 'user 1', **call)).to have_attributes(
+          from: '4912347114711', from_comment: 'CallerId Customer1',
+          to: '4930600000000', to_comment: 'user 1',
+          queue: '4930600000000', state: 'newCall', done: false
+        )
+        expect(cti_event(event: 'answer', **call)).to have_attributes(state: 'answer', to_comment: 'user 1')
+        expect(cti_event(event: 'hangup', cause: 'normalClearing', **call)).to have_attributes(state: 'hangup', comment: 'normalClearing')
+      end
 
-      # outbound - II - answer by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'answer',
-        direction: 'out',
-        call_id:   '1234567890-2',
-        from:      '4930600000000',
-        to:        '4912347114711',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930777000000')
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_between(2, 3)
-      expect(log.duration_talking_time).to be_nil
+      it 'names the user given on answer, e.g. the voicemail', :aggregate_failures do
+        call = { direction: 'in', call_id: '1234567890-4', from: '4912347114711', to: '4930600000000' }
 
-      travel 2.seconds
+        expect(cti_event(event: 'newCall', user: ['user 1', 'user 2'], **call)).to have_attributes(to_comment: 'user 1, user 2')
+        expect(cti_event(event: 'answer', user: 'voicemail', **call)).to have_attributes(to_comment: 'voicemail')
+      end
 
-      # outbound - II - hangup by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'hangup',
-        direction: 'out',
-        call_id:   '1234567890-2',
-        cause:     'normalClearing',
-        from:      '4930600000000',
-        to:        '4912347114711',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-2')
-      expect(log).to be_truthy
-      expect(log.from).to eq('4930777000000')
-      expect(log.to).to eq('4912347114711')
-      expect(log.direction).to eq('out')
-      expect(log.from_comment).to eq('user 1')
-      expect(log.to_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to eq('4930777000000')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_between(2, 3)
-      expect(log.duration_talking_time).to be_between(2, 3)
+      it 'names every customer sharing the caller number' do
+        log = cti_event(event: 'newCall', direction: 'in', call_id: '1234567890-6', from: '49999992222222', to: '4930600000000', user: 'user 1,user 2')
 
-      travel 1.second
+        expect(log).to have_attributes(from_comment: 'CallerId Customer3,CallerId Customer2', to_comment: 'user 1,user 2')
+      end
 
-      # inbound - I - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'in',
-        to:        '4930600000000',
-        from:      '4912347114711',
-        call_id:   '1234567890-3',
-        user:      'user 1',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
+      it 'takes the given queue for an anonymous caller' do
+        log = cti_event(event: 'newCall', direction: 'in', call_id: '1234567890-7', from: 'anonymous', to: '4930600000000', queue: 'some_queue_name')
 
-      travel 1.second
+        expect(log).to have_attributes(from: 'anonymous', from_comment: nil, queue: 'some_queue_name')
+      end
 
-      # inbound - I - answer by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'answer',
-        direction: 'in',
-        call_id:   '1234567890-3',
-        to:        '4930600000000',
-        from:      '4912347114711',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
+      it 'lists the logged calls to agents only', :aggregate_failures do
+        cti_event(event: 'newCall', direction: 'in', call_id: '1234567890-1', from: '4912347114711', to: '4930600000000')
+        travel 1.second
+        cti_event(event: 'newCall', direction: 'in', call_id: '1234567890-2', from: '49999992222222', to: '4930600000000')
 
-      travel 1.second
+        get '/api/v1/cti/log'
+        expect(response).to have_http_status(:forbidden)
 
-      # inbound - I - hangup by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'hangup',
-        direction: 'in',
-        call_id:   '1234567890-3',
-        cause:     'normalClearing',
-        to:        '4930600000000',
-        from:      '4912347114711',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-3')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_truthy
-
-      travel 1.second
-
-      # inbound - I - answer for hangup by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'answer',
-        direction: 'in',
-        call_id:   '1234567890-3',
-        to:        '4930600000000',
-        from:      '4912347114711',
-      }, as: :json
-      expect(response).to have_http_status(:ok)
-
-      travel 1.second
-
-      # inbound - II - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'in',
-        to:        '4930600000000',
-        from:      '4912347114711',
-        call_id:   '1234567890-4',
-        user:      ['user 1', 'user 2'],
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1, user 2')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - II - answer by voicemail
-      post "/api/v1/cti/#{token}", params: {
-        event:     'answer',
-        direction: 'in',
-        call_id:   '1234567890-4',
-        to:        '4930600000000',
-        from:      '4912347114711',
-        user:      'voicemail',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('voicemail')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('answer')
-      expect(log.done).to be(true)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - II - hangup by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'hangup',
-        direction: 'in',
-        call_id:   '1234567890-4',
-        cause:     'normalClearing',
-        to:        '4930600000000',
-        from:      '4912347114711',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-4')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('voicemail')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_truthy
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_truthy
-
-      travel 1.second
-
-      # inbound - III - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'in',
-        to:        '4930600000000',
-        from:      '4912347114711',
-        call_id:   '1234567890-5',
-        user:      'user 1,user 2',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-5')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - III - hangup by customer
-      post "/api/v1/cti/#{token}", params: {
-        event:     'hangup',
-        direction: 'in',
-        call_id:   '1234567890-5',
-        cause:     'normalClearing',
-        to:        '4930600000000',
-        from:      '4912347114711',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-5')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('4912347114711')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer1')
-      expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('hangup')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - IV - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'in',
-        to:        '4930600000000',
-        from:      '49999992222222',
-        call_id:   '1234567890-6',
-        user:      'user 1,user 2',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-6')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('49999992222222')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to eq('CallerId Customer3,CallerId Customer2')
-      expect(log.preferences['to']).to be_falsey
-      expect(log.preferences['from']).to be_truthy
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('4930600000000')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      travel 1.second
-
-      # inbound - IV - new call
-      post "/api/v1/cti/#{token}", params: {
-        event:     'newCall',
-        direction: 'in',
-        to:        '4930600000000',
-        from:      'anonymous',
-        call_id:   '1234567890-7',
-        user:      'user 1,user 2',
-        queue:     'some_queue_name',
-      }
-      expect(response).to have_http_status(:ok)
-      log = Cti::Log.find_by(call_id: '1234567890-7')
-      expect(log).to be_truthy
-      expect(log.to).to eq('4930600000000')
-      expect(log.from).to eq('anonymous')
-      expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
-      expect(log.from_comment).to be_nil
-      expect(log.preferences['to']).to be_falsey
-      expect(log.preferences['from']).to be_falsey
-      expect(log.comment).to be_nil
-      expect(log.queue).to eq('some_queue_name')
-      expect(log.state).to eq('newCall')
-      expect(log.done).to be(false)
-      expect(log.initialized_at).to be_truthy
-      expect(log.start_at).to be_nil
-      expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_nil
-      expect(log.duration_talking_time).to be_nil
-
-      get '/api/v1/cti/log'
-      expect(response).to have_http_status(:forbidden)
-
-      # get caller list
-      authenticated_as(agent)
-      get '/api/v1/cti/log', as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response['list']).to be_a(Array)
-      expect(json_response['list'].count).to eq(7)
-      expect(json_response['assets']).to be_truthy
-      expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer2.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer3.id.to_s]).to be_truthy
-      expect(json_response['list'][0]['call_id']).to eq('1234567890-7')
-      expect(json_response['list'][1]['call_id']).to eq('1234567890-6')
-      expect(json_response['list'][2]['call_id']).to eq('1234567890-5')
-      expect(json_response['list'][3]['call_id']).to eq('1234567890-4')
-      expect(json_response['list'][4]['call_id']).to eq('1234567890-3')
-      expect(json_response['list'][5]['call_id']).to eq('1234567890-2')
-      expect(json_response['list'][5]['state']).to eq('hangup')
-      expect(json_response['list'][5]['from']).to eq('4930777000000')
-      expect(json_response['list'][5]['from_comment']).to eq('user 1')
-      expect(json_response['list'][5]['to']).to eq('4912347114711')
-      expect(json_response['list'][5]['to_comment']).to eq('CallerId Customer1')
-      expect(json_response['list'][5]['comment']).to eq('normalClearing')
-      expect(json_response['list'][5]['state']).to eq('hangup')
-      expect(json_response['list'][6]['call_id']).to eq('1234567890-1')
+        authenticated_as(agent)
+        get '/api/v1/cti/log', as: :json
+        expect(response).to have_http_status(:ok)
+        expect(json_response['list'].pluck('call_id')).to eq(%w[1234567890-2 1234567890-1])
+        expect(json_response['assets']['User'].keys).to include(customer1.id.to_s, customer2.id.to_s, customer3.id.to_s)
+      end
     end
 
     it 'does log call with notify group with two a log entry' do

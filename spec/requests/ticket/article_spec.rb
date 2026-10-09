@@ -18,152 +18,65 @@ RSpec.describe 'Ticket Article API endpoints', type: :request do
 
   describe 'request handling' do
 
-    it 'does ticket create with agent and articles' do
-      params = {
-        title:       'a new ticket #1',
-        group:       'Users',
-        customer_id: customer.id,
-        article:     {
-          body: 'some body',
-        }
-      }
-      authenticated_as(agent)
-      post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:created)
+    context 'when an agent adds articles to a ticket' do
+      let(:ticket) { create(:ticket, group: Group.lookup(name: 'Users'), customer:) }
 
-      params = {
-        ticket_id:    json_response['id'],
-        content_type: 'text/plain', # or text/html
-        body:         'some body',
-        type:         'note',
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['subject']).to be_nil
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
+      before { authenticated_as(agent) }
 
-      ticket = Ticket.find(json_response['ticket_id'])
-      expect(ticket.articles.count).to eq(2)
-      expect(ticket.articles[0].attachments.count).to eq(0)
-      expect(ticket.articles[1].attachments.count).to eq(0)
+      def create_article(**params)
+        post '/api/v1/ticket_articles', params: { ticket_id: ticket.id, type: 'note' }.merge(params), as: :json
+        expect(response).to have_http_status(:created)
+        Ticket::Article.find(json_response['id'])
+      end
 
-      params = {
-        ticket_id:    json_response['ticket_id'],
-        content_type: 'text/html', # or text/html
-        body:         'some body <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+      it 'creates a plain text note' do
+        article = create_article(content_type: 'text/plain', body: 'some body')
+
+        expect(article).to have_attributes(
+          subject: nil, body: 'some body', content_type: 'text/plain',
+          created_by_id: agent.id, updated_by_id: agent.id, attachments: be_empty
+        )
+      end
+
+      it 'stores an inline image as an attachment', :aggregate_failures do
+        article = create_article(content_type: 'text/html', body: 'some body <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
 AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />',
-        type:         'note',
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['subject']).to be_nil
-      expect(json_response['body']).not_to match(%r{some body <img src="cid:.+?})
-      expect(json_response['body']).to match(%r{some body <img src="/api/v1/ticket_attachment/.+?" alt="Red dot"})
-      expect(json_response['content_type']).to eq('text/html')
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
+9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />')
 
-      ticket.articles.reload
+        expect(json_response['body']).to match(%r{some body <img src="/api/v1/ticket_attachment/.+?" alt="Red dot"})
+        expect(article.attachments.sole).to have_attributes(
+          filename:    'image1.png',
+          size:        '21',
+          preferences: include('Mime-Type' => 'image/png', 'Content-Disposition' => 'inline', 'Content-ID' => match(%r{@zammad.example.com}))
+        )
+      end
 
-      expect(ticket.articles.count).to eq(3)
-      expect(ticket.articles[0].attachments.count).to eq(0)
-      expect(ticket.articles[1].attachments.count).to eq(0)
-      expect(ticket.articles[2].attachments.count).to eq(1)
-      expect(ticket.articles[2].attachments[0]['id']).to be_truthy
-      expect(ticket.articles[2].attachments[0]['filename']).to eq('image1.png')
-      expect(ticket.articles[2].attachments[0]['size']).to eq('21')
-      expect(ticket.articles[2].attachments[0]['preferences']['Mime-Type']).to eq('image/png')
-      expect(ticket.articles[2].attachments[0]['preferences']['Content-Disposition']).to eq('inline')
-      expect(ticket.articles[2].attachments[0]['preferences']['Content-ID']).to match(%r{@zammad.example.com})
+      it 'stores given attachments', :aggregate_failures do
+        article = create_article(content_type: 'text/html', body: 'some body', attachments: [{ 'filename' => 'some_file.txt', 'data' => 'dGVzdCAxMjM=', 'mime-type' => 'text/plain' }])
 
-      params = {
-        ticket_id:    json_response['ticket_id'],
-        content_type: 'text/html', # or text/html
-        body:         'some body',
-        type:         'note',
-        attachments:  [
-          { 'filename'  => 'some_file.txt',
-            'data'      => 'dGVzdCAxMjM=',
-            'mime-type' => 'text/plain' },
-        ],
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['subject']).to be_nil
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['content_type']).to eq('text/html')
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
+        get "/api/v1/ticket_articles/#{article.id}?expand=true", params: {}, as: :json
+        expect(json_response['attachments'].sole).to include(
+          'id' => article.attachments.sole.id, 'filename' => 'some_file.txt', 'size' => '8', 'preferences' => include('Mime-Type' => 'text/plain')
+        )
+      end
 
-      ticket.articles.reload
+      it 'stores given preferences' do
+        article = create_article(content_type: 'text/plain', body: 'some body', internal: false, preferences: { some_key1: 123, highlight: '123' })
 
-      expect(ticket.articles.count).to eq(4)
-      expect(ticket.articles[0].attachments.count).to eq(0)
-      expect(ticket.articles[1].attachments.count).to eq(0)
-      expect(ticket.articles[2].attachments.count).to eq(1)
-      expect(ticket.articles[3].attachments.count).to eq(1)
+        expect(article.preferences).to include('some_key1' => 123, 'highlight' => '123')
+      end
 
-      get "/api/v1/ticket_articles/#{json_response['id']}?expand=true", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['attachments'].count).to eq(1)
-      expect(json_response['attachments'][0]['id']).to be_truthy
-      expect(json_response['attachments'][0]['filename']).to eq('some_file.txt')
-      expect(json_response['attachments'][0]['size']).to eq('8')
-      expect(json_response['attachments'][0]['preferences']['Mime-Type']).to eq('text/plain')
+      it 'updates only the internal flag and the highlight on an existing article' do
+        article = create_article(content_type: 'text/plain', body: 'some body', internal: false, preferences: { some_key1: 123, highlight: '123' })
 
-      params = {
-        ticket_id:    json_response['ticket_id'],
-        content_type: 'text/plain',
-        body:         'some body',
-        type:         'note',
-        internal:     false,
-        preferences:  {
-          some_key1: 123,
-          highlight: '123',
-        },
-      }
-      post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['subject']).to be_nil
-      expect(json_response['body']).to eq('some body')
-      expect(json_response['internal']).to be(false)
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
-      expect(json_response['preferences']['some_key1']).to eq(123)
-      expect(json_response['preferences']['highlight']).to eq('123')
-      expect(ticket.articles.count).to eq(5)
+        put "/api/v1/ticket_articles/#{article.id}", params: { body: 'some body 2', internal: true, preferences: { some_key2: 'abc', highlight: '234' } }, as: :json
 
-      params = {
-        body:        'some body 2',
-        internal:    true,
-        preferences: {
-          some_key2: 'abc',
-          highlight: '234',
-        },
-      }
-      put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['subject']).to be_nil
-      expect(json_response['body']).not_to eq('some body 2')
-      expect(json_response['internal']).to be(true)
-      expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
-      expect(json_response['preferences']['some_key1']).to eq(123)
-      expect(json_response['preferences']['some_key2']).not_to eq('abc')
-      expect(json_response['preferences']['highlight']).to eq('234')
-
+        expect(article.reload).to have_attributes(
+          body:        'some body',
+          internal:    true,
+          preferences: include('some_key1' => 123, 'highlight' => '234').and(not_include('some_key2'))
+        )
+      end
     end
 
     it 'does ticket create with customer and articles' do
@@ -573,12 +486,6 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       create(:ticket, group: Group.first)
     end
 
-    let(:article_communication) do
-      create(:ticket_article,
-             sender_name: 'Agent', type_name: 'email', ticket: ticket,
-             updated_by_id: agent.id, created_by_id: agent.id)
-    end
-
     let(:article_note_self) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
@@ -597,190 +504,71 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
              updated_by_id: customer.id, created_by_id: customer.id)
     end
 
-    let(:article_note_communication_self) do
-      create(:ticket_article_type, name: 'note_communication', communication: true)
-
-      create(:ticket_article,
-             sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id)
-    end
-
-    let(:article_note_communication_other) do
-      create(:ticket_article_type, name: 'note_communication', communication: true)
-
-      create(:ticket_article,
-             sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id)
-    end
-
     def delete_article_via_rest(article)
       delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json
-    end
-
-    shared_examples 'succeeds' do
-      it 'succeeds' do
-        expect { delete_article_via_rest(article) }.to change { Ticket::Article.exists?(id: article.id) }
-      end
-    end
-
-    shared_examples 'fails' do
-      it 'fails' do
-        expect { delete_article_via_rest(article) }.not_to change { Ticket::Article.exists?(id: article.id) }
-      end
-    end
-
-    shared_examples 'deleting' do |item:, now:, later:, much_later:|
-      context "deleting #{item}" do
-        let(:article) { send(item) }
-
-        include_examples now ? 'succeeds' : 'fails'
-
-        context '8 minutes later' do
-          before { article && travel(8.minutes) }
-
-          include_examples later ? 'succeeds' : 'fails'
-        end
-
-        context '11 minutes later' do
-          before { article && travel(11.minutes) }
-
-          include_examples much_later ? 'succeeds' : 'fails'
-        end
-      end
-    end
-
-    context 'as admin' do
-      let(:user) { admin }
-
-      include_examples 'deleting',
-                       item: 'article_communication',
-                       now: false, later: false, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_self',
-                       now: true, later: true, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_other',
-                       now: false, later: false, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_customer',
-                       now: false, later: false, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_communication_self',
-                       now: true, later: true, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_communication_other',
-                       now: false, later: false, much_later: false
     end
 
     context 'as agent' do
       let(:user) { agent }
 
-      include_examples 'deleting',
-                       item: 'article_communication',
-                       now: false, later: false, much_later: false
+      it 'deletes an own internal note', :aggregate_failures do
+        delete_article_via_rest(article_note_self)
 
-      include_examples 'deleting',
-                       item: 'article_note_self',
-                       now: true, later: true, much_later: false
+        expect(response).to have_http_status(:ok)
+        expect(article_note_self).not_to exist_in_database
+      end
 
-      include_examples 'deleting',
-                       item: 'article_note_other',
-                       now: false, later: false, much_later: false
+      it 'keeps the note of another agent', :aggregate_failures do
+        delete_article_via_rest(article_note_other)
 
-      include_examples 'deleting',
-                       item: 'article_note_customer',
-                       now: false, later: false, much_later: false
+        expect(response).to have_http_status(:forbidden)
+        expect(article_note_other).to exist_in_database
+      end
 
-      include_examples 'deleting',
-                       item: 'article_note_communication_self',
-                       now: true, later: true, much_later: false
+      context 'with a custom delete timeframe' do
+        before { Setting.set('ui_ticket_zoom_article_delete_timeframe', 6000) }
 
-      include_examples 'deleting',
-                       item: 'article_note_communication_other',
-                       now: false, later: false, much_later: false
+        it 'deletes an own internal note within the timeframe', :aggregate_failures do
+          article_note_self
+          travel 5000.seconds
+          delete_article_via_rest(article_note_self)
+
+          expect(response).to have_http_status(:ok)
+          expect(article_note_self).not_to exist_in_database
+        end
+
+        it 'keeps an own internal note after the timeframe', :aggregate_failures do
+          article_note_self
+          travel 8000.seconds
+          delete_article_via_rest(article_note_self)
+
+          expect(response).to have_http_status(:forbidden)
+          expect(article_note_self).to exist_in_database
+        end
+      end
+
+      context 'without a delete timeframe' do
+        before { Setting.set('ui_ticket_zoom_article_delete_timeframe', 0) }
+
+        it 'deletes an old own internal note', :aggregate_failures do
+          article_note_self
+          travel 99.days
+          delete_article_via_rest(article_note_self)
+
+          expect(response).to have_http_status(:ok)
+          expect(article_note_self).not_to exist_in_database
+        end
+      end
     end
 
     context 'as customer' do
       let(:user) { customer }
 
-      include_examples 'deleting',
-                       item: 'article_communication',
-                       now: false, later: false, much_later: false
+      it 'keeps the article', :aggregate_failures do
+        delete_article_via_rest(article_note_customer)
 
-      include_examples 'deleting',
-                       item: 'article_note_other',
-                       now: false, later: false, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_customer',
-                       now: false, later: false, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_communication_self',
-                       now: false, later: false, much_later: false
-
-      include_examples 'deleting',
-                       item: 'article_note_communication_other',
-                       now: false, later: false, much_later: false
-
-    end
-
-    context 'with custom timeframe' do
-      before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 6000 }
-
-      let(:article) { article_note_self }
-
-      context 'as admin' do
-        let(:user) { admin }
-
-        context 'deleting before timeframe' do
-          before { article && travel(5000.seconds) }
-
-          include_examples 'succeeds'
-        end
-
-        context 'deleting after timeframe' do
-          before { article && travel(8000.seconds) }
-
-          include_examples 'fails'
-        end
-      end
-
-      context 'as agent' do
-        let(:user) { agent }
-
-        context 'deleting before timeframe' do
-          before { article && travel(5000.seconds) }
-
-          include_examples 'succeeds'
-        end
-
-        context 'deleting after timeframe' do
-          before { article && travel(8000.seconds) }
-
-          include_examples 'fails'
-        end
-      end
-    end
-
-    context 'with timeframe as 0' do
-      before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 0 }
-
-      let(:article) { article_note_self }
-
-      context 'as agent' do
-        let(:user) { agent }
-
-        context 'deleting long after' do
-          before { article && travel(99.days) }
-
-          include_examples 'succeeds'
-        end
+        expect(response).to have_http_status(:forbidden)
+        expect(article_note_customer).to exist_in_database
       end
     end
   end

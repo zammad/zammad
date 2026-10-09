@@ -282,7 +282,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
       let(:headers) { { 'X-Forwarded-User' => login } }
       let(:login)   { User.last.login }
 
-      it 'returns a new user-session response' do
+      it 'returns forbidden response' do
         get '/auth/sso', as: :json, headers: headers
 
         expect(response).to have_http_status(:forbidden)

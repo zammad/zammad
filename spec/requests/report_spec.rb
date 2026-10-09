@@ -72,12 +72,10 @@ RSpec.describe 'Report', type: :request do
         expect(response['Content-Length']).to eq(response.body.bytesize.to_s)
       end
 
-      it 'does report example - deliver result' do
-        skip('No ES configured') if !SearchIndexBackend.enabled?
-
+      it 'does report example - deliver result in the default timezone' do
+        Setting.set('timezone_default', 'Europe/Berlin')
         authenticated_as(admin)
 
-        # 2019-03-15 - day interval
         params = {
           metric:    'count',
           year:      today.year,
@@ -91,33 +89,15 @@ RSpec.describe 'Report', type: :request do
         }
         post '/api/v1/reports/generate', params: params, as: :json
         expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1])
-
-        Setting.set('timezone_default', 'Europe/Berlin')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
         expect(json_response['data']['count::created']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1])
         expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         expect(json_response['data']['count::backlog']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1])
+      end
 
-        Setting.set('timezone_default', 'America/Chicago')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'Australia/Melbourne')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        # 2019-03 - month interval
+      it 'does report example - cover every day of the requested month' do
         Setting.set('timezone_default', 'UTC')
+        authenticated_as(admin)
+
         params = {
           metric:    'count',
           year:      today.year,
@@ -128,146 +108,9 @@ RSpec.describe 'Report', type: :request do
           },
           backends:  backends
         }
-
         post '/api/v1/reports/generate', params: params, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response['data']['count::created']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-
-        Setting.set('timezone_default', 'Europe/Berlin')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'America/Chicago')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
-
-        Setting.set('timezone_default', 'Australia/Melbourne')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(json_response['data']['count::created']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        # 2019-02 - month interval
-        Setting.set('timezone_default', 'UTC')
-        params = {
-          metric:    'count',
-          year:      today.year,
-          month:     today.month - 1,
-          timeRange: 'month',
-          profiles:  {
-            1 => true
-          },
-          backends:  backends
-        }
-
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-
-        Setting.set('timezone_default', 'Europe/Berlin')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'America/Chicago')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
-
-        Setting.set('timezone_default', 'Australia/Melbourne')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        # 2019-04 - month interval
-        Setting.set('timezone_default', 'UTC')
-        params = {
-          metric:    'count',
-          year:      today.year,
-          month:     today.month + 1,
-          timeRange: 'month',
-          profiles:  {
-            1 => true
-          },
-          backends:  backends
-        }
-
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'Europe/Berlin')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(json_response['data']['count::created']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'America/Chicago')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'Australia/Melbourne')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(json_response['data']['count::created']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        # 2019 - year interval
-        Setting.set('timezone_default', 'UTC')
-        params = {
-          metric:    'count',
-          year:      today.year,
-          timeRange: 'year',
-          profiles:  {
-            1 => true
-          },
-          backends:  backends
-        }
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 1, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 1, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'Europe/Berlin')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 8, 2, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'America/Chicago')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 2, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-        Setting.set('timezone_default', 'Australia/Melbourne')
-        post '/api/v1/reports/generate', params: params, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(json_response['data']['count::created']).to eq([0, 0, 8, 2, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        expect(json_response['data']['count::backlog']).to eq([0, 0, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0])
       end
     end
 
@@ -276,55 +119,45 @@ RSpec.describe 'Report', type: :request do
       let(:user_report_profile_unset)   { create(:report_profile, condition: { 'ticket.owner_id'=>{ 'operator' => 'is', 'pre_condition' => 'not_set', 'value' => [], 'value_completion' => '' } }) }
       let(:organization_report_profile) { create(:report_profile, condition: { 'ticket.organization_id'=>{ 'operator' => 'is', 'pre_condition' => 'current_user.organization_id', 'value' => [], 'value_completion' => '' } }) }
 
-      it 'does generate reports with current user condition' do
+      let(:organization) { create(:organization) }
+      let!(:owned_ticket)        { create(:ticket, group: Group.first, owner: admin, created_at: today) }
+      let!(:organization_ticket) { create(:ticket, customer: create(:customer, organization:), created_at: today) }
+
+      before do
+        admin.update!(organization:, group_names_access_map: { Group.first.name => 'full' })
+        searchindex_model_reload([Ticket])
         authenticated_as(admin)
+      end
+
+      def report_ticket_ids(profile)
         get '/api/v1/reports/sets', params: {
           'metric'                  => 'count',
-          'year'                    => 2025,
-          'month'                   => 1,
-          'week'                    => 3,
-          'day'                     => 15,
+          'year'                    => today.year,
+          'month'                   => today.month,
+          'day'                     => today.day,
           'timeRange'               => 'year',
           'profiles'                => {
-            user_report_profile.id.to_s => true
+            profile.id.to_s => true
           },
           'downloadBackendSelected' => 'count::created'
         }, as: :json
+
         expect(response).to have_http_status(:ok)
+        json_response['ticket_ids'].map(&:to_i)
+      end
+
+      it 'does generate reports with current user condition' do
+        expect(report_ticket_ids(user_report_profile)).to eq([owned_ticket.id])
       end
 
       it 'does generate reports with current user unset condition' do
-        authenticated_as(admin)
-        get '/api/v1/reports/sets', params: {
-          'metric'                  => 'count',
-          'year'                    => 2025,
-          'month'                   => 1,
-          'week'                    => 3,
-          'day'                     => 15,
-          'timeRange'               => 'year',
-          'profiles'                => {
-            user_report_profile_unset.id.to_s => true
-          },
-          'downloadBackendSelected' => 'count::created'
-        }, as: :json
-        expect(response).to have_http_status(:ok)
+        expect(report_ticket_ids(user_report_profile_unset))
+          .to include(organization_ticket.id)
+          .and not_include(owned_ticket.id)
       end
 
       it 'does generate reports with current organization condition' do
-        authenticated_as(admin)
-        get '/api/v1/reports/sets', params: {
-          'metric'                  => 'count',
-          'year'                    => 2025,
-          'month'                   => 1,
-          'week'                    => 3,
-          'day'                     => 15,
-          'timeRange'               => 'year',
-          'profiles'                => {
-            organization_report_profile.id.to_s => true
-          },
-          'downloadBackendSelected' => 'count::created'
-        }, as: :json
-        expect(response).to have_http_status(:ok)
+        expect(report_ticket_ids(organization_report_profile)).to eq([organization_ticket.id])
       end
     end
   end

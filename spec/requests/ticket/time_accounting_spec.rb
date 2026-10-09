@@ -34,7 +34,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
     context 'without sufficient permissions' do
       let(:policy_response) { false }
 
-      it 'returns the updated accounted time entry' do
+      it 'forbidden' do
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
 
   describe 'POST /api/v1/tickets/:ticket_id/time_accountings' do
     let(:article)       { create(:ticket_article, ticket: ticket) }
-    let(:params)        { { time_unit: 11, ticket_articke_id: article.id } }
+    let(:params)        { { time_unit: 11, ticket_article_id: article.id } }
     let(:policy_action) { :create? }
 
     before do
@@ -86,6 +86,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
         it 'returns the created accounted time entry' do
           expect(response).to have_http_status(:created)
           expect(json_response['time_unit']).to eq('11.0')
+          expect(Ticket::TimeAccounting.find(json_response['id'])).to have_attributes(ticket_id: ticket.id, ticket_article_id: article.id, time_unit: 11)
         end
       end
 
@@ -95,6 +96,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
         it 'returns the created accounted time entry' do
           expect(response).to have_http_status(:created)
           expect(json_response['time_unit']).to eq('11.0')
+          expect(Ticket::TimeAccounting.find(json_response['id'])).to have_attributes(ticket_id: ticket.id, time_unit: 11)
         end
       end
     end
@@ -104,6 +106,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
 
       it 'forbidden' do
         expect(response).to have_http_status(:forbidden)
+        expect(ticket.ticket_time_accounting).to be_empty
       end
     end
   end
@@ -121,9 +124,9 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
       let(:policy_response) { true }
 
       it 'returns the updated accounted time entry' do
-
         expect(response).to have_http_status(:ok)
         expect(json_response['time_unit']).to eq('15.0')
+        expect(time_accounting.reload.time_unit).to eq(15)
       end
     end
 
@@ -132,6 +135,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
 
       it 'forbidden' do
         expect(response).to have_http_status(:forbidden)
+        expect(time_accounting.reload.time_unit).to eq(22)
       end
     end
   end
@@ -147,7 +151,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
     context 'with sufficient permissions' do
       let(:policy_response) { true }
 
-      it 'returns the updated accounted time entry' do
+      it 'deletes the accounted time entry' do
         expect(Ticket::TimeAccounting).not_to exist(time_accounting.id)
         expect(response).to have_http_status(:ok)
       end
@@ -158,6 +162,7 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, authenticated_
 
       it 'forbidden' do
         expect(response).to have_http_status(:forbidden)
+        expect(Ticket::TimeAccounting).to exist(time_accounting.id)
       end
     end
   end
