@@ -28,7 +28,7 @@ module ActiveRecord
 
           if @limit
             @limit -= records.size
-            if @limit < size
+            if @limit < @size
               @size = @limit
             end
 
