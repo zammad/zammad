@@ -143,6 +143,7 @@ RSpec.describe 'Manage > Integration > PGP', type: :system do
 
       find('.js-updateGroup').click
 
+      wait.until { Setting.get('pgp_config').to_h.with_indifferent_access.dig(:group_id, :default_sign, '1').to_s == 'false' }
       expect(Setting.get('pgp_config'))
         .to include(
           group_id: include(
@@ -185,6 +186,7 @@ RSpec.describe 'Manage > Integration > PGP', type: :system do
   it 'enables PGP integration' do
     click 'label[for=setting-switch]'
 
-    expect(Setting.get('pgp_integration')).to be_truthy
+    wait_for_setting('pgp_integration', true)
+    expect(Setting.get('pgp_integration')).to be(true)
   end
 end

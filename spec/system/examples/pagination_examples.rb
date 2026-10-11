@@ -66,7 +66,7 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
     expect(page).to have_css('.js-pager')
     expect(page).to have_css('.js-page.btn--active', text: '1')
-    expect(page).to have_no_css('.js-tableBody table-draggable')
+    expect(page).to have_no_css('.js-tableBody .table-draggable')
 
     first_row = current_first_row
     last_row  = current_last_row
@@ -74,7 +74,7 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
     await_empty_ajax_queue
     expect(page).to have_css('.js-page.btn--active', text: '2')
-    expect(page).to have_no_css('.js-tableBody table-draggable')
+    expect(page).to have_no_css('.js-tableBody .table-draggable')
     wait_until_first_and_last_changed(first_row, last_row)
 
     first_row = current_first_row
@@ -83,7 +83,7 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
     await_empty_ajax_queue
     expect(page).to have_css('.js-page.btn--active', text: '3')
-    expect(page).to have_no_css('.js-tableBody table-draggable')
+    expect(page).to have_no_css('.js-tableBody .table-draggable')
     wait_until_first_and_last_changed(first_row, last_row)
 
     first_row = current_first_row
@@ -92,14 +92,14 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
     await_empty_ajax_queue
     expect(page).to have_css('.js-page.btn--active', text: '4')
-    expect(page).to have_no_css('.js-tableBody table-draggable')
+    expect(page).to have_no_css('.js-tableBody .table-draggable')
     wait_until_first_and_last_changed(first_row, last_row)
 
     page.first('.js-page', text: '1').click
 
     page.first(".js-tableHead[data-column-key=#{main_column}]").click
     expect(page).to have_css('.js-page.btn--active', text: '1')
-    expect(page).to have_no_css('.js-tableBody table-draggable')
+    expect(page).to have_no_css('.js-tableBody .table-draggable')
 
     first_row = current_first_row
     last_row  = current_last_row
@@ -150,7 +150,7 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
         await_empty_ajax_queue
         expect(page).to have_css('.js-page.btn--active', text: '2')
-        expect(page).to have_no_css('.js-tableBody table-draggable')
+        expect(page).to have_no_css('.js-tableBody .table-draggable')
 
         wait.until { page.find('.js-search').present? && page.find('.js-search').value == search_query && page.first('.js-pager').all('.js-page').count == 4 }
       end

@@ -28,6 +28,7 @@ RSpec.describe 'Popover', type: :system do
     visit "#ticket/zoom/#{Ticket.first.id}"
 
     # popover is not visible when moving back to the original page without moving mouse
+    expect(page).to have_css('.ticketZoom')
     expect(page).to have_no_css('.popover')
 
     within :active_content do

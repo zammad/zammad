@@ -63,7 +63,7 @@ RSpec.describe 'Manage > Role', type: :system do
     end
 
     it 'adds group permissions correctly' do
-      in_modal do
+      in_modal disappears: true do
         scroll_into_view '[data-attribute-name="group_ids"]'
 
         expect(page).to have_no_css 'table.settings-list tbody tr[data-id]'

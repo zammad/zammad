@@ -143,7 +143,6 @@ RSpec/ContextWording:
     - 'spec/system/manage/text_modules_spec.rb'
     - 'spec/system/manage/trigger_spec.rb'
     - 'spec/system/manage/users_spec.rb'
-    - 'spec/system/organization_profile_spec.rb'
     - 'spec/system/overview_spec.rb'
     - 'spec/system/profile_spec.rb'
     - 'spec/system/report_spec.rb'

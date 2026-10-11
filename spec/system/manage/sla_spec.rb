@@ -68,7 +68,7 @@ RSpec.describe 'Manage > Sla', type: :system do
     it 'shows and saves long times correctly (#6355)' do
       click '.js-edit'
 
-      in_modal do
+      in_modal disappears: true do
         expect(page).to have_field('first_response_time_in_text', with: '100:00')
         expect(page).to have_field('update_time_in_text', with: '1440:00')
         expect(page).to have_field('solution_time_in_text', with: '99999:00')

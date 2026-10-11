@@ -115,6 +115,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
       end
 
       it 'does not display the embedding provider warning' do
+        expect(page).to have_css('.js-vectordbEnabledSetting')
         expect(page).to have_no_text('The system currently has no default provider for semantic search.')
       end
     end

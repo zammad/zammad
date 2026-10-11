@@ -14,10 +14,12 @@ RSpec.describe 'System > Monitoring', type: :system do
         expect(url).to include(token)
 
         click '.js-resetToken'
+        wait.until { find('.js-token').value != token }
         new_token = find('.js-token').value
         new_url   = find('.js-url').value
         expect(new_url).to include(new_token)
         expect(token).not_to eq(new_token)
+        wait_for_setting('monitoring_token', new_token)
       end
     end
   end

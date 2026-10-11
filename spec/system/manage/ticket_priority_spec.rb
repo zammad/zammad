@@ -62,12 +62,15 @@ RSpec.describe 'Manage > Ticket Priorities', type: :system do
       click_on 'Submit'
 
       within :active_content do
-        expect(find("tr[data-id='#{Ticket::Priority.last.id}']")).to have_text(new_priority_name)
+        expect(page).to have_css('tr', text: new_priority_name)
       end
+
+      expect(Ticket::Priority.find_by(name: new_priority_name)).to be_present
     end
 
     it 'does not show ui_icon field by default' do
       within :active_content do
+        expect(page).to have_field('name')
         expect(page).to have_no_field('ui_icon')
       end
     end
@@ -117,6 +120,7 @@ RSpec.describe 'Manage > Ticket Priorities', type: :system do
 
     it 'does not show ui_icon field by default' do
       within :active_content do
+        expect(page).to have_field('name')
         expect(page).to have_no_field('ui_icon')
       end
     end

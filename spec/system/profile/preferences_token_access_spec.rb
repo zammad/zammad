@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe 'Profile > Token Access', type: :system do
   let(:name)           { 'Some App Token' }
   let(:checkbox_input) { 'input[value="ticket.agent"]' }
-  let(:expiry_date)    { '05/15/2024' }
+  let(:expiry)         { 1.year.from_now.to_date }
+  let(:expiry_date)    { expiry.strftime('%m/%d/%Y') }
   let(:token_list)     { find('.js-tokenList') }
 
   shared_examples 'having an error notification message' do
@@ -44,15 +45,16 @@ RSpec.describe 'Profile > Token Access', type: :system do
         end
       end
 
-      it 'shows active report profile' do
+      it 'shows the new token in the list' do
         in_modal do
           click_on "OK, I've copied my token"
         end
 
         within :active_content do
           expect(token_list).to have_text(name)
-            .and have_text(expiry_date)
         end
+
+        expect(Token.find_by(name: name).expires_at).to eq(expiry)
       end
     end
 
@@ -66,7 +68,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
         end
       end
 
-      it 'shows active report profile' do
+      it 'shows the new token in the list' do
         in_modal do
           click_on "OK, I've copied my token"
         end

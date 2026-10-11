@@ -19,11 +19,14 @@ RSpec.describe 'Manage > Ticket States', type: :system do
       click_on 'Submit'
 
       within :active_content do
-        expect(find("tr[data-id='#{Ticket::State.last.id}']")).to have_text(new_state_name)
+        expect(page).to have_css('tr', text: new_state_name)
       end
+
+      expect(Ticket::State.find_by(name: new_state_name).state_type.name).to eq('pending reminder')
     end
 
     it 'does not allow to select merged type' do
+      expect(page).to have_css('[name=state_type_id] option', text: 'pending reminder')
       expect(page).to have_no_css('option', text: 'merged')
     end
   end
@@ -42,7 +45,12 @@ RSpec.describe 'Manage > Ticket States', type: :system do
       it 'does not open edit dialog' do
         state_row.click
 
-        expect(page).to have_no_text('Edit:')
+        # An edit dialog of the merged state would cover the next row and catch the click.
+        find("tr[data-id='#{Ticket::State.find_by(name: 'pending close').id}']").click
+
+        in_modal do
+          expect(page).to have_field('name', with: 'pending close')
+        end
       end
 
       it 'has no additional actions' do

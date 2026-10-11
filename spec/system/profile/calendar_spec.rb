@@ -14,6 +14,7 @@ RSpec.describe 'Profile > Calendar', type: :system do
     end
 
     it 'does not show any warning about the API access' do
+      expect(page).to have_css('.page-content form')
       expect(page).to have_no_text('REST API access using the username/email address and password is currently disabled. Please contact your administrator.')
     end
   end

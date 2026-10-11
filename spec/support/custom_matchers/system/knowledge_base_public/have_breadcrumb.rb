@@ -7,6 +7,12 @@ module KnowledgeBasePublicMatchers
     matcher :have_breadcrumb do
       match { breadcrumb_found? && of_specified_length? }
 
+      match_when_negated do
+        next actual.has_no_css?('.breadcrumbs') if @length.nil?
+
+        actual.has_no_css?('.breadcrumbs .breadcrumb', count: @length)
+      end
+
       chain(:with, :length)
       chain(:items) { nil }
 

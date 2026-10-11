@@ -34,10 +34,13 @@ RSpec.describe 'Session takeover check', type: :system do
         login(username: agent.login, password: 'test')
 
         visit '/'
+        ensure_websocket
+        wait_for_authenticated_session(user: agent)
 
         expect(page).to have_no_text('A new session was created')
       end
 
+      expect(page).to have_css('#navigation')
       expect(page).to have_no_text('A new session was created')
     end
   end

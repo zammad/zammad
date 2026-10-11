@@ -65,6 +65,7 @@ RSpec.describe 'Knowledge Base feed', type: :system do
     it 'does not show icon' do
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}"
 
+      expect(page).to have_text(category.translations.first.title)
       expect(page).to have_no_css('.icon-rss')
     end
   end

@@ -81,6 +81,7 @@ RSpec.describe 'Profile > Language', type: :system do
             find("[data-value=#{new_locale}].js-option").click
 
             click_on 'Submit'
+            await_empty_ajax_queue
             session_user.reload
           end
         end

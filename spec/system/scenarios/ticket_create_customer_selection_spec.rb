@@ -79,6 +79,7 @@ RSpec.describe 'Scenario > Ticket create customer selection', authenticated_as: 
     end
 
     in_modal do
+      expect(page).to have_css('.user_autocompletion')
       expect(page).to have_no_css('.user_autocompletion.has-error')
 
       # An empty selection is invalid.

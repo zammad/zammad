@@ -9,6 +9,7 @@ RSpec.describe 'Password Reset', type: :system do
     end
 
     it 'logged in user cannot open password reset' do
+      expect(page).not_to have_current_route('password_reset')
       expect(page).to have_no_text 'password'
     end
   end

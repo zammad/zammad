@@ -14,6 +14,7 @@ RSpec.describe 'Admin password auth', type: :system do
     end
 
     it 'logged in user cannot open admin password auth' do
+      expect(page).not_to have_current_route('admin_password_auth')
       expect(page).to have_no_text 'password'
     end
   end

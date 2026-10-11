@@ -8,7 +8,7 @@ RSpec.describe 'QUnit', time_zone: 'Europe/London', type: :system do
     match do
       actual.has_css?('.total', wait: 120)
 
-      actual.has_css? '.result .failed', text: '0', wait: 0
+      actual.has_css? '.result .failed', exact_text: '0', wait: 0
     end
 
     failure_message do

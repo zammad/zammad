@@ -50,6 +50,7 @@ RSpec.describe 'Scenario > User access permissions of an agent', authenticated_a
 
       click '.js-action .icon-arrow-down'
 
+      expect(page).to have_css('.js-action [data-type="history"]')
       expect(page).to have_no_css('.js-action [data-type="edit"]')
     end
 
@@ -61,6 +62,7 @@ RSpec.describe 'Scenario > User access permissions of an agent', authenticated_a
 
       click '.js-action .icon-arrow-down'
 
+      expect(page).to have_css('.js-action [data-type="history"]')
       expect(page).to have_no_css('.js-action [data-type="edit"]')
     end
 
@@ -91,6 +93,7 @@ RSpec.describe 'Scenario > User access permissions of an agent', authenticated_a
       click '.tabsSidebar-tab[data-tab="customer"]'
       click '#userAction'
 
+      expect(page).to have_css('.sidebar[data-tab="customer"] .js-actions [data-type="customer-change"]')
       expect(page).to have_no_css('.sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
     end
   end

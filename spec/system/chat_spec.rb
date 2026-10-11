@@ -309,6 +309,7 @@ RSpec.describe 'Chat Handling', type: :system do
   context 'when chat is activated or disabled' do
     it 'switch the chat setting', authenticated_as: :authenticate do
       visit '/#channels/chat'
+      expect(page).to have_css(agent_chat_switch_selector)
 
       click '.content.active .js-chatSetting'
 
@@ -329,9 +330,9 @@ RSpec.describe 'Chat Handling', type: :system do
 
         refresh
 
-        expect(page).to have_no_css('.zammad-chat')
-        check_content('.settings', '{"state":"chat_disabled"}', should_match: false)
         check_content('.settings', '{"event":"chat_status_customer","data":{"state":"offline"}}')
+        check_content('.settings', '{"state":"chat_disabled"}', should_match: false)
+        expect(page).to have_no_css('.zammad-chat')
       end
 
       enable_agent_chat
@@ -517,7 +518,7 @@ RSpec.describe 'Chat Handling', type: :system do
           click '.zammad-chat .js-chat-open'
           expect(page).to have_css('.js-restart', wait: 60)
           click '.js-chat-toggle .zammad-chat-header-icon'
-          expect(page).to have_no_selector('zammad-chat-is-open', wait: 60)
+          expect(page).to have_no_selector('.zammad-chat-is-open', wait: 60)
         end
       end
     end

@@ -227,6 +227,7 @@ RSpec.describe 'Manage > Channels > Email', integration: true, type: :system do
       click '.js-editInbound'
 
       in_modal do
+        expect(page).to have_field('options::host')
         expect(page).to have_no_text 'ORGANIZATION & DEPARTMENT NAME'
       end
     end

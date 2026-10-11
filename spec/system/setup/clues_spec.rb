@@ -25,7 +25,7 @@ RSpec.describe 'Clues', authenticated_as: :agent, type: :system do
       agent.save!
     end
 
-    it 'shows the intro clues' do
+    it 'shows the keyboard shortcuts clue and remembers it' do
       visit 'dashboard'
 
       expect(page).to have_text('New Keyboard Shortcuts')

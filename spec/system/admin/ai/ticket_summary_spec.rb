@@ -23,6 +23,7 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
         find('label', text: 'Customer Sentiment').click
       end
 
+      wait.until { Setting.get('ai_assistance_ticket_summary_config')['customer_sentiment'] == false }
       expect(Setting.get('ai_assistance_ticket_summary_config')).to eq({
                                                                          'generate_on'        => 'on_ticket_detail_opening',
                                                                          'open_questions'     => true, # false by default
@@ -39,6 +40,7 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
         select('On ticket summary sidebar activation', from: 'generate_on')
         click_on('Submit')
 
+        wait_for_setting('ai_assistance_ticket_summary_config', 'on_ticket_summary_sidebar_activation', key: 'generate_on')
         expect(Setting.get('ai_assistance_ticket_summary_config')).to include(generate_on: 'on_ticket_summary_sidebar_activation')
       end
     end
@@ -55,6 +57,7 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
 
         click_on 'Save'
 
+        wait.until { Setting.get('ai_assistance_ticket_summary_selector').present? }
         expect(Setting.get('ai_assistance_ticket_summary_selector'))
           .to eq({
                    'condition' => {

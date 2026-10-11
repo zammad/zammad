@@ -57,6 +57,7 @@ RSpec.describe 'Authentication', type: :system do
     visit '/#signup'
 
     # check wrong displayed fields in registration form after logout. #2989
+    expect(page).to have_field('firstname')
     expect(page).to have_no_select('organization_id')
   end
 

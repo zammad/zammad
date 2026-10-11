@@ -7,6 +7,20 @@ module KnowledgeBasePublicMatchers
     matcher :have_breadcrumb_item do |expected|
       match { breadcrumb_item_found? && at_specified_index? && with_specified_url? }
 
+      # Retries like Capybara's own negative matchers until the item is gone.
+      match_when_negated do
+        node = actual.respond_to?(:synchronize) ? actual : actual.document
+
+        node.synchronize do
+          @breadcrumb_item_index = @breadcrumb_item_url = nil
+          raise Capybara::ExpectationNotMet if breadcrumb_item_found? && at_specified_index? && with_specified_url?
+
+          true
+        end
+      rescue Capybara::ExpectationNotMet
+        false
+      end
+
       chain(:at_index, :index)
       chain(:with_url, :url)
 

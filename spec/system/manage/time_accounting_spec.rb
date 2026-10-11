@@ -26,11 +26,13 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
       let(:time_accounting) { false }
 
       it 'turns the feature on' do
+        wait_for_setting('time_accounting', true)
         expect(Setting.get('time_accounting')).to be(true)
       end
     end
 
     it 'turns the feature off' do
+      wait_for_setting('time_accounting', false)
       expect(Setting.get('time_accounting')).to be(false)
     end
   end
@@ -52,6 +54,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
       end
 
       it 'updates time_accounting_selector setting' do
+        wait.until { Setting.get('time_accounting_selector').present? }
         expect(Setting.get('time_accounting_selector'))
           .to eq({
                    'condition' => {
@@ -65,7 +68,8 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
 
       it 'does not have expert mode' do
         within :active_content do
-          expect(page).to have_no_css('.ticket_selector .js-switch')
+          expect(page).to have_css('.js-selector .js-filterElement')
+          expect(page).to have_no_css('.js-selector .js-switch')
         end
       end
     end
@@ -88,9 +92,11 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
       shared_examples 'updating time_accounting_unit* settings' do
         it 'updates time_accounting_unit* settings' do
           if custom_unit.empty?
+            expect(page).to have_css('#timeAccountingUnit')
             expect(page).to have_no_css('#timeAccountingCustomUnit')
           end
 
+          wait_for_setting('time_accounting_unit', unit)
           expect(Setting.get('time_accounting_unit')).to eq(unit)
           expect(Setting.get('time_accounting_unit_custom')).to eq(custom_unit)
         end
@@ -132,6 +138,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
 
       shared_examples 'updating time_accounting_types setting' do
         it 'updates time_accounting_types setting' do
+          wait_for_setting('time_accounting_types', setting_state)
           expect(Setting.get('time_accounting_types')).to be(setting_state)
         end
       end

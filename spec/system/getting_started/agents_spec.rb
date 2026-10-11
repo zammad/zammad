@@ -42,8 +42,8 @@ RSpec.describe 'Getting Started > Agents', type: :system do
 
       click '.btn--success'
 
-      expect(User.last).to have_attributes(
-        email: 'test@example.com',
+      wait.until { User.exists?(email: 'test@example.com') }
+      expect(User.find_by(email: 'test@example.com')).to have_attributes(
         roles: contain_exactly(
           Role.find_by(name: 'Admin')
         )
@@ -51,6 +51,7 @@ RSpec.describe 'Getting Started > Agents', type: :system do
     end
 
     it 'adds group permissions correctly' do
+      expect(page).to have_css '[data-attribute-name="group_ids"] .js-groupListNewItemRow'
       expect(page).to have_no_css '[data-attribute-name="group_ids"] tbody tr[data-id]'
 
       within '.js-groupListNewItemRow' do
@@ -73,8 +74,8 @@ RSpec.describe 'Getting Started > Agents', type: :system do
 
       click '.btn--success'
 
-      expect(User.last).to have_attributes(
-        email:       'test@example.com',
+      wait.until { User.exists?(email: 'test@example.com') }
+      expect(User.find_by(email: 'test@example.com')).to have_attributes(
         user_groups: contain_exactly(
           have_attributes(group: group2, access: 'read')
         )

@@ -14,7 +14,10 @@ RSpec.describe 'Manage > Organizations', type: :system do
         it 'creates record', db_strategy: :reset do
 
           # required to edit attribute in admin interface
-          screens = { create: { 'admin.organization': { shown: true, required: false } } }
+          screens = {
+            create: { 'admin.organization': { shown: true, required: false } },
+            edit:   { 'admin.organization': { shown: true, required: false } },
+          }
 
           attribute = create(:object_manager_attribute_text,
                              object_name:             'Organization',
@@ -42,6 +45,17 @@ RSpec.describe 'Manage > Organizations', type: :system do
 
           within(:active_content) do
             expect(page).to have_text name
+          end
+
+          organization = Organization.find_by(name: name)
+          expect(organization[attribute.name]).to eq('value')
+
+          within(:active_content) do
+            click 'td', text: name
+          end
+
+          in_modal do
+            expect(page).to have_css("[data-attribute-name='#{attribute.name}'] a.controls-button[href='https://example.com']")
           end
         end
       end

@@ -45,7 +45,8 @@ RSpec.describe 'Manage > Groups', type: :system do
 
         click_on 'Submit'
 
-        expect(Group.last.name).to eq("#{group3.name}::#{Group.last.name_last}")
+        expect(page).to have_no_css('.modal')
+        expect(Group.find_by(name_last: group_name_last).name).to eq("#{group3.name}::#{group_name_last}")
       end
     end
   end

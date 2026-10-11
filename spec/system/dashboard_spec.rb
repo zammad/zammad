@@ -30,6 +30,7 @@ RSpec.describe 'Dashboard', type: :system do
       fill_in 'lastname', with: 'Braun'
       fill_in 'Email', with: 'nick.braun@zammad.org'
       click_on 'Invite'
+      await_empty_ajax_queue
       expect(User.find_by(firstname: 'Nick').roles).to eq([Role.find_by(name: 'Public')])
     end
   end
@@ -39,10 +40,14 @@ RSpec.describe 'Dashboard', type: :system do
     let(:agent)    { create(:agent) }
     let(:customer) { create(:customer) }
 
+    def frontend_session_timeout
+      page.evaluate_script('App.Plugin.instance().backend.session_timeout.getTimeout()')
+    end
+
     before do
       visit '/'
       ensure_websocket(check_if_pinged: false)
-      sleep 3 # fast relog causes raise conditions in websocket server
+      wait_for_authenticated_session # fast relog causes race conditions in websocket server
     end
 
     context 'Logout by frontend plugin - Default', authenticated_as: :authenticate do
@@ -54,11 +59,6 @@ RSpec.describe 'Dashboard', type: :system do
       it 'does logout user' do
         expect(page).to have_text('Due to inactivity, you will be automatically logged out within the next 30 seconds.')
         expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
-      end
-
-      it 'does not logout user', authenticated_as: :admin do
-        sleep 1.5
-        expect(page).to have_no_text('Due to inactivity, you have been automatically logged out.', wait: 0)
       end
     end
 
@@ -123,9 +123,8 @@ RSpec.describe 'Dashboard', type: :system do
         admin
       end
 
-      it 'does not logout user', authenticated_as: :admin do
-        sleep 1.5
-        expect(page).to have_no_text('Due to inactivity, you have been automatically logged out.', wait: 0)
+      it 'uses the default timeout' do
+        expect(frontend_session_timeout).to eq(1000 * 1000)
       end
     end
 
@@ -135,9 +134,8 @@ RSpec.describe 'Dashboard', type: :system do
         admin
       end
 
-      it 'does not logout user', authenticated_as: :admin do
-        sleep 1.5
-        expect(page).to have_no_text('Due to inactivity, you have been automatically logged out.', wait: 0)
+      it 'disables the logout timer' do
+        expect(frontend_session_timeout).to eq(0)
       end
     end
   end

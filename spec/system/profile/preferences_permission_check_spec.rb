@@ -9,100 +9,37 @@ RSpec.describe 'Profile > PreferencesPermissionCheck', type: :system do
 
   before { visit 'profile' }
 
-  shared_examples 'having profile page link to' do |link_name|
-    it "shows the #{link_name} link" do
+  shared_examples 'showing the profile page links' do |shown:, hidden: []|
+    it "shows #{shown.join(', ')}#{" but not #{hidden.join(', ')}" if hidden.present?}" do
       within '.content .NavBarProfile' do
-        expect(page).to have_link(link_name)
-      end
-    end
-  end
-
-  shared_examples 'not having profile page link to' do |link_name|
-    it "does not show the #{link_name} link" do
-      within '.content .NavBarProfile' do
-        expect(page).to have_no_link(link_name)
+        shown.each { |link_name| expect(page).to have_link(link_name) }
+        hidden.each { |link_name| expect(page).to have_no_link(link_name) }
       end
     end
   end
 
   context 'when logged in as admin', authenticated_as: :admin do
-    it_behaves_like 'having profile page link to', 'Password'
-
-    it_behaves_like 'having profile page link to', 'Language'
-
-    it_behaves_like 'having profile page link to', 'Linked Accounts'
-
-    it_behaves_like 'having profile page link to', 'Avatar'
-
-    it_behaves_like 'having profile page link to', 'Notifications'
-
-    it_behaves_like 'having profile page link to', 'Out of Office'
-
-    it_behaves_like 'having profile page link to', 'Calendar'
-
-    it_behaves_like 'having profile page link to', 'Devices'
-
-    it_behaves_like 'having profile page link to', 'Token Access'
+    it_behaves_like 'showing the profile page links', shown: ['Password', 'Language', 'Linked Accounts', 'Avatar', 'Notifications', 'Out of Office', 'Calendar', 'Devices', 'Token Access']
   end
 
   context 'when logged in as agent', authenticated_as: :agent do
-    it_behaves_like 'having profile page link to', 'Password'
-
-    it_behaves_like 'having profile page link to', 'Language'
-
-    it_behaves_like 'having profile page link to', 'Linked Accounts'
-
-    it_behaves_like 'having profile page link to', 'Avatar'
-
-    it_behaves_like 'having profile page link to', 'Notifications'
-
-    it_behaves_like 'having profile page link to', 'Out of Office'
-
-    it_behaves_like 'having profile page link to', 'Calendar'
-
-    it_behaves_like 'having profile page link to', 'Devices'
-
-    it_behaves_like 'having profile page link to', 'Token Access'
+    it_behaves_like 'showing the profile page links', shown: ['Password', 'Language', 'Linked Accounts', 'Avatar', 'Notifications', 'Out of Office', 'Calendar', 'Devices', 'Token Access']
   end
 
   context 'when a custom role grants user_preferences.device', authenticated_as: :user do
     let(:device_role) { create(:role, permission_names: %w[user_preferences.device]) }
     let(:user)        { create(:customer).tap { |customer| customer.roles << device_role } }
 
-    it_behaves_like 'having profile page link to', 'Password'
-
-    it_behaves_like 'having profile page link to', 'Language'
-
-    it_behaves_like 'not having profile page link to', 'Notifications'
-
-    it_behaves_like 'not having profile page link to', 'Calendar'
-
-    it_behaves_like 'not having profile page link to', 'Token Access'
-
-    it_behaves_like 'having profile page link to', 'Devices'
+    it_behaves_like 'showing the profile page links', shown: %w[Password Language Devices], hidden: ['Notifications', 'Calendar', 'Token Access']
 
     context 'when the custom role is deactivated' do
       let(:user) { super().tap { device_role.update!(active: false) } }
 
-      it_behaves_like 'having profile page link to', 'Password'
-
-      it_behaves_like 'not having profile page link to', 'Devices'
+      it_behaves_like 'showing the profile page links', shown: %w[Password], hidden: %w[Devices]
     end
   end
 
   context 'when logged in as customer', authenticated_as: :customer do
-    it_behaves_like 'having profile page link to', 'Password'
-
-    it_behaves_like 'having profile page link to', 'Language'
-
-    it_behaves_like 'having profile page link to', 'Linked Accounts'
-
-    it_behaves_like 'having profile page link to', 'Avatar'
-
-    it_behaves_like 'not having profile page link to', 'Notifications'
-
-    it_behaves_like 'not having profile page link to', 'Calendar'
-
-    it_behaves_like 'not having profile page link to', 'Token Access'
+    it_behaves_like 'showing the profile page links', shown: ['Password', 'Language', 'Linked Accounts', 'Avatar'], hidden: ['Notifications', 'Calendar', 'Token Access']
   end
 end

@@ -23,14 +23,17 @@ RSpec.describe 'Manage > Settings > BETA UI', type: :system do
       let(:route) { '#settings/beta_ui' }
 
       it 'supports modifying BETA UI settings' do
+        within :active_content do
+          expect(page).to have_css('h1', text: 'BETA UI Availability')
+        end
         expect(page).to have_no_text('Try New BETA UI')
 
         within :active_content do
-          expect(page).to have_css('h1', text: 'BETA UI Availability')
           check_switch_field_value('betaUIToggle', false)
           set_switch_field_value('betaUIToggle', true)
         end
 
+        wait_for_setting('ui_desktop_beta_switch', true)
         expect(Setting.get('ui_desktop_beta_switch')).to be(true)
         expect(page).to have_text('Try New BETA UI')
 
@@ -39,6 +42,7 @@ RSpec.describe 'Manage > Settings > BETA UI', type: :system do
           click_on 'Submit'
         end
 
+        wait_for_setting('ui_desktop_beta_switch_role_ids', [Role.lookup(name: 'Customer').id.to_s])
         expect(Setting.get('ui_desktop_beta_switch_role_ids')).to eq([Role.lookup(name: 'Customer').id.to_s])
         expect(page).to have_no_text('Try New BETA UI')
       end
@@ -48,6 +52,7 @@ RSpec.describe 'Manage > Settings > BETA UI', type: :system do
   context 'when BETA UI admin menu is disabled' do
     it 'does not show BETA UI menu item' do
       within '.sidebar' do
+        expect(page).to have_link('Groups', href: '#manage/groups')
         expect(page).to have_no_link('BETA UI', href: '#settings/beta_ui')
       end
     end

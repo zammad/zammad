@@ -621,7 +621,9 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     end
 
     context 'when customer' do
-      let(:authenticate_user) { customer }
+      let(:authenticate_user)   { customer }
+      let(:customer_ticket)     { create(:ticket, customer: customer, group: Group.first, title: "Ticket of #{organizations[0].name}") }
+      let(:before_authenticate) { customer_ticket }
 
       before do
         fill_in id: 'global-search', with: organizations[0].name.to_s
@@ -629,7 +631,8 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
       it 'does not show any organizations in global search because only agents have access to it' do
         within '.global-search-result' do
-          expect(page).to have_no_text(organizations[0].name)
+          expect(page).to have_css('.nav-tab.ticket-popover', text: customer_ticket.title)
+          expect(page).to have_no_css('.nav-tab.organization')
         end
       end
     end
@@ -760,7 +763,6 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
   describe 'Admin user can not find user or organization in the search bar #4574' do
     let(:admin) { create(:admin_only) }
-    let(:agent)        { create(:agent, groups: [Group.first]) }
     let(:organization) { create(:organization, name: SecureRandom.uuid) }
     let(:customer)     { create(:customer, organization: organization, firstname: SecureRandom.uuid) }
     let(:ticket)       { create(:ticket, title: SecureRandom.uuid, customer: customer, group: Group.first) }
@@ -769,72 +771,21 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       visit '#dashboard'
     end
 
-    context 'when customer' do
-      let(:before_authenticate) { organization && customer && ticket }
-      let(:authenticate_user) { customer }
-
-      it 'does find the ticket' do
-        fill_in id: 'global-search', with: ticket.title
-
-        expect(page.find('.global-search-menu')).to have_text(ticket.title)
-      end
-
-      it 'does not find the customer' do
-        fill_in id: 'global-search', with: customer.firstname
-
-        expect(page.find('.global-search-menu')).to have_no_text(customer.firstname)
-      end
-
-      it 'does not find the organization' do
-        fill_in id: 'global-search', with: organization.name
-
-        expect(page.find('.global-search-menu')).to have_no_text(organization.name)
-      end
-    end
-
-    context 'when agent' do
-      let(:before_authenticate) { organization && customer && ticket }
-      let(:authenticate_user) { agent }
-
-      it 'does find the ticket' do
-        fill_in id: 'global-search', with: ticket.title
-
-        expect(page.find('.global-search-menu')).to have_text(ticket.title)
-      end
-
-      it 'does find the customer' do
-        fill_in id: 'global-search', with: customer.firstname
-
-        expect(page.find('.global-search-menu')).to have_text(customer.firstname)
-      end
-
-      it 'does find the organization' do
-        fill_in id: 'global-search', with: organization.name
-
-        expect(page.find('.global-search-menu')).to have_text(organization.name)
-      end
-    end
-
+    # The search permissions of the other roles are covered by spec/services/service/search_spec.rb.
     context 'when admin only' do
       let(:authenticate_user) { admin }
       let(:before_authenticate) { organization && customer && ticket }
 
-      it 'does not find the ticket' do
-        fill_in id: 'global-search', with: ticket.title
-
-        expect(page.find('.global-search-menu')).to have_no_text(ticket.title)
-      end
-
-      it 'does find the customer' do
+      it 'finds the customer and the organization, but not the ticket' do
         fill_in id: 'global-search', with: customer.firstname
-
         expect(page.find('.global-search-menu')).to have_text(customer.firstname)
-      end
 
-      it 'does find the organization' do
         fill_in id: 'global-search', with: organization.name
-
         expect(page.find('.global-search-menu')).to have_text(organization.name)
+
+        fill_in id: 'global-search', with: ticket.title
+        expect(page.find('.global-search-menu')).to have_no_text(organization.name)
+        expect(page.find('.global-search-menu')).to have_no_text(ticket.title)
       end
     end
   end

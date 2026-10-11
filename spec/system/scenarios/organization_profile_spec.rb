@@ -43,6 +43,7 @@ RSpec.describe 'Scenario > Organization profile', authenticated_as: :authenticat
     find('.content.active .profile [data-name="note"]').send_keys 'some note 123'
     find('.content.active .profile-window h1').click
 
+    wait.until { organization.reload.note.to_s.include?('some note 123') }
     expect(organization.reload.note).to include('some note 123')
 
     # Renaming via the edit modal updates profile and task title.

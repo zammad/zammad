@@ -22,6 +22,9 @@ RSpec.describe 'Manage > Templates', time_zone: 'Europe/London', type: :system d
         fill_in('name', with: 'template 1')
         click_on('Submit')
       end
+
+      expect(page).to have_css('.js-tableBody', text: 'template 1')
+      expect(Template.find_by(name: 'template 1')).to have_attributes(active: true)
     end
 
     it 'with inactive state' do

@@ -56,6 +56,7 @@ RSpec.describe 'Knowledge Base search shortcuts', authenticated_as: :user, type:
     end
 
     it 'does not show the shortcuts dropdown' do
+      expect(page).to have_css('.js-searchField')
       expect(page).to have_no_css('.searchfield-shortcut')
     end
   end
@@ -90,6 +91,7 @@ RSpec.describe 'Knowledge Base search shortcuts', authenticated_as: :user, type:
     it 'does not show the ai-generated shortcut in the dropdown' do
       find('.searchfield-shortcut .btn').click
 
+      expect(page).to have_css('.dropdown-menu li', text: 'Drafts only')
       expect(page).to have_no_css('.dropdown-menu li', text: 'Tagged')
     end
   end

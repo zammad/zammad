@@ -20,7 +20,14 @@ module KnowledgeBasePublicMatchers
         %(could not search for "#{expected.translation.title}")
       end
 
-      failure_message do
+      match_when_negated do |actual|
+        search_string = expected.translation.title
+
+        actual.find('.js-search-input').fill_in with: search_string
+        actual.find('.search-results').has_text?('No results were found.') && actual.find('.search-results').has_no_text?(search_string)
+      end
+
+      failure_message_when_negated do
         %("#{expected.translation.title}" showed up in search results)
       end
     end

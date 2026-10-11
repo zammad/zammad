@@ -23,6 +23,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
           click_on 'Add'
         end
 
+        wait.until { SSLCertificate.exists? }
         expect(page).to have_css("tr[data-id='#{SSLCertificate.last.id}']")
       end
 
@@ -33,6 +34,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
           click_on 'Add'
         end
 
+        wait.until { SSLCertificate.exists? }
         expect(page).to have_css("tr[data-id='#{SSLCertificate.last.id}']")
       end
     end

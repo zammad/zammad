@@ -21,10 +21,12 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
         click "label[for='#{method_checkbox}']"
 
+        wait_for_setting(method_setting, true)
         expect(Setting.find_by(name: method_setting).state_current['value']).to be(true)
 
         click "label[for='#{method_checkbox}']"
 
+        wait_for_setting(method_setting, false)
         expect(Setting.find_by(name: method_setting).state_current['value']).to be(false)
       end
     end
@@ -36,6 +38,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
         click "[data-attribute-name='#{setting_name}'] .columnSelect-column--sidebar .columnSelect-option", exact_text: 'Customer'
         click "##{setting_name} .btn--primary"
 
+        wait.until { Setting.get(setting_name).include?(Role.find_by(name: 'Customer').id.to_s) }
         expect(Setting.find_by(name: setting_name).state_current['value']).to include(
           Role.find_by(name: 'Customer').id.to_s
         )
@@ -43,6 +46,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
         click "[data-attribute-name='#{setting_name}'] .columnSelect-column--selected .columnSelect-option", exact_text: 'Customer'
         click "##{setting_name} .btn--primary"
 
+        wait.until { Setting.get(setting_name).exclude?(Role.find_by(name: 'Customer').id.to_s) }
         expect(Setting.find_by(name: setting_name).state_current['value']).not_to include(
           Role.find_by(name: 'Customer').id.to_s
         )
@@ -103,6 +107,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
           it 'does not have authentication button in login page' do
             visit 'login'
+            expect(page).to have_css('#login')
             expect(page).to have_no_button(display_name)
           end
         end

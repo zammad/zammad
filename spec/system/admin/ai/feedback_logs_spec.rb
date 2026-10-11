@@ -11,13 +11,17 @@ RSpec.describe 'AI > Feedback & Logs', authenticated_as: :admin, type: :system d
     within :active_content do
       expect(page).to have_text('Download feedback from agents on AI features and error details about failed AI requests.')
 
-      click '.js-downloadFeedback'
+      # The browser download itself is out of reach, so record the files handed over to it.
+      page.execute_script(<<~JS)
+        window.specDownloads = []
+        App.Utils.downloadFileFromBlob = function(data, xhr, options) { window.specDownloads.push(options.fallbackFilename) }
+      JS
 
+      click '.js-downloadFeedback'
       click '.js-downloadErrorLogs'
 
-      # we can't test the download itself, but we can check if the button is still there so we didn't redirect
-      expect(page).to have_text('DOWNLOAD FEEDBACK')
-        .and have_text('DOWNLOAD ERROR LOGS')
+      wait.until { page.evaluate_script('window.specDownloads.length') == 2 }
+      expect(page.evaluate_script('window.specDownloads')).to contain_exactly('ai_analytics_with_usages.xlsx', 'ai_analytics_errors.xlsx')
     end
   end
 

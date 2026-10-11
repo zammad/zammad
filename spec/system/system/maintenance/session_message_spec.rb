@@ -46,9 +46,12 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
         end
       end
 
+      expect(page).to have_text('Sent successfully!')
+      expect(page).to have_no_css('.modal')
+
       within :active_content do
-        expect(page).to have_no_text(session_message_title)
-        expect(page).to have_no_text(session_message_text)
+        expect(page).to have_field('head', with: '')
+        expect(find('.js-Message [data-name=message]')).to have_no_text(session_message_text)
       end
     end
 

@@ -53,6 +53,7 @@ RSpec.describe 'Login Maintenance Mode', authenticated_as: false, type: :system 
 
         refresh
 
+        expect(page).to have_css('#login')
         expect(page).to have_no_css('.js-maintenanceMode')
 
         try_login('agent1@example.com', 'test')

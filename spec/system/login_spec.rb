@@ -184,6 +184,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         let(:recovery_codes_enabled) { false }
 
         it 'recovery code link is hidden' do
+          expect(page).to have_field('security_code')
           expect(page).to have_no_text 'Try another method'
         end
       end

@@ -15,6 +15,10 @@ RSpec.describe 'Manage > Integration > Ldap', type: :system do
     end
 
     context 'when no anonymous bind is allowed' do
+      before do
+        allow(Ldap).to receive(:new).and_raise(Net::LDAP::Error, '50, Insufficient Access Rights')
+      end
+
       it 'can insert base dn in normal text field' do
         open_ldap_wizard
 
@@ -24,12 +28,16 @@ RSpec.describe 'Manage > Integration > Ldap', type: :system do
 
           click_on 'Connect'
 
-          wait.until { find('input[name="base_dn"]').present? }
+          expect(page).to have_field('base_dn', with: '', class: 'form-control--small')
+          expect(page).to have_no_field('base_dn', class: 'ui-autocomplete-input')
 
           fill_in 'base_dn', with: 'dc=example,dc=okta,dc=com'
+          expect(page).to have_field('base_dn', with: 'dc=example,dc=okta,dc=com')
 
           click '.js-close'
         end
+
+        expect(Ldap).to have_received(:new)
       end
     end
   end

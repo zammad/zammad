@@ -16,6 +16,7 @@ RSpec.describe 'Admin Panel > Knowledge Base > Delete', type: :system do
 
     click_on 'Delete Knowledge Base'
 
+    wait.until { KnowledgeBase.none? }
     expect(KnowledgeBase.count).to be_zero
   end
 end

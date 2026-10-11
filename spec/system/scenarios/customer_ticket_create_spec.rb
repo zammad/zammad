@@ -34,6 +34,7 @@ RSpec.describe 'Scenario > Customer ticket create', authenticated_as: :authentic
     visit '#customer_ticket_new'
 
     within '.newTicket' do
+      expect(page).to have_field('title')
       expect(page).to have_no_field('customer_id', type: 'hidden')
       expect(page).to have_no_css('[name="priority_id"]', visible: :all)
 

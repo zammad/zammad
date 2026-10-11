@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Users', type: :system do
   describe 'switching to an alternative user', authenticated_as: :authenticate, authentication_type: :form do
-    let(:original_user)          { create(:admin) }
+    let(:original_user)          { create(:admin, password: 'test') }
     let(:alternative_one_user)   { create(:admin) }
     let(:alternative_two_user)   { create(:admin) }
     let(:alternative_three_user) { create(:customer) }
@@ -61,6 +61,7 @@ RSpec.describe 'Manage > Users', type: :system do
         click_on('Sign in')
       end
 
+      expect(page).to have_css(".navbar-items-personal a[title=\"#{original_user.login}\"]")
       expect(page).to have_no_text('Zammad looks like this')
     end
 
@@ -383,73 +384,31 @@ RSpec.describe 'Manage > Users', type: :system do
     end
   end
 
+  # The full permission matrix is covered by spec/policies/user_policy_spec.rb.
   describe 'check user edit permissions', authenticated_as: -> { user } do
+    let(:user) { create(:agent) }
 
-    shared_examples 'user permission' do |allow|
-      it(allow ? 'allows editing' : 'forbids editing') do
-        visit "#user/profile/#{record.id}"
-        find('.js-action .icon-arrow-down').click
-        selector = '.js-action [data-type="edit"]'
-        expect(page).to(allow ? have_css(selector) : have_no_css(selector))
-      end
-    end
-
-    context 'when admin tries to change admin' do
-      let(:user)   { create(:admin) }
-      let(:record) { create(:admin) }
-
-      include_examples 'user permission', true
-    end
-
-    context 'when admin tries to change agent' do
-      let(:user) { create(:admin) }
-      let(:record) { create(:agent) }
-
-      include_examples 'user permission', true
-    end
-
-    context 'when admin tries to change customer' do
-      let(:user) { create(:admin) }
-      let(:record) { create(:customer) }
-
-      include_examples 'user permission', true
-    end
-
-    context 'when agent tries to change admin' do
-      let(:user) { create(:agent) }
-      let(:record) { create(:admin) }
-
-      include_examples 'user permission', false
-    end
-
-    context 'when agent tries to change agent' do
-      let(:user) { create(:agent) }
-      let(:record) { create(:agent) }
-
-      include_examples 'user permission', false
+    before do
+      visit "#user/profile/#{record.id}"
+      find('.js-action .icon-arrow-down').click
     end
 
     context 'when agent tries to change customer' do
-      let(:user) { create(:agent) }
       let(:record) { create(:customer) }
 
-      include_examples 'user permission', true
+      it 'allows editing' do
+        expect(page).to have_css('.js-action [data-type="edit"]')
+      end
     end
 
-    context 'when agent tries to change customer who is also admin' do
-      let(:user) { create(:agent) }
-      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Admin').id)) }
+    context 'when agent tries to change admin' do
+      let(:record) { create(:admin) }
 
-      include_examples 'user permission', false
+      it 'forbids editing' do
+        expect(page).to have_css('.js-action [data-type="history"]')
+        expect(page).to have_no_css('.js-action [data-type="edit"]')
+      end
     end
-
-    context 'when agent tries to change customer who is also agent' do
-      let(:user) { create(:agent) }
-      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Agent').id)) }
-
-      include_examples 'user permission', false
-    end
-
   end
 
   describe 'UI is not updated right after importing users csv file #3919' do
@@ -468,22 +427,6 @@ RSpec.describe 'Manage > Users', type: :system do
 
     it 'does update the user list after import of new users' do
       expect(page).to have_text('firstname-simple-import1')
-    end
-  end
-
-  describe 'Missing secondary organizations in user profile after refreshing with many secondary organizations. #4331' do
-    let(:organizations) { create_list(:organization, 20) }
-    let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
-
-    before do
-      customer
-      visit '#manage/users'
-      click "tr[data-id='#{customer.id}']"
-    end
-
-    it 'does show all secondary organizations on edit' do
-      tokens = page.all('div[data-attribute-name="organization_ids"] .token')
-      expect(tokens.count).to eq(19)
     end
   end
 
@@ -573,6 +516,7 @@ RSpec.describe 'Manage > Users', type: :system do
 
       in_modal do
         # The group permissions field should be hidden for inactive users.
+        expect(page).to have_field('firstname')
         expect(page).to have_no_text('GROUP PERMISSIONS')
 
         set_select_field_label 'active', 'active'

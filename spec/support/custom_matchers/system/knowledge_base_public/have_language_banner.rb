@@ -6,6 +6,7 @@ module KnowledgeBasePublicMatchers
 
     matcher :have_language_banner do
       match { actual.has_css? '.language-banner' }
+      match_when_negated { actual.has_no_css? '.language-banner' }
       description { 'display language banner' }
       failure_message { 'expected to find language banner, but did not' }
       failure_message_when_negated { 'expected not to find language banner, but did' }

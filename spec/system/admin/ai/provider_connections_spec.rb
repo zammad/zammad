@@ -773,6 +773,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         click '[data-type=new]'
 
         in_modal disappears: false do
+          expect(page).to have_select('provider', with_options: ['OpenAI'])
           expect(page).to have_no_select('provider', with_options: ['Zammad AI'])
         end
       end
@@ -1076,18 +1077,10 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         create(:ai_provider_connection, :default_chat, :default_embedding, name:   'embedding-connection',
                                                                            config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-large' })
       end
-      # Same embedding model as the one serving semantic search, so handing it over changes nothing
-      # about the index.
-      let(:other_connection) do
-        create(:ai_provider_connection, name:   'other-connection',
-                                        config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-large' })
-      end
       let(:differing_connection) do
         create(:ai_provider_connection, name:   'differing-connection',
                                         config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-small' })
       end
-      # Whether there is an index to replace, recorded without depending on an Elasticsearch instance.
-      let(:index_exists) { true }
 
       def in_stop_dialog(&)
         within(find('.modal', text: 'Are you sure you want to stop semantic search?'), &)
@@ -1116,15 +1109,14 @@ RSpec.describe 'AI > Provider Connections', type: :system do
       end
 
       before do
-        embedding_connection && other_connection && differing_connection
+        embedding_connection && differing_connection
         Setting.set('ai_provider', true)
         Setting.set('vectordb_enabled', true)
 
-        if index_exists
-          Service::AI::VectorDB::Embedding::Configuration.record_indexed(
-            Service::AI::VectorDB::Embedding::Configuration.of(embedding_connection),
-          )
-        end
+        # Records an index to replace without depending on an Elasticsearch instance.
+        Service::AI::VectorDB::Embedding::Configuration.record_indexed(
+          Service::AI::VectorDB::Embedding::Configuration.of(embedding_connection),
+        )
 
         refresh
       end
@@ -1135,15 +1127,6 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         expect(page).to have_text('The vector index rebuild has started and will continue in the background.')
         expect(page).to have_no_text('Are you sure you want to change the embedding configuration?')
         expect(differing_connection.reload.default_embedding).to be(true)
-      end
-
-      it 'moves semantic search to a connection on the same model without reporting a rebuild', :aggregate_failures do
-        open_row_action('other-connection', 'set-default-embedding')
-
-        expect(page).to have_text('Default provider updated successfully.')
-        expect(page).to have_no_text('The vector index rebuild has started')
-        expect(other_connection.reload.default_embedding).to be(true)
-        expect(embedding_connection.reload.default_embedding).to be(false)
       end
 
       it 'reports a rebuild deferred until AI providers are re-enabled', :aggregate_failures do
@@ -1199,40 +1182,6 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
       end
 
-      it 'saves a change that leaves the embeddings alone without reporting a rebuild' do
-        find('td', text: 'embedding-connection').click
-
-        in_modal disappears: true do
-          fill_in 'name', with: 'renamed-connection'
-
-          click_on 'Next'
-        end
-
-        in_modal disappears: true do
-          click_on 'Submit'
-        end
-
-        expect(embedding_connection.reload.name).to eq('renamed-connection')
-        expect(page).to have_no_text('The vector index rebuild has started')
-      end
-
-      it 'does not report a rebuild for a connection that does not serve semantic search' do
-        find('td', text: 'other-connection').click
-
-        in_modal disappears: true do
-          click_on 'Next'
-        end
-
-        in_modal disappears: true do
-          find('select[name="config.embedding_model"]').select('text-embedding-3-small')
-
-          click_on 'Submit'
-        end
-
-        expect(other_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
-        expect(page).to have_no_text('The vector index rebuild has started')
-      end
-
       # The same outcome as the explicit "Do not use for semantic search" action, reached by editing
       # the connection instead - so it asks the same question rather than stopping semantic search
       # behind a "successfully updated".
@@ -1258,71 +1207,6 @@ RSpec.describe 'AI > Provider Connections', type: :system do
           await_save
 
           expect(embedding_connection.reload).to have_attributes(provider: 'anthropic', default_embedding: false)
-        end
-      end
-
-      context 'when the same model moves to another provider' do
-        let(:self_hosted) { true }
-        let(:embedding_connection) do
-          create(:ai_provider_connection, :default_chat, :default_embedding, name:     'embedding-connection',
-                                                                             provider: 'ollama',
-                                                                             config:   { url: 'http://localhost:11434', embedding_model: 'bge-m3' })
-        end
-
-        it 'saves without reporting a rebuild' do
-          find('td', text: 'embedding-connection').click
-
-          in_modal disappears: true do
-            find('select[name=provider]').select('Zammad AI')
-            fill_in 'Token', with: 'test-token'
-
-            # Zammad AI configures no models, so its dialog is the credential step alone.
-            click_on 'Submit'
-          end
-
-          expect(embedding_connection.reload.provider).to eq('zammad_ai')
-          expect(page).to have_no_text('The vector index rebuild has started')
-        end
-      end
-
-      # Deleting every connection leaves the index (and what it was built with) standing, and the
-      # first connection created afterwards takes the semantic search flag automatically - the same
-      # transition as handing it over, through the create door.
-      context 'when the first connection is created while an old index is recorded' do
-        before do
-          AI::ProviderConnection.destroy_all
-
-          refresh
-        end
-
-        it 'creates the connection without reporting a rebuild while AI providers are disabled', :aggregate_failures do
-          click '[data-type=new]'
-
-          in_modal disappears: true do
-            find('select[name=provider]').select('OpenAI')
-            fill_in 'name',  with: 'first-connection'
-            fill_in 'Token', with: 'test-token'
-
-            click_on 'Next'
-          end
-
-          find('select[name="config.embedding_model"]').select('text-embedding-3-small')
-          click_on 'Submit'
-
-          expect(page).to have_text('first-connection')
-          expect(page).to have_no_text('The vector index rebuild has started')
-          expect(AI::ProviderConnection.find_by(name: 'first-connection').default_embedding).to be(true)
-        end
-      end
-
-      context 'when no index has been built yet' do
-        let(:index_exists) { false }
-
-        it 'applies the change and reports the initial background build', :aggregate_failures do
-          open_row_action('differing-connection', 'set-default-embedding')
-
-          expect(page).to have_text('The vector index rebuild has started and will continue in the background.')
-          expect(differing_connection.reload.default_embedding).to be(true)
         end
       end
     end

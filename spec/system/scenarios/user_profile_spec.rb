@@ -40,6 +40,7 @@ RSpec.describe 'Scenario > User profile', authenticated_as: :authenticate, type:
     find('.content.active .profile [data-name="note"]').send_keys 'some note 123'
     find('.content.active .profile-window h1').click
 
+    wait.until { customer.reload.note.to_s.include?('some note 123') }
     expect(customer.reload.note).to include('some note 123')
 
     within(:active_content) do

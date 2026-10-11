@@ -152,6 +152,7 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
               click_on 'Submit'
             end
 
+            wait.until { channel.reload.options.dig('inbound', 'options', 'archive') }
             expect(channel.reload).to have_attributes(
               group_id: group2.id,
               active:   true,
@@ -266,10 +267,12 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
       it 'switches channel between enabled and disabled state' do
         find('.js-enable', text: 'Enable').click
 
+        wait.until { channel.reload.active }
         expect(channel.reload.active).to be(true)
 
         find('.js-disable', text: 'Disable').click
 
+        wait.until { !channel.reload.active }
         expect(channel.reload.active).to be(false)
       end
     end

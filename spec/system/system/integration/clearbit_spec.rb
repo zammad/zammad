@@ -27,6 +27,8 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
 
         click_on 'Save'
       end
+
+      wait_for_setting('clearbit_config', api_key, key: 'api_key')
     end
 
     shared_examples 'showing set config' do
@@ -61,20 +63,16 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
       it_behaves_like 'showing set config'
     end
 
-    context 'when disabled with changed config' do
+    context 'when disabled' do
       before do
-        # disable clearbit
         uncheck 'setting-switch', allow_label_click: true
+        wait_for_setting('clearbit_integration', false)
       end
-
-      let(:api_key) { '-empty-' }
 
       it_behaves_like 'showing set config'
 
-      it 'does not have the old api key' do
-        within :active_content, '.main' do
-          expect(page).to have_no_field('api_key', with: 'some_api_key')
-        end
+      it 'keeps the config' do
+        expect(Setting.get('clearbit_config')).to include('api_key' => api_key)
       end
     end
   end

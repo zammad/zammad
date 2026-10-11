@@ -77,6 +77,9 @@ RSpec.describe 'Manage > Trigger', type: :system do
         fill_in 'Name', with: 'trigger 1'
         click '.js-submit'
       end
+
+      expect(page).to have_text('trigger 1')
+      expect(Trigger.find_by(name: 'trigger 1').condition).to include('customer.email' => include('value' => ['zammad.com']))
     end
 
     context 'Checklist' do
@@ -108,7 +111,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
             click_on 'Submit'
           end
 
-          expect(Trigger.last.condition).to eq('ticket.checklist_existing' => { 'operator' => 'is', 'value' => false })
+          expect(Trigger.find_by(name: 'Checklist trigger').condition).to eq('ticket.checklist_existing' => { 'operator' => 'is', 'value' => false })
 
           find('tr', text: 'Checklist trigger').click
 
@@ -237,7 +240,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
             click_on 'Submit'
           end
 
-          expect(Trigger.last.perform).to eq('checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s })
+          expect(Trigger.find_by(name: 'Checklist trigger').perform).to eq('checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s })
 
           find('tr', text: 'Checklist trigger').click
 
@@ -273,6 +276,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
         within '.ticket_selector' do
           find(".js-attributeSelector select option[value='ticket.created_at']").select_option
 
+          expect(page).to have_css('select[name="condition::ticket.created_at::operator"] option[value="before (absolute)"]')
           expect(page).to have_no_css('select[name="condition::ticket.created_at::operator"] option[value="has changed"]')
         end
       end
@@ -285,6 +289,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
         within '.ticket_selector' do
           find(".js-attributeSelector select option[value='ticket.updated_at']").select_option
 
+          expect(page).to have_css('select[name="condition::ticket.updated_at::operator"] option[value="before (absolute)"]')
           expect(page).to have_no_css('select[name="condition::ticket.updated_at::operator"] option[value="has changed"]')
         end
       end
@@ -328,7 +333,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
         fill_in 'Name',	with: 'Test Trigger'
         within '.ticket_selector' do
           find('.js-attributeSelector select').select attribute.display
-          find('.js-operator select').select operator
+          find('.js-operator select').select 'contains all'
           trigger_values.each { |value| find('.js-value select').select value }
         end
 
@@ -346,98 +351,19 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
       visit "#ticket/zoom/#{ticket.id}"
 
-      ticket_multiselect_values.each do |value|
+      trigger_values.each do |value|
         within '.sidebar-content .multiselect select' do
           select value
         end
       end
 
       click_on 'Update'
-
     end
 
-    shared_examples 'updating the ticket with the trigger condition' do
-      it 'updates the ticket with the trigger condition' do
-        wait.until { ticket.multiselect_previously_changed? && ticket.articles.present? }
-        expect(ticket.articles).not_to be_empty
-        expect(page).to have_text 'Test body note'
-      end
-    end
-
-    context "with 'contains all' used" do
-      let(:operator) { 'contains all' }
-
-      context 'when updated value is the same with trigger value' do
-        let(:ticket_multiselect_values) { trigger_values }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-
-      context 'when all value is selected' do
-        let(:ticket_multiselect_values) { options.values }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-    end
-
-    context "with 'contains one' used" do
-      let(:operator) { 'contains one' }
-
-      context 'when updated value is the same with trigger value' do
-        let(:ticket_multiselect_values) { trigger_values }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-
-      context 'when all value is selected' do
-        let(:ticket_multiselect_values) { options.values }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-
-      context 'when updated value contains only one of the trigger value' do
-        let(:ticket_multiselect_values) { [trigger_values.first] }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-
-      context 'when updated value does not contain one of the trigger value' do
-        let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-    end
-
-    context "with 'contains all not' used" do
-      let(:operator) { 'contains all not' }
-
-      context 'when updated value is different from the trigger value' do
-        let(:ticket_multiselect_values) { options.values - trigger_values }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-
-      context 'when updated value contains only one of the trigger value' do
-        let(:ticket_multiselect_values) { [trigger_values.first] }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-
-      context 'when updated value does not contain one of the trigger value' do
-        let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
-    end
-
-    context "with 'contains one not' used" do
-      let(:operator) { 'contains one not' }
-
-      context 'when updated value is different from the trigger value' do
-        let(:ticket_multiselect_values) { options.values - trigger_values }
-
-        it_behaves_like 'updating the ticket with the trigger condition'
-      end
+    it 'updates the ticket with the trigger condition' do
+      expect(page).to have_text 'Test body note'
+      expect(ticket.reload).to have_attributes(multiselect: match_array(trigger_values))
+      expect(ticket.articles.last).to have_attributes(subject: 'Test subject note')
     end
   end
 

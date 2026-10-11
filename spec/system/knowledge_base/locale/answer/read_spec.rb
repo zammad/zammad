@@ -43,6 +43,7 @@ RSpec.describe 'Knowledge Base Locale Answer Read', authenticated_as: true, type
 
       it 'has no tags container' do
         within :active_content do
+          expect(page).to have_text(published_answer.translations.first.title)
           expect(page).to have_no_css('.knowledge-base-article-tags--container')
         end
       end

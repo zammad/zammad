@@ -7,7 +7,6 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   let(:customer_phone) { '0190333' }
   let(:agent)          { create(:agent, phone: agent_phone) }
   let(:customer)       { create(:customer, phone: customer_phone) }
-  let(:sipgate_on)     { true }
 
   let(:params) do
     {
@@ -30,60 +29,20 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   end
 
   def authenticate
-    Setting.set('sipgate_integration', sipgate_on)
+    Setting.set('sipgate_integration', true)
     agent
   end
 
-  context 'when sipgate integration is on' do
-    it 'shows the phone menu in nav bar' do
-      visit '/'
+  # The caller log itself is covered by cti_spec.rb, this only checks the sipgate wiring.
+  it 'shows incoming sipgate calls in the phone menu' do
+    visit 'cti'
+    ensure_websocket
+    wait_for_authenticated_session(user: agent)
 
-      within '#navigation .menu' do
-        expect(page).to have_link('Phone', href: '#cti')
-      end
-    end
-  end
+    place_call
 
-  context 'when sipgate integration is not on' do
-    let(:sipgate_on) { false }
-
-    it 'does not show the phone menu in nav bar' do
-      visit '/'
-
-      within '#navigation .menu' do
-        expect(page).to have_no_link('Phone', href: '#cti')
-      end
-    end
-  end
-
-  context 'with incoming call' do
-    before do
-      visit 'cti'
-      place_call
-    end
-
-    it 'increments the call counter notification badge' do
-      within '[href="#cti"].js-phoneMenuItem' do
-        counter = find('.counter')
-        expect(counter).to have_text 1
-      end
-    end
-  end
-
-  context 'when incoming call is checked' do
-    before do
-      visit 'cti'
-      place_call
-    end
-
-    it 'clears the call counter notification badge' do
-      within :active_content do
-        find('.table-checkbox input.js-check', visible: :all).check allow_label_click: true
-      end
-
-      within '[href="#cti"].js-phoneMenuItem' do
-        expect(page).to have_no_selector('.counter')
-      end
+    within '#navigation [href="#cti"].js-phoneMenuItem' do
+      expect(page).to have_css('.counter', text: '1')
     end
   end
 end

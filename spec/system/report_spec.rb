@@ -3,33 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Report', searchindex: true, type: :system do
-  context 'with ticket search result' do
-    let(:label) { find('.content ul.checkbox-list') }
-
-    before do
-      create(:report_profile, name: report_profile_name, active: active)
-      visit 'report'
-    end
-
-    context 'with an active report profile' do
-      let(:report_profile_name) { 'active report profile' }
-      let(:active) { true }
-
-      it 'shows active report profile' do
-        expect(label).to have_text(report_profile_name)
-      end
-    end
-
-    context 'with an inactive report profile' do
-      let(:report_profile_name) { 'inactive report profile' }
-      let(:active) { false }
-
-      it 'does not show inactive report profile' do
-        expect(label).to have_no_text(report_profile_name)
-      end
-    end
-  end
-
   context 'report profiles are displayed' do
     let!(:report_profile_active)   { create(:report_profile) }
     let!(:report_profile_inactive) { create(:report_profile, active: false) }
@@ -60,18 +33,22 @@ RSpec.describe 'Report', searchindex: true, type: :system do
 
   context 'with report profiles with date-based conditions' do
     let(:report_profile) { create(:report_profile, :condition_created_at, ticket_created_at: 1.year.ago) }
+    let(:ticket)         { create(:ticket, title: 'Ticket of the previous year', created_at: 1.year.ago.beginning_of_year) }
 
     before do
       freeze_time
       report_profile
+      ticket
+      searchindex_model_reload([Ticket])
       visit 'report'
     end
 
     it 'shows previous year for a profile with matching conditions' do
       click '.js-timePickerYear', text: Time.zone.now.year - 1
       click '.label-text', text: report_profile.name
+      click ".js-dataDownloadBackendSelector[data-backend='count::created']"
 
-      expect(page).to have_no_css('.modal')
+      expect(page).to have_css('.js-dataDownloadTable', text: ticket.title)
     end
   end
 

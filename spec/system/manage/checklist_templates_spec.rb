@@ -67,8 +67,8 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
     end
 
     it 'shows a description button' do
-      expect(page).to have_no_text('With checklist templates it is possible to pre-fill new checklists with initial items.')
       expect(page).to have_css('.js-description')
+      expect(page).to have_no_text('With checklist templates it is possible to pre-fill new checklists with initial items.')
 
       page.find('.js-description').click
 
@@ -123,7 +123,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
       visit 'manage/checklists'
     end
 
-    it 'successfully creates a clone' do
+    it 'successfully deletes the checklist' do
       expect(page).to have_text('Test Checklist')
 
       find('.js-checklistTemplatesTable tr.item .js-action').click

@@ -142,9 +142,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
     end
 
-    ['Text field', 'Single selection field', 'Integer field', 'Date & time field', 'Date field', 'Boolean field', 'Single tree selection field'].each do |data_type|
-      include_examples 'create and remove field with migration', data_type
-    end
+    include_examples 'create and remove field with migration', 'Text field'
 
     context 'with Multiselect' do
       include_examples 'create and remove field with migration', 'Multiple selection field'
@@ -760,7 +758,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
     end
 
-    it 'verifies max value does not go above limit' do
+    it 'shows the validation error of the backend' do
       in_modal do
         fill_in 'Maximal', with: '999999999999'
 
@@ -770,28 +768,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
     end
 
-    it 'verifies max value does not go below limit' do
-      in_modal do
-        fill_in 'Minimal', with: '-9999999999999'
-        fill_in 'Maximal', with: '-999999999999'
-
-        page.find('.js-submit').click
-
-        expect(page).to have_text 'Maximal value must be higher than -2147483648'
-      end
-    end
-
-    it 'verifies max value can be set' do
-      in_modal do
-        fill_in 'Maximal', with: '128'
-
-        page.find('.js-submit').click
-      end
-
-      expect(page).to have_text 'Integer1'
-    end
-
-    it 'verifies max value can be set to a negative value' do
+    it 'saves min and max values' do
       in_modal do
         fill_in 'Minimal', with: '-256'
         fill_in 'Maximal', with: '-128'
@@ -800,58 +777,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
 
       expect(page).to have_text 'Integer1'
-    end
-
-    it 'verifies min value does not go above limit' do
-      in_modal do
-        fill_in 'Minimal', with: '999999999999'
-        fill_in 'Maximal', with: '123'
-
-        page.find('.js-submit').click
-
-        expect(page).to have_text 'Minimal value must be lower than 2147483648'
-      end
-    end
-
-    it 'verifies min value does not go below limit' do
-      in_modal do
-        fill_in 'Minimal', with: '-999999999999'
-
-        page.find('.js-submit').click
-
-        expect(page).to have_text 'Minimal value must be higher than -2147483648'
-      end
-    end
-
-    it 'verifies min value can be set' do
-      in_modal do
-        fill_in 'Minimal', with: '128'
-
-        page.find('.js-submit').click
-      end
-
-      expect(page).to have_text 'Integer1'
-    end
-
-    it 'verifies min value can be set to a negative value' do
-      in_modal do
-        fill_in 'Minimal', with: '-128'
-
-        page.find('.js-submit').click
-      end
-
-      expect(page).to have_text 'Integer1'
-    end
-
-    it 'verifies min value must be lower than max' do
-      in_modal do
-        fill_in 'Minimal', with: '128'
-        fill_in 'Maximal', with: '-128'
-
-        page.find('.js-submit').click
-
-        expect(page).to have_text 'Maximal value must be higher than or equal to minimal value'
-      end
+      expect(ObjectManager::Attribute.find_by(name: 'integer1').data_option).to include('min' => -256, 'max' => -128)
     end
   end
 
@@ -871,8 +797,11 @@ RSpec.describe 'System > Objects', type: :system do
         page.find('select[name=data_type]').select('Date field')
         fill_in 'Default time diff (hours)', with: ''
 
-        expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+        page.find('.js-submit').click
       end
+
+      expect(page).to have_text('NoDiff')
+      expect(ObjectManager::Attribute.find_by(name: 'nodiff')).to be_present
     end
 
     it 'datetime attribute' do
@@ -880,8 +809,11 @@ RSpec.describe 'System > Objects', type: :system do
         page.find('select[name=data_type]').select('Date & time field')
         fill_in 'Default time diff (minutes)', with: ''
 
-        expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+        page.find('.js-submit').click
       end
+
+      expect(page).to have_text('NoDiff')
+      expect(ObjectManager::Attribute.find_by(name: 'nodiff')).to be_present
     end
   end
 

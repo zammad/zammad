@@ -94,6 +94,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       visit '/'
 
       within '#navigation .menu' do
+        expect(page).to have_link(href: '#dashboard')
         expect(page).to have_no_link('Phone', href: '#cti')
       end
     end
@@ -239,15 +240,10 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       let(:prettified_customer_phone)     { '+49 30 609854180' }
       let(:prettified_current_user_phone) { '+49 30 609811111' }
 
-      it 'appears prettified' do
+      it 'appears prettified, not verbatim' do
         within :active_content do
           expect(page).to have_css('.js-callerLog', text: prettified_customer_phone)
             .and have_css('.js-callerLog', text: prettified_current_user_phone)
-        end
-      end
-
-      it 'done not appear verbatim' do
-        within :active_content do
           expect(page).to have_no_selector('.js-callerLog', text: customer_phone)
         end
       end

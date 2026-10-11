@@ -19,6 +19,7 @@ RSpec.describe 'Profile', type: :system do
       visit 'dashboard'
 
       find('a[href="#current_user"]').click
+      expect(page).to have_css('.dropdown-menu > li > a[href="#logout"]')
       expect(page).to have_no_css('.dropdown-menu > li > a[href="#profile"]')
     end
   end
@@ -36,6 +37,7 @@ RSpec.describe 'Profile', type: :system do
       click 'label[for=api_token_access]'
 
       visit 'profile'
+      expect(page).to have_link('Language')
       expect(page).to have_no_text('Token Access')
 
       # enable token access
@@ -60,6 +62,7 @@ RSpec.describe 'Profile', type: :system do
     end
 
     it 'does not show password profile' do
+      expect(page).to have_link('Language')
       expect(page).to have_no_text('Password')
     end
 

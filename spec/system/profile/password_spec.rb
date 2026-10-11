@@ -12,6 +12,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
       password_and_authenticate(password: false, two_factor: false)
 
       visit 'profile/'
+      expect(page).to have_link('Language')
       expect(page).to have_no_text('Password & Authentication')
     end
 
@@ -54,6 +55,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         password_and_authenticate(password: false, two_factor: true)
 
         visit 'profile/'
+        expect(page).to have_link('Language')
         expect(page).to have_no_text('Password & Authentication')
       end
 

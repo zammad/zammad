@@ -57,14 +57,11 @@ RSpec.describe 'Manage > Integration > Icinga', type: :system do
       it_behaves_like 'showing set config'
     end
 
-    context 'when disabled with changed config' do
+    context 'when disabled' do
       before do
-        # disable icinga
         uncheck 'setting-switch', allow_label_click: true
+        wait_for_setting('icinga_integration', false)
       end
-
-      let(:icinga_sender) { 'icinga@monitoring.example.com' }
-      let(:icinga_auto_close) { 'yes' }
 
       it_behaves_like 'showing set config'
     end

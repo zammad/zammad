@@ -32,7 +32,7 @@ RSpec.describe 'User Profile', type: :system do
       true
     end
 
-    it 'checks ticket create' do
+    it 'limits the input to the maximum length' do
       visit "#user/profile/#{customer.id}"
       within(:active_content) do
         page.find('.profile .js-action').click

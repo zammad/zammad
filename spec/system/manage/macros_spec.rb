@@ -28,7 +28,7 @@ RSpec.describe 'Manage > Macro', type: :system do
         click_on 'Submit'
       end
 
-      expect(Macro.last.perform).to eq('checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s })
+      expect(Macro.find_by(name: 'Checklist macro').perform).to eq('checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s })
     end
 
     context 'when no checklist template is active' do

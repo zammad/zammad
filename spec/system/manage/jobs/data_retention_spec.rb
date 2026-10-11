@@ -37,20 +37,20 @@ RSpec.describe 'Data retention rules for object cleanup from the system with the
 
         click_on 'Submit'
       end
-
-      run_last_job_and_perform_last_deletion_task
     end
 
-    it 'deletes user via data privacy task', if: object_name == 'User' do
-      expect(User).not_to exist(user.id)
-      expect(Organization).to exist(organization.id)
-      expect(Ticket).not_to exist(ticket.id)
-    end
+    # The deletion itself is covered by spec/models/data_privacy_task_spec.rb.
+    it 'creates a scheduler that adds a data privacy deletion task' do
+      job = Job.find_by(name: 'Delete users older than 6 months')
 
-    it 'deletes ticket via data privacy task', if: object_name == 'Ticket' do
-      expect(Ticket).not_to exist(ticket.id)
-      expect(User).to exist(user.id)
-      expect(Organization).to exist(organization.id)
+      expect(job).to have_attributes(
+        object:  object_name,
+        perform: { "#{object_name.downcase}.action" => { 'value' => 'data_privacy_deletion_task' } },
+      )
+
+      run_job(job)
+
+      expect(DataPrivacyTask.last.deletable).to eq(deletable)
     end
   end
 
@@ -66,15 +66,11 @@ RSpec.describe 'Data retention rules for object cleanup from the system with the
     it_behaves_like 'deleting object via data privacy task', 'Ticket'
   end
 
-  def run_last_job_and_perform_last_deletion_task
-    job = Job.last
-
+  def run_job(job)
     # Workaround to always run the scheduler job without checking its executable state and if the current time applies.
     allow(job).to receive_messages(executable?: true, in_timeplan?: true)
 
     job.run
-
-    DataPrivacyTask.last.perform
   end
 
   def set_attribute_selector(row_number, value)

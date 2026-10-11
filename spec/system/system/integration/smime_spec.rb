@@ -37,8 +37,9 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       fill_in 'Enter Private Key Secret', with: private_key_secret
       click '.js-submit'
 
-      # check result
-      expect(Setting.get('smime_integration')).to be true
+      wait_for_setting('smime_integration', true)
+      wait.until { SMIMECertificate.last&.private_key.present? }
+
       expect(SMIMECertificate.last.fingerprint).to be_present
       expect(SMIMECertificate.last.pem).to be_present
       expect(SMIMECertificate.last.private_key).to be_present
@@ -82,7 +83,9 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       fill_in 'Enter Private Key Secret', with: private_key_secret
       click '.js-submit'
 
-      # check result
+      wait_for_setting('smime_integration', true)
+      wait.until { SMIMECertificate.last&.private_key.present? }
+
       expect(Setting.get('smime_integration')).to be true
       expect(SMIMECertificate.last.fingerprint).to eq(certificate_fingerprint)
       expect(SMIMECertificate.last.pem).to include('CERTIFICATE')

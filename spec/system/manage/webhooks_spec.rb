@@ -35,7 +35,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
     end
 
     it 'provides pre-defined webhooks' do
-      in_modal do
+      in_modal disappears: true do
         find('[name="pre_defined_webhook_id"]').select 'Mattermost Notifications'
 
         click_on 'Next'
@@ -76,7 +76,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
       let(:custom_payload) { JSON.pretty_generate(Webhook::PreDefined::RocketChat.new.custom_payload) }
 
       it 'overrides pre-defined payload' do
-        in_modal do
+        in_modal disappears: true do
           find('[name="pre_defined_webhook_id"]').select 'Rocket Chat Notifications'
 
           click_on 'Next'
@@ -112,7 +112,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
     end
 
     it 'supports pre-defined webhooks' do
-      in_modal do
+      in_modal disappears: true do
         expect(page).to have_select('Pre-defined Webhook', text: 'Mattermost Notifications', disabled: :all)
         expect(page).to have_field('Messaging Username', with: webhook.preferences['pre_defined_webhook']['messaging_username'])
         expect(page).to have_field('Messaging Channel', with: webhook.preferences['pre_defined_webhook']['messaging_channel'])
@@ -142,7 +142,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
       let!(:webhook) { create(:rocketchat_webhook, customized_payload: true, custom_payload: '{}') }
 
       it 'resets custom payload' do
-        in_modal do
+        in_modal disappears: true do
           expect(page).to have_field('Custom Payload', checked: true, visible: :all)
           expect(page).to have_field('custom_payload', with: webhook.custom_payload, disabled: :all, visible: :all)
 
@@ -174,7 +174,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
     end
 
     it 'supports pre-defined webhooks (#5524)' do
-      in_modal do
+      in_modal disappears: true do
         expect(page).to have_field('Name', with: 'Clone: Mattermost Notifications')
         expect(page).to have_select('Pre-defined Webhook', text: 'Mattermost Notifications', disabled: :all)
         expect(page).to have_field('Messaging Username', with: webhook.preferences['pre_defined_webhook']['messaging_username'])

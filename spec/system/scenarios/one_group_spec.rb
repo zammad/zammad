@@ -52,7 +52,7 @@ RSpec.describe 'Scenario > From one group to multiple groups', authenticated_as:
       click('button')
     end
 
-    expect(page).to have_no_text 'Sending'
+    wait.until { User.exists?(email: 'bob.smith.one.group@example.com') }
     expect(User.find_by(email: 'bob.smith.one.group@example.com')).to have_attributes(firstname: 'Bob', lastname: 'Smith', group_ids: [group.id])
 
     # The customer ticket create mask hides the group selection as well.
@@ -98,6 +98,7 @@ RSpec.describe 'Scenario > From one group to multiple groups', authenticated_as:
     visit '#ticket/create'
 
     within(:active_content) do
+      expect(page).to have_field('title')
       expect(page).to have_no_css('.newTicket .form-group.hide [name="group_id"]', visible: :all)
       expect(page).to have_css('.newTicket [name="group_id"]', visible: :all)
     end

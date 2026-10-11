@@ -34,7 +34,7 @@ RSpec.describe 'Unauthenticated redirect', authenticated_as: false, type: :syste
   context 'when customer', authenticated_as: :customer do
     let(:customer) { create(:customer) }
 
-    it 'does redirect to ticket view if no access' do
+    it 'does redirect to the profile if no access' do
       visit '#ticket/create'
       expect_current_route 'profile'
     end
@@ -43,7 +43,7 @@ RSpec.describe 'Unauthenticated redirect', authenticated_as: false, type: :syste
   context 'when agent', authenticated_as: :agent do
     let(:agent) { create(:agent) }
 
-    it 'does redirect to ticket view if no access' do
+    it 'does redirect to the profile if no access' do
       visit '#customer_ticket_new'
       expect_current_route 'profile'
     end
@@ -52,7 +52,7 @@ RSpec.describe 'Unauthenticated redirect', authenticated_as: false, type: :syste
   context 'when admin', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
-    it 'does redirect to ticket view if no access' do
+    it 'does redirect to the profile if no access' do
       visit '#customer_ticket_new'
       expect_current_route 'profile'
     end
