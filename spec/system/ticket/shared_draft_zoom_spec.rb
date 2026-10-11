@@ -49,18 +49,21 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
       let(:group_shared_drafts) { false }
 
       it 'share button not visible' do
+        expect(page).to have_css('.content.active .js-attributeBar .js-submit')
         expect(page).to have_no_selector :draft_share_button
       end
 
       it 'save button not visible' do
         click '.js-openDropdownMacro'
 
+        expect(page).to have_css('.js-submitDropdown .js-dropdownActionMacro', minimum: 1)
         expect(page).to have_no_selector :draft_save_button
       end
     end
 
     context 'when drafts enabled for the group' do
       it 'share button not visible initially' do
+        expect(page).to have_css('.content.active .js-attributeBar .js-submit')
         expect(page).to have_no_selector :draft_share_button
       end
 
@@ -94,12 +97,14 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
         visit "ticket/zoom/#{ticket_with_draft.id}"
 
         within :active_content do
+          expect(page).to have_css('.ticketZoom-header .ticket-number', text: ticket_with_draft.number)
           expect(page).to have_no_selector :draft_share_button
         end
       end
 
       it 'save button not visible' do
-        expect(page).to have_no_selector :draft_save_button
+        expect(page).to have_css('.content.active .js-attributeBar')
+        expect(page).to have_no_selector :draft_save_button, visible: :all
       end
     end
   end

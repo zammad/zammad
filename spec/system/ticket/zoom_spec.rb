@@ -31,7 +31,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           find('a[data-type=emailForward]').click
 
           click('.js-reset')
-          have_no_css('.js-reset')
+          wait.until_disappears { find('.js-reset', wait: 0) }
         end
       end
 
@@ -83,6 +83,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     %w[idoit gitlab github].each do |service_name|
       it "#{service_name} tab is hidden" do
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=customer]')
         expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
       end
 
@@ -96,9 +97,10 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
 
         context 'when customer', authenticated_as: :customer do
-          let(:customer) { create(:customer) }
+          let(:customer) { ticket.customer }
 
           it "#{service_name} tab is hidden" do
+            expect(page).to have_css('.ticketZoom-header .ticket-number', text: ticket.number)
             expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
           end
         end
@@ -185,6 +187,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit "ticket/zoom/#{ticket.id}"
 
         within :active_content, '.tabsSidebar' do
+          expect(page).to have_css('select[name=state_id] option', count: 3)
           expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen neu offen])
         end
       end
@@ -197,6 +200,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'shows ticket state dropdown options in sorted order' do
         visit 'ticket/create'
 
+        expect(page).to have_css('select[name=state_id] option', count: 6)
         expect(all('select[name=state_id] option').map(&:text)).to eq ['-', 'geschlossen', 'neu', 'offen', 'warten auf Erinnerung', 'warten auf Schließen']
       end
     end
@@ -481,6 +485,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       visit "ticket/zoom/#{ticket.id}"
 
       within :active_content do
+        expect(page).to have_css('.ticketZoom-header .ticket-number', text: ticket.number)
         expect(page).to have_no_css('.controls[data-name=pending_time]')
       end
     end
@@ -506,22 +511,23 @@ RSpec.describe 'Ticket zoom', type: :system do
       # pick the left/right half of the field, which is what the widget reads.
       it 'in the first half, hours selected' do
         within :active_content do
-          # timepicker messes with the dom, so don't cache the element and wait a bit.
-          sleep 1
-          find('.js-timepicker').click(x: -10, y: 0)
-          sleep 0.5
-          expect(find('.js-timepicker')).to have_selection(0..2)
+          click_timepicker(offset_x: -10)
+          wait.until { have_selection(0..2).matches?(find('.js-timepicker')) }
         end
       end
 
       it 'in the second half, minutes selected' do
         within :active_content do
-          sleep 1
-          find('.js-timepicker').click(x: 10, y: 0)
-          sleep 0.5
-          expect(find('.js-timepicker')).to have_selection(3..5)
+          click_timepicker(offset_x: 10)
+          wait.until { have_selection(3..5).matches?(find('.js-timepicker')) }
         end
       end
+    end
+
+    # The timepicker plugin rewrites the DOM once initialised, so don't cache the element.
+    def click_timepicker(offset_x:)
+      wait.until { page.evaluate_script("$('.content.active .js-timepicker').data('timepicker') !== undefined") }
+      find('.js-timepicker').click(x: offset_x, y: 0)
     end
 
     matcher :have_selection do
@@ -845,7 +851,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         page.evaluate_script("App.Event.trigger('ui:rerender')")
       end
 
-      it 'does loose attachments after rerender' do
+      it 'does keep attachments after rerender' do
         upload_and_set_text
         expect_upload_and_text
         rerender
@@ -1041,8 +1047,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         select 'closed', from: 'State'
         find('.js-submit').click
         using_session(:second_browser) do
-          sleep 3
-          expect(page.find("select[name='state_id']").value).not_to eq(closed_state.id.to_s)
+          expect(page).to have_css(".tasks .task[data-key='Ticket-#{ticket.id}'] .icon-task-state.closed")
+          expect(page.find(:active_content, "select[name='state_id']").value).not_to eq(closed_state.id.to_s)
         end
       end
     end
@@ -1103,7 +1109,9 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'does not show any changes for the field because it has no value and because it is not shown it should also not show the ticket as changed' do
-      sleep 3
+      expect(page).to have_css(".content.active select[name='state_id']")
+      wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
+      await_empty_ajax_queue
       expect(page).to have_no_selector('.js-reset')
     end
   end

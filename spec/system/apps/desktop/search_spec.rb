@@ -154,6 +154,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
 
       within 'aside[aria-label="Main sidebar"]' do
         find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+        wait_for_gql('apps/desktop/components/Search/graphql/queries/quickSearch.graphql')
 
         expect(page).to have_no_text('Found knowledge base answers')
       end

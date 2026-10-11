@@ -42,6 +42,9 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
         if authenticated
           find('a[href="#current_user"]').click
+          expect(page).to have_css('a', text: 'Sign out')
+        else
+          expect(page).to have_field('username')
         end
 
         expect(page).to have_no_css('a', text: 'Continue to mobile')
@@ -56,8 +59,8 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
         click 'a', text: 'Continue to mobile'
 
-        expect(page).to have_no_text('Loading failed')
         expect_current_route(target, app: :mobile)
+        expect(page).to have_no_text('Loading failed')
       end
     end
 
@@ -67,7 +70,7 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
       end
 
       context 'when user is authenticated' do
-        it_behaves_like 'hiding the mobile app link', 'dashboard'
+        it_behaves_like 'hiding the mobile app link', 'dashboard', authenticated: true
       end
     end
 
@@ -84,8 +87,8 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
           click_on('Continue to mobile')
 
-          expect(page).to have_no_text('Loading failed')
           expect_current_route('login', app: :mobile)
+          expect(page).to have_no_text('Loading failed')
         end
       end
 

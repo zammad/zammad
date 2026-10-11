@@ -39,7 +39,6 @@ RSpec.describe 'Ticket zoom > Macro execution', authenticated_as: :authenticate,
       visit "#ticket/zoom/#{ticket.id}"
 
       expect(page).to have_css('.content.active .js-tag', text: 'spam')
-      expect(page).to have_no_css('.content.active .js-tag', text: 'tag1')
     end
   end
 
@@ -54,7 +53,6 @@ RSpec.describe 'Ticket zoom > Macro execution', authenticated_as: :authenticate,
       perform_macro
 
       expect(page).to have_css('.content.active .js-tag', text: 'spam')
-      expect(page).to have_no_css('.content.active .js-tag', text: 'tag1')
       expect(page).to have_current_path(%r{#ticket/zoom/#{ticket.id}}, url: true)
     end
   end

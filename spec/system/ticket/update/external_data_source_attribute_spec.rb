@@ -32,6 +32,7 @@ RSpec.describe 'Ticket > Update > External Data Source Attribute', db_strategy: 
 
       click('.js-attributeBar .js-submit')
       expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
+      await_empty_ajax_queue
 
       expect(ticket.reload.external_data_source_attribute).to eq({ 'value' => customer2.id.to_s, 'label' => customer2.email })
     end
@@ -44,6 +45,7 @@ RSpec.describe 'Ticket > Update > External Data Source Attribute', db_strategy: 
 
         click('.js-attributeBar .js-submit')
         expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
+        await_empty_ajax_queue
 
         expect(ticket.reload.external_data_source_attribute).to eq({ 'value' => customer1.id.to_s, 'label' => customer1.email })
       end
@@ -55,9 +57,9 @@ RSpec.describe 'Ticket > Update > External Data Source Attribute', db_strategy: 
     it 'sees preexisting ticket as unchanged' do
       visit "ticket/zoom/#{preexisting_ticket.id}"
 
-      sleep 1 # some time needed for change marker to be applied
-
       elem = find("div[data-attribute-name='#{external_data_source_attribute.name}']")
+      wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
+      await_empty_ajax_queue
 
       expect(elem[:class]).not_to include('is-changed')
     end

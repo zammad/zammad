@@ -3,33 +3,35 @@
 require 'rails_helper'
 
 RSpec.describe 'Mobile > Ticket > Information > Accounted Time', app: :mobile, authenticated_as: :authenticate, type: :system do
-  let(:group)           { create(:group) }
-  let(:ticket)          { create(:ticket, group: group) }
-  let(:article)         { create(:ticket_article, ticket: ticket) }
-  let(:time_unit)       { Faker::Number.unique.decimal(l_digits: 1, r_digits: 1) }
-  let(:time_accounting) { create(:'ticket/time_accounting', ticket: ticket, ticket_article: article, time_unit: time_unit) }
+  let(:group)                { create(:group) }
+  let(:ticket)               { create(:ticket, group: group) }
+  let(:article)              { create(:ticket_article, ticket: ticket) }
+  let(:time_unit)            { Faker::Number.unique.decimal(l_digits: 1, r_digits: 1) }
+  let(:time_accounting)      { create(:'ticket/time_accounting', ticket: ticket, ticket_article: article, time_unit: time_unit) }
+  let(:time_accounting_unit) { '' }
+  let(:display_unit)         { nil }
 
   let(:accounted_time_element) do
     find('section', text: 'Total accounted time')
   end
 
   def authenticate
+    Setting.set('time_accounting', true)
+    Setting.set('time_accounting_unit', time_accounting_unit) if time_accounting_unit.present?
+    Setting.set('time_accounting_unit_custom', display_unit) if time_accounting_unit == 'custom'
+
     time_accounting
 
     user
   end
 
   before do
-    Setting.set('time_accounting', true)
-
     visit "/tickets/#{ticket.id}/information"
   end
 
   shared_examples 'showing accounted time' do |time_accounting_unit = '', display_unit = nil|
-    before do
-      Setting.set('time_accounting_unit', time_accounting_unit) if time_accounting_unit.present?
-      Setting.set('time_accounting_unit_custom', display_unit) if time_accounting_unit == 'custom'
-    end
+    let(:time_accounting_unit) { time_accounting_unit }
+    let(:display_unit)         { display_unit }
 
     it 'shows accounted time', if: !display_unit do
       expect(accounted_time_element).to have_text(format('%.2f', time_unit))
@@ -67,7 +69,8 @@ RSpec.describe 'Mobile > Ticket > Information > Accounted Time', app: :mobile, a
     let(:ticket) { create(:ticket, customer: user) }
 
     it 'does not show accounted time' do
-      expect(page).to have_no_css('Accounted time')
+      expect(page).to have_text(ticket.title)
+      expect(page).to have_no_text('Total accounted time')
     end
   end
 end

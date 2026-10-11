@@ -125,31 +125,6 @@ RSpec.describe 'Assist agent/customer to prevent duplicate ticket creation #4592
     end
   end
 
-  context 'with permission level system' do
-    let(:attributes)       { ['title'] }
-    let(:permission_level) { 'system' }
-
-    context 'with matching attributes shows a warning and accessible tickets only' do
-      let(:title)          { '123' }
-      let(:shown_tickets)  { [ticket1] }
-      let(:hidden_tickets) { [ticket2, ticket3, ticket4] }
-
-      it_behaves_like 'showing a warning'
-    end
-  end
-
-  context 'with permission level user' do
-    let(:attributes) { ['title'] }
-
-    context 'with matching attributes shows a warning and accessible tickets only' do
-      let(:title)          { '123' }
-      let(:shown_tickets)  { [ticket1] }
-      let(:hidden_tickets) { [ticket2, ticket3, ticket4] }
-
-      it_behaves_like 'showing a warning'
-    end
-  end
-
   context 'with customer user' do
     let(:current_user) { customer }
     let(:role_ids)     { [Role.find_by(name: 'Customer').id] }

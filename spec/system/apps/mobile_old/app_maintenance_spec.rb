@@ -21,10 +21,9 @@ RSpec.describe 'Mobile > App Update Check', app: :mobile, type: :system do
     end
 
     it 'shows app rebuild dialog' do
-      # Append a newline to the manifest file to trigger a reload notification.
-      Rails.public_path.join('assets/frontend/vite/.vite/manifest.json').open('a') do |file|
-        file.write("\n")
-      end
+      manifest = Rails.public_path.join('assets/frontend/vite/.vite/manifest.json')
+      allow(File).to receive(:read).and_call_original
+      allow(File).to receive(:read).with(manifest).and_return("#{manifest.read}\n")
 
       expect(page).to have_text('A newer version of the app is available. Please reload at your earliest.')
     end
@@ -35,6 +34,7 @@ RSpec.describe 'Mobile > App Update Check', app: :mobile, type: :system do
       visit '/', skip_waiting: true
       wait_for_test_flag('applicationLoaded.loaded')
       wait_for_test_flag('useConfigUpdatesSubscription.subscribed')
+      wait_for_test_flag('usePushMessagesSubscription.subscribed')
 
       Setting.set('maintenance_mode', true)
     end
@@ -43,7 +43,19 @@ RSpec.describe 'Mobile > App Update Check', app: :mobile, type: :system do
       let(:user) { create(:admin) }
 
       it 'does not log out' do
+        # Pushed after the setting change, so it arrives once the maintenance mode has been applied.
+        Gql::Subscriptions::PushMessages.trigger({ title: 'Attention', text: 'Maintenance test message.' })
+        expect(page).to have_text('Attention: Maintenance test message.')
+
         expect_current_route '/'
+      end
+    end
+
+    context 'with agent user' do
+      let(:user) { create(:agent) }
+
+      it 'logs out' do
+        expect_current_route '/login'
       end
     end
   end

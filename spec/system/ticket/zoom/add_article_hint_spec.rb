@@ -58,6 +58,7 @@ RSpec.describe 'Add Article Hint', authenticated_as: :authenticate, type: :syste
     it 'hides hint when changing to type that has no hint' do
       within '.article-new' do
         click '.attachmentPlaceholder'
+        expect(page).to have_text 'internal note'
 
         click '.js-selectableTypes'
         click '.js-articleTypeItem[data-value=email]'
@@ -90,6 +91,8 @@ RSpec.describe 'Add Article Hint', authenticated_as: :authenticate, type: :syste
       it 'hides the hint when changing to visibility that has no hint' do
         within '.article-new' do
           click '.attachmentPlaceholder'
+          expect(page).to have_text 'public phone'
+
           click '.js-toggleVisibility'
 
           expect(page).to have_no_css '.article-visibility-text'
@@ -104,6 +107,7 @@ RSpec.describe 'Add Article Hint', authenticated_as: :authenticate, type: :syste
         within :active_content do
           click '.attachmentPlaceholder'
 
+          expect(page).to have_css('.article-new [name=to]', visible: :all)
           expect(page).to have_no_css '.article-visibility-text'
         end
       end

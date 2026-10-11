@@ -24,6 +24,7 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
     end
 
     it 'can login with correct code' do
+      expect(page).to have_text('Security code')
       expect(page).to have_no_text('Try another method')
 
       find_input('Security code').type(code)

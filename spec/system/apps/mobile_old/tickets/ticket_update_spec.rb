@@ -58,9 +58,9 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
     it 'does not show "save" button, but shows form as menu with sections' do
       visit "/tickets/#{ticket.id}/information"
 
+      expect(find('section', text: %r{Tags})).to have_text('foo, bar')
       expect(page).to have_no_button('Save')
       expect(page).to have_no_css('output', text: 'Tags')
-      expect(find('section', text: %r{Tags})).to have_text('foo, bar')
       expect(find('section', text: %r{Group})).to have_text(ticket.group.name)
       expect(find('section', text: %r{State})).to have_text(ticket.state.name)
     end

@@ -230,9 +230,10 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       expect(page).to have_select('checklist_template_id')
 
       # Sometimes, by clicking the button, nothing happens.
-      sleep 0.1
-      click_on('Add from a template')
-      wait.until { page.has_content?('Please select a checklist template.') }
+      wait.until do
+        click_on('Add from a template')
+        page.has_content?('Please select a checklist template.', wait: 1)
+      end
 
       select checklist_template.name, from: 'checklist_template_id'
       wait.until { page.has_no_content?('Please select a checklist template.') }

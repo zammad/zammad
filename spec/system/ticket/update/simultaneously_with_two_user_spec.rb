@@ -128,8 +128,8 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
         within(:active_content) do
           click '.js-attributeBar .js-submit'
 
-          expect(page).to have_no_css('.js-reset')
           expect(page).to have_css('.article-content', text: 'some other note')
+          expect(page).to have_no_css('.js-reset')
         end
 
         expect(page).to have_avatar('TA').changed!
@@ -143,8 +143,8 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
 
         click '.js-attributeBar .js-submit'
 
-        expect(page).to have_no_css('.js-reset')
         expect(page).to have_css('.article-content', text: 'some note')
+        expect(page).to have_no_css('.js-reset')
       end
 
       using_session(:second_browser) do
@@ -260,6 +260,8 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
       end
 
       it 'does not show current user' do
+        expect(page).to have_css('.content.active .js-attributeBar .js-submit')
+        await_empty_ajax_queue
         expect(page).not_to have_avatar(user)
       end
     end
@@ -338,7 +340,9 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
         visit path
       end
 
-      it 'shows same user' do
+      it 'does not show same user' do
+        expect(page).to have_css('.content.active .js-attributeBar .js-submit')
+        await_empty_ajax_queue
         expect(page).not_to have_avatar(user)
       end
     end
@@ -351,6 +355,8 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
       end
 
       it 'do not show same user' do
+        expect(page).to have_css('.content.active .js-attributeBar .js-submit')
+        await_empty_ajax_queue
         expect(page).not_to have_avatar(user)
       end
     end

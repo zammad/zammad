@@ -259,6 +259,9 @@ RSpec.describe 'Ticket zoom > Taskbar', type: :system do
 
     it 'does not show the discard button nor the confirmation dialog' do
       within(:active_content) do
+        expect(page).to have_select('state_id')
+        wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
+        await_empty_ajax_queue
         expect(page).to have_no_css('.js-reset')
       end
 
@@ -305,6 +308,8 @@ RSpec.describe 'Ticket zoom > Taskbar', type: :system do
         visit '#dashboard'
         refresh
       end
+      expect(page).to have_css("#navigation [data-key='Ticket-#{Ticket.first.id}']")
+      await_empty_ajax_queue
       expect(page).to have_no_css('#navigation .icon-status-modified-inner-circle')
       sleep 2
 

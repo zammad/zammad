@@ -62,62 +62,6 @@ RSpec.describe 'Ticket zoom > Auto Assignment', type: :system do
           end
         end
       end
-
-      context 'with "ticket_auto_assignment_user_ids_ignore" (as string)' do
-        let(:setting_user_ids_ignore) { session_user.id.to_s }
-
-        it 'assigns ticket not to current session user' do
-          visit "#ticket/zoom/#{ticket.id}"
-
-          within(:active_content) do
-            expect(page).to have_select('owner_id',
-                                        selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
-          end
-        end
-      end
-
-      context 'with "ticket_auto_assignment_user_ids_ignore" (as [integer])' do
-        let(:setting_user_ids_ignore) { [session_user.id] }
-
-        it 'assigns ticket not to current session user' do
-          visit "#ticket/zoom/#{ticket.id}"
-
-          within(:active_content) do
-            expect(page).to have_select('owner_id',
-                                        selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
-          end
-        end
-      end
-
-      context 'with "ticket_auto_assignment_user_ids_ignore" (as [string])' do
-        let(:setting_user_ids_ignore) { [session_user.id.to_s] }
-
-        it 'assigns ticket not to current session user' do
-          visit "#ticket/zoom/#{ticket.id}"
-
-          within(:active_content) do
-            expect(page).to have_select('owner_id',
-                                        selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
-          end
-        end
-      end
-
-      context 'with "ticket_auto_assignment_user_ids_ignore" and other user ids' do
-        let(:setting_user_ids_ignore) { [99_999, 999_999] }
-
-        it 'assigns ticket to current session user' do
-          visit "#ticket/zoom/#{ticket.id}"
-
-          within(:active_content) do
-            expect(page).to have_select('owner_id',
-                                        selected: session_user.fullname,
-                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
-          end
-        end
-      end
     end
   end
 

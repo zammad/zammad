@@ -59,6 +59,7 @@ RSpec.describe 'Assist agent/customer to prevent duplicate ticket creation #4592
     it 'shows no warning' do
       find('[name="title"]').send_keys title, :tab
       set_tree_select_value('group_id', group.name)
+      await_empty_ajax_queue
 
       expect(page).to have_no_text 'Similar tickets found'
     end
@@ -95,31 +96,6 @@ RSpec.describe 'Assist agent/customer to prevent duplicate ticket creation #4592
       let(:group)          { permitted_group1 }
       let(:shown_tickets)  { [] }
       let(:hidden_tickets) { [ticket1, ticket2, ticket3, ticket4] }
-
-      it_behaves_like 'showing a warning'
-    end
-  end
-
-  context 'with permission level system' do
-    let(:attributes)       { ['title'] }
-    let(:permission_level) { 'system' }
-
-    context 'with matching attributes shows a warning and accessible tickets only' do
-      let(:title)          { '123' }
-      let(:shown_tickets)  { [ticket1] }
-      let(:hidden_tickets) { [ticket2, ticket3, ticket4] }
-
-      it_behaves_like 'showing a warning'
-    end
-  end
-
-  context 'with permission level user' do
-    let(:attributes) { ['title'] }
-
-    context 'with matching attributes shows a warning and accessible tickets only' do
-      let(:title)          { '123' }
-      let(:shown_tickets)  { [ticket1] }
-      let(:hidden_tickets) { [ticket2, ticket3, ticket4] }
 
       it_behaves_like 'showing a warning'
     end

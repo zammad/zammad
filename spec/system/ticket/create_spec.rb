@@ -30,8 +30,8 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     it 'show manage templates text only', authenticated_as: :agent do
       visit 'ticket/create'
 
-      expect(page).to have_no_css('div.js-createLink', visible: :all)
-      expect(page).to have_no_css('div.js-createTextOnly', visible: :hidden)
+      expect(page).to have_css('.js-createTextOnly')
+      expect(page).to have_no_css('.js-createLink')
     end
   end
 
@@ -61,6 +61,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       it "#{service_name} tab is hidden" do
         visit 'ticket/create'
 
+        expect(page).to have_css('.tabsSidebar-tab[data-tab="template"]')
         expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
       end
 
@@ -83,6 +84,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
           it "#{service_name} tab is hidden" do
             visit 'customer_ticket_new'
 
+            expect(page).to have_field('title')
             expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
           end
         end
@@ -96,8 +98,8 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     it 'show manage templates link', authenticated_as: :admin do
       visit 'ticket/create'
 
-      expect(page).to have_no_css('div.js-createLink', visible: :hidden)
-      expect(page).to have_no_css('div.js-createTextOnly', visible: :all)
+      expect(page).to have_css('.js-createLink')
+      expect(page).to have_no_css('.js-createTextOnly')
     end
   end
 
@@ -496,6 +498,8 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       end
 
       taskbar_tab_close(task_key)
+
+      expect(page).to have_no_css(".tasks .task[data-key='#{task_key}']")
     end
   end
 
@@ -586,6 +590,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       )
       visit 'customer_ticket_new'
 
+      expect(page).to have_field('title')
       expect(page).to have_no_field('customer_id', type: 'hidden')
     end
   end
@@ -766,8 +771,8 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     before do
       visit 'ticket/create'
 
-      # modal reaper ;)
-      sleep 3
+      find('[name=customer_id_completion]')
+      wait.until_disappears { find('.modal', wait: 0) }
     end
 
     context 'when less than 10 customers' do
@@ -789,7 +794,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
 
       let(:organization) { create(:organization, name: 'Zammed') }
       let(:customers) do
-        create_list(:customer, 50, organization: organization)
+        create_list(:customer, 26, organization: organization)
       end
 
       it 'does paginate through organization' do
@@ -806,7 +811,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
         expect(page).to have_css("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='25']")
         scroll_into_view('li.js-showMoreMembers')
         page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
-        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 52 } # 50 users + back + show more button
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 28 } # 26 users + back + show more button
 
         scroll_into_view('li.js-showMoreMembers')
         expect(page).to have_css("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all)
@@ -1004,15 +1009,16 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
         visit 'ticket/create'
       end
 
-      it 'does not show the organization field for user 1' do
+      it 'does show the organization field for user 1' do
         find('[name=customer_id_completion]').fill_in with: user1.firstname
         find("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").click
         expect(page).to have_css("div[data-attribute-name='organization_id']")
       end
 
-      it 'does show the organization field for user 2' do
+      it 'does not show the organization field for user 2' do
         find('[name=customer_id_completion]').fill_in with: user2.firstname
         find("li.recipientList-entry.js-object[data-object-id='#{user2.id}']").click
+        await_empty_ajax_queue
         expect(page).to have_no_css("div[data-attribute-name='organization_id']")
       end
 
@@ -1058,11 +1064,13 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
         visit 'customer_ticket_new'
       end
 
-      it 'does not show the organization field for user 1', authenticated_as: :customer1 do
+      it 'does show the organization field for user 1', authenticated_as: :customer1 do
         expect(page).to have_css("div[data-attribute-name='organization_id']")
       end
 
-      it 'does show the organization field for user 2', authenticated_as: :customer2 do
+      it 'does not show the organization field for user 2', authenticated_as: :customer2 do
+        expect(page).to have_field('title')
+        await_empty_ajax_queue
         expect(page).to have_no_css("div[data-attribute-name='organization_id']")
       end
 
@@ -1326,11 +1334,12 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     let(:agent)         { create(:agent, groups: [group]) }
     let(:customer)      { create(:customer) }
     let(:cc_recipients) { Array.new(3) { Faker::Internet.unique.email }.join(', ') }
+    let(:ticket_title)  { Faker::Name.unique.name_with_middle }
     let!(:template) do
       create(:template,
              options: {
                'ticket.title':          {
-                 value: Faker::Name.unique.name_with_middle,
+                 value: ticket_title,
                },
                'ticket.customer_id':    {
                  value:            customer.id,
@@ -1367,7 +1376,8 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
 
         click '.js-submit'
 
-        expect(Ticket::Article.last).to have_attributes(cc: cc_recipients)
+        wait.until { Ticket.last.title == ticket_title }
+        expect(Ticket.last.articles.first).to have_attributes(cc: cc_recipients)
       end
     end
 
@@ -1381,7 +1391,8 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
 
         click '.js-submit'
 
-        expect(Ticket::Article.last).not_to have_attributes(cc: cc_recipients)
+        wait.until { Ticket.last.title == ticket_title }
+        expect(Ticket.last.articles.first).not_to have_attributes(cc: cc_recipients)
       end
     end
   end

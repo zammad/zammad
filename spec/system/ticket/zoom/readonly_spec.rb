@@ -124,6 +124,8 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
     include_examples 'elements'
 
     it 'shows no tag and link modification buttons' do
+      expect(page).to have_css('.tags .js-tag', text: 'Tag')
+      expect(page).to have_css('.links .ticketLinks')
       expect(page).to have_no_selector('.tags .icon-diagonal-cross')
       expect(page).to have_no_text('+ Tag')
       expect(page).to have_no_selector('.links .icon-diagonal-cross')
@@ -131,6 +133,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
     end
 
     it 'shows no ticket actions' do
+      expect(page).to have_css('.content.active .ticket-article-item')
       expect(page).to have_no_selector('.js-submit')
       expect(page).to have_no_selector('.js-secondaryActionButtonLabel')
       expect(page).to have_no_selector('.js-ArticleAction[data-type=internal]')
@@ -139,12 +142,14 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
     it 'shows no ticket sidebar ticket actions' do
       click '.sidebar .js-headline'
+      expect(page).to have_css('.sidebar [data-type="ticket-history"]')
       expect(page).to have_no_text('Change Customer')
       expect(page).to have_no_text('Merge')
     end
 
     it 'shows no ticket sidebar customer ticket actions' do
       click '.tabsSidebar-tab[data-tab=customer]'
+      expect(page).to have_css('.sidebar[data-tab="customer"]', text: ticket.customer.lastname)
       click '.sidebar .js-headline'
       expect(page).to have_no_text('Change Customer')
     end
@@ -203,13 +208,10 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
   end
 
   def dropdown_toggle
-    loop do
+    wait(interval: 0.1).until do
       find('.controls .dropdown .dropdown-toggle').click
 
-      break if find_all(".js-optionsList > .js-option[data-value=#{value}]", allow_reload: true, wait: 0).any?
-
-      # If we could not find the dropdown options, we sleep and try again.
-      sleep 0.1
+      find_all(".js-optionsList > .js-option[data-value=#{value}]", allow_reload: true, wait: 0).any?
     end
   end
 

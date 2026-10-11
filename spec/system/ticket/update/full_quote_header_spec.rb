@@ -299,8 +299,8 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         expect(page).to have_text(sender_outbound_article.body)
 
         page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
-        expect(page.find('.js-writeArea')).to have_no_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
         expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} #{Setting.get('ticket_define_email_from_separator')} #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
+        expect(page.find('.js-writeArea')).to have_no_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
       end
 
       context 'when the agent has no name' do

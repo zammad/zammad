@@ -9,7 +9,7 @@ RSpec.describe 'Mobile > Tickets > Hide certain columns', app: :mobile, type: :s
   let(:agent)               { create(:agent, groups: [group]) }
 
   before do
-    create(:ticket, customer: user, organization: organization, group: group, created_by_id: user.id, state: Ticket::State.lookup(name: 'open'), priority: Ticket::Priority.lookup(name: '1 low'))
+    create(:ticket, title: 'Hidden columns ticket', customer: user, organization: organization, group: group, created_by_id: user.id, state: Ticket::State.lookup(name: 'open'), priority: Ticket::Priority.lookup(name: '1 low'))
 
     # testing agent on "open tickets"
     Overview.find_by(link: 'all_open').update!(
@@ -59,6 +59,7 @@ RSpec.describe 'Mobile > Tickets > Hide certain columns', app: :mobile, type: :s
 
     it 'cannot see columns for overview, because they are not defined in viewColumns' do
       visit '/tickets/view/my_organization_tickets'
+      expect(page).to have_text('Hidden columns ticket')
       expect(page).to have_no_text('1 LOW')
     end
   end

@@ -24,6 +24,7 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
     end
 
     it 'can login with correct code' do
+      expect(page).to have_text('Security code')
       expect(page).to have_no_text('Try another method')
 
       find_input('Security code').type(code)

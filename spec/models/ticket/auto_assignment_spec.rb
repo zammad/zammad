@@ -34,6 +34,41 @@ RSpec.describe 'Ticket: #auto_assign' do # rubocop:disable RSpec/DescribeClass
       end
     end
 
+    context 'when "ticket_auto_assignment_user_ids_ignore" is set' do
+      let(:ticket)                           { create(:ticket, group: Group.first) }
+      let(:agent)                            { create(:agent, groups: [Group.first]) }
+      let(:ticket_auto_assignment_condition) { { 'ticket.state_id' => { operator: 'is', value: Ticket::State.pluck(:id) } } }
+
+      before do
+        Setting.set('ticket_auto_assignment_user_ids_ignore', user_ids_ignore.call(agent))
+      end
+
+      {
+        'an integer'          => ->(agent) { agent.id },
+        'a string'            => ->(agent) { agent.id.to_s },
+        'an array of integer' => ->(agent) { [agent.id] },
+        'an array of string'  => ->(agent) { [agent.id.to_s] },
+      }.each do |format, value|
+        context "with the user id as #{format}" do
+          let(:user_ids_ignore) { value }
+
+          it 'does not auto assign' do
+            ticket.auto_assign(agent)
+            expect(ticket.reload.owner_id).to eq(1)
+          end
+        end
+      end
+
+      context 'with other user ids' do
+        let(:user_ids_ignore) { ->(_agent) { [99_999, 999_999] } }
+
+        it 'does auto assign' do
+          ticket.auto_assign(agent)
+          expect(ticket.reload.owner_id).to eq(agent.id)
+        end
+      end
+    end
+
     context 'when conditions with title are used' do
       let(:ticket) { create(:ticket, group: Group.first, title: 'Welcome to Zammad') }
       let(:agent)  { create(:agent, groups: [Group.first]) }

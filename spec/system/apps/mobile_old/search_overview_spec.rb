@@ -33,12 +33,14 @@ RSpec.describe 'Mobile > Search', app: :mobile, authenticated_as: :user, type: :
     it 'can\'t search users' do
       visit '/search/user'
 
+      expect_current_route('/search/ticket')
       expect(page).to have_no_text('User')
     end
 
     it 'can\'t search organizations' do
       visit '/search/organization'
 
+      expect_current_route('/search/ticket')
       expect(page).to have_no_text('Organization')
     end
   end

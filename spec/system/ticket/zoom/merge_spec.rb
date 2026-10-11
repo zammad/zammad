@@ -31,6 +31,7 @@ RSpec.describe 'Ticket zoom > Merge action', type: :system do
             # Regression check for #5515: the customer/recently-viewed ticket lists must never render
             #   pagination controls (pagerEnabled is false for them, so '.js-pager' stays an empty
             #   placeholder - checking that placeholder's visibility is unreliable cross-driver).
+            expect(page).to have_css('#ticket-merge-customer-tickets', text: target_ticket.number)
             expect(page).to have_no_css('.js-pager .js-page')
 
             click('.js-submit')
@@ -69,6 +70,7 @@ RSpec.describe 'Ticket zoom > Merge action', type: :system do
           find('input[name="target_ticket_number"]').fill_in with: ticket.number
 
           # Regression check for #5515, see comment above.
+          expect(page).to have_css('#ticket-merge-customer-tickets', text: ticket.number)
           expect(page).to have_no_css('.js-pager .js-page')
 
           click('.js-submit')

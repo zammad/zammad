@@ -71,6 +71,8 @@ RSpec.describe 'Ticket zoom > Autosave', type: :system do
     it 'ignores visibility change' do
       click '.js-toggleVisibility'
 
+      expect(page).to have_css('.article-new .editControls-icon.icon-public')
+      wait_for_form_update
       expect(page).to have_no_css('.js-reset')
     end
 
@@ -78,8 +80,15 @@ RSpec.describe 'Ticket zoom > Autosave', type: :system do
       click '.js-selectableTypes'
       click '.js-articleTypeItem[data-value=phone]'
 
+      expect(page).to have_css('.article-new .js-selectableTypes[data-type="phone"]')
+      wait_for_form_update
       expect(page).to have_no_css('.js-reset')
     end
+  end
+
+  def wait_for_form_update
+    wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
+    await_empty_ajax_queue
   end
 
   def wait_for_autosave_and_reload

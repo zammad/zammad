@@ -182,6 +182,7 @@ RSpec.describe 'Desktop > Knowledge Base > Sorting', app: :desktop_view, authent
 
       click_on 'Answers'
 
+      expect(page).to have_css('h3', text: 'Alpha answer')
       expect(page).to have_no_css("a[href$='/answer/#{alpha_answer.id}']")
     end
   end

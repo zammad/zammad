@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+# `path:` accepts a lambda, evaluated in the example, so records are not looked up at file load.
 RSpec.shared_examples 'macros' do |path:|
+  let(:macros_path) { path.is_a?(Proc) ? instance_exec(&path) : path }
 
   let!(:group1)              { create(:group) }
   let!(:group2)              { create(:group) }
@@ -24,7 +26,7 @@ RSpec.shared_examples 'macros' do |path:|
 
     # refresh browser to get macro accessable
     refresh
-    visit path
+    visit macros_path
 
     within(:active_content) do
 

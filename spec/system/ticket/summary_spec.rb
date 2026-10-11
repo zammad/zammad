@@ -306,7 +306,8 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
         refresh
 
-        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=summary] .tabsSidebar-tab-dot')
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
+          .and have_no_css('.tabsSidebar-tab[data-tab=summary] .tabsSidebar-tab-dot')
       end
 
       it 'dot is visible when summary is updated while looking at other tab' do
@@ -515,7 +516,11 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       let(:ai_analytics_usage) { create(:ai_analytics_usage, ai_analytics_run:, user: agent, rating: nil) }
 
       it 'does not record usage again when switching to summary tab', do_not_click_summary_tab: true do
-        expect { click '.tabsSidebar-tab[data-tab=summary]' }.not_to change(ai_analytics_usage, :updated_at)
+        expect do
+          click '.tabsSidebar-tab[data-tab=summary]'
+          expect(page).to have_css('.sidebar[data-tab="summary"] .js-aiFeedbackButtons')
+          await_empty_ajax_queue
+        end.not_to change { ai_analytics_usage.reload.updated_at }
       end
 
       it 'renders feedback buttons' do

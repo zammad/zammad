@@ -52,6 +52,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
       end
 
       it 'not visible without group selected' do
+        expect(page).to have_css('.tabsSidebar-tab[data-tab="template"]')
         expect(page).to have_no_selector :draft_sidebar_button
       end
 
@@ -59,6 +60,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
         within(:active_content) do
           set_tree_select_value('group_id', another_group.name)
         end
+        await_empty_ajax_queue
 
         expect(page).to have_no_selector :draft_sidebar_button
       end
@@ -81,6 +83,8 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
         let(:group_shared_drafts) { false }
 
         it 'not visible' do
+          expect(page).to have_css('.tabsSidebar-tab[data-tab="template"]')
+          await_empty_ajax_queue
           expect(page).to have_no_selector :draft_sidebar_button
         end
       end

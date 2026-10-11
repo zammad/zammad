@@ -11,6 +11,7 @@ RSpec.describe 'Desktop > Admin Password Auth', app: :desktop_view, authenticate
   it 'Shows the regular password login after admin password auth request was sent' do
     visit '/login', skip_waiting: true
 
+    expect(page).to have_text 'Request the password login here.'
     expect(page).to have_no_field 'login'
     expect(page).to have_no_field 'password'
 

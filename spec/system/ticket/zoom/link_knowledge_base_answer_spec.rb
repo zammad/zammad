@@ -489,6 +489,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
       it 'still checks for duplicate answers in the generation modal' do
         within :active_content, '.link_kb_answers' do
+          expect(page).to have_css('.js-kb-ai-generate')
           expect(page).to have_no_text('Suggested knowledge')
           expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
 

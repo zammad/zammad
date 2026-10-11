@@ -251,6 +251,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
 
       it 'does not show the None category if there are no accountings on categories' do
         within '.accounted-time-value-container' do
+          expect(page).to have_text('25')
           expect(page).to have_no_text('None')
         end
       end
@@ -269,6 +270,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
 
       it 'does not show the Type category if types are disabled' do
         within '.accounted-time-value-container' do
+          expect(page).to have_text('25')
           expect(page).to have_no_text(type.name)
         end
       end
@@ -306,6 +308,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       within :active_ticket_article, unaccounted_article do
         find('.article-content .textBubble').click
 
+        expect(page).to have_css('.article-meta-row', text: %r{From}i)
         expect(page).to have_no_css('.article-meta-row--columns')
         expect(page).to have_no_css('.article-meta-row', text: %r{Accounted\ Time}i)
       end
@@ -328,6 +331,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       within :active_ticket_article, accounted_article do
         find('.article-content .textBubble').click
 
+        expect(page).to have_css('.article-meta-row', text: %r{From}i)
         expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i)
       end
     end
@@ -348,6 +352,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         within :active_ticket_article, unaccounted_article do
           find('.article-content .textBubble').click
 
+          expect(page).to have_css('.article-meta-row', text: %r{From}i)
           expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i)
         end
       end
@@ -395,6 +400,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         within :active_ticket_article, accounted_article do
           find('.article-content .textBubble').click
 
+          expect(page).to have_css('.article-meta-row', text: %r{From}i)
           expect(page).to have_no_css('.article-meta-row--columns')
           expect(page).to have_no_css('.article-meta-row', text: %r{Accounted\ Time}i)
           expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i)

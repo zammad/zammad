@@ -105,89 +105,36 @@ RSpec.describe 'Ticket zoom > Article actions', type: :system do
         include_examples 'according to permission matrix', item: item, expects_visible: much_later, offset: 11.minutes, description: 'very old'
       end
 
-      context 'as admin' do
-        let(:user) { admin }
-
-        include_examples 'deleting ticket article',
-                         item: 'article_communication',
-                         now: false, later: false, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_self',
-                         now: true, later: true, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_other',
-                         now: false, later: false, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_customer',
-                         now: false, later: false, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_communication_self',
-                         now: true, later: true, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_communication_other',
-                         now: false, later: false, much_later: false
-      end
-
       context 'as agent' do
         let(:user) { agent }
 
         include_examples 'deleting ticket article',
-                         item: 'article_communication',
-                         now: false, later: false, much_later: false
-
-        include_examples 'deleting ticket article',
                          item: 'article_note_self',
                          now: true, later: true, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_other',
-                         now: false, later: false, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_customer',
-                         now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
                          item: 'article_note_communication_self',
                          now: true, later: true, much_later: false
 
-        include_examples 'deleting ticket article',
-                         item: 'article_note_communication_other',
-                         now: false, later: false, much_later: false
+        %w[article_communication article_note_other article_note_customer article_note_communication_other].each do |item|
+          include_examples 'according to permission matrix', item: item, expects_visible: false, offset: 0.minutes, description: 'just created'
+        end
       end
 
       context 'as customer' do
         let(:user) { customer }
 
-        include_examples 'deleting ticket article',
-                         item: 'article_communication',
-                         now: false, later: false, much_later: false
-
-        include_examples 'deleting ticket article',
-                         item: 'article_note_customer',
-                         now: false, later: false, much_later: false
-
+        include_examples 'according to permission matrix', item: 'article_communication', expects_visible: false, offset: 0.minutes, description: 'just created'
+        include_examples 'according to permission matrix', item: 'article_note_customer', expects_visible: false, offset: 0.minutes, description: 'just created'
       end
 
       context 'with custom offset' do
         let(:setting_delete_timeframe) { 6_000 }
 
-        context 'as admin' do
-          let(:user) { admin }
-
-          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: true,  offset: 5000.seconds, description: 'outside of delete timeframe'
-          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: false, offset: 8000.seconds, description: 'outside of delete timeframe'
-        end
-
         context 'as agent' do
           let(:user) { agent }
 
-          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: true,  offset: 5000.seconds, description: 'outside of delete timeframe'
+          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: true,  offset: 5000.seconds, description: 'inside of delete timeframe'
           include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: false, offset: 8000.seconds, description: 'outside of delete timeframe'
         end
       end

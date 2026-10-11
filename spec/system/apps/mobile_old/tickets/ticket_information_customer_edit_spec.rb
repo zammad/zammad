@@ -57,8 +57,6 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
   end
 
   it 'supports editing customer data' do
-    skip 'temporarily disabled, because something is failing due to undefined value'
-
     click_on('Edit Customer')
 
     wait_for_form_to_settle('user-edit')
@@ -74,10 +72,6 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
       find_input('Last name').type('Bar')
       find_input('Address').type('München')
       find_autocomplete('Organization').search_for_option(third_organization.name)
-
-      # # Despite the name of the action, the following DESELECTS all secondary organizations for the customer.
-      # #   This works because all these values are already selected in the field.
-      # find_autocomplete('Secondary organizations').select_options(secondary_organizations.map { |organization| organization.name })
     end
 
     click_on('Save')
@@ -89,12 +83,6 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
     expect(find('h3')).to have_text(third_organization.name)
     expect(find('section', text: 'Address')).to have_text('München')
     expect(find('section', text: 'Text Attribute')).to have_text('foobar')
-
-    # expect(page).to have_no_text('Secondary organizations')
-
-    # secondary_organizations.each do |organization|
-    #   expect(page).to have_no_text(organization.name)
-    # end
 
     expect(customer.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', text_attribute: 'foobar', address: 'München')
   end

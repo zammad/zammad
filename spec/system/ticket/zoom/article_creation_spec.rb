@@ -172,6 +172,7 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
       it 'previously created private note is not visible' do
         visit "ticket/zoom/#{ticket_article.ticket.id}"
 
+        expect(page).to have_selector(:active_ticket_article, ticket_article)
         expect(page).to have_no_selector(:active_ticket_article, ticket_note)
       end
 
@@ -199,6 +200,7 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
         visit "ticket/zoom/#{ticket.id}"
 
         find('.articleNewEdit-body').send_keys('Some reply')
+        expect(page).to have_css('form.article-add.is-open')
         expect(page).to have_no_selector('.js-selectedArticleType')
       end
     end
@@ -224,7 +226,9 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
 
     it 'does not expand the article box without changes' do
       refresh
-      sleep 3
+      expect(page).to have_css('form.article-add')
+      wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
+      await_empty_ajax_queue
       expect(page).to have_no_selector('form.article-add.is-open')
     end
 

@@ -68,6 +68,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
     it 'shows the users that start looking at the ticket' do
       visit "/tickets/#{ticket.id}"
 
+      expect(page).to have_text(ticket.title)
       expect(page).to have_no_button('Show ticket viewers')
 
       taskbar_item = create(:taskbar, user_id: third_agent.id, key: "Ticket-#{ticket.id}", app: 'mobile')
