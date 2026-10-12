@@ -7,7 +7,7 @@ module RuboCop
         MSG = 'Do not use Redis.new directly. Use Zammad::Service::Redis.new instead.'.freeze
 
         def_node_matcher :redis_client_usage?, <<~PATTERN
-          (send (const nil? :Redis) :new)
+          (send (const {nil? cbase} :Redis) :new ...)
         PATTERN
 
         def on_send(node)

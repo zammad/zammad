@@ -13,4 +13,18 @@ RSpec.describe RuboCop::Cop::Zammad::ForbidRedisClient, type: :rubocop do
 
     expect(result.first.cop_name).to eq('Zammad/ForbidRedisClient')
   end
+
+  it 'rejects Redis.new with arguments' do
+    expect_offense(<<~RUBY)
+      Redis.new(url: url)
+      ^^^^^^^^^^^^^^^^^^^ Do not use Redis.new directly. Use Zammad::Service::Redis.new instead.
+    RUBY
+  end
+
+  it 'rejects the fully qualified ::Redis.new' do
+    expect_offense(<<~RUBY)
+      ::Redis.new(url: url)
+      ^^^^^^^^^^^^^^^^^^^^^ Do not use Redis.new directly. Use Zammad::Service::Redis.new instead.
+    RUBY
+  end
 end

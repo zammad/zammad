@@ -7,7 +7,7 @@ module RuboCop
         MSG = 'Do not use Loofah.document. Use explicit parser version'.freeze
 
         def_node_matcher :loofah_document?, <<~PATTERN
-          (send (const nil? :Loofah) :document)
+          (send (const {nil? cbase} :Loofah) :document ...)
         PATTERN
 
         def on_send(node)

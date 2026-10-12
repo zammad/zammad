@@ -30,7 +30,7 @@ class SearchKnowledgeBaseBackend
   #   between a `<` and the next `>`, turning `RAM < 8 GB > 4 GB` into `RAM 4 GB`. A parser reads
   #   `< 8` as text, since a tag has to start with a letter.
   def self.plain_text(text)
-    without_highlight_marks(Loofah.fragment(text.to_s).text(encode_special_chars: false))
+    without_highlight_marks(Loofah.html5_fragment(text.to_s).text(encode_special_chars: false))
   end
 
   attr_reader :knowledge_base

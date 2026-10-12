@@ -7,7 +7,7 @@ module RuboCop
         MSG = 'Do not use Loofah.fragment. Use explicit parser version'.freeze
 
         def_node_matcher :loofah_fragment?, <<~PATTERN
-          (send (const nil? :Loofah) :fragment)
+          (send (const {nil? cbase} :Loofah) :fragment ...)
         PATTERN
 
         def on_send(node)

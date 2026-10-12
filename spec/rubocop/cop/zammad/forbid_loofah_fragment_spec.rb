@@ -14,4 +14,18 @@ RSpec.describe RuboCop::Cop::Zammad::ForbidLoofahFragment, type: :rubocop do
     result = inspect_source('Loofah.fragment')
     expect(result.first.cop_name).to eq('Zammad/ForbidLoofahFragment')
   end
+
+  it 'rejects Loofah.fragment with arguments' do
+    expect_offense(<<~RUBY)
+      Loofah.fragment(html)
+      ^^^^^^^^^^^^^^^^^^^^^ Do not use Loofah.fragment. Use explicit parser version
+    RUBY
+  end
+
+  it 'rejects the fully qualified ::Loofah.fragment' do
+    expect_offense(<<~RUBY)
+      ::Loofah.fragment(html)
+      ^^^^^^^^^^^^^^^^^^^^^^^ Do not use Loofah.fragment. Use explicit parser version
+    RUBY
+  end
 end
