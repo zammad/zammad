@@ -31,6 +31,8 @@ RSpec.describe Gql::Queries::Product::About, type: :graphql do
         gql.execute(query)
       end
 
+      it_behaves_like 'graphql responds with forbidden'
+
       it_behaves_like 'graphql responds with error if unauthenticated'
     end
   end

@@ -25,6 +25,14 @@ describe ChecklistPolicy do
     it { is_expected.to permit_actions(:show) }
   end
 
+  context 'when user has change access to the ticket' do
+    let(:user) { create(:agent) }
+
+    before { user.user_groups.create! group: ticket.group, access: 'change' }
+
+    it { is_expected.to permit_actions(:update, :destroy) }
+  end
+
   context 'when user has full access to the ticket' do
     let(:user) { create(:agent, groups: [ticket.group]) }
 

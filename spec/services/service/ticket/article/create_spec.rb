@@ -14,6 +14,10 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       expect(service_result).to be_persisted
     end
 
+    it 'falls back to type note' do
+      expect(service_result.type.name).to eq('note')
+    end
+
     it 'creates an article even if contains wrong ticket id' do
       payload[:ticket_id] = 123_456
 
@@ -91,6 +95,11 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         it 'ensures sender is set to customer' do
           expect(service_result.sender.name).to eq 'Customer'
         end
+
+        it 'overrides a forbidden sender with customer' do
+          payload[:sender] = 'Agent'
+          expect(service_result.sender.name).to eq 'Customer'
+        end
       end
 
       # Agent-Customer is incorrectly detected as Agent in a group he has no access to
@@ -98,7 +107,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       context 'when user is agent-customer' do
         let(:user) { ticket.customer }
 
-        it 'ensures sender is set to customer' do
+        it 'sets sender to agent' do
           expect(service_result.sender.name).to eq 'Agent'
         end
       end
@@ -133,13 +142,13 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       context 'when user is agent-customer' do
         let(:user) { ticket.customer }
 
-        it 'ensures internal is false' do
-          payload[:internal] = false
+        it 'keeps internal' do
+          payload[:internal] = true
 
-          expect(service_result.internal).to be_falsey
+          expect(service_result.internal).to be(true)
         end
 
-        it 'changes type from web to note' do
+        it 'keeps type' do
           payload[:type] = 'phone'
 
           expect(service_result.type.name).to eq('phone')

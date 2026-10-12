@@ -66,12 +66,12 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RemoveMethodCredentials
     end
 
     context 'when given method does not exist' do
-      let(:variables) { { methodName: 'nonsense', token: token } }
+      let(:variables) { { methodName: 'nonsense', token: token, credentialId: credential_id } }
 
       it 'returns error' do
         gql.execute(mutation, variables: variables)
 
-        expect(gql.result.error).to be_present
+        expect(gql.result.error_message).to eq('The given two-factor method does not exist.')
       end
     end
 

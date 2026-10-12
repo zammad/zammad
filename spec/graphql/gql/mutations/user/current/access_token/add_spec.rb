@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What adding an access token does is covered by spec/services/service/user/access_token/create_spec.rb —
+#   this covers the GraphQL surface only: authorization, argument coercion, and the payload.
 RSpec.describe Gql::Mutations::User::Current::AccessToken::Add, type: :graphql do
   let(:user)       { create(:agent) }
   let(:permission) { %w[ticket.agent] }
@@ -64,14 +66,10 @@ RSpec.describe Gql::Mutations::User::Current::AccessToken::Add, type: :graphql d
     context 'with expiration date' do
       let(:expires_at) { 1.day.from_now.to_date }
 
-      it 'returns token with expiration date and token value' do
+      it 'passes the expiration date to the service' do
         execute_graphql_query
 
-        expect(Token.last).to have_attributes(
-          name:        name,
-          preferences: include(permission: permission),
-          expires_at:  expires_at
-        )
+        expect(Token.last.expires_at).to eq(expires_at)
       end
     end
   end

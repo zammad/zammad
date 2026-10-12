@@ -51,7 +51,7 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RecoveryCodesGenerate, 
       it 'returns an error if recovery codes are disabled' do
         gql.execute(mutation, variables: variables)
 
-        expect(gql.result.error).to be_present
+        expect(gql.result.error_message).to eq('Could not generate recovery codes')
       end
 
       it_behaves_like 'keeping used token', operation_name: :mutation

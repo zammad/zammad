@@ -282,14 +282,33 @@ RSpec.describe Service::KnowledgeBase::Search do
     # Filtered by permission before anything is counted: a draft is a hit for an editor and not one
     #   for a customer, and a tab badge has to say so.
     describe 'permission filtering' do
-      before do
+      let!(:draft_answer_hit) do
         create(:knowledge_base_answer, :draft, category: category, translation_attributes: { title: 'Ocarina repairs' })
+      end
+      let!(:internal_answer_hit) do
+        create(:knowledge_base_answer, :internal, category: category, translation_attributes: { title: 'Ocarina rentals' })
+      end
+
+      before do
         searchindex_model_reload([KnowledgeBase::Answer::Translation])
       end
 
-      it 'finds a draft for an editor but not for a customer' do
-        expect(search(for_user: create(:admin)).size)
-          .to eq(search(for_user: create(:customer)).size + 1)
+      it 'finds answers of every publication state for an editor' do
+        expect(search(for_user: create(:admin)).map(&:item)).to include(matching_answer, internal_answer_hit, draft_answer_hit)
+      end
+
+      it 'finds internal answers but no drafts for a reader', :aggregate_failures do
+        items = search(for_user: create(:agent)).map(&:item)
+
+        expect(items).to include(matching_answer, internal_answer_hit)
+        expect(items).not_to include(draft_answer_hit)
+      end
+
+      it 'finds published answers only for a customer', :aggregate_failures do
+        items = search(for_user: create(:customer)).map(&:item)
+
+        expect(items).to include(matching_answer)
+        expect(items).not_to include(internal_answer_hit, draft_answer_hit)
       end
     end
 

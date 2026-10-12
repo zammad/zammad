@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+require 'graphql/gql/shared_examples/fails_if_forbidden'
 require 'graphql/gql/shared_examples/fails_if_unauthenticated'
 
 module ZammadSpecSupportGraphql

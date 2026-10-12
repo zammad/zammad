@@ -54,7 +54,7 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::SetDefaultMethod, :aggr
 
       it 'returns an error' do
         gql.execute(mutation, variables: variables)
-        expect(gql.result.error).to be_present
+        expect(gql.result.error_message).to eq('The given two-factor method does not exist.')
       end
     end
   end

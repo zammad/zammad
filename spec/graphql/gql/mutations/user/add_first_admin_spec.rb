@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What adding the first admin does is covered by spec/services/service/user/add_first_admin_spec.rb —
+#   this covers the GraphQL surface only: how the service's errors reach the client, and the payload.
 RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up: false, type: :request do
   context 'when adding the first admin user' do
     let(:query) do
@@ -54,11 +56,9 @@ RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up:
     end
 
     context 'with an empty system' do
-      it 'creates a new user' do
+      it 'returns the session of the new user' do
         expect(graphql_response['data']['userAddFirstAdmin']).to include({ 'session' => include({ 'id' => a_kind_of(String) }), 'errors' => nil })
-        expect(User.find_by(email: 'bender@futurama.fiction')).to be_present
-        expect(Calendar).to have_received(:init_setup)
-        expect(TextModule).to have_received(:load)
+        expect(controller.session[:user_id]).to eq(User.find_by(email: 'bender@futurama.fiction').id)
       end
     end
 
@@ -76,23 +76,6 @@ RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up:
 
       it 'fails with an error' do
         expect(graphql_response['errors'].first['message']).to eq("The required attribute 'email' is missing.")
-      end
-    end
-
-    context 'with a weak password' do
-      let(:variables) do
-        {
-          input: {
-            email:     'bender@futurama.fiction',
-            firstname: 'Bender',
-            lastname:  'Rodríguez',
-            password:  '1234'
-          }
-        }
-      end
-
-      it 'fails with an error' do
-        expect(graphql_response['data']['userAddFirstAdmin']['errors'].first['message']).to include('Invalid password')
       end
     end
 

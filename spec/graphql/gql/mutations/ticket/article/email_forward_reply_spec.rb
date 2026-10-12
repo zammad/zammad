@@ -139,7 +139,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
       gql.execute(query, variables: variables)
     end
 
-    it_behaves_like 'graphql responds with error if unauthenticated'
+    it_behaves_like 'graphql responds with forbidden'
   end
 
   context 'when not logged in' do
@@ -173,7 +173,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
       gql.execute(query, variables: variables)
     end
 
-    it_behaves_like 'graphql responds with error if unauthenticated'
+    it_behaves_like 'graphql responds with forbidden'
   end
 
   describe '#quotableFrom', authenticated_as: :agent do

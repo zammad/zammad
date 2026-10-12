@@ -36,7 +36,9 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(locale_default: 'lt').tap { it.delete(:url) } }
 
       it 'does not set locale' do
-        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }
+          .to raise_error(Exceptions::InvalidAttribute)
+          .and not_change { Setting.get('locale_default') }
       end
     end
 
@@ -80,7 +82,9 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.tap { it.delete(:url) } }
 
       it 'does not set organization name' do
-        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }
+          .to raise_error(Exceptions::InvalidAttribute)
+          .and not_change { Setting.get('organization') }
       end
     end
 
@@ -125,7 +129,9 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.tap { it.delete(:organization) } }
 
       it 'does not set http type & FQDN' do
-        expect { service_result }.to raise_error(Exceptions::MissingAttribute)
+        expect { service_result }
+          .to raise_error(Exceptions::MissingAttribute)
+          .and not_change { [Setting.get('http_type'), Setting.get('fqdn')] }
       end
     end
 

@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What recording a usage does is covered by spec/services/service/ai/analytics/upsert_usage_spec.rb —
+#   this covers the GraphQL surface only: authorization, how the service's errors reach the client, and the payload.
 RSpec.describe Gql::Mutations::AIAnalytics::Usage, :aggregate_failures, type: :graphql do
   context 'when accessing as an agent', authenticated_as: :agent do
     let(:group)            { create(:group) }
@@ -77,39 +79,12 @@ RSpec.describe Gql::Mutations::AIAnalytics::Usage, :aggregate_failures, type: :g
       context 'with an existing usage' do
         let(:usage) { create(:ai_analytics_usage, ai_analytics_run:, user: agent) }
 
-        context 'with a rating' do
-          let(:rating) { true }
-
-          it 'updates the usage rating' do
-            expect(gql.result.data['usage']['id']).to eq(gql.id(usage))
-            expect(usage.reload.rating).to eq(rating)
-          end
-        end
-
-        context 'with a comment' do
-          let(:comment) { Faker::Lorem.unique.sentence }
-
-          it 'updates the usage comment' do
-            expect(gql.result.data['usage']['id']).to eq(gql.id(usage))
-            expect(usage.reload.comment).to eq(comment)
-          end
-        end
-
         context 'with feedback provided already' do
           let(:usage)  { create(:ai_analytics_usage, ai_analytics_run:, user: agent, rating: true) }
           let(:rating) { true }
 
           it 'raises an error' do
             expect(gql.result.error_type).to eq(Service::AI::Analytics::UpsertUsage::FeedbackAlreadyProvidedError)
-          end
-        end
-
-        context 'with a usage context' do
-          let(:context) { { approved: true } }
-
-          it 'updates the usage context' do
-            expect(gql.result.data['usage']['id']).to eq(gql.id(usage))
-            expect(usage.reload.context).to eq(context.deep_stringify_keys)
           end
         end
       end

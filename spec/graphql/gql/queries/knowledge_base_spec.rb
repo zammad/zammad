@@ -31,6 +31,7 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
 
   before do
     knowledge_base
+    setup if defined?(setup)
     gql.execute(query, variables:)
   end
 
@@ -102,9 +103,8 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
     end
 
     context 'when published content exists' do
-      before do
+      let(:setup) do
         published_answer
-        gql.execute(query, variables:)
       end
 
       it 'is publicly available' do
@@ -125,9 +125,8 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
     end
 
     context 'when enabled' do
-      before do
+      let(:setup) do
         knowledge_base.update!(show_feed_icon: true)
-        gql.execute(query, variables:)
       end
 
       it 'is exposed' do
@@ -139,9 +138,8 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
   context 'when there is no active knowledge base', authenticated_as: :customer do
     let(:customer) { create(:customer) }
 
-    before do
+    let(:setup) do
       knowledge_base.update!(active: false)
-      gql.execute(query, variables:)
     end
 
     it 'is not found' do
@@ -174,10 +172,9 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
         create(:agent, preferences: { locale: alternative_locale.system_locale.locale })
       end
 
-      before do
+      let(:setup) do
         create(:knowledge_base_translation, knowledge_base:, kb_locale: alternative_locale,
                                             title: 'Pavadinimas lietuviškai')
-        gql.execute(query, variables:)
       end
 
       it 'answers in the locale the query fell back to', :aggregate_failures do

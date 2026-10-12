@@ -217,7 +217,7 @@ RSpec.describe Service::User::Signup, performs_jobs: true do
       context 'when the password is too short' do
         let(:password) { 'brBR2999' }
 
-        it_behaves_like 'raising an error', PasswordPolicy::Error, 'Invalid password', [10]
+        it_behaves_like 'raising an error', PasswordPolicy::Error, 'Invalid password', message_placeholder: [10]
       end
 
       context 'when the email is already taken' do

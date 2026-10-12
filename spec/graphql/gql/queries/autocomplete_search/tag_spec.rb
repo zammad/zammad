@@ -89,16 +89,11 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
 
     context 'when tags are being excluded from the results' do
       let(:except_tags)  { %w[TagAutoComplete1 TagAutoComplete2] }
-      let(:query_string) { 'Tag*' }
+      let(:query_string) { 'TagAutoComplete*' }
       let(:variables)    { { input: { query: query_string, limit: limit, exceptTags: except_tags } } }
 
       it 'returns filtered tags without excluded entries' do
-        expect(gql.result.data).to include(
-          include(
-            'value' => not_include('TagAutoComplete1', 'TagAutoComplete2'),
-            'label' => not_include('TagAutoComplete1', 'TagAutoComplete2'),
-          )
-        )
+        expect(gql.result.data).to eq([{ 'value' => 'TagAutoComplete0', 'label' => 'TagAutoComplete0' }])
       end
     end
 

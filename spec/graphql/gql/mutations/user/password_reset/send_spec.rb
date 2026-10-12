@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What sending a password reset link does is covered by spec/services/service/user/password_reset/send_spec.rb —
+#   this covers the GraphQL surface only: throttling, how the service's errors reach the client, and the payload.
 RSpec.describe Gql::Mutations::User::PasswordReset::Send, type: :graphql do
   context 'when resetting a password for a user' do
     let(:user) { create(:user) }
@@ -52,29 +54,9 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Send, type: :graphql do
       end
     end
 
-    context 'with existing user', performs_jobs: true do
-      it 'sends a password reset link', :aggregate_failures do
-        message = nil
-
-        allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
-          message = params[:body]
-        end
-
-        expect { perform_enqueued_jobs { gql.execute(query, variables: variables) } }.to change(Token, :count)
-        expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
-        expect(message).to include("<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last[:token]}\">")
-      end
-    end
-
-    context 'with an invalid user' do
-      let(:variables) do
-        {
-          username: 'foobar'
-        }
-      end
-
-      it 'returns success, but does nothing', :aggregate_failures do
-        expect { gql.execute(query, variables: variables) }.to not_change(Token, :count)
+    context 'with existing user' do
+      it 'returns success' do
+        gql.execute(query, variables: variables)
         expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
       end
     end

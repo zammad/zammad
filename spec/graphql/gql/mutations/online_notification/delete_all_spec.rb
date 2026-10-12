@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
+# What deleting all notifications does is covered by spec/services/service/online_notification/delete_all_spec.rb —
+#   this covers the GraphQL surface only.
 RSpec.describe Gql::Mutations::OnlineNotification::DeleteAll, authenticated_as: :user, type: :graphql do
-  let(:user)                      { create(:agent) }
-  let(:notification)              { create(:online_notification, user: user) }
-  let(:another_user_notification) { create(:online_notification, user: create(:user)) }
+  let(:user) { create(:agent) }
 
   let(:query) do
     <<~QUERY
@@ -18,8 +18,6 @@ RSpec.describe Gql::Mutations::OnlineNotification::DeleteAll, authenticated_as: 
   end
 
   before do
-    notification
-    another_user_notification
     allow(Service::OnlineNotification::DeleteAll).to receive(:execute).and_call_original
     gql.execute(query)
   end
@@ -27,14 +25,6 @@ RSpec.describe Gql::Mutations::OnlineNotification::DeleteAll, authenticated_as: 
   it 'calls the DeleteAll service' do
     expect(Service::OnlineNotification::DeleteAll)
       .to have_received(:execute).with(current_user: user)
-  end
-
-  it 'deletes all notifications for the current user' do
-    expect(OnlineNotification.where(user: user)).to be_empty
-  end
-
-  it 'does not delete other users notifications' do
-    expect(OnlineNotification).to exist(another_user_notification.id)
   end
 
   it 'returns success' do

@@ -5,18 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::ApplicationBuildChecksum, authenticated_as: false, type: :graphql do
 
   context 'when checking the application build checksum' do
-    let(:vite_path) { Rails.public_path.join('assets/frontend/vite/.vite') }
-    let(:filename)  { "#{vite_path}/manifest.json" }
-    let!(:initial_checksum) do
-      # Create some content to the file at the beginning, because normally it not exists for the graphql tests.
-      if !File.exist? filename
-        FileUtils.mkdir_p(vite_path, mode: 0o755)
-        File.open(filename, 'a') do |file|
-          file.write('{}')
-        end
-      end
-      Digest::MD5.hexdigest(File.read(filename))
-    end
+    let(:public_path)      { Pathname.new(Dir.mktmpdir) }
+    let(:manifest_content) { '{"some":"manifest"}' }
     let(:query) do
       <<~QUERY
         query applicationBuildChecksum {
@@ -26,21 +16,21 @@ RSpec.describe Gql::Queries::ApplicationBuildChecksum, authenticated_as: false, 
     end
 
     before do
-      File.open(filename, 'a') do |file|
-        file.write("\n")
-      end
+      manifest = public_path.join('assets/frontend/vite/.vite/manifest.json')
+      FileUtils.mkdir_p(manifest.dirname)
+      File.write(manifest, manifest_content)
+
+      allow(Rails).to receive(:public_path).and_return(public_path)
 
       gql.execute(query)
     end
 
     after do
-      if Digest::MD5.hexdigest('{}') == initial_checksum
-        FileUtils.rm_rf vite_path
-      end
+      FileUtils.rm_rf(public_path)
     end
 
     it 'returns the checksum of the manifest file' do
-      expect(gql.result.data).to not_eq(initial_checksum)
+      expect(gql.result.data).to eq(Digest::MD5.hexdigest(manifest_content))
     end
   end
 end

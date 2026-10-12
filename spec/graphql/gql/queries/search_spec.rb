@@ -199,8 +199,6 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
         searchindex_model_reload([Ticket, User, Organization])
       end
 
-      include_examples 'test search query'
-
       context 'with an advanced filter and no search term', authenticated_as: :agent do
         let(:variables) do
           {
@@ -338,8 +336,8 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
       end
 
       # The one thing this resolver does that the service does not, and what the quicksearch group's
-      #   "%s more" count and the story's AC9/AC10 rest on: `items` is the requested window while
-      #   `totalCount` stays the whole permitted set.
+      #   "%s more" count rests on: `items` is the requested window while `totalCount` stays the
+      #   whole permitted set.
       context 'with a limit below the number of hits' do
         let(:variables) { { search: search, onlyIn: 'KnowledgeBase__Answer__Translation', limit: 1 } }
 
@@ -369,18 +367,6 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
         it 'reports an empty result instead of an error' do
           expect(gql.result.data).to eq({ 'items' => [], 'totalCount' => 0 })
         end
-      end
-    end
-
-    context 'with a customer (public)', authenticated_as: :customer do
-      let(:customer) { create(:customer) }
-
-      it 'returns published answers' do
-        expect(titles).to include('Ocarina tuning')
-      end
-
-      it 'hides internal answers' do
-        expect(titles).not_to include('Ocarina repair')
       end
     end
 

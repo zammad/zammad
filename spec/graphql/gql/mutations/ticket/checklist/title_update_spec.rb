@@ -67,12 +67,6 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::TitleUpdate, current_user_id: 
       it_behaves_like 'raising an error', Exceptions::Forbidden
     end
 
-    context 'with ticket read+change permissions' do
-      let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => %w[read change] }) }
-
-      it_behaves_like 'updating the ticket checklist title'
-    end
-
     context 'when ticket checklist does not exist' do
       let(:variables) { { checklistId: 'gid://Zammad/Checklist/0', title: title } }
 

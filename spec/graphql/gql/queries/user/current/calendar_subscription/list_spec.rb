@@ -65,7 +65,7 @@ RSpec.describe Gql::Queries::User::Current::CalendarSubscription::List, type: :g
         gql.execute(query)
       end
 
-      it_behaves_like 'graphql responds with error if unauthenticated'
+      it_behaves_like 'graphql responds with forbidden'
     end
   end
 

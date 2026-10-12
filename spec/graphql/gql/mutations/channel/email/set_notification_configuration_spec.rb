@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What setting the configuration does is covered by spec/services/service/system/set_email_notification_configuration_spec.rb —
+#   this covers the GraphQL surface only: authorization, argument mapping, and the payload.
 RSpec.describe Gql::Mutations::Channel::Email::SetNotificationConfiguration, type: :graphql do
   let(:query) do
     <<~QUERY
@@ -43,24 +45,8 @@ RSpec.describe Gql::Mutations::Channel::Email::SetNotificationConfiguration, typ
       expect(gql.result.data).to include({ 'success' => true })
     end
 
-    it 'sets smtp to active and updates configuration' do
-      expect(channel_by_adapter('smtp')).to have_attributes(
-        active:       true,
-        status_out:   'ok',
-        last_log_out: nil,
-        options:      include(
-          outbound: include(
-            adapter: 'smtp',
-            options: include(
-              host:       'smtp.example.com',
-              port:       25,
-              user:       'some@example.com',
-              password:   'password',
-              ssl_verify: false,
-            )
-          )
-        )
-      )
+    it 'passes the configuration to the service' do
+      expect(channel_by_adapter('smtp').options.dig(:outbound, :options)).to include(host: 'smtp.example.com', ssl_verify: false)
     end
 
     context 'when runs in a hosted environment' do

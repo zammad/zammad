@@ -78,6 +78,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer::Suggestions, current_user_id
     context 'with a customer', authenticated_as: :customer do
       let(:search_query) { knowledge_base_answer_translation.title[0..2] }
 
+      it_behaves_like 'graphql responds with forbidden'
+
       it_behaves_like 'graphql responds with error if unauthenticated'
     end
   end

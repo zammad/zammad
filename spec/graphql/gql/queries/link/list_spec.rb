@@ -3,76 +3,75 @@
 require 'rails_helper'
 
 RSpec.describe Gql::Queries::Link::List, type: :graphql do
-  context 'when fetching link list' do
-    let(:from_group)    { create(:group) }
-    let(:from)          { create(:ticket, group: from_group) }
-    let(:to_group)      { create(:group) }
-    let(:to)            { create(:ticket, group: to_group) }
-    let(:type)          { ENV.fetch('LINK_TYPE') { %w[child parent normal].sample } }
-    let(:link)          { create(:link, from:, to:, link_type: type) }
+  %w[child parent normal].each do |link_type|
+    context "when fetching link list with link type #{link_type}" do
+      let(:type) { link_type }
 
-    let(:variables) { { objectId: gql.id(from), targetType: 'Ticket' } }
+      let(:from_group)    { create(:group) }
+      let(:from)          { create(:ticket, group: from_group) }
+      let(:to_group)      { create(:group) }
+      let(:to)            { create(:ticket, group: to_group) }
+      let(:link)          { create(:link, from:, to:, link_type: type) }
 
-    let(:query) do
-      <<~QUERY
-        query linkList($objectId: ID!, $targetType: String!) {
-          linkList(objectId: $objectId, targetType: $targetType) {
-            type
-            item {
-              ... on Ticket {
-                id
-                title
+      let(:variables) { { objectId: gql.id(from), targetType: 'Ticket' } }
+
+      let(:query) do
+        <<~QUERY
+          query linkList($objectId: ID!, $targetType: String!) {
+            linkList(objectId: $objectId, targetType: $targetType) {
+              type
+              item {
+                ... on Ticket {
+                  id
+                  title
+                }
               }
             }
           }
-        }
-      QUERY
-    end
-
-    before do
-      link
-      gql.execute(query, variables: variables)
-
-      next if RSpec.configuration.formatters.first
-        .class.name.exclude?('DocumentationFormatter')
-
-      puts "with link type: #{type}"
-    end
-
-    context 'with authenticated session', authenticated_as: :authenticated do
-      let(:authenticated) { create(:agent, groups: [from_group, to_group]) }
-
-      it 'returns link list' do
-        link_type = if type == 'normal'
-                      type
-                    else
-                      type == 'parent' ? 'child' : 'parent'
-                    end
-
-        expect(gql.result.data.first).to eq(
-          {
-            'item' => { 'id' => gql.id(to), 'title' => to.title },
-            'type' => link_type
-          }
-        )
+        QUERY
       end
 
-      context 'when source is not accessible' do
-        let(:authenticated) { create(:agent, groups: [to_group]) }
-
-        it 'raises an error' do
-          expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
-        end
+      before do
+        link
+        gql.execute(query, variables: variables)
       end
 
-      context 'when target is not accessible' do
-        before do
-          create(:link, from: from, to: create(:ticket), link_type: type)
+      context 'with authenticated session', authenticated_as: :authenticated do
+        let(:authenticated) { create(:agent, groups: [from_group, to_group]) }
+
+        it 'returns link list' do
+          link_type = if type == 'normal'
+                        type
+                      else
+                        type == 'parent' ? 'child' : 'parent'
+                      end
+
+          expect(gql.result.data.first).to eq(
+            {
+              'item' => { 'id' => gql.id(to), 'title' => to.title },
+              'type' => link_type
+            }
+          )
         end
 
-        it 'returns link list without the related link', :aggregate_failures do
-          expect(Link.count).to eq(2)
-          expect(gql.result.data.size).to eq(1)
+        context 'when source is not accessible' do
+          let(:authenticated) { create(:agent, groups: [to_group]) }
+
+          it 'raises an error' do
+            expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
+          end
+        end
+
+        context 'when target is not accessible' do
+          before do
+            create(:link, from: from, to: create(:ticket), link_type: type)
+            gql.execute(query, variables: variables)
+          end
+
+          it 'returns link list without the related link', :aggregate_failures do
+            expect(Link.count).to eq(2)
+            expect(gql.result.data.size).to eq(1)
+          end
         end
       end
     end
@@ -112,7 +111,7 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
     end
 
     # An agent without knowledge base permissions still sees published answers,
-    #   so their category tree must resolve as well (#807).
+    #   so their category tree must resolve as well.
     context 'with an agent without knowledge base permissions', authenticated_as: :authenticated do
       let(:role)          { create(:role, permissions: Permission.where(name: 'ticket.agent')) }
       let(:authenticated) { create(:agent, roles: [role], groups: [group]) }

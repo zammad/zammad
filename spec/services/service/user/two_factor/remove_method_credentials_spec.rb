@@ -19,17 +19,27 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
 
     it 'raises an error' do
       expect { service_result }
-        .to raise_error(Exceptions::UnprocessableContent)
+        .to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method does not exist.')
     end
   end
 
   context 'when method does not have credentials' do
-    let(:user_preference) { create(:user_two_factor_preference, :authenticator_app, user:) }
-    let(:method_name)     { 'authenticator_app' }
+    let(:method_name) { 'authenticator_app' }
+
+    before { create(:user_two_factor_preference, :authenticator_app, user:) }
 
     it 'raises an error' do
       expect { service_result }
-        .to raise_error(Exceptions::UnprocessableContent)
+        .to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method is not configured yet.')
+    end
+  end
+
+  context 'when the given credentials do not exist' do
+    before { create(:user_two_factor_preference, :security_keys, credential_public_key: 'otherKey', user:) }
+
+    it 'raises an error' do
+      expect { service_result }
+        .to raise_error(Exceptions::UnprocessableContent, "The two-factor credentials you're trying to delete do not exist")
     end
   end
 
@@ -89,7 +99,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
   context 'when method is not configured' do
     it 'raises an error' do
       expect { service_result }
-        .to raise_error(Exceptions::UnprocessableContent)
+        .to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method is not configured yet.')
     end
   end
 

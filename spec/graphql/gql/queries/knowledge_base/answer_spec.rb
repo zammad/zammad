@@ -49,6 +49,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
   before do
     answer
+    setup if defined?(setup)
     gql.execute(query, variables:)
   end
 
@@ -145,11 +146,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     context 'with a body linking to another answer' do
       let(:linked_answer) { published_answer_in_other_category }
 
-      before do
+      let(:setup) do
         answer.translation_primary.content.update!(
           body: "<a href='#knowledge_base/1/locale/en-us/answer/9999' data-target-type='knowledge-base-answer' data-target-id='#{linked_answer.translation_primary.id}'>See also</a>"
         )
-        gql.execute(query, variables:)
       end
 
       it 'resolves the link to the desktop answer route', :aggregate_failures do
@@ -160,11 +160,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     end
 
     context 'with a body linking to an answer that no longer exists' do
-      before do
+      let(:setup) do
         answer.translation_primary.content.update!(
           body: "<a href='#knowledge_base/1/locale/en-us/answer/9999' data-target-type='knowledge-base-answer' data-target-id='9999'>See also</a>"
         )
-        gql.execute(query, variables:)
       end
 
       it 'resolves the link to a placeholder', :aggregate_failures do
@@ -174,9 +173,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     end
 
     context 'with an answer that has no translation at all' do
-      before do
+      let(:setup) do
         answer.translations.destroy_all
-        gql.execute(query, variables:)
       end
 
       it 'returns no content instead of erroring', :aggregate_failures do
@@ -244,10 +242,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     end
 
     context 'with tags assigned to the answer' do
-      before do
+      let(:setup) do
         answer.tag_add('alpha', admin.id)
         answer.tag_add('beta', admin.id)
-        gql.execute(query, variables:)
       end
 
       it 'exposes the assigned tags' do
@@ -269,10 +266,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
     context 'with more files attached to the answer' do
       # Added in reverse, so the ordering below is the type's doing and not insertion order.
-      before do
+      let(:setup) do
         answer.add_attachment(File.open(Rails.root.join('test/data/upload/upload2.jpg')))
         answer.add_attachment(File.open(Rails.root.join('test/data/upload/upload1.txt')))
-        gql.execute(query, variables:)
       end
 
       it 'exposes them sorted by file name', :aggregate_failures do
@@ -385,13 +381,12 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     let(:unpublished_answer) { create(:knowledge_base_answer, category: category) }
     let(:next_answer)        { create(:knowledge_base_answer, :published, category: category) }
 
-    before do
+    let(:setup) do
       unpublished_answer
       next_answer
       answer.update_column(:position, 1)
       unpublished_answer.update_column(:position, 2)
       next_answer.update_column(:position, 3)
-      gql.execute(query, variables:)
     end
 
     context 'with an admin (editor)', authenticated_as: :admin do
@@ -511,16 +506,15 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
 
     let(:answer) { mike }
 
-    def answer_titled(title)
-      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: })
-    end
-
     # Positions handed out against the alphabetical order, so navigating by `position` returns
     #   exactly the opposite neighbours.
-    before do
+    let(:setup) do
       [zulu, mike, alpha].each.with_index(1) { |sibling, position| sibling.update_column(:position, position) }
       category.update!(answer_sorting_mode: 'alphabetical')
-      gql.execute(query, variables:)
+    end
+
+    def answer_titled(title)
+      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: })
     end
 
     it 'counts and navigates the siblings by title', :aggregate_failures do
@@ -617,9 +611,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
     let(:reader_role) { create(:role, permission_names: %w[knowledge_base.reader]) }
     let(:reader)      { create(:user, roles: [reader_role]) }
 
-    before do
+    let(:setup) do
       create(:knowledge_base_permission, permissionable: category, role: reader_role, access: 'none')
-      gql.execute(query, variables:)
     end
 
     context 'with a denied reader opening a published answer directly', authenticated_as: :reader do
@@ -656,9 +649,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
   context 'when the knowledge base is inactive', authenticated_as: :customer do
     let(:customer) { create(:customer) }
 
-    before do
+    let(:setup) do
       knowledge_base.update!(active: false)
-      gql.execute(query, variables:)
     end
 
     # Denied by KnowledgeBase::AnswerPolicy, which gates the read on the knowledge base being
@@ -673,9 +665,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer, type: :graphql do
   context 'when the answer is not translated to the browsed locale' do
     let(:locale) { alternative_locale.system_locale.locale }
 
-    before do
+    let(:setup) do
       alternative_locale
-      gql.execute(query, variables:)
     end
 
     context 'with an admin (editor)', authenticated_as: :admin do

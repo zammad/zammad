@@ -83,30 +83,6 @@ RSpec.describe 'AI text tool result verification', :aggregate_failures, integrat
     end
   end
 
-  # context 'with Open AI provider' do
-  #   before do
-  #     setup_ai_provider('open_ai', token: ENV['OPEN_AI_TOKEN'])
-  #   end
-
-  #   context 'when "Summarize section to about half its current size" is used' do
-  #     fixture_files.each do |fixture_path|
-  #       include_examples 'when result verification is performed', fixture_path, 'Summarize section to about half its current size'
-  #     end
-  #   end
-  # end
-
-  # context 'with Mistral provider' do
-  #   before do
-  #     setup_ai_provider('mistral_ai', token: ENV['MISTRAL_API_KEY'])
-  #   end
-
-  #   context 'when "Summarize section to about half its current size" is used' do
-  #     fixture_files.each do |fixture_path|
-  #       include_examples 'when result verification is performed', fixture_path, 'Summarize section to about half its current size'
-  #     end
-  #   end
-  # end
-
   def html_markup?(text)
     return false if text&.strip.blank?
 

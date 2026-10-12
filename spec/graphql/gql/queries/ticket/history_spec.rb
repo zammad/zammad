@@ -94,8 +94,12 @@ RSpec.describe Gql::Queries::Ticket::History, timezone: 'Europe/Berlin', type: :
       context 'when user has access to ticket' do
         let(:authenticated) { create(:agent, groups: [group]) }
 
-        it 'returns grouped history records' do
-          expect(gql.result.data).to be_present
+        it 'returns history records grouped by day', :aggregate_failures do
+          events = gql.result.data.map { |day| day['records'].flat_map { |record| record['events'] }.map { |event| event.values_at('action', 'attribute') } }
+
+          expect(events.length).to eq(2)
+          expect(events.first).to contain_exactly(['created', nil], %w[updated title], %w[updated owner])
+          expect(events.last).to contain_exactly(%w[updated title])
         end
       end
     end

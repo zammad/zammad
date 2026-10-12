@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# The query inherits from Gql::Queries::AutocompleteSearch::User, whose arguments and payload are
+#   covered in user_spec.rb — this covers only what it changes: agents are found, customers are not.
 RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent, type: :graphql do
 
   context 'when searching for agents' do
@@ -34,8 +36,8 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent
     end
 
     context 'without limit' do
-      it 'finds all agents' do
-        expect(gql.result.data.length).to eq(agents.length)
+      it 'finds the agents but no customers' do
+        expect(gql.result.data.pluck('value')).to match_array(agents.map(&:id))
       end
     end
 
@@ -44,65 +46,6 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent
 
       it 'respects the limit' do
         expect(gql.result.data.length).to eq(limit)
-      end
-    end
-
-    context 'with exact search' do
-      let(:first_user_payload) do
-        {
-          'value'              => agents.first.id,
-          'label'              => agents.first.fullname,
-          'labelPlaceholder'   => nil,
-          'heading'            => nil,
-          'headingPlaceholder' => nil,
-          'icon'               => nil,
-          'disabled'           => nil,
-        }
-      end
-      let(:query_string) { agents.first.login }
-
-      it 'has data' do
-        expect(gql.result.data).to include(first_user_payload)
-      end
-    end
-
-    context 'when sending an empty search string' do
-      let(:query_string) { '   ' }
-
-      it 'returns nothing' do
-        expect(gql.result.data.length).to eq(0)
-      end
-    end
-
-    context 'when a specific agent is excepted' do
-      let(:except) { agents.first.id }
-
-      let(:second_user_payload) do
-        {
-          'value'              => agents.second.id,
-          'label'              => agents.second.fullname,
-          'labelPlaceholder'   => nil,
-          'heading'            => nil,
-          'headingPlaceholder' => nil,
-          'icon'               => nil,
-          'disabled'           => nil,
-        }
-      end
-
-      let(:third_user_payload) do
-        {
-          'value'              => agents.third.id,
-          'label'              => agents.third.fullname,
-          'labelPlaceholder'   => nil,
-          'heading'            => nil,
-          'headingPlaceholder' => nil,
-          'icon'               => nil,
-          'disabled'           => nil,
-        }
-      end
-
-      it 'filters out provided agent' do
-        expect(gql.result.data).to eq([third_user_payload, second_user_payload])
       end
     end
 

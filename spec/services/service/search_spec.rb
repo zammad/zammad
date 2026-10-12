@@ -170,7 +170,7 @@ RSpec.describe Service::Search do
 
       before { allow(SearchIndexBackend).to receive(:enabled?).and_return(true) }
 
-      it 'forwards limit and offset arguments to model#search' do
+      it 'forwards limit and offset arguments to SearchIndexBackend' do
         instance.send(:search_single_model, User)
 
         expect(SearchIndexBackend)
@@ -178,7 +178,7 @@ RSpec.describe Service::Search do
           .with(anything, anything, include(limit: 123, offset: 1024))
       end
 
-      it 'forwards limit and offset arguments to SearchIndexBackend' do
+      it 'forwards limit and offset arguments to model#search' do
         instance.send(:search_single_model, Ticket)
 
         expect(Ticket)

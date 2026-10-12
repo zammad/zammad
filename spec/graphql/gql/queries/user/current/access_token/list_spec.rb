@@ -20,7 +20,7 @@ RSpec.describe Gql::Queries::User::Current::AccessToken::List, type: :graphql do
       gql.execute(query)
     end
 
-    it_behaves_like 'graphql responds with error if unauthenticated'
+    it_behaves_like 'graphql responds with forbidden'
   end
 
   context 'when authorized', authenticated_as: :user do

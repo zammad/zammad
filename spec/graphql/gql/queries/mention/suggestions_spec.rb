@@ -71,6 +71,8 @@ RSpec.describe Gql::Queries::Mention::Suggestions, searchindex: true, type: :gra
     context 'with a customer', authenticated_as: :customer do
       let(:search_query) { agent.firstname[0..2] }
 
+      it_behaves_like 'graphql responds with forbidden'
+
       it_behaves_like 'graphql responds with error if unauthenticated'
     end
   end

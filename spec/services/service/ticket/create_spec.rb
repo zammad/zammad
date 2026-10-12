@@ -39,6 +39,12 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       )
     end
 
+    it 'takes an existing customer by email address' do
+      ticket_data[:customer] = { email: customer.email }
+
+      expect(service_result.customer).to eq(customer)
+    end
+
     context 'when the customer is given as a phone number' do
       let(:phone_number) { '+49 30 609812345' }
 
@@ -285,9 +291,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       end
 
       it 'raises error if shared draft group does not match ticket group' do
-        shared_draft.update! group: create(:group)
-
-        group.update! shared_drafts: false
+        shared_draft.update! group: create(:group, shared_drafts: true)
 
         expect { service_result }
           .to raise_error(Exceptions::UnprocessableContent)
@@ -337,7 +341,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
           Setting.set('idoit_integration', true)
         end
 
-        it 'adds github links' do
+        it 'adds idoit object ids' do
           expect(service_result.preferences).to eq({ 'idoit' => { 'object_ids' => [42] } })
         end
       end

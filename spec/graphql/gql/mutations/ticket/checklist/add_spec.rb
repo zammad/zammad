@@ -102,6 +102,12 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
       it_behaves_like 'raising an error', Exceptions::Forbidden
     end
 
+    context 'with ticket read permission' do
+      let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
+
     context 'when ticket checklist already exists' do
       let(:checklist) { create(:checklist, ticket: ticket) }
 
@@ -129,17 +135,6 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
 
       it_behaves_like 'creating the ticket checklist'
 
-      context 'with ticket read permission' do
-        let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
-
-        it_behaves_like 'raising an error', Exceptions::Forbidden
-      end
-
-      context 'with ticket read+change permissions' do
-        let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => %w[read change] }) }
-
-        it_behaves_like 'creating the ticket checklist'
-      end
     end
   end
 

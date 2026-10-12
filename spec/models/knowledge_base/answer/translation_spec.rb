@@ -165,6 +165,27 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
     end
   end
 
+  describe '.vector_index_reload' do
+    # A reload embeds one document at a time for however long the knowledge base is - a run that has
+    # become obsolete stops between documents instead of finishing what a successor throws away.
+    it 'stops between records once the run is obsolete', :aggregate_failures do
+      create_list(:knowledge_base_answer, 2)
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      allow(described_class).to receive(:vector_index_scope).and_return(described_class.all)
+
+      updated = 0
+      allow_any_instance_of(described_class).to receive(:vector_index_update) { updated += 1 }
+
+      checks     = [false, true]
+      abort_when = -> { checks.shift }
+
+      expect { described_class.vector_index_reload(abort_when:) }
+        .to raise_error(Service::AI::VectorDB::Reload::Aborted)
+      expect(updated).to eq(1)
+    end
+  end
+
   describe '.vector_index_scope' do
     let(:knowledge_base)    { create(:knowledge_base) }
     let(:excluded_category) { create(:knowledge_base_category, knowledge_base:) }

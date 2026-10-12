@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+# What a bulk update does is covered by spec/services/service/ticket/bulk/ and
+#   spec/jobs/ticket_bulk_update_job_spec.rb — this covers the GraphQL surface only: how the
+#   result is mapped to IDs, and the payload.
 RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: :graphql do
   let(:query) do
     <<~QUERY
@@ -214,61 +217,6 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
             expect(ticket1.articles.last.type.name).to eq('note')
             expect(ticket2.reload.articles.last.body).to eq('bulk note body')
             expect(ticket2.articles.last.type.name).to eq('note')
-          end
-
-          context 'when one ticket update fails' do
-            before do
-              allow(Service::Ticket::Update).to receive(:execute).and_wrap_original do |m, *args, **kwargs|
-                if kwargs[:ticket].title == 'Ticket 2'
-                  raise ActiveRecord::RecordNotSaved.new('test failure during update of second ticket', ticket2)
-                end
-
-                m.call(*args, **kwargs)
-              end
-            end
-
-            it 'processes successful tickets and isolates failures' do
-              perform_enqueued_jobs do
-                gql.execute(query, variables:)
-                expect(gql.result.data).to include(async: true, total: 2)
-              end
-
-              # Ticket 1 should have the note added
-              expect(ticket1.reload.articles.last.body).to eq('bulk note body')
-              expect(ticket1.articles.last.type.name).to eq('note')
-
-              # Ticket 2 should not have a new article (failure was isolated)
-              ticket2.reload
-              expect(ticket2.articles.where(body: 'bulk note body')).to be_empty
-            end
-          end
-
-          context 'when permission is denied for one ticket' do
-            before do
-              allow_any_instance_of(TicketPolicy).to receive(:agent_update_access?).and_wrap_original do |m, *args|
-                ticket = m.receiver.record
-                if ticket.title == 'Ticket 2'
-                  false
-                else
-                  m.call(*args)
-                end
-              end
-            end
-
-            it 'processes authorized tickets and isolates permission failures' do
-              perform_enqueued_jobs do
-                gql.execute(query, variables:)
-                expect(gql.result.data).to include(async: true, total: 2)
-              end
-
-              # Ticket 1 should have the note added
-              expect(ticket1.reload.articles.last.body).to eq('bulk note body')
-              expect(ticket1.articles.last.type.name).to eq('note')
-
-              # Ticket 2 should not have a new article (permission denied)
-              ticket2.reload
-              expect(ticket2.articles.where(body: 'bulk note body')).to be_empty
-            end
           end
         end
       end

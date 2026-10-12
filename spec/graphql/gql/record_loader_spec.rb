@@ -35,13 +35,15 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
 
   context 'when querying multiple tickets' do
     before do
+      ticket_states = Ticket::State.all.to_a.cycle
+
       5.times do
         organization   = create(:organization)
         user           = create(:user, organization: organization)
         group          = create(:group)
 
         5.times do
-          source_ticket = create(:ticket, customer: user, organization: organization, group: group, created_by_id: user.id, state: Ticket::State.all.sample)
+          source_ticket = create(:ticket, customer: user, organization: organization, group: group, created_by_id: user.id, state: ticket_states.next)
           create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf1@record_loader_test.org', created_by_id: user.id)
         end
 

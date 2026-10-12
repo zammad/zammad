@@ -9,6 +9,10 @@ RSpec.describe Gql::Queries::User::History, timezone: 'Europe/Berlin', type: :gr
     let(:owner)  { create(:user) }
     let(:ticket) { create(:ticket, group:, owner:, created_by: owner) }
 
+    let(:expected_history) do
+      [include('records' => [include('events' => [include('action' => 'created', 'object' => include('klass' => 'User'))])])]
+    end
+
     let(:variables) { { userId: gql.id(user) } }
 
     let(:query) do
@@ -94,7 +98,7 @@ RSpec.describe Gql::Queries::User::History, timezone: 'Europe/Berlin', type: :gr
         let(:authenticated) { create(:agent, groups: [group]) }
 
         it 'returns grouped history records' do
-          expect(gql.result.data).to be_present
+          expect(gql.result.data).to match(expected_history)
         end
       end
 
@@ -102,7 +106,7 @@ RSpec.describe Gql::Queries::User::History, timezone: 'Europe/Berlin', type: :gr
         let(:authenticated) { create(:user, roles: [create(:role, permissions: Permission.where(name: 'admin.user'))]) }
 
         it 'returns grouped history records' do
-          expect(gql.result.data).to be_present
+          expect(gql.result.data).to match(expected_history)
         end
       end
 
@@ -110,7 +114,7 @@ RSpec.describe Gql::Queries::User::History, timezone: 'Europe/Berlin', type: :gr
         let(:authenticated) { create(:admin, groups: [group]) }
 
         it 'returns grouped history records' do
-          expect(gql.result.data).to be_present
+          expect(gql.result.data).to match(expected_history)
         end
       end
     end

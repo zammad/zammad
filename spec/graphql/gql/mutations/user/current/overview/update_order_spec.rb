@@ -74,7 +74,7 @@ RSpec.describe Gql::Mutations::User::Current::Overview::UpdateOrder, :aggregate_
   context 'with authenticated user having no permissions', authenticated_as: :user do
     let(:user) { create(:agent, roles: []) }
 
-    it 'does not delete any overview sortings' do
+    it 'raises a forbidden error' do
       execute_mutation
 
       expect(gql.result.error_type).to eq(Exceptions::Forbidden)

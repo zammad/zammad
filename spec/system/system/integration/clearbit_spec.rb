@@ -12,6 +12,7 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
 
     # enable clearbit
     check 'setting-switch', allow_label_click: true
+    wait_for_setting('clearbit_integration', true)
   end
 
   context 'for clearbit config' do

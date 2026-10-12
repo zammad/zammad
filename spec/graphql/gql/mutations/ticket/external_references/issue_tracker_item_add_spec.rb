@@ -124,7 +124,7 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
       context 'when an agent has no access to the ticket' do
         before { gql.execute(mutation, variables:) }
 
-        it_behaves_like 'graphql responds with error if unauthenticated'
+        it_behaves_like 'graphql responds with forbidden'
       end
     end
 

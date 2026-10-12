@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What the search finds, and for whom, is covered by spec/services/service/knowledge_base/search_spec.rb —
+#   this covers the GraphQL surface only: arguments, authorization, the payload, and its query count.
 RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql do
   include_context 'basic Knowledge Base'
 
@@ -102,31 +104,10 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
       expect(item_ids).to include(gql.id(published_ocarina), gql.id(internal_ocarina), gql.id(draft_ocarina))
     end
 
-    it 'returns answers alone, the kind that was asked for' do
-      expect(item_ids).to be_present.and(not_include(gql.id(ocarina_category)))
-    end
-
-    it 'never returns the knowledge base node itself' do
-      expect(gql.result.nodes.pluck('item')).to all(include('translation'))
-    end
-
     it 'marks the matched run of the title' do
       segments = node_for(published_ocarina)['titlePreview']
 
       expect(segments.select { |segment| segment['highlight'] }.pluck('text')).to eq(['Ocarina'])
-    end
-
-    it 'keeps the whole title across the segments' do
-      expect(node_for(published_ocarina)['titlePreview'].pluck('text').join).to eq('Ocarina tuning')
-    end
-
-    it 'previews the body even when only the title matched' do
-      expect(node_for(published_ocarina)['bodyPreview']).to be_present
-    end
-
-    it 'reports the category path root first' do
-      expect(node_for(subcategory_ocarina)['categoryPath'].pluck('title'))
-        .to eq([category, subcategory].map { |elem| elem.translation_primary.title })
     end
 
     it 'ids each category path segment for linking the breadcrumb' do
@@ -145,24 +126,12 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
         expect(item_ids).to include(gql.id(ocarina_category))
       end
 
-      it 'returns categories alone' do
-        expect(item_ids).to be_present.and(not_include(gql.id(published_ocarina)))
-      end
-
       it 'counts the categories it returns' do
         expect(gql.result.data['totalCount']).to eq(gql.result.nodes.size)
       end
 
-      it 'leaves a category without a body preview' do
-        expect(node_for(ocarina_category)['bodyPreview']).to be_empty
-      end
-
       it 'reports the subtree visibility of a category hit' do
         expect(node_for(ocarina_category_with_content)['item']).to include('visibility' => 'published')
-      end
-
-      it 'reads a category hit with no content as draft' do
-        expect(node_for(ocarina_category)['item']).to include('visibility' => 'draft')
       end
     end
 
@@ -239,36 +208,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
     let(:admin)       { create(:admin) }
     let(:category_id) { gql.id(category) }
 
-    it 'includes hits from the category and its subcategories' do
+    it 'includes only hits from the category and its subcategories', :aggregate_failures do
       expect(item_ids).to include(gql.id(published_ocarina), gql.id(subcategory_ocarina))
-    end
-
-    it 'excludes hits from a sibling subtree' do
       expect(item_ids).not_to include(gql.id(other_category_ocarina))
-    end
-  end
-
-  context 'with an agent (reader)', authenticated_as: :agent do
-    let(:agent) { create(:agent) }
-
-    it 'returns internal and published answers' do
-      expect(item_ids).to include(gql.id(published_ocarina), gql.id(internal_ocarina))
-    end
-
-    it 'hides drafts' do
-      expect(item_ids).not_to include(gql.id(draft_ocarina))
-    end
-  end
-
-  context 'with a customer (public)', authenticated_as: :customer do
-    let(:customer) { create(:customer) }
-
-    it 'returns only published answers' do
-      expect(item_ids).to include(gql.id(published_ocarina))
-    end
-
-    it 'hides internal answers' do
-      expect(item_ids).not_to include(gql.id(internal_ocarina))
     end
   end
 
@@ -306,15 +248,6 @@ RSpec.describe Gql::Queries::KnowledgeBase::Search, :searchindex, type: :graphql
     #   works on it only while it is active.
     it 'is rejected' do
       expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
-    end
-  end
-
-  context 'with a blank query', authenticated_as: :admin do
-    let(:admin)  { create(:admin) }
-    let(:search) { '' }
-
-    it 'returns nothing, so entering the page searches for nothing' do
-      expect(gql.result.data['edges']).to be_empty
     end
   end
 

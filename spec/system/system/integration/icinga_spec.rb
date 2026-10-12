@@ -11,6 +11,7 @@ RSpec.describe 'Manage > Integration > Icinga', type: :system do
 
     # enable icinga
     check 'setting-switch', allow_label_click: true
+    wait_for_setting('icinga_integration', true)
   end
 
   context 'for icinga config' do

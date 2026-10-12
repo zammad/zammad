@@ -61,7 +61,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::ObjectAttributeExternalDataSour
         gql.execute(query, variables: variables)
       end
 
-      it_behaves_like 'graphql responds with error if unauthenticated'
+      it_behaves_like 'graphql responds with forbidden'
     end
   end
 end

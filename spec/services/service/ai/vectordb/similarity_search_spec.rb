@@ -13,7 +13,7 @@ RSpec.describe Service::AI::VectorDB::SimilaritySearch, :aggregate_failures do
     subject(:service_result) { described_class.execute(text: 'text') }
 
     it 'embeds the text and searches the vector database' do
-      allow_any_instance_of(AI::VectorDB).to receive(:knn).and_return('knn response')
+      allow_any_instance_of(AI::VectorDB).to receive(:knn).with(embedding: [0.1, 0.2, 0.3], k: 2, filter: {}).and_return('knn response')
 
       allow_any_instance_of(AI::Provider::OpenAI)
         .to receive(:embed)

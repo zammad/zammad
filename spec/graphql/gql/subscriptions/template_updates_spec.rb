@@ -69,10 +69,7 @@ RSpec.describe Gql::Subscriptions::TemplateUpdates, :aggregate_failures, type: :
   end
 
   context 'with ticket.customer permission only', authenticated_as: :customer do
-
-    it 'fails with an authorization error' do
-      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
-    end
+    it_behaves_like 'graphql responds with forbidden'
 
     it 'does not deliver any templates' do
       create(:template, active: false)

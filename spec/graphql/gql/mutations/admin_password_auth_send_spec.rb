@@ -79,7 +79,7 @@ RSpec.describe Gql::Mutations::AdminPasswordAuthSend, type: :graphql do
 
           it 'blocks due to source IP address throttling (multiple usernames)' do
             4.times do
-              gql.execute(query, variables: variables.merge(username: create(:admin).login), context: { REMOTE_IP: static_ipv4 })
+              gql.execute(query, variables: variables.merge(login: create(:admin).login), context: { REMOTE_IP: static_ipv4 })
             end
 
             expect(gql.result.error_message).to eq 'The request limit for this operation was exceeded.'

@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# How icons are matched is covered by spec/lib/knowledge_base/icon_catalog_spec.rb — this covers the
+#   GraphQL surface only: arguments, authorization, and the payload.
 RSpec.describe Gql::Queries::AutocompleteSearch::KnowledgeBaseCategoryIcon, authenticated_as: :editor, type: :graphql do
   context 'when searching for knowledge base category icons' do
     let(:role)     { create(:role, permission_names: %w[knowledge_base.editor]) }
@@ -37,80 +39,12 @@ RSpec.describe Gql::Queries::AutocompleteSearch::KnowledgeBaseCategoryIcon, auth
       end
     end
 
-    context 'with a matching filter keyword' do
-      let(:query_string) { 'martini' }
-
-      it 'returns the icon' do
-        expect(gql.result.data).to include(include('label' => 'glass'))
-      end
-    end
-
-    context 'with a stored codepoint as query' do
-      let(:query_string) { 'f115' }
-
-      it 'returns the named icon, so the picker can label a stored value' do
-        expect(gql.result.data).to include(include('value' => 'f115', 'label' => 'folder open outlined'))
-      end
-    end
-
-    context 'with delimiters replaced by whitespace' do
-      let(:icon_set)     { 'material' }
-      let(:query_string) { '3d rotation' }
-
-      it 'returns the icon' do
-        expect(gql.result.data).to include(include('label' => '3d_rotation', 'iconSet' => 'material'))
-      end
-    end
-
-    context 'with query terms in another order than the icon name' do
-      let(:icon_set)     { 'ionicons' }
-      let(:query_string) { 'wifi android' }
-
-      it 'returns the icon' do
-        expect(gql.result.data).to include(include('label' => 'ion-android-wifi'))
-      end
-    end
-
-    context 'without a limit' do
-      let(:query_string) { 'user' }
-
-      it 'returns at most the default limit' do
-        expect(gql.result.data.length).to be <= KnowledgeBase::IconCatalog::DEFAULT_LIMIT
-      end
-    end
-
     context 'with a limit' do
       let(:query_string) { 'user' }
       let(:limit)        { 2 }
 
       it 'respects the limit' do
         expect(gql.result.data.length).to eq(2)
-      end
-    end
-
-    context 'with the wildcard query' do
-      let(:query_string) { '*' }
-      let(:limit)        { 2 }
-
-      it 'returns the complete iconset for browsing, ignoring the limit' do
-        expect(gql.result.data.length).to eq(KnowledgeBase::IconCatalog.for(icon_set).icons.length)
-      end
-    end
-
-    context 'with a negative limit' do
-      let(:query_string) { 'user' }
-      let(:limit)        { -1 }
-
-      it 'returns an empty list instead of an internal error' do
-        expect(gql.result.data).to be_empty
-      end
-    end
-
-    context 'without a match' do
-      let(:query_string) { 'nonexistingiconname' }
-
-      it 'returns an empty list' do
-        expect(gql.result.data).to be_empty
       end
     end
 

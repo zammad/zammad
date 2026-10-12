@@ -345,7 +345,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       end
 
       it 'does not find internal articles' do
-        expect(response_articles.pluck(:id)).to not_include(internal_article.id)
+        expect(response_articles.pluck('id')).to not_include(gql.id(internal_article))
       end
 
       context 'when has originBy' do

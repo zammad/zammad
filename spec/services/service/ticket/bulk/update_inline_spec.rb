@@ -71,7 +71,7 @@ RSpec.describe Service::Ticket::Bulk::UpdateInline do
     end
 
     context 'when passing an invalid ticket id' do
-      let(:invalid_ticket) { tickets[0] }
+      let(:invalid_ticket) { tickets[1] }
 
       before do
         error = Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly

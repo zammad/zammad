@@ -94,8 +94,6 @@ RSpec.describe Gql::Queries::Search::Counts, type: :graphql do
         searchindex_model_reload([Ticket, User, Organization])
       end
 
-      include_examples 'test search query'
-
       context 'with an advanced filter and no search term', authenticated_as: :agent do
         let(:variables) do
           {
@@ -130,9 +128,7 @@ RSpec.describe Gql::Queries::Search::Counts, type: :graphql do
   end
 
   # Counted through a different backend than every other model here - see
-  #   Gql::Concerns::SearchesKnowledgeBaseAnswers. This is the path
-  #   zammad/coordination-desktop-view#874's tab badge reads, so it has to work before that story
-  #   starts.
+  #   Gql::Concerns::SearchesKnowledgeBaseAnswers.
   context 'when counting knowledge base answers' do
     include_context 'basic Knowledge Base'
 
@@ -189,14 +185,6 @@ RSpec.describe Gql::Queries::Search::Counts, type: :graphql do
         it 'omits the model rather than failing' do
           expect(gql.result.data).to eq([])
         end
-      end
-    end
-
-    context 'with a customer (public)', authenticated_as: :customer do
-      let(:customer) { create(:customer) }
-
-      it 'counts published answers alone' do
-        expect(gql.result.data).to eq([{ 'model' => 'KnowledgeBase__Answer__Translation', 'totalCount' => 1 }])
       end
     end
 

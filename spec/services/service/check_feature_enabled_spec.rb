@@ -28,7 +28,7 @@ RSpec.describe Service::CheckFeatureEnabled do
       context 'when feature is enabled' do
         let(:value) { true }
 
-        it 'returns true' do
+        it 'passes' do
           expect(service_result).to be_nil
         end
       end

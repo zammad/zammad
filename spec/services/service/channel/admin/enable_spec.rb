@@ -8,7 +8,7 @@ RSpec.describe Service::Channel::Admin::Enable, current_user_id: 1 do
   let!(:channel) { create(:channel, active: false) }
 
   describe '#execute' do
-    it 'destroys the channel' do
+    it 'enables the channel' do
       expect { service_result }.to change { channel.reload.active }.to be(true)
     end
   end

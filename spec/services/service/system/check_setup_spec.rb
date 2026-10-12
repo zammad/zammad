@@ -206,7 +206,7 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
           service_result
         end
 
-        it 'returns done status' do
+        it 'returns in progress status' do
           expect(service_result.status).to eq('in_progress')
           expect(service_result.type).to eq('import')
         end
@@ -237,14 +237,10 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         before do
           Setting.set('import_mode', false)
 
+          allow(AutoWizard).to receive(:enabled?).and_return(true)
+
           Service::ExecuteLockedBlock.execute('Zammad::System::Setup', 10_000) do
-            begin
-              json = Rails.root.join('auto_wizard.json')
-              FileUtils.touch(json)
-              service_result
-            ensure
-              FileUtils.rm(json)
-            end
+            service_result
           end
         end
 
@@ -285,7 +281,7 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
           create(:admin)
         end
 
-        it 'raises error' do
+        it 'logs a warning' do
           allow(Rails.logger).to receive(:warn)
           service_result
           expect(Rails.logger).to have_received(:warn).with('The system setup is not marked as done, but at least one admin user is existing. Marking system setup as done.')

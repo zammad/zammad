@@ -113,7 +113,7 @@ RSpec.describe Service::KnowledgeBase::Answers do
         expect(order_of(first_answer, second_answer)).to eq([second_answer.id, first_answer.id])
       end
 
-      # acts_as_list already appends; this guards the story's "new items are added to the bottom".
+      # acts_as_list already appends; this guards that new items are added to the bottom.
       it 'appends a newly created answer' do
         expect(answers.map(&:id).last).to eq(second_answer.id)
       end

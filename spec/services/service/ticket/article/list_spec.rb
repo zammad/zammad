@@ -26,7 +26,7 @@ RSpec.describe Service::Ticket::Article::List do
 
       let(:user) { create(:agent) }
 
-      it 'returns all articles' do
+      it 'returns only public articles' do
         expect(service_result).to eq(articles[1..])
       end
     end

@@ -41,9 +41,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
       end
 
       it 'sets the appropriate delivery status attributes' do
-        begin
-          service_result
-        rescue Service::Ticket::Article::Type::PermanentDeliveryError => e
+        expect { service_result }.to raise_error(Service::Ticket::Article::Type::PermanentDeliveryError) do |e|
           expect(article.reload.preferences[:delivery_status]).to eq('fail')
           expect(article.reload.preferences[:delivery_status_date]).to be_an_instance_of(ActiveSupport::TimeWithZone)
           expect(article.reload.preferences[:delivery_status_message]).to eq(e.message)

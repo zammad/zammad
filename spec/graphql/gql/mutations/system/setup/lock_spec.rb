@@ -35,11 +35,13 @@ RSpec.describe Gql::Mutations::System::Setup::Lock, :aggregate_failures, type: :
     context 'when system setup is already done' do
       before do
         Setting.set('system_init_done', true)
+        create(:admin)
       end
 
       it 'raises error' do
         gql.execute(mutation, variables: variables)
-        expect { gql.result.data }.to raise_error(RuntimeError)
+        expect(gql.result.error_type).to eq(Service::System::CheckSetup::SystemSetupError)
+        expect(gql.result.error_message).to eq('The system setup cannot be started, because there is another one running or it was completed before.')
       end
     end
 
@@ -48,7 +50,8 @@ RSpec.describe Gql::Mutations::System::Setup::Lock, :aggregate_failures, type: :
         allow_any_instance_of(Redlock::Client).to receive(:locked?).with(resource).and_return(true)
 
         gql.execute(mutation, variables: variables)
-        expect { gql.result.data }.to raise_error(RuntimeError)
+        expect(gql.result.error_type).to eq(Service::System::CheckSetup::SystemSetupError)
+        expect(gql.result.error_message).to eq('The system setup cannot be started, because there is another one running or it was completed before.')
       end
     end
   end

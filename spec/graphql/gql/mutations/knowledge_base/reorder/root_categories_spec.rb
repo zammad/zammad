@@ -39,6 +39,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::RootCategories, type: :gr
 
   before do
     first && second
+    setup if defined?(setup)
 
     gql.execute(query, variables:)
   end
@@ -77,27 +78,6 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::RootCategories, type: :gr
       end
     end
 
-    context 'with an incomplete order' do
-      let(:sorting_mode) { 'manual' }
-      let(:category_ids) { [gql.id(first)] }
-
-      it 'returns a user error' do
-        expect(gql.result.data.dig('errors', 0, 'message')).to include('all items in scope')
-      end
-    end
-
-    # `manual` is the only mode that reads a stored order back, so it may not be armed without one —
-    #   the client sends the order it is showing along with it.
-    context 'with the manual mode and no order' do
-      let(:sorting_mode) { 'manual' }
-      let(:category_ids) { nil }
-
-      it 'returns a user error', :aggregate_failures do
-        expect(gql.result.data.dig('errors', 0, 'message')).to include('all items in scope')
-        expect(gql.result.data['knowledgeBase']).to be_nil
-      end
-    end
-
     context 'with a mode the models cannot store' do
       let(:sorting_mode) { 'by_hand' }
 
@@ -113,17 +93,6 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::RootCategories, type: :gr
         expect(gql.result.error_message).to include('sortingMode')
       end
     end
-
-    # `acts_as_list` is scoped to `parent`, so a category from further down the tree is not part of
-    #   the list this mutation numbers — the scope check is what catches it, the schema cannot.
-    context 'with a category that is not at the top level' do
-      let(:sorting_mode) { 'manual' }
-      let(:category_ids) { [gql.id(second), gql.id(first), gql.id(subcategory)] }
-
-      it 'returns a user error' do
-        expect(gql.result.data.dig('errors', 0, 'message')).to include('all items in scope')
-      end
-    end
   end
 
   # The top level belongs to the knowledge base, so ordering it needs editor access to the knowledge
@@ -136,12 +105,6 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Reorder::RootCategories, type: :gr
     let(:setup) do
       create(:knowledge_base_permission, permissionable: knowledge_base, role: granular_role, access: 'reader')
       create(:knowledge_base_permission, permissionable: first, role: granular_role, access: 'editor')
-    end
-
-    before do
-      setup
-
-      gql.execute(query, variables:)
     end
 
     it 'raises an error', authenticated_as: :granular_editor do

@@ -17,7 +17,7 @@ RSpec.describe Gql::Types::BinaryStringType do
       let(:input_with_prefix) { "data:mime/type;base64,#{input}" }
 
       it 'transforms input correctly' do
-        expect(described_class.coerce_input(input).b).to eq(result.b)
+        expect(described_class.coerce_input(input_with_prefix).b).to eq(result.b)
       end
     end
 

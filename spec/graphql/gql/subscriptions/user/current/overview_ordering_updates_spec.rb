@@ -37,8 +37,12 @@ RSpec.describe Gql::Subscriptions::User::Current::OverviewOrderingUpdates, type:
     end
 
     it 'does not receive user overview ordering updates for other users' do
-      gql.execute(subscription, context: { channel: mock_channel })
-      create(:'user/overview_sorting', user: create(:agent))
+      gql.execute(subscription, variables: { ignoreUserConditions: false }, context: { channel: mock_channel })
+
+      other_agent = create(:agent)
+      create(:'user/overview_sorting', user: other_agent)
+      described_class.trigger_by(other_agent)
+
       expect(mock_channel.mock_broadcasted_messages).to be_empty
     end
   end
@@ -53,12 +57,13 @@ RSpec.describe Gql::Subscriptions::User::Current::OverviewOrderingUpdates, type:
   end
 
   describe '.trigger_by' do
-    it 'passes user id as argument' do
+    it 'passes user id as argument', :aggregate_failures do
       allow(described_class).to receive(:trigger)
 
       described_class.trigger_by(target)
 
-      expect(described_class).to have_received(:trigger).exactly(2)
+      expect(described_class).to have_received(:trigger).with(nil, arguments: { ignore_user_conditions: true }, scope: target.id)
+      expect(described_class).to have_received(:trigger).with(nil, arguments: { ignore_user_conditions: false }, scope: target.id)
     end
   end
 end

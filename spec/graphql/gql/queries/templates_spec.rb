@@ -22,8 +22,8 @@ RSpec.describe Gql::Queries::Templates, type: :graphql do
     let(:only_active) { false }
     let(:variables) { { onlyActive: only_active } }
 
-    let!(:template)                  { create(:template) }
-    let!(:inactive_template)         { create(:template, active: false) }
+    let!(:template)                  { create(:template, name: 'B template') }
+    let!(:inactive_template)         { create(:template, name: 'A template', active: false) }
     let(:template_response)          { { 'name' => template.name, 'options' => template.options, 'active' => true } }
     let(:inactive_template_response) { { 'name' => inactive_template.name, 'options' => inactive_template.options, 'active' => false } }
 
@@ -38,8 +38,7 @@ RSpec.describe Gql::Queries::Templates, type: :graphql do
       end
 
       it 'returns templates in alphabetical order' do
-        actual_names = gql.result.data.pluck('name')
-        expect(actual_names).to eq(actual_names.sort)
+        expect(gql.result.data).to eq([inactive_template_response, template_response])
       end
 
       context 'when fetching only active templates' do
@@ -67,10 +66,7 @@ RSpec.describe Gql::Queries::Templates, type: :graphql do
     end
 
     context 'with ticket.customer permission only', authenticated_as: :customer do
-
-      it 'fails with an authorization error' do
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
-      end
+      it_behaves_like 'graphql responds with forbidden'
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'

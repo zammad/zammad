@@ -27,15 +27,16 @@ RSpec.describe Gql::Mutations::OnlineNotification::Delete, authenticated_as: :us
     let(:notification_to_delete) { notification }
 
     it 'deletes notification' do
-      expect(notification.class).not_to exist(notification.id)
+      expect(OnlineNotification).not_to exist(notification.id)
     end
   end
 
   context 'when deleting inaccessible notification' do
     let(:notification_to_delete) { another_user_notification }
 
-    it 'does not delete notification' do
-      expect(notification.class).to exist(notification.id)
+    it 'does not delete notification', :aggregate_failures do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      expect(OnlineNotification).to exist(another_user_notification.id)
     end
   end
 end

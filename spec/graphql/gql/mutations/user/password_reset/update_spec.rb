@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What resetting a password does is covered by spec/services/service/user/password_reset/update_spec.rb —
+#   this covers the GraphQL surface only: how the service's errors reach the client, and the payload.
 RSpec.describe Gql::Mutations::User::PasswordReset::Update, type: :graphql do
   context 'when updating a password for a user' do
     let(:user)     { create(:user) }
@@ -56,18 +58,6 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Update, type: :graphql do
 
       it 'updates user password' do
         expect { execute_graphql_query }.to change { user.reload.password }
-      end
-
-      it 'sends an email notification to the user' do
-        message = nil
-
-        allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
-          message = params[:body]
-        end
-
-        execute_graphql_query
-
-        expect(message).to include('If you did not initiate this change, please contact your system administrator.')
       end
     end
 

@@ -92,8 +92,8 @@ RSpec.describe Service::Translation::Search do
               create(:public_link, description: "desc #{query}")
             end
 
-            it 'does not crash on nil descriptions' do
-              expect { service_result }.not_to raise_error
+            it 'skips nil descriptions and finds the matching one' do
+              expect(service_result[:items].count).to eq(2)
             end
           end
         end

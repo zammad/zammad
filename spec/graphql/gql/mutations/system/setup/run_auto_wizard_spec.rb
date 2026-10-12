@@ -44,12 +44,15 @@ RSpec.describe Gql::Mutations::System::Setup::RunAutoWizard, :aggregate_failures
     end
 
     context 'with auto wizard enabled' do
+      let(:auto_wizard_file) { Pathname.new(Dir.mktmpdir).join('auto_wizard.json') }
+
       before do
-        FileUtils.cp(Rails.root.join('contrib/auto_wizard_example.json'), Rails.root.join('auto_wizard.json'))
+        FileUtils.cp(Rails.root.join('contrib/auto_wizard_example.json'), auto_wizard_file)
+        allow(AutoWizard).to receive(:file_location).and_return(auto_wizard_file)
       end
 
       after do
-        FileUtils.rm(Rails.root.join('auto_wizard.json'), force: true)
+        FileUtils.rm_rf(auto_wizard_file.dirname)
       end
 
       context 'without the right token' do

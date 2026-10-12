@@ -8,7 +8,7 @@ RSpec.describe Service::Channel::Admin::List, current_user_id: 1 do
   let!(:channel) { create(:channel) }
 
   describe '#execute' do
-    it 'destroys the channel' do
+    it 'returns the channels of the area' do
       expect(service_result).to eq([channel])
     end
   end

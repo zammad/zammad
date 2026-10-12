@@ -14,18 +14,18 @@ RSpec.describe Service::AIAssistance::TextTools do
     before do
       setup_ai_provider('open_ai')
       Setting.set('ai_assistance_text_tools', true)
-
-      allow_any_instance_of(Service::AI::Feature::TextTool)
-        .to receive(:execute)
-        .and_return(expected_output)
     end
 
     let(:expected_output) { Struct.new(:content, :stored_result, :fresh).new(content: 'Hello, world!', stored_result: nil, fresh: false) }
 
     describe '#execute' do
       context 'when valid text tool is used' do
-        it 'returns the corrected input' do
+        it 'passes the input to the text tool feature and returns its result', :aggregate_failures do
+          allow(Service::AI::Feature::TextTool).to receive(:execute).and_return(expected_output)
+
           expect(service_result).to eq(expected_output)
+          expect(Service::AI::Feature::TextTool).to have_received(:execute)
+            .with(current_user: user, context_data: hash_including(input:, text_tool:), regeneration_of: nil)
         end
       end
 

@@ -29,8 +29,9 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Delete, current_user_id: 1, ty
   end
 
   shared_examples 'deleting the ticket checklist' do
-    it 'deletes the ticket checklist' do
+    it 'deletes the ticket checklist', :aggregate_failures do
       expect(gql.result.data[:success]).to be(true)
+      expect(Checklist).not_to exist(checklist.id)
     end
   end
 
@@ -61,12 +62,6 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Delete, current_user_id: 1, ty
       let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
 
       it_behaves_like 'raising an error', Exceptions::Forbidden
-    end
-
-    context 'with ticket read+change permissions' do
-      let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => %w[read change] }) }
-
-      it_behaves_like 'deleting the ticket checklist'
     end
 
     context 'when ticket checklist does not exist' do

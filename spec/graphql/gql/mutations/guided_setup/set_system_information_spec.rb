@@ -2,7 +2,40 @@
 
 require 'rails_helper'
 
+# What setting the system information does is covered by spec/services/service/system/set_system_information_spec.rb —
+#   this covers the GraphQL surface only: authorization, the logo scalar, how the service's errors reach the client,
+#   and the payload.
 RSpec.describe Gql::Mutations::GuidedSetup::SetSystemInformation, type: :graphql do
+  let(:query) do
+    <<~QUERY
+      mutation guidedSetupSetSystemInformation($input: SystemInformation!) {
+        guidedSetupSetSystemInformation(input: $input) {
+          success
+          errors {
+            message
+            field
+          }
+        }
+      }
+    QUERY
+  end
+
+  let(:variables) { { input: { url: 'http://example.com', organization: 'Sample' } } }
+
+  context 'with an agent', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    before { gql.execute(query, variables: variables) }
+
+    it_behaves_like 'graphql responds with forbidden'
+  end
+
+  context 'when unauthenticated' do
+    before { gql.execute(query, variables: variables) }
+
+    it_behaves_like 'graphql responds with error if unauthenticated'
+  end
+
   context 'when setting up a new system', authenticated_as: :admin do
     let(:required_variables) do
       {
@@ -12,20 +45,6 @@ RSpec.describe Gql::Mutations::GuidedSetup::SetSystemInformation, type: :graphql
     end
 
     let(:admin) { create(:admin) }
-
-    let(:query) do
-      <<~QUERY
-        mutation guidedSetupSetSystemInformation($input: SystemInformation!) {
-          guidedSetupSetSystemInformation(input: $input) {
-            success
-            errors {
-              message
-              field
-            }
-          }
-        }
-      QUERY
-    end
 
     describe 'setting textual values' do
       context 'when locale is given' do
@@ -49,29 +68,8 @@ RSpec.describe Gql::Mutations::GuidedSetup::SetSystemInformation, type: :graphql
     end
 
     describe 'setting a required value' do
-      context 'when url is given' do
-        let(:variables) { { input: required_variables } }
-
-        it 'sets instance name' do
-          expect { gql.execute(query, variables: variables) }
-            .to change { [Setting.get('http_type'), Setting.get('fqdn')] }
-            .to(['http', 'example.com'])
-        end
-
-        it 'does not return any errors' do
-          gql.execute(query, variables: variables)
-
-          expect(gql.result.data).to include('success' => true, 'errors' => be_blank)
-        end
-      end
-
       context 'when url is not valid' do
         let(:variables) { { input: required_variables.merge(url: 'meh') } }
-
-        it 'does not set http type & FQDN' do
-          expect { gql.execute(query, variables: variables) }
-            .not_to change { [Setting.get('http_type'), Setting.get('fqdn')] }
-        end
 
         it 'returns an error' do
           gql.execute(query, variables: variables)
@@ -83,23 +81,6 @@ RSpec.describe Gql::Mutations::GuidedSetup::SetSystemInformation, type: :graphql
                 'message' => 'Please include a valid url.', 'field' => 'url'
               )
             )
-        end
-      end
-
-      context 'when url is not given for an online service' do
-        let(:variables) { { input: required_variables.tap { it.delete(:url) } } }
-
-        before { Setting.set('system_online_service', true) }
-
-        it 'does not set http type & FQDN' do
-          expect { gql.execute(query, variables: variables) }
-            .not_to change { [Setting.get('http_type'), Setting.get('fqdn')] }
-        end
-
-        it 'does not return any errors' do
-          gql.execute(query, variables: variables)
-
-          expect(gql.result.data).to include('success' => true, 'errors' => be_blank)
         end
       end
     end

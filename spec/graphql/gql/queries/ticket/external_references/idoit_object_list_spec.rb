@@ -66,7 +66,7 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IdoitObjectList, type: 
     context 'when no input is provided' do
       let(:variables) { {} }
 
-      it 'returns idoit objects', aggregate_failures: true do
+      it 'raises a validation error' do
         expect(gql.result.error_type).to eq(GraphQL::Schema::Validator::ValidationFailedError)
       end
     end

@@ -76,7 +76,7 @@ RSpec.describe Gql::Mutations::User::Current::CalendarSubscription::Update, type
 
       before { execute_graphql_query }
 
-      it_behaves_like 'graphql responds with error if unauthenticated'
+      it_behaves_like 'graphql responds with forbidden'
     end
   end
 end

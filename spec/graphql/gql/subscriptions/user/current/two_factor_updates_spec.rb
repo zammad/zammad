@@ -24,11 +24,13 @@ RSpec.describe Gql::Subscriptions::User::Current::TwoFactorUpdates, type: :graph
   let(:target)       { create(:user) }
 
   context 'when user is authenticated, but has no permission', authenticated_as: :agent do
-    let(:agent) { create(:agent, roles: []) }
+    let(:agent) { create(:agent, roles: [create(:role, :agent)]) }
 
     before do
       gql.execute(subscription, context: { channel: mock_channel })
     end
+
+    it_behaves_like 'graphql responds with forbidden'
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end

@@ -35,8 +35,9 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_
   end
 
   shared_examples 'updating the ticket checklist item order' do
-    it 'updates the ticket checklist item order' do
+    it 'updates the ticket checklist item order', :aggregate_failures do
       expect(gql.result.data[:success]).to be(true)
+      expect(checklist.reload.sorted_item_ids.map { |item_id| Gql::ZammadSchema.id_from_internal_id('Checklist::Item', item_id) }).to eq(order)
     end
   end
 
@@ -67,12 +68,6 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_
       let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
 
       it_behaves_like 'raising an error', Exceptions::Forbidden
-    end
-
-    context 'with ticket read+change permissions' do
-      let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => %w[read change] }) }
-
-      it_behaves_like 'updating the ticket checklist item order'
     end
 
     context 'when ticket checklist does not exist' do

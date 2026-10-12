@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What signing up does is covered by spec/services/service/user/signup_spec.rb — this covers the
+#   GraphQL surface only: throttling, how the service's errors reach the client, and the payload.
 RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
   context 'when registering a new user' do
     let(:query) do
@@ -41,44 +43,14 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
       end
     end
 
-    context 'with enabled user signup', performs_jobs: true do
+    context 'with enabled user signup' do
       before do
         Setting.set('user_create_account', true)
       end
 
-      it 'creates a new user', :aggregate_failures do
-        message = nil
-
-        allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
-          message = params[:body]
-        end
-
-        perform_enqueued_jobs { gql.execute(query, variables: variables) }
+      it 'returns success' do
+        gql.execute(query, variables: variables)
         expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
-        expect(User.find_by(email: 'bender@futurama.fiction')).to be_present
-        expect(message).to include("<a href=\"http://zammad.example.com/desktop/signup/verify/#{Token.last[:token]}\">")
-      end
-
-      context 'when the password is weak' do
-        let(:variables) do
-          {
-            input: {
-              email:     'bender@futurama.fiction',
-              firstname: 'Bender',
-              lastname:  'Rodríguez',
-              password:  'idonotlovebenderandthisiswrong'
-            }
-          }
-        end
-
-        it 'raises an error', :aggregate_failures do
-          gql.execute(query, variables: variables)
-
-          errors = gql.result.data[:errors].first
-          expect(errors.keys).to include('message', 'field')
-          expect(errors['message']).to include('Invalid password')
-          expect(errors['field']).to eq('password')
-        end
       end
 
       context 'when the password is too short' do
@@ -101,24 +73,6 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
                                                          'messagePlaceholder' => ['10'],
                                                          'field'              => 'password',
                                                        })
-        end
-      end
-
-      context 'when the email is already taken' do
-        before do
-          create(:user, email: 'bender@futurama.fiction')
-        end
-
-        it 'returns a silent success', :aggregate_failures do
-          message = nil
-          allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
-            message = params[:body]
-          end
-          perform_enqueued_jobs { gql.execute(query, variables: variables) }
-
-          expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
-          expect(message).to include('You or someone else tried to sign up with this email address.')
-          expect(message).to include("<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last[:token]}\">")
         end
       end
 

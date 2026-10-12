@@ -84,7 +84,7 @@ RSpec.describe Service::ExternalDataSource::Preview do
       context 'when list parsing fails' do
         let(:list_key) { 'deadend' }
 
-        it 'raises error' do
+        it 'returns the error' do
           expect(service_result).to include(
             success:       false,
             error:         'Search result list key "deadend" is not an array.',
@@ -97,7 +97,7 @@ RSpec.describe Service::ExternalDataSource::Preview do
       context 'when item parsing fails' do
         let(:label_key) { 'nonexistant' }
 
-        it 'raises error' do
+        it 'returns the error' do
           expect(service_result).to include(
             success:       false,
             error:         'Search result label key "nonexistant" was not found.',

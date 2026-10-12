@@ -111,7 +111,7 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
             }
           end
 
-          it 'adds an activity stream entry for the user’s session' do
+          it 'keeps the session for one year' do
             execute_graphql_query
             expect(request.env['rack.session.options'][:expire_after]).to eq(1.year)
           end
@@ -119,7 +119,7 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
           context 'with not activated remember me' do
             let(:remember_me) { false }
 
-            it 'adds an activity stream entry for the user’s session' do
+            it 'does not set a session expiry' do
               execute_graphql_query
               expect(request.env['rack.session.options'][:expire_after]).to be_nil
             end
