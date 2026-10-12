@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# The setup state matrix is covered in spec/services/service/user/add_first_admin_spec.rb.
 RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up: false, type: :request do
   context 'when adding the first admin user' do
     let(:query) do
@@ -133,6 +134,20 @@ RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up:
                                                                                   'field'              => nil,
                                                                                 },
                                                                               ])
+      end
+    end
+
+    context 'when an import is running' do
+      before do
+        Setting.set('import_mode', true)
+      end
+
+      it 'fails with an error and creates no session' do
+        expect(graphql_response['data']['userAddFirstAdmin']).to include(
+          'session' => nil,
+          'errors'  => [include('message' => 'The system setup cannot be started, because there is another one running or it was completed before.')],
+        )
+        expect(User.find_by(email: 'bender@futurama.fiction')).to be_nil
       end
     end
   end

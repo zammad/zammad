@@ -1376,6 +1376,13 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       expect(response).to have_http_status(:unprocessable_content)
     end
 
+    it 'does not allow to create an administrator account while an import is running' do
+      Setting.set('import_mode', true)
+      make_request successful_params
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(User.find_by(email: successful_params[:email])).to be_nil
+    end
+
     it 'requires email' do
       make_request successful_params.merge(email: nil)
       expect(response).to have_http_status(:unprocessable_content)
