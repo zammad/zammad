@@ -105,7 +105,7 @@
     "timezone-mock": "^1.4.3",
     "type-fest": "^5.10.0",
     "typescript": "^6.0.3",
-    "vite": "^8.3.2",
+    "vite": "^8.3.4",
     "vite-plugin-pwa": "^2.0.0",
     "vite-plugin-ruby": "^5.2.5",
     "vitest": "^5.0.3",
