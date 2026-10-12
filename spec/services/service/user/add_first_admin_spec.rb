@@ -90,6 +90,39 @@ RSpec.describe Service::User::AddFirstAdmin do
       end
     end
 
+    context 'with a running import' do
+      before do
+        Setting.set('import_mode', true)
+      end
+
+      shared_examples 'refusing the first admin' do
+        it 'raises an error and does not create a user' do
+          expect { service_result }
+            .to raise_error(Service::System::CheckSetup::SystemSetupError, 'The system setup cannot be started, because there is another one running or it was completed before.')
+            .and not_change(User, :count)
+        end
+      end
+
+      context 'when no admin has been imported yet' do
+        it_behaves_like 'refusing the first admin'
+      end
+
+      context 'when admins have been imported' do
+        before { create(:admin) }
+
+        it_behaves_like 'refusing the first admin'
+      end
+
+      context 'when the setup is marked as done' do
+        before do
+          create(:admin)
+          Setting.set('system_init_done', true)
+        end
+
+        it_behaves_like 'refusing the first admin'
+      end
+    end
+
     context 'without an email address' do
       let(:email) { '' }
 
