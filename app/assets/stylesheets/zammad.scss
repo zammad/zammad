@@ -10163,6 +10163,10 @@ li.list-item-none {
     background: none;
     cursor: default;
   }
+
+  > a {
+    cursor: default;
+  }
 }
 
 .dropdown-menu > li > a {

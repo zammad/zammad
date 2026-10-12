@@ -17,6 +17,10 @@ export default <DetailViewActionPlugin>{
   order: 400,
   permission: ['ticket.agent', 'admin.user'],
   show: (user: User) => !user.verified && user.source === 'signup' && user.email,
+  disabled: (user: User) => !user.active,
+  disabledText: __(
+    'You cannot resend the verification email to an inactive user. Activate them first.',
+  ),
   onClick: (user: User) => {
     if (!user.email) return
 

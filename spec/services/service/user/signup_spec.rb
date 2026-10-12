@@ -84,6 +84,10 @@ RSpec.describe Service::User::Signup, performs_jobs: true do
       expect(message).to include("<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last[:token]}\">")
     end
 
+    it 'creates no token', if: !with_new_user && with_existing_user && with_resend do
+      expect { service_result }.not_to change(Token, :count)
+    end
+
     it 'sends no email', if: !with_new_user && with_existing_user && with_resend do
       message = nil
 
@@ -232,9 +236,10 @@ RSpec.describe Service::User::Signup, performs_jobs: true do
     context 'when resending verification email' do
       let(:resend)   { true }
       let(:verified) { false }
+      let(:active)   { true }
 
       before do
-        create(:user, email: 'bender@futurama.fiction', verified: verified)
+        create(:user, email: 'bender@futurama.fiction', verified: verified, active: active)
       end
 
       it_behaves_like 'returning success', with_resend: true
@@ -254,6 +259,13 @@ RSpec.describe Service::User::Signup, performs_jobs: true do
       context 'when no account exists for the email address' do
         let(:user_data) { { email: 'leela@futurama.fiction' } }
 
+        it_behaves_like 'holding the response deadline'
+      end
+
+      context 'when user is inactive' do
+        let(:active) { false }
+
+        it_behaves_like 'returning success', with_existing_user: true, with_resend: true
         it_behaves_like 'holding the response deadline'
       end
 

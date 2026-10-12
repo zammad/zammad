@@ -117,6 +117,71 @@ describe('rendering section', () => {
     expect(clickHandler).toHaveBeenCalledOnce()
   })
 
+  it('renders an item as unavailable and does not invoke its click handler', async () => {
+    const clickHandler = vi.fn()
+
+    const items: MenuItem[] = [
+      {
+        key: 'example',
+        label: 'Example',
+        onClick: clickHandler,
+        disabled: () => true,
+        disabledText: 'Not available right now.',
+      },
+    ]
+
+    const view = renderComponent(CommonPopoverMenu, {
+      shallow: false,
+      props: {
+        popover: null,
+        items,
+      },
+      router: true,
+    })
+
+    const item = view.getByRole('button', { name: 'Example' })
+
+    expect(item).toHaveAttribute('aria-disabled', 'true')
+    expect(item).toHaveAttribute('aria-description', 'Not available right now.')
+
+    await view.events.click(item)
+
+    expect(clickHandler).not.toHaveBeenCalled()
+  })
+
+  it('renders a grouped item as unavailable and does not invoke its click handler', async () => {
+    const clickHandler = vi.fn()
+
+    const items: MenuItem[] = [
+      {
+        key: 'example',
+        label: 'Example',
+        groupLabel: 'Example group',
+        onClick: clickHandler,
+        disabled: () => true,
+        disabledText: 'Not available right now.',
+      },
+    ]
+
+    const view = renderComponent(CommonPopoverMenu, {
+      shallow: false,
+      props: {
+        popover: null,
+        items,
+      },
+      router: true,
+    })
+
+    const item = view.getByRole('button', { name: 'Example' })
+
+    expect(item).toHaveAttribute('aria-disabled', 'true')
+    expect(item).toHaveAttribute('aria-description', 'Not available right now.')
+
+    await view.events.click(item)
+
+    expect(clickHandler).not.toHaveBeenCalled()
+  })
+
   it('close popover on click on item or avoid closing', async () => {
     const clickHandlerExample = vi.fn()
     const clickHandlerOther = vi.fn()

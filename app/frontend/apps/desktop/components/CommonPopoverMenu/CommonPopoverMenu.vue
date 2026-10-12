@@ -41,7 +41,14 @@ const showHeaderLabel = computed(() => {
   return slots.header || props.headerLabel
 })
 
+const isDisabled = (item: MenuItem) => Boolean(item.disabled?.(props.entity))
+
 const onClickItem = (event: MouseEvent, item: MenuItem) => {
+  if (isDisabled(item)) {
+    event.preventDefault()
+    return
+  }
+
   if (item.onClick) {
     event.preventDefault()
     item.onClick(props.entity)
@@ -53,6 +60,12 @@ const onClickItem = (event: MouseEvent, item: MenuItem) => {
 
   emit('click-item', item, event)
 }
+
+const getLabelClass = (item: MenuItem) =>
+  isDisabled(item) ? 'text-stone-200! dark:text-neutral-500!' : undefined
+
+const getIconClass = (item: MenuItem) =>
+  isDisabled(item) ? 'text-stone-200 dark:text-neutral-500' : item.iconClass
 
 const getHoverFocusStyles = (variant?: Variant) => {
   if (variant === 'secondary')
@@ -98,20 +111,26 @@ const getHoverFocusStyles = (variant?: Variant) => {
                 <slot :name="`item-${subItem.key}`" v-bind="subItem">
                   <component
                     :is="subItem.component || CommonPopoverMenuItem"
+                    v-tooltip.supportive="
+                      isDisabled(subItem) ? $t(subItem.disabledText) : undefined
+                    "
                     class="flex grow rounded-lg p-2.5"
                     :class="[
-                      getHoverFocusStyles(subItem.variant),
+                      isDisabled(subItem) ? undefined : getHoverFocusStyles(subItem.variant),
                       {
                         'last:rounded-b-xl': index === filteredMenuItems?.length - 1,
+                        'cursor-default!': isDisabled(subItem),
                       },
                     ]"
+                    :aria-disabled="isDisabled(subItem) || undefined"
                     :label="subItem.label"
                     :variant="subItem.variant"
                     :link="subItem.link"
                     :link-external="subItem.linkExternal"
                     :open-in-new-tab="subItem.openInNewTab"
                     :icon="subItem.icon"
-                    :icon-class="subItem.iconClass"
+                    :icon-class="getIconClass(subItem)"
+                    :label-class="getLabelClass(subItem)"
                     :label-placeholder="subItem.labelPlaceholder"
                     @click="onClickItem($event, subItem)"
                   />
@@ -128,24 +147,28 @@ const getHoverFocusStyles = (variant?: Variant) => {
                   'first:rounded-t-[10px]': !showHeaderLabel,
                   'border-t border-neutral-100 dark:border-gray-900': item.separatorTop,
                 },
-                getHoverFocusStyles(item.variant),
+                isDisabled(item) ? undefined : getHoverFocusStyles(item.variant),
               ]"
             >
               <slot :name="`item-${item.key}`" v-bind="item">
                 <component
                   :is="item.component || CommonPopoverMenuItem"
+                  v-tooltip.supportive="isDisabled(item) ? $t(item.disabledText) : undefined"
                   class="flex grow p-2.5 focus-visible-app-default focus-visible:-outline-offset-1!"
                   :class="{
                     'rounded-t-lg!': index === 0 && !showHeaderLabel,
                     'rounded-b-lg!': index === filteredMenuItems?.length - 1,
+                    'cursor-default!': isDisabled(item),
                   }"
+                  :aria-disabled="isDisabled(item) || undefined"
                   :label="item.label"
                   :variant="item.variant"
                   :link="item.link"
                   :link-external="item.linkExternal"
                   :open-in-new-tab="item.openInNewTab"
                   :icon="item.icon"
-                  :icon-class="item.iconClass"
+                  :icon-class="getIconClass(item)"
+                  :label-class="getLabelClass(item)"
                   :label-placeholder="item.labelPlaceholder"
                   @click="onClickItem($event, item)"
                 />

@@ -16,6 +16,20 @@ export interface MenuItem extends ItemProps {
   permission?: RequiredPermission
   show?: (entity?: ObjectLike) => boolean
   /**
+   * Renders the item as unavailable instead of hiding it, so the action stays
+   * discoverable. It keeps hover and focus, since `disabledText` is reachable
+   * only through them.
+   *
+   * Honoured only where the item is rendered inside `CommonPopoverMenu`. An
+   * item rendered directly - a `CommonActionMenu` in single action mode, or a
+   * `topLevel` detail view action - stays clickable.
+   */
+  disabled?: (entity?: ObjectLike) => boolean
+  /**
+   * Why the item is unavailable. Required alongside `disabled`.
+   */
+  disabledText?: string
+  /**
    * Same group labels will be grouped together in the popover menu.
    * Adds a separator between groups by default.
    */

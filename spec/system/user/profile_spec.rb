@@ -183,4 +183,40 @@ RSpec.describe 'User Profile', type: :system do
       end
     end
   end
+
+  describe 'resend verification email action' do
+    let(:customer) { create(:customer, source: 'signup', verified: false, active: active) }
+
+    before do
+      visit "#user/profile/#{customer.id}"
+      page.find('.profile .js-action').click
+    end
+
+    context 'with an active user' do
+      let(:active) { true }
+
+      it 'sends the verification email' do
+        expect(page).to have_css('.profile li[data-type=resend_verification_email]:not([disabled])')
+
+        page.find('.profile li[data-type=resend_verification_email]').click
+
+        expect(page).to have_css('#notify .noty_message', text: %r{Email sent to .*#{Regexp.escape(customer.email)}}, visible: :all)
+      end
+    end
+
+    context 'with an inactive user' do
+      let(:active) { false }
+
+      it 'shows the action as unavailable and sends no email' do
+        expect(page)
+          .to have_css('.profile li[data-type=resend_verification_email][disabled] a[aria-disabled=true]')
+          .and have_css('.profile li[data-type=resend_verification_email] a[title="You cannot resend the verification email to an inactive user. Activate them first."]')
+
+        page.find('.profile li[data-type=resend_verification_email]').click
+        await_empty_ajax_queue
+
+        expect(page).to have_no_css('#notify .noty_message', visible: :all)
+      end
+    end
+  end
 end
