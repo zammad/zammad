@@ -67,7 +67,7 @@ RSpec.describe TransactionDispatcher do
       expect(observed).to include(system_context: true)
     end
 
-    it 'does not raise when the backend does' do
+    it 'logs instead of raising when the backend does', :aggregate_failures do
       allow(Rails.logger).to receive(:error)
 
       failing_backend = Class.new do
@@ -79,6 +79,7 @@ RSpec.describe TransactionDispatcher do
       end
 
       expect { described_class.execute_single_backend(failing_backend, {}, {}) }.not_to raise_error
+      expect(Rails.logger).to have_received(:error).with(an_instance_of(RuntimeError).and(having_attributes(message: 'error')))
     end
   end
 end

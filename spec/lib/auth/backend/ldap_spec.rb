@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/auth/backend/backend_examples'
 
 RSpec.describe Auth::Backend::Ldap do
 
@@ -29,8 +28,6 @@ RSpec.describe Auth::Backend::Ldap do
       allow(ldap_user).to receive(:valid?).with(any_args).and_return(true)
     end
 
-    it_behaves_like 'Auth backend'
-
     it 'authenticates users' do
       expect(instance.valid?).to be true
     end
@@ -43,10 +40,12 @@ RSpec.describe Auth::Backend::Ldap do
         )
       end
 
-      it 'authenticates' do
+      it 'authenticates with the configured attribute', :aggregate_failures do
+        allow(ldap_user).to receive(:valid?).with(any_args).and_return(false)
         allow(ldap_user).to receive(:valid?).with(user.firstname, password).and_return(true)
 
         expect(instance.valid?).to be true
+        expect(ldap_user).to have_received(:valid?).with(user.firstname, password)
       end
     end
 

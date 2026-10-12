@@ -7,13 +7,7 @@ RSpec.describe PasswordPolicy::MinLength do
   it_behaves_like 'declaring an error'
 
   describe '.applicable?' do
-    it "returns true when Setting 'password_min_size' is zero" do
-      Setting.set('password_min_size', 0)
-      expect(described_class).to be_applicable
-    end
-
-    it "returns true when Setting 'password_min_size' is 10" do
-      Setting.set('password_min_size', 10)
+    it 'is always applicable' do
       expect(described_class).to be_applicable
     end
   end

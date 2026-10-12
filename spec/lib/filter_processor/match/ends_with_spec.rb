@@ -14,7 +14,7 @@ RSpec.describe FilterProcessor::Match::EndsWith do
       it { is_expected.to be(true) }
     end
 
-    context 'with a correct beginning but upper letter matching single rule' do
+    context 'when the value ends with a rule in different case' do
       let(:rules) { ['Bar'] }
 
       it { is_expected.to be(true) }

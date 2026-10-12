@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Selector::Base, searchindex: true do
+RSpec.describe 'Selector SQL and search index parity', searchindex: true do # rubocop:disable RSpec/DescribeClass
   let(:default_organization) { create(:organization) }
   let(:agent)                { create(:agent, groups: [Group.first]) }
   let(:agent_owner)          { create(:agent, groups: [Group.first], organization: default_organization) }
@@ -598,8 +598,8 @@ RSpec.describe Selector::Base, searchindex: true do
       count, = Ticket.selectors(condition, { current_user: agent })
       expect(count).to eq(1)
 
-      count, = Ticket.selectors(condition, { current_user: agent })
-      expect(count).to eq(1)
+      result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+      expect(result[:count]).to eq(1)
     end
 
     before do
@@ -1873,6 +1873,41 @@ RSpec.describe Selector::Base, searchindex: true do
 
       result = SearchIndexBackend.selectors('Ticket', condition)
       expect(result[:count]).to eq(1)
+    end
+  end
+
+  describe 'select by custom attribute', db_strategy: :reset do
+    let(:attribute) do
+      attribute = create(:object_manager_attribute_text)
+      ObjectManager::Attribute.migration_execute
+
+      attribute
+    end
+    let(:condition) do
+      {
+        "ticket.#{attribute.name}" => {
+          operator: 'is',
+          value:    '1st value',
+        },
+      }
+    end
+
+    before do
+      attribute
+      create_list(:ticket, 10, group: Group.first).each_with_index do |ticket, index|
+        ticket[attribute.name] = index.odd? ? '1st value' : '2nd value'
+        ticket.save!
+      end
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'does find tickets by custom attribute value', :aggregate_failures do
+      count, tickets = Ticket.selectors(condition, { current_user: agent })
+      expect(count).to eq(5)
+
+      result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+      expect(result[:count]).to eq(5)
+      expect(result[:object_ids].map(&:to_i)).to match_array(tickets.map(&:id))
     end
   end
 end

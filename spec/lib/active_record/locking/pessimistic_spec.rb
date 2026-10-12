@@ -25,11 +25,15 @@ RSpec.describe ActiveRecord::Locking::Pessimistic do
     expect { ticket.lock! }.to raise_error(RuntimeError)
   end
 
-  it 'does not raise the error if the store has changes but only structure changed' do
+  it 'does not raise the error if the store has changes but only structure changed', :aggregate_failures do
     set_old_ticket_store
+    expect(ticket.has_changes_to_save?).to be true
+
+    title = SecureRandom.uuid
     expect do
       ticket.lock!
-      ticket.update(title: SecureRandom.uuid)
+      ticket.update!(title:)
     end.not_to raise_error
+    expect(ticket.reload.title).to eq(title)
   end
 end

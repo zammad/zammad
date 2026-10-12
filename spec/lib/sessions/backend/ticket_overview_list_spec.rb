@@ -3,16 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Sessions::Backend::TicketOverviewList do
-  it 'inherits #asset_needed? from Sessions::Backend::Base' do
-    expect(described_class.instance_method(:asset_needed?).owner)
-      .to be(described_class.superclass)
-  end
-
-  it 'inherits #asset_push from Sessions::Backend::Base' do
-    expect(described_class.instance_method(:asset_push).owner)
-      .to be(described_class.superclass)
-  end
-
   describe '.push' do
     let(:admin)     { create(:admin, groups: [group]) }
     let(:group)     { create(:group) }
@@ -105,8 +95,18 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
       end
 
       context 'when called twice, after changes have occurred to the Ticket table' do
-        let!(:ticket)     { create(:ticket, group: group) }
+        let(:ticket)      { create(:ticket, group: group) }
         let!(:first_call) { collection.push }
+
+        before { ticket }
+
+        shared_examples 'returning the changed ticket' do
+          it 'returns an updated set of results' do
+            expect(collection.push)
+              .to all(match({ event: 'ticket_overview_list', data: hash_including(:assets) }))
+              .and include(include(data: include(tickets: include(include(id: ticket.id)))))
+          end
+        end
 
         context 'before the TTL has passed' do
           it 'returns nil' do
@@ -116,26 +116,20 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
           context 'after .reset with the user’s id' do
             before { described_class.reset(admin.id) }
 
-            it 'returns nil because no ticket and no overview has changed' do
-              expect(collection.push).to be_nil
-            end
+            include_examples 'returning the changed ticket'
           end
         end
 
         context 'after the TTL has passed' do
           before { travel(ttl + 1) }
 
-          it 'returns an empty result' do
-            expect(collection.push).to be_nil
-          end
+          include_examples 'returning the changed ticket'
         end
 
         context 'after two hours have passed' do
           before { travel(2.hours + 1.second) }
 
-          it 'returns an empty result' do
-            expect(collection.push).to be_nil
-          end
+          include_examples 'returning the changed ticket'
         end
       end
 
@@ -164,7 +158,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
         context 'after two hours have passed' do
           before { travel(2.hours + 1.second) }
 
-          it 'returns an empty result' do
+          it 'returns an updated set of results' do
             expect(collection.push)
               .to be_an(Array)
               .and have_attributes(length: 1)

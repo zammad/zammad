@@ -1,10 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/import/helper_examples'
 
 RSpec.describe Import::Helper do
-  it_behaves_like 'Import::Helper'
 
   context 'import mode' do
 

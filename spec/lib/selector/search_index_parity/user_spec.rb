@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Selector::Base, 'user', searchindex: true do
+RSpec.describe 'Selector SQL and search index parity', 'user', searchindex: true do # rubocop:disable RSpec/DescribeClass
   describe 'Basic tests' do
     let(:user_1)   { create(:user, firstname: 'Philipp J.', lastname: 'Fry') }
     let(:user_2)   { create(:user, firstname: 'Turanga', lastname: 'Leela') }

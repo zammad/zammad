@@ -35,11 +35,11 @@ RSpec.describe KnowledgeBase::Category::Permission do
     context 'when child category has permissions' do
       before { child_permission }
 
-      it 'parent category returns parent permission' do
+      it 'parent category returns no permission' do
         expect(described_class.new(category).permissions_effective).to be_blank
       end
 
-      it 'child category returns parent permission' do
+      it 'child category returns child permission' do
         expect(described_class.new(child_category).permissions_effective).to eq [child_permission]
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe KnowledgeBase::Category::Permission do
         expect(described_class.new(category).permissions_effective).to eq [parent_permission]
       end
 
-      it 'child category returns parent permission' do
+      it 'child category returns child and parent permissions' do
         expect(described_class.new(child_category).permissions_effective).to eq [child_permission, parent_permission]
       end
     end

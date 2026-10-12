@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Whatsapp::Webhook::Payload::Error', :aggregate_failures, current_user_id: 1 do
+RSpec.describe Whatsapp::Webhook::Concerns::HandlesError, :aggregate_failures, current_user_id: 1 do
   let(:channel) { create(:whatsapp_channel) }
   let(:wa_id)   { Faker::PhoneNumber.unique.cell_phone_in_e164.delete('+') }
   let(:errors)  { {} }

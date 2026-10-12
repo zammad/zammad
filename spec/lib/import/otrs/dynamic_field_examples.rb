@@ -11,9 +11,3 @@ end
 def load_dynamic_field_json(file)
   json_fixture("import/otrs/dynamic_field/#{file}")
 end
-
-RSpec.shared_examples 'Import::OTRS::DynamicField' do
-  it 'responds to convert_name' do
-    expect(described_class).to respond_to('convert_name')
-  end
-end

@@ -8,10 +8,6 @@ RSpec.describe Auth::User do
   let(:instance) { described_class.new(user.login) }
 
   describe '.can_login?' do
-    it 'responds to can_login?' do
-      expect(instance).to respond_to(:can_login?)
-    end
-
     shared_examples 'check loginable' do
       it 'checks if users can login' do
         expect(instance.can_login?).to be true

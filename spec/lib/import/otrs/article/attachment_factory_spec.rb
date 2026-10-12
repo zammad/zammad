@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/import/import_factory_examples'
 
 RSpec.describe Import::OTRS::Article::AttachmentFactory do
   let(:start_import) do
@@ -35,8 +34,6 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
   def article_attachment_expectations(article_attachments)
     allow(local_article).to receive(:attachments).and_return(article_attachments)
   end
-
-  it_behaves_like 'Import factory'
 
   it 'imports' do
     article_attachment_expectations([])

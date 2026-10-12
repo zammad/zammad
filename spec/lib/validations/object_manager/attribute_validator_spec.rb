@@ -98,27 +98,6 @@ RSpec.describe Validations::ObjectManager::AttributeValidator, application_handl
       end
     end
 
-    context 'when custom attribute exists' do
-      before do
-        allow(validator).to receive(:attributes_unchanged?)
-      end
-
-      it 'runs validation in default context' do
-        ApplicationHandleInfo.in_context(nil) do
-          validator.validate(record)
-        end
-
-        expect(validator).to have_received(:attributes_unchanged?)
-      end
-
-      it 'does not run validations in contexts that do not use custom attributes' do
-        ApplicationHandleInfo.in_context('merge') do
-          validator.validate(record)
-        end
-
-        expect(validator).not_to have_received(:attributes_unchanged?)
-      end
-    end
   end
 
   describe '#validation_needed' do

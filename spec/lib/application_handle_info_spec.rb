@@ -54,7 +54,7 @@ RSpec.describe ApplicationHandleInfo do
 
   describe '.in_context' do
     it 'requires a block' do
-      expect { described_class.use('foo') }
+      expect { described_class.in_context('foo') }
         .to raise_error(ArgumentError)
     end
 

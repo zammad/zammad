@@ -8,15 +8,6 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp do
 
   let(:user) { create(:user) }
 
-  shared_examples 'responding to provided instance method' do |method|
-    it "responds to '.#{method}'" do
-      expect(instance).to respond_to(method)
-    end
-  end
-
-  it_behaves_like 'responding to provided instance method', :verify
-  it_behaves_like 'responding to provided instance method', :initiate_configuration
-
   describe '#verify' do
     let(:secret)      { ROTP::Base32.random_base32 }
     let(:last_otp_at) { 1_256_953_732 } # 2009-10-31T01:48:52Z

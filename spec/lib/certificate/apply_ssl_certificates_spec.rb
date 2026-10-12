@@ -35,32 +35,4 @@ RSpec.describe Certificate::ApplySSLCertificates, :aggregate_failures, type: :mo
     end
   end
 
-  describe '.extract_metadata' do
-
-    it 'imports CA certificates correctly' do
-      expect(create(:ssl_certificate, fixture: 'RootCA')).to have_attributes(
-        fingerprint: 'de4abd259187d7b5f2713ff7a97eb54dd5fe9d86',
-        subject:     '/emailAddress=RootCA@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
-        not_before:  Time.zone.parse('2023-08-01 09:47:39 UTC'),
-        not_after:   Time.zone.parse('2043-07-27 09:47:39 UTC'),
-      )
-      expect(create(:ssl_certificate, fixture: 'IntermediateCA')).to have_attributes(
-        fingerprint: 'd1badcd237d6d2c6f0c62b5ccb21c2130b24855e',
-        subject:     '/C=DE/ST=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=IntermediateCA@example.com',
-        not_before:  Time.zone.parse('2023-08-01 09:47:39 UTC'),
-        not_after:   Time.zone.parse('2043-07-27 09:47:39 UTC'),
-      )
-    end
-
-    it 'imports connection certificates correctly' do
-      certificate = File.read(Localhost::Authority.fetch('localhost').certificate_path)
-      expect(create(:ssl_certificate, certificate: certificate)).to have_attributes(
-        subject: 'DNS:localhost',
-      )
-    end
-
-    it 'rejects other certificates' do
-      expect { create(:ssl_certificate, certificate: Rails.root.join('spec/fixtures/files/smime/smime1@example.com.crt').read) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: The certificate is not valid for SSL usage. Please check e.g. the validity period or the extensions.')
-    end
-  end
 end

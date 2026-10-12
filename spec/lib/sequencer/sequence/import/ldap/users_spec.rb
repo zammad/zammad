@@ -9,7 +9,7 @@ RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
 
     context 'config "unassigned_users": "skip_sync"' do
 
-      it 'returns found ids based on ldap search', last_admin_check: false do
+      it 'returns found ids and deactivates users that lost their group assignment', last_admin_check: false do
 
         user_entry                   = build(:ldap_entry)
         user_entry['objectguid']     = ['user1337']
@@ -42,15 +42,12 @@ RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
           base_dn: 'test'
         )
 
-        # LDAP::Group
-        allow(connection).to receive(:search).and_yield(group_entry)
+        # LDAP::Group and Sequencer::Unit::Import::Ldap::Users::SubSequence
+        allow(connection).to receive(:search).and_yield(group_entry).and_yield(user_entry)
         allow(connection).to receive(:entries?).and_return(true)
 
         # Sequencer::Unit::Import::Ldap::Users::Total
         allow(connection).to receive(:count).and_return(1)
-
-        # Sequencer::Unit::Import::Ldap::Users::SubSequence
-        allow(connection).to receive(:search).and_yield(user_entry)
 
         result = process(
           dry_run:         false,
@@ -74,17 +71,18 @@ RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
 
         group_entry['member'] = ['some.other.dn']
 
-        # LDAP::Group
-        allow(connection).to receive(:search).and_yield(group_entry)
+        # LDAP::Group and Sequencer::Unit::Import::Ldap::Users::SubSequence
+        allow(connection).to receive(:search).and_yield(group_entry).and_yield(user_entry)
         allow(connection).to receive(:entries?).and_return(true)
 
-        result = process(
-          dry_run:         false,
-          resource:        ldap_config,
-          ldap_connection: connection,
-          import_job:      import_job,
-        )
-        expect(result[:found_ids]).to eq([])
+        expect do
+          process(
+            dry_run:         false,
+            resource:        ldap_config,
+            ldap_connection: connection,
+            import_job:      import_job,
+          )
+        end.to change { imported_user.reload.active }.from(true).to(false)
       end
     end
 
@@ -152,16 +150,9 @@ RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
 
         group_entry['member'] = ['some.other.dn']
 
-        # LDAP::Group
-        allow(connection).to receive(:search).and_yield(group_entry)
+        # LDAP::Group and Sequencer::Unit::Import::Ldap::Users::SubSequence
+        allow(connection).to receive(:search).and_yield(group_entry).and_yield(user_entry)
         allow(connection).to receive(:entries?).and_return(true)
-
-        # Sequencer::Unit::Import::Ldap::Users::Total
-        # cached
-        # expect(connection).to receive(:count).and_return(1)
-
-        # Sequencer::Unit::Import::Ldap::Users::SubSequence
-        allow(connection).to receive(:search).and_yield(user_entry)
 
         expect do
           process(

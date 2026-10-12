@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Sessions integration with BackgroundServices::Service::ProcessSessionsJobs' do # rubocop:disable RSpec/DescribeClass
-  # These examples spin up the real BackgroundServices::Service::ProcessSessionsJobs
-  # worker on a separate thread and rely on real wall-clock time passing for it to pick
-  # up and clean up sessions, so `sleep` calls interacting with the worker thread are
-  # kept as real sleeps instead of `travel`.
+  # The real BackgroundServices::Service::ProcessSessionsJobs worker runs on a separate
+  # thread and picks up and cleans up sessions in real wall-clock time, so `travel`
+  # does not affect it and its state has to be polled.
+  def wait_for(timeout: 20)
+    Timeout.timeout(timeout) { sleep 0.1 until yield }
+  end
+
   describe 'processing session client threads' do
     before do
       # The session store persists across examples/processes, so stale
@@ -165,7 +168,7 @@ RSpec.describe 'Sessions integration with BackgroundServices::Service::ProcessSe
           worker = BackgroundServices::Service::ProcessSessionsJobs.new(manager: nil)
           worker.launch
         end
-        sleep 6
+        wait_for { worker && [client_id1, client_id2, client_id3].all? { |client_id| worker.client_threads.key?(client_id) } }
 
         # check client threads
         expect(worker.client_threads.key?(client_id1)).to be(true)
@@ -182,7 +185,7 @@ RSpec.describe 'Sessions integration with BackgroundServices::Service::ProcessSe
         expect(Sessions.session_exists?(client_id2)).to be(false)
         expect(Sessions.session_exists?(client_id3)).to be(false)
 
-        sleep 6
+        wait_for { [client_id1, client_id2, client_id3].none? { |client_id| worker.client_threads.key?(client_id) } }
 
         # check client threads
         expect(worker.client_threads.key?(client_id1)).to be(false)
@@ -258,20 +261,12 @@ RSpec.describe 'Sessions integration with BackgroundServices::Service::ProcessSe
         Sessions.destroy(client_id2)
         Sessions.destroy(client_id3)
 
-        worker = nil
-
-        # start jobs
-        jobs = Thread.new do
-          worker = BackgroundServices::Service::ProcessSessionsJobs.new(manager: nil)
-          worker.launch
-        end
-        sleep 5
         Sessions.create(client_id1_0, agent1.attributes, { type: 'websocket' })
-        sleep 6.5
+        travel 6.5.seconds
         Sessions.create(client_id1_1, agent1.attributes, { type: 'websocket' })
-        sleep 3.2
+        travel 3.2.seconds
         Sessions.create(client_id2, agent2.attributes, { type: 'ajax' })
-        sleep 3.2
+        travel 3.2.seconds
         Sessions.create(client_id3, agent3.attributes, { type: 'websocket' })
 
         expect(Sessions.session_exists?(client_id1_0)).to be(true)
@@ -289,10 +284,6 @@ RSpec.describe 'Sessions integration with BackgroundServices::Service::ProcessSe
         expect(Sessions.session_exists?(client_id1_1)).to be(false)
         expect(Sessions.session_exists?(client_id2)).to be(false)
         expect(Sessions.session_exists?(client_id3)).to be(false)
-
-        # exit jobs
-        jobs.exit
-        jobs.join
       end
     end
   end

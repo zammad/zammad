@@ -8,15 +8,6 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod::SecurityKeys do
 
   let(:user) { create(:user) }
 
-  shared_examples 'responding to provided instance method' do |method|
-    it "responds to '.#{method}'" do
-      expect(instance).to respond_to(method)
-    end
-  end
-
-  it_behaves_like 'responding to provided instance method', :verify
-  it_behaves_like 'responding to provided instance method', :initiate_configuration
-
   describe '#initiate_configuration' do
     it 'does not require user verification (#5156)' do
       expect(instance.initiate_configuration.authenticator_selection).to include(user_verification: 'discouraged')

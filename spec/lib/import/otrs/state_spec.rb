@@ -85,9 +85,11 @@ RSpec.describe Import::OTRS::State do
     let(:object_structure) { load_state_json('removed') }
 
     it 'skips', :aggregate_failures do
+      allow(import_object).to receive(:new)
+
       start_import_test
 
-      expect(import_object).not_to receive(:new)
+      expect(import_object).not_to have_received(:new)
       expect(Ticket::State.find_by(name: 'removed')).to be_nil
     end
   end

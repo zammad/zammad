@@ -1,16 +1,37 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'elasticsearch'
 
 RSpec.describe AI::VectorDB, :aggregate_failures do
   subject(:instance) { described_class.new }
 
   describe '.ping!' do
-    context 'when version is not suitable' do
-      before do
-        allow(instance).to receive(:verify_es_version!)
-          .and_raise(AI::VectorDB::Error, 'Incompatible Elasticsearch version')
+    let(:es_version)   { SearchIndexBackend::SUPPORTED_ES_VERSION_MINIMUM }
+    let(:index_exists) { true }
+
+    before do
+      indices = instance_double(Elasticsearch::API::Indices::Actions, exists?: index_exists)
+      client  = instance_double(Elasticsearch::Client, indices:, info: { 'version' => { 'number' => es_version } })
+      allow(instance).to receive_messages(client:)
+    end
+
+    context 'when version is suitable and ai_embeddings index exists' do
+      it 'raises no error' do
+        expect(instance.ping!).to be_nil
       end
+    end
+
+    context 'when version is below the minimum supported version' do
+      let(:es_version) { '8.14.3' }
+
+      it 'raises AI::VectorDB::Error' do
+        expect { instance.ping! }.to raise_error(AI::VectorDB::Error, 'Incompatible Elasticsearch version')
+      end
+    end
+
+    context 'when version is above the maximum supported version' do
+      let(:es_version) { '10.0.1' }
 
       it 'raises AI::VectorDB::Error' do
         expect { instance.ping! }.to raise_error(AI::VectorDB::Error, 'Incompatible Elasticsearch version')
@@ -18,24 +39,14 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
     end
 
     context 'when ai_embeddings index does not exist' do
-      before do
-        allow(instance).to receive(:verify_es_version!)
-        allow(instance).to receive(:index_exists)
-          .and_raise(AI::VectorDB::MigrationError, 'Elasticsearch index does not exist')
-      end
+      let(:index_exists) { false }
 
       it 'raises AI::VectorDB::MigrationError' do
         expect { instance.ping! }.to raise_error(AI::VectorDB::MigrationError, 'Elasticsearch index does not exist')
       end
-    end
 
-    context 'when version is suitable and ai_embeddings index exists' do
-      before do
-        allow(instance).to receive_messages(verify_es_version!: nil, index_exists: nil)
-      end
-
-      it 'raises no error' do
-        expect(instance.ping!).to be_nil
+      it 'raises no error when only the version is checked' do
+        expect(instance.ping!(only_version: true)).to be_nil
       end
     end
   end

@@ -1,9 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/import/factory_examples'
+require 'lib/import/base_factory_examples'
 
 RSpec.describe Import::Factory do
-  it_behaves_like 'Import::Factory'
   it_behaves_like 'Import::BaseFactory extender'
 end

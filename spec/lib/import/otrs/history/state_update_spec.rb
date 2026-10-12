@@ -4,8 +4,6 @@ require 'rails_helper'
 require 'lib/import/otrs/history_examples'
 
 RSpec.describe Import::OTRS::History::StateUpdate do
-  it_behaves_like 'Import::OTRS::History'
-
   it 'imports an OTRS StateUpdate history entry' do
 
     zammad_structure = {

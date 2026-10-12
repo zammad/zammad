@@ -14,10 +14,6 @@ RSpec.describe Ldap::Group do
 
   describe '.uid_attribute' do
 
-    it 'responds to .uid_attribute' do
-      expect(described_class).to respond_to(:uid_attribute)
-    end
-
     it 'returns uid attribute' do
       expect(described_class.uid_attribute).to be_a(String)
     end
@@ -77,10 +73,6 @@ RSpec.describe Ldap::Group do
 
     describe '#list' do
 
-      it 'responds to #list' do
-        expect(instance).to respond_to(:list)
-      end
-
       it 'returns a Hash of groups' do
         ldap_entry = build(:ldap_entry)
         allow(mocked_ldap).to receive(:search).and_return(ldap_entry)
@@ -96,10 +88,6 @@ RSpec.describe Ldap::Group do
         }
       end
 
-      it 'responds to #filter' do
-        expect(instance).to respond_to(:filter)
-      end
-
       it 'tries filters and returns first one with entries' do
         allow(mocked_ldap).to receive(:entries?).and_return(true)
         expect(instance.filter).to be_a(String)
@@ -112,10 +100,6 @@ RSpec.describe Ldap::Group do
     end
 
     describe '#uid_attribute' do
-
-      it 'responds to #uid_attribute' do
-        expect(instance).to respond_to(:uid_attribute)
-      end
 
       it 'returns the uid attribute' do
         expect(instance.uid_attribute).to be_a(String)

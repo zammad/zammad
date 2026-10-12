@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Selector::Base, 'organization', searchindex: true do
+RSpec.describe 'Selector SQL and search index parity', 'organization', searchindex: true do # rubocop:disable RSpec/DescribeClass
   describe 'Basic tests' do
     let(:organization_1) { create(:organization) }
     let(:organization_2) { create(:organization) }

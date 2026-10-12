@@ -7,8 +7,6 @@ RSpec.describe Import::OTRS::DynamicField do
   let(:object_structure)  { load_dynamic_field_json('text/default') }
   let(:start_import_test) { described_class.new(object_structure) }
 
-  it_behaves_like 'Import::OTRS::DynamicField'
-
   it 'requires an implementation of init_callback' do
     allow(ObjectManager::Attribute).to receive(:get).and_return(false)
     expect do

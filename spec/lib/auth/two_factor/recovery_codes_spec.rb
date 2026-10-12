@@ -7,21 +7,6 @@ RSpec.describe Auth::TwoFactor::RecoveryCodes, current_user_id: 1 do
 
   let(:user) { create(:user) }
 
-  shared_examples 'responding to provided instance method' do |method|
-    it "responds to '.#{method}'" do
-      expect(instance).to respond_to(method)
-    end
-  end
-
-  it_behaves_like 'responding to provided instance method', :verify
-  it_behaves_like 'responding to provided instance method', :generate
-  it_behaves_like 'responding to provided instance method', :exists?
-  it_behaves_like 'responding to provided instance method', :enabled?
-  it_behaves_like 'responding to provided instance method', :method_name
-  it_behaves_like 'responding to provided instance method', :related_setting_name
-  it_behaves_like 'responding to provided instance method', :create_user_config
-  it_behaves_like 'responding to provided instance method', :destroy_user_config
-
   describe '#verify' do
     let(:current_codes) { instance.generate }
     let(:current_hashed_codes) { user.reload.two_factor_preferences.recovery_codes.configuration[:codes] }

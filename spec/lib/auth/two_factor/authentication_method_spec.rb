@@ -8,12 +8,6 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod, current_user_id: 1 do
 
   let(:user) { create(:user) }
 
-  shared_examples 'responding to provided instance method' do |method|
-    it "responds to '.#{method}'" do
-      expect(instance).to respond_to(method)
-    end
-  end
-
   shared_examples "raising 'NotImplemented' error for base methods" do |method, args = []|
     it "raises 'NotImplemented' error for '.#{method}'" do
       expect { instance.method(method).call(*args) }.to raise_error(NotImplementedError)
@@ -29,15 +23,6 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod, current_user_id: 1 do
       expect(instance.method(method).call(*args)).to be(value)
     end
   end
-
-  it_behaves_like 'responding to provided instance method', :verify
-  it_behaves_like 'responding to provided instance method', :available?
-  it_behaves_like 'responding to provided instance method', :enabled?
-  it_behaves_like 'responding to provided instance method', :method_name
-  it_behaves_like 'responding to provided instance method', :related_setting_name
-  it_behaves_like 'responding to provided instance method', :initiate_configuration
-  it_behaves_like 'responding to provided instance method', :create_user_config
-  it_behaves_like 'responding to provided instance method', :destroy_user_config
 
   it_behaves_like "raising 'NotImplemented' error for base methods", :verify, [ nil, nil ]
   it_behaves_like "raising 'NotImplemented' error for base methods", :initiate_configuration

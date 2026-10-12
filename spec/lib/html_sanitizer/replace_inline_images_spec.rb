@@ -48,5 +48,153 @@ RSpec.describe HtmlSanitizer::ReplaceInlineImages do
         it { expect(sanitized.last).not_to include(include(filename: 'avatar')) }
       end
     end
+
+    context 'with inline images in different positions', :aggregate_failures do
+      let(:body)               { sanitized.first }
+      let(:inline_attachments) { sanitized.last }
+
+      context 'when called for image at absolute path' do
+        let(:input) { '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">' }
+
+        it 'keeps src attr as-is' do
+          expect(body).to match(%r{<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">})
+        end
+
+        it 'extracts no attachments' do
+          expect(inline_attachments).to be_empty
+        end
+      end
+
+      context 'when called for base64-encoded inline images' do
+        context 'with src attr last' do
+          let(:input) { '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">' }
+
+          it 'converts embedded image to cid' do
+            expect(body).to match(%r{<img style="width: 181px; height: 125px" src="cid:.+?">})
+          end
+
+          it 'extracts one attachment' do
+            expect(inline_attachments).to be_one
+          end
+
+          it 'sets filename to image1.jpeg' do
+            expect(inline_attachments.first[:filename]).to eq('image1.jpeg')
+          end
+
+          it 'sets Content-Type to image/jpeg' do
+            expect(inline_attachments.first[:preferences]['Content-Type']).to eq('image/jpeg')
+          end
+
+          it 'sets Content-ID based on Zammad fqdn' do
+            expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
+          end
+
+          it 'sets Content-Disposition to inline' do
+            expect(inline_attachments.first[:preferences]['Content-Disposition']).to eq('inline')
+          end
+        end
+
+        context 'with src attr first' do
+          let(:input) { '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">' }
+
+          it 'converts embedded image to cid' do
+            expect(body).to match(%r{<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">})
+          end
+
+          it 'extracts one attachment' do
+            expect(inline_attachments).to be_one
+          end
+
+          it 'sets filename to image1.jpeg' do
+            expect(inline_attachments.first[:filename]).to eq('image1.jpeg')
+          end
+
+          it 'sets Content-Type to image/jpeg' do
+            expect(inline_attachments.first[:preferences]['Content-Type']).to eq('image/jpeg')
+          end
+
+          it 'sets Content-ID based on Zammad fqdn' do
+            expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
+          end
+
+          it 'sets Content-Disposition to inline' do
+            expect(inline_attachments.first[:preferences]['Content-Disposition']).to eq('inline')
+          end
+        end
+
+        context 'when followed by an incomplete/invalid HTML tag' do
+          let(:input) { '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc"><invalid what ever' }
+
+          it 'converts embedded image to cid' do
+            expect(body).to match(%r{<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">})
+          end
+
+          it 'extracts one attachment' do
+            expect(inline_attachments).to be_one
+          end
+
+          it 'sets filename to image1.jpeg' do
+            expect(inline_attachments.first[:filename]).to eq('image1.jpeg')
+          end
+
+          it 'sets Content-Type to image/jpeg' do
+            expect(inline_attachments.first[:preferences]['Content-Type']).to eq('image/jpeg')
+          end
+
+          it 'sets Content-ID based on Zammad fqdn' do
+            expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
+          end
+
+          it 'sets Content-Disposition to inline' do
+            expect(inline_attachments.first[:preferences]['Content-Disposition']).to eq('inline')
+          end
+        end
+
+        context 'when nested in a <div>, mixed with other HTML elements' do
+          let(:input) { '<div><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."><p>123</p><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."></div>' }
+
+          it 'converts embedded image to cid' do
+            expect(body).to match(%r{<div><img style="width: 181px; height: 125px" src="cid:.+?"><p>123</p><img style="width: 181px; height: 125px" src="cid:.+?"></div>})
+          end
+
+          it 'extracts two attachments' do
+            expect(inline_attachments.length).to be(2)
+          end
+
+          it 'sets filenames sequentially (as imageN.jpeg)' do
+            expect(inline_attachments.first[:filename]).to eq('image1.jpeg')
+            expect(inline_attachments.second[:filename]).to eq('image2.jpeg')
+          end
+
+          it 'sets Content-Types to image/jpeg' do
+            expect(inline_attachments.first[:preferences]['Content-Type']).to eq('image/jpeg')
+            expect(inline_attachments.second[:preferences]['Content-Type']).to eq('image/jpeg')
+          end
+
+          it 'sets Content-IDs based on Zammad fqdn' do
+            expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
+            expect(inline_attachments.second[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
+          end
+
+          it 'sets Content-Dispositions to inline' do
+            expect(inline_attachments.first[:preferences]['Content-Disposition']).to eq('inline')
+            expect(inline_attachments.second[:preferences]['Content-Disposition']).to eq('inline')
+          end
+        end
+      end
+
+      context 'when processing pre elements' do
+        let(:input) do
+          '<pre><code>apt-get update
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Hit:2 http://de.archive.ubuntu.com/ubuntu focal InRelease
+Building dependency tree...</code></pre>'
+        end
+
+        it 'does not convert links' do
+          expect(body).to eq(input)
+        end
+      end
+    end
   end
 end

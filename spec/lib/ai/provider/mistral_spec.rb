@@ -12,7 +12,7 @@ RSpec.describe AI::Provider::Mistral, integration: true, required_envs: %w[MISTR
 
   before do
     # Workaround, because of current rate limit from mistral side.
-    sleep 5
+    sleep 5 if VCR.current_cassette.nil? || VCR.current_cassette.recording?
 
     setup_ai_provider('mistral', token: ENV['MISTRAL_API_KEY'])
   end

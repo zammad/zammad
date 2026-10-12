@@ -67,7 +67,7 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::UserField, sequencer: :sequ
     end
 
     it 'does not try to add a existing field' do
-      expect { process(process_payload) }.not_to raise_error
+      expect { process(process_payload) }.to not_change(User, :column_names).and not_change(ObjectManager::Attribute, :count)
     end
   end
 

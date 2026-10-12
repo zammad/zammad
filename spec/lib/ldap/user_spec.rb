@@ -12,10 +12,6 @@ RSpec.describe Ldap::User do
 
   describe '.uid_attribute' do
 
-    it 'responds to .uid_attribute' do
-      expect(described_class).to respond_to(:uid_attribute)
-    end
-
     it 'returns uid attribute string from given attribute structure' do
       attributes = {
         objectguid: 'TEST',
@@ -116,10 +112,6 @@ RSpec.describe Ldap::User do
         end
       end
 
-      it 'responds to #valid?' do
-        expect(instance).to respond_to(:valid?)
-      end
-
       it_behaves_like 'validates credentials'
 
       context 'with a user_filter inside of the config' do
@@ -136,10 +128,6 @@ RSpec.describe Ldap::User do
     end
 
     describe '#attributes' do
-
-      it 'responds to #attributes' do
-        expect(instance).to respond_to(:attributes)
-      end
 
       it 'lists user attributes with example values' do
         ldap_entry = build(:ldap_entry)
@@ -172,10 +160,6 @@ RSpec.describe Ldap::User do
         }
       end
 
-      it 'responds to #filter' do
-        expect(instance).to respond_to(:filter)
-      end
-
       it 'tries filters and returns first one with entries' do
         allow(mocked_ldap).to receive(:entries?).and_return(true)
         expect(instance.filter).to be_a(String)
@@ -193,10 +177,6 @@ RSpec.describe Ldap::User do
         {
           filter: '(objectClass=user)',
         }
-      end
-
-      it 'responds to #uid_attribute' do
-        expect(instance).to respond_to(:uid_attribute)
       end
 
       it 'tries to find uid attribute in example attributes' do

@@ -115,12 +115,15 @@ RSpec.describe AppVersion, :aggregate_failures do
 
     context 'with auto_shutdown' do
       it 'starts a thread and calls .restart_required?' do
+        checked_versions = Queue.new
+        allow(described_class).to receive(:restart_required?) do |version|
+          checked_versions << version
+          false
+        end
+
         thread = described_class.start_maintenance_thread(process_name: 'rspec')
         expect(thread).to be_alive
-        sleep 1 # wait for thread to start working
-        expect(described_class)
-          .to have_received(:restart_required?)
-          .with(Setting.get('app_version'))
+        expect(checked_versions.pop(timeout: 5)).to eq(Setting.get('app_version'))
       ensure
         thread.kill
         thread.join

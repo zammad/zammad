@@ -9,10 +9,6 @@ RSpec.describe Ldap::Guid do
 
   describe '.valid?' do
 
-    it 'responds to .valid?' do
-      expect(described_class).to respond_to(:valid?)
-    end
-
     it 'detects valid uid string' do
       expect(described_class.valid?(string)).to be true
     end
@@ -24,10 +20,6 @@ RSpec.describe Ldap::Guid do
   end
 
   describe '.hex' do
-
-    it 'responds to .hex' do
-      expect(described_class).to respond_to(:hex)
-    end
 
     it 'tunnels to instance method' do
       instance = double
@@ -41,10 +33,6 @@ RSpec.describe Ldap::Guid do
   end
 
   describe '.string' do
-
-    it 'responds to .string' do
-      expect(described_class).to respond_to(:string)
-    end
 
     it 'tunnels to instance method' do
 
@@ -61,10 +49,6 @@ RSpec.describe Ldap::Guid do
 
     let(:instance) { described_class.new(hex) }
 
-    it 'responds to #string' do
-      expect(instance).to respond_to(:string)
-    end
-
     it 'converts to string' do
       expect(instance.string).to eq(string)
     end
@@ -73,10 +57,6 @@ RSpec.describe Ldap::Guid do
   describe '#hex' do
 
     let(:instance) { described_class.new(string) }
-
-    it 'responds to #hex' do
-      expect(instance).to respond_to(:hex)
-    end
 
     it 'converts to hex' do
       expect(instance.hex).to eq(hex)

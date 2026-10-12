@@ -213,10 +213,6 @@ RSpec.describe Ldap do
 
     describe '#preferences' do
 
-      it 'responds to #preferences' do
-        expect(instance).to respond_to(:preferences)
-      end
-
       it 'returns preferences' do
         attributes = {
           namingcontexts: ['ou=dep1,ou=org', 'ou=dep2,ou=org']
@@ -231,10 +227,6 @@ RSpec.describe Ldap do
 
       let(:base)   { 'DC=domain,DC=tld' }
       let(:filter) { '(objectClass=user)' }
-
-      it 'responds to #search' do
-        expect(instance).to respond_to(:search)
-      end
 
       it 'performs search for a filter, base and scope and yields of returned entries' do
 
@@ -306,10 +298,6 @@ RSpec.describe Ldap do
     describe '#entries?' do
 
       let(:filter) { '(objectClass=user)' }
-
-      it 'responds to #entries?' do
-        expect(instance).to respond_to(:entries?)
-      end
 
       it 'returns true if entries are present' do
         params = {

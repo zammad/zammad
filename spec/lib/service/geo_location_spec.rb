@@ -3,41 +3,32 @@
 require 'rails_helper'
 
 RSpec.describe Service::GeoLocation do
+  let(:address)   { 'Marienstrasse 13, 10117 Berlin' }
+  let(:latitude)  { 52.5220514 }
+  let(:longitude) { 13.3832091 }
+
   describe '#geocode' do
     subject(:geocode) { described_class.geocode(address) }
 
-    context 'when checking simple results' do
-      let(:address)   { 'Marienstrasse 13, 10117 Berlin' }
-      let(:latitude)  { 52.5220514 }
-      let(:longitude) { 13.3832091 }
-      let(:result)    { [latitude, longitude] }
+    before do
+      allow(Service::GeoLocation::Osm).to receive(:geocode).and_return([latitude, longitude])
+    end
 
-      before do
-        allow(Service::GeoLocation::Osm).to receive(:geocode).and_return(result)
+    context 'with the configured backend' do
+      before { Setting.set('geo_location_backend', 'Service::GeoLocation::Osm') }
+
+      it 'returns the result of the backend', :aggregate_failures do
+        expect(geocode).to eq([latitude, longitude])
+        expect(Service::GeoLocation::Osm).to have_received(:geocode).with(address)
       end
+    end
 
-      it { is_expected.to eq(result) }
+    context 'without a configured backend' do
+      before { Setting.set('geo_location_backend', '') }
 
-      context 'when address field in user preferences is filled' do
-        let(:user) { create(:user, address: address) }
-
-        it 'stores correct values for latitude + longitude' do
-          expect(user.preferences).to include({ 'lat' => latitude, 'lng' => longitude })
-        end
-      end
-
-      context 'when street, city and zip fields in user preferences are filled' do
-        let(:address)       { 'Marienstrasse 13, 10117, Berlin' }
-        let(:address_parts) { address.split(%r{\.?\s+}, 4) }
-        let(:street)        { "#{address_parts.first} #{address_parts[1].chop}" }
-        let(:zip)           { address_parts[2].chop }
-        let(:city)          { address_parts.last }
-
-        let(:user) { create(:user, street: street, zip: zip, city: city) }
-
-        it 'stores correct values for latitude + longitude' do
-          expect(user.preferences).to include({ 'lat' => latitude, 'lng' => longitude })
-        end
+      it 'does not perform a lookup', :aggregate_failures do
+        expect(geocode).to be_nil
+        expect(Service::GeoLocation::Osm).not_to have_received(:geocode)
       end
     end
   end
@@ -45,16 +36,28 @@ RSpec.describe Service::GeoLocation do
   describe '#reverse_geocode' do
     subject(:reverse_geocode) { described_class.reverse_geocode(latitude, longitude) }
 
-    context 'when checking simple results' do
-      let(:latitude)        { 52.5220514 }
-      let(:longitude)       { 13.3832091 }
-      let(:result)          { '13, Marienstraße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland' }
+    let(:result) { '13, Marienstraße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland' }
 
-      before do
-        allow(Service::GeoLocation::Osm).to receive(:reverse_geocode).and_return(result)
+    before do
+      allow(Service::GeoLocation::Osm).to receive(:reverse_geocode).and_return(result)
+    end
+
+    context 'with the configured backend' do
+      before { Setting.set('geo_location_backend', 'Service::GeoLocation::Osm') }
+
+      it 'returns the result of the backend', :aggregate_failures do
+        expect(reverse_geocode).to eq(result)
+        expect(Service::GeoLocation::Osm).to have_received(:reverse_geocode).with(latitude, longitude)
       end
+    end
 
-      it { is_expected.to eq(result) }
+    context 'without a configured backend' do
+      before { Setting.set('geo_location_backend', '') }
+
+      it 'does not perform a lookup', :aggregate_failures do
+        expect(reverse_geocode).to be_nil
+        expect(Service::GeoLocation::Osm).not_to have_received(:reverse_geocode)
+      end
     end
   end
 end

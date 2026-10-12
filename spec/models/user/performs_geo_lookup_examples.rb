@@ -15,4 +15,12 @@ RSpec.shared_examples 'UserPerformsGeoLookup' do
 
     expect(user.preferences).to include(lat: 10.0, lng: 20.0)
   end
+
+  it 'performs geo lookup for an address-only location' do
+    allow(Service::GeoLocation).to receive(:geocode).with('Marienstraße 18, 10117 Berlin').and_return([10.0, 20.0])
+
+    user = create(described_class.name.underscore, address: 'Marienstraße 18, 10117 Berlin')
+
+    expect(user.preferences).to include(lat: 10.0, lng: 20.0)
+  end
 end

@@ -42,22 +42,24 @@ RSpec.describe FormSpamProtection do
   end
 
   describe '.verify_request' do
-    before { Setting.set('form_ticket_create_honeypot', true) }
+    it 'returns the request check result of the verifier', :aggregate_failures do
+      verifier   = instance_double(FormSpamProtection::Verifier, request_valid?: false)
+      submission = submission({})
+      allow(FormSpamProtection::Verifier).to receive(:new).with(submission).and_return(verifier)
 
-    it 'fails when a stateless request check rejects the submission (honeypot filled)' do
-      expect(described_class.verify_request(submission({ FormSpamProtection::Honeypot::FIELD_NAME => 'spam' }))).to be(false)
-    end
-
-    it 'passes a clean submission' do
-      expect(described_class.verify_request(submission({}))).to be(true)
+      expect(described_class.verify_request(submission)).to be(false)
+      expect(verifier).to have_received(:request_valid?)
     end
   end
 
   describe '.verify_challenge' do
-    it 'passes when no captcha provider is configured' do
-      Setting.set('form_ticket_create_captcha_provider', '')
+    it 'returns the challenge check result of the verifier', :aggregate_failures do
+      verifier   = instance_double(FormSpamProtection::Verifier, challenge_valid?: false)
+      submission = submission({})
+      allow(FormSpamProtection::Verifier).to receive(:new).with(submission).and_return(verifier)
 
-      expect(described_class.verify_challenge(submission({}))).to be(true)
+      expect(described_class.verify_challenge(submission)).to be(false)
+      expect(verifier).to have_received(:challenge_valid?)
     end
   end
 end

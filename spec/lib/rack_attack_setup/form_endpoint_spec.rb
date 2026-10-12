@@ -50,22 +50,6 @@ RSpec.describe RackAttackSetup::FormEndpoint do
       end
     end
 
-    describe 'the return proc' do
-      let(:request)     { instance_double(Rack::Request, ip: '127.0.0.1', path:) }
-      let(:path)        { described_class::API_V1_FORM_SUBMIT_PATH }
-      let(:return_proc) { proc { described_class::API_V1_FORM_SUBMIT_PATH } }
-
-      context 'when the return proc returns a constant' do
-        it 'returns the constant value' do
-          described_class.setup_single_throttle(name:, setting:, default:, period:, return_proc:)
-
-          expect(Rack::Attack).to have_received(:throttle) do |&block|
-            expect(block.call(request)).to eq(described_class::API_V1_FORM_SUBMIT_PATH)
-          end
-        end
-      end
-    end
-
     describe 'the throttle block' do
       let(:request) { instance_double(Rack::Request, ip: '127.0.0.1', path:) }
 

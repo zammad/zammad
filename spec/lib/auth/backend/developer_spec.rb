@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/auth/backend/backend_examples'
 
 RSpec.describe Auth::Backend::Developer do
 
@@ -11,8 +10,6 @@ RSpec.describe Auth::Backend::Developer do
   let(:instance) { described_class.new({ adapter: described_class.name }, auth) }
 
   describe '#valid?' do
-    it_behaves_like 'Auth backend'
-
     context 'when Setting developer_mode is true' do
 
       before do

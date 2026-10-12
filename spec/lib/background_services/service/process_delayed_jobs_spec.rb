@@ -1,22 +1,13 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-
-class SampleDelayedJob < ApplicationJob
-  def perform
-    Rails.logger.debug 'performing SampleTestJob'
-  end
-end
-
-class SampleDelayedAIJob < AIJob
-  def perform
-    Rails.logger.debug 'performing SampleTestAIJob'
-  end
-end
+require 'lib/background_services/service/process_delayed_jobs_examples'
 
 RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, :aggregate_failures, ensure_threads_exited: true do
   before do
     stub_const "#{described_class}::SLEEP_IF_EMPTY", 1
+    stub_const 'SampleDelayedJob', Class.new(ApplicationJob) { def perform; end }
+    stub_const 'SampleDelayedAIJob', Class.new(AIJob) { def perform; end }
   end
 
   let(:manager)  { BackgroundServices.new(BackgroundServices::ServiceConfig.configuration_from_env({})) }
@@ -91,31 +82,5 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, :aggregate_failu
     end
   end
 
-  describe '.pre_run' do
-    it 'cleans up DelayedJobs' do
-      allow(described_class::CleanupAction).to receive(:cleanup_delayed_jobs)
-
-      described_class.pre_run
-
-      expect(described_class::CleanupAction)
-        .to have_received(:cleanup_delayed_jobs)
-        .with(anything, queues: contain_exactly(:default))
-    end
-
-    it 'cleans up ImportJobs' do
-      allow(ImportJob).to receive(:cleanup_import_jobs)
-      described_class.pre_run
-      expect(ImportJob).to have_received(:cleanup_import_jobs)
-    end
-
-    it 'runs in scheduler context' do
-      handle_info = nil
-      allow(described_class)
-        .to receive(:pre_launch).and_invoke(-> { handle_info = ApplicationHandleInfo.current })
-
-      described_class.pre_run
-
-      expect(handle_info).to eq 'scheduler'
-    end
-  end
+  it_behaves_like 'BackgroundServices::Service delayed jobs pre_run', queue: :default, cleans_up_import_jobs: true
 end

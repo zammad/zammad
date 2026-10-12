@@ -61,10 +61,6 @@ RSpec.describe Import::OTRS::Customer do
       ]
     end
 
-    it 'responds to by_customer_id' do
-      expect(described_class).to respond_to('by_customer_id')
-    end
-
     it 'finds Organizations by OTRS CustomerID' do
       allow(Import::OTRS::Requester).to receive(:load).and_return(otrs_dummy_response)
       allow(import_object).to receive(:find_by).with(name: customer_id).and_return(existing_object)

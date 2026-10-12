@@ -10,8 +10,6 @@ require 'lib/import/otrs/dynamic_field_examples'
 require 'import/otrs/dynamic_field/date'
 
 RSpec.describe Import::OTRS::DynamicField::Date do
-  it_behaves_like 'Import::OTRS::DynamicField'
-
   it 'imports an OTRS Date DynamicField' do
 
     zammad_structure = {

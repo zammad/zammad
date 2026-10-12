@@ -2,28 +2,22 @@
 
 require 'rails_helper'
 
-class Sample1 < MonitoringHelper::HealthChecker::Backend
-  def check_health
-    response = MonitoringHelper::HealthChecker::Response.new
-    response.issues << 'issue1'
-    response
-  end
-end
-
-class Sample2 < MonitoringHelper::HealthChecker::Backend
-  def check_health
-    response = MonitoringHelper::HealthChecker::Response.new
-    response.issues << 'issue2'
-    response
-  end
-end
-
 RSpec.describe MonitoringHelper::HealthChecker do
   let(:instance) { described_class.new }
 
+  def sample_backend(issue)
+    Class.new(MonitoringHelper::HealthChecker::Backend) do
+      define_method(:check_health) do
+        response = MonitoringHelper::HealthChecker::Response.new
+        response.issues << issue
+        response
+      end
+    end
+  end
+
   describe '#check_health' do
     it 'returns merged responses' do
-      allow(instance).to receive(:backends).and_return([Sample1, Sample2])
+      allow(instance).to receive(:backends).and_return([sample_backend('issue1'), sample_backend('issue2')])
 
       expect(instance.check_health.issues).to match_array(%w[issue1 issue2])
     end

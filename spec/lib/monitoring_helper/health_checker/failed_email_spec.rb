@@ -6,7 +6,7 @@ RSpec.describe MonitoringHelper::HealthChecker::FailedEmail do
   let(:instance) { described_class.new }
 
   describe '#check_health' do
-    it 'does nothing if directory missing' do
+    it 'does nothing if no failed emails exist' do
       expect(instance.check_health.issues).to be_blank
     end
 

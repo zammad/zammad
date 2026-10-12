@@ -144,7 +144,7 @@ RSpec.describe BackgroundServices do
 
       it 'runs Service#run' do
         instance.send(:start_as_forks, ProcessService, 1)
-        sleep 0.1 until File.exist? ProcessService.path
+        Timeout.timeout(5) { sleep 0.1 until File.exist? ProcessService.path }
 
         expect(File.read(ProcessService.path)).to eq('run')
       end
@@ -173,8 +173,8 @@ RSpec.describe BackgroundServices do
 
       it 'runs Service#run' do
         instance.send(:start_as_thread, SampleService)
-        sleep 0.1 until log.any?
-        expect(log).to be_present
+        Timeout.timeout(5) { sleep 0.1 until log.any? }
+        expect(log).to include(:run_called)
       end
     end
 

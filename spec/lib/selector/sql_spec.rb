@@ -1473,10 +1473,10 @@ RSpec.describe Selector::Sql do
     end
 
     describe 'ticket create' do
-      it 'matches created tickets depending on condition and current user', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      before do
         Ticket.destroy_all
 
-        ticket1 = Ticket.create!(
+        Ticket.create!(
           title:         'some title1',
           group:         group,
           customer_id:   customer1.id,
@@ -1488,12 +1488,9 @@ RSpec.describe Selector::Sql do
           updated_by_id: 1,
           created_by_id: 1,
         )
-        expect(ticket1).to be_a(Ticket)
-        expect(ticket1.customer.id).to eq(customer1.id)
-        expect(ticket1.organization.id).to eq(organization1.id)
         travel 1.second
 
-        ticket2 = Ticket.create!(
+        Ticket.create!(
           title:         'some title2',
           group:         group,
           customer_id:   customer2.id,
@@ -1504,9 +1501,6 @@ RSpec.describe Selector::Sql do
           updated_by_id: 1,
           created_by_id: 1,
         )
-        expect(ticket2).to be_a(Ticket)
-        expect(ticket2.customer.id).to eq(customer2.id)
-        expect(ticket2.organization_id).to be_nil
         travel 1.second
 
         ticket3 = Ticket.create!(
@@ -1521,12 +1515,10 @@ RSpec.describe Selector::Sql do
           created_by_id: 1,
         )
         ticket3.update_columns(escalation_at: '2015-02-06 10:00:00')
-        expect(ticket3).to be_a(Ticket)
-        expect(ticket3.customer.id).to eq(customer2.id)
-        expect(ticket3.organization_id).to be_nil
         travel 1.second
+      end
 
-        # search not matching
+      it 'does not match tickets with a non-existing state', :aggregate_failures do
         condition = {
           'ticket.state_id' => {
             operator: 'is',
@@ -1542,10 +1534,11 @@ RSpec.describe Selector::Sql do
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
         expect(ticket_count).to eq(0)
 
-        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(0)
+      end
 
-        # search matching with empty value / missing key
+      it 'matches all tickets for empty or missing values', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         condition = {
           'ticket.group_id' => {
             operator: 'is',
@@ -1623,8 +1616,9 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to be_nil
+      end
 
-        # search matching
+      it 'matches tickets by state', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         condition = {
           'ticket.group_id' => {
             operator: 'is',
@@ -1696,8 +1690,9 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(1)
+      end
 
-        # search - created_at
+      it 'matches tickets by created_at', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         condition = {
           'ticket.group_id'   => {
             operator: 'is',
@@ -1854,8 +1849,9 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(2)
+      end
 
-        # search - updated_at
+      it 'matches tickets by updated_at', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         condition = {
           'ticket.group_id'   => {
             operator: 'is',
@@ -2012,11 +2008,13 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(2)
+      end
 
-        # invalid conditions
+      it 'raises an error for invalid conditions' do
         expect { Ticket.selectors(nil, limit: 10) }.to raise_error(RuntimeError)
+      end
 
-        # search with customers
+      it 'matches tickets by customer', :aggregate_failures do
         condition = {
           'ticket.group_id' => {
             operator: 'is',
@@ -2060,8 +2058,9 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(2)
+      end
 
-        # search with organizations
+      it 'matches tickets by organization', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         condition = {
           'ticket.group_id'   => {
             operator: 'is',
@@ -2136,8 +2135,9 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(0)
+      end
 
-        # with owner/customer/org
+      it 'matches tickets by specific or unset owner', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         condition = {
           'ticket.group_id' => {
             operator: 'is',
@@ -2227,7 +2227,9 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
         expect(ticket_count).to eq(0)
+      end
 
+      it 'matches tickets by pre conditions of the current user', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
         UserInfo.current_user_id = agent1.id
         condition = {
           'ticket.group_id' => {
@@ -2383,7 +2385,6 @@ RSpec.describe Selector::Sql do
 
         ticket_count, = Ticket.selectors(condition, limit: 10)
         expect(ticket_count).to eq(0)
-        travel_back
       end
     end
 

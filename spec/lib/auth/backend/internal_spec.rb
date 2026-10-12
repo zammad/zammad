@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/auth/backend/backend_examples'
 
 RSpec.describe Auth::Backend::Internal do
 
@@ -11,8 +10,6 @@ RSpec.describe Auth::Backend::Internal do
   let(:instance) { described_class.new({ adapter: described_class.name }, auth) }
 
   describe '#valid?' do
-    it_behaves_like 'Auth backend'
-
     context 'when password is given' do
       let(:user) { create(:user, password: password) }
 
@@ -67,14 +64,6 @@ RSpec.describe Auth::Backend::Internal do
     context 'with legacy SHA2 passwords' do
       let(:user) { create(:user, password: PasswordHash.sha2(password)) }
 
-      it 'is password hash crypted' do
-        expect(PasswordHash.crypted?(user.password)).to be true
-      end
-
-      it 'is password hash legacy' do
-        expect(PasswordHash.legacy?(user.password, password)).to be true
-      end
-
       it 'valid authentication' do
         expect(instance.valid?).to be true
       end
@@ -84,9 +73,9 @@ RSpec.describe Auth::Backend::Internal do
         expect(PasswordHash.legacy?(user.reload.password, password)).to be false
       end
 
-      it 'is password hash crypted after validation' do
+      it 'is password hash argon2 after validation' do
         instance.valid?
-        expect(PasswordHash.crypted?(user.password)).to be true
+        expect(PasswordHash).to be_hashed_argon2(user.reload.password)
       end
     end
 

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe CalendarSubscriptions, :aggregate_failures do
+  before { freeze_time }
+
   # Set second fraction to zero for easier comparsion.
   def dt_now
     now = DateTime.now

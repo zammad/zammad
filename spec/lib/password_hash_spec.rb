@@ -6,36 +6,6 @@ RSpec.describe PasswordHash do
 
   let(:pw_plain) { 'zammad' }
 
-  context 'stable API' do
-    it 'responds to crypt' do
-      expect(described_class).to respond_to(:crypt)
-    end
-
-    it 'responds to verified?' do
-      expect(described_class).to respond_to(:verified?)
-    end
-
-    it 'responds to crypted?' do
-      expect(described_class).to respond_to(:crypted?)
-    end
-
-    it 'responds to legacy?' do
-      expect(described_class).to respond_to(:legacy?)
-    end
-
-    it 'responds to sha2' do
-      expect(described_class).to respond_to(:sha2)
-    end
-
-    it 'responds to hashed_sha2?' do
-      expect(described_class).to respond_to(:hashed_sha2?)
-    end
-
-    it 'responds to hashed_argon2?' do
-      expect(described_class).to respond_to(:hashed_argon2?)
-    end
-  end
-
   context 'encryption' do
 
     it 'crypts passwords' do
@@ -51,6 +21,22 @@ RSpec.describe PasswordHash do
     it 'detects crypted passwords' do
       pw_crypted = described_class.crypt(pw_plain)
       expect(described_class.crypted?(pw_crypted)).to be true
+    end
+
+    it 'rejects wrong passwords' do
+      pw_crypted = described_class.crypt(pw_plain)
+      expect(described_class.verified?(pw_crypted, 'wrong')).to be false
+    end
+  end
+
+  describe '::hashed_argon2?' do
+    it 'detects argon2 hashes' do
+      expect(described_class).to be_hashed_argon2(described_class.crypt(pw_plain))
+    end
+
+    it 'does not detect other hashes', :aggregate_failures do
+      expect(described_class).not_to be_hashed_argon2(described_class.sha2(pw_plain))
+      expect(described_class).not_to be_hashed_argon2(pw_plain)
     end
   end
 

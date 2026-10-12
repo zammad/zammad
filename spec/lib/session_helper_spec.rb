@@ -44,13 +44,19 @@ RSpec.describe SessionHelper do
   end
 
   describe 'New collections by installed packages are crashing zammad#4748' do
-    it 'does add a collection as a file' do
-      allow(Rails).to receive(:env).and_return('production')
-      Rails.root.join('lib/session_helper/collection_xxx.rb').write('module SessionHelper::CollectionXXX; end;')
+    let(:collection_files) { Rails.root.glob('lib/session_helper/collection_*.rb').map(&:to_s) }
+    let(:unloadable_file)  { Rails.root.join('lib/session_helper/collection_xxx.rb').to_s }
 
-      expect { described_class.default_collections(User.find(1)) }.not_to raise_error(NameError, 'uninitialized constant SessionHelper::CollectionXxx')
-    ensure
-      Rails.root.join('lib/session_helper/collection_xxx.rb').delete
+    before do
+      allow(Rails).to receive(:env).and_return(ActiveSupport::EnvironmentInquirer.new('production'))
+      allow(Dir).to receive(:glob).and_call_original
+      allow(Dir).to receive(:glob).with(%r{/lib/session_helper/collection_\*\.rb\z}).and_return([*collection_files, unloadable_file])
+    end
+
+    it 'skips collection files without a loaded constant and keeps the other collections' do
+      collections, = described_class.default_collections(User.find(1))
+
+      expect(collections).to include(Locale.to_app_model)
     end
   end
 end

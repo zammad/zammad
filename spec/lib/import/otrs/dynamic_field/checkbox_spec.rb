@@ -4,8 +4,6 @@ require 'rails_helper'
 require 'lib/import/otrs/dynamic_field_examples'
 
 RSpec.describe Import::OTRS::DynamicField::Checkbox do
-  it_behaves_like 'Import::OTRS::DynamicField'
-
   it 'imports an OTRS Checkbox DynamicField' do
 
     zammad_structure = {

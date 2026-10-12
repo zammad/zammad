@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Tasks::Zammad::Command do
   context 'when listing all commands' do
     it 'rake finds zammad commands' do
-      expect(`bundle exec rake --tasks`).to include('zammad:package:reinstall_all')
+      expect(Rake::Task.task_defined?('zammad:package:reinstall_all')).to be(true)
     end
   end
 end

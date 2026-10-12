@@ -26,9 +26,29 @@ RSpec.describe EmailAddressValidation do
 
   describe 'Email address' do
     describe 'with MX record' do
-      let(:email_address) { 'greetings@zammad.org' }
+      let(:email_address) { 'greetings@with-mx-record.example.org' }
+      let(:dns)           { instance_double(Resolv::DNS, :timeouts= => nil) }
+      let(:mx_record)     { Resolv::DNS::Resource::IN::MX.new(10, Resolv::DNS::Name.create('mail.with-mx-record.example.org')) }
+
+      before do
+        allow(Resolv::DNS).to receive(:open).and_yield(dns)
+        allow(dns).to receive(:getresources).with('with-mx-record.example.org', Resolv::DNS::Resource::IN::MX).and_return([mx_record])
+        allow(IPSocket).to receive(:getaddress).with('mail.with-mx-record.example.org').and_return('192.0.2.1')
+      end
 
       include_examples 'email address validity', valid: true, check_mx: true
+    end
+
+    describe 'without MX record when checking MX' do
+      let(:email_address) { 'greetings@without-mx-record.example.org' }
+      let(:dns)           { instance_double(Resolv::DNS, :timeouts= => nil, getresources: []) }
+
+      before do
+        allow(Resolv::DNS).to receive(:open).and_yield(dns)
+        allow(Addrinfo).to receive(:getaddrinfo).and_raise(SocketError)
+      end
+
+      include_examples 'email address validity', valid: false, check_mx: true
     end
 
     describe 'without MX record' do

@@ -536,7 +536,7 @@ RSpec.describe Escalation do
 
     it 'works when one of escalation times is not present' do
       ticket.update! first_response_escalation_at: 1.hour.from_now, update_escalation_at: nil, close_escalation_at: nil
-      expect { instance.send(:calculate_next_escalation) }.not_to raise_error
+      expect(instance.send(:calculate_next_escalation)).to eq ticket.first_response_escalation_at
     end
   end
 

@@ -29,11 +29,13 @@ RSpec.describe Import::OTRS::ArticleCustomer do
     start_import_test
   end
 
-  it 'creates customers' do
-    allow(import_object).to receive(:create).and_return(existing_object)
+  it 'creates customers', :aggregate_failures do
+    allow(import_object).to receive_messages(find_by: nil, create: existing_object)
 
-    expect(import_object).to receive(:find_by).at_least(:once)
     start_import_test
+
+    expect(import_object).to have_received(:find_by).at_least(:once)
+    expect(import_object).to have_received(:create).with(hash_including(login: 'kunde2@kunde.de', email: 'kunde2@kunde.de'))
   end
 
   it 'creates customers with special encoding in name' do

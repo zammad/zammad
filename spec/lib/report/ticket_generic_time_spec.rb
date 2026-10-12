@@ -525,14 +525,14 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
     it 'correctly handles missing tickets', searchindex: false do
       class_double(SearchIndexBackend, selectors: { object_ids: [-1] }, drop_index: nil, drop_pipeline: nil).as_stubbed_const
 
-      expect do
-        described_class.items(
-          range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
-          range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
-          selector:    {}, # ticket selector to get only a collection of tickets
-          params:      { field: 'created_at' },
-        )
-      end.not_to raise_error
+      result = described_class.items(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        selector:    {}, # ticket selector to get only a collection of tickets
+        params:      { field: 'created_at' },
+      )
+
+      expect(result).to eq({ ticket_ids: [-1], assets: {} })
     end
   end
 

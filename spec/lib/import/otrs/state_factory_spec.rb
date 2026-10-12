@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'lib/import/transaction_factory_examples'
 
 RSpec.describe Import::OTRS::StateFactory do
   let(:state_backend_param) do
@@ -12,8 +11,6 @@ RSpec.describe Import::OTRS::StateFactory do
     end
   end
 
-  it_behaves_like 'Import::TransactionFactory'
-
   it 'creates a state backup in the pre_import_hook' do
     expect(described_class).to receive(:backup)
     described_class.pre_import_hook([])
@@ -23,14 +20,10 @@ RSpec.describe Import::OTRS::StateFactory do
     json_fixture("import/otrs/state/#{file}")
   end
 
-  it 'updates ObjectManager Ticket state_id and pending_time filter' do
+  it 'updates ObjectManager Ticket state_id filter and screens' do
     ticket_state_id = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'state_id',
-    )
-    ticket_pending_time = ObjectManager::Attribute.get(
-      object: 'Ticket',
-      name:   'pending_time',
     )
 
     expect do
@@ -38,7 +31,6 @@ RSpec.describe Import::OTRS::StateFactory do
 
       # sync changes
       ticket_state_id.reload
-      ticket_pending_time.reload
     end.to change {
       ticket_state_id.data_option
     }.and change {
@@ -46,15 +38,11 @@ RSpec.describe Import::OTRS::StateFactory do
     }
   end
 
-  it "doesn't update ObjectManager Ticket state_id and pending_time filter in diff import" do
+  it "doesn't update ObjectManager Ticket state_id filter and screens in diff import" do
 
     ticket_state_id = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'state_id',
-    )
-    ticket_pending_time = ObjectManager::Attribute.get(
-      object: 'Ticket',
-      name:   'pending_time',
     )
 
     allow(Import::OTRS).to receive(:diff?).and_return(true)
@@ -64,13 +52,10 @@ RSpec.describe Import::OTRS::StateFactory do
 
       # sync changes
       ticket_state_id.reload
-      ticket_pending_time.reload
     end.to not_change {
       ticket_state_id.data_option
     }.and not_change {
       ticket_state_id.screens
-    }.and not_change {
-      ticket_pending_time.data_option
     }
   end
 

@@ -37,7 +37,7 @@ RSpec.describe BackgroundServices::Service::ManageSessionsJobs do
     context 'when ProcessSessionsJob is active and forking' do
       let(:env) { { 'ZAMMAD_PROCESS_SESSIONS_JOBS_WORKERS' => '2' } }
 
-      it 'skips' do
+      it 'does not skip' do
         expect(described_class.skip?(manager:)).to be(false)
       end
     end

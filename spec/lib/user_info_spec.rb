@@ -182,14 +182,6 @@ RSpec.describe UserInfo do
       end
     end
 
-    it 'survives a reset, it marks the unit of work and not the user' do
-      described_class.with_system_context do
-        described_class.reset
-
-        expect(described_class).to be_system_context
-      end
-    end
-
     it 'is present even if the context was never established' do
       Thread.current[:assets] = nil
 
@@ -207,6 +199,14 @@ RSpec.describe UserInfo do
 
     it 'marks the given block as system context' do
       described_class.with_system_context do
+        expect(described_class).to be_system_context
+      end
+    end
+
+    it 'survives a reset, it marks the unit of work and not the user' do
+      described_class.with_system_context do
+        described_class.reset
+
         expect(described_class).to be_system_context
       end
     end

@@ -343,10 +343,11 @@ RSpec.describe AI::Provider do
 
     context 'when the response code is 200' do
       let(:code) { 200 }
-      let(:success) { true }
+      let(:success)  { true }
+      let(:response) { UserAgent::Result.new(code:, success:, data: { 'content' => 'response content' }) }
 
       it 'returns the response content' do
-        expect { ai_provider.validate_response!(response) }.not_to raise_error
+        expect(ai_provider.validate_response!(response)).to eq({ 'content' => 'response content' })
       end
     end
 

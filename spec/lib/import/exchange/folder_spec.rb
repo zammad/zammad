@@ -68,7 +68,7 @@ RSpec.describe Import::Exchange::Folder, :integration do
           allow(child_of_root)
             .to receive(:display_name).and_return('你好'.b)
 
-          expect { folder.display_path(child_of_root).to_json }.not_to raise_error
+          expect(folder.display_path(child_of_root)).to eq('你好')
         end
       end
 
@@ -77,7 +77,7 @@ RSpec.describe Import::Exchange::Folder, :integration do
           allow(grandchild_of_root)
             .to receive(:display_name).and_return('你好'.b)
 
-          expect { folder.display_path(grandchild_of_root).to_json }.not_to raise_error
+          expect(folder.display_path(grandchild_of_root)).to eq('Top of Information Store -> 你好')
         end
       end
 
@@ -88,7 +88,7 @@ RSpec.describe Import::Exchange::Folder, :integration do
           allow(folder)
             .to receive(:id_folder_map).with(any_args).and_raise(Viewpoint::EWS::EwsError)
 
-          expect { folder.display_path(grandchild_of_root).to_json }.not_to raise_error
+          expect(folder.display_path(grandchild_of_root)).to eq('你好')
         end
       end
     end

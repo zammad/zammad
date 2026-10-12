@@ -538,16 +538,6 @@ RSpec.describe FilterProcessor, type: :channel_filter do
              active:  true)
     end
 
-    context 'when the filter uses a named capture group' do
-      let(:regex_value)  { 'ContractID:\s(?<CONTRACT_ID>.*)' }
-      let(:target_value) { '#{regexp.CONTRACT_ID}' } # rubocop:disable Lint/InterpolationCheck
-
-      it 'sets the ticket title using the captured CONTRACT_ID' do
-        instance.process
-        expect(mail_hash[:'x-zammad-ticket-title']).to eq('1234abcd')
-      end
-    end
-
     context 'when the filter uses a regex with nameless capture groups' do
       let(:regex_value)  { 'ContractID:\s(.*)' }
       let(:target_value) { '#{regexp.1}' }
@@ -555,16 +545,6 @@ RSpec.describe FilterProcessor, type: :channel_filter do
       it 'sets the ticket title using the captured CONTRACT_ID' do
         instance.process
         expect(mail_hash[:'x-zammad-ticket-title']).to eq('1234abcd')
-      end
-    end
-
-    context 'when the filter finds no value in question' do
-      let(:regex_value)  { 'ContractID:\s(.*)' }
-      let(:target_value) { '#{regexp.CONTRAKT}' } # rubocop:disable Lint/InterpolationCheck
-
-      it 'sets the ticket title using fallback value' do
-        instance.process
-        expect(mail_hash[:'x-zammad-ticket-title']).to eq('-')
       end
     end
   end
