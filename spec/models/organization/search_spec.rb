@@ -32,6 +32,24 @@ RSpec.describe Organization::Search do
           expect(results).to contain_exactly(organization_1, organization_2)
         end
       end
+
+      context 'when user is customer without organization' do
+        let(:user) { create(:customer) }
+
+        it 'finds no organizations' do
+          expect(results).to be_empty
+        end
+
+        it 'asks no backend', :aggregate_failures do
+          allow(Organization).to receive(:search_es).and_call_original
+          allow(Organization).to receive(:search_sql).and_call_original
+
+          results
+
+          expect(Organization).not_to have_received(:search_es)
+          expect(Organization).not_to have_received(:search_sql)
+        end
+      end
     end
 
     context 'with elasticsearch', searchindex: true do

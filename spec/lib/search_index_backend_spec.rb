@@ -18,6 +18,34 @@ RSpec.describe SearchIndexBackend do
     it 'coerces :query_extension hash keys to symbols' do
       expect(query.dig(:query, :bool, :filter, :term, :a)).to eq('b')
     end
+
+    context 'with ids option' do
+      subject(:query) { described_class.build_query('Ticket', '', ids: ids) }
+
+      context 'when ids is not given' do
+        let(:ids) { nil }
+
+        it 'does not add an ids clause' do
+          expect(query.dig(:query, :bool, :must).grep(Hash).flat_map(&:keys)).not_to include(:ids)
+        end
+      end
+
+      context 'when ids is empty' do
+        let(:ids) { [] }
+
+        it 'adds an ids clause matching nothing' do
+          expect(query.dig(:query, :bool, :must)).to include({ ids: { values: [] } })
+        end
+      end
+
+      context 'when ids are given' do
+        let(:ids) { [1, 2] }
+
+        it 'adds an ids clause with the given ids' do
+          expect(query.dig(:query, :bool, :must)).to include({ ids: { values: [1, 2] } })
+        end
+      end
+    end
   end
 
   describe '.search', searchindex: false do
@@ -132,6 +160,23 @@ RSpec.describe SearchIndexBackend do
           total_count:     1,
           object_metadata: include(include(id: record.id.to_s))
         )
+      end
+
+      context 'with ids option' do
+        it 'does not restrict results when ids is not given' do
+          result = described_class.search_by_index(record.number, record_type, ids: nil)
+          expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+        end
+
+        it 'restricts results to the given ids' do
+          result = described_class.search_by_index(record.number, record_type, ids: [record.id])
+          expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+        end
+
+        it 'returns nothing when ids is empty' do
+          result = described_class.search_by_index(record.number, record_type, ids: [])
+          expect(result).to be_empty
+        end
       end
     end
 

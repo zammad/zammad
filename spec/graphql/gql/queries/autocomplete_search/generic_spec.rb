@@ -107,6 +107,15 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Generic, authenticated_as: :age
       end
     end
 
+    context 'when searching for organizations as customer without organization', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:only_in)  { ['Organization'] }
+
+      it 'returns nothing' do
+        expect(gql.result.data).to be_empty
+      end
+    end
+
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
 end

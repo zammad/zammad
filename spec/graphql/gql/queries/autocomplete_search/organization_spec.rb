@@ -139,6 +139,15 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Organization, authenticated_as:
       end
     end
 
+    context 'when searching as customer without organization', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+
+      it 'finds no organizations' do
+        gql.execute(query, variables: variables)
+        expect(gql.result.data).to be_empty
+      end
+    end
+
     context 'when unauthenticated' do
       before do
         gql.execute(query, variables: variables)

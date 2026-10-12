@@ -63,6 +63,20 @@ RSpec.describe 'CanSearch', searchindex: true, type: :model do
     expect(search(params)[:total_count]).to eq(4)
   end
 
+  it 'does search by query and empty ids without asking a backend', :aggregate_failures do
+    allow(Role).to receive(:search_es).and_call_original
+    allow(Role).to receive(:search_sql).and_call_original
+
+    params = { query: 'TestRole*', limit: 10, ids: [] }
+    expect(search(params)).to eq({ object_ids: [], total_count: 0 })
+
+    allow(SearchIndexBackend).to receive(:enabled?).and_return(false)
+    expect(search(params)).to eq({ object_ids: [], total_count: 0 })
+
+    expect(Role).not_to have_received(:search_es)
+    expect(Role).not_to have_received(:search_sql)
+  end
+
   it 'does search by query and ids and sorted', :aggregate_failures do
     expected_result = roles[0..3].map(&:id).reverse
     params = { query: 'TestRole*', limit: 10, ids: expected_result, sort_by: 'id', order_by: 'desc' }
