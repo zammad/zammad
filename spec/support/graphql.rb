@@ -16,6 +16,9 @@ module ZammadSpecSupportGraphql
 
       attr_reader :mock_broadcasted_messages
 
+      # A real channel belongs to a connection which decides whether it may still be served.
+      attr_accessor :connection
+
       def stream_from(stream_name, coder: nil, &block)
         # Rails uses `coder`, we don't
         block ||= ->(msg) { @mock_broadcasted_messages << msg }
@@ -230,13 +233,13 @@ RSpec.configure do |config|
 
   config.prepend_before(:each, type: :graphql) do
     ZammadSpecSupportGraphql::MockActionCable.clear_mocks
-    Gql::ZammadSchema.subscriptions = GraphQL::Subscriptions::ActionCableSubscriptions.new(
+    Gql::ZammadSchema.subscriptions = Gql::ActionCableSubscriptions.new(
       action_cable: ZammadSpecSupportGraphql::MockActionCable, action_cable_coder: JSON, schema: Gql::ZammadSchema
     )
   end
 
   config.append_after(:each, type: :graphql) do
-    Gql::ZammadSchema.subscriptions = GraphQL::Subscriptions::ActionCableSubscriptions.new(schema: Gql::ZammadSchema)
+    Gql::ZammadSchema.subscriptions = Gql::ActionCableSubscriptions.new(schema: Gql::ZammadSchema)
   end
 
   # This helper allows you to authenticate as a given user in :graphql specs

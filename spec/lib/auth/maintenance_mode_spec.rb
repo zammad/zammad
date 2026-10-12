@@ -29,6 +29,12 @@ RSpec.describe Auth::MaintenanceMode do
 
         it { is_expected.to be(false) }
       end
+
+      context 'when a user without maintenance permissions switched to the user' do
+        let(:switched_from_user_id) { create(:agent).id }
+
+        it { is_expected.to be(true) }
+      end
     end
   end
 end

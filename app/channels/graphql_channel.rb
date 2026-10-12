@@ -10,17 +10,20 @@ class GraphqlChannel < ApplicationCable::Channel
     variables = ensure_hash(data['variables'])
     operation_name = data['operationName']
 
+    # Served as logged out while maintenance mode denies the user, as GraphqlController does.
+    user = effective_user
+
     # context must be kept in sync with GraphqlController!
     # Channels use session auth only (no token auth), so we set the token to nil here.
     context = {
       sid:             connection.sid,
-      current_user:    current_user && UserContext.new(current_user, nil),
-      current_user_id: current_user&.id,
+      current_user:    user && UserContext.new(user, nil),
+      current_user_id: user&.id,
       # :channel is required for ActionCableSubscriptions and MUST NOT be used otherwise.
       channel:         self,
     }
 
-    result = UserInfo.with_user_id(current_user&.id) do
+    result = UserInfo.with_user_id(user&.id) do
       Gql::ZammadSchema.execute(query:, context:, variables:, operation_name:)
     end
 

@@ -69,6 +69,16 @@ RSpec.describe ApplicationCable::Connection, type: :channel do
             expect(connection).to have_attributes(current_user: user, sid: session_id)
           end
         end
+
+        context 'when a user without maintenance permissions switched to the user' do
+          let(:extra_session_data) { { 'switched_from_user_id' => create(:agent).id } }
+
+          it 'connects but sets no user' do
+            connect
+
+            expect(connection).to have_attributes(current_user: be_nil, sid: session_id)
+          end
+        end
       end
 
       # Such a session belongs to the admin and is served as the user, so the admin's own state
@@ -92,6 +102,70 @@ RSpec.describe ApplicationCable::Connection, type: :channel do
             connect
 
             expect(connection).to have_attributes(current_user: be_nil, sid: session_id)
+          end
+        end
+      end
+    end
+
+    # The user stays attached to the connection, so the session has to be asked again while the
+    #   connection is served (see ApplicationCable::Channel and Gql::ActionCableSubscriptions).
+    describe '#still_authorized? on an established connection' do
+      let(:user) { create(:agent) }
+
+      before { connect }
+
+      it 'is true without maintenance mode' do
+        expect(connection.still_authorized?).to be(true)
+      end
+
+      it 'is true without maintenance mode even when the session is gone, since that takes a new connection' do
+        ActiveRecord::SessionStore::Session.destroy_all
+
+        expect(connection.still_authorized?).to be(true)
+      end
+
+      context 'when maintenance mode is enabled afterwards' do
+        before { Setting.set('maintenance_mode', true) }
+
+        it 'is false for a user without maintenance permissions' do
+          expect(connection.still_authorized?).to be(false)
+        end
+
+        it 'is false once the session is gone' do
+          ActiveRecord::SessionStore::Session.destroy_all
+
+          expect(connection.still_authorized?).to be(false)
+        end
+
+        context 'when the user has maintenance permissions' do
+          let(:user) { create(:admin) }
+
+          it 'is true' do
+            expect(connection.still_authorized?).to be(true)
+          end
+
+          it 'is false once the session authorizes somebody else' do
+            ActiveRecord::SessionStore::Session.find_each do |session|
+              session.update!(data: session.data.merge('user_id' => create(:admin).id))
+            end
+
+            expect(connection.still_authorized?).to be(false)
+          end
+        end
+
+        context 'when an admin switched to the user' do
+          let(:extra_session_data) { { 'switched_from_user_id' => create(:admin).id } }
+
+          it 'is true' do
+            expect(connection.still_authorized?).to be(true)
+          end
+        end
+
+        context 'when a user without maintenance permissions switched to the user' do
+          let(:extra_session_data) { { 'switched_from_user_id' => create(:agent).id } }
+
+          it 'is false' do
+            expect(connection.still_authorized?).to be(false)
           end
         end
       end

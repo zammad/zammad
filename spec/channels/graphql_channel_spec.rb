@@ -27,7 +27,7 @@ RSpec.describe GraphqlChannel, type: :channel do
       let(:user) { create(:agent) }
 
       it 'sets UserInfo.current_user_id for the operation' do
-        stub_connection sid: '123_456', current_user: user
+        stub_connection sid: '123_456', current_user: user, still_authorized?: true
 
         subscribe
 
@@ -43,7 +43,7 @@ RSpec.describe GraphqlChannel, type: :channel do
 
     context 'when connected with a userless session' do
       it 'sets UserInfo.current_user_id for the operation' do
-        stub_connection sid: '123_456', current_user: nil
+        stub_connection sid: '123_456', current_user: nil, still_authorized?: true
 
         subscribe
 
@@ -52,6 +52,53 @@ RSpec.describe GraphqlChannel, type: :channel do
         expect(transmissions.last).to include(
           result: include(
             data: include(testQuery: be_nil)
+          )
+        )
+      end
+    end
+  end
+
+  # Whether the connection may still be served is the connection's decision (see
+  #   ApplicationCable::Connection#still_authorized?), the channel only follows it.
+  describe 'when the connection is no longer authorized' do
+    let(:user) { create(:agent) }
+    let(:current_user_query) do
+      <<~QUERY
+        query currentUser {
+          currentUser {
+            id
+          }
+        }
+      QUERY
+    end
+
+    before do
+      stub_connection sid: '123_456', current_user: user, still_authorized?: still_authorized
+
+      subscribe
+
+      perform :execute, operationName: 'currentUser', query: current_user_query
+    end
+
+    context 'when the connection is still authorized' do
+      let(:still_authorized) { true }
+
+      it 'serves the operation as the user' do
+        expect(transmissions.last).to include(
+          result: include(
+            data: include(currentUser: include(id: user.to_global_id.to_s))
+          )
+        )
+      end
+    end
+
+    context 'when the connection is no longer authorized' do
+      let(:still_authorized) { false }
+
+      it 'serves the operation as logged out' do
+        expect(transmissions.last).to include(
+          result: include(
+            errors: include(include(message: 'Authentication required'))
           )
         )
       end
