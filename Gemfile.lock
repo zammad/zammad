@@ -439,7 +439,8 @@ GEM
     multipart-post (2.4.1)
     mutex_m (0.3.0)
     nestful (1.1.4)
-    net-http (0.9.1)
+    net-http (0.10.0)
+      net-protocol (>= 0.3.0)
       uri (>= 0.11.1)
     net-imap (0.6.7)
       date
@@ -857,7 +858,7 @@ GEM
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
     unicode-emoji (4.3.0)
-    uri (1.1.1)
+    uri (1.1.2)
     useragent (0.16.11)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
