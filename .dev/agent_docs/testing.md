@@ -22,6 +22,18 @@ Add `CI_SKIP_DB_RESET=1` to skip database reset between runs.
 Add `CI_SKIP_ASSETS_PRECOMPILE=1` to skip asset compilation —
 but omit it when frontend files have changed.
 
+### HTTP streams
+
+- WebMock hands `Net::HTTP` a stubbed response — and a real one it lets through to
+  localhost — as one part. A spec that checks that parts arrive one by one switches
+  WebMock off for its examples and runs against a plain Rack app on a Puma of its
+  own, or a `TCPServer` for what Rack cannot send (headers that trickle in, a TLS
+  handshake that never answers).
+- The Rails application's middleware holds a streamed response back, so a test
+  route in the application does not stream.
+- Test a stream parser by feeding the same body whole, in small parts and byte by
+  byte, with multi-byte characters and CRLF and CR line ends.
+
 ### RSpec meta attributes
 
 - `authenticated_as:` — accepts `true` (admin), `false` (skip login),

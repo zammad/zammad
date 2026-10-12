@@ -125,7 +125,7 @@ is already checked out (confirmed in step 1). Instead:
 ### 5. Implement
 
 Write the code following the patterns described in the relevant agent reference
-docs (graphql_patterns, frontend_patterns, service_patterns, etc.). Read the
+docs (ruby_patterns, graphql_patterns, frontend_patterns, service_patterns, etc.). Read the
 relevant doc before starting implementation — do not read them all upfront.
 
 ### 6. Test

@@ -38,6 +38,7 @@ authority, and they change.
 | Specs, test setup, test helpers                       | `testing.md`                      |
 | Specs for a service or its GraphQL caller             | `testing_services_and_graphql.md` |
 | Service objects (`app/services/service/`)             | `service_patterns.md`             |
+| Any Ruby class or module in `app/` or `lib/`          | `ruby_patterns.md`                |
 | Migrations or seeds                                   | `database_migrations.md`          |
 
 A convention violation is a finding. "The surrounding code doesn't follow it either" is not a

@@ -16,5 +16,6 @@ They are used e.g. by GraphQL resolvers and REST controllers.
   `.dev/agent_docs/testing_services_and_graphql.md`
 - Knowledge base services follow extra rules, see
   `.dev/agent_docs/knowledge_base_patterns.md`
-- Add attr_reader for all arguments passed to the initializer, so they are available in instance methods
+- Add attr_reader for all arguments passed to the initializer, so they are available in instance methods; the
+  rest of the instance state follows `.dev/agent_docs/ruby_patterns.md`
 - Service initializer should not have super() call, as Service::Base does not have an initializer

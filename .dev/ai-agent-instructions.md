@@ -154,6 +154,9 @@ You MUST read the relevant file(s) below before responding when working on that 
 - `.dev/agent_docs/testing_services_and_graphql.md` — How to split spec
   coverage between a service and the query, mutation or subscription that
   calls it
+- `.dev/agent_docs/ruby_patterns.md` — Conventions for every Ruby class or
+  module in `app/` and `lib/`: instance state and readers, acronyms in constant
+  names, text from outside, timeouts around a caller's block
 - `.dev/agent_docs/service_patterns.md` — Service object conventions and structure
 - `.dev/agent_docs/knowledge_base_patterns.md` — Knowledge base rules for the
   new stack (Vue/GraphQL/services) only: the single active knowledge base and
