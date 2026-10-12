@@ -395,14 +395,15 @@ class Selector::Sql < Selector::Base
 
       query << "(#{sub_query.join(' AND ')})" if sub_query.present?
     elsif block_condition[:operator] == 'is'
-      if block_condition[:pre_condition] == 'not_set'
+      case block_condition[:pre_condition]
+      when 'not_set'
         if attribute_name.match?(%r{^(created_by|updated_by|owner|customer|user)_id})
           query << "(#{attribute} IS NULL OR #{attribute} IN (?))"
           bind_params.push 1
         else
           query << "#{attribute} IS NULL"
         end
-      elsif block_condition[:pre_condition] == 'current_user.id'
+      when 'current_user.id'
         raise "Use current_user.id in block_condition, but no current_user is set #{block_condition.inspect}" if !current_user_id
 
         query << "#{attribute} IN (?)"
@@ -411,7 +412,7 @@ class Selector::Sql < Selector::Base
         else
           bind_params.push current_user_id
         end
-      elsif block_condition[:pre_condition] == 'current_user.organization_id'
+      when 'current_user.organization_id'
         raise "Use current_user.id in block_condition, but no current_user is set #{block_condition.inspect}" if !current_user_id
 
         query << "#{attribute} IN (?)"
@@ -441,21 +442,22 @@ class Selector::Sql < Selector::Base
         end
       end
     elsif block_condition[:operator] == 'is not'
-      if block_condition[:pre_condition] == 'not_set'
+      case block_condition[:pre_condition]
+      when 'not_set'
         if attribute_name.match?(%r{^(created_by|updated_by|owner|customer|user)_id})
           query << "(#{attribute} IS NOT NULL AND #{attribute} NOT IN (?))"
           bind_params.push 1
         else
           query << "#{attribute} IS NOT NULL"
         end
-      elsif block_condition[:pre_condition] == 'current_user.id'
+      when 'current_user.id'
         query << "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
         if attribute_name == 'out_of_office_replacement_id'
           bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
         else
           bind_params.push current_user_id
         end
-      elsif block_condition[:pre_condition] == 'current_user.organization_id'
+      when 'current_user.organization_id'
         query << "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
         user = User.find_by(id: current_user_id)
         bind_params.push user.organization_id

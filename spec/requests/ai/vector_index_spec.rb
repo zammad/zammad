@@ -7,9 +7,8 @@ RSpec.describe 'AI vector index', :aggregate_failures, authenticated_as: :user, 
     create(:agent, roles: [create(:role, permission_names: %w[admin.ai_knowledge_base admin.ai_provider])])
   end
 
-  describe 'POST /ai/vector_index/sync' do
+  describe 'POST /ai/vector_index/sync', :performs_jobs do
     before do
-      allow(VectorIndexSyncJob).to receive(:perform_later)
       allow(Service::AI::VectorDB::CreateTable).to receive(:execute)
       allow(Service::AI::VectorDB::Reload).to receive(:execute)
       allow(Service::AI::VectorDB::Reachable).to receive(:execute).and_return(reachable)
@@ -22,7 +21,7 @@ RSpec.describe 'AI vector index', :aggregate_failures, authenticated_as: :user, 
     it 'schedules the vector index sync without performing it in the request' do
       expect(response).to have_http_status(:ok)
       expect(json_response).to eq('success' => true)
-      expect(VectorIndexSyncJob).to have_received(:perform_later).once
+      expect(VectorIndexSyncJob).to have_been_enqueued.once
       expect(Service::AI::VectorDB::CreateTable).not_to have_received(:execute)
       expect(Service::AI::VectorDB::Reload).not_to have_received(:execute)
     end
@@ -30,7 +29,7 @@ RSpec.describe 'AI vector index', :aggregate_failures, authenticated_as: :user, 
     shared_examples 'allowed to sync the vector index' do
       it 'schedules the vector index sync' do
         expect(response).to have_http_status(:ok)
-        expect(VectorIndexSyncJob).to have_received(:perform_later).once
+        expect(VectorIndexSyncJob).to have_been_enqueued.once
       end
     end
 
@@ -54,7 +53,7 @@ RSpec.describe 'AI vector index', :aggregate_failures, authenticated_as: :user, 
       it 'says so, having queued the build anyway', :aggregate_failures do
         expect(response).to have_http_status(:unprocessable_content)
         expect(json_response['error']).to include('The knowledge base index cannot be built')
-        expect(VectorIndexSyncJob).to have_received(:perform_later).once
+        expect(VectorIndexSyncJob).to have_been_enqueued.once
       end
     end
 
@@ -63,7 +62,7 @@ RSpec.describe 'AI vector index', :aggregate_failures, authenticated_as: :user, 
 
       it 'returns forbidden without changing the index' do
         expect(response).to have_http_status(:forbidden)
-        expect(VectorIndexSyncJob).not_to have_received(:perform_later)
+        expect(VectorIndexSyncJob).not_to have_been_enqueued
         expect(Service::AI::VectorDB::CreateTable).not_to have_received(:execute)
         expect(Service::AI::VectorDB::Reload).not_to have_received(:execute)
       end

@@ -95,14 +95,9 @@ RSpec.describe TicketBulkUpdateJob do
           .perform_now(user:, perform:, ticket_ids: tickets.slice(0, 5))
       end
 
-      it 'enqueues next batch of tickets' do
-        allow(described_class).to receive(:perform_later)
-
-        described_class
-          .perform_now(user:, perform:, ticket_ids: tickets.pluck(:id))
-
-        expect(described_class)
-          .to have_received(:perform_later)
+      it 'enqueues next batch of tickets', :performs_jobs do
+        expect { described_class.perform_now(user:, perform:, ticket_ids: tickets.pluck(:id)) }
+          .to have_enqueued_job(described_class)
           .with(
             user:,
             perform:,

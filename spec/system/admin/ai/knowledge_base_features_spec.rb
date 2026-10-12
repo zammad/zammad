@@ -3,12 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
-  context 'with knowledge base features', authenticated_as: :admin do
+  context 'with knowledge base features', :performs_jobs, authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
     before do
       setup_ai_provider
-      allow(VectorIndexSyncJob).to receive(:perform_later)
 
       visit '/#ai/knowledge_base_features'
     end
@@ -34,7 +33,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
       await_empty_ajax_queue
 
       expect(Setting.get('vectordb_enabled')).to be(true)
-      expect(VectorIndexSyncJob).to have_received(:perform_later).once
+      expect(VectorIndexSyncJob).to have_been_enqueued.once
       expect(page.evaluate_script("App.Setting.findNative(#{setting_id}).vector_index_rebuild_started"))
         .to be_nil
     end
@@ -101,7 +100,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
         expect(page).to have_text('No AI provider with a valid embedding model is configured.')
         expect(Setting.get('vectordb_enabled')).to be(false)
         expect(page).to have_no_css('.js-vectordbEnabledSetting input:checked')
-        expect(VectorIndexSyncJob).not_to have_received(:perform_later)
+        expect(VectorIndexSyncJob).not_to have_been_enqueued
       end
     end
 

@@ -52,14 +52,13 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
 
       # Without it the draft stays out of the vector index until something changes it again, so it
       # never turns up as a related answer of the ticket it was written from.
-      it 'schedules the new answer for the vector index' do
+      it 'schedules the new answer for the vector index', :performs_jobs do
         allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
-        allow(VectorIndexJob).to receive(:perform_later)
 
         translation = service_result.translations.find_by(kb_locale: kb_locale)
 
         expect(VectorIndexJob)
-          .to have_received(:perform_later)
+          .to have_been_enqueued
           .with('KnowledgeBase::Answer::Translation', translation.id)
       end
     end

@@ -45,13 +45,9 @@ RSpec.describe Service::Ticket::Bulk::DispatchUpdate do
     end
 
     context 'when many tickets are selected' do
-      it 'schedules background job' do
-        allow(TicketBulkUpdateJob).to receive(:perform_later)
-
-        service_result
-
-        expect(TicketBulkUpdateJob)
-          .to have_received(:perform_later)
+      it 'schedules background job', :performs_jobs do
+        expect { service_result }
+          .to have_enqueued_job(TicketBulkUpdateJob)
           .with(user:, perform:, ticket_ids:)
       end
 

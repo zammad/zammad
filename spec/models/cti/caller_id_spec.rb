@@ -359,32 +359,29 @@ RSpec.describe Cti::CallerId do
     end
   end
 
-  describe 'callbacks' do
+  describe 'callbacks', :performs_jobs do
     subject!(:caller_id) { build(:cti_caller_id, caller_id: phone) }
 
     let(:phone) { '1234567890' }
 
     describe 'on creation' do
       it 'adopts CTI Logs from same number (via UpdateCtiLogsByCallerJob)' do
-        expect(UpdateCtiLogsByCallerJob).to receive(:perform_later)
-
-        caller_id.save
+        expect { caller_id.save }.to have_enqueued_job(UpdateCtiLogsByCallerJob)
       end
 
       it 'splits job into fg and bg (for more responsive UI – see #2057)' do
         expect(UpdateCtiLogsByCallerJob).to receive(:perform_now).with(phone, limit: 20)
-        expect(UpdateCtiLogsByCallerJob).to receive(:perform_later).with(phone, limit: 40, offset: 20)
 
-        caller_id.save
+        expect { caller_id.save }
+          .to have_enqueued_job(UpdateCtiLogsByCallerJob).with(phone, limit: 40, offset: 20)
       end
 
       it 'skips jobs on import_mode true' do
         Setting.set('import_mode', true)
 
         expect(UpdateCtiLogsByCallerJob).not_to receive(:perform_now)
-        expect(UpdateCtiLogsByCallerJob).not_to receive(:perform_later)
 
-        caller_id.save
+        expect { caller_id.save }.not_to have_enqueued_job(UpdateCtiLogsByCallerJob)
       end
     end
 
@@ -392,9 +389,7 @@ RSpec.describe Cti::CallerId do
       before { caller_id.save }
 
       it 'orphans CTI Logs from same number (via UpdateCtiLogsByCallerJob)' do
-        expect(UpdateCtiLogsByCallerJob).to receive(:perform_later).with(phone)
-
-        caller_id.destroy
+        expect { caller_id.destroy }.to have_enqueued_job(UpdateCtiLogsByCallerJob).with(phone)
       end
     end
   end

@@ -1924,16 +1924,16 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'from sender: "Agent"' do
         let(:agent) { create(:agent) }
 
-        it 'does not dispatch an email on article creation' do
-          expect(TicketArticleCommunicateEmailJob).not_to receive(:perform_later)
+        it 'does not dispatch an email on article creation', :performs_jobs do
+          expect do
+            described_class.new.process({}, <<~RAW.chomp)
+              From: #{agent.email}
+              To: customer@example.com
+              Subject: some subject
 
-          described_class.new.process({}, <<~RAW.chomp)
-            From: #{agent.email}
-            To: customer@example.com
-            Subject: some subject
-
-            Some Text
-          RAW
+              Some Text
+            RAW
+          end.not_to have_enqueued_job(TicketArticleCommunicateEmailJob)
         end
       end
     end
