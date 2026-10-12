@@ -199,5 +199,31 @@ RSpec.describe Auth::Permissions, type: :request do
 
       expect(described_class).to have_received(:new).twice
     end
+
+    it 'loads the permission names only once for different queries' do
+      allow(user).to receive(:permissions).and_call_original
+
+      described_class.authorized?(user, 'ticket.agent')
+      described_class.authorized?(user, 'admin.user')
+
+      expect(user).to have_received(:permissions).once
+    end
+
+    it 'loads the permission names again after a role change' do
+      described_class.authorized?(user, 'ticket.agent')
+      user.roles << Role.find_by(name: 'Admin')
+
+      expect(described_class).to be_authorized(user, 'admin.user')
+    end
+
+    it 'loads the permission names again for an unsaved object' do
+      unsaved_user = build(:agent)
+      allow(unsaved_user).to receive(:permissions).and_call_original
+
+      described_class.authorized?(unsaved_user, 'ticket.agent')
+      described_class.authorized?(unsaved_user, 'admin.user')
+
+      expect(unsaved_user).to have_received(:permissions).twice
+    end
   end
 end

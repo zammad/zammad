@@ -66,6 +66,17 @@ class Auth::Permissions
   end
 
   def permissions_cache
-    @permissions_cache ||= object.permissions.pluck(:name)
+    @permissions_cache ||= request_cached_permission_names
+  end
+
+  # Shared by all queries for the same user or token, so a new query does not load the names again.
+  def request_cached_permission_names
+    return permission_names if object.new_record?
+
+    Auth::RequestCache.fetch_value("permission_names/#{object.to_global_id}") { permission_names }
+  end
+
+  def permission_names
+    object.permissions.pluck(:name)
   end
 end
