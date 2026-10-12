@@ -72,8 +72,6 @@ RSpec.describe Service::User::AddFirstAdmin do
       end
 
       it 'logs the error and creates the user anyway', :aggregate_failures do
-        pending 'the rescue calls an undefined `logger` and raises NameError'
-
         expect(service_result).to be_persisted
         expect(Rails.logger).to have_received(:error).with('Unable to load text modules de-de: no text modules')
       end

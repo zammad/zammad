@@ -37,7 +37,7 @@ class Service::User::AddFirstAdmin < Service::Base
     begin
       TextModule.load(request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us')
     rescue => e
-      logger.error "Unable to load text modules #{request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us'}: #{e.message}"
+      Rails.logger.error "Unable to load text modules #{request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us'}: #{e.message}"
     end
   end
 end
