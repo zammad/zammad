@@ -38,8 +38,9 @@ see e.g. also app/models/ticket/search.rb
 
     # Scope to specific IDs if they're given in params.
     # Usually those IDs are pre-filled in .search_params_pre method.
+    # An empty list restricts to nothing, only a missing one means no restriction.
     scope :search_sql_ids, lambda { |params|
-      where(id: params[:ids]) if params[:ids].present?
+      where(id: params[:ids]) if !params[:ids].nil?
     }
   end
 
@@ -193,6 +194,9 @@ returns
       return if defined?(search_preferences) && !search_preferences(params[:current_user])
 
       params = search_build_params(params)
+
+      # An empty ids list matches nothing on either backend, so no round trip is needed.
+      return search_result(params, [], 0) if params[:ids] == []
 
       # try search index backend
       # we only search in elastic search when we have a query present or if search_by_index is explicitly set to true

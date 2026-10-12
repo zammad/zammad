@@ -1573,6 +1573,24 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
         include_examples 'result check'
       end
+
+      shared_examples 'unrestricted result check' do
+        it 'returns all agents matching the query' do
+          expect(json_response.pluck('id')).to eq(search_agents.map(&:id))
+        end
+      end
+
+      context 'when ids is a blank string' do
+        let(:search_ids) { '' }
+
+        include_examples 'unrestricted result check'
+      end
+
+      context 'when ids is an empty list' do
+        let(:search_ids) { [] }
+
+        include_examples 'unrestricted result check'
+      end
     end
 
     context 'with elasticsearch', searchindex: true do

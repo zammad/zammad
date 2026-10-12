@@ -790,7 +790,13 @@ generate url for index or document access (only for internal use)
 
   def self.build_query(index, condition, options = {})
     options[:from] = options[:from].presence || options[:offset].presence
-    options        = DEFAULT_QUERY_OPTIONS.merge(options.compact_blank.deep_symbolize_keys)
+    options        = options.deep_symbolize_keys
+
+    # An empty list restricts to nothing, only a missing one means no restriction,
+    # so it has to survive the compaction below.
+    ids = options[:ids]
+
+    options = DEFAULT_QUERY_OPTIONS.merge(options.compact_blank)
 
     data = {
       from:  options[:from],
@@ -810,8 +816,8 @@ generate url for index or document access (only for internal use)
 
     data[:query][:bool][:must].push condition
 
-    if options[:ids].present?
-      data[:query][:bool][:must].push({ ids: { values: options[:ids] } })
+    if !ids.nil?
+      data[:query][:bool][:must].push({ ids: { values: ids } })
     end
 
     if options[:condition].present?

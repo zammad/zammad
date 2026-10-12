@@ -84,6 +84,9 @@ class Service::Search < Service::Base
       .with_defaults(limit: 10) # limit can be overriden
       .merge(with_total_count: true, full: true) # those options are mandatory; :only_total_count can still be passed and will override
 
+    # An empty ids list restricts the search to no results, so unlike other blank options it has to be kept.
+    output[:ids] = input[:ids] if !input[:ids].nil?
+
     if output[:only_ids]
       output[:with_total_count] = false
       output[:full] = false
