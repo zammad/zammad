@@ -178,4 +178,74 @@ RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
       end
     end
   end
+
+  context 'when one LDAP attribute is mapped to multiple Zammad attributes' do
+
+    it 'imports the value into all mapped attributes', last_admin_check: false do
+
+      user_entry               = build(:ldap_entry)
+      user_entry['objectguid'] = ['user1337']
+      user_entry['mail']       = ['Hans@Example.COM']
+      user_entry['first_name'] = ['Hans']
+
+      group_entry           = build(:ldap_entry)
+      group_entry['member'] = [user_entry.dn]
+
+      ldap_config = {
+        id:              ldap_source.id,
+        user_filter:     'user=filter',
+        group_role_map:  {
+          group_entry.dn => [1, 2]
+        },
+        user_attributes: {
+          'mail'       => %w[login email],
+          'first_name' => 'firstname',
+        },
+        user_uid:        'objectguid',
+      }
+
+      import_job = build_stubbed(:import_job, name: 'Import::Ldap')
+
+      connection = double(
+        host:    'example.com',
+        port:    1337,
+        ssl:     true,
+        base_dn: 'test'
+      )
+
+      # LDAP::Group and Sequencer::Unit::Import::Ldap::Users::SubSequence
+      allow(connection).to receive(:search).and_yield(group_entry).and_yield(user_entry)
+
+      # LDAP::Group and Sequencer::Unit::Import::Ldap::Users::Total
+      allow(connection).to receive_messages(entries?: true, count: 1)
+
+      expect do
+        process(
+          dry_run:         false,
+          resource:        ldap_config,
+          ldap_connection: connection,
+          import_job:      import_job,
+        )
+      end.to change(User, :count).by(1)
+
+      imported_user = User.last
+
+      expect(imported_user).to have_attributes(
+        login:     'hans@example.com',
+        email:     'hans@example.com',
+        firstname: 'Hans',
+      )
+
+      # a second run must find the existing user by the shared value
+      # instead of creating a duplicate
+      expect do
+        process(
+          dry_run:         false,
+          resource:        ldap_config,
+          ldap_connection: connection,
+          import_job:      import_job,
+        )
+      end.not_to change(User, :count)
+    end
+  end
 end

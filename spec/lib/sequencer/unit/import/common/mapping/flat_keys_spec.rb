@@ -37,4 +37,55 @@ RSpec.describe Sequencer::Unit::Import::Common::Mapping::FlatKeys, sequencer: :u
     )
     expect(provided[:mapped]).to be_a(ActiveSupport::HashWithIndifferentAccess)
   end
+
+  it 'maps one source attribute to multiple local attributes' do
+
+    parameters = {
+      resource: {
+        remote_attribute: 'value',
+      }
+    }
+
+    mapping = {
+      remote_attribute: %i[local_attribute another_local_attribute]
+    }
+
+    provided = process(parameters) do |instance|
+      allow(instance).to receive(:mapping).and_return(mapping)
+    end
+
+    expect(provided).to eq(
+      mapped: {
+        'local_attribute'         => 'value',
+        'another_local_attribute' => 'value',
+      }
+    )
+  end
+
+  it 'maps single and multiple local attributes side by side' do
+
+    parameters = {
+      resource: {
+        remote_attribute:       'value',
+        other_remote_attribute: 'other value',
+      }
+    }
+
+    mapping = {
+      remote_attribute:       %i[local_attribute another_local_attribute],
+      other_remote_attribute: :other_local_attribute,
+    }
+
+    provided = process(parameters) do |instance|
+      allow(instance).to receive(:mapping).and_return(mapping)
+    end
+
+    expect(provided).to eq(
+      mapped: {
+        'local_attribute'         => 'value',
+        'another_local_attribute' => 'value',
+        'other_local_attribute'   => 'other value',
+      }
+    )
+  end
 end
