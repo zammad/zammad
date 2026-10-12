@@ -376,8 +376,8 @@ importers:
         specifier: ^10.11.1
         version: 10.11.1(@typescript-eslint/parser@8.71.1(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(vue-eslint-parser@10.4.1(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2))
       eslint-plugin-vuejs-accessibility:
-        specifier: ^2.6.0
-        version: 2.6.0(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.11.0)(supports-color@10.2.2)
+        specifier: ^2.6.2
+        version: 2.6.2(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.11.0)(supports-color@10.2.2)
       eslint-plugin-zammad:
         specifier: file:.eslint-plugin-zammad
         version: file:.eslint-plugin-zammad(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -3961,8 +3961,8 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
-  eslint-plugin-vuejs-accessibility@2.6.0:
-    resolution: {integrity: sha512-QtJO3UdLH+aydue/im7aBsYKO99ouJ6hm4wEHL1Xm/BwDfYTAmXEPhTImNwlOHp2bbid7rNY7IrHz+IZzGApYA==}
+  eslint-plugin-vuejs-accessibility@2.6.2:
+    resolution: {integrity: sha512-3pZCg3khqRWa9eo2FAAoPG6oITcdjhnvieCp24z/XUns8KfO5OAru+D4CkMpHQ5hxJIF+74JsnRRzLggPIbj3Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
@@ -10440,7 +10440,7 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/parser': 8.71.1(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
 
-  eslint-plugin-vuejs-accessibility@2.6.0(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.11.0)(supports-color@10.2.2):
+  eslint-plugin-vuejs-accessibility@2.6.2(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.11.0)(supports-color@10.2.2):
     dependencies:
       aria-query: 5.3.2
       eslint: 10.12.0(jiti@2.7.0)(supports-color@10.2.2)
