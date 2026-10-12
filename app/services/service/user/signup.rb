@@ -60,7 +60,7 @@ class Service::User::Signup < Service::Base
       user = ::User.find_by(email: user_data[:email].downcase)
 
       # The result is always positive to avoid leaking of existing user accounts.
-      next true if !user || user.verified == true
+      next true if !user || user.verified == true || !user.active
 
       send_verification_email(user)
     end

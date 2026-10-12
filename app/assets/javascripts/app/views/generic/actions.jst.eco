@@ -8,7 +8,7 @@
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
     <% for item in @items: %>
-      <li role="presentation" data-type="<%= item.name %>"><a role="menuitem" tabindex="-1" href="#"><%- @T( item.title ) %></a>
+      <li role="presentation" data-type="<%= item.name %>"<% if item.disabled: %> disabled<% end %>><a role="menuitem" tabindex="-1" href="#"<% if item.disabled: %> aria-disabled="true" title="<%- @Ti( item.disabledText ) %>"<% end %>><%- @T( item.title ) %></a>
     <% end %>
   </ul>
 </div>

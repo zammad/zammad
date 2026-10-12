@@ -2,12 +2,14 @@
 
 import { within } from '@testing-library/vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockUserQuery } from '#shared/entities/user/graphql/queries/user.mocks.ts'
 import type { User } from '#shared/graphql/types.ts'
 
+import { UserSignupResendDocument } from '#desktop/entities/user/graphql/mutations/userSignupResend.api.ts'
 import { waitForUserSignupResendMutationCalls } from '#desktop/entities/user/graphql/mutations/userSignupResend.mocks.ts'
 
 const user: User = {
@@ -88,5 +90,29 @@ describe('User detail view: Resend verification email', () => {
         'Email sent to "nicole.braun@zammad.org". Please let the user verify their email account.',
       ),
     ).toBeInTheDocument()
+  })
+
+  it('offers the action as unavailable for an inactive user', async () => {
+    mockUserQuery({ user: { ...user, active: false } })
+
+    const view = await visitView('/users/2')
+
+    const main = view.getByRole('main')
+    const header = within(main).getByTestId('user-detail-top-bar-full-details')
+
+    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
+
+    const popover = await view.findByRole('region', { name: 'Additional actions' })
+    const action = within(popover).getByRole('button', { name: 'Resend verification email' })
+
+    expect(action).toHaveAttribute('aria-disabled', 'true')
+    expect(action).toHaveAttribute(
+      'aria-description',
+      'You cannot resend the verification email to an inactive user. Activate them first.',
+    )
+
+    await view.events.click(action)
+
+    expect(getGraphQLMockCalls(UserSignupResendDocument)).toHaveLength(0)
   })
 })

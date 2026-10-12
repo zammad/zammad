@@ -167,10 +167,15 @@ address as verified and establish no session. The REST endpoint still answers
 mutation's payload field `session` was replaced by a boolean `success`, so a client selecting
 `session { id }` receives a GraphQL error.
 
+The resend endpoints `POST /api/v1/users/email_verify_send` and the `userSignupResend` mutation now
+refuse to mint a token for an inactive account. They keep answering positively, so that the existence
+of an account is not leaked, but no mail is sent. `POST /api/v1/users/password_reset` has always
+behaved this way.
+
 A non-persistent token — `Signup`, `PasswordReset`, `AdminAuth`, `KnowledgeBasePreview` — is now
 rejected when it belongs to an inactive user. Previously only persistent tokens were checked this
-way. The mail carrying such a link is still sent, but the link itself no longer works while the
-account is deactivated.
+way, so a link minted before the account was deactivated no longer works — a self-signup account
+that is deactivated before the user clicks the link is now refused where it was verified before.
 
 ⚠️ Sign in through `POST /api/v1/signin` or the `login` mutation after redeeming a verification
 token, and pass the configured second factor there. Change GraphQL clients to select `success`
@@ -178,6 +183,8 @@ instead of `session`. Activate a deactivated account before sending it a verific
 reset link.
 
 **Related advisory:** [GHSA-f3qr-94c2-7mx2](https://github.com/zammad/zammad/security/advisories/GHSA-f3qr-94c2-7mx2)
+
+**Related issue:** [#6431](https://github.com/zammad/zammad/issues/6431)
 
 ### The getting started endpoints require `admin.wizard` once the system is set up
 

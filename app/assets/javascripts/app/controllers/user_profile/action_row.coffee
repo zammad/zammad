@@ -1,6 +1,7 @@
 class App.UserProfileActionRow extends App.ControllerObserverActionRow
   model: 'User'
   observe:
+    active: true
     verified: true
     source: true
     organization_id: true
@@ -80,9 +81,11 @@ class App.UserProfileActionRow extends App.ControllerObserverActionRow
 
       if user.verified isnt true && user.source is 'signup'
         actions.push({
-          name:     'resend_verification_email'
-          title:    __('Resend verification email')
-          callback: @resendVerificationEmail
+          name:         'resend_verification_email'
+          title:        __('Resend verification email')
+          callback:     @resendVerificationEmail
+          disabled:     !user.active
+          disabledText: __('You cannot resend the verification email to an inactive user. Activate them first.')
         })
 
     if @permissionCheck('admin.data_privacy')

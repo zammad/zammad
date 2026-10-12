@@ -16,5 +16,6 @@ class App.ControllerObserverActionRow extends App.ControllerObserver
           'click'
           (e) ->
             e.preventDefault()
+            return if item.disabled
             item.callback(object)
         )
