@@ -61,7 +61,7 @@ class SearchController < ApplicationController
   def search_result_options
     {
       limit:            params[:limit] || 10,
-      ids:              params[:ids],
+      ids:              params[:ids].presence, # blank client input means no restriction
       offset:           params[:offset],
       sort_by:          Array(params[:sort_by]).compact_blank.presence,
       order_by:         Array(params[:order_by]).compact_blank.presence,

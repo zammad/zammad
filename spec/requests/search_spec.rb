@@ -87,6 +87,20 @@ RSpec.describe 'Search', type: :request do
         ), 'assets' => include_assets_of(ticket1, ticket2, ticket3).and(not_include_assets_of(agent)))
       end
 
+      context 'with blank ids' do
+        it 'does not restrict the result for an empty list' do
+          post '/api/v1/search/user', params: params.merge(ids: []), as: :json
+
+          expect(json_response).to include('result' => contain_exactly(include('type' => 'User', 'id' => agent.id)))
+        end
+
+        it 'does not restrict the result for an empty string' do
+          post '/api/v1/search/user', params: params.merge(ids: ''), as: :json
+
+          expect(json_response).to include('result' => contain_exactly(include('type' => 'User', 'id' => agent.id)))
+        end
+      end
+
       context 'when searching by object' do
         let(:params) { super().merge(by_object: true) }
 
@@ -131,6 +145,41 @@ RSpec.describe 'Search', type: :request do
           ), 'assets' => include_assets_of(agent).and(not_include_assets_of(ticket1, ticket2, ticket3)))
         end
       end
+    end
+  end
+
+  describe 'organization search as customer without organization' do
+    let(:customer)     { create(:customer) }
+    let(:organization) { create(:organization, name: 'test superuniqstring1337 org') }
+
+    before do
+      organization
+      authenticated_as(customer)
+    end
+
+    shared_examples 'returns no organizations' do
+      it 'returns no organizations' do
+        post '/api/v1/search/organization', params: { query: 'superuniqstring1337' }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('result' => be_empty, 'assets' => not_include_assets_of(organization))
+      end
+    end
+
+    context 'with elasticsearch', searchindex: true do
+      before do
+        searchindex_model_reload([Organization])
+      end
+
+      include_examples 'returns no organizations'
+    end
+
+    context 'without elasticsearch' do
+      before do
+        Setting.set('es_url', nil)
+      end
+
+      include_examples 'returns no organizations'
     end
   end
 

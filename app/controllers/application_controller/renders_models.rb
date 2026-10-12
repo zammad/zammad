@@ -148,22 +148,7 @@ module ApplicationController::RendersModels
   def model_search_render(object, params)
     paginate_with(max: 200, default: 50)
 
-    generic_objects = object.search(
-      query:            params[:query] || params[:term],
-      condition:        params[:condition],
-      ids:              params[:ids],
-      role_ids:         params[:role_ids],
-      group_ids:        params[:group_ids],
-      permissions:      params[:permissions],
-      only_total_count: response_only_total_count?,
-      sort_by:          params[:sort_by],
-      order_by:         params[:order_by],
-      offset:           pagination.offset,
-      limit:            pagination.limit,
-      current_user:     current_user,
-      full:             true,
-      with_total_count: true,
-    ) || { objects: [], total_count: 0 }
+    generic_objects = object.search(model_search_params(params)) || { objects: [], total_count: 0 }
 
     if response_only_total_count?
       model_search_render_result_only_total_count(generic_objects[:total_count])
@@ -184,6 +169,25 @@ module ApplicationController::RendersModels
 
       model_index_render_result(result)
     end
+  end
+
+  def model_search_params(params)
+    {
+      query:            params[:query] || params[:term],
+      condition:        params[:condition],
+      ids:              params[:ids].presence, # blank client input means no restriction, not a restriction to nothing
+      role_ids:         params[:role_ids],
+      group_ids:        params[:group_ids],
+      permissions:      params[:permissions],
+      only_total_count: response_only_total_count?,
+      sort_by:          params[:sort_by],
+      order_by:         params[:order_by],
+      offset:           pagination.offset,
+      limit:            pagination.limit,
+      current_user:     current_user,
+      full:             true,
+      with_total_count: true,
+    }
   end
 
   def model_search_render_result_only_total_count(total)
