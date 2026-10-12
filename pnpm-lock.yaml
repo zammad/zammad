@@ -289,8 +289,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(pinia@4.0.3(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.43(typescript@6.0.3)))
       '@sa11y/preset-rules':
-        specifier: ^8.1.1
-        version: 8.1.1
+        specifier: ^8.2.0
+        version: 8.2.0
       '@sa11y/vitest':
         specifier: ^8.1.1
         version: 8.1.1(@types/node@26.2.0)(jsdom@30.1.2)(vite@8.3.4(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
@@ -2324,6 +2324,10 @@ packages:
     resolution: {integrity: sha512-Liy/hSiRMHXlsDzm0KWmJmZHwB3oTgOyXPBcVvCFTCdnBkXr2os+sF6mY1ZLjbvHfxJBzJR2hGLw+CCo2Wbcpg==}
     engines: {node: ^20 || ^22 || ^24}
 
+  '@sa11y/common@8.2.0':
+    resolution: {integrity: sha512-g1lfZFO19bFDvpI4JU3y6GntYFK9OooeTuLYJgSU0qK9q4PcB4D2abLkX/2hGjCnJjRSDSySEVgC9wg3v68FXQ==}
+    engines: {node: ^20 || ^22 || ^24}
+
   '@sa11y/format@8.1.1':
     resolution: {integrity: sha512-/p4HZEDvLmRNKwsu0pAluWANcgAljSfEDEk8eSp57v39A/pHT4fJhZWSIJPZwvmc2Z9+N2sR7Rboof+3PwxSVg==}
     engines: {node: ^20 || ^22 || ^24}
@@ -2334,6 +2338,10 @@ packages:
 
   '@sa11y/preset-rules@8.1.1':
     resolution: {integrity: sha512-fMFkBZT2I0a1QadRa8jxjaqy2+3XhvlK5U5HChUGV0EefRTqt7O9tyKrdpxOWEy0cl6Y2pngO2yG47QNTQ1dDA==}
+    engines: {node: ^20 || ^22 || ^24}
+
+  '@sa11y/preset-rules@8.2.0':
+    resolution: {integrity: sha512-iR7GHbEmxyBHtpFFzZs1HGG++y4/yl86YerR9NLRDdbOMln+AUKWrPNNA5QNnbHCupGv9uuVPmNFfE0C//9eqQ==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sa11y/vitest@8.1.1':
@@ -8630,6 +8638,10 @@ snapshots:
     dependencies:
       axe-core: 4.11.1
 
+  '@sa11y/common@8.2.0':
+    dependencies:
+      axe-core: 4.11.1
+
   '@sa11y/format@8.1.1':
     dependencies:
       '@sa11y/common': 8.1.1
@@ -8645,6 +8657,10 @@ snapshots:
   '@sa11y/preset-rules@8.1.1':
     dependencies:
       '@sa11y/common': 8.1.1
+
+  '@sa11y/preset-rules@8.2.0':
+    dependencies:
+      '@sa11y/common': 8.2.0
 
   '@sa11y/vitest@8.1.1(@types/node@26.2.0)(jsdom@30.1.2)(vite@8.3.4(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))':
     dependencies:
