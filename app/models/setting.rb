@@ -251,7 +251,9 @@ reload config settings
       preferences[:authentication] ? 'authenticated' : 'public'
     )
 
-    Gql::Subscriptions::ConfigUpdates.trigger(self)
+    # The value is handed over rather than looked up by the subscribers, since the process serving
+    #   a subscriber may still cache the previous value of this setting (see .cache_valid?).
+    Gql::Subscriptions::ConfigUpdates.trigger({ 'name' => name, 'value' => value, 'authentication' => preferences[:authentication] })
   end
 
   def notify_clients_send(data)

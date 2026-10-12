@@ -17,6 +17,9 @@ module ZammadSpecSupportGraphql
 
       attr_reader :mock_broadcasted_messages
 
+      # A real channel belongs to a connection which decides whether it may still be served.
+      attr_accessor :connection
+
       def stream_from(stream_name, coder: nil, &block)
         block ||= ->(msg) { @mock_broadcasted_messages << msg }
 

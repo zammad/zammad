@@ -2,5 +2,11 @@
 
 module ApplicationCable
   class Channel < ActionCable::Channel::Base
+
+    private
+
+    def effective_user
+      current_user if connection.still_authorized?
+    end
   end
 end
