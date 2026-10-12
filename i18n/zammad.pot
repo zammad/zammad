@@ -14548,6 +14548,10 @@ msgstr ""
 msgid "Public Menu"
 msgstr ""
 
+#: app/models/channel/driver/sms/telnyx.rb:128
+msgid "Public key"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:2
 msgid "Publish Article"
 msgstr ""
@@ -17856,6 +17860,42 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:164
 msgid "Telegram Account"
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:202
+msgid "Telnyx public key in the channel configuration is invalid."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:195
+msgid "Telnyx public key is missing in the channel configuration."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:263
+msgid "Telnyx webhook payload is invalid."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:172
+msgid "Telnyx webhook request body is missing."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:171
+msgid "Telnyx webhook signature headers are missing."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:179
+msgid "Telnyx webhook signature is invalid."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:191
+msgid "Telnyx webhook timestamp is invalid."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:189
+msgid "Telnyx webhook timestamp is outside of the accepted tolerance."
+msgstr ""
+
+#: app/models/channel/driver/sms/telnyx.rb:170
+msgid "Telnyx webhooks are only accepted via POST."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/template.coffee:3
