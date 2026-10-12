@@ -6,15 +6,15 @@
 #   locked out.
 #
 # It does not terminate connections that are already established when the setting is switched
-#   on: an ActionCable connection ends on its next restore, a legacy one on the next run of its
-#   push loop. Established real-time connections are torn down for a deactivated or deleted
-#   account only (see User::TerminatesSessions).
+#   on. An ActionCable connection verifies its session again for every operation it serves and
+#   every subscription update it is about to receive (see
+#   ApplicationCable::Connection#still_authorized?), a legacy one for every event and every run of
+#   its push loop, so an established connection is no longer served as its user from then on.
+#   Established real-time connections are torn down for a deactivated or deleted account only (see
+#   User::TerminatesSessions).
 #
-# It does not log a client out either. The Vue front end does that itself, however the setting
-#   was toggled, since Setting#broadcast_frontend triggers a config update on every save. A
-#   legacy tab only reacts to the 'maintenance' event that the legacy admin interface sends (see
-#   Sessions::Event::Maintenance), so one left open while the setting is changed elsewhere keeps
-#   its rendered state until its next request is denied.
+# It does not log a client out either. Both front ends do that themselves, however the setting
+#   was toggled, since Setting#broadcast_frontend triggers a config update on every save.
 module Auth::MaintenanceMode
 
   # Deliberately does not log a denial: this is asked per event and per run of a client loop, so

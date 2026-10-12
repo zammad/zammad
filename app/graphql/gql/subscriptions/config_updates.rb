@@ -13,14 +13,9 @@ module Gql::Subscriptions
     allow_public_access!
 
     def update
-      return no_update if !object.frontend
-      return no_update if object.preferences[:authentication] && !context.current_user?
+      return no_update if object['authentication'] && !context.current_user?
 
-      # Some setting values use interpolation to reference other settings.
-      # This is applied in `Setting.get`, thus direct reading of the value should be avoided.
-      value = Setting.get(object.name)
-
-      { setting: { key: object.name, value: value } }
+      { setting: { key: object['name'], value: object['value'] } }
     end
   end
 end

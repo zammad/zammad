@@ -233,7 +233,7 @@ RSpec.describe Setting, type: :model do
       it 'does not trigger subscription' do
         allow(Gql::Subscriptions::ConfigUpdates).to receive(:trigger)
         setting.save
-        expect(Gql::Subscriptions::ConfigUpdates).not_to have_received(:trigger).with(setting)
+        expect(Gql::Subscriptions::ConfigUpdates).not_to have_received(:trigger)
       end
     end
 
@@ -245,10 +245,11 @@ RSpec.describe Setting, type: :model do
           .with({ data: { name: 'broadcast_test', value: 'foo' }, event: 'config_update' }, 'public')
       end
 
-      it 'triggers subscription' do
+      it 'triggers subscription with the value' do
         allow(Gql::Subscriptions::ConfigUpdates).to receive(:trigger)
         setting.save
-        expect(Gql::Subscriptions::ConfigUpdates).to have_received(:trigger).with(setting)
+        expect(Gql::Subscriptions::ConfigUpdates).to have_received(:trigger)
+          .with({ 'name' => 'broadcast_test', 'value' => 'foo', 'authentication' => nil })
       end
     end
 
@@ -262,10 +263,11 @@ RSpec.describe Setting, type: :model do
           .with({ data: { name: 'broadcast_test', value: 'foo' }, event: 'config_update' }, 'authenticated')
       end
 
-      it 'triggers subscription' do
+      it 'triggers subscription with the value and the authentication flag' do
         allow(Gql::Subscriptions::ConfigUpdates).to receive(:trigger)
         setting.save
-        expect(Gql::Subscriptions::ConfigUpdates).to have_received(:trigger).with(setting)
+        expect(Gql::Subscriptions::ConfigUpdates).to have_received(:trigger)
+          .with({ 'name' => 'broadcast_test', 'value' => 'foo', 'authentication' => true })
       end
     end
 
@@ -285,10 +287,11 @@ RSpec.describe Setting, type: :model do
           )
       end
 
-      it 'triggers subscription' do
+      it 'triggers subscription with the interpolated value' do
         allow(Gql::Subscriptions::ConfigUpdates).to receive(:trigger)
         setting.save
-        expect(Gql::Subscriptions::ConfigUpdates).to have_received(:trigger).with(setting)
+        expect(Gql::Subscriptions::ConfigUpdates).to have_received(:trigger)
+          .with({ 'name' => 'broadcast_test', 'value' => "test #{described_class.get('fqdn')}", 'authentication' => nil })
       end
     end
   end

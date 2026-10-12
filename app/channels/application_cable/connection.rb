@@ -19,13 +19,28 @@ module ApplicationCable
     def connect
       return if session_id.blank?
 
-      self.current_user = find_verified_user
+      self.current_user = verified_user
       self.sid          = session_id
+    end
+
+    # Whether the connection may still be served as the user it was authenticated as. The user
+    #   stays attached for the connection's whole lifetime, so while a maintenance mode is on, the
+    #   session is verified again for every operation and every subscription update. A session that
+    #   meanwhile authorizes somebody else does not count: that takes a new connection, as any login
+    #   or logout does.
+    def still_authorized?
+      return true if !current_user || !Auth::MaintenanceMode.active?
+
+      verified_user == current_user
     end
 
     private
 
-    def find_verified_user
+    # The user the session cookie authorizes right now, with the prerequisites of the HTTP
+    #   transport applied (see ApplicationController::Authenticates#authentication_check_prerequesits),
+    #   otherwise a session that was retained across a deactivation would stay authorized on this
+    #   transport.
+    def verified_user
       private_id = Rack::Session::SessionId.new(session_id).private_id
 
       session = ActiveRecord::SessionStore::Session.find_by(session_id: private_id)
@@ -33,9 +48,6 @@ module ApplicationCable
 
       user = User.find_by(id: session.data['user_id'])
 
-      # The prerequisites of the HTTP transport must be applied here as well (see
-      #   ApplicationController::Authenticates#authentication_check_prerequesits), otherwise a
-      #   session that was retained across a deactivation would stay authorized on this transport.
       return if !user&.active?
       return if Auth::SwitchedSession.revoked?(session.data['switched_from_user_id'])
       return if Auth::MaintenanceMode.blocks?(user, switched_from_user_id: session.data['switched_from_user_id'])
