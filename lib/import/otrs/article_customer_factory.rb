@@ -4,6 +4,7 @@ module Import
   module OTRS
     module ArticleCustomerFactory
       extend Import::Factory
+      extend self
 
       def skip?(record, *_args)
         return true if record['SenderType'] != 'customer'
