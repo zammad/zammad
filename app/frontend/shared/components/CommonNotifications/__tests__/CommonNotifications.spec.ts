@@ -289,6 +289,32 @@ describe('CommonNotifications.vue', () => {
     expect(wrapper.getByTestId('notification')).toBeInTheDocument()
   })
 
+  it('keeps notifications that are preserved on clear', async () => {
+    const { notify, notifications, clearAllNotifications, removeNotification } = useNotifications()
+
+    onTestFinished(() => removeNotification('preserved-id'))
+
+    notify({
+      message,
+      type: NotificationTypes.Error,
+    })
+
+    notify({
+      id: 'preserved-id',
+      message,
+      type: NotificationTypes.Warn,
+      persistent: true,
+      preserveOnClear: true,
+    })
+
+    clearAllNotifications()
+    await nextTick()
+
+    expect(notifications.value).toHaveLength(1)
+    expect(notifications.value[0].id).toBe('preserved-id')
+    expect(wrapper.getAllByTestId('notification')).toHaveLength(1)
+  })
+
   it('cancels the pending timeout when a notification is removed manually', async () => {
     const { notify, notifications, removeNotification } = useNotifications()
 

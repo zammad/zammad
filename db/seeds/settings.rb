@@ -345,7 +345,7 @@ Setting.create_if_not_exists(
     online_service_disable: true,
     permission:             ['admin.system'],
   },
-  frontend:    false
+  frontend:    true
 )
 Setting.create_if_not_exists(
   title:       __('WebSocket backend'),

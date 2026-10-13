@@ -1,9 +1,13 @@
 <div class="noty_message">
   <% if @type is 'error': %>
     <%- @Icon('diagonal-cross', 'icon-error') %>
-  <% end %>
-  <% if @type is 'success': %>
+  <% else if @type is 'alert': %>
+    <%- @Icon('danger') %>
+  <% else if @type is 'success': %>
     <%- @Icon('checkmark') %>
   <% end %>
   <span class="noty_text"></span>
+  <% if @timeout is false: %>
+    <div class="noty_close"><%- @Icon('diagonal-cross') %></div>
+  <% end %>
 </div>

@@ -1,9 +1,13 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { effectScope } from 'vue'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
+import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import { useUnknownAddressDetection } from '#shared/composables/useUnknownAddressDetection.ts'
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
@@ -104,5 +108,38 @@ describe('testing login error handling', () => {
     expect(view.getByTestId('notification')).toHaveTextContent(
       'Login failed. Please double-check your two-factor authentication method.',
     )
+  })
+
+  it('keeps the unknown address warning when the login fails', async () => {
+    mockApplicationConfig({ fqdn: 'zammad.org', http_type: 'https' })
+
+    const scope = effectScope()
+    scope.run(() => useUnknownAddressDetection())
+
+    onTestFinished(() => {
+      scope.stop()
+      useNotifications().removeNotification('unknown-fqdn-redirect')
+    })
+
+    mockGraphQLApi(LoginDocument).willFailWithUserError({
+      login: {
+        session: null,
+        errors: [{ message: 'Login failed.' }],
+        twoFactorRequired: null,
+      },
+    })
+
+    const view = await visitView('/login')
+
+    await view.events.type(view.getByPlaceholderText('Username / Email'), 'admin@example.com')
+    await view.events.type(view.getByPlaceholderText('Password'), 'wrong')
+
+    await view.events.click(view.getByText('Sign in'))
+
+    const notifications = view.getAllByTestId('notification')
+
+    expect(notifications).toHaveLength(2)
+    expect(notifications[0]).toHaveTextContent("This isn't the address Zammad is set up for.")
+    expect(notifications[1]).toHaveTextContent('Login failed.')
   })
 })

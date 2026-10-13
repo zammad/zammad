@@ -988,10 +988,10 @@ msgstr ""
 msgid "Accounted Time"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:133
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:185
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:128
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr ""
@@ -2934,8 +2934,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:173
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
@@ -3367,8 +3367,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:124
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:129
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:114
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:162
 msgid "Channel"
 msgstr ""
@@ -4598,7 +4598,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:94
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList.vue:35
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:145
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/models/report.rb:22
 msgid "Created"
 msgstr ""
@@ -4639,7 +4639,7 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb:116
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:25
@@ -6167,8 +6167,8 @@ msgstr ""
 msgid "Detected Language"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:117
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:122
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
 msgid "Detected language"
 msgstr ""
 
@@ -8223,8 +8223,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "From"
 msgstr ""
@@ -11295,7 +11295,7 @@ msgid "Message for login page."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:16
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:141
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:145
 msgid "Message status"
 msgstr ""
 
@@ -11316,7 +11316,7 @@ msgstr ""
 msgid "Messaging Username"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:93
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:94
 msgid "Meta data"
 msgstr ""
 
@@ -13254,7 +13254,7 @@ msgid "Original Translation"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:41
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:60
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:61
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original formatting"
 msgstr ""
@@ -14361,7 +14361,7 @@ msgid "Rating can only be set once"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:107
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:45
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:46
 msgid "Raw"
 msgstr ""
 
@@ -14854,7 +14854,7 @@ msgid "Reply to last article"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:97
 msgid "Reply-To"
 msgstr ""
 
@@ -15800,7 +15800,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:183
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:148
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:152
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:296
 #: db/seeds/permissions.rb:209
@@ -16530,7 +16530,7 @@ msgstr ""
 msgid "Show matching tickets in the warning"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:80
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:81
 msgid "Show meta data"
 msgstr ""
 
@@ -17181,7 +17181,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
@@ -17343,6 +17343,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
 msgid "Switch back to old layout"
+msgstr ""
+
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+msgid "Switch here"
 msgstr ""
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
@@ -19509,6 +19513,14 @@ msgstr ""
 msgid "This is not a valid X509 certificate. Please check the certificate format."
 msgstr ""
 
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+msgid "This isn't the address Zammad is set up for."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/unknown_address_detection.coffee:37
+msgid "This isn't the address Zammad is set up for. Switch here."
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:102
 msgid "This item expands to show more options"
@@ -20305,8 +20317,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:97
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
