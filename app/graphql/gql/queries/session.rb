@@ -3,13 +3,13 @@
 module Gql::Queries
   class Session < BaseQuery
 
-    description 'The sessionId of the currently authenticated user.'
+    description 'The session of the currently authenticated user.'
 
     type Gql::Types::SessionType, null: false
 
     def resolve(...)
       {
-        id:         context[:sid],
+        session_id: context[:controller].session.id,
         after_auth: Auth::AfterAuth.run(context.current_user, context[:controller].session)
       }
     end

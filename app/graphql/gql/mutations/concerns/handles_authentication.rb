@@ -39,7 +39,7 @@ module Gql::Mutations::Concerns::HandlesAuthentication
     def authenticate_result
       {
         session: {
-          id:         context[:controller].session.id,
+          session_id: context[:controller].session.id,
           after_auth: Auth::AfterAuth.run(context.current_user, context[:controller].session, options: { initial: true })
         }
       }
