@@ -77,20 +77,31 @@ class App.Notify extends App.Controller
 
     translatedMessage = App.i18n.translateContent(data.msg)
 
-    if data.link
-      translatedMessage = '<a href="' + data.link + '">' + translatedMessage + '</a>'
+    link = if _.isFunction(data.link) then data.link() else data.link
 
-    $('#notify').noty(
+    if link
+      translatedMessage = '<a href="' + link + '">' + translatedMessage + '</a>'
+
+    closeWith = ['click']
+    closeWith.push('button') if data.timeout is false
+
+    notification = $('#notify').noty(
       text:      translatedMessage
       type:      data.type
       template:  App.view('notify')
         type: data.type
+        timeout: data.timeout
       animation:
         open:    'animated fadeInDown'
         close:   'animated fadeOutDown'
-      timeout:   data.timeout || 3800
-      closeWith: ['click']
+      timeout:   data.timeout ? 3800
+      closeWith: closeWith
     )
+
+    # A function link is resolved again on click, so a toast that stays open follows the user
+    # through the app. The browser reads the href only after the click handlers ran.
+    if _.isFunction(data.link)
+      notification.$bar.find('a').on('click', -> $(@).attr('href', data.link()))
 
   destroy: (e) ->
     e.preventDefault()

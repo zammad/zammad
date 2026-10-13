@@ -13,6 +13,7 @@ export interface ConfigList {
   ai_assistance_ticket_summary_config: unknown
   ai_assistance_ticket_summary_selector: unknown
   ai_provider: boolean
+  alternative_fqdn: string
   api_password_access?: boolean | null
   api_token_access?: boolean | null
   auth_facebook?: boolean | null

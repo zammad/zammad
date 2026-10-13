@@ -27,8 +27,12 @@ const removeNotification = (id: string) => {
 }
 
 const clearAllNotifications = () => {
-  notifications.value.forEach(cancelNotificationTimeout)
-  notifications.value = []
+  notifications.value = notifications.value.filter((notification: Notification) => {
+    if (notification.preserveOnClear) return true
+
+    cancelNotificationTimeout(notification)
+    return false
+  })
 }
 
 const useNotifications = () => {
