@@ -216,6 +216,106 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
       end
     end
 
+    context 'when inserting from the related knowledge widget' do
+      def open_article
+        within(:active_content) { find('.js-writeArea').click(x: 5, y: 5) }
+      end
+
+      def insert_from_widget(translation)
+        within :active_content, '.link_kb_answers' do
+          find(".js-kb-insert[data-object-id='#{translation.id}']").click
+        end
+      end
+
+      it 'inserts the answer with its attachment at the caret, leaving the text written intact' do
+        field.send_keys('Before', :enter, 'After', :up, :end)
+        insert_from_widget(target_translation)
+
+        expect(field).to have_text(%r{\ABefore\s*#{Regexp.escape(target_translation.content.body)}\s*After\z})
+
+        within(:active_content) do
+          expect(page).to have_css('.attachments .attachment--row', text: 'hello_world.txt')
+        end
+      end
+
+      it 'replaces the selected text with the answer' do
+        field.send_keys('Before Selected After', *Array.new(6, :left), *Array.new(8, %i[shift left]))
+        insert_from_widget(target_translation)
+
+        expect(field).to have_text(%r{\ABefore\s*#{Regexp.escape(target_translation.content.body)}\s*After\z})
+      end
+
+      it 'inserts a suggested answer' do
+        open_article
+        insert_from_widget(suggested_translation)
+
+        expect(field).to have_text(suggested_translation.content.body)
+      end
+
+      it 'inserts several answers one after another' do
+        field.send_keys('Before')
+        insert_from_widget(target_translation)
+        expect(field).to have_text(target_translation.content.body)
+
+        insert_from_widget(suggested_translation)
+
+        expect(field).to have_text(%r{\ABefore\s*#{Regexp.escape(target_translation.content.body)}\s*#{Regexp.escape(suggested_translation.content.body)}\z})
+      end
+
+      it 'keeps an empty article open' do
+        open_article
+        insert_from_widget(target_translation)
+
+        expect(field).to have_text(target_translation.content.body)
+        expect(page).to have_css('.article-add.is-open')
+      end
+
+      it 'reports a failed request and inserts nothing' do
+        page.execute_script("App.KnowledgeBaseAnswerTranslation.prototype.contentUrl = function() { return App.Config.get('api_path') + '/knowledge_bases/0/answers/0' }")
+
+        field.send_keys('Before')
+        insert_from_widget(target_translation)
+
+        expect(page).to have_text('The knowledge base answer could not be inserted.')
+        expect(field).to have_text(%r{\ABefore\z})
+      end
+
+      context 'with a full quote reply' do
+        let(:article) { create(:ticket_article, :inbound_email, ticket:, body: 'Customer question.') }
+
+        def authenticate
+          Setting.set('ui_ticket_zoom_article_email_full_quote', true)
+          article
+
+          super
+        end
+
+        it 'inserts the answer at the start, above the quote, when no caret was placed' do
+          within(:active_content) { click '.js-ArticleAction[data-type=emailReply]' }
+          expect(field).to have_css('blockquote', text: 'Customer question.')
+
+          insert_from_widget(target_translation)
+
+          expect(field).to have_text(%r{\A#{Regexp.escape(target_translation.content.body)}.*Customer question\.}m)
+        end
+      end
+
+      context 'when the answer has an image' do
+        let(:answer) { create(:knowledge_base_answer, :with_image, published_at: 1.week.ago) }
+
+        it 'inserts the image' do
+          open_article
+          insert_from_widget(target_translation)
+
+          within(:active_content) do
+            within(:richtext) do
+              wait.until { first('img').evaluate_script('this.naturalWidth').positive? }
+            end
+          end
+        end
+      end
+    end
+
     it 'drops the suggestions from the open list when they fail' do
       field.send_keys('??')
       expect(page).to have_selector(:text_module, suggested_translation.id)

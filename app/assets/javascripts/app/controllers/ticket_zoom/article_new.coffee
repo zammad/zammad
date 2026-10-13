@@ -30,8 +30,17 @@ class App.TicketZoomArticleNew extends App.Controller
     'focus .js-textarea':            'openTextarea'
     'input .js-textarea':            'updateLetterCount'
     'blur .js-textarea':             'blurTextarea'
+    'keyup .js-textarea':            'rememberSelection'
+    'mouseup .js-textarea':          'rememberSelection'
     'click .js-active-toggle':       'toggleButton'
     'click .js-active-toggle-type':  'toggleTypeButton'
+
+  # The related knowledge widget offers its insert action only while the article is open. It is rebuilt
+  # with the sidebar, so besides the announcement it has to be able to look the state up.
+  @openTicketIds: {}
+
+  @isOpen: (ticketId) ->
+    Boolean(@openTicketIds[ticketId])
 
   constructor: ->
     super
@@ -94,7 +103,16 @@ class App.TicketZoomArticleNew extends App.Controller
       return if data.ticket?.id?.toString() isnt @ticket_id.toString() && data.form_id isnt @form_id
       return if _.isEmpty(data.attachments)
       for file in data.attachments
+        continue if _.some(@attachments, (attachment) -> attachment.id.toString() is file.id.toString())
+
+        @attachments.push(file)
         @renderAttachment(file)
+    )
+
+    @controllerBind('ui::ticket::insertKnowledgeBaseAnswer', (data) =>
+      return if data.ticket_id.toString() isnt @ticket_id.toString()
+
+      @insertKnowledgeBaseAnswer(data.translation_id)
     )
 
     # reset new article screen
@@ -206,6 +224,9 @@ class App.TicketZoomArticleNew extends App.Controller
   render: ->
     @releaseGlobalClickEvents()
     ticket = App.Ticket.fullLocal(@ticket_id)
+
+    @lastSelection = undefined
+    @announceOpen(false)
 
     @html App.view('ticket_zoom/article_new')(
       ticket:           ticket
@@ -605,7 +626,66 @@ class App.TicketZoomArticleNew extends App.Controller
       .addClass className
 
   blurTextarea: =>
+    @rememberSelection()
     App.Event.trigger('ui::ticket::articleNew::change', { ticket_id: @ticket.id })
+
+  # A click outside of the article, on the related knowledge widget's insert action for example, takes
+  # the selection along, so the answer is inserted where it was last.
+  rememberSelection: =>
+    range = @textarea.data('plugin_ce')?.getSelection().ranges[0]
+    return if !range
+
+    @lastSelection = range.cloneRange()
+
+  # Over the last selection. Without one, at the start of the article, above the signature.
+  insertionRange: ->
+    textarea = @textarea.get(0)
+
+    return @lastSelection.cloneRange() if @lastSelection and textarea.contains(@lastSelection.startContainer)
+
+    range = document.createRange()
+    range.setStart(textarea, 0)
+    range
+
+  # The same as picking the answer via `??`. The range is taken now, not once the answer arrived.
+  insertKnowledgeBaseAnswer: (translationId) =>
+    translation = App.KnowledgeBaseAnswerTranslation.find(translationId)
+    range       = @insertionRange()
+    formId      = @form_id
+
+    # Submitting the article meanwhile resets it under a new form ID; the answer belonged to the old one.
+    isStale = => @form_id isnt formId
+
+    App.KnowledgeBaseAnswerTranslation.fetchForInsertion(
+      translation.contentUrl(),
+      translation.id,
+      formId,
+      (body, attachments) =>
+        return if isStale()
+
+        @textarea.trigger('focus')
+        @textarea.data('plugin_ce').restoreSelection([range])
+        @textarea.data('plugin_textmodule').paste(body)
+        @rememberSelection()
+
+        App.Event.trigger('ui::ticket::addArticleAttachment', {
+          attachments: attachments
+          form_id:     formId
+        })
+      (xhr) =>
+        # Logging out cancels all pending requests.
+        return if xhr?.statusText is 'abort'
+        return if isStale()
+
+        @notify(
+          type: 'error'
+          msg:  __('The knowledge base answer could not be inserted.')
+        )
+    )
+
+  announceOpen: (open) ->
+    App.TicketZoomArticleNew.openTicketIds[@ticket_id] = open
+    App.Event.trigger('ui::ticket::articleNew::open', { ticket_id: @ticket_id, open: open })
 
   updateInitials: (value) =>
     if value is undefined
@@ -626,6 +706,7 @@ class App.TicketZoomArticleNew extends App.Controller
       duration = 0
 
     @articleNewEdit.addClass('is-open')
+    @announceOpen(true)
 
     @textarea.velocity
       properties:
@@ -686,7 +767,10 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
 
-  closeTextarea: =>
+  closeTextarea: (event) =>
+    # An empty article stays open for the answer the related knowledge widget is about to insert.
+    return if $(event?.target).closest('.js-kb-insert').length
+
     if !@textarea.text().trim() && !@attachments.length && not @isIE10()
       $(window).off 'click.ticket-zoom-textarea'
 
@@ -696,7 +780,9 @@ class App.TicketZoomArticleNew extends App.Controller
         options:
           duration: 300
           easing: 'easeOutQuad'
-          complete: => @articleNewEdit.removeClass('is-open')
+          complete: =>
+            @articleNewEdit.removeClass('is-open')
+            @announceOpen(false)
 
       @textBubble.velocity
         properties:

@@ -9105,6 +9105,7 @@ a.list-group-item.active > .badge,
 }
 
 .list-item-add,
+.list-item-insert,
 .list-item-delete {
   padding: 0 10px;
 
@@ -9134,6 +9135,15 @@ a.list-group-item.active > .badge,
   .icon {
     fill: var(--supergood-color);
   }
+}
+
+.list-item-insert .icon {
+  width: 14px;
+  height: 14px;
+}
+
+.list-item-insert:hover .icon {
+  fill: var(--highlight);
 }
 
 // Separate the "Suggested knowledge" section from the "+ Link" / "+ AI draft" controls above it.

@@ -35,6 +35,8 @@ const preContext = {
     queueAction((context) => context.addSignature(signature)),
   removeSignature: () => queueAction((context) => context.removeSignature()),
   focus: () => queueAction((context) => nextTick(() => context.focus())),
+  insertKnowledgeBaseAnswer: (translationId: ID) =>
+    queueAction((context) => context.insertKnowledgeBaseAnswer?.(translationId)),
 }
 
 // eslint-disable-next-line vue/no-mutating-props

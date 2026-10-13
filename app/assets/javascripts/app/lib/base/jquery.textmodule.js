@@ -633,37 +633,8 @@
 
     var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
 
-    App.Ajax.request({
-      id:   'textmoduleKbAnswer',
-      type: 'GET',
-      url:  $(elem).data('url'),
-      success: function(data, status, xhr) {
-        App.Collection.loadAssets(data.assets)
-
-        var translation = App.KnowledgeBaseAnswerTranslation.find($(elem).data('id'))
-
-        var body = translation.content().bodyWithPublicURLs()
-
-        App.Ajax.request({
-          id:   'textmoduleKbAnswerAttachments',
-          type: 'POST',
-          data: JSON.stringify({
-            form_id: form_id
-          }),
-          url:  translation.parent().generateURL('/attachments/clone_to_form'),
-          success: function(data, status, xhr) {
-            App.Utils.htmlImage2DataUrlAsync(body, function(output){
-              callback(output, data.attachments)
-            })
-          },
-          error: function(xhr) {
-            callback('')
-          }
-        })
-      },
-      error: function(xhr) {
-        callback('')
-      }
+    App.KnowledgeBaseAnswerTranslation.fetchForInsertion($(elem).data('url'), $(elem).data('id'), form_id, callback, function() {
+      callback('')
     })
   }
 

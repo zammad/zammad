@@ -20,7 +20,7 @@ import type {
   MentionKnowledgeBaseRelatedItem,
   MentionKnowledgeBaseRelatedSection,
 } from '../types.ts'
-import type { CommandProps } from '@tiptap/core'
+import type { CommandProps, EditorEvents } from '@tiptap/core'
 import type { Ref } from 'vue'
 
 export const EXTENSION_NAME = 'mentionKnowledgeBase'
@@ -66,6 +66,34 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     useKnowledgeBaseAnswerSuggestionContentTransformMutation({}),
   )
 
+  // Shared by `??` and the insert from outside the editor, so both bring the same content.
+  //   Attachments are only added while the editor that asked for them is still there.
+  const loadAnswerContent = async (translationId: ID, isEditorAlive = () => true) => {
+    const { meta: editorMeta = {}, formId } = context.value
+    const meta = editorMeta[EXTENSION_NAME] || {}
+
+    const result = await translateHandler.send({
+      translationId,
+      formId,
+    })
+
+    if (!isEditorAlive()) return ''
+
+    const attachmentsNodeName = meta?.attachmentsNodeName
+
+    if (attachmentsNodeName) {
+      const attachmentField = getNodeByName(context.value.formId, attachmentsNodeName)
+
+      const existingAttachments = (cloneDeep(attachmentField?.value) || []) as StoredFile[]
+      const newAttachments =
+        result?.knowledgeBaseAnswerSuggestionContentTransform?.attachments || []
+
+      attachmentField?.input?.([...existingAttachments, ...newAttachments])
+    }
+
+    return htmlCleanup(result?.knowledgeBaseAnswerSuggestionContentTransform?.body || '')
+  }
+
   return Mention.extend({
     name: EXTENSION_NAME,
     addCommands: () => ({
@@ -74,6 +102,39 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
         // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
         ({ chain }: CommandProps) =>
           chain().insertContent(` ${ACTIVATOR}`).run(),
+      insertKnowledgeBaseAnswer:
+        (translationId: ID) =>
+        ({ editor, dispatch }: CommandProps) => {
+          if (!dispatch) return true
+
+          // Taken now, so the answer replaces the current selection. Text typed at either edge while the
+          //   content loads stays outside the replaced range.
+          let { from, to } = editor.state.selection
+
+          const trackPosition = ({
+            transaction,
+            appendedTransactions,
+          }: EditorEvents['transaction']) => {
+            ;[transaction, ...appendedTransactions].forEach((tr) => {
+              from = tr.mapping.map(from)
+              to = Math.max(from, tr.mapping.map(to, -1))
+            })
+          }
+
+          editor.on('transaction', trackPosition)
+
+          loadAnswerContent(translationId, () => !editor.isDestroyed)
+            .then((content) => {
+              if (!content || editor.isDestroyed) return
+
+              editor.chain().focus().insertContentAt({ from, to }, content).run()
+            })
+            // A failed request is already notified by the handler, and inserts nothing.
+            .catch(() => {})
+            .finally(() => editor.off('transaction', trackPosition))
+
+          return true
+        },
     }),
     addOptions() {
       return {
@@ -87,29 +148,8 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       type: 'knowledge-base',
       label: __('Knowledge base articles'),
       placeholder: __('Start typing to search in knowledge base…'),
-      async insert(props: MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem) {
-        const { meta: editorMeta = {}, formId } = context.value
-        const meta = editorMeta[EXTENSION_NAME] || {}
-
-        const result = await translateHandler.send({
-          translationId: props.id,
-          formId,
-        })
-
-        const attachmentsNodeName = meta?.attachmentsNodeName
-
-        if (attachmentsNodeName) {
-          const attachmentField = getNodeByName(context.value.formId, attachmentsNodeName)
-
-          const existingAttachments = (cloneDeep(attachmentField?.value) || []) as StoredFile[]
-          const newAttachments =
-            result?.knowledgeBaseAnswerSuggestionContentTransform?.attachments || []
-
-          attachmentField?.input?.([...existingAttachments, ...newAttachments])
-        }
-
-        return htmlCleanup(result?.knowledgeBaseAnswerSuggestionContentTransform?.body || '')
-      },
+      insert: (props: MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem) =>
+        loadAnswerContent(props.id),
       // The related answers are at hand, so they skip the debounce. A search still on its way when the
       //   term is cleared is discarded by the suggestion plugin.
       items: ({ query }) => (query ? searchKnowledgeBaseMentions({ query }) : getRelatedMentions()),

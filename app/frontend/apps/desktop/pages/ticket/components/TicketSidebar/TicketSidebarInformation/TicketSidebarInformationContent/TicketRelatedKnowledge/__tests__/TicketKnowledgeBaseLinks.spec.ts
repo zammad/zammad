@@ -58,11 +58,13 @@ const linkedAnswer = (
 const renderLinks = (
   linkedAnswers = [linkedAnswer(1, 'Reset your password')],
   isTicketEditable = true,
+  canInsertAnswer = false,
 ) =>
   renderComponent(TicketKnowledgeBaseLinks, {
     props: {
       linkedAnswers,
       isTicketEditable,
+      canInsertAnswer,
     },
     router: true,
     routerRoutes: [
@@ -156,6 +158,29 @@ describe('TicketKnowledgeBaseLinks', () => {
     expect(wrapper.emitted('unlink')).toEqual([
       [convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)],
     ])
+  })
+
+  it('requests the insert of a linked answer while an article is being written', async () => {
+    const wrapper = renderLinks([linkedAnswer(1, 'Reset your password')], true, true)
+
+    await wrapper.events.click(
+      await wrapper.findByRole('button', { name: 'Insert knowledge base answer' }),
+    )
+
+    expect(wrapper.emitted('insert')).toEqual([
+      [convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)],
+    ])
+  })
+
+  it('hides the insert action while no article is being written', () => {
+    const wrapper = renderLinks([linkedAnswer(1, 'Reset your password')])
+
+    expect(
+      wrapper.queryByRole('button', { name: 'Insert knowledge base answer' }),
+    ).not.toBeInTheDocument()
+    expect(
+      wrapper.getByRole('button', { name: 'Unlink knowledge base answer' }),
+    ).toBeInTheDocument()
   })
 
   it('hides the unlink action when the ticket is not editable', () => {

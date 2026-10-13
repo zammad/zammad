@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, useTemplateRef } from 'vue'
 
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { Link } from '#shared/types/router.ts'
@@ -28,6 +29,13 @@ const popoverWithTriggerInstance = useTemplateRef('popover-with-trigger')
 const hasOpenedViaLongPress = computed(
   () => popoverWithTriggerInstance.value?.hasOpenedViaLongPress,
 )
+
+const { isTouchDevice } = useTouchDevice()
+
+// The actions take no room from the title until they are needed, but stay reachable by keyboard and
+//   screen readers. Touch is decided here, so the hover variant skips Tailwind's `(hover: hover)`
+//   media query, which headless Chrome does not match.
+const revealActionsOnHover = computed(() => !isTouchDevice.value && !hasOpenedViaLongPress.value)
 </script>
 
 <template>
@@ -56,6 +64,14 @@ const hasOpenedViaLongPress = computed(
       <slot name="link-trailing" />
     </CommonPopoverWithTrigger>
 
-    <slot name="action" :has-opened-via-long-press="hasOpenedViaLongPress" />
+    <div
+      v-if="$slots.action"
+      class="flex shrink-0 items-center gap-2"
+      :class="{
+        'sr-only group-focus-within:not-sr-only group-[&:hover]:not-sr-only': revealActionsOnHover,
+      }"
+    >
+      <slot name="action" />
+    </div>
   </li>
 </template>

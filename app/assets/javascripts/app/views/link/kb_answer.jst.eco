@@ -13,6 +13,9 @@
         </a>
       </div>
       <% if @editable: %>
+        <a class="list-item-insert js-kb-insert hide" data-object-id="<%= item.id %>" title="<%- @Tp('Insert knowledge base answer') %>">
+          <%- @Icon('book') %>
+        </a>
         <a class="list-item-delete js-delete" data-object="KnowledgeBase::Answer::Translation" data-object-id="<%= item.id %>" data-link-type="normal">
           <%- @Icon('diagonal-cross') %>
         </a>
@@ -60,6 +63,9 @@
             </div>
           </div>
           <% if @editable: %>
+            <a class="task-addon list-item-insert js-kb-insert hide" data-object-id="<%= item.id %>" title="<%- @Tp('Insert knowledge base answer') %>">
+              <%- @Icon('book') %>
+            </a>
             <a class="task-addon list-item-add js-kb-suggestion-add" data-object-id="<%= item.id %>" title="<%- @Tp('Link') %>">
               <%- @Icon('plus') %>
             </a>

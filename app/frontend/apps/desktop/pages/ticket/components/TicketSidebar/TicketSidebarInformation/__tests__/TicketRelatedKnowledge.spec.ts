@@ -129,6 +129,7 @@ const renderRelatedKnowledge = (
           ticket: computed(() => ticket),
           ticketInternalId: computed(() => ticket.internalId),
           isTicketEditable: computed(() => isTicketEditable),
+          newTicketArticlePresent: ref(false),
         },
       ],
       // The AI draft action hands the active sidebar to the flyout it opens.

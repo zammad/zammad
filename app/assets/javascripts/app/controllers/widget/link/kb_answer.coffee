@@ -19,6 +19,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     'click .js-kb-ai-generate':       'openAiDraftModal'
     'click .js-kb-suggestions-retry': 'retrySuggestions'
     'click .js-kb-suggestion-add':    'linkSuggestion'
+    'click .js-kb-insert':            'insertAnswer'
 
   # The ticket's reply editor offers the linked and suggested answers in its `??` list, and reads
   # them from the widget on screen instead of searching a second time.
@@ -39,6 +40,13 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
       @render()
       @ensureSuggestions('sidebar') if @suggestionsVisible()
+    )
+
+    # The insert action is offered only while the article is being written.
+    @controllerBind('ui::ticket::articleNew::open', (data) =>
+      return if data.ticket_id?.toString() isnt @object.id.toString()
+
+      @toggleInsertActions()
     )
 
     return if !@suggestionsSearchAvailable()
@@ -213,7 +221,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       id:       translation.id
       title:    @titleWithLocale(translation, answer, kb_locale)
       category: if kb_locale then answer.category().categoriesForSearch(kb_locale: kb_locale) else ''
-      url:      answer.generateURL() + "?include_contents=#{translation.content_id}"
+      url:      translation.contentUrl()
 
     {
       linked:    linked.map(insertable)
@@ -283,6 +291,17 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @preventDefault(e)
     e.stopPropagation()
     @saveToServer($(e.currentTarget).data('object-id'))
+
+  insertAnswer: (e) =>
+    @preventDefault(e)
+
+    App.Event.trigger('ui::ticket::insertKnowledgeBaseAnswer', {
+      ticket_id:      @object.id
+      translation_id: $(e.currentTarget).data('object-id')
+    })
+
+  toggleInsertActions: =>
+    @$('.js-kb-insert').toggleClass('hide', !App.TicketZoomArticleNew.isOpen(@object.id))
 
   requestSuggestions: (scope) =>
     @suggestionState(scope).requested = true
@@ -405,6 +424,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
     @refreshElements()
     @searchableSelect.addClass('hidden')
+    @toggleInsertActions()
 
     @aiDraftModal?.update()
 

@@ -11,6 +11,7 @@ import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
+import { useKnowledgeBaseAnswerInsert } from './TicketRelatedKnowledge/composables/useKnowledgeBaseAnswerInsert.ts'
 import { useKnowledgeBaseAnswerLinks } from './TicketRelatedKnowledge/composables/useKnowledgeBaseAnswerLinks.ts'
 import TicketKnowledgeBaseActions from './TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue'
 import TicketKnowledgeBaseAiSuggested from './TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue'
@@ -53,6 +54,8 @@ const unlinkedAiSuggestedAnswers = computed(() =>
 
 const { unlinkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetType)
 
+const { canInsertAnswer, insertAnswer } = useKnowledgeBaseAnswerInsert()
+
 // Unlinking makes the answer eligible as a suggestion again, but the search that excluded it ran on
 //   the server, so it can only come back by re-running it. Nothing else about the ticket changed,
 //   which is why this refresh keeps the current suggestions on screen rather than showing a waiting
@@ -86,7 +89,9 @@ const showAIKnowledgeBaseDraft = computed(
           v-if="linkedAnswers?.length"
           :linked-answers="linkedAnswers"
           :is-ticket-editable="isTicketEditable"
+          :can-insert-answer="canInsertAnswer"
           @unlink="handleUnlinkAnswer"
+          @insert="insertAnswer"
         />
         <TicketKnowledgeBaseAiSuggested
           v-if="showAiSuggestedAnswers"
@@ -97,8 +102,10 @@ const showAIKnowledgeBaseDraft = computed(
           :has-error="hasAiSuggestedAnswersError"
           :error-detail="aiSuggestedAnswersErrorDetail"
           :is-ticket-editable="isTicketEditable"
+          :can-insert-answer="canInsertAnswer"
           :show-relevance-score="showRelevanceScore"
           @retry="$emit('retry-ai-suggested-answers-search')"
+          @insert="insertAnswer"
         />
       </div>
 

@@ -118,6 +118,59 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     end
   end
 
+  describe 'Insert action', authenticated_as: :authenticate do
+    let(:ticket)                { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:linked_translation)    { published_answer.translations.first }
+    let(:suggested_translation) { internal_answer.translations.first }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', true)
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      # The knowledge base answer factory triggers the vector index callback, which must not reach
+      # Elasticsearch in this spec.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return({ answers: [{ translation: suggested_translation, score: 0.9 }], pending: false })
+
+      create(:link, from: ticket, to: linked_translation)
+
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      within :active_content, '.link_kb_answers' do
+        find('.js-kb-suggestion-add')
+        find('li', text: linked_translation.title)
+      end
+    end
+
+    it 'offers the action on the linked and the suggested answer only while the article is open' do
+      within :active_content do
+        expect(page).to have_no_css('.link_kb_answers .js-kb-insert')
+
+        find('.js-writeArea').click(x: 5, y: 5)
+
+        within '.link_kb_answers' do
+          expect(page)
+            .to have_css(".js-kb-insert[data-object-id='#{linked_translation.id}']")
+            .and(have_css(".js-kb-insert[data-object-id='#{suggested_translation.id}']"))
+        end
+      end
+
+      find(:richtext).send_keys(' ')
+      find('input#global-search').click
+
+      within :active_content do
+        expect(page).to have_no_css('form.article-add.is-open')
+        expect(page).to have_no_css('.link_kb_answers .js-kb-insert')
+      end
+    end
+  end
+
   describe 'AI suggestions with no results', authenticated_as: :authenticate do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 

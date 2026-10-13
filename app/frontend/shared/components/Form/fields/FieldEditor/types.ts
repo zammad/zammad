@@ -36,6 +36,7 @@ declare module '@tiptap/core' {
       openUserMention: () => ReturnType
       openTextMention: () => ReturnType
       openKnowledgeBaseMention: () => ReturnType
+      insertKnowledgeBaseAnswer: (translationId: ID) => ReturnType
     }
     images: {
       setImages(images: ImageFileData[]): ReturnType
@@ -90,6 +91,8 @@ export interface FieldEditorContext {
   removeSignature(): void
   focus(): void
   getEditorValue(type: EditorContentType): string
+  // Only offered by editors with the knowledge base mention (`??`).
+  insertKnowledgeBaseAnswer?(translationId: ID): void
   signature?: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null
   signatureEnabled?: boolean
 }

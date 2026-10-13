@@ -17,7 +17,7 @@ import { ANSWER_EDITOR_TOOLS } from '#desktop/entities/knowledge-base/utils/answ
 const TICKET_TOOLS = [
   'AI writing assistant tools',
   'Mention user',
-  'Insert text from knowledge base answer',
+  'Insert knowledge base answer',
   'Insert text from text module',
 ]
 

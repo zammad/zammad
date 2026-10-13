@@ -87,7 +87,7 @@ export default function useEditorActions(
         id: getUuid(),
         name: KnowledgeBaseMentionName,
         contentType: ['text/html', 'text/plain'],
-        label: __('Insert text from knowledge base answer'),
+        label: __('Insert knowledge base answer'),
         icon: 'editor-mention-knowledge-base',
         command: focused((c) => c.openKnowledgeBaseMention()),
         permission: 'ticket.agent',

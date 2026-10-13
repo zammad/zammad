@@ -9,6 +9,7 @@ import { computed, onMounted, onUnmounted, ref, toRef, useTemplateRef, watch } f
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { useAttachments } from '#shared/components/Form/fields/FieldEditor/composables/useAttachments.ts'
 import { useSignatureHandling } from '#shared/components/Form/fields/FieldEditor/composables/useSignatureHandling.ts'
+import { EXTENSION_NAME as knowledgeBaseMentionExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts'
 import { EXTENSION_NAME as userMentionExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import {
   imageExtensionName,
@@ -373,6 +374,14 @@ const editorCustomContext = {
   addSignature,
   removeSignature,
   focus: focusEditor,
+  // Set either way, to replace the queued variant the wrapper offers until the editor is loaded.
+  insertKnowledgeBaseAnswer: editorExtensions.value.some(
+    ({ name }) => name === knowledgeBaseMentionExtensionName,
+  )
+    ? (translationId: ID) => {
+        editor.value?.commands.insertKnowledgeBaseAnswer(translationId)
+      }
+    : undefined,
 }
 
 // eslint-disable-next-line vue/no-mutating-props
