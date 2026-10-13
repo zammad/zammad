@@ -73,6 +73,8 @@ export default defineConfig(async ({ mode, command }) => {
         includeManifestIcons: false,
         injectRegister: null,
         strategies: 'injectManifest',
+        // The worker caches nothing, so the manifest the plugin would inject is left out.
+        injectManifest: { injectionPoint: undefined },
       }),
     )
   }

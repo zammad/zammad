@@ -24,6 +24,7 @@ import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeG
 import initializeGlobalDirectives from '#mobile/initializer/initializeGlobalDirectives.ts'
 import { initializeMobileIcons } from '#mobile/initializer/initializeMobileIcons.ts'
 import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
+import { preloadComponents } from '#mobile/initializer/preloadComponents.ts'
 import initializeRouter from '#mobile/router/index.ts'
 import initializeApolloClient from '#mobile/server/apollo/index.ts'
 
@@ -54,6 +55,7 @@ export default async function mountApp(): Promise<void> {
   initializeMobileIcons()
   initializeForm(app)
   initializeFormFields()
+  preloadComponents()
   initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
