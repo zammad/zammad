@@ -2,6 +2,7 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockTicketArticleTranslationTargetLocalesQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
@@ -66,6 +67,7 @@ describe('TopBarHeaderCompact', () => {
   })
 
   it('shows the translation language menu for agents when the service can translate', async () => {
+    mockPermissions(['ticket.agent'])
     mockApplicationConfig({
       content_translation_service: true,
       content_translation_ticket_article: true,

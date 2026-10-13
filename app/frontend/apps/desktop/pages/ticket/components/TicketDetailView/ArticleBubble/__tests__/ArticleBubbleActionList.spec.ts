@@ -5,6 +5,7 @@ import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
@@ -236,6 +237,10 @@ describe('ArticleBubbleActionList', () => {
   })
 
   describe('with article translation', () => {
+    beforeEach(() => {
+      mockPermissions(['ticket.agent'])
+    })
+
     const enableTranslation = () => {
       mockApplicationConfig({
         content_translation_service: true,

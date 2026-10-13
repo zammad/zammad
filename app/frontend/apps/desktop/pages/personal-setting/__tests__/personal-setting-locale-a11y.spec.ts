@@ -30,6 +30,7 @@ describe('testing locale a11y view', () => {
     mockUserCurrent({
       preferences: { locale: 'en-us', content_translation_excluded_languages: ['en'] },
       hasContentTranslationAutoAvailable: true,
+      permissions: { names: ['ticket.agent'] },
     })
     mockLocalesQuery({
       locales: [

@@ -41,6 +41,7 @@ const renderMenu = ({ auto = false, allArticles = false } = {}) => {
   mockUserCurrent({
     preferences: { locale: 'en-us', content_translation_auto: allArticles },
     hasContentTranslationAutoAvailable: auto,
+    permissions: { names: ['ticket.agent'] },
   })
 
   mockUserCurrentContentTranslationAutoMutation({

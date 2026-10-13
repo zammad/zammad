@@ -22,11 +22,13 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
   const config = toRef(useApplicationStore(), 'config')
   const session = useSessionStore()
 
-  // The settings say whether translation is meant to be on ...
+  // The settings say whether translation is meant to be on ... for agents only: customers see the
+  //   same ticket view, but the server refuses them the target locales.
   const isEnabled = computed(
     () =>
       !!config.value.content_translation_service &&
-      !!config.value.content_translation_ticket_article,
+      !!config.value.content_translation_ticket_article &&
+      session.hasPermission('ticket.agent'),
   )
 
   // Applied at once, saved in the background: the preference is the agent's, so it survives the
@@ -57,6 +59,7 @@ export const useArticleTranslationStore = defineStore('articleTranslation', () =
   let loadGeneration = 0
 
   const loadTargetLocales = () => {
+    if (!isEnabled.value) return Promise.resolve(null)
     if (targetLocales.value) return Promise.resolve(targetLocales.value)
     if (loadingTargetLocales) return loadingTargetLocales
 

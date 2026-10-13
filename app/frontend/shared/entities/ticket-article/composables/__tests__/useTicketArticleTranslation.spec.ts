@@ -112,6 +112,7 @@ const setup = (config: Partial<ConfigList> = {}, locales?: string[], auto = fals
   mockUserCurrent({
     preferences: { locale: 'de-de', content_translation_auto: auto },
     hasContentTranslationAutoAvailable: true,
+    permissions: { names: ['ticket.agent'] },
   })
   mockUserCurrentContentTranslationTargetLocaleMutation({
     userCurrentContentTranslationTargetLocale: { success: true, errors: null },
@@ -1476,6 +1477,7 @@ describe('useTicketArticleTranslation', () => {
         mockUserCurrent({
           preferences: { locale: 'de-de', content_translation_auto: true, notification: {} },
           hasContentTranslationAutoAvailable: true,
+          permissions: { names: ['ticket.agent'] },
         })
         await waitForNextTick(true)
 

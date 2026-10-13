@@ -6,6 +6,7 @@ import { setActivePinia } from 'pinia'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 
+import { TicketArticleTranslationTargetLocalesDocument } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.api.ts'
 import {
   mockTicketArticleTranslationTargetLocalesQuery,
   mockTicketArticleTranslationTargetLocalesQueryError,
@@ -28,6 +29,7 @@ import {
   waitForUserCurrentContentTranslationTargetLocaleMutationCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.mocks.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -59,8 +61,9 @@ const setup = (config: Partial<ConfigList> = {}, user: Partial<UserData> = {}) =
   } as ConfigList
 
   useSessionStore().user = {
-    id: 'gid://zammad/User/2',
+    id: convertToGraphQLId('User', 2),
     preferences: { locale: 'de-de' },
+    permissions: { __typename: 'UserPermission', names: ['ticket.agent'] },
     ...user,
   } as UserData
 
@@ -119,6 +122,20 @@ describe('useArticleTranslationStore', () => {
       await store.loadTargetLocales()
 
       expect(store.isAvailable).toBe(false)
+    })
+
+    it('does not ask the server for a customer', async () => {
+      const store = setup(
+        {},
+        { permissions: { __typename: 'UserPermission', names: ['ticket.customer'] } },
+      )
+
+      mockTargetLocales()
+      await store.loadTargetLocales()
+
+      expect(store.isEnabled).toBe(false)
+      expect(store.isAvailable).toBe(false)
+      expect(getGraphQLMockCalls(TicketArticleTranslationTargetLocalesDocument)).toHaveLength(0)
     })
 
     it('asks the server again when the AI provider setting changes', async () => {

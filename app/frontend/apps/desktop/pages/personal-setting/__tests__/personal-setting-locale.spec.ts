@@ -91,6 +91,7 @@ describe('locale page', () => {
       mockUserCurrent({
         preferences: { locale: 'en-us', content_translation_excluded_languages: ['en'] },
         hasContentTranslationAutoAvailable: auto,
+        permissions: { names: ['ticket.agent'] },
       })
 
       mockLocalesQuery({
