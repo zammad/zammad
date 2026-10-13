@@ -154,6 +154,12 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(response).to have_http_status(:ok)
         end
 
+        it 'ignores update without message (e.g. bot blocked by user)' do
+          expect { post callback_url, params: read_message('private', 'my_chat_member'), as: :json }
+            .not_to change(Ticket::Article, :count)
+          expect(response).to have_http_status(:ok)
+        end
+
         it 'text message' do
           post callback_url, params: read_message('private', 'text'), as: :json
           expect(response).to have_http_status(:ok)
