@@ -3901,7 +3901,7 @@ export type Queries = {
   search: SearchResult;
   /** Generic object search, finds only hit counts across models */
   searchCounts: Array<SearchCountsResult>;
-  /** The sessionId of the currently authenticated user. */
+  /** The session of the currently authenticated user. */
   session: Session;
   /** Fetch system import state */
   systemImportState?: Maybe<ImportJob>;
@@ -4519,6 +4519,7 @@ export type SelectorObjectInput = {
 export type Session = {
   __typename?: 'Session';
   afterAuth?: Maybe<SessionAfterAuth>;
+  /** Opaque identifier of the session, derived from the session ID. */
   id: Scalars['String']['output'];
 };
 

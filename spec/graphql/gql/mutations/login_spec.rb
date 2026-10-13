@@ -71,6 +71,18 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
           expect(graphql_response['data']['login']['session']['id']).to be_present
         end
 
+        it 'does not return the session cookie value as session id' do
+          expect(graphql_response['data']['login']['session']['id']).not_to eq(cookies[Zammad::Application::Initializer::SessionStore::SESSION_KEY])
+        end
+
+        it 'returns the same session id as the session query' do
+          login_session_id = graphql_response['data']['login']['session']['id']
+
+          post '/graphql', params: { query: '{ session { id } }' }, headers: headers, as: :json
+
+          expect(json_response['data']['session']['id']).to eq(login_session_id)
+        end
+
         it 'sets the :persistent session parameter' do
           expect { execute_graphql_query }.to change { request&.session&.fetch(:persistent) }.to(true)
         end

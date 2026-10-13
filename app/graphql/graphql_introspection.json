@@ -22185,7 +22185,7 @@
             },
             {
               "name": "session",
-              "description": "The sessionId of the currently authenticated user.",
+              "description": "The session of the currently authenticated user.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -24240,7 +24240,7 @@
             },
             {
               "name": "id",
-              "description": null,
+              "description": "Opaque identifier of the session, derived from the session ID.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
