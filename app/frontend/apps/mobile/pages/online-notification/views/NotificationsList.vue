@@ -87,7 +87,10 @@ const notificationRemoved = () => {
 }
 
 // TODO: currently this triggered in some situations a real subscription on the server: https://github.com/apollographql/apollo-client/issues/10117
-const { unseenCount, notificationsCountSubscription } = useOnlineNotificationCount()
+// The same variables as the push cleanup, so the client holds one subscription.
+const { unseenCount, notificationsCountSubscription } = useOnlineNotificationCount({
+  withPushTags: true,
+})
 
 notificationsCountSubscription.watchOnResult(() => {
   notificationsHandler.refetch()

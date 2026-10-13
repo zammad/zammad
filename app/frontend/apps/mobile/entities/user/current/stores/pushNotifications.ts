@@ -13,6 +13,7 @@ import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { forgetAllShownPushNotifications } from '#shared/sw/shownPushNotifications.ts'
+import type { ClosePushNotificationsMessage } from '#shared/sw/types.ts'
 import { isStandalone } from '#shared/utils/pwa.ts'
 import {
   isAppleMobileDevice,
@@ -47,9 +48,14 @@ export const usePushNotificationsStore = defineStore(
     const isSubscriptionKnown = ref(false)
     const isLoading = ref(false)
 
-    // Remembers that push was turned on here, to tell a subscription the device
-    //   dropped on its own (expired) from one the user never had.
-    const wasEnabledOnDevice = useLocalStorage('zammad-push-notifications-enabled', false)
+    // Remembers for whom push was turned on here: a subscription the device
+    //   dropped on its own (expired) is told from one the user never had, and
+    //   the subscription of the browser is not taken over by whoever logs in next.
+    const enabledForUserId = useLocalStorage<string | null>('zammad-push-notifications-user', null)
+    const wasEnabledOnDevice = computed(() => enabledForUserId.value !== null)
+    const isEnabledForUser = computed(
+      () => !!session.user?.id && enabledForUserId.value === session.user.id,
+    )
 
     // iOS reports a permission turned off in its settings as not asked yet, but
     //   refuses a new request without asking, so it counts as blocked once push
@@ -89,9 +95,10 @@ export const usePushNotificationsStore = defineStore(
       if (!isRecipient.value) return 'hidden'
       if (unavailableReason.value) return 'unavailable'
       if (permission.value === 'denied' || isPermissionWithdrawn.value) return 'denied'
+      if (!isEnabledForUser.value) return 'disabled'
       if (isSubscribed.value) return 'enabled'
 
-      return isSubscriptionKnown.value && wasEnabledOnDevice.value ? 'expired' : 'disabled'
+      return isSubscriptionKnown.value ? 'expired' : 'disabled'
     })
 
     // enable() shows one toast for every kind of failure, so the handler stays quiet.
@@ -184,13 +191,55 @@ export const usePushNotificationsStore = defineStore(
       return subscription
     }
 
+    // A registration still in flight when the logout comes is awaited there,
+    //   so the logout finds the ownership it records, and its delete reaches
+    //   the server after the add.
+    let pendingRegistration: Promise<void> | null = null
+
+    const trackRegistration = async (register: () => Promise<void>) => {
+      const registration = register()
+      pendingRegistration = registration
+
+      try {
+        await registration
+      } finally {
+        if (pendingRegistration === registration) pendingRegistration = null
+      }
+    }
+
+    // The subscription of a user whose session ended without the logout, e.g.
+    //   by expiry, would keep delivering their pushes to whoever uses the
+    //   device next. Dropped, nothing reaches the device anymore; the server
+    //   keeps the entry until the push service reports it gone, which Apple's
+    //   does not. The pushes already shown are closed by the worker, except
+    //   below iOS 18. The previous user turns push on again.
+    const releaseForeignSubscription = async () => {
+      if (!enabledForUserId.value || enabledForUserId.value === session.user?.id) return
+
+      enabledForUserId.value = null
+
+      if (!isPushSupported()) return
+
+      const registration = await getServiceWorkerRegistration()
+      if (!registration) return
+
+      const message: ClosePushNotificationsMessage = { type: 'CLOSE_PUSH_NOTIFICATIONS' }
+      registration.active?.postMessage(message)
+
+      await (await registration.pushManager.getSubscription())?.unsubscribe()
+      await forgetAllShownPushNotifications()
+    }
+
     // Re-registers the subscription of this browser, so the server holds the
-    //   current keys, e.g. after the push service rotated them or another user
-    //   logged in on this device.
-    const sync = async () => {
+    //   current keys, e.g. after the push service rotated them or the user
+    //   logged in again. Another user turns push on for themselves.
+    const syncDevice = async () => {
+      // Before the checks of refresh, a user who may not use push included.
+      await releaseForeignSubscription()
+
       const subscription = await refresh()
 
-      if (!subscription) return
+      if (!subscription || !isEnabledForUser.value) return
 
       try {
         await registerSubscription(subscription)
@@ -199,11 +248,9 @@ export const usePushNotificationsStore = defineStore(
 
         throw error
       }
-
-      wasEnabledOnDevice.value = true
     }
 
-    const enable = async () => {
+    const enableDevice = async () => {
       if (!canUsePushNotifications.value) return
 
       isLoading.value = true
@@ -225,10 +272,14 @@ export const usePushNotificationsStore = defineStore(
             ),
           }))
 
+        // The add is sent as this user, while a session change in another tab
+        //   can load a different one before it answers.
+        const registeringUserId = session.user?.id ?? null
+
         await registerSubscription(subscription)
 
         isSubscribed.value = true
-        wasEnabledOnDevice.value = true
+        enabledForUserId.value = registeringUserId
       } catch (error) {
         // The locked toggle names the reason.
         if (error instanceof PushServiceRejected) return
@@ -245,10 +296,17 @@ export const usePushNotificationsStore = defineStore(
       }
     }
 
+    const sync = () => trackRegistration(syncDevice)
+    const enable = () => trackRegistration(enableDevice)
+
     // Removes the device from the current user, but keeps the browser
-    //   subscription, so the next login on this device only has to sync.
+    //   subscription, so the next login of the same user only has to sync.
+    //   The server knows the device only for the user who turned push on here,
+    //   anyone else logging out has nothing to remove and may not even ask.
     const unregisterDevice = async () => {
-      if (!isPushSupported()) return null
+      await pendingRegistration?.catch(() => undefined)
+
+      if (!isPushSupported() || !isRecipient.value || !isEnabledForUser.value) return null
 
       const subscription = await getSubscription()
 
@@ -258,7 +316,6 @@ export const usePushNotificationsStore = defineStore(
       }
 
       isSubscribed.value = false
-      wasEnabledOnDevice.value = false
 
       return subscription
     }
@@ -270,6 +327,7 @@ export const usePushNotificationsStore = defineStore(
         const subscription = await unregisterDevice()
 
         await subscription?.unsubscribe()
+        enabledForUserId.value = null
       } finally {
         isLoading.value = false
       }

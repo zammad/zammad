@@ -6,14 +6,14 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const OnlineNotificationsCountDocument = gql`
-    subscription onlineNotificationsCount {
+    subscription onlineNotificationsCount($withPushTags: Boolean! = false) {
   onlineNotificationsCount {
     unseenCount
-    unseenPushTags
+    unseenPushTags @include(if: $withPushTags)
   }
 }
     `;
-export function useOnlineNotificationsCountSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>(OnlineNotificationsCountDocument, {}, options);
+export function useOnlineNotificationsCountSubscription(variables: Types.OnlineNotificationsCountSubscriptionVariables | VueCompositionApi.Ref<Types.OnlineNotificationsCountSubscriptionVariables> | ReactiveFunction<Types.OnlineNotificationsCountSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>(OnlineNotificationsCountDocument, variables, options);
 }
 export type OnlineNotificationsCountSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.OnlineNotificationsCountSubscription, Types.OnlineNotificationsCountSubscriptionVariables>;

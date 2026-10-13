@@ -13,6 +13,8 @@ certificate the device trusts, and a service worker, which development mode leav
   default.
 - Outgoing internet access from the development machine, as the backend delivers through the push services of Apple,
   Google, Mozilla or Microsoft.
+- The `fqdn` setting not being `localhost`: the server names it as the VAPID subject of every push, and Apple
+  rejects a `localhost` subject with a bare 403. A host name in the local network or an IP address is accepted.
 
 The key pair for signing pushes (VAPID) is created by a migration, so a migrated development database already has it.
 
@@ -106,7 +108,10 @@ test.
 
 - **Delivery:** the background worker logs every run of `WebPushNotificationJob`, and every failed or rejected push
   with its reason as `Web push to subscription …`:
-  `grep -E 'WebPushNotificationJob|Web push to subscription' log/development.log`.
+  `grep -E 'WebPushNotificationJob|Web push to subscription' log/development.log`. A `WebPush::Unauthorized` (403)
+  from `web.push.apple.com` for every device, while the other push services deliver, can indicate that the `fqdn`
+  setting is `localhost`, see above; a 403 also covers other invalid VAPID claims, a wrong signature or a key that
+  does not match the subscription.
 - **Subscriptions:** `PushSubscription.where(user: agent)` in the Rails console lists the registered devices. A
   subscription the push service reports as gone is removed on the next delivery.
 - **Console of the installed app on iOS:** connect the device by cable, turn on Settings → Apps → Safari → Advanced → Web

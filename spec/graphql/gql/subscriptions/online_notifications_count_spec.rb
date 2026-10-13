@@ -42,6 +42,27 @@ RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, authenticated_as: :
         )
       end
 
+      context 'when the push tags are not requested' do
+        let(:subscription) do
+          <<~QUERY
+            subscription onlineNotificationsCount {
+              onlineNotificationsCount {
+                unseenCount
+              }
+            }
+          QUERY
+        end
+
+        before { allow(OnlineNotification).to receive(:push_tags).and_call_original }
+
+        it 'delivers the count without resolving them', :aggregate_failures do
+          create(:online_notification, user_id: agent.id)
+
+          expect(mock_channel.mock_broadcasted_first.data).to eq({ 'unseenCount' => 2 })
+          expect(OnlineNotification).not_to have_received(:push_tags)
+        end
+      end
+
       it 'receives update when new notification created' do
         create(:online_notification, user_id: agent.id)
 

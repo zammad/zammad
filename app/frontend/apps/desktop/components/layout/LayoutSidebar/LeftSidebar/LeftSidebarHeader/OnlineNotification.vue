@@ -26,13 +26,11 @@ import {
 
 const webNotificationList = new Map<ID, Notification>()
 
-const { unseenCount } = useOnlineNotificationCount()
+const { unseenCount, notificationsCountSubscription } = useOnlineNotificationCount()
 
 const { popover, popoverTarget, toggle, open, close } = usePopover()
 
 const { play, isEnabled } = useOnlineNotificationSound()
-
-const { notificationsCountSubscription } = useOnlineNotificationCount()
 
 const { permissionGranted, show } = useBrowserNotification()
 

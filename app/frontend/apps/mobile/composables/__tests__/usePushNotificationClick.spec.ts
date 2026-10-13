@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { effectScope, ref } from 'vue'
+import { effectScope, nextTick } from 'vue'
 
+import { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
 import { resetPushNotificationDatabase } from '#tests/support/mock-pushNotificationDatabase.ts'
 
+import { useSessionStore } from '#shared/stores/session.ts'
 import {
   rememberShownPushNotification,
   takeVanishedPushNotifications,
@@ -12,17 +14,31 @@ import {
 import { usePushNotificationClick } from '../usePushNotificationClick.ts'
 
 // The tags of the unseen notifications, as the count subscription would deliver them.
-const { unseenPushTags } = await vi.hoisted(async () => {
-  const { ref: hoistedRef } = await import('vue')
-  return { unseenPushTags: hoistedRef<string[]>() }
-})
+const { unseenPushTags, useOnlineNotificationCount, countSubscriptionStopped } = await vi.hoisted(
+  async () => {
+    const { ref: hoistedRef, onScopeDispose: hoistedOnScopeDispose } = await import('vue')
+    const unseenPushTags = hoistedRef<string[]>()
+    // Set when the scope the count subscription lives in is stopped.
+    const countSubscriptionStopped = vi.fn()
+
+    return {
+      unseenPushTags,
+      countSubscriptionStopped,
+      useOnlineNotificationCount: vi.fn(() => {
+        hoistedOnScopeDispose(countSubscriptionStopped)
+
+        return {
+          unseenPushTags,
+          unseenCount: hoistedRef<number>(),
+          notificationsCountSubscription: {},
+        }
+      }),
+    }
+  },
+)
 
 vi.mock('#shared/entities/online-notification/composables/useOnlineNotificationCount.ts', () => ({
-  useOnlineNotificationCount: () => ({
-    unseenPushTags,
-    unseenCount: ref<number>(),
-    notificationsCountSubscription: {},
-  }),
+  useOnlineNotificationCount,
 }))
 
 vi.mock('#shared/sw/pushNotificationDatabase.ts', async () => {
@@ -52,6 +68,7 @@ describe('usePushNotificationClick', () => {
   )
   let subscribed: boolean
   let scope: ReturnType<typeof effectScope>
+  let session: ReturnType<typeof useSessionStore>
 
   const showApp = async () => {
     Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true })
@@ -86,6 +103,11 @@ describe('usePushNotificationClick', () => {
       },
       configurable: true,
     })
+
+    initializePiniaStore()
+    session = useSessionStore()
+    session.initialized = true
+    useOnlineNotificationCount.mockClear()
 
     scope = effectScope()
     scope.run(() => usePushNotificationClick())
@@ -234,6 +256,10 @@ describe('usePushNotificationClick', () => {
   })
 
   describe('pushes seen elsewhere', () => {
+    it('asks the count subscription for the push tags', () => {
+      expect(useOnlineNotificationCount).toHaveBeenCalledWith({ withPushTags: true })
+    })
+
     const remember = (tag: string) =>
       rememberShownPushNotification({ tag, path: `/${tag}`, shownAt: Date.now() })
 
@@ -283,6 +309,57 @@ describe('usePushNotificationClick', () => {
       await showApp()
 
       expect(closed).toEqual([])
+    })
+  })
+
+  describe('session', () => {
+    const restart = (initialized: boolean) => {
+      scope.stop()
+      useOnlineNotificationCount.mockClear()
+      session.initialized = initialized
+
+      scope = effectScope()
+      scope.run(() => usePushNotificationClick())
+    }
+
+    it('starts the count subscription only once the session is there', async () => {
+      restart(false)
+
+      expect(useOnlineNotificationCount).not.toHaveBeenCalled()
+
+      session.initialized = true
+      await nextTick()
+
+      expect(useOnlineNotificationCount).toHaveBeenCalledWith({ withPushTags: true })
+    })
+
+    it('stops a count subscription started after a login together with the app', async () => {
+      restart(false)
+      countSubscriptionStopped.mockClear()
+
+      session.initialized = true
+      await nextTick()
+      scope.stop()
+
+      expect(countSubscriptionStopped).toHaveBeenCalled()
+    })
+
+    it('forgets the tags on logout and subscribes afresh on the next login', async () => {
+      displayedTags.push('ticket-7')
+      unseenPushTags.value = ['ticket-42']
+
+      session.initialized = false
+      await nextTick()
+      await showApp()
+
+      expect(closed).toEqual([])
+
+      session.initialized = true
+      await nextTick()
+      await showApp()
+
+      expect(useOnlineNotificationCount).toHaveBeenCalledTimes(2)
+      expect(closed).toEqual(['ticket-7'])
     })
   })
 })

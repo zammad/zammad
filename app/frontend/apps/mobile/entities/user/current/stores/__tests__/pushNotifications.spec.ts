@@ -5,16 +5,19 @@ import { createPinia, setActivePinia } from 'pinia'
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 import { UserCurrentPushSubscriptionAddDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionAdd.api.ts'
 import {
   mockUserCurrentPushSubscriptionAdd,
   waitForUserCurrentPushSubscriptionAddCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionAdd.mocks.ts'
+import { UserCurrentPushSubscriptionDeleteDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionDelete.api.ts'
 import {
   mockUserCurrentPushSubscriptionDelete,
   waitForUserCurrentPushSubscriptionDeleteCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionDelete.mocks.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { usePushNotificationsStore } from '../pushNotifications.ts'
 
@@ -64,7 +67,10 @@ const mockBrowserPush = ({
   Object.defineProperty(window, 'PushManager', { value: class {}, configurable: true })
   Object.defineProperty(navigator, 'serviceWorker', {
     value: {
-      getRegistration: vi.fn(async (): Promise<unknown> => ({ pushManager, active: {} })),
+      getRegistration: vi.fn(async (): Promise<unknown> => ({
+        pushManager,
+        active: { postMessage: vi.fn() },
+      })),
       addEventListener: vi.fn(),
       ready: Promise.resolve(),
     },
@@ -78,6 +84,9 @@ const mockSupportedEnvironment = () => {
   mockApplicationConfig({ web_push_vapid_public_key: 'QUJD' })
   mockPermissions(['user_preferences.notifications', 'ticket.agent'])
 }
+
+// Push was turned on here by the user the permission mock signs in.
+const mockEnabledOnDevice = () => localStorage.setItem('zammad-push-notifications-user', '123')
 
 describe('usePushNotificationsStore', () => {
   beforeEach(() => {
@@ -260,6 +269,7 @@ describe('usePushNotificationsStore', () => {
   it('takes up a permission granted again in the settings, without registering the device again', async () => {
     const { notification } = mockBrowserPush({ permission: 'denied', subscribed: true })
     mockSupportedEnvironment()
+    mockEnabledOnDevice()
 
     const store = usePushNotificationsStore()
 
@@ -296,7 +306,7 @@ describe('usePushNotificationsStore', () => {
 
     const store = usePushNotificationsStore()
 
-    await store.sync()
+    await store.enable()
 
     expect(store.state).toBe('enabled')
 
@@ -333,6 +343,7 @@ describe('usePushNotificationsStore', () => {
   it('unregisters the device on logout but keeps the browser subscription', async () => {
     const { pushSubscription } = mockBrowserPush({ permission: 'granted', subscribed: true })
     mockSupportedEnvironment()
+    mockEnabledOnDevice()
     mockUserCurrentPushSubscriptionDelete({
       userCurrentPushSubscriptionDelete: { success: true, errors: null },
     })
@@ -345,6 +356,76 @@ describe('usePushNotificationsStore', () => {
 
     expect(calls.at(-1)?.variables).toEqual({ endpoint: subscriptionData.endpoint })
     expect(pushSubscription.unsubscribe).not.toHaveBeenCalled()
+    expect(store.state).toBe('disabled')
+  })
+
+  it('leaves the server alone when a user who never turned push on here logs out', async () => {
+    mockBrowserPush({ permission: 'granted', subscribed: true })
+    mockSupportedEnvironment()
+    mockEnabledOnDevice()
+    mockUserCurrentPushSubscriptionDelete({
+      userCurrentPushSubscriptionDelete: { success: true, errors: null },
+    })
+
+    mockUserCurrent({ id: convertToGraphQLId('User', 3) })
+    mockPermissions(['user_preferences.notifications', 'ticket.agent'])
+
+    await usePushNotificationsStore().unregisterDevice()
+
+    expect(getGraphQLMockCalls(UserCurrentPushSubscriptionDeleteDocument)).toHaveLength(0)
+  })
+
+  it('leaves the server alone when a user without the notifications permission logs out', async () => {
+    mockBrowserPush({ permission: 'granted', subscribed: true })
+    mockApplicationConfig({ web_push_vapid_public_key: 'QUJD' })
+    mockPermissions(['ticket.customer'])
+    mockEnabledOnDevice()
+    mockUserCurrentPushSubscriptionDelete({
+      userCurrentPushSubscriptionDelete: { success: true, errors: null },
+    })
+
+    await usePushNotificationsStore().unregisterDevice()
+
+    expect(getGraphQLMockCalls(UserCurrentPushSubscriptionDeleteDocument)).toHaveLength(0)
+  })
+
+  it('lets a registration in flight finish before a logout decides on the device', async () => {
+    mockBrowserPush({ permission: 'granted', subscribed: true })
+    mockSupportedEnvironment()
+    mockUserCurrentPushSubscriptionAdd({
+      userCurrentPushSubscriptionAdd: { success: true, errors: null },
+    })
+    mockUserCurrentPushSubscriptionDelete({
+      userCurrentPushSubscriptionDelete: { success: true, errors: null },
+    })
+
+    const store = usePushNotificationsStore()
+
+    const enabling = store.enable()
+    await store.unregisterDevice()
+    await enabling
+
+    expect(getGraphQLMockCalls(UserCurrentPushSubscriptionAddDocument)).toHaveLength(1)
+    expect(getGraphQLMockCalls(UserCurrentPushSubscriptionDeleteDocument)).toHaveLength(1)
+    expect(store.state).toBe('disabled')
+  })
+
+  it('records the user the device was registered for, even if the session changed meanwhile', async () => {
+    mockBrowserPush({ permission: 'granted', subscribed: true })
+    mockSupportedEnvironment()
+    // Another user is loaded while the add of the first one is on its way.
+    mockUserCurrentPushSubscriptionAdd(() => {
+      mockUserCurrent({ id: convertToGraphQLId('User', 3) })
+      mockPermissions(['user_preferences.notifications', 'ticket.agent'])
+
+      return { userCurrentPushSubscriptionAdd: { success: true, errors: null } }
+    })
+
+    const store = usePushNotificationsStore()
+
+    await store.enable()
+
+    expect(localStorage.getItem('zammad-push-notifications-user')).toBe('123')
     expect(store.state).toBe('disabled')
   })
 
@@ -397,6 +478,7 @@ describe('usePushNotificationsStore', () => {
     it('does not report push as on for a subscription found on start that is rejected', async () => {
       const { pushSubscription } = mockBrowserPush({ permission: 'granted', subscribed: true })
       mockSupportedEnvironment()
+      mockEnabledOnDevice()
       mockUserCurrentPushSubscriptionAdd(rejected)
 
       const store = usePushNotificationsStore()
@@ -409,17 +491,95 @@ describe('usePushNotificationsStore', () => {
     })
   })
 
-  it('re-registers an existing subscription on sync', async () => {
+  it('re-registers the subscription on sync for the user who turned push on', async () => {
     mockBrowserPush({ permission: 'granted', subscribed: true })
     mockSupportedEnvironment()
     mockUserCurrentPushSubscriptionAdd({
       userCurrentPushSubscriptionAdd: { success: true, errors: null },
     })
 
-    await usePushNotificationsStore().sync()
+    const store = usePushNotificationsStore()
+
+    await store.enable()
+    await store.sync()
 
     const calls = await waitForUserCurrentPushSubscriptionAddCalls()
 
+    expect(calls).toHaveLength(2)
     expect(calls.at(-1)?.variables).toEqual({ input: subscriptionData })
+  })
+
+  describe('when another user logs in on a device where push was on', () => {
+    it('drops the subscription of the previous user and has the worker close its pushes', async () => {
+      const { pushSubscription } = mockBrowserPush({ permission: 'granted', subscribed: true })
+      mockSupportedEnvironment()
+      mockEnabledOnDevice()
+      const worker = { postMessage: vi.fn() }
+      vi.mocked(navigator.serviceWorker.getRegistration).mockResolvedValue({
+        pushManager: { getSubscription: async () => pushSubscription },
+        active: worker,
+      } as unknown as ServiceWorkerRegistration)
+
+      mockUserCurrent({ id: convertToGraphQLId('User', 3) })
+      mockPermissions(['user_preferences.notifications', 'ticket.agent'])
+
+      const store = usePushNotificationsStore()
+      await store.sync()
+
+      expect(pushSubscription.unsubscribe).toHaveBeenCalled()
+      expect(worker.postMessage).toHaveBeenCalledWith({ type: 'CLOSE_PUSH_NOTIFICATIONS' })
+      expect(localStorage.getItem('zammad-push-notifications-user')).toBeNull()
+      expect(getGraphQLMockCalls(UserCurrentPushSubscriptionAddDocument)).toHaveLength(0)
+    })
+
+    it('drops it for a user who may not use push as well', async () => {
+      const { pushSubscription } = mockBrowserPush({ permission: 'granted', subscribed: true })
+      mockApplicationConfig({ web_push_vapid_public_key: 'QUJD' })
+      mockEnabledOnDevice()
+      mockUserCurrent({ id: convertToGraphQLId('User', 3) })
+      mockPermissions(['ticket.customer'])
+
+      await usePushNotificationsStore().sync()
+
+      expect(pushSubscription.unsubscribe).toHaveBeenCalled()
+    })
+
+    it('keeps the subscription for the user who turned push on', async () => {
+      const { pushSubscription } = mockBrowserPush({ permission: 'granted', subscribed: true })
+      mockSupportedEnvironment()
+      mockEnabledOnDevice()
+      mockUserCurrentPushSubscriptionAdd({
+        userCurrentPushSubscriptionAdd: { success: true, errors: null },
+      })
+
+      const store = usePushNotificationsStore()
+      await store.sync()
+
+      expect(pushSubscription.unsubscribe).not.toHaveBeenCalled()
+      expect(store.state).toBe('enabled')
+    })
+
+    it('lets the new user turn push on for themselves', async () => {
+      mockBrowserPush({ permission: 'granted', subscribed: true })
+      mockSupportedEnvironment()
+      mockEnabledOnDevice()
+      mockUserCurrentPushSubscriptionAdd({
+        userCurrentPushSubscriptionAdd: { success: true, errors: null },
+      })
+      mockUserCurrent({ id: convertToGraphQLId('User', 3) })
+      mockPermissions(['user_preferences.notifications', 'ticket.agent'])
+
+      const store = usePushNotificationsStore()
+      await store.sync()
+
+      expect(store.state).toBe('disabled')
+
+      await store.enable()
+
+      expect(store.state).toBe('enabled')
+      expect(localStorage.getItem('zammad-push-notifications-user')).toBe(
+        convertToGraphQLId('User', 3),
+      )
+    })
   })
 })

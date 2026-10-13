@@ -10,7 +10,8 @@ import { useCustomLayout } from './useCustomLayout.ts'
 
 const user = toRef(useSessionStore(), 'user')
 const { isCustomLayout } = useCustomLayout()
-const { unseenCount } = useOnlineNotificationCount()
+// The same variables as the push cleanup, so the client holds one subscription.
+const { unseenCount } = useOnlineNotificationCount({ withPushTags: true })
 
 const notificationCount = computed(() => {
   if (!unseenCount.value) return ''

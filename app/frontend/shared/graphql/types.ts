@@ -1605,10 +1605,12 @@ export type OnlineNotificationsQuery = { onlineNotifications: { __typename: 'Onl
           | { __typename: 'User' }
          | null | undefined } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
 
-export type OnlineNotificationsCountSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type OnlineNotificationsCountSubscriptionVariables = Exact<{
+  withPushTags?: boolean;
+}>;
 
 
-export type OnlineNotificationsCountSubscription = { onlineNotificationsCount: { __typename: 'OnlineNotificationsCountPayload', unseenCount: number, unseenPushTags: Array<string> } };
+export type OnlineNotificationsCountSubscription = { onlineNotificationsCount: { __typename: 'OnlineNotificationsCountPayload', unseenCount: number, unseenPushTags?: Array<string> } };
 
 export type OrganizationAttributesFragment = { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, shared: boolean | null | undefined, domain: string | null | undefined, domainAssignment: boolean | null | undefined, active: boolean | null | undefined, note: string | null | undefined, vip: boolean | null | undefined, objectAttributeValues: Array<{ __typename: 'ObjectAttributeValue', value: any, renderedLink: string | null | undefined, attribute: { __typename: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null | undefined };
 

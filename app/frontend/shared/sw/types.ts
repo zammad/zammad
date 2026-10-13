@@ -35,6 +35,11 @@ export interface PushNotificationPayload {
   tag?: string
 }
 
+// Asks the service worker to close every push it shows, see the push store.
+export interface ClosePushNotificationsMessage {
+  type: 'CLOSE_PUSH_NOTIFICATIONS'
+}
+
 export interface PushNotificationClickMessage {
   type: 'PUSH_NOTIFICATION_CLICK'
   path: string

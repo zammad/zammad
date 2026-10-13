@@ -13,6 +13,15 @@ declare let self: ServiceWorkerGlobalScope
 self.skipWaiting()
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting()
+
+  // Below iOS 18 nothing closes: iOS 16 lists no displayed notification,
+  //   iOS 17 ignores the close.
+  if (event.data && event.data.type === 'CLOSE_PUSH_NOTIFICATIONS')
+    event.waitUntil(
+      self.registration
+        .getNotifications()
+        .then((displayed) => displayed.forEach((notification) => notification.close())),
+    )
 })
 
 clientsClaim()

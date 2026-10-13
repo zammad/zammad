@@ -294,6 +294,20 @@ describe('mobile service worker', () => {
     })
   })
 
+  describe('message', () => {
+    it('closes every displayed push on request of the app', async () => {
+      const first = displayNotification('ticket-42')
+      const second = displayNotification('online-notification-7')
+
+      const event = { data: { type: 'CLOSE_PUSH_NOTIFICATIONS' }, waitUntil: vi.fn() }
+      ;(listeners.message as (event: unknown) => void)(event)
+      await waitUntilResult(event)
+
+      expect(first.close).toHaveBeenCalled()
+      expect(second.close).toHaveBeenCalled()
+    })
+  })
+
   describe('notificationclick', () => {
     it('closes the notification', async () => {
       const notification = await dispatchNotificationClick({ path: '/tickets/42' })

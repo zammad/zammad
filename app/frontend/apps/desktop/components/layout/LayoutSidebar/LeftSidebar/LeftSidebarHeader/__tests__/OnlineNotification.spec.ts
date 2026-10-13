@@ -30,6 +30,23 @@ import { BROWSER_NOTIFICATION_LOCK } from '#desktop/composables/useBrowserNotifi
 
 const playSoundSpy = vi.hoisted(() => vi.fn())
 
+// Counts the calls and keeps the real composable, so the subscription mock stays in play.
+const useOnlineNotificationCountSpy = vi.hoisted(() => vi.fn())
+
+vi.mock(
+  '#shared/entities/online-notification/composables/useOnlineNotificationCount.ts',
+  async (importOriginal) => {
+    const original =
+      await importOriginal<
+        typeof import('#shared/entities/online-notification/composables/useOnlineNotificationCount.ts')
+      >()
+
+    useOnlineNotificationCountSpy.mockImplementation(original.useOnlineNotificationCount)
+
+    return { useOnlineNotificationCount: useOnlineNotificationCountSpy }
+  },
+)
+
 const node = {
   id: convertToGraphQLId('OnlineNotification', 1),
   seen: false,
@@ -157,6 +174,14 @@ describe('OnlineNotification', () => {
     expect(wrapper.getByRole('status', { name: 'Unseen notifications count' })).toHaveTextContent(
       '10',
     )
+  })
+
+  it('reads the notification count through one composable call', () => {
+    useOnlineNotificationCountSpy.mockClear()
+
+    renderComponent(OnlineNotification)
+
+    expect(useOnlineNotificationCountSpy).toHaveBeenCalledTimes(1)
   })
 
   it('makes a notification sound if a new unseen message comes in', async () => {
