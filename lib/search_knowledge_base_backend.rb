@@ -33,7 +33,7 @@ class SearchKnowledgeBaseBackend
     without_highlight_marks(Loofah.html5_fragment(text.to_s).text(encode_special_chars: false))
   end
 
-  attr_reader :knowledge_base
+  attr_reader :knowledge_base, :user
 
   # @param [Hash] params the paramsused to initialize search instance
   # @option params [KnowledgeBase, <KnowledgeBase>] :knowledge_base (nil) knowledge base instance
@@ -48,6 +48,7 @@ class SearchKnowledgeBaseBackend
   #   merged over DEFAULT_HIGHLIGHT_OPTIONS key by key. Without it Elasticsearch's defaults apply, i.e.
   #   up to five 100 character fragments, marked with HIGHLIGHT_START/END.
   # @option params [Hash<String=>String>, Hash<Symbol=>Symbol>] :order_by hash with column => asc/desc
+  # @option params [User] :user (nil) the searching user, whose access the results are filtered by
   # @option params [Boolean] :include_drafts_and_archived (true) false leaves out the drafts and
   #   archived answers a user could see, such as an editor, before the hits are counted; only for
   #   a search of answers alone
@@ -55,7 +56,8 @@ class SearchKnowledgeBaseBackend
   #   did not run the search, instead of finding nothing
 
   def initialize(params)
-    @params = params.compact
+    @params = params.except(:user).compact
+    @user   = params[:user]
 
     if !include_drafts_and_archived? && indexes != [KnowledgeBase::Answer::Translation.name]
       raise ArgumentError, 'leaving out drafts and archived answers needs a search of answers alone'
@@ -64,21 +66,10 @@ class SearchKnowledgeBaseBackend
     prepare_scope_ids
   end
 
-  def use_internal_assets?
-    flavor == :agent && KnowledgeBase.granular_permissions?
-  end
-
-  def search(query, user: nil, pagination: nil)
-    if use_internal_assets? # cache for later use
-      @granular_permissions_handler = KnowledgeBase::InternalAssets.new(user)
-    end
-
-    # Without drafts and archived answers, the query takes the answers the user may read (#options_apply_answer_ids).
-    @readable_answer_translation_ids = translation_ids_for_answers(user) if !include_drafts_and_archived?
-
+  def search(query, pagination: nil)
     raw_results = raw_results(query, pagination: pagination)
 
-    filtered = filter_results raw_results, user
+    filtered = filter_results raw_results
 
     if pagination
       filtered = filtered.slice pagination.offset, pagination.limit
@@ -148,63 +139,96 @@ class SearchKnowledgeBaseBackend
   #   all answers followed by all categories, destroying it.
   #
   # The permitted ids are still resolved once per type, not once per hit.
-  def filter_results(raw_results, user)
+  def filter_results(raw_results)
     permitted_ids = raw_results
       .map { |result| result[:type] }
       .uniq
-      .index_with { |type| translation_ids_for_type(type, user)&.to_set(&:to_i) }
+      .index_with { |type| translation_ids_for_type(type)&.to_set(&:to_i) }
 
     raw_results.select { |result| permitted_ids[result[:type]]&.include?(result[:id].to_i) }
   end
 
-  def translation_ids_for_type(type, user)
+  def translation_ids_for_type(type)
     case type
     when KnowledgeBase::Answer::Translation.name
-      @readable_answer_translation_ids || translation_ids_for_answers(user)
+      translation_ids_for_answers
     when KnowledgeBase::Category::Translation.name
-      translation_ids_for_categories(user)
+      translation_ids_for_categories
     when KnowledgeBase::Translation.name
-      translation_ids_for_kbs(user)
+      translation_ids_for_kbs
     end
   end
 
-  def translation_ids_for_answers(user)
-    scope = KnowledgeBase::Answer
-      .joins(:category)
-      .where(knowledge_base_categories: { knowledge_base_id: knowledge_bases })
-      .then do |relation|
-        if use_internal_assets? # cache for later use
-          relation.where(id: @granular_permissions_handler.all_answer_ids)
-        elsif user&.permissions?('knowledge_base.editor')
-          relation
-        elsif user&.permissions?('knowledge_base.reader') && flavor == :agent
-          relation.internal
-        else
-          relation.published
-        end
-      end
+  # Asked once: without drafts and archived answers, the query takes them too (#options_apply_answer_ids).
+  def translation_ids_for_answers
+    @translation_ids_for_answers ||= begin
+      scope = KnowledgeBase::Answer
+        .joins(:category)
+        .where(knowledge_base_categories: { knowledge_base_id: knowledge_bases })
 
-    # `internal` covers both internally and publicly published answers.
-    scope = scope.internal if !include_drafts_and_archived?
+      visible = if flavor == :agent
+                  KnowledgeBase::Answer.visible_to_user(user)
+                else
+                  KnowledgeBase::Answer.visible_on_help_site_to_user(user)
+                end
+      scope = scope.where(id: visible.select(:id))
 
-    flatten_translation_ids(scope)
+      # `internal` covers both internally and publicly published answers.
+      scope = scope.internal if !include_drafts_and_archived?
+
+      flatten_translation_ids(scope)
+    end
   end
 
-  def translation_ids_for_categories(user)
+  def translation_ids_for_categories
     scope = KnowledgeBase::Category.where(knowledge_base_id: knowledge_bases)
 
-    if use_internal_assets?
-      flatten_translation_ids scope.where(id: @granular_permissions_handler.all_category_ids)
-    elsif user&.permissions?('knowledge_base.editor')
+    case access
+    in :granular_agent
+      flatten_translation_ids scope.where(id: internal_assets.all_category_ids)
+    in :granular_public
+      flatten_translation_ids(scope.where(id: editor_category_ids)) +
+        public_category_translation_ids(scope.where.not(id: editor_category_ids))
+    in :editor
       flatten_translation_ids scope
-    elsif user&.permissions?('knowledge_base.reader') && flavor == :agent
+    in :internal
       flatten_answer_translation_ids(scope, :internal)
-    else
-      flatten_answer_translation_ids(scope, :public)
+    in :published
+      public_category_translation_ids(scope)
     end
   end
 
-  def translation_ids_for_kbs(_user)
+  # The translations whose category holds published content in their locale: one query per searched
+  #   locale, where asking each category translation for #public_content? walked one subtree apiece.
+  def public_category_translation_ids(categories)
+    kb_locales.flat_map do |kb_locale|
+      KnowledgeBase::Category::Translation
+        .where(kb_locale:, category: categories.where(knowledge_base_id: kb_locale.knowledge_base_id).with_public_content_in(kb_locale.system_locale_id))
+        .pluck(:id)
+    end
+  end
+
+  # The help site arm follows KnowledgeBase::CategoryPolicy#show_public?; a granular reader edits
+  #   no category, so they get published content without resolving an editor set that is empty anyway.
+  def access
+    @access ||= case [KnowledgeBase.access_for_user(user), flavor]
+                in [:granular, :agent] then :granular_agent
+                in [:granular, _] if user.permissions?('knowledge_base.editor') then :granular_public
+                in [:editor, _]        then :editor
+                in [:reader, :agent]   then :internal
+                else                        :published
+                end
+  end
+
+  def internal_assets
+    @internal_assets ||= KnowledgeBase::InternalAssets.new(user)
+  end
+
+  def editor_category_ids
+    @editor_category_ids ||= KnowledgeBase::AccessibleCategories.for_user(user).editor.map(&:id)
+  end
+
+  def translation_ids_for_kbs
     flatten_translation_ids KnowledgeBase.active.where(id: knowledge_bases)
   end
 
@@ -305,7 +329,7 @@ class SearchKnowledgeBaseBackend
   def options_apply_answer_ids(hash)
     return if include_drafts_and_archived?
 
-    hash[:query_extension][:bool][:must].push({ terms: { _id: @readable_answer_translation_ids } })
+    hash[:query_extension][:bool][:must].push({ terms: { _id: translation_ids_for_answers } })
   end
 
   def options_apply_pagination(hash, pagination)

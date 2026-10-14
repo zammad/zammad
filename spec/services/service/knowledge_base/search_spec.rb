@@ -393,8 +393,8 @@ RSpec.describe Service::KnowledgeBase::Search do
     end
 
     # Granular permissions make KnowledgeBase.access_for_user :granular for anyone with a flat
-    #   editor/reader permission, but this user has neither - #flavor has to fall back to :public
-    #   for them regardless, or they would be filtered through grants they were never given.
+    #   editor/reader permission, but this user has neither - they search as :public and find the
+    #   published content they can browse, not nothing.
     context 'with granular permissions in effect, for a user without any knowledge base permission' do
       # Not the :agent factory - its default Agent role grants knowledge_base.reader (see
       #   db/seeds/permissions.rb), which is exactly the flat permission this example excludes.
@@ -406,7 +406,11 @@ RSpec.describe Service::KnowledgeBase::Search do
       end
 
       it 'takes the public path' do
-        expect(KnowledgeBase.access_for_user(user)).to eq(:public)
+        allow(SearchKnowledgeBaseBackend).to receive(:new).and_call_original
+
+        search
+
+        expect(SearchKnowledgeBaseBackend).to have_received(:new).with(hash_including(flavor: :public))
       end
 
       it 'still finds published answers outside the granted category' do

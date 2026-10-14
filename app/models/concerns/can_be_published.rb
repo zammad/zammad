@@ -130,6 +130,23 @@ module CanBePublished
       end
     }
 
+    # KnowledgeBase::AnswerPolicy#show_public? for a whole relation. A granular reader edits no
+    #   category, so they get published answers without resolving an empty editor set.
+    #
+    # @param [User] user
+    scope :visible_on_help_site_to_user, lambda { |user|
+      shown = all.where(category_id: KnowledgeBase::Category.where(knowledge_base: KnowledgeBase.active).select(:id))
+
+      case KnowledgeBase.access_for_user(user)
+      in :editor
+        shown
+      in :granular if user.permissions?('knowledge_base.editor')
+        shown.where(category: KnowledgeBase::AccessibleCategories.for_user(user).editor).or(shown.published)
+      else
+        shown.published
+      end
+    }
+
     # Returns all currently published answers
     scope :published, lambda {
       timestamp = Time.zone.now

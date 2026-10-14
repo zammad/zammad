@@ -46,7 +46,26 @@ RSpec.describe KnowledgeBase::AnswerPolicy::Scope, current_user_id: 1 do
       before { roles.first.permissions << permission }
 
       it 'returns the given collection (unfiltered)' do
-        expect(scope.resolve).to eq(original_collection)
+        expect(scope.resolve).to match_array(original_collection.all)
+      end
+    end
+
+    context 'with "knowledge_base.editor" permissions narrowed by granular permissions' do
+      let(:user)     { create(:user, roles: [role]) }
+      let(:role)     { create(:role, permission_names: %w[knowledge_base.editor]) }
+      let(:answer)   { original_collection.archived.first }
+
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(answer.category)
+          .update! role => 'reader'
+      end
+
+      it 'removes unpublished and archived answers of the narrowed category' do
+        expect(scope.resolve)
+          .to match_array(original_collection.where(<<~QUERY, now: Time.zone.now, category_id: answer.category_id))
+            category_id <> :category_id OR (published_at < :now AND (archived_at IS NULL OR archived_at > :now))
+          QUERY
       end
     end
   end

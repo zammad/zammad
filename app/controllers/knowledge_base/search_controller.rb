@@ -31,12 +31,13 @@ class KnowledgeBase::SearchController < ApplicationController
       index:             params[:index],
       limit:             params[:limit],
       highlight_enabled: highlight_enabled?,
-      order_by:          { updated_at: :desc }
+      order_by:          { updated_at: :desc },
+      user:              current_user
     )
 
     include_locale = params[:include_locale] && KnowledgeBase.with_multiple_locales_exists?
 
-    result = search_backend.search params[:query], user: current_user, pagination: pagination
+    result = search_backend.search params[:query], pagination: pagination
 
     if (exclude_ids = params[:exclude_ids]&.map(&:to_i))
       result.reject! { |meta| meta[:type] == params[:index] && exclude_ids.include?(meta[:id]) }

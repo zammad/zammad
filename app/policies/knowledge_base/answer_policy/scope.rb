@@ -5,11 +5,7 @@ class KnowledgeBase::AnswerPolicy < ApplicationPolicy
     USER_REQUIRED = false
 
     def resolve
-      if user&.permissions?('knowledge_base.editor')
-        scope
-      else
-        scope.published
-      end
+      scope.visible_on_help_site_to_user(user)
     end
   end
 end
