@@ -212,7 +212,7 @@ describe('useBubbleHeader', () => {
     expect(showMetaInformation.value).toBe(false)
   })
 
-  it.each(['a', 'button', 'button>span'])(
+  it.each(['a', 'button', 'button>span', 'textarea'])(
     'should not toggle if clicked node is a %s',
     (tagName) => {
       const { showMetaInformation, toggleHeader } = useBubbleHeader()

@@ -19,7 +19,7 @@ export const useBubbleHeader = () => {
   const isInteractiveTarget = (target: HTMLElement) => {
     if (!target) return false
 
-    const interactiveElements = new Set(['A', 'BUTTON'])
+    const interactiveElements = new Set(['A', 'BUTTON', 'TEXTAREA'])
 
     // Parent interactive or traversed nodes
     const hasInteractiveElements = target.closest(Array.from(interactiveElements).join(','))
