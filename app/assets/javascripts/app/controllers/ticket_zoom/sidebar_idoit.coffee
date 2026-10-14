@@ -93,6 +93,20 @@ class SidebarIdoit extends App.Controller
       objectId = $(e.currentTarget).attr 'data-object-id'
       @delete(objectId)
     )
+    list.on('click', '.js-idoitObjectId', (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+
+      objectId = $(e.currentTarget).attr 'data-object-id'
+      return if _.isEmpty(objectId)
+
+      $('#global-search')
+        .val("preferences.idoit.object_ids:#{objectId}")
+        .trigger('input')
+        .trigger('change')
+        .trigger('keyup')
+        .focus()
+    )
     @html(list)
 
   showError: (message) =>
