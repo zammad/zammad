@@ -315,8 +315,6 @@ GEM
     fiber-local (1.1.0)
       fiber-storage
     fiber-storage (1.0.1)
-    gli (2.22.2)
-      ostruct
     globalid (1.4.0)
       activesupport (>= 6.1)
     google-protobuf (4.36.2)
@@ -375,7 +373,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (3.0.2)
+    json (3.1.0)
     json-jwt (1.17.2)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -798,11 +796,10 @@ GEM
       activesupport (>= 7.2)
     simple_po_parser (1.1.6)
     simpleidn (0.3.0)
-    slack-ruby-client (3.2.0)
+    slack-ruby-client (3.3.0)
       faraday (>= 2.0.1)
       faraday-mashify
       faraday-multipart
-      gli
       hashie
       logger
     slop (3.6.0)
