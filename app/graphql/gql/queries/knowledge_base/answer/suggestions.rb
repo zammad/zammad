@@ -18,7 +18,8 @@ module Gql::Queries
         flavor:            'agent',
         index:             'KnowledgeBase::Answer::Translation',
         highlight_enabled: false,
-      ).search(query, user: context.current_user)
+        user:              context.current_user,
+      ).search(query)
 
       ids = results.pluck(:id)
 

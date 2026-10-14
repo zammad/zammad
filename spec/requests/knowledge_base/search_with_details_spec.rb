@@ -254,6 +254,53 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
     end
   end
 
+  # The flavor comes from the client and defaults to public, so neither may widen what an editor
+  #   whose access is narrowed per category gets to see.
+  context 'when an editor has no access to one of the categories', authenticated_as: :editor do
+    let(:search_phrase) { 'narrowed editor test' }
+    let(:editor_role)   { create(:role, permission_names: %w[ticket.agent knowledge_base.editor]) }
+    let(:editor)        { create(:user, roles: [editor_role]) }
+
+    let(:answer_in_editable_category) do
+      create(:knowledge_base_answer, :draft, category: category, translation_attributes: { title: "#{search_phrase} editable" })
+    end
+
+    let(:answer_in_restricted_category) do
+      create(:knowledge_base_answer, :draft, category: other_category, translation_attributes: { title: "#{search_phrase} restricted" })
+    end
+
+    before do |example|
+      answer_in_editable_category
+      answer_in_restricted_category
+      other_category.translations.first.update!(title: "#{search_phrase} category")
+
+      KnowledgeBase::PermissionsUpdate.new(other_category).update!(editor_role => 'none')
+
+      next if !example.metadata[:searchindex]
+
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+    end
+
+    shared_examples 'test narrowed editor' do
+      [nil, 'public', 'agent'].each do |flavor|
+        it "lists only the editable answer with #{flavor ? "the #{flavor}" : 'no'} flavor" do
+          post endpoint, params: { query: search_phrase, flavor: flavor }.compact, as: :json
+
+          expect(json_response['details'].map { [it['type'], it['id']] })
+            .to contain_exactly(['KnowledgeBase::Answer::Translation', answer_in_editable_category.translations.first.id])
+        end
+      end
+    end
+
+    context 'with elasticsearch' do
+      include_examples 'test narrowed editor'
+    end
+
+    context 'with no elasticsearch', searchindex: false do
+      include_examples 'test narrowed editor'
+    end
+  end
+
   # The details are markup whether highlighting is on or not, while the index holds plain text - so
   #   the controller escapes everything but the marks it asked Elasticsearch for.
   context 'when the title contains HTML special characters' do

@@ -430,6 +430,96 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
     end
   end
 
+  describe 'visible_on_help_site_to_user' do
+    include_context 'basic Knowledge Base'
+
+    let(:all_answers) do
+      [
+        published_answer, internal_answer, draft_answer,
+        published_answer_in_other_category, internal_answer_in_other_category, draft_answer_in_other_category
+      ]
+    end
+
+    before { all_answers }
+
+    context 'when granular permissions narrow an editor' do
+      let(:user) { create(:admin_only) }
+
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(category)
+          .update! user.roles.first => access
+      end
+
+      context 'when the editor keeps editing the category' do
+        let(:access) { 'editor' }
+
+        it 'returns every answer' do
+          expect(described_class.visible_on_help_site_to_user(user)).to match_array(all_answers)
+        end
+      end
+
+      context 'when the editor only reads the category' do
+        let(:access) { 'reader' }
+
+        it 'returns the published answers of the category and every answer elsewhere' do
+          expect(described_class.visible_on_help_site_to_user(user)).to contain_exactly(
+            published_answer,
+            published_answer_in_other_category, internal_answer_in_other_category, draft_answer_in_other_category
+          )
+        end
+      end
+    end
+
+    context 'when granular permissions narrow a reader' do
+      let(:user) { create(:agent) }
+
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(category)
+          .update! user.roles.first => 'none'
+      end
+
+      it 'returns published answers' do
+        expect(described_class.visible_on_help_site_to_user(user)).to contain_exactly(published_answer, published_answer_in_other_category)
+      end
+
+      it 'resolves no accessible categories' do
+        allow(KnowledgeBase::AccessibleCategories).to receive(:for_user).and_call_original
+
+        described_class.visible_on_help_site_to_user(user).load
+
+        expect(KnowledgeBase::AccessibleCategories).not_to have_received(:for_user)
+      end
+    end
+
+    context 'when granular permissions not enabled' do
+      it 'returns every answer for an editor' do
+        expect(described_class.visible_on_help_site_to_user(create(:admin))).to match_array(all_answers)
+      end
+
+      it 'returns published answers for a reader' do
+        expect(described_class.visible_on_help_site_to_user(create(:agent))).to contain_exactly(published_answer, published_answer_in_other_category)
+      end
+
+      it 'returns published answers without a user' do
+        expect(described_class.visible_on_help_site_to_user(nil)).to contain_exactly(published_answer, published_answer_in_other_category)
+      end
+    end
+
+    context 'when the knowledge base is inactive' do
+      before { knowledge_base.update!(active: false) }
+
+      it 'returns nothing for an editor' do
+        expect(described_class.visible_on_help_site_to_user(create(:admin))).to be_empty
+      end
+
+      it 'returns nothing without a user' do
+        expect(described_class.visible_on_help_site_to_user(nil)).to be_empty
+      end
+    end
+  end
+
   describe 'reindexing translations when the answer changes', performs_jobs: true do
     before do
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)

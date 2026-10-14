@@ -83,7 +83,7 @@ class Service::KnowledgeBase::Search < Service::Base
   def execute
     return empty if query.blank?
 
-    hits = backend.search(query, user: current_user)
+    hits = backend.search(query)
 
     preheat(hits)
 
@@ -123,19 +123,13 @@ class Service::KnowledgeBase::Search < Service::Base
       highlight_enabled:           enriched,
       highlight_options:           enriched ? HIGHLIGHT_OPTIONS : nil,
       include_drafts_and_archived: include_drafts_and_archived,
+      user:                        current_user,
       raise_on_failure:            raise_on_failure,
     )
   end
 
-  # Derived rather than hardcoded to :agent. SearchKnowledgeBaseBackend#use_internal_assets? is
-  #   `flavor == :agent && granular_permissions?` with no role condition, so a user without any
-  #   knowledge base permission would be filtered through the granular category grants — of which
-  #   they have none — and see nothing, while KnowledgeBase::Answer.visible_to_user still lets them
-  #   browse published content. Mapping :public through keeps search and browsing in agreement.
-  #
-  # A side effect is that such a user searches with the public field list and therefore without the
-  #   title/tag weighting, which SearchKnowledgeBaseBackend applies to the agent flavor only so the
-  #   public help site's ranking stays untouched.
+  # Not hardcoded to :agent: a user without knowledge base permission keeps the help site's field
+  #   list and ranking, which the backend only changes for the agent flavor.
   def flavor
     ::KnowledgeBase.access_for_user(current_user) == :public ? :public : :agent
   end
