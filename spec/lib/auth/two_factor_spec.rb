@@ -117,6 +117,19 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
     end
   end
 
+  describe '#initiate_authentication' do
+    it 'returns an empty hash for an unknown method' do
+      expect(instance.initiate_authentication('does_not_exist')).to eq({})
+    end
+
+    it 'delegates to the resolved authentication method object' do
+      create(:user_two_factor_preference, :security_keys, user: user)
+      allow(WebAuthn::Credential).to receive(:options_for_get).with(any_args).and_return(:challenge)
+
+      expect(instance.initiate_authentication('security_keys')).to eq(:challenge)
+    end
+  end
+
   describe '#user_authentication_methods' do
     before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
