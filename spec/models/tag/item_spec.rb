@@ -2,8 +2,61 @@
 
 require 'rails_helper'
 
-RSpec.describe Tag::Item do
+RSpec.describe Tag::Item, type: :model do
   subject(:item) { create(:'tag/item') }
+
+  it { is_expected.to validate_uniqueness_of(:name) }
+
+  it 'rejects a duplicate name at database level' do
+    expect { build(:tag_item, name: item.name).save!(validate: false) }
+      .to raise_error(ActiveRecord::RecordNotUnique)
+  end
+
+  describe '.lookup_by_name_and_create' do
+    context 'when another transaction has committed the name since the lookup' do
+      before do
+        item
+        allow(described_class).to receive(:lookup).and_return(nil)
+      end
+
+      it 'returns the committed item' do
+        expect(described_class.lookup_by_name_and_create(item.name)).to eq(item)
+      end
+    end
+
+    context 'when another transaction creates the name concurrently', :ensure_threads_exited do
+      self.use_transactional_tests = false
+
+      after { described_class.where(name: 'Concurrent tag').delete_all }
+
+      it 'returns the item of the other transaction and keeps its own transaction usable' do
+        with_uncommitted_concurrent_write(-> { described_class.create!(name: 'Concurrent tag') }) do |concurrent_item|
+          ActiveRecord::Base.transaction do
+            expect(described_class.lookup_by_name_and_create('Concurrent tag')).to eq(concurrent_item)
+          end
+        end
+      end
+
+      it 'does not lock the item of the other transaction until its own transaction commits' do
+        with_uncommitted_concurrent_write(-> { described_class.create!(name: 'Concurrent tag') }) do |concurrent_item|
+          ActiveRecord::Base.transaction do
+            described_class.lookup_by_name_and_create('Concurrent tag')
+
+            expect { key_share_lock_on_another_connection(concurrent_item) }.not_to raise_error
+          end
+        end
+      end
+
+      # The foreign key check of a tag insert takes this lock on the item.
+      def key_share_lock_on_another_connection(item)
+        Thread.new do
+          described_class.connection_pool.with_connection do
+            described_class.where(id: item.id).lock('FOR KEY SHARE NOWAIT').pick(:id)
+          end
+        end.join
+      end
+    end
+  end
 
   describe '.rename' do
     let!(:ticket) { create(:ticket) }

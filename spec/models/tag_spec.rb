@@ -7,6 +7,8 @@ RSpec.describe Tag, type: :model do
 
   let!(:ticket) { create(:ticket) }
 
+  it { is_expected.to validate_uniqueness_of(:tag_item_id).scoped_to(:tag_object_id, :o_id) }
+
   shared_examples 'tag adding' do
     context 'when a Tag::Object does not exist for the given class' do
       it 'creates it and assigns it to a new Tag' do
@@ -106,6 +108,31 @@ RSpec.describe Tag, type: :model do
     end
 
     include_examples 'tag adding'
+
+    context 'when another transaction adds the same tag to the same object concurrently', :ensure_threads_exited do
+      self.use_transactional_tests = false
+
+      # Nothing is rolled back here, so the ticket of the outer let! would stay behind.
+      let(:ticket)      { nil }
+      let!(:tag_item)   { create(:tag_item) }
+      let!(:tag_object) { Tag::Object.lookup_by_name_and_create('Concurrent object') }
+
+      after do
+        described_class.where(tag_item:).delete_all
+        tag_item.destroy!
+        tag_object.destroy!
+      end
+
+      it 'keeps the tag of the other transaction and its own transaction usable' do
+        with_uncommitted_concurrent_write(-> { described_class.create!(tag_item:, tag_object:, o_id: 1, created_by_id: 1) }) do
+          ActiveRecord::Base.transaction do
+            described_class.tag_add(object: tag_object.name, item: tag_item.name, o_id: 1, created_by_id: 1)
+
+            expect(described_class.where(tag_item:, tag_object:, o_id: 1).count).to eq(1)
+          end
+        end
+      end
+    end
   end
 
   describe '.tag_remove' do

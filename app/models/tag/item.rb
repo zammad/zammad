@@ -1,7 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag::Item < ApplicationModel
-  validates :name, presence: true, format: { without: %r{,|\*}, message: __('Commas and stars are not allowed in name.') }
+  validates :name,
+            presence:   true,
+            format:     { without: %r{,|\*}, message: __('Commas and stars are not allowed in name.') },
+            uniqueness: { case_sensitive: true }
 
   before_save :fill_namedowncase
 
@@ -39,8 +42,22 @@ tag_item = Tag::Item.lookup_by_name_and_create('some tag')
     tag_item = Tag::Item.lookup(name: name)
     return tag_item if tag_item
 
-    Tag::Item.create!(name: name)
+    create_or_find_by_name!(name)
   end
+
+  # Another transaction may create the same name after the lookup. The validation
+  # rejects it once that transaction has committed, the unique index before.
+  # Not create_or_find_by!: it re-reads FOR UPDATE, which blocks tagging with this item until the caller commits.
+  def self.create_or_find_by_name!(name)
+    transaction(requires_new: true) { create!(name:) }
+  rescue ActiveRecord::RecordNotUnique
+    find_by!(name:)
+  rescue ActiveRecord::RecordInvalid => e
+    raise if !e.record.errors.of_kind?(:name, :taken)
+
+    find_by!(name:)
+  end
+  private_class_method :create_or_find_by_name!
 
 =begin
 

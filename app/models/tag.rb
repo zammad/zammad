@@ -7,6 +7,8 @@ class Tag < ApplicationModel
   belongs_to :tag_object, class_name: 'Tag::Object', optional: true
   belongs_to :tag_item,   class_name: 'Tag::Item', optional: true
 
+  validates :tag_item_id, uniqueness: { scope: %i[tag_object_id o_id] }
+
 =begin
 
 add tags for certain object
@@ -36,7 +38,7 @@ add tags for certain object
     return true if current_tags.include?(data[:item])
 
     # create history
-    Tag.create(
+    create_unless_added_concurrently(
       tag_object_id: tag_object_id,
       tag_item_id:   tag_item_id,
       o_id:          data[:o_id],
@@ -155,7 +157,7 @@ update tags for certain object
     added_tags.each do |tag_name|
       tag_item_id = Tag::Item.lookup_by_name_and_create(tag_name).id
 
-      Tag.create(
+      create_unless_added_concurrently(
         tag_object_id: tag_object_id,
         tag_item_id:   tag_item_id,
         o_id:          o_id,
@@ -253,4 +255,13 @@ references # [['Ticket', 1], ['Ticket', 4], ...]
 
     Tag::Item.lookup(name: name).present?
   end
+
+  # Another transaction may add the same tag to the same object after the
+  # duplicate check. Its row wins; the savepoint keeps the caller's transaction usable.
+  def self.create_unless_added_concurrently(**attributes)
+    transaction(requires_new: true) { create(**attributes) }
+  rescue ActiveRecord::RecordNotUnique
+    nil
+  end
+  private_class_method :create_unless_added_concurrently
 end
