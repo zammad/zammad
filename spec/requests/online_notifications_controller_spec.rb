@@ -366,12 +366,83 @@ RSpec.describe OnlineNotificationsController, type: :request do
     end
   end
 
+  # Hidden entirely in every render mode, like the index action already does.
+  shared_examples 'forbidding all render modes' do
+    it 'is forbidden' do
+      submit_request
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'is forbidden with expand param' do
+      submit_request(expand: true)
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'is forbidden with full param' do
+      submit_request(full: true)
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'exposes nothing but the error' do
+      submit_request(full: true)
+
+      expect(json_response.keys).to match_array(%w[error error_human])
+    end
+  end
+
+  shared_examples 'hiding the notification' do
+    context 'when fetching the notification' do
+      def submit_request(query = {})
+        get "/api/v1/online_notifications/#{online_notification.id}?#{query.to_query}", as: :json
+      end
+
+      include_examples 'forbidding all render modes'
+    end
+
+    context 'when updating the notification' do
+      def submit_request(query = {})
+        put "/api/v1/online_notifications/#{online_notification.id}?#{query.to_query}", params: { seen: true }, as: :json
+      end
+
+      include_examples 'forbidding all render modes'
+
+      it 'does not mark the notification as seen' do
+        expect { submit_request }.not_to change { online_notification.reload.seen }.from(false)
+      end
+    end
+
+    it 'is not listed in the index', :aggregate_failures do
+      get '/api/v1/online_notifications', as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.pluck('id')).not_to include(online_notification.id)
+    end
+
+    it 'ships nothing of the related object in the index', :aggregate_failures do
+      get '/api/v1/online_notifications?full=true', as: :json
+
+      expect(json_response['record_ids']).not_to include(online_notification.id)
+      secrets.each { |secret| expect(response.body).not_to include(secret) }
+    end
+
+    it 'can still be deleted by its owner', :aggregate_failures do
+      delete "/api/v1/online_notifications/#{online_notification.id}", as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(OnlineNotification.exists?(online_notification.id)).to be(false)
+    end
+  end
+
   describe 'without permission for the related ticket' do
     let(:group_with_access)    { create(:group) }
     let(:group_without_access) { create(:group) }
     let(:notified_agent)       { create(:agent, groups: [group_with_access]) }
     let(:acting_agent)         { create(:agent, groups: [group_with_access]) }
-    let(:ticket)               { create(:ticket, group: group_with_access, owner: notified_agent) }
+    let(:ticket)               { create(:ticket, group: group_with_access, owner: notified_agent, title: 'secret ticket title') }
+    let(:secrets)              { [ticket.title] }
 
     let(:online_notification) do
       OnlineNotification.add(
@@ -385,69 +456,6 @@ RSpec.describe OnlineNotificationsController, type: :request do
     end
 
     before { online_notification && authenticated_as(notified_agent) }
-
-    # Hidden entirely in every render mode, like the index action already does.
-    shared_examples 'forbidding all render modes' do
-      it 'is forbidden' do
-        submit_request
-
-        expect(response).to have_http_status(:forbidden)
-      end
-
-      it 'is forbidden with expand param' do
-        submit_request(expand: true)
-
-        expect(response).to have_http_status(:forbidden)
-      end
-
-      it 'is forbidden with full param' do
-        submit_request(full: true)
-
-        expect(response).to have_http_status(:forbidden)
-      end
-
-      it 'exposes nothing but the error' do
-        submit_request(full: true)
-
-        expect(json_response.keys).to match_array(%w[error error_human])
-      end
-    end
-
-    shared_examples 'hiding the notification' do
-      context 'when fetching the notification' do
-        def submit_request(query = {})
-          get "/api/v1/online_notifications/#{online_notification.id}?#{query.to_query}", as: :json
-        end
-
-        include_examples 'forbidding all render modes'
-      end
-
-      context 'when updating the notification' do
-        def submit_request(query = {})
-          put "/api/v1/online_notifications/#{online_notification.id}?#{query.to_query}", params: { seen: true }, as: :json
-        end
-
-        include_examples 'forbidding all render modes'
-
-        it 'does not mark the notification as seen' do
-          expect { submit_request }.not_to change { online_notification.reload.seen }.from(false)
-        end
-      end
-
-      it 'is not listed in the index', :aggregate_failures do
-        get '/api/v1/online_notifications', as: :json
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response.pluck('id')).not_to include(online_notification.id)
-      end
-
-      it 'can still be deleted by its owner', :aggregate_failures do
-        delete "/api/v1/online_notifications/#{online_notification.id}", as: :json
-
-        expect(response).to have_http_status(:ok)
-        expect(OnlineNotification.exists?(online_notification.id)).to be(false)
-      end
-    end
 
     context 'when the ticket was moved to an inaccessible group' do
       before { ticket.update!(group: group_without_access) }
@@ -476,6 +484,127 @@ RSpec.describe OnlineNotificationsController, type: :request do
 
         expect(json_response.dig('assets', 'Ticket', ticket.id.to_s)).to include('title' => ticket.title)
       end
+    end
+  end
+
+  describe 'with notifications pointing at objects outside the agent groups' do
+    let(:group_with_access)    { create(:group) }
+    let(:group_without_access) { create(:group) }
+    let(:notified_agent)       { create(:agent, groups: [group_with_access]) }
+    let(:ticket)               { create(:ticket, group: group_without_access, title: 'secret ticket title') }
+    let(:article)              { create(:ticket_article, ticket: ticket, internal: true, body: 'secret article body') }
+
+    before { online_notification && authenticated_as(notified_agent) }
+
+    context 'when the notification points at an internal article of the ticket' do
+      let(:online_notification) { create(:online_notification, o: article, user: notified_agent) }
+      let(:secrets)             { [article.body, ticket.title] }
+
+      include_examples 'hiding the notification'
+
+      context 'when the agent was downgraded to a customer without groups' do
+        before do
+          notified_agent.roles = [Role.find_by(name: 'Customer')]
+          notified_agent.group_ids = []
+          notified_agent.save!
+        end
+
+        it 'still ships nothing of the related object', :aggregate_failures do
+          get '/api/v1/online_notifications?full=true', as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response['record_ids']).not_to include(online_notification.id)
+          secrets.each { |secret| expect(response.body).not_to include(secret) }
+        end
+      end
+    end
+
+    context 'when the notification points at a knowledge base answer the agent may not read' do
+      let(:answer)              { create(:knowledge_base_answer, :draft, translation_attributes: { title: 'secret answer title' }) }
+      let(:online_notification) { create(:online_notification, o: answer.translations.first, user: notified_agent, type_name: 'create') }
+      let(:secrets)             { [answer.translations.first.title] }
+
+      include_examples 'hiding the notification'
+    end
+
+    context 'when the notification points at a published knowledge base answer the agent may only read publicly' do
+      let(:answer)              { create(:knowledge_base_answer, :published, translation_attributes: { title: 'public answer title' }) }
+      let(:online_notification) { create(:online_notification, o: answer.translations.first, user: notified_agent, type_name: 'create') }
+      let(:secrets)             { [answer.translations.first.title] }
+
+      before { create(:knowledge_base_permission, permissionable: answer.category, role: notified_agent.roles.first, access: 'none') }
+
+      include_examples 'hiding the notification'
+    end
+
+    context 'when the notification points at the standalone record of another agent' do
+      let(:standalone)          { create(:online_notification_standalone, :kb_answer_generation_failed, data: { error_message: 'secret generation error', ticket_title: 'secret answer ticket title' }) }
+      let(:online_notification) { create(:online_notification, o: standalone, user: notified_agent, type_name: 'kb_answer_generation_failed') }
+      let(:secrets)             { ['secret generation error', 'secret answer ticket title'] }
+
+      before { create(:online_notification, o: standalone, user: create(:agent), type_name: 'kb_answer_generation_failed') }
+
+      include_examples 'hiding the notification'
+    end
+
+    context 'when the article is in an accessible group' do
+      let(:ticket)              { create(:ticket, group: group_with_access, title: 'visible ticket title') }
+      let(:online_notification) { create(:online_notification, o: article, user: notified_agent) }
+
+      it 'lists the notification with the assets of the article and its ticket', :aggregate_failures do
+        get '/api/v1/online_notifications?full=true', as: :json
+
+        expect(json_response['record_ids']).to include(online_notification.id)
+        expect(json_response.dig('assets', 'TicketArticle', article.id.to_s)).to include('body' => article.body)
+        expect(json_response.dig('assets', 'Ticket', ticket.id.to_s)).to include('title' => ticket.title)
+      end
+
+      it 'ships the assets of the article with full param' do
+        get "/api/v1/online_notifications/#{online_notification.id}?full=true", as: :json
+
+        expect(json_response.dig('assets', 'TicketArticle', article.id.to_s)).to include('body' => article.body)
+      end
+    end
+  end
+
+  describe 'when updating a notification' do
+    let(:group)               { create(:group) }
+    let(:notified_agent)      { create(:agent, groups: [group]) }
+    let(:ticket)              { create(:ticket, group: group) }
+    let(:online_notification) { create(:online_notification, o: ticket, user: notified_agent, type_name: 'update') }
+    let(:foreign_article)     { create(:ticket_article, ticket: create(:ticket, group: create(:group)), internal: true, body: 'secret article body') }
+
+    let(:payload) do
+      {
+        seen:             true,
+        object:           'Ticket::Article',
+        object_lookup_id: ObjectLookup.by_name('Ticket::Article'),
+        o_id:             foreign_article.id,
+        type:             'escalation',
+        type_lookup_id:   TypeLookup.by_name('escalation'),
+        user_id:          create(:agent).id,
+      }
+    end
+
+    before { online_notification && authenticated_as(notified_agent) }
+
+    it 'changes the seen flag only', :aggregate_failures do
+      put "/api/v1/online_notifications/#{online_notification.id}", params: payload, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(online_notification.reload).to have_attributes(
+        seen:             true,
+        object_lookup_id: ObjectLookup.by_name('Ticket'),
+        o_id:             ticket.id,
+        type_lookup_id:   TypeLookup.by_name('update'),
+        user_id:          notified_agent.id,
+      )
+    end
+
+    it 'ships nothing of the object the request pointed at' do
+      put "/api/v1/online_notifications/#{online_notification.id}?full=true", params: payload, as: :json
+
+      expect(response.body).not_to include(foreign_article.body)
     end
   end
 end

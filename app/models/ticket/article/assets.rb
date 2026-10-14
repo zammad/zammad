@@ -63,4 +63,11 @@ returns
 
     super.except('detected_language')
   end
+
+  def authorized_asset?
+    return UserInfo.system_context? if UserInfo.current_user.blank?
+    return true if Ticket::ArticlePolicy.new(UserInfo.current_user, self).show?
+
+    false
+  end
 end

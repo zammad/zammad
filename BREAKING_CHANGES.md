@@ -216,6 +216,21 @@ requires `admin.organization`, and agent tokens receive `403 Forbidden`.
 
 ## 7.2
 
+### `PUT /api/v1/online_notifications/{id}` only updates `seen`
+
+**Who is affected?** Integrations that write any attribute other than `seen` through
+`PUT /api/v1/online_notifications/{id}`.
+
+The endpoint accepted every attribute of the notification in its payload, including `o_id`,
+`object`, `type` and `user_id`. It now applies `seen` only. Other attributes in the payload are
+ignored, and the response still answers `200` with the record, so such an integration gets a success
+response while nothing but `seen` changes.
+
+⚠️ Send only `seen` to this endpoint. Where a notification points and whom it belongs to is decided
+by the server when the notification is created.
+
+**Related advisory:** [GHSA-w4xf-rp7v-r2j2](https://github.com/zammad/zammad/security/advisories/GHSA-w4xf-rp7v-r2j2)
+
 ### Verifying a signup email address no longer signs the user in
 
 **Who is affected?** Integrations that redeem a signup verification token through

@@ -107,15 +107,9 @@ curl http://localhost/api/v1/online_notifications/#{id} -v -u #{login}:#{passwor
 Resource:
 PUT /api/v1/online_notifications/{id}
 
-Payload:
+Payload (only "seen" is writable, other attributes are ignored):
 {
-  "id": 123,
-  "o_id": 628,
-  "object": "Ticket",
-  "type": "escalation",
-  "seen": true,
-  "updated_at": "2016-08-16T07:55:42.119Z",
-  "created_at": "2016-08-16T07:55:42.119Z"
+  "seen": true
 }
 
 Response:
@@ -130,12 +124,14 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/online_notifications/#{id} -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"seen": true}'
 
 =end
 
   def update
-    model_update_render(OnlineNotification, params)
+    # Where a notification points and whom it belongs to is decided by the server; the client only
+    #   tracks whether it was seen.
+    model_update_render(OnlineNotification, params.permit(:id, :seen))
   end
 
 =begin

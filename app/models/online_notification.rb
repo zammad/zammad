@@ -39,7 +39,7 @@ add a new online notification for this user
     ObjectLookup
       .by_id(object_lookup_id)
       &.safe_constantize
-      &.find(o_id)
+      &.find_by(id: o_id)
   end
 
   # The tag of a web push about this notification. Notifications of one ticket
@@ -148,12 +148,13 @@ remove whole online notifications of an object by type
 
 =begin
 
-return online notifications of an user.
+return online notifications of an user, limited to those whose related object the user may read
 
 @param user [User] to get notifications of
 @param limit [Integer] of notifications to get
-@param ensure_access [Boolean] to check if user still has access to referenced ticket
-@param access [String] can be 'full', 'read', 'create' or 'ignore' (ignore means a selector over all tickets)
+@param access [String] group access the user needs on a related ticket: 'full', 'read' or 'create';
+  'ignore' skips the related object check altogether
+@param ids [Array<Integer>] to restrict the list to, e.g. to check a single notification
 
 @example
 
@@ -161,22 +162,80 @@ return online notifications of an user.
 
 =end
 
-  def self.list(user, limit: 200, access: 'read')
+  def self.list(user, limit: 200, access: 'read', ids: nil)
     relation = OnlineNotification
       .where(user_id: user.id)
       .reorder(created_at: :desc, id: :desc)
       .limit(limit)
+    relation = relation.where(id: ids) if ids
 
     return relation if access == 'ignore'
 
-    object_id = ObjectLookup.by_name 'Ticket'
-
-    relation
-      .joins("LEFT JOIN tickets ON online_notifications.object_lookup_id = #{ActiveRecord::Base.connection.quote(object_id)} AND tickets.id = online_notifications.o_id")
-      .where('online_notifications.object_lookup_id != :object_id OR (online_notifications.object_lookup_id = :object_id AND tickets.group_id IN (:group_ids))',
-             object_id: object_id,
-             group_ids: user.group_ids_access(access))
+    relation.merge(related_object_accessible(relation, user, access))
   end
+
+  def self.related_object_accessible(relation, user, access)
+    ticket_object_id     = ObjectLookup.by_name('Ticket')
+    article_object_id    = ObjectLookup.by_name('Ticket::Article')
+    standalone_object_id = ObjectLookup.by_name('OnlineNotificationStandalone')
+
+    # Only the newest page of candidates is authorized: an older one belongs to the page only when
+    #   fewer than a page of newer notifications are accessible, which is not worth checking all.
+    policy_candidates = relation.where.not(object_lookup_id: [ticket_object_id, article_object_id, standalone_object_id])
+
+    # Each check is correlated on the notification row: an uncorrelated subselect in an OR branch
+    #   is not planned as a join, so it would enumerate every readable ticket or article per call.
+    readable_tickets = Ticket.where(group_id: user.group_ids_access(access))
+    readable_ticket  = readable_tickets.where('tickets.id = online_notifications.o_id')
+    readable_article = Ticket::Article.joins(:ticket).merge(readable_tickets).where('ticket_articles.id = online_notifications.o_id')
+    own_standalone   = own_standalone_ids(user).where('online_notification_standalones.id = online_notifications.o_id')
+
+    where(object_lookup_id: ticket_object_id).where(readable_ticket.arel.exists)
+      .or(where(object_lookup_id: article_object_id).where(readable_article.arel.exists))
+      .or(where(object_lookup_id: standalone_object_id).where(own_standalone.arel.exists))
+      .or(where(id: policy_accessible_ids(user, policy_candidates)))
+  end
+  private_class_method :related_object_accessible
+
+  # A standalone record has no owner column: it is created together with the notification of the
+  #   user it is for, so it stops counting as theirs once another user's notification points at it.
+  def self.own_standalone_ids(user)
+    foreign_ids = where(object_lookup_id: ObjectLookup.by_name('OnlineNotificationStandalone'))
+      .where.not(user_id: user.id)
+      .select(:o_id)
+
+    OnlineNotificationStandalone.where.not(id: foreign_ids).select(:id)
+  end
+
+  # Object types without a query of their own (e.g. a knowledge base answer) are authorized one
+  #   record at a time, with the related records loaded in one query per class beforehand. The
+  #   policy checks themselves still query per record, e.g. for the effective knowledge base
+  #   permission: the page of candidates bounds that cost, the preload does not remove it.
+  def self.policy_accessible_ids(user, candidates)
+    candidates      = candidates.to_a
+    related_objects = related_objects_of(candidates)
+
+    candidates.filter_map do |notification|
+      notification.id if OnlineNotificationPolicy.new(user, notification).related_accessible?(related_objects[notification.id])
+    end
+  end
+  private_class_method :policy_accessible_ids
+
+  # What the policy of a related object reads before deciding, loaded together with the object.
+  RELATED_OBJECT_PRELOADS = {
+    'KnowledgeBase::Answer::Translation' => { answer: { category: :knowledge_base } },
+  }.freeze
+
+  def self.related_objects_of(notifications)
+    notifications
+      .group_by { |notification| ObjectLookup.by_id(notification.object_lookup_id)&.safe_constantize }
+      .each_with_object({}) do |(klass, grouped), result|
+        records = klass ? klass.where(id: grouped.map(&:o_id)).preload(RELATED_OBJECT_PRELOADS[klass.name]).index_by(&:id) : {}
+
+        grouped.each { |notification| result[notification.id] = records[notification.o_id] }
+      end
+  end
+  private_class_method :related_objects_of
 
 =begin
 
