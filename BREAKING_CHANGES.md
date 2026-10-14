@@ -73,6 +73,22 @@ instead.
 
 ## 7.3
 
+### Indexes on name-like columns are no longer turned into `LOWER()` indexes
+
+**Who is affected?** Developers of custom packages, patches or add-ons whose migrations index a column
+named `name`, `login`, `locale` or `alias`, or ending in `name`.
+
+A core extension silently turned every index on such a column into a case-insensitive `LOWER(column)`
+expression index on PostgreSQL. It was removed, so `add_index`, `t.index` and `index: true` create the
+index the migration declares. A unique index created this way is case-sensitive, and queries comparing
+`LOWER(column)` cannot use it. Indexes that already exist on a system are not changed by the update;
+Zammad only adjusted its own.
+
+⚠️ Declare the expression where a package needs a case-insensitive index, e.g.
+`add_index :my_table, 'LOWER(name)', unique: true, name: 'index_my_table_on_name'`.
+
+**Related issue:** [#6450](https://github.com/zammad/zammad/issues/6450)
+
 ### `String#utf8_encode` and `Object#to_utf8` were deprecated in favour of `TextEncoding.utf8_encode`
 
 **Who is affected?** Developers of third-party packages, patches or add-ons that call

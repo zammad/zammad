@@ -36,7 +36,7 @@ class CreateAIProviderConnections < ActiveRecord::Migration[8.0]
 
       t.timestamps limit: 3
 
-      t.index :name, unique: true
+      t.index 'LOWER(name)', unique: true, name: 'index_ai_provider_connections_on_name'
       t.index :default_chat
       t.index :default_embedding
       t.index :default_ocr

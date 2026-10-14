@@ -19,7 +19,7 @@ class CreateAIAgents < ActiveRecord::Migration[7.2]
 
       t.timestamps limit: 3, null: false
 
-      t.index :name, unique: true
+      t.index 'LOWER(name)', unique: true, name: 'index_ai_agents_on_name'
       t.index :active
     end
   end

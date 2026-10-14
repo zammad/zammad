@@ -9,7 +9,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,        :integer,            null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :ticket_state_types, [:name], unique: true
+    add_index :ticket_state_types, 'LOWER(name)', unique: true, name: 'index_ticket_state_types_on_name'
     add_foreign_key :ticket_state_types, :users, column: :created_by_id
     add_foreign_key :ticket_state_types, :users, column: :updated_by_id
 
@@ -27,7 +27,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,        :integer,             null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :ticket_states, [:name], unique: true
+    add_index :ticket_states, 'LOWER(name)', unique: true, name: 'index_ticket_states_on_name'
     add_index :ticket_states, [:default_create]
     add_index :ticket_states, [:default_follow_up]
     add_index :ticket_states, [:default_close]
@@ -47,7 +47,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,        :integer,            null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :ticket_priorities, [:name], unique: true
+    add_index :ticket_priorities, 'LOWER(name)', unique: true, name: 'index_ticket_priorities_on_name'
     add_index :ticket_priorities, [:default_create]
     add_foreign_key :ticket_priorities, :users, column: :created_by_id
     add_foreign_key :ticket_priorities, :users, column: :updated_by_id
@@ -226,7 +226,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
 
-    add_index :ticket_time_accounting_types, [:name], unique: true
+    add_index :ticket_time_accounting_types, 'LOWER(name)', unique: true, name: 'index_ticket_time_accounting_types_on_name'
 
     add_foreign_key :ticket_time_accounting_types, :users, column: :created_by_id
     add_foreign_key :ticket_time_accounting_types, :users, column: :updated_by_id
@@ -317,7 +317,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,            :integer,               null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :triggers, [:name], unique: true
+    add_index :triggers, 'LOWER(name)', unique: true, name: 'index_triggers_on_name'
     add_index :triggers, %i[active activator]
     add_foreign_key :triggers, :users, column: :created_by_id
     add_foreign_key :triggers, :users, column: :updated_by_id
@@ -431,7 +431,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,        :integer,                 null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :slas, [:name], unique: true
+    add_index :slas, 'LOWER(name)', unique: true, name: 'index_slas_on_name'
     add_foreign_key :slas, :users, column: :created_by_id
     add_foreign_key :slas, :users, column: :updated_by_id
 
@@ -445,7 +445,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.integer :created_by_id,                         null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :macros, [:name], unique: true
+    add_index :macros, 'LOWER(name)', unique: true, name: 'index_macros_on_name'
     add_foreign_key :macros, :users, column: :created_by_id
     add_foreign_key :macros, :users, column: :updated_by_id
 
@@ -463,7 +463,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.integer :created_by_id,                       null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :chats, [:name], unique: true
+    add_index :chats, 'LOWER(name)', unique: true, name: 'index_chats_on_name'
     add_foreign_key :chats, :users, column: :created_by_id
     add_foreign_key :chats, :users, column: :updated_by_id
 
@@ -518,7 +518,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,  :integer,               null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :report_profiles, [:name], unique: true
+    add_index :report_profiles, 'LOWER(name)', unique: true, name: 'index_report_profiles_on_name'
     add_foreign_key :report_profiles, :users, column: :created_by_id
     add_foreign_key :report_profiles, :users, column: :updated_by_id
 

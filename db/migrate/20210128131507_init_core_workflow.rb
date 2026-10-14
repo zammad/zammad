@@ -29,7 +29,7 @@ class InitCoreWorkflow < ActiveRecord::Migration[5.2]
       t.integer :created_by_id,           null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :core_workflows, [:name], unique: true
+    add_index :core_workflows, 'LOWER(name)', unique: true, name: 'index_core_workflows_on_name'
     add_foreign_key :core_workflows, :users, column: :created_by_id
     add_foreign_key :core_workflows, :users, column: :updated_by_id
   end

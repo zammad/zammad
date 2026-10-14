@@ -9,7 +9,7 @@ class Signature < ApplicationModel
   include HasAuditLogs
 
   has_many  :groups,  after_add: :cache_update, after_remove: :cache_update
-  validates :name,    presence: true
+  validates :name,    presence: true, uniqueness: { case_sensitive: false }
 
   validates :note, length: { maximum: 250 }
   sanitized_html :note

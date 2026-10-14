@@ -4,12 +4,29 @@ require 'rails_helper'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_timeplan_examples'
 
-RSpec.describe Scheduler do
+RSpec.describe Scheduler, type: :model do
 
   let!(:failed_job) { create(:scheduler, status: 'error', active: false) }
 
   it_behaves_like 'HasXssSanitizedNote', model_factory: :scheduler
   it_behaves_like 'HasTimeplan'
+
+  describe 'Validations' do
+    subject(:job) { create(:scheduler) }
+
+    it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
+
+    it 'skips the duplicate lookup when the name is unchanged' do
+      job
+
+      queries = []
+      ActiveSupport::Notifications.subscribed(->(*, payload) { queries << payload[:sql] }, 'sql.active_record') do
+        job.update!(status: 'error')
+      end
+
+      expect(queries).not_to include(match(%r{schedulers.*LOWER}i))
+    end
+  end
 
   describe '.failed_jobs' do
     it 'does list failed jobs' do

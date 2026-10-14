@@ -13,6 +13,8 @@ class LdapSource < ApplicationModel
 
   store :preferences
 
+  validates :name, uniqueness: { case_sensitive: false }
+
   def self.by_user(user)
     return if user.blank? || user.source.blank?
     return if !%r{^Ldap::(\d+)$}.match?(user.source)

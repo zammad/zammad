@@ -12,6 +12,13 @@ RSpec.describe Signature, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :signature
   it_behaves_like 'Association clears cache', association: :groups
 
+  describe 'Validations' do
+    subject(:signature) { create(:signature) }
+
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
+  end
+
   describe 'body sanitization' do
     it 'keeps font color styling of pasted content (#6251)' do
       signature = create(:signature, body: 'Hello <span style="color: #ff0000;">red</span> world')

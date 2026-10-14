@@ -14,7 +14,7 @@ class Report::Profile < ApplicationModel
 
   scope :sorted, -> { order(:name) }
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
   store     :condition
 
   def self.list

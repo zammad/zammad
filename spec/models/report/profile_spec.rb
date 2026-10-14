@@ -5,6 +5,14 @@ require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe Report::Profile, type: :model do
   it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
+
+  describe 'Validations' do
+    subject(:report_profile) { create(:report_profile) }
+
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
+  end
+
   describe '.sorted' do
     before { described_class.destroy_all }
 

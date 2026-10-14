@@ -7,6 +7,10 @@ class Scheduler < ApplicationModel
   validates :note, length: { maximum: 250 }
   sanitized_html :note
 
+  # An explicit case_sensitive option makes Rails run this query on every save,
+  # and each job run saves its row.
+  validates :name, uniqueness: { case_sensitive: false }, if: :will_save_change_to_name?
+
   scope :failed_jobs, -> { where(status: 'error', active: false) }
 
   # Jobs running more often than every 5 minutes are kept in a continuous thread.

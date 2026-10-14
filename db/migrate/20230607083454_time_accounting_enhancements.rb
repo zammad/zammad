@@ -22,7 +22,7 @@ class TimeAccountingEnhancements < ActiveRecord::Migration[5.0]
       t.timestamps limit: 3, null: false
     end
 
-    add_index :ticket_time_accounting_types, [:name], unique: true
+    add_index :ticket_time_accounting_types, 'LOWER(name)', unique: true, name: 'index_ticket_time_accounting_types_on_name'
 
     add_foreign_key :ticket_time_accounting_types, :users, column: :created_by_id
     add_foreign_key :ticket_time_accounting_types, :users, column: :updated_by_id
