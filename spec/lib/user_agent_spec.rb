@@ -736,6 +736,8 @@ RSpec.describe UserAgent, :aggregate_failures do
               :open_timeout=    => nil,
               :read_timeout=    => nil,
               :set_debug_output => nil,
+              :start            => nil,
+              :started?         => false,
               :request          => nil,
               :proxy?           => false,
             )
@@ -934,6 +936,70 @@ RSpec.describe UserAgent, :aggregate_failures do
         described_class.get('http://example.com')
 
         expect(Net::HTTP).not_to have_received(:Proxy)
+      end
+    end
+  end
+
+  describe '.connect_with_address_fallback' do
+    let(:hostname)    { 'dualstack.example.com' }
+    let(:http)        { Net::HTTP.new(hostname, 443) }
+    let(:attempts)    { [] }
+    let(:unreachable) { [] }
+
+    before do
+      http.ipaddr = '2001:db8::1'
+
+      allow(HostnameSafetyCheck).to receive(:safe_addresses).with(hostname).and_return(['2001:db8::1', '203.0.113.10'])
+
+      allow(http).to receive(:start) do
+        attempts << http.ipaddr
+        raise Errno::ENETUNREACH if unreachable.include?(http.ipaddr)
+
+        http
+      end
+    end
+
+    context 'when the pinned address is reachable' do
+      it 'connects to it without resolving further addresses' do
+        described_class.connect_with_address_fallback(http, hostname, nil)
+
+        expect(attempts).to eq(['2001:db8::1'])
+        expect(HostnameSafetyCheck).not_to have_received(:safe_addresses)
+      end
+    end
+
+    context 'when the pinned address is unreachable' do
+      let(:unreachable) { ['2001:db8::1'] }
+
+      it 'connects to the next safe address' do
+        described_class.connect_with_address_fallback(http, hostname, nil)
+
+        expect(attempts).to eq(['2001:db8::1', '203.0.113.10'])
+      end
+    end
+
+    context 'when no address is reachable' do
+      let(:unreachable) { ['2001:db8::1', '203.0.113.10'] }
+
+      it 'raises the error and keeps the pinned address' do
+        expect { described_class.connect_with_address_fallback(http, hostname, nil) }
+          .to raise_error(Errno::ENETUNREACH)
+
+        expect(attempts).to eq(['2001:db8::1', '203.0.113.10'])
+        expect(http.ipaddr).to eq('2001:db8::1')
+      end
+    end
+
+    context 'when the connection fails for another reason' do
+      before do
+        allow(http).to receive(:start).and_raise(OpenSSL::SSL::SSLError)
+      end
+
+      it 'does not try other addresses' do
+        expect { described_class.connect_with_address_fallback(http, hostname, nil) }
+          .to raise_error(OpenSSL::SSL::SSLError)
+
+        expect(HostnameSafetyCheck).not_to have_received(:safe_addresses)
       end
     end
   end

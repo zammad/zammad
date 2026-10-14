@@ -5,6 +5,16 @@ require 'net/https'
 
 class UserAgent
 
+  # Raised while opening a connection, before anything has been sent.
+  CONNECT_ERRORS = [
+    Net::OpenTimeout,
+    Errno::ECONNREFUSED,
+    Errno::EHOSTUNREACH,
+    Errno::ENETUNREACH,
+    Errno::EADDRNOTAVAIL,
+    Errno::ETIMEDOUT,
+  ].freeze
+
   # Make HTTP request via GET method
   #
   # @see .make_connection
@@ -256,6 +266,26 @@ class UserAgent
     end
   end
 
+  # Opens the connection to the pinned address and falls back to the other safe addresses of the hostname,
+  # e.g. from an unreachable IPv6 to IPv4 - pinning keeps Net::HTTP from doing that on its own.
+  # Only the connection is retried, so the request itself is never sent twice.
+  def self.connect_with_address_fallback(http, hostname, validate_safety_options)
+    http.start
+  rescue *CONNECT_ERRORS => e
+    pinned_ip = http.ipaddr
+    fallback  = HostnameSafetyCheck.safe_addresses(hostname, **validate_safety_options) - [pinned_ip]
+
+    fallback.each do |address|
+      http.ipaddr = address
+      return http.start
+    rescue *CONNECT_ERRORS
+      next
+    end
+
+    http.ipaddr = pinned_ip
+    raise e
+  end
+
   # Base method for making connection
   #
   # @param method [Symbol] HTTP request method style to use. Must be Net::HTTP::Class
@@ -305,6 +335,8 @@ class UserAgent
       http.ipaddr = resolved_ip if !http.proxy?
     end
 
+    address_pinned = options[:validate_safety] && !http.proxy?
+
     # set headers
     request = set_headers(request, options)
 
@@ -328,6 +360,8 @@ class UserAgent
 
       handled_open_timeout(options[:open_socket_tries]) do
         Timeout.timeout(total_timeout) do
+          connect_with_address_fallback(http, uri.hostname, validate_safety_options) if address_pinned
+
           response = if (send_as_raw_body = options[:send_as_raw_body])
                        http.request(request, send_as_raw_body)
                      else
@@ -343,6 +377,8 @@ class UserAgent
         success: false,
         code:    0,
       )
+    ensure
+      http.finish if address_pinned && http.started?
     end
   end
 

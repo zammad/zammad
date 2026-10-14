@@ -186,4 +186,34 @@ RSpec.describe HostnameSafetyCheck do
       end
     end
   end
+
+  describe '.safe_addresses' do
+    let(:hostname)  { 'dualstack.example.com' }
+    let(:addresses) { ['2001:db8::1', '203.0.113.10', '169.254.169.254', 'fd00:ec2::254', '203.0.113.10'] }
+
+    before do
+      allow(Addrinfo).to receive(:getaddrinfo)
+        .with(hostname, nil, nil, :STREAM)
+        .and_return(addresses.map { |address| Addrinfo.tcp(address, 0) })
+    end
+
+    it 'returns the distinct safe addresses in resolver order' do
+      expect(described_class.safe_addresses(hostname)).to eq(['2001:db8::1', '203.0.113.10'])
+    end
+
+    it 'applies the given options' do
+      expect(described_class.safe_addresses(hostname, allow_link_local: true))
+        .to eq(['2001:db8::1', '203.0.113.10', '169.254.169.254'])
+    end
+
+    context 'when the hostname cannot be resolved' do
+      before do
+        allow(Addrinfo).to receive(:getaddrinfo).and_raise(SocketError)
+      end
+
+      it 'returns no addresses' do
+        expect(described_class.safe_addresses(hostname)).to eq([])
+      end
+    end
+  end
 end
