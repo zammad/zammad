@@ -18,23 +18,25 @@ class OnlineNotificationPolicy < ApplicationPolicy
 
   # Whether the user may see the object the notification is about, not only
   #   that the notification exists.
-  def related_accessible?
-    return false if !record.related_object
+  def related_accessible?(related_object = record.related_object)
+    return false if related_object.blank?
+    return own_standalone?(related_object) if related_object.is_a?(OnlineNotificationStandalone)
 
-    case record.related_object
-    when OnlineNotificationStandalone
-      true
-    else
-      Pundit
-        .policy(user, record.related_object)
-        .show?
-    end
+    policy = Pundit.policy(user, related_object)
+    return false if !policy.respond_to?(:show?)
+
+    # The assets ship the related object in full, so a field-scoped result is not enough.
+    policy.show? == true
   end
 
   private
 
   def owner?
     user == record.user
+  end
+
+  def own_standalone?(standalone)
+    OnlineNotification.own_standalone_ids(user).exists?(standalone.id)
   end
 
   def without_relation_permission_field_scope

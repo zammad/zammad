@@ -180,6 +180,82 @@ RSpec.describe OnlineNotification, type: :model do
           .to contain_exactly(notification_1, notification_3)
       end
     end
+
+    context 'when the user is only the customer of a referenced ticket' do
+      let(:user)                          { create(:agent_and_customer, groups: [group]) }
+      let(:customer_ticket)               { create(:ticket, group: create(:group), customer: user) }
+      let(:customer_ticket_notification)  { create(:online_notification, o: customer_ticket, user: user) }
+      let(:customer_article_notification) { create(:online_notification, o: create(:ticket_article, ticket: customer_ticket), user: user) }
+
+      before { customer_ticket_notification && customer_article_notification }
+
+      it 'hides the notifications about the ticket and its articles' do
+        expect(described_class.list(user)).to contain_exactly(notification_1, notification_3)
+      end
+    end
+
+    context 'with notifications referencing other object types' do
+      let(:inaccessible_ticket)  { create(:ticket, group: create(:group)) }
+      let(:article)              { create(:ticket_article, ticket: ticket) }
+      let(:inaccessible_article) { create(:ticket_article, ticket: inaccessible_ticket, internal: true) }
+      let(:published_answer)     { create(:knowledge_base_answer, :published) }
+      let(:draft_answer)         { create(:knowledge_base_answer, :draft) }
+      let(:public_answer)        { create(:knowledge_base_answer, :published) }
+
+      let(:article_notification)              { create(:online_notification, o: article, user: user) }
+      let(:inaccessible_article_notification) { create(:online_notification, o: inaccessible_article, user: user) }
+      let(:standalone_notification)           { create(:online_notification, :with_bulk_job, user: user) }
+      let(:foreign_standalone_notification)   { create(:online_notification, :with_bulk_job, user: another_user) }
+      let(:repointed_standalone_notification) { create(:online_notification, o: foreign_standalone_notification.related_object, user: user, type_name: 'bulk_job') }
+      let(:dangling_standalone_notification)  { create(:online_notification, object_lookup_id: ObjectLookup.by_name('OnlineNotificationStandalone'), o_id: 0, user: user, type_name: 'bulk_job') }
+      let(:published_answer_notification)     { create(:online_notification, o: published_answer.translations.first, user: user, type_name: 'create') }
+      let(:draft_answer_notification)         { create(:online_notification, o: draft_answer.translations.first, user: user, type_name: 'create') }
+      let(:public_answer_notification)        { create(:online_notification, o: public_answer.translations.first, user: user, type_name: 'create') }
+      let(:unknown_object_notification)       { create(:online_notification, o: ObjectLookup.first, user: user) }
+      let(:dangling_notification)             { create(:online_notification, object_lookup_id: ObjectLookup.by_name('KnowledgeBase::Answer::Translation'), o_id: 0, user: user, type_name: 'create') }
+
+      before do
+        create(:knowledge_base_permission, permissionable: public_answer.category, role: user.roles.first, access: 'none')
+
+        article_notification && inaccessible_article_notification && standalone_notification && repointed_standalone_notification && dangling_standalone_notification && published_answer_notification && draft_answer_notification && public_answer_notification && unknown_object_notification && dangling_notification
+      end
+
+      it 'returns notifications whose related object the user may read' do
+        expect(described_class.list(user))
+          .to contain_exactly(notification_1, notification_3, article_notification, standalone_notification, published_answer_notification)
+      end
+
+      it 'returns all notifications of the user when access is ignored' do
+        expect(described_class.list(user, access: 'ignore'))
+          .to include(inaccessible_article_notification, repointed_standalone_notification, dangling_standalone_notification, draft_answer_notification, public_answer_notification, unknown_object_notification, dangling_notification)
+      end
+
+      it 'restricts the list to the given ids' do
+        expect(described_class.list(user, ids: [published_answer_notification.id, draft_answer_notification.id, notification_1.id]))
+          .to contain_exactly(published_answer_notification, notification_1)
+      end
+
+      it 'authorizes only the newest page of candidates' do
+        allow(OnlineNotificationPolicy).to receive(:new).and_call_original
+
+        described_class.list(user, limit: 2)
+
+        expect(OnlineNotificationPolicy).to have_received(:new).twice
+      end
+
+      it 'loads the related answer translations with their answers and knowledge bases in one query each' do
+        tables  = %w[knowledge_base_answer_translations knowledge_base_answers knowledge_bases]
+        queries = Hash.new(0)
+        callback = lambda do |_name, _start, _finish, _id, payload|
+          table = tables.find { |candidate| payload[:sql].start_with?(%(SELECT "#{candidate}".* FROM "#{candidate}")) }
+          queries[table] += 1 if table
+        end
+
+        ActiveSupport::Notifications.subscribed(callback, 'sql.active_record') { described_class.list(user) }
+
+        expect(queries).to eq('knowledge_base_answer_translations' => 1, 'knowledge_base_answers' => 1, 'knowledge_bases' => 1)
+      end
+    end
   end
 
   describe 'notification creation', performs_jobs: true do

@@ -18,7 +18,7 @@ class Controllers::OnlineNotificationsControllerPolicy < Controllers::Applicatio
 
   # Same rule as the index action: own notification, related object still accessible.
   def accessible?
-    OnlineNotification.list(user, limit: nil).exists?(id: record.params[:id])
+    OnlineNotification.list(user, limit: nil, ids: [record.params[:id]]).exists?
   end
 
   def own?

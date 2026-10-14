@@ -39,6 +39,21 @@ RSpec.describe Controllers::OnlineNotificationsControllerPolicy, current_user_id
       it { is_expected.to forbid_actions(:show, :update) }
       it { is_expected.to permit_actions(:destroy) }
     end
+
+    context 'when the notification references an internal article of the ticket' do
+      let(:online_notification) { create(:online_notification, o: create(:ticket_article, ticket: ticket, internal: true), user: notified_user) }
+
+      context 'when the related ticket is accessible' do
+        it { is_expected.to permit_actions(:show, :update, :destroy) }
+      end
+
+      context 'when the related ticket was moved to an inaccessible group' do
+        before { ticket.update!(group: group_without_access) }
+
+        it { is_expected.to forbid_actions(:show, :update) }
+        it { is_expected.to permit_actions(:destroy) }
+      end
+    end
   end
 
   context 'when the notification belongs to another user' do

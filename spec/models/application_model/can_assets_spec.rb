@@ -68,5 +68,32 @@ RSpec.describe ApplicationModel::CanAssets do
         expect(assets[:User]).not_to have_key(deleted_user_id)
       end
     end
+
+    context 'when the list references a ticket article' do
+      let(:article) { create(:ticket_article, ticket: ticket, internal: true) }
+
+      let(:list) do
+        [
+          {
+            'object' => 'Ticket::Article',
+            'o_id'   => article.id,
+          }
+        ]
+      end
+
+      it 'ships the assets of the article and its ticket', :aggregate_failures do
+        expect(assets[:TicketArticle]).to include(article.id => include('body' => article.body))
+        expect(assets[:Ticket]).to include(ticket.id => include('title' => ticket.title))
+      end
+
+      context 'when the current user has no access to the referenced record' do
+        let(:ticket_group) { group_without_access }
+
+        it 'ships neither the article nor its ticket', :aggregate_failures do
+          expect(assets).not_to have_key(:TicketArticle)
+          expect(assets).not_to have_key(:Ticket)
+        end
+      end
+    end
   end
 end
