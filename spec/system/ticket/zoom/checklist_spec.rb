@@ -40,7 +40,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
     wait.until { ticket.reload.checklist.present? }
 
     wait.until do
-      item_field  = find('input[placeholder="Text or ticket identifier"]')
+      item_field  = find('textarea[placeholder="Text or ticket identifier"]')
       active_elem = page.evaluate_script('document.activeElement')
 
       item_field == active_elem

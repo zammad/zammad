@@ -16086,8 +16086,8 @@ div.accounted-time-value {
     &.edit-widget-active {
       padding-top: 5px;
       padding-bottom: 3px;
-
-      @include bidi-style(padding-left, 0, padding-right, 4px);
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
@@ -16210,6 +16210,23 @@ div.accounted-time-value {
 .checklistItemEdit,
 .checklistTitleEdit {
   flex-grow: 1;
+}
+
+// Matches the display value, so the text does not move when editing starts.
+.checklistItemEdit {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+
+  .form-control {
+    padding: 4px 3px 1px;
+    overflow: hidden;
+  }
+
+  .input-group-btn {
+    flex: 0 0 40px;
+    white-space: normal;
+  }
 }
 
 .checklistStart {

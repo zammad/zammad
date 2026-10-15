@@ -5,7 +5,8 @@ class App.SidebarChecklistItemEdit extends App.Controller
     'click .js-cancel':             'onCancel'
     'click .js-confirm':            'onConfirm'
     'blur .js-input':               'onBlur'
-    'keyup #checklistItemEditText': 'onKeyUp'
+    'input .js-input':              'resize'
+    'keydown .js-input':            'onKeyUp'
 
   constructor: ->
     super
@@ -26,6 +27,11 @@ class App.SidebarChecklistItemEdit extends App.Controller
     @el.addClass('edit-widget-active')
     @el.closest('tr').find('.dropdown').addClass('hide')
     @input.focus().val('').val(@object()?.text)
+    @resize()
+
+  resize: =>
+    @input.css('height', 'auto')
+    @input.css('height', @input.prop('scrollHeight') + @input.outerHeight() - @input.innerHeight())
 
   object: =>
     App.ChecklistItem.find(@id)
