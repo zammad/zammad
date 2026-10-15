@@ -2,6 +2,8 @@
 
 class Store < ApplicationModel
   PREFERENCES_SIZE_MAX = 2400
+  RESIZE_PIXELS_MAX    = 50_000_000
+  RESIZABLE_SIGNATURES = ["\x89PNG".b, "\xFF\xD8\xFF".b].freeze
 
   belongs_to :created_by,   class_name: 'User', optional: true
   belongs_to :store_object, class_name: 'Store::Object', optional: true
@@ -235,10 +237,15 @@ returns
   end
 
   def image_resize_via_temp_file(content, width)
+    return if !resizable_content?(content)
+
     temp_file = ::Tempfile.new
     temp_file.binmode
     temp_file.write(content)
     temp_file.close
+
+    return if image_oversized?(temp_file.path)
+
     image = Rszr::Image.load(temp_file.path)
 
     # do not resize image if image is smaller or already same size
@@ -255,6 +262,17 @@ returns
     temp_file_resize = ::Tempfile.new.path
     image.save(temp_file_resize, format: original_format)
     ::File.binread(temp_file_resize)
+  end
+
+  def resizable_content?(content)
+    content.to_s.byteslice(0, 4).b.start_with?(*RESIZABLE_SIGNATURES)
+  end
+
+  def image_oversized?(path)
+    # Header-only load: autorotate would turn!/flop! the image during load and decode it in full before the check.
+    image = Rszr::Image.load(path, autorotate: false)
+
+    image.width * image.height > RESIZE_PIXELS_MAX
   end
 
   def image_resize(content, width, no_cache: false)
