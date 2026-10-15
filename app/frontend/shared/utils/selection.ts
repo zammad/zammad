@@ -45,6 +45,18 @@ const firstSelectedItemNumber = (list: Element, range: Range) => {
 const elementRoot = (container: Node) =>
   container.nodeType === Node.ELEMENT_NODE ? (container as Element) : container.parentElement
 
+const restoreAncestorChain = (fragment: DocumentFragment, root: Element, outermost: Element) => {
+  let element: Element | null = root
+
+  while (element) {
+    const wrapper = element.cloneNode(false) as Element
+    wrapper.append(...Array.from(fragment.childNodes))
+    fragment.appendChild(wrapper)
+
+    element = element === outermost ? null : element.parentElement
+  }
+}
+
 // A selection drawn inside a single list item keeps nothing of what held it: the item, whatever it
 // wraps its content in, and the list itself are all common ancestors, so the clone comes back as
 // bare text belonging to no list at all. Rebuild that chain from the selection outwards, up to and
@@ -53,17 +65,18 @@ const restoreListItemWrapper = (fragment: DocumentFragment, root: Element) => {
   const item = root.closest('li')
   if (!item) return null
 
-  let element: Element | null = root
-
-  while (element) {
-    const wrapper = element.cloneNode(false) as Element
-    wrapper.append(...Array.from(fragment.childNodes))
-    fragment.appendChild(wrapper)
-
-    element = element === item ? null : element.parentElement
-  }
+  restoreAncestorChain(fragment, root, item)
 
   return item.parentElement
+}
+
+// Line breaks inside a preformatted block are plain characters. A selection drawn inside the block
+// comes back without it, and the editor collapses them into spaces, so put the block back around it.
+const restorePreformattedWrapper = (fragment: DocumentFragment, root: Element) => {
+  const block = root.closest('pre')
+  if (!block) return
+
+  restoreAncestorChain(fragment, root, block)
 }
 
 // `cloneContents()` drops the common ancestor of the selection, so a selection drawn inside a
@@ -128,6 +141,9 @@ const cloneRangeContents = (range: Range) => {
   // item is not, and once that item is restored its list takes over as the root to work from.
   const listOfItem = LIST_TAGS.has(root.tagName) ? null : restoreListItemWrapper(contents, root)
   const listRoot = listOfItem ?? root
+
+  // A restored item already holds any preformatted block inside of it.
+  if (!listOfItem) restorePreformattedWrapper(contents, root)
 
   restoreListWrapper(contents, listRoot)
   restoreOrderedListStart(contents, range, listRoot)

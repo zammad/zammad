@@ -172,7 +172,8 @@ class EmailReply extends App.Controller
 
   @cleanUpHtmlSelection: (selected) ->
     if selected
-      cleaned_up = App.Utils.htmlCleanup(selected).html()
+      # A selection of a single element would otherwise be cleaned up as the root and lose its own tag.
+      cleaned_up = App.Utils.htmlCleanup($('<div>').html(selected)).html()
 
       return cleaned_up if cleaned_up
 

@@ -96,13 +96,31 @@ class _Singleton
     if sel && sel.rangeCount
       container = document.createElement('div')
       for i in [1..sel.rangeCount]
-        container.appendChild(sel.getRangeAt(i-1).cloneContents())
+        container.appendChild(@_cloneRangeContents(sel.getRangeAt(i-1)))
       html = container.innerHTML
 
     if type != 'sel'
       html
     else
       sel
+
+  # Line breaks inside a preformatted block are plain characters. cloneContents() drops the common
+  # ancestor of the range, so a selection drawn inside the block would lose them once quoted.
+  _cloneRangeContents: (range) ->
+    contents = range.cloneContents()
+    root     = range.commonAncestorContainer
+    root     = root.parentElement if root.nodeType isnt Node.ELEMENT_NODE
+    block    = root?.closest('pre')
+    return contents if !block
+
+    element = root
+    while element
+      wrapper = element.cloneNode(false)
+      wrapper.append(Array.from(contents.childNodes)...)
+      contents.appendChild(wrapper)
+      element = if element is block then null else element.parentElement
+
+    contents
 
   manuallyUpdateSelection: ->
     @_updateSelection()
