@@ -33,10 +33,7 @@ class Ticket::AssetsAll
 
       ticket.referencing_checklists
         .includes(:ticket)
-        .each do |elem|
-          elem.assets(assets)
-          elem.ticket.assets(assets) if elem.ticket.authorized_asset?
-        end
+        .each { |elem| elem.assets(assets) }
     end
 
     assets

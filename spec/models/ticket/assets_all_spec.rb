@@ -65,6 +65,40 @@ RSpec.describe Ticket::AssetsAll do
       it 'includes AI summary enabled state below the ticket asset' do
         expect(instance.all_assets.dig(:assets, Ticket.to_app_model, ticket.id, 'ai_summary_enabled')).to be(true)
       end
+
+      context 'with referencing checklists', current_user_id: -> { user.id } do
+        let(:referencing_ticket)     { create(:ticket, group:) }
+        let(:referencing_checklist)  { create(:checklist, ticket: referencing_ticket) }
+        let(:inaccessible_ticket)    { create(:ticket) }
+        let(:inaccessible_checklist) { create(:checklist, ticket: inaccessible_ticket) }
+
+        before do
+          referencing_checklist.items.create!(ticket:)
+          inaccessible_checklist.items.create!(ticket:)
+        end
+
+        it 'returns assets of accessible referencing checklist' do
+          assets = instance.all_assets[:assets]
+
+          objects = [referencing_checklist, referencing_ticket, *referencing_checklist.items]
+
+          expect(assets).to include_assets_of(objects)
+        end
+
+        it 'returns only id and flag of referencing checklist of inaccessible ticket' do
+          assets = instance.all_assets[:assets]
+
+          expect(assets.dig(Checklist.to_app_model, inaccessible_checklist.id)).to eq('id' => inaccessible_checklist.id, 'ticket_inaccessible' => true)
+        end
+
+        it 'does not return assets of inaccessible referencing ticket' do
+          assets = instance.all_assets[:assets]
+
+          objects = [inaccessible_ticket, inaccessible_ticket.customer, *inaccessible_checklist.items]
+
+          expect(assets).not_to include_assets_of(objects)
+        end
+      end
     end
 
     context 'when user is customer' do

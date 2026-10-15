@@ -2671,6 +2671,32 @@ RSpec.describe 'Ticket', type: :request do
         end
       end
     end
+
+    context 'referencing checklist present', authenticated_as: -> { agent }, current_user_id: 1 do
+      let(:referencing_ticket)    { create(:ticket, group: ticket.group) }
+      let(:referencing_checklist) { create(:checklist, ticket: referencing_ticket) }
+
+      before do
+        Setting.set('checklist', true)
+        referencing_checklist.items.create!(ticket:)
+        get "/api/v1/tickets/#{ticket.id}", params: { all: 'true' }, as: :json
+      end
+
+      it 'is present in response', :aggregate_failures do
+        expect(response).to have_http_status(:ok)
+        expect(json_response['assets']).to include_assets_of([referencing_checklist, referencing_ticket, *referencing_checklist.items])
+      end
+
+      context 'no permission to referencing Ticket Group' do
+        let(:referencing_ticket) { create(:ticket) }
+
+        it 'is marked as inaccessible without ticket and item assets', :aggregate_failures do
+          expect(response).to have_http_status(:ok)
+          expect(json_response.dig('assets', 'Checklist', referencing_checklist.id.to_s)).to eq('id' => referencing_checklist.id, 'ticket_inaccessible' => true)
+          expect(json_response['assets']).not_to include_assets_of([referencing_ticket, referencing_ticket.customer, *referencing_checklist.items])
+        end
+      end
+    end
   end
 
   describe 'GET /api/v1/ticket_customer' do
