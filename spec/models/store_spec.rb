@@ -275,6 +275,30 @@ RSpec.describe Store, type: :model do
           end
         end
 
+        context 'and GIF content declared as image/png' do
+          let(:content_type) { 'image/png' }
+          let(:data)         { "GIF89a\x20\x4E\x20\x4E\x00\x00\x00;".b }
+
+          before do
+            allow(Rszr::Image).to receive(:load).and_call_original
+          end
+
+          it 'cannot be resized (neither inlined nor previewed) without loading the image' do
+            expect { store.content_inline }
+              .to raise_error('Inline content could not be generated.')
+
+            expect { store.content_preview }
+              .to raise_error('Content preview could not be generated.')
+
+            expect(store.preferences)
+              .to not_include(resizable: true)
+              .and not_include(content_inline: true)
+              .and not_include(content_preview: true)
+
+            expect(Rszr::Image).not_to have_received(:load)
+          end
+        end
+
         context 'with image content (width > 1800px)' do
           context 'width <= 200px' do
             let(:content_type) { 'image/png' }
@@ -308,6 +332,32 @@ RSpec.describe Store, type: :model do
                 .to include(resizable: true)
                 .and not_include(content_inline: true)
                 .and include(content_preview: true)
+            end
+          end
+
+          context 'with more pixels than Store::RESIZE_PIXELS_MAX' do
+            let(:content_type) { 'image/png' }
+            let(:data) { Rails.root.join('test/data/image/1000x1000.png').binread }
+
+            before do
+              stub_const('Store::RESIZE_PIXELS_MAX', 999_999)
+              allow(Rszr::Image).to receive(:load).and_call_original
+            end
+
+            it 'cannot be resized (neither inlined nor previewed)' do
+              expect { store.content_inline }
+                .to raise_error('Inline content could not be generated.')
+
+              expect { store.content_preview }
+                .to raise_error('Content preview could not be generated.')
+
+              expect(store.preferences)
+                .to not_include(resizable: true)
+                .and not_include(content_inline: true)
+                .and not_include(content_preview: true)
+
+              expect(Rszr::Image).to have_received(:load).with(kind_of(String), autorotate: false).at_least(:once)
+              expect(Rszr::Image).not_to have_received(:load).with(kind_of(String))
             end
           end
 
