@@ -7,8 +7,8 @@ publiccodeYmlVersion: '0.2'
 name: Zammad
 categories:
   - help-desk
-releaseDate: '2026-04-08'
-softwareVersion: 6.5.4
+releaseDate: '2026-10-15'
+softwareVersion: 6.5.5
 softwareType: standalone/web
 logo: 'logo.svg'
 platforms:
