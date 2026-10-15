@@ -46,7 +46,8 @@ defence — if the doc says it, the change should do it.
 
 `.dev/ai-agent-instructions.md` carries the repo-wide rules that apply regardless of area:
 
-- Every new file except Markdown files (`*.md`) needs the Zammad copyright header.
+- Follow the copyright-header rule and exceptions in `.dev/ai-agent-instructions.md`; check lint
+  configuration and comparable files before reporting a missing header.
 - `i18n/*.po` is never edited directly — translations come from translations.zammad.org.
 - New features target Vue 3 + GraphQL. A new feature built on REST + CoffeeScript is worth
   questioning unless it is extending existing legacy behaviour.
