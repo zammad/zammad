@@ -2,7 +2,11 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 # Hook: regenerate generated files when their sources change.
 
-# Claude Code invokes this script outside of an interactive shell, so rv's
+# git reports paths relative to the repository root, and rv reads .ruby-version from
+#   the working directory; agents may start the hook in a subdirectory.
+cd "$(git rev-parse --show-toplevel)" || exit 2
+
+# Coding agents invoke this script outside of an interactive shell, so rv's
 #   PROMPT_COMMAND-based version switching never runs; re-resolve it here.
 #   Needed before the pnpm generate-* calls below, which shell out to
 #   `bundle exec rails generate ...` and inherit this process's env.

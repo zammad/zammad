@@ -31,17 +31,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/lint-after-edit.sh",
-            "timeout": 120
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": ".claude/hooks/regenerate-after-edit.sh",
-            "timeout": 120
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.dev/hooks/after-edit.sh",
+            "timeout": 240
           }
         ]
       }
