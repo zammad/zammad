@@ -1669,3 +1669,86 @@ describe('Form.vue - Form Updater - use flags for showing an additional field', 
     })
   })
 })
+
+describe('Form.vue - Form Updater - values for fields behind a schema condition', () => {
+  it('does not trigger another request when such a field is created with its value', async () => {
+    const { wrapper, mockFormUpdaterApi } = await renderForm(
+      [
+        {
+          formUpdater: {
+            fields: {},
+            flags: {},
+          },
+        },
+        {
+          formUpdater: {
+            fields: {
+              articleType: { value: 'email' },
+              subtype: { value: 'reply' },
+            },
+            flags: {},
+          },
+        },
+        {
+          formUpdater: {
+            fields: {
+              subtype: { value: 'forward' },
+            },
+            flags: {},
+          },
+        },
+        {
+          formUpdater: {
+            fields: {},
+            flags: {},
+          },
+        },
+      ],
+      {
+        props: {
+          schema: [
+            {
+              name: 'title',
+              label: 'Title',
+              type: 'text',
+            },
+            {
+              name: 'articleType',
+              label: 'Channel',
+              type: 'text',
+            },
+            {
+              if: '$values.articleType === "email"',
+              name: 'subtype',
+              label: 'Subtype',
+              type: 'text',
+            },
+          ],
+        },
+      },
+    )
+
+    await wrapper.events.type(wrapper.getByLabelText('Title'), 'Example title')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.resolve === 2)
+
+    checkInputValue(wrapper, 'Subtype', 'reply')
+
+    // Give a wrongly triggered request the chance to happen.
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    expect(mockFormUpdaterApi.calls.resolve).toBe(2)
+
+    // A later updater value for the now existing field is not a user change either.
+    await wrapper.events.type(wrapper.getByLabelText('Title'), ' again')
+    await waitUntil(() => mockFormUpdaterApi.calls.resolve === 3)
+
+    checkInputValue(wrapper, 'Subtype', 'forward')
+
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    expect(mockFormUpdaterApi.calls.resolve).toBe(3)
+
+    await wrapper.events.type(wrapper.getByLabelText('Subtype'), ' changed')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.resolve === 4)
+  })
+})

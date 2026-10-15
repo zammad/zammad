@@ -8027,7 +8027,7 @@
             },
             {
               "name": "uploadedFiles",
-              "description": "Information about the uploaded files.",
+              "description": "Information about the uploaded files, in the order of the given files.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -14395,7 +14395,7 @@
                         "name": null,
                         "ofType": {
                           "kind": "INPUT_OBJECT",
-                          "name": "UploadFileInput",
+                          "name": "UploadCacheFileInput",
                           "ofType": null
                         }
                       }
@@ -35691,6 +35691,67 @@
                   "name": "String",
                   "ofType": null
                 }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "UploadCacheFileInput",
+          "description": "A file to be added to the upload cache of a form, either from its content or copied from an existing attachment.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "name",
+              "description": "File name, defaults to the name of the copied attachment.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "type",
+              "description": "File's content-type.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "content",
+              "description": "File content",
+              "type": {
+                "kind": "SCALAR",
+                "name": "BinaryString",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "inline",
+              "description": "Content-Disposition: inline flag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "attachmentId",
+              "description": "Existing attachment to copy, instead of the content.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
               },
               "defaultValue": null
             }

@@ -3,6 +3,10 @@
 import Mention, { type MentionOptions } from '@tiptap/extension-mention'
 import { cloneDeep } from 'lodash-es'
 
+import {
+  claimInlineImages,
+  getEditorFormId,
+} from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import buildMentionSuggestion from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
@@ -127,6 +131,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
             .then((content) => {
               if (!content || editor.isDestroyed) return
 
+              claimInlineImages(getEditorFormId(editor), content)
               editor.chain().focus().insertContentAt({ from, to }, content).run()
             })
             // A failed request is already notified by the handler, and inserts nothing.

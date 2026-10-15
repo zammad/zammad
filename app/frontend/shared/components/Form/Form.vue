@@ -789,6 +789,13 @@ const updateChangedFields = (
       field.pendingValueUpdate = true
     }
 
+    // A field behind a schema condition is created only after this update, the first commit of
+    //   its value must not count as a user change either.
+    const valueForLaterCreatedField =
+      staticShowCondition && !currentCreatedFormFields.has(fieldName) && value !== undefined
+
+    if (valueForLaterCreatedField) field.formUpdaterValueChange = !changesCanTriggerFormUpdater
+
     // This happens for the initial updater, when the form is not settled yet or the field was not rendered yet.
     // In this case we need to remember the changes and do it afterwards after the form is settled the first time.
     // Sometimes the value from the server is the "real" initial value, for this the `initialValue` can be used.

@@ -5,20 +5,12 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 
 import log from './log.ts'
 
-import type { Except } from 'type-fest'
-
 export type FilePreview = 'image' | 'calendar'
 
 export interface ImageFileData {
   name: string
   type: string
   content: string
-}
-
-export interface ImageFileSource extends Except<ImageFileData, 'content'> {
-  name: string
-  type: string
-  src: string
 }
 
 interface CompressData {

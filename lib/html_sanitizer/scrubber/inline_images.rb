@@ -21,6 +21,8 @@ class HtmlSanitizer
           process_inline_image(node, $1)
         when %r{\A(?:/api/v1/attachments/)(\d+)\z}
           process_uploaded_image(node, $1)
+        when %r{\A/api/v1/ticket_attachment/\d+/\d+/(\d+)(?:\?[^\s]*)?\z}
+          process_quoted_ticket_attachment(node, $1)
         when %r{users/image/(.+)}
           process_user_avatar_image(node, $1)
         when %r{^(?:blob:)}
@@ -62,6 +64,14 @@ class HtmlSanitizer
 
         @attachments_inline.push attachment(attachment.content, attachment.filename, cid, mime_type: attachment.preferences['Mime-Type'], content_type: attachment.preferences['Content-Type'])
         node['src'] = "cid:#{cid}"
+      end
+
+      # A quoted image whose copy into the upload cache did not finish while editing. One that
+      #   cannot be resolved stays a plain reference, as before.
+      def process_quoted_ticket_attachment(node, attachment_id)
+        process_uploaded_image(node, attachment_id)
+      rescue ActiveRecord::RecordNotFound, Pundit::NotAuthorizedError
+        nil
       end
 
       def process_user_avatar_image(node, image_hash)

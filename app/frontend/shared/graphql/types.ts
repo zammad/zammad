@@ -1515,7 +1515,7 @@ export type AutocompleteSearchObjectAttributeExternalDataSourceQuery = { autocom
 
 export type FormUploadCacheAddMutationVariables = Exact<{
   formId: string;
-  files: Array<Types.UploadFileInput> | Types.UploadFileInput;
+  files: Array<Types.UploadCacheFileInput> | Types.UploadCacheFileInput;
 }>;
 
 

@@ -1452,7 +1452,7 @@ export type FormUploadCacheAddPayload = {
   __typename?: 'FormUploadCacheAddPayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
-  /** Information about the uploaded files. */
+  /** Information about the uploaded files, in the order of the given files. */
   uploadedFiles: Array<StoredFile>;
 };
 
@@ -2793,7 +2793,7 @@ export type MutationsCtiLogDoneUpdateArgs = {
 
 /** All available mutations */
 export type MutationsFormUploadCacheAddArgs = {
-  files: Array<UploadFileInput>;
+  files: Array<UploadCacheFileInput>;
   formId: Scalars['FormId']['input'];
 };
 
@@ -6536,6 +6536,20 @@ export type TwoFactorMethodInitiateAuthenticationPayload = {
 export type TwoFactorRecoveryInput = {
   /** Two factor recovery code */
   recoveryCode: Scalars['String']['input'];
+};
+
+/** A file to be added to the upload cache of a form, either from its content or copied from an existing attachment. */
+export type UploadCacheFileInput = {
+  /** Existing attachment to copy, instead of the content. */
+  attachmentId?: InputMaybe<Scalars['ID']['input']>;
+  /** File content */
+  content?: InputMaybe<Scalars['BinaryString']['input']>;
+  /** Content-Disposition: inline flag */
+  inline?: InputMaybe<Scalars['Boolean']['input']>;
+  /** File name, defaults to the name of the copied attachment. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** File's content-type. */
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A file to be uploaded. */

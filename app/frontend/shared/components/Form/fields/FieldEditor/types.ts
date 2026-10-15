@@ -181,6 +181,7 @@ export type EditorCustomExtensions = keyof ConfidentTake<FieldEditorProps, 'meta
 declare module '@tiptap/vue-3' {
   interface EditorEvents {
     'cancel-ai-assistant-text-tools-updates': void
+    'inline-images-replaced': void
     'toggle-visibility': {
       name: string
       active: boolean

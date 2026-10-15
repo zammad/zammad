@@ -4,6 +4,10 @@ import { PluginKey } from '@tiptap/pm/state'
 import { VueRenderer } from '@tiptap/vue-3'
 import { watch, type WatchSource, type WatchStopHandle } from 'vue'
 
+import {
+  claimInlineImages,
+  getEditorFormId,
+} from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import type { MentionType } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { setFloatingPopover } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import { getEditorComponents } from '#shared/components/Form/initializeFieldEditor.ts'
@@ -68,6 +72,9 @@ export default function buildMentionExtension<T>(
       }
 
       const insert = (content: Content) => {
+        // Images of an inserted text module or answer belong to this draft, like pasted ones.
+        if (typeof content === 'string') claimInlineImages(getEditorFormId(editor), content)
+
         editor.chain().focus().insertContentAt(range, content).run()
       }
 

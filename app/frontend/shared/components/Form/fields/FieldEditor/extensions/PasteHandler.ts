@@ -3,6 +3,7 @@
 import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 
+import { claimInlineImages } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 
 export const PasteHandlerPluginKey = new PluginKey('paste-handler')
@@ -38,6 +39,11 @@ export const PasteHandler = Extension.create({
             const cleanContent = htmlCleanup(content, !imageExtensionEnabled)
 
             event.preventDefault()
+
+            if (imageExtensionEnabled) {
+              const attributes = editor.options.editorProps.attributes as Record<string, string>
+              claimInlineImages(attributes?.['data-form-id'], cleanContent)
+            }
 
             editor.commands.insertContent(cleanContent)
 
