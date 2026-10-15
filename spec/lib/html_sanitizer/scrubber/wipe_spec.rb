@@ -167,6 +167,101 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       end
     end
 
+    context 'when src uses backslashes as protocol-relative prefix' do
+      let(:input)  { '<img src="\\\\attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src uses a slash and a backslash as protocol-relative prefix' do
+      let(:input)  { '<img src="/\attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src uses a backslash and a slash as protocol-relative prefix' do
+      let(:input)  { '<img src="\/attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src uses backslashes to reach an api endpoint on the own fqdn' do
+      let(:input)  { "<img src=\"\\\\#{Setting.get('fqdn')}/api/v1/signout\">" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when srcset uses backslashes as protocol-relative prefix' do
+      let(:input)  { '<img srcset="\\\\attacker.example/pixel.gif 1x">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src starts with a control character before a protocol-relative url' do
+      let(:input)  { '<img src="&#1;//attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src starts with a control character before a backslash protocol-relative url' do
+      let(:input)  { '<img src="&#x1f;\\\\attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src starts with a control character before an api endpoint' do
+      let(:input)  { '<img src="&#1;/api/v1/signout">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when srcset starts with a control character before a protocol-relative url' do
+      let(:input)  { '<img srcset="&#1;//attacker.example/pixel.gif 1x">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
     context 'when has a remote srcset without src' do
       let(:input)  { '<img srcset="https://tracking.example.com/pixel.gif">' }
       let(:target) { '' }
@@ -408,6 +503,36 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
 
       it 'does not mark remote content as removed' do
         expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+  end
+
+  describe '#remote_url?' do
+    subject(:remote) { scrubber.send(:remote_url?, url) }
+
+    {
+      # remote urls
+      'https://attacker.example/pixel.gif'   => true,
+      'http:attacker.example/pixel.gif'      => true,
+      '//attacker.example/pixel.gif'         => true,
+
+      # backslash variants browsers resolve like slashes
+      '\\\\attacker.example/pixel.gif'       => true,
+      '/\attacker.example/pixel.gif'         => true,
+      '\/attacker.example/pixel.gif'         => true,
+      'https:\\\\attacker.example/pixel.gif' => true,
+
+      # local urls
+      '/api/v1/attachments/1'                => false,
+      '\api\v1\attachments\1'                => false,
+      'images/logo.png'                      => false,
+    }.each do |test_url, expected_remote|
+      context "with #{test_url.inspect}" do
+        let(:url) { test_url }
+
+        it "is #{expected_remote ? 'remote' : 'local'}" do
+          expect(remote).to be(expected_remote)
+        end
       end
     end
   end
