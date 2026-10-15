@@ -105,13 +105,23 @@ class KnowledgeBase::Public::BaseController < ApplicationController
       .visible_on_help_site_to_user(current_user)
   end
 
+  # Asks the policy rather than `.visible_on_help_site_to_user`: for one answer, that is cheaper
+  #   than resolving a granular editor's access to every category, which any answer save resets.
   def find_answer(scope, id, locale: system_locale_via_uri)
     return if scope.nil?
 
     scope = scope.include_contents
     scope = scope.localed(locale) if locale
 
-    scope.visible_on_help_site_to_user(current_user).find_by(id: id)
+    if !current_user&.permissions?('knowledge_base.editor')
+      return scope.published.find_by(id: id)
+    end
+
+    if (item = scope.find_by(id: id)) && policy(item).show_public?
+      return item
+    end
+
+    nil
   end
 
   # Asked once per listed item by the view; `||=` would ask the policy again each time for a guest.
