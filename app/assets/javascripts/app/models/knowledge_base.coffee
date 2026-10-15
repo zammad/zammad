@@ -12,7 +12,7 @@ class App.KnowledgeBase extends App.Model
   publicBaseUrl: (kb_locale = undefined) ->
     # coffeelint: disable=indentation
     components = if @custom_address? && @custom_address[0] != '/'
-                   ["http://#{@custom_address}"]
+                   ["#{App.Config.get('http_type') || 'http'}://#{@custom_address.replace(/^([^/]+):(80|443)(?=\/|$)/, '$1')}"]
                  else if @custom_address?
                    [App.Utils.baseUrl(), @custom_address.substr(1, @custom_address.length - 1)]
                  else

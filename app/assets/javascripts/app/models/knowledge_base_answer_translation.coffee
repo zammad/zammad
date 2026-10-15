@@ -122,16 +122,30 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
       attachments: @attachments
     attributes
 
+  # Mirrors the answer links part of the knowledgeBaseAnswerSuggestionContentTransform mutation.
+  #   Nothing resolves the links of the inserted body again, so they lose their target markers.
   bodyWithPublicURLs: ->
     parsed = $("<div>#{@constructor.linkVideoWidgets(@body)}</div>")
 
     for linkDom in parsed.find('a').addBack('a').toArray()
       switch $(linkDom).attr('data-target-type')
         when 'knowledge-base-answer'
-          if object = App.KnowledgeBaseAnswerTranslation.find $(linkDom).attr('data-target-id')
-            $(linkDom).attr 'href', object.publicBaseUrl()
+          object = App.KnowledgeBaseAnswerTranslation.find $(linkDom).attr('data-target-id')
+          answer = object?.parent()
+
+          if !answer
+            $(linkDom).replaceWith $(linkDom).contents()
           else
-            $(linkDom).attr 'href', '#'
+            kb_locale = App.KnowledgeBaseLocale.localeFor(object)
+            href      = if answer.visiblePublicly(kb_locale) && answer.knowledge_base()?.visiblePublicly(kb_locale)
+              object.publicBaseUrl()
+            else
+              App.Utils.joinUrlComponents(App.Utils.baseUrl(), object.uiUrl())
+
+            $(linkDom)
+              .attr('href', href)
+              .removeAttr('data-target-type')
+              .removeAttr('data-target-id')
 
     parsed[0].innerHTML
 

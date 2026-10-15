@@ -6,26 +6,41 @@
 # The link target differs per consumer — the public help pages want the `/help/…` path (and the
 #   knowledge base's custom address applied to it), the desktop app its own route — so the href is
 #   supplied by the caller's block. See KnowledgeBaseRichTextHelper for the view side, which is the
-#   only one that may use route/`request` helpers.
+#   only one that may depend on `request`.
 module KnowledgeBaseRichText
   module_function
 
   # @yieldparam translation [KnowledgeBase::Answer::Translation] the link's target
-  # @yieldreturn [String] the href to write
+  # @yieldreturn [String, nil] the href to write, nil when the target must not be linked
   def prepare(input, &)
     expand_video_widgets(resolve_answer_links(input, &))
   end
 
-  def resolve_answer_links(input)
-    scrubber = Loofah::Scrubber.new do |node|
+  # A link whose target is gone, or for which the block returns nil, gets a placeholder href.
+  #
+  # `detach` is for a body that leaves the knowledge base, e.g. inserted into a ticket article,
+  #   where nothing resolves its links again: a resolved link loses its target markers and becomes
+  #   an ordinary one, so an editor does not treat it as an answer link, and an unresolved link is
+  #   replaced by its content, as a link that leads nowhere would only mislead the reader.
+  def resolve_answer_links(input, detach: false)
+    # Bottom up, so a link nested in one that gets unwrapped is still resolved.
+    scrubber = Loofah::Scrubber.new(direction: :bottom_up) do |node|
       next if node.name != 'a'
       next if !node.key? 'data-target-type'
 
       case node['data-target-type']
       when 'knowledge-base-answer'
         translation = KnowledgeBase::Answer::Translation.find_by(id: node['data-target-id'])
+        href        = translation && yield(translation)
 
-        node['href'] = translation ? yield(translation) : '#'
+        if href
+          node['href'] = href
+          %w[data-target-type data-target-id].each { |attribute| node.remove_attribute(attribute) } if detach
+        elsif detach
+          node.replace(node.children)
+        else
+          node['href'] = '#'
+        end
       end
     end
 

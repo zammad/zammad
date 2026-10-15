@@ -229,6 +229,61 @@ RSpec.describe KnowledgeBase, type: :model do
     end
   end
 
+  describe '#canonical_url' do
+    before do
+      Setting.set('http_type', 'https')
+      knowledge_base.update!(custom_address: custom_address)
+    end
+
+    context 'without a custom address' do
+      let(:custom_address) { nil }
+
+      it 'uses the system FQDN and the regular help path' do
+        expect(knowledge_base.canonical_url('/help/en-us')).to eq("https://#{Setting.get('fqdn')}/help/en-us")
+      end
+    end
+
+    context 'with a custom path' do
+      let(:custom_address) { '/support' }
+
+      it 'uses the system FQDN and the custom path' do
+        expect(knowledge_base.canonical_url('/help/en-us')).to eq("https://#{Setting.get('fqdn')}/support/en-us")
+      end
+    end
+
+    context 'with a custom domain' do
+      let(:custom_address) { 'help.example.com' }
+
+      it 'uses the custom domain' do
+        expect(knowledge_base.canonical_url('/help/en-us')).to eq('https://help.example.com/en-us')
+      end
+    end
+
+    context 'with a custom domain on a non-default port' do
+      let(:custom_address) { 'help.example.com:8443/support' }
+
+      it 'keeps the port' do
+        expect(knowledge_base.canonical_url('/help/en-us')).to eq('https://help.example.com:8443/support/en-us')
+      end
+    end
+
+    context 'with a custom domain on the default port of the scheme' do
+      let(:custom_address) { 'help.example.com:443' }
+
+      it 'omits the port' do
+        expect(knowledge_base.canonical_url('/help/en-us')).to eq('https://help.example.com/en-us')
+      end
+    end
+
+    context 'with a custom domain on the default port of the other scheme' do
+      let(:custom_address) { 'help.example.com:80' }
+
+      it 'omits the port' do
+        expect(knowledge_base.canonical_url('/help/en-us')).to eq('https://help.example.com/en-us')
+      end
+    end
+  end
+
   describe '#full_destroy!' do
     let(:knowledge_base) { create(:kb_category_with_tree).knowledge_base }
 

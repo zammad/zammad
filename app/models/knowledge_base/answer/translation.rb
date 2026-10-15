@@ -64,6 +64,23 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     "/desktop/knowledge-base/locale/#{kb_locale.system_locale.locale}/answer/#{answer_id}"
   end
 
+  # Where this translation is read on the public help pages, below the regular `/help` address.
+  #   The knowledge base's custom address is not applied, see #public_url and
+  #   KnowledgeBaseHelper#custom_path_if_needed for that.
+  def public_path
+    Rails.application.routes.url_helpers.help_answer_path(
+      answer.category.translation_preferred(kb_locale),
+      self,
+      locale: kb_locale.system_locale.locale,
+    )
+  end
+
+  # Where this translation is read on the public help pages, as an absolute URL for places outside
+  #   of Zammad, e.g. an article sent by email. Honours the knowledge base's custom address.
+  def public_url
+    kb_locale.knowledge_base.canonical_url(public_path)
+  end
+
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 

@@ -195,7 +195,13 @@ class KnowledgeBase < ApplicationModel
   end
 
   def canonical_host
-    custom_address_uri&.host.presence || Setting.get('fqdn')
+    uri = custom_address_uri
+
+    return Setting.get('fqdn') if uri&.host.blank?
+    # The scheme follows `http_type`, so a port of either default only states a scheme.
+    return uri.host if [URI::HTTP.default_port, URI::HTTPS.default_port].include?(uri.port)
+
+    "#{uri.host}:#{uri.port}"
   end
 
   def canonical_scheme_host

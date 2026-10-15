@@ -22,9 +22,47 @@ RSpec.describe KnowledgeBaseRichText do
     end
 
     it 'writes a placeholder href when the target translation is gone' do
-      result = described_class.resolve_answer_links(link(9999)) { |found| "/somewhere/#{found.answer_id}" }
+      result = described_class.resolve_answer_links(link(0)) { |found| "/somewhere/#{found.answer_id}" }
 
       expect(result).to include('href="#"')
+    end
+
+    it 'writes a placeholder href when the block returns nil' do
+      result = described_class.resolve_answer_links(link(translation.id)) { nil }
+
+      expect(result).to include('href="#"')
+    end
+
+    context 'when detaching the body' do
+      def resolve(target_id, &)
+        described_class.resolve_answer_links("<p>#{link(target_id)}</p>", detach: true, &)
+      end
+
+      it 'turns a resolved link into an ordinary one' do
+        expect(resolve(translation.id) { '/somewhere' }).to eq('<p><a href="/somewhere">See also</a></p>')
+      end
+
+      it 'replaces a link to a gone target by its content' do
+        expect(resolve(0) { '/somewhere' }).to eq('<p>See also</p>')
+      end
+
+      it 'replaces a link the block returns nil for by its content' do
+        expect(resolve(translation.id) { nil }).to eq('<p>See also</p>')
+      end
+
+      it 'keeps markup inside the link' do
+        input  = "<a data-target-type='knowledge-base-answer' data-target-id='0'><strong>See</strong> also</a>"
+        result = described_class.resolve_answer_links(input, detach: true) { '/somewhere' }
+
+        expect(result).to eq('<strong>See</strong> also')
+      end
+
+      it 'still resolves a link nested in an unwrapped one' do
+        input  = "<a data-target-type='knowledge-base-answer' data-target-id='0'><b>#{link(translation.id)}</b></a>"
+        result = described_class.resolve_answer_links(input, detach: true) { '/somewhere' }
+
+        expect(result).to eq('<b><a href="/somewhere">See also</a></b>')
+      end
     end
 
     it 'leaves links without a target marker alone' do

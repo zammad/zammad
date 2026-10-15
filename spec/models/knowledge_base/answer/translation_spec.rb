@@ -23,6 +23,46 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
     end
   end
 
+  describe '#public_path' do
+    let(:translation) { create(:knowledge_base_answer).translation }
+    let(:locale)      { translation.kb_locale.system_locale.locale }
+    let(:category)    { translation.answer.category.translation_preferred(translation.kb_locale) }
+
+    it 'points at the answer page of the public help pages, ignoring a custom address' do
+      translation.kb_locale.knowledge_base.update!(custom_address: '/support')
+
+      expect(translation.public_path)
+        .to eq("/help/#{locale}/#{category.to_param}/#{translation.to_param}")
+    end
+  end
+
+  describe '#public_url' do
+    let(:translation)    { create(:knowledge_base_answer).translation }
+    let(:knowledge_base) { translation.kb_locale.knowledge_base }
+    let(:locale)         { translation.kb_locale.system_locale.locale }
+    let(:category)       { translation.answer.category.translation_preferred(translation.kb_locale) }
+    let(:host)           { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}" }
+
+    it 'points at the answer page of the public help pages, in the locale of this translation' do
+      expect(translation.public_url)
+        .to eq("#{host}/help/#{locale}/#{category.to_param}/#{translation.to_param}")
+    end
+
+    it 'honours a custom address of the knowledge base' do
+      knowledge_base.update!(custom_address: '/support')
+
+      expect(translation.public_url)
+        .to eq("#{host}/support/#{locale}/#{category.to_param}/#{translation.to_param}")
+    end
+
+    it 'keeps an explicit port of a custom domain' do
+      knowledge_base.update!(custom_address: 'help.example.com:8080')
+
+      expect(translation.public_url)
+        .to eq("#{Setting.get('http_type')}://help.example.com:8080/#{locale}/#{category.to_param}/#{translation.to_param}")
+    end
+  end
+
   describe '#edited_at' do
     let(:translation) { subject }
 

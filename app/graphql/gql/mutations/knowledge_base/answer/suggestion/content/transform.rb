@@ -36,7 +36,18 @@ module Gql::Mutations
           preferences: elem.preferences,
         )
       end
-      HasRichText.insert_urls(translation.content.body.dup, content_attachments)
+      body = HasRichText.insert_urls(translation.content.body.dup, content_attachments)
+      KnowledgeBaseRichText.resolve_answer_links(body, detach: true) { |target| publicly_visible?(target) ? target.public_url : agent_url(target) }
+    end
+
+    # The public help site serves active knowledge bases only.
+    def publicly_visible?(translation)
+      translation.answer.visible? && translation.kb_locale.knowledge_base.visible?
+    end
+
+    # Absolute, as the article is also read outside the app, e.g. in the agent notification email.
+    def agent_url(translation)
+      "#{Setting.get('http_type')}://#{Setting.get('fqdn')}#{translation.desktop_url}"
     end
 
     def clone_attachments(translation, form_id)
