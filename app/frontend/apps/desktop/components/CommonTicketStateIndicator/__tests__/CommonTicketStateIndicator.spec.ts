@@ -23,7 +23,7 @@ describe('CommonTicketStateIndicator.vue', () => {
       label: 'open',
     })
 
-    expect(view.getByRole('group')).toHaveClass('common-badge-warning')
+    expect(view.getByRole('group')).toHaveClass('common-badge-open')
     expect(view.getByRole('group')).toHaveTextContent('open')
   })
 

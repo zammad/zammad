@@ -24,7 +24,7 @@ const badgeVariant = computed(() => {
       return 'danger'
     case EnumTicketStateColorCode.Open:
     default:
-      return 'warning'
+      return 'open'
   }
 })
 </script>
