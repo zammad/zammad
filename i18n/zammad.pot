@@ -628,7 +628,7 @@ msgstr ""
 msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:152
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
@@ -3870,7 +3870,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:317
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:42
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:43
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4071,7 +4071,7 @@ msgstr ""
 msgid "Config"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:113
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
 msgid "Config has changed"
 msgstr ""
 
@@ -4286,11 +4286,15 @@ msgstr ""
 msgid "Content could not be loaded."
 msgstr ""
 
+#: app/models/store.rb:162
+msgid "Content is not a resizable image."
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
 msgstr ""
 
-#: app/models/store.rb:88
+#: app/models/store.rb:90
 msgid "Content preview could not be generated."
 msgstr ""
 
@@ -4347,7 +4351,7 @@ msgstr ""
 msgid "Continue anyway"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:40
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:41
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -9505,6 +9509,10 @@ msgstr ""
 msgid "Image actions"
 msgstr ""
 
+#: app/models/store.rb:169
+msgid "Image exceeds the maximum resizable pixel count."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
@@ -9799,7 +9807,7 @@ msgstr ""
 msgid "Initiate the import process to transfer your data into Zammad. Keep track of the migration progress on this page to be notified as soon as the import is successfully finished."
 msgstr ""
 
-#: app/models/store.rb:100
+#: app/models/store.rb:102
 msgid "Inline content could not be generated."
 msgstr ""
 
@@ -12312,7 +12320,7 @@ msgstr ""
 msgid "New User Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:150
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
 msgid "New Version"
 msgstr ""
 
@@ -15108,7 +15116,7 @@ msgstr ""
 msgid "Relevance score threshold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:134
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr ""
@@ -16423,7 +16431,7 @@ msgstr ""
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:128
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
 msgid "Security token verification failed"
 msgstr ""
 
@@ -17394,11 +17402,11 @@ msgstr ""
 msgid "Some Text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:72
 msgid "Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:91
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 
@@ -18637,7 +18645,7 @@ msgstr ""
 msgid "The chosen unit will be used for display only and will not affect stored values."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
@@ -18910,7 +18918,7 @@ msgstr ""
 msgid "The import was successful."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:130
 msgid "The included security token is invalid. This may be just a temporary error, please reload your browser, and try again."
 msgstr ""
 
@@ -19246,7 +19254,7 @@ msgid "The required PGP passphrase is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb:662
-#: app/services/service/user/add_first_admin.rb:18
+#: app/services/service/user/add_first_admin.rb:16
 msgid "The required attribute 'email' is missing."
 msgstr ""
 
@@ -19569,6 +19577,7 @@ msgid "The system report provides a summarized version of the system state and c
 msgstr ""
 
 #: app/services/service/system/check_setup.rb:25
+#: app/services/service/user/add_first_admin.rb:39
 msgid "The system setup cannot be started, because there is another one running or it was completed before."
 msgstr ""
 
@@ -20371,7 +20380,7 @@ msgstr ""
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr ""
 
-#: app/services/service/user/add_first_admin.rb:14
+#: app/services/service/user/add_first_admin.rb:34
 msgid "This system has already been configured and an administrator account exists."
 msgstr ""
 
@@ -23512,7 +23521,7 @@ msgstr ""
 msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:70
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
 msgid "Zammad is restarting…"
 msgstr ""
 
@@ -23520,7 +23529,7 @@ msgstr ""
 msgid "Zammad looks like this for \"%s\""
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:89
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
 msgid "Zammad requires a restart!"
 msgstr ""
 
@@ -23840,11 +23849,11 @@ msgstr ""
 msgid "d"
 msgstr ""
 
-#: app/models/concerns/can_be_published.rb:198
+#: app/models/concerns/can_be_published.rb:214
 msgid "date must be no earlier than internal date"
 msgstr ""
 
-#: app/models/concerns/can_be_published.rb:204
+#: app/models/concerns/can_be_published.rb:220
 msgid "date must be no earlier than published date"
 msgstr ""
 
