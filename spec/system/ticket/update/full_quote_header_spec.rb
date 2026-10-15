@@ -218,6 +218,24 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
+    context 'when bits inside a preformatted block are selected' do
+      let(:ticket_article) do
+        create(:ticket_article, ticket: ticket, content_type: 'text/html',
+                                body: "<p>Hello,</p><pre>One\nTwo\nThree</pre>")
+      end
+
+      it 'keeps the line breaks in the quote' do
+        within(:active_content) do
+          highlight_text('.ticket-article-item .richtext-content pre', '.ticket-article-item .richtext-content pre')
+          click_reply
+
+          within(:richtext) do
+            expect(page).to have_css('blockquote pre', text: "One\nTwo\nThree")
+          end
+        end
+      end
+    end
+
     context 'when full quote header setting is enabled' do
       let(:full_quote_header_setting) { true }
 
