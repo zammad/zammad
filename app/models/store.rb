@@ -237,14 +237,14 @@ returns
   end
 
   def image_resize_via_temp_file(content, width)
-    return if !resizable_content?(content)
+    raise __('Content is not a resizable image.') if !resizable_content?(content)
 
     temp_file = ::Tempfile.new
     temp_file.binmode
     temp_file.write(content)
     temp_file.close
 
-    return if image_oversized?(temp_file.path)
+    raise __('Image exceeds the maximum resizable pixel count.') if image_oversized?(temp_file.path)
 
     image = Rszr::Image.load(temp_file.path)
 
