@@ -225,9 +225,7 @@ class Transaction::Notification
   end
 
   def possible_recipients_of_group(group_id)
-    Rails.cache.fetch("User/notification/possible_recipients_of_group/#{group_id}/#{User.latest_change}", expires_in: 20.seconds) do
-      User.group_access(group_id, 'full').sort_by(&:login)
-    end
+    User.group_access(group_id, 'full').sort_by(&:login)
   end
 
   # Deliver the email notification, but never let a broken 'Email::Notification'
