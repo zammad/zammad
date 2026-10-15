@@ -61,10 +61,13 @@ To execute this manually, just paste the following into the browser console
   private
 
   def session_from_cookie
-    return if !origin_allowed?
-
     public_session_id = session_cookie_value
     return if public_session_id.blank?
+
+    if !origin_allowed?
+      log_rejected_origin
+      return
+    end
 
     private_session_id = Rack::Session::SessionId.new(public_session_id).private_id
     ActiveRecord::SessionStore::Session.find_by(session_id: private_session_id)
@@ -93,6 +96,18 @@ To execute this manually, just paste the following into the browser console
     return true if LOCALHOST_ORIGIN.match?(request_origin)
 
     Zammad::WebSocketOrigins.configured.any? { |origin| request_origin.casecmp?(origin) }
+  end
+
+  # A proxy that rewrites or drops the Origin header would otherwise leave the session anonymous without a trace.
+  def log_rejected_origin
+    request_origin = header_value('Origin')
+
+    if request_origin.blank?
+      Rails.logger.warn 'WebSocket login ignored the session cookie, because the handshake carried no Origin header. Please make sure that the reverse proxy forwards it.'
+      return
+    end
+
+    Rails.logger.warn "WebSocket login ignored the session cookie, because the origin #{request_origin.inspect} does not match the configured origins (#{Zammad::WebSocketOrigins.configured.join(', ')}). Please check the settings http_type, fqdn and alternative_fqdn."
   end
 
   def session_cookie_value
