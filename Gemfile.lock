@@ -352,11 +352,10 @@ GEM
       mutex_m
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    icalendar (2.12.5)
+    icalendar (2.13.0)
       base64
       ice_cube (~> 0.16)
       logger
-      ostruct
     icalendar-recurrence (1.2.1)
       icalendar (~> 2.0)
       ice_cube (~> 0.16)
