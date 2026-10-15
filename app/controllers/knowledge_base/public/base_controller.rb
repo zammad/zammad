@@ -75,20 +75,17 @@ class KnowledgeBase::Public::BaseController < ApplicationController
   #   listing ten answers from ten categories: ten queries saved, for anonymous visitors as much as
   #   for editors. On a category page the preload is a no-op, the association already being loaded.
   def answers_filter(list, sorting_node = nil)
-    answers = list
-                .includes(:category)
-                .localed(system_locale_via_uri)
-                # Not `internal`: this site never shows the internal publication date, so it must
-                #   not order by it either.
-                .sorted_by_mode(sorting_node&.answer_sorting_mode, system_locale_or_id: system_locale_via_uri, internal: false)
-
-    if current_user&.permissions?('knowledge_base.editor')
-      answers.filter { |answer| policy(answer).show_public? }
-    else
-      answers.published
-    end
+    list
+      .includes(:category)
+      .localed(system_locale_via_uri)
+      # Not `internal`: this site never shows the internal publication date, so it must
+      #   not order by it either.
+      .sorted_by_mode(sorting_node&.answer_sorting_mode, system_locale_or_id: system_locale_via_uri, internal: false)
+      .visible_on_help_site_to_user(current_user)
   end
 
+  # Asks the policy rather than `.visible_on_help_site_to_user`: for one answer, that is cheaper
+  #   than resolving a granular editor's access to every category, which any answer save resets.
   def find_answer(scope, id, locale: system_locale_via_uri)
     return if scope.nil?
 
