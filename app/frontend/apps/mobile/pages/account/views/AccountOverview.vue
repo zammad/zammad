@@ -159,7 +159,7 @@ const { forceDesktop } = useForceDesktop()
 
       <template #help>
         {{ $t('Did you know?') }}
-        <CommonLink class="text-blue" target="_blank" :link="translation.link">
+        <CommonLink class="text-blue" :link="translation.link" size="small" open-in-new-tab>
           {{ $t('You can help translating Zammad.') }}
         </CommonLink>
       </template>
