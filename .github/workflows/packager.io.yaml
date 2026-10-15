@@ -47,6 +47,8 @@ jobs:
           target: ${{ matrix.target }}
           version: ${{ steps.setup.outputs.version }}
           debug: true
+          # Keep the build cache per branch, otherwise develop's cache is restored and its gems and assets end up in the package.
+          cache_prefix: ${{ github.ref_name }}
           # Don't require Redis or Postgres (use fake DATABASE_URL to make Rails validation happy).
           env: |
             DATABASE_URL=postgresql://zammad:/zammad
