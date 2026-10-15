@@ -374,6 +374,58 @@ RSpec.describe Transaction::Notification, type: :model do
 
   it_behaves_like 'ChecksHumanChanges'
 
+  describe 'group recipients after role based access changes' do
+    let(:group)  { create(:group) }
+    let(:role)   { create(:role, :agent, group_names_access_map: { group.name => 'full' }) }
+    let(:agent)  { create(:user, roles: [role]) }
+    let(:ticket) { create(:ticket, group: group) }
+
+    before do
+      agent
+      ticket
+
+      run(ticket, User.find(1), 'create')
+    end
+
+    it 'notifies the agent while the role grants access' do
+      expect { run(ticket, User.find(1), 'create') }
+        .to change { OnlineNotification.where(user: agent).count }.by(1)
+    end
+
+    context 'when the role is removed from the agent' do
+      before do
+        agent.update!(roles: Role.where(name: 'Customer'))
+      end
+
+      it 'does not notify the agent' do
+        expect { run(ticket, User.find(1), 'create') }
+          .not_to change { OnlineNotification.where(user: agent).count }
+      end
+    end
+
+    context 'when the group is removed from the role' do
+      before do
+        role.update!(group_names_access_map: {})
+      end
+
+      it 'does not notify the agent' do
+        expect { run(ticket, User.find(1), 'create') }
+          .not_to change { OnlineNotification.where(user: agent).count }
+      end
+    end
+
+    context 'when the role is deactivated' do
+      before do
+        role.update!(active: false)
+      end
+
+      it 'does not notify the agent' do
+        expect { run(ticket, User.find(1), 'create') }
+          .not_to change { OnlineNotification.where(user: agent).count }
+      end
+    end
+  end
+
   describe 'agent notifications across the ticket create/update lifecycle', performs_jobs: true do
     let(:group) do
       Group.create_or_update(
