@@ -1,11 +1,32 @@
 <div class="dashboard main flex center">
+  <% if @stats or @firstSteps: %>
   <div class="tabs tabs--big">
+    <% if @stats: %>
     <div class="tab active" data-area="stat-widgets"><%- @T('My Stats') %></div>
-    <div class="tab" data-area="first-steps-widgets"><%- @T('First Steps') %></div>
+    <% end %>
+    <% if @firstSteps: %>
+    <div class="tab <% if !@stats: %>active<% end %>" data-area="first-steps-widgets"><%- @T('First Steps') %></div>
+    <% end %>
   </div>
-  <div class="tab-content first-steps-widgets hidden"></div>
+  <% end %>
+  <% if @firstSteps: %>
+  <div class="tab-content first-steps-widgets <% if @stats: %>hidden<% end %>"></div>
+  <% end %>
+  <% if @stats: %>
   <div class="tab-content stat-widgets three-columns horizontal"></div>
+  <% end %>
+  <% if !@stats and !@firstSteps: %>
+  <div class="fit vertical centered">
+    <div class="dashboard-empty-state vertical center">
+      <img src="<%= @C('image_path') %>/graphics/dashboard_empty_state.svg" alt="<%- @Ti('Empty dashboard illustration') %>">
+      <div>
+        <p><%- @T('Oops, seems like all the dashboard widgets have been turned off for you. Please contact your administrator.') %></p>
+      </div>
+    </div>
+  </div>
+  <% end %>
 </div>
+<% if @activityStream: %>
 <div class="sidebar optional">
   <h2><%- @T('Activity Stream') %></h2>
   <div class="activity-description">
@@ -17,3 +38,4 @@
     <p><%- @T('For example, recently changed tickets, users, or organizations.') %></p>
   </div>
 </div>
+<% end %>

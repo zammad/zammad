@@ -693,27 +693,27 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/ai_agent.jst.eco:3
-#: db/seeds/permissions.rb:251
+#: db/seeds/permissions.rb:257
 msgid "AI Agents"
 msgstr ""
 
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:263
 msgid "AI Feedback & Logs"
 msgstr ""
 
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:269
 msgid "AI Knowledge Base"
 msgstr ""
 
-#: db/seeds/settings.rb:6426
+#: db/seeds/settings.rb:6566
 msgid "AI Knowledge Base Answer Suggestions"
 msgstr ""
 
-#: db/seeds/settings.rb:6440
+#: db/seeds/settings.rb:6580
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
 msgstr ""
 
-#: db/seeds/settings.rb:6412
+#: db/seeds/settings.rb:6552
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr ""
 
@@ -721,7 +721,7 @@ msgstr ""
 msgid "AI Knowledge Base Services"
 msgstr ""
 
-#: db/seeds/permissions.rb:233
+#: db/seeds/permissions.rb:239
 msgid "AI Provider"
 msgstr ""
 
@@ -783,7 +783,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee:6
 #: app/models/audit_log/object_type_labels.rb:6
-#: db/seeds/settings.rb:6316
+#: db/seeds/settings.rb:6456
 msgid "AI provider"
 msgstr ""
 
@@ -840,7 +840,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:281
 msgid "API"
 msgstr ""
 
@@ -911,47 +911,47 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: db/seeds/permissions.rb:369
+#: db/seeds/permissions.rb:375
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:390
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:399
+#: db/seeds/permissions.rb:405
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:405
+#: db/seeds/permissions.rb:411
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:427
+#: db/seeds/permissions.rb:433
 msgid "Access the tickets as agent based on group access."
 msgstr ""
 
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:442
 msgid "Access tickets as customer."
 msgstr ""
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:366
 msgid "Access to the chat interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:396
 msgid "Access to the knowledge base interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:375
+#: db/seeds/permissions.rb:381
 msgid "Access to the phone interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:412
+#: db/seeds/permissions.rb:418
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:418
+#: db/seeds/permissions.rb:424
 msgid "Access to the ticket interface."
 msgstr ""
 
@@ -1168,7 +1168,8 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard.jst.eco:10
+#: app/assets/javascripts/app/views/dashboard.jst.eco:31
+#: app/assets/javascripts/app/views/settings/dashboard_views.jst.eco:4
 msgid "Activity Stream"
 msgstr ""
 
@@ -1607,7 +1608,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:368
+#: db/seeds/permissions.rb:374
 msgid "Agent chat"
 msgstr ""
 
@@ -1620,11 +1621,11 @@ msgstr ""
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:383
+#: db/seeds/permissions.rb:389
 msgid "Agent phone"
 msgstr ""
 
-#: db/seeds/permissions.rb:426
+#: db/seeds/permissions.rb:432
 #: db/seeds/settings.rb:1172
 msgid "Agent tickets"
 msgstr ""
@@ -1656,6 +1657,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:8
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:30
 msgid "All Tickets"
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/dashboard_views.jst.eco:9
+msgid "All activities"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:131
@@ -1699,7 +1704,7 @@ msgid "All groups will be considered for dispatching tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:165
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:105
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
 msgid "All notifications will be deleted. This action cannot be undone."
 msgstr ""
@@ -1721,11 +1726,15 @@ msgstr ""
 msgid "All values will be considered for extracted text from tickets."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:117
+msgid "All views and widgets are turned off, so agents see an empty dashboard. If you do not need the dashboard at all, you can turn it off."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_categorizer.rb:65
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 
-#: db/seeds/settings.rb:6301
+#: db/seeds/settings.rb:6441
 msgid "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
 
@@ -1773,7 +1782,7 @@ msgstr ""
 msgid "Allow users to create new tags."
 msgstr ""
 
-#: db/seeds/settings.rb:6292
+#: db/seeds/settings.rb:6432
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 
@@ -1988,12 +1997,12 @@ msgstr ""
 msgid "App secret"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:433
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:436
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
-#: db/seeds/permissions.rb:449
+#: db/seeds/permissions.rb:455
 msgid "Appearance"
 msgstr ""
 
@@ -2286,7 +2295,7 @@ msgstr ""
 msgid "Assign users based on user domain."
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco:3
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:21
 msgid "Assigned"
 msgstr ""
 
@@ -2442,7 +2451,7 @@ msgid "Audit Log"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:30
-#: db/seeds/permissions.rb:341
+#: db/seeds/permissions.rb:347
 msgid "Audit Logs"
 msgstr ""
 
@@ -2548,7 +2557,7 @@ msgstr ""
 msgid "Auto Assignment Selector"
 msgstr ""
 
-#: db/seeds/settings.rb:6278
+#: db/seeds/settings.rb:6418
 msgid "Auto Shutdown"
 msgstr ""
 
@@ -2667,7 +2676,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:122
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
-#: db/seeds/permissions.rb:463
+#: db/seeds/permissions.rb:469
 msgid "Avatar"
 msgstr ""
 
@@ -3365,7 +3374,7 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: db/seeds/permissions.rb:481
+#: db/seeds/permissions.rb:487
 msgid "Change personal account password."
 msgstr ""
 
@@ -3452,7 +3461,7 @@ msgstr ""
 msgid "Channel"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:3
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:37
 msgid "Channel Distribution"
 msgstr ""
 
@@ -3562,7 +3571,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:36
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:353
+#: db/seeds/permissions.rb:359
 #: db/seeds/settings.rb:6251
 msgid "Checklists"
 msgstr ""
@@ -3717,7 +3726,7 @@ msgid "Clear all filters"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:110
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:108
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 msgid "Clear all notifications"
 msgstr ""
@@ -3843,7 +3852,7 @@ msgstr ""
 msgid "Close chat sessions where participants are offline."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:240
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:243
 msgid "Close current tab"
 msgstr ""
 
@@ -4105,7 +4114,7 @@ msgstr ""
 msgid "Confirm your #{config.product_name} account, #{user.firstname} #{user.lastname}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>Confirm your email address to complete your #{config.product_name} account. It's easy, just click the link below.</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:302
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:305
 msgid "Confirm/submit dialog"
 msgstr ""
 
@@ -4364,7 +4373,7 @@ msgstr ""
 msgid "Copy codes"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:356
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
@@ -4420,7 +4429,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:299
+#: db/seeds/permissions.rb:305
 msgid "Core Workflows"
 msgstr ""
 
@@ -4952,7 +4961,7 @@ msgstr ""
 msgid "Customer sentiment"
 msgstr ""
 
-#: db/seeds/permissions.rb:435
+#: db/seeds/permissions.rb:441
 #: db/seeds/settings.rb:1181
 msgid "Customer tickets"
 msgstr ""
@@ -4988,16 +4997,63 @@ msgstr ""
 msgid "Dark mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
-#: app/assets/javascripts/app/controllers/dashboard.coffee:28
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:87
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:149
+#: app/assets/javascripts/app/controllers/dashboard.coffee:52
 #: app/assets/javascripts/app/controllers/package.coffee:61
-#: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
+#: app/frontend/apps/desktop/pages/dashboard/routes.ts:31
+#: db/seeds/permissions.rb:203
+#: db/seeds/settings.rb:5581
 msgid "Dashboard"
+msgstr ""
+
+#: db/seeds/settings.rb:6292
+msgid "Dashboard activity stream"
+msgstr ""
+
+#: db/seeds/settings.rb:6306
+msgid "Dashboard activity stream own activities"
+msgstr ""
+
+#: db/seeds/settings.rb:6376
+msgid "Dashboard assigned tickets widget"
+msgstr ""
+
+#: db/seeds/settings.rb:6362
+msgid "Dashboard channel distribution widget"
+msgstr ""
+
+#: db/seeds/settings.rb:6320
+msgid "Dashboard first steps"
+msgstr ""
+
+#: db/seeds/settings.rb:6348
+msgid "Dashboard mood widget"
+msgstr ""
+
+#: db/seeds/settings.rb:6404
+msgid "Dashboard reopening rate widget"
+msgstr ""
+
+#: db/seeds/settings.rb:6390
+msgid "Dashboard tickets in process widget"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:99
+msgid "Dashboard views"
+msgstr ""
+
+#: db/seeds/settings.rb:6334
+msgid "Dashboard waiting time widget"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:100
+msgid "Dashboard widgets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:311
+#: db/seeds/permissions.rb:317
 msgid "Data Privacy"
 msgstr ""
 
@@ -5470,7 +5526,7 @@ msgstr ""
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr ""
 
-#: db/seeds/settings.rb:6319
+#: db/seeds/settings.rb:6459
 msgid "Defines if the AI provider is configured."
 msgstr ""
 
@@ -5494,7 +5550,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6540
+#: db/seeds/settings.rb:6680
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5726,7 +5782,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6517
+#: db/seeds/settings.rb:6657
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5770,7 +5826,7 @@ msgstr ""
 msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6401
+#: db/seeds/settings.rb:6541
 msgid "Defines the fixed instructions that guide the AI Writing Assistant on e.g. how to format its output."
 msgstr ""
 
@@ -5806,7 +5862,7 @@ msgstr ""
 msgid "Defines the maximum number of allowed open tabs before auto cleanup removes surplus tabs when creating new tabs."
 msgstr ""
 
-#: db/seeds/settings.rb:6443
+#: db/seeds/settings.rb:6583
 msgid "Defines the minimum relevance score (in percent) a knowledge base answer must reach to be suggested in the ticket sidebar."
 msgstr ""
 
@@ -5822,11 +5878,11 @@ msgstr ""
 msgid "Defines the port of the WebSocket server."
 msgstr ""
 
-#: db/seeds/settings.rb:6580
+#: db/seeds/settings.rb:6720
 msgid "Defines the private key used to sign web push notifications."
 msgstr ""
 
-#: db/seeds/settings.rb:6593
+#: db/seeds/settings.rb:6733
 msgid "Defines the public key browsers use to subscribe to web push notifications."
 msgstr ""
 
@@ -5931,7 +5987,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6508
+#: db/seeds/settings.rb:6648
 msgid "Defines which knowledge base categories are excluded from the vector database. Sub-categories of an excluded category are excluded as well. Note that the vector database has to be rebuilt after removing a category from this list, so that its answers get indexed."
 msgstr ""
 
@@ -5939,7 +5995,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6310
+#: db/seeds/settings.rb:6450
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
@@ -6033,7 +6089,7 @@ msgid "Delete User"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:111
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:109
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:67
 msgid "Delete all"
 msgstr ""
@@ -6071,7 +6127,7 @@ msgstr ""
 msgid "Delete column"
 msgstr ""
 
-#: db/seeds/permissions.rb:312
+#: db/seeds/permissions.rb:318
 msgid "Delete existing data of your system."
 msgstr ""
 
@@ -6230,15 +6286,15 @@ msgstr ""
 msgid "Desktop"
 msgstr ""
 
-#: db/seeds/settings.rb:6289
+#: db/seeds/settings.rb:6429
 msgid "Desktop BETA UI Switch"
 msgstr ""
 
-#: db/seeds/settings.rb:6298
+#: db/seeds/settings.rb:6438
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr ""
 
-#: db/seeds/settings.rb:6307
+#: db/seeds/settings.rb:6447
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
@@ -6304,7 +6360,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
-#: db/seeds/permissions.rb:494
+#: db/seeds/permissions.rb:500
 msgid "Devices"
 msgstr ""
 
@@ -6469,6 +6525,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:671
 msgid "Do not encrypt email"
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/dashboard_views.jst.eco:8
+msgid "Do not show activities"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:657
@@ -7083,6 +7143,10 @@ msgstr ""
 msgid "Empty caller log"
 msgstr ""
 
+#: app/assets/javascripts/app/views/dashboard.jst.eco:21
+msgid "Empty dashboard illustration"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:431
 msgid "Empty overview"
 msgstr ""
@@ -7158,11 +7222,11 @@ msgstr ""
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
 msgstr ""
 
-#: db/seeds/settings.rb:6415
+#: db/seeds/settings.rb:6555
 msgid "Enable or disable AI generation of knowledge base answers from ticket content."
 msgstr ""
 
-#: db/seeds/settings.rb:6281
+#: db/seeds/settings.rb:6421
 msgid "Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy."
 msgstr ""
 
@@ -7170,7 +7234,7 @@ msgstr ""
 msgid "Enable or disable the automatic translation of ticket articles when an agent opens a ticket."
 msgstr ""
 
-#: db/seeds/settings.rb:6429
+#: db/seeds/settings.rb:6569
 msgid "Enable or disable the display of AI suggested knowledge base answers in the ticket sidebar."
 msgstr ""
 
@@ -7182,7 +7246,7 @@ msgstr ""
 msgid "Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session."
 msgstr ""
 
-#: db/seeds/settings.rb:6336
+#: db/seeds/settings.rb:6476
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
@@ -7190,23 +7254,59 @@ msgstr ""
 msgid "Enable or disable the translation of ticket articles."
 msgstr ""
 
-#: db/seeds/settings.rb:6485
+#: db/seeds/settings.rb:6625
 msgid "Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend."
 msgstr ""
 
-#: db/seeds/settings.rb:6387
+#: db/seeds/settings.rb:6527
 msgid "Enable or disable the writing assistant text tools."
+msgstr ""
+
+#: db/seeds/settings.rb:6295
+msgid "Enable the activity stream on the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6379
+msgid "Enable the assigned tickets widget on the dashboard."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
 msgid "Enable the banner for the BETA switch"
 msgstr ""
 
+#: db/seeds/settings.rb:6365
+msgid "Enable the channel distribution widget on the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6281
+msgid "Enable the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6323
+msgid "Enable the first steps tab on the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6351
+msgid "Enable the mood widget on the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6407
+msgid "Enable the reopening rate widget on the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6393
+msgid "Enable the tickets in process widget on the dashboard."
+msgstr ""
+
+#: db/seeds/settings.rb:6337
+msgid "Enable the waiting time widget on the dashboard."
+msgstr ""
+
 #: db/seeds/settings.rb:2611
 msgid "Enable ticket auto assignment."
 msgstr ""
 
-#: db/seeds/settings.rb:6369
+#: db/seeds/settings.rb:6509
 msgid "Enable ticket summary for following matching tickets."
 msgstr ""
 
@@ -7214,7 +7314,7 @@ msgstr ""
 msgid "Enable time accounting."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:425
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
 msgid "Enable/disable inline translations"
 msgstr ""
 
@@ -8074,7 +8174,8 @@ msgstr ""
 msgid "First Solution"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard.jst.eco:4
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:28
+#: app/assets/javascripts/app/views/dashboard.jst.eco:8
 msgid "First Steps"
 msgstr ""
 
@@ -8185,7 +8286,7 @@ msgstr ""
 msgid "For additional support, consult our migration guide."
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard.jst.eco:13
+#: app/assets/javascripts/app/views/dashboard.jst.eco:34
 msgid "For example, recently changed tickets, users, or organizations."
 msgstr ""
 
@@ -8256,11 +8357,11 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:604
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
 msgid "Format as //strikethrough//"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
 msgid "Format as _underlined_"
 msgstr ""
 
@@ -8270,15 +8371,15 @@ msgstr ""
 msgid "Format as bold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:653
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:656
 msgid "Format as h1 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:659
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:662
 msgid "Format as h2 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:665
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:668
 msgid "Format as h3 heading"
 msgstr ""
 
@@ -8288,7 +8389,7 @@ msgstr ""
 msgid "Format as italic"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:650
 msgid "Format as ordered list"
 msgstr ""
 
@@ -8309,15 +8410,15 @@ msgstr ""
 msgid "Format as underlined"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:644
 msgid "Format as unordered list"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:592
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
 msgid "Format as |bold|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:598
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
 msgid "Format as ||italic||"
 msgstr ""
 
@@ -8999,7 +9100,7 @@ msgstr ""
 msgid "Here you find your ticket overviews for open, assigned, and escalated tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard.jst.eco:12
+#: app/assets/javascripts/app/views/dashboard.jst.eco:33
 msgid "Here you will find the latest activities of your system."
 msgstr ""
 
@@ -9155,19 +9256,19 @@ msgstr ""
 msgid "How can we help?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:10
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:68
 msgid "How long did each customer have to wait, on average, to get a response from you today?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee:9
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee:19
 msgid "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you have too many…)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:27
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:37
 msgid "How many of your tickets are coming from email, phone, or Facebook? (Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:18
 msgid "How many of your tickets have been re-opened after being marked “closed”?"
 msgstr ""
 
@@ -9713,19 +9814,19 @@ msgstr ""
 msgid "Inserting image not possible due to source restrictions"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:638
 msgid "Inserts a horizontal rule"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:568
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
 msgid "Inserts a mention for a user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:562
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:565
 msgid "Inserts knowledge base answer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:556
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:559
 msgid "Inserts text module"
 msgstr ""
 
@@ -9770,7 +9871,7 @@ msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:275
 msgid "Integrations"
 msgstr ""
 
@@ -9799,7 +9900,7 @@ msgstr ""
 msgid "Internal error"
 msgstr ""
 
-#: db/seeds/settings.rb:6499
+#: db/seeds/settings.rb:6639
 msgid "Internal record of the embedding model and vector size the knowledge base index was last built with. Used to detect a stale index by comparison, without probing Elasticsearch."
 msgstr ""
 
@@ -10205,7 +10306,7 @@ msgstr ""
 msgid "Knowledge Base Assistant"
 msgstr ""
 
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:404
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -10217,7 +10318,7 @@ msgstr ""
 msgid "Knowledge Base Home"
 msgstr ""
 
-#: db/seeds/permissions.rb:404
+#: db/seeds/permissions.rb:410
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -10294,7 +10395,7 @@ msgstr ""
 msgid "Knowledge base navigation"
 msgstr ""
 
-#: db/seeds/settings.rb:6468
+#: db/seeds/settings.rb:6608
 msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
@@ -10343,7 +10444,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:97
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:153
-#: db/seeds/permissions.rb:456
+#: db/seeds/permissions.rb:462
 msgid "Language"
 msgstr ""
 
@@ -10690,7 +10791,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
 #: app/assets/javascripts/app/views/popover/user.jst.eco:5
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
-#: db/seeds/permissions.rb:508
+#: db/seeds/permissions.rb:514
 msgid "Linked Accounts"
 msgstr ""
 
@@ -10725,11 +10826,11 @@ msgstr ""
 msgid "List of issue labels"
 msgstr ""
 
-#: db/seeds/settings.rb:6471
+#: db/seeds/settings.rb:6611
 msgid "List of self-hosted video servers. This list is used for content security policy."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:215
 msgid "List of shortcuts"
 msgstr ""
 
@@ -10859,7 +10960,7 @@ msgstr ""
 msgid "Logo"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:232
 msgid "Logout"
 msgstr ""
 
@@ -10923,7 +11024,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:323
 msgid "Maintenance"
 msgstr ""
 
@@ -10944,23 +11045,23 @@ msgstr ""
 msgid "Manage"
 msgstr ""
 
-#: db/seeds/permissions.rb:252
+#: db/seeds/permissions.rb:258
 msgid "Manage AI agents of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:270
 msgid "Manage AI features which operate on your knowledge base content."
 msgstr ""
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:264
 msgid "Manage AI feedback and logs of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:234
+#: db/seeds/permissions.rb:240
 msgid "Manage AI provider of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:282
 msgid "Manage API of your system."
 msgstr ""
 
@@ -11017,11 +11118,11 @@ msgstr ""
 msgid "Manage WhatsApp channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:547
+#: db/seeds/permissions.rb:553
 msgid "Manage access to New BETA UI switch."
 msgstr ""
 
-#: db/seeds/permissions.rb:336
+#: db/seeds/permissions.rb:342
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -11037,7 +11138,7 @@ msgstr ""
 msgid "Manage applications that can use Zammad as an OAuth provider and applications that you've authorized to use your account."
 msgstr ""
 
-#: db/seeds/permissions.rb:342
+#: db/seeds/permissions.rb:348
 msgid "Manage audit logs of your system."
 msgstr ""
 
@@ -11053,12 +11154,16 @@ msgstr ""
 msgid "Manage chat channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:204
+#: db/seeds/permissions.rb:210
 msgid "Manage core system settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:300
+#: db/seeds/permissions.rb:306
 msgid "Manage core workflows of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb:204
+msgid "Manage dashboard settings of your system."
 msgstr ""
 
 #: db/seeds/permissions.rb:132
@@ -11073,71 +11178,71 @@ msgstr ""
 msgid "Manage groups of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:276
 msgid "Manage integrations of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:324
 msgid "Manage maintenance mode of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:330
 msgid "Manage monitoring of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:288
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:330
+#: db/seeds/permissions.rb:336
 msgid "Manage packages of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:502
+#: db/seeds/permissions.rb:508
 msgid "Manage personal API tokens."
 msgstr ""
 
-#: db/seeds/permissions.rb:450
+#: db/seeds/permissions.rb:456
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:464
+#: db/seeds/permissions.rb:470
 msgid "Manage personal avatar settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:536
+#: db/seeds/permissions.rb:542
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:495
+#: db/seeds/permissions.rb:501
 msgid "Manage personal devices and sessions."
 msgstr ""
 
-#: db/seeds/permissions.rb:457
+#: db/seeds/permissions.rb:463
 msgid "Manage personal language settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:509
+#: db/seeds/permissions.rb:515
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:516
+#: db/seeds/permissions.rb:522
 msgid "Manage personal notifications settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:471
+#: db/seeds/permissions.rb:477
 msgid "Manage personal out of office settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:526
+#: db/seeds/permissions.rb:532
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:449
 msgid "Manage personal settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:488
+#: db/seeds/permissions.rb:494
 msgid "Manage personal two-factor authentication methods."
 msgstr ""
 
@@ -11157,11 +11262,11 @@ msgstr ""
 msgid "Manage schedulers of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:210
+#: db/seeds/permissions.rb:216
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:348
+#: db/seeds/permissions.rb:354
 msgid "Manage system report of your system."
 msgstr ""
 
@@ -11169,15 +11274,15 @@ msgstr ""
 msgid "Manage text modules of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:222
+#: db/seeds/permissions.rb:228
 msgid "Manage ticket auto assignment settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:354
+#: db/seeds/permissions.rb:360
 msgid "Manage ticket checklists of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:228
+#: db/seeds/permissions.rb:234
 msgid "Manage ticket duplicate detection settings of your system."
 msgstr ""
 
@@ -11189,19 +11294,19 @@ msgstr ""
 msgid "Manage ticket overviews of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:300
 msgid "Manage ticket priorities of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:216
+#: db/seeds/permissions.rb:222
 msgid "Manage ticket settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:294
 msgid "Manage ticket states of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:240
+#: db/seeds/permissions.rb:246
 msgid "Manage ticket summarization of your system."
 msgstr ""
 
@@ -11217,7 +11322,7 @@ msgstr ""
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:306
+#: db/seeds/permissions.rb:312
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -11233,7 +11338,7 @@ msgstr ""
 msgid "Manage webhooks of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:246
+#: db/seeds/permissions.rb:252
 msgid "Manage writing assistant text tools of your system."
 msgstr ""
 
@@ -11277,7 +11382,7 @@ msgid "March"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:126
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:129
 msgid "Mark all as read"
 msgstr ""
 
@@ -11697,7 +11802,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:323
+#: db/seeds/permissions.rb:329
 msgid "Monitoring"
 msgstr ""
 
@@ -11713,7 +11818,7 @@ msgstr ""
 msgid "Month(s)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:3
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee:19
 msgid "Mood"
 msgstr ""
 
@@ -11743,7 +11848,7 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:344
 msgid "Move left and right"
 msgstr ""
 
@@ -11751,7 +11856,7 @@ msgstr ""
 msgid "Move up"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:337
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:340
 msgid "Move up and down"
 msgstr ""
 
@@ -11795,7 +11900,7 @@ msgstr ""
 msgid "My Replacement Tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard.jst.eco:3
+#: app/assets/javascripts/app/views/dashboard.jst.eco:5
 msgid "My Stats"
 msgstr ""
 
@@ -11818,7 +11923,7 @@ msgstr ""
 msgid "My tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:3
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_in_process.coffee:20
 msgid "My tickets in process"
 msgstr ""
 
@@ -11921,7 +12026,7 @@ msgstr ""
 msgid "Name of form submit button"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:549
 msgid "Navigate through article"
 msgstr ""
 
@@ -11930,7 +12035,7 @@ msgstr ""
 msgid "Navigate to %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:139
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:71
 msgid "Navigation"
 msgstr ""
@@ -12026,7 +12131,7 @@ msgstr ""
 msgid "New BETA UI"
 msgstr ""
 
-#: db/seeds/permissions.rb:546
+#: db/seeds/permissions.rb:552
 msgid "New BETA UI Switch"
 msgstr ""
 
@@ -12107,7 +12212,7 @@ msgstr ""
 msgid "New Template"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:193
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:490
@@ -12454,7 +12559,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:128
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:113
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:116
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:247
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:138
 msgid "No entries"
@@ -12912,7 +13017,7 @@ msgid "Notification sound"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:182
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -12921,7 +13026,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:48
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:515
+#: db/seeds/permissions.rb:521
 msgid "Notifications"
 msgstr ""
 
@@ -13052,7 +13157,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:340
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:54
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:287
 msgid "Objects"
 msgstr ""
 
@@ -13095,6 +13200,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:10
 msgid "On-screen Translation"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:30
+msgid "Onboard new users with a step-by-step Zammad setup."
 msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee:8
@@ -13189,6 +13298,10 @@ msgstr ""
 msgid "Only when shared organization member"
 msgstr ""
 
+#: app/assets/javascripts/app/views/dashboard.jst.eco:23
+msgid "Oops, seems like all the dashboard widgets have been turned off for you. Please contact your administrator."
+msgstr ""
+
 #: app/frontend/shared/form/i18n/locales.ts:106
 msgid "Open"
 msgstr ""
@@ -13238,11 +13351,11 @@ msgstr ""
 msgid "Open link"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:503
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:506
 msgid "Open macro selection"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:463
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:466
 msgid "Open note box"
 msgstr ""
 
@@ -13333,6 +13446,10 @@ msgstr ""
 
 #: app/models/object_manager/attribute/data_option_validator.rb:59
 msgid "Options are required."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:88
+msgid "Options for enabling/disabling the dashboard and customizing its elements. If the dashboard is disabled, ticket overviews become your Zammad landing page."
 msgstr ""
 
 #: app/models/object_manager/attribute/data_option_validator.rb:53
@@ -13508,7 +13625,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
-#: db/seeds/permissions.rb:470
+#: db/seeds/permissions.rb:476
 msgid "Out of Office"
 msgstr ""
 
@@ -13516,7 +13633,7 @@ msgstr ""
 msgid "Out of Office start date has to be earlier than or equal to end date"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:21
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
 
@@ -13605,11 +13722,11 @@ msgstr ""
 msgid "Overview: %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:158
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:161
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:80
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:24
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:262
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
@@ -13627,6 +13744,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:73
 msgid "Overwrite draft"
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/dashboard_views.jst.eco:10
+msgid "Own activities only"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:522
@@ -13697,11 +13818,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
 #: app/assets/javascripts/app/views/package.jst.eco:3
-#: db/seeds/permissions.rb:329
+#: db/seeds/permissions.rb:335
 msgid "Packages"
 msgstr ""
 
-#: db/seeds/settings.rb:6564
+#: db/seeds/settings.rb:6704
 msgid "Packages Token"
 msgstr ""
 
@@ -13762,7 +13883,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1480
-#: db/seeds/permissions.rb:480
+#: db/seeds/permissions.rb:486
 msgid "Password"
 msgstr ""
 
@@ -13842,11 +13963,11 @@ msgstr ""
 msgid "Paste Private Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:610
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
 msgid "Paste from clipboard"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:620
 msgid "Paste from clipboard (plain text)"
 msgstr ""
 
@@ -13959,7 +14080,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:1017
-#: db/seeds/permissions.rb:374
+#: db/seeds/permissions.rb:380
 msgid "Phone"
 msgstr ""
 
@@ -14433,7 +14554,7 @@ msgstr ""
 msgid "Profile language updated successfully."
 msgstr ""
 
-#: db/seeds/permissions.rb:442
+#: db/seeds/permissions.rb:448
 msgid "Profile settings"
 msgstr ""
 
@@ -14594,11 +14715,11 @@ msgstr ""
 msgid "Push notifications become available once the app has finished loading. This can take a moment."
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts:103
+#: app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts:110
 msgid "Push notifications could not be disabled."
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts:240
+#: app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts:291
 msgid "Push notifications could not be enabled."
 msgstr ""
 
@@ -14784,7 +14905,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6526
+#: db/seeds/settings.rb:6666
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -15060,11 +15181,11 @@ msgstr ""
 msgid "Removed reaction from message %s from %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:671
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:674
 msgid "Removes any hyperlink"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:626
 msgid "Removes the formatting"
 msgstr ""
 
@@ -15097,7 +15218,7 @@ msgstr ""
 msgid "Reopened"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco:3
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:18
 msgid "Reopening rate"
 msgstr ""
 
@@ -15146,7 +15267,7 @@ msgstr ""
 msgid "Reply allowed only for open tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:481
 msgid "Reply to last article"
 msgstr ""
 
@@ -15395,7 +15516,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6537
+#: db/seeds/settings.rb:6677
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -15846,7 +15967,7 @@ msgstr ""
 msgid "Scroll towards start"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:169
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:172
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:32
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:208
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
@@ -16120,7 +16241,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:152
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:303
-#: db/seeds/permissions.rb:209
+#: db/seeds/permissions.rb:215
 msgid "Security"
 msgstr ""
 
@@ -16263,7 +16384,7 @@ msgstr ""
 msgid "Select default ticket type"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:345
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:348
 msgid "Select item"
 msgstr ""
 
@@ -16489,7 +16610,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6527
+#: db/seeds/settings.rb:6667
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -16547,7 +16668,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:335
+#: db/seeds/permissions.rb:341
 msgid "Sessions"
 msgstr ""
 
@@ -16566,7 +16687,7 @@ msgstr ""
 msgid "Set agent limit"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:493
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:496
 msgid "Set article to internal/public"
 msgstr ""
 
@@ -16813,6 +16934,10 @@ msgstr ""
 msgid "Show additional notes for ticket creation depending on the selected type."
 msgstr ""
 
+#: db/seeds/settings.rb:6309
+msgid "Show agents only their own activities in the activity stream."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/reference_list.jst.eco:21
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:40
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:11
@@ -16860,7 +16985,7 @@ msgstr ""
 msgid "Show more tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:252
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:255
 msgid "Show next tab"
 msgstr ""
 
@@ -16876,7 +17001,7 @@ msgstr ""
 msgid "Show password login for users on login page. Disabling only takes effect if third-party authentication is enabled."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:281
 msgid "Show previous tab"
 msgstr ""
 
@@ -16930,6 +17055,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:95
 msgid "Shown when the chat is closed."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/dashboard_views.jst.eco:14
+msgid "Shows recent changes to tickets, users and organizations on the dashboard."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:375
@@ -17494,7 +17623,7 @@ msgstr ""
 msgid "Stores the credentials (e.g. site key and secret) of the selected CAPTCHA provider."
 msgstr ""
 
-#: db/seeds/settings.rb:6350
+#: db/seeds/settings.rb:6490
 msgid "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
 
@@ -17712,7 +17841,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/manage.coffee:51
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:28
-#: db/seeds/permissions.rb:203
+#: db/seeds/permissions.rb:209
 #: db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr ""
@@ -17732,7 +17861,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:347
+#: db/seeds/permissions.rb:353
 msgid "System Report"
 msgstr ""
 
@@ -17944,7 +18073,7 @@ msgstr ""
 msgid "Text Modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
 msgid "Text editing"
 msgstr ""
 
@@ -18124,7 +18253,7 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr ""
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr ""
 
@@ -18537,7 +18666,7 @@ msgstr ""
 msgid "The event could not be processed."
 msgstr ""
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -19373,7 +19502,7 @@ msgstr ""
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:176
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:179
 msgid "The translation language could not be saved."
 msgstr ""
 
@@ -19398,7 +19527,7 @@ msgstr ""
 msgid "The translation service refused the configured credentials."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:106
+#: app/frontend/shared/entities/ticket-article/stores/articleTranslation.ts:109
 msgid "The translation setting could not be saved."
 msgstr ""
 
@@ -20090,7 +20219,7 @@ msgstr ""
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
 msgstr ""
 
-#: db/seeds/settings.rb:6567
+#: db/seeds/settings.rb:6707
 msgid "This setting defines the token to access the support.zammad.com instance for package remote commands."
 msgstr ""
 
@@ -20192,7 +20321,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
-#: db/seeds/permissions.rb:215
+#: db/seeds/permissions.rb:221
 msgid "Ticket"
 msgstr ""
 
@@ -20218,7 +20347,7 @@ msgstr ""
 msgid "Ticket Articles"
 msgstr ""
 
-#: db/seeds/permissions.rb:221
+#: db/seeds/permissions.rb:227
 msgid "Ticket Auto Assignment"
 msgstr ""
 
@@ -20242,7 +20371,7 @@ msgstr ""
 msgid "Ticket Customer"
 msgstr ""
 
-#: db/seeds/permissions.rb:227
+#: db/seeds/permissions.rb:233
 msgid "Ticket Duplicate Detection"
 msgstr ""
 
@@ -20295,7 +20424,7 @@ msgid "Ticket Owner"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:293
+#: db/seeds/permissions.rb:299
 msgid "Ticket Priorities"
 msgstr ""
 
@@ -20324,7 +20453,7 @@ msgid "Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:287
+#: db/seeds/permissions.rb:293
 msgid "Ticket States"
 msgstr ""
 
@@ -20346,16 +20475,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239
-#: db/seeds/settings.rb:6333
+#: db/seeds/permissions.rb:245
+#: db/seeds/settings.rb:6473
 msgid "Ticket Summary"
 msgstr ""
 
-#: db/seeds/settings.rb:6347
+#: db/seeds/settings.rb:6487
 msgid "Ticket Summary Config"
 msgstr ""
 
-#: db/seeds/settings.rb:6366
+#: db/seeds/settings.rb:6506
 msgid "Ticket Summary Selector"
 msgstr ""
 
@@ -20579,7 +20708,7 @@ msgstr ""
 msgid "TicketID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:456
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -20856,7 +20985,7 @@ msgstr ""
 msgid "Toggle article meta information"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:446
 msgid "Toggle dark mode"
 msgstr ""
 
@@ -20892,7 +21021,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
-#: db/seeds/permissions.rb:501
+#: db/seeds/permissions.rb:507
 msgid "Token Access"
 msgstr ""
 
@@ -21039,10 +21168,10 @@ msgstr ""
 msgid "Translation to %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:417
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:305
+#: db/seeds/permissions.rb:311
 msgid "Translations"
 msgstr ""
 
@@ -21192,7 +21321,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
-#: db/seeds/permissions.rb:487
+#: db/seeds/permissions.rb:493
 msgid "Two-factor Authentication"
 msgstr ""
 
@@ -21420,7 +21549,7 @@ msgstr ""
 msgid "Unread notification"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue:40
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue:41
 msgid "Unread notifications"
 msgstr ""
 
@@ -21428,7 +21557,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:214
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:212
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -21538,7 +21667,7 @@ msgstr ""
 msgid "Update Time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:513
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
 msgid "Update as closed"
 msgstr ""
 
@@ -21816,11 +21945,11 @@ msgstr ""
 msgid "Use this switch to start synchronization of your LDAP sources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:141
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:143
 msgid "Used anywhere"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:421
 msgid "Used anywhere (admin only)"
 msgstr ""
 
@@ -21832,23 +21961,23 @@ msgstr ""
 msgid "Used in"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:333
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:336
 msgid "Used in lists (views and results)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:350
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:353
 msgid "Used in object views"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:551
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
 msgid "Used when composing a Ticket article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:581
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:584
 msgid "Used when composing a text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:457
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
 msgid "Used when viewing a Ticket"
 msgstr ""
 
@@ -22009,7 +22138,7 @@ msgstr ""
 msgid "User mailbox"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:201
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:204
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:45
 msgid "User menu"
 msgstr ""
@@ -22143,19 +22272,19 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: db/seeds/settings.rb:6482
+#: db/seeds/settings.rb:6622
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6496
+#: db/seeds/settings.rb:6636
 msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:6514
+#: db/seeds/settings.rb:6654
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
-#: db/seeds/settings.rb:6505
+#: db/seeds/settings.rb:6645
 msgid "Vector DB knowledge base excluded categories"
 msgstr ""
 
@@ -22375,11 +22504,11 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: db/seeds/settings.rb:6577
+#: db/seeds/settings.rb:6717
 msgid "Web Push VAPID Private Key"
 msgstr ""
 
-#: db/seeds/settings.rb:6590
+#: db/seeds/settings.rb:6730
 msgid "Web Push VAPID Public Key"
 msgstr ""
 
@@ -22475,7 +22604,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
@@ -22483,7 +22612,7 @@ msgstr ""
 msgid "What can you do here?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_in_process.coffee:10
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_in_process.coffee:20
 msgid "What percentage of your tickets have you responded to, updated, or modified in some way today?"
 msgstr ""
 
@@ -22633,12 +22762,12 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
-#: db/seeds/permissions.rb:245
-#: db/seeds/settings.rb:6384
+#: db/seeds/permissions.rb:251
+#: db/seeds/settings.rb:6524
 msgid "Writing Assistant"
 msgstr ""
 
-#: db/seeds/settings.rb:6398
+#: db/seeds/settings.rb:6538
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
@@ -24950,18 +25079,18 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:407
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
 msgid "…add object link URL"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:400
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:403
 msgid "…add object title"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:632
 msgid "…of whole text area"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:68
 msgid "∅ Waiting time today"
 msgstr ""

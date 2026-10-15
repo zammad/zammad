@@ -24,7 +24,8 @@ class Stats extends App.ControllerDashboardStatsBase
     for id, channel of data.StatsTicketChannelDistribution.channels
       channel.overal_percentage = Math.round((channel.inbound + channel.outbound) / totalTickets * 100) || 0
 
-    data.StatsTicketChannelDistribution.description =  __('How many of your tickets are coming from email, phone, or Facebook? (Shows percentages for both inbound and outbound tickets.)')
+    data.StatsTicketChannelDistribution.title       = @widget.title
+    data.StatsTicketChannelDistribution.description = @widget.description
 
     content = App.view('dashboard/stats/ticket_channel_distribution')(data)
 
@@ -33,4 +34,4 @@ class Stats extends App.ControllerDashboardStatsBase
     else
       @el.append(content)
 
-App.Config.set('ticket_channel_distribution', { controller: Stats, permission: 'ticket.agent', prio: 300, className: 'ticket_channel_distribution' }, 'Stats')
+App.Config.set('ticket_channel_distribution', { controller: Stats, permission: 'ticket.agent', prio: 300, className: 'ticket_channel_distribution', title: __('Channel Distribution'), description: __('How many of your tickets are coming from email, phone, or Facebook? (Shows percentages for both inbound and outbound tickets.)') }, 'Stats')

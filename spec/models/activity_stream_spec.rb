@@ -242,4 +242,76 @@ RSpec.describe ActivityStream, type: :model do
       travel_back
     end
   end
+
+  describe 'pausing' do
+    shared_examples 'a paused activity stream' do |setting|
+      let!(:existing_entries) do
+        create(:ticket, group: groups.first)
+        described_class.list(admin_user, 10).to_a
+      end
+
+      before { Setting.set(setting, false) }
+
+      it 'does not record new activity' do
+        expect { create(:ticket, group: groups.first) }.not_to change(described_class, :count)
+      end
+
+      it 'does not record a started session' do
+        expect { current_user.activity_stream_log('session started', current_user.id, true) }
+          .not_to change(described_class, :count)
+      end
+
+      it 'lists no entries' do
+        expect(described_class.list(admin_user, 10)).to be_empty
+      end
+
+      it 'keeps the existing entries and lists them again once turned back on', :aggregate_failures do
+        expect(existing_entries).to be_present
+
+        Setting.set(setting, true)
+
+        expect(described_class.list(admin_user, 10)).to match_array(existing_entries)
+      end
+    end
+
+    context 'with the activity stream turned off' do
+      it_behaves_like 'a paused activity stream', 'dashboard_activity_stream'
+    end
+
+    context 'with the dashboard turned off' do
+      it_behaves_like 'a paused activity stream', 'dashboard'
+    end
+  end
+
+  describe 'limiting to own activities' do
+    let(:agent)          { create(:agent, groups: groups) }
+    let(:colleague)      { create(:agent, groups: groups) }
+    let(:own_ticket)     { create(:ticket, group: groups.first, created_by_id: agent.id) }
+    let!(:own_entry)     { ticket_entry(own_ticket) }
+    let!(:foreign_entry) { ticket_entry(create(:ticket, group: groups.first, created_by_id: colleague.id)) }
+
+    def ticket_entry(ticket)
+      described_class.find_by(activity_stream_object_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id)
+    end
+
+    context 'when turned on' do
+      before { Setting.set('dashboard_activity_stream_own', true) }
+
+      it 'lists only the entries the user created' do
+        expect(described_class.list(agent, 10)).to contain_exactly(own_entry)
+      end
+
+      it 'does not list an own entry of a ticket the user can no longer read' do
+        own_ticket.update!(group: create(:group))
+
+        expect(described_class.list(agent, 10)).to be_empty
+      end
+    end
+
+    context 'when turned off' do
+      it 'lists the entries of all users' do
+        expect(described_class.list(agent, 10)).to contain_exactly(own_entry, foreign_entry)
+      end
+    end
+  end
 end

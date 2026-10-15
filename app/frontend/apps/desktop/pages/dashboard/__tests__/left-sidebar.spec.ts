@@ -4,6 +4,7 @@ import { fireEvent, getAllByRole, getByLabelText, getByRole } from '@testing-lib
 import { flushPromises } from '@vue/test-utils'
 
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
@@ -15,6 +16,7 @@ import { SidebarName } from '#desktop/components/layout/types.ts'
 
 describe('Left sidebar', () => {
   beforeEach(() => {
+    mockApplicationConfig({ dashboard: true })
     mockUserCurrent({
       id: 'gid://zammad/User/999',
       firstname: 'Nicole',

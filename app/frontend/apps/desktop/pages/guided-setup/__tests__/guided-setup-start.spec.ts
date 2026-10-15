@@ -35,6 +35,7 @@ describe('guided setup start', () => {
     beforeEach(() => {
       mockApplicationConfig({
         system_init_done: false,
+        dashboard: true,
       })
     })
 

@@ -8,7 +8,8 @@ class Stats extends App.ControllerDashboardStatsBase
         total: 0
         average_per_agent: 0
 
-    data.StatsTicketLoadMeasure.description = __('Out of all open tickets (company-wide), how many are assigned to you?')
+    data.StatsTicketLoadMeasure.title       = @widget.title
+    data.StatsTicketLoadMeasure.description = @widget.description
 
     content = App.view('dashboard/stats/ticket_load_measure')(data)
 
@@ -17,4 +18,4 @@ class Stats extends App.ControllerDashboardStatsBase
     else
       @el.append(content)
 
-App.Config.set('ticket_load_measure', { controller: Stats, permission: 'ticket.agent', prio: 400, className: 'ticket_load_measure' }, 'Stats')
+App.Config.set('ticket_load_measure', { controller: Stats, permission: 'ticket.agent', prio: 400, className: 'ticket_load_measure', title: __('Assigned'), description: __('Out of all open tickets (company-wide), how many are assigned to you?') }, 'Stats')

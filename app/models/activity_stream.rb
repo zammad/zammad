@@ -100,16 +100,36 @@ remove whole activity entries of an object
 
 =begin
 
-return all activity entries of an user
+check if the activity stream is turned on, turning off the whole dashboard turns it off too
+
+  ActivityStream.enabled?
+
+returns
+
+  true # false
+
+=end
+
+  def self.enabled?
+    Setting.get('dashboard') && Setting.get('dashboard_activity_stream')
+  end
+
+=begin
+
+return all activity entries of an user, none while the activity stream is turned off,
+only the ones the user created while it is limited to their own activities
 
   activity_stream = ActivityStream.list(user, limit)
 
 =end
 
   def self.list(user, limit)
-    ActivityStreamPolicy::Scope.new(user, self).resolve
-                               .reorder(created_at: :desc)
-                               .limit(limit)
+    return none if !enabled?
+
+    scope = ActivityStreamPolicy::Scope.new(user, self).resolve
+    scope = scope.where(created_by_id: user.id) if Setting.get('dashboard_activity_stream_own')
+
+    scope.reorder(created_at: :desc).limit(limit)
   end
 
 =begin

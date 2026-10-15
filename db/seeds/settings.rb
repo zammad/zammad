@@ -6282,6 +6282,146 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Dashboard'),
+  name:        'dashboard',
+  area:        'Dashboard::Base',
+  description: __('Enable the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard activity stream'),
+  name:        'dashboard_activity_stream',
+  area:        'Dashboard::Base',
+  description: __('Enable the activity stream on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard activity stream own activities'),
+  name:        'dashboard_activity_stream_own',
+  area:        'Dashboard::Base',
+  description: __('Show agents only their own activities in the activity stream.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       false,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard first steps'),
+  name:        'dashboard_first_steps',
+  area:        'Dashboard::Base',
+  description: __('Enable the first steps tab on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard waiting time widget'),
+  name:        'dashboard_stats_ticket_waiting_time',
+  area:        'Dashboard::Base',
+  description: __('Enable the waiting time widget on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard mood widget'),
+  name:        'dashboard_stats_ticket_escalation',
+  area:        'Dashboard::Base',
+  description: __('Enable the mood widget on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard channel distribution widget'),
+  name:        'dashboard_stats_ticket_channel_distribution',
+  area:        'Dashboard::Base',
+  description: __('Enable the channel distribution widget on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard assigned tickets widget'),
+  name:        'dashboard_stats_ticket_load_measure',
+  area:        'Dashboard::Base',
+  description: __('Enable the assigned tickets widget on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard tickets in process widget'),
+  name:        'dashboard_stats_ticket_in_process',
+  area:        'Dashboard::Base',
+  description: __('Enable the tickets in process widget on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Dashboard reopening rate widget'),
+  name:        'dashboard_stats_ticket_reopen',
+  area:        'Dashboard::Base',
+  description: __('Enable the reopening rate widget on the dashboard.'),
+  options:     {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.dashboard'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('Auto Shutdown'),
   name:        'auto_shutdown',
   area:        'Core::WebApp',

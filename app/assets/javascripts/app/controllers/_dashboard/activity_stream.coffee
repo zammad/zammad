@@ -25,7 +25,6 @@ class App.DashboardActivityStream extends App.CollectionController
     # init fetch via ajax, all other updates on time via websockets
     else
       @ajax(
-        id:    'dashoard_activity_stream'
         type:  'GET'
         url:   "#{@apiPath}/activity_stream?full=true"
         data:
@@ -53,10 +52,7 @@ class App.DashboardActivityStream extends App.CollectionController
     @items || []
 
   onRenderEnd: =>
-    return if _.isEmpty(@items)
-
-    # remove description of activity stream
-    @el.closest('.sidebar').find('.activity-description').addClass('hidden')
+    @el.closest('.sidebar').find('.activity-description').toggleClass('hidden', !_.isEmpty(@items))
 
   onRenderItemEnd: (item, el) ->
     return if App.Session.get() is undefined

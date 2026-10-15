@@ -7,7 +7,8 @@ class Stats extends App.ControllerDashboardStatsBase
         state: 'supergood'
         average_per_agent: 0
 
-    data.StatsTicketWaitingTime.description = __('How long did each customer have to wait, on average, to get a response from you today?')
+    data.StatsTicketWaitingTime.title       = @widget.title
+    data.StatsTicketWaitingTime.description = @widget.description
 
     content = App.view('dashboard/stats/ticket_waiting_time')(data)
     if @$('.ticket_waiting_time').length > 0
@@ -64,4 +65,4 @@ class Stats extends App.ControllerDashboardStatsBase
     ctx.closePath()
     ctx.fill()
 
-App.Config.set('ticket_waiting_time', { controller: Stats, permission: 'ticket.agent', prio: 100, className: 'ticket_waiting_time' }, 'Stats')
+App.Config.set('ticket_waiting_time', { controller: Stats, permission: 'ticket.agent', prio: 100, className: 'ticket_waiting_time', title: __('∅ Waiting time today'), description: __('How long did each customer have to wait, on average, to get a response from you today?') }, 'Stats')

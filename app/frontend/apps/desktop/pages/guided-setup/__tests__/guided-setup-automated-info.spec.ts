@@ -50,6 +50,7 @@ describe('guided setup automated info', () => {
     beforeEach(() => {
       mockApplicationConfig({
         system_init_done: true,
+        dashboard: true,
       })
       mockAuthentication(true)
     })

@@ -60,6 +60,7 @@ describe('password login', () => {
   it('can login using login form', async () => {
     mockApplicationConfig({
       user_show_password_login: true,
+      dashboard: true,
     })
 
     const view = await visitView('/login')

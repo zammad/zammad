@@ -6,7 +6,8 @@ class Stats extends App.ControllerDashboardStatsBase
         percent: 0
         average_per_agent: 0
 
-    data.StatsTicketReopen.description = __('How many of your tickets have been re-opened after being marked “closed”?')
+    data.StatsTicketReopen.title       = @widget.title
+    data.StatsTicketReopen.description = @widget.description
 
     content = App.view('dashboard/stats/ticket_reopen')(data)
     if @$('.ticket_reopen').length > 0
@@ -14,4 +15,4 @@ class Stats extends App.ControllerDashboardStatsBase
     else
       @el.append(content)
 
-App.Config.set('ticket_reopen', { controller: Stats, permission: 'ticket.agent', prio: 600, className: 'ticket_reopen' }, 'Stats')
+App.Config.set('ticket_reopen', { controller: Stats, permission: 'ticket.agent', prio: 600, className: 'ticket_reopen', title: __('Reopening rate'), description: __('How many of your tickets have been re-opened after being marked “closed”?') }, 'Stats')

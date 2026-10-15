@@ -82,5 +82,44 @@ RSpec.describe Sessions::Backend::ActivityStream do
       # get as stream
       expect(activity_stream.push).to be_present
     end
+
+    context 'when the activity stream is turned off' do
+      before do
+        create(:group)
+        Setting.set('dashboard_activity_stream', false)
+      end
+
+      it 'pushes an empty list' do
+        expect(activity_stream.push.dig(:data, :record_ids)).to eq([])
+      end
+    end
+
+    context 'when the activity stream is limited to own activities' do
+      let!(:own_group) { create(:group, created_by_id: agent.id) }
+
+      before do
+        create(:group)
+        Setting.set('dashboard_activity_stream_own', true)
+      end
+
+      it 'pushes only the entries the agent created' do
+        own_entry = ActivityStream.find_by(activity_stream_object_id: ObjectLookup.by_name('Group'), o_id: own_group.id)
+
+        expect(activity_stream.push.dig(:data, :record_ids)).to eq([own_entry.id])
+      end
+    end
+
+    context 'when the activity stream gets limited to own activities later' do
+      before { create(:group) }
+
+      it 'pushes the emptied list', :aggregate_failures do
+        expect(activity_stream.push.dig(:data, :record_ids)).to be_present
+
+        Setting.set('dashboard_activity_stream_own', true)
+        travel 4.seconds
+
+        expect(activity_stream.push.dig(:data, :record_ids)).to eq([])
+      end
+    end
   end
 end

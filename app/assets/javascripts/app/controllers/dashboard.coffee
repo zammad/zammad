@@ -1,5 +1,6 @@
 class App.Dashboard extends App.Controller
-  clueAccess: true
+  @include App.CluesShowable
+
   events:
     'click .tabs .tab': 'toggle'
     'click .js-intro': 'clues'
@@ -7,12 +8,7 @@ class App.Dashboard extends App.Controller
   constructor: ->
     super
 
-    if !@permissionCheck('ticket.agent')
-      @clueAccess = false
-      return
-
-    # render page
-    @render()
+    return if !@permissionCheck('ticket.agent')
 
     # rerender view, e. g. on language change
     @controllerBind('ui:rerender', =>
@@ -20,82 +16,77 @@ class App.Dashboard extends App.Controller
       @render()
     )
 
+    @controllerBind('config_update_local', (data) => @configUpdated(data))
+
+    # The task is started at boot for every agent, even with the dashboard turned off,
+    #   so it is there to render once the dashboard gets turned on.
+    return if !@Config.get('dashboard')
+
+    @render()
+
     @mayBeClues()
 
+  configUpdated: (data) ->
+    return if !data.name.startsWith('dashboard')
+
+    if data.name is 'dashboard'
+      @updateNavMenu()
+
+      if !data.value and @shown
+        @navigate '#ticket/view', { hideCurrentLocationFromHistory: true }
+
+    # These settings change which activities are listed, so the cached activity stream is outdated.
+    App.SessionStorage.delete('activity_stream') if data.name in ['dashboard', 'dashboard_activity_stream', 'dashboard_activity_stream_own']
+    @render()
+
   render: ->
-
-    localEl = $( App.view('dashboard')(
-      head:    __('Dashboard')
-      isAdmin: @permissionCheck('admin')
-    ) )
-
-    new App.DashboardStats(
-      el: localEl.find('.stat-widgets')
-    )
-
-    new App.DashboardActivityStream(
-      el:    localEl.find('.js-activityContent')
-      limit: 25
-    )
-
-    new App.DashboardFirstSteps(
-      el: localEl.find('.first-steps-widgets')
-    )
-
-    @html localEl
-
-  mayBeClues: =>
-    return if @Config.get('after_auth')
-    return if !@clueAccess
-    return if !@shown
-    return if @Config.get('switch_back_to_possible')
-    preferences = @Session.get('preferences')
-    @clueAccess = false
-
-    # If the initial clue has been already completed by the user, show the rest of the clues.
-    if preferences['intro']
-      for clue in _.sortBy(App.Config.get('Clues'), 'prio')
-        continue if preferences[clue.preference_key] # skip already completed clues
-        continue if clue.config_key and not App.Config.get(clue.config_key) # skip clues about inactive features
-        continue if clue.permission and not _.every(clue.permission, (permission) -> App.User.current()?.permission(permission)) # skip clues without required permissions
-
-        new clue.controller(
-          appEl: @appEl
-          onComplete: =>
-            App.Ajax.request(
-              id:          'preferences'
-              type:        'PUT'
-              url:         "#{@apiPath}/users/preferences"
-              data:        JSON.stringify("#{clue.preference_key}": true)
-              processData: true
-            )
-        )
-
-        return # show only one clue at a time
-
+    if !@Config.get('dashboard')
+      @html('')
       return
 
-    @clues()
+    stats          = App.DashboardStats.anyVisibleToCurrentUser()
+    activityStream = @Config.get('dashboard_activity_stream')
+    firstSteps     = @Config.get('dashboard_first_steps')
 
-  clues: (e) =>
-    @clueAccess = false
-    if e
-      e.preventDefault()
+    localEl = $( App.view('dashboard')(
+      head:           __('Dashboard')
+      isAdmin:        @permissionCheck('admin')
+      stats:          stats
+      activityStream: activityStream
+      firstSteps:     firstSteps
+    ) )
 
-    # Initial clue has its own controller, so it can be triggered via a route change later.
-    @navigate '#clues'
+    if stats
+      new App.DashboardStats(
+        el: localEl.find('.stat-widgets')
+      )
+
+    if activityStream
+      new App.DashboardActivityStream(
+        el:    localEl.find('.js-activityContent')
+        limit: 25
+      )
+
+    if firstSteps
+      new App.DashboardFirstSteps(
+        el: localEl.find('.first-steps-widgets')
+      )
+
+    @html localEl
 
   active: (state) =>
     return @shown if state is undefined
     @shown = state
-    if state
+    if state and @Config.get('dashboard')
       @mayBeClues()
 
   url: ->
     '#dashboard'
 
   show: (params) =>
-    if @permissionCheck('ticket.agent')
+    if @permissionCheck('ticket.agent') && !@Config.get('dashboard')
+      @navigate '#ticket/view', { hideCurrentLocationFromHistory: true }
+    else if @permissionCheck('ticket.agent')
       @title __('Dashboard')
       @navupdate '#dashboard'
     # in case of being only customer, redirect to default router
@@ -137,4 +128,4 @@ class DashboardRouter extends App.ControllerPermanent
 
 App.Config.set('dashboard', DashboardRouter, 'Routes')
 App.Config.set('Dashboard', { controller: 'Dashboard', permission: ['*'] }, 'permanentTask')
-App.Config.set('Dashboard', { prio: 100, parent: '', name: __('Dashboard'), target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')
+App.Config.set('Dashboard', { prio: 100, parent: '', name: __('Dashboard'), target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], setting: ['dashboard'], class: 'dashboard' }, 'NavBar')

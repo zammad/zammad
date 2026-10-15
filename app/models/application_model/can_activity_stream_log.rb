@@ -26,6 +26,8 @@ returns
     # return if we run on init mode
     return if !Setting.get('system_init_done')
 
+    return if !ActivityStream.enabled?
+
     permission = self.class.instance_variable_get(:@activity_stream_permission)
     updated_at = self.updated_at
     if force

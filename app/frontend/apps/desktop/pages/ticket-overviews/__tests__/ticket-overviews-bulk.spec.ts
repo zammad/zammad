@@ -2,6 +2,7 @@
 
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -151,6 +152,7 @@ describe('Ticket Overviews > Bulk edit tickets', () => {
 
 describe('Ticket Overviews > Async bulk update notifications', () => {
   const setupBulkUpdateView = async () => {
+    mockApplicationConfig({ dashboard: true })
     mockDefaultOverviewQueries()
     mockDefaultTicketsCachedByOverview({ edges: [{ node: createDummyTicket() }] })
     mockUserCurrent({

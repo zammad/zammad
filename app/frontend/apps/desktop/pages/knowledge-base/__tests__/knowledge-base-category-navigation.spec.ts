@@ -61,7 +61,7 @@ const answer = (id: string, title: string) => ({
 
 describe('knowledge base category navigation', () => {
   beforeEach(() => {
-    mockApplicationConfig({ kb_active_publicly: true })
+    mockApplicationConfig({ kb_active_publicly: true, dashboard: true })
 
     mockKnowledgeBaseQuery({
       knowledgeBase: {

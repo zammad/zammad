@@ -1,6 +1,6 @@
 <div class="stat-widget vertical">
   <div class="stat-title">
-    <%- @T('My tickets in process') %>
+    <%- @T(@StatsTicketInProcess.title) %>
     <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketInProcess.description) %>" data-placement="bottom">
       <%- @Icon('help') %>
     </div>

@@ -36,7 +36,7 @@ vi.mock('#shared/server/apollo/client.ts', () => {
 beforeEach(() => {
   mockPublicLinks([])
   mockPublicLinksSubscription()
-  mockApplicationConfig({ product_name: 'Zammad' })
+  mockApplicationConfig({ product_name: 'Zammad', dashboard: true })
   mockGraphQLSubscription(UserCurrentTaskbarItemUpdatesDocument)
   mockGraphQLSubscription(UserCurrentTaskbarItemListUpdatesDocument)
   mockGraphQLSubscription(OnlineNotificationsCountDocument)

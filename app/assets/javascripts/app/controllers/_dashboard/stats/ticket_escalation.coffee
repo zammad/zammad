@@ -6,7 +6,8 @@ class Stats extends App.ControllerDashboardStatsBase
         own: 0
         total: 0
 
-    data.StatsTicketEscalation.description = __('How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you have too many…)')
+    data.StatsTicketEscalation.title       = @widget.title
+    data.StatsTicketEscalation.description = @widget.description
 
     content = App.view('dashboard/stats/ticket_escalation')(data)
 
@@ -15,4 +16,4 @@ class Stats extends App.ControllerDashboardStatsBase
     else
       @el.append(content)
 
-App.Config.set('ticket_escalation', { controller: Stats, permission: 'ticket.agent', prio: 200, className: 'ticket_escalation' }, 'Stats')
+App.Config.set('ticket_escalation', { controller: Stats, permission: 'ticket.agent', prio: 200, className: 'ticket_escalation', title: __('Mood'), description: __('How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you have too many…)') }, 'Stats')

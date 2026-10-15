@@ -41,6 +41,7 @@ describe('guided setup manual finish', () => {
     beforeEach(() => {
       mockApplicationConfig({
         system_init_done: true,
+        dashboard: true,
       })
       mockPermissions(['admin'])
       mockAuthentication(true)

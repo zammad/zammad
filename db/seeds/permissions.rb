@@ -199,6 +199,12 @@ Permission.create_if_not_exists(
   preferences: { prio: 1300 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.dashboard',
+  label:       __('Dashboard'),
+  description: __('Manage dashboard settings of your system.'),
+  preferences: { prio: 1305 }
+)
+Permission.create_if_not_exists(
   name:        'admin.system',
   label:       __('System'),
   description: __('Manage core system settings.'),

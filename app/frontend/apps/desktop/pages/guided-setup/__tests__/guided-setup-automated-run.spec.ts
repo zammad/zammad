@@ -21,6 +21,7 @@ describe('guided setup automated run', () => {
     beforeEach(() => {
       mockApplicationConfig({
         system_init_done: false,
+        dashboard: true,
       })
 
       mockAuthentication(false)
@@ -93,6 +94,7 @@ describe('guided setup automated run', () => {
     beforeEach(() => {
       mockApplicationConfig({
         system_init_done: true,
+        dashboard: true,
       })
     })
 

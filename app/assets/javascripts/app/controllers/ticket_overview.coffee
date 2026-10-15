@@ -1,6 +1,7 @@
 class App.TicketOverview extends App.Controller
   @extend App.TicketMassUpdatable
   @include App.ValidUsersForTicketSelectionMethods
+  @include App.CluesShowable
 
   className: 'overviews'
   activeFocus: 'nav'
@@ -86,6 +87,9 @@ class App.TicketOverview extends App.Controller
     if !@view && @viewLast
       @navigate "#ticket/view/#{@viewLast}", { hideCurrentLocationFromHistory: true }
       return
+
+    if @view and !@Config.get('dashboard')
+      @mayBeClues()
 
     # build nav bar
     if @navBarController

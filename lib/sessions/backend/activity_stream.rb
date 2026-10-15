@@ -10,25 +10,20 @@ class Sessions::Backend::ActivityStream < Sessions::Backend::Base
     @client_id    = client_id
     @ttl          = ttl
     @asset_lookup = asset_lookup
-    @last_change  = nil
+    @last_ids     = nil
   end
 
   def load
 
     # get whole collection
     activity_stream = @user.activity_stream(25)
-    if activity_stream && !activity_stream.first
-      return
-    end
 
-    if activity_stream&.first && activity_stream.first['created_at'] == @last_change
-      return
-    end
+    # The whole list is compared, not only its newest entry: a changed dashboard setting can
+    #   remove entries from it or empty it, and open dashboards have to follow.
+    ids = activity_stream.map(&:id)
+    return if ids == @last_ids
 
-    # update last changed
-    if activity_stream&.first
-      @last_change = activity_stream.first['created_at']
-    end
+    @last_ids = ids
 
     assets = {}
     item_ids = []

@@ -1,4 +1,17 @@
 class App.DashboardStats extends App.Controller
+  @settingName: (widget) ->
+    "dashboard_stats_#{widget.className}"
+
+  # Widgets without such a setting, e.g. from an addon, stay visible.
+  @isVisible: (widget) ->
+    App.Config.get(App.DashboardStats.settingName(widget)) isnt false
+
+  @anyVisible: ->
+    _.some(App.Config.get('Stats'), @isVisible)
+
+  @anyVisibleToCurrentUser: ->
+    _.some(App.Config.get('Stats'), (widget) => @isVisible(widget) and App.User.current()?.permission(widget.permission))
+
   constructor: ->
     super
     @setupStatsWidgets()
@@ -17,6 +30,8 @@ class App.DashboardStats extends App.Controller
       widgets = _.sortBy(widgets, (item) -> return item.prio)
 
       for widget in widgets
+        continue if !App.DashboardStats.isVisible(widget)
+
         if @permissionCheck(widget.permission)
           try
 
@@ -31,6 +46,7 @@ class App.DashboardStats extends App.Controller
             new widget.controller(
               el: localEl
               className: widget.className
+              widget: widget
             )
             @$('.js-stat-help').tooltip()
           catch e

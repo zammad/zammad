@@ -1,0 +1,16 @@
+<div class="settings-entry no-margin js-activityStream">
+  <div class="form-group">
+    <div class="formGroup-label">
+      <label for="dashboard_activity_stream"><%- @T('Activity Stream') %></label>
+    </div>
+    <div class="controls controls--select">
+      <select id="dashboard_activity_stream" class="form-control" name="dashboard_activity_stream" <% if @disabled: %>disabled<% end %>>
+        <option value="off" <% if @activityStream is 'off': %>selected<% end %>><%- @T('Do not show activities') %></option>
+        <option value="all" <% if @activityStream is 'all': %>selected<% end %>><%- @T('All activities') %></option>
+        <option value="own" <% if @activityStream is 'own': %>selected<% end %>><%- @T('Own activities only') %></option>
+      </select>
+      <%- @Icon('arrow-down') %>
+    </div>
+    <p class="help-text"><%- @T('Shows recent changes to tickets, users and organizations on the dashboard.') %></p>
+  </div>
+</div>

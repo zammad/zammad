@@ -33,6 +33,7 @@ describe('guided setup admin user creation', () => {
     beforeEach(() => {
       mockApplicationConfig({
         system_init_done: false,
+        dashboard: true,
       })
     })
 

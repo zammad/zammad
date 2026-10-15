@@ -3917,6 +3917,21 @@ ol.tabs li {
   }
 }
 
+.dashboard-empty-state {
+  width: 350px;
+  max-width: 100%;
+  gap: 40px;
+  text-align: center;
+
+  img {
+    width: 200px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
 .separator {
   margin: 20px 0;
   position: relative;

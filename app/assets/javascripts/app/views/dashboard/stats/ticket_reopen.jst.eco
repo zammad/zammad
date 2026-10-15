@@ -1,6 +1,6 @@
 <div class="stat-widget vertical">
   <div class="stat-title">
-    <%- @T('Reopening rate') %>
+    <%- @T(@StatsTicketReopen.title) %>
     <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketReopen.description) %>" data-placement="left">
       <%- @Icon('help') %>
     </div>

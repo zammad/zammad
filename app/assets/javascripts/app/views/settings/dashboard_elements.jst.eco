@@ -1,0 +1,11 @@
+<% for element in @elements: %>
+  <div class="checkbox js-dashboardElement">
+    <label class="inline-label checkbox-replacement">
+      <input type="checkbox" name="<%= element.key %>" value="true" <% if element.active: %>checked<% end %> <% if @disabled: %>disabled<% end %>>
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
+      <span class="label-text"><%- @T(element.name) %></span>
+    </label>
+    <span class="help-text"><%- @T(element.description) %></span>
+  </div>
+<% end %>

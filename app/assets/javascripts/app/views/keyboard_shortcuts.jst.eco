@@ -27,6 +27,7 @@
       <% for item in area.content: %>
         <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
         <% for shortcut in item.shortcuts: %>
+          <% continue if shortcut.setting and not App.Config.get(shortcut.setting) %>
           <% if App.KeyboardShortcutPlugin.getKeyForLayout(shortcut.hotkeys): %>
             <% for hotkey in @hotkeys: %>
               <kbd><%= hotkey %></kbd>

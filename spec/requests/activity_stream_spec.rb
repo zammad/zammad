@@ -68,5 +68,30 @@ RSpec.describe 'ActivityStream', type: :request do
         expect(json_response.dig('assets', 'TicketArticle', article.id.to_s)).to be_nil
       end
     end
+
+    context 'when the activity stream is turned off' do
+      before { Setting.set('dashboard_activity_stream', false) }
+
+      it 'returns no entries', :aggregate_failures do
+        get '/api/v1/activity_stream', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to be_empty
+      end
+    end
+
+    context 'when the activity stream is limited to own activities' do
+      let!(:own_ticket) { create(:ticket, group:, created_by_id: agent.id) }
+      let(:own_entry) { ActivityStream.find_by(activity_stream_object_id: ObjectLookup.by_name('Ticket'), o_id: own_ticket.id) }
+
+      before { Setting.set('dashboard_activity_stream_own', true) }
+
+      it 'lists only the entries the agent created', :aggregate_failures do
+        get '/api/v1/activity_stream', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response.pluck('id')).to eq([own_entry.id])
+      end
+    end
   end
 end

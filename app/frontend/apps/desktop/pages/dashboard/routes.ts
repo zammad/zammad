@@ -1,5 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { markRaw } from 'vue'
+
+import { useApplicationStore } from '#shared/stores/application.ts'
+
+import DashboardNavigationItem from './components/DashboardNavigationItem.vue'
+
 import type { RouteRecordRaw } from 'vue-router'
 
 const route: RouteRecordRaw[] = [
@@ -26,6 +32,12 @@ if (import.meta.env.DEV || VITE_TEST_MODE) {
     alias: '/',
     props: true,
     component: () => import('./views/Dashboard.vue'),
+    // A redirect instead of `canAccess`, which would show the forbidden page right after the login.
+    beforeEnter: () => {
+      if (useApplicationStore().config.dashboard) return true
+
+      return { name: 'TicketOverview' }
+    },
     meta: {
       title: __('Dashboard'),
       requiresAuth: true,
@@ -33,6 +45,7 @@ if (import.meta.env.DEV || VITE_TEST_MODE) {
       requiredPermission: ['*'],
       order: 0,
       mainNavigation: true,
+      navigationItemComponent: markRaw(DashboardNavigationItem),
       permanentItem: true,
     },
   })

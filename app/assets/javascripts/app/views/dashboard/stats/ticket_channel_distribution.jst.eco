@@ -1,6 +1,6 @@
 <div class="stat-widget vertical">
   <div class="stat-title">
-    <%- @T('Channel Distribution') %>
+    <%- @T(@StatsTicketChannelDistribution.title) %>
     <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketChannelDistribution.description) %>" data-placement="left">
       <%- @Icon('help') %>
     </div>

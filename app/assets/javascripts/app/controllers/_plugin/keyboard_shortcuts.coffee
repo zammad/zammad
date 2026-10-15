@@ -107,6 +107,7 @@ class App.KeyboardShortcutPlugin extends App.Controller
 
                 $(document).on('keydown.shortcuts', {keys: modifier}, (e) =>
                   return if App.KeyboardShortcutPlugin.isDisabled()
+                  return if shortcut.setting && !App.Config.get(shortcut.setting)
                   return if shortcut.onlyOutsideInputs && App.KeyboardShortcutPlugin.isInput()
                   return if shortcut.onlyWithoutSelection && App.KeyboardShortcutPlugin.hasSelection()
                   e.preventDefault()
@@ -125,6 +126,7 @@ class App.KeyboardShortcutPlugin extends App.Controller
       for area in areas
         for item in area.content
           for shortcut in item.shortcuts
+            continue if shortcut.setting && !App.Config.get(shortcut.setting)
             if shortcut.globalEvent is e
               shortcut.callback(shortcut)
     )
@@ -145,6 +147,7 @@ App.Config.set(
               hotkeys: [true, false]
               onlyOutsideInputs: true
               description: __('Dashboard')
+              setting: 'dashboard'
               globalEvent: 'dashboard'
               callback: ->
                 $('#global-search').trigger('blur')
