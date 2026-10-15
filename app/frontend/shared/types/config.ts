@@ -224,6 +224,7 @@ export interface ConfigList {
   ui_ticket_add_article_hint: unknown
   ui_ticket_create_available_types: ('phone-in' | 'phone-out' | 'email-out')[]
   ui_ticket_create_default_type: 'phone-in' | 'phone-out' | 'email-out'
+  ui_ticket_hide_article_actions: unknown,
   ui_ticket_create_notes: unknown
   ui_ticket_overview_query_polling: unknown
   ui_ticket_overview_ticket_limit: number
