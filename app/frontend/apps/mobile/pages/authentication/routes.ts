@@ -1,5 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+// The app shell loads this store on start, so a dynamic import could not split it off.
+import { usePushNotificationsStore } from '#mobile/entities/user/current/stores/pushNotifications.ts'
+
 import { useAfterAuthPlugins } from './after-auth/composable/useAfterAuthPlugins.ts'
 
 import type { RouteRecordRaw } from 'vue-router'
@@ -38,12 +41,10 @@ const route: RouteRecordRaw[] = [
     name: 'Logout',
     component: {
       async beforeRouteEnter() {
-        const [{ useAuthenticationStore }, { useNotifications }, { usePushNotificationsStore }] =
-          await Promise.all([
-            import('#shared/stores/authentication.ts'),
-            import('#shared/components/CommonNotifications/useNotifications.ts'),
-            import('#mobile/entities/user/current/stores/pushNotifications.ts'),
-          ])
+        const [{ useAuthenticationStore }, { useNotifications }] = await Promise.all([
+          import('#shared/stores/authentication.ts'),
+          import('#shared/components/CommonNotifications/useNotifications.ts'),
+        ])
 
         const { clearAllNotifications } = useNotifications()
 

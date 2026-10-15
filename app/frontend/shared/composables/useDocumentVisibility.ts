@@ -14,6 +14,9 @@ export const useDocumentVisibility = () => {
 
   const clearDeferred = () => {
     deferredCallback = null
+
+    if (!deferredTimeout) return
+
     clearTimeout(deferredTimeout)
   }
 
