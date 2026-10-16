@@ -9,4 +9,5 @@ minimumReleaseAgeExclude:
   - vitest@5.0.0
 overrides:
   '@sa11y/vitest>vitest': ^5.0.3
+  'lightningcss': ^1.33.0
 verifyDepsBeforeRun: false
