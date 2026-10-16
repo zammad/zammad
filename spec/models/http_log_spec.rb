@@ -75,6 +75,12 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
         expect(described_class.mask_sensitive_data(bearer)).to eq('Authorization: Bearer [FILTERED]')
       end
 
+      it 'masks a Bearer token with characters outside the RFC 6750 set completely' do
+        bearer = "Authorization: Bearer pa$$word#1:!x\nContent-Type: application/json"
+
+        expect(described_class.mask_sensitive_data(bearer)).to eq("Authorization: Bearer [FILTERED]\nContent-Type: application/json")
+      end
+
       it 'masks previously partially filtered dot-separated Bearer authorization headers completely' do
         bearer = [
           'Authorization: Bearer [FILTERED]',
@@ -98,6 +104,39 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
         header = "Authorization: DeepL-Auth-Key secret-key\nContent-Type: application/json"
 
         expect(described_class.mask_sensitive_data(header)).to eq("Authorization: DeepL-Auth-Key [FILTERED]\nContent-Type: application/json")
+      end
+    end
+
+    # GitLab authenticates with a PRIVATE-TOKEN header, which Net::HTTP logs in lowercase.
+    context 'when the input includes a token header' do
+      it 'masks the token but keeps the header name' do
+        header = 'private-token: s3cr3t'
+
+        expect(described_class.mask_sensitive_data(header)).to eq('private-token: [FILTERED]')
+      end
+
+      it 'masks the token regardless of the header case' do
+        header = 'PRIVATE-TOKEN: s3cr3t'
+
+        expect(described_class.mask_sensitive_data(header)).to eq('PRIVATE-TOKEN: [FILTERED]')
+      end
+
+      it 'masks other token headers too' do
+        header = 'x-auth-token: s3cr3t'
+
+        expect(described_class.mask_sensitive_data(header)).to eq('x-auth-token: [FILTERED]')
+      end
+
+      it 'keeps the surrounding headers' do
+        headers = "accept: */*\nprivate-token: s3cr3t\ncontent-type: application/json"
+
+        expect(described_class.mask_sensitive_data(headers)).to eq("accept: */*\nprivate-token: [FILTERED]\ncontent-type: application/json")
+      end
+
+      it 'keeps headers that only mention a token in their value' do
+        header = 'x-description: private-token: not a header'
+
+        expect(described_class.mask_sensitive_data(header)).to eq(header)
       end
     end
 
