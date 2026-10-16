@@ -9713,11 +9713,11 @@ msgstr ""
 msgid "Invalid auto wizard file."
 msgstr ""
 
-#: app/controllers/long_polling_controller.rb:82
+#: app/controllers/long_polling_controller.rb:83
 msgid "Invalid client_id in receive loop!"
 msgstr ""
 
-#: app/controllers/long_polling_controller.rb:50
+#: app/controllers/long_polling_controller.rb:51
 msgid "Invalid client_id received!"
 msgstr ""
 
@@ -12934,6 +12934,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco:17
 msgid "Only packages from known, trusted, and verified sources should be installed."
+msgstr ""
+
+#: app/controllers/long_polling_controller.rb:92
+msgid "Only session based authentication is supported!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37

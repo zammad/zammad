@@ -42,7 +42,7 @@ RSpec.describe 'LongPolling', type: :request do
     end
 
     it 'receive without client_id' do
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_receive', params: { data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
@@ -50,7 +50,7 @@ RSpec.describe 'LongPolling', type: :request do
     end
 
     it 'receive without wrong client_id' do
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_receive', params: { client_id: 'not existing', data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
@@ -58,7 +58,7 @@ RSpec.describe 'LongPolling', type: :request do
     end
 
     it 'send without client_id' do
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_send', params: { data: {} }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
@@ -67,11 +67,59 @@ RSpec.describe 'LongPolling', type: :request do
 
     it 'send with client_id' do
       Sessions.create('123456', {}, { type: 'ajax' })
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_send', params: { client_id: '123456', data: {} }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response).to eq({})
+    end
+  end
+
+  describe 'authentication types' do
+    let(:token) { create(:token, user: agent, permissions: %w[user_preferences.calendar]) }
+
+    it 'creates a session for a browser session' do
+      authenticated_as(agent, via: :browser)
+      post '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response['client_id']).to be_a_uuid
+      expect(Sessions.get(json_response['client_id'])).to include(user: { 'id' => agent.id })
+    end
+
+    it 'rejects sending via API token' do
+      authenticated_as(agent, token: token)
+      post '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
+      expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Only session based authentication is supported!')
+      expect(Sessions.sessions).to be_empty
+    end
+
+    it 'rejects receiving via API token' do
+      client_id = SecureRandom.uuid
+      Sessions.create(client_id, { 'id' => agent.id }, { type: 'ajax' })
+
+      authenticated_as(agent, token: token)
+      post '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
+      expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Only session based authentication is supported!')
+    end
+
+    it 'rejects sending via HTTP basic auth' do
+      authenticated_as(agent)
+      post '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
+      expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Only session based authentication is supported!')
+      expect(Sessions.sessions).to be_empty
+    end
+
+    it 'rejects receiving via HTTP basic auth' do
+      client_id = SecureRandom.uuid
+      Sessions.create(client_id, { 'id' => agent.id }, { type: 'ajax' })
+
+      authenticated_as(agent)
+      post '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
+      expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Only session based authentication is supported!')
     end
   end
 
@@ -80,7 +128,7 @@ RSpec.describe 'LongPolling', type: :request do
       target = Rails.root.join('tmp/poc_path_traversal_test.txt')
       File.write(target, 'still here')
 
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_receive', params: { client_id: '../poc_path_traversal_test.txt', data: {} }, as: :json
 
       expect(File.exist?(target)).to be(true)
@@ -93,7 +141,7 @@ RSpec.describe 'LongPolling', type: :request do
       target = Rails.root.join('tmp/poc_path_traversal_send.txt')
       File.write(target, 'still here')
 
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_send', params: { client_id: '../poc_path_traversal_send.txt', data: { event: 'login' } }, as: :json
 
       expect(File.exist?(target)).to be(true)
@@ -104,7 +152,7 @@ RSpec.describe 'LongPolling', type: :request do
     end
 
     it 'rejects client_id with null bytes' do
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_receive', params: { client_id: "valid-id\x00/../etc/passwd", data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_content)
     end
@@ -113,7 +161,7 @@ RSpec.describe 'LongPolling', type: :request do
       client_id = SecureRandom.uuid
       Sessions.create(client_id, { 'id' => agent.id }, { type: 'ajax' })
 
-      authenticated_as(agent)
+      authenticated_as(agent, via: :browser)
       post '/api/v1/message_send', params: { client_id: client_id, data: {} }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to eq({})
