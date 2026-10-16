@@ -19,8 +19,8 @@ class Role < ApplicationModel
   self.audit_log_attributes_ignored = %i[preferences]
 
   has_and_belongs_to_many :users,
-                          after_add:    %i[cache_update audit_log_user_add],
-                          after_remove: %i[cache_update audit_log_user_remove]
+                          after_add:    %i[cache_update audit_log_user_add note_user_membership_change],
+                          after_remove: %i[cache_update audit_log_user_remove note_user_membership_change]
   has_and_belongs_to_many :permissions,
                           before_add:    %i[validate_agent_limit_by_permission validate_permissions],
                           after_add:     %i[cache_update cache_add_kb_permission audit_log_permission_add],
@@ -33,6 +33,8 @@ class Role < ApplicationModel
   before_save    :cleanup_groups_if_not_agent
   before_create  :check_default_at_signup_permissions
   before_update  :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
+  before_destroy :note_users_membership_change
+  after_commit   :note_users_membership_change, on: :create
 
   # workflow checks should run after before_create and before_update callbacks
   include ChecksCoreWorkflow
@@ -203,6 +205,18 @@ returns
 
   def audit_log_user_remove(user)
     AuditLog.log_role_assignment(user:, role: self, action_type: 'role_remove')
+  end
+
+  # A new role writes its join rows only along with itself, and a destroyed one drops them
+  #   without the association callbacks: both tell their users as a whole instead.
+  def note_user_membership_change(user)
+    return if new_record?
+
+    user.note_membership_change
+  end
+
+  def note_users_membership_change
+    users.find_each(&:note_membership_change)
   end
 
   def audit_log_permission_add(permission)
