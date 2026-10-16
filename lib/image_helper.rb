@@ -28,4 +28,18 @@ returns
     end
     raise "Unable to parse data url: #{data_url&.slice(0, 100)}"
   end
+
+=begin
+
+  mime_type = ImageHelper.mime_type(image_bin_content)
+
+returns the type detected from the content, 'application/octet-stream' for unknown content
+
+=end
+
+  # Only the bytes decide: given a file name or a declared type, Marcel falls back
+  # to those when the content matches nothing.
+  def self.mime_type(content)
+    Marcel::MimeType.for(StringIO.new(content))
+  end
 end

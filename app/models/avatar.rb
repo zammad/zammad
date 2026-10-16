@@ -6,6 +6,8 @@ class Avatar < ApplicationModel
 
   belongs_to :object_lookup, optional: true
 
+  MAX_IMAGE_SIZE = 5.megabytes
+
 =begin
 
 add an avatar based on auto detection (email address)
@@ -109,18 +111,14 @@ add avatar by url
     if data[:url].present?
       if data[:url].instance_of?(Tempfile)
         logger.info "Reading image from tempfile '#{data[:url].inspect}'"
-        content = data[:url].read
-        filename = data[:url].path
-        mime_type = 'image'
-        if filename.match?(%r{\.png}i)
-          mime_type = 'image/png'
-        end
-        if filename.match?(%r{\.(jpg|jpeg)}i)
-          mime_type = 'image/jpeg'
+        if data[:url].size > MAX_IMAGE_SIZE
+          logger.info "Image '#{data[:url].inspect}' exceeds the allowed size of #{MAX_IMAGE_SIZE} bytes"
+          return
         end
 
-        # forbid creation of avatars without a specified mime_type (image is not displayed in the UI)
-        if mime_type == 'image'
+        content = data[:url].read
+        mime_type = image_mime_type(content)
+        if !mime_type
           logger.info "Could not determine mime_type for image '#{data[:url].inspect}'"
           return
         end
@@ -149,10 +147,11 @@ add avatar by url
           url,
           {},
           {
-            open_timeout:    12,
-            read_timeout:    24,
-            total_timeout:   24,
-            validate_safety: { allow_private: true, allow_loopback: true },
+            open_timeout:      12,
+            read_timeout:      24,
+            total_timeout:     24,
+            max_response_size: MAX_IMAGE_SIZE,
+            validate_safety:   { allow_private: true, allow_loopback: true },
           },
         )
         if !response.success?
@@ -160,24 +159,8 @@ add avatar by url
           return
         end
         logger.info "Fetched image '#{url}', http code: #{response.code}"
-        mime_type = 'image'
-        if url.match?(%r{\.png}i)
-          mime_type = 'image/png'
-        end
-        if url.match?(%r{\.(jpg|jpeg)}i)
-          mime_type = 'image/jpeg'
-        end
-
-        # fallback to content-type of the response if url does not end with png, jpg or jpeg
-        #   see https://github.com/zammad/zammad/issues/3829
-        if mime_type == 'image' &&
-           response.header['content-type'].present? &&
-           Rails.application.config.active_storage.web_image_content_types.include?(response.header['content-type'])
-          mime_type = response.header['content-type']
-        end
-
-        # forbid creation of avatars without a specified mime_type (image is not displayed in the UI)
-        if mime_type == 'image'
+        mime_type = image_mime_type(response.body)
+        if !mime_type
           logger.info "Could not determine mime_type for image '#{url}'"
           return
         end
@@ -419,6 +402,14 @@ returns:
       avatar.default = false
       avatar.save!
     end
+  end
+
+  # Neither the URL, the response header nor the file name say what was fetched, only the bytes do.
+  def self.image_mime_type(content)
+    mime_type = ImageHelper.mime_type(content)
+    return if Rails.application.config.active_storage.web_image_content_types.exclude?(mime_type)
+
+    mime_type
   end
 
   def self._add_init_avatar(object_id, o_id)

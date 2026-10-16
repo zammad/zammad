@@ -281,6 +281,7 @@ class UserAgent
   # @option options [Integer] :open_timeout
   # @option options [Integer] :read_timeout
   # @option options [Boolean] :do_not_follow_redirects
+  # @option options [Integer] :max_response_size in bytes, a larger response fails before it is read completely
   # @option options [Hash, Boolean] :validate_safety to validate hostname safety via HostnameSafetyCheck.validate! with options as sub-keys
   # @option log [String] :facility is sub-key as in options[:log][:facility] providing name to use when logging in HttpLog
   # @param count [Integer] of redirects. Counts towards zero and then aborts
@@ -328,7 +329,10 @@ class UserAgent
 
       handled_open_timeout(options[:open_socket_tries]) do
         Timeout.timeout(total_timeout) do
-          response = if (send_as_raw_body = options[:send_as_raw_body])
+          send_as_raw_body = options[:send_as_raw_body]
+          response = if options[:max_response_size]
+                       request_with_size_limit(http, request, options[:max_response_size], send_as_raw_body)
+                     elsif send_as_raw_body
                        http.request(request, send_as_raw_body)
                      else
                        http.request(request)
@@ -343,6 +347,28 @@ class UserAgent
         success: false,
         code:    0,
       )
+    end
+  end
+
+  # Reads the body in chunks, so a response over the limit is dropped before it is held in memory.
+  def self.request_with_size_limit(http, request, max_size, raw_body = nil)
+    request_args = raw_body ? [request, raw_body] : [request]
+    http.request(*request_args) do |response|
+      raise ResponseTooLargeError, max_size if response['content-length'].to_i > max_size
+
+      body = ''.b
+      has_body = response.read_body do |chunk|
+        body << chunk
+        raise ResponseTooLargeError, max_size if body.bytesize > max_size
+      end
+      # read_body returns nil for a response without a body (204, HEAD).
+      response.body = body if has_body
+    end
+  end
+
+  class ResponseTooLargeError < StandardError
+    def initialize(max_size)
+      super("The response exceeds the allowed size of #{max_size} bytes.")
     end
   end
 
