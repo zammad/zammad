@@ -4,7 +4,7 @@ class LongPollingController < ApplicationController
   skip_before_action :session_update # prevent race conditions
   prepend_before_action :authentication_check_only
 
-  # GET /api/v1/message_send
+  # POST /api/v1/message_send
   def message_send
     new_connection = false
 
@@ -46,7 +46,7 @@ class LongPollingController < ApplicationController
     render json: {}
   end
 
-  # GET /api/v1/message_receive
+  # POST /api/v1/message_receive
   def message_receive
 
     # check client id
