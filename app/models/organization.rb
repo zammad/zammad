@@ -30,6 +30,7 @@ class Organization < ApplicationModel
 
   before_create :domain_cleanup
   before_update :domain_cleanup
+  after_commit  :members_update_after_create, on: :create
 
   available_perform_change_actions :attribute_updates
 
@@ -77,7 +78,7 @@ class Organization < ApplicationModel
 
     super()
 
-    secondary_members_to_touch.each(&:touch)
+    secondary_members_to_touch.each { |user| member_touch(user) }
   end
 
   def attributes_with_association_ids
@@ -106,11 +107,23 @@ class Organization < ApplicationModel
   end
 
   def member_update(user)
-    if persisted?
-      touch # rubocop:disable Rails/SkipsModelValidations
-    end
+    # A new organization has its members only once it is saved: the primary ones are saved along
+    #   with it and remember the change themselves, the secondary ones are told after the commit.
+    return if new_record?
 
-    user&.touch # rubocop:disable Rails/SkipsModelValidations
+    touch # rubocop:disable Rails/SkipsModelValidations
+    member_touch(user)
+  end
+
+  # Not iterated in memory: that would load the association and leave an empty target behind on
+  #   every organization created without secondary members, masking the ones joined later.
+  def members_update_after_create
+    secondary_members.find_each { |user| member_touch(user) }
+  end
+
+  def member_touch(user)
+    user.note_membership_change
+    user.touch # rubocop:disable Rails/SkipsModelValidations
   end
 
   def check_secondary_member_uniqueness(user)

@@ -34,7 +34,7 @@ class User < ApplicationModel
 
   SENSITIVE_FIELDS = %i[password].freeze
 
-  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], before_add: %i[check_organization_uniqueness ensure_different_organizations_on_commit], class_name: 'Organization'
+  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history note_membership_change], after_remove: %i[cache_update create_organization_remove_history note_membership_change], before_add: %i[check_organization_uniqueness ensure_different_organizations_on_commit], class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy

@@ -10,32 +10,81 @@
 # - Its established real-time connections. A connection keeps the user it was authenticated as
 #   for its whole lifetime (see ApplicationCable::Connection), so dropping the session alone
 #   would not stop one that is already open from being served.
+#
+# Drops only the established real-time connections when the organizations or roles of an
+#   account change: the account keeps its stored sessions, and the client reconnects with
+#   the current memberships.
 module User::TerminatesSessions
   extend ActiveSupport::Concern
 
   included do
-    # Deactivation and deletion must share one callback: ActiveSupport::Callbacks treats two
-    #   registrations of the same method name as duplicates and keeps only the last one.
-    after_commit :terminate_sessions, if: :access_revoked?
+    after_update :remember_saved_changes
+    after_commit :terminate_sessions, on: :destroy
+  end
+
+  # For the membership changes that leave no trace in saved_changes, like the ones written through
+  #   an association.
+  def note_membership_change(_record = nil)
+    # A new record cannot hold a connection yet, and the records it is built with would otherwise
+    #   count as a change on its first update.
+    return if !persisted?
+
+    note_change(:membership_changed)
   end
 
   private
 
-  def access_revoked?
-    return true if destroyed?
+  # Noted on save: a later touch or nested save in the same transaction replaces saved_changes.
+  def remember_saved_changes
+    note_change(:access_revoked) if saved_change_to_active?(from: true, to: false)
+    note_membership_change if saved_change_to_organization_id?
+  end
 
-    # A user can be created as inactive, which counts as a change of 'active' as well, but
-    #   cannot hold a session or a connection yet.
-    return false if previously_new_record?
+  # Hooked into the transaction, not the commit callbacks of the record: Rails runs those only on
+  #   the last instance of it saved in the transaction, and not at all on an association write.
+  def note_change(change)
+    transaction = self.class.current_transaction
+    hooked      = noted_changes.key?(transaction)
 
-    saved_change_to_active?(from: true, to: false)
+    (noted_changes[transaction] ||= []) << change
+    return if hooked
+
+    # A rolled back savepoint discards only what was noted inside it.
+    transaction.after_rollback { noted_changes.delete(transaction) }
+    transaction.after_commit { act_on_changes }
+  end
+
+  # A deactivation terminates the connections along with the sessions.
+  def act_on_changes
+    changes = noted_changes.values.flatten
+
+    if changes.include?(:access_revoked)
+      terminate_sessions
+    elsif changes.include?(:membership_changed)
+      renew_realtime_connections
+    end
   end
 
   def terminate_sessions
+    # Covers a membership change of the same transaction as well, which must not be acted on again.
+    forget_changes
+
     destroy_stored_sessions
 
     terminate_realtime_connections(self)
   end
+
+  def renew_realtime_connections
+    forget_changes
+
+    terminate_realtime_connections(self)
+  end
+
+  def forget_changes
+    noted_changes.clear
+  end
+
+  def noted_changes = @noted_changes ||= {}
 
   # The sessions table has no user column, and its data is stored as base64 encoded Marshal, so
   #   there is nothing to filter on in SQL: every row has to be deserialized to find the ones

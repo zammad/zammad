@@ -5,10 +5,8 @@ require 'rails_helper'
 RSpec.describe User::TerminatesSessions do
   subject(:user) { create(:agent) }
 
-  # Installed ahead of the let! declarations below: let! is itself a before hook, and hooks run
-  #   in declaration order. Creating the session rows creates the user, so declaring them first
-  #   would let a create-time callback broadcast before this spy exists, leaving the
-  #   previously_new_record? guard unchecked by the 'when it is created' examples.
+  # Installed ahead of the let! declarations below, which create the user: a broadcast on creation
+  #   would otherwise go unseen, leaving unchecked that only updates are remembered (after_update).
   before do
     allow(ActionCable.server).to receive(:broadcast)
   end
@@ -64,6 +62,59 @@ RSpec.describe User::TerminatesSessions do
     end
 
     include_examples 'revoking what the account holds'
+
+    # Rails runs the commit callbacks only on the last instance of a record saved in a transaction.
+    context 'when another instance of the record is saved afterwards in the same transaction' do
+      def revoke_access
+        User.transaction do
+          user.update!(active: false)
+          User.find(user.id).touch
+        end
+      end
+
+      include_examples 'revoking what the account holds'
+
+      it 'keeps the stored sessions created afterwards on activation' do
+        revoke_access
+        new_session = create(:active_session, user: user)
+        user.update!(active: true)
+
+        expect(Session).to exist(new_session.id)
+      end
+    end
+
+    # A rolled back savepoint discards only what was noted inside it.
+    context 'when a membership change in a nested transaction is rolled back afterwards' do
+      def revoke_access
+        User.transaction do
+          user.update!(active: false)
+
+          User.transaction(requires_new: true) do
+            user.update!(organization: create(:organization))
+
+            raise ActiveRecord::Rollback
+          end
+        end
+      end
+
+      include_examples 'revoking what the account holds'
+    end
+
+    context 'when a save in a nested transaction is rolled back afterwards' do
+      def revoke_access
+        User.transaction do
+          user.update!(active: false)
+
+          User.transaction(requires_new: true) do
+            user.update!(lastname: 'Changed')
+
+            raise ActiveRecord::Rollback
+          end
+        end
+      end
+
+      include_examples 'revoking what the account holds'
+    end
   end
 
   context 'when the account is deleted' do
@@ -163,6 +214,334 @@ RSpec.describe User::TerminatesSessions do
 
         expect(Session).to exist(session.id)
       end
+    end
+  end
+
+  shared_examples 'renewing the connections of the account' do
+    it 'keeps the stored sessions of the user' do
+      change_membership
+
+      expect(Session).to exist(session.id)
+    end
+
+    it 'terminates the established connections of the user' do
+      change_membership
+
+      expect(ActionCable.server).to have_received(:broadcast).with(disconnect_broadcasting, disconnect_message)
+    end
+  end
+
+  # A connection is served as the user it was authenticated as, memberships included, so it has
+  #   to be made anew once they change.
+  context 'when the primary organization is set' do
+    def change_membership
+      user.update!(organization: create(:organization))
+    end
+
+    include_examples 'renewing the connections of the account'
+  end
+
+  context 'with a primary organization' do
+    subject(:user) { create(:agent, organization: organization) }
+
+    let(:organization) { create(:organization) }
+
+    context 'when it changes' do
+      def change_membership
+        user.update!(organization: create(:organization))
+      end
+
+      include_examples 'renewing the connections of the account'
+
+      # A new ticket touches its customer (see Ticket::TouchesAssociations), which replaces the
+      #   saved changes ahead of the commit.
+      context 'when the record is touched afterwards in the same transaction' do
+        def change_membership
+          User.transaction do
+            user.update!(organization: create(:organization))
+            user.touch
+          end
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      context 'when another instance of the record is saved afterwards in the same transaction' do
+        def change_membership
+          User.transaction do
+            user.update!(organization: create(:organization))
+            User.find(user.id).touch
+          end
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      context 'when a membership change in a nested transaction is rolled back afterwards' do
+        def change_membership
+          User.transaction do
+            user.update!(organization: create(:organization))
+
+            User.transaction(requires_new: true) do
+              user.organizations << create(:organization)
+
+              raise ActiveRecord::Rollback
+            end
+          end
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      context 'when it changes in a nested transaction that is rolled back' do
+        def leave_access
+          User.transaction do
+            user.update!(lastname: 'Changed')
+
+            User.transaction(requires_new: true) do
+              user.update!(organization: create(:organization))
+
+              raise ActiveRecord::Rollback
+            end
+          end
+        end
+
+        include_examples 'leaving the account alone'
+      end
+    end
+
+    context 'when it is removed' do
+      def change_membership
+        user.update!(organization: nil)
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+
+    context 'when a secondary organization is added' do
+      def change_membership
+        user.update!(organization_ids: [create(:organization).id])
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+
+    # Written through the association alone, the record is never saved along with the change.
+    context 'when a secondary organization is added through the association alone' do
+      def change_membership
+        user.organizations << create(:organization)
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+
+    # Dropped from the organization side, the user is only touched (see Organization#member_update).
+    context 'when the organization drops the user as a member' do
+      def change_membership
+        organization.update!(member_ids: organization.member_ids - [user.id])
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+
+    # A new organization fires its member callbacks on assignment, before it and its join rows
+    #   exist; a connection renewed at that point would be denied the membership.
+    context 'when a new organization is created with the user as a secondary member' do
+      it 'terminates the established connections of the user only once it is a member', :aggregate_failures do
+        organization_ids_at_disconnect = nil
+        allow(ActionCable.server).to receive(:broadcast).with(disconnect_broadcasting, disconnect_message) do
+          organization_ids_at_disconnect = User.find(user.id).organization_ids
+        end
+
+        new_organization = create(:organization, secondary_members: [user])
+
+        expect(ActionCable.server).to have_received(:broadcast).with(disconnect_broadcasting, disconnect_message).once
+        expect(organization_ids_at_disconnect).to eq([new_organization.id])
+      end
+    end
+
+    context 'when a new organization is created with the user as a member' do
+      it 'terminates the established connections of the user only once it is a member', :aggregate_failures do
+        organization_id_at_disconnect = nil
+        allow(ActionCable.server).to receive(:broadcast).with(disconnect_broadcasting, disconnect_message) do
+          organization_id_at_disconnect = User.find(user.id).organization_id
+        end
+
+        new_organization = create(:organization, members: [user])
+
+        expect(ActionCable.server).to have_received(:broadcast).with(disconnect_broadcasting, disconnect_message).once
+        expect(organization_id_at_disconnect).to eq(new_organization.id)
+      end
+    end
+
+    context 'with a secondary organization' do
+      subject(:user) { create(:agent, organization: organization, organizations: [secondary_organization]) }
+
+      let(:secondary_organization) { create(:organization) }
+
+      context 'when it is removed' do
+        def change_membership
+          user.update!(organization_ids: [])
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      context 'when it drops the user as a secondary member' do
+        def change_membership
+          secondary_organization.update!(secondary_member_ids: [])
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      # The join rows go with the organization, without the association callbacks.
+      context 'when it is destroyed' do
+        def change_membership
+          secondary_organization.destroy
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      context 'when its removal was rolled back' do
+        def leave_access
+          User.transaction do
+            user.update!(organization_ids: [])
+
+            raise ActiveRecord::Rollback
+          end
+
+          user.update!(lastname: 'Changed')
+        end
+
+        include_examples 'leaving the account alone'
+      end
+
+      context 'when it is removed through the association alone' do
+        def change_membership
+          user.organizations.delete(secondary_organization)
+        end
+
+        include_examples 'renewing the connections of the account'
+      end
+
+      context 'when its removal through the association alone was rolled back' do
+        def leave_access
+          User.transaction do
+            user.organization_ids = []
+
+            raise ActiveRecord::Rollback
+          end
+
+          user.update!(lastname: 'Changed')
+        end
+
+        include_examples 'leaving the account alone'
+      end
+
+      # Also guards that the organizations a record is built with do not count on its first
+      #   update.
+      context 'when it is assigned again' do
+        def leave_access
+          user.update!(organization_ids: [secondary_organization.id])
+        end
+
+        include_examples 'leaving the account alone'
+      end
+    end
+  end
+
+  context 'when a role is added' do
+    def change_membership
+      user.update!(role_ids: user.role_ids + [create(:role).id])
+    end
+
+    include_examples 'renewing the connections of the account'
+  end
+
+  # Agent permissions fill in the notification preferences, which saves the record in the middle
+  #   of the role assignment.
+  context 'when a customer is given a role with agent permissions' do
+    subject(:user) { create(:customer) }
+
+    def change_membership
+      user.update!(role_ids: user.role_ids + [create(:role, :agent).id])
+    end
+
+    include_examples 'renewing the connections of the account'
+  end
+
+  context 'with a role' do
+    subject(:user) { create(:agent, roles: Role.where(name: 'Agent') + [role]) }
+
+    let(:role) { create(:role) }
+
+    context 'when it is removed' do
+      def change_membership
+        user.update!(role_ids: user.role_ids - [role.id])
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+
+    # From the role side, the user is written through the association of the role alone.
+    context 'when it drops the user as a member' do
+      def change_membership
+        role.users.delete(user)
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+
+    # The join rows go with the role, without the association callbacks.
+    context 'when it is destroyed' do
+      def change_membership
+        role.destroy!
+      end
+
+      include_examples 'renewing the connections of the account'
+    end
+  end
+
+  context 'when a role takes the user as a member' do
+    def change_membership
+      create(:role).users << user
+    end
+
+    include_examples 'renewing the connections of the account'
+  end
+
+  context 'when a new role is created with the user as a member' do
+    it 'terminates the established connections of the user only once it is a member', :aggregate_failures do
+      role_ids_at_disconnect = nil
+      allow(ActionCable.server).to receive(:broadcast).with(disconnect_broadcasting, disconnect_message) do
+        role_ids_at_disconnect = User.find(user.id).role_ids
+      end
+
+      role = create(:role, users: [user])
+
+      expect(ActionCable.server).to have_received(:broadcast).with(disconnect_broadcasting, disconnect_message).once
+      expect(role_ids_at_disconnect).to include(role.id)
+    end
+  end
+
+  # The nested save (see above) persists the deactivation ahead of the save that was asked for,
+  #   which is then left without changes of its own.
+  context 'when a customer is deactivated and given a role with agent permissions at once' do
+    subject(:user) { create(:customer) }
+
+    def revoke_access
+      user.update!(active: false, role_ids: user.role_ids + [create(:role, :agent).id])
+    end
+
+    include_examples 'revoking what the account holds'
+
+    it 'does not terminate the established connections of the user again on activation' do
+      revoke_access
+      user.update!(active: true)
+
+      expect(ActionCable.server).to have_received(:broadcast).with(disconnect_broadcasting, disconnect_message).once
     end
   end
 
