@@ -887,6 +887,155 @@ RSpec.describe UserAgent, :aggregate_failures do
     include_context 'when doing user agent tests'
   end
 
+  describe 'response size limit' do
+    let(:max_size) { 1024 }
+    let(:response) { described_class.get(url, {}, { max_response_size: max_size }) }
+
+    context 'with a stubbed response' do
+      let(:url)     { 'http://example.com/avatar' }
+      let(:headers) { {} }
+
+      before do
+        stub_request(:get, url).to_return(status: 200, body: body, headers: headers)
+      end
+
+      context 'when the body stays within the limit' do
+        let(:body) { 'x' * max_size }
+
+        it 'returns the body' do
+          expect(response).to be_success
+          expect(response.body).to eq(body)
+        end
+      end
+
+      context 'when the body exceeds the limit' do
+        let(:body) { 'x' * (max_size + 1) }
+
+        it 'fails the request' do
+          expect(response).not_to be_success
+          expect(response.error).to include('exceeds the allowed size')
+        end
+      end
+
+      context 'when the announced length exceeds the limit' do
+        let(:body)    { 'x' }
+        let(:headers) { { 'Content-Length' => (max_size + 1).to_s } }
+
+        it 'fails the request' do
+          expect(response).not_to be_success
+          expect(response.error).to include('exceeds the allowed size')
+        end
+      end
+
+      context 'when a raw request body is combined with the limit' do
+        let(:body) { '' }
+
+        before do
+          stub_request(:post, url).to_return(status: 200, body: 'x' * (max_size + 1))
+        end
+
+        it 'still enforces the limit on the raw-body request' do
+          result = described_class.post(url, {}, { max_response_size: max_size, send_as_raw_body: 'payload' })
+
+          expect(result).not_to be_success
+          expect(result.error).to include('exceeds the allowed size')
+        end
+      end
+    end
+
+    # WebMock reads the whole body before it hands the response over, also on a
+    # connection it lets through, so these run without it against a Rack app of their own.
+    context 'with a real connection' do
+      def stream_port
+        ENV.fetch('ZAMMAD_TEST_STREAM_PORT', 3012).to_i
+      end
+
+      let(:url)         { "http://127.0.0.1:#{stream_port}/avatar" }
+      let(:ready_token) { SecureRandom.hex(8) }
+
+      around do |example|
+        WebMock.disable!
+        example.run
+      ensure
+        WebMock.enable!
+      end
+
+      before do
+        token = ready_token
+        inner = rack_app
+        app = lambda do |env|
+          # The readiness probe checks this, so a stray listener on the port cannot stand in for the fixture.
+          next [200, {}, [token]] if env['PATH_INFO'] == '/__ready__'
+
+          inner.call(env)
+        end
+
+        thread = Thread.new do
+          Rack::Handler::Puma.run(app, Port: stream_port, Host: '127.0.0.1', Silent: true) do |launcher|
+            @puma_server = launcher
+          end
+        end
+        thread.report_on_exception = false
+        @puma_thread = thread
+
+        deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 5
+        begin
+          served_token = Net::HTTP.start('127.0.0.1', stream_port, open_timeout: 1, read_timeout: 1) do |http|
+            http.get('/__ready__').body
+          end
+          raise "Port #{stream_port} is held by another server." if served_token != ready_token
+        rescue Errno::ECONNREFUSED, Errno::ECONNRESET, EOFError, Net::OpenTimeout, Net::ReadTimeout
+          thread.join if !thread.alive? # re-raises the reason Puma could not boot
+          raise 'Streaming test server did not start in time.' if Process.clock_gettime(Process::CLOCK_MONOTONIC) > deadline
+
+          sleep 0.1
+          retry
+        end
+      end
+
+      after do
+        @puma_server&.stop # rubocop:disable RSpec/InstanceVariable
+        @puma_thread&.join(5) # rubocop:disable RSpec/InstanceVariable
+      end
+
+      context 'when the server streams more than the limit' do
+        let(:chunk)      { 'x' * 1024 }
+        let(:total_size) { 10.megabytes }
+        let(:served)     { [] }
+        let(:rack_app) do
+          counter = served
+          data    = chunk
+          count   = total_size / chunk.bytesize
+
+          lambda do |_env|
+            body = Enumerator.new do |yielder|
+              count.times do
+                yielder << data
+                counter << data.bytesize
+              end
+            end
+            [200, { 'content-type' => 'application/octet-stream' }, body]
+          end
+        end
+
+        it 'stops reading before the whole body arrives' do
+          expect(response).not_to be_success
+          expect(response.error).to include('exceeds the allowed size')
+          expect(served.sum).to be < total_size
+        end
+      end
+
+      context 'when the response has no body' do
+        let(:rack_app) { ->(_env) { [204, {}, []] } }
+
+        it 'returns no body' do
+          expect(response).to be_success
+          expect(response.body).to be_nil
+        end
+      end
+    end
+  end
+
   # Tests mocked proxy functionality in general.
   # Integration pipeline is optional and CI still passes if it fails.
   # This ensures that broken proxy functionality is easier to spot.
