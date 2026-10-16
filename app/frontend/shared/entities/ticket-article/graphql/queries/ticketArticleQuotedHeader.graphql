@@ -1,0 +1,8 @@
+query ticketArticleQuotedHeader($articleId: ID!) {
+  ticketArticleQuotedHeader(articleId: $articleId) {
+    from
+    to
+    cc
+    authorName
+  }
+}

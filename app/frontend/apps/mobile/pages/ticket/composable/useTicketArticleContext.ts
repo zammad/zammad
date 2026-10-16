@@ -7,6 +7,7 @@ import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts
 import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
 import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
+import { usePendingArticleAction } from '#shared/entities/ticket-article/composables/usePendingArticleAction/usePendingArticleAction.ts'
 import log from '#shared/utils/log.ts'
 import type { SelectionData } from '#shared/utils/selection.ts'
 
@@ -30,6 +31,8 @@ export const useTicketArticleContext = () => {
     form,
     showArticleReplyDialog,
   )
+
+  const { isPending, isArticlePending, performAction } = usePendingArticleAction()
 
   const triggerId = ref(0)
 
@@ -64,8 +67,9 @@ export const useTicketArticleContext = () => {
         type: link ? ('link' as const) : ('button' as const),
         label,
         link,
+        attributes: { disabled: isPending.value },
         onAction: () =>
-          perform(ticket, article, {
+          performAction(action, ticket, article, {
             formId: form.value?.formId || '',
             selection: selectionData.value,
             openReplyForm,
@@ -122,5 +126,6 @@ export const useTicketArticleContext = () => {
     contextOptions,
     articleContextShown,
     showArticleContext,
+    isArticlePending,
   }
 }

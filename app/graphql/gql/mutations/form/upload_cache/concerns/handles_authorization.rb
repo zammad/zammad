@@ -8,8 +8,8 @@ module Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
     def authorized?(...)
       form_id = @prepared_arguments[:form_id]
 
-      # Mutations with an optional form_id have nothing to clone without one -
-      #   there is no upload cache to authorize then.
+      # A blank form_id names no upload cache to authorize; the mutations do not
+      #   clone into one either.
       return super if form_id.blank?
 
       cache = UploadCache.new(form_id)

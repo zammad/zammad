@@ -495,7 +495,7 @@ class EmailReply extends App.Controller
       return ''
 
     date = @date_format(article.created_at)
-    name = article.recipientName()
+    name = article.recipientName() or ''
 
     App.i18n.translateInline('On %s, %s wrote:', date, name) + '<br><br>'
 

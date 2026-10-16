@@ -15843,11 +15843,15 @@
                 },
                 {
                   "name": "formId",
-                  "description": "Form identifier of the form for the new article to copy attachments to (forward only)",
+                  "description": "Form identifier of the form for the new article to copy attachments to",
                   "type": {
-                    "kind": "SCALAR",
-                    "name": "FormId",
-                    "ofType": null
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "FormId",
+                      "ofType": null
+                    }
                   },
                   "defaultValue": null
                 }
@@ -23706,6 +23710,37 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketArticleQuotedHeader",
+              "description": "Header lines of an article to quote when forwarding or replying to it",
+              "args": [
+                {
+                  "name": "articleId",
+                  "description": "The article to be forwarded or replied to",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketArticleQuotedHeader",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketArticleTranslationTargetLocales",
               "description": "Locales a ticket article can be translated into with the configured translation service",
               "args": [],
@@ -29864,18 +29899,6 @@
               "deprecationReason": null
             },
             {
-              "name": "quotableAuthorName",
-              "description": "Author name for the reply citation ('On ..., X wrote:'), following the configured email sender format",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "quotableCc",
               "description": "'Cc' information of the original email to be inserted in the quoted email block",
               "args": [],
@@ -30275,6 +30298,65 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketArticleQuotedHeader",
+          "description": "Header lines of an article to quote when forwarding or replying to it, following the configured email sender format",
+          "fields": [
+            {
+              "name": "authorName",
+              "description": "Author name for the reply citation ('On ..., X wrote:')",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "cc",
+              "description": "'Cc' information of the original email to be inserted in the quoted email block",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "from",
+              "description": "'From' information of the original email to be inserted in the quoted email block",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "to",
+              "description": "'To' information of the original email to be inserted in the quoted email block",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,

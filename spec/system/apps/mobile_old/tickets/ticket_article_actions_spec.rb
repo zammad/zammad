@@ -272,14 +272,18 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       let(:trigger_label) { 'Forward' }
       let(:to)              { [] }
       let(:new_to)          { 'test@example.com' }
-      let(:article)         { create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject') }
+      # Authored by the agent - a quoted From line of an article nobody sent
+      #   would carry the raw header instead of the sender format.
+      let(:article)         { create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject', created_by_id: agent.id) }
       let(:article_subject) { article.subject }
+      let(:text_from)       { "#{group.email_address.sender_display_name(agent)} <#{group.email_address.email}>" }
       let(:text_to)         { article.to }
       let(:current_text) do
         msg = "#{agent.firstname}\nSignature!"
         msg += '\n\n---Begin forwarded message:---\n\n'
         msg += "Subject: #{article_subject}\n"
         msg += 'Date: \\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{1,2} (am|pm)\n'
+        msg += "From: #{text_from}\n"
         msg += "To: #{text_to}\n\n"
         msg += article.body
         Regexp.new(msg)
@@ -300,6 +304,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         msg += '<blockquote dir="auto" type="cite">'
         msg += "<p dir=\"auto\">Subject: #{article_subject}<br dir=\"auto\">"
         msg += 'Date: \\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{1,2} (am|pm)<br dir=\"auto\">'
+        msg += "From: #{escape_html_wo_single_quotes(text_from)}<br dir=\"auto\">"
         msg += "To: #{escape_html_wo_single_quotes(text_to)}<br dir=\"auto\"></p>"
         msg += "<p dir=\"auto\">#{article.body}</p>"
         msg += '</blockquote>'
@@ -315,7 +320,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       context 'with attachments' do
         let(:result_attachments) { Store.last(2) }
         let(:article) do
-          article = create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject')
+          article = create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject', created_by_id: agent.id)
           create(
             :store,
             object:   'Ticket::Article',
@@ -334,7 +339,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       end
 
       context 'when forwarding phone article' do
-        let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
+        let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket, created_by_id: agent.id) }
         let(:text_to) { "#{ticket.customer.fullname} <#{ticket.customer.email}>" }
         let(:type_id) { Ticket::Article::Type.find_by(name: 'email').id }
 

@@ -1,7 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import { mockTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.mocks.ts'
+import {
+  mockTicketArticleQuotedHeaderQuery,
+  mockTicketArticleQuotedHeaderQueryError,
+} from '#shared/entities/ticket-article/graphql/queries/ticketArticleQuotedHeader.mocks.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 
 import { replyToEmail } from '../email/reply.ts'
@@ -43,7 +47,7 @@ describe('getReplyQuoteHeader', () => {
     expect(header).not.toContain('max@example.com')
   })
 
-  // Simulates a failed mutation or a nameless customer author (the server
+  // Simulates a failed query or a nameless customer author (the server
   //   returns no name then): the client must never fall back to fullname,
   //   which holds the email address for users without a name.
   it('renders a blank name instead of the email address when no server name is available', () => {
@@ -63,17 +67,18 @@ describe('replyToEmail citation', () => {
   it('inserts the server provided author name into the quoted body', async () => {
     const { ticket, article } = createEligibleTicketArticleReplyData('email')
 
-    mockTicketArticleEmailForwardReplyMutation({
-      ticketArticleEmailForwardReply: {
-        quotableAuthorName: 'Sender Format Name',
+    mockTicketArticleQuotedHeaderQuery({
+      ticketArticleQuotedHeader: {
+        authorName: 'Sender Format Name',
       },
     })
 
-    const openReplyForm = vi.fn()
-    const options = {
+    const openReplyForm = vi.fn().mockResolvedValue(undefined)
+    const options: TicketArticlePerformOptions = {
+      formId: 'ticket-article-reply-form',
       openReplyForm,
       getNewArticleBody: () => '',
-    } as unknown as TicketArticlePerformOptions
+    }
 
     const config = createConfig({ ui_ticket_zoom_article_email_full_quote: true })
 
@@ -82,6 +87,33 @@ describe('replyToEmail citation', () => {
     expect(openReplyForm).toHaveBeenCalledWith(
       expect.objectContaining({
         body: expect.stringContaining('Sender Format Name wrote:'),
+      }),
+    )
+  })
+
+  it('falls back to the author name parts when the query fails', async () => {
+    const { ticket, article } = createEligibleTicketArticleReplyData('email')
+
+    mockTicketArticleQuotedHeaderQueryError('Something went wrong', {
+      type: GraphQLErrorTypes.UnknownError,
+    })
+
+    const openReplyForm = vi.fn().mockResolvedValue(undefined)
+    const options: TicketArticlePerformOptions = {
+      formId: 'ticket-article-reply-form',
+      openReplyForm,
+      getNewArticleBody: () => '',
+    }
+
+    const config = createConfig({ ui_ticket_zoom_article_email_full_quote: true })
+
+    await replyToEmail(ticket, article as TicketArticle, options, config)
+
+    expect(openReplyForm).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: expect.stringContaining(
+          `${article.author?.firstname} ${article.author?.lastname} wrote:`,
+        ),
       }),
     )
   })

@@ -1591,10 +1591,13 @@ msgstr ""
 msgid "Age"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/full_quote_header.coffee:39
+#: app/assets/javascripts/app/models/user.coffee:511
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:13
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:13
 #: app/controllers/time_accountings_controller.rb:97
+#: app/services/service/ticket/article/quoted_header.rb:80
 #: db/seeds/roles.rb:14
 #: db/seeds/ticket_article_senders.rb:3
 msgid "Agent"

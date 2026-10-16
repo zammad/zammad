@@ -1723,11 +1723,11 @@ export type TicketArticleDeleteMutation = { ticketArticleDelete: { __typename: '
 
 export type TicketArticleEmailForwardReplyMutationVariables = Exact<{
   articleId: string | number;
-  formId?: string | null | undefined;
+  formId: string;
 }>;
 
 
-export type TicketArticleEmailForwardReplyMutation = { ticketArticleEmailForwardReply: { __typename: 'TicketArticleEmailForwardReplyPayload', quotableFrom: string | null | undefined, quotableTo: string | null | undefined, quotableCc: string | null | undefined, quotableAuthorName: string | null | undefined, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined }>, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type TicketArticleEmailForwardReplyMutation = { ticketArticleEmailForwardReply: { __typename: 'TicketArticleEmailForwardReplyPayload', quotableFrom: string | null | undefined, quotableTo: string | null | undefined, quotableCc: string | null | undefined, attachments: Array<{ __typename: 'StoredFile', id: string, internalId: number, name: string, size: number | null | undefined, type: string | null | undefined }>, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type TicketArticleRetryMediaDownloadMutationVariables = Exact<{
   articleId: string | number;
@@ -1766,6 +1766,13 @@ export type TicketArticleTranslateManyMutationVariables = Exact<{
 
 
 export type TicketArticleTranslateManyMutation = { ticketArticleTranslateMany: { __typename: 'TicketArticleTranslateManyPayload', pendingArticleIds: Array<string>, pendingBackend: string | null | undefined, results: Array<{ __typename: 'TicketArticleTranslationResult', translated?: boolean | null | undefined, skipReason?: Types.EnumTicketArticleTranslationSkipReason | null | undefined, article: { __typename: 'TicketArticle', id: string, translationAvailable: boolean | null | undefined } & { __typename: 'TicketArticle', id?: string, translation?: { __typename: 'ContentTranslation', content: string | null | undefined, backend: string | null | undefined, translated: boolean | null | undefined } | null | undefined }, analytics?: { __typename: 'AIAnalyticsMetadata', run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined }> } | null | undefined };
+
+export type TicketArticleQuotedHeaderQueryVariables = Exact<{
+  articleId: string | number;
+}>;
+
+
+export type TicketArticleQuotedHeaderQuery = { ticketArticleQuotedHeader: { __typename: 'TicketArticleQuotedHeader', from: string | null | undefined, to: string | null | undefined, cc: string | null | undefined, authorName: string | null | undefined } };
 
 export type TicketArticleTranslationTargetLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 

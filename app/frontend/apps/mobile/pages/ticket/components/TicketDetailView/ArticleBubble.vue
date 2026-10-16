@@ -42,6 +42,7 @@ interface Props {
   mediaError?: boolean | null
   bodyRenderingError?: boolean | null
   reaction?: string
+  actionPending?: boolean
 }
 
 const props = defineProps<Props>()
@@ -157,6 +158,8 @@ onMounted(() => {
 useArticleSeen(bubbleElement, emit)
 
 const onContextClick = () => {
+  if (props.actionPending) return
+
   emit('show-context')
   nextTick(() => {
     // remove selection because pointerdown event will leave it as is,
@@ -273,10 +276,18 @@ const onContextClick = () => {
             type="button"
             data-name="article-context"
             :aria-label="$t('Article actions')"
+            :aria-busy="actionPending"
+            :disabled="actionPending"
             @pointerdown="onContextClick()"
             @keydown.enter.prevent="onContextClick()"
           >
-            <CommonIcon name="more-vertical" size="small" decorative data-ignore-click />
+            <CommonIcon
+              :name="actionPending ? 'loading' : 'more-vertical'"
+              :animation="actionPending ? 'spin' : undefined"
+              size="small"
+              decorative
+              data-ignore-click
+            />
           </button>
         </div>
       </div>

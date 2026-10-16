@@ -10,10 +10,12 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   let(:current_user)              { customer }
   let(:selection)                 { '' }
   let(:setting_ticket_email_from) { 'AgentNameSystemAddressName' }
+  let(:setting_user_name_format)  { 'first_last' }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
     Setting.set 'ticket_define_email_from', setting_ticket_email_from
+    Setting.set 'user_name_format', setting_user_name_format
   end
 
   before do
@@ -82,6 +84,112 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
 
           within(:richtext) do
             expect(page).to have_text(to_1).and(have_text(to_2))
+          end
+        end
+      end
+    end
+
+    context 'when TO contains a quoted display name with a comma' do
+      let(:current_user)     { create(:agent, groups: [group]) }
+      let(:recipient_agent)  { create(:agent, firstname: 'John', lastname: 'Doe', groups: [group]) }
+      # The recipient owns the ticket, so the browser has the record from the
+      #   ticket assets rather than from a later collection push.
+      let(:ticket)           { create(:ticket, group: group, owner: recipient_agent) }
+      let(:ticket_article)   { create(:ticket_article, :inbound_email, ticket: ticket, to: %("Doe, John" <#{recipient_agent.email}>, other@example.org)) }
+
+      it 'renders the recipient name without fragments' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to have_text('To: John Doe, other@example.org')
+            expect(page).to have_no_text('"Doe')
+            expect(page).to have_no_text(recipient_agent.email)
+          end
+        end
+      end
+    end
+
+    context "when user_name_format is 'last_first_comma' and a customer is the author" do
+      let(:current_user)             { create(:agent, groups: [group]) }
+      let(:setting_user_name_format) { 'last_first_comma' }
+      let(:author)                   { create(:customer, firstname: 'Nicole', lastname: 'Braun') }
+      let(:ticket)                   { create(:ticket, group: group, customer: author) }
+      let(:ticket_article)           { create(:ticket_article, :inbound_email, ticket: ticket, created_by: author, origin_by: author, from: "Nicole Braun <#{author.email}>") }
+
+      it 'orders the citation name like the desktop view does' do
+        within(:active_content) do
+          highlight_and_click_reply
+
+          within(:richtext) do
+            expect(page).to have_text('Braun, Nicole wrote:')
+          end
+        end
+      end
+
+      it 'orders the quoted From line accordingly on forward' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to have_text(%(From: "Braun, Nicole" <#{author.email}>))
+          end
+        end
+      end
+    end
+
+    # Inbound mails are created by user 1, the postmaster - its placeholder
+    #   identity must not shadow the sender named in the header.
+    context 'when an inbound mail was created by the system user', current_user_id: 1 do
+      let(:author)         { create(:customer, firstname: 'Nicole', lastname: 'Braun') }
+      let(:ticket)         { create(:ticket, group: group, customer: author) }
+      let(:ticket_article) { create(:ticket_article, :inbound_email, ticket: ticket, from: "Nicole Braun <#{author.email}>") }
+
+      it 'resolves the sender through the header on forward' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to have_text("From: Nicole Braun <#{author.email}>")
+            expect(page).to have_no_text('"-"')
+          end
+        end
+      end
+    end
+
+    # Mirrors the GraphQL path, which renders the agent name only when no sender
+    #   address is resolvable, instead of exposing the raw header.
+    context 'when the group email address is not available in the browser' do
+      let(:current_user)   { create(:agent, firstname: 'Max', lastname: 'Mustermann', groups: [group]) }
+      let(:ticket_article) do
+        create(:ticket_article, :outbound_web, ticket: ticket).tap do |article|
+          article.update_columns(from: 'Max Private <max.private@example.com>')
+        end
+      end
+
+      before do
+        page.execute_script('App.EmailAddress.deleteAll()')
+      end
+
+      it 'renders the agent name only on forward' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to have_text('From: Max Mustermann')
+            expect(page).to have_no_text(ticket.group.email_address.name)
+            expect(page).to have_no_text('max.private@example.com')
+          end
+        end
+      end
+
+      it 'renders the agent name in the reply citation' do
+        within(:active_content) do
+          highlight_and_click_reply
+
+          within(:richtext) do
+            expect(page).to have_text('Max Mustermann wrote:')
+            expect(page).to have_no_text('undefined')
           end
         end
       end
@@ -288,7 +396,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         it 'does show agent recipient name only on forward' do
           expect(page).to have_text(sender_outbound_article.body)
 
-          page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+          click_forward(sender_outbound_article)
           expect(page.find('.js-writeArea')).to have_text("To: #{recipient_agent.fullname}")
           expect(page.find('.js-writeArea')).to have_no_text(recipient_agent.email)
           expect(page.find('.js-writeArea')).to have_no_text("#{recipient_agent.fullname} #{Setting.get('ticket_define_email_from_separator')}")
@@ -302,7 +410,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       it 'does not show agent name on forward' do
         expect(page).to have_text(sender_outbound_article.body)
 
-        page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+        click_forward(sender_outbound_article)
         expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
         expect(page.find('.js-writeArea')).to have_no_text("From: #{sender_agent.fullname}")
       end
@@ -316,7 +424,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       it 'does show agent name on forward' do
         expect(page).to have_text(sender_outbound_article.body)
 
-        page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+        click_forward(sender_outbound_article)
         expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} #{Setting.get('ticket_define_email_from_separator')} #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
         expect(page.find('.js-writeArea')).to have_no_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
       end
@@ -327,7 +435,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         it 'falls back to the system address display name on forward' do
           expect(page).to have_text(sender_outbound_article.body)
 
-          page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+          click_forward(sender_outbound_article)
           expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
           expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
         end
@@ -342,7 +450,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       it 'does show agent name with group email address on forward' do
         expect(page).to have_text(sender_outbound_article.body)
 
-        page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+        click_forward(sender_outbound_article)
         expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} <#{ticket.group.email_address.email}>")
         expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
       end
@@ -360,7 +468,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         it 'does show agent recipient without email address on forward' do
           expect(page).to have_text(sender_outbound_article.body)
 
-          page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+          click_forward(sender_outbound_article)
           expect(page.find('.js-writeArea')).to have_text("To: #{sender_agent.fullname}")
           expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
         end
@@ -382,9 +490,9 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
           it 'does not fall back to the agent email address on forward' do
             expect(page).to have_text(sender_outbound_article.body)
 
-            page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+            click_forward(sender_outbound_article)
             expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
-            expect(page.find('.js-writeArea')).to have_text('To: -')
+            expect(page.find('.js-writeArea')).to have_text('To: Agent')
             expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
           end
         end
@@ -422,8 +530,11 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     end
   end
 
-  def click_forward
-    click '.js-ArticleAction[data-type=emailForward]'
+  # Scoped to one article where the ticket shows several.
+  def click_forward(article = nil)
+    return click '.js-ArticleAction[data-type=emailForward]' if !article
+
+    within(:active_ticket_article, article) { click '.js-ArticleAction[data-type=emailForward]' }
   end
 
   def set_internal

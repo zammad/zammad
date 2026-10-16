@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
+import { fireEvent, waitFor } from '@testing-library/vue'
 import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -10,6 +10,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { replyToEmail } from '#shared/entities/ticket-article/action/plugins/email/reply.ts'
 import {
   mockTicketArticleTranslationTargetLocalesQuery,
   mockTicketArticleTranslationTargetLocalesQueryError,
@@ -22,6 +23,10 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue'
+
+vi.mock('#shared/entities/ticket-article/action/plugins/email/reply.ts', () => ({
+  replyToEmail: vi.fn(),
+}))
 
 // The tab's translation state, as the bubble injects it.
 let articleTranslation = createArticleTranslationMock()
@@ -234,6 +239,57 @@ describe('ArticleBubbleActionList', () => {
 
     expect(wrapper.getByRole('menuitem', { name: 'Copy article permalink' })).toBeInTheDocument()
     expect(wrapper.queryByRole('menuitem', { name: 'Set to internal' })).not.toBeInTheDocument()
+  })
+
+  describe('with a pending action', () => {
+    const mockPendingReply = () => {
+      let resolveReply!: () => void
+
+      vi.mocked(replyToEmail).mockReturnValueOnce(
+        new Promise<void>((resolve) => {
+          resolveReply = resolve
+        }),
+      )
+
+      return () => resolveReply()
+    }
+
+    it('shows the busy state on the triggering button and blocks the other actions until it settles', async () => {
+      const resolveReply = mockPendingReply()
+
+      const wrapper = renderArticleBubbleActionList({ provideOverrides: { form: ref() } })
+
+      const followUp = wrapper.getByRole('button', { name: 'Follow up' })
+      const menu = wrapper.getByRole('button', { name: 'Action menu button' })
+
+      await wrapper.events.click(followUp)
+
+      expect(followUp).toHaveAttribute('aria-busy', 'true')
+      expect(followUp).toHaveAttribute('aria-disabled', 'true')
+      expect(menu).toHaveAttribute('aria-disabled', 'true')
+
+      resolveReply()
+
+      await waitFor(() => expect(followUp).not.toHaveAttribute('aria-busy', 'true'))
+      expect(followUp).not.toHaveAttribute('aria-disabled')
+      expect(menu).not.toHaveAttribute('aria-disabled')
+    })
+
+    it('ignores further clicks while the action is pending', async () => {
+      const resolveReply = mockPendingReply()
+
+      const wrapper = renderArticleBubbleActionList({ provideOverrides: { form: ref() } })
+
+      const followUp = wrapper.getByRole('button', { name: 'Follow up' })
+
+      await wrapper.events.click(followUp)
+      // The disabled button takes no pointer events, so the click is dispatched directly.
+      await fireEvent.click(followUp)
+
+      expect(replyToEmail).toHaveBeenCalledOnce()
+
+      resolveReply()
+    })
   })
 
   describe('with article translation', () => {

@@ -8,6 +8,7 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
 import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
+import { usePendingArticleAction } from '#shared/entities/ticket-article/composables/usePendingArticleAction/usePendingArticleAction.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
 import log from '#shared/utils/log.ts'
 
@@ -106,6 +107,8 @@ const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
   showTicketArticleReplyForm,
 )
 
+const { isPending, isActionPending, performAction } = usePendingArticleAction()
+
 const disposeCallbacks: (() => unknown)[] = []
 
 const onDispose = (callback: () => unknown) => {
@@ -164,7 +167,7 @@ const actions = computed(() => {
             onClick: () => {
               if (!ticket.value) return
 
-              action.perform!(ticket.value, props.article, {
+              performAction(action, ticket.value, props.article, {
                 formId: form.value?.formId ?? '',
                 selection: articleSelection(props.article.internalId),
                 openReplyForm,
@@ -209,6 +212,8 @@ const actions = computed(() => {
         class="px-1 py-0.5! text-xs! focus-visible:outline-offset-0! focus-visible:outline-blue-800!"
         :class="buttonVariantClassExtension"
         :prefix-icon="action.icon"
+        :disabled="isPending"
+        :aria-busy="isActionPending(action.key, article.id)"
         size="large"
         @click="action.onClick"
         >{{ $t(action.label) }}
@@ -238,6 +243,7 @@ const actions = computed(() => {
       button-size="medium"
       :placement="position === 'left' ? 'arrowStart' : 'arrowEnd'"
       :default-button-variant="position === 'left' ? 'neutral-dark' : 'neutral-light'"
+      :disabled="isPending"
       :actions="actions.popoverActions"
       no-single-action-mode
       z-index="20"

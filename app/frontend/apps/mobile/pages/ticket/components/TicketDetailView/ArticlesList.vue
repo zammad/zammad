@@ -30,7 +30,8 @@ const emit = defineEmits<{
   'load-previous': []
 }>()
 
-const { contextOptions, articleContextShown, showArticleContext } = useTicketArticleContext()
+const { contextOptions, articleContextShown, showArticleContext, isArticlePending } =
+  useTicketArticleContext()
 
 const articlesElement = shallowRef<HTMLElement>()
 
@@ -92,6 +93,7 @@ const markSeen = (id: string) => {
         :attachments="filterAttachments(row.article)"
         :remote-content-warning="remoteContentWarning(row.article)"
         :reaction="row.article.preferences?.whatsapp?.reaction?.emoji"
+        :action-pending="isArticlePending(row.article.id)"
         @seen="markSeen(row.key)"
         @show-context="showArticleContext(row.article, ticket)"
       />

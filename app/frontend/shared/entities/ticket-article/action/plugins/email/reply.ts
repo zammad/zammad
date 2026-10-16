@@ -1,12 +1,13 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { uniq } from 'lodash-es'
+import { effectScope } from 'vue'
 
 import { claimInlineImages } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import type { TicketById, TicketArticle } from '#shared/entities/ticket/types.ts'
-import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
+import { useTicketArticleQuotedHeaderLazyQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleQuotedHeader.api.ts'
 import { EnumTicketArticleSenderName, type AddressesField } from '#shared/graphql/types.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 
 import { getArticleSelection, getReplyQuoteHeader } from './selection.ts'
@@ -151,22 +152,26 @@ const getRecipientArticle = (ticket: TicketById, article: TicketArticle, all = f
   return newArticle
 }
 
-const quotableAuthorNameMutation = new MutationHandler(
-  useTicketArticleEmailForwardReplyMutation({}),
-  {
-    errorShowNotification: false,
-  },
-)
-
 // The citation name follows the configured email sender format and is computed
 //   server side, shared with the forwarded quote header. On failure the plain
-//   author name serves as fallback.
+//   author name serves as fallback. Always asks the server: the header follows
+//   settings and user data that change without invalidating a cached result.
+//   Runs outside any component, so the query gets a scope of its own.
 const fetchQuotableAuthorName = async (article: TicketArticle) => {
+  const variables = { articleId: article.id }
+  const scope = effectScope(true)
+  const quotedHeaderQuery = scope.run(
+    () =>
+      new QueryHandler(
+        useTicketArticleQuotedHeaderLazyQuery(variables, { fetchPolicy: 'no-cache' }),
+      ),
+  )!
+
   try {
-    const result = await quotableAuthorNameMutation.send({ articleId: article.id })
-    return result?.ticketArticleEmailForwardReply?.quotableAuthorName
-  } catch {
-    return undefined
+    const { data } = await quotedHeaderQuery.query({ variables })
+    return data?.ticketArticleQuotedHeader?.authorName
+  } finally {
+    scope.stop()
   }
 }
 
@@ -203,7 +208,7 @@ export const replyToEmail = async (
   const body =
     (selection || '') + (currentBody && selection ? `<p></p>${currentBody}` : currentBody)
 
-  options.openReplyForm({
+  await options.openReplyForm({
     ...newArticle,
     subtype: 'reply',
     body,

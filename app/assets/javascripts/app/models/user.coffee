@@ -496,28 +496,36 @@ class App.User extends App.Model
     '-'
 
   recipientName: (ticket, withEmail = false, email_address = null) ->
-    format = App.Config.get('ticket_define_email_from')
-    if !email_address
-      group         = App.Group.find(ticket.group_id)
-      email_address = App.EmailAddress.find(group.email_address_id)
-    return if !email_address
+    # Customers are no senders in the sense of the sender format - their name
+    #   follows the user name format, like in the quoted recipient lines.
+    if !@permission('ticket.agent')
+      result = @displayNameFromParts()
+      result = App.Utils.buildEmailAddress(result, @email) if withEmail
+      return result
 
+    email_address or= @recipientEmailAddress(ticket)
+
+    # Without a resolvable sender address only the name may be shown, never a
+    #   personal address. The label also prevents callers from falling through
+    #   to the raw header element, which could carry one.
+    return @displayNameFromParts() or App.i18n.translatePlain('Agent') if !email_address
+
+    format    = App.Config.get('ticket_define_email_from')
     separator = App.Config.get('ticket_define_email_from_separator')
     # Build the name nil-safe from the parts - string interpolation would render
     #   NULL name parts as the literal 'null'.
     user_name = _.compact([@firstname, @lastname].map((part) -> part?.toString().trim())).join(' ')
-    if (@id is 1 || format is 'SystemAddressName') && @permission('ticket.agent')
-      result = email_address.name
-      result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
-      return result
-    else if format is 'AgentNameSystemAddressName' && @permission('ticket.agent')
-      result = if user_name then "#{user_name} #{separator} #{email_address.name}" else email_address.name
-      result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
-      return result
-    else
-      result = user_name # AgentName or customer
-      result or= email_address.name if @permission('ticket.agent')
-      if withEmail
-        address = if @permission('ticket.agent') then email_address.email else @email
-        result  = App.Utils.buildEmailAddress(result, address)
-      return result
+
+    result =
+      if format is 'SystemAddressName' || !user_name
+        email_address.name
+      else if format is 'AgentNameSystemAddressName'
+        "#{user_name} #{separator} #{email_address.name}"
+      else
+        user_name # AgentName
+    result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
+    result
+
+  recipientEmailAddress: (ticket) ->
+    email_address_id = App.Group.find(ticket?.group_id)?.email_address_id
+    App.EmailAddress.find(email_address_id) if email_address_id
