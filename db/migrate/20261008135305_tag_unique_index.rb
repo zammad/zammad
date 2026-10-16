@@ -8,8 +8,10 @@ class TagUniqueIndex < ActiveRecord::Migration[8.0]
     migrate_duplicate_tag_names
     migrate_duplicate_tags
 
-    add_index :tag_items, :name, unique: true, name: 'index_tag_items_on_name'
-    add_index :tags, %i[tag_item_id tag_object_id o_id], unique: true
+    # A reverted earlier version of this migration left the index on tags
+    # behind on the nightly systems of May 2026 (#6451).
+    ensure_unique_index :tag_items, %w[name]
+    ensure_unique_index :tags, %w[tag_item_id tag_object_id o_id]
 
     # Covered by the leading column of the unique index above. Systems moved
     # from MySQL also carry its implicit foreign key index under a pgloader name.
@@ -19,6 +21,18 @@ class TagUniqueIndex < ActiveRecord::Migration[8.0]
   end
 
   private
+
+  # Matched by columns and uniqueness, as an index of the expected name may
+  # still be a non-unique one.
+  def ensure_unique_index(table, columns)
+    return if index_exists?(table, columns, unique: true)
+
+    connection.indexes(table)
+      .select { it.columns == columns }
+      .each { remove_index table, name: it.name }
+
+    add_index table, columns, unique: true
+  end
 
   def migrate_duplicate_tag_names
     Tag::Item
