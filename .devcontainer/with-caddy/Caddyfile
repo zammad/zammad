@@ -1,0 +1,33 @@
+# Reverse proxy in front of the development stack, see README.md.
+#
+# Caddy shares the network namespace of the devcontainer, so every upstream
+# listens on localhost. TLS is left to the tunnel in front of it.
+{
+	auto_https off
+
+	servers {
+		# Keep X-Forwarded-Proto from the tunnel agent, which connects from
+		# localhost or the Docker host, so Rails sees the public https origin.
+		trusted_proxies static private_ranges
+	}
+}
+
+:8080 {
+	# Vite dev server, including the HMR websocket. Vite only accepts requests
+	# whose Host header names itself, so the public hostname is swapped out.
+	handle /assets/frontend/vite-dev/* {
+		reverse_proxy 127.0.0.1:{$VITE_RUBY_PORT:3036} {
+			header_up Host {upstream_hostport}
+		}
+	}
+
+	# Legacy websocket server.
+	handle /ws {
+		reverse_proxy 127.0.0.1:{$ZAMMAD_WEBSOCKET_PORT:6042}
+	}
+
+	# Rails, including ActionCable on /cable.
+	handle {
+		reverse_proxy 127.0.0.1:{$ZAMMAD_RAILS_PORT:3000}
+	}
+}

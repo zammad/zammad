@@ -25,6 +25,21 @@ const SSL_PATH = resolve(homedir(), '.local/state/localhost.rb')
 
 const isEnvBooleanSet = (value) => ['true', '1'].includes(value)
 
+// The HMR websocket cannot ride the Rails asset proxy (no upgrade support), so the client is
+// pointed directly at the Vite port. A proxy that forwards websocket upgrades (see
+// .devcontainer/with-caddy) sets VITE_HMR_SAME_ORIGIN to keep it on the page origin instead.
+// `clientPort` must be an own property either way, or vite-plugin-ruby forces the Vite port.
+const hmrClientOptions = () => {
+  if (isEnvBooleanSet(process.env.VITE_HMR_SAME_ORIGIN)) {
+    return { clientPort: undefined }
+  }
+
+  return {
+    host: process.env.VITE_RUBY_HOST || 'localhost',
+    clientPort: Number(process.env.VITE_RUBY_PORT || 3036),
+  }
+}
+
 export default defineConfig(async ({ mode, command }) => {
   const isTesting = ['test', 'cypress'].includes(mode)
   const isBuild = command === 'build'
@@ -173,12 +188,7 @@ export default defineConfig(async ({ mode, command }) => {
     },
     server: {
       https,
-      // The HMR websocket cannot ride the Rails asset proxy (no upgrade support) — point
-      // the client directly at the Vite dev server port instead of the page origin.
-      hmr: {
-        host: process.env.VITE_RUBY_HOST || 'localhost',
-        clientPort: Number(process.env.VITE_RUBY_PORT || 3036),
-      },
+      ws: hmrClientOptions(),
       watch: {
         ignored: isTesting
           ? []

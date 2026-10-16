@@ -112,6 +112,8 @@ It serves on `localhost:3000`, with the websocket server on `6042` and Vite on
 `3036`. Export `ZAMMAD_RAILS_PORT`, `ZAMMAD_WEBSOCKET_PORT` and
 `VITE_RUBY_PORT` before `bin/dev` to move them — the whole stack has to agree
 on them, so export, do not set them per process.
+The `with-caddy` devcontainer variant additionally serves the whole stack on
+`localhost:8080` through a reverse proxy, for TLS tunnels; see its README.
 
 `zammad:bootstrap:reset` migrates, seeds and runs the auto wizard, which creates
 `admin@example.com` / `test`. Plain `zammad:db:init` skips the wizard and leaves

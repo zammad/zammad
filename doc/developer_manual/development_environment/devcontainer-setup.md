@@ -10,9 +10,12 @@ configure dependencies.
 ### Stack options
 
 - Default
+- With LDAP (for LDAP integration)
 - With Mailserver (for local email testing)
 - With Ollama (for local AI playground)
 - With Selenium (for integration tests)
+- With Caddy (reverse proxy to expose the stack through a TLS tunnel such as ngrok,
+  see `.devcontainer/with-caddy/README.md`)
 
 ## Prerequisites
 

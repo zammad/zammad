@@ -1,0 +1,59 @@
+// For format details, see https://containers.dev/implementors/json_reference/.
+// For config options, see the README at: https://github.com/devcontainers/templates/tree/main/src/ruby
+{
+  "name": "Zammad (with Caddy)",
+  "dockerComposeFile": "compose.yaml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
+    "ghcr.io/devcontainers/features/node:2": {
+      "installYarnUsingApt": "false"
+    },
+    "ghcr.io/rails/devcontainer/features/postgres-client": {},
+    "ghcr.io/devcontainers-extra/features/apt-get-packages": {
+      "packages": "curl gnupg libimlib2-dev"
+    },
+    "ghcr.io/devcontainers/features/go:1": {},
+    "ghcr.io/rapidsai/devcontainers/features/gitlab-cli:latest": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {},
+    "../features/zammad-deps": {},
+    "../features/add-bin-path": {
+      "addBinPath": "/workspaces/${localWorkspaceFolderBasename}/bin"
+    }
+  },
+  "mounts": [
+    {
+      // Avoid conflicts with host-installed node_modules with a different platform/architecture.
+      "source": "node-modules",
+      "target": "/workspaces/${localWorkspaceFolderBasename}/node_modules",
+      "type": "volume"
+    },
+    {
+      "source": "pnpm-store",
+      "target": "/workspaces/${localWorkspaceFolderBasename}/.pnpm-store",
+      "type": "volume"
+    }
+  ],
+  "containerEnv": {
+    // Lets the Vite HMR client connect to the page origin, where Caddy forwards it (see README.md).
+    "VITE_HMR_SAME_ORIGIN": "1"
+  },
+  "forwardPorts": [
+    3000,
+    3001,
+    3036,
+    6042,
+    8080
+  ],
+  "portsAttributes": {
+    "8080": {
+      "label": "Caddy reverse proxy"
+    }
+  },
+  "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-caddy/scripts/post_create.sh",
+  "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
+}

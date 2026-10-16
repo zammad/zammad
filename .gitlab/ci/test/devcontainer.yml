@@ -17,7 +17,7 @@
   after_script: []
   parallel:
     matrix:
-      - VARIANT: [default, with-ldap, with-mailserver, with-ollama, with-selenium]
+      - VARIANT: [default, with-caddy, with-ldap, with-mailserver, with-ollama, with-selenium]
   script:
     - npx --yes @devcontainers/cli@$DEVCONTAINERS_CLI_VERSION build
         --workspace-folder .
