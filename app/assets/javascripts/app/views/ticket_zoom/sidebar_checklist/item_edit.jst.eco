@@ -1,10 +1,9 @@
 <div class="checklistItemEdit input-group input-group--small">
-  <input
+  <textarea
     class="form-control form-control--small js-input"
     id="checklistItemEditText"
-    type="text"
-    placeholder="<%- @T('Text or ticket identifier') %>"
-    value="<%= @value %>">
+    rows="1"
+    placeholder="<%- @T('Text or ticket identifier') %>"><%= @value %></textarea>
   <span class="input-group-btn">
     <button class="btn btn--action btn--icon-only btn--no-margin danger-color js-cancel">
       <%- @Icon('diagonal-cross') %>
