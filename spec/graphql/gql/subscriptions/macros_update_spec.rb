@@ -77,5 +77,18 @@ RSpec.describe Gql::Subscriptions::MacrosUpdate, type: :graphql do
     end
   end
 
+  context 'when authenticated as customer', authenticated_as: :customer do
+    let(:customer) { create(:customer) }
+
+    it_behaves_like 'graphql responds with forbidden'
+
+    it 'does not deliver macro updates' do
+      macro.update!(name: 'New Name', group_ids: [])
+      macro.destroy
+
+      expect(mock_channel.mock_broadcasted_messages).to be_empty
+    end
+  end
+
   it_behaves_like 'graphql responds with error if unauthenticated'
 end
