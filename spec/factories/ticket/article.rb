@@ -325,6 +325,7 @@ FactoryBot.define do
         type_name          { 'whatsapp message' }
         channel            { Channel.find(ticket.preferences[:channel_id]) }
         from_phone_number  { Faker::PhoneNumber.cell_phone_in_e164 }
+        from_user_id       { nil }
         from_name          { Faker::Name.unique.name }
         timestamp_incoming { Time.zone.now.to_i.to_s }
       end
@@ -341,7 +342,8 @@ FactoryBot.define do
         context.ticket.preferences.tap do |p|
           p['whatsapp'] = {
             from:               {
-              phone_number: context.from_phone_number.delete('+'),
+              phone_number: context.from_phone_number&.delete('+'),
+              user_id:      context.from_user_id,
               display_name: context.from_name,
             },
             timestamp_incoming: context.timestamp_incoming,
