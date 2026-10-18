@@ -463,6 +463,10 @@
     this.paste(App.Utils.clipboardHtmlInsertPreperation(content, this.options))
   }
 
+  Plugin.prototype.insertLink = function (url) {
+    document.execCommand('createLink', false, url)
+  }
+
   Plugin.prototype.onPaste = function (e) {
     e.preventDefault()
     var clipboardData, clipboardImage, text, htmlRaw, htmlString

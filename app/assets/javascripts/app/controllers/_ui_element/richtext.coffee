@@ -162,3 +162,20 @@ class App.UiElement.richtext extends Spine.Module
     output = App.UiElement.richtext.buildParentsList(elem, container)
     output.unshift(elem)
     output
+
+  @ensureProtocol: (input) ->
+    input = input.trim()
+
+    if @isWithProtocol(input) || @isRelativePath(input) || @isMailto(input)
+      input
+    else
+      'http://' + input
+
+  @isWithProtocol: (input) ->
+    /^\S+\:\/\//.test(input)
+
+  @isMailto: (input) ->
+    /^mailto\:\S+@\S/.test(input)
+
+  @isRelativePath: (input) ->
+    input[0] is '/'

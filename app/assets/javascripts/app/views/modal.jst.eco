@@ -43,7 +43,7 @@
 
       <% if @leftButtons: %>
         <% for button in @leftButtons: %>
-          <a class="btn btn--text btn--subtle <%= button.className %>" href="#"><%- @T(button.text) %></a>
+          <a class="btn <%= button.baseClass or 'btn--text btn--subtle' %> <%= button.className %>" href="#"><%- @T(button.text) %></a>
         <% end %>
       <% end %>
     </div>
