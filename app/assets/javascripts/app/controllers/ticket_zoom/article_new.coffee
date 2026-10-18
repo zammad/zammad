@@ -251,11 +251,15 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @tokanice(@type)
 
-    @$('[data-name="body"]').ce({
+    ceElement = @$('[data-name="body"]')
+    ceElement.ce({
       mode:      'richtext'
       multiline: true
       maxlength: 150000
     })
+    ce = ceElement.data().plugin_ce
+    ceElement.on 'remove', ->
+      ce?.destroy()
 
     new App.Html5Upload(
       uploadUrl:              "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"

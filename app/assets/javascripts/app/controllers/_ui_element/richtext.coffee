@@ -10,12 +10,15 @@ class App.UiElement.richtext extends Spine.Module
       attribute.value = attribute.value.text
 
     item = $( App.view('generic/richtext')(attribute: attribute, toolButtons: @toolButtons) )
-    item.find('[contenteditable]').ce(
+    ceElement = item.find('[contenteditable]').ce(
       mode:      attribute.type
       maxlength: attribute.maxlength
       buttons:   attribute.buttons
       noImages:  attribute.no_images
     )
+    ce = ceElement.data().plugin_ce
+    ceElement.on 'remove', ->
+      ce?.destroy()
 
     item.find('a.btn--action[data-action]').on 'click', (event) => @toolButtonClicked(event, form)
 

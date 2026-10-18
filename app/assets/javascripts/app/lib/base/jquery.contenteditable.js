@@ -10,6 +10,7 @@
 */
 
   var pluginName = 'ce',
+  pluginInstanceCount = 0,
   defaults = {
     debug:     false,
     mode:      'richtext',
@@ -69,6 +70,7 @@
     this._defaults                   = defaults;
     this._name                       = pluginName;
     this._supportedFormattingActions = supportedFormattingActions;
+    this._instanceId                = pluginInstanceCount++;
 
     // take placeholder from markup
     if ( !this.options.placeholder && this.$element.data('placeholder') ) {
@@ -98,21 +100,34 @@
   }
 
   Plugin.prototype.onSelection = function (callback) {
-    startSelectionHandler = function () {
-      endSelectionHandler = function() {
-        this.$element.closest('.content').off('mouseup.selection, keyup.selection')
+    // The .content element can be shared by several editors (e.g. signature body and
+    // note), so the rebind must use a per-instance namespace or the instances
+    // would remove each other's bindings.
+    this._selectionNamespace = 'selection_' + this._instanceId
+    this._selectionEvents = 'mouseup.' + this._selectionNamespace + ', keyup.' + this._selectionNamespace
 
-        // Skip empty selections.
-        sel = window.getSelection()
-        if (sel.isCollapsed) return
+    this._endSelectionHandler = function () {
+      this.$element.closest('.content').off(this._selectionEvents)
 
-        callback(this.getSelection())
-      }
+      // Skip empty selections.
+      sel = window.getSelection()
+      if (sel.isCollapsed) return
 
-      this.$element.closest('.content').off('mouseup.selection, keyup.selection').on('mouseup.selection, keyup.selection', endSelectionHandler.bind(this))
+      callback(this.getSelection())
+    }.bind(this)
+
+    this._selectionHandler = function () {
+      this.$element.closest('.content').off(this._selectionEvents).on(this._selectionEvents, this._endSelectionHandler)
+    }.bind(this)
+
+    $(document).on('selectionchange', this._selectionHandler)
+  }
+
+  Plugin.prototype.destroy = function () {
+    if (this._selectionHandler) {
+      $(document).off('selectionchange', this._selectionHandler)
+      this.$element.closest('.content').off(this._selectionEvents)
     }
-
-    $(document).on('selectionchange', startSelectionHandler.bind(this))
   }
 
   Plugin.prototype.toggleBlock = function(tag) {
