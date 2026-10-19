@@ -49,18 +49,6 @@ class Auth::TwoFactor
     true
   end
 
-  def initiate_authentication(method)
-    return {} if method.nil?
-
-    method_object = method_object(method)
-    return {} if method_object.nil?
-
-    result = method_object.initiate_authentication
-    return {} if result.nil?
-
-    result
-  end
-
   def verify_configuration?(method, payload, configuration)
     return false if method.nil?
 
