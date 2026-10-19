@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
+
 import { mockApolloClient } from '#cy/utils.ts'
 
 import { FormUploadCacheAddDocument } from '#shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts'
@@ -105,5 +107,20 @@ describe('resizing image within editor', () => {
     })
 
     cy.get('img').should('have.attr', 'width', '83').and('have.attr', 'height', '83')
+  })
+
+  it('does not change the content when an image is only displayed', () => {
+    cy.intercept('GET', '/api/v1/attachments/2062', { fixture: 'example.png' })
+
+    const value = '<p><img src="/api/v1/attachments/2062"></p>'
+
+    mountEditor({ value })
+
+    cy.get('img').should(($img) => {
+      expect(($img[0] as HTMLImageElement).naturalWidth).to.be.greaterThan(0)
+    })
+
+    cy.get('img').should('not.have.attr', 'width')
+    cy.then(() => expect(getNode('editor')?.value).to.eq(value))
   })
 })

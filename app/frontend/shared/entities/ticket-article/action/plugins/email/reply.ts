@@ -2,6 +2,7 @@
 
 import { uniq } from 'lodash-es'
 
+import { claimInlineImages } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import type { TicketById, TicketArticle } from '#shared/entities/ticket/types.ts'
 import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
 import { EnumTicketArticleSenderName, type AddressesField } from '#shared/graphql/types.ts'
@@ -186,6 +187,8 @@ export const replyToEmail = async (
   let { content: selection, full } = getArticleSelection(options.selection, article, config)
 
   if (selection) {
+    claimInlineImages(options.formId, selection)
+
     const authorName = config.ui_ticket_zoom_article_email_full_quote_header
       ? await fetchQuotableAuthorName(article)
       : undefined

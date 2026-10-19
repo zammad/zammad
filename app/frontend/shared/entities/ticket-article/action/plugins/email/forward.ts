@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { claimInlineImages } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import { getAttachmentLinks } from '#shared/composables/getAttachmentLinks.ts'
 import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts'
 import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
@@ -55,6 +56,8 @@ export const forwardEmail = async (
 
   // TODO: standardise this in https://github.com/zammad/coordination-feature-mobile-view/issues/396
   body = body.replace(/<p><br><\/p>/g, '<p></p>') // cleanup
+
+  claimInlineImages(options.formId, body)
 
   const result = await forwardMutation
     .send({

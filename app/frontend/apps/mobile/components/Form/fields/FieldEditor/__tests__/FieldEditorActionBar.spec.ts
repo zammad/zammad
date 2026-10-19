@@ -24,7 +24,7 @@ vi.mock('@tiptap/vue-3', () => {
 
 vi.mock('@tiptap/pm/state', () => {
   return {
-    PluginKey: vi.fn((name: string) => name),
+    PluginKey: class {},
   }
 })
 

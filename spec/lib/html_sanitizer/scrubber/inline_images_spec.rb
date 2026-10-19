@@ -78,6 +78,41 @@ RSpec.describe HtmlSanitizer::Scrubber::InlineImages do
         end
       end
 
+      context 'when a quoted ticket attachment image is handled' do
+        let(:article)    { create(:ticket_article) }
+        let(:attachment) { create(:store, :image, object: 'Ticket::Article', o_id: article.id) }
+        let(:input)      { "<img src='/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?view=inline'>" }
+        let(:target)     { %r{<img src="cid:.+?">} }
+
+        it { is_expected.to match target }
+
+        it 'adds a copy of the attachment to scrubber' do
+          actual
+
+          expect(scrubber.attachments_inline).to match_array(include(filename: attachment.filename, data: attachment.content))
+        end
+
+        context 'when the user does not have access to the attachment', current_user_id: -> { create(:agent).id } do
+          it 'keeps the reference' do
+            expect(actual).to include('/api/v1/ticket_attachment/')
+          end
+
+          it 'adds no attachment to scrubber' do
+            actual
+
+            expect(scrubber.attachments_inline).to be_blank
+          end
+        end
+
+        context 'when the attachment does not exist anymore' do
+          let(:input) { "<img src='/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/999999?view=inline'>" }
+
+          it 'keeps the reference' do
+            expect(actual).to include('/api/v1/ticket_attachment/')
+          end
+        end
+      end
+
       context 'when uploaded image reference is surrounded by other content' do
         let(:input)  { %(<img src="junk\n/api/v1/attachments/999999">) }
         let(:target) { %r{<img src="junk\n/api/v1/attachments/999999">} }
