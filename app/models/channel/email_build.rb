@@ -97,7 +97,7 @@ generate email with S/MIME
         end
         ScrubHtml.new(html_alternative.body.to_s, scrubber).scrub!
       rescue => e
-        logger.error e
+        Rails.logger.error e
       end
 
       html_alternative.body = HtmlSanitizer.adjust_inline_image_size(html_alternative.body.to_s) if found_content_ids.present?
