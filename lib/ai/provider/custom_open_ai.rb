@@ -8,7 +8,7 @@ class AI::Provider::CustomOpenAI < AI::Provider
 
   DEFAULT_OPTIONS = {
     temperature:                0.1,
-    models_without_temperature: ['gpt-5']
+    models_without_temperature: [%r{\Agpt-[5-9]}, %r{\Ao\d}]
   }.freeze
 
   # An OpenAI compatible endpoint does not have to implement the model list. These answers mean
@@ -90,12 +90,14 @@ class AI::Provider::CustomOpenAI < AI::Provider
   end
 
   def self.check_temperature_support!(config, related_object: nil)
+    temperature_sent = !model_without_temperature?(config[:model])
+
     request_body = {
-      model:       config[:model],
-      messages:    [{ role: 'user', content: 'Hello' }],
-      temperature: DEFAULT_OPTIONS[:temperature],
-      stream:      false,
+      model:    config[:model],
+      messages: [{ role: 'user', content: 'Hello' }],
+      stream:   false,
     }
+    request_body[:temperature] = DEFAULT_OPTIONS[:temperature] if temperature_sent
 
     request_options = {
       **REQUEST_TIMEOUT_OPTIONS,
@@ -113,7 +115,7 @@ class AI::Provider::CustomOpenAI < AI::Provider
       request_options,
     )
 
-    evaluate_temperature_probe!(response)
+    evaluate_temperature_probe!(response, temperature_sent:)
   rescue CheckTemperatureSupportError
     raise
   rescue => e
