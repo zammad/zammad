@@ -79,15 +79,11 @@ module ApplicationController::Authenticates
     token = Doorkeeper::OAuth::Token.from_bearer_authorization(request)
     if token
       request.session_options[:skip] = true # do not send a session cookie
-      logger.debug { "OAuth2 token auth check '#{token}'" }
-      access_token = Doorkeeper::AccessToken.by_token(token)
+      access_token = Doorkeeper::OAuth::Token.authenticate(request, :from_bearer_authorization)
 
       raise Exceptions::NotAuthorized, __('The provided token is invalid.') if !access_token
-
-      # check expire
-      if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
-        raise Exceptions::NotAuthorized, __('OAuth2 token is expired!')
-      end
+      raise Exceptions::NotAuthorized, __('OAuth2 token is expired!') if access_token.expired?
+      raise Exceptions::NotAuthorized, __('OAuth2 token is revoked!') if access_token.revoked?
 
       # if access_token.scopes.empty?
       #   raise Exceptions::NotAuthorized, 'OAuth2 scope missing for token!'

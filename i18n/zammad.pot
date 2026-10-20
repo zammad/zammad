@@ -13179,6 +13179,10 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
+#: app/controllers/application_controller/authenticates.rb:100
+msgid "OAuth2 token is revoked!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
 msgstr ""
