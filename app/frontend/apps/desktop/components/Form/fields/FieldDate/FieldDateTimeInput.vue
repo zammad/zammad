@@ -268,6 +268,9 @@ const open = () => {
 }
 
 const closed = () => {
+  // https://github.com/Vuepic/vue-datepicker/issues/1307
+  pickerInstance.value?.switchView('calendar')
+
   nextTick(() => {
     testFlags.set('field-date-time.closed')
   })

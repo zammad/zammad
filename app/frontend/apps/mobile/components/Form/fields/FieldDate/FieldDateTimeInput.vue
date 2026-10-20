@@ -72,6 +72,9 @@ const expandPicker = () => {
 }
 
 const collapsePicker = () => {
+  // https://github.com/Vuepic/vue-datepicker/issues/1307
+  picker.value?.switchView('calendar')
+
   showPicker.value = false
 
   nextTick(() => {

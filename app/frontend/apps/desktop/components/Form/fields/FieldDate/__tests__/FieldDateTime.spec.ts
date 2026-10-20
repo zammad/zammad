@@ -360,6 +360,34 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue(display)
     })
 
+    it('allows selecting a date after the menu was closed with the time picker open', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByLabelText('Open the time picker'))
+
+      // Closing the menu while the time overlay is open left the calendar inert
+      //   on the next opening (https://github.com/Vuepic/vue-datepicker/issues/1307).
+      await view.events.click(document.body)
+      await view.events.click(input)
+
+      const calendar = view.getByRole('dialog').querySelector('.dp--calendar')
+
+      expect(calendar).not.toHaveAttribute('inert')
+      expect(calendar).not.toHaveAttribute('aria-hidden')
+
+      await view.events.click(view.getByText('12'))
+
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
+      expect(emittedInput.at(-1)?.at(0)).toBe('2021-04-12T11:10:00Z')
+      expect(input).toHaveDisplayValue('2021-04-12 11:10')
+    })
+
     it('renders AM/PM, if needed', async () => {
       i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
 
