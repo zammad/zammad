@@ -239,7 +239,10 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
       end
 
       it 'replaces the selected text with the answer' do
-        field.send_keys('Before Selected After', *Array.new(6, :left), *Array.new(8, %i[shift left]))
+        field.send_keys('Before Selected After', *Array.new(6, :left))
+        # Firefox clicks the element's centre before sending a key chord to an unfocused element, and the
+        #   collapsed article's attachment area covers it.
+        field.send_keys(*Array.new(8, %i[shift left]))
         insert_from_widget(target_translation)
 
         expect(field).to have_text(%r{\ABefore\s*#{Regexp.escape(target_translation.content.body)}\s*After\z})

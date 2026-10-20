@@ -83,6 +83,21 @@ RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :
       find_editor('Text').input_element.text
     end
 
+    # The row actions only show while the row is hovered or focused, which is not what is checked here.
+    it 'offers the insert action only while an article is being written' do
+      within related_answer_row(linked_translation) do
+        expect(page).to have_button('Unlink knowledge base answer', visible: :all)
+        expect(page).to have_no_button('Insert knowledge base answer', visible: :all)
+      end
+
+      within('main') { find('button', text: 'Add internal note').click }
+      wait_for_editor_ready(find_editor('Text'))
+
+      within related_answer_row(linked_translation) do
+        expect(page).to have_button('Insert knowledge base answer', visible: :all)
+      end
+    end
+
     context 'with a full quote reply' do
       let(:article) do
         create(:ticket_article, :inbound_email, ticket:, body: '<p>Customer question.</p>', content_type: 'text/html')
