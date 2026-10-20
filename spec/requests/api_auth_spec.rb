@@ -378,8 +378,9 @@ RSpec.describe 'Api Auth', type: :request do
         let(:two_factor_payload) { 'wrong' }
         let(:two_factor_method) { 'authenticator_app' }
 
-        it 'rejects the log-in' do
+        it 'rejects the log-in and increases the failed login count', :aggregate_failures do
           expect(response).to have_http_status(:unauthorized)
+          expect(admin.reload.login_failed).to eq(1)
         end
       end
 
