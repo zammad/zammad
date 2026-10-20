@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { mountEditor } from './utils.ts'
+import { EDITOR_IMAGE, mountEditor } from './utils.ts'
 
 describe('FieldEditor basic functionality', { retries: 2 }, () => {
   it('typing works, text becomes bold, when "B" is clicked', () => {
@@ -69,7 +69,7 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       .paste({
         files: [new File(['0', '1'], 'name.jpeg', { type: 'image/jpeg' })],
       })
-      .find('img')
+      .find(EDITOR_IMAGE)
       .should('have.attr', 'src', 'data:image/jpeg;base64,MDE=')
   })
 })

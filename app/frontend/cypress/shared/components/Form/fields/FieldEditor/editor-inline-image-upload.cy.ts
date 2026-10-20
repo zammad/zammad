@@ -13,7 +13,7 @@ import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { dataURLToBlob } from '#shared/utils/files.ts'
 
-import { mountEditor } from './utils.ts'
+import { EDITOR_IMAGE, mountEditor } from './utils.ts'
 
 const PNG_DATA_URL =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='
@@ -88,7 +88,7 @@ describe('inline image upload', () => {
 
     mountEditor({ value: insertedHere('<p><img src="/api/v1/attachments/42"></p>') })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/42')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/42')
 
     // Uploads start asynchronously, give them a chance to (wrongly) happen.
     cy.wait(300)
@@ -102,7 +102,7 @@ describe('inline image upload', () => {
 
     mountEditor({ value: insertedHere(quotedImage(3)) })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.wrap(copyHandler).should('have.been.calledOnce')
     cy.wrap(copyHandler)
@@ -117,7 +117,7 @@ describe('inline image upload', () => {
     mountEditor({ value: quotedImage(4) })
 
     cy.findByRole('textbox')
-      .find('img')
+      .find(EDITOR_IMAGE)
       .should('have.attr', 'src', '/api/v1/ticket_attachment/1/2/4?view=inline')
 
     cy.wait(300)
@@ -132,7 +132,7 @@ describe('inline image upload', () => {
 
     mountEditor({ value: insertedHere(`<p><img src="${PNG_DATA_URL}"></p>`) })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/42')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/42')
 
     cy.wrap(addHandler).should('have.been.calledOnce')
     cy.wrap(addHandler)
@@ -206,12 +206,12 @@ describe('inline image upload', () => {
 
     mountEditor({ value })
 
-    cy.findByRole('textbox').find('img')
+    cy.findByRole('textbox').find(EDITOR_IMAGE)
 
     setEditorValue(`<p>Reply</p>${value}`)
     setEditorValue(`<p>Reply again</p>${value}`)
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.wrap(copyHandler).should('have.been.calledOnce')
   })
@@ -225,7 +225,7 @@ describe('inline image upload', () => {
       ),
     })
 
-    cy.findByRole('textbox').find('img')
+    cy.findByRole('textbox').find(EDITOR_IMAGE)
 
     cy.then(() => {
       const context = getNode('editor')?.context as unknown as Required<FieldEditorContext>
@@ -234,7 +234,7 @@ describe('inline image upload', () => {
     })
 
     cy.findByRole('textbox').should('contain.text', 'Signature')
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.wrap(copyHandler).should('have.been.calledOnce')
   })
@@ -245,12 +245,12 @@ describe('inline image upload', () => {
 
     mountEditor({ value })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     setEditorValue(`<p>Reply</p>${value}`)
 
     cy.findByRole('textbox').should('contain.text', 'Reply')
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.wrap(copyHandler).should('have.been.calledOnce')
   })
@@ -261,13 +261,13 @@ describe('inline image upload', () => {
 
     mountEditor({ value })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.then(() => insertedHere(value))
     setEditorValue(`<p>Reply</p>${value}`)
 
     cy.findByRole('textbox').should('contain.text', 'Reply')
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.wait(300)
     cy.wrap(copyHandler).should('have.been.calledOnce')
@@ -281,7 +281,7 @@ describe('inline image upload', () => {
 
     mountEditor({ value: `<p><img src="${src}" content="${PNG_DATA_URL}"></p>` })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/42')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/42')
     cy.get('@revokeObjectURL').should('have.been.calledWith', src)
   })
 
@@ -309,7 +309,7 @@ describe('inline image upload', () => {
     cy.findByRole('textbox').type('::logo')
     cy.findByTestId('mention-text').findByText('logo').click()
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/42')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/42')
     cy.wrap(addHandler).should('have.been.calledOnce')
   })
 
@@ -335,13 +335,13 @@ describe('inline image upload', () => {
       !!getNodeByName(formId, 'editor')?.root?.context?.state.uploadProcessing
 
     mountForm()
-    cy.findByRole('textbox').find('img')
+    cy.findByRole('textbox').find(EDITOR_IMAGE)
 
     mountForm()
 
     cy.wrap(null).should(() => expect(isUploadProcessing()).to.equal(true))
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
     cy.wrap(null).should(() => expect(isUploadProcessing()).to.equal(false))
   })
 
@@ -360,12 +360,12 @@ describe('inline image upload', () => {
     cy.wrap(copyHandler).should('have.been.calledOnce')
 
     setEditorValue('<p>Reply</p>')
-    cy.findByRole('textbox').find('img').should('not.exist')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('not.exist')
 
     cy.then(() => insertedHere(value))
     setEditorValue(`<p>Reply</p>${value}`)
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
     cy.wrap(copyHandler).should('have.been.calledTwice')
   })
 
@@ -375,7 +375,7 @@ describe('inline image upload', () => {
 
     mountEditor({ value })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.then(() => getNode('editor')?.input(value, false))
 
@@ -389,11 +389,11 @@ describe('inline image upload', () => {
     const value = insertedHere(quotedImage(10))
 
     mountEditor({ value })
-    cy.findByRole('textbox').find('img')
+    cy.findByRole('textbox').find(EDITOR_IMAGE)
 
     mountEditor({ value })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
     cy.wrap(copyHandler).should('have.been.calledOnce')
   })
 
@@ -403,13 +403,13 @@ describe('inline image upload', () => {
 
     mountEditor({ value })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/43')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).should('have.attr', 'src', '/api/v1/attachments/43')
 
     cy.then(() => getNode('editor')?.reset())
     setEditorValue(value)
 
     cy.findByRole('textbox')
-      .find('img')
+      .find(EDITOR_IMAGE)
       .should('have.attr', 'src', '/api/v1/ticket_attachment/1/2/11?view=inline')
 
     cy.wait(300)

@@ -8,7 +8,7 @@ const typeOrderedList = () => {
   cy.findByRole('textbox').click()
   cy.findByTestId('action-bar').findByLabelText('Add ordered list').click()
 
-  cy.findByRole('listitem').type('First{enter}Middle{enter}Third{enter}Last')
+  cy.findByRole('listitem').find('p').type('First{enter}Middle{enter}Third{enter}Last')
 }
 
 // Turns the ordered list off for the item the cursor sits on, breaking the list in two.

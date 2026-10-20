@@ -6,7 +6,7 @@ import { mockApolloClient } from '#cy/utils.ts'
 
 import { FormUploadCacheAddDocument } from '#shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts'
 
-import { mountEditor } from './utils.ts'
+import { EDITOR_IMAGE, mountEditor } from './utils.ts'
 
 describe('resizing image within editor', () => {
   it('can be resized', { retries: 2 }, () => {
@@ -46,14 +46,14 @@ describe('resizing image within editor', () => {
           { force: true },
         )
       })
-    cy.findByRole('textbox').get('img:first').trigger('click')
+    cy.findByRole('textbox').find(EDITOR_IMAGE).first().trigger('click')
 
     cy.get('.vdr-handle:last')
       .trigger('mousedown', { button: 0 })
       .trigger('mousemove', { pageX: 100, pageY: 100 })
       .trigger('mouseup', { button: 0 })
       .then(($item) => {
-        cy.get('img').then(($img) => {
+        cy.get(EDITOR_IMAGE).then(($img) => {
           const height = $img.height()
           const width = $img.width()
           expect(width).to.eq(83)
@@ -65,7 +65,7 @@ describe('resizing image within editor', () => {
       .trigger('mousemove', { pageX: 600, pageY: 600 }) // call large number, beyoud max width/height
       .trigger('mouseup', { button: 0 })
       .then(() => {
-        cy.get('img').then(($img) => {
+        cy.get(EDITOR_IMAGE).then(($img) => {
           const height = $img.height()
           const width = $img.width()
           // this is their max width and height
@@ -87,7 +87,7 @@ describe('resizing image within editor', () => {
       value: '<p><img src="/api/v1/attachments/2062" style="width:83px;height:83px"></p>',
     })
 
-    cy.get('img').then(($img) => {
+    cy.get(EDITOR_IMAGE).then(($img) => {
       expect($img.width()).to.eq(83)
       expect($img.height()).to.eq(83)
     })
@@ -106,7 +106,7 @@ describe('resizing image within editor', () => {
       value: '<p><img src="/api/v1/attachments/2062" width="83" height="83"></p>',
     })
 
-    cy.get('img').should('have.attr', 'width', '83').and('have.attr', 'height', '83')
+    cy.get(EDITOR_IMAGE).should('have.attr', 'width', '83').and('have.attr', 'height', '83')
   })
 
   it('does not change the content when an image is only displayed', () => {
@@ -116,11 +116,11 @@ describe('resizing image within editor', () => {
 
     mountEditor({ value })
 
-    cy.get('img').should(($img) => {
+    cy.get(EDITOR_IMAGE).should(($img) => {
       expect(($img[0] as HTMLImageElement).naturalWidth).to.be.greaterThan(0)
     })
 
-    cy.get('img').should('not.have.attr', 'width')
+    cy.get(EDITOR_IMAGE).should('not.have.attr', 'width')
     cy.then(() => expect(getNode('editor')?.value).to.eq(value))
   })
 })

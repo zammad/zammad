@@ -65,3 +65,6 @@ export const mountEditorWithAttachments = (
     permissions,
   })
 }
+
+// ProseMirror renders `img.ProseMirror-separator` cursor helpers next to inline atoms.
+export const EDITOR_IMAGE = 'img:not(.ProseMirror-separator)'

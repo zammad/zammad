@@ -35,7 +35,7 @@ const SIGNATURE =
   '<strong>Signature</strong><div>Context</div><br>---<br><em>Phone: +1234556778</em>'
 
 const PARSED_SIGNATURE =
-  '<p dir="auto"><strong>Signature</strong></p><p dir="auto">Context</p><p dir="auto"><br dir="auto">---<em>Phone: +1234556778</em></p>'
+  '<p dir="auto"><strong>Signature</strong></p><p dir="auto">Context</p><p dir="auto"><img class="ProseMirror-separator" alt=""><br dir="auto">---<em>Phone: +1234556778</em></p>'
 
 const WRAPPED_SIGNATURE = (id: string, str: string) => {
   return `<div data-signature="true" dir="auto" class="signature" data-signature-id="${id}">${str}</div>`
@@ -85,7 +85,8 @@ describe('correctly adds signature', { retries: 2 }, () => {
             `${PARSED_SIGNATURE}`,
           )}${BREAK_HTML}`,
         )
-        cy.findByRole('textbox').type('new')
+        // Synthetic `type` loses the cursor after the first key since prosemirror-view 1.42.6.
+        cy.realType('new')
 
         cy.findByRole('textbox')
           .shouldContainNormalizedHtml(`<p dir="auto">${ORIGINAL_TEXT}new</p>`) // cursor didn't move

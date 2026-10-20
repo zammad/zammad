@@ -42,7 +42,7 @@ RSpec.describe 'Mobile > Ticket > Reply with inline image', app: :mobile, authen
 
     wait.until do
       # The image appears asynchronously, `first` would wrap a missing one instead of returning nil.
-      images = find_editor('Text').input_element.all('img', visible: :all, wait: false)
+      images = find_editor('Text').input_element.all('img:not(.ProseMirror-separator)', visible: :all, wait: false)
       images.first&.[](:src)&.match?(%r{/api/v1/attachments/\d+\z})
     end
 

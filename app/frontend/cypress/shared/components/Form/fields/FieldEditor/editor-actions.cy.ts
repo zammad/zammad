@@ -4,7 +4,7 @@ import { mockApolloClient } from '#cy/utils.ts'
 
 import { FormUploadCacheAddDocument } from '#shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts'
 
-import { mountEditor } from './utils.ts'
+import { EDITOR_IMAGE, mountEditor } from './utils.ts'
 
 const testAction = (
   action: string,
@@ -216,7 +216,9 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
         )
       })
 
-    cy.findByRole('textbox').find('img').should('have.attr', 'src', '/api/v1/attachments/2062')
+    cy.findByRole('textbox')
+      .find(EDITOR_IMAGE)
+      .should('have.attr', 'src', '/api/v1/attachments/2062')
   })
 
   describe('table', () => {
@@ -302,7 +304,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     cy.findByRole('textbox').click()
     cy.findByTestId('action-bar').findByLabelText('Add bullet list').click()
 
-    cy.findByRole('listitem').type('First{enter}Second{enter}Third')
+    cy.findByRole('listitem').find('p').type('First{enter}Second{enter}Third')
 
     cy.findByLabelText('Indent text').click()
 
@@ -322,7 +324,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
     cy.findByRole('textbox').click()
     cy.findByTestId('action-bar').findByLabelText('Add bullet list').click()
 
-    cy.findByRole('listitem').type('First{enter}Second{enter}Third')
+    cy.findByRole('listitem').find('p').type('First{enter}Second{enter}Third')
 
     cy.findByLabelText('Indent text').click()
 
