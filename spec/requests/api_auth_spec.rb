@@ -469,4 +469,78 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe 'OAuth2 token auth' do
+    let(:application) { Doorkeeper::Application.create!(name: 'Test', redirect_uri: 'https://localhost', scopes: '') }
+    let(:access_token) do
+      Doorkeeper::AccessToken.create!(
+        application:       application,
+        resource_owner_id: agent.id,
+        scopes:            'full',
+        expires_in:        2.hours.to_i,
+        use_refresh_token: true,
+      )
+    end
+    let(:client_params) { { client_id: application.uid, client_secret: application.secret } }
+    let(:graphql_query) { 'query { currentUser { id } }' }
+
+    def bearer_headers(token)
+      { 'Authorization' => "Bearer #{token}" }
+    end
+
+    it 'does oauth2 auth - valid token', :aggregate_failures do
+      get '/api/v1/tickets', headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+
+      post '/graphql', params: { query: graphql_query }, headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response.dig('data', 'currentUser', 'id')).to eq(Gql::ZammadSchema.id_from_object(agent))
+    end
+
+    it 'does oauth2 auth - expired token', :aggregate_failures do
+      access_token.update!(created_at: 3.hours.ago)
+
+      get '/api/v1/tickets', headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response['error']).to eq('OAuth2 token is expired!')
+    end
+
+    it 'does oauth2 auth - revoked token', :aggregate_failures do
+      post '/oauth/revoke', params: client_params.merge(token: access_token.plaintext_token)
+      expect(response).to have_http_status(:ok)
+      expect(access_token.reload).to be_revoked
+
+      get '/api/v1/tickets', headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response['error']).to eq('OAuth2 token is revoked!')
+
+      post '/graphql', params: { query: graphql_query }, headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response['error']).to eq('OAuth2 token is revoked!')
+    end
+
+    it 'does oauth2 auth - refreshed token', :aggregate_failures do
+      post '/oauth/token', params: client_params.merge(grant_type: 'refresh_token', refresh_token: access_token.plaintext_refresh_token)
+      expect(response).to have_http_status(:ok)
+      new_access_token = json_response['access_token']
+      expect(new_access_token).to be_present
+
+      get '/api/v1/tickets', headers: bearer_headers(new_access_token), as: :json
+      expect(response).to have_http_status(:ok)
+      expect(access_token.reload).to be_revoked
+
+      get '/api/v1/tickets', headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response['error']).to eq('OAuth2 token is revoked!')
+
+      post '/graphql', params: { query: graphql_query }, headers: bearer_headers(access_token.plaintext_token), as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response['error']).to eq('OAuth2 token is revoked!')
+
+      post '/oauth/token', params: client_params.merge(grant_type: 'refresh_token', refresh_token: access_token.plaintext_refresh_token)
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response['error']).to eq('invalid_grant')
+    end
+  end
 end

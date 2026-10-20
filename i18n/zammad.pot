@@ -10755,7 +10755,7 @@ msgstr ""
 msgid "Maintenance Mode"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:120
+#: app/controllers/application_controller/authenticates.rb:118
 msgid "Maintenance mode enabled!"
 msgstr ""
 
@@ -12745,8 +12745,12 @@ msgstr ""
 msgid "OAuth URLs are:"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:102
+#: app/controllers/application_controller/authenticates.rb:100
 msgid "OAuth2 token is expired!"
+msgstr ""
+
+#: app/controllers/application_controller/authenticates.rb:101
+msgid "OAuth2 token is revoked!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
