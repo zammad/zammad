@@ -121,8 +121,34 @@ RSpec.describe Auth do
         context 'with an invalid two factor token' do
           let(:instance) { described_class.new(user.login, password, two_factor_method: 'authenticator_app', two_factor_payload: 'wrong') }
 
-          it 'raises an error and does not increase the failed login count' do
-            expect { instance.valid! }.to raise_error(Auth::Error::TwoFactorFailed).and(not_change { user.reload.login_failed })
+          it 'raises an error and increases the failed login count' do
+            expect { instance.valid! }.to raise_error(Auth::Error::TwoFactorFailed).and(change { user.reload.login_failed }.from(0).to(1))
+          end
+
+          it 'failed login avoids brute force attack' do
+            allow(instance).to receive(:sleep)
+            begin
+              instance.try(:valid!)
+            rescue Auth::Error::TwoFactorFailed
+              # no-op
+            end
+            # sleep receives the stubbed value.
+            expect(instance).to have_received(:sleep).with(0)
+          end
+
+          context 'when the maximum of failed logins is reached' do
+            let(:user)           { create(:user, password: password, login_failed: Setting.get('password_max_login_failed').to_i) }
+            let(:code)           { two_factor_pref.configuration[:code] }
+            let(:valid_instance) { described_class.new(user.login, password, two_factor_method: 'authenticator_app', two_factor_payload: code) }
+
+            it 'rejects a valid two factor token until the account is unlocked', :aggregate_failures do
+              expect { instance.valid! }.to raise_error(Auth::Error::TwoFactorFailed)
+              expect { valid_instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
+
+              user.update!(login_failed: 0)
+
+              expect(valid_instance.valid!).to be true
+            end
           end
 
           context 'with disabled authenticator method' do

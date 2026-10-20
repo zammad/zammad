@@ -178,13 +178,14 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
             }
           end
 
-          it 'fails with error message' do
+          it 'fails with error message and increases the failed login count' do
             expect(graphql_response['data']['login']['errors']).to eq(
               [{
                 'message' => 'Login failed. Please double-check your two-factor authentication method.',
                 'field'   => nil
               }]
             )
+            expect(agent.reload.login_failed).to eq(1)
           end
 
           context 'when default method is disabled, but another exists' do
