@@ -216,11 +216,11 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
           ],
           'screens'    => [
             {
-              'name'       => 'edit',
+              'name'       => 'create',
               'attributes' => %w[name shared domain_assignment domain vip note active],
             },
             {
-              'name'       => 'create',
+              'name'       => 'edit',
               'attributes' => %w[name shared domain_assignment domain vip note active],
             },
             {
@@ -270,11 +270,11 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
           ],
           'screens'    => [
             {
-              'name'       => 'edit',
+              'name'       => 'create',
               'attributes' => %w[name domain note],
             },
             {
-              'name'       => 'create',
+              'name'       => 'edit',
               'attributes' => %w[name domain note],
             },
             {
@@ -452,6 +452,14 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
           ],
           'screens'    => [
             {
+              'attributes' => ['tags'],
+              'name'       => 'create_bottom'
+            },
+            {
+              'attributes' => %w[group_id owner_id state_id pending_time priority_id],
+              'name'       => 'create_middle'
+            },
+            {
               'attributes' => %w[title customer_id organization_id],
               'name'       => 'create_top'
             },
@@ -459,15 +467,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'attributes' => %w[group_id owner_id state_id pending_time priority_id],
               'name'       => 'edit'
             },
-            {
-              'attributes' => %w[group_id owner_id state_id pending_time priority_id],
-              'name'       => 'create_middle'
-            },
-            { 'attributes' => %w[group_id owner_id state_id pending_time priority_id], 'name' => 'overview_bulk' },
-            {
-              'attributes' => ['tags'],
-              'name'       => 'create_bottom'
-            }
+            { 'attributes' => %w[group_id owner_id state_id pending_time priority_id], 'name' => 'overview_bulk' }
           ]
         }
       end
@@ -602,6 +602,14 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
           ],
           'screens'    => [
             {
+              'attributes' => [],
+              'name'       => 'create_bottom'
+            },
+            {
+              'attributes' => %w[group_id state_id],
+              'name'       => 'create_middle'
+            },
+            {
               'attributes' => %w[title organization_id],
               'name'       => 'create_top'
             },
@@ -609,15 +617,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'attributes' => ['state_id'],
               'name'       => 'edit'
             },
-            {
-              'attributes' => %w[group_id state_id],
-              'name'       => 'create_middle'
-            },
-            { 'attributes' => [], 'name' => 'overview_bulk' },
-            {
-              'attributes' => [],
-              'name'       => 'create_bottom'
-            }
+            { 'attributes' => [], 'name' => 'overview_bulk' }
           ]
         }
       end

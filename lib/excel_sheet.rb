@@ -177,7 +177,7 @@ class ExcelSheet
     end
     if object[:data_type] !~ %r{^(multi_)?tree_select$} && object[:data_option].present? && object[:data_option]['options'].present?
       display_values = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])
-      value = Array(value).map { |v| display_values[v] }.join(',')
+      value = Array(value).map { |v| display_values[v.to_s] }.join(',')
     end
     if value.is_a?(Array)
       value = value.join(',')

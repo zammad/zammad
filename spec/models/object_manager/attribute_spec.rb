@@ -509,6 +509,34 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
     end
 
+    context 'when adding custom sorted hash options' do
+      let(:attribute) do
+        {
+          object:        'Ticket',
+          name:          'test_sorted',
+          display:       'Test sorted',
+          data_type:     'select',
+          data_option:   {
+            default:    '',
+            null:       true,
+            customsort: 'on',
+            options:    { 'zz' => 'Last', 'a' => 'First' },
+          },
+          active:        true,
+          screens:       {},
+          position:      20,
+          created_by_id: 1,
+          updated_by_id: 1,
+        }
+      end
+
+      it 'stores them as array in the given order' do
+        described_class.add(attribute)
+
+        expect(described_class.get(object: 'Ticket', name: 'test_sorted').data_option[:options]).to eq([{ 'name' => 'Last', 'value' => 'zz' }, { 'name' => 'First', 'value' => 'a' }])
+      end
+    end
+
     context 'when adding a json field' do
       let(:expected_attributes) do
         {

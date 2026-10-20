@@ -56,5 +56,21 @@ RSpec.describe Service::AI::Agent::Run::Context::Instruction::ObjectAttributes::
         end
       end
     end
+
+    context 'with boolean options' do
+      let(:object_attribute) { create(:object_manager_attribute_boolean) }
+
+      it 'lists the string keyed options' do
+        expect(options_context.prepare_for_instruction).to eq([{ value: 'true', label: 'yes' }, { value: 'false', label: 'no' }])
+      end
+
+      context 'with filter values' do
+        let(:filter_values) { { 'true' => 'only yes' } }
+
+        it 'matches the string keyed options' do
+          expect(options_context.prepare_for_instruction).to eq([{ value: 'true', label: 'yes', description: 'only yes' }])
+        end
+      end
+    end
   end
 end

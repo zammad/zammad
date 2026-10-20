@@ -640,12 +640,12 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :name,                         limit: 200,   null: false
       t.string :display,                      limit: 200,   null: false
       t.string :data_type,                    limit: 100,   null: false
-      t.text :data_option,                    limit: 800.kilobytes + 1,  null: true
-      t.text :data_option_new,                limit: 800.kilobytes + 1,  null: true
+      t.jsonb :data_option,                   null: false, default: {}
+      t.jsonb :data_option_new,               null: false, default: {}
       t.boolean :editable,                                  null: false, default: true
       t.boolean :internal,                                  null: false, default: false
       t.boolean :active,                                    null: false, default: true
-      t.string :screens,                      limit: 2000,  null: true
+      t.jsonb :screens,                       null: false, default: {}
       t.boolean :to_create,                                 null: false, default: false
       t.boolean :to_migrate,                                null: false, default: false
       t.boolean :to_delete,                                 null: false, default: false
@@ -855,10 +855,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :core_workflows do |t|
       t.string :name,                     limit: 100, null: false
       t.string :object,                   limit: 100, null: true
-      t.text   :preferences,              limit: 500.kilobytes + 1, null: true
-      t.text   :condition_saved,          limit: 500.kilobytes + 1, null: true
-      t.text   :condition_selected,       limit: 500.kilobytes + 1, null: true
-      t.text   :perform,                  limit: 500.kilobytes + 1, null: true
+      t.jsonb  :preferences,              null: false, default: {}
+      t.jsonb  :condition_saved,          null: false, default: {}
+      t.jsonb  :condition_selected,       null: false, default: {}
+      t.jsonb  :perform,                  null: false, default: {}
       t.boolean :active,                  null: false, default: true
       t.boolean :stop_after_match,        null: false, default: false
       t.boolean :changeable,              null: false, default: true

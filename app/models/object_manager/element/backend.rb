@@ -60,9 +60,12 @@ class ObjectManager::Element::Backend
     screen_permission_options(permission_options)
   end
 
+  # the permission with the most rights wins, independent of the stored key order
   def screen_permission_options(permission_options)
     booleans = [true, false]
-    permission_options.each_with_object({}) do |(permission, options), result|
+    sorted   = permission_options.sort_by.with_index { |(permission, _options), index| [Auth::Permissions.level(permission), index] }
+
+    sorted.each_with_object({}) do |(permission, options), result|
 
       next if !authorized?(permission)
 

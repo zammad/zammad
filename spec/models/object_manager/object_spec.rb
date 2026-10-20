@@ -208,6 +208,25 @@ RSpec.describe ObjectManager::Object do
           expect(attribute[:screen]['create']['filter']).to eq([2, 4])
         end
       end
+
+      context 'when the agent permission is stored first' do
+        let(:screens) do
+          {
+            create: {
+              'ticket.agent':    {
+                filter: [3, 5]
+              },
+              'ticket.customer': {
+                filter: [2, 4]
+              }
+            }
+          }
+        end
+
+        it 'prefers agent over customer permissions' do
+          expect(attribute[:screen]['create']['filter']).to eq([3, 5])
+        end
+      end
     end
 
     context 'with a ticket record' do

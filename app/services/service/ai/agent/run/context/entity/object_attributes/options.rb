@@ -6,22 +6,27 @@ class Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Options < Serv
   end
 
   def prepare
-    return if entity_value.blank?
+    return if entity_value != false && entity_value.blank?
 
     options = object_attribute.data_option[:historical_options] || object_attribute.data_option[:options] || {}
-    return if !options.key?(entity_value)
+    return if !options.key?(value)
 
-    label = options[entity_value]
+    label = options[value]
 
-    label = entity_value if tree_select?
+    label = value if tree_select?
 
     {
-      value: entity_value,
+      value: value,
       label: label
     }
   end
 
   private
+
+  # boolean options are stored with string keys, the instruction lists them the same way
+  def value
+    @value ||= object_attribute.data_type == 'boolean' ? entity_value.to_s : entity_value
+  end
 
   def tree_select?
     %w[tree_select multi_tree_select].include?(object_attribute.data_type)

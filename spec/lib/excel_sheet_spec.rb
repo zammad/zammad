@@ -101,6 +101,27 @@ RSpec.describe ExcelSheet do
     end
   end
 
+  describe 'Boolean attribute values are shown with their configured labels', db_strategy: :reset do
+    let(:attribute)    { ObjectManager::Attribute.find_by(name: 'boolean_attribute') }
+    let(:ticket_true)  { create(:ticket, boolean_attribute: true) }
+    let(:ticket_false) { create(:ticket, boolean_attribute: false) }
+
+    before do
+      create(:object_manager_attribute_boolean, name: 'boolean_attribute')
+      ObjectManager::Attribute.migration_execute
+
+      ticket_true && ticket_false
+    end
+
+    it 'does show true value formatted' do
+      expect(document.value_lookup(ticket_true, 'boolean_attribute', attribute, nil)).to eq('yes')
+    end
+
+    it 'does show false value formatted' do
+      expect(document.value_lookup(ticket_false, 'boolean_attribute', attribute, nil)).to eq('no')
+    end
+  end
+
   describe 'Tags are not displayed in the excel sheet of the report #5904' do
     let(:ticket) { create(:ticket) }
     let(:tag1)   { create(:tag, o: ticket, tag: 'tag1') }

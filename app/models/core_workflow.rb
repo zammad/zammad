@@ -21,10 +21,10 @@ class CoreWorkflow < ApplicationModel
   scope :changeable, -> { where(changeable: true) }
   scope :object, ->(object) { where(object: [object, nil]) }
 
-  store :preferences
-  store :condition_saved
-  store :condition_selected
-  store :perform
+  attribute :preferences, :indifferent_json
+  attribute :condition_saved, :indifferent_json
+  attribute :condition_selected, :indifferent_json
+  attribute :perform, :indifferent_json
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

@@ -1,6 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::Permissions
+  LEVEL_CUSTOMER = 1
+  LEVEL_AGENT    = 2
+  LEVEL_ADMIN    = 3
+
   attr_reader :object, :query
 
   def initialize(object, query)
@@ -9,18 +13,24 @@ class Auth::Permissions
   end
 
   def self.authorized?(object, query)
+    return new(object, query).authorized? if object.id.blank?
+
     Auth::RequestCache.fetch_value(cache_key(object, query)) do
       new(object, query).authorized?
     end
-  rescue URI::GID::MissingModelIdError
-    new(object, query).authorized?
+  end
+
+  # rank of a permission name, used where the permission with the most rights wins
+  def self.level(permission)
+    case permission
+    when %r{^admin\.}   then LEVEL_ADMIN
+    when 'ticket.agent' then LEVEL_AGENT
+    else                     LEVEL_CUSTOMER
+    end
   end
 
   def self.cache_key(object, query)
-    object_key = object.to_global_id.to_s
-    query_key  = Array(query).join('|')
-
-    "permissions/#{object_key}_#{query_key}"
+    "permissions/#{object.class.name}/#{object.id}_#{Array(query).join('|')}"
   end
   private_class_method :cache_key
 

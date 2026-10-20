@@ -98,9 +98,9 @@ class ObjectManager::Attribute < ApplicationModel
 
   validates_with ObjectManager::Attribute::DataOptionValidator
 
-  store :screens
-  store :data_option
-  store :data_option_new
+  attribute :screens, :indifferent_json
+  attribute :data_option, :indifferent_json
+  attribute :data_option_new, :indifferent_json
 
   before_validation :set_base_options
 
@@ -1034,6 +1034,16 @@ is certain attribute used by triggers, overviews or schedulers
     when 'autocompletion_ajax_external_data_source'
       local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
     end
+
+    customsort_options_to_array
+  end
+
+  # custom sorted hash options would lose their order in the jsonb column, the admin UI stores them as array
+  def customsort_options_to_array
+    return if local_data_option[:customsort] != 'on'
+    return if !local_data_option[:options].is_a?(Hash)
+
+    local_data_option[:options] = local_data_option[:options].map { |value, name| { 'name' => name, 'value' => value.to_s } }
   end
 
   def inactive_must_be_unused_by_references

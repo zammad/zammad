@@ -70,6 +70,26 @@ RSpec.describe Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Optio
       end
     end
 
+    context 'with boolean options' do
+      let(:object_attribute) { create(:object_manager_attribute_boolean) }
+
+      context 'when entity value is true' do
+        let(:entity_value) { true }
+
+        it 'returns the value and label from the string keyed options' do
+          expect(options_context.prepare).to eq({ value: 'true', label: 'yes' })
+        end
+      end
+
+      context 'when entity value is false' do
+        let(:entity_value) { false }
+
+        it 'returns the value and label from the string keyed options' do
+          expect(options_context.prepare).to eq({ value: 'false', label: 'no' })
+        end
+      end
+    end
+
     context 'with array options (tree select)' do
       let(:object_attribute) { build(:object_manager_attribute_tree_select) }
 

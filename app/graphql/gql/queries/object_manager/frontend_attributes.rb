@@ -46,7 +46,7 @@ module Gql::Queries
 
         {
           attributes: frontend_attributes,
-          screens:    frontend_screens.map { |screen, attributes| { name: screen, attributes: attributes } }
+          screens:    frontend_screens.sort.map { |screen, attributes| { name: screen, attributes: attributes } }
         }
       end
 

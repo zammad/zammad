@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class UserInfo::Assets
-  LEVEL_CUSTOMER = 1
-  LEVEL_AGENT    = 2
-  LEVEL_ADMIN    = 3
+  LEVEL_CUSTOMER = Auth::Permissions::LEVEL_CUSTOMER
+  LEVEL_AGENT    = Auth::Permissions::LEVEL_AGENT
+  LEVEL_ADMIN    = Auth::Permissions::LEVEL_ADMIN
 
   attr_accessor :current_user_id, :level, :filter_attributes, :user
 
@@ -11,14 +11,7 @@ class UserInfo::Assets
   def self.level_for(user)
     return if user.blank?
 
-    level = LEVEL_CUSTOMER
-    user.permissions_with_child_names.each do |permission|
-      return LEVEL_ADMIN if permission.match?(%r{^admin\.})
-
-      level = LEVEL_AGENT if permission == 'ticket.agent'
-    end
-
-    level
+    user.permissions_with_child_names.map { |permission| Auth::Permissions.level(permission) }.max || LEVEL_CUSTOMER
   end
 
   # The levels of many users at once, as a Hash of user id to level. Ids of users that do not

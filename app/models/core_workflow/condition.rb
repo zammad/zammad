@@ -22,17 +22,15 @@ class CoreWorkflow::Condition
     case key_split[0]
     when 'article'
       key_split.shift
-      obj = @attribute_object.article
+      @attribute_object.article
     when 'session'
       key_split.shift
-      obj = user
-    when attributes.class.to_s.downcase
-      key_split.shift
-      obj = attributes
+      user
     else
       obj = attributes
+      key_split.shift if key_split[0] == obj.class.to_s.downcase
+      obj
     end
-    obj
   end
 
   def condition_key_value_tags(attribute, obj)

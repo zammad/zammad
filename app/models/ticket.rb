@@ -719,6 +719,7 @@ returns a hex color code
 
     customer = User.find_by(id: customer_id)
     return if !customer
+    return if organization_id.present? && organization_id == customer.organization_id
     return if organization_id.present? && customer.organization_id?(organization_id)
     return if organization.present? && customer.organization_id?(organization.id)
 

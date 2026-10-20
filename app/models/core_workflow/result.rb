@@ -67,7 +67,7 @@ class CoreWorkflow::Result
   end
 
   def workflows
-    CoreWorkflow.active.object(payload['class_name'])
+    @workflows ||= CoreWorkflow.active.object(payload['class_name']).to_a
   end
 
   def set_default

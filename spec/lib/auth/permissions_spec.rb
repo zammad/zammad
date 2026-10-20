@@ -226,4 +226,18 @@ RSpec.describe Auth::Permissions, type: :request do
       expect(unsaved_user).to have_received(:permissions).twice
     end
   end
+
+  describe '.level' do
+    it 'ranks admin permissions highest' do
+      expect(described_class.level('admin.organization')).to eq(described_class::LEVEL_ADMIN)
+    end
+
+    it 'ranks the agent permission above the customer permission' do
+      expect(described_class.level('ticket.agent')).to be > described_class.level('ticket.customer')
+    end
+
+    it 'ranks unknown permissions like the customer permission' do
+      expect(described_class.level('chat.agent')).to eq(described_class::LEVEL_CUSTOMER)
+    end
+  end
 end

@@ -633,8 +633,8 @@ RSpec.describe 'System > Objects', type: :system do
       await_empty_ajax_queue
 
       expected_data_options = {
-        true  => 'yes',
-        false => 'HELL NOO',
+        'true'  => 'yes',
+        'false' => 'HELL NOO',
       }
 
       wait(60).until { ObjectManager::Attribute.find_by(name: 'bool1')&.data_option&.dig('options') == expected_data_options }

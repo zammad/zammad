@@ -97,11 +97,6 @@ class FormUpdater::CoreWorkflow::Options < FormUpdater::CoreWorkflow::Backend
   def option_hash_label(name, value, all_options, historical_options)
     return all_options[value] if all_options[value].present?
 
-    # Special handling for boolean fields.
-    if %w[false true].include?(value)
-      return all_options[ActiveModel::Type::Boolean.new.cast(value)]
-    end
-
     # When the not existing option is inside the historical options or is the current value of the object we need to add the
     # option inside the frontend field.
     # The situations can happen, when options are removed in the object attribute configuration or when unknown values are

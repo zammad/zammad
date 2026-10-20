@@ -58,7 +58,7 @@ returns
 
       # only use object attributes
       clean_params = ActiveSupport::HashWithIndifferentAccess.new
-      new.attributes.each_key do |attribute|
+      attribute_names.each do |attribute|
         next if !data.key?(attribute)
 
         # check reference records, referenced by _id attributes
@@ -71,7 +71,7 @@ returns
         clean_params[attribute] = data[attribute]
       end
 
-      clean_params['form_id'] = data['form_id'] if data.key?('form_id') && new.respond_to?(:form_id)
+      clean_params['form_id'] = data['form_id'] if data.key?('form_id') && method_defined?(:form_id)
 
       if inside_nested
         clean_params['id'] = params[:id] if params[:id].present?
