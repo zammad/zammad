@@ -109,6 +109,16 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
     end
   end
 
+  describe '#initiate_authentication' do
+    let(:method_object) { instance_double(Auth::TwoFactor::AuthenticationMethod::SecurityKeys, initiate_authentication: { challenge: 'abc' }) }
+
+    before { allow(instance).to receive(:authentication_method_object).with('security_keys').and_return(method_object) }
+
+    it 'returns the initiation payload of the requested method' do
+      expect(instance.initiate_authentication('security_keys')).to eq({ challenge: 'abc' })
+    end
+  end
+
   describe '#authentication_method_object' do
     before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
