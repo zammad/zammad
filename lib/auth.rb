@@ -28,6 +28,7 @@ class Auth
     @increase_login_failed_attempts = false
     @only_verify_password           = only_verify_password
     @skip_login_failed_tracking     = skip_login_failed_tracking
+    @two_factor_failed              = false
 
     return if !@two_factor_payload.is_a?(Hash)
 
@@ -45,7 +46,7 @@ class Auth
       return true
     end
 
-    wait_and_raise Auth::Error::AuthenticationFailed
+    wait_and_raise failure_error
   end
 
   private
@@ -72,7 +73,17 @@ class Auth
       raise Auth::Error::TwoFactorRequired, auth_user
     end
 
-    auth_user.two_factor_payload_valid?(two_factor_method, two_factor_payload) || wait_and_raise(Auth::Error::TwoFactorFailed)
+    return true if auth_user.two_factor_payload_valid?(two_factor_method, two_factor_payload)
+
+    auth_user.increase_login_failed if !skip_login_failed_tracking
+    @two_factor_failed = true
+    false
+  end
+
+  def two_factor_failed? = @two_factor_failed
+
+  def failure_error
+    two_factor_failed? ? Auth::Error::TwoFactorFailed : Auth::Error::AuthenticationFailed
   end
 
   def wait_and_raise(...)
