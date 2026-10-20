@@ -83,8 +83,7 @@ job.run(true)
     # only execute jobs older than 1 min to give admin time to make last-minute changes
     return false if updated_at > 1.minute.ago
 
-    # check if job got stuck
-    return false if running == true && last_run_at && 1.day.ago < last_run_at
+    return false if running_actively?
 
     # check if jobs need to be executed
     # ignore if job was running within last 10 min.
@@ -93,12 +92,21 @@ job.run(true)
     true
   end
 
+  def runnable_on_demand?
+    !running_actively?
+  end
+
   def matching_count
     object_count, _objects = object.constantize.selectors(condition, limit: 1, execution_time: true)
     object_count || 0
   end
 
   private
+
+  # a job that is marked as running for more than a day is considered stuck
+  def running_actively?
+    running == true && last_run_at.present? && 1.day.ago < last_run_at
+  end
 
   def next_run_at_calculate(time = Time.zone.now)
     return nil if !active

@@ -369,6 +369,26 @@ RSpec.describe Job, type: :model do
       end
     end
 
+    describe '#runnable_on_demand?' do
+      subject(:job) { create(:job, active: false) }
+
+      it 'is true for an inactive job without time slots' do
+        expect(job).to be_runnable_on_demand
+      end
+
+      it 'is false while the job is running' do
+        job.update_columns(running: true, last_run_at: 1.minute.ago)
+
+        expect(job).not_to be_runnable_on_demand
+      end
+
+      it 'is true again when the running flag is stuck for over a day' do
+        job.update_columns(running: true, last_run_at: 2.days.ago)
+
+        expect(job).to be_runnable_on_demand
+      end
+    end
+
     describe '#executable?' do
       context 'for an inactive Job' do
         subject(:job) { create(:job, active: false) }

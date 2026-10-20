@@ -31,6 +31,19 @@ class Job extends App.ControllerSubContent
         buttons: [
           { name: __('New Scheduler'), 'data-type': 'new', class: 'btn--success' }
         ]
+        tableExtend:
+          customActions: [
+            {
+              name: 'run_now'
+              display: __('Run now')
+              icon: 'reload'
+              class: 'js-run-now'
+              callback: (id) =>
+                @confirmRunNow(id)
+              available: (job) ->
+                job.running isnt true or new Date(job.last_run_at) < new Date(Date.now() - 24 * 60 * 60 * 1000)
+            }
+          ]
       container: @el.closest('.content')
       veryLarge: true
       handlers: [
@@ -44,6 +57,33 @@ class Job extends App.ControllerSubContent
         @[key] = value
 
     @genericController.paginate(@page || 1, params)
+
+  confirmRunNow: (id) =>
+    new App.ControllerConfirm(
+      message: __('Are you sure you want to run this scheduler now? It will process all matching objects.')
+      callback: => @runNow(id)
+      container: @el.closest('.content')
+    )
+
+  runNow: (id) =>
+    @ajax(
+      id:   "job_run_#{id}"
+      type: 'POST'
+      url:  "#{@apiPath}/jobs/#{id}/run"
+      success: ->
+        App.Event.trigger 'notify', {
+          type:    'success'
+          msg:     __('The scheduler run was started.')
+          timeout: 3000
+        }
+      error: (xhr) ->
+        details = xhr.responseJSON || {}
+        App.Event.trigger 'notify', {
+          type:    'error'
+          msg:     details.error_human || details.error || __('The scheduler run could not be started.')
+          timeout: 4000
+        }
+    )
 
   fetchTimezones: =>
     @ajax(

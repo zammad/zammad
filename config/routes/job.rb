@@ -9,6 +9,7 @@ Zammad::Application.routes.draw do
   match api_path + '/jobs/:id',        to: 'jobs#show',    via: :get
   match api_path + '/jobs',            to: 'jobs#create',  via: :post
   match api_path + '/jobs/:id',        to: 'jobs#update',  via: :put
+  match api_path + '/jobs/:id/run',    to: 'jobs#run',     via: :post
   match api_path + '/jobs/:id',        to: 'jobs#destroy', via: :delete
 
 end

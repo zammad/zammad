@@ -23,6 +23,16 @@ class JobsController < ApplicationController
     model_search_render(Job, params)
   end
 
+  def run
+    job = Job.find(params[:id])
+
+    raise Exceptions::UnprocessableContent, __('This scheduler is already running.') if !job.runnable_on_demand?
+
+    JobRunJob.perform_later(job.id)
+
+    render json: {}, status: :accepted
+  end
+
   def destroy
     model_destroy_render(Job, params)
   end

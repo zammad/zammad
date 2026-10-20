@@ -33,6 +33,7 @@ class App.Job extends App.Model
     'processed',
     'next_run_at',
     'matching',
+    'running',
   ]
 
   uiUrl: =>
