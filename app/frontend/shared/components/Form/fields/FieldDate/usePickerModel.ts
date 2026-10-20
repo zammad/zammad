@@ -2,6 +2,8 @@
 
 import { computed } from 'vue'
 
+import { formatDateTimeValue } from './normalizeDateValue.ts'
+
 import type { DateTimeContext } from './types.ts'
 import type { Ref, WritableComputedRef } from 'vue'
 
@@ -20,6 +22,8 @@ type DateModel = any
 export const usePickerModel = (
   context: Ref<DateTimeContext>,
   localValue: WritableComputedRef<DateModel>,
+  minDate: Ref<Date | string | undefined>,
+  maxDate: Ref<Date | string | undefined>,
 ) => {
   const pickerModel = computed<DateModel>({
     get: () => localValue.value,
@@ -36,5 +40,31 @@ export const usePickerModel = (
     },
   })
 
-  return { pickerModel }
+  // The picker rejects a day whose 08:00 start time lies outside the bounds (today in a future-
+  // or past-only field), so such a click selects the bound instead. Those bounds date from the
+  // opening, so the click time is the closer one.
+  const outOfRangeBound = (date: Date) => {
+    if (minDate.value && date < new Date(minDate.value)) {
+      return context.value.futureOnly ? new Date() : new Date(minDate.value)
+    }
+
+    if (maxDate.value && date > new Date(maxDate.value)) {
+      return context.value.pastOnly ? new Date() : new Date(maxDate.value)
+    }
+
+    return null
+  }
+
+  const clampDateClick = (date: Date) => {
+    if (context.value.type !== 'datetime' || context.value.range) return false
+
+    const bound = outOfRangeBound(date)
+    if (!bound) return false
+
+    localValue.value = formatDateTimeValue(bound)
+
+    return true
+  }
+
+  return { pickerModel, clampDateClick }
 }

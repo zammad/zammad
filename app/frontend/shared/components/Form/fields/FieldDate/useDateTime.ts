@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 
 import { i18n } from '#shared/i18n.ts'
 
@@ -14,13 +14,21 @@ export const useDateTime = (context: Ref<DateTimeContext>) => {
     return 'yyyy-MM-dd'
   })
 
+  // Refreshed on every open, else a future-only field mounted before 08:00 accepts today 08:00
+  // once it has passed.
+  const now = ref(new Date())
+
+  const refreshNow = () => {
+    now.value = new Date()
+  }
+
   const maxDate = computed(() => {
-    if (context.value.pastOnly) return new Date()
+    if (context.value.pastOnly) return now.value
     return context.value.maxDate
   })
 
   const minDate = computed(() => {
-    if (context.value.futureOnly) return new Date()
+    if (context.value.futureOnly) return now.value
     return context.value.minDate
   })
 
@@ -42,6 +50,15 @@ export const useDateTime = (context: Ref<DateTimeContext>) => {
   })
 
   const is24 = computed(() => i18n.getTimeFormatType() === '24hour')
+
+  // Picking a date without a time defaults to 08:00, like the legacy UI. Not for ranges, where
+  // an end at 08:00 would cut off most of the last day.
+  const timeConfig = computed(() => ({
+    enableTimePicker: timePicker.value,
+    is24: is24.value,
+    ignoreTimeValidation: !timePicker.value,
+    startTime: context.value.range ? undefined : { hours: 8, minutes: 0 },
+  }))
 
   const ariaLabels = computed(() => ({
     toggleOverlay: i18n.t('Toggle the overlay'),
@@ -112,9 +129,10 @@ export const useDateTime = (context: Ref<DateTimeContext>) => {
   return {
     ariaLabels,
     displayFormat,
-    is24,
     maxDate,
     minDate,
+    refreshNow,
+    timeConfig,
     timePicker,
     valueFormat,
   }

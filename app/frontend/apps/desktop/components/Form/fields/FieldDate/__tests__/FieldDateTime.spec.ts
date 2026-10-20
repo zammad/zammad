@@ -320,6 +320,101 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('2021-04-13 11:10')
     })
 
+    it('defaults the time to 08:00 when picking a date', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByText('15'))
+
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
+      expect(emittedInput[0][0]).toBe('2021-04-15T08:00:00Z')
+      expect(input).toHaveDisplayValue('2021-04-15 08:00')
+    })
+
+    it('keeps the current time when picking a range', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+        range: true,
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByText('12'))
+      await view.events.click(view.getByText('14'))
+
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
+      expect(emittedInput.at(-1)?.at(0)).toEqual(['2021-04-12T11:10:00Z', '2021-04-14T11:10:00Z'])
+    })
+
+    it('falls back to the current time when 08:00 today is already past, if futureOnly present', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+        futureOnly: true,
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByText('12'))
+
+      expect(view.emitted().inputRaw).toBeUndefined()
+
+      await view.events.click(view.getByText('13'))
+
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
+      expect(emittedInput[0][0]).toBe('2021-04-13T11:10:00Z')
+      expect(input).toHaveDisplayValue('2021-04-13 11:10')
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+
+    it('falls back to the current time when 08:00 passed after mounting, if futureOnly present', async () => {
+      vi.setSystemTime(new Date('2021-04-13T07:00:00Z'))
+
+      const view = await renderDateField({
+        type: 'datetime',
+        futureOnly: true,
+      })
+
+      vi.setSystemTime(new Date('2021-04-13T09:00:00Z'))
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByText('13'))
+
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
+      expect(emittedInput.at(-1)?.at(0)).toMatch(/^2021-04-13T09:00:.*Z$/)
+    })
+
+    it('falls back to the current time when 08:00 today is still ahead, if pastOnly present', async () => {
+      vi.setSystemTime(new Date('2021-04-13T06:30:00Z'))
+
+      const view = await renderDateField({
+        type: 'datetime',
+        pastOnly: true,
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByText('13'))
+
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
+      expect(emittedInput.at(-1)?.at(0)).toMatch(/^2021-04-13T06:30:.*Z$/)
+      expect(input).toHaveDisplayValue('2021-04-13 06:30')
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+
     it('renders input and allows entering timestamp', async () => {
       const view = await renderDateField({
         type: 'datetime',

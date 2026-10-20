@@ -184,7 +184,7 @@ describe('ticket create view', () => {
           },
           groupId: 'gid://zammad/Group/1',
           objectAttributeValues: [],
-          pendingTime: '2024-11-29T00:00:00Z',
+          pendingTime: '2024-11-29T08:00:00Z',
           priorityId: 'gid://zammad/Ticket::Priority/2',
           stateId: 'gid://zammad/Ticket::State/3',
           title: 'Test Ticket',

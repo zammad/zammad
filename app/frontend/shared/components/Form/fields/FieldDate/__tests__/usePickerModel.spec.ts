@@ -15,7 +15,12 @@ const setup = (context: Partial<DateTimeContext> = {}, initial: RangeValue = nul
       stored.value = value
     },
   })
-  const model = usePickerModel(ref(context) as unknown as Ref<DateTimeContext>, localValue)
+  const model = usePickerModel(
+    ref(context) as unknown as Ref<DateTimeContext>,
+    localValue,
+    ref(context.minDate),
+    ref(context.maxDate),
+  )
 
   return { stored, ...model }
 }
@@ -43,5 +48,71 @@ describe('usePickerModel', () => {
     pickerModel.value = ['2021-04-14', '2021-04-28']
 
     expect(stored.value).toEqual(['2021-04-14', '2021-04-28'])
+  })
+
+  describe('clampDateClick', () => {
+    beforeEach(() => {
+      vi.useFakeTimers().setSystemTime(new Date('2021-04-13T11:10:00Z'))
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('selects the minimum for a clicked time before it', () => {
+      const { stored, clampDateClick } = setup({
+        type: 'datetime',
+        minDate: '2021-04-13T10:00:00Z',
+      })
+
+      expect(clampDateClick(new Date('2021-04-13T08:00:00Z'))).toBe(true)
+      expect(stored.value).toBe('2021-04-13T10:00:00Z')
+    })
+
+    it('selects the maximum for a clicked time after it', () => {
+      const { stored, clampDateClick } = setup({
+        type: 'datetime',
+        maxDate: '2021-04-13T07:00:00Z',
+      })
+
+      expect(clampDateClick(new Date('2021-04-13T08:00:00Z'))).toBe(true)
+      expect(stored.value).toBe('2021-04-13T07:00:00Z')
+    })
+
+    it.each(['futureOnly', 'pastOnly'])('selects the current time, if %s present', (bound) => {
+      const { stored, clampDateClick } = setup({
+        type: 'datetime',
+        [bound]: true,
+        minDate: bound === 'futureOnly' ? '2021-04-13T10:00:00Z' : undefined,
+        maxDate: bound === 'pastOnly' ? '2021-04-13T07:00:00Z' : undefined,
+      })
+
+      expect(clampDateClick(new Date('2021-04-13T08:00:00Z'))).toBe(true)
+      expect(stored.value).toBe('2021-04-13T11:10:00Z')
+    })
+
+    it('leaves a clicked time within the bounds to the picker', () => {
+      const { stored, clampDateClick } = setup({
+        type: 'datetime',
+        minDate: '2021-04-13T07:00:00Z',
+        maxDate: '2021-04-13T10:00:00Z',
+      })
+
+      expect(clampDateClick(new Date('2021-04-13T08:00:00Z'))).toBe(false)
+      expect(stored.value).toBeNull()
+    })
+
+    it.each([
+      { name: 'a date field', context: { type: 'date' } },
+      { name: 'a range', context: { type: 'datetime', range: true } },
+    ])('leaves $name to the picker', ({ context }) => {
+      const { stored, clampDateClick } = setup({
+        ...context,
+        minDate: '2021-04-13T10:00:00Z',
+      })
+
+      expect(clampDateClick(new Date('2021-04-13T08:00:00Z'))).toBe(false)
+      expect(stored.value).toBeNull()
+    })
   })
 })

@@ -27,13 +27,18 @@ const contextReactive = toRef(props, 'context')
 
 const { localValue } = useValue(contextReactive)
 
-const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
+const { ariaLabels, displayFormat, maxDate, minDate, refreshNow, timeConfig, valueFormat } =
   useDateTime(contextReactive)
 
 // Shared model handling: drops a half-selected range when `partialRange` is
 // false so only a complete range reaches the form value — keeping the mobile
 // field consistent with desktop.
-const { pickerModel } = usePickerModel(contextReactive, localValue)
+const { pickerModel, clampDateClick } = usePickerModel(
+  contextReactive,
+  localValue,
+  minDate,
+  maxDate,
+)
 
 const config = {
   keepActionRow: true,
@@ -59,11 +64,30 @@ const actionRow = {
 const input = ref<HTMLInputElement>()
 const picker = ref()
 
+// The inline picker applies its 08:00 start time only on mount, so a cleared field remounts it.
+const pickerKey = ref(0)
+let clearedByKeyboard = false
+
+const clearByKeyboard = () => {
+  clearedByKeyboard = true
+  picker.value?.clearValue()
+}
+
+const remountPicker = () => {
+  pickerKey.value += 1
+
+  if (!clearedByKeyboard) return
+
+  clearedByKeyboard = false
+  nextTick(() => input.value?.focus())
+}
+
 const showPicker = ref(false)
 
 const pickerDisplayStyle = computed(() => (showPicker.value ? 'block' : 'none'))
 
 const expandPicker = () => {
+  if (!showPicker.value) refreshNow()
   showPicker.value = true
 
   nextTick(() => {
@@ -102,6 +126,7 @@ useEventListener('click', (e) => {
   <div class="flex w-full">
     <!-- eslint-disable vuejs-accessibility/aria-props -->
     <VueDatePicker
+      :key="pickerKey"
       ref="picker"
       v-model="pickerModel"
       :class="{ 'pointer-events-none': context.disabled }"
@@ -109,11 +134,7 @@ useEventListener('click', (e) => {
       :disabled="context.disabled"
       :range="rangeConfig"
       :partial-range="context.partialRange"
-      :time-config="{
-        enableTimePicker: timePicker,
-        is24: is24,
-        ignoreTimeValidation: !timePicker,
-      }"
+      :time-config="timeConfig"
       :formats="displayFormat"
       :locale="dateFnsLocale"
       :max-date="maxDate"
@@ -137,6 +158,8 @@ useEventListener('click', (e) => {
       dark
       @open="expandPicker"
       @close="collapsePicker"
+      @date-click="clampDateClick"
+      @cleared="remountPicker"
       @blur="context.handlers.blur"
     >
       <template #dp-input="{ value, onInput, onEnter, onTab, onBlur, onKeypress, onPaste }">
@@ -171,7 +194,7 @@ useEventListener('click', (e) => {
           role="button"
           tabindex="0"
           @click.stop="picker?.clearValue()"
-          @keypress.space.prevent.stop="picker?.clearValue()"
+          @keypress.space.prevent.stop="clearByKeyboard"
         />
       </template>
       <template #clock-icon>
