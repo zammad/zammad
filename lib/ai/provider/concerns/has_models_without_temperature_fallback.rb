@@ -4,6 +4,12 @@ class AI::Provider
   module Concerns::HasModelsWithoutTemperatureFallback
     extend ActiveSupport::Concern
 
+    class_methods do
+      def model_without_temperature?(model)
+        self::DEFAULT_OPTIONS[:models_without_temperature].any? { |model_pattern| model.to_s.start_with?(model_pattern) }
+      end
+    end
+
     included do
       private
 
@@ -12,8 +18,7 @@ class AI::Provider
         return config[:model_temperature_support] if config.key?(:model_temperature_support)
 
         # Fall back to the hardcoded list for backward compatibility.
-        current_model = options[:model]
-        options[:models_without_temperature].none? { |model_pattern| current_model.start_with?(model_pattern) }
+        !self.class.model_without_temperature?(options[:model])
       end
     end
   end

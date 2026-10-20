@@ -31,15 +31,20 @@ class AI::Provider::Anthropic < AI::Provider
   end
 
   def self.check_temperature_support!(config, related_object: nil)
+    model            = config[:model] || DEFAULT_OPTIONS[:model]
+    temperature_sent = !model_without_temperature?(model)
+
+    request_body = {
+      model:,
+      max_tokens: 1,
+      messages:   [{ role: 'user', content: 'Hello' }],
+      stream:     false,
+    }
+    request_body[:temperature] = DEFAULT_OPTIONS[:temperature] if temperature_sent
+
     response = UserAgent.post(
       "#{ANTHROPIC_API_BASE_URL}/messages",
-      {
-        model:       config[:model] || DEFAULT_OPTIONS[:model],
-        max_tokens:  1,
-        messages:    [{ role: 'user', content: 'Hello' }],
-        temperature: DEFAULT_OPTIONS[:temperature],
-        stream:      false,
-      },
+      request_body,
       {
         **REQUEST_TIMEOUT_OPTIONS,
         verify_ssl: true,
@@ -49,7 +54,7 @@ class AI::Provider::Anthropic < AI::Provider
       },
     )
 
-    evaluate_temperature_probe!(response)
+    evaluate_temperature_probe!(response, temperature_sent:)
   rescue CheckTemperatureSupportError
     raise
   rescue => e

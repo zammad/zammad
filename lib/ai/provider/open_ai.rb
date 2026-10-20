@@ -11,7 +11,7 @@ class AI::Provider::OpenAI < AI::Provider
   DEFAULT_OPTIONS = {
     temperature:                0.1,
     model:                      'gpt-4.1',
-    models_without_temperature: ['gpt-5']
+    models_without_temperature: [%r{\Agpt-[5-9]}, %r{\Ao\d}]
   }.freeze
 
   RECOMMENDED_EMBEDDING_MODEL = 'text-embedding-3-small'.freeze
@@ -25,15 +25,20 @@ class AI::Provider::OpenAI < AI::Provider
   end
 
   def self.check_temperature_support!(config, related_object: nil)
+    model            = config[:model] || DEFAULT_OPTIONS[:model]
+    temperature_sent = !model_without_temperature?(model)
+
+    request_body = {
+      model:,
+      messages: [{ role: 'user', content: 'Hello' }],
+      stream:   false,
+      store:    false,
+    }
+    request_body[:temperature] = DEFAULT_OPTIONS[:temperature] if temperature_sent
+
     response = UserAgent.post(
       "#{OPENAI_API_BASE_URL}/chat/completions",
-      {
-        model:       config[:model] || DEFAULT_OPTIONS[:model],
-        messages:    [{ role: 'user', content: 'Hello' }],
-        temperature: DEFAULT_OPTIONS[:temperature],
-        stream:      false,
-        store:       false,
-      },
+      request_body,
       {
         **REQUEST_TIMEOUT_OPTIONS,
         verify_ssl:   true,
@@ -43,7 +48,7 @@ class AI::Provider::OpenAI < AI::Provider
       },
     )
 
-    evaluate_temperature_probe!(response)
+    evaluate_temperature_probe!(response, temperature_sent:)
   rescue CheckTemperatureSupportError
     raise
   rescue => e

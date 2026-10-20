@@ -44,4 +44,25 @@ RSpec.describe AI::Provider::Concerns::HasModelsWithoutTemperatureFallback do
       end
     end
   end
+
+  describe '.model_without_temperature?' do
+    it 'matches every OpenAI model from GPT-5 on', :aggregate_failures do
+      expect(AI::Provider::OpenAI.model_without_temperature?('gpt-5-mini')).to be(true)
+      expect(AI::Provider::OpenAI.model_without_temperature?('gpt-6')).to be(true)
+      expect(AI::Provider::OpenAI.model_without_temperature?('gpt-4.1')).to be(false)
+      expect(AI::Provider::OpenAI.model_without_temperature?('gpt-4o')).to be(false)
+      expect(AI::Provider::OpenAI.model_without_temperature?('gpt-35-turbo')).to be(false)
+      expect(AI::Provider::OpenAI.model_without_temperature?('gpt-oss-120b')).to be(false)
+    end
+
+    it 'matches the OpenAI reasoning models', :aggregate_failures do
+      expect(AI::Provider::CustomOpenAI.model_without_temperature?('o3')).to be(true)
+      expect(AI::Provider::CustomOpenAI.model_without_temperature?('o4-mini')).to be(true)
+      expect(AI::Provider::CustomOpenAI.model_without_temperature?('ollama/llama3')).to be(false)
+    end
+
+    it 'matches nothing without a model' do
+      expect(AI::Provider::CustomOpenAI.model_without_temperature?(nil)).to be(false)
+    end
+  end
 end
