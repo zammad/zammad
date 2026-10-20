@@ -631,6 +631,7 @@ check if website is allowed for chat
 
   def website_allowed?(website)
     return true if allowed_websites.blank?
+    return false if website.blank?
 
     allowed_websites.split(';').any? do |allowed_website|
       website.downcase.include?(allowed_website.downcase.strip)

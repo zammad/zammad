@@ -18,6 +18,16 @@ RSpec.describe Chat, type: :model do
       result = chat.website_allowed?('https://www.zammad.com')
       expect(result).to be false
     end
+
+    it 'detects missing website as non-allowed', :aggregate_failures do
+      expect(chat.website_allowed?(nil)).to be false
+      expect(chat.website_allowed?('')).to be false
+    end
+
+    it 'allows missing website without allowed websites' do
+      chat.update!(allowed_websites: nil)
+      expect(chat.website_allowed?(nil)).to be true
+    end
   end
 
   describe '#destroy' do
