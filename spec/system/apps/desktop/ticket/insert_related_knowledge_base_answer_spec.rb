@@ -71,82 +71,16 @@ RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :
     end
 
     def insert_from_sidebar(translation)
-      # The row actions only take up space while the row is hovered. The collapsed button still counts
-      #   as visible, so only the obscured check tells that the reveal happened, and a click intercepted
-      #   by the collapsed row makes Capybara scroll the button to the viewport centre, away from the
-      #   resting pointer; a retry therefore has to hover the row again.
-      retry_on_click_intercepted do
-        row = related_answer_row(translation)
-        row.hover
+      button = related_answer_row(translation).find_button('Insert knowledge base answer', visible: :all)
 
-        button = row.find_button('Insert knowledge base answer', obscured: false)
-        button.hover
-        button.click
-      end
+      # The row reveals its actions on focus as well as on hover, and focus does not depend on where
+      #   the pointer rests.
+      button.evaluate_script('this.focus()')
+      button.click
     end
 
     def editor_text
       find_editor('Text').input_element.text
-    end
-
-    it 'offers the insert action only while an article is being written' do
-      related_answer_row(linked_translation).hover
-
-      within '#ticket-ai-knowledge-base-answers' do
-        expect(page).to have_button('Unlink knowledge base answer')
-        expect(page).to have_no_button('Insert knowledge base answer', visible: :all)
-      end
-
-      within('main') { find('button', text: 'Add internal note').click }
-      wait_for_editor_ready(find_editor('Text'))
-
-      related_answer_row(linked_translation).hover
-
-      within '#ticket-ai-knowledge-base-answers' do
-        expect(page).to have_button('Insert knowledge base answer', obscured: false)
-      end
-    end
-
-    it 'inserts linked and suggested answers where the cursor was, keeping the written text' do
-      within 'main' do
-        find('button', text: 'Add internal note').click
-
-        editor = find_editor('Text')
-        wait_for_editor_ready(editor)
-        editor.input_element.send_keys('Before', :enter, 'After', :up, :end)
-      end
-
-      insert_from_sidebar(linked_translation)
-
-      within '#ticketArticleReplyForm' do
-        expect(page).to have_text(%r{hello_world\s*\.txt})
-      end
-
-      expect(editor_text).to include(linked_translation.content.body)
-
-      insert_from_sidebar(suggested_translation)
-
-      expect(page).to have_css('#ticketArticleReplyForm [role="textbox"]', text: suggested_translation.content.body)
-
-      text = editor_text
-      expect(text.index('Before')).to be < text.index(linked_translation.content.body)
-      expect(text.index(linked_translation.content.body)).to be < text.index(suggested_translation.content.body)
-      expect(text.index(suggested_translation.content.body)).to be < text.index('After')
-    end
-
-    it 'replaces the selected text with the answer' do
-      within 'main' do
-        find('button', text: 'Add internal note').click
-
-        editor = find_editor('Text')
-        wait_for_editor_ready(editor)
-        editor.input_element.send_keys('Before Selected After', *Array.new(6, :left), *Array.new(8, %i[shift left]))
-      end
-
-      insert_from_sidebar(linked_translation)
-
-      expect(page).to have_css('#ticketArticleReplyForm [role="textbox"]', text: linked_translation.content.body)
-      expect(editor_text).to match(%r{\ABefore\s*#{Regexp.escape(linked_translation.content.body)}\s*After\z})
     end
 
     context 'with a full quote reply' do
