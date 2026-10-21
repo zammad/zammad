@@ -159,6 +159,31 @@ Some Text',
         {
           data:    'From: me@example.com
 To: customer@example.com
+Subject: some subject / with agent login in another case
+X-Zammad-Ticket-owner: AGENT1
+
+Some Text',
+          channel: {
+            trusted: true,
+          },
+          success: true,
+          result:  {
+            0 => {
+              state:    'new',
+              priority: '2 normal',
+              title:    'some subject / with agent login in another case',
+              owner:    User.find(1),
+            },
+            1 => {
+              sender:   'Customer',
+              type:     'email',
+              internal: false,
+            },
+          },
+        },
+        {
+          data:    'From: me@example.com
+To: customer@example.com
 Subject: some subject / with agent email
 X-Zammad-Ticket-owner: agent1@example.com
 

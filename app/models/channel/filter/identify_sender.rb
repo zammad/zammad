@@ -16,7 +16,8 @@ class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
 
     # check if sender exists in database
     if !customer_user && mail[ :'x-zammad-customer-login' ].present?
-      customer_user = User.find_by(login: mail[ :'x-zammad-customer-login' ])
+      # Deliberately case-sensitive, unlike the other login lookups, see User.by_login_case_sensitive.
+      customer_user = User.by_login_case_sensitive(mail[ :'x-zammad-customer-login' ]).take
     end
     if !customer_user && mail[ :'x-zammad-customer-email' ].present?
       customer_user = User.find_by(email: mail[ :'x-zammad-customer-email' ])

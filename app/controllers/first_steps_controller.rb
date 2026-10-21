@@ -207,7 +207,7 @@ class FirstStepsController < ApplicationController
   end
 
   def test_customer
-    User.find_by(login: 'nicole.braun@zammad.org')
+    User.by_login('nicole.braun@zammad.org').take
   end
 
   def check_availability(result)

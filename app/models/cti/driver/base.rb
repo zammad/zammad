@@ -208,7 +208,7 @@ class Cti::Driver::Base
 
     # based on user param
     if !user && @params[:user].present?
-      user = User.find_by(login: @params[:user].downcase)
+      user = User.by_login(@params[:user]).take
     end
 
     # based on user_id param

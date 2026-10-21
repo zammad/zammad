@@ -27,8 +27,13 @@ returns
       raise ArgumentError, "Valid lookup attribute required (#{lookup_keys.join(', ')})" if attr.empty?
 
       Auth::RequestCache.fetch_value("#{self}/lookup/#{Digest::MD5.hexdigest(Marshal.dump(attr))}") do
-        find_by(attr)
+        lookup_relation(attr).take
       end
+    end
+
+    # A model overrides this for a key that has a dedicated finder.
+    def lookup_relation(attr)
+      where(attr)
     end
 
 =begin

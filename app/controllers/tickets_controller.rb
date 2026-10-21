@@ -146,7 +146,7 @@ class TicketsController < ApplicationController
           local_customer = User.find_by(email: clean_customer[:email].downcase)
         end
         if !local_customer && clean_customer[:login].present?
-          local_customer = User.find_by(login: clean_customer[:login].downcase)
+          local_customer = User.by_login(clean_customer[:login]).take
         end
         if !local_customer
           role_ids = Role.signup_role_ids

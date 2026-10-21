@@ -48,6 +48,14 @@ RSpec.describe ApplicationModel::CanAssociations, type: :model do
         .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
     end
 
+    it 'raises error if has many users association is given the login in another case' do
+      create(:user, login: 'jdoe')
+      params = { name: 'org', members: ['JDOE'] }
+
+      expect { Organization.association_name_to_id_convert(params) }
+        .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
+    end
+
     it 'converts non-user has many association by name' do
       token  = create(:token)
       params = { email: 'email@example.org', tokens: [token.name] }
@@ -102,6 +110,14 @@ RSpec.describe ApplicationModel::CanAssociations, type: :model do
         .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
     end
 
+    it 'raises error if belongs to users association is given the login in another case' do
+      create(:user, login: 'jdoe')
+      params = { name: 'token', user: 'JDOE' }
+
+      expect { Token.association_name_to_id_convert(params) }
+        .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
+    end
+
     it 'converts non-user belongs to association by name' do
       organization = create(:organization)
       params       = { email: 'email@example.org', organization: organization.name }
@@ -129,6 +145,34 @@ RSpec.describe ApplicationModel::CanAssociations, type: :model do
       params       = { email: 'email@example.org', organization: organization.id }
 
       expect { User.association_name_to_id_convert(params) }
+        .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
+    end
+  end
+
+  describe '#associations_from_param' do
+    it 'assigns has many users association by login' do
+      user         = create(:user)
+      organization = create(:organization)
+
+      organization.associations_from_param(members: [user.login])
+
+      expect(organization.member_ids).to eq([user.id])
+    end
+
+    it 'assigns has many users association by a login given in a nested array' do
+      user         = create(:user)
+      organization = create(:organization)
+
+      organization.associations_from_param(members: [[user.login]])
+
+      expect(organization.member_ids).to eq([user.id])
+    end
+
+    it 'raises error if has many users association is given the login in another case' do
+      create(:user, login: 'jdoe')
+      organization = create(:organization)
+
+      expect { organization.associations_from_param(members: ['JDOE']) }
         .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
     end
   end

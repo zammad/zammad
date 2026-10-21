@@ -4,7 +4,8 @@ class Authorization::Provider::OpenidConnect < Authorization::Provider
   private
 
   def find_user
-    user = User.find_by(login: uid)
+    # Deliberately case-sensitive, unlike the other login lookups, see User.by_login_case_sensitive.
+    user = User.by_login_case_sensitive(uid).take
 
     if !user && !Setting.get('user_email_multiple_use') && info['email'].present?
       user = User.find_by(email: info['email'].downcase)

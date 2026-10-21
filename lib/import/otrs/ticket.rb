@@ -168,7 +168,7 @@ module Import
       end
 
       def user_lookup(login)
-        ::User.find_by(login: login.downcase)
+        ::User.by_login(login).take
       end
 
       def first_customer_id(articles)

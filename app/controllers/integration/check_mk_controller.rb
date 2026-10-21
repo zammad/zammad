@@ -97,7 +97,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     # define customer of ticket
     customer = nil
     if params[:customer].present?
-      customer = User.find_by(login: params[:customer].downcase)
+      customer = User.by_login(params[:customer]).take
       if !customer
         customer = User.find_by(email: params[:customer].downcase)
       end

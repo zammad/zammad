@@ -24,6 +24,22 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Lookup::Attributes, sequence
     expect(provided[:instance]).to eq(current_user)
   end
 
+  it 'finds entries via a login differing only in case' do
+
+    current_user = create(:user)
+
+    provided = process(
+      found_ids:            [],
+      model_class:          model_class,
+      external_sync_source: external_sync_source,
+      mapped:               {
+        login: current_user.login.upcase,
+      }
+    )
+
+    expect(provided[:instance]).to eq(current_user)
+  end
+
   it "doesn't find already synced/found entries with same lookup attributes" do
 
     other_user = create(:user)

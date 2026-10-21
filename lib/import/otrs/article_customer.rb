@@ -22,7 +22,7 @@ module Import
           return if !email
 
           user   = ::User.find_by(email: email)
-          user ||= ::User.find_by(login: email)
+          user ||= ::User.by_login(email).take
           user
         end
 

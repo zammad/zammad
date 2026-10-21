@@ -89,6 +89,7 @@ returns
 
         lookup = nil
         if class_object == User
+          # User.lookup(login:) is case-sensitive, unlike the other login lookups, see User.by_login_case_sensitive.
           if !lookup
             lookup = class_object.lookup(login: value)
           end
@@ -389,6 +390,7 @@ returns
               raise Exceptions::UnprocessableContent, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
             end
 
+            # User.lookup(login:) is case-sensitive, unlike the other login lookups, see User.by_login_case_sensitive.
             if !lookup
               lookup = class_object.lookup(login: value)
             end
@@ -436,6 +438,7 @@ returns
               raise Exceptions::UnprocessableContent, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
             end
 
+            # User.lookup(login:) is case-sensitive, unlike the other login lookups, see User.by_login_case_sensitive.
             if !lookup
               lookup = class_object.lookup(login: item)
             end

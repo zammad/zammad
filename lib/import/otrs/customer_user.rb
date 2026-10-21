@@ -43,7 +43,7 @@ module Import
       end
 
       def updated?(customer)
-        @local_customer = ::User.find_by(login: customer[:login])
+        @local_customer = ::User.by_login(customer[:login]).take
         return false if !@local_customer
 
         # do not update user if it is already agent

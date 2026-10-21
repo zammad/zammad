@@ -61,6 +61,21 @@ RSpec.describe Authorization, type: :model do
       end
     end
 
+    shared_examples 'matching the login as given' do
+      context 'when the uid differs from an existing login only in case' do
+        let(:other_user) { create(:agent) }
+        let(:auth_hash)  { super().merge('uid' => uid.upcase, 'info' => { 'email' => other_user.email }) }
+
+        before { existing_user.update!(login: uid) }
+
+        it 'links the account found by email, not the one with the login' do
+          authorization = described_class.create_from_hash(auth_hash, nil)
+
+          expect(authorization.user).to eq(other_user)
+        end
+      end
+    end
+
     # These providers have no reliable email verification signal, so they
     # link purely on a matching email address.
     context 'when the provider has no email verification signal' do
@@ -157,6 +172,14 @@ RSpec.describe Authorization, type: :model do
       context 'when NameID does not match any login' do
         include_examples 'linking the account'
       end
+
+      include_examples 'matching the login as given'
+    end
+
+    context 'with OpenID Connect' do
+      let(:provider) { 'openid_connect' }
+
+      include_examples 'matching the login as given'
     end
 
     context 'when auto-link is disabled' do

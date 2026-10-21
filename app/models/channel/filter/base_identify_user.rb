@@ -8,7 +8,7 @@ class Channel::Filter::BaseIdentifyUser
       attrs[:login] = EmailHelper::Idn.to_unicode(attrs[:login])
     end
 
-    if (user = User.find_by('email = :email OR login = :email', attrs))
+    if (user = User.by_login_or_email(attrs[:email]).take)
       if user.no_name? && attrs[:firstname].present?
         user.name_from_channel_import = true
         user.update!(attrs.slice(:firstname))

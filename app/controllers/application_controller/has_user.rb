@@ -117,6 +117,6 @@ module ApplicationController::HasUser
     end
 
     # find user for execution based on the header
-    User.where('login = :param OR email = :param', param: identifier).first
+    User.by_login_or_email(identifier).first
   end
 end

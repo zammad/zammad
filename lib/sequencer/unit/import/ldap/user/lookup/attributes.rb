@@ -7,10 +7,16 @@ class Sequencer::Unit::Import::Ldap::User::Lookup::Attributes < Sequencer::Unit:
   private
 
   def lookup(attribute:, value:)
-    entries = model_class.where(attribute => value).to_a
+    entries = scope_for(attribute, value).to_a
     return if entries.blank?
 
     not_synced(entries)
+  end
+
+  def scope_for(attribute, value)
+    return model_class.by_login(value) if attribute == :login
+
+    model_class.where(attribute => value)
   end
 
   def not_synced(entries)

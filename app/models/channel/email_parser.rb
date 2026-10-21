@@ -465,6 +465,7 @@ returns
             if item.new.respond_to?(:name)
               assoc_object = item.lookup(name: mail[header.to_sym])
             end
+            # User.lookup(login:) is case-sensitive, unlike the other login lookups, see User.by_login_case_sensitive.
             if !assoc_object && item.new.respond_to?(:login)
               assoc_object = item.lookup(login: mail[header.to_sym])
             end

@@ -42,6 +42,17 @@ RSpec.describe Channel::Filter::IdentifySender, type: :channel_filter do
 
         expect(mail_hash[:'x-zammad-ticket-customer_id']).to eq(user.id)
       end
+
+      context 'when it differs from the stored login only in case' do
+        let(:sender)    { create(:user) }
+        let(:mail_hash) { { 'x-zammad-customer-login': user.login.upcase, from_email: sender.email } }
+
+        it 'does not match the user and sets customer to the sender' do
+          filter(mail_hash)
+
+          expect(mail_hash[:'x-zammad-ticket-customer_id']).to eq(sender.id)
+        end
+      end
     end
 
     context 'when x-zammad-customer-email present' do

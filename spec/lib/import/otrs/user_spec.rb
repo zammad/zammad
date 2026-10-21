@@ -37,7 +37,7 @@ RSpec.describe Import::OTRS::User do
   end
 
   def user_expectations
-    allow(User).to receive(:where).and_return([])
+    allow(User).to receive(:by_login).and_return(User.none)
   end
 
   # this is really bad and should get improved!

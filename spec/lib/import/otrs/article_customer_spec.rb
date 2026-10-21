@@ -23,7 +23,7 @@ RSpec.describe Import::OTRS::ArticleCustomer do
 
   it 'finds customers by login' do
     allow(import_object).to receive(:find_by)
-    allow(import_object).to receive(:find_by).with(login: 'kunde2@kunde.de').and_return(existing_object)
+    allow(import_object).to receive(:by_login).with('kunde2@kunde.de').and_return(instance_double(ActiveRecord::Relation, take: existing_object))
 
     expect(import_object).not_to receive(:create)
     start_import_test

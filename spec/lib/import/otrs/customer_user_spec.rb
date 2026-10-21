@@ -15,7 +15,7 @@ RSpec.describe Import::OTRS::CustomerUser do
 
   def updates_with(zammad_structure)
     allow_organization_lookup
-    allow(import_object).to receive(:find_by).and_return(existing_object)
+    allow(import_object).to receive(:by_login).and_return(instance_double(ActiveRecord::Relation, take: existing_object))
     # we delete the :role_ids from the zammad_structure to make sure that
     # a) role_ids call returns the initial role_ids
     # b) and update! gets called without them
