@@ -107,6 +107,18 @@ RSpec.describe 'Email channel API endpoints', type: :request do
       )
     end
 
+    context 'with a channel of another type' do
+      let(:channel)    { create(:channel, area: 'Microsoft365::Account', options: { inbound: { adapter: 'imap', options: { password: 'stored_token' } }, outbound: { adapter: 'smtp', options: { password: 'stored_token' } } }) }
+      let(:channel_id) { channel.id }
+
+      it 'does not update the channel' do
+        post '/api/v1/channels_email_verify', params: params
+        expect(response).to have_http_status(:not_found)
+        expect(channel.reload.options[:inbound][:options][:password]).to eq('stored_token')
+        expect(channel.reload.options[:outbound][:options][:password]).to eq('stored_token')
+      end
+    end
+
     context 'when group email address handling is used' do
       let(:group) { create(:group, email_address: nil) }
       let(:group_id) { group.id }
@@ -216,6 +228,26 @@ RSpec.describe 'Email channel API endpoints', type: :request do
       end
     end
 
+    context 'with a channel of another type' do
+      let(:channel) { create(:channel, area: 'Microsoft365::Account', options: { inbound: { adapter: 'imap', options: { password: 'stored_token' } } }) }
+      let(:update_params) do
+        params.merge(
+          channel_id: channel.id,
+          options:    params[:options].merge(password: SensitiveParamsHelper::SENSITIVE_MASK)
+        )
+      end
+
+      it 'does not use the stored password for testing' do
+        post '/api/v1/channels_email_inbound', params: update_params
+        expect(response).to have_http_status(:ok)
+        expect(EmailHelper::Probe).to have_received(:inbound).with(
+          hash_including(
+            options: hash_including(password: nil)
+          )
+        )
+      end
+    end
+
     context 'when updating existing channel' do
       let(:channel) do
         create(:email_channel).tap do |c|
@@ -320,7 +352,7 @@ RSpec.describe 'Email channel API endpoints', type: :request do
         },
       }
     end
-    let(:email) { 'test@example.com' }
+    let(:email)      { 'test@example.com' }
     let(:channel_id) { nil }
 
     before do
@@ -332,6 +364,28 @@ RSpec.describe 'Email channel API endpoints', type: :request do
         post '/api/v1/channels_email_outbound', params: params.merge(email: email)
         expect(response).to have_http_status(:ok)
         expect(json_response).to include('result' => 'ok')
+      end
+    end
+
+    context 'with a channel of another type' do
+      let(:channel) { create(:channel, area: 'Microsoft365::Account', options: { outbound: { adapter: 'smtp', options: { password: 'stored_token' } } }) }
+      let(:update_params) do
+        params.merge(
+          channel_id: channel.id,
+          email:      email,
+          options:    params[:options].merge(password: SensitiveParamsHelper::SENSITIVE_MASK)
+        )
+      end
+
+      it 'does not use the stored password for testing' do
+        post '/api/v1/channels_email_outbound', params: update_params
+        expect(response).to have_http_status(:ok)
+        expect(EmailHelper::Probe).to have_received(:outbound).with(
+          hash_including(
+            options: hash_including(password: nil)
+          ),
+          email
+        )
       end
     end
 

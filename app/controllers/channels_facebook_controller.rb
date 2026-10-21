@@ -21,7 +21,7 @@ class ChannelsFacebookController < ApplicationController
   end
 
   def update
-    model_update_render(Channel, params)
+    model_update_render(Channel.in_area('Facebook::Account'), params.except(:area))
   end
 
   def enable

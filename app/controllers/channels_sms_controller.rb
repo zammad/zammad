@@ -15,7 +15,7 @@ class ChannelsSmsController < ApplicationController
   end
 
   def show
-    model_show_render(Channel, params)
+    model_show_render(channels, params)
   end
 
   def create
@@ -23,7 +23,7 @@ class ChannelsSmsController < ApplicationController
   end
 
   def update
-    model_update_render(Channel, channel_params)
+    model_update_render(channels, channel_params)
   end
 
   # the channel is rendered as-is by #render, which would bypass the masking, and the
@@ -81,8 +81,12 @@ class ChannelsSmsController < ApplicationController
 
   private
 
+  def channels
+    Channel.in_area(['Sms::Account', 'Sms::Notification'])
+  end
+
   def channel
-    @channel ||= Channel.lookup(id: params[:id])
+    @channel ||= channels.find(params[:id])
   end
 
   # The provider dialog pre-fills the token with the masked value it received via assets,
