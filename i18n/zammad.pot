@@ -1592,7 +1592,7 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:182
+#: app/models/role.rb:195
 #: app/models/user.rb:809
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
@@ -2289,7 +2289,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:159
+#: app/models/role.rb:172
 #: app/models/user.rb:788
 msgid "At least one user needs to have admin permissions."
 msgstr ""
@@ -10755,7 +10755,7 @@ msgstr ""
 msgid "Maintenance Mode"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:118
+#: app/controllers/application_controller/authenticates.rb:117
 msgid "Maintenance mode enabled!"
 msgstr ""
 
@@ -11770,7 +11770,7 @@ msgstr ""
 msgid "Negative feedback"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:58
+#: app/controllers/sessions_controller.rb:56
 msgid "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found."
 msgstr ""
 
@@ -12745,11 +12745,11 @@ msgstr ""
 msgid "OAuth URLs are:"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:100
+#: app/controllers/application_controller/authenticates.rb:99
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:101
+#: app/controllers/application_controller/authenticates.rb:100
 msgid "OAuth2 token is revoked!"
 msgstr ""
 
@@ -15341,7 +15341,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:289
+#: app/controllers/sessions_controller.rb:292
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17788,6 +17788,10 @@ msgstr ""
 msgid "The PGP signature key has been revoked."
 msgstr ""
 
+#: app/controllers/sessions_controller.rb:57
+msgid "The SSO environment variables and headers contain different user logins."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
 msgstr ""
@@ -18548,7 +18552,7 @@ msgstr ""
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:99
+#: app/controllers/application_controller/authenticates.rb:98
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
 #: app/services/service/user/password_reset/update.rb:28
@@ -19048,7 +19052,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:274
+#: app/controllers/sessions_controller.rb:277
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr ""
@@ -21501,7 +21505,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:172
+#: app/controllers/sessions_controller.rb:175
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr ""
