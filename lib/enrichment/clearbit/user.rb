@@ -163,7 +163,7 @@ module Enrichment
       class << self
 
         def all
-          users = User.of_role(Role.signup_roles)
+          users = ::User.of_role(Role.signup_roles.pluck(:name))
           users.each do |user|
             new(user).synced?
           end
