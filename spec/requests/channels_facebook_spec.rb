@@ -91,5 +91,24 @@ RSpec.describe 'Facebook channel API endpoints', :aggregate_failures, authentica
 
       expect(channel.reload.options['sync']).to eq({ 'pages' => { '1' => { 'group_id' => Group.first.id } } })
     end
+
+    it 'does not change the area' do
+      post "/api/v1/channels_facebook/#{channel.id}", params: params.merge(area: 'Email::Account'), as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(channel.reload.area).to eq('Facebook::Account')
+    end
+  end
+
+  context 'with a channel of another type', authenticated_as: :facebook_admin do
+    let(:facebook_admin) { create(:user, roles: [create(:role, permission_names: ['admin.channel_facebook'])]) }
+    let(:email_channel)  { create(:email_channel) }
+
+    it 'does not update the channel' do
+      post "/api/v1/channels_facebook/#{email_channel.id}", params: { id: email_channel.id, options: { adapter: 'facebook' } }, as: :json
+
+      expect(response).to have_http_status(:not_found)
+      expect(email_channel.reload.options['adapter']).to be_nil
+    end
   end
 end

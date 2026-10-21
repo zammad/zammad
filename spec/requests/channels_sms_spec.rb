@@ -99,4 +99,47 @@ RSpec.describe 'SMS channel API endpoints', :aggregate_failures, authenticated_a
       expect(driver).to have_received(:deliver) { |options, _attr| expect(options['token']).to eq(SensitiveParamsHelper::SENSITIVE_MASK) }
     end
   end
+
+  context 'with a channel of another type', authenticated_as: :sms_admin do
+    let(:sms_admin)     { create(:user, roles: [create(:role, permission_names: ['admin.channel_sms'])]) }
+    let(:email_channel) { create(:email_channel) }
+
+    it 'does not show the channel' do
+      get "/api/v1/channels_sms/#{email_channel.id}", as: :json
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'does not update the channel' do
+      put "/api/v1/channels_sms/#{email_channel.id}", params: { area: 'Sms::Account', options: { adapter: 'sms/message_bird' } }, as: :json
+
+      expect(response).to have_http_status(:not_found)
+      expect(email_channel.reload.area).to eq('Email::Account')
+    end
+
+    it 'does not disable the channel' do
+      post '/api/v1/channels_sms_disable', params: { id: email_channel.id }, as: :json
+
+      expect(response).to have_http_status(:not_found)
+      expect(email_channel.reload).to be_active
+    end
+
+    it 'does not destroy the channel' do
+      delete "/api/v1/channels_sms/#{email_channel.id}", as: :json
+
+      expect(response).to have_http_status(:not_found)
+      expect(Channel).to exist(email_channel.id)
+    end
+
+    context 'when the channel is inactive' do
+      let(:email_channel) { create(:email_channel, active: false) }
+
+      it 'does not enable the channel' do
+        post '/api/v1/channels_sms_enable', params: { id: email_channel.id }, as: :json
+
+        expect(response).to have_http_status(:not_found)
+        expect(email_channel.reload).not_to be_active
+      end
+    end
+  end
 end
