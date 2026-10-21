@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         runs-on:
-          - runner: ubuntu-24.04
+          - runner: ubuntu-26.04
             platform: 'amd64'
           - runner: ['self-hosted', 'arm64']
             platform: 'arm64'
@@ -84,7 +84,7 @@ jobs:
 
   docker-create-multiarch-manifest:
     if: github.repository == 'zammad/zammad' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/develop')
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - docker-build-image
     strategy:
