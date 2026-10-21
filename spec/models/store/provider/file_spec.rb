@@ -98,6 +98,20 @@ RSpec.describe Store::Provider::File do
     end
   end
 
+  describe '.validate_file' do
+    context 'when the contents do NOT match the SHA digest' do
+      before do
+        FileUtils.mkdir_p(filepath.parent)
+        File.write(filepath, 'bar')
+      end
+
+      it 'raises a corruption error naming the file path' do
+        expect { described_class.validate_file(sha) }
+          .to raise_error(RuntimeError, "File corrupted: path #{filepath} does not match SHA digest (#{Store::File.checksum('bar')})")
+      end
+    end
+  end
+
   describe '.bytesize' do
     it 'returns the size of the stored file' do
       described_class.add(data, sha)
