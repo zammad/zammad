@@ -156,6 +156,7 @@ class Selector::Sql < Selector::Base
     validate_pre_condition_values! block_condition
 
     is_json_column = sql_helper.json_column?(attribute_name)
+    is_date_column = sql_helper.date_column?(attribute_name)
 
     # get attributes
     attribute = is_json_column ? sql_helper.json_db_column_with_key(attribute_name, 'value') : sql_helper.db_column(attribute_name)
@@ -582,12 +583,17 @@ class Selector::Sql < Selector::Base
       end
     elsif block_condition[:operator] == 'today'
       Time.use_zone(Setting.get('timezone_default')) do
-        day_start = Time.zone.now.beginning_of_day.utc
-        day_end   = Time.zone.now.end_of_day.utc
+        if is_date_column
+          query << "#{attribute} = ?"
+          bind_params.push Time.zone.today
+        else
+          day_start = Time.zone.now.beginning_of_day.utc
+          day_end   = Time.zone.now.end_of_day.utc
 
-        query << "#{attribute} BETWEEN ? AND ?"
-        bind_params.push day_start
-        bind_params.push day_end
+          query << "#{attribute} BETWEEN ? AND ?"
+          bind_params.push day_start
+          bind_params.push day_end
+        end
       end
     elsif block_condition[:operator] == 'in range'
       if (!block_condition[:value].is_a?(Array) || block_condition[:value].size != 2) || (block_condition[:value][0].blank? && block_condition[:value][1].blank?)
@@ -611,30 +617,24 @@ class Selector::Sql < Selector::Base
       bind_params.push block_condition[:value]
     elsif block_condition[:operator] == 'within last (relative)'
       query << "#{attribute} BETWEEN ? AND ?"
-      time = range(block_condition).ago
-      bind_params.push time
-      bind_params.push Time.zone.now
+      bind_params.push relative_bound(is_date_column) { range(block_condition).ago }
+      bind_params.push relative_bound(is_date_column) { Time.zone.now }
     elsif block_condition[:operator] == 'within next (relative)'
       query << "#{attribute} BETWEEN ? AND ?"
-      time = range(block_condition).from_now
-      bind_params.push Time.zone.now
-      bind_params.push time
+      bind_params.push relative_bound(is_date_column) { Time.zone.now }
+      bind_params.push relative_bound(is_date_column) { range(block_condition).from_now }
     elsif block_condition[:operator] == 'before (relative)'
       query << "#{attribute} <= ?"
-      time = range(block_condition).ago
-      bind_params.push time
+      bind_params.push relative_bound(is_date_column) { range(block_condition).ago }
     elsif block_condition[:operator] == 'after (relative)'
       query << "#{attribute} >= ?"
-      time = range(block_condition).from_now
-      bind_params.push time
+      bind_params.push relative_bound(is_date_column) { range(block_condition).from_now }
     elsif block_condition[:operator] == 'till (relative)'
       query << "#{attribute} <= ?"
-      time = range(block_condition).from_now
-      bind_params.push time
+      bind_params.push relative_bound(is_date_column) { range(block_condition).from_now }
     elsif block_condition[:operator] == 'from (relative)'
       query << "#{attribute} >= ?"
-      time = range(block_condition).ago
-      bind_params.push time
+      bind_params.push relative_bound(is_date_column) { range(block_condition).ago }
     elsif ['is less than', 'is less than or equal to', 'is greater than', 'is greater than or equal to'].include?(block_condition[:operator])
       operator = OPERATOR_WORDING_TO_SYNTAX[block_condition[:operator]]
       query << "#{attribute} #{operator} ?"
@@ -652,10 +652,10 @@ class Selector::Sql < Selector::Base
     [query, bind_params, tables]
   end
 
-  def range(selector)
-    selector[:value].to_i.send(selector[:range].pluralize)
-  rescue
-    raise 'unknown selector'
+  def relative_bound(is_date_column, &)
+    return yield if !is_date_column
+
+    date_in_system_timezone(&)
   end
 
   def validate_block_operator!(condition)

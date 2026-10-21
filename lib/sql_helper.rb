@@ -23,6 +23,10 @@ class SqlHelper
     @object.column_for_attribute(attribute).type == :jsonb
   end
 
+  def date_column?(attribute)
+    @object.column_for_attribute(attribute).type == :date
+  end
+
   def json_db_column_with_key(attribute, key)
     "#{db_column(attribute)}->>#{ActiveRecord::Base.connection.quote(key)}"
   end

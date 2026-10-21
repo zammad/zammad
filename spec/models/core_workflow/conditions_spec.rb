@@ -53,6 +53,83 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
     end
   end
 
+  describe '.perform - Condition - today with a date field (#6464)', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:payload)    { base_payload.merge('params' => { field_name => date }) }
+
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               "ticket.#{field_name}": {
+                 operator: 'today',
+               },
+             })
+    end
+
+    # Shortly after midnight in Berlin, the UTC date is still yesterday.
+    before do
+      Setting.set('timezone_default', 'Europe/Berlin')
+      travel_to Time.find_zone('Europe/Berlin').parse('2026-10-16 00:30')
+      create(:object_manager_attribute_date, name: field_name, display: field_name)
+      ObjectManager::Attribute.migration_execute
+    end
+
+    context 'when the date is today in the system timezone' do
+      let(:date) { '2026-10-16' }
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when the date is yesterday in the system timezone' do
+      let(:date) { '2026-10-15' }
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
+  describe '.perform - Condition - today with a datetime field (#6464)' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.created_at': {
+                 operator: 'today',
+               },
+             })
+    end
+
+    # Shortly after midnight in Berlin, the UTC date is still yesterday.
+    before do
+      Setting.set('timezone_default', 'Europe/Berlin')
+      travel_to Time.find_zone('Europe/Berlin').parse('2026-10-16 00:30')
+    end
+
+    context 'when the time is today in the system timezone' do
+      let(:ticket_created_at) { Time.find_zone('Europe/Berlin').parse('2026-10-16 00:15') }
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when the time is yesterday in the system timezone' do
+      let(:ticket_created_at) { Time.find_zone('Europe/Berlin').parse('2026-10-15 23:30') }
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
   describe '.perform - Condition - after (absolute)' do
     let(:ticket_created_at) { DateTime.new 2023, 7, 21, 10, 0 }
     let(:payload) do

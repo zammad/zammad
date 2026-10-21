@@ -547,6 +547,115 @@ RSpec.describe 'Selector SQL and search index parity', searchindex: true do # ru
     end
   end
 
+  describe 'Overview condition Date field = TODAY calculated incorrectly #6464', db_strategy: :reset do
+    let(:field_name) { SecureRandom.hex(8) }
+    let(:title)      { SecureRandom.uuid }
+
+    def condition_for(name, operator, range: nil)
+      {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'ticket.title',
+            operator: 'is',
+            value:    title,
+          },
+          {
+            name:     name,
+            operator: operator,
+            range:    range,
+            value:    range && '1',
+          }.compact,
+        ]
+      }
+    end
+
+    before do
+      Setting.set('timezone_default', timezone)
+      travel_to Time.find_zone(timezone).parse(local_time)
+      create(:object_manager_attribute_date, object_name: 'Ticket', name: field_name)
+      ObjectManager::Attribute.migration_execute
+      tickets
+      searchindex_model_reload([Ticket])
+    end
+
+    shared_examples 'matching the same tickets' do |operator, expected, range: nil|
+      it "matches the tickets #{expected} with '#{operator}'", :aggregate_failures do
+        condition = condition_for(condition_name, operator, range:)
+
+        _, result = Ticket.selectors(condition, { current_user: agent })
+        expect(result).to match_array(tickets.values_at(*expected))
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:object_ids]).to match_array(tickets.values_at(*expected).map { it.id.to_s })
+      end
+    end
+
+    context 'with a date field' do
+      let(:condition_name) { "ticket.#{field_name}" }
+      let(:today)          { Date.parse(local_time) }
+      let(:offsets)        { -2..2 }
+      let(:tickets) do
+        offsets.index_with do |offset|
+          create(:ticket, title:, group: Group.first, owner: agent_owner, customer: default_customer, field_name => today + offset)
+        end
+      end
+
+      shared_examples 'comparing against dates in the system timezone' do
+        include_examples 'matching the same tickets', 'today', [0]
+        include_examples 'matching the same tickets', 'within last (relative)', [-1, 0], range: 'day'
+        include_examples 'matching the same tickets', 'within next (relative)', [0, 1], range: 'day'
+        include_examples 'matching the same tickets', 'before (relative)', [-2, -1], range: 'day'
+        include_examples 'matching the same tickets', 'after (relative)', [1, 2], range: 'day'
+        include_examples 'matching the same tickets', 'till (relative)', [-2, -1, 0, 1], range: 'day'
+        include_examples 'matching the same tickets', 'from (relative)', [-1, 0, 1, 2], range: 'day'
+      end
+
+      context 'with a timezone behind UTC, late in the evening' do
+        let(:timezone)   { 'America/Chicago' }
+        let(:local_time) { '2026-10-16 23:30' }
+
+        include_examples 'comparing against dates in the system timezone'
+      end
+
+      context 'with a timezone ahead of UTC, shortly after midnight' do
+        let(:timezone)   { 'Europe/Berlin' }
+        let(:local_time) { '2026-10-16 00:30' }
+
+        include_examples 'comparing against dates in the system timezone'
+      end
+
+      context 'with a timezone ahead of UTC, shortly after midnight on the day after a DST change' do
+        let(:timezone)   { 'Europe/Berlin' }
+        let(:local_time) { '2026-03-30 00:30' }
+
+        include_examples 'comparing against dates in the system timezone'
+      end
+
+      context 'with a timezone ahead of UTC, shortly after midnight on the first day of a month' do
+        let(:timezone)   { 'Europe/Berlin' }
+        let(:local_time) { '2026-05-01 00:30' }
+        let(:offsets)    { [-31, -30, -29] }
+
+        include_examples 'matching the same tickets', 'before (relative)', [-31, -30], range: 'month'
+      end
+    end
+
+    # Shortly after midnight in Berlin, the UTC date is still yesterday.
+    context 'with a datetime field' do
+      let(:timezone)       { 'Europe/Berlin' }
+      let(:local_time)     { '2026-10-16 00:30' }
+      let(:condition_name) { 'ticket.created_at' }
+      let(:tickets) do
+        { yesterday: 1.hour.ago, today: Time.zone.now }.transform_values do |created_at|
+          create(:ticket, title:, group: Group.first, owner: agent_owner, customer: default_customer, created_at:)
+        end
+      end
+
+      include_examples 'matching the same tickets', 'today', [:today]
+    end
+  end
+
   describe 'Selector "contains" on relation fields (e.g. customer.email) no longer matches values containing "@" #6232' do
     let(:customer) { create(:customer, email: 'john.doe@example.com') }
     let(:ticket)   { create(:ticket, title: 'bli', group: Group.first, customer: customer) }

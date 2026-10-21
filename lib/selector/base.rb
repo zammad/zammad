@@ -133,6 +133,17 @@ class Selector::Base
     value.to_s.match?(MATCH_WILDCARD_REGEX)
   end
 
+  def range(selector)
+    selector[:value].to_i.send(selector[:range].pluralize)
+  rescue
+    raise 'unknown selector'
+  end
+
+  # Date columns hold the day in the system timezone, so bounds are counted in its calendar.
+  def date_in_system_timezone(&)
+    Time.use_zone(Setting.get('timezone_default'), &).to_date
+  end
+
   def get
     raise 'NOT_IMPLEMENTED'
   end

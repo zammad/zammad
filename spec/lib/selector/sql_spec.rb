@@ -83,6 +83,82 @@ RSpec.describe Selector::Sql do
     end
   end
 
+  describe 'Overview condition Date field = TODAY calculated incorrectly #6464', db_strategy: :reset do
+    let(:agent)     { create(:agent, groups: [Group.first]) }
+    let(:attribute) { create(:object_manager_attribute_date, object_name: 'Ticket') }
+    let(:today)     { Date.parse(local_time) }
+    let(:offsets)   { -2..2 }
+    let(:tickets)   { offsets.index_with { |offset| create(:ticket, group: Group.first, attribute.name => today + offset) } }
+
+    before do
+      Setting.set('timezone_default', timezone)
+      travel_to Time.find_zone(timezone).parse(local_time)
+      attribute
+      ObjectManager::Attribute.migration_execute
+      Ticket.destroy_all
+      tickets
+    end
+
+    shared_examples 'finding the tickets dated' do |operator, offsets, range: nil|
+      it "finds the tickets dated #{offsets} days from today with '#{operator}'" do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     "ticket.#{attribute.name}",
+              operator: operator,
+              range:    range,
+              value:    range && '1',
+            }.compact,
+          ],
+        }
+
+        _, result = Ticket.selectors(condition, { current_user: agent })
+
+        expect(result).to match_array(tickets.values_at(*offsets))
+      end
+    end
+
+    shared_examples 'comparing against dates in the system timezone' do
+      include_examples 'finding the tickets dated', 'today', [0]
+      include_examples 'finding the tickets dated', 'within last (relative)', [-1, 0], range: 'day'
+      include_examples 'finding the tickets dated', 'within next (relative)', [0, 1], range: 'day'
+      include_examples 'finding the tickets dated', 'before (relative)', [-2, -1], range: 'day'
+      include_examples 'finding the tickets dated', 'after (relative)', [1, 2], range: 'day'
+      include_examples 'finding the tickets dated', 'till (relative)', [-2, -1, 0, 1], range: 'day'
+      include_examples 'finding the tickets dated', 'from (relative)', [-1, 0, 1, 2], range: 'day'
+    end
+
+    context 'with a timezone behind UTC, late in the evening' do
+      let(:timezone)   { 'America/Chicago' }
+      let(:local_time) { '2026-10-16 23:30' }
+
+      include_examples 'comparing against dates in the system timezone'
+    end
+
+    context 'with a timezone ahead of UTC, shortly after midnight' do
+      let(:timezone)   { 'Europe/Berlin' }
+      let(:local_time) { '2026-10-16 00:30' }
+
+      include_examples 'comparing against dates in the system timezone'
+    end
+
+    context 'with a timezone ahead of UTC, shortly after midnight on the day after a DST change' do
+      let(:timezone)   { 'Europe/Berlin' }
+      let(:local_time) { '2026-03-30 00:30' }
+
+      include_examples 'comparing against dates in the system timezone'
+    end
+
+    context 'with a timezone ahead of UTC, shortly after midnight on the first day of a month' do
+      let(:timezone)   { 'Europe/Berlin' }
+      let(:local_time) { '2026-05-01 00:30' }
+      let(:offsets)    { [-31, -30, -29] }
+
+      include_examples 'finding the tickets dated', 'before (relative)', [-31, -30], range: 'month'
+    end
+  end
+
   describe 'Expert mode overview not working when using "owner is me" OR "subscribe is me #4547' do
     let(:agent)    { create(:agent, groups: [Group.first]) }
     let(:ticket_1) { create(:ticket, owner: agent, group: Group.first) }
