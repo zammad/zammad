@@ -84,7 +84,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     kb = App.KnowledgeBase.find(@knowledge_base_id)
 
     @ajax(
-      id:          'knowledge_bases_init_admin'
+      id:          'knowledge_base_toggle_active'
       type:        'PATCH'
       url:         kb.manageUrl(action)
       processData: true
