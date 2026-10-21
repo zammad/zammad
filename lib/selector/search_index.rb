@@ -8,6 +8,8 @@ class Selector::SearchIndex < Selector::Base
     'is greater than or equal to' => 'gte',
   }.freeze
 
+  RELATIVE_OPERATORS = ['within last (relative)', 'within next (relative)', 'before (relative)', 'after (relative)', 'till (relative)', 'from (relative)'].freeze
+
   def get
     result = {
       size: options[:limit] || SearchIndexBackend::DEFAULT_QUERY_OPTIONS[:limit],
@@ -181,6 +183,7 @@ class Selector::SearchIndex < Selector::Base
 
     field_mapping    = SearchIndexBackend.get_mapping_properties_object(klass).dig(:properties, key_tmp) if klass
     field_is_keyword = field_mapping&.dig(:fields, :keyword, :type) == 'keyword'
+    field_is_date    = klass&.columns_hash&.dig(key_tmp)&.type == :date
 
     t = {}
 
@@ -348,6 +351,10 @@ class Selector::SearchIndex < Selector::Base
 
       query_must.push t
 
+    elsif field_is_date && RELATIVE_OPERATORS.include?(data[:operator])
+      t[:range] = { key_tmp => relative_date_range(data) }
+      query_must.push t
+
     # within last/within next (relative)
     elsif ['within last (relative)', 'within next (relative)'].include?(data[:operator])
       range = relative_map[data[:range].to_sym]
@@ -407,10 +414,19 @@ class Selector::SearchIndex < Selector::Base
       end
       query_must.push t
     elsif data[:operator] == 'today'
-      t[:range]                = {}
-      t[:range][key_tmp]       = {}
-      t[:range][key_tmp][:gte] = "#{Time.zone.today}T00:00:00Z"
-      t[:range][key_tmp][:lte] = "#{Time.zone.today}T23:59:59Z"
+      t[:range]          = {}
+      t[:range][key_tmp] = {}
+
+      Time.use_zone(Setting.get('timezone_default')) do
+        if field_is_date
+          t[:range][key_tmp][:gte] = Time.zone.today.iso8601
+          t[:range][key_tmp][:lte] = Time.zone.today.iso8601
+        else
+          t[:range][key_tmp][:gte] = Time.zone.now.beginning_of_day.utc.iso8601
+          t[:range][key_tmp][:lte] = Time.zone.now.end_of_day.utc.iso8601
+        end
+      end
+
       query_must.push t
     elsif data[:operator] == 'in range'
       if (!data[:value].is_a?(Array) || data[:value].size != 2) || (data[:value][0].blank? && data[:value][1].blank?)
@@ -445,5 +461,23 @@ class Selector::SearchIndex < Selector::Base
     return "*#{value}" if operator == 'ends with one of'
 
     "*#{value}*"
+  end
+
+  # Same inclusive date bounds as the SQL selector, instead of "now" date math in UTC.
+  def relative_date_range(data)
+    today    = date_in_system_timezone { Time.zone.now }
+    ago      = date_in_system_timezone { range(data).ago }
+    from_now = date_in_system_timezone { range(data).from_now }
+
+    bounds = case data[:operator]
+             when 'within last (relative)' then { gte: ago, lte: today }
+             when 'within next (relative)' then { gte: today, lte: from_now }
+             when 'before (relative)'      then { lte: ago }
+             when 'after (relative)'       then { gte: from_now }
+             when 'till (relative)'        then { lte: from_now }
+             when 'from (relative)'        then { gte: ago }
+             end
+
+    bounds.transform_values(&:iso8601)
   end
 end

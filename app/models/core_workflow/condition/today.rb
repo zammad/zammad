@@ -2,6 +2,8 @@
 
 class CoreWorkflow::Condition::Today < CoreWorkflow::Condition::Backend
   def match
-    value_times.all?(&:today?)
+    Time.use_zone(Setting.get('timezone_default')) do
+      value_times.all?(&:today?)
+    end
   end
 end
