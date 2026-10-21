@@ -471,6 +471,62 @@ RSpec.describe 'Sessions endpoints', type: :request do
       end
     end
 
+    context 'with multiple user logins' do
+      let(:user)       { create(:agent) }
+      let(:other_user) { create(:agent) }
+
+      shared_examples 'refusing the login with 401 Unauthorized' do
+        it 'returns 401 Unauthorized' do
+          get '/auth/sso', as: :json, headers: headers, env: env
+
+          expect(response).to have_http_status(:unauthorized)
+          expect(json_response).to include('error' => 'The SSO environment variables and headers contain different user logins.')
+        end
+
+        it 'does not set the :user_id session parameter' do
+          expect { get '/auth/sso', as: :json, headers: headers, env: env }
+            .not_to change { request&.session&.fetch(:user_id, nil) }
+        end
+      end
+
+      context 'when "X-Forwarded-User" header and "HTTP_REMOTE_USER" request env var differ' do
+        let(:headers) { { 'X-Forwarded-User' => user.login } }
+        let(:env)     { { 'HTTP_REMOTE_USER' => other_user.login } }
+
+        include_examples 'refusing the login with 401 Unauthorized'
+      end
+
+      context 'when "X-Forwarded-User" header and "REMOTE_USER" request env var differ' do
+        let(:headers) { { 'X-Forwarded-User' => user.login } }
+        let(:env)     { { 'REMOTE_USER' => other_user.login } }
+
+        include_examples 'refusing the login with 401 Unauthorized'
+      end
+
+      context 'when "REMOTE_USER" and "HTTP_REMOTE_USER" request env vars differ' do
+        let(:headers) { {} }
+        let(:env)     { { 'REMOTE_USER' => user.login, 'HTTP_REMOTE_USER' => other_user.login } }
+
+        include_examples 'refusing the login with 401 Unauthorized'
+      end
+
+      context 'when all sources contain the same login' do
+        let(:headers) { { 'X-Forwarded-User' => user.login } }
+        let(:env)     { { 'REMOTE_USER' => user.login, 'HTTP_REMOTE_USER' => user.login.upcase } }
+
+        it 'returns a new user-session response' do
+          get '/auth/sso', as: :json, headers: headers, env: env
+
+          expect(response).to redirect_to('/#')
+        end
+
+        it 'sets the :user_id session parameter' do
+          expect { get '/auth/sso', as: :json, headers: headers, env: env }
+            .to change { request&.session&.fetch(:user_id) }.to(user.id)
+        end
+      end
+    end
+
     context 'with trusted proxy IPs configured' do
       before do
         Setting.set('auth_sso_trusted_ips', '192.168.1.1, 10.0.0.0/8')
