@@ -1668,6 +1668,21 @@ RSpec.describe Channel::EmailParser, type: :model do
             o_id:      Ticket.last.id,
           )
         end
+
+        context 'when the incident number is followed by a colon' do
+          let(:raw_mail) { super().sub('INC678439 --', 'INC678439: --') }
+
+          it 'creates an ExternalSync reference' do
+            described_class.new.process({}, raw_mail)
+
+            expect(ExternalSync.last).to have_attributes(
+              source:    'ServiceNow-example@service-now.com',
+              source_id: 'INC678439',
+              object:    'Ticket',
+              o_id:      Ticket.last.id,
+            )
+          end
+        end
       end
 
       context 'follow up' do
@@ -1689,6 +1704,14 @@ RSpec.describe Channel::EmailParser, type: :model do
         context 'key insensitive sender address' do
 
           let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
+
+          it 'adds Article to existing Ticket' do
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.reload.count }
+          end
+        end
+
+        context 'when the incident number is followed by a colon' do
+          let(:raw_mail) { super().sub('Incident_INC678439_--', 'Incident_INC678439:_--') }
 
           it 'adds Article to existing Ticket' do
             expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.reload.count }
@@ -1717,7 +1740,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'follow up' do
 
         let(:mail_file) { Rails.root.join('test/data/mail/mail104.box') }
-        let(:ticket) { create(:ticket) }
+        let(:ticket)    { create(:ticket) }
         let!(:external_sync) do
           create(:external_sync,
                  source:    'Jira-example@jira.com',
