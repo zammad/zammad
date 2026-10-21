@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getCurrentSelectionData } from '#shared/utils/selection.ts'
+import { getCaretOffsetFromPoint, getCurrentSelectionData } from '#shared/utils/selection.ts'
 
 const render = (html: string) => {
   document.body.innerHTML = `<div id="article">${html}</div>`
@@ -287,5 +287,75 @@ describe('getCurrentSelectionData', () => {
     selectText(paragraph.firstChild as Text, 0, 4)
 
     expect(getCurrentSelectionData().html).toBe('Some')
+  })
+})
+
+describe('getCaretOffsetFromPoint', () => {
+  let container: HTMLDivElement
+
+  beforeEach(() => {
+    container = render('Visit <a href="#">the docs</a> today')
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+    Reflect.deleteProperty(document, 'caretPositionFromPoint')
+    Reflect.deleteProperty(document, 'caretRangeFromPoint')
+  })
+
+  const link = () => container.querySelector('a')?.firstChild as Text
+
+  it('counts the characters up to the caret position at the point', () => {
+    const caretPositionFromPoint = vi.fn(() => ({ offsetNode: link(), offset: 4 }))
+    Object.defineProperty(document, 'caretPositionFromPoint', {
+      value: caretPositionFromPoint,
+      configurable: true,
+    })
+
+    expect(getCaretOffsetFromPoint(container, 10, 20)).toBe(10)
+    expect(caretPositionFromPoint).toHaveBeenCalledWith(10, 20)
+  })
+
+  it('falls back to the caret range at the point', () => {
+    Object.defineProperty(document, 'caretPositionFromPoint', {
+      value: undefined,
+      configurable: true,
+    })
+    Object.defineProperty(document, 'caretRangeFromPoint', {
+      value: () => {
+        const range = document.createRange()
+        range.setStart(container.lastChild as Text, 3)
+        return range
+      },
+      configurable: true,
+    })
+
+    expect(getCaretOffsetFromPoint(container, 10, 20)).toBe(17)
+  })
+
+  it('returns null for a point outside of the container', () => {
+    const outside = document.createElement('p')
+    outside.textContent = 'Elsewhere'
+    document.body.appendChild(outside)
+
+    Object.defineProperty(document, 'caretPositionFromPoint', {
+      value: () => ({ offsetNode: outside.firstChild, offset: 2 }),
+      configurable: true,
+    })
+
+    expect(getCaretOffsetFromPoint(container, 10, 20)).toBeNull()
+  })
+
+  it('returns null when the browser cannot locate the caret', () => {
+    Object.defineProperty(document, 'caretPositionFromPoint', {
+      value: () => null,
+      configurable: true,
+    })
+
+    expect(getCaretOffsetFromPoint(container, 10, 20)).toBeNull()
+  })
+
+  it('returns null without any caret API', () => {
+    expect(getCaretOffsetFromPoint(container, 10, 20)).toBeNull()
   })
 })

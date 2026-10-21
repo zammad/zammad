@@ -206,7 +206,15 @@ class App.SidebarChecklistShow extends App.Controller
 
     @preventDefaultAndStopPropagation(e)
 
-    @onEditChecklistItem(e)
+    @onEditChecklistItem(e, @clickedCaretOffset(e))
+
+  # The offset only maps onto the edit value as long as the cell shows that very text.
+  clickedCaretOffset: (e) ->
+    cell = e.currentTarget
+    item = App.ChecklistItem.find($(cell).closest('tr').data('id'))
+    return null if !item || cell.textContent isnt item.text
+
+    App.Utils.caretOffsetFromPoint(cell, e.clientX, e.clientY)
 
   toggleSortability: (isSorting, disablingCommand = 'disable') =>
     @table.find('tbody').sortable(if isSorting then 'enable' else disablingCommand)
@@ -225,14 +233,14 @@ class App.SidebarChecklistShow extends App.Controller
     @saveOrderButton.toggleClass('hide', !isReordering)
     @resetOrderButton.toggleClass('hide', !isReordering)
 
-  onEditChecklistItem: (e) =>
+  onEditChecklistItem: (e, caretOffset) =>
     @preventDefaultAndStopPropagation(e)
 
     row  = $(e.currentTarget).closest('tr')
     id   = row.data('id')
     cell = row.find('.checklistItemValue')[0]
 
-    @activateItemEditMode(cell, row, id)
+    @activateItemEditMode(cell, row, id, caretOffset)
 
   onDeleteChecklistItem: (e) =>
     @preventDefaultAndStopPropagation(e)
@@ -271,12 +279,13 @@ class App.SidebarChecklistShow extends App.Controller
       callback:  deleteCallback
     )
 
-  activateItemEditMode: (cell, row, id) =>
+  activateItemEditMode: (cell, row, id, caretOffset) =>
     # @actionController?.releaseController()
     new App.SidebarChecklistItemEdit(
       el: cell
       parentVC: @
       id: id
+      caretOffset: caretOffset
     )
 
   renderEmpty: =>

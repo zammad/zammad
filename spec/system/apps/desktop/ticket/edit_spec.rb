@@ -88,11 +88,11 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
       within '[data-test-id="ticket-detail-top-bar-full-details"]' do
         find('[aria-label="Edit ticket title"]').click
       end
-      # CommonInlineEdit focuses its input asynchronously (nextTick + queued
+      # CommonInlineEdit focuses its field asynchronously (nextTick + queued
       #   task), and page-level keystrokes go to whatever is focused - typing
       #   after the save button renders but before the focus lands loses the
       #   leading keys (produced titles like 'Test initialed' in CI).
-      expect(page).to have_css('[data-test-id="ticket-detail-top-bar-full-details"] input:focus')
+      expect(page).to have_css('[data-test-id="ticket-detail-top-bar-full-details"] textarea:focus')
       send_keys ' changed', :enter
       wait_for_gql('shared/entities/ticket/graphql/mutations/titleUpdate.graphql', number: 1)
       expect(page).to have_text('Ticket updated successfully')
@@ -156,6 +156,32 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
 
       within '#user-taskbar-tabs' do
         expect(page).to have_text("Received call\nTest initial changed")
+      end
+    end
+  end
+
+  context 'when editing a title that wraps' do
+    let(:ticket) { create(:ticket, group:, title: Array.new(7, 'A rather long ticket title').join(' ')) }
+
+    before do
+      article
+
+      visit "/ticket/#{ticket.id}"
+      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+    end
+
+    it 'keeps the title wrapped, with the caret where it was clicked' do
+      within '[data-test-id="ticket-detail-top-bar-full-details"]' do
+        label = find('[role="heading"]', text: ticket.title)
+
+        # Click offsets count from the center of the element, this one lands at the start of the first line.
+        label.click(x: -(label.rect.width / 2) + 5, y: -(label.rect.height / 2) + 5)
+
+        field       = find('textarea:focus')
+        line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
+
+        expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
+        expect(field.rect.height).to be > line_height
       end
     end
   end

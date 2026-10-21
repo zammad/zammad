@@ -40,7 +40,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
     wait.until { ticket.reload.checklist.present? }
 
     wait.until do
-      item_field  = find('input[placeholder="Text or ticket identifier"]')
+      item_field  = find('textarea[placeholder="Text or ticket identifier"]')
       active_elem = page.evaluate_script('document.activeElement')
 
       item_field == active_elem
@@ -88,10 +88,10 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       expect(page).to have_text('Add empty checklist')
     end
 
-    it 'does rename the checklist' do
+    it 'does rename the checklist, without surrounding whitespace' do
       perform_checklist_action('Rename checklist')
       checklist_name = SecureRandom.uuid
-      find('#checklistTitleEditText').fill_in with: checklist_name, fill_options: { clear: :backspace }
+      find('#checklistTitleEditText').fill_in with: "  #{checklist_name}  ", fill_options: { clear: :backspace }
       page.find('.js-confirm').click
       wait.until { checklist.reload.name == checklist_name }
     end
@@ -114,10 +114,10 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       wait.until { item.reload.checked == false }
     end
 
-    it 'does edit item' do
+    it 'does edit item, without surrounding whitespace' do
       perform_item_action(item.id, 'edit')
       item_text = SecureRandom.uuid
-      find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
+      find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: "  #{item_text}  ", fill_options: { clear: :backspace }
       page.find('.js-confirm').click
       wait.until { item.reload.text == item_text }
     end
@@ -128,6 +128,36 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
       page.find('.js-confirm').click
       expect(page).to have_link(Ticket.first.title)
+    end
+
+    it 'does show and keep the line breaks of an item' do
+      item.update!(text: "first line\nsecond line")
+
+      expect(page).to have_css(".checklistShow tr[data-id='#{item.id}'] .checklistItemValue", exact_text: "first line\nsecond line")
+
+      perform_item_action(item.id, 'edit')
+      find(".checklistShow tr[data-id='#{item.id}'] .js-input").send_keys(' end')
+      page.find('.js-confirm').click
+
+      wait.until { item.reload.text == "first line\nsecond line end" }
+    end
+
+    it 'does edit a long item in place, with the caret where it was clicked' do
+      item.update!(text: Array.new(8, 'A rather long checklist item').join(' '))
+
+      cell        = find(".checklistShow tr[data-id='#{item.id}'] .checklistItemValue", text: item.text)
+      cell_height = cell.rect.height
+
+      # Click offsets count from the center of the element, this one lands at the start of the first line.
+      cell.click(x: -(cell.rect.width / 2) + 10, y: -(cell_height / 2) + 5)
+
+      field = find(".checklistShow tr[data-id='#{item.id}'] textarea.js-input")
+      wait.until { page.evaluate_script('document.activeElement') == field }
+
+      line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
+
+      expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
+      expect(field.rect.height).to be > 2 * line_height
     end
 
     it 'does reorder item' do

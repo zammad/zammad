@@ -12,7 +12,7 @@
       <% if !@readOnly: %>
         <div class="dropdown-container">
           <div class="dropdown dropdown--actions">
-            <button class="btn btn--table btn--text btn--secondary js-action" data-toggle="dropdown">
+            <button class="btn btn--table btn--text btn--secondary btn--icon-only js-action" data-toggle="dropdown">
               <%- @Icon('overflow-button') %>
             </button>
             <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu">

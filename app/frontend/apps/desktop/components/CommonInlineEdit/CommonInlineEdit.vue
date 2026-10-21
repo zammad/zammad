@@ -1,17 +1,20 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useResizeObserver } from '@vueuse/core'
+import linkifyStr from 'linkify-string'
 import { escape } from 'lodash-es'
-import { computed, ref, nextTick, watch, onMounted, useTemplateRef } from 'vue'
+import { computed, ref, nextTick, watch, onMounted, useTemplateRef, type Directive } from 'vue'
 
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { i18n } from '#shared/i18n/index.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
+import { isComposing } from '#shared/utils/events.ts'
+import { getCaretOffsetFromPoint } from '#shared/utils/selection.ts'
 
 import CommonInlineEditButtons from '#desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue'
+
 export interface Props {
   value: string
   initialEditValue?: string
@@ -29,6 +32,7 @@ export interface Props {
   label?: string
   block?: boolean
   maxLength?: number | string
+  singleLine?: boolean
   classes?: {
     label?: string
     input?: string
@@ -50,7 +54,10 @@ const isHoverTargetLink = ref(false)
 
 const isValid = ref(false) // default user made no changes
 const labelInstance = useTemplateRef('label')
+const textareaElement = useTemplateRef('textarea')
 const newEditValue = ref(props.value)
+
+let caretOffset: number | null = null
 
 const isEditing = defineModel<boolean>('editing', {
   default: false,
@@ -93,10 +100,20 @@ const stopEditing = (emitCancel = true) => {
   if (!newEditValue.value.length) newEditValue.value = props.initialEditValue ?? props.value
 }
 
+// The offset only maps onto the edit value as long as the label shows that very text.
+const getClickedCaretOffset = (event: MouseEvent) => {
+  const label = labelInstance.value?.$el as HTMLElement | undefined
+  if (!label || label.textContent !== (props.initialEditValue ?? props.value)) return null
+
+  return getCaretOffsetFromPoint(label, event.clientX, event.clientY)
+}
+
 const activateEditing = (event?: MouseEvent | KeyboardEvent) => {
   if (props.detectLinks && (event?.target as HTMLElement)?.closest('a')) return // guard to prevent editing when clicking on a link
 
   if (isEditing.value || props.disabled) return
+
+  caretOffset = event instanceof MouseEvent ? getClickedCaretOffset(event) : null
 
   isEditing.value = true
 }
@@ -150,12 +167,20 @@ onClickOutside(target, () => {
 const { setupLinksHandlers } = useHtmlLinks('/desktop')
 
 const handleEnterKey = (event: KeyboardEvent) => {
+  if (isComposing(event)) return
+
   event.preventDefault()
   submitEdit()
 }
 
+const handleEscapeKey = (event: KeyboardEvent) => {
+  if (isComposing(event)) return
+
+  stopEditing()
+}
+
 const processedContent = computed(() => {
-  if (props.detectLinks) return textToHtml(props.value)
+  if (props.detectLinks) return linkifyStr(props.value)
   return escape(props.value)
 })
 
@@ -181,15 +206,46 @@ watch(isEditing, () => {
   newEditValue.value = props.initialEditValue ?? props.value
 })
 
-const vFocus = (el: HTMLElement) => {
-  checkValidity(inputValue.value)
+// Grows by whole lines: a height taken from the rounded scrollHeight is up to a pixel off the label.
+const resizeTextarea = () => {
+  const textarea = textareaElement.value
+  if (!textarea) return
 
+  const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight)
+  if (!lineHeight) return
+
+  textarea.rows = 1
+  textarea.rows = Math.max(1, Math.round(textarea.scrollHeight / lineHeight))
+}
+
+watch([textareaElement, inputValue], resizeTextarea, { flush: 'post' })
+
+useResizeObserver(textareaElement, resizeTextarea)
+
+const focusField = (el: HTMLInputElement | HTMLTextAreaElement, onFocus?: () => void) => {
   nextTick(() => {
     // Add this to the event loop to ensure when clicking fast between inputs does not loose focus
     setTimeout(() => {
       el.focus()
+      onFocus?.()
     }, 0)
   })
+}
+
+// Places the caret only once, so a re-render while typing does not move it.
+const vFocus: Directive<HTMLInputElement | HTMLTextAreaElement> = {
+  mounted: (el) => {
+    checkValidity(inputValue.value)
+
+    const offset = caretOffset
+    caretOffset = null
+
+    focusField(el, () => {
+      const position = Math.min(offset ?? el.value.length, el.value.length)
+      el.setSelectionRange(position, position)
+    })
+  },
+  updated: (el) => focusField(el),
 }
 
 // Styling
@@ -274,7 +330,7 @@ defineExpose({
     @keydown.enter.capture="activateEditing"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
-    @keydown.esc="stopEditing()"
+    @keydown.esc="handleEscapeKey"
   >
     <div
       v-if="!isEditing"
@@ -289,18 +345,21 @@ defineExpose({
         hoverClasses,
       ]"
     >
-      <!--   eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html   -->
+      <!-- Reserves the room of the edit buttons, so the text wraps the same way in both modes. -->
       <CommonLabel
         :id="id"
         ref="label"
         v-tooltip.supportive.truncate="processedContent"
-        class="z-10 wrap-break-word"
+        class="z-10 wrap-break-word whitespace-pre-wrap"
         :style="{ wordBreak: 'normal', overflowWrap: 'anywhere' }"
         v-bind="labelAttrs"
         :size="size"
-        :class="[classes?.label, minHeightClassMap[size]]"
-        v-html="processedContent"
-      />
+        :class="[{ 'pe-14': !disabled }, classes?.label, minHeightClassMap[size]]"
+      >
+        <!-- One element, else the text and its links become separate flex items of the label. -->
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <span v-html="processedContent" />
+      </CommonLabel>
     </div>
 
     <div
@@ -308,28 +367,47 @@ defineExpose({
       class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-1.25 before:z-0 before:size-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md focus-within:before:outline-1 focus-within:before:outline-blue-800"
       :class="[{ 'w-full': block }, editBackgroundClass, fontSizeClassMap[size]]"
     >
-      <div class="relative z-10 w-full ltr:pr-14 rtl:pl-14">
+      <div class="relative z-10 w-full pe-14">
         <input
+          v-if="singleLine"
           key="editable-content-key"
           v-model.trim="inputValue"
           v-focus
           class="block w-full shrink-0 bg-transparent text-normal outline-hidden"
           :class="[{ grow: block }, classes?.input || '']"
           :disabled="disabled || loading"
+          :aria-label="label"
           :placeholder="placeholder"
           :maxlength="maxLength"
           @keydown.stop.enter="handleEnterKey"
         />
-      </div>
+        <textarea
+          v-else
+          key="editable-content-multi-line-key"
+          ref="textarea"
+          v-model.trim="inputValue"
+          v-focus
+          rows="1"
+          class="block w-full shrink-0 resize-none overflow-hidden bg-transparent wrap-break-word text-normal outline-hidden"
+          :style="{ wordBreak: 'normal', overflowWrap: 'anywhere' }"
+          :class="[{ grow: block }, classes?.input || '']"
+          :disabled="disabled || loading"
+          :aria-label="label"
+          :placeholder="placeholder"
+          :maxlength="maxLength"
+          @keydown.stop.enter="handleEnterKey"
+        />
 
-      <CommonInlineEditButtons
-        :submit-label="submitLabel"
-        :cancel-label="cancelLabel"
-        class="absolute inset-e-0 z-10 print:hidden"
-        :submit-disabled="!isValid"
-        @submit="submitEdit"
-        @cancel="stopEditing()"
-      />
+        <!-- One line high and at the bottom, so the buttons are centered on the last line, where typing ends. -->
+        <CommonInlineEditButtons
+          :submit-label="submitLabel"
+          :cancel-label="cancelLabel"
+          class="absolute inset-e-0 bottom-0 h-lh items-center print:hidden"
+          :submit-disabled="!isValid"
+          @submit="submitEdit"
+          @cancel="stopEditing()"
+        />
+      </div>
     </div>
   </div>
 </template>

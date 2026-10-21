@@ -30,6 +30,6 @@
       <%- @Icon('checkbox-checked', 'icon-checked') %>
     </label>
 
-  <div class="checklistItemValue <% if !@readOnly: %>js-checklist-item-edit u-clickable<% end %>" <% if !@readOnly: %>data-table-action="edit"<% end %>>
+  <div class="checklistItemValue <% if !@readOnly: %>checklistItemValue--editable js-checklist-item-edit u-clickable<% end %>" <% if !@readOnly: %>data-table-action="edit"<% end %>>
   </div>
 <% end %>

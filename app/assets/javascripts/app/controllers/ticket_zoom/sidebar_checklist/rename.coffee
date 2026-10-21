@@ -40,7 +40,7 @@ class App.SidebarChecklistRename extends App.Controller
   onConfirm: (e) =>
     @preventDefaultAndStopPropagation(e)
 
-    newValue = @input.val()
+    newValue = @input.val().trim()
 
     checklist = @object()
 

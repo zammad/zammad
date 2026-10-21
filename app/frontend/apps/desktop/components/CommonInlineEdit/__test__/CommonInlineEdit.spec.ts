@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { fireEvent, waitFor } from '@testing-library/vue'
+import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -8,7 +9,7 @@ import CommonInlineEdit, {
   type Props,
 } from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 
-const renderInlineEdit = (props: Partial<Props> = {}) => {
+const renderInlineEdit = (props: Partial<Props> = {}, options = {}) => {
   return renderComponent(CommonInlineEdit, {
     props: {
       name: 'inlineEditTest',
@@ -20,6 +21,14 @@ const renderInlineEdit = (props: Partial<Props> = {}) => {
     },
     form: true,
     router: true,
+    ...options,
+  })
+}
+
+const stubCaretPosition = (getNode: () => Node | null, offset: number) => {
+  Object.defineProperty(document, 'caretPositionFromPoint', {
+    value: () => ({ offsetNode: getNode(), offset }),
+    configurable: true,
   })
 }
 
@@ -148,6 +157,30 @@ describe('CommonInlineEdit', () => {
     expect(wrapper.emitted()['cancel-edit']).toBeTruthy()
   })
 
+  it.each([
+    ['composing', { isComposing: true }],
+    ['committing a composition in Safari', { keyCode: 229 }],
+  ])('neither submits nor cancels on enter or escape while %s', async (_, eventInit) => {
+    const submitEditCallbackSpy = vi.fn()
+
+    const wrapper = renderInlineEdit({
+      onSubmitEdit: (value: string) => submitEditCallbackSpy(value),
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await wrapper.events.type(wrapper.getByRole('textbox'), ' update')
+
+    const textbox = wrapper.getByRole('textbox')
+
+    await fireEvent.keyDown(textbox, { key: 'Enter', ...eventInit })
+    await fireEvent.keyDown(textbox, { key: 'Escape', ...eventInit })
+
+    expect(submitEditCallbackSpy).not.toHaveBeenCalled()
+    expect(wrapper.emitted()['cancel-edit']).toBeFalsy()
+    expect(wrapper.getByRole('textbox')).toHaveValue('test value update')
+  })
+
   it('disables submit if input is incorrect and required is true', async () => {
     const wrapper = renderInlineEdit({ required: true })
 
@@ -201,6 +234,18 @@ describe('CommonInlineEdit', () => {
     expect(wrapper.getByRole('link', { name: 'https://zammad.com/en' })).toBeInTheDocument()
   })
 
+  it('keeps text and links in one element of the label, so they wrap as one paragraph', () => {
+    const wrapper = renderInlineEdit({
+      detectLinks: true,
+      value: 'see https://zammad.com/en for details',
+    })
+
+    const label = wrapper.getByTestId('common-label')
+
+    expect(label.children).toHaveLength(1)
+    expect(label.firstElementChild).toHaveTextContent('see https://zammad.com/en for details')
+  })
+
   it('displays initial edit value if editing got activated', async () => {
     const wrapper = renderInlineEdit({
       initialEditValue: 'initial Value',
@@ -246,7 +291,128 @@ describe('CommonInlineEdit', () => {
     const wrapper = renderInlineEdit({ maxLength: 10 })
     await wrapper.events.click(wrapper.getByText('test value'))
     const input = wrapper.getByRole('textbox')
-    // native input element should have maxlength attribute set
+    // native field element should have maxlength attribute set
     expect(input).toHaveAttribute('maxlength', '10')
+  })
+
+  it('edits in a textarea, unless limited to a single line', async () => {
+    const wrapper = renderInlineEdit()
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    expect(wrapper.getByRole('textbox').tagName).toBe('TEXTAREA')
+
+    await wrapper.rerender({ singleLine: true })
+
+    expect(wrapper.getByRole('textbox').tagName).toBe('INPUT')
+  })
+
+  it('keeps line breaks, whether the value has them or they are pasted in', async () => {
+    const submitEditCallbackSpy = vi.fn()
+
+    const wrapper = renderInlineEdit({
+      value: 'first\nsecond',
+      onSubmitEdit: (value: string) => submitEditCallbackSpy(value),
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toHaveFocus())
+
+    await wrapper.events.type(wrapper.getByRole('textbox'), ' end')
+    await wrapper.events.paste('\npasted')
+
+    expect(wrapper.getByRole('textbox')).toHaveValue('first\nsecond end\npasted')
+
+    await wrapper.events.keyboard('{enter}')
+
+    expect(submitEditCallbackSpy).toHaveBeenCalledWith('first\nsecond end\npasted')
+  })
+
+  describe('caret position', () => {
+    afterEach(() => {
+      Reflect.deleteProperty(document, 'caretPositionFromPoint')
+    })
+
+    it('puts the caret where the text was clicked', async () => {
+      const wrapper = renderInlineEdit()
+      const label = wrapper.getByText('test value')
+
+      stubCaretPosition(() => label.firstChild, 4)
+
+      await wrapper.events.click(label)
+
+      const textbox = wrapper.getByRole('textbox') as HTMLTextAreaElement
+      await waitFor(() => expect(textbox).toHaveFocus())
+
+      expect(textbox.selectionStart).toBe(4)
+      expect(textbox.selectionEnd).toBe(4)
+    })
+
+    it('keeps the caret in place while typing', async () => {
+      const wrapper = renderInlineEdit()
+      const label = wrapper.getByText('test value')
+
+      stubCaretPosition(() => label.firstChild, 4)
+
+      await wrapper.events.click(label)
+
+      const textbox = wrapper.getByRole('textbox') as HTMLTextAreaElement
+      await waitFor(() => expect(textbox).toHaveFocus())
+
+      await wrapper.events.keyboard('ing')
+
+      expect(textbox).toHaveValue('testing value')
+      expect(textbox.selectionStart).toBe(7)
+    })
+
+    it('puts the caret at the end when the edit value differs from the text', async () => {
+      const wrapper = renderInlineEdit({
+        initialEditValue: 'initial Value',
+        value: 'default Value',
+      })
+      const label = wrapper.getByText('default Value')
+
+      stubCaretPosition(() => label.firstChild, 4)
+
+      await wrapper.events.click(label)
+
+      const textbox = wrapper.getByRole('textbox') as HTMLTextAreaElement
+      await waitFor(() => expect(textbox).toHaveFocus())
+
+      expect(textbox.selectionStart).toBe('initial Value'.length)
+    })
+
+    it('puts the caret at the end when editing is started by keyboard', async () => {
+      const wrapper = renderInlineEdit()
+
+      stubCaretPosition(() => wrapper.getByText('test value').firstChild, 4)
+
+      wrapper.getByRole('button').focus()
+      await wrapper.events.keyboard('{enter}')
+
+      const textbox = wrapper.getByRole('textbox') as HTMLTextAreaElement
+      await waitFor(() => expect(textbox).toHaveFocus())
+
+      expect(textbox.selectionStart).toBe('test value'.length)
+    })
+
+    it('puts the caret at the end when editing is started from outside after a click', async () => {
+      const editing = ref(false)
+      const wrapper = renderInlineEdit({}, { vModel: { editing } })
+      const label = wrapper.getByText('test value')
+
+      stubCaretPosition(() => label.firstChild, 4)
+
+      await wrapper.events.click(label)
+      await waitFor(() => expect(wrapper.getByRole('textbox')).toHaveFocus())
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Cancel' }))
+
+      editing.value = true
+
+      const textbox = (await wrapper.findByRole('textbox')) as HTMLTextAreaElement
+      await waitFor(() => expect(textbox).toHaveFocus())
+
+      expect(textbox.selectionStart).toBe('test value'.length)
+    })
   })
 })

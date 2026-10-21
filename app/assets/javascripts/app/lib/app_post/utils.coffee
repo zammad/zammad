@@ -1276,6 +1276,27 @@ class App.Utils
 
     return 100 - widthWithScroll
 
+  # Character offset within the text of an element at a viewport point, or null when the browser
+  #   cannot tell or the point lies outside of the element.
+  # offset = App.Utils.caretOffsetFromPoint(element, event.clientX, event.clientY)
+  @caretOffsetFromPoint: (element, x, y) ->
+    if document.caretPositionFromPoint
+      position = document.caretPositionFromPoint(x, y)
+      node     = position?.offsetNode
+      offset   = position?.offset
+    else if document.caretRangeFromPoint
+      # Non-standard fallback for Safari and older Chromium.
+      caretRange = document.caretRangeFromPoint(x, y)
+      node       = caretRange?.startContainer
+      offset     = caretRange?.startOffset
+
+    return null if !node || !element.contains(node)
+
+    range = document.createRange()
+    range.setStart(element, 0)
+    range.setEnd(node, offset)
+    range.toString().length
+
   @diffPositionAdd: (a, b) ->
     applyOrder = []
     newOrderMethod = (a, b, applyOrder) ->

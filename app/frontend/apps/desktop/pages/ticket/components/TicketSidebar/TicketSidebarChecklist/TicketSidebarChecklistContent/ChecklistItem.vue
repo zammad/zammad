@@ -91,7 +91,6 @@ defineExpose({
 <template>
   <li
     class="flex min-h-10 gap-2 overflow-x-clip rounded-lg bg-blue-200 p-2 text-muted dark:bg-gray-700"
-    :class="{ 'items-center': isEditing }"
   >
     <template v-if="isReordering">
       <CommonIcon name="grip-vertical" class="mt-1.5 inline-block shrink-0" size="xs" />
@@ -132,6 +131,7 @@ defineExpose({
       :ticket="item.ticketReference?.ticket"
     />
 
+    <!-- The edit buttons take the place of the action menu, the label reserves only the rest of their room. -->
     <CommonInlineEdit
       v-else
       ref="inline-edit"
@@ -144,7 +144,7 @@ defineExpose({
       :placeholder="$t('Text or ticket identifier')"
       :class="{ 'pointer-events-none': isReordering }"
       :classes="{
-        label: ' text-contrast',
+        label: 'text-contrast pe-7!',
         input: ' text-contrast',
       }"
       :disabled="isReordering"

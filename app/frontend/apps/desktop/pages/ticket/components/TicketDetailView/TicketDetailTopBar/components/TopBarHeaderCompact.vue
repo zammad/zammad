@@ -97,6 +97,7 @@ defineExpose({ titleLine })
             size="xl"
             required
             block
+            single-line
             max-length="255"
             :value="ticket.title"
             :disabled="!ticket.policy.update"

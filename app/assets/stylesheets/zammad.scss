@@ -16095,15 +16095,24 @@ div.accounted-time-value {
     padding-right: 4px;
     padding-top: 10px;
     padding-bottom: 5px; // make sure the value is aligned vertically with the checkbox and the dropdown menu
-    overflow-wrap: break-word;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere; // unlike break-word, also lets a long word shrink the flex item instead of overflowing the row
 
     &.edit-widget-active {
       padding-top: 5px;
       padding-bottom: 3px;
-
-      @include bidi-style(padding-left, 0, padding-right, 4px);
+      padding-left: 0;
+      padding-right: 0;
     }
+  }
+
+  // Not while editing, else the indentation of the edit widget template shows.
+  .checklistItemValue:not(.edit-widget-active) {
+    white-space: pre-wrap;
+  }
+
+  // The edit buttons take the place of the action menu, but are wider, so the text keeps the rest free.
+  .checklistItemValue--editable:not(.edit-widget-active) {
+    @include bidi-style(padding-right, 32px, padding-left, 4px);
   }
 
   .checkbox-replacement-readonly,
@@ -16145,6 +16154,16 @@ div.accounted-time-value {
 
   .dropdown-container {
     flex-shrink: 0;
+
+    // As large as the edit buttons taking its place, and inside the row, so its focus ring is not cut off.
+    .dropdown--actions > .btn {
+      width: 30px;
+      height: 30px;
+      min-height: 0;
+      margin: 5px;
+      padding: 0;
+      justify-content: center;
+    }
 
     .icon-checkmark {
       fill: white;
@@ -16225,6 +16244,41 @@ div.accounted-time-value {
 .checklistItemEdit,
 .checklistTitleEdit {
   flex-grow: 1;
+}
+
+// Matches the display value, so the text does not move when editing starts.
+.checklistItemEdit {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+
+  .form-control {
+    padding: 4px 3px 1px;
+    overflow: hidden;
+    resize: none;
+  }
+
+  .form-control:first-child {
+    border-radius: 3px;
+  }
+
+  // Next to the last line, where typing ends. Apart from the field, so its focus ring stays visible, and
+  //   with the confirm button under the action menu it replaces.
+  .input-group-btn {
+    flex-shrink: 0;
+    align-self: flex-end;
+    width: auto;
+
+    @include ltr(margin, 0 5px 0 4px);
+    @include rtl(margin, 0 4px 0 5px);
+
+    > .btn:first-child {
+      margin-left: 0;
+
+      @include bidi-style(border-top-left-radius, 4px, border-top-right-radius, 0);
+      @include bidi-style(border-bottom-left-radius, 4px, border-bottom-right-radius, 0);
+    }
+  }
 }
 
 .checklistStart {

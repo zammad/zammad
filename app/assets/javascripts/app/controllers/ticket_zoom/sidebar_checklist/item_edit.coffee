@@ -5,7 +5,8 @@ class App.SidebarChecklistItemEdit extends App.Controller
     'click .js-cancel':             'onCancel'
     'click .js-confirm':            'onConfirm'
     'blur .js-input':               'onBlur'
-    'keyup #checklistItemEditText': 'onKeyUp'
+    'input .js-input':              'resize'
+    'keydown .js-input':            'onKeyUp'
 
   constructor: ->
     super
@@ -26,6 +27,15 @@ class App.SidebarChecklistItemEdit extends App.Controller
     @el.addClass('edit-widget-active')
     @el.closest('tr').find('.dropdown').addClass('hide')
     @input.focus().val('').val(@object()?.text)
+    @resize()
+
+    if @caretOffset?
+      position = Math.min(@caretOffset, @input.val().length)
+      @input[0].setSelectionRange(position, position)
+
+  resize: =>
+    @input.css('height', 'auto')
+    @input.css('height', @input.prop('scrollHeight') + @input.outerHeight() - @input.innerHeight())
 
   object: =>
     App.ChecklistItem.find(@id)
@@ -48,7 +58,7 @@ class App.SidebarChecklistItemEdit extends App.Controller
   onConfirm: (e) =>
     @preventDefaultAndStopPropagation(e)
 
-    newValue = @input.val()
+    newValue = @input.val().trim()
 
     # Prevent AJAX if user has not changed the value
     row = @parentVC.table.find("tbody tr[data-id=#{@id}]")
@@ -80,6 +90,9 @@ class App.SidebarChecklistItemEdit extends App.Controller
     )
 
   onKeyUp: (e) =>
+    # Safari reports the keydown that commits an IME composition with keyCode 229, but not as composing.
+    return if e.originalEvent?.isComposing or e.keyCode is 229
+
     switch e.key
       when 'Enter' then @onConfirm(e)
       when 'Escape' then @onCancel(e)

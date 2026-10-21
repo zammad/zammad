@@ -75,6 +75,32 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
     close_and_verify
   end
 
+  context 'when editing a checklist item that wraps' do
+    let(:ticket)    { create(:ticket, group:) }
+    let(:item_text) { Array.new(4, 'A rather long checklist item').join(' ') }
+
+    before do
+      create(:checklist_item, checklist: create(:checklist, :empty, ticket:), text: item_text)
+
+      visit "/tickets/#{ticket.id}"
+      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+      open_checklist
+    end
+
+    it 'keeps the text wrapped, with the caret where it was clicked' do
+      label = find('#ticketSidebar li [data-test-id="common-label"]', text: item_text)
+
+      # Click offsets count from the center of the element, this one lands at the start of the first line.
+      label.click(x: -(label.rect.width / 2) + 5, y: -(label.rect.height / 2) + 5)
+
+      field       = find('#ticketSidebar li textarea:focus')
+      line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
+
+      expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
+      expect(field.rect.height).to be > line_height
+    end
+  end
+
   def create_ticket(title, owner, checklist_template)
     visit '/ticket/create'
     wait_for_form_to_settle('ticket-create')
@@ -109,10 +135,10 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
     click_on main_title
     open_checklist
 
-    find('span', text: 'IT to-dos').click
+    find('#ticketSidebar li [data-test-id="common-label"]', text: 'IT to-dos').click
     # Target the inline edit field via its placeholder: a bare 'input' selector is ambiguous
     #   under Playwright, whose visibility check also counts the appearance-none checkbox inputs.
-    find('#ticketSidebar input[placeholder="Text or ticket identifier"]').fill_in with: ticket_hook(Ticket.last)
+    find('#ticketSidebar textarea[placeholder="Text or ticket identifier"]').fill_in with: ticket_hook(Ticket.last)
     find('#ticketSidebar button[aria-label="Save changes"]').click
     wait_for_gql('apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.graphql')
   end

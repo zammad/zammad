@@ -177,3 +177,31 @@ export const getCurrentSelectionData = (): SelectionData => {
     selection: sel,
   }
 }
+
+const caretPointFromPoint = (x: number, y: number) => {
+  if (document.caretPositionFromPoint) {
+    const position = document.caretPositionFromPoint(x, y)
+    return position && { node: position.offsetNode, offset: position.offset }
+  }
+
+  // Non-standard fallback for Safari and older Chromium.
+  if (document.caretRangeFromPoint) {
+    const range = document.caretRangeFromPoint(x, y)
+    return range && { node: range.startContainer, offset: range.startOffset }
+  }
+
+  return null
+}
+
+// Character offset within the text of `container` at the given viewport point, or `null` when the
+// browser cannot tell or the point lies outside of it.
+export const getCaretOffsetFromPoint = (container: HTMLElement, x: number, y: number) => {
+  const point = caretPointFromPoint(x, y)
+  if (!point || !container.contains(point.node)) return null
+
+  const range = document.createRange()
+  range.setStart(container, 0)
+  range.setEnd(point.node, point.offset)
+
+  return range.toString().length
+}

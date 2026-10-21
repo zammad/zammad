@@ -20,4 +20,7 @@ const stopEvent = (event: Event, stopOptions: StopEventOptions = {}): void => {
   }
 }
 
+// Safari reports the keydown that commits an IME composition with keyCode 229, but not as composing.
+export const isComposing = (event: KeyboardEvent) => event.isComposing || event.keyCode === 229
+
 export default stopEvent
