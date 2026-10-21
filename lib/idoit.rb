@@ -14,14 +14,14 @@ returns
 
 =end
 
-  def self.verify(api_token, endpoint, _client_id = nil, verify_ssl: false)
-    raise __('Invalid i-doit configuration (missing endpoint or api_token).') if api_token.blank? || endpoint.blank?
+  def self.verify(method, api_token, endpoint, username, password, client_id = nil, verify_ssl: false)
+    raise __("Invalid i-doit configuration (missing endpoint or api_token).") if api_token.blank? || endpoint.blank?
 
     params = {
       apikey: api_token,
     }
 
-    _query('cmdb.object_types', params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
+    _query(method, username, password, params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
   end
 
 =begin
@@ -97,10 +97,23 @@ or with filter:
     if filter.present?
       params[:filter] = filter
     end
-    _query(method, params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
+
+    _query(method, setting[:username], setting[:password], params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
   end
 
-  def self._query(method, params, url, verify_ssl: false)
+  def self._query(method, username, password, params, url, verify_ssl: false)
+
+    headers = {
+      'Content-Type' => 'application/json',
+      'User-Agent'   => 'Idoit Client'
+    }
+
+    # i-doit supports RPC auth via dedicated headers.
+    if username && password
+      headers['X-RPC-Auth-Username'] = username
+      headers['X-RPC-Auth-Password'] = password
+    end
+
     result = UserAgent.post(
       url,
       {
@@ -113,9 +126,10 @@ or with filter:
         id:      42,
       },
       {
-        verify_ssl: verify_ssl,
-        json:       true,
-        log:        {
+        headers:      headers,
+        verify_ssl:   verify_ssl,
+        json:         true,
+        log:          {
           facility: 'idoit',
         },
       },
