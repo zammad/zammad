@@ -51,6 +51,10 @@ class FormUpdater::Updater::Search::AdvancedFilters < FormUpdater::Updater
     'tags'         => FormUpdater::ApplyValue::Tags,
   }.freeze
 
+  def self.required_permissions
+    ENTITY_PERMISSIONS.values.flatten.uniq
+  end
+
   def object_type
     nil
   end
@@ -169,7 +173,7 @@ class FormUpdater::Updater::Search::AdvancedFilters < FormUpdater::Updater
     ids = Array.wrap(filter_row_value(field['name'])).compact
     return if ids.empty?
 
-    ids.filter_map { |id| handler.resolve_option(id) }
+    ids.filter_map { |id| handler.resolve_option(id, current_user:) }
   end
 
   # The form's `data` payload is the canonical source of filter row values

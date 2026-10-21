@@ -41,7 +41,8 @@ class FormUpdater::Updater::KnowledgeBase::Answer::Edit < FormUpdater::Updater
     #   needs #update?, the same query the mutation and the taskbar tab list ask for this answer.
     @object = Gql::ZammadSchema.authorized_object_from_id(id, type: object_type, user: current_user, query: :update?)
 
-    true
+    # #update? leaves out what #show? also checks, like a deactivated knowledge base.
+    Pundit.policy(current_user, object).show?.present?
   end
 
   # Seeds the form's upload cache with the answer's own files, and hands the field their cached
@@ -77,6 +78,8 @@ class FormUpdater::Updater::KnowledgeBase::Answer::Edit < FormUpdater::Updater
   end
 
   def seed_upload_cache
+    authorize_form_upload_cache!
+
     UserInfo.with_user_id(current_user.id) do
       object.clone_attachments('UploadCache', meta[:form_id])
     end

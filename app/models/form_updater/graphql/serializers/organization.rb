@@ -15,12 +15,13 @@ module FormUpdater::Graphql::Serializers::Organization
   # Serialize an Organization object with standard fields
   #
   # @param organization [Organization] The organization to serialize
+  # @param current_user [User] The user the organization is serialized for
   # @return [Hash, nil] Serialized organization hash
   #
   # @example
-  #   FormUpdater::Graphql::Serializers::Organization.serialize(org)
+  #   FormUpdater::Graphql::Serializers::Organization.serialize(org, current_user:)
   #
-  def self.serialize(organization)
-    FormUpdater::Graphql::Serializer.serialize(organization, FIELDS)
+  def self.serialize(organization, current_user:)
+    FormUpdater::Graphql::Serializer.serialize(organization, FIELDS, current_user:)
   end
 end

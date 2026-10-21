@@ -1,8 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::User::Current::NewAccessToken < FormUpdater::Updater
+  def self.required_permissions
+    %w[user_preferences.access_token]
+  end
+
   def authorized?
-    Setting.get('api_token_access') == true && current_user.permissions?('user_preferences.access_token')
+    Setting.get('api_token_access') == true && super
   end
 
   def resolve

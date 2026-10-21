@@ -50,14 +50,22 @@ RSpec.describe(FormUpdater::Updater::User::Edit) do
     end
   end
 
-  context 'when a customer edits their own account' do
-    let(:user)      { create(:customer) }
-    let(:edit_user) { user }
+  describe '#authorized?' do
+    context 'with a customer opening the form for their own account' do
+      let(:user)      { create(:customer) }
+      let(:edit_user) { user }
 
-    it 'resolves without raising even though core workflow is not permitted for the customer' do
-      resolved_result.authorized?
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
 
-      expect { resolved_result.resolve }.not_to raise_error
+    context 'with an agent opening the form for a user they may not change' do
+      let(:edit_user) { create(:agent) }
+
+      it 'is not authorized' do
+        expect { resolved_result.authorized? }.to raise_error(Exceptions::Forbidden)
+      end
     end
   end
 

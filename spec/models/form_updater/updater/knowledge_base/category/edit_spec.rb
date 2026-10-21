@@ -42,6 +42,14 @@ RSpec.describe(FormUpdater::Updater::KnowledgeBase::Category::Edit) do
       end
     end
 
+    context 'with a deactivated knowledge base' do
+      before { knowledge_base.update!(active: false) }
+
+      it 'is not authorized' do
+        expect(updater.authorized?).to be false
+      end
+    end
+
     context 'with a reader' do
       let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
 

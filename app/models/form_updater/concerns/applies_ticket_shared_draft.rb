@@ -22,15 +22,7 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
   def apply_draft
     apply_value = FormUpdater::ApplyValue.new(context:, data:, result:)
 
-    new_attachments = UserInfo.with_user_id(context[:current_user].id) do
-      cloned_attachments = selected_draft.clone_attachments('UploadCache', meta[:form_id])
-
-      remove_stale_inline_attachments
-
-      cloned_attachments
-    end
-
-    apply_value.perform(field: 'attachments', config: { 'value' => new_attachments.reject(&:inline?) })
+    apply_value.perform(field: 'attachments', config: { 'value' => clone_draft_attachments.reject(&:inline?) })
 
     apply_shared_draft_group_keys = self.class.instance_variable_get(:@apply_shared_draft_group_keys)
 
@@ -50,6 +42,18 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
 
     # Include shared draft internal ID for a subsequent reference.
     apply_value.perform(field: 'shared_draft_id', config: { 'value' => selected_draft.id })
+  end
+
+  def clone_draft_attachments
+    authorize_form_upload_cache!
+
+    UserInfo.with_user_id(context[:current_user].id) do
+      cloned_attachments = selected_draft.clone_attachments('UploadCache', meta[:form_id])
+
+      remove_stale_inline_attachments
+
+      cloned_attachments
+    end
   end
 
   # A draft's inline images receive a fresh Content-ID on every draft save (see

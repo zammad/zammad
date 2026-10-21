@@ -24,8 +24,10 @@ class FormUpdater::Updater
     end
   end
 
+  # An `id` in the request reaches this for an updater without an object, so it fails as a regular
+  #   GraphQL error, like a missing permission declaration below.
   def object_type
-    raise NotImplementedError
+    raise "#{self.class.name} has no object type."
   end
 
   def self.updaters
@@ -36,8 +38,15 @@ class FormUpdater::Updater
     true
   end
 
+  # Every updater states who may use it, an empty list being the explicit choice to allow any user.
+  #   Not a NotImplementedError, which GraphQL would not handle, so a missing one is a regular error.
   def self.required_permissions
-    []
+    raise "#{name} needs to declare its required permissions."
+  end
+
+  # The policy query the object of an `id` is loaded with, e.g. :update? for a form that edits it.
+  def self.object_pundit_method
+    :show?
   end
 
   def authorized?
@@ -47,7 +56,7 @@ class FormUpdater::Updater
 
     # The authorized function needs to be implemented for any updaters which have a `id`.
     if id
-      @object = Gql::ZammadSchema.authorized_object_from_id id, type: object_type, user: current_user
+      @object = Gql::ZammadSchema.authorized_object_from_id id, type: object_type, user: current_user, query: self.class.object_pundit_method
     end
 
     true
@@ -74,8 +83,22 @@ class FormUpdater::Updater
   # Attributes by default. A form whose fields are not attributes of its object overrides them —
   #   FormUpdater::Updater::KnowledgeBase::Answer::Edit does, where the title lives on a
   #   translation and the publication state is derived from three timestamps.
+  #
+  # The field names come from the request, so a user who may see only part of the object, like a
+  #   customer their ticket, gets no further than its attributes visible to them.
   def object_field?(field)
-    object.respond_to?(field)
+    return false if !object.respond_to?(field)
+    return true if !object_authorization.respond_to?(:field_authorized?)
+
+    object_visible_attributes.include?(field.to_s) && object_authorization.field_authorized?(field)
+  end
+
+  def object_authorization
+    @object_authorization ||= Pundit.policy(current_user, object).public_send(self.class.object_pundit_method)
+  end
+
+  def object_visible_attributes
+    @object_visible_attributes ||= ObjectManager::Object.new(object.class.name).attributes(current_user, object).pluck(:name)
   end
 
   def object_field_value(field)
@@ -151,5 +174,13 @@ class FormUpdater::Updater
 
   def result_initialize_field(name)
     result[name] ||= {}
+  end
+
+  # Attachments are copied into the upload cache of the form the request names, which has to be
+  #   one the current user may add to.
+  def authorize_form_upload_cache!
+    Pundit.authorize(current_user, UploadCache.new(meta[:form_id]), :add?)
+  rescue Pundit::NotAuthorizedError => e
+    raise Exceptions::Forbidden, e.message
   end
 end

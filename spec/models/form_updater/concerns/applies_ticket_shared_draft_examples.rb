@@ -165,6 +165,14 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do |draft_type: 's
         before { original_attachment }
 
         include_examples 'sets the draft value for the field'
+
+        context 'when the form belongs to another user' do
+          before { create(:store, object: 'UploadCache', o_id: form_id, created_by_id: create(:agent).id) }
+
+          it 'does not copy the attachments into it' do
+            expect { resolved_result.resolve }.to raise_error(Exceptions::Forbidden)
+          end
+        end
       end
 
       context 'with an inline image referenced via cid' do
@@ -195,7 +203,7 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do |draft_type: 's
         # draft's inline image -- e.g. left over from a previous apply, or an unrelated
         # image of equal byte size pasted separately into the same compose form.
         let(:colliding_attachment) do
-          create(:store, object: 'UploadCache', o_id: form_id, filename: 'image1.png', data: image_data,
+          create(:store, object: 'UploadCache', o_id: form_id, filename: 'image1.png', data: image_data, created_by_id: user.id,
                           preferences: { 'Content-Type' => 'image/png' })
         end
 

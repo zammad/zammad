@@ -23,5 +23,24 @@ RSpec.describe(FormUpdater::Updater::Organization::Edit) do
     []
   end
 
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with a customer opening the form for their own organization' do
+      subject(:resolved_result) do
+        described_class.new(context:, relation_fields:, meta:, data:, id: Gql::ZammadSchema.id_from_object(organization))
+      end
+
+      let(:organization) { create(:organization) }
+      let(:user)         { create(:customer, organization:) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
+  end
+
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Organization'
 end

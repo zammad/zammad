@@ -28,6 +28,9 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
   def perform_payload
     payload = super
 
+    # The tickets come from the authorized selection below only, never from the form data.
+    payload['params'].delete('ticket_ids')
+
     input = meta[:additional_data]&.slice('entityIds', 'overviewId', 'searchQuery', 'searchFilter') || {}
     return payload if input.blank?
 
@@ -73,7 +76,7 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
       next if !user
 
       # Serialize user without the organization relation and computed fields.
-      user_serialized = ::FormUpdater::Graphql::Serializers::User.serialize(user, with_organization: false, with_computed: false)
+      user_serialized = ::FormUpdater::Graphql::Serializers::User.serialize(user, current_user:, with_organization: false, with_computed: false)
 
       option[:object] = user_serialized
     end

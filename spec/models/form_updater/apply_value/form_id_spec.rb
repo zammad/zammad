@@ -51,6 +51,20 @@ RSpec.describe FormUpdater::ApplyValue::FormId, type: :model do
     end
   end
 
+  it 'skips the files of another user' do
+    UserInfo.with_user_id(create(:agent).id) do
+      UploadCache.new(form_id).add(
+        data:        Rails.root.join('spec/fixtures/files/image/squares.png').binread,
+        filename:    'foreign.png',
+        preferences: { 'Content-Type' => 'image/png' },
+      )
+    end
+
+    perform({ 'value' => form_id })
+
+    expect(result.dig('attachments', :value).pluck(:name)).to eq(['squares.png'])
+  end
+
   it 'skips inline files, which belong to the body rather than to the field' do
     UserInfo.with_user_id(user.id) do
       UploadCache.new(form_id).add(

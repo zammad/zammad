@@ -137,6 +137,16 @@ RSpec.describe(FormUpdater::Updater::Ticket::BulkEdit) do
   end
 
   context 'when passing different types of ticket selection' do
+    context 'with ticket_ids in the form data' do
+      let(:data) { { 'ticket_ids' => create(:ticket).id.to_s } }
+
+      it 'ignores them' do
+        payload = resolved_result.send(:perform_payload)
+
+        expect(payload['params']).not_to have_key('ticket_ids')
+      end
+    end
+
     context 'with entityIds in additional_data' do
       let(:meta) do
         {

@@ -6,6 +6,7 @@ module Gql::Mutations
     include Gql::Concerns::HandlesAuthorization
     include Gql::Concerns::HandlesSettingCheck
     include Gql::Concerns::HasNestedGraphqlName
+    include Gql::Concerns::VerifiesCsrfToken
 
     # FIXME: Remove when all mutations are using services which are taking care of this flag.
     include Gql::Mutations::Concerns::HandlesCoreWorkflow
@@ -38,16 +39,6 @@ module Gql::Mutations
       return if !requires_csrf_verification?
 
       verify_csrf_token!
-    end
-
-    def verify_csrf_token!
-      return true if context[:is_graphql_introspection_generator]
-      # Support :graphql type tests that don't use HTTP.
-      return true if Rails.env.test? && !context[:controller]
-      # Support developer workflows that need to turn off CSRF.
-      return true if Rails.env.development? && context[:controller].request.headers['SkipAuthenticityTokenCheck'] == 'true'
-
-      context[:controller].send(:verify_csrf_token) # verify_csrf_token is private :(
     end
 
     def self.register_in_schema(schema)

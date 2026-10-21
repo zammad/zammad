@@ -14,4 +14,8 @@ class FormUpdater::Relation::TicketState < FormUpdater::Relation
   def default_scope
     relation_type.where(active: true)
   end
+
+  def allowed_scope
+    relation_type.all
+  end
 end

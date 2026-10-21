@@ -30,25 +30,14 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
       'priority_id' => ::Ticket::Priority.find_by(default_create: true)&.id
     }
 
-    customer_id = meta.dig(:additional_data, 'customer_id')
-    customer_user = ::User.find_by(id: customer_id)
+    customer_option = FormUpdater::ApplyValue::UserAutocomplete.resolve_option(meta.dig(:additional_data, 'customer_id'), current_user:)
     customer_phone = meta.dig(:additional_data, 'customer_phone')
 
-    if customer_user
-      # We use the internal_id to avoid coercing the customer_id if it's a string
-      values['customer_id'] = customer_user.id
+    if customer_option
+      values['customer_id'] = customer_option[:value]
 
-      customer_user_serialized = FormUpdater::Graphql::Serializers::User.serialize(customer_user)
-
-      # For customer_id we need also to add the user as an option.
-      # TODO: maybe we can have some generic way for this, because we are also have it in other places (e.g. applies tempalte).
       result['customer_id'] ||= {}
-      result['customer_id'][:options] = [{
-        value:   customer_user.id,
-        label:   customer_user.fullname.presence || customer_user.login,
-        heading: customer_user.organization&.name,
-        object:  customer_user_serialized
-      }]
+      result['customer_id'][:options] = [customer_option]
     elsif customer_phone.present?
       # A create screen opened for a caller nobody knows yet: the number stands in
       #   for the customer until the ticket is created or a user is picked.

@@ -48,11 +48,6 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
     # Copy data to avoid changing the original data inside core workflow.
     params = data.dup
 
-    # Add object id information for the perform worklow for already existing objects.
-    if object
-      params['id'] = object.id
-    end
-
     # Make sure that current values are used for the perform workflow.
     # For example: Apply template can change the values.
     result.each do |name, field|
@@ -60,6 +55,11 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
 
       params[name] = field[:value]
     end
+
+    # The record core workflow works on is the authorized object, never an id from the form data
+    #   or from values applied to it, like a taskbar state.
+    params.delete('id')
+    params['id'] = object.id if object
 
     # Currently we need to convert the relation field values (integer) to strings for the
     # current core workflow implementation.

@@ -58,7 +58,7 @@ class GraphqlController < ApplicationController
       sid:             session.id,
       current_user:    current_user && UserContext.new(current_user, token),
       current_user_id: current_user&.id,
-      # :controller is used by login/logout mutations and MUST NOT be used otherwise.
+      # :controller is used by login/logout mutations and the CSRF verification, and MUST NOT be used otherwise.
       controller:      self,
     }
   end

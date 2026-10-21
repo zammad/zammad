@@ -5,6 +5,14 @@ class FormUpdater::Updater::Organization::Edit < FormUpdater::Updater
 
   core_workflow_screen 'edit'
 
+  def self.required_permissions
+    %w[ticket.agent admin.organization]
+  end
+
+  def self.object_pundit_method
+    :update?
+  end
+
   def object_type
     ::Organization
   end
