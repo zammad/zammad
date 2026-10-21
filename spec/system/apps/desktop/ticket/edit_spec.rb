@@ -173,15 +173,13 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
     it 'keeps the title wrapped, with the caret where it was clicked' do
       within '[data-test-id="ticket-detail-top-bar-full-details"]' do
         label = find('[role="heading"]', text: ticket.title)
-
-        # Click offsets count from the center of the element, this one lands at the start of the first line.
-        label.click(x: -(label.rect.width / 2) + 5, y: -(label.rect.height / 2) + 5)
+        label.click(x: 5, y: 5, offset: :top_left)
 
         field       = find('textarea:focus')
         line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
 
         expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
-        expect(field.rect.height).to be > line_height
+        expect(field.evaluate_script('this.getBoundingClientRect().height')).to be > line_height
       end
     end
   end

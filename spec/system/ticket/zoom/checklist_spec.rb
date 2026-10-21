@@ -145,11 +145,8 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
     it 'does edit a long item in place, with the caret where it was clicked' do
       item.update!(text: Array.new(8, 'A rather long checklist item').join(' '))
 
-      cell        = find(".checklistShow tr[data-id='#{item.id}'] .checklistItemValue", text: item.text)
-      cell_height = cell.rect.height
-
-      # Click offsets count from the center of the element, this one lands at the start of the first line.
-      cell.click(x: -(cell.rect.width / 2) + 10, y: -(cell_height / 2) + 5)
+      cell = find(".checklistShow tr[data-id='#{item.id}'] .checklistItemValue", text: item.text)
+      cell.click(x: 10, y: 5, offset: :top_left)
 
       field = find(".checklistShow tr[data-id='#{item.id}'] textarea.js-input")
       wait.until { page.evaluate_script('document.activeElement') == field }
@@ -157,7 +154,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
 
       expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
-      expect(field.rect.height).to be > 2 * line_height
+      expect(field.evaluate_script('this.getBoundingClientRect().height')).to be > 2 * line_height
     end
 
     it 'does reorder item' do

@@ -89,15 +89,13 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
 
     it 'keeps the text wrapped, with the caret where it was clicked' do
       label = find('#ticketSidebar li [data-test-id="common-label"]', text: item_text)
-
-      # Click offsets count from the center of the element, this one lands at the start of the first line.
-      label.click(x: -(label.rect.width / 2) + 5, y: -(label.rect.height / 2) + 5)
+      label.click(x: 5, y: 5, offset: :top_left)
 
       field       = find('#ticketSidebar li textarea:focus')
       line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
 
       expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
-      expect(field.rect.height).to be > line_height
+      expect(field.evaluate_script('this.getBoundingClientRect().height')).to be > line_height
     end
   end
 
