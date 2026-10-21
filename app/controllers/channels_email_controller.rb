@@ -76,7 +76,7 @@ class ChannelsEmailController < ApplicationController
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
 
-    channel          = Channel.find_by(id: params[:channel_id])
+    channel          = Channel.find_by(id: params[:channel_id], area: 'Email::Account')
     original_options = channel&.options&.dig(:outbound)
     unmasked_params  = unmask_sensitive_params(params.permit!.to_h, original_options)
 
@@ -91,7 +91,7 @@ class ChannelsEmailController < ApplicationController
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
 
-    channel          = Channel.find_by(id: params[:channel_id])
+    channel          = Channel.find_by(id: params[:channel_id], area: 'Email::Account')
     original_options = channel&.options&.dig(:inbound)
     unmasked_params  = unmask_sensitive_params(params.permit!.to_h, original_options)
 
@@ -112,7 +112,7 @@ class ChannelsEmailController < ApplicationController
     # verify access
     return if channel_id && !check_access(channel_id)
 
-    channel                   = Channel.find_by(id: channel_id)
+    channel                   = channel_id ? Channel.find_by!(id: channel_id, area: 'Email::Account') : nil
     original_options_inbound  = channel&.options&.dig(:inbound)
     original_options_outbound = channel&.options&.dig(:outbound)
     unmasked_params_inbound   = unmask_sensitive_params(params[:inbound].to_h, original_options_inbound)
@@ -140,8 +140,7 @@ class ChannelsEmailController < ApplicationController
     end
 
     # update account
-    if channel_id
-      channel = Channel.find(channel_id)
+    if channel
       channel.update!(
         options:      {
           inbound:  unmasked_params_inbound,
