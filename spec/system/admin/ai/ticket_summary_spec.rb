@@ -47,12 +47,10 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
 
     it 'can configure the ticket summary selector' do
       within(:active_content) do
-        find('.js-filterElement .js-attributeSelector select')
-          .find('option', text: 'Priority')
+        find('.js-filterElement .js-attributeSelector select option', text: 'Priority')
           .select_option
 
-        find('.js-filterElement .js-value select')
-          .find('option', text: '3 high')
+        find('.js-filterElement .js-value select option', text: '3 high')
           .select_option
 
         click_on 'Save'

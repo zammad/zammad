@@ -38,7 +38,7 @@ RSpec.describe 'User Profile', type: :system do
         page.find('.profile .js-action').click
         page.find('.profile li[data-type=edit]').click
         fill_in 'maxtest', with: 'hellu'
-        expect(page.find_field('maxtest').value).to eq('hel')
+        expect(page).to have_field('maxtest', with: 'hel')
       end
     end
   end

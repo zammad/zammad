@@ -126,18 +126,18 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
     it 'shows no tag and link modification buttons' do
       expect(page).to have_css('.tags .js-tag', text: 'Tag')
       expect(page).to have_css('.links .ticketLinks')
-      expect(page).to have_no_selector('.tags .icon-diagonal-cross')
+      expect(page).to have_no_css('.tags .icon-diagonal-cross')
       expect(page).to have_no_text('+ Tag')
-      expect(page).to have_no_selector('.links .icon-diagonal-cross')
+      expect(page).to have_no_css('.links .icon-diagonal-cross')
       expect(page).to have_no_text('+ Link')
     end
 
     it 'shows no ticket actions' do
       expect(page).to have_css('.content.active .ticket-article-item')
-      expect(page).to have_no_selector('.js-submit')
-      expect(page).to have_no_selector('.js-secondaryActionButtonLabel')
-      expect(page).to have_no_selector('.js-ArticleAction[data-type=internal]')
-      expect(page).to have_no_selector('.js-highlight')
+      expect(page).to have_no_css('.js-submit')
+      expect(page).to have_no_css('.js-secondaryActionButtonLabel')
+      expect(page).to have_no_css('.js-ArticleAction[data-type=internal]')
+      expect(page).to have_no_css('.js-highlight')
     end
 
     it 'shows no ticket sidebar ticket actions' do

@@ -26,7 +26,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       return if page.has_no_css?('#taskbarTabListExpanded', wait: 0)
 
       within '#taskbarTabListExpanded' do
-        find('li', text: ticket.title).find('button[aria-label="Close this tab"]', visible: :all).click
+        within('li', text: ticket.title) { find('button[aria-label="Close this tab"]', visible: :all).click }
       end
     end
 

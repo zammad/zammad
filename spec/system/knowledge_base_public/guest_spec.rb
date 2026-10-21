@@ -174,7 +174,7 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
 
     it { expect(page).to have_text(published_answer.translation_primary.title) }
     it { expect(page).to have_text('only available in these languages') }
-    it { expect(page).to have_no_selector('h1', text: published_answer.translation_primary.title) }
+    it { expect(page).to have_no_css('h1', text: published_answer.translation_primary.title) }
 
     context 'follow primary locale' do
       before { click_on published_answer.translation_primary.title }

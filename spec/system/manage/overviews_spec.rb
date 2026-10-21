@@ -65,8 +65,8 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'does not show customer ticket that is not selected' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_no_selector('tr.item', text: ticket_two.title)
-          expect(page).to have_no_selector('tr.item', text: ticket_three.title)
+          expect(page).to have_no_css('tr.item', text: ticket_two.title)
+          expect(page).to have_no_css('tr.item', text: ticket_three.title)
         end
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'does not show selected customer ticket' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_no_selector('tr.item', text: ticket_one.title)
+          expect(page).to have_no_css('tr.item', text: ticket_one.title)
         end
       end
 
@@ -107,7 +107,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'does not show customer ticket that is not selected' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_no_selector('tr.item', text: ticket_three.title)
+          expect(page).to have_no_css('tr.item', text: ticket_three.title)
         end
       end
     end
@@ -117,8 +117,8 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'does not show selected customer ticket' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_no_selector('tr.item', text: ticket_one.title)
-          expect(page).to have_no_selector('tr.item', text: ticket_two.title)
+          expect(page).to have_no_css('tr.item', text: ticket_one.title)
+          expect(page).to have_no_css('tr.item', text: ticket_two.title)
         end
       end
 

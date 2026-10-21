@@ -119,7 +119,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
       it 'closes current tab' do
         within :active_content do
-          expect(page).to have_no_selector('.newTicket')
+          expect(page).to have_no_css('.newTicket')
         end
       end
     end
@@ -206,7 +206,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
         end
 
         within :active_content do
-          expect(page).to have_no_selector('.is-internal')
+          expect(page).to have_no_css('.is-internal')
         end
 
         send_keys(%i[shift return])
@@ -279,9 +279,9 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
       it 'enables translations' do
         within :active_content do
-          expect(page).to have_no_selector('.stat-title span.translation')
+          expect(page).to have_no_css('.stat-title span.translation')
         end
-        expect(page).to have_no_selector('#navigation [href="#dashboard"] span.translation')
+        expect(page).to have_no_css('#navigation [href="#dashboard"] span.translation')
 
         send_keys(['t'])
 
@@ -293,9 +293,9 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
       it 'does not enable translations with a modifier (#5312)' do
         within :active_content do
-          expect(page).to have_no_selector('.stat-title span.translation')
+          expect(page).to have_no_css('.stat-title span.translation')
         end
-        expect(page).to have_no_selector('#navigation [href="#dashboard"] span.translation')
+        expect(page).to have_no_css('#navigation [href="#dashboard"] span.translation')
 
         send_keys([:control, 't'])
 

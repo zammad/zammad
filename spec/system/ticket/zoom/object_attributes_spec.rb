@@ -99,7 +99,7 @@ RSpec.describe 'Ticket zoom > Object manager attributes', type: :system do
       visit "ticket/zoom/#{ticket.id}"
       within(:active_content) do
         fill_in 'maxtest', with: 'hellu'
-        expect(page.find_field('maxtest').value).to eq('hel')
+        expect(page).to have_field('maxtest', with: 'hel')
       end
     end
   end

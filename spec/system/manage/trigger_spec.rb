@@ -386,7 +386,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
           find_field('activator').select 'Action'
 
           within '.ticket_selector' do
-            expect(find('.js-filterElement .js-operator select')).to have_no_selector('option', text: operator)
+            expect(find('.js-filterElement .js-operator select')).to have_no_css('option', text: operator)
           end
         end
       end
@@ -409,7 +409,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
         find_field('activator').select 'Time event'
 
         within '.ticket_selector' do
-          expect(find('.js-filterElement .js-attributeSelector select')).to have_no_selector('option', text: 'Action')
+          expect(find('.js-filterElement .js-attributeSelector select')).to have_no_css('option', text: 'Action')
         end
       end
     end

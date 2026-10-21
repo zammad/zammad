@@ -25,7 +25,7 @@ RSpec.describe 'Disable login form', authenticated_as: false, type: :system do
       Setting.set 'auth_saml', true
       visit '/'
       expect(page).to have_css('.auth-provider--saml')
-      expect(page).to have_no_selector('#login')
+      expect(page).to have_no_css('#login')
     end
   end
 end

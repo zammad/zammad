@@ -201,7 +201,7 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
 
         find('.articleNewEdit-body').send_keys('Some reply')
         expect(page).to have_css('form.article-add.is-open')
-        expect(page).to have_no_selector('.js-selectedArticleType')
+        expect(page).to have_no_css('.js-selectedArticleType')
       end
     end
 
@@ -229,7 +229,7 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
       expect(page).to have_css('form.article-add')
       wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
       await_empty_ajax_queue
-      expect(page).to have_no_selector('form.article-add.is-open')
+      expect(page).to have_no_css('form.article-add.is-open')
     end
 
     it 'does open and close by usage' do
@@ -237,7 +237,7 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
       find('.js-textarea').send_keys(' ')
       expect(page).to have_css('form.article-add.is-open')
       find('input#global-search').click
-      expect(page).to have_no_selector('form.article-add.is-open')
+      expect(page).to have_no_css('form.article-add.is-open')
     end
 
     it 'does open automatically when body is given from sidebar' do

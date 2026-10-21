@@ -16,7 +16,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Assistant', type: :system do
       within(:active_content) do
         expect(Setting.get('ai_assistance_kb_answer_from_ticket_generation')).to be(true)
 
-        find('.checkbox--service', text: 'Knowledge Base Answer Generation').find('label').click
+        within('.checkbox--service', text: 'Knowledge Base Answer Generation') { find('label').click }
 
         await_empty_ajax_queue
 

@@ -83,7 +83,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         let(:two_factor_pref) { create(:user_two_factor_preference, :mocked_security_keys, user: user, page: page) }
 
         it 'signs in with the correct security key present' do
-          expect(page).to have_no_selector('#login')
+          expect(page).to have_no_css('#login')
         end
       end
 
@@ -120,7 +120,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
           click_on('Sign in')
         end
 
-        expect(page).to have_no_selector('#login')
+        expect(page).to have_no_css('#login')
       end
 
       it 'login with wrong payload' do
@@ -167,7 +167,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
             click_on('Sign in')
           end
 
-          expect(page).to have_no_selector('#login')
+          expect(page).to have_no_css('#login')
         end
 
         it 'login with wrong payload' do

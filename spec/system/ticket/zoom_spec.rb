@@ -228,7 +228,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       refresh
 
       within '.article-new' do
-        type_input = find('input[name="type"]', visible: false)
+        type_input = find('input[name="type"]', visible: :all)
 
         expect(type_input.value).to eq('note')
         expect(page).to have_no_field('input[name=to]', visible: :visible)
@@ -450,7 +450,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         # unsubscribe via sidebar
         click '.js-subscriptions .js-unsubscribe input'
         expect(page).to have_css('.js-subscriptions .js-subscribe input')
-        expect(page).to have_no_selector('.js-subscriptions span.avatar')
+        expect(page).to have_no_css('.js-subscriptions span.avatar')
 
         # subscribe via macro
         click '.js-openDropdownMacro'
@@ -461,7 +461,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         click '.js-openDropdownMacro'
         find(:macro, 3).click # Unsubscribe macro button
 
-        expect(page).to have_no_selector('.js-subscriptions span.avatar')
+        expect(page).to have_no_css('.js-subscriptions span.avatar')
 
         create(:mention, mentionable: ticket, user: other_agent)
         expect(page).to have_css('.js-subscriptions span.avatar')
@@ -609,7 +609,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         expect(ticket.reload.preferences[:gitlab][:issue_links][0]).to be_nil
 
         # check that counter got removed
-        expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=gitlab] .js-tabCounter')
+        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=gitlab] .js-tabCounter')
       end
     end
   end
@@ -660,7 +660,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         expect(ticket.reload.preferences[:github][:issue_links][0]).to be_nil
 
         # check that counter got removed
-        expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=github] .js-tabCounter')
+        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=github] .js-tabCounter')
       end
     end
   end
@@ -892,7 +892,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           # returns this weird exception for the jquery
           # even tho it worked fine
         end
-        expect(page).to have_no_selector('.js-reset')
+        expect(page).to have_no_css('.js-reset')
       end
     end
   end
@@ -1112,7 +1112,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_css(".content.active select[name='state_id']")
       wait.until { page.evaluate_script("Object.values(App.Delay._all()).every(function(level) { return !('ticket-zoom-form-update' in level) })") }
       await_empty_ajax_queue
-      expect(page).to have_no_selector('.js-reset')
+      expect(page).to have_no_css('.js-reset')
     end
   end
 
@@ -1323,7 +1323,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         it 'does not highlight' do
           expect(elem)
-            .to have_no_selector('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
+            .to have_no_css('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
         end
       end
 
@@ -1334,7 +1334,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           create(:ticket, customer: customer, group: group)
 
           expect(elem)
-            .to have_no_selector('.tabsSidebar-tab-count--danger')
+            .to have_no_css('.tabsSidebar-tab-count--danger')
             .and have_css('.tabsSidebar-tab-count--warning')
         end
       end
@@ -1345,7 +1345,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         it 'highlights as danger' do
           expect(elem)
             .to have_css('.tabsSidebar-tab-count--danger')
-            .and have_no_selector('.tabsSidebar-tab-count--warning')
+            .and have_no_css('.tabsSidebar-tab-count--warning')
         end
       end
     end
@@ -1358,7 +1358,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         it 'does not highlight' do
           expect(elem)
-            .to have_no_selector('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
+            .to have_no_css('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
         end
       end
     end

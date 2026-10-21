@@ -28,7 +28,7 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
         wait.until { page.evaluate_script("Object.keys(App.Delay._all()['tags'] || {}).length === 0") }
 
         find('.token').double_click
-        find('.js-to', visible: false).sibling('.token-input').set('test')
+        find('.js-to', visible: :all).sibling('.token-input').set('test')
         find('.js-textarea').set('welcome to the community')
         find('.js-submitDropdown button.js-submit').click
 
@@ -41,7 +41,7 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
         click_email_reply
 
         find('.token').double_click
-        find('.js-to', visible: false).sibling('.token-input').set('user@test.com')
+        find('.js-to', visible: :all).sibling('.token-input').set('user@test.com')
         find('.js-textarea').set('welcome to the community')
         find('.js-submitDropdown button.js-submit').click
 
@@ -55,8 +55,8 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
     it 'shows both name and email in token' do
       click_email_reply
 
-      find('.js-to', visible: false).sibling('.token-input').set(customer.email)
-      find('ul.ui-autocomplete li:first-child', visible: false).click
+      find('.js-to', visible: :all).sibling('.token-input').set(customer.email)
+      find('ul.ui-autocomplete li:first-child', visible: :all).click
 
       within all('.token-label')[1] do
         expect(page).to have_text("#{customer.firstname} #{customer.lastname} <#{customer.email}>")

@@ -4,6 +4,9 @@ module WindowActions
 
   delegate :app_host, to: Capybara
 
+  # Index-based window access is the purpose of these helpers.
+  # rubocop:disable Capybara/UnorderedWindowAccess
+
   # This is a convenient wrapper method around #switch_to_window
   # which switch to an given window index, waiting for it to appear
   # first (e.g. right after triggering a new tab/window via a click,
@@ -35,6 +38,8 @@ module WindowActions
 
     switch_to_window(windows[0]) if windows.length == 1
   end
+
+  # rubocop:enable Capybara/UnorderedWindowAccess
 
   # This is a convenient wrapper method around #open_new_window
   # which open a new window and switched directly to it

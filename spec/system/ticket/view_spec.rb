@@ -217,7 +217,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
         display_macro_batches ticket1
 
         within :active_content do
-          expect(page).to have_no_selector('.batch-overlay-backdrop')
+          expect(page).to have_no_css('.batch-overlay-backdrop')
         end
       end
     end
@@ -238,7 +238,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
           within(:active_content) do
             display_macro_batches Ticket.first
 
-            expect(page).to have_no_selector('.batch-overlay-macro-entry.small')
+            expect(page).to have_no_css('.batch-overlay-macro-entry.small')
           end
         end
       end

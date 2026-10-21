@@ -161,7 +161,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
     it 'shows an inline form' do
       visit path
       uncheck 'Start modal dialog for form.', allow_label_click: true
-      expect(page).to have_css('.js-formInline').and have_no_selector('.js-formInline.hide')
+      expect(page).to have_css('.js-formInline').and have_no_css('.js-formInline.hide')
     end
   end
 

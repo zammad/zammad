@@ -138,7 +138,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -338,7 +338,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -538,7 +538,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -575,7 +575,7 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page).to have_css("select[name='#{field_name}'] option[value='key_1']")
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='key_2']")
+        expect(page).to have_no_css("select[name='#{field_name}'] option[value='key_2']")
         expect(page).to have_css("select[name='#{field_name}'] option[value='key_3']")
       end
     end
@@ -738,7 +738,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -775,7 +775,7 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page).to have_css("select[name='#{field_name}'] option[value='key_1']")
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='key_2']")
+        expect(page).to have_no_css("select[name='#{field_name}'] option[value='key_2']")
         expect(page).to have_css("select[name='#{field_name}'] option[value='key_3']")
       end
     end
@@ -939,7 +939,7 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page).to have_css("select[name='#{field_name}'] option[value='false']")
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='true']")
+        expect(page).to have_no_css("select[name='#{field_name}'] option[value='true']")
       end
     end
 
@@ -1101,7 +1101,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1140,8 +1140,8 @@ RSpec.shared_examples 'core workflow' do
         expect(page).to have_css('span.searchableSelect-option-text', text: 'Incident', visible: :all)
         expect(page).to have_css('span.searchableSelect-option-text', text: 'Hardware', visible: :all)
         expect(page).to have_css('span.searchableSelect-option-text', text: 'Monitor', visible: :all)
-        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Mouse', visible: :all)
-        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all)
+        expect(page).to have_no_css('span.searchableSelect-option-text', text: 'Mouse', visible: :all)
+        expect(page).to have_no_css('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all)
       end
     end
 
@@ -1303,7 +1303,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1342,8 +1342,8 @@ RSpec.shared_examples 'core workflow' do
         expect(page).to have_css('span.searchableSelect-option-text', text: 'Incident', visible: :all)
         expect(page).to have_css('span.searchableSelect-option-text', text: 'Hardware', visible: :all)
         expect(page).to have_css('span.searchableSelect-option-text', text: 'Monitor', visible: :all)
-        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Mouse', visible: :all)
-        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all)
+        expect(page).to have_no_css('span.searchableSelect-option-text', text: 'Mouse', visible: :all)
+        expect(page).to have_no_css('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all)
       end
     end
 
@@ -1505,7 +1505,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1641,7 +1641,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+        expect(page).to have_no_css("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 

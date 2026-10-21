@@ -66,7 +66,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         end
 
         expect(page).to have_css('.bulkAction.no-sidebar')
-        expect(page).to have_no_selector('.bulkAction.no-sidebar.hide', visible: :all)
+        expect(page).to have_no_css('.bulkAction.no-sidebar.hide', visible: :all)
       end
 
       it 'shows bulkform when all checkbox is checked' do
@@ -75,7 +75,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         end
 
         expect(page).to have_css('.bulkAction.no-sidebar')
-        expect(page).to have_no_selector('.bulkAction.no-sidebar.hide', visible: :all)
+        expect(page).to have_no_css('.bulkAction.no-sidebar.hide', visible: :all)
       end
 
       it 'hides bulkform when checkbox is unchecked' do
@@ -297,7 +297,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         display_macro_batches ticket_1
 
         within :active_content do
-          expect(page).to have_no_selector('.batch-overlay-backdrop')
+          expect(page).to have_no_css('.batch-overlay-backdrop')
         end
       end
     end
@@ -318,7 +318,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
           display_macro_batches ticket_1
           within(:active_content) do
 
-            expect(page).to have_no_selector('.batch-overlay-macro-entry.small')
+            expect(page).to have_no_css('.batch-overlay-macro-entry.small')
           end
         end
       end
@@ -523,13 +523,13 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         page.find('.js-search').fill_in(with: '"Testing Ticket 1"')
         expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
         expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 2')
-        expect(current_url).to include('Testing%20Ticket%201')
+        expect(page).to have_current_path(%r{Testing%20Ticket%201}, url: true)
 
         # switch by global search
         page.find('.js-search').fill_in(with: '"Testing Ticket 2"')
         expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 2')
         expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 1')
-        expect(current_url).to include('Testing%20Ticket%202')
+        expect(page).to have_current_path(%r{Testing%20Ticket%202}, url: true)
       end
 
       it 'keeps input typed before the route of the previous key is executed' do
@@ -553,14 +553,14 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       it 'does switch search results properly' do
         expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
         expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 2')
-        expect(current_url).to include('Testing%20Ticket%201')
+        expect(page).to have_current_path(%r{Testing%20Ticket%201}, url: true)
 
         # switch by global search
         fill_in id: 'global-search', with: '"Testing Ticket 2"'
         click_on 'Show Search Details'
         expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 2')
         expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 1')
-        expect(current_url).to include('Testing%20Ticket%202')
+        expect(page).to have_current_path(%r{Testing%20Ticket%202}, url: true)
       end
     end
 
@@ -572,13 +572,13 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       it 'does switch search results properly' do
         expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 1')
         expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 2')
-        expect(current_url).to include('Testing%20Ticket%201')
+        expect(page).to have_current_path(%r{Testing%20Ticket%201}, url: true)
 
         # switch by url
         visit '#search/"Testing Ticket 2"'
         expect(page).to have_css('.js-tableBody', text: 'Testing Ticket 2')
         expect(page).to have_no_css('.js-tableBody', text: 'Testing Ticket 1')
-        expect(current_url).to include('Testing%20Ticket%202')
+        expect(page).to have_current_path(%r{Testing%20Ticket%202}, url: true)
       end
     end
   end
@@ -1001,7 +1001,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
         find('.js-tableBody tr:last-child td.table-checkbox').check('bulk', allow_label_click: true)
 
-        find('select[name=owner_id]').find('option:nth-child(2)').select_option
+        find('select[name=owner_id] option:nth-child(2)').select_option
         click '.js-confirm'
         click '.js-submit'
 

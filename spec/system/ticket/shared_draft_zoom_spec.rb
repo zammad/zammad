@@ -326,7 +326,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
           within :active_content do
             expect(page)
               .to have_text(draft_content)
-              .and(have_no_selector('[data-signature-placeholder]', visible: :all))
+              .and(have_no_css('[data-signature-placeholder]', visible: :all))
           end
         end
       end

@@ -213,7 +213,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       visit 'ticket/create'
       within(:active_content) do
         fill_in 'maxtest', with: 'hellu'
-        expect(page.find_field('maxtest').value).to eq('hel')
+        expect(page).to have_field('maxtest', with: 'hel')
       end
     end
   end
@@ -711,7 +711,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     it 'does make it possible to create pending states where the pending time is optional and not visible' do
       select 'pending customer feedback', from: 'state_id'
       click '.js-submit'
-      expect(current_url).to include('ticket/zoom')
+      expect(page).to have_current_path(%r{ticket/zoom}, url: true)
       expect(Ticket.last.state_id).to eq(Ticket::State.find_by(name: 'pending customer feedback').id)
       expect(Ticket.last.pending_time).to be_nil
     end
@@ -1325,7 +1325,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     end
 
     it 'filters active templates only' do
-      expect(find('#form-template select[name="id"]')).to have_css('option', text: active_template.name).and(have_no_selector('option', text: inactive_template.name))
+      expect(find('#form-template select[name="id"]')).to have_css('option', text: active_template.name).and(have_no_css('option', text: inactive_template.name))
     end
   end
 
@@ -1426,7 +1426,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
           create(:ticket, customer: customer, group: group)
 
           expect(elem)
-            .to have_no_selector('.tabsSidebar-tab-count--danger')
+            .to have_no_css('.tabsSidebar-tab-count--danger')
             .and have_css('.tabsSidebar-tab-count--warning')
         end
       end
@@ -1437,7 +1437,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
         it 'highlights as danger' do
           expect(elem)
             .to have_css('.tabsSidebar-tab-count--danger')
-            .and have_no_selector('.tabsSidebar-tab-count--warning')
+            .and have_no_css('.tabsSidebar-tab-count--warning')
         end
       end
     end
@@ -1450,7 +1450,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
 
         it 'does not highlight' do
           expect(elem)
-            .to have_no_selector('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
+            .to have_no_css('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
         end
       end
     end
@@ -1527,7 +1527,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       it 'has core workflow support for title and text' do
         expect(page).to have_css('div[data-attribute-name=title].is-readonly')
         expect(page).to have_css('div[data-attribute-name=body].is-readonly')
-        expect(page.find_field('Title').value).to eq('title 123')
+        expect(page).to have_field('Title', with: 'title 123')
         expect(page.find('div[data-name=body]')['innerHTML']).to eq('<b>text 123</b>')
 
         # unset readonly (https://github.com/zammad/zammad/issues/4540)
@@ -1555,7 +1555,7 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       it 'has core workflow support for title and text' do
         expect(page).to have_css('div[data-attribute-name=title].is-readonly')
         expect(page).to have_css('div[data-attribute-name=body].is-readonly')
-        expect(page.find_field('Title').value).to eq('title 123')
+        expect(page).to have_field('Title', with: 'title 123')
         expect(page.find('div[data-name=body]')['innerHTML']).to eq('<b>text 123</b>')
       end
     end

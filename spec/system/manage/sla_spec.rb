@@ -13,9 +13,9 @@ RSpec.describe 'Manage > Sla', type: :system do
     page.find('.js-new').click
 
     # enable all checkboxes
-    page.find('input#update_time', visible: false).find(:xpath, './/..').click
-    page.first('.js-updateTypeSelector', visible: false).click
-    page.find('input#solution_time', visible: false).find(:xpath, './/..').click
+    page.find('input#update_time', visible: :all).find(:xpath, './/..').click
+    page.first('.js-updateTypeSelector', visible: :all).click
+    page.find('input#solution_time', visible: :all).find(:xpath, './/..').click
 
     # check if required
     expect(page).to have_css('input[name=first_response_time_in_text][required]')
@@ -23,9 +23,9 @@ RSpec.describe 'Manage > Sla', type: :system do
     expect(page).to have_css('input[name=solution_time_in_text][required]')
 
     # drop all checkboxes
-    page.find('input#first_response_time', visible: false).find(:xpath, './/..').click
-    page.find('input#update_time', visible: false).find(:xpath, './/..').click
-    page.find('input#solution_time', visible: false).find(:xpath, './/..').click
+    page.find('input#first_response_time', visible: :all).find(:xpath, './/..').click
+    page.find('input#update_time', visible: :all).find(:xpath, './/..').click
+    page.find('input#solution_time', visible: :all).find(:xpath, './/..').click
 
     # check if optional
     expect(page).to have_no_css('input[name=first_response_time_in_text][required]')
@@ -48,9 +48,9 @@ RSpec.describe 'Manage > Sla', type: :system do
       expect(page).to have_css('input[name=solution_time_in_text][required]')
 
       # drop all checkboxes
-      page.find('input#first_response_time', visible: false).find(:xpath, './/..').click
-      page.find('input#update_time', visible: false).find(:xpath, './/..').click
-      page.find('input#solution_time', visible: false).find(:xpath, './/..').click
+      page.find('input#first_response_time', visible: :all).find(:xpath, './/..').click
+      page.find('input#update_time', visible: :all).find(:xpath, './/..').click
+      page.find('input#solution_time', visible: :all).find(:xpath, './/..').click
 
       # check if optional
       expect(page).to have_no_css('input[name=first_response_time_in_text][required]')

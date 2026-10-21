@@ -91,9 +91,7 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
     wait_for_form_to_settle("form-ticket-edit-#{similar_tickets.first.id}")
 
     within 'aside[aria-label="Main sidebar"]' do
-      find('li', text: 'Similar problem')
-        .find('button[aria-label="Close this tab"]', visible: :all)
-        .click
+      within('li', text: 'Similar problem') { find('button[aria-label="Close this tab"]', visible: :all).click }
     end
 
     within 'main' do

@@ -79,7 +79,7 @@ RSpec.describe 'Admin Panel > Knowledge Base > Video servers', type: :system do
         )
       )
 
-      find('tr', text: %r{CMS}).find('.js-remove').click
+      within('tr', text: %r{CMS}) { find('.js-remove').click }
 
       in_modal { click '.js-submit' }
 

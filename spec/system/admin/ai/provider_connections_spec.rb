@@ -994,7 +994,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
 
       # The tooltip sits on the cell, which is the only one in the table carrying a title.
       describe 'status badge tooltip' do
-        let(:tooltip) { find('tr', text: 'second-connection').find('td[title]')[:title] }
+        let(:tooltip) { within('tr', text: 'second-connection') { find('td[title]')[:title] } }
 
         # The message is escaped exactly once, by the generic table row template: a raw provider
         # message reaches the title attribute verbatim, and neither breaks out of it nor arrives

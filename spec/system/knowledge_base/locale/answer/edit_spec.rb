@@ -212,8 +212,7 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
 
     it 'deletes a tag' do
       within :active_content do
-        find('.list-item', text: published_answer_tag_name)
-          .find('.js-delete').click
+        within('.list-item', text: published_answer_tag_name) { find('.js-delete').click }
 
         expect(page).to have_no_link(published_answer_tag_name, href: false, class: ['js-tag'])
         wait.until_exists { published_answer_with_tag.reload.tag_list.exclude? published_answer_tag_name }

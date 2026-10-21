@@ -47,7 +47,7 @@ RSpec.describe 'Manage > Report Profiles', type: :system do
       it 'creates an active profile report on the ui' do
         within :active_content do
           within '.page-content' do
-            expect(page).to have_no_selector('tr.item.is-inactive')
+            expect(page).to have_no_css('tr.item.is-inactive')
               .and have_text(name)
           end
         end

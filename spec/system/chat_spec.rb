@@ -518,7 +518,7 @@ RSpec.describe 'Chat Handling', type: :system do
           click '.zammad-chat .js-chat-open'
           expect(page).to have_css('.js-restart', wait: 60)
           click '.js-chat-toggle .zammad-chat-header-icon'
-          expect(page).to have_no_selector('.zammad-chat-is-open', wait: 60)
+          expect(page).to have_no_css('.zammad-chat-is-open', wait: 60)
         end
       end
     end

@@ -209,7 +209,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       end
 
       within '[href="#cti"].js-phoneMenuItem' do
-        expect(page).to have_no_selector('.counter')
+        expect(page).to have_no_css('.counter')
       end
     end
   end
@@ -244,7 +244,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
         within :active_content do
           expect(page).to have_css('.js-callerLog', text: prettified_customer_phone)
             .and have_css('.js-callerLog', text: prettified_current_user_phone)
-          expect(page).to have_no_selector('.js-callerLog', text: customer_phone)
+          expect(page).to have_no_css('.js-callerLog', text: customer_phone)
         end
       end
     end

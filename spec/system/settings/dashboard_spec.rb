@@ -161,7 +161,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
           expect(page).to have_select('dashboard_activity_stream', selected: 'All activities')
           expect(page).to have_unchecked_field('dashboard_first_steps', visible: :all)
 
-          find('.js-dashboardElement', text: 'First Steps').find('label').click
+          within('.js-dashboardElement', text: 'First Steps') { find('label').click }
         end
 
         await_empty_ajax_queue
@@ -173,7 +173,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
     it 'turns a stats widget off' do
       within :active_content do
         click_on 'Dashboard widgets'
-        find('.js-dashboardElement', text: 'Mood').find('label').click
+        within('.js-dashboardElement', text: 'Mood') { find('label').click }
       end
 
       await_empty_ajax_queue
@@ -217,7 +217,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
       it 'shows a hint once the views are turned off too, until the dashboard is turned off' do
         within :active_content do
-          find('.js-dashboardElement', text: 'First Steps').find('label').click
+          within('.js-dashboardElement', text: 'First Steps') { find('label').click }
 
           expect(page).to have_unchecked_field('dashboard_first_steps', visible: :all)
           expect(page).to have_no_css('.alert--warning')
@@ -226,11 +226,11 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
           expect(page).to have_css('.alert--warning', text: 'All views and widgets are turned off, so agents see an empty dashboard. If you do not need the dashboard at all, you can turn it off.')
 
-          find('.js-dashboardElement', text: 'First Steps').find('label').click
+          within('.js-dashboardElement', text: 'First Steps') { find('label').click }
 
           expect(page).to have_no_css('.alert--warning')
 
-          find('.js-dashboardElement', text: 'First Steps').find('label').click
+          within('.js-dashboardElement', text: 'First Steps') { find('label').click }
 
           expect(page).to have_css('.alert--warning')
 

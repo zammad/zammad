@@ -133,12 +133,10 @@ RSpec.describe 'Manage > Integration > PGP', type: :system do
       expect(find('select[name="group_id::default_encryption::1"]'))
         .to have_css('[selected][value=false]')
 
-      find('select[name="group_id::default_encryption::1"]')
-        .find('option', text: 'yes')
+      find('select[name="group_id::default_encryption::1"] option', text: 'yes')
         .select_option
 
-      find('select[name="group_id::default_sign::1"]')
-        .find('option', text: 'no')
+      find('select[name="group_id::default_sign::1"] option', text: 'no')
         .select_option
 
       find('.js-updateGroup').click

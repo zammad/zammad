@@ -82,7 +82,7 @@ RSpec.describe 'Admin password auth', type: :system do
             click_on('Sign in')
           end
 
-          expect(page).to have_no_selector('#login')
+          expect(page).to have_no_css('#login')
         end
       end
     end

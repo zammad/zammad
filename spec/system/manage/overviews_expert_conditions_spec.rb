@@ -635,7 +635,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
 
         within '.ticket_selector' do
           check_condition(1, 'State', 'is')
-          expect(self).to have_no_selector('.js-switch')
+          expect(self).to have_no_css('.js-switch')
         end
       end
     end
@@ -705,7 +705,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
         it 'does not show an alert' do
           within '.ticket_selector' do
             check_condition(1, 'Title', 'contains', value_input: 'welcome')
-            expect(self).to have_no_selector('.js-alert')
+            expect(self).to have_no_css('.js-alert')
           end
         end
       end
