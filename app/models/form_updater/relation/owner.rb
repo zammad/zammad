@@ -13,4 +13,8 @@ class FormUpdater::Relation::Owner < FormUpdater::Relation
   def relation_type
     ::User
   end
+
+  def allowed_scope
+    Pundit.policy_scope!(current_user, relation_type)
+  end
 end

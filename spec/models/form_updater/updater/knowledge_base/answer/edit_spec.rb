@@ -54,6 +54,14 @@ RSpec.describe(FormUpdater::Updater::KnowledgeBase::Answer::Edit) do
       end
     end
 
+    context 'with a deactivated knowledge base' do
+      before { knowledge_base.update!(active: false) }
+
+      it 'is not authorized' do
+        expect(updater.authorized?).to be false
+      end
+    end
+
     context 'with a reader' do
       let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
 
@@ -259,6 +267,14 @@ RSpec.describe(FormUpdater::Updater::KnowledgeBase::Answer::Edit) do
         fields
 
         expect(UploadCache.new(form_id).attachments).to be_empty
+      end
+    end
+
+    context 'when the form belongs to another user' do
+      before { create(:store, object: 'UploadCache', o_id: form_id, created_by_id: create(:agent).id) }
+
+      it 'does not copy the files into it' do
+        expect { fields }.to raise_error(Exceptions::Forbidden)
       end
     end
   end

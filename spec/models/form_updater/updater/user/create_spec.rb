@@ -23,5 +23,19 @@ RSpec.describe(FormUpdater::Updater::User::Create) do
     []
   end
 
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with a customer' do
+      let(:user) { create(:customer) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
+  end
+
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'User'
 end

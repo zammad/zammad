@@ -6,6 +6,10 @@ class FormUpdater::Updater::User::Create < FormUpdater::Updater
 
   core_workflow_screen 'create'
 
+  def self.required_permissions
+    %w[ticket.agent admin.user]
+  end
+
   def object_type
     ::User
   end

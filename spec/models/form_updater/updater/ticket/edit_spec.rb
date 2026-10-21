@@ -419,6 +419,29 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
 
+  context 'when a customer restores the dirty fields of their own ticket' do
+    let(:user)            { create(:customer) }
+    let(:ticket)          { create(:ticket, title: 'Example ticket', group:, customer: user, owner: create(:agent, groups: [group]), note: 'Internal note') }
+    let(:taskbar)         { create(:taskbar, key: "Ticket-#{ticket.id}", callback: 'TicketZoom', user_id: user.id, state: { 'ticket' => {} }) }
+    let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar), 'applyTaskbarState' => true } }
+    let(:meta)            { { additional_data:, dirty_fields: %w[title owner_id note time_unit] } }
+    let(:data)            { { 'title' => 'Changed', 'owner_id' => 0, 'note' => 'Changed', 'time_unit' => '-1' } }
+    let(:id)              { Gql::ZammadSchema.id_from_object(ticket) }
+
+    before do
+      ticket.update_columns(time_unit: 42)
+      resolved_result.authorized?
+    end
+
+    it 'restores only the attributes visible to the customer', :aggregate_failures do
+      fields = resolved_result.resolve[:fields]
+
+      expect(fields['title']).to include(value: 'Example ticket')
+      expect(fields['owner_id'] || {}).not_to include(:value, :options)
+      expect(fields).not_to include('note', 'time_unit')
+    end
+  end
+
   context 'when handling default follow-up state' do
     let(:closed_state)    { Ticket::State.find_by(name: 'closed') }
     let(:follow_up_state) { Ticket::State.find_by(default_follow_up: true) }

@@ -116,11 +116,12 @@ RSpec.shared_examples 'FormUpdater::AppliesTaskbarState' do |taskbar_key:, taskb
 
         before do
           create(:store,
-                 object:      'UploadCache',
-                 o_id:        form_id,
-                 data:        'dGVzdCAxMjM=',
-                 filename:    'some_file.pdf',
-                 preferences: {
+                 object:        'UploadCache',
+                 o_id:          form_id,
+                 data:          'dGVzdCAxMjM=',
+                 filename:      'some_file.pdf',
+                 created_by_id: user.id,
+                 preferences:   {
                    'Content-Type': 'application/pdf',
                    'Content-ID':   'application/pdf@01CAB192.K8H512Y9',
                  })

@@ -4,25 +4,23 @@ class FormUpdater::ApplyValue::UserAutocomplete < FormUpdater::ApplyValue::Base
 
   # Resolves a User id into the canonical option entry consumed by the
   # autocomplete FormKit field — same shape `FieldCustomer`/`FieldAgent` build
-  # client-side. Reused by `map_value` for top-level form fields and by the
-  # advanced search filter prefill path.
+  # client-side. Reused by `map_value` for top-level form fields, by the
+  # advanced search filter prefill path and by the ticket create prefill.
   #
-  # TODO: visibility is not enforced here yet — the lookup is a plain find_by.
-  # The taskbar / template-restore paths already worked this way; the filter
-  # prefill inherits that and will be tightened together with the apply-value
-  # path in a follow-up.
-  def self.resolve_option(id)
+  # Only users of the current user's policy scope, not those visible in part: the
+  # label falls back to the email address or the login, which a field scope hides.
+  def self.resolve_option(id, current_user:)
     # Cast to an integer, a string like '12abc' would hit user 12.
     return if !id.to_s.match?(%r{\A\d+\z})
 
-    user = User.find_by(id: id)
+    user = Pundit.policy_scope!(current_user, User).find_by(id: id)
     return if !user
 
     {
       value:   user.id,
       label:   user.fullname.presence || user.login,
       heading: user.organization&.name,
-      object:  FormUpdater::Graphql::Serializers::User.serialize(user),
+      object:  FormUpdater::Graphql::Serializers::User.serialize(user, current_user:),
     }
   end
 
@@ -32,7 +30,7 @@ class FormUpdater::ApplyValue::UserAutocomplete < FormUpdater::ApplyValue::Base
 
   def map_value(field:, config:)
     value  = config['value']
-    option = unknown_value_option(value) || self.class.resolve_option(value)
+    option = unknown_value_option(value) || self.class.resolve_option(value, current_user: context[:current_user])
     return if !option
 
     result[field][:value] = option[:value]

@@ -240,6 +240,36 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       end
     end
 
+    context 'when the form data carries the id of a record' do
+      let(:data) { { 'id' => create(:ticket).id } }
+
+      it 'does not hand it to core workflow' do
+        expect(resolved_result.send(:perform_payload)['params']).not_to have_key('id')
+      end
+    end
+
+    context 'when the restored taskbar state carries the id of a record' do
+      let(:taskbar) { create(:taskbar, key: 'TicketCreateScreen-1234', callback: 'TicketCreate', user_id: user.id, state: { 'id' => create(:ticket).id }) }
+      let(:meta)    { { initial: true, form_id: SecureRandom.uuid, additional_data: { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar) } } }
+
+      it 'does not hand it to core workflow' do
+        allow(CoreWorkflow).to receive(:perform).and_call_original
+
+        resolved_result.resolve
+
+        expect(CoreWorkflow).to have_received(:perform).with(hash_including(payload: hash_including('params' => hash_excluding('id'))))
+      end
+    end
+
+    context 'when a customer prefills another user as the customer' do
+      let(:user) { create(:customer) }
+      let(:meta) { { initial: true, form_id: SecureRandom.uuid, additional_data: { 'customer_id' => create(:agent).id } } }
+
+      it 'resolves no option for that user' do
+        expect(resolved_result.resolve[:fields]['customer_id'] || {}).not_to include(:initialValue, :options)
+      end
+    end
+
     context 'when the customer is prefilled with a phone number' do
       let(:phone) { '+49 30 609812345' }
       let(:meta)  { { initial: true, form_id: SecureRandom.uuid, additional_data: { 'customer_phone' => phone } } }

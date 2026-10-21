@@ -7,7 +7,7 @@ class FormUpdater::ApplyValue::Tags < FormUpdater::ApplyValue::Base
   # (`FormUpdater::Updater::Search::AdvancedFilters`) so tag chips restored
   # from URL state / taskbar / cross-tab sync render with proper labels
   # instead of falling back to the "(unknown)" placeholder.
-  def self.resolve_option(name)
+  def self.resolve_option(name, **)
     return if name.blank?
 
     { value: name, label: name }

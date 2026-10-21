@@ -24,4 +24,8 @@ class FormUpdater::Relation::Group < FormUpdater::Relation
 
     current_user.groups_access('read')
   end
+
+  def allowed_scope
+    Pundit.policy_scope!(current_user, relation_type)
+  end
 end

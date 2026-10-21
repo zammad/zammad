@@ -27,18 +27,19 @@ module FormUpdater::Graphql::Serializers::User
   # Serialize a User object with standard fields
   #
   # @param user [User] The user to serialize
+  # @param current_user [User] The user the user is serialized for
   # @param with_organization [Boolean] Include organization relation (default: true)
   # @param with_computed [Boolean] Include computed fields (default: true)
   # @return [Hash, nil] Serialized user hash
   #
   # @example
-  #   FormUpdater::Graphql::Serializers::User.serialize(user)
-  #   FormUpdater::Graphql::Serializers::User.serialize(user, with_organization: false)
+  #   FormUpdater::Graphql::Serializers::User.serialize(user, current_user:)
+  #   FormUpdater::Graphql::Serializers::User.serialize(user, current_user:, with_organization: false)
   #
-  def self.serialize(user, with_organization: true, with_computed: true)
+  def self.serialize(user, current_user:, with_organization: true, with_computed: true)
     relations = with_organization ? { organization: FormUpdater::Graphql::Serializers::Organization::FIELDS } : {}
     computed = with_computed ? COMPUTED_FIELDS : {}
 
-    FormUpdater::Graphql::Serializer.serialize(user, FIELDS, relations: relations, computed_fields: computed)
+    FormUpdater::Graphql::Serializer.serialize(user, FIELDS, current_user:, relations: relations, computed_fields: computed)
   end
 end
