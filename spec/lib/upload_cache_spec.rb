@@ -101,7 +101,7 @@ RSpec.describe UploadCache do
     end
 
     it 'fails for non existing UploadCache Store items' do
-      expect { upload_cache.remove_item(form_id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { upload_cache.remove_item(Store.maximum(:id).next) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
