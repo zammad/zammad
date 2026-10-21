@@ -90,6 +90,26 @@ describe('DragAndDropBulkTopDrawer', () => {
       expect(await wrapper.findByText('Assign to support')).toBeInTheDocument()
     })
 
+    it('sorts macro names in the language of the user', async () => {
+      document.documentElement.setAttribute('lang', 'sv-se')
+      onTestFinished(() => document.documentElement.removeAttribute('lang'))
+
+      mockMacrosQuery({
+        macros: [
+          { internalId: 1, name: 'Ärende' },
+          { internalId: 2, name: 'Zon' },
+        ],
+      })
+      const wrapper = renderTopDrawer({ isActive: true })
+
+      await waitForMacrosQueryCalls()
+
+      const first = await wrapper.findByText('Zon')
+      const second = await wrapper.findByText('Ärende')
+
+      expect(first.compareDocumentPosition(second)).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+    })
+
     it('shows the "Run macro" heading rendered as h3', async () => {
       mockMacrosQuery({ macros })
       const wrapper = renderTopDrawer({ isActive: true })

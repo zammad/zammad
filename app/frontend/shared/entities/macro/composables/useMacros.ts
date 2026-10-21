@@ -58,7 +58,7 @@ export const useMacros = (selector: Ref<TicketMacrosSelectorInput>) => {
 
   const macros = computed(() =>
     translatedMacros.value.sort((a, b) =>
-      a.name.localeCompare(b.name, i18n.locale.name, { numeric: true, sensitivity: 'base' }),
+      a.name.localeCompare(b.name, i18n.locale(), { numeric: true, sensitivity: 'base' }),
     ),
   )
 
