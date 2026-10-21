@@ -8409,7 +8409,7 @@ msgstr ""
 msgid "Form Allowed Parameters"
 msgstr ""
 
-#: app/graphql/gql/queries/form_updater.rb:34
+#: app/graphql/gql/queries/form_updater.rb:36
 msgid "FormSchema could not be found."
 msgstr ""
 
@@ -12148,7 +12148,7 @@ msgstr ""
 msgid "Negative feedback"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:58
+#: app/controllers/sessions_controller.rb:56
 msgid "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found."
 msgstr ""
 
@@ -18389,6 +18389,10 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:97
 msgid "The PGP signature key has been revoked."
+msgstr ""
+
+#: app/controllers/sessions_controller.rb:57
+msgid "The SSO environment variables and headers contain different user logins."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159

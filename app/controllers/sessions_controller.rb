@@ -50,15 +50,18 @@ class SessionsController < ApplicationController
 
     verify_sso_trusted_ip!
 
-    user = begin
-      login = request.env['REMOTE_USER'] ||
-              request.env['HTTP_REMOTE_USER'] ||
-              request.headers['X-Forwarded-User']
+    logins = [
+      request.env['REMOTE_USER'],
+      request.env['HTTP_REMOTE_USER'],
+      request.headers['X-Forwarded-User'],
+    ].compact_blank
 
-      User.lookup(login: login&.downcase)
-    end
+    raise Exceptions::NotAuthorized, __("Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found.") if logins.blank?
+    raise Exceptions::NotAuthorized, __('The SSO environment variables and headers contain different user logins.') if logins.map(&:downcase).uniq.many?
 
-    raise Exceptions::NotAuthorized, __("Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found.") if login.blank?
+    login = logins.first
+    user  = User.lookup(login: login.downcase)
+
     raise Exceptions::NotAuthorized, "User '#{login}' could not be found." if user.blank?
 
     session.delete(:switched_from_user_id)
