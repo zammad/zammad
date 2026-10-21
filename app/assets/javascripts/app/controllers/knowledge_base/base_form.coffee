@@ -179,7 +179,7 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
     button.disabled = true
 
     @ajax(
-      id:          'knowledge_bases_init_admin'
+      id:          'knowledge_base_server_snippets'
       type:        'GET'
       url:         @object().manageUrl('server_snippets')
       processData: true
