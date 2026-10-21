@@ -7,9 +7,9 @@
 module ActiveRecord
   module AsBatches
     class Batch
-      def initialize(arel, args)
-        @offset = arel.offset || 0
-        @limit  = arel.limit
+      def initialize(relation, args)
+        @offset = relation.offset_value || 0
+        @limit  = relation.limit_value
         @size   = args[:size] || 100
         return if !@limit || (@limit > @size)
 
@@ -28,7 +28,7 @@ module ActiveRecord
 
           if @limit
             @limit -= records.size
-            if @limit < size
+            if @limit < @size
               @size = @limit
             end
 
@@ -41,7 +41,7 @@ module ActiveRecord
     end
 
     def as_batches(args = {}, &)
-      Batch.new(arel, args).as_batches(self, &)
+      Batch.new(self, args).as_batches(self, &)
     end
   end
 
