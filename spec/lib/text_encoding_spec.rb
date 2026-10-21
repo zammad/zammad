@@ -52,6 +52,24 @@ RSpec.describe TextEncoding, :aggregate_failures do
         end
       end
 
+      # Code page 936 writes the euro sign as the single byte 0x80. The detection
+      # reports it as GB18030, which rejects that byte in Ruby.
+      context 'with code page 936 content that only the detection can place' do
+        subject(:string) { original_string.encode(input_encoding).b }
+
+        let(:original_string) { '欧元报价：€1,200 – 请确认。谢谢' }
+        let(:input_encoding)  { Encoding::GBK }
+
+        it 'decodes it without a from: option' do
+          expect(CharDet.detect(string)['encoding']).to eq('GB18030')
+          expect(described_class.utf8_encode(string)).to eq(original_string)
+        end
+
+        it 'decodes it with a from: option nobody resolves' do
+          expect(described_class.utf8_encode(string, from: 'x-gbk')).to eq(original_string)
+        end
+      end
+
       context 'with a valid from: option' do
         let(:original_string) { 'Tschüss!' }
         let(:input_encoding) { Encoding::ISO_8859_2 }
@@ -66,19 +84,114 @@ RSpec.describe TextEncoding, :aggregate_failures do
       end
 
       context 'with an invalid from: option' do
-        let(:original_string) { '―陈志' }
-        let(:input_encoding) { Encoding::GB18030 }
+        # Binary, like the mail parser hands it over - otherwise the encoding of
+        # the string itself would be a viable candidate and mask the detection.
+        subject(:string) { original_string.encode(input_encoding).b }
+
+        let(:original_string) { 'Tschüss!' }
+        let(:input_encoding)  { Encoding::ISO_8859_2 }
 
         it 'does not try it' do
-          expect { string.encode('utf-8', 'gb2312') }
+          expect { string.encode('utf-8', 'us-ascii') }
             .to raise_error(Encoding::InvalidByteSequenceError)
 
-          expect { described_class.utf8_encode(string, from: 'gb2312') }
+          expect { described_class.utf8_encode(string, from: 'us-ascii') }
             .not_to raise_error
         end
 
         it 'uses the detected input encoding instead' do
+          expect(described_class.utf8_encode(string, from: 'us-ascii')).to eq(original_string)
+        end
+      end
+
+      # regression test for issue 6461
+      context 'with a from: option that mailers use for a superset of it' do
+        subject(:string) { original_string.encode(input_encoding).b }
+
+        # The en dash is undefined in GB2312, Outlook sends it as GBK anyway.
+        let(:original_string) { 'Hong Kong (HKG) – Zurich (ZRH) – Tel Aviv (TLV)' }
+        let(:input_encoding)  { Encoding::GBK }
+
+        it 'decodes GBK content declared as gb2312' do
+          expect { string.encode('utf-8', 'gb2312') }
+            .to raise_error(Encoding::InvalidByteSequenceError)
+
           expect(described_class.utf8_encode(string, from: 'gb2312')).to eq(original_string)
+        end
+
+        # Code page 936 writes the euro sign as the single byte 0x80, which
+        # GB18030 rejects.
+        context 'with a euro sign' do
+          let(:original_string) { '欧元报价：€1,200 – 请确认。谢谢' }
+
+          it 'decodes it declared as gb2312' do
+            expect(described_class.utf8_encode(string, from: 'gb2312')).to eq(original_string)
+          end
+
+          it 'decodes it declared as gbk' do
+            expect(described_class.utf8_encode(string, from: 'gbk')).to eq(original_string)
+          end
+
+          # English text keeps the detection from placing it instead.
+          context 'with English text' do
+            let(:original_string) { 'Hong Kong (HKG) – Zurich (ZRH), €1,200' }
+
+            it 'decodes it declared as gb18030' do
+              expect(described_class.utf8_encode(string, from: 'gb18030')).to eq(original_string)
+            end
+
+            it 'decodes it declared with an alias of GB2312 or GBK' do
+              %w[GB_2312-80 gb_2312 gb2312_80 csGB2312 chinese iso-ir-58 csISO58GB231280 EUC-CN x-gbk ms936 windows-936 cp-936 csGBK gb-18030].each do |charset|
+                expect(described_class.utf8_encode(string, from: charset)).to eq(original_string)
+              end
+            end
+          end
+        end
+
+        context 'with GB18030 content' do
+          let(:original_string) { 'Hong Kong – Zurich, €1,200 😀 𠀀' }
+          let(:input_encoding)  { Encoding::GB18030 }
+
+          it 'decodes it declared as gb2312' do
+            expect(string.dup.force_encoding('GBK')).not_to be_valid_encoding
+
+            expect(described_class.utf8_encode(string, from: 'gb2312')).to eq(original_string)
+          end
+
+          it 'decodes it declared as gbk' do
+            expect(described_class.utf8_encode(string, from: 'gbk')).to eq(original_string)
+          end
+
+          it 'decodes it next to a euro sign of code page 936' do
+            mixed = 'Hong Kong – Zurich, €1,200'.encode('GBK').b + ' 😀'.encode('GB18030').b
+
+            expect(described_class.utf8_encode(mixed, from: 'gb2312')).to eq('Hong Kong – Zurich, €1,200 😀')
+          end
+        end
+
+        context 'with GB2312 content' do
+          let(:original_string) { '你好，世界' }
+          let(:input_encoding)  { Encoding::GB2312 }
+
+          it 'decodes it unchanged' do
+            expect(described_class.utf8_encode(string, from: 'gb2312')).to eq(original_string)
+          end
+        end
+
+        # The declared charset wins, as for any other label: byte pairs that GB18030
+        # maps to characters decode as wrong ones. Only a pair it maps to private
+        # use, like the one of 航 here, hands the content over to the detection.
+        context 'with content in another multibyte charset that GB18030 reads as private use' do
+          let(:original_string) { '請確認航班' }
+          let(:input_encoding)  { Encoding::Big5 }
+
+          it 'falls back to the detected encoding' do
+            expect(string.encode('utf-8', 'gb18030')).to match(%r{\p{Co}})
+
+            %w[gb2312 gbk gb18030].each do |charset|
+              expect(described_class.utf8_encode(string, from: charset)).to eq(original_string)
+            end
+          end
         end
       end
 

@@ -90,7 +90,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       it 'ensures tests were dynamically generated' do
-        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(119)
+        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(120)
       end
     end
 

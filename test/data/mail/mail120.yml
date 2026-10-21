@@ -1,0 +1,19 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"陈志" <sender@example.com>'
+from_email: sender@example.com
+from_display_name: 陈志
+to: support@example.org
+subject: 航班预订 €1,200 – Hong Kong (HKG) – Zurich (ZRH) – Tel Aviv (TLV)
+body: "<p>Hello,</p><p>Please book the following flights: Hong Kong (HKG) – Zurich
+  (ZRH) – Tel Aviv (TLV).</p><p>Thanks</p>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"></head><body><p>Hello,</p><p>Please
+    book the following flights: Hong Kong (HKG) – Zurich (ZRH) – Tel Aviv (TLV).</p><p>Thanks</p></body></html>'
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: gb2312

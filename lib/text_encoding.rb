@@ -11,6 +11,14 @@ class TextEncoding
   # before the viable encodings are considered.
   NON_VIABLE_ENCODINGS = [Encoding::ASCII_8BIT, Encoding::UTF_8].freeze
 
+  # GB2312 and GBK are subsets of GB18030. Like the `mail` gem, read them as
+  # GB18030: Outlook declares code page 936 (GBK) as 'gb2312', and text declared
+  # as GBK may carry four-byte sequences, both of which Ruby's strict GB2312 and
+  # GBK reject.
+  GB18030_SUBSETS = [Encoding::GB2312, Encoding::GBK].freeze
+
+  GB18030_EURO_SIGN = '€'.encode(Encoding::GB18030).freeze
+
 =begin
 
 Returns a copy of the given string, encoded in UTF-8. Anything that is not a
@@ -52,15 +60,18 @@ Raises `EncodingError` if no valid encoding was found and no fallback was given.
 
   attr_reader :string, :options
 
-  # Convert the string to the given charset, if valid_encoding? is true.
+  # Convert the string from the given charset, if it decodes the string.
   def encoded_from_given_charset
     return if options[:from].blank?
 
     encoding = find_encoding(options[:from])
-    return if encoding.blank? || !string.dup.force_encoding(encoding).valid_encoding?
+    decoded  = decode(encoding)
+    return decoded if encoding != Encoding::GB18030
 
-    string.force_encoding(encoding)
-    string.encode!('utf-8', encoding)
+    # GB18030 maps the byte pairs that GBK leaves undefined to private use, and
+    # Big5 keeps its most common characters there. Mislabelled Big5 goes to the
+    # detection instead of decoding as wrong characters.
+    decoded if !decoded&.match?(%r{\p{Co}})
   rescue ArgumentError, EncodingError => e
     Rails.logger.error { e.inspect }
     nil
@@ -68,14 +79,35 @@ Raises `EncodingError` if no valid encoding was found and no fallback was given.
 
   def encoded_from_viable_encodings
     viable_encodings.each do |encoding|
-
-      return string.encode!('utf-8', encoding)
+      decoded = decode(encoding)
+      return decoded if decoded
     rescue EncodingError => e
       Rails.logger.error { e.inspect }
-
     end
 
     nil
+  end
+
+  # Returns the string decoded from the given encoding, or nil if it is invalid in it.
+  def decode(encoding)
+    candidate = string.dup.force_encoding(encoding)
+    candidate = read_cp936_euro_signs(candidate) if encoding == Encoding::GB18030
+    return if !candidate&.valid_encoding?
+
+    candidate.encode('utf-8')
+  end
+
+  # GB18030 rejects the single byte that code page 936 uses for the euro sign.
+  # Like the `mail` gem and the WHATWG gb18030 decoder, read it as '€'. Any other
+  # invalid sequence means the string is not GB18030.
+  def read_cp936_euro_signs(gb18030)
+    return gb18030 if gb18030.valid_encoding?
+
+    gb18030.scrub do |bytes|
+      break if bytes.bytesize != 1 || bytes.getbyte(0) != 0x80
+
+      GB18030_EURO_SIGN
+    end
   end
 
   def fallback
@@ -89,13 +121,19 @@ Raises `EncodingError` if no valid encoding was found and no fallback was given.
     end
   end
 
-  # Resolves a charset label to an `Encoding`.
-  #
+  # Resolves a charset label to the `Encoding` that decodes it.
+  def find_encoding(charset)
+    encoding = resolve_encoding(charset)
+    return Encoding::GB18030 if GB18030_SUBSETS.include?(encoding)
+
+    encoding
+  end
+
   # Ruby knows only a subset of the charset labels that occur in real mail. For
   # labels it cannot resolve, the `mail` gem's alias table is consulted before
   # giving up, so that a declared charset is not silently dropped in favour of
   # charset detection (e.g. 'ks_c_5601-1987', the Microsoft alias for CP949).
-  def find_encoding(charset)
+  def resolve_encoding(charset)
     Encoding.find(charset)
   rescue ArgumentError
     picked = Mail::Utilities.pick_encoding(charset)
@@ -110,7 +148,6 @@ Raises `EncodingError` if no valid encoding was found and no fallback was given.
     [string.encoding, detected_encoding]
       .compact
       .reject { NON_VIABLE_ENCODINGS.include?(it) }
-      .select { string.dup.force_encoding(it).valid_encoding? }
   end
 
   # CharDet reports labels that Ruby cannot resolve ('HZ-GB-2312', 'x-euc-tw').
