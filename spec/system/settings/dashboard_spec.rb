@@ -26,6 +26,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
       await_empty_ajax_queue
 
+      expect(page).to have_text('Update successful.')
       expect(Setting.get('dashboard')).to be(false)
 
       within :active_content do
@@ -65,6 +66,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
       await_empty_ajax_queue
 
+      expect(page).to have_text('Update successful.')
       expect(Setting.get('dashboard_activity_stream')).to be(false)
     end
 
@@ -75,6 +77,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
       await_empty_ajax_queue
 
+      expect(page).to have_text('Update successful.')
       expect(Setting.get('dashboard_activity_stream')).to be(true)
       expect(Setting.get('dashboard_activity_stream_own')).to be(true)
     end
@@ -96,6 +99,20 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
       expect(Setting.get('dashboard_activity_stream_own')).to be(true)
     end
 
+    it 'shows an activity stream change from another session' do
+      wait_for_authenticated_session
+
+      within :active_content do
+        expect(page).to have_select('dashboard_activity_stream', selected: 'All activities')
+      end
+
+      Setting.set('dashboard_activity_stream', false)
+
+      within :active_content do
+        expect(page).to have_select('dashboard_activity_stream', selected: 'Do not show activities')
+      end
+    end
+
     context 'with the activity stream turned off' do
       def authenticate
         Setting.set('dashboard_activity_stream', false)
@@ -112,8 +129,119 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
         await_empty_ajax_queue
 
+        expect(page).to have_text('Update successful.')
         expect(Setting.get('dashboard_activity_stream_own')).to be(true)
         expect(Setting.get('dashboard_activity_stream')).to be(true)
+      end
+
+      # A test cannot see whether a dropdown is open, so the element has to survive the save instead.
+      it 'keeps the dropdown in place while saving', :aggregate_failures do
+        within :active_content do
+          expect(page).to have_select('dashboard_activity_stream', selected: 'Do not show activities')
+        end
+
+        # Marked right away, as choosing itself renders the dropdown anew.
+        shown = page.evaluate_script(<<~JS)
+          (function() {
+            $(document).on('ajaxComplete', function(event, xhr, settings) {
+              if (settings.type === 'GET' && settings.url.indexOf('/settings/?full=true') !== -1) window.settingsRefetched = true
+            })
+            $('#dashboard_activity_stream').val('own').trigger('change')
+            $('#dashboard_activity_stream').attr('data-test-marker', 'kept')
+            return $('#dashboard_activity_stream').val()
+          })()
+        JS
+
+        expect(shown).to eq('own')
+
+        await_empty_ajax_queue
+
+        expect(page).to have_text('Update successful.')
+
+        # The save also reloads all settings once the websocket reports it, which may render anew as well.
+        wait.until { page.evaluate_script('window.settingsRefetched') }
+
+        within :active_content do
+          expect(page).to have_css('#dashboard_activity_stream[data-test-marker]')
+        end
+      end
+
+      it 'turns the activity stream on when chosen again while it is being turned on', :aggregate_failures do
+        within :active_content do
+          expect(page).to have_select('dashboard_activity_stream', selected: 'Do not show activities')
+        end
+
+        # Hooked on the request turning the stream on, as both choices have to land while it is in flight.
+        page.execute_script(<<~JS)
+          var chosenAgain = false
+          $(document).on('ajaxSend', function(event, xhr, settings) {
+            if (chosenAgain || settings.type !== 'PUT' || String(settings.data).indexOf('"name":"dashboard_activity_stream"') === -1) return
+
+            chosenAgain = true
+            $('#dashboard_activity_stream').val('off').trigger('change')
+            $('#dashboard_activity_stream').val('own').trigger('change')
+          })
+          $('#dashboard_activity_stream').val('own').trigger('change')
+        JS
+
+        await_empty_ajax_queue
+
+        within :active_content do
+          expect(page).to have_select('dashboard_activity_stream', selected: 'Own activities only')
+        end
+
+        expect(Setting.get('dashboard_activity_stream')).to be(true)
+        expect(Setting.get('dashboard_activity_stream_own')).to be(true)
+      end
+
+      context 'when the activity stream cannot be turned on' do
+        def authenticate
+          Setting.set('system_online_service', true)
+
+          setting = Setting.find_by(name: 'dashboard_activity_stream')
+          setting.preferences[:online_service_disable] = true
+          setting.save!
+
+          super
+        end
+
+        it 'shows no success toast when turning the activity stream on fails', :aggregate_failures do
+          within :active_content do
+            select 'Own activities only', from: 'dashboard_activity_stream'
+          end
+
+          await_empty_ajax_queue
+
+          expect(page).to have_text('Not authorized (service disabled)!')
+
+          # The toast hides itself after two seconds, so waiting for it to be gone proves nothing.
+          expect(page).to have_no_text('Update successful.', wait: 0)
+          expect(Setting.get('dashboard_activity_stream')).to be(false)
+        end
+
+        it 'turns the activity stream on when chosen again after it failed' do
+          within :active_content do
+            select 'Own activities only', from: 'dashboard_activity_stream'
+          end
+
+          expect(page).to have_text('Not authorized (service disabled)!')
+
+          # Choosing the option shown already saves nothing, so the stored value has to be shown first.
+          #   Checked before the service is turned back on, as that renders the page anew as well.
+          within :active_content do
+            expect(page).to have_select('dashboard_activity_stream', selected: 'Do not show activities')
+          end
+
+          Setting.set('system_online_service', false)
+
+          within :active_content do
+            select 'Own activities only', from: 'dashboard_activity_stream'
+          end
+
+          await_empty_ajax_queue
+
+          expect(Setting.get('dashboard_activity_stream')).to be(true)
+        end
       end
 
       it 'turns the activity stream on with all activities', :aggregate_failures do
@@ -178,6 +306,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
       await_empty_ajax_queue
 
+      expect(page).to have_text('Update successful.')
       expect(Setting.get('dashboard_stats_ticket_escalation')).to be(false)
     end
 
