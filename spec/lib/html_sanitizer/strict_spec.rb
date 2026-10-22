@@ -52,6 +52,8 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<IFRAME SRC="javascript:alert(\'XSS\');"></IFRAME>')).to eq('')
       expect(sanitize('<TABLE><TD BACKGROUND="javascript:alert(\'XSS\')">')).to eq('<table><tbody><tr><td></td></tr></tbody></table>')
       expect(sanitize('<DIV STYLE="background-image: url(javascript:alert(\'XSS\'), \'\')">')).to eq('<div></div>')
+      expect(sanitize('<TABLE><TD STYLE="background:url(http://xss.rocks/xss.gif)">')).to eq('<table><tbody><tr><td></td></tr></tbody></table>')
+      expect(sanitize('<SPAN STYLE="background:u\\72l(/api/v1/signout)">XSS</SPAN>')).to eq('<span>XSS</span>')
       expect(sanitize('<a href="/some/path">test</a>')).to eq('<a href="/some/path">test</a>')
       expect(sanitize('<a href="https://some/path">test</a>')).to eq('<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank" title="https://some/path">test</a>')
       expect(sanitize('<a href="https://some/path">test</a>', external: true)).to eq('<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank" title="https://some/path">test</a>')
