@@ -28,6 +28,9 @@ class SettingsController < ApplicationController
 
   # PUT /settings/image/:id
   def update_image
+    setting = Setting.lookup(id: params[:id])
+    raise Exceptions::UnprocessableContent, __('Only the product logo can be updated with an image.') if setting.name != 'product_logo'
+
     logo_content = %i[logo logo_resize].each_with_object({}) do |key, memo|
       data = params[key]
 
@@ -48,7 +51,6 @@ class SettingsController < ApplicationController
       return
     end
 
-    setting = Setting.lookup(name: 'product_logo')
     setting.state = logo_timestamp
     setting.save!
 
