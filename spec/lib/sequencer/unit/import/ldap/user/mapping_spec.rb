@@ -24,6 +24,32 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Mapping, sequencer: :unit do
       resource:    resource,
     )
 
-    expect(provided['lastname']).to be_nil
+    expect(provided[:mapped]['lastname']).to be_nil
+  end
+
+  it 'maps one LDAP attribute to multiple Zammad attributes' do
+
+    ldap_config = {
+      user_attributes: {
+        mail:      %w[login email],
+        firstName: 'firstname',
+      }
+    }
+
+    resource = {
+      mail:      'some@example.com',
+      firstName: 'Some',
+    }
+
+    provided = process(
+      ldap_config: ldap_config,
+      resource:    resource,
+    )
+
+    expect(provided[:mapped]).to include(
+      'login'     => 'some@example.com',
+      'email'     => 'some@example.com',
+      'firstname' => 'Some',
+    )
   end
 end
