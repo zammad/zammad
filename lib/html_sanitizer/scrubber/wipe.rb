@@ -10,6 +10,28 @@ class HtmlSanitizer
         api/v1/ticket_attachment/
       ].freeze
 
+      # An escaped `(` does not open a function for the browser, but is treated as one to stay on the safe side.
+      CSS_RESOURCE          = %r{(?:url|src|image|image-set|cross-fade|element|expression)\s*\\?\(|@import}i
+      # Parentheses inside strings and escaped characters do not nest, so they are consumed as a whole.
+      CSS_ARGUMENT          = %r{\\.|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[()]}m
+      # The URL parser strips leading C0 controls and spaces, so any of them may precede the scheme.
+      CSS_REMOTE_URL        = %r{[\u0000- ('",](?:https?:|ftp:|//)}i
+      # A `/*` inside a string or after a `\` does not open a comment, so escapes and strings are consumed as a whole.
+      CSS_COMMENT           = %r{\\.|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|/\*.*?\*/}m
+      CSS_COMMENT_DELIMITER = %r{/\*|\*/}
+      # Captures everything before a `(` that could belong to the function name, so a prefix cannot pass as an allowed name.
+      CSS_FUNCTION          = %r{([^\s:,()/*+"']*)\(}
+      CSS_ESCAPE            = %r{\\(\h{1,6})\s?|\\(.)}m
+      CSS_SYNTAX            = %w[\\ " ' ( )].freeze
+
+      # `background` is the only allowed property that accepts an image, so only functions known not to load one may be used.
+      CSS_BACKGROUND_FUNCTIONS = %w[
+        rgb rgba hsl hsla hwb lab lch oklab oklch color color-mix light-dark
+        linear-gradient radial-gradient conic-gradient
+        repeating-linear-gradient repeating-radial-gradient repeating-conic-gradient
+        calc min max clamp
+      ].freeze
+
       attr_reader :remote_content_removed
 
       def initialize # rubocop:disable Lint/MissingSuper
@@ -73,10 +95,101 @@ class HtmlSanitizer
         prop = pair.split(':')
         return if prop.first.blank?
 
+        uncommented = css_remove_comments(pair)
+
+        # An escaped `/*` does not open a comment, so comments go before the escapes are resolved.
+        # Escapes may produce uppercase letters again, e.g. `\57 hite`.
+        declaration = css_unescape(uncommented).downcase
+
+        # Every resource needs a `(` or `@import`, and an escaped `(` stays escaped.
+        function_syntax = declaration.match?(%r{[(@]})
+
+        if function_syntax
+          resources = css_resource_arguments(declaration)
+          if resources.any?
+            @remote_content_removed = true if resources.any? { |argument| css_remote_url?(argument) }
+            return
+          end
+        end
+
+        # A comment spanning a `;` would join kept declarations with parts of others that were checked on their own.
+        return if uncommented.match?(CSS_COMMENT_DELIMITER)
         return if !clear_style_allowed?(node, prop)
-        return if clear_style_blocked?(node, pair)
+        return if function_syntax && !clear_style_functions_allowed?(prop, declaration)
+        return if clear_style_blocked?(node, declaration)
 
         true
+      end
+
+      def css_remove_comments(string)
+        return string if string.exclude?('/*')
+
+        string.gsub(CSS_COMMENT) { |match| match.start_with?('/*') ? '' : match }
+      end
+
+      def css_resource_arguments(value)
+        arguments = []
+        scanner   = StringScanner.new(value)
+
+        while scanner.skip_until(CSS_RESOURCE)
+          if scanner.matched.casecmp?('@import')
+            arguments << scanner.rest
+            break
+          end
+
+          # StringScanner positions are byte offsets, so the argument is sliced by bytes too.
+          start = scanner.pos - 1
+          css_skip_argument(scanner)
+          arguments << value.byteslice(start, scanner.pos - start)
+        end
+
+        arguments
+      end
+
+      def clear_style_functions_allowed?(prop, declaration)
+        return true if prop.first.strip != 'background'
+
+        declaration.scan(CSS_FUNCTION).flatten.all? { |name| CSS_BACKGROUND_FUNCTIONS.include?(name) }
+      end
+
+      # Advances to the parenthesis closing the current function, or to the end on unbalanced input.
+      # Counting the depth keeps arguments with nested functions whole, in linear time.
+      def css_skip_argument(scanner)
+        depth = 1
+
+        while depth.positive? && scanner.skip_until(CSS_ARGUMENT)
+          case scanner.matched
+          when '(' then depth += 1
+          when ')' then depth -= 1
+          end
+        end
+
+        scanner.terminate if depth.positive?
+      end
+
+      # Resolves CSS escapes as the browser does, so e.g. `u\72l(` is recognised as `url(`.
+      # An escaped quote, parenthesis or backslash is plain text for the browser, so it stays escaped
+      # and cannot end a string or an argument for `css_skip_argument`.
+      def css_unescape(string)
+        return string if string.exclude?('\\')
+
+        string.gsub(CSS_ESCAPE) do
+          char = Regexp.last_match(1) ? css_codepoint(Regexp.last_match(1).hex) : Regexp.last_match(2)
+
+          CSS_SYNTAX.include?(char) ? "\\#{char}" : char
+        end
+      end
+
+      # Like `remote_url?`, but for a resource argument: the URL parser reads `\` as `/` and drops tabs and newlines.
+      # `css_unescape` keeps every backslash the browser sees as the pair `\\`.
+      def css_remote_url?(argument)
+        argument.gsub('\\\\', '/').delete("\t\n\r").match?(CSS_REMOTE_URL)
+      end
+
+      def css_codepoint(codepoint)
+        return "\uFFFD" if codepoint.zero? || codepoint > 0x10FFFF || codepoint.between?(0xD800, 0xDFFF)
+
+        codepoint.chr(Encoding::UTF_8)
       end
 
       def clear_style_allowed?(node, prop)
@@ -86,8 +199,8 @@ class HtmlSanitizer
         true
       end
 
-      def clear_style_blocked?(node, pair)
-        css_values_blocklist[node.name]&.include?(pair.gsub(%r{[[:space:]]}, '').strip)
+      def clear_style_blocked?(node, declaration)
+        css_values_blocklist[node.name]&.include?(declaration.gsub(%r{[[:space:]]}, '').strip)
       end
 
       def move_attrs_to_css(node)
