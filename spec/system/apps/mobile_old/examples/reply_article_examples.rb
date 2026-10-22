@@ -56,8 +56,8 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
         if attachments
           find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
 
-          # need to wait until the file is uploaded
-          expect(page).to have_css('[aria-label="small.png"]', wait: 60)
+          # The bare file name labels only the upload placeholder, the download label the uploaded file.
+          expect(page).to have_css('[aria-label="Download small.png"]', wait: 60)
         else
           expect(page).to have_no_field('attachments', visible: :all)
         end

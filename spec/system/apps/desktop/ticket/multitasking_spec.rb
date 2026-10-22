@@ -29,6 +29,9 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
 
     wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
+    # The scroll to the newest article swaps the headers, which closes any open popover.
+    expect(page).to have_css('[data-test-id="ticket-detail-top-bar-clipped-details"]:not([inert])')
+
     within('#ticketSidebar') do
       click_on 'Action menu button'
     end

@@ -992,6 +992,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     before do
       visit "#ticket/zoom/#{ticket.id}"
       ensure_websocket
+      wait_for_authenticated_session
     end
 
     it 'does show up the new priority' do

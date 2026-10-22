@@ -4,7 +4,9 @@
 #   a busy CI runner does not make the block look slow. The wall-clock timeout only
 #   stops a block that hangs.
 # The full garbage collection upfront keeps a major collection of the garbage left
-#   behind by earlier examples out of the measurement.
+#   behind by earlier examples out of the measurement, and the time of the collections
+#   during the block is left out of the comparison: it depends on the heap the earlier
+#   examples built up rather than on the code under test.
 RSpec::Matchers.define :take_less_cpu_time_than do |limit|
   supports_block_expectations
 
@@ -19,11 +21,11 @@ RSpec::Matchers.define :take_less_cpu_time_than do |limit|
       @gc_time  = (GC.total_time - gc_started_at) / 1_000_000_000.0
     end
 
-    @cpu_time < limit
+    @cpu_time - @gc_time < limit
   end
 
   failure_message do
-    "expected block to take less than #{limit}s of CPU time, but it took #{@cpu_time.round(3)}s " \
-      "(#{@gc_time.round(3)}s of which garbage collection)"
+    "expected block to take less than #{limit}s of CPU time outside garbage collection, " \
+      "but it took #{(@cpu_time - @gc_time).round(3)}s (plus #{@gc_time.round(3)}s of garbage collection)"
   end
 end

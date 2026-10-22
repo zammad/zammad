@@ -105,6 +105,8 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
     context 'when ai_provider is set' do
       before do
         click '.tabsSidebar-tab[data-tab=summary]'
+
+        wait_for_authenticated_session(user: agent)
       end
 
       it 'displays and updates summary in sidebar', performs_jobs: true do
