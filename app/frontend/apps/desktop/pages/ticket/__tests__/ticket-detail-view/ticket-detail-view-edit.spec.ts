@@ -14,7 +14,10 @@ import {
   waitForAutocompleteSearchRecipientQueryCalls,
 } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.mocks.ts'
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
-import { waitForTicketUpdateMutationCalls } from '#shared/entities/ticket/graphql/mutations/update.mocks.ts'
+import {
+  mockTicketUpdateMutation,
+  waitForTicketUpdateMutationCalls,
+} from '#shared/entities/ticket/graphql/mutations/update.mocks.ts'
 import { mockTicketArticlesQuery } from '#shared/entities/ticket/graphql/queries/ticket/articles.mocks.ts'
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
 import { getTicketUpdatesSubscriptionHandler } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.mocks.ts'
@@ -1126,6 +1129,161 @@ describe('Ticket detail view', () => {
       expect(
         dialogView.getByText('Did you plan to include attachments with this message?'),
       ).toBeInTheDocument()
+    })
+  })
+
+  describe('Update action', () => {
+    const mockEditableTicket = () => {
+      const ticket = createDummyTicket({
+        articleType: 'phone',
+        state: {
+          id: convertToGraphQLId('Ticket::State', 2),
+          name: 'open',
+          stateType: {
+            id: convertToGraphQLId('TicketStateType', 2),
+            name: 'open',
+          },
+        },
+        defaultPolicy: {
+          update: true,
+          agentReadAccess: true,
+        },
+      })
+
+      mockTicketQuery({ ticket })
+
+      return ticket
+    }
+
+    it('highlights the update action while a reply is open and returns to neutral after discarding it', async () => {
+      mockApplicationConfig({
+        ui_ticket_zoom_article_note_new_internal: true,
+      })
+
+      mockEditableTicket()
+
+      const view = await visitView('/tickets/1')
+
+      await getNode('form-ticket-edit-1')?.settled
+
+      expect(await view.findByRole('button', { name: 'Update' })).toHaveClass('bg-green-200')
+      expect(view.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-green-200')
+
+      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
+
+      expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
+
+      await view.events.type(await view.findByRole('textbox', { name: 'Text' }), 'Foo note')
+
+      await waitFor(() =>
+        expect(view.getByRole('button', { name: 'Update' })).toHaveClass('bg-yellow-300'),
+      )
+
+      expect(view.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-yellow-300')
+
+      await view.events.click(view.getByRole('button', { name: 'Discard your unsaved changes' }))
+
+      const confirmDialog = await view.findByRole('dialog')
+
+      await view.events.click(
+        within(confirmDialog).getByRole('button', { name: 'Discard changes' }),
+      )
+
+      await waitFor(() =>
+        expect(view.getByRole('button', { name: 'Update' })).toHaveClass('bg-green-200'),
+      )
+
+      expect(view.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-green-200')
+    })
+
+    it('highlights the update action after changing an attribute and returns to neutral after a successful update', async () => {
+      const ticket = mockEditableTicket()
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            state_id: {
+              options: [
+                {
+                  value: 4,
+                  label: 'closed',
+                },
+                {
+                  value: 2,
+                  label: 'open',
+                },
+              ],
+            },
+            pending_time: {
+              show: false,
+            },
+          },
+          flags: {
+            newArticlePresent: false,
+          },
+        },
+      })
+
+      const view = await visitView('/tickets/1')
+
+      await getNode('form-ticket-edit-1')?.settled
+
+      expect(await view.findByRole('button', { name: 'Update' })).toHaveClass('bg-green-200')
+
+      const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
+
+      await view.events.click(await ticketMetaSidebar.findByLabelText('State'))
+
+      expect(await view.findByRole('listbox', { name: 'Select…' })).toBeInTheDocument()
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            state_id: { value: 4 },
+          },
+        },
+      })
+
+      await view.events.click(view.getByRole('option', { name: 'closed' }))
+
+      await getNode('form-ticket-edit-1')?.settled
+
+      await waitFor(() =>
+        expect(view.getByRole('button', { name: 'Update' })).toHaveClass('bg-yellow-300'),
+      )
+
+      mockTicketUpdateMutation({
+        ticketUpdate: {
+          ticket: {
+            ...ticket,
+            state: {
+              ...ticket.state,
+              id: convertToGraphQLId('Ticket::State', 4),
+              name: 'closed',
+              stateType: {
+                ...ticket.state.stateType,
+                id: convertToGraphQLId('Ticket::StateType', 5),
+                name: 'closed',
+              },
+            },
+          },
+          errors: null,
+        },
+      })
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {},
+        },
+      })
+
+      await view.events.click(view.getByRole('button', { name: 'Update' }))
+
+      await waitForTicketUpdateMutationCalls()
+
+      await waitFor(() =>
+        expect(view.getByRole('button', { name: 'Update' })).toHaveClass('bg-green-200'),
+      )
     })
   })
 

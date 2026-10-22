@@ -51,6 +51,42 @@ describe('TicketDetailBottomBar', () => {
     expect(wrapper.getByRole('button', { name: 'Update' })).toBeInTheDocument()
   })
 
+  it('highlights the update action for agents only when the form is dirty', async () => {
+    const wrapper = renderTicketDetailBottomBar()
+
+    expect(wrapper.getByRole('button', { name: 'Update' })).toHaveClass('bg-green-200')
+    expect(wrapper.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-green-200')
+
+    await wrapper.rerender({
+      dirty: true,
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Update' })).toHaveClass('bg-yellow-300')
+    expect(wrapper.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-yellow-300')
+
+    await wrapper.rerender({
+      dirty: false,
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Update' })).toHaveClass('bg-green-200')
+    expect(wrapper.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-green-200')
+  })
+
+  it('highlights the update action for customers only when the form is dirty', async () => {
+    const wrapper = renderTicketDetailBottomBar({
+      isTicketAgent: false,
+    })
+
+    expect(wrapper.queryByRole('button', { name: 'Drafts & macros' })).not.toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Update' })).toHaveClass('bg-green-200')
+
+    await wrapper.rerender({
+      dirty: true,
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Update' })).toHaveClass('bg-yellow-300')
+  })
+
   it('renders discard unsaved changes button if dirty prop is true', async () => {
     const wrapper = renderTicketDetailBottomBar({
       dirty: true,
@@ -282,6 +318,29 @@ describe('TicketDetailBottomBar', () => {
       await wrapper.events.click(addonButton)
 
       expect(within(wrapper.getByRole('menu')).queryByRole('menuitem')).not.toBeInTheDocument()
+    })
+
+    it('keeps the action menu with an empty state if there are no macros and drafts cannot be used', async () => {
+      mockMacrosQuery({
+        macros: [],
+      })
+
+      const wrapper = renderTicketDetailBottomBar({
+        canUseDraft: false,
+      })
+
+      await waitForMacrosQueryCalls()
+
+      const addonButton = wrapper.getByRole('button', {
+        name: 'Drafts & macros',
+      })
+
+      await wrapper.events.click(addonButton)
+
+      const menu = wrapper.getByRole('menu')
+
+      expect(within(menu).queryByRole('menuitem')).not.toBeInTheDocument()
+      expect(within(menu).getByText('No items available')).toBeInTheDocument()
     })
   })
 

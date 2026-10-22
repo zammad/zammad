@@ -11,7 +11,6 @@ import type { MacroById } from '#shared/entities/macro/types.ts'
 import { useTicketSharedDraftZoomCreateMutation } from '#shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomCreate.api.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
@@ -22,6 +21,7 @@ interface Props {
   ticketId: string
   form?: FormRef
   groupId?: string
+  dirty: boolean
   disabled: boolean
   canUseDraft?: boolean
   sharedDraftId?: string | null
@@ -36,7 +36,7 @@ const emit = defineEmits<{
 
 const macrosSelector = computed(() => (props.groupId ? { entityIds: [props.groupId] } : {}))
 
-const { macrosLoaded, macros } = useMacros(macrosSelector)
+const { macros } = useMacros(macrosSelector)
 
 const { notify } = useNotifications()
 
@@ -105,9 +105,8 @@ const actionItems = computed(() => {
 
 <template>
   <SplitButton
-    v-if="!macrosLoaded || canUseDraft || macros?.length"
     size="large"
-    variant="submit"
+    :variant="dirty ? 'submit' : 'tertiary'"
     type="button"
     :disabled="disabled"
     :items="actionItems"
@@ -116,14 +115,4 @@ const actionItems = computed(() => {
   >
     {{ $t('Update') }}
   </SplitButton>
-  <CommonButton
-    v-else
-    size="large"
-    variant="submit"
-    type="button"
-    :disabled="disabled"
-    @click="$emit('submit', $event)"
-  >
-    {{ $t('Update') }}
-  </CommonButton>
 </template>
