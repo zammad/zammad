@@ -169,6 +169,10 @@ You MUST read the relevant file(s) below before responding when working on that 
   the deliberate exceptions to it
 - `.dev/agent_docs/database_migrations.md` — How to write migrations and work
   with seeds
+- `.dev/agent_docs/code_analysis.md` — The fallow hooks that audit a branch on
+  their own and what to do when one blocks; when to run fallow yourself: finding
+  an existing helper before writing one, tracing an "unused" export before
+  deleting it
 
 ## CodeGraph
 

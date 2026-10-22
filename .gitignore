@@ -145,3 +145,6 @@ schema.graphql
 # CodeGraph
 /.codegraph/
 /.mcp.json
+
+# fallow analysis cache (machine-local)
+/.fallow/

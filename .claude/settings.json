@@ -20,6 +20,12 @@
       "Bash(pnpm lint *)",
       "Bash(pnpm generate-graphql-api)",
       "Bash(pnpm generate-setting-types)",
+      "Bash(pnpm analyse:fallow*)",
+      "Bash(pnpm exec fallow dead-code *)",
+      "Bash(pnpm exec fallow dupes *)",
+      "Bash(pnpm exec fallow trace *)",
+      "Bash(pnpm exec fallow explain *)",
+      "Bash(pnpm exec fallow fix --dry-run *)",
       "mcp__github__issue_read",
       "mcp__github__list_issue_comments",
       "mcp__codegraph__*"
@@ -43,6 +49,18 @@
           {
             "type": "command",
             "command": "pnpm exec codegraph prompt-hook"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.dev/hooks/fallow-gate.sh",
+            "timeout": 180
           }
         ]
       }

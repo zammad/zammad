@@ -9,6 +9,7 @@ it.
 - [Getting started](development_environment/getting-started.md)
 - [Basic information](development_environment/basic-information.md)
 - [CodeGraph setup](development_environment/codegraph-setup.md)
+- [fallow setup](development_environment/fallow-setup.md)
 
 ## Standards & Best Practices
 

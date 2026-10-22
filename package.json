@@ -35,7 +35,11 @@
     "codegraph:reindex": "pnpm exec codegraph index",
     "codegraph:status": "pnpm exec codegraph status",
     "codegraph:uninit": "pnpm exec codegraph uninit",
-    "codegraph:uninstall": "pnpm exec codegraph uninstall"
+    "codegraph:uninstall": "pnpm exec codegraph uninstall",
+    "analyse:fallow": "fallow",
+    "analyse:fallow:audit": "fallow audit --base ${FALLOW_AUDIT_BASE:-origin/develop}",
+    "analyse:fallow:dupes": "fallow dupes --skip-local",
+    "analyse:fallow:health": "fallow health --hotspots --targets"
   },
   "engines": {
     "node": ">=24",
@@ -85,6 +89,7 @@
     "eslint-plugin-vue": "^10.11.1",
     "eslint-plugin-vuejs-accessibility": "^2.6.2",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
+    "fallow": "3.33.1",
     "jsdom": "^30.1.3",
     "markdownlint-cli2": "^0.23.3",
     "minimatch": "^10.2.6",

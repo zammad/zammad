@@ -21,6 +21,7 @@ FRONTEND_JS_FILES=()
 COFFEESCRIPT_FILES=()
 STYLE_FILES=()
 MARKDOWN_FILES=()
+NEEDS_FALLOW=false
 EXIT_CODE=0
 
 while IFS= read -r file; do
@@ -34,6 +35,7 @@ while IFS= read -r file; do
     *.coffee)     COFFEESCRIPT_FILES+=("$file") ;;
     *.scss|*.css) STYLE_FILES+=("$file") ;;
     *.md)         MARKDOWN_FILES+=("$file") ;;
+    package.json|.fallowrc.json) NEEDS_FALLOW=true ;;
   esac
 done < <(git diff --name-only --diff-filter=ACMR HEAD 2>/dev/null; git ls-files --others --exclude-standard 2>/dev/null)
 
@@ -65,6 +67,12 @@ fi
 
 if [[ ${#MARKDOWN_FILES[@]} -gt 0 ]]; then
   pnpm lint:md:cmd --fix "${MARKDOWN_FILES[@]}" >&2 || EXIT_CODE=2
+fi
+
+# Unused code, duplication and complexity a branch introduces only show across the
+#   module graph, which no per-file linter sees.
+if [[ ${#FRONTEND_ALL_FILES[@]} -gt 0 || $NEEDS_FALLOW == true ]]; then
+  .dev/hooks/fallow-audit.sh || EXIT_CODE=2
 fi
 
 exit $EXIT_CODE

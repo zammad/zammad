@@ -1,0 +1,95 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "entry": [
+    "app/frontend/entrypoints/*.ts",
+    "app/frontend/tests/vitest.setup.ts",
+    "app/frontend/build/**/*.{js,mjs,ts}",
+    "app/frontend/**/*.graphql",
+    "app/frontend/cypress/**/*.cy.ts",
+    "app/frontend/shared/server/action_cable/types.ts"
+  ],
+  "dynamicallyLoaded": [
+    "app/frontend/apps/*/components/Form/fields/*/index.ts",
+    "app/frontend/apps/*/pages/**/routes.ts",
+    "app/frontend/apps/*/pages/**/routes/*.ts",
+    "app/frontend/apps/*/pages/authentication/after-auth/plugins/*.ts",
+    "app/frontend/apps/*/server/apollo/cache/initializer/*.ts",
+    "app/frontend/shared/entities/*/stores/objectAttributes.ts",
+    "app/frontend/shared/entities/two-factor/plugins/*.ts",
+    "app/frontend/shared/components/Form/fields/**/index.ts",
+    "app/frontend/shared/form/theme/global/extensions/*.ts",
+    "app/frontend/shared/form/validation/rules/*.ts",
+    "app/frontend/tests/graphql/factories/**/*.ts"
+  ],
+  "ignorePatterns": [
+    "app/assets/**",
+    "public/**",
+    "tmp/**",
+    ".dev/**",
+    "!.dev/cypress/**",
+    "spec/**",
+    ".eslint-plugin-zammad/**",
+    "!app/frontend/build/**"
+  ],
+  "ignoreFindings": [
+    "app/frontend/**/graphql/**/*.ts",
+    "app/frontend/shared/graphql/schema-types.ts",
+    "app/frontend/shared/graphql/types.ts"
+  ],
+  "ignoreExports": [
+    {
+      "file": "app/frontend/**/*.vue",
+      "exports": ["Props"]
+    },
+    {
+      "file": "app/frontend/apps/*/router/index.ts",
+      "exports": ["routes"]
+    },
+    {
+      "file": "app/frontend/apps/*/form/index.ts",
+      "exports": ["initializeForm", "initializeFormFields"]
+    },
+    {
+      "file": "app/frontend/shared/components/Form/fields/FieldEditor/{extensions,features}/**/*.ts",
+      "exports": ["EXTENSION_NAME"]
+    },
+    {
+      "file": "app/frontend/**/graphql/**/*.api.ts",
+      "exports": ["ReactiveFunction"]
+    },
+    {
+      "file": "app/frontend/shared/graphql/schema-types.ts",
+      "exports": ["*"]
+    }
+  ],
+  "ignoreDependencies": [
+    "tslib",
+    "eslint-import-resolver-typescript",
+    "non-existing",
+    "postcss-html"
+  ],
+  "ignoreUnresolvedImports": ["cypress", "cypress/**"],
+  "workspaces": {
+    "patterns": [".dev/cypress"]
+  },
+  "duplicates": {
+    "near": true
+  },
+  "circularDependencies": {
+    "ignoreLazyImports": true
+  },
+  "rules": {
+    "complexity-crap": "off",
+    "complexity-cyclomatic": "warn",
+    "complexity-cognitive": "warn",
+    "package-cycle": "off"
+  },
+  "overrides": [
+    {
+      "files": ["app/frontend/shared/i18n/index.ts", "app/frontend/shared/utils/testSw.ts"],
+      "rules": {
+        "unused-class-members": "off"
+      }
+    }
+  ]
+}

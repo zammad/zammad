@@ -120,6 +120,37 @@
     paths:
       - tmp/vite-bundle-stats.yml
 
+# Advisory while fallow is evaluated: reports only the dead code, duplication and
+#   complexity a merge request introduces, never the findings it inherits. No Code
+#   Quality report: GitLab needs one from the target branch to compare against, and
+#   the audit only covers the files a merge request changes.
+'lint: fallow audit':
+  extends:
+    - .template_lint
+  timeout: 5 minutes
+  cache: !reference [.cache, read_only_nodejs]
+  rules:
+    - !reference [.rule_fragments, variable_filters_without_force]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
+      allow_failure: true
+    - when: never
+  before_script:
+    - !reference [.scripts, pnpm_install]
+  script:
+    # audit diffs `base...HEAD`, which needs the merge base in the checkout. The MR diff
+    #   base is that merge base, so deepen HEAD's history (depth 1 at checkout, GIT_DEPTH
+    #   has no effect here) until the base commit is an ancestor.
+    - git fetch --quiet origin "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+    - |
+      for _ in 1 2 3 4 5 6 7 8 9 10; do
+        git merge-base --is-ancestor "$CI_MERGE_REQUEST_DIFF_BASE_SHA" HEAD && break
+        git fetch --quiet --deepen=200 origin "$CI_COMMIT_SHA"
+      done
+      git merge-base --is-ancestor "$CI_MERGE_REQUEST_DIFF_BASE_SHA" HEAD || { echo "MR base $CI_MERGE_REQUEST_DIFF_BASE_SHA not reachable from HEAD after deepening"; exit 1; }
+    - pnpm exec fallow audit --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+  after_script: []
+
 # Must be a separate job because it may fail and is only executed manually.
 'lint: orphaned ruby gems':
   extends:
