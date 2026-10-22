@@ -5740,6 +5740,19 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Hide article actions.'),
+  name:        'ui_ticket_hide_article_actions',
+  area:        'UI::TicketZoomArticle',
+  description: __('Hide the article actions of these names.'),
+  options:     {},
+  state:       [],
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('Ticket Overview Query Polling'),
   name:        'ui_ticket_overview_query_polling',
   area:        'UI::TicketOverview::QueryPolling',

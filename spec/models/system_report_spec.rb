@@ -58,6 +58,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ui_ticket_create_notes',
           'ui_ticket_create_default_type',
           'ui_ticket_create_available_types',
+          'ui_ticket_hide_article_actions',
           'ui_sidebar_open_ticket_indicator_colored',
           'ui_table_group_by_show_count',
           'ui_ticket_overview_ticket_limit',
