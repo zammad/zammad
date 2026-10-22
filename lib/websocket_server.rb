@@ -107,6 +107,11 @@ class WebsocketServer
       return
     end
 
+    if !data.is_a?(Hash)
+      log 'error', "unknown message '#{data.inspect}'", client_id
+      return
+    end
+
     # check if connection not already exists
     return if !@clients[client_id]
 
