@@ -31,7 +31,9 @@ returns
       end
       return data if data[ app_model ][ id ]
 
-      local_attributes = attributes_with_association_ids
+      # Not the cached attributes_with_association_ids: deleting a user hands the notification to
+      # the system user with update_all, which leaves the cached copy and its creator in place.
+      local_attributes = attributes
 
       local_attributes['object'] = ObjectLookup.by_id(local_attributes['object_lookup_id'])
       local_attributes['type'] = TypeLookup.by_id(local_attributes['type_lookup_id'])

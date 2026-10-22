@@ -192,12 +192,12 @@ get assets of object list
         next if !record.authorized_asset?
 
         assets = record.assets(assets)
-        if item['created_by_id'].present?
-          user = User.find(item['created_by_id'])
-          assets = user.assets(assets)
-        end
-        if item['updated_by_id'].present?
-          user = User.find(item['updated_by_id'])
+
+        # A cached list item can still reference a user who has been deleted since.
+        item.values_at('created_by_id', 'updated_by_id').compact_blank.each do |user_id|
+          user = User.lookup(id: user_id)
+          next if !user
+
           assets = user.assets(assets)
         end
       end
