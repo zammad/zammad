@@ -154,10 +154,10 @@ describe('common object attributes interface', () => {
       router: true,
     })
 
-    expect(view.getByRole('link', { name: '600' })).toHaveAttribute(
-      'href',
-      'https://integer.com/rendered',
-    )
+    const link = view.getByRole('link', { name: '600' })
+
+    expect(link).toHaveAttribute('href', 'https://integer.com/rendered')
+    expect(link).toHaveAttribute('target', '_blank')
   })
 
   it('renders user relation', () => {
