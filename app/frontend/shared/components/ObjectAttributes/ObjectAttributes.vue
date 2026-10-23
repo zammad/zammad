@@ -60,6 +60,8 @@ useInlineEditable(props, fields)
           v-if="field.link"
           :link="field.link"
           :class="objectAttributesConfig.classes.link"
+          external
+          open-in-new-tab
         >
           <Component
             :is="field.component"

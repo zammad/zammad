@@ -32,6 +32,8 @@ const { field } = useDisplayObjectAttribute(props)
       v-bind="$attrs"
       :link="field.link"
       :class="objectAttributesConfig.classes.link"
+      external
+      open-in-new-tab
     >
       <Component
         :is="field.component"

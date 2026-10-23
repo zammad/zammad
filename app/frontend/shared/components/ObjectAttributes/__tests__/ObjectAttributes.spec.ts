@@ -343,22 +343,19 @@ describe('common object attributes interface', () => {
 
     const getRegion = (name: string) => view.getByRole('region', { name })
 
-    expect(getByRole(getRegion('Integer Field'), 'link', { name: '600' })).toHaveAttribute(
-      'href',
-      'https://integer.com/rendered',
-    )
-    expect(getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' })).toHaveAttribute(
-      'href',
-      'https://phone.com/rendered',
-    )
-    expect(getByRole(getRegion('Email'), 'link', { name: 'email@email.com' })).toHaveAttribute(
-      'href',
-      'https://email.com/rendered',
-    )
-    expect(getByRole(getRegion('Url'), 'link', { name: 'https://url.com' })).toHaveAttribute(
-      'href',
-      'https://url.com',
-    )
+    const integerLink = getByRole(getRegion('Integer Field'), 'link', { name: '600' })
+    const phoneLink = getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' })
+    const emailLink = getByRole(getRegion('Email'), 'link', { name: 'email@email.com' })
+    const urlLink = getByRole(getRegion('Url'), 'link', { name: 'https://url.com' })
+
+    expect(integerLink).toHaveAttribute('href', 'https://integer.com/rendered')
+    expect(integerLink).toHaveAttribute('target', '_blank')
+    expect(phoneLink).toHaveAttribute('href', 'https://phone.com/rendered')
+    expect(phoneLink).toHaveAttribute('target', '_blank')
+    expect(emailLink).toHaveAttribute('href', 'https://email.com/rendered')
+    expect(emailLink).toHaveAttribute('target', '_blank')
+    expect(urlLink).toHaveAttribute('href', 'https://url.com')
+    expect(urlLink).toHaveAttribute('target', '_blank')
   })
 
   test('renders editable attributes with inline editing', async () => {
