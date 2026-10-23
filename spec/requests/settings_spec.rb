@@ -361,6 +361,58 @@ RSpec.describe 'Settings', type: :request do
     end
   end
 
+  describe 'PUT /api/v1/settings/image/:id' do
+    let(:admin_branding) do
+      role_branding = create(:role)
+      role_branding.permission_grant('admin.branding')
+
+      create(:admin, roles: [role_branding])
+    end
+    let(:product_logo) { Setting.find_by(name: 'product_logo') }
+    let(:params)       { { logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' } }
+
+    context 'with another setting the user may update', authenticated_as: :admin_api do
+      it 'does not change the product logo', :aggregate_failures do
+        setting = Setting.find_by(name: 'api_token_access')
+
+        expect { put "/api/v1/settings/image/#{setting.id}", params: params, as: :json }
+          .to not_change { product_logo.reload.state_current }
+          .and not_change { Service::SystemAssets::ProductLogo.sendable_asset.content }
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response['error']).to eq('Only the product logo can be updated with an image.')
+      end
+    end
+
+    context 'with another branding setting', authenticated_as: :admin_branding do
+      it 'does not change the setting', :aggregate_failures do
+        setting = Setting.find_by(name: 'product_name')
+
+        expect { put "/api/v1/settings/image/#{setting.id}", params: params, as: :json }
+          .not_to change { setting.reload.state_current }
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response['error']).to eq('Only the product logo can be updated with an image.')
+      end
+    end
+
+    context 'without the branding permission', authenticated_as: :admin_api do
+      it 'does not change the product logo', :aggregate_failures do
+        expect { put "/api/v1/settings/image/#{product_logo.id}", params: params, as: :json }
+          .not_to change { product_logo.reload.state_current }
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (required ["admin.branding"])!')
+      end
+    end
+
+    context 'with the branding permission', authenticated_as: :admin_branding do
+      it 'changes the product logo', :aggregate_failures do
+        expect { put "/api/v1/settings/image/#{product_logo.id}", params: params, as: :json }
+          .to change { product_logo.reload.state_current }
+        expect(response).to have_http_status(:ok)
+        expect(json_response['result']).to eq('ok')
+      end
+    end
+  end
+
   describe 'vector index rebuild response', authenticated_as: :admin, performs_jobs: true do
     let(:connection) do
       create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
