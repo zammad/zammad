@@ -1,14 +1,22 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { watchOnce } from '@vueuse/shared'
-import { computed, ref, toRef, watch, type Ref } from 'vue'
+import { computed, inject, provide, ref, watch, type InjectionKey, type Ref } from 'vue'
 
 import type { UserTaskbarTab } from '#desktop/components/UserTaskbarTabs/types.ts'
-import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
 type CommonLinkInstance = {
   $el?: HTMLElement
 }
+
+// Injected instead of read from the taskbar tabs store, which imports the tab components.
+const ACTIVE_TASKBAR_TAB_ENTITY_KEY = Symbol('active-taskbar-tab-entity-key') as InjectionKey<
+  Ref<string | undefined>
+>
+
+export const provideActiveTaskbarTabEntityKey = (
+  activeTaskbarTabEntityKey: Ref<string | undefined>,
+) => provide(ACTIVE_TASKBAR_TAB_ENTITY_KEY, activeTaskbarTabEntityKey)
 
 export const useUserTaskbarTab = (
   taskbarTab: Ref<UserTaskbarTab>,
@@ -16,10 +24,7 @@ export const useUserTaskbarTab = (
 ) => {
   const tabLinkInstance = ref<CommonLinkInstance>()
 
-  const activeTaskbarTabEntityKey = toRef(
-    useUserCurrentTaskbarTabsStore(),
-    'activeTaskbarTabEntityKey',
-  )
+  const activeTaskbarTabEntityKey = inject(ACTIVE_TASKBAR_TAB_ENTITY_KEY, ref())
 
   const taskbarTabActive = computed(
     () => activeTaskbarTabEntityKey.value === taskbarTab.value.tabEntityKey,

@@ -70,13 +70,14 @@ import { items as highlightMenuItems } from '#desktop/pages/ticket/components/Ti
 import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
 
 import { ARTICLES_INFORMATION_KEY } from '../../composables/useArticleContext.ts'
+import { useProvideTicketSidebar } from '../../composables/useProvideTicketSidebar.ts'
 import { useTicketArticleReply } from '../../composables/useTicketArticleReply.ts'
 import {
   initializeTicketInformation,
   provideTicketInformation,
 } from '../../composables/useTicketInformation.ts'
 import { useTicketRelatedKnowledge } from '../../composables/useTicketRelatedKnowledge.ts'
-import { useTicketSidebar, useProvideTicketSidebar } from '../../composables/useTicketSidebar.ts'
+import { useTicketSidebar } from '../../composables/useTicketSidebar.ts'
 import { type TicketSidebarContext, TicketSidebarScreenType } from '../../types/sidebar.ts'
 import TicketSidebar from '../TicketSidebar.vue'
 

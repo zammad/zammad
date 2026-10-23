@@ -19,6 +19,7 @@ import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/Com
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
 import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
+import { provideActiveTaskbarTabEntityKey } from '#desktop/composables/useUserTaskbarTab.ts'
 import { useUserCurrentTaskbarItemListPrioMutation } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.api.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
@@ -41,7 +42,10 @@ const {
   hasTaskbarTabs,
   taskbarTabContexts,
   loading,
+  activeTaskbarTabEntityKey,
 } = storeToRefs(taskbarTabStore)
+
+provideActiveTaskbarTabEntityKey(activeTaskbarTabEntityKey)
 
 const { getTaskbarTabTypePlugin } = taskbarTabStore
 

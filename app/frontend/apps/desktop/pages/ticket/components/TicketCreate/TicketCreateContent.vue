@@ -34,7 +34,8 @@ import { useTaskbarTabContext } from '#desktop/entities/user/current/composables
 import { useTaskbarTabDiscard } from '#desktop/entities/user/current/composables/useTaskbarTabDiscard.ts'
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 
-import { useProvideTicketSidebar, useTicketSidebar } from '../../composables/useTicketSidebar.ts'
+import { useProvideTicketSidebar } from '../../composables/useProvideTicketSidebar.ts'
+import { useTicketSidebar } from '../../composables/useTicketSidebar.ts'
 import { TicketSidebarScreenType, type TicketSidebarContext } from '../../types/sidebar.ts'
 import TicketSidebar from '../TicketSidebar.vue'
 
