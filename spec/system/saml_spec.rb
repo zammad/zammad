@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'system/examples/sso_role_mapping_examples'
 
 RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KC_BOOTSTRAP_ADMIN_USERNAME KC_BOOTSTRAP_ADMIN_PASSWORD], type: :system do
   let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
@@ -10,9 +11,10 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
   let(:saml_realm_zammad_descriptor) { "#{saml_base_url}/realms/zammad/protocol/saml/descriptor" }
   let(:saml_realm_zammad_accounts)   { "#{saml_base_url}/realms/zammad/account" }
 
-  # Only before(:each) can access let() variables.
+  let(:idp_client_uuid) { saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:) }
+
   before do
-    saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:)
+    idp_client_uuid
   end
 
   # Shared_examples does not work.
@@ -191,6 +193,25 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       visit saml_realm_zammad_accounts
       expect(page).to have_text('John Doe')
     end
+  end
+
+  describe 'role mapping' do
+    before do
+      saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:)
+    end
+
+    def login_via_idp
+      visit '/#login'
+      find('.auth-provider--saml').click
+
+      saml_login_keycloak
+    end
+
+    def logout_via_idp
+      logout_saml
+    end
+
+    it_behaves_like 'assigning roles from the identity provider', provider: 'saml', attribute: 'Role'
   end
 
   describe 'Mobile View', app: :mobile do

@@ -1,0 +1,21 @@
+<div class="key-relation-map">
+  <input class="js-keyRelationMapValue" type="hidden" name="{json}<%= @attribute.name %>" value="<%= @valueRaw %>">
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th><%- @T(@keyDisplay) %></th>
+        <th><%- @T(@relationDisplay) %></th>
+        <th><%- @T('Action') %></th>
+      </tr>
+    </thead>
+    <tbody class="js-rows">
+      <tr class="js-empty">
+        <td colspan="3" class="settings-list-middle"><%- @T('No entries') %></td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn--text btn--create js-addRow">
+    <%- @Icon('plus-small') %>
+    <%- @T('Add') %>
+  </button>
+</div>

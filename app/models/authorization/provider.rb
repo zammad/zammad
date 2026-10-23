@@ -57,8 +57,8 @@ class Authorization::Provider
   end
 
   class AccountError < StandardError
-    def initialize
-      super(__('The user account does not exist. Please contact your administrator.'))
+    def initialize(message = __('The user account does not exist. Please contact your administrator.'))
+      super
     end
   end
 end
