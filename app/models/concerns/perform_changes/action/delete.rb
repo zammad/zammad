@@ -10,6 +10,9 @@ class PerformChanges::Action::Delete < PerformChanges::Action
 
     record.destroy!
 
+    # Nothing is left to act on, so remaining phases (e.g. notifications or articles) are skipped (#6463).
     prepared_actions.delete(:before_save)
+    prepared_actions.delete(:after_save)
+    prepared_actions.delete(:after_commit)
   end
 end

@@ -335,6 +335,32 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       expect { object.perform_changes(performable, 'trigger', object, User.first) }
         .to change(object, :destroyed?).to(true)
     end
+
+    context 'when the perform hash also contains notifications and articles' do
+      let(:perform) do
+        {
+          'ticket.action'        => { 'value' => 'delete' },
+          'notification.email'   => {
+            'recipient' => 'ticket_customer',
+            'subject'   => 'Ticket deleted',
+            'body'      => "Ticket \#{created_article.ticket_id} (\#{created_article.subject}) was deleted.",
+          },
+          'notification.webhook' => { 'webhook_id' => create(:webhook).id.to_s },
+          'article.note'         => { 'subject' => 'Deleted', 'body' => 'Deleted', 'internal' => 'true' },
+        }
+      end
+
+      it 'deletes the ticket without creating articles' do
+        expect { object.perform_changes(performable, 'trigger', object, User.first) }
+          .to change(object, :destroyed?).to(true)
+          .and not_change(Ticket::Article, :count)
+      end
+
+      it 'does not enqueue webhook jobs', performs_jobs: true do
+        expect { object.perform_changes(performable, 'trigger', object, User.first) }
+          .not_to change { enqueued_jobs.count { |job| job[:job] == TriggerWebhookJob } }
+      end
+    end
   end
 
   context 'with a "notification.email" trigger' do
@@ -878,19 +904,6 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       let(:skip_reason) { 'Checklist items are limited to 100 items per checklist.' }
 
       before { create(:checklist, item_count: 2, ticket: object) }
-
-      include_examples 'skipping the action'
-    end
-
-    context 'when the same rule also deletes the ticket' do
-      let(:skip_reason) { 'ticket was deleted' }
-
-      let(:perform) do
-        {
-          'ticket.action'               => { 'value' => 'delete' },
-          'checklist.add_from_template' => { 'checklist_template_id' => template.id.to_s },
-        }
-      end
 
       include_examples 'skipping the action'
     end

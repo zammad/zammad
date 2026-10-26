@@ -7,7 +7,6 @@ class Ticket::PerformChanges::Action::ChecklistAddFromTemplate < Ticket::Perform
   end
 
   def execute(...)
-    return skip('ticket was deleted') if record.destroyed?
     return skip('checklist feature is disabled') if !Setting.get('checklist')
 
     template = ChecklistTemplate.find_by(id: template_id)
