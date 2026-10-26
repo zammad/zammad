@@ -118,6 +118,67 @@ RSpec.describe Service::AI::Agent::Run do
         it 'executes the AI agent service and applies changes to the ticket based on AI result' do
           expect { service_result }.to change { ticket.reload.priority.name }.to('3 high')
         end
+
+        context 'when AI result contains a template placeholder' do
+          let(:action_definition) do
+            {
+              'mapping' => {
+                'ticket.title' => {
+                  'value' => '#{ai_agent_result.content}' # rubocop:disable Lint/InterpolationCheck
+                },
+              }
+            }
+          end
+          let(:ai_result_content) { 'Login issue #{config.fqdn}' } # rubocop:disable Lint/InterpolationCheck
+
+          it 'keeps the placeholder as literal text' do
+            expect { service_result }.to change { ticket.reload.title }.to('Login issue #{config.fqdn}') # rubocop:disable Lint/InterpolationCheck
+          end
+        end
+      end
+
+      context 'when AI result contains template placeholders' do
+        let(:result_structure) { { 'title' => 'string' } }
+        let(:action_definition) do
+          {
+            'mapping' => {
+              'ticket.title' => {
+                'value' => 'AI: #{ai_agent_result.title}' # rubocop:disable Lint/InterpolationCheck
+              },
+            }
+          }
+        end
+        let(:ai_result_content) { { 'title' => title } }
+
+        context 'with a config placeholder' do
+          let(:title) { 'Login issue #{config.fqdn}' } # rubocop:disable Lint/InterpolationCheck
+
+          it 'keeps the placeholder as literal text' do
+            service_result
+
+            expect(ticket.reload.title).to eq('AI: Login issue #{config.fqdn}') # rubocop:disable Lint/InterpolationCheck
+          end
+        end
+
+        context 'with an already escaped placeholder' do
+          let(:title) { 'Login issue \#{config.fqdn}' }
+
+          it 'does not render the placeholder' do
+            service_result
+
+            expect(ticket.reload.title).to eq('AI: Login issue \#{config.fqdn}')
+          end
+        end
+
+        context 'with an ERB tag' do
+          let(:title) { 'Login issue <%= Setting.get("fqdn") %>' }
+
+          it 'keeps the tag as literal text' do
+            service_result
+
+            expect(ticket.reload.title).to eq('AI: Login issue <%= Setting.get("fqdn") %>')
+          end
+        end
       end
 
       context 'when conditions are present in action_definition' do
