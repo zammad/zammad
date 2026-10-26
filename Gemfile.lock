@@ -880,7 +880,7 @@ GEM
     web-push (3.1.0)
       jwt (~> 3.0)
       openssl (>= 3.0)
-    webauthn (3.4.3)
+    webauthn (3.5.0)
       android_key_attestation (~> 0.3.0)
       bindata (~> 2.4)
       cbor (~> 0.5.9)
