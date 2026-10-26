@@ -5,7 +5,7 @@
 # SELENIUM_BROWSER=playwright or SELENIUM_BROWSER=playwright_firefox.
 #
 # Local (non-CI) runs launch the `playwright` package installed by `pnpm
-#   install` (tracked in package.json, pinned to Playwright::
+#   install` (tracked in package.json, on the same minor version as Playwright::
 #   COMPATIBLE_PLAYWRIGHT_VERSION so it stays in lockstep with the gem). The
 #   package ships no browsers, so a one-time `pnpm playwright:install` is
 #   required as well - without it the first driver call fails with
@@ -58,9 +58,12 @@ end
 #   playwright-ruby-client gem, or the two protocol sides drift apart silently.
 #   Local runs and CI are provisioned from separate pins (package.json vs the
 #   PLAYWRIGHT_VERSION CI variable), so verify both against the gem before
-#   starting a browser.
+#   starting a browser. Only major.minor has to match, like Playwright's own
+#   server handshake: the gem is released per minor version, the npm package
+#   and the server image get patch releases in between.
 def assert_playwright_version_lockstep
   expected = Playwright::COMPATIBLE_PLAYWRIGHT_VERSION
+  minor    = ->(version) { version.to_s.split('.').first(2).join('.') }
 
   # The package.json pin provisions local runs and is always checked - a missing
   #   entry means there is nothing to launch, so it must not pass as "no drift".
@@ -70,10 +73,10 @@ def assert_playwright_version_lockstep
   pins = { 'package.json' => package_json.dig('devDependencies', 'playwright') || package_json.dig('dependencies', 'playwright') }
   pins['PLAYWRIGHT_VERSION'] = ENV['PLAYWRIGHT_VERSION'] if ENV['PLAYWRIGHT_VERSION'].present?
 
-  drifted = pins.reject { |_source, pin| pin == expected }
+  drifted = pins.reject { |_source, pin| minor.call(pin) == minor.call(expected) }
   return if drifted.none?
 
-  raise "playwright version drift: the playwright-ruby-client gem needs #{expected}, but " \
+  raise "playwright version drift: the playwright-ruby-client gem needs #{minor.call(expected)}.x, but " \
         "#{drifted.map { |source, pin| "#{source} has #{pin ? pin.inspect : 'no playwright entry'}" }.join(', ')}. " \
         'Keep the package.json devDependency, the PLAYWRIGHT_VERSION CI variable and the gem in lockstep.'
 end

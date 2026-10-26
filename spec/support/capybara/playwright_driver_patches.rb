@@ -10,7 +10,7 @@ require 'capybara/playwright'
 # The patches below reach into gem internals, so they are written against this
 #   exact version. On an upgrade: check whether they were fixed upstream, drop
 #   what is obsolete, then bump the pin here.
-if Gem.loaded_specs['capybara-playwright-driver'].version != Gem::Version.new('0.5.12')
+if Gem.loaded_specs['capybara-playwright-driver'].version != Gem::Version.new('0.5.14')
   raise 'capybara-playwright-driver was updated - re-evaluate the patches in ' \
         "#{__FILE__} against the new version, then adjust the version pin."
 end
@@ -27,8 +27,8 @@ end
 #     few of them but raises the raw error once its retries are used up, so a
 #     navigation during e.g. a `have_css?` wait can abort the wait instead of
 #     retrying it;
-#   - a few node methods evaluate in the page without going through the
-#     translating wrapper at all (see the patches below).
+#   - the read overrides below evaluate in the page without going through the
+#     translating wrapper at all.
 module ZammadCapybaraPlaywrightStaleErrors
   MESSAGES = Regexp.union(
     'Execution context was destroyed, most likely because of a navigation',
@@ -144,41 +144,13 @@ module ZammadCapybaraPlaywrightNodePatches
   #   reloads the node for and retries (just like Selenium's
   #   StaleElementReferenceError). Its own patterns miss the Firefox message
   #   (see above), so route what it re-raises through the broader translation.
+  #
+  # Still unguarded in the gem, but with no observed failures: the mutating
+  #   #set, #drop, #scroll_by, #trigger, #unselect_option and #shadow_root.
   def assert_element_not_stale(&)
     super
   rescue ::Playwright::Error => e
     ZammadCapybaraPlaywrightStaleErrors.translate(e)
-  end
-
-  # These read methods evaluate in the page without that wrapper, and
-  #   Capybara already has a rescue waiting for each of them - but only for the
-  #   translated error:
-  #
-  #   - #== is called per candidate node while filtering a query
-  #     (Queries::SelectorQuery#matches_filters?), which rescues
-  #     invalid_element_errors and drops the node from the result set;
-  #   - #tag_name is called by Node::Element#inspect, which rescues them into
-  #     "Obsolete #<Capybara::Node::Element>". Untranslated it raises *while
-  #     Capybara builds a failure message*, replacing the real failure with a
-  #     navigation error - the reason a stale <select> reports
-  #     "Execution context was destroyed" instead of what did not match;
-  #   - the predicates back Capybara's own #disabled?/#readonly? etc., where a
-  #     stale node means the enclosing synchronize should retry.
-  #
-  # Translated rather than wrapped in #assert_element_not_stale, because that
-  #   wrapper spends a liveness round trip per call and these run per candidate
-  #   node per query. Selenium raises its own StaleElementReferenceError here,
-  #   which is what those rescues were written for (#== not even that: it
-  #   compares element ids client-side without touching the browser).
-  #
-  # Still unguarded, but with no observed failures: the mutating #set, #drop,
-  #   #scroll_by, #trigger, #unselect_option and #shadow_root.
-  %i[== tag_name disabled? readonly? multiple?].each do |method_name|
-    define_method(method_name) do |*args|
-      super(*args)
-    rescue ::Playwright::Error => e
-      ZammadCapybaraPlaywrightStaleErrors.translate(e)
-    end
   end
 
   # Capybara reads - #text, #[], #visible? - run hundreds of times per example,
