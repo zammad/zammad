@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|تذكرة##{ticket.number}>: تم تصعيدها في #{ticket.escalation_at}_
-التذكرة (#{ticket.title}) من "#{ticket.customer.longname}" تم تصعيدها منذ "#{ticket.escalation_at}"!
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: تم التصعيد في #{ticket.escalation_at}_
+تم تصعيد التذكرة (#{ticket.title}) الخاصة بالعميل "#{ticket.customer.longname}" منذ "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>
 #{article.body_as_text}
