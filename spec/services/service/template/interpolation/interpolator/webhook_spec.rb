@@ -371,6 +371,10 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
           expect(service_result['message']).to include('Created by')
           expect(service_result['changes']).to include('State: new')
         end
+
+        it 'separates the changes with real line breaks (#6449)' do
+          expect(service_result['changes']).to eq("* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: new")
+        end
       end
 
       context "when the event is of the type 'update'" do

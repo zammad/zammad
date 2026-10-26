@@ -93,7 +93,7 @@ class Service::Template::Interpolation::Interpolator::Webhook::Track::Notificati
             .split(%r{\n})
             .map(&:strip)
             .compact_blank
-            .join('\n')
+            .join("\n")
         end
 
         hash[key] = value.strip
