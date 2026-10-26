@@ -25,5 +25,19 @@ RSpec.describe FilterProcessor::Match::StartsWith do
 
       it { is_expected.to be(false) }
     end
+
+    context 'when the value is nil' do
+      let(:from)  { nil }
+      let(:rules) { ['foo'] }
+
+      it { is_expected.to be(false) }
+    end
+
+    context 'when the value is empty' do
+      let(:from)  { '' }
+      let(:rules) { ['foo'] }
+
+      it { is_expected.to be(false) }
+    end
   end
 end
