@@ -3,7 +3,7 @@ Frissített jegybejegyzés (#{ticket.title})
 <div>Kedves #{recipient.firstname}!</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> ezzel reagált: <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> az ő üzentére: #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> ezzel reagált: <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> az ő üzentére: #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>

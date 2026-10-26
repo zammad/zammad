@@ -424,6 +424,43 @@ RSpec.describe NotificationFactory::Mailer do
             end
           end
         end
+
+        context 'with ticket_article_update_reaction template' do
+          let(:template) { 'ticket_article_update_reaction' }
+          let(:changes)  { {} }
+          let(:article) do
+            Ticket::Article.create(
+              ticket_id:     ticket.id,
+              type_id:       Ticket::Article::Type.lookup(name: 'whatsapp message').id,
+              sender_id:     Ticket::Article::Sender.lookup(name: 'Agent').id,
+              from:          'Zammad Feedback <feedback@zammad.org>',
+              content_type:  'text/plain',
+              body:          'Welcome!',
+              internal:      false,
+              preferences:   {
+                whatsapp: {
+                  reaction: {
+                    author: 'Reaction<b>author</b>',
+                    emoji:  '<i>emoji</i>',
+                  },
+                },
+              },
+              updated_by_id: 1,
+              created_by_id: 1,
+            )
+          end
+
+          Rails.root.glob('app/views/mailer/ticket_article_update_reaction/*.html.erb').map { |path| path.basename.to_s.delete_suffix('.html.erb') }.each do |template_locale|
+            context "with locale #{template_locale}" do
+              let(:locale) { template_locale }
+
+              it 'renders the reaction author and emoji escaped', :aggregate_failures do
+                expect(result[:body]).to include('Reaction&lt;b&gt;author&lt;/b&gt;', '&lt;i&gt;emoji&lt;/i&gt;')
+                expect(result[:body]).not_to include('<b>author</b>', '<i>emoji</i>')
+              end
+            end
+          end
+        end
       end
     end
   end

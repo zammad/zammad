@@ -3,7 +3,7 @@ Zaktualizowany artykuł w zgłoszeniu (#{ticket.title})
 <div>Witaj #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> zareagował(a) <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na wiadomość od #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> zareagował(a) <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na wiadomość od #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>
