@@ -3,7 +3,7 @@
 <div>你好, #{recipient.firstname}:</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> 對 #{article.created_by.fullname} 的訊息回應了一個 <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %>：
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> 對 #{article.created_by.fullname} 的訊息回應了一個 <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %>：
 </div>
 <br>
 <% if @objects[:article] %>

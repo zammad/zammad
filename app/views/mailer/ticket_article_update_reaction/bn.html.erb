@@ -3,7 +3,7 @@
 <div>প্রিয় #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> #{article.created_by.fullname}-এর বার্তায় <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> দিয়ে রিঅ্যাক্ট করেছেন:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> #{article.created_by.fullname}-এর বার্তায় <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> দিয়ে রিঅ্যাক্ট করেছেন:
 </div>
 <br>
 <% if @objects[:article] %>

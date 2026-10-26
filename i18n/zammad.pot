@@ -21994,7 +21994,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n    <blockquote type=\"cite\">\n    #{article.body_as_html}\n    </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
+msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n    <blockquote type=\"cite\">\n    #{article.body_as_html}\n    </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17

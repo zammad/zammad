@@ -3,7 +3,7 @@ Osvežen članak tiketa (#{ticket.title})
 <div>Zdravo #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> je reagovao(la) sa <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na poruku od #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> je reagovao(la) sa <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na poruku od #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>

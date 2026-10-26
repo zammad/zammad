@@ -3,7 +3,7 @@ Atnaujintas trikties įrašas (#{ticket.title})
 <div>Sveiki #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> sureagavo su <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> į žinutę iš #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> sureagavo su <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> į žinutę iš #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>

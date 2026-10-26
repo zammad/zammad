@@ -3,7 +3,7 @@
 <div>こんにちは、#{recipient.firstname}さん。</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> が #{article.created_by.fullname} からのメッセージに対して <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> でリアクションしました。
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> が #{article.created_by.fullname} からのメッセージに対して <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> でリアクションしました。
 </div>
 <br>
 <% if @objects[:article] %>
