@@ -192,7 +192,7 @@ msgstr ""
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
-#: app/assets/javascripts/app/models/group.coffee:30
+#: app/assets/javascripts/app/models/group.coffee:33
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:23
 msgid "%s created group |%s|"
 msgstr ""
@@ -415,7 +415,7 @@ msgstr ""
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
-#: app/assets/javascripts/app/models/group.coffee:32
+#: app/assets/javascripts/app/models/group.coffee:35
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:25
 msgid "%s updated group |%s|"
 msgstr ""
@@ -1620,7 +1620,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:810
+#: app/models/user.rb:832
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1729,7 +1729,7 @@ msgstr ""
 msgid "All values will be considered for extracted text from tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:117
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:136
 msgid "All views and widgets are turned off, so agents see an empty dashboard. If you do not need the dashboard at all, you can turn it off."
 msgstr ""
 
@@ -2329,7 +2329,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:712
+#: app/models/user.rb:734
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2346,7 +2346,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:789
+#: app/models/user.rb:811
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2373,7 +2373,7 @@ msgid "Attached files"
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:216
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:217
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:329
 msgid "Attachment"
@@ -3007,7 +3007,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:173
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:174
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
@@ -3221,8 +3221,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:78
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:238
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:690
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:417
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:418
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:65
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 msgid "Cancel & go back"
 msgstr ""
@@ -3329,7 +3329,7 @@ msgstr ""
 msgid "Certificates & Private Keys"
 msgstr ""
 
-#: app/assets/javascripts/app/models/group.coffee:46
+#: app/assets/javascripts/app/models/group.coffee:49
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:26
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:102
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:108
@@ -3759,17 +3759,17 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:432
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:680
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:387
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:402
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:313
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:375
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:165
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:191
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 msgid "Clear selection"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:109
 msgid "Clear the value"
 msgstr ""
 
@@ -3902,7 +3902,7 @@ msgstr ""
 msgid "Close tab on ticket close"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
 msgid "Close the time picker"
 msgstr ""
 
@@ -4538,7 +4538,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:15
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
-#: app/assets/javascripts/app/models/group.coffee:45
+#: app/assets/javascripts/app/models/group.coffee:48
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco:13
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:23
@@ -4550,7 +4550,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:305
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:499
 msgid "Create"
 msgstr ""
@@ -4627,7 +4627,7 @@ msgstr ""
 msgid "Create new Customer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:304
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:305
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:71
 msgid "Create new customer"
 msgstr ""
@@ -5004,7 +5004,7 @@ msgstr ""
 msgid "Dark mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:87
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:94
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:149
 #: app/assets/javascripts/app/controllers/dashboard.coffee:52
 #: app/assets/javascripts/app/controllers/package.coffee:61
@@ -5046,7 +5046,7 @@ msgstr ""
 msgid "Dashboard tickets in process widget"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:99
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:106
 msgid "Dashboard views"
 msgstr ""
 
@@ -5054,7 +5054,7 @@ msgstr ""
 msgid "Dashboard waiting time widget"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:100
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:107
 msgid "Dashboard widgets"
 msgstr ""
 
@@ -5103,11 +5103,11 @@ msgstr ""
 msgid "Date field"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:49
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
 msgid "Datepicker input field"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:48
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:65
 msgid "Datepicker menu"
 msgstr ""
 
@@ -5134,15 +5134,15 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:83
 msgid "Decrement hours value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
 msgid "Decrement minutes value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:71
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
 msgid "Decrement seconds value"
 msgstr ""
 
@@ -6462,7 +6462,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:235
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:414
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:415
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
@@ -6721,11 +6721,11 @@ msgstr ""
 msgid "Draft available"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:75
 msgid "Draft could not be saved."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:30
 msgid "Draft could not be updated."
 msgstr ""
 
@@ -6733,7 +6733,7 @@ msgstr ""
 msgid "Drafts"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:112
 msgid "Drafts & macros"
 msgstr ""
 
@@ -6900,7 +6900,7 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:111
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:112
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
 msgid "Edit ticket title"
 msgstr ""
@@ -7062,7 +7062,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:722
+#: app/models/user.rb:744
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -8038,7 +8038,7 @@ msgstr ""
 msgid "Feature disabled!"
 msgstr ""
 
-#: app/controllers/integration/check_mk_controller.rb:135
+#: app/controllers/integration/check_mk_controller.rb:138
 #: app/controllers/integration/cti_controller.rb:52
 #: app/controllers/integration/placetel_controller.rb:51
 #: app/controllers/integration/sipgate_controller.rb:51
@@ -8489,7 +8489,7 @@ msgid "Frontend"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:525
-#: app/assets/javascripts/app/models/group.coffee:48
+#: app/assets/javascripts/app/models/group.coffee:51
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:54
 msgid "Full"
 msgstr ""
@@ -9698,7 +9698,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:479
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:480
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -9706,15 +9706,15 @@ msgstr ""
 msgid "Increment (SystemID.Counter)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:55
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:72
 msgid "Increment hours value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:74
 msgid "Increment minutes value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:60
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
 msgid "Increment seconds value"
 msgstr ""
 
@@ -9899,7 +9899,7 @@ msgstr ""
 msgid "Internal Knowledge Base feed:"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:705
+#: app/models/object_manager/attribute.rb:714
 msgid "Internal attributes cannot be deleted"
 msgstr ""
 
@@ -9985,7 +9985,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:661
+#: app/models/user.rb:683
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10699,7 +10699,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:61
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#: app/frontend/shared/components/Form/FormFieldLink.vue:24
+#: app/frontend/shared/components/Form/FormFieldLink.vue:23
 msgid "Link"
 msgstr ""
 
@@ -10821,7 +10821,7 @@ msgstr ""
 msgid "LinkedIn Developer Site"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:242
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:246
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -11834,7 +11834,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:741
+#: app/models/user.rb:763
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12318,7 +12318,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:243
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:82
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:19
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts:11
 msgid "New ticket"
@@ -12383,7 +12383,7 @@ msgstr ""
 msgid "Next in overview"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:105
 msgid "Next month"
 msgstr ""
 
@@ -12391,7 +12391,7 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "Next year"
 msgstr ""
 
@@ -12806,7 +12806,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:482
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:483
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -13354,7 +13354,7 @@ msgstr ""
 msgid "Open in primary locale"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:66
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:73
 msgid "Open link"
 msgstr ""
 
@@ -13374,27 +13374,27 @@ msgstr ""
 msgid "Open quick search"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
 msgid "Open the hours overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
 msgid "Open the minutes overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:104
 msgid "Open the months overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:82
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:99
 msgid "Open the seconds overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:67
 msgid "Open the time picker"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:86
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:103
 msgid "Open the years overlay"
 msgstr ""
 
@@ -13455,7 +13455,7 @@ msgstr ""
 msgid "Options are required."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:88
+#: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:95
 msgid "Options for enabling/disabling the dashboard and customizing its elements. If the dashboard is disabled, ticket overviews become your Zammad landing page."
 msgstr ""
 
@@ -13707,7 +13707,7 @@ msgid "Overflow menu"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/models/group.coffee:47
+#: app/assets/javascripts/app/models/group.coffee:50
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:50
 msgid "Overview"
@@ -13749,7 +13749,7 @@ msgstr ""
 msgid "Overwrite content"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
 msgid "Overwrite draft"
 msgstr ""
 
@@ -14198,7 +14198,7 @@ msgstr ""
 msgid "Please contact your administrator."
 msgstr ""
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid "Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)"
 msgstr ""
 
@@ -14291,7 +14291,7 @@ msgstr ""
 msgid "Please select at least one ticket overview"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue:82
 msgid "Please select some text first."
 msgstr ""
 
@@ -14462,7 +14462,7 @@ msgstr ""
 msgid "Previous in overview"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:106
 msgid "Previous month"
 msgstr ""
 
@@ -14470,7 +14470,7 @@ msgstr ""
 msgid "Previous page"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:108
 msgid "Previous year"
 msgstr ""
 
@@ -14792,7 +14792,7 @@ msgstr ""
 msgid "Reacted with %s to message %s from %s"
 msgstr ""
 
-#: app/assets/javascripts/app/models/group.coffee:44
+#: app/assets/javascripts/app/models/group.coffee:47
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:38
 msgid "Read"
 msgstr ""
@@ -15859,7 +15859,7 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:59
 msgid "Save draft"
 msgstr ""
 
@@ -16220,17 +16220,17 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:729
+#: app/models/user.rb:751
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
 #: app/models/concerns/checks_secondary_organizations_on_commit.rb:21
-#: app/models/user.rb:735
+#: app/models/user.rb:757
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
 #: app/models/organization.rb:116
-#: app/models/user.rb:969
+#: app/models/user.rb:991
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr ""
 
@@ -16247,7 +16247,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:183
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:184
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:152
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
@@ -16871,7 +16871,7 @@ msgstr ""
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:84
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:115
 msgid "Shared draft has been created successfully."
 msgstr ""
@@ -16880,7 +16880,7 @@ msgstr ""
 msgid "Shared draft has been deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:45
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:140
 msgid "Shared draft has been updated successfully."
 msgstr ""
@@ -16967,7 +16967,7 @@ msgstr ""
 msgid "Show chat automatically"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:68
 msgid "Show draft"
 msgstr ""
 
@@ -17416,7 +17416,7 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:68
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
 msgid "Start editing"
 msgstr ""
 
@@ -17919,7 +17919,7 @@ msgstr ""
 msgid "Table options"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:261
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:265
 msgid "Tabs"
 msgstr ""
 
@@ -18171,8 +18171,8 @@ msgstr ""
 msgid "The 'logout_token' is invalid."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:23
-#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:26
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:22
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:25
 msgid "The 24 hour customer service window is now closed, no further WhatsApp messages can be sent."
 msgstr ""
 
@@ -18402,7 +18402,7 @@ msgstr ""
 msgid "The browser is outdated. It does not support WebSocket - the technology we use for the chat."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:110
 msgid "The calendar icon"
 msgstr ""
 
@@ -18628,7 +18628,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/ai_analytics_download.coffee:26
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1713
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1734
 msgid "The download could not be started. Please try again later."
 msgstr ""
 
@@ -18755,7 +18755,7 @@ msgstr ""
 msgid "The hostname could not be found."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:119
 msgid "The hours overlay"
 msgstr ""
 
@@ -18866,7 +18866,7 @@ msgstr ""
 msgid "The login is not possible."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:104
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:121
 msgid "The minutes overlay"
 msgstr ""
 
@@ -18874,11 +18874,11 @@ msgstr ""
 msgid "The model list could not be fetched: %s"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:113
 msgid "The month picker"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:113
 msgid "The month picker overlay"
 msgstr ""
 
@@ -19060,7 +19060,7 @@ msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:99
-#: app/controllers/integration/check_mk_controller.rb:139
+#: app/controllers/integration/check_mk_controller.rb:142
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
 #: app/services/service/user/password_reset/update.rb:28
 #: app/services/service/user/password_reset/verify.rb:22
@@ -19317,7 +19317,7 @@ msgstr ""
 msgid "The scheduler run was started."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:124
 msgid "The seconds overlay"
 msgstr ""
 
@@ -19500,7 +19500,7 @@ msgstr ""
 msgid "The tickets could not be merged."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:111
 msgid "The time picker"
 msgstr ""
 
@@ -19636,11 +19636,11 @@ msgstr ""
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:115
 msgid "The year picker"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:115
 msgid "The year picker overlay"
 msgstr ""
 
@@ -19695,7 +19695,7 @@ msgid "There is already a PGP key with the same fingerprint."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:60
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr ""
 
@@ -20683,7 +20683,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:562
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:563
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr ""
@@ -20993,14 +20993,14 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:57
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:70
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:61
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
 msgid "Toggle AM/PM mode"
 msgstr ""
 
@@ -21028,7 +21028,7 @@ msgstr ""
 msgid "Toggle header row"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:64
 msgid "Toggle the overlay"
 msgstr ""
 
@@ -21572,7 +21572,7 @@ msgstr ""
 msgid "Unread notification"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue:41
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue:34
 msgid "Unread notifications"
 msgstr ""
 
@@ -21647,8 +21647,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:702
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:84
 msgid "Update"
 msgstr ""
 
@@ -22170,7 +22170,7 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:276
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:280
 msgid "User taskbar tabs"
 msgstr ""
 
@@ -22842,7 +22842,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:481
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:482
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -23074,8 +23074,8 @@ msgstr ""
 msgid "You get notified on this device about updates to your tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:29
-#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:35
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:28
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:34
 msgid "You have a 24 hour window to send WhatsApp messages in this conversation. The customer service window closes %s."
 msgstr ""
 
@@ -23158,7 +23158,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:476
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:477
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -23536,7 +23536,7 @@ msgstr ""
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:694
+#: app/models/object_manager/attribute.rb:703
 msgid "can't be altered after creation (you can delete the attribute and create another with the desired value)"
 msgstr ""
 
@@ -23546,7 +23546,7 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:701
+#: app/models/object_manager/attribute.rb:710
 msgid "can't be modified"
 msgstr ""
 
@@ -24105,7 +24105,7 @@ msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1471
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1492
 #: app/assets/javascripts/app/models/checklist_template.coffee:27
 #: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
@@ -24263,7 +24263,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:928
+#: app/models/user.rb:950
 msgid "is too long"
 msgstr ""
 

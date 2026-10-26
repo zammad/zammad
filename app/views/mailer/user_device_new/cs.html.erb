@@ -1,19 +1,19 @@
-#{config.product_name} Detekováno přihlášení z nového zařízení
+#{config.product_name}: přihlášení z nového zařízení
 
-<div>Dobrý den,</div>
+<div>Dobrý den, #{user.firstname},</div>
 <br>
-<div>vypadá to, že jste se do systému Zammad přihlásil <b>pomocí nového zařízení</b> v dobu "#{user_device.created_at}":</div>
+<div>zdá se, že jste se ke svému účtu přihlásili <b>z nového zařízení</b>, a to dne "#{user_device.created_at}":</div>
 <br>
 <div>
 Vaše zařízení: #{user_device.name}<br>
-Vaše lokace (relativně): #{user_device.location}<br>
-Vaše IP: #{user_device.ip}<br>
+Vaše poloha (přibližná): #{user_device.location}<br>
+Vaše IP adresa: #{user_device.ip}<br>
 </div>
 <br>
-<div>Vaše zařízení bylo přidáno do vašeho seznamu známých zařízení, jenž si můžete prohlédnout na níže zmíněném odkazu:</div>
+<div>Vaše zařízení bylo přidáno do vašeho seznamu známých zařízení, který si můžete prohlédnout zde:</div>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>Pokud jste to nebyli Vy, odstraňte toto zařízení ze seznamu, změňte své heslo, případně smažte osobní přístupové tokeny a co nejdříve kontaktujte správce. Někdo mohl získat neoprávněný přístup k Vašemu účtu.</div>
+<div>Pokud jste to nebyli vy, odeberte prosím toto zařízení, změňte si heslo k účtu a kontaktujte svého administrátora. Někdo mohl získat neoprávněný přístup k vašemu účtu.</div>
 <br>
-<div>Team webu #{config.product_name}</div>
+<div>Váš tým #{config.product_name}</div>

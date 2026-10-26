@@ -1,8 +1,8 @@
 Nový tiket (#{ticket.title})
 
-<div>Dobrý den,</div>
+<div>Dobrý den, #{recipient.firstname},</div>
 <br>
-<div>byl vytvořen nový tiket (#{ticket.title}) uživatelem "<b>#{current_user.longname}</b>".</div>
+<div>uživatel "<b>#{current_user.longname}</b>" vytvořil nový tiket (#{ticket.title}).</div>
 <br>
 <div>
 Skupina: #{ticket.group.name}<br>
@@ -20,5 +20,5 @@ Stav: #{t(ticket.state.name)}<br>
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobrazit v aplikaci #{config.product_name}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobrazit v #{config.product_name}</a>
 </div>

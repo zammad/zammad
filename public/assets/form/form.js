@@ -106,6 +106,15 @@ $(function() {
     ],
     translations: {
     // ZAMMAD_TRANSLATIONS_START
+      'ar': {
+        'Attachments': 'المرفقات',
+        'Email': 'البريد الإلكتروني',
+        'Message': 'رسالة',
+        'Name': 'الاسم',
+        'Your Email': 'بريدكم الإلكتروني',
+        'Your Message…': 'رسالتكم…',
+        'Your Name': 'اسمكم',
+      },
       'bn': {
         'Attachments': 'সংযুক্তি',
         'Email': 'ইমেইল',
@@ -117,9 +126,9 @@ $(function() {
       },
       'cs': {
         'Attachments': 'Přílohy',
-        'Email': 'Email',
+        'Email': 'E-mail',
         'Message': 'Zpráva',
-        'Name': 'Jméno',
+        'Name': 'Název',
         'Your Email': 'Váš e-mail',
         'Your Message…': 'Vaše zpráva…',
         'Your Name': 'Vaše jméno',

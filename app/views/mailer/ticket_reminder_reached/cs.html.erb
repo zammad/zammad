@@ -1,8 +1,8 @@
-Dosažena upomínka tiketu (#{ticket.title})
+Nastal čas připomenutí tiketu (#{ticket.title})
 
 <div>Dobrý den, #{recipient.firstname},</div>
 <br>
-<div>tiket (#{ticket.title}) vytvořený zákazníkem "<b>#{ticket.customer.longname}</b>" vyžaduje Vaši pozornost, neboť byl dosažen čas pro upomínku.</div>
+<div>tiket vyžaduje pozornost: nastal čas připomenutí u tiketu (#{ticket.title}) zákazníka "<b>#{ticket.customer.longname}</b>".</div>
 <br>
 <% if @objects[:article] %>
   <div>
@@ -14,5 +14,5 @@ Dosažena upomínka tiketu (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Otevřít v aplikaci #{config.product_name}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobrazit v #{config.product_name}</a>
 </div>
