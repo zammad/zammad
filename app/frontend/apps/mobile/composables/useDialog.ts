@@ -37,6 +37,7 @@ const lastFocusedElements: Record<string, HTMLElement> = {}
 
 export const getOpenedDialogs = () => dialogsOpened.value
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const isDialogOpened = (name?: string) =>
   name ? dialogsOpened.value.has(name) : dialogsOpened.value.size > 0
 

@@ -9,7 +9,6 @@ import type { Store } from 'pinia'
 
 let storeInitialized = false
 let pinia: TestingPinia
-export const getTestPinia = () => pinia
 const stores = new Set<Store>()
 
 export const initializeStore = () => {

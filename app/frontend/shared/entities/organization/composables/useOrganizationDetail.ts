@@ -17,7 +17,7 @@ import { useOrganizationObjectAttributesStore } from '../stores/objectAttributes
 
 import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
-export const SECONDARY_ORGANIZATIONS_FETCH_COUNT = 5
+const SECONDARY_ORGANIZATIONS_FETCH_COUNT = 5
 
 export const useOrganizationDetail = (
   organizationId: Ref<string | undefined> | ComputedRef<string | undefined>,

@@ -1,16 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-export type FilterField = 'name' | 'operator' | 'value'
-
-export interface FilterKeyParts {
-  index: number
-  field: FilterField
-  // Remaining segments after `filter.<index>.<field>`. Empty for the exact
-  // cell (`filter.0.value`); populated for nested value paths like
-  // `filter.0.value.from` → `['from']` once compound value codecs land.
-  rest: string[]
-}
-
 export interface ParsedFilter {
   name?: unknown
   operator?: unknown

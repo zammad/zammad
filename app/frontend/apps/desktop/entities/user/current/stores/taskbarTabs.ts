@@ -112,23 +112,6 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
     return newTaskbarTabList
   })
 
-  const activeTaskbarTab = computed<UserTaskbarTab | undefined>((currentActiveTaskbarTab) => {
-    if (!activeTaskbarTabEntityKey.value) return
-
-    const newActiveTaskbarTab = taskbarTabList.value.find(
-      (taskbarTab) => taskbarTab.tabEntityKey === activeTaskbarTabEntityKey.value,
-    )
-
-    if (currentActiveTaskbarTab && isEqual(newActiveTaskbarTab, currentActiveTaskbarTab))
-      return currentActiveTaskbarTab
-
-    return newActiveTaskbarTab
-  })
-
-  const activeTaskbarTabId = computed(() => activeTaskbarTab.value?.taskbarTabId)
-
-  const activeTaskbarTabEntityAccess = computed(() => activeTaskbarTab.value?.entityAccess)
-
   const hasTaskbarTabs = computed(() => taskbarTabList.value?.length > 0)
 
   const taskbarTabListByTabEntityKey = computed(() => keyBy(taskbarTabList.value, 'tabEntityKey'))
@@ -523,18 +506,11 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
   return {
     taskbarTabIDsInDeletion,
-    activeTaskbarTabId,
-    activeTaskbarTab,
     activeTaskbarTabEntityKey,
-    activeTaskbarTabEntityAccess,
     taskbarTabContexts,
-    taskbarTabsInCreation,
-    taskbarTabsRaw,
     taskbarTabList,
     taskbarTabListByTabEntityKey,
-    taskbarLookupByTypeAndTabEntityKey,
     taskbarTabListOrder,
-    taskbarTabExists,
     getTaskbarTabTypePlugin,
     addTaskbarTab,
     updateTaskbarTab,

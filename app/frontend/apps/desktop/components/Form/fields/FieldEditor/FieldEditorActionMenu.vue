@@ -38,8 +38,6 @@ const props = withDefaults(defineProps<Props>(), {
 const targetId = computed(() => props.targetId || `editor-action-menu-${getUuid()}`)
 
 const emit = defineEmits<{
-  hide: []
-  blur: []
   'click-action': [EditorButton, MouseEvent]
   'close-popover': []
 }>()

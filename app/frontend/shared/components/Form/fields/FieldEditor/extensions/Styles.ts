@@ -3,7 +3,7 @@
 import { Extension } from '@tiptap/core'
 import { type CommandProps } from '@tiptap/vue-3'
 
-export type SubTextStylesOptions = {
+type SubTextStylesOptions = {
   types: string[]
   defaultUnit: string
 }

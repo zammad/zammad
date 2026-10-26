@@ -7,7 +7,7 @@ import { useHistoryFlyout } from '#desktop/components/CommonHistoryFlyout/useHis
 
 import { useUserHistoryQuery } from '../graphql/queries/history.api.ts'
 
-export const USER_HISTORY_FLYOUT_NAME = 'user-history-flyout'
+const USER_HISTORY_FLYOUT_NAME = 'user-history-flyout'
 
 export const openUserHistoryFlyout = (userId: string) => {
   openFlyout(USER_HISTORY_FLYOUT_NAME, {

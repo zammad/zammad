@@ -95,11 +95,8 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
 
   return {
     overviews,
-    initializing: ticketOverviewHandler.operationResult.forceDisabled.value,
     loading: overviewsLoading,
     includedOverviews,
-    includedIds,
-    overviewsByKey,
     updateOverviews,
   }
 })

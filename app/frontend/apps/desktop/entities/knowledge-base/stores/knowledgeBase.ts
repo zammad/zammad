@@ -91,7 +91,6 @@ export const useKnowledgeBaseStore = defineStore('knowledgeBase', () => {
     iconSet,
     loading,
     activeLocale,
-    kbLocales,
     isKnownLocale,
     ensureLoaded,
     previousPath,

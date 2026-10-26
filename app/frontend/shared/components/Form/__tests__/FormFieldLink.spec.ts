@@ -8,7 +8,6 @@ const renderFormFieldLink = (props: Record<string, unknown> = {}) =>
   renderComponent(FormFieldLink, {
     router: true,
     props: {
-      id: 'test-link',
       link: 'https://www.zammad.org',
       ...props,
     },

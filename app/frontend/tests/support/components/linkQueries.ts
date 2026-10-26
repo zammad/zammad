@@ -2,7 +2,7 @@
 
 import { getElementError } from '@testing-library/vue'
 
-export const getLinkFromElement = (container: HTMLElement, element: Element): HTMLAnchorElement => {
+const getLinkFromElement = (container: HTMLElement, element: Element): HTMLAnchorElement => {
   const link = element.closest('a') as HTMLAnchorElement | null
 
   if (!link) {

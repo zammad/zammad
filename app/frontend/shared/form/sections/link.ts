@@ -14,7 +14,6 @@ export const link = createSection(
       $cmp: markRaw(FormFieldLink),
       if: '$link',
       props: {
-        id: '$id',
         link: '$link',
         linkIcon: '$linkIcon',
         linkLabel: '$linkLabel',

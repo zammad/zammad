@@ -108,7 +108,6 @@ export const useThemeStore = defineStore(
 
     return {
       savingTheme,
-      preferredColorScheme,
       currentTheme,
       isDarkMode,
       updateTheme,

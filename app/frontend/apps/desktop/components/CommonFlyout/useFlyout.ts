@@ -16,11 +16,14 @@ import { getCurrentApp } from '#desktop/currentApp.ts'
 
 const OVERLAY_CONTAINER_TYPE = 'flyout'
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const getOpenedFlyouts = () => getOpenedOverlayContainers(OVERLAY_CONTAINER_TYPE)
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const isFlyoutOpened = (name?: string) =>
   isOverlayContainerOpened(OVERLAY_CONTAINER_TYPE, name)
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const getFlyoutMeta = () => {
   const overlayContainerMeta = getOverlayContainerMeta(OVERLAY_CONTAINER_TYPE)
 

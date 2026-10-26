@@ -9,7 +9,7 @@ import { closeDialog, openDialog, useDialog } from '#desktop/components/CommonDi
 
 import { useBetaUiFeedbackConsentState } from './useBetaUiFeedbackConsentState.ts'
 
-export const DIALOG_NAME = 'beta-ui-feedback-consent'
+const DIALOG_NAME = 'beta-ui-feedback-consent'
 
 export const showFeedbackConsent = () => openDialog(DIALOG_NAME, {}, true)
 

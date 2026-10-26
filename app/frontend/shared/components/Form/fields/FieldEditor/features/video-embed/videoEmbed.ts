@@ -60,7 +60,7 @@ const SELF_HOSTED_REGEXPS: Record<string, RegExp[]> = {
 //   `constructor` or `toString` as its provider would otherwise be answered by `Object.prototype`.
 const isSelfHosted = (provider: VideoProvider) => Object.hasOwn(SELF_HOSTED_REGEXPS, provider)
 
-export const hostFromUrl = (input: string) => {
+const hostFromUrl = (input: string) => {
   // A pasted URL may well come without its scheme, which `URL` insists on.
   for (const candidate of [input, `https://${input}`]) {
     try {

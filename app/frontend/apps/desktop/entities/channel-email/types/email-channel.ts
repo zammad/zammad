@@ -26,9 +26,3 @@ export interface EmailChannelForms {
   emailInboundMessages: Pick<EmailChannelForm<EmailInboundMessagesData>, 'form'>
   emailOutbound: EmailChannelForm<EmailOutboundData>
 }
-
-export type ValidateConfigurationRoundtripAndChannelAddFunction = (
-  account: EmailAccountData,
-  inboundConfiguration: EmailInboundData,
-  outboundConfiguration: EmailOutboundData,
-) => Promise<void>

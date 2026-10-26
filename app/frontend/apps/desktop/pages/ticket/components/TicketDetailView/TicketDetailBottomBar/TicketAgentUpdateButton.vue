@@ -66,7 +66,6 @@ const actionItems = computed(() => {
         sharedDraftConflictDialog.open({
           sharedDraftId: props.sharedDraftId,
           sharedDraftParams: mapSharedDraftParams(props.ticketId, props.form),
-          form: props.form,
         })
 
         return

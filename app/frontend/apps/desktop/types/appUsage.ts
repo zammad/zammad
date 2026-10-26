@@ -12,6 +12,4 @@ export interface TimeTrackerOptions {
 
 export type MilestoneKey = '1h' | '5h' | '20h'
 
-export type MilestoneRecords = Record<MilestoneKey, { reached: boolean; triggerHistory: boolean }>
-
 export type MilestonesHistoryRecords = Record<MilestoneKey, boolean>

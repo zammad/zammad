@@ -7,7 +7,6 @@ import type { RouteLocationRaw } from 'vue-router'
 
 withDefaults(
   defineProps<{
-    id: string
     link: RouteLocationRaw
     linkIcon?: string
     linkLabel?: string

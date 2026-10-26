@@ -7,7 +7,7 @@ import { useHistoryFlyout } from '#desktop/components/CommonHistoryFlyout/useHis
 
 import { useOrganizationHistoryQuery } from '../graphql/queries/history.api.ts'
 
-export const ORGANIZATION_HISTORY_FLYOUT_NAME = 'organization-history-flyout'
+const ORGANIZATION_HISTORY_FLYOUT_NAME = 'organization-history-flyout'
 
 export const openOrganizationHistoryFlyout = (organizationId: ID) => {
   openFlyout(ORGANIZATION_HISTORY_FLYOUT_NAME, {

@@ -19,8 +19,6 @@ export enum GraphQLErrorTypes {
   AiFeedbackAlreadyProvided = 'Service::AI::Analytics::UpsertUsage::FeedbackAlreadyProvidedError',
 }
 
-export type GraphQLErrorTypeKeys = keyof GraphQLErrorTypes
-
 export interface GraphQLErrorExtensionsHandler {
   type: GraphQLErrorTypes
   backtrace: string

@@ -6,7 +6,7 @@ import { Mapping } from '@tiptap/pm/transform'
 
 import type { Node as ProseMirrorNode, ResolvedPos } from '@tiptap/pm/model'
 
-export const ORDERED_LIST_CONTINUATION_NAME = 'orderedListContinuation'
+const ORDERED_LIST_CONTINUATION_NAME = 'orderedListContinuation'
 
 const ORDERED_LIST_NAME = 'orderedList'
 

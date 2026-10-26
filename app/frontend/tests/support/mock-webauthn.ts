@@ -29,7 +29,7 @@ export const createMockCredential = (overrides?: Partial<PublicKeyCredential>) =
 /**
  * Mock parsed creation options returned by parseCreationOptionsFromJSON
  */
-export const createMockCreationOptions = (
+const createMockCreationOptions = (
   overrides?: Partial<PublicKeyCredentialCreationOptions>,
 ): PublicKeyCredentialCreationOptions => {
   const defaultOptions: PublicKeyCredentialCreationOptions = {
@@ -51,7 +51,7 @@ export const createMockCreationOptions = (
 /**
  * Mock parsed request options returned by parseRequestOptionsFromJSON
  */
-export const createMockRequestOptions = (
+const createMockRequestOptions = (
   overrides?: Partial<PublicKeyCredentialRequestOptions>,
 ): PublicKeyCredentialRequestOptions => {
   const defaultOptions: PublicKeyCredentialRequestOptions = {

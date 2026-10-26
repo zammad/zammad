@@ -8,7 +8,7 @@ import { useTicketHistoryQuery } from '#desktop/pages/ticket/graphql/queries/tic
 
 export const TICKET_HISTORY_FLYOUT_NAME = 'ticket-history'
 
-export const openTicketHistoryFlyout = (ticketId: string) => {
+const openTicketHistoryFlyout = (ticketId: string) => {
   openFlyout(TICKET_HISTORY_FLYOUT_NAME, {
     name: TICKET_HISTORY_FLYOUT_NAME,
     type: EnumObjectManagerObjects.Ticket,

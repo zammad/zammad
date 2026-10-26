@@ -19,11 +19,3 @@ export enum NotificationMatrixColumnKey {
   AllTickets = 'no',
   AlsoNotifyViaEmail = 'email',
 }
-
-export type NotificationMatrix = {
-  [rowKey in NotificationMatrixRowKey]: {
-    [pathKey in NotificationMatrixPathKey]: {
-      [columnKey in NotificationMatrixColumnKey]: boolean
-    }
-  }
-}

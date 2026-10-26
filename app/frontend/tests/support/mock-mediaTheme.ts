@@ -2,7 +2,7 @@
 
 import type { EnumAppearanceTheme } from '#shared/graphql/types.ts'
 
-export const addEventListener = vi.fn()
+const addEventListener = vi.fn()
 
 export const mockMediaTheme = (theme: EnumAppearanceTheme) => {
   window.matchMedia = (rule) =>

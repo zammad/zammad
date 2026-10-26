@@ -175,7 +175,6 @@ let routerInitialized = false
 let router: MockedRouter
 const history = createWebHistory(isDesktop ? '/desktop' : '/mobile')
 
-export const getTestPlugins = () => [...plugins]
 export const getTestRouter = () => router
 export const getHistory = () => history
 
@@ -309,7 +308,7 @@ const initializeApplicationConfig = () => {
 
 const wrappers = new Set<[ExtendedMountingOptions<any>, ExtendedRenderResult]>()
 
-export const cleanup = () => {
+const cleanup = () => {
   wrappers.forEach((wrapper) => {
     const [{ unmount = true }, view] = wrapper
 

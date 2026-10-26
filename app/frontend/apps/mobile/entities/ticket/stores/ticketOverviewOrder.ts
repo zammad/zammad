@@ -18,7 +18,7 @@ import { TicketOverviewUpdatesDocument } from '#mobile/entities/ticket/graphql/s
 
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage.ts'
 
-export type TicketOverview = Pick<Overview, 'name' | 'id'>
+type TicketOverview = Pick<Overview, 'name' | 'id'>
 
 export const useTicketOverviewOrderStore = defineStore('ticketOverviewOrder', () => {
   const ticketOverviewOrderHandler = new QueryHandler(useTicketOverviewOrderQuery())
@@ -61,10 +61,6 @@ export const useTicketOverviewOrderStore = defineStore('ticketOverviewOrder', ()
 
   const includedIds = ref(new Set<string>(storage.getOverviews()))
 
-  const includedOverviews = computed(() => {
-    return [...includedIds.value].map((id) => overviewsByKey.value[id]).filter(Boolean)
-  })
-
   const saveOverviews = (overviews: TicketOverview[]) => {
     const ids = overviews.map(({ id }) => id)
     storage.saveOverviews(ids)
@@ -95,9 +91,7 @@ export const useTicketOverviewOrderStore = defineStore('ticketOverviewOrder', ()
 
   return {
     overviews,
-    initializing: ticketOverviewOrderHandler.operationResult.forceDisabled.value,
     loading: overviewsLoading,
-    includedOverviews,
     includedIds,
     overviewsByKey,
     saveOverviews,

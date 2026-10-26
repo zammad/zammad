@@ -25,8 +25,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
   action: []
-  'hide-action-bar': [boolean]
-  'show-ai-text-loader': [boolean]
 }>()
 
 const meta = props.formContext?.meta || {}

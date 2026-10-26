@@ -147,7 +147,6 @@ export default defineConfig(async ({ mode, command }) => {
                 '@formkit/i18n',
                 '@formkit/inputs',
                 '@formkit/rules',
-                '@formkit/tailwindcss',
                 '@formkit/themes',
                 '@formkit/utils',
                 '@formkit/validation',

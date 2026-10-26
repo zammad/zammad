@@ -85,9 +85,6 @@ export const useAiAssistantTextToolsStore = defineStore('aiTextTools', () => {
 
   return {
     lookupResult,
-    usageKeys,
-    queryByUsageKey,
-    queryResultByUsageKey,
     activate,
     deactivate,
   }

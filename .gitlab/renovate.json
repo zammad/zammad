@@ -210,8 +210,7 @@
         "postcss-html",
         "sass",
         "autoprefixer",
-        "/tailwind/",
-        "!@formkit/tailwindcss"
+        "/tailwind/"
       ],
       "groupName": "Tailwind/Styling packages",
       "groupSlug": "tailwind-styling-related"

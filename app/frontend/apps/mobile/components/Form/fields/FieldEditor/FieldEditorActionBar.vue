@@ -4,13 +4,14 @@
 import { nextTick, shallowRef, toRef, ref, defineAsyncComponent, watch } from 'vue'
 
 import useEditorActionHelper from '#shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts'
+import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import type {
   EditorButton,
   EditorContentType,
   EditorCustomExtensions,
+  FieldEditorProps,
 } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import type { FieldEditorProps } from '#shared/components/Form/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
@@ -112,7 +113,7 @@ const showAiAssistantTextToolsLoadingBanner = ref(false)
 const config = toRef(useApplicationStore(), 'config')
 
 watch(
-  () => editor.value?.storage?.showAiTextLoader,
+  () => editor.value?.storage?.[TEXT_TOOL_EXTENSION_NAME]?.showAiTextLoader?.value,
   (showLoader) => {
     showAiAssistantTextToolsLoadingBanner.value = !!showLoader
     hideActionBarLocally.value = !!showLoader
@@ -152,8 +153,6 @@ watch(
           :form-context="formContext"
           @action="handleSubMenuClick"
           @close="handleSubMenuClick(true)"
-          @hide-action-bar="hideActionBarLocally = $event"
-          @show-ai-text-loader="showAiAssistantTextToolsLoadingBanner = $event"
         />
       </template>
     </CommonSectionPopup>

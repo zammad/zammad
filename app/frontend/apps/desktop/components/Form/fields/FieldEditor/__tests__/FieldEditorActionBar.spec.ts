@@ -23,20 +23,6 @@ vi.mock('@tiptap/pm/state', () => {
   }
 })
 
-vi.mock('prosemirror-model', () => {
-  return {
-    DOMSerializer: {
-      fromSchema: vi.fn(() => ({
-        serializeFragment: vi.fn(() => {
-          const fragment = document.createDocumentFragment()
-          fragment.textContent = 'selected text'
-          return fragment
-        }),
-      })),
-    },
-  }
-})
-
 describe('keyboard interactions', () => {
   it('can use arrows to traverse toolbar', async () => {
     const view = renderComponent(FieldEditorActionBar, {

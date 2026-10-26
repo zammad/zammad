@@ -4,14 +4,14 @@
 import { useVModel } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
 
-export interface CommonInputSearchProps {
+interface CommonInputSearchProps {
   modelValue?: string
   noBorder?: boolean
   wrapperClass?: string
   placeholder?: string
 }
 
-export interface CommonInputSearchEmits {
+interface CommonInputSearchEmits {
   (e: 'update:modelValue', filter: string): void
 }
 

@@ -151,7 +151,7 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
     return remainingIds
   })
 
-  const { overviewsTicketCountById, overviewsTicketCount } = useTicketsCountByOverview(
+  const { overviewsTicketCountById } = useTicketsCountByOverview(
     overviewIds,
     overviewBackgroundCountPollingIds,
     queryPollingConfig,
@@ -386,7 +386,6 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
     overviewsTicketCountById,
     overviewsById,
     overviewsByLink,
-    overviewsTicketCount,
     overviewsLoading,
     hasOverviews,
     currentTicketOverviewLink,

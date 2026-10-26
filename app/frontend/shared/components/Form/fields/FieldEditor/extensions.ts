@@ -80,7 +80,7 @@ export const getDisabledExtensionNames = (
   return [...new Set([...disabled, ...optedOut])]
 }
 
-export const lowlight = createLowlight(common)
+const lowlight = createLowlight(common)
 
 export const getPlainExtensions = (
   placeholder = '',

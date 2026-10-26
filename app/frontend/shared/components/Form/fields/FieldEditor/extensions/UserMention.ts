@@ -21,7 +21,7 @@ import type { CommandProps, MarkConfig, ParentConfig } from '@tiptap/core'
 import type { Ref } from 'vue'
 
 export const EXTENSION_NAME = 'mentionUser'
-export const EXTENSION_LINK_NAME = 'mentionUserLink'
+const EXTENSION_LINK_NAME = 'mentionUserLink'
 
 const ACTIVATOR = '@@'
 

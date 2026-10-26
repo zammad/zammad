@@ -16,8 +16,10 @@ import { getCurrentApp } from '#desktop/currentApp.ts'
 
 const OVERLAY_CONTAINER_TYPE = 'dialog'
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const getOpenedDialogs = () => getOpenedOverlayContainers(OVERLAY_CONTAINER_TYPE)
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const isDialogOpened = (name?: string) =>
   isOverlayContainerOpened(OVERLAY_CONTAINER_TYPE, name)
 

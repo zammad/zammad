@@ -1,18 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
-
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import type { FilePreview } from '#shared/utils/files.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
 import type { MaybeRef } from 'vue'
-
-interface ImagePreview {
-  src?: string
-  title?: string
-}
 
 export interface ViewerFile {
   id?: string
@@ -22,18 +15,6 @@ export interface ViewerFile {
   inline?: string
   type?: Maybe<string>
 }
-
-export interface ViewerOptions {
-  images: ImagePreview[]
-  index: number
-  visible: boolean
-}
-
-export const imageViewerOptions = ref<ViewerOptions>({
-  visible: false,
-  index: 0,
-  images: [],
-})
 
 export const useFilePreviewViewer = (viewFiles: MaybeRef<ViewerFile[]>) => {
   const { showImage } = useImageViewer(viewFiles)

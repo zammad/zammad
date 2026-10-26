@@ -71,7 +71,6 @@ export const useMacroStore = defineStore('macro', () => {
   }
 
   return {
-    usageKeys,
     activate,
     deactivate,
   }

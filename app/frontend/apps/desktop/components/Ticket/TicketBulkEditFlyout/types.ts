@@ -24,7 +24,3 @@ export interface TicketBulkEditReturn {
   onSuccessCallback?: () => void
   openBulkEditFlyout: () => void
 }
-
-export interface TicketBulkEditOptions {
-  onSuccess?: () => void
-}

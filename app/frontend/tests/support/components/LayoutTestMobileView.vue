@@ -31,8 +31,6 @@ const hasOwnLandmarks = computed(() => {
 
 const mainContainer = computed(() => (hasOwnLandmarks.value ? 'div' : 'main'))
 
-const footerContainer = computed(() => (hasOwnLandmarks.value ? 'div' : 'footer'))
-
 useAuthenticationChanges()
 </script>
 
@@ -42,7 +40,6 @@ useAuthenticationChanges()
     <component :is="mainContainer" data-test-id="appMain">
       <RouterView :key="testKey" />
     </component>
-    <component :is="footerContainer" data-bottom-navigation />
     <DynamicInitializer name="dialog" />
     <CommonNotifications />
     <CommonImageViewer />

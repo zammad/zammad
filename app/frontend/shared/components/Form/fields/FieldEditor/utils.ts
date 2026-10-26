@@ -127,7 +127,7 @@ export const getActiveNodeOrMark = (editor: Editor) => {
   return domNode.nodeType === Node.TEXT_NODE ? domNode.parentElement : (domNode as HTMLElement)
 }
 
-export const setAutoUpdate = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
+const setAutoUpdate = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
   const anchorNode = anchor || getActiveNodeOrMark(editor)
 
   if (!anchorNode) {
@@ -138,7 +138,7 @@ export const setAutoUpdate = (editor: Editor, element: HTMLElement, anchor?: HTM
   return autoUpdate(anchorNode, element, () => updatePosition(editor, element, anchor))
 }
 
-export const autoUpdatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
+const autoUpdatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLElement) => {
   updatePosition(editor, element, anchor)
   return setAutoUpdate(editor, element, anchor)
 }
@@ -220,7 +220,7 @@ export const setFloatingPopover = <T extends object>(
   return virtualComponent
 }
 
-export const rectUnion = (...rects: DOMRect[]) => {
+const rectUnion = (...rects: DOMRect[]) => {
   const validRects = rects.filter((rect) => rect)
 
   if (!validRects.length) return new DOMRect(-1000, -1000, 0, 0)
@@ -257,39 +257,6 @@ export const getReferenceClientRect = (editor: Editor) => {
   }
 
   return rectUnion(...selectedCells.map((cell) => cell.getBoundingClientRect()))
-}
-
-export const getPreviousNodeFromPosition = (
-  editor: Editor,
-  position: number,
-  options = {} as { fallbackToCursorPosition: boolean },
-) => {
-  const { fallbackToCursorPosition = true } = options
-
-  let previousNode = null
-  const insertPosition = editor.state.doc.resolve(position)
-
-  if (position > 0) {
-    if (insertPosition.depth > 0) {
-      // When inside a block node, resolve the node that precedes our insertion point
-      const prevNodePos = insertPosition.before(insertPosition.depth)
-      previousNode = editor.state.doc.nodeAt(prevNodePos)
-    } else {
-      // At doc root level use nodeBefore so we get the actual preceding top-level node
-      // (e.g. TipTap's trailing empty paragraph) rather than the cursor's enclosing node.
-      // This prevents inserting a redundant blank line when an empty paragraph already
-      // precedes the insertion point (e.g. after a remove+re-add cycle).
-      previousNode = insertPosition.nodeBefore
-    }
-  }
-
-  if (!previousNode && fallbackToCursorPosition) {
-    const { $from } = editor.state.selection
-    const prevNodePos = $from.before($from.depth)
-    previousNode = editor.state.doc.nodeAt(prevNodePos)
-  }
-
-  return previousNode
 }
 
 export const clamp = (val: number, min: number, max: number) =>

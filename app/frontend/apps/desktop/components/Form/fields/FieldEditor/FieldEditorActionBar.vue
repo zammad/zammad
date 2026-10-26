@@ -4,13 +4,14 @@
 import { nextTick, shallowRef, toRef, ref, defineAsyncComponent, watch } from 'vue'
 
 import useEditorActionHelper from '#shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts'
+import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import type {
   EditorButton,
   EditorContentType,
   EditorCustomExtensions,
+  FieldEditorProps,
 } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import type { FieldEditorProps } from '#shared/components/Form/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import useEditorActions from '#desktop//components/Form/fields/FieldEditor/useEditorActions.ts'
@@ -112,7 +113,7 @@ const config = toRef(useApplicationStore(), 'config')
 const { zIndex } = useFieldEditorOptions()
 
 watch(
-  () => editor.value?.storage?.showAiTextLoader,
+  () => editor.value?.storage?.[TEXT_TOOL_EXTENSION_NAME]?.showAiTextLoader?.value,
   (showLoader) => {
     showAiAssistantTextToolsLoadingBanner.value = !!showLoader
     hideActionBarLocally.value = !!showLoader

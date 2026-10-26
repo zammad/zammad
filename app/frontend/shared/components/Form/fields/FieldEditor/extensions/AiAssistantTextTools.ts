@@ -72,11 +72,11 @@ const createAiTextToolsController = () => {
 const createLoaderHandler = (editor: Editor) => ({
   showActionBarAndHideLoader: () => {
     editor.setEditable(true)
-    editor.storage.showAiTextLoader = false
+    editor.storage[EXTENSION_NAME].showAiTextLoader.value = false
   },
   hideActionBarAndShowLoader: () => {
     editor.setEditable(false)
-    editor.storage.showAiTextLoader = true
+    editor.storage[EXTENSION_NAME].showAiTextLoader.value = true
   },
 })
 
@@ -186,7 +186,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     name: EXTENSION_NAME,
     addStorage() {
       return {
-        showAiTextLoader: false,
+        showAiTextLoader: ref(false),
       }
     },
     onBeforeCreate({ editor }) {

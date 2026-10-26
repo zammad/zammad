@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router'
 import { EnumKnowledgeBaseSearchEntity } from '#shared/graphql/types.ts'
 
 // search_field_widget.coffee:82
-export const SEARCH_DEBOUNCE_TIME = 500
+const SEARCH_DEBOUNCE_TIME = 500
 
 const SEARCH_ENTITIES: string[] = Object.values(EnumKnowledgeBaseSearchEntity)
 

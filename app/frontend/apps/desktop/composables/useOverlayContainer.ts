@@ -40,6 +40,7 @@ export interface OverlayContainerOptions {
 
 export type OverlayContainerType = 'dialog' | 'flyout'
 
+// fallow-ignore-next-line unused-type -- Kept for upcoming overlay features.
 export interface OverlayContainerMeta {
   mounted: Map<string, number>
   options: Map<string, OverlayContainerOptions>
@@ -83,6 +84,7 @@ export const isOverlayContainerOpened = (type: OverlayContainerType, name?: stri
     ? overlayContainerMeta[type].opened.value.has(name)
     : overlayContainerMeta[type].opened.value.size > 0
 
+// fallow-ignore-next-line unused-export -- Kept for upcoming overlay features.
 export const currentOverlayContainersOpen = computed(() => {
   const openContainers: Partial<Record<OverlayContainerType, string | undefined>> = {}
 

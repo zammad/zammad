@@ -35,18 +35,6 @@ export interface UserOption {
   object: AvatarUser
 }
 
-interface GroupChild {
-  /**
-   * internal id
-   */
-  value: number
-  label: string
-  disabled: boolean
-}
-export interface GroupOption extends GroupChild {
-  children?: GroupChild[]
-}
-
 export interface BulkScrollListItem {
   label: string
   type: DragAndDropBulkEntityType

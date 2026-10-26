@@ -23,5 +23,3 @@ export interface CommonPopoverInternalInstance extends Omit<
 export type Orientation = 'top' | 'bottom' | 'left' | 'right' | 'autoVertical' | 'autoHorizontal'
 
 export type Placement = 'start' | 'arrowStart' | 'arrowEnd' | 'end'
-
-export type Variant = 'secondary' | 'danger'

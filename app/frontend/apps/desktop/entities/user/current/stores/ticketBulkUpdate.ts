@@ -186,7 +186,6 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
 
   return {
     setTicketBulkUpdateStatus: setStatus,
-    status,
     isRunning,
     confirmationPending,
     requestBulkConfirmation,

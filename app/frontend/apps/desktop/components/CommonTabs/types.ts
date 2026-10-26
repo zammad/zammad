@@ -2,7 +2,6 @@
 
 import type { Link } from '#shared/types/router.ts'
 
-import type { MaybeRefOrGetter } from 'vue'
 export interface Tab {
   label: string
   /**
@@ -36,37 +35,6 @@ export interface MarkerStyle {
   height: string
   // just due missing type compatibility to CSSProperties and  StyleValue
   [key: `--${string}`]: string
-}
-
-export interface TabsScrollListClasses {
-  container: string
-  item: string
-  tab: string
-  marker: string
-}
-
-export interface TabsOverflowMenuClasses {
-  container: string
-  item: string
-  tab: string
-  tabActive: string
-  overflowButton: string
-  overflowButtonActive: string
-  menuItem: string
-  overflowItem: string
-  overflowItemActive: string
-}
-
-export interface TabsOptions {
-  tabs: MaybeRefOrGetter<Tab[]>
-  /**
-   * Keys of the currently active tab(s). The first one positions the marker pill.
-   */
-  activeKeys: MaybeRefOrGetter<Tab['key'][]>
-  /**
-   * Whether the strip draws the sliding marker pill (single tabs / navigation, not multiselect).
-   */
-  hasMarker: MaybeRefOrGetter<boolean>
 }
 
 export type TabBaseProps<T extends Tab> = Omit<T, 'key'> & {

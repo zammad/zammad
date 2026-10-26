@@ -38,25 +38,6 @@ export type KnowledgeBaseSortingModes = Partial<
   Record<KnowledgeBaseSortingScope, KnowledgeBaseSortingMode>
 >
 
-export interface KnowledgeBaseLocaleCompact {
-  id: string
-  primary: boolean
-  systemLocale: {
-    id: string
-    locale: string
-    name: string
-  }
-}
-
-export interface KnowledgeBaseCompact {
-  id: string
-  title: string | null | undefined
-  iconset: string
-  isPubliclyAvailable: boolean
-  isVisiblePublicly: boolean
-  kbLocales: KnowledgeBaseLocaleCompact[]
-}
-
 export interface KnowledgeBaseCategoryCompact {
   id: string
   title: string

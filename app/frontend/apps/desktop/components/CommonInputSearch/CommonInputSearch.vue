@@ -4,7 +4,7 @@
 import { useVModel } from '@vueuse/core'
 import { useTemplateRef, computed } from 'vue'
 
-export interface CommonInputSearchProps {
+interface CommonInputSearchProps {
   modelValue?: string
   wrapperClass?: string
   placeholder?: string

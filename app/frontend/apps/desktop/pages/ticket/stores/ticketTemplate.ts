@@ -69,7 +69,6 @@ export const useTicketTemplateStore = defineStore('ticketTemplate', () => {
   }
 
   return {
-    usageKeys,
     templateList,
     activate,
     deactivate,

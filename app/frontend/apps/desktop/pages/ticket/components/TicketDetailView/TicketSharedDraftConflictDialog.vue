@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import type { FormRef } from '#shared/components/Form/types.ts'
 import { useTicketSharedDraftZoomUpdateMutation } from '#shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomUpdate.api.ts'
 import type { TicketSharedDraftZoomInput } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -16,7 +15,6 @@ import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicke
 const props = defineProps<{
   sharedDraftId: string
   sharedDraftParams: TicketSharedDraftZoomInput
-  form?: FormRef
 }>()
 
 const { notify } = useNotifications()

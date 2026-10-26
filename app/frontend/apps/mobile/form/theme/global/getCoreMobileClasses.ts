@@ -9,7 +9,7 @@ import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
 import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
-export const addButtonVariants = (classes: Classes = {}): Classes => {
+const addButtonVariants = (classes: Classes = {}): Classes => {
   return extendClasses(classes, {
     wrapper: 'relative',
     input:

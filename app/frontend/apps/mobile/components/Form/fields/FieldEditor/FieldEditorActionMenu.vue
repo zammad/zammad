@@ -11,8 +11,6 @@ import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSect
 import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/types.ts'
 
 defineEmits<{
-  hide: []
-  blur: []
   'click-action': [EditorButton, MouseEvent]
 }>()
 

@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import type { EnumObjectManagerObjects, FormUpdaterQuery } from '#shared/graphql/types.ts'
 import type { EntityObject } from '#shared/types/entity.ts'
 import type { FormUpdaterOptions } from '#shared/types/form.ts'
@@ -320,16 +319,5 @@ export type FieldEditorClass = {
   }
   tableMenu: {
     triggerButton: string
-  }
-}
-
-export type FieldEditorProps = {
-  actionBar: {
-    visible?: boolean
-    button: {
-      icon: {
-        size: Sizes
-      }
-    }
   }
 }

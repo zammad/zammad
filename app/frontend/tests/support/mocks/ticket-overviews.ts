@@ -15,7 +15,7 @@ const column = (key: string, value: string) => ({
   value,
 })
 
-export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
+const getApiTicketOverviews = (): TicketOverviewsQuery => ({
   ticketOverviews: [
     {
       __typename: 'Overview',

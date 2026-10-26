@@ -68,5 +68,5 @@ export const useTicketsCountByOverview = (
     )
   })
 
-  return { overviewsTicketCountById, overviewsTicketCount }
+  return { overviewsTicketCountById }
 }
