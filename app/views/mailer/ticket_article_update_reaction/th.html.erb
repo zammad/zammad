@@ -3,7 +3,7 @@
 <div>สวัสดี #{recipient.firstname},</div>  
 <br>  
 <div>  
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> ตอบสนองด้วย <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> ต่อข้อความจาก #{article.created_by.fullname}:  
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> ตอบสนองด้วย <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> ต่อข้อความจาก #{article.created_by.fullname}:  
 </div>  
 <br>  
 <% if @objects[:article] %>  

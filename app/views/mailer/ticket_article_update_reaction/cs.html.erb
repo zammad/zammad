@@ -3,7 +3,7 @@ Aktualizovaný článek tiketu (#{ticket.title})
 <div>Dobrý den, #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagoval(a) pomocí <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na zprávu od #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagoval(a) pomocí <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na zprávu od #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>

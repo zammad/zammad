@@ -3,7 +3,7 @@
 <div>Здраво #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> је реаговао(ла) са <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> на поруку од #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> је реаговао(ла) са <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> на поруку од #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>
