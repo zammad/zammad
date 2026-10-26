@@ -52,6 +52,25 @@ Selenium opens a real, visible browser window.
 SELENIUM_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb
 ```
 
+### Stale legacy assets
+
+System specs for the legacy (CoffeeScript) app run against the compiled
+bundle in `public/assets/`. A stale bundle does not fail loudly: a route added
+since the last build is missing, Capybara lands on a default page, and the
+examples fail with generic errors such as `Unable to find css "tr"`, which
+read like a broken selector or a code bug.
+
+Before debugging such a failure, check whether the bundle is older than the
+change (`ls -lt public/assets/application-*.js | head -1`, or grep it for a new
+symbol), and rebuild it:
+
+```bash
+RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rake assets:precompile
+```
+
+"Frontend files have changed" in the `CI_SKIP_ASSETS_PRECOMPILE` note above
+includes changes that arrived with a pull or rebase, not only your own.
+
 ### Ports of a test run
 
 The suite serves Capybara on `CAPYBARA_PORT` (default `3001`) and its websocket
