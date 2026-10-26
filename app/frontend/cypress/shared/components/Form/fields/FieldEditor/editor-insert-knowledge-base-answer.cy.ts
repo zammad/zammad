@@ -133,6 +133,8 @@ describe('inserting a knowledge base answer from outside the editor', () => {
 
     insertAnswer()
     cy.findByRole('textbox').should('have.text', 'Hello answer 1')
+    // The insert hands the focus back to the editor a frame later.
+    cy.findByRole('textbox').should('have.focus')
 
     insertAnswer(convertToGraphQLId('KnowledgeBase::Answer::Translation', 2))
     cy.findByRole('textbox').should('have.text', 'Hello answer 1answer 2')

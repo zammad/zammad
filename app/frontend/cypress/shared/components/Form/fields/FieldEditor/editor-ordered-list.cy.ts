@@ -8,7 +8,8 @@ const typeOrderedList = () => {
   cy.findByRole('textbox').click()
   cy.findByTestId('action-bar').findByLabelText('Add ordered list').click()
 
-  cy.findByRole('listitem').find('p').type('First{enter}Middle{enter}Third{enter}Last')
+  // The paragraph of a fresh list item can measure 0x0 in CI, the editor root always has a size.
+  cy.findByRole('textbox').type('First{enter}Middle{enter}Third{enter}Last')
 }
 
 // Turns the ordered list off for the item the cursor sits on, breaking the list in two.
