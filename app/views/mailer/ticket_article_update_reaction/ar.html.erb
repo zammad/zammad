@@ -3,7 +3,7 @@
 <div>مرحبًا #{recipient.firstname}،</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> تفاعل بالرمز <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> على رسالة من #{article.created_by.fullname}:
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> تفاعل بالرمز <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> على رسالة من #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>
