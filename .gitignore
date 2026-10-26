@@ -148,3 +148,6 @@ schema.graphql
 
 # fallow analysis cache (machine-local)
 /.fallow/
+
+# Playwright MCP output (snapshots, screenshots, console logs)
+/.playwright-mcp/
