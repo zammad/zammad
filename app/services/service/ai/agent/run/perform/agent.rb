@@ -41,7 +41,7 @@ class Service::AI::Agent::Run::Perform::Agent < SimpleDelegator
         tracks:                         {},
         additional_track_generate_data: {
           result_structure: execution_definition['result_structure'],
-          ai_agent_result:  ai_result_content,
+          ai_agent_result:  literal_ai_result_content,
         },
       )
 
@@ -97,5 +97,22 @@ class Service::AI::Agent::Run::Perform::Agent < SimpleDelegator
 
   def ai_result_content
     @ai_result_content ||= ai_result&.content
+  end
+
+  # The interpolated mapping values are rendered as notification templates later on,
+  #   so placeholders in the AI result have to stay literal text.
+  def literal_ai_result_content
+    case ai_result_content
+    when String
+      escape_template_placeholders(ai_result_content)
+    when Hash
+      ai_result_content.transform_values { |value| value.is_a?(String) ? escape_template_placeholders(value) : value }
+    else
+      ai_result_content
+    end
+  end
+
+  def escape_template_placeholders(value)
+    value.gsub('#{') { '\#{' }
   end
 end
