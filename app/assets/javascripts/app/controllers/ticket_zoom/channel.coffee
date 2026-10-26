@@ -14,8 +14,7 @@ class App.TicketZoomChannel
     return null if not lastWhatsappTimestamp or /^(closed|merged|removed)$/.test(@ticket.state.name)
 
     # Determine the end of the customer service window and set the appropriate alert text and type.
-    timeWindowEnd = new Date(lastWhatsappTimestamp * 1000)
-    timeWindowEnd.setHours(timeWindowEnd.getHours() + 24)
+    timeWindowEnd = new Date(lastWhatsappTimestamp * 1000 + 24 * 60 * 60 * 1000)
 
     # If time window is already closed, return an error alert.
     if timeWindowEnd <= new Date()
