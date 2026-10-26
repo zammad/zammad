@@ -1,0 +1,25 @@
+{
+  "ticket": {
+    "title": "Unsere Benachrichtigungen landen beim Kunden im Spam",
+    "articles": [
+      {
+        "sender": "Customer",
+        "body": "Hallo zusammen, seit letzter Woche beschweren sich mehrere unserer Kunden, dass die Antworten aus dem Helpdesk bei ihnen im Spam-Ordner landen. Betroffen sind vor allem Empfänger mit Gmail- und Outlook-Adressen. Vorher hat alles problemlos funktioniert. Wir haben in der Zwischenzeit nur unseren Mailserver gewechselt. Können Sie sich das bitte ansehen?"
+      },
+      {
+        "sender": "Agent",
+        "body": "Guten Tag, vielen Dank für Ihre Meldung. Wir haben die Kopfzeilen einer betroffenen E-Mail geprüft. Die Prüfung des SPF-Eintrags schlägt fehl, weil der neue Mailserver nicht im SPF-Eintrag Ihrer Domain hinterlegt ist. Die empfangenden Server stufen die Nachrichten deshalb als verdächtig ein. Bitte ergänzen Sie im DNS-Eintrag vom Typ TXT Ihrer Domain den neuen Mailserver mit einem include-Eintrag, so wie es Ihr E-Mail-Anbieter in seiner Dokumentation beschreibt. Danach dauert es in der Regel einige Stunden, bis die Änderung überall übernommen wurde."
+      },
+      {
+        "sender": "Customer",
+        "body": "Danke für die schnelle Hilfe! Wir haben den SPF-Eintrag wie beschrieben angepasst. Seit heute Morgen kommen alle Antworten wieder ganz normal im Posteingang an, auch bei Gmail und Outlook. Das Ticket kann geschlossen werden."
+      }
+    ]
+  },
+  "preserve": [
+    "SPF"
+  ],
+  "target_locales": [
+    "en-us"
+  ]
+}

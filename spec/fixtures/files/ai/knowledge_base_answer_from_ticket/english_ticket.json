@@ -1,0 +1,25 @@
+{
+  "ticket": {
+    "title": "Customers cannot send us attachments larger than 10 MB",
+    "articles": [
+      {
+        "sender": "Customer",
+        "body": "Hello, several of our customers told us that their emails with larger attachments never reach our support team. They receive a bounce message saying that the message is too large. As far as we can tell, it happens with every file above 10 MB, for example scanned contracts or longer log files. Smaller attachments arrive without any problems. Is there a limit we are not aware of?"
+      },
+      {
+        "sender": "Agent",
+        "body": "Hello, thank you for the details. The limit you are hitting is the maximum email size of your helpdesk, which is set to 10 MB by default. Emails above this size are rejected and the sender receives a bounce message. An administrator can raise the limit in the admin settings under Channels, Email, Settings, in the field Maximum email size. Please keep in mind that your mail server may enforce its own limit as well, so the new value should not be higher than the limit of your mail server."
+      },
+      {
+        "sender": "Customer",
+        "body": "Thanks a lot. Our administrator raised the maximum email size to 25 MB, which matches the limit of our mail server. We just received a test email with a 20 MB attachment and it arrived correctly. You can close this ticket."
+      }
+    ]
+  },
+  "preserve": [
+    "10 MB"
+  ],
+  "target_locales": [
+    "de-de"
+  ]
+}
