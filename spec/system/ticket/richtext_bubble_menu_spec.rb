@@ -430,6 +430,8 @@ RSpec.describe 'Richtext Bubble Menu', authenticated_as: :authenticate, type: :s
     end
 
     context 'when using the signature edit modal' do
+      let(:agent) { create(:admin) }
+
       before do
         visit 'channels/email'
 
@@ -441,8 +443,6 @@ RSpec.describe 'Richtext Bubble Menu', authenticated_as: :authenticate, type: :s
       end
 
       context 'when dismissing a link dialog' do
-        let(:agent) { create(:admin) }
-
         before do
           open_new_signature_modal
 
