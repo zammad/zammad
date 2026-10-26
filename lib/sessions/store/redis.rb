@@ -92,6 +92,10 @@ class Sessions::Store::Redis
     data
   end
 
+  def clear_queue(client_id)
+    @redis.del client_messages_key(client_id)
+  end
+
   def cleanup
     clear_spool
     clear_sessions

@@ -188,4 +188,49 @@ RSpec.describe Sessions::Store::File do
       end
     end
   end
+
+  describe '#clear_queue' do
+    let(:client_id) { 'abc123' }
+
+    before do
+      instance.create(client_id, { user: { 'id' => 1 }, meta: {} }.to_json)
+      instance.send_data(client_id, { event: 'test' })
+    end
+
+    after do
+      instance.destroy(client_id)
+    end
+
+    it 'removes the queued messages' do
+      instance.clear_queue(client_id)
+
+      expect(instance.queue(client_id)).to be_empty
+    end
+
+    it 'keeps the session' do
+      instance.clear_queue(client_id)
+
+      expect(instance.get(client_id)).to include(user: { 'id' => 1 })
+    end
+  end
+
+  describe '#queue' do
+    let(:client_id) { 'abc123' }
+
+    before do
+      instance.create(client_id, '{}')
+      instance.send_data(client_id, { event: 'test' })
+    end
+
+    after do
+      instance.destroy(client_id)
+    end
+
+    it 'skips a message removed while the queue is read' do
+      allow(File).to receive(:open).and_call_original
+      allow(File).to receive(:open).with(%r{/send-}, 'rb').and_raise(Errno::ENOENT)
+
+      expect(instance.queue(client_id)).to be_empty
+    end
+  end
 end

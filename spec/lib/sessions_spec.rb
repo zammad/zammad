@@ -85,6 +85,56 @@ RSpec.describe Sessions do
     it 'returns nil for invalid client_id' do
       expect(described_class.create('../malicious', {}, { type: 'ajax' })).to be_nil
     end
+
+    context 'when the session exists already' do
+      let(:client_id) { '190385' }
+      let(:message)   { { 'event' => 'ticket_overview_list', 'data' => {} } }
+
+      before do
+        described_class.create(client_id, { 'id' => 1 }, { type: 'websocket' })
+        described_class.queue(client_id)
+        described_class.send(client_id, message)
+      end
+
+      after do
+        described_class.destroy(client_id)
+      end
+
+      def events
+        described_class.queue(client_id).pluck('event')
+      end
+
+      it 'drops queued messages on logout' do
+        described_class.create(client_id, {}, { type: 'websocket' })
+
+        expect(events).to be_empty
+      end
+
+      it 'drops queued messages when another user logs in' do
+        described_class.create(client_id, { 'id' => 2 }, { type: 'websocket' })
+
+        expect(events).to eq(['ws:login'])
+      end
+
+      it 'drops queued messages when the session is switched to another user' do
+        described_class.create(client_id, { 'id' => 1, 'switched_from_user_id' => 2 }, { type: 'websocket' })
+
+        expect(events).to eq(['ws:login'])
+      end
+
+      it 'drops queued messages when a session without a stored user logs in' do
+        described_class.instance_variable_get(:@store).create(client_id, { user: nil, meta: {} }.to_json)
+        described_class.create(client_id, { 'id' => 1 }, { type: 'websocket' })
+
+        expect(events).to eq(['ws:login'])
+      end
+
+      it 'keeps queued messages when the same user logs in again' do
+        described_class.create(client_id, { 'id' => 1 }, { type: 'websocket' })
+
+        expect(events).to eq(%w[ticket_overview_list ws:login])
+      end
+    end
   end
 
   describe '.touch' do

@@ -30,7 +30,12 @@ returns
     }
     content = data.to_json
 
+    previous_user = @store.get(client_id)&.dig(:user) || {} if @store.session_exists?(client_id)
+
     @store.create(client_id, content)
+
+    # Messages still queued were produced for the previous identity and must not reach the new one.
+    @store.clear_queue(client_id) if previous_user && identity_changed?(previous_user, session)
 
     # send update to browser
     return if !session || session['id'].blank?
@@ -81,6 +86,11 @@ returns
   def self.valid_client_id?(client_id)
     client_id.present? && client_id.match?(%r{\A[a-f0-9-]+\z})
   end
+
+  def self.identity_changed?(previous_user, user)
+    %w[id switched_from_user_id].any? { |key| previous_user[key] != user&.dig(key) }
+  end
+  private_class_method :identity_changed?
 
 =begin
 

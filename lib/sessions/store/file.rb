@@ -128,6 +128,10 @@ class Sessions::Store::File
     data
   end
 
+  def clear_queue(client_id)
+    Dir.glob("#{safe_session_path(client_id)}/send*").each { FileUtils.rm_f it }
+  end
+
   def cleanup
     return true if !File.exist?(@path)
 
@@ -280,12 +284,17 @@ class Sessions::Store::File
   def queue_file_read(path, filename)
     location = "#{path}#{filename}"
     message = ''
-    File.open(location, 'rb') do |file|
-      file.flock(File::LOCK_EX)
-      message = file.read
-      file.flock(File::LOCK_UN)
+    begin
+      File.open(location, 'rb') do |file|
+        file.flock(File::LOCK_EX)
+        message = file.read
+        file.flock(File::LOCK_UN)
+      end
+      File.delete(location)
+    rescue Errno::ENOENT
+      # Cleared or destroyed by a concurrent re-login while the queue was read.
+      return
     end
-    File.delete(location)
     return if message.blank?
 
     begin

@@ -42,4 +42,29 @@ RSpec.describe Sessions::Store::Redis do
       end
     end
   end
+
+  describe '#clear_queue' do
+    let(:client_id) { 'test_client_id' }
+
+    before do
+      instance.create(client_id, { user: { 'id' => 1 }, meta: {} }.to_json)
+      instance.send_data(client_id, { event: 'test' })
+    end
+
+    after do
+      instance.destroy(client_id)
+    end
+
+    it 'removes the queued messages' do
+      instance.clear_queue(client_id)
+
+      expect(instance.queue(client_id)).to be_empty
+    end
+
+    it 'keeps the session' do
+      instance.clear_queue(client_id)
+
+      expect(instance.get(client_id)).to include(user: { 'id' => 1 })
+    end
+  end
 end
