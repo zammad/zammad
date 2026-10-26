@@ -16,8 +16,7 @@ const ticketChannelPlugin: TicketChannelPlugin = {
     if (!lastWhatsappTimestamp || /^(closed|merged|removed)$/.test(ticket.state.name)) return null
 
     // Determine the end of the customer service window and set the appropriate alert text and type.
-    const timeWindowEnd = new Date(lastWhatsappTimestamp * 1000)
-    timeWindowEnd.setHours(timeWindowEnd.getHours() + 24)
+    const timeWindowEnd = new Date(lastWhatsappTimestamp * 1000 + 24 * 60 * 60 * 1000)
 
     // If time window is already closed, show an error alert.
     if (timeWindowEnd <= new Date()) {
