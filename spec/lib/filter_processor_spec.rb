@@ -188,6 +188,18 @@ RSpec.describe FilterProcessor, type: :channel_filter do
           expect(described_class.new(filter, mail_hash).filter_matches?).to be false
         end
       end
+
+      context 'when the header is missing', :aggregate_failures do
+        let(:filter)    { create(:postmaster_filter, match: { 'subject' => { 'operator' => 'starts with one of', 'value' => ['Example A', 'Example B'] } }) }
+        let(:mail_hash) { Channel::EmailParser.new.parse("From: daffy.duck@acme.corp\nTo: batman@marvell.com\n\nI can haz anvil!") }
+
+        before { allow(Rails.logger).to receive(:error) }
+
+        it 'returns false without logging an error (#6486)' do
+          expect(described_class.new(filter, mail_hash).filter_matches?).to be false
+          expect(Rails.logger).not_to have_received(:error)
+        end
+      end
     end
 
     context "with operator 'ends with one of'" do
