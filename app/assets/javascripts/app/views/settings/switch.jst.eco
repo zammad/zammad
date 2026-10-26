@@ -17,5 +17,6 @@
         <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
       </div>
     </form>
+    <% end %>
   </div>
 </div>
