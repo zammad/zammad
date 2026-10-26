@@ -112,6 +112,90 @@ RSpec.describe 'Integration Check MK', type: :request do
         expect(ticket.articles.count).to eq(1)
       end
 
+      it 'does add note and close ticket with group' do
+        params = {
+          event_id: '123',
+          state:    'down',
+          host:     'some host',
+          service:  'some service',
+          group:    group.name,
+        }
+        post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
+        expect(response).to have_http_status(:ok)
+
+        ticket = Ticket.find(json_response['ticket_id'])
+        expect(ticket.group.name).to eq(group.name)
+
+        post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
+        expect(response).to have_http_status(:ok)
+        expect(json_response['result']).to eq('ticket already open, added note')
+
+        post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params.merge(state: 'up')
+        expect(response).to have_http_status(:ok)
+        expect(json_response['ticket_ids']).to include(ticket.id)
+
+        ticket.reload
+        expect(ticket.state.name).to eq('closed')
+        expect(ticket.articles.count).to eq(3)
+      end
+
+      shared_examples 'rejecting an unknown group' do
+        let(:params) do
+          {
+            event_id: '123',
+            state:    'down',
+            host:     'some host',
+            service:  'some service',
+            **group_params,
+          }
+        end
+
+        it 'does fail to create ticket', :aggregate_failures do
+          expect { post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params }.not_to change(Ticket, :count)
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(json_response['error']).to eq(error)
+        end
+
+        it 'does fail to add note to open ticket', :aggregate_failures do
+          post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params.except(*group_params.keys)
+          ticket = Ticket.find(json_response['ticket_id'])
+
+          expect { post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params }.not_to change { ticket.articles.count }
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(json_response['error']).to eq(error)
+        end
+
+        it 'does fail to close ticket', :aggregate_failures do
+          post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params.except(*group_params.keys)
+          ticket = Ticket.find(json_response['ticket_id'])
+
+          expect { post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params.merge(state: 'up') }.not_to change { ticket.articles.count }
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(json_response['error']).to eq(error)
+          expect(ticket.reload.state.name).to eq('new')
+        end
+
+        it 'does fail to ignore close without open ticket', :aggregate_failures do
+          post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params.merge(state: 'up')
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(json_response['error']).to eq(error)
+        end
+      end
+
+      context 'with unknown group name' do
+        let(:group_params) { { group: 'unknown group' } }
+        let(:error)        { "No lookup value found for 'group': \"unknown group\"" }
+
+        include_examples 'rejecting an unknown group'
+      end
+
+      context 'with unknown group id' do
+        let(:group_params) { { group_id: 999_999 } }
+        let(:error)        { "No value found for 'group' with id \"999999\"" }
+
+        include_examples 'rejecting an unknown group'
+      end
+
       it 'does create ticket with extra field', db_strategy: :reset do
         create(:object_manager_attribute_text, name: 'text1')
         ObjectManager::Attribute.migration_execute
