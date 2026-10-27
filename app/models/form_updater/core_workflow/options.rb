@@ -49,6 +49,9 @@ class FormUpdater::CoreWorkflow::Options < FormUpdater::CoreWorkflow::Backend
   end
 
   def options_hash(name, values, all_options, historical_options)
+    all_options = all_options.stringify_keys
+    historical_options = historical_options.to_h.stringify_keys
+
     values.each_with_object([]) do |value, options|
       next if value.empty?
 
