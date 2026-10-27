@@ -17,6 +17,7 @@ class App.ArticleViewItem extends App.ControllerObserver
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
+    'contentvisibilityautostatechange':         'setSeeMore'
     'click .article-meta-permanent':             'toggleMetaWithDelay'
     'click .textBubble':                         'toggleMetaWithDelay'
     'click .textBubble a':                       'stopPropagation'
@@ -135,11 +136,12 @@ class App.ArticleViewItem extends App.ControllerObserver
     else if article.content_type is 'text/html'
       body = article.body
 
-      domBody = $('<div>').html(body)
+      domBody = $(document.implementation.createHTMLDocument().createElement('div')).html(body)
       domBody.find('img')
         .addBack('img')
         .each((i, el) ->
           el = $(el)
+          el.attr('loading', 'lazy')
 
           if el[0].style.height
             el.css('max-height', el[0].style.height)
@@ -252,6 +254,10 @@ class App.ArticleViewItem extends App.ControllerObserver
   setSeeMore: =>
     return if @el.is(':hidden')
     return if @shown
+    return if !@textBubbleContent.length
+    # Measuring skipped content would force the browser to render it.
+    if @textBubbleContent[0].checkVisibility && 'oncontentvisibilityautostatechange' of @el[0]
+      return if !@textBubbleContent[0].checkVisibility(contentVisibilityAuto: true)
     @shown = true
 
     @textBubbleImages.each (i, el) =>
@@ -553,3 +559,7 @@ class App.ArticleViewItem extends App.ControllerObserver
 
   updateFormId: (newFormId) ->
     @articleActions?.form_id = newFormId
+
+# Safari does not load deferred images automatically when printing.
+$(window).on 'beforeprint', ->
+  $('.ticket-article-item img[loading=lazy]').attr('loading', 'eager')
