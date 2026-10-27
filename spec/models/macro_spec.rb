@@ -2,16 +2,27 @@
 
 require 'rails_helper'
 require 'models/concerns/has_audit_logs_examples'
-require 'models/concerns/has_collection_update_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/application_model/has_cache_examples'
 require 'models/concerns/has_optional_groups_examples'
 
 RSpec.describe Macro, type: :model do
   it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
-  it_behaves_like 'HasCollectionUpdate', collection_factory: :macro
   it_behaves_like 'HasXssSanitizedNote', model_factory: :macro
   it_behaves_like 'HasOptionalGroups', model_factory: :macro
+
+  describe 'collection update', performs_jobs: true do
+    let(:macro) { create(:macro) }
+
+    before do
+      macro
+      clear_jobs
+    end
+
+    it 'does not push the collection to clients' do
+      expect { macro.update!(name: 'New name') }.not_to have_enqueued_job(CollectionUpdateJob)
+    end
+  end
 
   describe 'validation' do
     it 'uses Validations::VerifyPerformRulesValidator' do
