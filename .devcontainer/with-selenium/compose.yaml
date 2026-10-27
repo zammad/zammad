@@ -2,26 +2,36 @@ name: "zammad-devcontainer"
 
 include: [../default/compose.yaml]
 
+# Both grids share the network namespace of the devcontainer, so they answer on
+# localhost:4444 and localhost:4445 there and VS Code forwards the ports like the
+# others. Everything else they listen on therefore has to differ as well: the
+# Firefox grid moves its X display, VNC and noVNC off the defaults (:99, 5900, 7900).
 services:
   selenium-chrome:
     image: selenium/standalone-chromium
+    network_mode: service:devcontainer
+    depends_on:
+      - devcontainer
     shm_size: 2g
     environment:
       SE_NODE_MAX_SESSIONS: '5'
       SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
       SE_VNC_NO_PASSWORD: 'true'
-    ports:
-      - 127.0.0.1:4444:4444
     restart: unless-stopped
 
   selenium-firefox:
     image: selenium/standalone-firefox
+    network_mode: service:devcontainer
+    depends_on:
+      - devcontainer
     shm_size: 2g
     environment:
       SE_NODE_MAX_SESSIONS: '5'
       SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
       SE_OPTS: '--port 4445'
       SE_VNC_NO_PASSWORD: 'true'
-    ports:
-      - 127.0.0.1:4445:4445
+      DISPLAY_NUM: '98'
+      DISPLAY: ':98.0'
+      SE_VNC_PORT: '5901'
+      SE_NO_VNC_PORT: '7901'
     restart: unless-stopped

@@ -16,8 +16,10 @@ services:
 
   mailserver:
     image: ghcr.io/docker-mailserver/docker-mailserver:latest
-    hostname: mail.test.local
-    domainname: test.local
+    # Shares the network namespace of the devcontainer, so the mail ports answer on localhost
+    # there and VS Code forwards them like the others. A container in this mode cannot set its
+    # own hostname, hence OVERRIDE_HOSTNAME below.
+    network_mode: service:devcontainer
     environment:
       SSL_TYPE: manual
       SSL_CERT_PATH: /tmp/docker-mailserver/certs/mail.test.local.crt
@@ -30,12 +32,10 @@ services:
       OVERRIDE_HOSTNAME: mail.test.local
       ACCOUNT_PROVISIONER: FILE
     depends_on:
+      devcontainer:
+        condition: service_started
       mailserver-init:
         condition: service_completed_successfully
-    ports:
-      - 127.0.0.1:1465:465 # SMTP (SSL)
-      - 127.0.0.1:1587:587 # SMTP (STARTTLS)
-      - 127.0.0.1:1993:993 # IMAP (SSL)
     volumes:
       - ./certs:/tmp/docker-mailserver/certs
       - mailserver-config:/tmp/docker-mailserver

@@ -5,10 +5,15 @@ Zammad LDAP integration testing.
 
 ## Ports
 
-| Service | Host port | Protocol |
-|---------|-----------|----------|
-| LDAP    | 1389      | plain / STARTTLS |
-| LDAPS   | 1636      | TLS |
+| Service | Port | Protocol |
+|---------|------|----------|
+| LDAP    | 389  | plain / STARTTLS |
+| LDAPS   | 636  | TLS |
+
+The directory shares the network namespace of the devcontainer, so `localhost:389` and
+`localhost:636` work inside the devcontainer. VS Code forwards both ports to your machine, but
+as they are privileged there, it usually assigns different local ports: look them up in the
+Ports panel of VS Code when connecting from your machine.
 
 ## Pre-seeded directory
 

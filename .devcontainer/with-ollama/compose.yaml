@@ -5,21 +5,27 @@ include: [../default/compose.yaml]
 services:
   ollama-init:
     image: alpine/curl
+    # Ollama has no network identity of its own anymore (see below), so the model pull
+    # reaches it on localhost from the same network namespace.
+    network_mode: service:devcontainer
     environment:
       OLLAMA_PULL_MODEL: llama3.2
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
         echo "Pulling model $${OLLAMA_PULL_MODEL}…"
-        curl --location 'http://ollama:11434/api/pull' --data "{ \"name\": \"$${OLLAMA_PULL_MODEL}\" }"
+        curl --location 'http://localhost:11434/api/pull' --data "{ \"name\": \"$${OLLAMA_PULL_MODEL}\" }"
     restart: "no"
     depends_on:
       - ollama
 
   ollama:
     image: docker.io/ollama/ollama:latest
-    ports:
-      - 127.0.0.1:11434:11434
+    # Shares the network namespace of the devcontainer, so the API answers on localhost:11434
+    # there and VS Code forwards the port like the others.
+    network_mode: service:devcontainer
+    depends_on:
+      - devcontainer
     volumes:
       - ollama-data:/root/.ollama
     restart: unless-stopped

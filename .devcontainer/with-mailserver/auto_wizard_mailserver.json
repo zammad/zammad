@@ -38,7 +38,7 @@
         "inbound": {
           "adapter": "imap",
           "options": {
-            "host": "mail.test.local",
+            "host": "localhost",
             "port": "993",
             "ssl": "ssl",
             "user": "zammad@test.local",
@@ -49,7 +49,7 @@
         "outbound": {
           "adapter": "smtp",
           "options": {
-            "host": "mail.test.local",
+            "host": "localhost",
             "port": "465",
             "user": "zammad@test.local",
             "password": "zammad",

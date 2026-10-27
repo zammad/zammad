@@ -23,7 +23,7 @@ bundle exec bootsnap precompile --gemfile app/ lib/
 
 echo "== Configure Elasticsearch URL =="
 
-bundle exec rails r "Setting.set('es_url', 'http://elasticsearch:9200')"
+bundle exec rails r "Setting.set('es_url', 'http://localhost:9200')"
 
 echo "== Run auto_wizard setup =="
 

@@ -45,11 +45,37 @@
     "ZAMMAD_MAIL_TO_FILE": "1"
   },
   "forwardPorts": [
+    465,
+    587,
+    993,
     3000,
-    3001,
     3036,
-    6042
+    6042,
+    9200
   ],
+  "portsAttributes": {
+    "465": {
+      "label": "Mailserver SMTP (SSL)"
+    },
+    "587": {
+      "label": "Mailserver SMTP (STARTTLS)"
+    },
+    "993": {
+      "label": "Mailserver IMAP (SSL)"
+    },
+    "3000": {
+      "label": "Puma web server"
+    },
+    "3036": {
+      "label": "Vite dev server"
+    },
+    "6042": {
+      "label": "WebSocket legacy server"
+    },
+    "9200": {
+      "label": "Elasticsearch HTTP API"
+    }
+  },
   "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-mailserver/scripts/post_create.sh",
   "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
 }

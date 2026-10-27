@@ -40,19 +40,42 @@
   ],
   "containerEnv": {
     "VITE_TEST_MODE": "1", // needed for test flag support
-    "SELENIUM_REMOTE_URL": "http://selenium-chrome:4444/wd/hub",
+    // The grids share the network namespace of the devcontainer (see compose.yaml), so the
+    // browser reaches the Capybara server on localhost, the default CAPYBARA_HOSTNAME.
+    "SELENIUM_REMOTE_URL": "http://localhost:4444/wd/hub",
     "SELENIUM_BROWSER": "chrome",
-    // "SELENIUM_REMOTE_URL": "http://selenium-firefox:4445/wd/hub",
+    // "SELENIUM_REMOTE_URL": "http://localhost:4445/wd/hub",
     // "SELENIUM_BROWSER": "firefox",
-    "SELENIUM_BROWSER_HEADLESS": "true",
-    "CAPYBARA_HOSTNAME": "devcontainer"
+    "SELENIUM_BROWSER_HEADLESS": "true"
   },
   "forwardPorts": [
     3000,
-    3001,
     3036,
-    6042
+    4444,
+    4445,
+    6042,
+    9200
   ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Puma web server"
+    },
+    "3036": {
+      "label": "Vite dev server"
+    },
+    "4444": {
+      "label": "Selenium Chrome standalone server"
+    },
+    "4445": {
+      "label": "Selenium Firefox standalone server"
+    },
+    "6042": {
+      "label": "WebSocket legacy server"
+    },
+    "9200": {
+      "label": "Elasticsearch HTTP API"
+    }
+  },
   "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-selenium/scripts/post_create.sh",
   "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
 }

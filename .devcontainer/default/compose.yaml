@@ -15,7 +15,7 @@ services:
       RAILS_SERVE_STATIC_FILES: 'true'
       TZ: 'Europe/London'
       Z_LOCALES: en-us:en-gb:de-de
-      ES_URL: http://elasticsearch:9200
+      ES_URL: http://localhost:9200
       ES_INDEX: estest.local_zammad
       VITE_RUBY_HOST: '127.0.0.1'
       BETA_UI_FEEDBACK_API_HOST: 'http://localhost:3000'
@@ -47,10 +47,12 @@ services:
       # - http.max_content_length=100mb
       # - indexing_pressure.memory.limit=10%
       # - indexing_pressure.memory.coordinating.limit=10%
+    # Shares the network namespace of the devcontainer, so Elasticsearch answers on
+    # localhost:9200 there and VS Code forwards the port like the others.
+    network_mode: service:devcontainer
+    depends_on:
+      - devcontainer
     restart: unless-stopped
-    ports:
-      # Expose the ES service for direct access if needed, but avoid conflicts with host services.
-      - 127.0.0.1:19200:9200
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
 

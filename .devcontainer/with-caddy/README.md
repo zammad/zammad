@@ -11,7 +11,7 @@ phone or to receive webhooks.
 |---------------------|------|---------------------------------------------------------------|
 | Caddy reverse proxy | 8080 | Rails, Vite dev server and legacy websocket behind one origin |
 
-The ports of the default devcontainer (3000, 3036, 6042) stay available as well.
+The ports of the default devcontainer (3000, 3036, 6042, 9200) stay available as well.
 
 Caddy shares the network namespace of the devcontainer, so `localhost:8080` works inside the
 devcontainer and, through the port forwarding of VS Code, on your machine.

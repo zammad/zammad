@@ -5,6 +5,11 @@ include: [../default/compose.yaml]
 services:
   ldap:
     build: ./ldap
+    # Shares the network namespace of the devcontainer, so the directory answers on
+    # localhost:389 and localhost:636 there and VS Code forwards the ports like the others.
+    network_mode: service:devcontainer
+    depends_on:
+      - devcontainer
     environment:
       LDAP_BASE_DN: dc=foo,dc=example,dc=com
       LDAP_ADMIN_DN: cn=admin,dc=foo,dc=example,dc=com
@@ -12,7 +17,4 @@ services:
       LDAP_DISALLOW_BIND_ANON: "false"
     volumes:
       - ./ldap/certs:/certs
-    ports:
-      - 127.0.0.1:1389:389 # LDAP (no TLS/STARTTLS)
-      - 127.0.0.1:1636:636 # LDAP (TLS)
     restart: unless-stopped

@@ -44,14 +44,26 @@
   },
   "forwardPorts": [
     3000,
-    3001,
     3036,
     6042,
-    8080
+    8080,
+    9200
   ],
   "portsAttributes": {
+    "3000": {
+      "label": "Puma web server"
+    },
+    "3036": {
+      "label": "Vite dev server"
+    },
+    "6042": {
+      "label": "WebSocket legacy server"
+    },
     "8080": {
       "label": "Caddy reverse proxy"
+    },
+    "9200": {
+      "label": "Elasticsearch HTTP API"
     }
   },
   "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-caddy/scripts/post_create.sh",
