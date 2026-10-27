@@ -12,7 +12,7 @@ RSpec.describe 'Manage > Tags', type: :system do
   # https://github.com/zammad/zammad/issues/4277
   it 'removes a tag after adding a tag without double modal' do
     within :active_content do
-      find('input[name="name"]').fill_in with: tag_name
+      find('input[name="name"] ~ input.token-input').fill_in with: tag_name
       click '.js-submit'
     end
 
@@ -29,7 +29,7 @@ RSpec.describe 'Manage > Tags', type: :system do
 
   it 'adds multiple tags at once (#5795)' do
     within :active_content do
-      find('input[name="name"]').fill_in with: 'tag1, tag2, tag3'
+      find('input[name="name"] ~ input.token-input').fill_in with: 'tag1, tag2, tag3'
       click '.js-submit'
     end
 
