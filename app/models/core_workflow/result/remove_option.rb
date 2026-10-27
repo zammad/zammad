@@ -9,12 +9,12 @@ class CoreWorkflow::Result::RemoveOption < CoreWorkflow::Result::BaseOption
   end
 
   def update_restrict_values
-    @result_object.result[:restrict_values][field] ||= Array(@result_object.payload['params'][field])
-    @result_object.result[:restrict_values][field] -= Array(config_value)
+    @result_object.result[:restrict_values][field] ||= Array.wrap(@result_object.payload['params'][field])
+    @result_object.result[:restrict_values][field] -= Array.wrap(config_value)
   end
 
   def config_value
-    result = Array(@perform_config['remove_option'])
+    result = Array.wrap(@perform_config['remove_option'])
     result -= saved_value
     result
   end

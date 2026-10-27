@@ -759,4 +759,27 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
       end
     end
   end
+
+  describe '.perform - Option actions on a field missing from the screen' do
+    let(:result) { CoreWorkflow.perform(payload: payload, user: ticket_customer) }
+
+    {
+      'auto_select' => [true,   []],
+      'select'      => ['3',    []],
+      'add_option'  => [['3'],  ['3']],
+    }.each do |operator, (value, expected_values)|
+      it "does not fail for #{operator}" do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 'ticket.owner_id': {
+                   'operator' => operator,
+                   operator   => value
+                 },
+               })
+
+        expect(result[:restrict_values]['owner_id'].to_a).to eq(expected_values)
+      end
+    end
+  end
 end

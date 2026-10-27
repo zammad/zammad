@@ -3,7 +3,7 @@
 class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
   def run
     @result_object.result[:restrict_values][field] = if restriction_set?
-                                                       restrict_values
+                                                       filtered_restrict_values
                                                      else
                                                        config_value
                                                      end
@@ -14,7 +14,7 @@ class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
 
   def config_value
     @config_value ||= begin
-      result = Array(@perform_config['set_fixed_to'])
+      result = Array.wrap(@perform_config['set_fixed_to'])
       result |= saved_value
       result
     end
@@ -24,7 +24,7 @@ class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
     @result_object.result[:restrict_values][field]
   end
 
-  def restrict_values
-    @result_object.result[:restrict_values][field].reject { |v| config_value.exclude?(v) }
+  def filtered_restrict_values
+    restrict_values.reject { |v| config_value.exclude?(v) }
   end
 end

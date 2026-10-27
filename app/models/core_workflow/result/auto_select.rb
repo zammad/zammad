@@ -13,7 +13,7 @@ class CoreWorkflow::Result::AutoSelect < CoreWorkflow::Result::Backend
   end
 
   def last_value
-    result = @result_object.result[:restrict_values][field].last
+    result = restrict_values.last
     return [result] if multiple?
 
     result
@@ -24,6 +24,6 @@ class CoreWorkflow::Result::AutoSelect < CoreWorkflow::Result::Backend
   end
 
   def too_many_values?
-    @result_object.result[:restrict_values][field].count { |v| v != '' } != 1
+    restrict_values.count { |v| v != '' } != 1
   end
 end
