@@ -32,7 +32,9 @@ class Controllers::SettingsControllerPolicy < Controllers::ApplicationController
     Pundit.authorize(user, setting, query)
     true
   rescue Pundit::NotAuthorizedError
-    not_authorized("required #{setting.preferences[:permission].inspect}")
+    return not_authorized('setting is protected') if setting.protected?
+
+    not_authorized("required #{setting.required_permission.inspect}")
   end
 
   def updateable?

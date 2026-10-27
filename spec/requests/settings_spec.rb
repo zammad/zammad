@@ -393,6 +393,7 @@ RSpec.describe 'Settings', type: :request do
       expect { put "/api/v1/settings/#{setting.id}", params: params, as: :json }
         .not_to change { setting.reload.state_current }
       expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Not authorized (setting is protected)!')
     end
 
     context 'when the SSO setting is updated', authenticated_as: :admin do
@@ -513,6 +514,89 @@ RSpec.describe 'Settings', type: :request do
           .to change { product_logo.reload.state_current }
         expect(response).to have_http_status(:ok)
         expect(json_response['result']).to eq('ok')
+      end
+    end
+  end
+
+  describe 'access by admin permission' do
+    let(:security_admin) do
+      role = create(:role)
+      role.permission_grant('admin.security')
+
+      create(:user, roles: [role])
+    end
+    let(:developer_mode) { Setting.find_by(name: 'developer_mode') }
+    let(:system_bcc)     { Setting.find_by(name: 'system_bcc') }
+
+    context 'with a partial admin permission', authenticated_as: :security_admin do
+      it 'lists only the settings of that permission', :aggregate_failures do
+        get '/api/v1/settings', as: :json
+
+        names = json_response.pluck('name')
+        expect(names).to include('session_timeout')
+        expect(names).not_to include('developer_mode', 'es_url', 'system_bcc')
+      end
+
+      it 'can update a setting of that permission', :aggregate_failures do
+        setting = Setting.find_by(name: 'session_timeout')
+        value   = setting.state_current['value'].merge('default' => '3600')
+
+        put "/api/v1/settings/#{setting.id}", params: { state_current: { value: } }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(setting.reload.state_current['value']['default']).to eq('3600')
+      end
+
+      it 'can not show a setting reserved to full admins' do
+        get "/api/v1/settings/#{system_bcc.id}", as: :json
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'can not update a setting reserved to full admins', :aggregate_failures do
+        expect { put "/api/v1/settings/#{system_bcc.id}", params: { state_current: { value: 'archive@example.com' } }, as: :json }
+          .not_to change { system_bcc.reload.state_current }
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (required ["admin"])!')
+      end
+
+      it 'can not reset a setting reserved to full admins', :aggregate_failures do
+        system_bcc.update!(state_current: { value: 'archive@example.com' })
+
+        expect { post "/api/v1/settings/reset/#{system_bcc.id}", as: :json }
+          .not_to change { system_bcc.reload.state_current }
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'names full admin as required for a setting without a permission', :aggregate_failures do
+        system_bcc.update!(preferences: {})
+
+        get "/api/v1/settings/#{system_bcc.id}", as: :json
+
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (required ["admin"])!')
+      end
+
+      it 'can not update the developer mode', :aggregate_failures do
+        expect { put "/api/v1/settings/#{developer_mode.id}", params: { state_current: { value: true } }, as: :json }
+          .not_to change { developer_mode.reload.state_current }
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response['error']).to eq('Not authorized (required ["admin"])!')
+      end
+    end
+
+    context 'with full admin permission', authenticated_as: :admin do
+      it 'lists the settings reserved to full admins' do
+        get '/api/v1/settings', as: :json
+
+        expect(json_response.pluck('name')).to include('developer_mode', 'es_url', 'system_bcc')
+      end
+
+      it 'can update a setting reserved to full admins', :aggregate_failures do
+        put "/api/v1/settings/#{system_bcc.id}", params: { state_current: { value: 'archive@example.com' } }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(system_bcc.reload.state_current['value']).to eq('archive@example.com')
       end
     end
   end

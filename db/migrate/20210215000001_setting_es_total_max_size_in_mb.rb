@@ -8,7 +8,10 @@ class SettingEsTotalMaxSizeInMb < ActiveRecord::Migration[5.2]
       area:        'SearchIndex::Elasticsearch',
       description: 'Define max. payload size for Elasticsearch.',
       state:       300,
-      preferences: { online_service_disable: true },
+      preferences: {
+        online_service_disable: true,
+        permission:             ['admin'],
+      },
       frontend:    false
     )
   end

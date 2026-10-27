@@ -216,6 +216,34 @@ requires `admin.organization`, and agent tokens receive `403 Forbidden`.
 
 ## 7.2
 
+### The settings API limits delegated admins to the settings their permissions cover
+
+**Who is affected?** Roles and API tokens holding an admin sub-permission such as `admin.security`
+without `admin` that read or write settings through `/api/v1/settings`, and developers of add-ons
+that ship settings without a permission.
+
+A setting without a `permission` in its preferences could be read and changed through the settings
+API by any user or token holding an admin sub-permission. Such a setting now requires `admin`. Every
+setting shipped with Zammad now declares a permission: the ones that admin pages change for
+delegated admins carry that page's permission, e.g. `session_timeout` requires `admin.security` and
+`language_detection_article` requires `admin.ticket`.
+
+79 settings now require `admin`, among them the Elasticsearch connection and index settings
+(`es_url`, `es_user`, `es_password`, `es_index`, `es_ssl_verify`, …), `import_mode` and the
+importers' endpoints and credentials (`import_*`), `developer_mode`, `system_init_done`,
+`system_bcc`, the WebSocket settings, the postmaster filter and transaction backend registrations,
+and state such as `app_version`. The full list is in the `RestrictAccessToInternalSettings`
+migration. For a role or token holding sub-permissions only, they are left out of
+`GET /api/v1/settings` and `GET /api/v1/settings/area/:area`, and `GET` and
+`PUT /api/v1/settings/:id` and `POST /api/v1/settings/reset/:id` answer `403 Forbidden` for them.
+Full admins keep access to all of them.
+
+⚠️ Give the `admin` permission to roles and API tokens that read or change any of these settings.
+Declare a `permission` in the preferences of settings that an add-on's admin pages change, e.g.
+`preferences: { permission: ['admin.my_addon'] }`.
+
+**Related advisory:** [GHSA-qqr9-58h5-hxc4](https://github.com/zammad/zammad/security/advisories/GHSA-qqr9-58h5-hxc4)
+
 ### `PUT /api/v1/online_notifications/{id}` only updates `seen`
 
 **Who is affected?** Integrations that write any attribute other than `seen` through

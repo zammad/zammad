@@ -394,6 +394,7 @@ RSpec.describe 'Manage > Integration > Content translation', authenticated_as: :
         find('.nav-tabs a[href="#ticket-articles"]').click
 
         expect(page).to have_css('.js-languageDetectionAlert', text: language_detection_warning)
+        expect(page).to have_css('.js-languageDetectionAlert a[href="#settings/ticket"]')
       end
     end
   end
@@ -412,6 +413,38 @@ RSpec.describe 'Manage > Integration > Content translation', authenticated_as: :
     end
 
     it 'shows no warning' do
+      within :active_content do
+        expect(page).to have_css('.js-ticketArticleSetting')
+        expect(page).to have_no_text(language_detection_warning)
+      end
+    end
+  end
+
+  context 'with a delegated administrator without the ticket settings permission', authenticated_as: :delegated_admin do
+    let(:role)            { create(:role, permission_names: %w[admin.integration]) }
+    let(:delegated_admin) { create(:agent, roles: [role]) }
+
+    # Following the link would only bounce off permissionCheckRedirect, so it is not offered.
+    it 'points to an administrator instead of linking the ticket settings' do
+      open_ticket_articles_tab
+
+      within :active_content do
+        expect(page).to have_css('.js-languageDetectionAlert', text: 'ask an administrator with access to the ticket settings')
+        expect(page).to have_no_css('.js-languageDetectionAlert a')
+      end
+    end
+
+    # The setting's own push only reaches admin.ticket holders, so only config_update can redraw the warning.
+    it 'follows a language detection change made elsewhere' do
+      open_ticket_articles_tab
+
+      within :active_content do
+        expect(page).to have_css('.js-languageDetectionAlert', text: language_detection_warning)
+      end
+
+      wait_for_session_login
+      Setting.set('language_detection_article', 'cld')
+
       within :active_content do
         expect(page).to have_css('.js-ticketArticleSetting')
         expect(page).to have_no_text(language_detection_warning)

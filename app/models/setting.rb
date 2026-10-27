@@ -136,6 +136,16 @@ reload config settings
     SENSITIVE_SETTING_NAMES.any? { |word| name.include?(word) }
   end
 
+  def protected?
+    preferences[:protected].present?
+  end
+
+  # Shared by SettingPolicy and its denial message, so the two cannot name different permissions.
+  # Only a missing permission falls back to admin: an empty list still grants nobody.
+  def required_permission
+    preferences[:permission] || ['admin']
+  end
+
   private
 
   # load values and cache them

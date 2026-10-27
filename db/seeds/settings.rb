@@ -20,7 +20,10 @@ Setting.create_if_not_exists(
   description: __('Defines if application is in init mode.'),
   options:     {},
   state:       false,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -30,7 +33,10 @@ Setting.create_if_not_exists(
   description: __('Only used internally to propagate current web app version to clients.'),
   options:     {},
   state:       '',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -77,7 +83,10 @@ Setting.create_if_not_exists(
   description: __('Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery).'),
   options:     {},
   state:       Rails.env.development?,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -87,7 +96,10 @@ Setting.create_if_not_exists(
   description: __('Defines if application is used as online service.'),
   options:     {},
   state:       false,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -200,7 +212,10 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
-  preferences: { authentication: true },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -353,6 +368,9 @@ Setting.create_if_not_exists(
   area:        'System::WebSocket',
   description: __('Defines how to reach WebSocket server. "websocket" is default on production, "websocketPort" is for CI.'),
   state:       Rails.env.production? ? 'websocket' : 'websocketPort',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -371,7 +389,10 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '6042',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -1217,7 +1238,8 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: {
-    prio: 30,
+    prio:       30,
+    permission: ['admin.security'],
   },
   state:       {
     'default'         => 4.weeks.seconds.to_s,
@@ -3297,6 +3319,9 @@ Setting.create_if_not_exists(
   area:        'Form::API',
   description: __('Defines which parameters are allowed to be submitted via the form API.'),
   state:       [],
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -3628,7 +3653,10 @@ Setting.create_if_not_exists(
   description: __('To archive all outgoing emails from Zammad to external, you can store a BCC email address here.'),
   options:     {},
   state:       '',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 
@@ -3761,6 +3789,9 @@ Setting.create_if_not_exists(
   description: __('Defines the default screen.'),
   options:     {},
   state:       '#dashboard',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    true
 )
 
@@ -3770,7 +3801,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Defines endpoint of Elasticsearch.'),
   state:       '',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3779,7 +3813,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Defines HTTP basic auth user of Elasticsearch.'),
   state:       '',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3788,7 +3825,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Defines HTTP basic auth password of Elasticsearch.'),
   state:       '',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3797,7 +3837,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Defines Elasticsearch index name.'),
   state:       'zammad',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3806,7 +3849,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Defines Elasticsearch SSL verification.'),
   state:       true,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3815,7 +3861,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Defines attachment extensions which will be ignored by Elasticsearch.'),
   state:       [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ],
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3824,7 +3873,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Define max. attachment size for Elasticsearch.'),
   state:       10,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3833,7 +3885,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Define max. payload size for Elasticsearch.'),
   state:       300,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3842,7 +3897,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Define pipeline name for Elasticsearch.'),
   state:       '',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3851,7 +3909,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Define model configuration for Elasticsearch.'),
   state:       {},
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3860,7 +3921,10 @@ Setting.create_if_not_exists(
   area:        'SearchIndex::Elasticsearch',
   description: __('Define if asciifolding analyzer should be used in Elasticsearch.'),
   state:       true,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 
@@ -3884,6 +3948,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       false,
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -3893,6 +3960,9 @@ Setting.create_if_not_exists(
   description: __('Set backend which is being used for import.'),
   options:     {},
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -3915,6 +3985,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       false,
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -3934,6 +4007,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       'http://otrs_host/otrs',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3952,6 +4028,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -3971,6 +4050,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -3990,6 +4072,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -4009,6 +4094,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       'https://yours.zendesk.com/api/v2',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4027,6 +4115,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -4046,6 +4137,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -4065,6 +4159,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       'https://yours.freshdesk.com/api/v2',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4083,6 +4180,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -4102,6 +4202,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       'https://yours.kayako.com/api/v1',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4120,6 +4223,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4138,6 +4244,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       '',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -4185,6 +4294,9 @@ Setting.create_if_not_exists(
         remove:       :debug,
       }
     }
+  },
+  preferences: {
+    permission: ['admin'],
   },
   frontend:    false,
 )
@@ -4355,6 +4467,7 @@ Setting.create_if_not_exists(
   },
   preferences: {
     authentication: true,
+    permission:     ['admin'],
   },
   frontend:    true
 )
@@ -4366,6 +4479,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to remove X-Zammad headers from untrustworthy sources.'),
   options:     {},
   state:       'Channel::Filter::Trusted',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4375,6 +4491,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.'),
   options:     {},
   state:       'Channel::Filter::AutoResponseCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4384,6 +4503,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify follow-ups (based on admin settings).'),
   options:     {},
   state:       'Channel::Filter::FollowUpCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4393,6 +4515,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify follow-up ticket for merged tickets.'),
   options:     {},
   state:       'Channel::Filter::FollowUpMerged',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4402,6 +4527,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to set the owner (based on group follow up assignment).'),
   options:     {},
   state:       'Channel::Filter::FollowUpAssignment',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4411,6 +4539,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to set the sender/from of emails based on reply-to header.'),
   options:     {},
   state:       'Channel::Filter::ReplyToBasedSender',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4420,6 +4551,9 @@ Setting.create_if_not_exists(
   description: __('Define postmaster filter to import archive mailboxes.'),
   options:     {},
   state:       'Channel::Filter::ImportArchive',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4429,6 +4563,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender.'),
   options:     {},
   state:       'Channel::Filter::SenderIsSystemAddress',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4438,6 +4575,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to check if the email is a self-created notification email, then ignore it to prevent email loops.'),
   options:     {},
   state:       'Channel::Filter::OwnNotificationLoopDetection',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4447,6 +4587,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify session user.'),
   options:     {},
   state:       'Channel::Filter::IdentifySessionUser',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4456,6 +4599,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify sender user.'),
   options:     {},
   state:       'Channel::Filter::IdentifySender',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4465,6 +4611,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to handle secure mailing.'),
   options:     {},
   state:       'Channel::Filter::SecureMailing',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4474,6 +4623,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to remove references to local attachments from incoming emails.'),
   options:     {},
   state:       'Channel::Filter::AttachmentReferenceRemove',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4483,6 +4635,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state.'),
   options:     {},
   state:       'Channel::Filter::OutOfOfficeCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4492,6 +4647,9 @@ Setting.create_if_not_exists(
   description: __('Define postmaster filter to check if follow-ups get created (based on admin settings).'),
   options:     {},
   state:       'Channel::Filter::FollowUpPossibleCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4501,6 +4659,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify postmaster bounces; and handles them as follow-up of the original tickets.'),
   options:     {},
   state:       'Channel::Filter::BounceFollowUpCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4510,6 +4671,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify postmaster bounces; and disables sending notification if delivery fails permanently.'),
   options:     {},
   state:       'Channel::Filter::BounceDeliveryPermanentFailed',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4519,6 +4683,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify postmaster bounces; and reopens tickets if delivery fails permanently.'),
   options:     {},
   state:       'Channel::Filter::BounceDeliveryTemporaryFailed',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4528,6 +4695,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter for filters managed via admin interface.'),
   options:     {},
   state:       'Channel::Filter::Database',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4537,6 +4707,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to manage Icinga (http://www.icinga.org) emails.'),
   options:     {},
   state:       'Channel::Filter::Icinga',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4546,6 +4719,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to manage Nagios (http://www.nagios.org) emails.'),
   options:     {},
   state:       'Channel::Filter::Nagios',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4555,6 +4731,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/check_mk.html) emails.'),
   options:     {},
   state:       'Channel::Filter::CheckMk',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4564,6 +4743,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails.'),
   options:     {},
   state:       'Channel::Filter::Monit',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4573,6 +4755,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify ServiceNow mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4582,6 +4767,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify ServiceNow mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4591,6 +4779,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify Jira mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::JiraCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4600,6 +4791,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter to identify Jira mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::JiraCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -4609,6 +4803,9 @@ Setting.create_if_not_exists(
   description: __('Defines postmaster filter which sets the articles visibility to internal if it is a rely to an internal article or the last outgoing email is internal.'),
   options:     {},
   state:       'Channel::Filter::InternalArticleCheck',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create!(
@@ -4618,6 +4815,9 @@ Setting.create!(
   description: __('Defines postmaster filter to identify ticket group.'),
   options:     {},
   state:       'Channel::Filter::IdentifyGroup',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -5261,6 +5461,9 @@ Setting.create_if_not_exists(
   description: __('Defines the transaction backend to execute triggers.'),
   options:     {},
   state:       'Transaction::Trigger',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -5270,6 +5473,9 @@ Setting.create_if_not_exists(
   description: __('Defines the transaction backend to send agent notifications.'),
   options:     {},
   state:       'Transaction::Notification',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -5279,6 +5485,9 @@ Setting.create_if_not_exists(
   description: __('Defines the transaction backend to detect customer signatures in emails.'),
   options:     {},
   state:       'Transaction::SignatureDetection',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -5548,6 +5757,9 @@ Setting.create_if_not_exists(
   description: __('Defines the transaction backend which will enrich customer and organization information from Clearbit (http://www.clearbit.com).'),
   options:     {},
   state:       'Transaction::ClearbitEnrichment',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -5557,6 +5769,9 @@ Setting.create_if_not_exists(
   description: __('Defines the transaction backend which detects caller IDs in objects and stores them for CTI lookups.'),
   options:     {},
   state:       'Transaction::CtiCallerIdDetection',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -5566,6 +5781,9 @@ Setting.create_if_not_exists(
   description: __('Defines the transaction backend which executes time based triggers.'),
   options:     {},
   state:       'Transaction::TimeBasedTrigger',
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -5576,7 +5794,10 @@ Setting.create_if_not_exists(
   description: __('Defines the agent limit.'),
   options:     {},
   state:       false,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 
@@ -5599,7 +5820,9 @@ Setting.create_if_not_exists(
   description: __('Defines processing timeout for the html sanitizer.'),
   options:     {},
   state:       20,
-  preferences: {},
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false
 )
 
@@ -5700,7 +5923,10 @@ Setting.create_if_not_exists(
   description: __('Support of multilingual Knowledge Base.'),
   options:     {},
   state:       true,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    true
 )
 
@@ -5729,7 +5955,8 @@ Setting.create_if_not_exists(
     prio:           1,
     trigger:        ['menu:render'],
     authentication: true,
-    permission:     [],
+    permission:     ['admin'],
+    protected:      true,
   },
   frontend:    true
 )
@@ -5979,7 +6206,10 @@ Setting.create_if_not_exists(
   description: __('Defines if the PGP recipient alias configuration is enabled or not.'),
   options:     {},
   state:       false,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    true
 )
 
@@ -6457,7 +6687,10 @@ Setting.create_if_not_exists(
   description: __('Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy.'),
   options:     {},
   state:       !Rails.env.test?,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin'],
+  },
   frontend:    false
 )
 
@@ -6467,6 +6700,9 @@ Setting.create_if_not_exists(
   area:        'UI::Desktop',
   description: __('Allow users to switch automatically to the new desktop UI.'),
   state:       false,
+  preferences: {
+    permission: ['admin.beta_ui'],
+  },
   frontend:    true,
 )
 
@@ -6476,6 +6712,9 @@ Setting.create_if_not_exists(
   area:        'UI::Desktop',
   description: __('Allow admins to manage availability and access to the desktop BETA UI switch.'),
   state:       false,
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    true,
 )
 
@@ -6485,6 +6724,9 @@ Setting.create_if_not_exists(
   area:        'UI::Desktop',
   description: __('Defines which roles are allowed to access the desktop BETA UI switch.'),
   state:       [],
+  preferences: {
+    permission: ['admin.beta_ui'],
+  },
   frontend:    true,
 )
 
@@ -6690,6 +6932,7 @@ Setting.create_if_not_exists(
   preferences: {
     authentication: true,
     validations:    ['Setting::Validation::VectorDB'],
+    permission:     ['admin.ai_knowledge_base'],
   },
   frontend:    true,
 )
@@ -6700,6 +6943,9 @@ Setting.create_if_not_exists(
   area:        'VectorDB',
   description: __('Internal record of the embedding model and vector size the knowledge base index was last built with. Used to detect a stale index by comparison, without probing Elasticsearch.'),
   state:       {},
+  preferences: {
+    permission: ['admin'],
+  },
   frontend:    false,
 )
 
@@ -6709,6 +6955,9 @@ Setting.create_if_not_exists(
   area:        'VectorDB::KnowledgeBase',
   description: __('Defines which knowledge base categories are excluded from the vector database. Sub-categories of an excluded category are excluded as well. Note that the vector database has to be rebuilt after removing a category from this list, so that its answers get indexed.'),
   state:       [],
+  preferences: {
+    permission: ['admin.ai_knowledge_base'],
+  },
   frontend:    false,
 )
 
@@ -6732,6 +6981,9 @@ Setting.create_if_not_exists(
     ],
   },
   state:       'sentence',
+  preferences: {
+    permission: ['admin.ai_knowledge_base'],
+  },
   frontend:    false,
 )
 
