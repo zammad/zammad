@@ -20,7 +20,7 @@ class CoreWorkflow::Result::Select < CoreWorkflow::Result::Backend
   end
 
   def select_value
-    @select_value ||= Array(@perform_config['select']).reject { |v| @result_object.result[:restrict_values][field].exclude?(v) }
+    @select_value ||= Array.wrap(@perform_config['select']).reject { |v| restrict_values.exclude?(v) }
     return @select_value if multiple?
 
     @select_value.first
