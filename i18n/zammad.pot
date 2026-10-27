@@ -992,7 +992,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:238
+#: app/controllers/channels_email_controller.rb:237
 msgid "Account already exists!"
 msgstr ""
 
@@ -4954,6 +4954,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:7
 msgid "Custom instructions"
+msgstr ""
+
+#: app/models/core_workflow.rb:89
+msgid "Custom module '%s' is not available."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
@@ -19310,7 +19314,7 @@ msgstr ""
 msgid "The required parameter 'application_secret' is missing."
 msgstr ""
 
-#: app/controllers/channels_sms_controller.rb:100
+#: app/controllers/channels_sms_controller.rb:104
 msgid "The required parameter 'area' is missing."
 msgstr ""
 
@@ -19372,7 +19376,7 @@ msgstr ""
 msgid "The required parameter 'options.adapter' is missing."
 msgstr ""
 
-#: app/controllers/channels_sms_controller.rb:104
+#: app/controllers/channels_sms_controller.rb:108
 msgid "The required parameter 'params' is missing."
 msgstr ""
 

@@ -11,6 +11,8 @@ class CoreWorkflow < ApplicationModel
   include CoreWorkflow::Assets
   include CoreWorkflow::Search
 
+  CUSTOM_MODULE_OPERATORS = ['match all modules', 'match one module', 'match no modules'].freeze
+
   self.audit_log_attributes_ignored = %i[preferences]
 
   core_workflow_screens 'create', 'edit'
@@ -27,6 +29,7 @@ class CoreWorkflow < ApplicationModel
   attribute :perform, :indifferent_json
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validate :validate_custom_modules
 
   def self.classes
     Models.all.keys.select { |m| m.include?(ChecksCoreWorkflow) }
@@ -127,5 +130,27 @@ Match payload selected data:
     Rails.logger.error 'Error performing Core Workflow engine.'
     Rails.logger.error e
     false
+  end
+
+  private
+
+  def validate_custom_modules
+    custom_module_paths.each do |module_path|
+      next if CoreWorkflow::Custom.lookup(module_path)
+
+      errors.add(:base, format(__("Custom module '%s' is not available."), module_path))
+    end
+  end
+
+  def custom_module_paths
+    Array(perform.dig('custom.module', 'execute')) + condition_module_paths
+  end
+
+  def condition_module_paths
+    [condition_saved, condition_selected].flat_map(&:values).flat_map do |condition|
+      next [] if CUSTOM_MODULE_OPERATORS.exclude?(condition['operator'])
+
+      Array.wrap(condition['value']).map { |value| value.is_a?(Hash) ? value['value'] : value }
+    end
   end
 end
