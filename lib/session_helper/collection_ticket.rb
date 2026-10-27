@@ -34,25 +34,39 @@ module SessionHelper::CollectionTicket
     end
 
     if user.permissions?(['ticket.agent', 'admin.channel_email'])
-      collections[ TextModule.to_app_model ] = []
-      TextModulePolicy::Scope.new(user, TextModule).resolve.each do |item|
-        assets = item.assets(assets)
-      end
-
-      [
-        Macro,
-        Signature,
-        EmailAddress,
-        Template,
-        Ticket::SharedDraftStart,
-        AI::TextTool,
-      ].each do |klass|
-        collections[ klass.to_app_model ] = []
-        klass.all.each do |item|
-          assets = item.assets(assets)
-        end
-      end
+      assets = agent_session(collections, assets, user)
     end
     [collections, assets]
+  end
+
+  def agent_session(collections, assets, user)
+    collections[ TextModule.to_app_model ] = []
+    TextModulePolicy::Scope.new(user, TextModule).resolve.each do |item|
+      assets = item.assets(assets)
+    end
+
+    [
+      Macro,
+      Template,
+      Ticket::SharedDraftStart,
+      AI::TextTool,
+    ].each do |klass|
+      collections[ klass.to_app_model ] = []
+      Pundit.policy_scope!(user, klass).each do |item|
+        assets = item.assets(assets)
+      end
+    end
+
+    [
+      Signature,
+      EmailAddress,
+    ].each do |klass|
+      collections[ klass.to_app_model ] = []
+      klass.all.each do |item|
+        assets = item.assets(assets)
+      end
+    end
+
+    assets
   end
 end

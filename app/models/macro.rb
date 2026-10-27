@@ -5,7 +5,6 @@ class Macro < ApplicationModel
   include HasAuditLogs
   include ChecksHtmlSanitized
   include CanSeed
-  include HasCollectionUpdate
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
@@ -20,8 +19,6 @@ class Macro < ApplicationModel
 
   validates :note, length: { maximum: 250 }
   sanitized_html :note
-
-  collection_push_permission('ticket.agent')
 
   ApplicableOn = Struct.new(:result, :blocking_tickets) do
     delegate :==, to: :result

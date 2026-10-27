@@ -9,6 +9,7 @@ class CollectionAssets extends App.Controller
     App.TicketState.subscribe(->)
     App.TicketPriority.subscribe(->)
     if App.Session.get().permission('ticket.agent')
+      App.Macro.subscribe(->)
       App.Template.subscribe(->)
       App.ChecklistTemplate.subscribe(->)
       App.TicketSharedDraftStart.subscribe(->)

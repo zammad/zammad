@@ -43,6 +43,56 @@ RSpec.describe SessionHelper do
     end
   end
 
+  describe 'ticket collections' do
+    let(:group)         { create(:group) }
+    let(:foreign_group) { create(:group) }
+    let(:user)          { create(:agent, groups: [group]) }
+
+    let(:macro)                  { create(:macro, groups: [group]) }
+    let(:foreign_macro)          { create(:macro, groups: [foreign_group]) }
+    let(:inactive_macro)         { create(:macro, groups: [group], active: false) }
+    let(:text_tool)              { create(:ai_text_tool, groups: [group]) }
+    let(:foreign_text_tool)      { create(:ai_text_tool, groups: [foreign_group]) }
+    let(:inactive_text_tool)     { create(:ai_text_tool, groups: [group], active: false) }
+    let(:template)               { create(:template) }
+    let(:inactive_template)      { create(:template, active: false) }
+    let(:shared_draft)           { create(:ticket_shared_draft_start, group: group) }
+    let(:foreign_shared_draft)   { create(:ticket_shared_draft_start, group: foreign_group) }
+
+    let(:assets) { described_class.json_hash(user)[:assets] }
+
+    before do
+      macro && foreign_macro && inactive_macro
+      text_tool && foreign_text_tool && inactive_text_tool
+      template && inactive_template
+      shared_draft && foreign_shared_draft
+    end
+
+    it 'provides only accessible records' do
+      expect(assets)
+        .to include_assets_of(macro, text_tool, template, shared_draft)
+        .and not_include_assets_of(foreign_macro, inactive_macro, foreign_text_tool, inactive_text_tool, inactive_template, foreign_shared_draft)
+    end
+
+    context 'when user is admin' do
+      let(:user) { create(:admin, groups: [group, foreign_group]) }
+
+      it 'provides all records' do
+        expect(assets)
+          .to include_assets_of(macro, foreign_macro, inactive_macro, text_tool, foreign_text_tool, inactive_text_tool, template, inactive_template, shared_draft, foreign_shared_draft)
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user) { create(:customer) }
+
+      it 'provides no records' do
+        expect(assets)
+          .to not_include_assets_of(macro, foreign_macro, inactive_macro, text_tool, foreign_text_tool, inactive_text_tool, template, inactive_template, shared_draft, foreign_shared_draft)
+      end
+    end
+  end
+
   describe 'New collections by installed packages are crashing zammad#4748' do
     let(:collection_files) { Rails.root.glob('lib/session_helper/collection_*.rb').map(&:to_s) }
     let(:unloadable_file)  { Rails.root.join('lib/session_helper/collection_xxx.rb').to_s }
