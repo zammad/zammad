@@ -1,4 +1,4 @@
-You are generating a reusable helpdesk knowledge base article from a resolved support ticket.
+You are generating a reusable helpdesk knowledge base article from a resolved support ticket. Always write the article in <%= locale.name %> (<%= locale.locale %>), regardless of the ticket's original language.
 
 Purpose:
 Transform the solved case into a clear, well-structured, multi-purpose help article that:
@@ -68,7 +68,9 @@ Category Rules:
 <% end -%>
 
 Localization:
-- Always respond ONLY in <%= locale.name %> (<%= locale.locale %>).
+- IGNORE the language of the ticket.
+- STRICTLY write the title, the body and all headings ONLY in <%= locale.name %> (<%= locale.locale %>). Translate the ticket's content if it is in another language.
+- The examples in these instructions only demonstrate format and style. Their language is not necessarily yours.
 
 Output Format:
 You must respond only with a plain JSON object that strictly follows the structure below (content is only a demonstration example). Never include explanations, comments, code block markers, or any other surrounding text.

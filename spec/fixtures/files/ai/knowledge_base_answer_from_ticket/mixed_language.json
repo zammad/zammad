@@ -1,0 +1,29 @@
+{
+  "ticket": {
+    "title": "Export der Berichte als CSV zeigt kaputte Umlaute",
+    "articles": [
+      {
+        "sender": "Customer",
+        "body": "Hallo, wenn wir unsere monatlichen Berichte als CSV exportieren und die Datei in Excel öffnen, werden alle Umlaute falsch dargestellt. Aus \"Müller\" wird zum Beispiel \"MÃ¼ller\". In der Weboberfläche sieht alles korrekt aus. Das betrifft alle Berichte, nicht nur einen bestimmten."
+      },
+      {
+        "sender": "Agent",
+        "body": "Hello, sorry for answering in English, our German-speaking colleague is out of office today. The export itself is correct: the CSV file is encoded in UTF-8. Excel, however, assumes a different encoding when a CSV file is opened with a double click, which breaks the umlauts. To open the file correctly, start Excel, go to Data, From Text/CSV, select the exported file and choose 65001: Unicode (UTF-8) as the file origin before loading it."
+      },
+      {
+        "sender": "Customer",
+        "body": "Kein Problem, vielen Dank! Wir haben die Datei jetzt über Daten, Aus Text/CSV mit der Kodierung UTF-8 geöffnet und alle Umlaute werden richtig angezeigt. Wir haben die Anleitung auch an unsere Buchhaltung weitergegeben. Das Ticket kann geschlossen werden."
+      }
+    ]
+  },
+  "preserve": [
+    "CSV",
+    "Excel",
+    "UTF-8",
+    "65001"
+  ],
+  "target_locales": [
+    "en-us",
+    "de-de"
+  ]
+}

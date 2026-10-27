@@ -1,0 +1,162 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ai.zammad.com/api/v1/features/knowledge_base_answer_from_ticket
+    body:
+      encoding: UTF-8
+      string: '{"system_prompt":"You are generating a reusable helpdesk knowledge
+        base article from a resolved support ticket. Always write the article in English
+        (United States) (en-us), regardless of the ticket''s original language.\n\nPurpose:\nTransform
+        the solved case into a clear, well-structured, multi-purpose help article
+        that:\n- Acts as a ready-to-use response template for agents.\n- Functions
+        as a public-facing FAQ or how-to entry.\n- Reflects the documented resolution
+        with maximum accuracy.\n\nContent Integrity \u0026 Constraints:\n- Use ONLY
+        explicitly confirmed facts from the ticket, including internal notes as context.\n-
+        IMPORTANT: Internal notes may contain sensitive operational details (discounts,
+        exceptions, internal decisions). Never include such details in the output
+        — the article must be safe for public consumption.\n- STRICTLY PROHIBITED:
+        Inventing root causes, speculating on technical reasons, adding generic troubleshooting
+        (e.g., \"restart your browser\"), or using filler language.\n- If a piece
+        of information wasn''t confirmed by the user, agent, or logs, omit it entirely
+        rather than hedging.\n- Focus exclusively on the primary resolved issue.\n-
+        Only include causes that were explicitly confirmed as the root cause.\n- Ignore
+        unrelated changes mentioned in the ticket.\n\nContent Requirements:\n- What
+        does the user experience? (Plain language).\n- Explain the underlying cause/mechanism
+        so agents understand the \"Why\", but keep it accessible for technical customers.\n-
+        When the cause is confirmed, write with confidence. Do not hedge with \"may
+        be due to\" or \"could indicate\".\n- If the ticket confirms steps, present
+        them as clear, numbered instructions for sequences or bullet points for non-ordered
+        options.\n- Ensure steps are minimal, safe, and directly supported by the
+        ticket.\n- Clearly label whether the resolution is a permanent fix, a configuration
+        change, or a workaround. Never present a workaround as a permanent fix.\n-
+        If the ticket contains advice on avoiding recurrence, include it as a Prevention
+        section.\n- Organize content naturally into subheadings when it improves clarity.\n-
+        Aim for concise articles. Most articles should be under 500 words.\n\nPrivacy
+        \u0026 Compliance:\n- Scrub all PII: names, emails, phone numbers, IDs, IP
+        addresses, internal hostnames, and timestamps.\n- Generalize specific infrastructure
+        details (e.g., \"the production server\" instead of \"SRV-PROD-01\").\n\nTone
+        \u0026 Style:\n- Professional, practical, and empathetic.\n- Do not open with
+        meta-commentary about what the article will cover (e.g., \"this article explains...\").
+        Start with the situation directly.\n- Lead with what the user needs; put technical
+        detail after the resolution, not before it.\n- Avoid internal jargon or references
+        to the ticket history (e.g., instead of \"The user reported...\", use \"Users
+        may encounter...\". No \"we escalated\", no \"the ticket shows\").\n- Do not
+        mention \"Internal investigation\" or \"Engineering ticket #123\".\n\nFormatting:\n-
+        Use basic HTML.\n- Use \u003cstrong\u003e for UI elements or key terms.\n-
+        Use bullet points for steps to ensure high scannability.\n- The structure
+        should feel natural but must prioritize readability.\n\nTitle:\n- Write the
+        title from the user''s perspective, matching how they would search for this
+        problem.\n- For bug fixes: lead with the symptom — \"Slack notifications stop
+        after SSO migration\".\n- For how-tos: lead with the task — \"How to export
+        reports as CSV\".\n- For limitations: set expectations — \"Why invoices cannot
+        be backdated\".\n- Avoid generic patterns like \"How to resolve [issue]\".\n\nCategory
+        Rules:\n- Select exactly one category_id from the provided list in \u003cavailable_categories\u003e.
+        Always select the best matching category.\n- If no category is a strong match,
+        select the most general one.\n- Never invent categories that don''t exist.\n-
+        Prefer the category that matches where a user would be standing when they
+        need this article — this is often the root cause, not the affected feature.\n\n\u003cavailable_categories\u003e\n  \u003coption\u003e\n    \u003cvalue\u003e1\u003c/value\u003e\n    \u003clabel\u003e\u003c![CDATA[General]]\u003e\u003c/label\u003e\n  \u003c/option\u003e\n\u003c/available_categories\u003e\n\nLocalization:\n-
+        IGNORE the language of the ticket.\n- STRICTLY write the title, the body and
+        all headings ONLY in English (United States) (en-us). Translate the ticket''s
+        content if it is in another language.\n- The examples in these instructions
+        only demonstrate format and style. Their language is not necessarily yours.\n\nOutput
+        Format:\nYou must respond only with a plain JSON object that strictly follows
+        the structure below (content is only a demonstration example). Never include
+        explanations, comments, code block markers, or any other surrounding text.\nYour
+        output must always be a valid JSON object (all string values must be on a
+        single line with no literal newlines).\n\n{\n  \"title\": \"Symptom- or task-first
+        title matching how users search\",\n  \"category_id\": 3,\n  \"body\": \"\u003cp\u003eSummary...\u003c/p\u003e\u003ch3\u003eResolution\u003c/h3\u003e\u003cul\u003e\u003cli\u003eStep
+        1\u003c/li\u003e\u003c/ul\u003e\"\n}","prompt":"\u003ctitle\u003eUnsere Benachrichtigungen
+        landen beim Kunden im Spam\u003c/title\u003e\n\u003carticle\u003e\n  \u003csender_type\u003eCustomer\u003c/sender_type\u003e\n  \u003ccreated_at\u003e2026-10-23
+        13:16:36 UTC\u003c/created_at\u003e\n  \u003cvisibility\u003epublic\u003c/visibility\u003e\n  \u003ctext\u003e\u003c![CDATA[Hallo
+        zusammen, seit letzter Woche beschweren sich mehrere unserer Kunden, dass
+        die Antworten aus dem Helpdesk bei ihnen im Spam-Ordner landen. Betroffen
+        sind vor allem Empfänger mit Gmail- und Outlook-Adressen. Vorher hat alles
+        problemlos funktioniert. Wir haben in der Zwischenzeit nur unseren Mailserver
+        gewechselt. Können Sie sich das bitte ansehen?]]\u003e\u003c/text\u003e\n\u003c/article\u003e\n\u003carticle\u003e\n  \u003csender_type\u003eAgent\u003c/sender_type\u003e\n  \u003ccreated_at\u003e2026-10-23
+        13:16:36 UTC\u003c/created_at\u003e\n  \u003cvisibility\u003epublic\u003c/visibility\u003e\n  \u003ctext\u003e\u003c![CDATA[Guten
+        Tag, vielen Dank für Ihre Meldung. Wir haben die Kopfzeilen einer betroffenen
+        E-Mail geprüft. Die Prüfung des SPF-Eintrags schlägt fehl, weil der neue Mailserver
+        nicht im SPF-Eintrag Ihrer Domain hinterlegt ist. Die empfangenden Server
+        stufen die Nachrichten deshalb als verdächtig ein. Bitte ergänzen Sie im DNS-Eintrag
+        vom Typ TXT Ihrer Domain den neuen Mailserver mit einem include-Eintrag, so
+        wie es Ihr E-Mail-Anbieter in seiner Dokumentation beschreibt. Danach dauert
+        es in der Regel einige Stunden, bis die Änderung überall übernommen wurde.]]\u003e\u003c/text\u003e\n\u003c/article\u003e\n\u003carticle\u003e\n  \u003csender_type\u003eCustomer\u003c/sender_type\u003e\n  \u003ccreated_at\u003e2026-10-23
+        13:16:36 UTC\u003c/created_at\u003e\n  \u003cvisibility\u003epublic\u003c/visibility\u003e\n  \u003ctext\u003e\u003c![CDATA[Danke
+        für die schnelle Hilfe! Wir haben den SPF-Eintrag wie beschrieben angepasst.
+        Seit heute Morgen kommen alle Antworten wieder ganz normal im Posteingang
+        an, auch bei Gmail und Outlook. Das Ticket kann geschlossen werden.]]\u003e\u003c/text\u003e\n\u003c/article\u003e\n"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - ai.zammad.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <ZAMMAD_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 23 Oct 2026 13:16:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - DENY
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept
+      Etag:
+      - W/"7aaefa6f5bc7bf6c6ac85e51e04d2a3d"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Security-Policy:
+      - 'default-src ''self'' https:; font-src ''self'' https: data:; img-src ''self''
+        https: data:; object-src ''none''; script-src ''self'' https: ''nonce-'';
+        style-src ''self'' https: ''nonce-'''
+      X-Request-Id:
+      - 87873fe4-dc43-4b55-a186-85035434fc93
+      X-Runtime:
+      - '3.906335'
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"model":"mistral-small3.2:24b","created_at":"2026-10-23 13:16:41
+        UTC","response":"{\n  \"title\": \"Helpdesk notifications are marked as spam
+        after mail server change\",\n  \"category_id\": 1,\n  \"body\": \"<p>Users
+        may find that helpdesk notifications are being delivered to their spam folder,
+        particularly for Gmail and Outlook addresses. This typically occurs after
+        changing your mail server.</p><h3>Cause</h3><p>The SPF (Sender Policy Framework)
+        record for your domain does not include the new mail server. Email servers
+        use SPF records to verify the sender''s identity, and a missing entry causes
+        receiving servers to flag the messages as suspicious.</p><h3>Resolution</h3><p>Add
+        the new mail server to your domain''s SPF record by following your email provider''s
+        documentation. This ensures that receiving servers recognize your mail server
+        as authorized to send emails on behalf of your domain.</p><h3>Prevention</h3><p>Whenever
+        you change your mail server, always update your SPF record to include the
+        new server. This prevents future email delivery issues.</p>\"\n}","usage":{"prompt_tokens":1557,"total_tokens":1778,"completion_tokens":221,"prompt_tokens_details":null},"done":true,"uuid":"9baf7841-34bf-4d06-9ad0-8706aa6fc215"}]'
+  recorded_at: Fri, 23 Oct 2026 13:16:41 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,47 @@
+{
+  "ticket": {
+    "title": "Anmeldung per SSO hängt nach dem Umzug in einer Weiterleitungsschleife",
+    "articles": [
+      {
+        "sender": "Customer",
+        "body": "Guten Morgen, wir haben am Wochenende unseren Identitätsanbieter für das Single Sign-on umgestellt. Seitdem können sich unsere Mitarbeitenden nicht mehr anmelden. Nach dem Klick auf \"Mit SSO anmelden\" werden sie zum Identitätsanbieter weitergeleitet, melden sich dort erfolgreich an und landen danach wieder auf der Anmeldeseite des Helpdesks. Dann beginnt alles von vorn. Die Anmeldung mit Benutzername und Passwort funktioniert für unsere Administratoren weiterhin. Wir sind mit rund 40 Personen betroffen und brauchen dringend eine Lösung."
+      },
+      {
+        "sender": "Agent",
+        "body": "Guten Morgen, danke für die ausführliche Beschreibung. Damit wir das Problem eingrenzen können: Haben Sie die Konfiguration des SSO im Helpdesk nach dem Umzug ebenfalls angepasst, oder wurde nur der Identitätsanbieter selbst umgestellt? Bitte schicken Sie uns außerdem einen Screenshot der Einstellungen der Anwendung beim neuen Identitätsanbieter, insbesondere die eingetragene Weiterleitungs-URL."
+      },
+      {
+        "sender": "Customer",
+        "body": "Im Helpdesk haben wir die neue Adresse des Identitätsanbieters, die Client-ID und das Client-Secret eingetragen. Sonst haben wir nichts geändert. Den Screenshot der Anwendung beim Identitätsanbieter hänge ich an. Uns ist dabei nichts Auffälliges aufgefallen."
+      },
+      {
+        "sender": "Agent",
+        "internal": true,
+        "body": "Interne Notiz: Im Screenshot ist als Weiterleitungs-URL noch die alte Adresse mit http statt https eingetragen. Der Helpdesk läuft aber ausschließlich über https. Der Identitätsanbieter schickt die Antwort deshalb an die falsche Adresse, das Sitzungs-Cookie wird nicht gesetzt und die Anmeldung beginnt von vorn. Kunde hat einen Rahmenvertrag, Bearbeitung bitte priorisieren."
+      },
+      {
+        "sender": "Agent",
+        "body": "Vielen Dank für den Screenshot, damit haben wir die Ursache gefunden. Beim neuen Identitätsanbieter ist als Weiterleitungs-URL eine Adresse mit http eingetragen. Ihr Helpdesk ist aber nur über https erreichbar. Nach der erfolgreichen Anmeldung schickt der Identitätsanbieter die Antwort deshalb an eine Adresse, unter der keine gültige Sitzung entstehen kann, und der Anmeldevorgang startet erneut. Bitte ändern Sie die Weiterleitungs-URL in der Anwendung beim Identitätsanbieter so, dass sie genau der Adresse entspricht, die im Helpdesk in den SSO-Einstellungen als Callback-URL angezeigt wird, also mit https am Anfang. Speichern Sie die Änderung und testen Sie die Anmeldung anschließend in einem privaten Browserfenster."
+      },
+      {
+        "sender": "Customer",
+        "body": "Wir haben die Weiterleitungs-URL geändert und es jetzt in einem privaten Fenster getestet. Die Anmeldung klappt! Allerdings melden zwei Kolleginnen, dass es bei ihnen in ihrem normalen Browserfenster immer noch nicht funktioniert."
+      },
+      {
+        "sender": "Agent",
+        "body": "Das freut uns zu hören. Bei den beiden Kolleginnen sind vermutlich noch alte Cookies aus den fehlgeschlagenen Anmeldeversuchen gespeichert. Bitte lassen Sie die beiden die Cookies für die Adresse des Helpdesks im Browser löschen und die Anmeldung danach erneut versuchen."
+      },
+      {
+        "sender": "Customer",
+        "body": "Nachdem die Cookies gelöscht waren, konnten sich auch die beiden Kolleginnen problemlos anmelden. Inzwischen haben sich alle 40 Mitarbeitenden erfolgreich über SSO angemeldet. Vielen Dank für die schnelle und gründliche Hilfe, das Ticket kann geschlossen werden."
+      }
+    ]
+  },
+  "preserve": [
+    "SSO",
+    "https"
+  ],
+  "target_locales": [
+    "en-us"
+  ]
+}
