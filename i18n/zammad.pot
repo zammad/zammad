@@ -18507,8 +18507,12 @@ msgstr ""
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:253
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:290
 msgid "The article language detection is disabled. Enable it to avoid translating articles that are already in the target language. %l"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
+msgid "The article language detection is disabled. To avoid translating articles that are already in the target language, ask an administrator with access to the ticket settings to enable it."
 msgstr ""
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33

@@ -144,7 +144,10 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
       description: 'Support of multi-lingual Knowledge Base.',
       options:     {},
       state:       true,
-      preferences: { online_service_disable: true },
+      preferences: {
+        online_service_disable: true,
+        permission:             ['admin'],
+      },
       frontend:    true
     )
 
@@ -173,7 +176,8 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
         prio:           1,
         trigger:        ['menu:render'],
         authentication: true,
-        permission:     [],
+        permission:     ['admin'],
+        protected:      true,
       },
       frontend:    true
     )
