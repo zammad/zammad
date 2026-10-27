@@ -283,6 +283,25 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
         expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
+
+    context 'when translation is switched off' do
+      before do
+        store_translation(articles.first, '<p>Hallo Welt.</p>')
+        unset_content_translation
+      end
+
+      it 'refuses a lookup, although a translation is stored' do
+        gql.execute(query, variables: variables.merge(generateMissing: false))
+
+        expect(gql.result.error_message).to eq('This feature is not enabled.')
+      end
+
+      it 'refuses to generate' do
+        expect { gql.execute(query, variables:) }.not_to have_enqueued_job(ContentTranslationJob)
+
+        expect(gql.result.error_message).to eq('This feature is not enabled.')
+      end
+    end
   end
 
   context 'when a customer asks for a translation' do

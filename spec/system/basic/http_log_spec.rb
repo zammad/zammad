@@ -65,6 +65,10 @@ RSpec.describe 'HTTP log widget', type: :system do
   end
 
   describe 'System > Integrations > Content Translation' do
+    before do
+      grant_content_translation_permission
+    end
+
     # The log sits in its own tab, so the screen needs one more step than a plain visit.
     def open_http_log
       visit '#system/integration/content_translation'

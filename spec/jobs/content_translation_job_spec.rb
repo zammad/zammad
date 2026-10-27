@@ -91,5 +91,21 @@ RSpec.describe ContentTranslationJob, type: :job do
           .with(article, target_locale, { error: { message: 'some error', exception: 'StandardError' } })
       end
     end
+
+    context 'with the settings at their seeded defaults' do
+      before { allow(Rails.logger).to receive(:error) }
+
+      it 'publishes the refusal' do
+        perform
+
+        expect(Gql::Subscriptions::Ticket::Article::TranslationUpdates)
+          .to have_received(:trigger_for)
+          .with(article, target_locale, { error: { message: 'No translation service is configured.', exception: 'Service::CheckFeatureEnabled::FeatureDisabledError' } })
+      end
+
+      it 'stores nothing' do
+        expect { perform }.not_to change(AI::StoredResult, :count)
+      end
+    end
   end
 end

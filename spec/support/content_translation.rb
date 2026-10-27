@@ -9,6 +9,11 @@ module ContentTranslationHelper
     Setting.set('content_translation_ticket_article', ticket_article)
   end
 
+  def grant_content_translation_permission
+    create(:permission, name: 'experimental.content_translation')
+    Role.find_by(name: 'Admin').permission_grant('experimental.content_translation')
+  end
+
   def unset_content_translation
     Setting.set('content_translation_service', false)
     Setting.set('content_translation_service_config', {})

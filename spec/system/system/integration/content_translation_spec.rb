@@ -2,8 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Integration > Content translation', type: :system do
+RSpec.describe 'Manage > Integration > Content translation', authenticated_as: :authenticate, type: :system do
   let(:language_detection_warning) { 'The article language detection is disabled.' }
+
+  def authenticate
+    grant_content_translation_permission
+
+    true
+  end
 
   # A push sent before the session is logged in on the server is lost. Unlike
   # wait_for_authenticated_session this accepts the long-polling fallback as well.
@@ -16,6 +22,26 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     within :active_content do
       find('.nav-tabs a[href="#ticket-articles"]').click
+    end
+  end
+
+  context 'without the experimental permission' do
+    def authenticate
+      true
+    end
+
+    it 'is not listed on the integrations page' do
+      visit '#system/integration'
+
+      # Another row first, so the absence is not checked before the list has rendered.
+      expect(page).to have_css('tr[data-key=IntegrationGitLab]')
+      expect(page).to have_no_css('tr[data-key=IntegrationContentTranslation]')
+    end
+
+    it 'redirects a direct visit to the profile' do
+      visit '#system/integration/content_translation'
+
+      expect_current_route 'profile'
     end
   end
 
@@ -88,6 +114,8 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
   context 'with a configured AI provider', authenticated_as: :authenticate do
     def authenticate
+      grant_content_translation_permission
+
       create(:ai_provider_connection)
       Setting.set('ai_provider', true)
 
@@ -143,6 +171,8 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
       let(:other_connection)   { create(:ai_provider_connection, name: 'Other connection') }
 
       def authenticate
+        grant_content_translation_permission
+
         default_connection
         other_connection
         Setting.set('ai_provider', true)
@@ -235,7 +265,7 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
       # Both APIs behind the row require admin.ai_provider, so it is not offered without it.
       context 'with a delegated administrator without AI provider permission' do
-        let(:role)            { create(:role, permission_names: %w[admin.integration]) }
+        let(:role)            { create(:role, permission_names: %w[admin.integration experimental.content_translation]) }
         let(:delegated_admin) { create(:agent, roles: [role]) }
 
         def authenticate
@@ -370,6 +400,8 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
   context 'with article language detection', authenticated_as: :authenticate do
     def authenticate
+      grant_content_translation_permission
+
       Setting.set('language_detection_article', 'cld')
 
       true
@@ -542,6 +574,8 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
 
     context 'with AI as the configured service', authenticated_as: :authenticate do
       def authenticate
+        grant_content_translation_permission
+
         Setting.set('content_translation_service_config', { 'provider' => 'ai' })
 
         true
@@ -578,10 +612,12 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
       end
 
       context 'with a delegated administrator without AI logs permission' do
-        let(:role)            { create(:role, permission_names: %w[admin.integration]) }
+        let(:role)            { create(:role, permission_names: %w[admin.integration experimental.content_translation]) }
         let(:delegated_admin) { create(:agent, roles: [role]) }
 
         def authenticate
+          grant_content_translation_permission
+
           Setting.set('content_translation_service_config', { 'provider' => 'ai' })
 
           delegated_admin
@@ -632,9 +668,15 @@ RSpec.describe 'Manage > Integration > Content translation', type: :system do
       expect(reported_scope).to contain_exactly(translation_run)
     end
 
-    context 'with a delegated administrator without AI logs permission', authenticated_as: :delegated_admin do
-      let(:role)            { create(:role, permission_names: %w[admin.integration]) }
+    context 'with a delegated administrator without AI logs permission' do
+      let(:role)            { create(:role, permission_names: %w[admin.integration experimental.content_translation]) }
       let(:delegated_admin) { create(:agent, roles: [role]) }
+
+      def authenticate
+        grant_content_translation_permission
+
+        delegated_admin
+      end
 
       it 'offers no feedback tab' do
         visit 'system/integration/content_translation'

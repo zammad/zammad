@@ -184,4 +184,20 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
     end
   end
 
+  context 'when translation is switched off' do
+    before do
+      allow(Rails.logger).to receive(:error)
+      unset_content_translation
+    end
+
+    it 'receives the refusal instead of a translation, and nothing is stored', :aggregate_failures do
+      expect { ContentTranslationJob.new.perform(article, target_locale, service: 'Service::ContentTranslation::TicketArticle') }
+        .not_to change(AI::StoredResult, :count)
+
+      expect(broadcasted).to include(
+        'translation' => nil,
+        'error'       => { 'message' => 'No translation service is configured.', 'exception' => 'Service::CheckFeatureEnabled::FeatureDisabledError' },
+      )
+    end
+  end
 end

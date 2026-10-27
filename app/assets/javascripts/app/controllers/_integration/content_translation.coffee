@@ -1,7 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+# No installation has experimental.content_translation, so the page stays hidden until the feature
+# is released. Development and test systems create the permission by hand and grant it to a role.
 class ContentTranslation extends App.ControllerTabs
-  @requiredPermission: 'admin.integration'
+  @requiredPermission: 'admin.integration+experimental.content_translation'
   header:      __('Translation services')
   description: __('This service allows agents to translate articles to their configured UI language or other languages of their choice.')
 
@@ -362,7 +364,7 @@ App.Config.set(
     description: __('Translate ticket articles into another language.')
     controller: ContentTranslation
     state: State
-    permission: ['admin.integration']
+    permission: ['admin.integration+experimental.content_translation']
   }
   'NavBarIntegrations'
 )

@@ -196,4 +196,45 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
       expect(page).to have_no_css('[data-test-id="translate-all-articles"]')
     end
   end
+
+  # The agent's auto preference and language detection on, German stored: only the settings keep the feature away.
+  context 'with translation switched off' do
+    let(:auto)               { true }
+    let(:excluded_languages) { %w[en] }
+
+    before do
+      unset_content_translation
+      Setting.set('content_translation_ticket_article_auto', false)
+
+      refresh
+      wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
+    end
+
+    it 'shows no trace of the feature' do
+      expect(page).to have_text('Hello world.').and(have_no_text('Hallo Welt.'))
+      expect(page).to have_no_css('[data-test-id="article-translation-target-menu"]')
+
+      find("#article-#{articles.first.id}").hover
+      within "#article-#{articles.first.id}" do
+        expect(page).to have_no_button('Translate article')
+      end
+    end
+
+    it 'leaves an arriving article alone' do
+      new_article = create(:ticket_article, ticket:, body: 'Anything new?', content_type: 'text/plain')
+
+      within "[data-test-id=\"article-bubble-container-#{new_article.id}\"]" do
+        expect(page).to have_text('Anything new?')
+        expect(page).to have_no_css('[data-test-id="article-translation-progress"]')
+        expect(page).to have_no_css('[data-test-id="article-translation-toggle"]')
+      end
+    end
+
+    it 'offers no translation preferences' do
+      visit '/personal-setting/locale'
+
+      expect(page).to have_text('User interface language')
+      expect(page).to have_no_text('Languages you understand')
+    end
+  end
 end

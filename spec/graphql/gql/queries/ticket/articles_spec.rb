@@ -539,6 +539,22 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       expect(gql.result.nodes.pluck('translation')).to all(be_nil)
     end
 
+    it 'reports no availability at the seeded defaults' do
+      unset_content_translation
+      gql.execute(query, variables:)
+
+      expect(gql.result.nodes.first).to include('translationAvailable' => false, 'translation' => nil)
+    end
+
+    # Availability has no feature gate; only the emptied config hides it. Accepted while dormant.
+    it 'still reports availability while only the flags are off' do
+      Setting.set('content_translation_service', false)
+      Setting.set('content_translation_ticket_article', false)
+      gql.execute(query, variables:)
+
+      expect(gql.result.nodes.first).to include('translationAvailable' => true, 'translation' => nil)
+    end
+
     context 'with a customer', authenticated_as: :customer do
       let(:customer) { create(:customer) }
       let(:ticket) { create(:ticket, customer:) }

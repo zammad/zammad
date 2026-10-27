@@ -176,6 +176,19 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
       end
     end
 
+    context 'when translation is switched off' do
+      before do
+        store_translation('<p>Hallo Welt.</p>')
+        unset_content_translation
+      end
+
+      it 'fails with an error, although a translation is stored' do
+        expect { gql.execute(query, variables:) }.not_to have_enqueued_job(ContentTranslationJob)
+
+        expect(gql.result.error_message).to eq('No translation service is configured.')
+      end
+    end
+
     context 'when the AI provider is not configured' do
       before { unset_ai_provider }
 
