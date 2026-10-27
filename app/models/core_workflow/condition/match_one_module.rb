@@ -7,7 +7,8 @@ class CoreWorkflow::Condition::MatchOneModule < CoreWorkflow::Condition::Backend
     result = false
     value.each do |_current_value|
       condition_value.each do |current_condition_value|
-        custom_module = current_condition_value.constantize.new(condition_object: @condition_object, result_object: @result_object)
+        custom_module = CoreWorkflow::Custom.lookup(current_condition_value)&.new(condition_object: @condition_object, result_object: @result_object)
+        next if !custom_module
 
         result = custom_module.send(:"#{@condition_object.check}_attribute_match?")
         next if !result

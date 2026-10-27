@@ -66,7 +66,8 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
         end
       end
     end
-    let!(:workflow) do
+    let(:module_matches) { [] }
+    let(:workflow) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
@@ -77,14 +78,17 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
              })
     end
 
-    describe 'with "match all modules" false' do
-      let(:operator) { 'match all modules' }
-
-      before do
-        stub_const 'CoreWorkflow::Custom::Testa', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testb', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testc', custom_class_false
+    before do
+      module_matches.zip(modules).each do |module_match, module_path|
+        stub_const module_path, module_match ? custom_class_true : custom_class_false
       end
+
+      workflow
+    end
+
+    describe 'with "match all modules" false' do
+      let(:operator)       { 'match all modules' }
+      let(:module_matches) { [false, false, false] }
 
       it 'does not match' do
         expect(result[:matched_workflows]).not_to include(workflow.id)
@@ -92,13 +96,8 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
     end
 
     describe 'with "match all modules" true' do
-      let(:operator) { 'match all modules' }
-
-      before do
-        stub_const 'CoreWorkflow::Custom::Testa', custom_class_true
-        stub_const 'CoreWorkflow::Custom::Testb', custom_class_true
-        stub_const 'CoreWorkflow::Custom::Testc', custom_class_true
-      end
+      let(:operator)       { 'match all modules' }
+      let(:module_matches) { [true, true, true] }
 
       it 'does match' do
         expect(result[:matched_workflows]).to include(workflow.id)
@@ -115,13 +114,8 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
     end
 
     describe 'with "match one module" true' do
-      let(:operator) { 'match one module' }
-
-      before do
-        stub_const 'CoreWorkflow::Custom::Testa', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testb', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testc', custom_class_true
-      end
+      let(:operator)       { 'match one module' }
+      let(:module_matches) { [false, false, true] }
 
       it 'does match' do
         expect(result[:matched_workflows]).to include(workflow.id)
@@ -129,13 +123,8 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
     end
 
     describe 'with "match one module" false' do
-      let(:operator) { 'match one module' }
-
-      before do
-        stub_const 'CoreWorkflow::Custom::Testa', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testb', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testc', custom_class_false
-      end
+      let(:operator)       { 'match one module' }
+      let(:module_matches) { [false, false, false] }
 
       it 'does not match' do
         expect(result[:matched_workflows]).not_to include(workflow.id)
@@ -152,13 +141,8 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
     end
 
     describe 'with "match no modules" true' do
-      let(:operator) { 'match no modules' }
-
-      before do
-        stub_const 'CoreWorkflow::Custom::Testa', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testb', custom_class_false
-        stub_const 'CoreWorkflow::Custom::Testc', custom_class_false
-      end
+      let(:operator)       { 'match no modules' }
+      let(:module_matches) { [false, false, false] }
 
       it 'does match' do
         expect(result[:matched_workflows]).to include(workflow.id)
@@ -166,13 +150,8 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
     end
 
     describe 'with "match no modules" false' do
-      let(:operator) { 'match no modules' }
-
-      before do
-        stub_const 'CoreWorkflow::Custom::Testa', custom_class_true
-        stub_const 'CoreWorkflow::Custom::Testb', custom_class_true
-        stub_const 'CoreWorkflow::Custom::Testc', custom_class_true
-      end
+      let(:operator)       { 'match no modules' }
+      let(:module_matches) { [true, true, true] }
 
       it 'does not match' do
         expect(result[:matched_workflows]).not_to include(workflow.id)
@@ -185,6 +164,121 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
 
       it 'does match' do
         expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    describe 'with an unregistered module' do
+      let(:modules) { ['CoreWorkflow::Custom::Testa', 'UnregisteredModule'] }
+      let(:module_matches) { [true] }
+      let(:unregistered_class) do
+        Class.new do
+          def initialize(*); end
+
+          def selected_attribute_match?
+            true
+          end
+        end
+      end
+      let(:workflow) do
+        build(:core_workflow,
+              object:             'Ticket',
+              condition_selected: {
+                'custom.module': {
+                  operator: operator,
+                  value:    modules,
+                },
+              }).tap { |core_workflow| core_workflow.save!(validate: false) }
+      end
+
+      before do
+        stub_const 'UnregisteredModule', unregistered_class
+        allow(unregistered_class).to receive(:new)
+      end
+
+      describe 'with "match all modules"' do
+        let(:operator) { 'match all modules' }
+
+        it 'does not match and does not instantiate the module', :aggregate_failures do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+          expect(unregistered_class).not_to have_received(:new)
+        end
+      end
+
+      describe 'with "match one module"' do
+        let(:operator)       { 'match one module' }
+        let(:module_matches) { [false] }
+
+        it 'does not match and does not instantiate the module', :aggregate_failures do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+          expect(unregistered_class).not_to have_received(:new)
+        end
+      end
+
+      describe 'with "match no modules"' do
+        let(:operator)       { 'match no modules' }
+        let(:module_matches) { [false] }
+
+        it 'does match and does not instantiate the module', :aggregate_failures do
+          expect(result[:matched_workflows]).to include(workflow.id)
+          expect(unregistered_class).not_to have_received(:new)
+        end
+      end
+    end
+  end
+
+  describe '.perform - Perform - Custom module' do
+    let(:custom_class) do
+      Class.new(CoreWorkflow::Custom::Backend) do
+        def perform
+          result('hide', 'priority_id')
+        end
+      end
+    end
+    let(:workflow) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'custom.module': {
+                 execute: ['CoreWorkflow::Custom::Testa'],
+               },
+             })
+    end
+
+    before do
+      stub_const 'CoreWorkflow::Custom::Testa', custom_class
+      workflow
+    end
+
+    it 'does perform the module' do
+      expect(result[:visibility]['priority_id']).to eq('hide')
+    end
+
+    describe 'with an unregistered module' do
+      let(:unregistered_class) do
+        Class.new do
+          def initialize(*); end
+
+          def perform; end
+        end
+      end
+      let(:workflow) do
+        build(:core_workflow,
+              object:  'Ticket',
+              perform: {
+                'custom.module': {
+                  execute: ['UnregisteredModule'],
+                },
+              }).tap { |core_workflow| core_workflow.save!(validate: false) }
+      end
+
+      before do
+        stub_const 'UnregisteredModule', unregistered_class
+        allow(unregistered_class).to receive(:new)
+      end
+
+      it 'does not instantiate the module', :aggregate_failures do
+        expect(result[:matched_workflows]).to include(workflow.id)
+        expect(unregistered_class).not_to have_received(:new)
       end
     end
   end

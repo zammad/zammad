@@ -166,8 +166,8 @@ class CoreWorkflow::Result
 
   def run_custom(workflow, condition)
     Array(workflow.perform.dig('custom.module', 'execute')).each do |module_path|
-      custom_module = module_path.constantize.new(condition_object: condition, result_object: self)
-      custom_module.perform
+      custom_module = CoreWorkflow::Custom.lookup(module_path)&.new(condition_object: condition, result_object: self)
+      custom_module&.perform
     end
   end
 
