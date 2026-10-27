@@ -45,7 +45,7 @@
     "node": ">=24",
     "pnpm": ">=12"
   },
-  "packageManager": "pnpm@12.8.1",
+  "packageManager": "pnpm@12.15.0",
   "devDependencies": {
     "@colbymchenry/codegraph": "^1.6.2",
     "@faker-js/faker": "^10.6.0",
