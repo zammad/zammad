@@ -4,6 +4,8 @@ require 'icalendar/tzinfo'
 
 class CalendarSubscriptions
 
+  attr_reader :time_zone
+
   def initialize(user)
     @user        = user
     @time_zone   = Setting.get('timezone_default')
@@ -26,7 +28,7 @@ class CalendarSubscriptions
 
     sub_class_name = object_name.to_s.capitalize
     object         = "CalendarSubscriptions::#{sub_class_name}".constantize
-    instance       = object.new(@user, @preferences[ object_name ], @time_zone)
+    instance       = object.new(@user, @preferences[ object_name ], time_zone)
 
     raise Exceptions::UnprocessableContent, __('An unknown method name was requested.') if object::ALLOWED_METHODS.exclude?(method_name)
 
@@ -35,12 +37,15 @@ class CalendarSubscriptions
 
   def to_ical(events_data)
     cal = Icalendar::Calendar.new
-    tz  = ActiveSupport::TimeZone.find_tzinfo(@time_zone)
+    tz  = ActiveSupport::TimeZone.find_tzinfo(time_zone)
 
     # https://github.com/zammad/zammad/issues/3989
     # https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19
     if events_data.any?
-      cal.add_timezone tz.ical_timezone(DateTime.parse(events_data.first[:dtstart].to_s))
+      first_start = event_start_utc(events_data.first)
+
+      # Resolve the period from UTC, local times can be ambiguous or missing around DST changes.
+      cal.add_timezone tz.ical_timezone(tz.utc_to_local(first_start), tz.period_for_utc(first_start).dst?)
     end
 
     events_data.each do |event_data|
@@ -56,8 +61,8 @@ class CalendarSubscriptions
           dtend = tz.utc_to_local(dtend)
         end
 
-        e.dtstart = Icalendar::Values::DateTime.new(dtstart, 'tzid' => @time_zone)
-        e.dtend   = Icalendar::Values::DateTime.new(dtend, 'tzid' => @time_zone)
+        e.dtstart = Icalendar::Values::DateTime.new(dtstart, 'tzid' => time_zone)
+        e.dtend   = Icalendar::Values::DateTime.new(dtend, 'tzid' => time_zone)
         if event_data[:alarm]
           e.alarm do |a|
             a.action  = 'DISPLAY'
@@ -73,6 +78,16 @@ class CalendarSubscriptions
     end
 
     cal.to_ical
+  end
+
+  private
+
+  # New/open ticket events carry a local date, all other events the UTC wall clock
+  # labelled with the offset of the time zone, which has to be dropped.
+  def event_start_utc(event_data)
+    return ActiveSupport::TimeZone[time_zone].parse(event_data[:dtstart].to_s).utc if event_data[:type] == 'new_open'
+
+    DateTime.parse(event_data[:dtstart].to_s).change(offset: '+00:00')
   end
 
 end

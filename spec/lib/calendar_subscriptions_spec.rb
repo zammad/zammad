@@ -307,4 +307,46 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
       include_examples 'verify timestamps'
     end
   end
+
+  context 'when the first event falls on a daylight saving time change' do
+    let(:group) { create(:group) }
+    let(:agent) { create(:agent, groups: [group]) }
+
+    shared_examples 'delivering the calendar' do |time_zone:, now:, event_type:, local_start:, ticket_attributes: {}|
+      before do
+        travel_to now
+        Setting.set('timezone_default', time_zone)
+
+        agent.preferences[:calendar_subscriptions] = {
+          tickets: %w[new_open pending escalation].index_with { |type| { own: type == event_type, not_assigned: false } }.merge(alarm: false),
+        }
+        agent.save!
+
+        create(:ticket, group:, owner: agent, **ticket_attributes)
+      end
+
+      it 'includes the time zone and the event' do
+        expect(calendars.first.timezones.first.tzid.to_s).to eq(time_zone)
+        expect(calendars.first.events.count).to be(1)
+        expect(calendars.first.events.first.dtstart.value_ical).to eq(local_start)
+      end
+    end
+
+    context 'with an event in the repeated hour when the clocks are set back' do
+      include_examples 'delivering the calendar',
+                       time_zone:         'Europe/Berlin',
+                       now:               Time.utc(2026, 10, 23, 1, 30),
+                       event_type:        'pending',
+                       local_start:       '20261025T033000',
+                       ticket_attributes: { state_name: 'pending reminder', pending_time: Time.utc(2026, 10, 25, 2, 30) }
+    end
+
+    context 'with a new ticket on a day without local midnight' do
+      include_examples 'delivering the calendar',
+                       time_zone:   'America/Santiago',
+                       now:         Time.utc(2026, 9, 6, 12),
+                       event_type:  'new_open',
+                       local_start: '20260906T010000'
+    end
+  end
 end
