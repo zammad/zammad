@@ -73,6 +73,60 @@ RSpec.describe CoreWorkflow, type: :model do
     end
   end
 
+  describe 'custom module validation' do
+    let(:registered_module) { 'CoreWorkflow::Custom::Testa' }
+
+    before do
+      stub_const registered_module, Class.new(CoreWorkflow::Custom::Backend)
+    end
+
+    it 'accepts registered modules' do
+      workflow = build(:core_workflow,
+                       condition_saved:    { 'custom.module': { operator: 'match all modules', value: [registered_module] } },
+                       condition_selected: { 'custom.module': { operator: 'match one module', value: [registered_module] } },
+                       perform:            { 'custom.module': { execute: [registered_module] } })
+
+      expect(workflow).to be_valid
+    end
+
+    it 'rejects an unregistered module in perform', :aggregate_failures do
+      workflow = build(:core_workflow, perform: { 'custom.module': { execute: ['Ticket'] } })
+
+      expect(workflow).not_to be_valid
+      expect(workflow.errors.full_messages).to include("Custom module 'Ticket' is not available.")
+    end
+
+    it 'rejects an unregistered module in saved conditions' do
+      workflow = build(:core_workflow, condition_saved: { 'custom.module': { operator: 'match all modules', value: ['Ticket'] } })
+
+      expect(workflow).not_to be_valid
+    end
+
+    it 'rejects an unregistered module in selected conditions' do
+      workflow = build(:core_workflow, condition_selected: { 'custom.module': { operator: 'match no modules', value: [registered_module, 'Ticket'] } })
+
+      expect(workflow).not_to be_valid
+    end
+
+    it 'rejects an unregistered module in a module condition of another attribute' do
+      workflow = build(:core_workflow, condition_saved: { 'ticket.title': { operator: 'match all modules', value: ['Ticket'] } })
+
+      expect(workflow).not_to be_valid
+    end
+
+    it 'rejects an unregistered module given as condition value hash' do
+      workflow = build(:core_workflow, condition_selected: { 'custom.module': { operator: 'match one module', value: [{ value: 'Ticket' }] } })
+
+      expect(workflow).not_to be_valid
+    end
+
+    it 'rejects an unknown module' do
+      workflow = build(:core_workflow, perform: { 'custom.module': { execute: ['CoreWorkflow::Custom::Unknown'] } })
+
+      expect(workflow).not_to be_valid
+    end
+  end
+
   describe '.matches_selector?' do
     let(:result) { described_class.matches_selector?(id: ticket.id, user: action_user, selector: condition) }
 
