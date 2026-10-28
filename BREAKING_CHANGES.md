@@ -262,6 +262,22 @@ template and setting value under `Templates referring to settings` in the Rails 
 
 **Related advisory:** [GHSA-4x57-g5xr-67vq](https://github.com/zammad/zammad/security/advisories/GHSA-4x57-g5xr-67vq)
 
+### `PUT /api/v1/settings/{id}` only updates the value of the setting
+
+**Who is affected?** Integrations that send anything other than `state_current.value` through
+`PUT /api/v1/settings/{id}`.
+
+The endpoint applied the setting's `title` and `description` and new `preferences` keys from its
+payload, and stored `state_current` as sent. It now applies `state_current.value` only. Other
+attributes, and keys next to `value` in `state_current`, are ignored, and the response still answers
+`200` with the record, so such an integration gets a success response while nothing but the value
+changes. A request without `state_current.value` is rejected with `422`.
+
+⚠️ Send only `state_current: { value: … }` to this endpoint. The title, description and preferences
+of a setting are maintained by Zammad itself.
+
+**Related advisory:** [GHSA-772p-w6hj-6p6v](https://github.com/zammad/zammad/security/advisories/GHSA-772p-w6hj-6p6v)
+
 ### `PUT /api/v1/online_notifications/{id}` only updates `seen`
 
 **Who is affected?** Integrations that write any attribute other than `seen` through
