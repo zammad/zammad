@@ -10,6 +10,14 @@ class Setting < ApplicationModel
 
   SENSITIVE_SETTING_NAMES = %w[secret auth_ password pw credential endpoint_key _config _token recovery_codes pwd captcha_options private_key].freeze
 
+  # Not sent to the frontend, but harmless, and what a template needs to rebuild the ticket
+  # reference and the notification sender.
+  TEMPLATE_READABLE_SETTINGS = %w[ticket_hook_divider notification_sender].freeze
+
+  # How far a setting's value travels, widest audience first: to anonymous clients, to logged-in
+  # users, to templates, or no further than the backend.
+  REACH = { public: 0, authenticated: 1, templates: 2, backend: 3 }.freeze
+
   store         :options
   store         :state_current
   store         :state_initial
@@ -27,6 +35,7 @@ class Setting < ApplicationModel
 
   @@current         = {}
   @@raw             = {}
+  @@reach           = {}
   @@query_cache_key = nil
   @@last_changed_at = nil
   @@lookup_at       = nil
@@ -70,6 +79,23 @@ get config setting
   def self.get(name)
     load
     @@current[name].deep_dup # prevents accidental modification of settings in console
+  end
+
+  # True for a setting a template may read: one sent to the frontend, or one of the few named ones.
+  def self.template_readable?(name)
+    load
+    travels_to?(name, REACH[:templates])
+  end
+
+  def self.known?(name)
+    load
+    @@reach.key?(name)
+  end
+
+  # True when the value of `referrer` takes in `#{config.<name>}`.
+  def self.reference_kept?(referrer, name)
+    load
+    takes_in?(referrer, name)
   end
 
 =begin
@@ -165,13 +191,15 @@ reload config settings
                        base_query
                      end
 
-    settings = settings_query.pluck(:name, :state_current)
+    settings      = settings_query.pluck(:name, :state_current, :frontend)
+    authenticated = authenticated_names(settings_query)
 
     @@last_changed_at = [Time.current, latest].min if latest
 
     if settings.present?
-      settings.each do |setting|
-        @@raw[setting[0]] = setting[1]['value']
+      settings.each do |name, state_current, frontend|
+        @@raw[name]   = state_current['value']
+        @@reach[name] = reach(name, frontend, authenticated.include?(name))
       end
 
       @@raw.each do |key, value|
@@ -180,7 +208,7 @@ reload config settings
           next
         end
 
-        @@current[key] = interpolate_value value
+        @@current[key] = interpolate_value key, value
       end
     end
 
@@ -191,32 +219,67 @@ reload config settings
   end
   private_class_method :load
 
-  def self.interpolate_value(input)
-    return input if !input.is_a? String
+  # Deserializing preferences is costly, and only frontend settings need them.
+  def self.authenticated_names(settings_query)
+    settings_query.where(frontend: true).pluck(:name, :preferences)
+      .filter_map { |name, preferences| name if preferences['authentication'] }
+      .to_set
+  end
+  private_class_method :authenticated_names
 
-    input.gsub(%r{\#\{config\.(.+?)\}}) do
-      @@raw[$1].to_s
-    end
+  def self.reach(name, frontend, authenticated)
+    return REACH[:templates] if TEMPLATE_READABLE_SETTINGS.include?(name)
+    return REACH[:backend] if !frontend
+
+    authenticated ? REACH[:authenticated] : REACH[:public]
+  end
+  private_class_method :reach
+
+  def self.travels_to?(name, reach)
+    @@reach.key?(name) && @@reach[name] <= reach
+  end
+  private_class_method :travels_to?
+
+  # A value takes in only what its own readers may see anyway: a template may read `name`, and it
+  # travels at least as far as `referrer` does, so a public setting takes in public settings only.
+  def self.takes_in?(referrer, name)
+    return false if !@@reach.key?(referrer)
+
+    travels_to?(name, [@@reach[referrer], REACH[:templates]].min)
+  end
+  private_class_method :takes_in?
+
+  def self.interpolate_value(referrer, input)
+    replace_config_references(referrer, input) { |_name, value| value }
   end
   private_class_method :interpolate_value
 
   def self.sanitize_notification_sender(input)
-    return input if !input.is_a? String
-
-    input.gsub(%r{\#\{config\.(.+?)\}}) do
-      placeholder = @@raw[$1].to_s
-
-      case $1
+    replace_config_references('notification_sender', input) do |name, value|
+      case name
       when 'fqdn'
-        placeholder = placeholder.sub(%r{:\d+$}, '') # strip port from fqdn
+        value.sub(%r{:\d+$}, '') # strip port from fqdn
       when 'product_name'
-        placeholder = "\"#{placeholder.gsub(%r{"}, "''")}\"" # quote and replace double quotes
+        "\"#{value.gsub(%r{"}, "''")}\"" # quote and replace double quotes
+      else
+        value
       end
-
-      placeholder
     end
   end
   private_class_method :sanitize_notification_sender
+
+  # A reference the value does not take in is dropped, as an unknown one always was.
+  def self.replace_config_references(referrer, input)
+    return input if !input.is_a? String
+
+    input.gsub(%r{\#\{config\.(.+?)\}}) do
+      name = $1
+      next '' if !takes_in?(referrer, name)
+
+      yield name, @@raw[name].to_s
+    end
+  end
+  private_class_method :replace_config_references
 
   # set initial value in state_initial
   def set_initial

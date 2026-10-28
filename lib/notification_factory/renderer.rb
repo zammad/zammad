@@ -7,6 +7,9 @@ class NotificationFactory::Renderer
     created_article created_internal_article created_external_article
   ].freeze
 
+  def read_all_settings? = @read_all_settings
+  def ignore_missing_objects? = @ignore_missing_objects
+
 =begin
 
 examples how to use
@@ -21,6 +24,7 @@ examples how to use
       escape: false,      # Perform HTML encoding on replaced values
       url_encode: false, # Perform URI encoding on replaced values
       trusted: false,     # Allow ERB tags in the template?
+      read_all_settings: false, # Resolve #{config.*} for every setting, not only those sent to the frontend?
     ).render
 
     message_body = NotificationFactory::Renderer.new(
@@ -34,7 +38,7 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, ignore_missing_objects: false, trim_mode: nil)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, read_all_settings: false, ignore_missing_objects: false, trim_mode: nil)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
@@ -42,6 +46,7 @@ examples how to use
     @escape = escape
     @url_encode = url_encode
     @trusted = trusted
+    @read_all_settings = read_all_settings
     @ignore_missing_objects = ignore_missing_objects
     @trim_mode = trim_mode
   end
@@ -95,11 +100,7 @@ examples how to use
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
     # if object is not in available objects, just return
-    if !object_refs
-      return "\#{#{key}}" if @ignore_missing_objects
-
-      return debug("\#{#{object_name} / no such object}")
-    end
+    return missing_object(key, object_name) if !object_refs
 
     # if content of method is a complex datatype, just return
     if object_methods.blank? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
@@ -204,8 +205,9 @@ examples how to use
   # c - config
   # c('fqdn', htmlEscape)
   def c(key, escape = nil)
-    config = Setting.get(key)
-    escaping(config, escape)
+    return missing_object("config.#{key}") if config_withheld?(key)
+
+    escaping(Setting.get(key), escape)
   end
 
   # t - translation
@@ -247,6 +249,18 @@ examples how to use
   end
 
   private
+
+  # Only a setting that exists but templates may not read is withheld; an unknown name renders
+  # empty, as it always did.
+  def config_withheld?(key)
+    !read_all_settings? && Setting.known?(key) && !Setting.template_readable?(key)
+  end
+
+  def missing_object(placeholder, name = placeholder)
+    return "\#{#{placeholder}}" if ignore_missing_objects?
+
+    debug("\#{#{name} / no such object}")
+  end
 
   def template_binding
     TemplateContext.new(self, @objects).safe_binding

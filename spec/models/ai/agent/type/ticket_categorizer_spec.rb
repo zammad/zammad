@@ -14,11 +14,19 @@ RSpec.describe AI::Agent::Type::TicketCategorizer, :aggregate_failures, current_
       expect(result['result_structure']).to include('priority_id')
       expect(result['result_structure']['priority_id']).to eq('string')
     end
+
+    context 'when a placeholder value contains a config placeholder' do
+      let(:type_enrichment_data) { { 'category' => '#{config.application_secret}' } } # rubocop:disable Lint/InterpolationCheck
+
+      it 'does not put the setting value into the definition' do
+        expect(agent_type.execution_definition.to_json).not_to include(Setting.get('application_secret'))
+      end
+    end
   end
 
   describe '.execution_action_definition' do
     let(:type_enrichment_data) { { 'category' => 'category' } }
-    let(:agent_type) { described_class.new(type_enrichment_data:) }
+    let(:agent_type)           { described_class.new(type_enrichment_data:) }
 
     it 'transforms action_definition with replacement data' do
       result = agent_type.execution_action_definition

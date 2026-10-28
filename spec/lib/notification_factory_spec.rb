@@ -98,4 +98,18 @@ RSpec.describe NotificationFactory do
         .to eq(File.read(template_path))
     end
   end
+
+  describe '::render_file_template' do
+    it 'runs ERB and reads a setting templates may not read' do
+      expect(described_class.render_file_template('<%= 1 + 1 %> #{config.postmaster_max_size}', { objects: {} })) # rubocop:disable Lint/InterpolationCheck
+        .to eq("2 #{Setting.get('postmaster_max_size')}")
+    end
+
+    it 'does not escape when asked not to' do
+      Setting.set('product_name', 'A & B')
+
+      expect(described_class.render_file_template('#{config.product_name}', { objects: {} }, escape: false)) # rubocop:disable Lint/InterpolationCheck
+        .to eq('A & B')
+    end
+  end
 end

@@ -24,6 +24,23 @@ RSpec.describe Trigger, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
   it_behaves_like 'TouchesPerformReferences'
 
+  describe 'article.note with a setting that is not sent to the frontend' do
+    let(:perform) do
+      { 'article.note' => { 'subject' => 'Setting probe', 'internal' => 'true', 'body' => 'secret: #{config.application_secret}' } } # rubocop:disable Lint/InterpolationCheck
+    end
+
+    before { trigger }
+
+    it 'does not put the setting value into the note', :aggregate_failures do
+      ticket = create(:ticket)
+      TransactionDispatcher.commit
+
+      note = ticket.reload.articles.find_by(subject: 'Setting probe')
+      expect(note.body).to start_with('secret: ')
+      expect(note.body).not_to include(Setting.get('application_secret'))
+    end
+  end
+
   describe 'validation' do
     it 'uses Validations::VerifyPerformRulesValidator' do
       expect(described_class).to have_validator(Validations::VerifyPerformRulesValidator).on(:perform)

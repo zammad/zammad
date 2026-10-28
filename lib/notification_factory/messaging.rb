@@ -66,14 +66,7 @@ returns
   end
 
   def self.render_template(template, data)
-    NotificationFactory::Renderer.new(
-      objects:  data[:objects],
-      locale:   data[:locale],
-      timezone: data[:timezone],
-      template: template,
-      escape:   false,
-      trusted:  true
-    ).render
+    NotificationFactory.render_file_template(template, data, escape: false)
   end
 
   def self.adjust_data(data, message_body)
