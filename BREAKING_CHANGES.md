@@ -101,6 +101,24 @@ Declare a `permission` in the preferences of settings that an add-on's admin pag
 
 **Related advisory:** [GHSA-qqr9-58h5-hxc4](https://github.com/zammad/zammad/security/advisories/GHSA-qqr9-58h5-hxc4)
 
+### Templates written in the admin interface only resolve settings sent to the frontend
+
+**Who is affected?** Admins whose triggers, scheduler jobs, macros, text modules, signatures, AI
+text tools, AI agents, link templates, external data source search URLs or setting values use a
+`#{config.<name>}` placeholder for a setting not sent to the frontend, such as `postmaster_max_size`.
+
+Such a placeholder resolved every setting. It now resolves only settings sent to the frontend, plus
+`ticket_hook_divider` and `notification_sender`; any other setting renders as a missing object
+(`#{config.<name> / no such object}` or `-`), and in an AI agent stays as the placeholder itself. A
+setting value takes in only settings its own readers may see, so a public setting such as
+`product_name` no longer takes in `system_id`, which is sent to logged-in users only. The
+placeholders Zammad ships (`product_name`, `fqdn`, `http_type`, `ticket_hook`) keep working.
+
+⚠️ Replace such placeholders with the literal value before updating. The update logs every affected
+template and setting value under `Templates referring to settings` in the Rails log.
+
+**Related advisory:** [GHSA-4x57-g5xr-67vq](https://github.com/zammad/zammad/security/advisories/GHSA-4x57-g5xr-67vq)
+
 ### `PUT /api/v1/online_notifications/{id}` only updates `seen`
 
 **Who is affected?** Integrations that write any attribute other than `seen` through

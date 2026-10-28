@@ -132,4 +132,30 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
+
+  context 'when a text module uses a setting that is not sent to the frontend' do
+    let(:group) { create(:group) }
+    let(:agent) { create(:agent, groups: [group]) }
+    let(:query) do
+      <<~QUERY
+        query textModuleSuggestions($query: String!) {
+          textModuleSuggestions(query: $query) {
+            renderedContent(templateRenderContext: {})
+          }
+        }
+      QUERY
+    end
+
+    before do
+      create(:text_module, name: 'SettingProbe', keywords: 'SettingProbe', content: 'secret: #{config.application_secret}', groups: [group]) # rubocop:disable Lint/InterpolationCheck
+      gql.execute(query, variables: { query: 'SettingProbe' })
+    end
+
+    it 'does not render the setting value', :aggregate_failures do
+      rendered = gql.result.data.first['renderedContent']
+
+      expect(rendered).to start_with('secret: ')
+      expect(rendered).not_to include(Setting.get('application_secret'))
+    end
+  end
 end

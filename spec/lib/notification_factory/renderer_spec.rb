@@ -722,6 +722,55 @@ RSpec.describe NotificationFactory::Renderer do
           template = "some \#{ config.fqdn} and \#{\tconfig.product_name}"
           expect(render_result(template: template, objects: { ticket: ticket })).to eq("some #{Setting.get('fqdn')} and #{Setting.get('product_name')}")
         end
+
+        it 'renders a setting that is not sent to the frontend as a missing object' do
+          expect(render_result(template: '#{config.postmaster_max_size}', objects: {})).to eq('#{config.postmaster_max_size / no such object}')
+        end
+
+        it 'does not render the application secret' do
+          expect(render_result(template: '#{config.application_secret}', objects: {})).not_to include(Setting.get('application_secret'))
+        end
+
+        it 'does not render a setting the ticket hook divider refers to' do
+          Setting.set('ticket_hook_divider', '#{config.application_secret}')
+
+          expect(render_result(template: '#{config.ticket_hook_divider}', objects: {})).not_to include(Setting.get('application_secret'))
+        end
+
+        it 'renders the ticket hook divider, which is not sent to the frontend' do
+          Setting.set('ticket_hook_divider', '-')
+
+          expect(render_result(template: '#{config.ticket_hook}#{config.ticket_hook_divider}#{ticket.number}', objects: { ticket: ticket }))
+            .to eq("#{Setting.get('ticket_hook')}-#{ticket.number}")
+        end
+
+        it 'renders the notification sender, which is not sent to the frontend' do
+          renderer = build(:notification_factory_renderer, objects: {}, template: '#{config.notification_sender}', escape: false)
+
+          expect(renderer.render).to eq(Setting.get('notification_sender'))
+        end
+
+        it 'renders an unknown setting as an empty string' do
+          expect(render_result(template: 'a#{config.does_not_exist}b', objects: {})).to eq('ab')
+        end
+
+        it 'keeps the placeholder of a setting that is not readable when missing objects are ignored' do
+          renderer = build(:notification_factory_renderer, objects: {}, template: '#{config.postmaster_max_size}', ignore_missing_objects: true)
+
+          expect(renderer.render).to eq('#{config.postmaster_max_size}')
+        end
+
+        it 'renders a setting that is not sent to the frontend as a missing object in a trusted template' do
+          renderer = build(:notification_factory_renderer, objects: {}, template: '#{config.postmaster_max_size}', trusted: true)
+
+          expect(renderer.render).to eq('#{config.postmaster_max_size / no such object}')
+        end
+
+        it 'renders a setting that is not sent to the frontend when every setting may be read' do
+          renderer = build(:notification_factory_renderer, objects: {}, template: '#{config.postmaster_max_size}', read_all_settings: true, escape: false)
+
+          expect(renderer.render).to eq(Setting.get('postmaster_max_size').to_s)
+        end
       end
 
       context 'with translations' do
