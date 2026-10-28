@@ -93,4 +93,26 @@ RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
       expect(page).to have_css('li', text: Regexp.new(text))
     end
   end
+
+  context 'with sent notification' do
+    let(:group) { Group.first }
+
+    before do
+      History.add(
+        o_id:           ticket.id,
+        history_type:   'notification',
+        history_object: 'Ticket',
+        value_to:       'john.doe@example.com(reminder_reached:online,email)',
+        created_by_id:  1,
+      )
+
+      visit "#ticket/zoom/#{ticket.id}"
+      find('[data-tab="ticket"] .js-actions').click
+      click('[data-type="ticket-history"]')
+    end
+
+    it 'shows the reason and channels in human readable form' do
+      expect(page).to have_css('li', text: "notification sent to 'john.doe@example.com' (Ticket reminder reached: Online, Email)")
+    end
+  end
 end

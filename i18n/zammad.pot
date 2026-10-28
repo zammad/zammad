@@ -3547,7 +3547,7 @@ msgstr ""
 msgid "Checklist"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr ""
 
@@ -6978,6 +6978,7 @@ msgstr ""
 msgid "Elasticsearch version"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:59
@@ -6989,6 +6990,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -12318,6 +12320,8 @@ msgstr ""
 msgid "New text module"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -13003,7 +13007,7 @@ msgstr ""
 msgid "Notification sender"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr ""
 
@@ -13229,7 +13233,9 @@ msgstr ""
 msgid "One or more self-hosted video servers are invalid. Please check the host names."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr ""
@@ -20569,10 +20575,17 @@ msgstr ""
 msgid "Ticket customer updated successfully."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+msgid "Ticket escalation warning"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
@@ -20631,8 +20644,10 @@ msgstr ""
 msgid "Ticket overviews"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr ""
@@ -20679,9 +20694,11 @@ msgstr ""
 msgid "Ticket title"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr ""
@@ -23575,7 +23592,7 @@ msgstr ""
 msgid "checked"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr ""
 
@@ -23857,7 +23874,7 @@ msgstr ""
 msgid "email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr ""
 
@@ -23941,7 +23958,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr ""
 
@@ -24565,8 +24582,12 @@ msgstr ""
 msgid "note"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+msgid "notification sent to '%s' (%s: %s)"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
@@ -24656,7 +24677,7 @@ msgstr ""
 msgid "reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr ""
 
@@ -24695,7 +24716,7 @@ msgstr ""
 msgid "remove option"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr ""
 
@@ -24900,7 +24921,7 @@ msgstr ""
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr ""
 
@@ -24909,7 +24930,7 @@ msgstr ""
 msgid "ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr ""
 
@@ -24949,15 +24970,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
@@ -24986,7 +25007,7 @@ msgstr ""
 msgid "unassign user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr ""
 

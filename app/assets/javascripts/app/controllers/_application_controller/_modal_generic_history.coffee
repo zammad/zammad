@@ -42,6 +42,24 @@ class App.GenericHistory extends App.ControllerModal
       'AI::Agent': __('AI Agent'),
     }[type] || type
 
+  # Notifications are stored as "recipient(type:channel,channel)", labelled like in the notification settings where possible.
+  notificationContent: (value) ->
+    match = value.match(/^(.+)\(([^:()]+):([^()]+)\)$/)
+    return App.i18n.translateContent("notification sent to '%s'", value) if !match
+
+    [recipient, type, channels] = match[1..]
+    reason = {
+      'create': __('New ticket'),
+      'update': __('Ticket update'),
+      'reminder_reached': __('Ticket reminder reached'),
+      'escalation': __('Ticket escalation'),
+      'escalation_warning': __('Ticket escalation warning'),
+    }[type.split('.')[0]] || type
+    channelNames = for channel in channels.split(',')
+      App.i18n.translatePlain({ 'online': __('Online'), 'email': __('Email') }[channel] || channel)
+
+    App.i18n.translateContent("notification sent to '%s' (%s: %s)", recipient, App.i18n.translatePlain(reason), channelNames.join(', '))
+
   reworkItems: (items) ->
     newItems = []
     newItem = {}
@@ -99,7 +117,7 @@ class App.GenericHistory extends App.ControllerModal
       # build content
       content = ''
       if item.type is 'notification'
-        content = App.i18n.translateContent( "notification sent to '%s'", item.value_to )
+        content = @notificationContent(item.value_to)
       else if item.type is 'email'
         content = App.i18n.translateContent( "email sent to '%s'", item.value_to )
       else if item.type is 'time_trigger_performed'

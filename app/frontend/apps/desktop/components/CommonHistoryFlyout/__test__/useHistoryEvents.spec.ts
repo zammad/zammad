@@ -447,7 +447,110 @@ describe('useHistoryEvents', () => {
           component: undefined,
           sentenceDescription: 'Notification sent to',
           details: 'dummy@example.com',
-          additionalDetails: 'update:online,email',
+          additionalDetails: 'Ticket update: Online, Email',
+        })
+      })
+
+      it('tells an escalation warning apart from an escalation', () => {
+        const event: HistoryRecordEvent = {
+          __typename: 'HistoryRecordEvent',
+          action: 'notification',
+          createdAt: '2022-01-01T00:00:00Z',
+          changes: {
+            from: '',
+            to: 'dummy@example.com(escalation_warning:online)',
+          },
+          object: {},
+        }
+
+        const { getEventOutput } = useHistoryEvents()
+
+        expect(getEventOutput(event)).toMatchObject({
+          additionalDetails: 'Ticket escalation warning: Online',
+        })
+      })
+
+      it('shows a qualified reason like a merge as a ticket update', () => {
+        const event: HistoryRecordEvent = {
+          __typename: 'HistoryRecordEvent',
+          action: 'notification',
+          createdAt: '2022-01-01T00:00:00Z',
+          changes: {
+            from: '',
+            to: 'dummy@example.com(update.merged_into:online)',
+          },
+          object: {},
+        }
+
+        const { getEventOutput } = useHistoryEvents()
+
+        expect(getEventOutput(event)).toMatchObject({
+          additionalDetails: 'Ticket update: Online',
+        })
+      })
+
+      it('keeps parentheses in a login used as recipient', () => {
+        const event: HistoryRecordEvent = {
+          __typename: 'HistoryRecordEvent',
+          action: 'notification',
+          createdAt: '2022-01-01T00:00:00Z',
+          changes: {
+            from: '',
+            to: 'max (it)(update:online)',
+          },
+          object: {},
+        }
+
+        const { getEventOutput } = useHistoryEvents()
+
+        expect(getEventOutput(event)).toMatchObject({
+          details: 'max (it)',
+          additionalDetails: 'Ticket update: Online',
+        })
+      })
+
+      it('falls back to the raw values for unknown parts', () => {
+        const event: HistoryRecordEvent = {
+          __typename: 'HistoryRecordEvent',
+          action: 'notification',
+          createdAt: '2022-01-01T00:00:00Z',
+          changes: {
+            from: '',
+            to: 'dummy@example.com(unknown:sms)',
+          },
+          object: {},
+        }
+
+        const { getEventOutput } = useHistoryEvents()
+
+        expect(getEventOutput(event)).toEqual({
+          actionName: 'notification',
+          component: undefined,
+          sentenceDescription: 'Notification sent to',
+          details: 'dummy@example.com',
+          additionalDetails: 'unknown: sms',
+        })
+      })
+
+      it('shows the raw value when it has an unknown format', () => {
+        const event: HistoryRecordEvent = {
+          __typename: 'HistoryRecordEvent',
+          action: 'notification',
+          createdAt: '2022-01-01T00:00:00Z',
+          changes: {
+            from: '',
+            to: 'a@example.com,b@example.com',
+          },
+          object: {},
+        }
+
+        const { getEventOutput } = useHistoryEvents()
+
+        expect(getEventOutput(event)).toEqual({
+          actionName: 'notification',
+          component: undefined,
+          sentenceDescription: 'Notification sent to',
+          details: 'a@example.com,b@example.com',
         })
       })
     })
