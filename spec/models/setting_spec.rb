@@ -62,6 +62,49 @@ RSpec.describe Setting, type: :model do
       end
     end
 
+    context 'when the value refers to a setting that is not sent to the frontend' do
+      it 'drops the reference' do
+        create(:setting, name: 'broadcast_test', state: 'test')
+        described_class.set('broadcast_test', 'test #{config.application_secret}') # rubocop:disable Lint/InterpolationCheck
+
+        expect(described_class.get('broadcast_test')).to eq('test ')
+      end
+
+      it 'drops the reference in the notification sender' do
+        described_class.set('notification_sender', '#{config.application_secret} <noreply@example.com>') # rubocop:disable Lint/InterpolationCheck
+
+        expect(described_class.get('notification_sender')).to eq(' <noreply@example.com>')
+      end
+    end
+
+    context 'when the value refers to a setting templates may read although it is not sent to the frontend' do
+      it 'takes it in' do
+        described_class.set('ticket_hook_divider', '-')
+        create(:setting, name: 'broadcast_test', state: 'test')
+        described_class.set('broadcast_test', 'a#{config.ticket_hook_divider}b') # rubocop:disable Lint/InterpolationCheck
+
+        expect(described_class.get('broadcast_test')).to eq('a-b')
+      end
+    end
+
+    context 'when a setting sent to anonymous clients refers to a setting sent to logged-in users only' do
+      it 'drops that reference and keeps a public one' do
+        create(:setting, name: 'broadcast_test', frontend: true, state: 'test')
+        described_class.set('broadcast_test', 'ID #{config.system_id} at #{config.fqdn}') # rubocop:disable Lint/InterpolationCheck
+
+        expect(described_class.get('broadcast_test')).to eq("ID  at #{described_class.get('fqdn')}")
+      end
+    end
+
+    context 'when a setting sent to logged-in users refers to a setting sent to logged-in users only' do
+      it 'takes it in' do
+        create(:setting, name: 'broadcast_test', frontend: true, preferences: { authentication: true }, state: 'test')
+        described_class.set('broadcast_test', 'ID #{config.system_id}') # rubocop:disable Lint/InterpolationCheck
+
+        expect(described_class.get('broadcast_test')).to eq("ID #{described_class.get('system_id')}")
+      end
+    end
+
     context 'with offending chars in product_name and fqdn (#4355)' do
       before do
         described_class.set('product_name', '<My "Helpdesk">')
@@ -72,6 +115,63 @@ RSpec.describe Setting, type: :model do
         expect(described_class.get('notification_sender'))
           .to eq('"<My \'\'Helpdesk\'\'>" <noreply@localhost>')
       end
+    end
+  end
+
+  describe '.template_readable?' do
+    it 'is true for a setting sent to the frontend' do
+      expect(described_class.template_readable?('fqdn')).to be(true)
+    end
+
+    it 'is true for the ticket hook divider and the notification sender, which are not sent to the frontend' do
+      expect(%w[ticket_hook_divider notification_sender].map { |name| described_class.template_readable?(name) }).to all(be(true))
+    end
+
+    it 'is false for a setting not sent to the frontend' do
+      expect(described_class.template_readable?('application_secret')).to be(false)
+    end
+
+    it 'is false for an unknown setting' do
+      expect(described_class.template_readable?('does_not_exist')).to be(false)
+    end
+
+    it 'follows a changed frontend flag' do
+      setting = create(:setting, name: 'template_readable_test', frontend: false, state: 'test')
+
+      expect { setting.update!(frontend: true) }
+        .to change { described_class.template_readable?('template_readable_test') }.from(false).to(true)
+    end
+  end
+
+  describe '.reference_kept?' do
+    it 'is true for a public setting referring to a public setting' do
+      expect(described_class.reference_kept?('product_name', 'fqdn')).to be(true)
+    end
+
+    it 'is false for a public setting referring to a setting sent to logged-in users only' do
+      expect(described_class.reference_kept?('product_name', 'system_id')).to be(false)
+    end
+
+    it 'is true for a setting not sent to the frontend referring to a setting sent to logged-in users only' do
+      expect(described_class.reference_kept?('notification_sender', 'system_id')).to be(true)
+    end
+
+    it 'is false for a setting not sent to the frontend referring to one templates may not read' do
+      expect(described_class.reference_kept?('notification_sender', 'application_secret')).to be(false)
+    end
+
+    it 'is false for an unknown referrer' do
+      expect(described_class.reference_kept?('does_not_exist', 'fqdn')).to be(false)
+    end
+  end
+
+  describe '.known?' do
+    it 'is true for an existing setting, whether templates may read it or not' do
+      expect(%w[fqdn application_secret].map { |name| described_class.known?(name) }).to all(be(true))
+    end
+
+    it 'is false for an unknown setting' do
+      expect(described_class.known?('does_not_exist')).to be(false)
     end
   end
 

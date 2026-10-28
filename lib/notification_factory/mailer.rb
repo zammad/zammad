@@ -393,25 +393,12 @@ returns
       type:     'mailer',
     )
 
-    message_subject = NotificationFactory::Renderer.new(
-      objects:  data[:objects],
-      locale:   data[:locale],
-      timezone: data[:timezone],
-      template: template[:subject],
-      escape:   false,
-      trusted:  true,
-    ).render
+    message_subject = NotificationFactory.render_file_template(template[:subject], data, escape: false)
 
     # strip off the extra newline at the end of the subject to avoid =0A suffixes (see #2726)
     message_subject.chomp!
 
-    message_body = NotificationFactory::Renderer.new(
-      objects:  data[:objects],
-      locale:   data[:locale],
-      timezone: data[:timezone],
-      template: template[:body],
-      trusted:  true,
-    ).render
+    message_body = NotificationFactory.render_file_template(template[:body], data)
 
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
@@ -420,13 +407,7 @@ returns
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
-      message_body = NotificationFactory::Renderer.new(
-        objects:  data[:objects],
-        locale:   data[:locale],
-        timezone: data[:timezone],
-        template: application_template,
-        trusted:  true,
-      ).render
+      message_body = NotificationFactory.render_file_template(application_template, data)
     end
     {
       subject: message_subject,
