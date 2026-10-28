@@ -68,7 +68,7 @@ class App.Auth
             return location.replace(data.url)
 
           # set logout (config, session, ...)
-          @_logout(rerender, callback)
+          @_logout(rerender, callback, true)
 
         error: (xhr, statusText, error) =>
           @_loginError(xhr)
@@ -143,6 +143,8 @@ class App.Auth
     # store user data
     App.Session.set(data.session.id)
 
+    App.ThirdPartyLoginAutoRedirect.resume()
+
     # trigger auth ok with new session data
     App.Event.trigger('auth', data.session)
 
@@ -168,7 +170,7 @@ class App.Auth
         if _.isFunction(App[model].updateAttributes)
           App[model].updateAttributes(attributes)
 
-  @_logout: (rerender = true, callback) ->
+  @_logout: (rerender = true, callback, pauseAutoRedirect = false) ->
     App.Log.debug 'Auth', '_logout'
 
     App.TaskManager.reset()
@@ -191,6 +193,9 @@ class App.Auth
         App.Event.trigger('ui:rerender')
       )
     App.Event.trigger('clearStore')
+
+    # The identity provider session is still alive, the next login page would sign in again.
+    App.ThirdPartyLoginAutoRedirect.pause() if pauseAutoRedirect
 
     if callback
       callback()

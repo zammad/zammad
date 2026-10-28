@@ -10,11 +10,14 @@ import {
 } from '#shared/components/CommonNotifications/index.ts'
 import useLoginTwoFactor from '#shared/composables/authentication/useLoginTwoFactor.ts'
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
+import { useThirdPartyAuthenticationAutoRedirect } from '#shared/composables/authentication/useThirdPartyAuthenticationAutoRedirect.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import { usePublicLinks } from '#shared/composables/usePublicLinks.ts'
 import type UserError from '#shared/errors/UserError.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 
 import LoginCredentialsForm from '../components/LoginCredentialsForm.vue'
 import LoginFooter from '../components/LoginFooter.vue'
@@ -60,6 +63,8 @@ const { links } = usePublicLinks(EnumPublicLinksScreen.Login)
 
 const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 
+const { isAutoRedirecting } = useThirdPartyAuthenticationAutoRedirect(enabledProviders)
+
 const showPasswordLogin = computed(
   () => application.config.user_show_password_login || !hasEnabledProviders.value,
 )
@@ -85,7 +90,8 @@ const showError = (error: UserError) => {
 </script>
 
 <template>
-  <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
+  <CommonLoader v-if="isAutoRedirecting" class="min-h-screen" loading />
+  <div v-else class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
     <div v-if="statePreviousMap[loginFlow.state]" class="flex w-full">
       <button class="cursor-pointer" :aria-label="__('Go back')" @click="goBack">
         <CommonIcon name="chevron-left" decorative />

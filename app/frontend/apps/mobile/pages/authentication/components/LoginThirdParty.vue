@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { resumeThirdPartyLoginAutoRedirect } from '#shared/composables/authentication/useThirdPartyAuthenticationAutoRedirect.ts'
 import { getCSRFToken } from '#shared/server/apollo/utils/csrfToken.ts'
 import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
 
@@ -25,6 +26,7 @@ const csrfToken = getCSRFToken()
         class="flex min-w-1/2 grow"
         method="post"
         :action="provider.url"
+        @submit="resumeThirdPartyLoginAutoRedirect"
       >
         <input type="hidden" name="authenticity_token" :value="csrfToken" />
         <button

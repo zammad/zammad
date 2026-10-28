@@ -8,6 +8,10 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import {
+  pauseThirdPartyLoginAutoRedirect,
+  resumeThirdPartyLoginAutoRedirect,
+} from '#shared/composables/authentication/useThirdPartyAuthenticationAutoRedirect.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { stopAllQueryPollings } from '#shared/composables/useQueryPolling.ts'
 import { useLoginMutation } from '#shared/graphql/mutations/login.api.ts'
@@ -87,6 +91,8 @@ export const useAuthenticationStore = defineStore(
       //  keep silencing the authentication errors of the new session, too.
       setAuthenticationInvalidated(false)
 
+      resumeThirdPartyLoginAutoRedirect()
+
       await Promise.all([useApplicationStore().getConfig(), useSessionStore().getCurrentUser()])
     }
 
@@ -132,6 +138,9 @@ export const useAuthenticationStore = defineStore(
         window.location.href = result.logout.externalLogoutUrl
         return
       }
+
+      // The identity provider session is still alive, the next login page would sign in again.
+      pauseThirdPartyLoginAutoRedirect()
 
       // Logout cleanup is already done before, so we are setting it to false.
       await clearAuthentication(false)

@@ -1092,6 +1092,33 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Automatic Third-party Login'),
+  name:        'third_party_login_auto_redirect',
+  area:        'Security::Base',
+  description: __('Redirect users from the login page directly to the third-party sign-in. Takes effect only if password login is disabled and exactly one third-party authentication is enabled.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'third_party_login_auto_redirect',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       6,
+    permission: ['admin.security'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('New User Accounts'),
   name:        'user_create_account',
   area:        'Security::Base',

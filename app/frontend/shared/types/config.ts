@@ -194,6 +194,7 @@ export interface ConfigList {
   system_init_done: boolean
   system_online_service: boolean
   tag_new?: boolean | null
+  third_party_login_auto_redirect?: boolean | null
   ticket_agent_default_notifications: unknown
   ticket_allow_expert_conditions?: boolean | null
   ticket_auto_assignment?: boolean | null

@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { computed, effectScope, ref } from 'vue'
 
+import { resumeThirdPartyLoginAutoRedirect } from '#shared/composables/authentication/useThirdPartyAuthenticationAutoRedirect.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { useCurrentUserLazyQuery } from '#shared/graphql/queries/currentUser.api.ts'
 import { useSessionLazyQuery } from '#shared/graphql/queries/session.api.ts'
@@ -86,6 +87,8 @@ export const useSessionStore = defineStore(
       // Refresh the current sessionId state.
       id.value = result?.session.id || null
       afterAuth.value = result?.session.afterAuth || null
+
+      if (id.value) resumeThirdPartyLoginAutoRedirect()
 
       return id.value
     }

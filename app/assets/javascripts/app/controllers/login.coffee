@@ -4,6 +4,7 @@ class Login extends App.ControllerFullPage
     'click .js-go-to-mobile': 'goToMobile'
     'click .js-try-another':              'clickedTryAnotherTwoFactor'
     'click .js-select-two-factor-method': 'clickedAnotherTwoFactor'
+    'submit .auth-providers form':        'clickedAuthProvider'
   className: 'login'
 
   constructor: ->
@@ -31,6 +32,10 @@ class Login extends App.ControllerFullPage
       }
 
     @title __('Sign in')
+
+    if autoRedirectProvider = App.ThirdPartyLoginAutoRedirect.provider(@authProviders(), @password_auth_token)
+      App.ThirdPartyLoginAutoRedirect.redirect(autoRedirectProvider)
+      return
 
     if !App.Config.get('user_show_password_login') && @password_auth_token
       params =
@@ -87,12 +92,6 @@ class Login extends App.ControllerFullPage
     if @showAdminPasswordLogin
       data.showAdminPasswordLogin = true
 
-    auth_provider_all = App.Config.get('auth_provider_all')
-    auth_providers = []
-    for key, provider of auth_provider_all
-      if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
-        auth_providers.push provider
-
     public_links = App.PublicLink.search(
       filter:
         screen: ['login']
@@ -102,7 +101,7 @@ class Login extends App.ControllerFullPage
     @replaceWith App.view('login')(
       item:             data
       logoUrl:          @logoUrl()
-      auth_providers:   auth_providers
+      auth_providers:   @authProviders()
       public_links:     public_links
       show_mobile_link: App.MobileDetection.isMobile() or App.MobileDetection.isForcingDesktopView()
     )
@@ -115,6 +114,14 @@ class Login extends App.ControllerFullPage
 
     # scroll to top
     @scrollTo()
+
+  authProviders: ->
+    auth_providers = []
+    for key, provider of App.Config.get('auth_provider_all')
+      if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
+        auth_providers.push provider
+
+    auth_providers
 
   renderTwoFactor: (data = {}) ->
     @twoFactorMethod = data.twoFactorMethod
@@ -226,6 +233,9 @@ class Login extends App.ControllerFullPage
       twoFactorMethod:           newMethod
       twoFactorAvailableMethods: @twoFactorAvailableMethods
     )
+
+  clickedAuthProvider: ->
+    App.ThirdPartyLoginAutoRedirect.resume()
 
   goToMobile: (e) ->
     @preventDefaultAndStopPropagation(e)

@@ -265,7 +265,8 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'dashboard_stats_ticket_channel_distribution',
           'dashboard_stats_ticket_load_measure',
           'dashboard_stats_ticket_in_process',
-          'dashboard_stats_ticket_reopen'
+          'dashboard_stats_ticket_reopen',
+          'third_party_login_auto_redirect'
         ]
       end
 

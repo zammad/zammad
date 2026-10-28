@@ -12,6 +12,7 @@ import type { FormSubmitData, FormSchemaField, FormValues } from '#shared/compon
 import { useForm } from '#shared/components/Form/useForm.ts'
 import useLoginTwoFactor from '#shared/composables/authentication/useLoginTwoFactor.ts'
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
+import { useThirdPartyAuthenticationAutoRedirect } from '#shared/composables/authentication/useThirdPartyAuthenticationAutoRedirect.ts'
 import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
@@ -20,6 +21,7 @@ import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 import { useBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import LoginThirdParty from '#desktop/pages/authentication/components/LoginThirdParty.vue'
@@ -38,6 +40,8 @@ const route = useRoute()
 const authentication = useAuthenticationStore()
 
 const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
+
+const { isAutoRedirecting } = useThirdPartyAuthenticationAutoRedirect(enabledProviders)
 
 const passwordLoginErrorMessage = ref('')
 
@@ -183,7 +187,8 @@ const { switchValue, toggleBetaUiSwitch } = useBetaUi()
 </script>
 
 <template>
-  <LayoutPublicPage box-size="small" :title="loginPageTitle" show-logo>
+  <CommonLoader v-if="isAutoRedirecting" class="min-h-screen" loading />
+  <LayoutPublicPage v-else box-size="small" :title="loginPageTitle" show-logo>
     <div
       v-if="application.isMaintenanceModeActive"
       class="mb-1 rounded-lg bg-red-500 px-4 py-2 text-sm text-white"
