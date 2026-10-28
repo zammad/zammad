@@ -9,4 +9,8 @@
 rspec:
   extends:
     - .template_rspec_postgresql
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, backend_changes_in_mr]
+    - !reference [.rule_fragments, then_manual_in_mr]
   parallel: 8

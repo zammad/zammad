@@ -1,9 +1,12 @@
 .template_vitest_shard:
   stage: test
   extends:
-    - .job_rules_default
     - .no_artifact_dependencies
     - .artifacts_with_test_report
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, frontend_changes_in_mr]
+    - !reference [.rule_fragments, then_manual_in_mr]
   needs:
     - !reference [.needs, nodejs]
     - !reference [.needs, lint]
@@ -30,9 +33,12 @@ frontend:vitest:
 frontend:cypress:
   stage: test
   extends:
-    - .job_rules_default
     - .tags_docker_low_concurrency
     - .no_artifact_dependencies
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, frontend_changes_in_mr]
+    - !reference [.rule_fragments, then_manual_in_mr]
   needs:
     - !reference [.needs, nodejs]
     - !reference [.needs, lint]

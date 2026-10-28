@@ -77,6 +77,53 @@
     - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
       when: never
 
+  # Start the backend test jobs in a merge request only if it touches what they
+  #   test. `changes:` cannot exclude paths, so `app/` is listed per directory, plus
+  #   the few frontend files that specs read. A path missing here only makes the job
+  #   manual in merge requests, branch pipelines still run it.
+  backend_changes_in_mr:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .gitlab/ci/__includes__/**/*
+        - .gitlab/ci/test/rspec.yml
+        - .gitlab/ci/database.yml
+        - .gitlab/{configure_environment.rb,database.rb,init_database.sh}
+        - .gitlab/ci/test/rspec/**/*
+        - .gitlab/ci/timings/rspec.yml
+        - .dev/rubocop/**/*
+        - .rspec
+        - .rubocop.yml
+        - .ruby-version
+        - app/{channels,controllers,graphql,helpers,jobs,mailers,models,policies,services,views}/**/*
+        - app/assets/stylesheets/custom_knowledge_base_public/**/*
+        - app/frontend/shared/composables/activity-message/**/*
+        - '{config,contrib,db,i18n,lib,public,script,spec,test,vendor}/**/*'
+        - config.ru
+        - Gemfile
+        - Gemfile.lock
+        - Rakefile
+        - VERSION
+      when: on_success
+
+  # Start the frontend test jobs in a merge request only if it touches what they
+  #   test. The GraphQL introspection is the schema the frontend tests mock.
+  frontend_changes_in_mr:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .gitlab/ci/__includes__/**/*
+        - .gitlab/ci/test/frontend.yml
+        - .dev/cypress/**/*
+        - .eslint-plugin-zammad/**/*
+        - app/frontend/**/*
+        - app/graphql/graphql_introspection.json
+        - public/assets/{fonts,frontend,icon-fonts}/**/*
+        - package.json
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - 'tsconfig*.json'
+        - vite.config.mjs
+      when: on_success
+
   # Closing entry: offer a manual start and never block the pipeline. `allow_failure`
   #   has to be spelled out for manual jobs - in `rules:` it defaults to `false`,
   #   which would turn the manual job into a blocking one.
@@ -94,8 +141,9 @@
       allow_failure: true
 
   # Closing entry for secondary test lanes that cover the same specs as a primary
-  #   lane (e.g. Firefox next to Chrome): in merge requests they are advisory and
-  #   only started on demand, on branches they run automatically.
+  #   lane (e.g. Firefox next to Chrome), and for test jobs whose code a merge
+  #   request does not touch (see `*_changes_in_mr`): in merge requests they are
+  #   advisory and only started on demand, on branches they run automatically.
   then_manual_in_mr:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: manual
