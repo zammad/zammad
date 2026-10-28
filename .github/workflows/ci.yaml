@@ -33,10 +33,10 @@ jobs:
         uses: actions/checkout@v7
       - name: Install pnpm
         uses: pnpm/action-setup@v6
-      - name: Use Node.js 24
+      - name: Use Node.js 26
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
           cache: 'pnpm'
       - name: Cache Rubygems
         id: cache-bundler
