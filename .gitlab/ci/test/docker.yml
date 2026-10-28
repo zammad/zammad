@@ -6,7 +6,6 @@
   needs:
     - !reference [.needs, lint]
   timeout: 30 minutes
-  interruptible: false
   rules:
     - !reference [.rule_fragments, main_repository_only]
     - !reference [.rule_fragments, variable_filters]
@@ -35,9 +34,11 @@
         zammad-nginx:
           ports: !reset []
       COMPOSE_OVERRIDE_FILE
+  # Also runs for a canceled job, so a new commit can stop these jobs without leaving
+  #   their stack or image behind on the runner host.
   after_script:
     - cd zammad-docker-compose
-    - docker compose down --timeout 0 --volumes
+    - docker compose -p "zammad-docker-ci-${ZAMMAD_IMAGE_TAG}" down --timeout 0 --volumes
     - docker image rm ${ZAMMAD_IMAGE}
 
 docker base tests:

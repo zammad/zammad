@@ -1,7 +1,7 @@
 workflow:
   # A new commit cancels the interruptible jobs of the older pipelines on the same ref.
-  #   The default `conservative` cancels nothing as soon as one non-interruptible job
-  #   (e.g. the docker jobs) has started, which happens a few minutes into every pipeline.
+  #   The default `conservative` cancels nothing as soon as one job with
+  #   `interruptible: false` has started.
   auto_cancel:
     on_new_commit: interruptible
   rules:
