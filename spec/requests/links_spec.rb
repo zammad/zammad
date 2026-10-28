@@ -137,5 +137,83 @@ RSpec.describe 'Link', type: :request do
         expect(json_response['error']).to eq('Link already exists')
       end
     end
+
+    context 'when the source does not exist' do
+      let(:params) { super().merge(link_object_source_number: '99999999') }
+
+      it 'is forbidden and does not reveal the missing object' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/links/remove', authenticated_as: -> { agent } do
+    let(:ticket) { create(:ticket) }
+    let(:source) { create(:ticket, group: ticket.group) }
+    let(:agent)  { create(:agent, groups: [ticket.group]) }
+
+    let(:params) do
+      {
+        link_type:                'normal',
+        link_object_target:       ticket.class.name,
+        link_object_target_value: ticket.id,
+        link_object_source:       source.class.name,
+        link_object_source_value: source.id,
+      }
+    end
+
+    let(:foreign)        { create(:ticket) }
+    let(:existing_links) { [{ from: source, to: ticket }] }
+
+    before do
+      existing_links.each { |link| create(:link, **link) }
+
+      delete '/api/v1/links/remove', params: params, as: :json
+    end
+
+    it 'removes the link' do
+      expect(response).to have_http_status(:created)
+      expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id)).to be_blank
+    end
+
+    context 'when the source is not accessible' do
+      let(:source) { create(:ticket) }
+
+      it 'is forbidden and keeps the link' do
+        expect(response).to have_http_status(:forbidden)
+        expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id))
+          .to include(include('link_object_value' => source.id))
+      end
+    end
+
+    context 'when the source does not exist' do
+      let(:params) { super().merge(link_object_source_value: 99_999_999) }
+
+      it 'is forbidden and does not reveal the missing object' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'when an inaccessible source is passed together with an accessible one' do
+      let(:existing_links) { [{ from: source, to: ticket }, { from: foreign, to: ticket }] }
+      let(:params)         { super().merge(link_object_source_value: [source.id, foreign.id]) }
+
+      it 'is forbidden and keeps the links' do
+        expect(response).to have_http_status(:forbidden)
+        expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id).pluck('link_object_value'))
+          .to contain_exactly(source.id, foreign.id)
+      end
+    end
+
+    context 'when an inaccessible target is passed together with an accessible one' do
+      let(:existing_links) { [{ from: source, to: ticket }, { from: source, to: foreign }] }
+      let(:params)         { super().merge(link_object_target_value: [ticket.id, foreign.id]) }
+
+      it 'is forbidden and keeps the links' do
+        expect(response).to have_http_status(:forbidden)
+        expect(Link.list(link_object: 'Ticket', link_object_value: source.id).pluck('link_object_value'))
+          .to contain_exactly(ticket.id, foreign.id)
+      end
+    end
   end
 end

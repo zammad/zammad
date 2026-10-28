@@ -13,7 +13,7 @@ module Gql::Mutations
     requires_permission 'ticket.agent'
 
     def resolve(input:)
-      source = fetch_link_object(input.source_id)
+      source = fetch_visible_link_object(input.source_id)
       target = fetch_authorized_link_object(input.target_id)
       type   = input.type
 

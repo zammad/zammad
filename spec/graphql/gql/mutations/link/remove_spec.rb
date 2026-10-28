@@ -70,9 +70,10 @@ RSpec.describe Gql::Mutations::Link::Remove, :aggregate_failures, type: :graphql
         context 'when source is not accessible' do
           let(:authenticated) { create(:agent, groups: [to_group]) }
 
-          it 'removes both links if existing' do
+          it 'raises an error and keeps both links' do
             expect { gql.execute(mutation, variables: variables) }
-              .to change(Link, :count).by(decremet)
+              .not_to change(Link, :count)
+            expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
           end
         end
       end

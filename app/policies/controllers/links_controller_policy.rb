@@ -6,11 +6,14 @@ class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPol
   end
 
   def add?
-    object_target_update? && object_source_show?
+    object_target_update? && object_source_show?(number: record.params[:link_object_source_number])
   end
 
   def remove?
-    object_target_update?
+    # Link.remove matches every id of an array, but only one of them would be authorized.
+    return false if record.params.values_at(:link_object_source_value, :link_object_target_value).any?(Array)
+
+    object_target_update? && object_source_show?(id: record.params[:link_object_source_value])
   end
 
   private
@@ -31,10 +34,13 @@ class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPol
     object_access?(policy, :agent_update_access?)
   end
 
-  def object_source_show?
-    policy = object_policy(record.params[:link_object_source], number: record.params[:link_object_source_number])
+  def object_source_show?(id: nil, number: nil)
+    policy = object_policy(record.params[:link_object_source], id:, number:)
 
     object_access?(policy, :agent_read_access?)
+  rescue ActiveRecord::RecordNotFound, NoMatchingPatternError
+    # Same as in #object_show?: a missing source must not be told apart from an inaccessible one.
+    false
   end
 
   def object_access?(policy, ticket_access)
