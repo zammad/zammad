@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-ARG RUBY_VERSION=3.4.9
+ARG RUBY_VERSION=3.4.12
 ARG NODE_VERSION=24
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim-trixie AS base

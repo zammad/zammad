@@ -2,7 +2,7 @@ name: "zammad-devcontainer"
 
 services:
   devcontainer:
-    "image": "ghcr.io/rails/devcontainer/images/ruby:3.4.9"
+    "image": "ghcr.io/rails/devcontainer/images/ruby:3.4.12"
 
     environment:
       MEMCACHE_SERVERS: memcached:11211
