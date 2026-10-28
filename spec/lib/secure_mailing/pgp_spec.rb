@@ -462,6 +462,59 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
       let!(:recipient_key)    { create(:pgp_key, :with_private, fixture: recipient_email_address) }
       let!(:cc_recipient_key) { create(:pgp_key, :with_private, fixture: cc_recipient_email_address) }
 
+      # X-Zammad headers are not taken from decrypted content.
+      context 'when the encrypted message has X-Zammad headers in the content' do
+        let(:mail) do
+          # The encrypted content is a MIME entity that also carries X-Zammad headers.
+          inner = <<~INNER.gsub(%r{\n}, "\r\n")
+            Content-Type: text/plain
+            X-Zammad-Ticket-Id: 99999
+            X-Zammad-Session-User-Id: 1
+            X-Zammad-Ticket-Followup-Customer: sender@example.com
+            X-Zammad-Article-Internal: true
+
+            Secured PGP body
+          INNER
+
+          encrypted = SecureMailing::PGP::Tool.new.with_private_keyring do |pgp_tool|
+            pgp_tool.import(recipient_key.key)
+            pgp_tool.encrypt(inner, [recipient_key.fingerprint])[:stdout]
+          end
+
+          pgp_mail               = Mail.new
+          pgp_mail.from          = 'sender@example.com'
+          pgp_mail.to            = recipient_email_address
+          pgp_mail.subject       = 'test'
+          pgp_mail.body          = nil
+          pgp_mail.content_type  = 'multipart/encrypted; protocol="application/pgp-encrypted"; boundary=OpenPGPMIMEBoundary'
+          pgp_mail.add_part(Mail::Part.new do
+            body         'Version: 1'
+            content_type 'application/pgp-encrypted'
+          end)
+          pgp_mail.add_part(Mail::Part.new do
+            body                encrypted
+            content_type        'application/octet-stream; name="encrypted.asc"'
+            content_disposition 'inline; filename="encrypted.asc"'
+          end)
+
+          mail = Channel::EmailParser.new.parse(pgp_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'decrypts and shows the content but does not adopt its X-Zammad headers' do
+          expect(mail[:body]).to include('Secured PGP body')
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+          expect(mail[:'x-zammad-ticket-id']).to be_nil
+          expect(mail[:'x-zammad-session-user-id']).to be_nil
+          expect(mail[:'x-zammad-ticket-followup-customer']).to be_nil
+          expect(mail[:'x-zammad-article-internal']).to be_nil
+          # The `raw-*` header twins are not adopted either.
+          expect(mail['raw-x-zammad-ticket-id']).to be_nil
+        end
+      end
+
       context 'when private key present' do
 
         let(:mail) do

@@ -76,6 +76,10 @@ class SecureMailing::Backend::HandlerIncoming < SecureMailing::Backend::Handler
     end
 
     Channel::EmailParser.new.parse("#{mail[:mail_instance].header}#{decrypted_body}", allow_missing_attribute_exceptions: false).each do |key, value|
+      # Keep the X-Zammad headers (and their raw- twins) of the original mail instead of taking
+      # them from the re-parsed content.
+      next if key.to_s.match?(%r{^(raw-)?x-zammad}i)
+
       mail[key] = value
     end
 
