@@ -181,10 +181,17 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
             $('#dashboard_activity_stream').val('off').trigger('change')
             $('#dashboard_activity_stream').val('own').trigger('change')
           })
+          $(document).on('ajaxComplete', function(event, xhr, settings) {
+            if (settings.type !== 'PUT' || String(settings.data).indexOf('"name":"dashboard_activity_stream"') === -1) return
+
+            if (String(settings.data).indexOf('"value":false') !== -1) window.turnedOff = true
+            else if (window.turnedOff) window.turnedOnAgain = true
+          })
           $('#dashboard_activity_stream').val('own').trigger('change')
         JS
 
-        await_empty_ajax_queue
+        # The saves are chained, and the ajax queue is empty for a moment between two of them.
+        wait.until { page.evaluate_script('window.turnedOnAgain') }
 
         within :active_content do
           expect(page).to have_select('dashboard_activity_stream', selected: 'Own activities only')

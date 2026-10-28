@@ -27,12 +27,6 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
     missed_call
   end
 
-  # The connection is shared with the server threads: joining one of their open
-  #   transactions would swallow the after_commit that triggers the subscription.
-  def in_own_transaction(&)
-    Cti::Log.transaction(requires_new: true, &)
-  end
-
   context 'with the cti.agent permission' do
     it 'shows the caller log' do
       visit '/cti'
@@ -78,7 +72,7 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
       within 'main' do
         expect(page).to have_css('[data-item-id]', count: 1)
 
-        incoming_call = in_own_transaction { create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false) }
+        incoming_call = create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false)
 
         expect(page).to have_css('[data-item-id]', count: 2)
           .and have_link(href: 'tel:4930100099999')
@@ -87,12 +81,12 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
         # The newest call sits on top.
         expect(first('[data-item-id]')['data-item-id']).to eq(Gql::ZammadSchema.id_from_object(incoming_call))
 
-        in_own_transaction { incoming_call.update!(state: 'answer', done: true) }
+        incoming_call.update!(state: 'answer', done: true)
 
         expect(page).to have_text('Connected')
           .and have_no_text('Ringing…')
 
-        in_own_transaction { incoming_call.destroy! }
+        incoming_call.destroy!
 
         expect(page).to have_css('[data-item-id]', count: 1)
           .and have_no_link(href: 'tel:4930100099999')
@@ -112,13 +106,13 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
         within '#page-navigation' do
           expect(page).to have_no_css('ul[aria-label="Ringing calls"]')
 
-          incoming_call = in_own_transaction { create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false) }
+          incoming_call = create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false)
 
           within 'ul[aria-label="Ringing calls"]' do
             expect(page).to have_text('+49 30 100099999')
           end
 
-          in_own_transaction { incoming_call.update!(state: 'answer') }
+          incoming_call.update!(state: 'answer')
 
           expect(page).to have_no_css('ul[aria-label="Ringing calls"]')
         end
