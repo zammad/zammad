@@ -1,5 +1,16 @@
 workflow:
+  # A new commit cancels the interruptible jobs of the older pipelines on the same ref.
+  #   The default `conservative` cancels nothing as soon as one non-interruptible job
+  #   (e.g. the docker jobs) has started, which happens a few minutes into every pipeline.
+  auto_cancel:
+    on_new_commit: interruptible
   rules:
+    # Scheduled and manually started pipelines are started on purpose, also with a
+    #   filter variable - a push to the same branch must not cancel them.
+    - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+      auto_cancel:
+        on_new_commit: none
+      when: always
     # Allow duplicate pipelines for filtered pipelines as we cannot pass variables from the
     #   git push commandline to merge request pipelines.
     #   (see https://docs.gitlab.com/ee/user/project/push_options.html)
