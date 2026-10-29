@@ -118,6 +118,14 @@ class Ticket::Article < ApplicationModel
     end
 
     inline_attachments = {}
+    attachments_by_content_id = {}
+    article.attachments.each do |file|
+      content_id = file.preferences['Content-ID']
+      attachments_by_content_id[content_id] ||= file
+      next if !content_id.is_a?(String) || !content_id.start_with?('<') || !content_id.end_with?('>')
+
+      attachments_by_content_id[content_id[1...-1]] ||= file
+    end
 
     new_body = body.gsub(%r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im) do |item|
       tag_start = $1
@@ -125,10 +133,7 @@ class Ticket::Article < ApplicationModel
       tag_end = $4
       replace = item
 
-      file = article.attachments.find do |file|
-        content_id = file.preferences['Content-ID']
-        content_id == cid || content_id == "<#{cid}>"
-      end
+      file = attachments_by_content_id[cid]
 
       if file
         replace = "#{tag_start}/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/#{file.id}?view=inline\"#{tag_end}>"
