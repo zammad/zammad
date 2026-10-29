@@ -1,10 +1,11 @@
-
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe AI::Provider::Anthropic do
   subject(:ai_provider) { described_class.new(config: { token: 'test-key' }) }
+
+  let(:request_bodies) { [] }
 
   let(:response) do
     UserAgent::Result.new(
@@ -18,16 +19,19 @@ RSpec.describe AI::Provider::Anthropic do
   end
 
   before do
-    allow(UserAgent).to receive(:post).and_return(response)
+    allow(UserAgent).to receive(:post) do |_url, body, _options|
+      request_bodies << body
+      response
+    end
   end
 
   describe '#ask with image' do
-    {
-      'image/png'                      => 'image/png',
-      'image/png; name=image.png'      => 'image/png',
-      'image/gif; name=image.png'      => 'image/gif',
-      'image/jpeg; name=image010.jpg'  => 'image/jpeg',
-    }.each do |content_type, expected_type|
+    [
+      ['image/png', 'image/png'],
+      ['image/png; name=image.png', 'image/png'],
+      ['image/gif; name=image.png', 'image/gif'],
+      ['image/jpeg; name=image010.jpg', 'image/jpeg'],
+    ].each do |content_type, expected_type|
       it "normalizes #{content_type} to #{expected_type}" do
         image = Store.new(
           filename:    'image.png',
@@ -42,11 +46,11 @@ RSpec.describe AI::Provider::Anthropic do
           prompt_image:  image,
         )
 
-        expect(UserAgent).to have_received(:post) do |_url, body, _options|
-          media_type = body.dig(:messages, 0, :content, 1, :source, :media_type)
+        media_type = request_bodies.first.dig(
+          :messages, 0, :content, 1, :source, :media_type
+        )
 
-          expect(media_type).to eq(expected_type)
-        end
+        expect(media_type).to eq(expected_type)
       end
     end
   end
