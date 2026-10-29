@@ -232,6 +232,98 @@ Some Text',
     end
   end
 
+  context 'when the channel is not trusted and the mail is secured with S/MIME' do
+    before do
+      Setting.set('smime_integration', true)
+    end
+
+    let(:system_email_address) { 'smime1@example.com' }
+    let(:sender_email_address) { 'smime2@example.com' }
+
+    let(:agent)           { create(:agent) }
+    let(:other_customer)  { create(:customer) }
+    let(:existing_ticket) { create(:ticket, title: 'existing ticket') }
+
+    let(:payload) do
+      <<~PAYLOAD.gsub(%r{\n}, "\r\n")
+        Content-Type: text/plain
+
+        Secured body
+      PAYLOAD
+    end
+
+    def secured_mail(secured_body)
+      headers = <<~HEADERS.gsub(%r{\n}, "\r\n")
+        From: #{sender_email_address}
+        To: #{system_email_address}
+        Subject: secured mail
+        X-Zammad-Ticket-Id: #{existing_ticket.id}
+        X-Zammad-Session-User-Id: #{agent.id}
+        X-Zammad-Ticket-Followup-Customer: #{other_customer.email}
+        X-Zammad-Article-Internal: true
+      HEADERS
+
+      "#{headers}#{secured_body}"
+    end
+
+    def opaque_signed_body
+      key  = OpenSSL::PKey::RSA.new(2048)
+      cert = OpenSSL::X509::Certificate.new
+      cert.version    = 2
+      cert.serial     = 1
+      cert.subject    = OpenSSL::X509::Name.parse("/CN=example.com/emailAddress=#{sender_email_address}")
+      cert.issuer     = cert.subject
+      cert.public_key = key.public_key
+      cert.not_before = Time.zone.now
+      cert.not_after  = 1.hour.from_now
+      cert.sign(key, OpenSSL::Digest.new('SHA256'))
+
+      # Flag 0 (no DETACHED) embeds the content in the PKCS7 structure (opaque signature).
+      OpenSSL::PKCS7.write_smime(OpenSSL::PKCS7.sign(cert, key, payload, [], 0))
+    end
+
+    def enveloped_body
+      recipient_certificate = OpenSSL::X509::Certificate.new(Rails.root.join("spec/fixtures/files/smime/#{system_email_address}.crt").read)
+
+      OpenSSL::PKCS7.write_smime(OpenSSL::PKCS7.encrypt([recipient_certificate], payload, OpenSSL::Cipher.new('AES-128-CBC')))
+    end
+
+    shared_examples 'keeping the original mail attributes' do
+      it 'processes the secured content and keeps the original mail attributes' do
+        customer_id_before = existing_ticket.customer_id
+
+        ticket, article, = Channel::EmailParser.new.process({ trusted: false }, mail, false)
+
+        # The secured content is processed, so the re-parse really happened.
+        expect(article.body).to include('Secured body')
+
+        expect(ticket).to be_present
+        expect(ticket.id).not_to eq(existing_ticket.id)
+        expect(article.internal).to be false
+        expect(article.created_by_id).not_to eq(agent.id)
+
+        expect(existing_ticket.reload.customer_id).to eq(customer_id_before)
+        expect(existing_ticket.articles).to be_empty
+      end
+    end
+
+    context 'with an opaque signature from an unknown signer' do
+      let(:mail) { secured_mail(opaque_signed_body) }
+
+      include_examples 'keeping the original mail attributes'
+    end
+
+    context 'with an enveloped message' do
+      before do
+        create(:smime_certificate, :with_private, fixture: system_email_address)
+      end
+
+      let(:mail) { secured_mail(enveloped_body) }
+
+      include_examples 'keeping the original mail attributes'
+    end
+  end
+
   def assert_process(files)
     files.each do |file|
       result = Channel::EmailParser.new.process(file[:channel] || {}, file[:data], false)
