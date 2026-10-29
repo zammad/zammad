@@ -18,9 +18,10 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     auth_openid_connect_credentials['scope'] = auth_openid_connect_credentials['scope'].split.map(&:to_sym) if auth_openid_connect_credentials['scope'].is_a?(String)
 
     auth_openid_connect_credentials.compact_blank.merge(
-      discovery:      true,
-      response_type:  :code,
-      pkce:           ActiveModel::Type::Boolean.new.cast(auth_openid_connect_credentials['pkce']),
+      discovery:          true,
+      response_type:      :code,
+      client_auth_method: :none,
+      pkce:               ActiveModel::Type::Boolean.new.cast(auth_openid_connect_credentials['pkce']),
       client_options:,
     )
   end
