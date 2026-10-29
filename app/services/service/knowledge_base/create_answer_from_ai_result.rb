@@ -23,6 +23,9 @@ class Service::KnowledgeBase::CreateAnswerFromAIResult < Service::Base
         kb_locale:,
       )
       translation.build_content(body: payload[:body])
+      # Not Pundit.authorize: the job shows this message to the agent, and Pundit's is a developer one.
+      raise Exceptions::UnprocessableContent, __('No valid knowledge base category provided.') if !Pundit.policy(current_user, kb_answer).create?
+
       kb_answer.save!
       kb_answer.tag_add('ai-generated', current_user.id)
       kb_answer

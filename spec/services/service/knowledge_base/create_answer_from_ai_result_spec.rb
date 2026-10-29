@@ -13,7 +13,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       )
   end
 
-  let(:current_user)     { create(:agent) }
+  let(:current_user)     { create(:admin) }
   let(:knowledge_base)   { create(:knowledge_base) }
   let!(:first_category)  { create(:knowledge_base_category, knowledge_base: knowledge_base) }
   let!(:second_category) { create(:knowledge_base_category, knowledge_base: knowledge_base) }
@@ -77,6 +77,28 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
     end
 
+    context 'when the current user cannot edit the category' do
+      let(:current_user) { create(:admin_only) }
+      let(:ai_result) do
+        {
+          category_id: second_category.id,
+          title:       'Some title',
+          body:        'Some body',
+        }
+      end
+
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(second_category)
+          .update! current_user.roles.first => 'reader'
+      end
+
+      it 'creates no answer' do
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'No valid knowledge base category provided.')
+          .and(not_change(KnowledgeBase::Answer, :count))
+      end
+    end
+
     context 'when title is blank' do
       let(:ai_result) do
         {
@@ -92,7 +114,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
 
     context 'when title is longer than 250 characters' do
       let(:long_title) { 'a' * 300 }
-      let(:ai_result) { { title: long_title, category_id: first_category.id } }
+      let(:ai_result)  { { title: long_title, category_id: first_category.id } }
 
       it 'truncates title to 250 characters' do
         kb_answer = service_result
