@@ -3,10 +3,17 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumLinkType } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
+import {
+  mockLinkRemoveMutationError,
+  waitForLinkRemoveMutationCalls,
+} from '#desktop/entities/link/graphql/mutations/linkRemove.mocks.ts'
 import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import { getLinkUpdatesSubscriptionHandler } from '#desktop/entities/link/graphql/subscriptions/linkUpdates.mocks.ts'
 
@@ -142,5 +149,41 @@ describe('TicketLinks', () => {
     expect(view.getByText('Parent')).toBeInTheDocument()
 
     expect(view.getByText('Ticket 5')).toBeInTheDocument()
+  })
+
+  it('notifies when unlinking a ticket is denied', async () => {
+    mockLinkListQuery({
+      linkList: [
+        {
+          item: {
+            __typename: 'Ticket',
+            id: 'gid://zammad/Ticket/2',
+            title: 'Ticket 2',
+            state: {
+              __typename: 'TicketState',
+              id: convertToGraphQLId('Ticket::State', 2),
+              name: 'open',
+            },
+          },
+          type: EnumLinkType.Normal,
+        },
+      ],
+    })
+
+    // The backend answers with Pundit::NotAuthorizedError, which the client treats as unknown.
+    mockLinkRemoveMutationError('not allowed to TicketPolicy#agent_read_access? this Ticket', {
+      type: GraphQLErrorTypes.UnknownError,
+    })
+
+    const view = renderTicketLinks()
+
+    await view.events.click(await view.findByLabelText('Unlink ticket'))
+    await waitForLinkRemoveMutationCalls()
+    await waitForNextTick()
+
+    expect(useNotifications().notifications.value).toMatchObject([
+      { type: NotificationTypes.Error, message: 'An error occurred during the operation.' },
+    ])
+    expect(view.getByText('Ticket 2')).toBeInTheDocument()
   })
 })

@@ -67,12 +67,10 @@ const deleteLink = async (targetId: string, type: string) => {
         })
       },
     }),
-    {
-      errorShowNotification: false,
-    },
   )
 
-  deleteLinkMutation.send()
+  // The handler has already notified about a failure, and the link stays in the list.
+  deleteLinkMutation.send().catch(() => {})
 }
 
 const linkFlyout = useFlyout({
