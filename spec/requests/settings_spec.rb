@@ -74,9 +74,10 @@ RSpec.describe 'Settings', type: :request do
       # update
       setting = Setting.find_by(name: 'product_name')
       params = {
-        id:          setting.id,
-        name:        'some_new_name',
-        preferences: {
+        id:            setting.id,
+        name:          'some_new_name',
+        state_current: setting.state_current,
+        preferences:   {
           permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
@@ -87,14 +88,15 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('product_name')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.branding')
-      expect(json_response['preferences']['some_new_key']).to be(true)
+      expect(json_response['preferences']).not_to have_key('some_new_key')
 
       # update
       setting = Setting.find_by(name: 'api_token_access')
       params = {
-        id:          setting.id,
-        name:        'some_new_name',
-        preferences: {
+        id:            setting.id,
+        name:          'some_new_name',
+        state_current: setting.state_current,
+        preferences:   {
           permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
@@ -105,7 +107,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
-      expect(json_response['preferences']['some_new_key']).to be(true)
+      expect(json_response['preferences']).not_to have_key('some_new_key')
 
       # delete
       setting = Setting.find_by(name: 'product_name')
@@ -252,9 +254,10 @@ RSpec.describe 'Settings', type: :request do
       # update
       setting = Setting.find_by(name: 'api_token_access')
       params = {
-        id:          setting.id,
-        name:        'some_new_name',
-        preferences: {
+        id:            setting.id,
+        name:          'some_new_name',
+        state_current: setting.state_current,
+        preferences:   {
           permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
@@ -265,7 +268,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
-      expect(json_response['preferences']['some_new_key']).to be(true)
+      expect(json_response['preferences']).not_to have_key('some_new_key')
 
       # delete
       setting = Setting.find_by(name: 'product_name')
@@ -358,6 +361,78 @@ RSpec.describe 'Settings', type: :request do
         expect(response).to have_http_status(:ok)
         expect(json_response).to be_a(Hash)
         expect(json_response['state_current']).to eq(setting[:state_initial])
+      end
+    end
+  end
+
+  describe 'PUT /api/v1/settings/:id with attributes other than the state' do
+    let(:admin_security) do
+      role_security = create(:role)
+      role_security.permission_grant('admin.security')
+
+      create(:admin, roles: [role_security])
+    end
+    let(:setting) { Setting.find_by(name: 'user_lost_password') }
+    let(:params) do
+      {
+        name:          'changed_name',
+        area:          'Changed::Base',
+        title:         'Changed title',
+        description:   'Changed description',
+        options:       { form: [] },
+        frontend:      false,
+        state_initial: { value: false },
+        state_current: { value: false },
+        preferences:   {
+          protected:       true,
+          transformations: ['Setting::Transformation::SanitizeHtml'],
+          validations:     ['Setting::Validation::TimeZone'],
+          cache:           ['some_cache_key'],
+          some_new_key:    true,
+        },
+      }
+    end
+
+    shared_examples 'updating only the state' do
+      it 'ignores the other attributes and keeps the setting reachable', :aggregate_failures do
+        expect { put "/api/v1/settings/#{setting.id}", params: params, as: :json }
+          .to not_change { setting.reload.attributes.except('state_current', 'updated_at') }
+
+        expect(response).to have_http_status(:ok)
+        expect(setting.state_current['value']).to be(false)
+
+        get "/api/v1/settings/#{setting.id}", as: :json
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with a partial admin', authenticated_as: :admin_security do
+      it_behaves_like 'updating only the state'
+    end
+
+    context 'with a full admin', authenticated_as: :admin do
+      it_behaves_like 'updating only the state'
+    end
+  end
+
+  describe 'PUT /api/v1/settings/:id with keys other than the value in the state', authenticated_as: :admin do
+    let(:setting) { Setting.find_by(name: 'user_lost_password') }
+
+    it 'stores only the value', :aggregate_failures do
+      put "/api/v1/settings/#{setting.id}", params: { state_current: { value: false, some_new_key: { some: 'value' } } }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(setting.reload.state_current).to eq({ 'value' => false })
+    end
+
+    [{ some_new_key: true }, false].each do |state_current|
+      context "with #{state_current.inspect} as the state" do
+        it 'rejects the request', :aggregate_failures do
+          expect { put "/api/v1/settings/#{setting.id}", params: { state_current: state_current }, as: :json }
+            .to not_change { setting.reload.state_current }
+
+          expect(response).to have_http_status(:unprocessable_content)
+        end
       end
     end
   end

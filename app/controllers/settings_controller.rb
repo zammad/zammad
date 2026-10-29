@@ -23,7 +23,12 @@ class SettingsController < ApplicationController
 
   # PUT /settings/1
   def update
-    model_update_render(Setting, keep_certain_attributes)
+    permitted_params = params.permit(:id, state_current: {})
+    raise ActionController::ParameterMissing, :state_current if !permitted_params[:state_current]&.key?(:value)
+
+    permitted_params[:state_current] = permitted_params[:state_current].slice(:value)
+
+    model_update_render(Setting, permitted_params)
   end
 
   # PUT /settings/image/:id
@@ -86,20 +91,6 @@ class SettingsController < ApplicationController
   end
 
   private
-
-  def keep_certain_attributes
-    setting = Setting.find(params[:id])
-    %i[name area state_initial frontend options].each do |key|
-      params.delete(key)
-    end
-    if params[:preferences].present?
-      %i[online_service_disable permission render].each do |key|
-        params[:preferences].delete(key)
-      end
-      params[:preferences].merge!(setting.preferences)
-    end
-    params
-  end
 
   def model_item_render_attributes(object, attrs)
     return attrs if !object.vector_index_rebuild_started
