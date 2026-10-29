@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onClickOutside, onLongPress, useElementHover, whenever } from '@vueuse/core'
-import { computed, onDeactivated, onUnmounted, shallowRef, watch } from 'vue'
+import { computed, onActivated, onDeactivated, onUnmounted, shallowRef, watch } from 'vue'
 
 import type { Link } from '#shared/types/router.ts'
 import getUuid from '#shared/utils/getUuid.ts'
@@ -81,8 +81,12 @@ const isPopoverTargetHovered = useElementHover(popoverTarget, {
   delayLeave: 200,
 })
 
+// A click on a link trigger navigates away within the hover delay: the delayed hover would still
+//   open the popover on the deactivated page, where no `mouseleave` comes to close it again.
+const isActive = shallowRef(true)
+
 watch([isPopoverHovered, isPopoverTargetHovered], ([isPopoverHovered, isPopoverTargetHovered]) => {
-  if (hasOpenedViaLongPress.value) return
+  if (!isActive.value || hasOpenedViaLongPress.value) return
 
   const shouldOpen = isPopoverTargetHovered || isPopoverHovered
 
@@ -104,7 +108,18 @@ whenever(
 )
 
 onDeactivated(() => {
+  isActive.value = false
+
+  popover.value?.cancelOpenPopover()
   if (isOpen.value) close()
+})
+
+// The hover state still holds what it saw before the page was left.
+onActivated(() => {
+  isPopoverHovered.value = false
+  isPopoverTargetHovered.value = false
+
+  isActive.value = true
 })
 
 onUnmounted(() => {

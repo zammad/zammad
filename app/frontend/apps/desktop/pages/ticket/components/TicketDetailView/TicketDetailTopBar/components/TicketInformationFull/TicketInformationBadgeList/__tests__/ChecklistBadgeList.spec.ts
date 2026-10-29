@@ -63,7 +63,7 @@ describe('TicketChecklistBadges', () => {
     expect(wrapper.getByIconName('checklist')).toBeInTheDocument()
 
     expect(wrapper.getByRole('button', { name: 'Open checklist' })).toHaveTextContent(
-      'checked2 of 5',
+      'Checked2 of 5',
     ) // because of margin
   })
 
@@ -196,7 +196,7 @@ describe('TicketChecklistBadges', () => {
     const data = createDummyTicket({
       checklist: {
         id: convertToGraphQLId('Checklist', 1),
-        completed: false,
+        completed: true,
         total: 3,
         incomplete: 0,
         complete: 3,
@@ -208,6 +208,6 @@ describe('TicketChecklistBadges', () => {
       provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
-    expect(wrapper.queryByRole('button', { name: 'checked3 of 3' })).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Open checklist' })).not.toBeInTheDocument()
   })
 })

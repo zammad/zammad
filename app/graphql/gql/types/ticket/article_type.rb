@@ -27,6 +27,7 @@ module Gql::Types::Ticket
     field :body, String, null: false, description: 'Raw body as saved in the database.'
     field :body_with_urls, String, null: false, description: 'Body with cid: URLs replaced for inline images in HTML articles.'
     field :body_rendering_error, Boolean, null: false, description: 'True when the body could not be rendered due to HTML processing issues and contains an untranslated error message.'
+    field :body_excerpt, String, description: 'Short plain-text excerpt of the body (~50 words, cut on sentence boundaries).'
     field :internal, Boolean, null: false
 
     field :preferences, ::GraphQL::Types::JSON

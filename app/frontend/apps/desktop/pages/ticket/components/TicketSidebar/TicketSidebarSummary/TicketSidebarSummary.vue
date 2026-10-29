@@ -15,11 +15,9 @@ import { MutationHandler, SubscriptionHandler } from '#shared/server/apollo/hand
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import type { SummaryConfig } from '#desktop/entities/ticket/types.ts'
 import TicketSidebarSummaryContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue'
-import {
-  type SummaryConfig,
-  type SummaryItem,
-} from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/types.ts'
+import type { SummaryItem } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/types.ts'
 import { useTicketSummaryGenerating } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/useTicketSummaryGenerating.ts'
 import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import { useTicketArticleCountChange } from '#desktop/pages/ticket/composables/useTicketArticleCountChange.ts'

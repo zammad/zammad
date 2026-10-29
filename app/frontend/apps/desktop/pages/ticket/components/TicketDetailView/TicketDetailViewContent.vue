@@ -18,6 +18,7 @@ import {
   effectScope,
   onUnmounted,
 } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import {
   NotificationTypes,
@@ -302,6 +303,24 @@ const sidebarContext = computed<TicketSidebarContext>(() => ({
 
 useProvideTicketSidebar(sidebarContext)
 const { hasSidebar, activeSidebar, switchSidebar } = useTicketSidebar()
+
+// Deep link, e.g. from the checklist badge in the overview popover. The view is kept
+//   alive per taskbar tab, so the query has to be watched, and only the instance of
+//   the routed ticket may react. Consuming the parameter lets a later link switch again.
+const route = useRoute()
+const router = useRouter()
+
+watch(
+  () => route.query.sidebar,
+  (requestedSidebar) => {
+    if (typeof requestedSidebar !== 'string') return
+    if (route.params.internalId !== internalId.value) return
+
+    switchSidebar(requestedSidebar)
+    router.replace({ query: { ...route.query, sidebar: undefined } })
+  },
+  { immediate: true },
+)
 
 const hasInternalArticle = computed(() => (values.value as TicketUpdateFormData).article?.internal)
 

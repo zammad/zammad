@@ -25,6 +25,7 @@ import TableHeader from './TableHeader.vue'
 import TableRow from './TableRow.vue'
 import TableRowGroupBy from './TableRowGroupBy.vue'
 import { type AdvancedTableProps, type TableAdvancedItem, type TableAttribute } from './types.ts'
+import { getTicketPriorityLinkColorClasses } from './utils.ts'
 
 const props = withDefaults(defineProps<AdvancedTableProps>(), {
   maxItems: 1000,
@@ -442,14 +443,7 @@ const endOfListMessage = computed(() => {
 const getLinkColorClasses = (item: TableAdvancedItem) => {
   if (props.object !== EnumObjectManagerObjects.Ticket) return ''
 
-  switch ((item as TicketById).priority?.uiColor) {
-    case 'high-priority':
-      return 'text-red-500'
-    case 'low-priority':
-      return 'text-muted'
-    default:
-      return ''
-  }
+  return getTicketPriorityLinkColorClasses((item as TicketById).priority?.uiColor)
 }
 
 const selectAllLoadedItems = () => {

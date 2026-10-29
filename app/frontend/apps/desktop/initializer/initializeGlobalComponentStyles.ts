@@ -25,6 +25,7 @@ export const initializeGlobalComponentStyles = () => {
     neutral: 'text-normal bg-neutral-50 dark:bg-gray-500',
     highlight: 'bg-pink-500 text-white',
     open: 'bg-yellow-50 text-yellow-500 dark:bg-yellow-900',
+    ai: 'badge-ai',
     custom: 'badge-custom',
   })
 

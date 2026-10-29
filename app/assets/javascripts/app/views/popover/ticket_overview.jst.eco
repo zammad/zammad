@@ -1,0 +1,50 @@
+<div class="ticket-overview-popover-content">
+  <% if @checklist or @sentiment: %>
+    <div class="ticket-overview-popover-badges">
+      <% if @checklist: %>
+        <a class="ticket-overview-popover-badge js-ticketOverviewPopoverSidebar" href="#ticket/zoom/<%= @ticket.id %>/sidebar/checklist" title="<%- @Ti('Open checklist') %>">
+          <%- @Icon('checklist') %>
+          <span class="ticket-overview-popover-badge-label"><%- @T('Checked') %></span>
+          <%- @Ti('%s of %s', @checklist.complete, @checklist.total) %>
+        </a>
+      <% end %>
+      <% if @sentiment: %>
+        <a class="ticket-overview-popover-badge ticket-overview-popover-badge--sentiment js-ticketOverviewPopoverSidebar" href="#ticket/zoom/<%= @ticket.id %>/sidebar/summary" title="<%- @Ti('Open AI summary') %>">
+          <span class="ticket-overview-popover-badge-inner">
+            <span class="ticket-overview-popover-badge-label"><%- @T('Customer sentiment') %></span>
+            <% if @sentiment.emotion: %>
+              <span aria-hidden="true"><%= @sentiment.emotion %></span>
+            <% end %>
+            <%= @sentiment.mood %>
+          </span>
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @summary?.customer_request: %>
+    <div class="ticket-overview-popover-section">
+      <label><%- @T('Customer intent') %></label>
+      <p><%= @summary.customer_request %></p>
+      <div class="ticket-overview-popover-ai-divider"></div>
+      <p class="ticket-overview-popover-note"><%- @T('Be sure to check AI-generated content for accuracy.') %></p>
+    </div>
+  <% end %>
+
+  <% for section in @articles: %>
+    <div class="ticket-overview-popover-section">
+      <label><%- @T(section.label) %></label>
+      <div class="ticket-overview-popover-article ticket-overview-popover-article--<%= section.position %><% if section.article.internal: %> is-internal<% end %>">
+        <% if section.author: %>
+          <%- section.author.avatar(40) %>
+        <% end %>
+        <div class="internal-border">
+          <div class="textBubble">
+            <div class="bubble-arrow"></div>
+            <p><%= section.article.body_excerpt %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

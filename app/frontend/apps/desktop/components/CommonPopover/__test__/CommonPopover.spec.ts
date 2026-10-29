@@ -107,4 +107,93 @@ describe('CommonPopover.vue', () => {
       top: '16px',
     })
   })
+
+  describe('wide', () => {
+    const renderWidePopover = (props: Record<string, unknown>) =>
+      renderComponent({
+        components: { CommonPopover },
+        template: html`
+          <CommonPopover ref="popover" :owner="popoverTarget" v-bind="props"
+            ><span>Example Content</span></CommonPopover
+          >
+          <button ref="popoverTarget" @click="toggle">Click me</button>
+        `,
+        setup() {
+          const { popover, popoverTarget, toggle } = usePopover()
+          return { toggle, popover, popoverTarget, props }
+        },
+      })
+
+    const openWithOwnerAt = async (
+      props: Record<string, unknown>,
+      bounds: { left: number; right: number },
+    ) => {
+      isSmallScreen.value = false
+
+      const wrapper = renderWidePopover(props)
+      const owner = wrapper.getByText('Click me')
+
+      vi.spyOn(owner, 'getBoundingClientRect').mockReturnValue(
+        DOMRect.fromRect({ x: bounds.left, y: 100, width: bounds.right - bounds.left, height: 20 }),
+      )
+
+      await wrapper.events.click(owner)
+
+      return wrapper
+    }
+
+    it('keeps the regular width without the wide prop', async () => {
+      const wrapper = await openWithOwnerAt({ orientation: 'right' }, { left: 100, right: 200 })
+
+      expect(wrapper.getByRole('region').style.maxWidth).toBe('')
+      expect(wrapper.getByText('Example Content').parentElement).toHaveClass('max-w-md')
+    })
+
+    it.each([
+      {
+        case: 'right',
+        props: { orientation: 'right' },
+        bounds: { left: 100, right: 200 },
+        maxWidth: '800px',
+      },
+      {
+        case: 'left',
+        props: { orientation: 'left' },
+        bounds: { left: 700, right: 800 },
+        maxWidth: '676px',
+      },
+      {
+        case: 'below, start',
+        props: { orientation: 'bottom', placement: 'start' },
+        bounds: { left: 100, right: 200 },
+        maxWidth: '916px',
+      },
+      {
+        case: 'below, end',
+        props: { orientation: 'bottom', placement: 'end' },
+        bounds: { left: 800, right: 900 },
+        maxWidth: '892px',
+      },
+      {
+        case: 'too little space',
+        props: { orientation: 'right' },
+        bounds: { left: 700, right: 800 },
+        maxWidth: '',
+      },
+      {
+        case: 'arrow placement',
+        props: { orientation: 'bottom', placement: 'arrowStart' },
+        bounds: { left: 100, right: 200 },
+        maxWidth: '',
+      },
+    ])(
+      'limits the width to the space next to the owner ($case)',
+      async ({ props, bounds, maxWidth }) => {
+        const wrapper = await openWithOwnerAt({ ...props, wide: true }, bounds)
+
+        expect(wrapper.getByRole('region').style.maxWidth).toBe(maxWidth)
+        expect(wrapper.getByText('Example Content').parentElement).toHaveClass('max-w-3xl')
+      },
+    )
+  })
 })

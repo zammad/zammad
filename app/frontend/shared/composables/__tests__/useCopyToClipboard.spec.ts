@@ -5,12 +5,13 @@ import { ref } from 'vue'
 import { getClipboardItemData } from '#tests/support/mocks/clipboardItem.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import {
   createLinkClipboardItem,
   useCopyToClipboard,
 } from '#shared/composables/useCopyToClipboard.ts'
 
-const clipboardCopyMock = vi.fn()
+const clipboardCopyMock = vi.fn().mockResolvedValue(undefined)
 const clipboardCopiedMock = ref(false)
 
 vi.mock('@vueuse/core', async () => {
@@ -84,6 +85,23 @@ describe('useCopyToClipboard', () => {
     await waitForNextTick()
 
     expect(notifyMock).toHaveBeenCalledWith(expect.objectContaining({ message: 'Copied.' }))
+  })
+
+  it('shows a notification on failure', async () => {
+    clipboardCopyMock.mockRejectedValueOnce(new DOMException('Document is not focused.'))
+
+    const { copyToClipboard } = useCopyToClipboard()
+
+    copyToClipboard('foobar')
+
+    await vi.waitFor(() => {
+      expect(notifyMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: NotificationTypes.Error,
+          message: 'The content could not be copied to the clipboard.',
+        }),
+      )
+    })
   })
 
   it('does not copy undefined nor null values to clipboard', () => {

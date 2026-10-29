@@ -298,4 +298,92 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
+
+  # The service behaviour is covered in spec/services/service/ticket/ai_assistance/stored_summary_spec.rb.
+  context 'when fetching the stored AI summary' do
+    let(:ticket) { create(:ticket) }
+    let(:query) do
+      <<~QUERY
+        query ticket($ticketId: ID!) {
+          ticket(ticketId: $ticketId) {
+            aiStoredSummary {
+              customerRequest
+            }
+          }
+        }
+      QUERY
+    end
+
+    before do
+      allow(Service::Ticket::AIAssistance::StoredSummary).to receive(:execute)
+        .with(hash_including(ticket:))
+        .and_return({ 'customer_request' => 'Customer wants a corrected invoice.' })
+
+      gql.execute(query, variables: { ticketId: gql.id(ticket) })
+    end
+
+    context 'with an agent', authenticated_as: :agent do
+      let(:agent) { create(:agent, groups: [ticket.group]) }
+
+      it 'returns the stored summary' do
+        expect(gql.result.data.dig('aiStoredSummary', 'customerRequest')).to eq('Customer wants a corrected invoice.')
+      end
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:ticket)   { create(:ticket, customer:) }
+
+      it 'returns no summary' do
+        expect(gql.result.data['aiStoredSummary']).to be_nil
+      end
+    end
+  end
+
+  # The excerpt behaviour is covered in spec/models/ticket/article_spec.rb.
+  context 'when fetching the first and the last article' do
+    let(:ticket) { create(:ticket) }
+    let(:query) do
+      <<~QUERY
+        query ticket($ticketId: ID!) {
+          ticket(ticketId: $ticketId) {
+            firstArticle { id bodyExcerpt }
+            lastArticle { id bodyExcerpt }
+          }
+        }
+      QUERY
+    end
+
+    let(:first_article) { create(:ticket_article, :inbound_web, ticket:, body: 'A question.') }
+    let(:last_article)  { create(:ticket_article, :internal_note, ticket:, body: 'A remark.') }
+
+    before do
+      create(:ticket_article, :system_delivery_message, ticket:)
+      first_article
+      last_article
+      create(:ticket_article, :system_delivery_message, ticket:)
+
+      gql.execute(query, variables: { ticketId: gql.id(ticket) })
+    end
+
+    context 'with an agent', authenticated_as: :agent do
+      let(:agent) { create(:agent, groups: [ticket.group]) }
+
+      it 'returns the first and the last article, skipping system notifications' do
+        expect(gql.result.data).to include(
+          'firstArticle' => include('id' => gql.id(first_article), 'bodyExcerpt' => 'A question.'),
+          'lastArticle'  => include('id' => gql.id(last_article), 'bodyExcerpt' => 'A remark.'),
+        )
+      end
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:ticket)   { create(:ticket, customer:) }
+
+      it 'returns no articles' do
+        expect(gql.result.data).to include('firstArticle' => nil, 'lastArticle' => nil)
+      end
+    end
+  end
 end

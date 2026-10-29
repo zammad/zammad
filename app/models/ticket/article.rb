@@ -11,6 +11,7 @@ class Ticket::Article < ApplicationModel
   include CanCsvImport
   include CanCloneAttachments
   include HasObjectManagerAttributes
+  include HasExcerpt
 
   include Ticket::Article::Assets
   include Ticket::Article::PreserveContextAfterTransaction
@@ -241,6 +242,12 @@ get body as text with quote sign "> " at the beginning of each line
 
   def body_as_text_with_quote
     body_as_text.word_wrap.message_quote
+  end
+
+  # Not has_excerpt :body — that would always run html2text, while the body's
+  #   content_type decides whether it is HTML at all.
+  def body_excerpt(**)
+    excerpt_text(body_as_text(link_style: :plain), **)
   end
 
 =begin

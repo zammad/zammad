@@ -78,6 +78,9 @@ module Gql::Types
       field :external_references, Gql::Types::TicketExternalReferencesType, null: true, description: 'Returns links to external services'
       field :ai_agent_running, Boolean, description: 'Returns true if an AI agent is running for this ticket'
       field :ai_summary_enabled, Boolean, description: 'Returns true if the AI summary is enabled for this ticket'
+      field :ai_stored_summary, Gql::Types::Ticket::AIAssistance::SummaryType, description: 'Returns the stored and current AI summary in the locale of the current user, never triggers a generation'
+      field :first_article, Gql::Types::Ticket::ArticleType, description: 'First article of this ticket, excluding system notifications'
+      field :last_article, Gql::Types::Ticket::ArticleType, description: 'Last article of this ticket, excluding system notifications'
     end
 
     internal_fields do
@@ -160,6 +163,22 @@ module Gql::Types
       Service::Ticket::AIAssistance::SummaryEnabled
         .with_current_user(context.current_user)
         .execute(ticket: @object)
+    end
+
+    def ai_stored_summary
+      Service::Ticket::AIAssistance::StoredSummary
+        .with_current_user(context.current_user)
+        .execute(ticket: @object)
+    end
+
+    # The same article set the summary reads: internal notes included, because
+    #   these fields are only available to agents.
+    def first_article
+      @object.articles.without_system_notifications.first
+    end
+
+    def last_article
+      @object.articles.without_system_notifications.last
     end
 
     private

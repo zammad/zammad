@@ -925,4 +925,25 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
   end
+
+  describe '#body_excerpt' do
+    it 'strips HTML and marks the cut' do
+      article = create(:ticket_article, content_type: 'text/html', body: "<p>#{'This is one example sentence with some words. ' * 10}</p>")
+
+      expect(article.body_excerpt).to end_with('…')
+      expect(article.body_excerpt).not_to include('<p>')
+    end
+
+    it 'keeps a short body as it is' do
+      article = create(:ticket_article, content_type: 'text/plain', body: 'Hello there. All good.')
+
+      expect(article.body_excerpt).to eq('Hello there. All good.')
+    end
+
+    it 'does not treat angle brackets in a plain text body as HTML' do
+      article = create(:ticket_article, content_type: 'text/plain', body: 'Use the <placeholder> as it is.')
+
+      expect(article.body_excerpt).to eq('Use the <placeholder> as it is.')
+    end
+  end
 end

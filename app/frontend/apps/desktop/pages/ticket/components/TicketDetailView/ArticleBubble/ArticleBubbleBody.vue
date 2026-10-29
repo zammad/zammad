@@ -20,6 +20,7 @@ import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.t
 
 import CommonAIFeedback from '#desktop/components/CommonAIFeedback/CommonAIFeedback.vue'
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+import { useBubbleStyleGuide } from '#desktop/composables/useBubbleStyleGuide.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import { useArticleHighlights } from './useArticleHighlights/useArticleHighlights.ts'
@@ -138,11 +139,7 @@ const translationDirection = computed(() =>
   displayedTranslation.value ? translationStore.targetLocaleData?.dir?.toLowerCase() : undefined,
 )
 
-const bodyClasses = computed(() =>
-  props.position === 'right'
-    ? ['dark:bg-stone-500', 'bg-blue-100', 'Content--customer']
-    : ['dark:bg-gray-400', 'bg-white', 'Content--agent'],
-)
+const { articleBodyClasses: bodyClasses } = useBubbleStyleGuide(computed(() => props.position))
 
 const body = computed(() => {
   // The translation comes in the format of the original, so it takes the same path.

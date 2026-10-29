@@ -5240,6 +5240,8 @@ export type Ticket = ObjectAttributeValuesInterface & TagsInterface & {
   __typename?: 'Ticket';
   /** Returns true if an AI agent is running for this ticket */
   aiAgentRunning?: Maybe<Scalars['Boolean']['output']>;
+  /** Returns the stored and current AI summary in the locale of the current user, never triggers a generation */
+  aiStoredSummary?: Maybe<TicketAiAssistanceSummary>;
   /** Returns true if the AI summary is enabled for this ticket */
   aiSummaryEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Count of ticket articles that were not sent by 'System'. */
@@ -5261,6 +5263,8 @@ export type Ticket = ObjectAttributeValuesInterface & TagsInterface & {
   escalationAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
   /** Returns links to external services */
   externalReferences?: Maybe<TicketExternalReferences>;
+  /** First article of this ticket, excluding system notifications */
+  firstArticle?: Maybe<TicketArticle>;
   firstResponseAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
   firstResponseDiffInMin?: Maybe<Scalars['Int']['output']>;
   firstResponseEscalationAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
@@ -5272,6 +5276,8 @@ export type Ticket = ObjectAttributeValuesInterface & TagsInterface & {
   initialChannel?: Maybe<EnumChannelArea>;
   /** Internal database ID */
   internalId: Scalars['Int']['output'];
+  /** Last article of this ticket, excluding system notifications */
+  lastArticle?: Maybe<TicketArticle>;
   lastCloseAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
   lastContactAgentAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
   lastContactAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
@@ -5404,6 +5410,8 @@ export type TicketArticle = {
   author: User;
   /** Raw body as saved in the database. */
   body: Scalars['String']['output'];
+  /** Short plain-text excerpt of the body (~50 words, cut on sentence boundaries). */
+  bodyExcerpt?: Maybe<Scalars['String']['output']>;
   /** True when the body could not be rendered due to HTML processing issues and contains an untranslated error message. */
   bodyRenderingError: Scalars['Boolean']['output'];
   /** Body with cid: URLs replaced for inline images in HTML articles. */

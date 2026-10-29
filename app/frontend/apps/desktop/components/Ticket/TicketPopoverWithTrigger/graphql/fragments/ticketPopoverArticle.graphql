@@ -1,0 +1,16 @@
+fragment ticketPopoverArticle on TicketArticle {
+  id
+  createdAt
+  bodyExcerpt
+  internal
+  author {
+    id
+    fullname
+    firstname
+    lastname
+    image
+  }
+  sender {
+    name
+  }
+}

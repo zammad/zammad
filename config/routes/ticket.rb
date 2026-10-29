@@ -75,6 +75,9 @@ Zammad::Application.routes.draw do
   # ticket summarize (AI)
   match api_path + '/tickets/:id/summarize',                           to: 'ticket/summarize#summarize',                        via: :post
 
+  # ticket content for the overview popover
+  match api_path + '/tickets/:id/popover',                             to: 'ticket/popover#show',                               via: :get
+
   # generate knowledge base answer (AI)
   match api_path + '/tickets/:id/knowledge_base_answers', to: 'ticket/knowledge_base_answers#create', via: :post
 

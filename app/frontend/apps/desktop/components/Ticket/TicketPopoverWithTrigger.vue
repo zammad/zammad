@@ -20,6 +20,7 @@ export interface Props {
   noFocusStyling?: boolean
   noHoverStyling?: boolean
   zIndex?: string
+  withContent?: boolean
 }
 
 defineProps<Props>()
@@ -65,6 +66,7 @@ const isAgent = computed(() => session.hasPermission('ticket.agent'))
         :id="popoverId"
         :ticket="ticket"
         :has-open-via-long-click="hasOpenedViaLongClick"
+        :with-content="withContent"
       />
     </template>
 

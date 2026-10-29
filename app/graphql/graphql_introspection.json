@@ -28010,6 +28010,18 @@
               "deprecationReason": null
             },
             {
+              "name": "aiStoredSummary",
+              "description": "Returns the stored and current AI summary in the locale of the current user, never triggers a generation",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketAIAssistanceSummary",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "aiSummaryEnabled",
               "description": "Returns true if the AI summary is enabled for this ticket",
               "args": [],
@@ -28174,6 +28186,18 @@
               "deprecationReason": null
             },
             {
+              "name": "firstArticle",
+              "description": "First article of this ticket, excluding system notifications",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketArticle",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "firstResponseAt",
               "description": null,
               "args": [],
@@ -28277,6 +28301,18 @@
                   "name": "Int",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "lastArticle",
+              "description": "Last article of this ticket, excluding system notifications",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketArticle",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -29221,6 +29257,18 @@
                   "name": "String",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "bodyExcerpt",
+              "description": "Short plain-text excerpt of the body (~50 words, cut on sentence boundaries).",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

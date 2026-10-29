@@ -1,6 +1,6 @@
 class App.TicketList extends App.Controller
   @extend App.PopoverProvidable
-  @registerPopovers 'Organization', 'User'
+  @registerPopovers 'Organization', 'User', 'TicketOverview'
   orderBy: null
   orderDirection: null
   pagerEnabled: false
@@ -31,6 +31,13 @@ class App.TicketList extends App.Controller
 
     callbackLinkToTicket = (value, object, attribute, attributes) ->
       attribute.link = object.uiUrl()
+      value
+
+    callbackTicketOverviewPopover = (value, object, attribute, attributes) ->
+      return value if !object
+      attribute.class = 'ticket-overview-popover'
+      attribute.data =
+        id: object.id
       value
 
     callbackUserPopover = (value, object, attribute, attributes) ->
@@ -93,6 +100,14 @@ class App.TicketList extends App.Controller
       attribute.title = App.i18n.translateInline(priority?.name)
       value = object.priorityIcon()
 
+    # Only a list that shows tickets the way an overview does opts in; the popover shows
+    #   the full title, so only users without it get the title tooltip.
+    callbackTicketCell =
+      if @ticketPopover && @permissionCheck('ticket.agent')
+        [ callbackLinkToTicket, callbackTicketOverviewPopover ]
+      else
+        [ callbackLinkToTicket, callbackTicketTitleAdd ]
+
     callbackHeader = [ callbackIconHeader ]
     callbackAttributes =
       icon:
@@ -104,9 +119,9 @@ class App.TicketList extends App.Controller
       owner_id:
         [ callbackUserPopover ]
       title:
-        [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        callbackTicketCell
       number:
-        [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        callbackTicketCell
 
     if App.Config.get('ui_ticket_priority_icons') == true
       callbackHeader = [ callbackIconHeader, callbackIconPriorityHeader ]

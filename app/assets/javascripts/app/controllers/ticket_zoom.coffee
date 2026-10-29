@@ -259,6 +259,14 @@ class App.TicketZoom extends App.Controller
   url: =>
     "#ticket/zoom/#{@ticket_id}"
 
+  # Opened from a deep link, e. g. a badge of the overview popover. A rendered sidebar
+  #   switches right away, one that is still to come picks the tab up from its state.
+  activateSidebarTab: (name) =>
+    return if !name
+
+    @sidebarState.active = name
+    @sidebarWidget?.toggleTab(name)
+
   show: (params) =>
 
     # if controller is not active, then delay the fetch
@@ -1443,7 +1451,26 @@ class TicketZoomRouter extends App.ControllerPermanent
       show:       true
     )
 
+    return if !params.sidebar_tab
+
+    # An already running task keeps its params, so the tab is handed to the controller
+    #   itself - directly if it exists, otherwise as soon as its worker has started.
+    App.TaskManager.ensureWorker("Ticket-#{@ticket_id}", (worker) ->
+      worker.activateSidebarTab(params.sidebar_tab)
+    )
+
+    # The task has taken the tab over, so the link is dropped from the address bar instead
+    #   of ending up in the browser history - like the desktop view drops its query
+    #   parameter. 'Spine.Route' hears of a hash change through its event only, so its
+    #   path has to be corrected along with it.
+    return if !window.history
+
+    url = "#ticket/zoom/#{@ticket_id}"
+    window.history.replaceState(null, null, url)
+    Spine.Route.path = url.replace(/^#/, '')
+
 App.Config.set('ticket/zoom/number/:ticket_number', TicketZoomRouter, 'Routes')
 App.Config.set('ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes')
 App.Config.set('ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/sidebar/:sidebar_tab', TicketZoomRouter, 'Routes')
 App.Config.set('ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes')

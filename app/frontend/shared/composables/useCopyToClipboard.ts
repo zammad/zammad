@@ -39,7 +39,13 @@ export const useCopyToClipboard = () => {
       source = [new ClipboardItem({ 'text/plain': input })]
     }
 
-    copyClipboardItems(source as ClipboardItem[])
+    copyClipboardItems(source as ClipboardItem[]).catch(() => {
+      notify({
+        id: 'copy-to-clipboard-failed',
+        type: NotificationTypes.Error,
+        message: __('The content could not be copied to the clipboard.'),
+      })
+    })
   }
 
   whenever(copiedToClipboard, () => {

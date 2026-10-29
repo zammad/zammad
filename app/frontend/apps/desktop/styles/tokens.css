@@ -108,6 +108,9 @@
 
   --blur-2xs: 2px;
 
+  /* The gradient that marks AI in the UI, shared by the AI agent avatar and the AI badge. */
+  --gradient-ai: linear-gradient(to right, var(--color-blue-800), var(--color-pink-200));
+
   /* Not a design token, used for calculating sticky top for the FieldEditorActionBar */
   --top-header-height: 0;
 }

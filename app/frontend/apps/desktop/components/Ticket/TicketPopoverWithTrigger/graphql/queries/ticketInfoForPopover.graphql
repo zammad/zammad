@@ -1,4 +1,4 @@
-query ticketInfoForPopover($ticketId: ID!) {
+query ticketInfoForPopover($ticketId: ID!, $withContent: Boolean = false) {
   ticket(ticketId: $ticketId) {
     id
     internalId
@@ -53,6 +53,23 @@ query ticketInfoForPopover($ticketId: ID!) {
     priority {
       id
       name
+    }
+    aiStoredSummary @include(if: $withContent) {
+      customerRequest
+      customerMood
+      customerEmotion
+    }
+    checklist @include(if: $withContent) {
+      id
+      complete
+      total
+      completed
+    }
+    firstArticle @include(if: $withContent) {
+      ...ticketPopoverArticle
+    }
+    lastArticle @include(if: $withContent) {
+      ...ticketPopoverArticle
     }
   }
 }

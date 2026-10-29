@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref, ShallowRef } from 'vue'
+import type { UseElementBoundingReturn } from '@vueuse/core'
+import type { Ref, ShallowRef, UnwrapRef } from 'vue'
 
 export interface CommonPopoverInstance {
   openPopover(): void
@@ -23,3 +24,5 @@ export interface CommonPopoverInternalInstance extends Omit<
 export type Orientation = 'top' | 'bottom' | 'left' | 'right' | 'autoVertical' | 'autoHorizontal'
 
 export type Placement = 'start' | 'arrowStart' | 'arrowEnd' | 'end'
+
+export type TargetElementBounds = UnwrapRef<UseElementBoundingReturn>

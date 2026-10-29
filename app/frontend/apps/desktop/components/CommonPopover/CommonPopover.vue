@@ -41,7 +41,12 @@ import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts
 
 import { usePopoverInstances } from './usePopoverInstances.ts'
 
-import type { Placement, CommonPopoverInternalInstance, Orientation } from './types.ts'
+import type {
+  Placement,
+  CommonPopoverInternalInstance,
+  Orientation,
+  TargetElementBounds,
+} from './types.ts'
 
 export interface Props {
   owner: HTMLElement | ComponentPublicInstance | undefined
@@ -52,6 +57,10 @@ export interface Props {
   persistent?: boolean
   noCloseOnClickOutside?: boolean
   noFullWidth?: boolean
+  /**
+   * Allows a wider popover, limited to the space the popover has next to its owner.
+   */
+  wide?: boolean
   zIndex?: string
 }
 
@@ -152,65 +161,115 @@ const PLACEMENT_OFFSET_WO_ARROW = 16
 const PLACEMENT_OFFSET_WITH_ARROW = 30
 const ORIENTATION_OFFSET_WO_ARROW = 6
 const ORIENTATION_OFFSET_WITH_ARROW = 16
+const WIDE_VIEWPORT_MARGIN = 8
+const WIDE_MIN_WIDTH = 448
 
-const popoverStyle = computed(() => {
-  if (!targetElementBounds.value) return { top: 0, left: 0, maxHeight: 0 }
+// Below a usable width the popover keeps its size, so the regular overflow handling flips it.
+const getWideMaxWidth = () => {
+  if (!props.wide || !targetElementBounds.value) return
 
-  const maxHeight = hasDirectionUp.value
-    ? targetElementBounds.value.top
-    : windowSize.height.value - targetElementBounds.value.bottom
-
-  const style: Record<string, string> = {
-    maxHeight: `${verticalOrientation.value ? maxHeight - 24 : maxHeight + 34}px`,
-  }
-
-  const arrowOffset = props.hideArrow ? PLACEMENT_OFFSET_WO_ARROW : PLACEMENT_OFFSET_WITH_ARROW
-
-  const placementOffset = targetElementBounds.value.width / 2 - arrowOffset
-
-  if (verticalOrientation.value) {
-    if (currentPlacement.value === 'start') {
-      style.left = `${targetElementBounds.value.left - BORDER_OFFSET}px`
-    } else if (currentPlacement.value === 'arrowStart') {
-      style.left = `${targetElementBounds.value.left + placementOffset + BORDER_OFFSET}px`
-    } else if (currentPlacement.value === 'arrowEnd') {
-      style.right = `${windowSize.width.value - targetElementBounds.value.left + placementOffset - targetElementBounds.value.width - BORDER_OFFSET}px`
-    } else if (currentPlacement.value === 'end') {
-      style.right = `${windowSize.width.value - targetElementBounds.value.left - targetElementBounds.value.width - BORDER_OFFSET}px`
-    }
-  } else if (!verticalOrientation.value) {
-    if (currentPlacement.value === 'start') {
-      style.top = `${targetElementBounds.value.top - BORDER_OFFSET}px`
-    } else if (currentPlacement.value === 'arrowStart') {
-      style.top = `${targetElementBounds.value.bottom - targetElementBounds.value.height / 2 - arrowOffset + BORDER_OFFSET}px`
-    } else if (currentPlacement.value === 'arrowEnd') {
-      style.bottom = `${windowSize.height.value - targetElementBounds.value.bottom + targetElementBounds.value.height / 2 - arrowOffset - BORDER_OFFSET}px`
-    } else if (currentPlacement.value === 'end') {
-      style.bottom = `${windowSize.height.value - targetElementBounds.value.bottom - BORDER_OFFSET}px`
-    }
-  }
-
+  const bounds = targetElementBounds.value
   const orientationOffset = props.hideArrow
     ? ORIENTATION_OFFSET_WO_ARROW
     : ORIENTATION_OFFSET_WITH_ARROW
 
+  let availableWidth: number
+
+  if (autoOrientation.value === 'left') availableWidth = bounds.left - orientationOffset
+  else if (autoOrientation.value === 'right')
+    availableWidth = windowSize.width.value - bounds.right - orientationOffset
+  else if (currentPlacement.value === 'start') availableWidth = windowSize.width.value - bounds.left
+  else if (currentPlacement.value === 'end') availableWidth = bounds.right
+  else return
+
+  availableWidth -= WIDE_VIEWPORT_MARGIN
+
+  if (availableWidth < WIDE_MIN_WIDTH) return
+
+  return availableWidth
+}
+
+// Positions the popover along the owner's edge, across the orientation axis.
+const getPlacementStyle = (
+  bounds: TargetElementBounds,
+  arrowOffset: number,
+): Record<string, string> => {
+  const placementOffset = bounds.width / 2 - arrowOffset
+
+  if (verticalOrientation.value) {
+    switch (currentPlacement.value) {
+      case 'start':
+        return { left: `${bounds.left - BORDER_OFFSET}px` }
+      case 'arrowStart':
+        return { left: `${bounds.left + placementOffset + BORDER_OFFSET}px` }
+      case 'arrowEnd':
+        return {
+          right: `${windowSize.width.value - bounds.left + placementOffset - bounds.width - BORDER_OFFSET}px`,
+        }
+      case 'end':
+        return {
+          right: `${windowSize.width.value - bounds.left - bounds.width - BORDER_OFFSET}px`,
+        }
+      default:
+        return {}
+    }
+  }
+
+  switch (currentPlacement.value) {
+    case 'start':
+      return { top: `${bounds.top - BORDER_OFFSET}px` }
+    case 'arrowStart':
+      return { top: `${bounds.bottom - bounds.height / 2 - arrowOffset + BORDER_OFFSET}px` }
+    case 'arrowEnd':
+      return {
+        bottom: `${windowSize.height.value - bounds.bottom + bounds.height / 2 - arrowOffset - BORDER_OFFSET}px`,
+      }
+    case 'end':
+      return { bottom: `${windowSize.height.value - bounds.bottom - BORDER_OFFSET}px` }
+    default:
+      return {}
+  }
+}
+
+// Pushes the popover off the owner, on the side the available space picked.
+const getOrientationStyle = (
+  bounds: TargetElementBounds,
+  orientationOffset: number,
+): Record<string, string> => {
   switch (autoOrientation.value) {
     case 'top':
-      style.bottom = `${windowSize.height.value - targetElementBounds.value.top + orientationOffset}px`
-      break
+      return { bottom: `${windowSize.height.value - bounds.top + orientationOffset}px` }
     case 'bottom':
-      style.top = `${
-        targetElementBounds.value.top + targetElementBounds.value.height + orientationOffset
-      }px`
-      break
+      return { top: `${bounds.top + bounds.height + orientationOffset}px` }
     case 'left':
-      style.right = `${windowSize.width.value - targetElementBounds.value.left + orientationOffset}px`
-      break
+      return { right: `${windowSize.width.value - bounds.left + orientationOffset}px` }
     case 'right':
-      style.left = `${targetElementBounds.value.right + orientationOffset}px`
-      break
+      return { left: `${bounds.right + orientationOffset}px` }
     default:
+      return {}
   }
+}
+
+const popoverStyle = computed(() => {
+  if (!targetElementBounds.value) return { top: 0, left: 0, maxHeight: 0 }
+
+  const bounds = targetElementBounds.value
+
+  const maxHeight = hasDirectionUp.value ? bounds.top : windowSize.height.value - bounds.bottom
+
+  const arrowOffset = props.hideArrow ? PLACEMENT_OFFSET_WO_ARROW : PLACEMENT_OFFSET_WITH_ARROW
+  const orientationOffset = props.hideArrow
+    ? ORIENTATION_OFFSET_WO_ARROW
+    : ORIENTATION_OFFSET_WITH_ARROW
+
+  const style: Record<string, string> = {
+    maxHeight: `${verticalOrientation.value ? maxHeight - 24 : maxHeight + 34}px`,
+    ...getPlacementStyle(bounds, arrowOffset),
+    ...getOrientationStyle(bounds, orientationOffset),
+  }
+
+  const wideMaxWidth = getWideMaxWidth()
+  if (wideMaxWidth) style.maxWidth = `${wideMaxWidth}px`
 
   style.zIndex = props.zIndex
 
@@ -464,8 +523,8 @@ useOnEmitter('resize-layout', () => {
   <Teleport to="body">
     <Transition :name="transitions.fade">
       <div
-        v-if="persistent"
-        v-show="showPopover"
+        v-if="persistent || showPopover"
+        v-show="!persistent || showPopover"
         :id="id"
         ref="popover"
         role="region"
@@ -475,27 +534,10 @@ useOnEmitter('resize-layout', () => {
         :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
         v-bind="$attrs"
       >
-        <div class="max-w-md overflow-y-auto" :class="{ 'w-full': !noFullWidth }">
-          <slot />
-        </div>
         <div
-          v-if="!hideArrow"
-          class="absolute -z-10 -rotate-45 transform"
-          :class="[arrowPlacementClasses, classes.arrow]"
-        />
-      </div>
-      <div
-        v-else-if="showPopover"
-        :id="id"
-        ref="popover"
-        role="region"
-        class="popover fixed flex print:hidden"
-        :class="[classes.base]"
-        :style="popoverStyle"
-        :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
-        v-bind="$attrs"
-      >
-        <div class="max-w-md overflow-y-auto" :class="{ 'w-full': !noFullWidth }">
+          class="overflow-y-auto"
+          :class="{ 'w-full': !noFullWidth, 'max-w-md': !wide, 'max-w-3xl': wide }"
+        >
           <slot />
         </div>
         <div

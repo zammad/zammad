@@ -4,6 +4,7 @@ import { getNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
 import { expect } from 'vitest'
 
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -51,6 +52,40 @@ describe('Ticket detail view', () => {
       await view.events.click(view.getByLabelText('Checklist'))
 
       expect(view.getByRole('heading', { name: 'Checklist', level: 2 })).toBeInTheDocument()
+    })
+
+    it('opens the checklist sidebar via the sidebar query parameter', async () => {
+      mockApplicationConfig({ checklist: true })
+
+      mockTicketChecklistQuery({
+        ticketChecklist: null,
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket(),
+      })
+
+      const view = await visitView('/tickets/1?sidebar=checklist')
+
+      expect(await view.findByRole('heading', { name: 'Checklist', level: 2 })).toBeInTheDocument()
+    })
+
+    it('opens the checklist sidebar when the sidebar query parameter is set on an open view', async () => {
+      mockApplicationConfig({ checklist: true })
+
+      mockTicketChecklistQuery({
+        ticketChecklist: null,
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket(),
+      })
+
+      const view = await visitView('/tickets/1')
+
+      await getTestRouter().push('/tickets/1?sidebar=checklist')
+
+      expect(await view.findByRole('heading', { name: 'Checklist', level: 2 })).toBeInTheDocument()
     })
 
     it('hides checklist if it is disabled and user is agent', async () => {

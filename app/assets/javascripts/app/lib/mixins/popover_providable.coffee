@@ -28,7 +28,9 @@ InstanceMethods =
   intersectionChanged: (entries) ->
     last = entries[entries.length - 1]
 
-    return if last.isVisible
+    # Not 'isVisible': it stays false without 'trackVisibility', so even the first callback
+    #   right after a render would hide a popover that was just opened.
+    return if last.isIntersecting
 
     return if !@initializedPopovers
 

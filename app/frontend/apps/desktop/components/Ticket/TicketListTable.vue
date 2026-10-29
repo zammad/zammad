@@ -10,6 +10,7 @@ import type { TicketByList } from '#shared/entities/ticket/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectWithId } from '#shared/types/utils.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
@@ -21,8 +22,10 @@ import OrganizationPopoverWithTrigger from '#desktop/components/Organization/Org
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
 
 import { useListTable } from '../CommonTable/composables/useListTable.ts'
+import { getTicketPriorityLinkColorClasses } from '../CommonTable/utils.ts'
 
 import { useTicketBulkEdit } from './TicketBulkEditFlyout/useTicketBulkEdit.ts'
+import TicketPopoverWithTrigger from './TicketPopoverWithTrigger.vue'
 
 import type { ListTableEmits, ListTableProps } from '../CommonTable/types.ts'
 
@@ -76,6 +79,13 @@ const userPopoverSlots: {
   { slotName: 'column-cell-customer_id', ticketAttribute: 'customer' },
   { slotName: 'column-cell-owner_id', ticketAttribute: 'owner' },
 ]
+
+const session = useSessionStore()
+
+// The popover trigger drops its content for non-agents, so they keep the default link cell.
+const ticketPopoverSlots = computed(() =>
+  session.hasPermission('ticket.agent') ? ['column-cell-title', 'column-cell-number'] : [],
+)
 
 // Matching the general ticket structure for the default layout column width
 const columnWidths = computed(() =>
@@ -210,6 +220,36 @@ const skeletonColumns = computed(() => columnWidths.value.length)
               />
             </CommonLabel>
           </UserPopoverWithTrigger>
+        </template>
+        <template
+          v-for="slotName in ticketPopoverSlots"
+          :key="slotName"
+          #[slotName]="{ item, isRowSelected, attribute }"
+        >
+          <TicketPopoverWithTrigger
+            :popover-config="{ orientation: 'autoHorizontal', wide: true }"
+            :ticket="item as TicketByList"
+            with-content
+            class="block! w-full text-sm group-hover:text-contrast! group-focus-visible:text-white group-active:text-white! group-active:dark:text-white!"
+            :class="[
+              {
+                'text-contrast': isRowSelected,
+              },
+              getTicketPriorityLinkColorClasses((item as TicketByList).priority?.uiColor),
+            ]"
+            internal
+            no-hover-styling
+            @click.stop
+            @keydown.stop
+          >
+            <span class="block truncate">
+              <ObjectAttributeContent
+                mode="table"
+                :attribute="attribute as unknown as ObjectAttribute"
+                :object="item"
+              />
+            </span>
+          </TicketPopoverWithTrigger>
         </template>
         <template #column-cell-organization_id="{ item, isRowSelected, attribute }">
           <OrganizationPopoverWithTrigger

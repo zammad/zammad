@@ -35,3 +35,10 @@ export type BulkUpdateAsyncResult = {
 }
 
 export type BulkUpdateResult = BulkUpdateSyncResult | BulkUpdateAsyncResult
+
+export interface SummaryConfig {
+  open_questions: boolean
+  upcoming_events: boolean
+  customer_sentiment: boolean
+  generate_on: string
+}

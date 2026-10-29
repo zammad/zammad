@@ -352,6 +352,7 @@ class App.Search extends App.Controller
         ticket_ids: ticket_ids
         radio:      false
         checkbox:   checkbox
+        ticketPopover: true
         orderBy:        @getSavedOrderBy()?.orderBy
         orderDirection: @getSavedOrderBy()?.orderDirection
         bindRow:

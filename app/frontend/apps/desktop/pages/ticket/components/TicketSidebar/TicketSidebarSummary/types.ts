@@ -8,10 +8,3 @@ export interface SummaryItem {
   active: boolean
   type?: 'list' | 'paragraphs'
 }
-
-export interface SummaryConfig {
-  open_questions: boolean
-  upcoming_events: boolean
-  customer_sentiment: boolean
-  generate_on: string
-}

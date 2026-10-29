@@ -6140,6 +6140,11 @@ a.list-group-item.active > .badge,
   max-width: 400px;
 }
 
+// A tip shown from inside a popover. Both live in 'body', so the later tooltip stacks on top.
+.tooltip--abovePopover {
+  @extend .zIndex-12;
+}
+
 .popover {
   @extend .zIndex-12;
 
@@ -6312,6 +6317,189 @@ a.list-group-item.active > .badge,
 
 .popover .column {
   margin-top: 8px;
+}
+
+// The design gives this popover more room than the shared width of 372px.
+.popover:has(.ticket-overview-popover-content) {
+  width: 575px;
+}
+
+.ticket-overview-popover-headline {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+
+  h2 {
+    flex: 1;
+    min-width: 0;
+
+    @extend .u-textTruncate;
+  }
+
+  // Laid out as a row so that the icon sits on the number's center, instead of on the
+  //   top edge its 'vertical-align' puts it on.
+  .ticket-number-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+}
+
+.ticket-overview-popover-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+// The count carries the badge, its label and icon stay in the back - as in the checklist
+//   line of the ticket zoom.
+.ticket-overview-popover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--header-primary);
+  font-size: 13px;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: var(--header-primary);
+    text-decoration: none;
+  }
+
+  // Sized as in the checklist line of the ticket zoom, instead of the icon's own 16x14.
+  .icon {
+    width: 14px;
+    height: 12.25px;
+    fill: var(--text-muted);
+  }
+}
+
+.ticket-overview-popover-badge-label {
+  color: var(--text-muted);
+}
+
+// The one-pixel padding lets the AI gradient show as the badge's border.
+.ticket-overview-popover-badge--sentiment {
+  padding: 1px;
+  background: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
+
+  .ticket-overview-popover-badge-label {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// The explicit line height keeps the badge at the 24 pixels of the design, whatever
+//   line height the popover's font settles on.
+.ticket-overview-popover-badge-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  line-height: 16px;
+  background: var(--background-popover);
+}
+
+.ticket-overview-popover-section {
+  margin-top: 10px;
+
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ticket-overview-popover-note {
+    margin-top: 2px;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: right;
+  }
+}
+
+.ticket-overview-popover-ai-divider {
+  height: 1px;
+  margin-top: 8px;
+  background-image: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
+}
+
+// The article bubble of the ticket zoom, scaled down to the popover: its colors, the avatar
+//   beside it and the side that tells the customer from the agent.
+.ticket-overview-popover-article {
+  display: flex;
+  align-items: flex-start;
+  // 5px of the gap are eaten by the negative margin of the internal border.
+  gap: 13px;
+
+  .avatar {
+    flex-shrink: 0;
+    cursor: default;
+  }
+
+  .internal-border {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .textBubble {
+    padding: 14px 20px;
+  }
+
+  p {
+    overflow-wrap: anywhere;
+  }
+
+  // The striped frame of an internal note bleeds past the bubble and would touch the label.
+  &.is-internal {
+    margin-top: 10px;
+  }
+}
+
+// The dark customer color barely stands out from the popover, and the side of the avatar
+//   already tells the direction, so there the bubble keeps the colors of an agent's article.
+.ticket-overview-popover-article--right {
+  flex-direction: row-reverse;
+
+  .textBubble {
+    background: var(--background-article-customer);
+    border-color: var(--border-article-customer);
+    box-shadow: none;
+
+    @include dark {
+      background: var(--background-secondary);
+      border-color: var(--border-alt);
+    }
+  }
+
+  .bubble-arrow {
+    left: auto;
+    right: -6px;
+  }
+
+  .bubble-arrow::after {
+    left: auto;
+    right: 2px;
+    background: var(--background-article-customer);
+    border-color: var(--border-article-customer);
+    box-shadow: none;
+
+    @include dark {
+      background: var(--background-secondary);
+      border-color: var(--border-alt);
+    }
+  }
 }
 
 .popover--notifications {

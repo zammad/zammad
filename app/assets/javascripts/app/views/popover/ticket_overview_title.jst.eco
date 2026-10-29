@@ -1,0 +1,9 @@
+<div class="ticket-overview-popover-headline">
+  <h2 class="u-textTruncate"><%= @ticket.title %></h2>
+  <span class="ticket-number-copy">
+    <span class="ticket-number js-objectNumber" data-number="<%- @C('ticket_hook') %><%= @ticket.number %>"><%- @C('ticket_hook') %><%= @ticket.number %></span>
+    <span class="js-ticketOverviewPopoverCopyNumber u-clickable" title="<%- @Ti('Copy ticket number') %>">
+      <%- @Icon('clipboard', 'ticketNumberCopy-icon') %>
+    </span>
+  </span>
+</div>

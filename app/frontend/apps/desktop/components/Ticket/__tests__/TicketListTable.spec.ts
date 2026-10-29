@@ -1,7 +1,12 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
+
 import '#tests/graphql/builders/mocks.ts'
 import { renderComponent, type ExtendedMountingOptions } from '#tests/support/components/index.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
@@ -12,6 +17,10 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { ListTableProps } from '#desktop/components/CommonTable/types.ts'
 
 import TicketListTable from '../TicketListTable.vue'
+import {
+  mockTicketInfoForPopoverQuery,
+  waitForTicketInfoForPopoverQueryCalls,
+} from '../TicketPopoverWithTrigger/graphql/queries/ticketInfoForPopover.mocks.ts'
 
 mockRouterHooks()
 
@@ -63,8 +72,8 @@ const tableItems: TicketByList[] = [
       uiColor: null,
     },
     createdAt: '2021-01-01T12:00:00Z',
-    internalId: 0,
-    number: '',
+    internalId: 1,
+    number: '31001',
     updatedAt: '',
     stateColorCode: EnumTicketStateColorCode.Closed,
     customer: {
@@ -123,6 +132,119 @@ describe('TicketListTable', () => {
       expect(
         wrapper.getByRole('status', { name: 'Currently processing this ticket…' }),
       ).toBeInTheDocument()
+    })
+  })
+
+  describe('Ticket popover', () => {
+    const renderPopoverListTable = () =>
+      renderListTable({
+        headers: ['number', 'title', 'owner'],
+        items: tableItems,
+        totalCount: 1,
+        caption: 'Table caption',
+        tableId: 'ticket-list-table',
+        maxItems: 1000,
+        loading: false,
+        loadingNewPage: false,
+      })
+
+    beforeEach(() => {
+      mockApplicationConfig({ ticket_hook: 'Ticket#' })
+
+      mockTicketInfoForPopoverQuery({
+        ticket: {
+          id: tableItems[0].id,
+          internalId: tableItems[0].internalId,
+          number: tableItems[0].number,
+          title: tableItems[0].title,
+          owner: {
+            id: convertToGraphQLId('User', 3),
+            fullname: 'Agent 1 Test',
+          },
+          customer: {
+            id: convertToGraphQLId('User', 2),
+            fullname: 'Nicole Braun',
+          },
+          group: {
+            id: convertToGraphQLId('Group', 1),
+            name: 'Users',
+          },
+          priority: {
+            id: convertToGraphQLId('TicketPriority', 3),
+            name: '3 high',
+          },
+        },
+      })
+    })
+
+    it.each([
+      { column: 'title', linkName: 'Dummy ticket' },
+      { column: 'number', linkName: '31001' },
+    ])('shows the ticket details when hovering the $column', async ({ linkName }) => {
+      mockPermissions(['ticket.agent'])
+
+      const wrapper = await renderPopoverListTable()
+
+      const link = wrapper.getByRole('link', { name: linkName })
+
+      expect(link.querySelector('[data-tooltip]')).not.toBeInTheDocument()
+
+      await wrapper.events.hover(link)
+
+      const calls = await waitForTicketInfoForPopoverQueryCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({
+        ticketId: tableItems[0].id,
+        withContent: true,
+      })
+
+      const popover = await wrapper.findByRole('region')
+
+      expect(within(popover).getByText('Dummy ticket')).toBeVisible()
+      expect(within(popover).getByText('Ticket#31001')).toBeVisible()
+
+      expect(within(popover).queryByText('Users')).not.toBeInTheDocument()
+      expect(within(popover).queryByText('3 high')).not.toBeInTheDocument()
+    })
+
+    it.each([
+      {
+        action: 'clicking',
+        activate: (wrapper: Awaited<ReturnType<typeof renderPopoverListTable>>) =>
+          wrapper.events.click(wrapper.getByRole('link', { name: 'Dummy ticket' })),
+      },
+      {
+        action: 'pressing Enter on',
+        activate: async (wrapper: Awaited<ReturnType<typeof renderPopoverListTable>>) => {
+          wrapper.getByRole('link', { name: 'Dummy ticket' }).focus()
+          await wrapper.events.keyboard('{Enter}')
+        },
+      },
+    ])('navigates once when $action the title', async ({ activate }) => {
+      mockPermissions(['ticket.agent'])
+
+      const wrapper = await renderPopoverListTable()
+
+      await getTestRouter().isReady()
+
+      const pushSpy = vi.spyOn(getTestRouter(), 'push')
+
+      await activate(wrapper)
+
+      expect(pushSpy).toHaveBeenCalledTimes(1)
+      expect(pushSpy).toHaveBeenCalledWith('/tickets/1')
+    })
+
+    it('keeps a plain link without a popover for customers', async () => {
+      mockPermissions(['ticket.customer'])
+
+      const wrapper = await renderPopoverListTable()
+
+      const link = wrapper.getByRole('link', { name: 'Dummy ticket' })
+
+      expect(link).toHaveAttribute('href', '/desktop/tickets/1')
+      expect(link).not.toHaveAttribute('aria-controls')
+      expect(link).toHaveAttribute('data-tooltip', 'truncate')
     })
   })
 })

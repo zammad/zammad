@@ -11,7 +11,7 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
 import CommonUpdateIndicator from '#desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue'
 import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
-import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
+import { useTicketNumber } from '#desktop/entities/ticket/composables/useTicketNumber.ts'
 
 import type { UserTaskbarTabEntityProps } from '../types.ts'
 

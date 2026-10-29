@@ -111,6 +111,9 @@ class App.Sidebar extends App.Controller
       else
         @toggleTabAction(name)
 
+  tabByName: (elements, name) ->
+    elements.filter(-> $(@).data('tab') is name)
+
   toggleTabAction: (name) =>
     return if !name
 
@@ -126,18 +129,26 @@ class App.Sidebar extends App.Controller
         available_sidebar = _.first @items, (elem) -> elem.sidebarItem()?
         available_sidebar?.shown = true
 
+    # a tab requested from outside may be gone, e. g. a deep link to a disabled sidebar
+    # the name comes from the outside, so it is compared instead of put into a selector
+    tab = @tabByName(@tabs, name)
+    if !tab.length
+      tab  = @tabs.first()
+      name = tab.data('tab')
+      return if !name
+
     # remember sidebarState for outsite
     if @sidebarState
       @sidebarState.active = name
 
     # add active state
-    @$('.tabsSidebar-tab[data-tab=' + name + ']').addClass('active')
+    tab.addClass('active')
 
     # hide all content tabs
     @sidebars.addClass('hide')
 
     # show active tab content
-    tabContent = @$('.sidebar[data-tab=' + name + ']')
+    tabContent = @tabByName(@sidebars, name)
     tabContent.removeClass('hide')
 
     # remember current tab

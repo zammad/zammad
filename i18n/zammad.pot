@@ -321,7 +321,9 @@ msgstr ""
 msgid "%s object(s) will be updated."
 msgstr ""
 
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:8
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:19
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:50
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:208
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:44
 msgid "%s of %s"
@@ -2537,7 +2539,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:247
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:244
 msgid "Author name and article creation date"
 msgstr ""
 
@@ -2816,6 +2818,8 @@ msgid "Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:30
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:147
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:125
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:53
 msgid "Be sure to check AI-generated content for accuracy."
@@ -3540,6 +3544,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:70
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:66
 msgid "Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order."
+msgstr ""
+
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:7
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:40
+msgid "Checked"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:23
@@ -4345,16 +4355,17 @@ msgstr ""
 msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:78
 msgid "Conversation summary"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:171
 msgid "Copied!"
 msgstr ""
 
-#: app/frontend/shared/composables/useCopyToClipboard.ts:49
+#: app/frontend/shared/composables/useCopyToClipboard.ts:55
 msgid "Copied."
 msgstr ""
 
@@ -4405,6 +4416,8 @@ msgstr ""
 msgid "Copy text"
 msgstr ""
 
+#: app/assets/javascripts/app/views/popover/ticket_overview_title.jst.eco:5
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:102
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
 msgid "Copy ticket number"
@@ -4868,7 +4881,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:27
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:239
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:279
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
@@ -4929,7 +4942,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:89
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:85
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:61
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
@@ -4960,7 +4973,9 @@ msgstr ""
 msgid "Customer and agent ratio (role based user counts)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:75
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:27
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:73
 msgid "Customer intent"
 msgstr ""
 
@@ -4968,7 +4983,9 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:14
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:96
 msgid "Customer sentiment"
 msgstr ""
 
@@ -8023,7 +8040,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:128
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:129
 msgid "Failed to translate article content."
 msgstr ""
 
@@ -8190,6 +8207,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:28
 #: app/assets/javascripts/app/views/dashboard.jst.eco:8
 msgid "First Steps"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:114
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:89
+msgid "First article"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:130
@@ -9704,7 +9726,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:480
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:499
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -10602,6 +10624,11 @@ msgstr ""
 msgid "Lastname, Firstname"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:108
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:83
+msgid "Latest article"
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:164
 msgid "Layout"
 msgstr ""
@@ -11001,7 +11028,7 @@ msgstr ""
 msgid "MAC address (unique identifier of the report)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:113
 msgid "Machine-translated, some formatting may be lost."
 msgstr ""
 
@@ -12814,7 +12841,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:483
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:502
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -12826,7 +12853,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:60
-#: app/graphql/gql/types/ticket_type.rb:112
+#: app/graphql/gql/types/ticket_type.rb:115
 #: db/seeds/settings.rb:2048
 msgid "None"
 msgstr ""
@@ -12914,7 +12941,7 @@ msgstr ""
 msgid "Not reached"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:351
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:348
 msgid "Not translated due to your preferences."
 msgstr ""
 
@@ -13328,6 +13355,11 @@ msgstr ""
 msgid "Open %s"
 msgstr ""
 
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:12
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:64
+msgid "Open AI summary"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:102
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 msgid "Open Questions"
@@ -13347,6 +13379,8 @@ msgstr ""
 msgid "Open and closed tickets ratio (ticket counts based on state)"
 msgstr ""
 
+#: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:5
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:31
 msgid "Open checklist"
 msgstr ""
@@ -13376,7 +13410,7 @@ msgstr ""
 msgid "Open note box"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:84
 msgid "Open questions"
 msgstr ""
 
@@ -13533,7 +13567,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:93
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:14
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:92
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:68
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:28
 #: app/frontend/apps/desktop/pages/organization/routes.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
@@ -13770,7 +13804,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:522
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:79
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:55
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
@@ -14204,7 +14238,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:603
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:329
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:326
 msgid "Please contact your administrator."
 msgstr ""
 
@@ -14512,7 +14546,7 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:124
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:134
 msgid "Priority icon"
 msgstr ""
 
@@ -15032,7 +15066,7 @@ msgid "Reload application"
 msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:97
-#: app/frontend/shared/stores/authentication.ts:209
+#: app/frontend/shared/stores/authentication.ts:210
 msgid "Reload now"
 msgstr ""
 
@@ -15888,7 +15922,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1214
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1222
 msgid "Saving failed."
 msgstr ""
 
@@ -16332,7 +16366,7 @@ msgstr ""
 msgid "Security token verification failed"
 msgstr ""
 
-#: app/frontend/shared/stores/authentication.ts:204
+#: app/frontend/shared/stores/authentication.ts:205
 msgid "Security token verification failed. This may be just temporary, please reload and try again. Reloading in %s second(s)…"
 msgstr ""
 
@@ -16343,7 +16377,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:508
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:302
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:299
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:272
 msgid "See less"
 msgstr ""
@@ -16354,7 +16388,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:302
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:299
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:272
 msgid "See more"
 msgstr ""
@@ -16619,7 +16653,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr ""
 
-#: app/models/ticket/article.rb:347
+#: app/models/ticket/article.rb:353
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -17552,7 +17586,7 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:140
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:150
 msgid "State icon"
 msgstr ""
 
@@ -18151,7 +18185,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:182
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:375
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:372
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -18565,6 +18599,10 @@ msgstr ""
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
 #: lib/email_helper/probe.rb:281
 msgid "The connection was refused."
+msgstr ""
+
+#: app/frontend/shared/composables/useCopyToClipboard.ts:46
+msgid "The content could not be copied to the clipboard."
 msgstr ""
 
 #: app/services/service/content_translation/backend/base.rb:34
@@ -20708,7 +20746,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:563
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:582
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr ""
@@ -21167,7 +21205,7 @@ msgstr ""
 msgid "Translate ticket articles into another language."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:111
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:112
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
@@ -21187,7 +21225,7 @@ msgstr ""
 msgid "Translation Source"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:280
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:277
 msgid "Translation in progress…"
 msgstr ""
 
@@ -21655,7 +21693,7 @@ msgstr ""
 msgid "Upcoming Events"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:90
 msgid "Upcoming events"
 msgstr ""
 
@@ -22867,7 +22905,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:482
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -23087,7 +23125,7 @@ msgstr ""
 msgid "You do not have permission to update"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:439
+#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:440
 msgid "You don't have more items to load."
 msgstr ""
 
@@ -23183,7 +23221,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:477
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:496
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -23209,7 +23247,7 @@ msgstr ""
 msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:435
+#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:436
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
@@ -23586,10 +23624,6 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/chat.ts:5
 #: db/seeds/ticket_article_types.rb:5
 msgid "chat"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:40
-msgid "checked"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149

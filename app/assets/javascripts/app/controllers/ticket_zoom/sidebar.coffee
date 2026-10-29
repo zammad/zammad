@@ -20,6 +20,9 @@ class App.TicketZoomSidebar extends App.ControllerObserver
   get: (key) ->
     return @sidebarBackends[key]
 
+  toggleTab: (name) =>
+    @sidebar?.toggleTabAction(name)
+
   reload: (args) =>
     for key, backend of @sidebarBackends
       if backend && backend.reload

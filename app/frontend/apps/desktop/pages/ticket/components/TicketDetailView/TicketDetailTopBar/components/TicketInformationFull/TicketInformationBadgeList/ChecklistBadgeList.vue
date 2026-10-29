@@ -37,7 +37,7 @@ const isCompleted = computed(() => checklist.value?.completed)
   >
     <template #label>
       <CommonLabel size="small" class="text-current! uppercase">
-        {{ $t('checked') }}
+        {{ $t('Checked') }}
       </CommonLabel>
     </template>
     <CommonLabel size="small" class="text-contrast!">

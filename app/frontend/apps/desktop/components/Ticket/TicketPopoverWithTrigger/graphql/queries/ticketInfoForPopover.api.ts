@@ -1,12 +1,13 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { TicketPopoverArticleFragmentDoc } from '../fragments/ticketPopoverArticle.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketInfoForPopoverDocument = gql`
-    query ticketInfoForPopover($ticketId: ID!) {
+    query ticketInfoForPopover($ticketId: ID!, $withContent: Boolean = false) {
   ticket(ticketId: $ticketId) {
     id
     internalId
@@ -62,9 +63,26 @@ export const TicketInfoForPopoverDocument = gql`
       id
       name
     }
+    aiStoredSummary @include(if: $withContent) {
+      customerRequest
+      customerMood
+      customerEmotion
+    }
+    checklist @include(if: $withContent) {
+      id
+      complete
+      total
+      completed
+    }
+    firstArticle @include(if: $withContent) {
+      ...ticketPopoverArticle
+    }
+    lastArticle @include(if: $withContent) {
+      ...ticketPopoverArticle
+    }
   }
 }
-    `;
+    ${TicketPopoverArticleFragmentDoc}`;
 export function useTicketInfoForPopoverQuery(variables: Types.TicketInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.TicketInfoForPopoverQueryVariables> | ReactiveFunction<Types.TicketInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>(TicketInfoForPopoverDocument, variables, options);
 }

@@ -11,6 +11,7 @@ export type BadgeVariant =
   | 'tertiary'
   | 'highlight'
   | 'open'
+  | 'ai'
   | 'custom'
 
 export type BadgeClass = BadgeVariant | 'base'

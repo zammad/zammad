@@ -4,12 +4,19 @@ import { computed, type ComputedRef } from 'vue'
 
 export const useBubbleStyleGuide = (
   position: ComputedRef<'left' | 'right'>,
-  isArticleTypeNote: ComputedRef<boolean>,
+  isArticleTypeNote: ComputedRef<boolean> = computed(() => false),
 ) => {
   const bodyClasses = computed(() =>
     position.value === 'right'
       ? ['dark:bg-stone-500', 'bg-blue-100']
       : ['dark:bg-gray-400', 'bg-neutral-100'],
+  )
+
+  // The surface of the article body itself, which the `Content--*` classes let its gradient match.
+  const articleBodyClasses = computed(() =>
+    position.value === 'right'
+      ? ['dark:bg-stone-500', 'bg-blue-100', 'Content--customer']
+      : ['dark:bg-gray-400', 'bg-white', 'Content--agent'],
   )
 
   const dividerClass = computed(() => {
@@ -52,6 +59,7 @@ export const useBubbleStyleGuide = (
 
   return {
     bodyClasses,
+    articleBodyClasses,
     dividerClass,
     frameBorderClass,
     headerAndIconBarBackgroundClass,

@@ -35,6 +35,9 @@ export default (_parent: unknown, _value: unknown, meta: ResolversMeta): DeepPar
     },
     checklist: null,
     referencingChecklistTickets: [],
+    // An article generates its ticket, which generates articles again — stop the recursion.
+    firstArticle: null,
+    lastArticle: null,
   }
   if (meta.variables.ticketNumber) {
     ticket.number = meta.variables.ticketNumber as string
