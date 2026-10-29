@@ -382,13 +382,13 @@ GEM
       faraday-follow_redirects
     jwt (3.3.0)
       base64
-    koala (3.7.0)
+    koala (3.8.0)
       addressable
       base64
       cgi
       faraday
       faraday-multipart
-      json (>= 1.8)
+      json (>= 2.0)
       ostruct
       rexml
     language_server-protocol (3.17.0.6)

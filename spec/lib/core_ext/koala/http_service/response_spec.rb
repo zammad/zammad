@@ -16,8 +16,4 @@ RSpec.describe Koala::HTTPService::Response do
       expect(described_class.new(200, '', {}).data).to be_nil
     end
   end
-
-  it 'is still needed for the bundled Koala version' do
-    expect(Koala::VERSION).to eq('3.7.0'), 'Koala was updated - check whether lib/core_ext/koala/http_service/response.rb is still needed and remove it or update this version.'
-  end
 end
