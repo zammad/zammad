@@ -24,6 +24,21 @@ RSpec.describe TransactionDispatcher do
         expect(Rails.logger).to have_received(:error).with(%r{Transaction::DoesNotExist})
       end
     end
+
+    context 'when a sync backend names a class outside of Transaction' do
+      before do
+        Setting.set('0100_trigger', 'DataPrivacyTaskJob', validate: false)
+        allow(DataPrivacyTaskJob).to receive(:new)
+        allow(Rails.logger).to receive(:error)
+      end
+
+      it 'skips it and logs an error', :aggregate_failures do
+        Transaction.execute { create(:ticket) }
+
+        expect(DataPrivacyTaskJob).not_to have_received(:new)
+        expect(Rails.logger).to have_received(:error).with(%r{DataPrivacyTaskJob})
+      end
+    end
   end
 
   describe '.execute_single_backend' do
