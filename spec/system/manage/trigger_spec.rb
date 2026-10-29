@@ -266,6 +266,30 @@ RSpec.describe 'Manage > Trigger', type: :system do
         end
       end
     end
+
+    context 'Webhook with a long endpoint' do
+      let(:webhook) { create(:webhook, name: 'Long webhook', endpoint: "https://example.com/#{'a' * 500}") }
+
+      before do
+        create(:trigger, name: 'Webhook trigger', perform: { 'notification.webhook' => { 'webhook_id' => [webhook.id.to_s] } })
+      end
+
+      it 'keeps the selected webhook within its row' do
+        visit '/#manage/trigger'
+        find('tr', text: 'Webhook trigger').click
+
+        in_modal do
+          within '.ticket_perform_action' do
+            expect(page).to have_css('.js-setNotification .token', text: 'Long webhook')
+
+            webhook_group = find('.js-setNotification').rect
+            row_actions   = find('.js-rowActions').rect
+
+            expect(webhook_group.x + webhook_group.width).to be <= row_actions.x
+          end
+        end
+      end
+    end
   end
 
   context "with elements which do not support 'has changed' operator" do

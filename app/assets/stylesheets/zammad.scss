@@ -11829,6 +11829,7 @@ label + .wizard-buttonList {
   border: 1px solid var(--border-alt);
   border-radius: 5px;
   margin: 0 5px;
+  min-width: 0;
 
   > .form-group:last-child {
     margin-bottom: 0;
