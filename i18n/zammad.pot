@@ -479,6 +479,10 @@ msgstr ""
 msgid "'%s' is not a valid IP address or CIDR range."
 msgstr ""
 
+#: app/models/setting/validation/backend_class.rb:20
+msgid "'%s' is not a valid backend for this setting."
+msgstr ""
+
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr ""
@@ -19067,6 +19071,10 @@ msgstr ""
 
 #: app/models/core_workflow/result.rb:40
 msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr ""
+
+#: app/models/setting/validation/backend_class.rb:15
+msgid "The value of this setting has an invalid format."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137

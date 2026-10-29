@@ -474,8 +474,9 @@ Setting.create_if_not_exists(
   },
   state:       'Service::Image::Zammad',
   preferences: {
-    prio:       1,
-    permission: ['admin.system'],
+    prio:        1,
+    permission:  ['admin.system'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -501,8 +502,9 @@ Setting.create_if_not_exists(
   },
   state:       'Service::GeoIp::Zammad',
   preferences: {
-    prio:       2,
-    permission: ['admin.system'],
+    prio:        2,
+    permission:  ['admin.system'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -528,8 +530,9 @@ Setting.create_if_not_exists(
   },
   state:       'Service::GeoLocation::Osm',
   preferences: {
-    prio:       3,
-    permission: ['admin.system'],
+    prio:        3,
+    permission:  ['admin.system'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -555,8 +558,9 @@ Setting.create_if_not_exists(
   },
   state:       'Service::GeoCalendar::Zammad',
   preferences: {
-    prio:       2,
-    permission: ['admin.system'],
+    prio:        2,
+    permission:  ['admin.system'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -1255,6 +1259,7 @@ Setting.create_if_not_exists(
     title_i18n:       [__('internal database')],
     description_i18n: [__('internal database')],
     permission:       ['admin.security'],
+    validations:      ['Setting::Validation::BackendClass'],
   },
   state:       {
     priority: 1,
@@ -1271,6 +1276,7 @@ Setting.create_if_not_exists(
     title_i18n:       [__('developer password')],
     description_i18n: [__('developer password')],
     permission:       ['admin.security'],
+    validations:      ['Setting::Validation::BackendClass'],
   },
   state:       {
     priority: 2,
@@ -1287,6 +1293,7 @@ Setting.create_if_not_exists(
     title_i18n:       [__('LDAP')],
     description_i18n: [__('LDAP')],
     permission:       ['admin.security'],
+    validations:      ['Setting::Validation::BackendClass'],
   },
   state:       {
     priority:      3,
@@ -2537,6 +2544,7 @@ Setting.create_if_not_exists(
     settings_included: %w[ticket_number_increment ticket_number_date],
     controller:        'SettingsAreaTicketNumber',
     permission:        ['admin.ticket'],
+    validations:       ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4230,7 +4238,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       ['Import::Ldap', 'Import::Exchange'],
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4452,7 +4461,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::Trusted',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4464,7 +4474,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::AutoResponseCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4476,7 +4487,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::FollowUpCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4488,7 +4500,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::FollowUpMerged',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4500,7 +4513,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::FollowUpAssignment',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4512,7 +4526,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::ReplyToBasedSender',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4524,7 +4539,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::ImportArchive',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4536,7 +4552,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::SenderIsSystemAddress',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4548,7 +4565,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::OwnNotificationLoopDetection',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4560,7 +4578,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::IdentifySessionUser',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4572,7 +4591,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::IdentifySender',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4584,7 +4604,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::SecureMailing',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4596,7 +4617,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::AttachmentReferenceRemove',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4608,7 +4630,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::OutOfOfficeCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4620,7 +4643,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::FollowUpPossibleCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4632,7 +4656,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::BounceFollowUpCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4644,7 +4669,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::BounceDeliveryPermanentFailed',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4656,7 +4682,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::BounceDeliveryTemporaryFailed',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4668,7 +4695,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::Database',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4680,7 +4708,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::Icinga',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4692,7 +4721,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::Nagios',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4704,7 +4734,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::CheckMk',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4716,7 +4747,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::Monit',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4728,7 +4760,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4740,7 +4773,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4752,7 +4786,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::JiraCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4764,7 +4799,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::JiraCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4776,7 +4812,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Channel::Filter::InternalArticleCheck',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -4788,7 +4825,8 @@ Setting.create!(
   options:     {},
   state:       'Channel::Filter::IdentifyGroup',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5434,7 +5472,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Transaction::Trigger',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5446,7 +5485,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Transaction::Notification',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5458,7 +5498,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Transaction::SignatureDetection',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5730,7 +5771,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Transaction::ClearbitEnrichment',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5742,7 +5784,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Transaction::CtiCallerIdDetection',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5754,7 +5797,8 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Transaction::TimeBasedTrigger',
   preferences: {
-    permission: ['admin'],
+    permission:  ['admin'],
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5807,8 +5851,9 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Stats::TicketWaitingTime',
   preferences: {
-    permission: ['ticket.agent'],
-    prio:       1,
+    permission:  ['ticket.agent'],
+    prio:        1,
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5822,8 +5867,9 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Stats::TicketEscalation',
   preferences: {
-    permission: ['ticket.agent'],
-    prio:       2,
+    permission:  ['ticket.agent'],
+    prio:        2,
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5837,8 +5883,9 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Stats::TicketChannelDistribution',
   preferences: {
-    permission: ['ticket.agent'],
-    prio:       3,
+    permission:  ['ticket.agent'],
+    prio:        3,
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5852,8 +5899,9 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Stats::TicketLoadMeasure',
   preferences: {
-    permission: ['ticket.agent'],
-    prio:       4,
+    permission:  ['ticket.agent'],
+    prio:        4,
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5867,8 +5915,9 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Stats::TicketInProcess',
   preferences: {
-    permission: ['ticket.agent'],
-    prio:       5,
+    permission:  ['ticket.agent'],
+    prio:        5,
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )
@@ -5882,8 +5931,9 @@ Setting.create_if_not_exists(
   options:     {},
   state:       'Stats::TicketReopen',
   preferences: {
-    permission: ['ticket.agent'],
-    prio:       6,
+    permission:  ['ticket.agent'],
+    prio:        6,
+    validations: ['Setting::Validation::BackendClass'],
   },
   frontend:    false
 )

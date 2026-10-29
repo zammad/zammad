@@ -15,6 +15,14 @@ returns
 =end
 
   def self.generate
+    stats_items = Setting.where(area: 'Dashboard::Stats')
+    if stats_items.blank?
+      raise __("No settings with area 'Dashboard::Stats' defined")
+    end
+
+    # A backend is resolved once an agent may use it, so a registration no agent may use (e.g. one
+    #   left behind by a removed add-on) doesn't stop the run.
+    backends = {}
 
     # generate stats per agent
     users = User.with_permissions('ticket.agent')
@@ -27,23 +35,12 @@ returns
       agent_count += 1
       data = {}
 
-      backends = Setting.where(area: 'Dashboard::Stats')
-      if backends.blank?
-        raise __("No settings with area 'Dashboard::Stats' defined")
-      end
-
-      backends.each do |stats_item|
+      stats_items.each do |stats_item|
         # additional permission check
         next if stats_item.preferences[:permission] && !user.permissions?(stats_item.preferences[:permission])
 
-        backend = stats_item.state_current[:value]
-        if !backend
-          raise "Dashboard::Stats backend #{stats_item.name} is not defined"
-        end
-
-        backend = backend.constantize
-
-        data[backend] = backend.generate(user)
+        backend_model = backends[stats_item.name] ||= backend_class!(stats_item)
+        data[backend_model] = backend_model.generate(user)
       end
       user_result[user] = data
     end
@@ -71,7 +68,7 @@ returns
         data[backend_model_average][:average_per_agent] = average
 
         # generate icon state
-        backend_model_average.to_s.constantize.average_state(data[backend_model_average], user.id)
+        backend_model_average.average_state(data[backend_model_average], user.id)
       end
     end
 
@@ -101,5 +98,16 @@ returns
 
     true
   end
+
+  def self.backend_class!(stats_item)
+    backend = stats_item.state_current[:value]
+    if !backend
+      raise "Dashboard::Stats backend #{stats_item.name} is not defined"
+    end
+
+    ApplicationLib.load_adapter(backend, namespace: Stats) ||
+      raise("Dashboard::Stats backend #{stats_item.name} '#{backend}' is not a stats backend")
+  end
+  private_class_method :backend_class!
 
 end

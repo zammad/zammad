@@ -170,7 +170,7 @@ returns
 
     filters = {}
     Setting.where(area: 'Postmaster::PreFilter').reorder(:name).each do |setting|
-      filters[setting.name] = Setting.get(setting.name).constantize
+      filters[setting.name] = postmaster_filter!(setting.name)
     end
     filters.each do |key, backend|
       Rails.logger.debug { "run postmaster pre filter #{key}: #{backend}" }
@@ -326,7 +326,13 @@ returns
     # run postmaster post filter
     filters = {}
     Setting.where(area: 'Postmaster::PostFilter').reorder(:name).each do |setting|
-      filters[setting.name] = Setting.get(setting.name).constantize
+      filter = postmaster_filter(setting.name)
+      if !filter
+        Rails.logger.error "can't load postmaster post filter #{setting.name}: '#{Setting.get(setting.name)}' is not a postmaster filter"
+        next
+      end
+
+      filters[setting.name] = filter
     end
     filters.each_value do |backend|
       Rails.logger.debug { "run postmaster post filter #{backend}" }
@@ -547,6 +553,16 @@ returns
   end
 
   private
+
+  def postmaster_filter(setting_name)
+    ApplicationLib.load_adapter(Setting.get(setting_name), namespace: Channel::Filter)
+  end
+
+  # A pre filter that can't be loaded stops the processing, as skipping one (e.g. the trusted
+  #   filter) would let the mail through unchecked.
+  def postmaster_filter!(setting_name)
+    postmaster_filter(setting_name) || raise("Postmaster filter #{setting_name} '#{Setting.get(setting_name)}' is not a postmaster filter")
+  end
 
   # generate Message ID on the fly if it was missing
   # yes, Mail gem generates one in some cases
