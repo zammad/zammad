@@ -7,8 +7,9 @@ class FormUpdater::ApplyValue::FormId < FormUpdater::ApplyValue::Base
   end
 
   def map_value(field:, config:)
+    # Only the user's own files, as the form id may come from a stored taskbar state.
     attachments = UploadCache.new(config['value'])
-      .attachments
+      .attachments(created_by_id: context[:current_user].id)
       .reject(&:inline?)
       .map do |attachment|
         {

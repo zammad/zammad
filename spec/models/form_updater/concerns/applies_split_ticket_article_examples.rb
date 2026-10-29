@@ -113,6 +113,26 @@ RSpec.shared_examples 'FormUpdater::AppliesSplitTicketArticle' do
         end
       end
 
+      context 'when the form belongs to another user' do
+        let(:form_id) { SecureRandom.uuid }
+        let(:meta)    { { initial: true, form_id:, additional_data: } }
+
+        before { create(:store, object: 'UploadCache', o_id: form_id, created_by_id: create(:agent).id) }
+
+        it 'does not copy the attachments into it' do
+          expect { resolved_result.resolve }.to raise_error(Exceptions::Forbidden)
+        end
+      end
+
+      context 'when the agent is only the customer of the ticket' do
+        let(:user)          { create(:agent_and_customer) }
+        let(:source_ticket) { create(:ticket, group: create(:group), customer: user) }
+
+        it 'does not split the article' do
+          expect { resolved_result.resolve }.to raise_error(Exceptions::Forbidden)
+        end
+      end
+
       context 'when given invalid article id' do
         let(:additional_data) { { 'splitTicketArticleId' => 'non-existant' } }
 

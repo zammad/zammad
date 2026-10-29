@@ -2,6 +2,8 @@
 
 module Gql::Queries
   class FormUpdater < BaseQuery
+    include Gql::Concerns::VerifiesCsrfToken
+
     description 'Return updated form information for a frontend form (e.g. core workflow information or resolved relations).'
 
     attr_reader :form_updater
@@ -32,6 +34,14 @@ module Gql::Queries
       )
 
       raise ActiveRecord::RecordNotFound, __('FormSchema could not be found.') if !@form_updater
+    end
+
+    # It stores the form state in the taskbar, so over HTTP it needs the CSRF token like a mutation.
+    #   A request over the websocket connection is covered by its origin check instead.
+    def ready?(...)
+      verify_csrf_token! if context[:controller]
+
+      super
     end
 
     def authorized?(...)

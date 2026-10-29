@@ -37,10 +37,10 @@ module FormUpdater::Concerns::PreparesTicketSignature
 
   def group_signature
     return nil if group.nil? || group.signature_id.nil?
+    # The group comes from the form data, so only one the agent may see.
+    return nil if !Pundit.policy(current_user, group).show?
 
-    @group_signature ||= Signature.find(group.signature_id)
-  rescue ActiveRecord::RecordNotFound
-    nil
+    @group_signature ||= Signature.find_by(id: group.signature_id, active: true)
   end
 
   def group

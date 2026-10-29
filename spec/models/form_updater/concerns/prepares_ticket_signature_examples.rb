@@ -47,6 +47,18 @@ RSpec.shared_examples 'FormUpdater::PreparesTicketSignature' do
         let(:data) { { 'group_id' => group.id } }
 
         it_behaves_like 'setting the signature prop for the field'
+
+        context 'when the signature is inactive' do
+          let(:signature) { create(:signature, body: 'test', active: false) }
+
+          it_behaves_like 'resetting the signature prop for the field'
+        end
+
+        context 'when the agent has no access to the group' do
+          let(:data) { { 'group_id' => create(:group, signature:).id } }
+
+          it_behaves_like 'resetting the signature prop for the field'
+        end
       end
     end
 

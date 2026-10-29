@@ -30,6 +30,8 @@ module FormUpdater::Concerns::AppliesSplitTicketArticle
   end
 
   def apply_attachments
+    authorize_form_upload_cache!
+
     new_attachments = UserInfo.with_user_id(context[:current_user].id) do
       selected_ticket_article.clone_attachments('UploadCache', meta[:form_id])
     end
@@ -64,7 +66,8 @@ module FormUpdater::Concerns::AppliesSplitTicketArticle
     @selected_ticket_article ||= begin
       gid = meta.dig(:additional_data, 'splitTicketArticleId')
 
-      Gql::ZammadSchema.authorized_object_from_id(gid, type: Ticket::Article, user: context[:current_user]) if gid.present?
+      # Agent access, as the split hands over every attribute of the ticket.
+      Gql::ZammadSchema.authorized_object_from_id(gid, type: Ticket::Article, user: context[:current_user], query: :agent_read_access?) if gid.present?
     end
   end
 

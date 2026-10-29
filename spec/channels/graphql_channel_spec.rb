@@ -104,4 +104,32 @@ RSpec.describe GraphqlChannel, type: :channel do
       end
     end
   end
+
+  # The connection's origin check covers the form updater here, which over HTTP needs the CSRF token.
+  describe 'running the form updater' do
+    let(:query) do
+      <<~QUERY
+        query formUpdater($meta: FormUpdaterMetaInput!) {
+          formUpdater(formUpdaterId: FormUpdater__Updater__Ticket__Create, relationFields: [], meta: $meta, data: {}) {
+            fields
+          }
+        }
+      QUERY
+    end
+
+    before do
+      # Outside of tests, a request without a controller is not let through on that ground.
+      allow(Rails.env).to receive(:test?).and_return(false)
+
+      stub_connection sid: '123_456', current_user: create(:agent), still_authorized?: true
+
+      subscribe
+    end
+
+    it 'needs no CSRF token' do
+      perform :execute, operationName: 'formUpdater', query:, variables: { meta: { formId: SecureRandom.uuid } }
+
+      expect(transmissions.last).to include(result: include(data: include(formUpdater: include(fields: be_present))))
+    end
+  end
 end

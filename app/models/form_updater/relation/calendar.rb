@@ -10,4 +10,8 @@ class FormUpdater::Relation::Calendar < FormUpdater::Relation
   def order
     { name: :asc }
   end
+
+  def allowed_scope
+    current_user.permissions?('admin.calendar') ? relation_type.all : relation_type.none
+  end
 end

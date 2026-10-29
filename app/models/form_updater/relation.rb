@@ -42,10 +42,16 @@ class FormUpdater::Relation
     relation_type.none
   end
 
+  # Items the current user may see at all. The filter ids come from the request or from core
+  #   workflow, so they only ever narrow this down. Every relation has to declare it.
+  def allowed_scope
+    raise "#{self.class.name} needs to declare the items the current user may see."
+  end
+
   def items
     @items ||= begin
       scope = filter_ids.nil? ? default_scope : relation_type.where(id: filter_ids)
-      scope.reorder(order)
+      scope.and(allowed_scope).reorder(order)
     end
   end
 end

@@ -278,11 +278,12 @@ RSpec.describe(FormUpdater::Updater::KnowledgeBase::Answer::Create) do
 
       before do
         create(:store,
-               object:      'UploadCache',
-               o_id:        form_id,
-               data:        'dGVzdCAxMjM=',
-               filename:    'some_file.pdf',
-               preferences: {
+               object:        'UploadCache',
+               o_id:          form_id,
+               data:          'dGVzdCAxMjM=',
+               filename:      'some_file.pdf',
+               created_by_id: user.id,
+               preferences:   {
                  'Content-Type': 'application/pdf',
                })
       end

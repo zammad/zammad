@@ -13,7 +13,8 @@ class FormUpdater::Updater::KnowledgeBase::Category::Edit < FormUpdater::Updater
     #   the global permission above is satisfied.
     @object = Gql::ZammadSchema.authorized_object_from_id(id, type: object_type, user: current_user, query: :update?)
 
-    true
+    # #update? leaves out what #show? also checks, like a deactivated knowledge base.
+    Pundit.policy(current_user, object).show?.present?
   end
 
   private
