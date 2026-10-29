@@ -61,15 +61,16 @@ class Channel::Driver::Imap < Channel::Driver::BaseEmailInbound
   end
 
   def fetch_message_ids(filter)
+    # Sequence numbers change when another IMAP session expunges messages.
     raise if @imap.capabilities.exclude?('SORT')
 
     {
-      result:      @imap.sort(['DATE'], filter, 'US-ASCII'),
+      result:      @imap.uid_sort(['DATE'], filter, 'US-ASCII'),
       is_fallback: false
     }
   rescue
     {
-      result:      @imap.search(filter),
+      result:      @imap.uid_search(filter),
       is_fallback: true # indicates that we can not use a result ordered by date
     }
   end
@@ -234,7 +235,7 @@ returns
 
   def fetch_single_message(message_id, count, count_all) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
-      @imap.fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
+      @imap.uid_fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
     rescue Net::IMAP::ResponseParseError => e
       raise if e.message.exclude?('unknown token')
 
@@ -267,7 +268,7 @@ returns
     # ignore already imported
     if message_validator.already_imported?(@keep_on_server, @channel)
       Timeout.timeout(1.minute) do
-        @imap.store(message_id, '+FLAGS', [:Seen])
+        @imap.uid_store(message_id, '+FLAGS', [:Seen])
       end
       Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
 
@@ -278,7 +279,7 @@ returns
     msg = begin
       Timeout.timeout(FETCH_MSG_TIMEOUT) do
         key = fetch_message_body_key(@options)
-        @imap.fetch(message_id, key)[0].attr[key]
+        @imap.uid_fetch(message_id, key)[0].attr[key]
       end
     rescue Timeout::Error => e
       Rails.logger.error "Unable to fetch email from #{count}/#{count_all} from server (#{@options[:host]}/#{@options[:user]}): #{e.inspect}"
@@ -310,9 +311,9 @@ returns
     begin
       Timeout.timeout(FETCH_MSG_TIMEOUT) do
         if @keep_on_server
-          @imap.store(message_id, '+FLAGS', [:Seen])
+          @imap.uid_store(message_id, '+FLAGS', [:Seen])
         else
-          @imap.store(message_id, '+FLAGS', [:Deleted])
+          @imap.uid_store(message_id, '+FLAGS', [:Deleted])
         end
       end
     rescue Timeout::Error => e
@@ -356,7 +357,7 @@ returns
 
   def check_single_message(message_id)
     message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
-      @imap.fetch(message_id, ['RFC822.HEADER'])[0]
+      @imap.uid_fetch(message_id, ['RFC822.HEADER'])[0]
     end
 
     MessageValidator.new(self.class.extract_rfc822_headers(message_meta))
@@ -364,7 +365,7 @@ returns
 
   def verify_single_message(message_id, verify_string)
     message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
-      @imap.fetch(message_id, ['RFC822.HEADER'])[0]
+      @imap.uid_fetch(message_id, ['RFC822.HEADER'])[0]
     end
 
     # check if verify message exists
@@ -375,7 +376,7 @@ returns
 
   def verify_message_cleanup(message_id)
     Timeout.timeout(EXPUNGE_TIMEOUT) do
-      @imap.store(message_id, '+FLAGS', [:Deleted])
+      @imap.uid_store(message_id, '+FLAGS', [:Deleted])
       @imap.expunge
     end
   end
