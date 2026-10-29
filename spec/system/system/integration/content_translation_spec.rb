@@ -420,9 +420,15 @@ RSpec.describe 'Manage > Integration > Content translation', authenticated_as: :
     end
   end
 
-  context 'with a delegated administrator without the ticket settings permission', authenticated_as: :delegated_admin do
-    let(:role)            { create(:role, permission_names: %w[admin.integration]) }
+  context 'with a delegated administrator without the ticket settings permission' do
+    let(:role)            { create(:role, permission_names: %w[admin.integration experimental.content_translation]) }
     let(:delegated_admin) { create(:agent, roles: [role]) }
+
+    def authenticate
+      super
+
+      delegated_admin
+    end
 
     # Following the link would only bounce off permissionCheckRedirect, so it is not offered.
     it 'points to an administrator instead of linking the ticket settings' do
