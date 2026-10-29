@@ -1,4 +1,26 @@
 class App.TicketCreate extends App.Controller
+  @applyTemplateTags: (params, templateTags, dirty) ->
+
+    # Process template tags, but only if they are "dirty".
+    if dirty and params.tags
+      switch templateTags?['operator']
+
+        # Remove tags included in the template from the existing tags.
+        when 'remove'
+          params.tags = _.difference(params.tags.split(', '), templateTags?['value']?.split(', ')).join(', ')
+
+        # Add tags included in the template by merging them with existing tags.
+        #   Do this also if the operator is missing from the template configuration (default behavior).
+        else
+          params.tags = _.uniq(_.union(params.tags.split(', '), templateTags?['value']?.split(', '))).join(', ')
+
+    # Otherwise, simply replace the tags with the value from the template.
+    #   Do not do this if they are supposed to be removed only.
+    #   This allows switching between different templates without accumulating their tags.
+    #   Note that template might not contain tags, in which case the field will be reset.
+    else if templateTags?['operator'] != 'remove'
+      params.tags = templateTags?['value']
+
   @include App.SecurityOptions
 
   elements:
@@ -459,26 +481,7 @@ class App.TicketCreate extends App.Controller
 
       # Handle template tags only, since shared drafts support only the simple value format.
       if not template.shared_draft_id
-
-        # Process template tags, but only if they are "dirty".
-        if @dirty?.tags and params.tags
-          switch templateTags?['operator']
-
-            # Remove tags included in the template from the existing tags.
-            when 'remove'
-              params.tags = _.difference(params.tags.split(', '), templateTags?['value']?.split(', ')).join(', ')
-
-            # Add tags included in the template by merging them with existing tags.
-            #   Do this also if the operator is missing from the template configuration (default behavior).
-            else
-              params.tags = _.uniq(_.union(params.tags.split(', '), templateTags?['value']?.split(', '))).join(', ')
-
-        # Otherwise, simply replace the tags with the value from the template.
-        #   Do not do this if they are supposed to be removed only.
-        #   This allows switching between different templates without accumulating their tags.
-        #   Note that template might not contain tags, in which case the field will be reset.
-        else if templateTags?['operator'] != 'remove'
-          params.tags = templateTags?['value']
+        @constructor.applyTemplateTags(params, templateTags, @dirty?.tags)
 
     if !_.isEmpty(params)
       # only use form meta once so it will not get used on templates

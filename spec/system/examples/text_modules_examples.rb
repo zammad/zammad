@@ -91,7 +91,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
         find(:richtext).send_keys('test')
         page.execute_script("$('a[data-mention-user-id]').first().html('<br>')")
         find(:richtext).send_keys(:backspace)
-        expect(find(:richtext).all('a[data-mention-user-id]', visible: :all).count).to eq(0)
+        expect(find(:richtext)).to have_no_css('a[data-mention-user-id]', visible: :all)
       end
     end
 

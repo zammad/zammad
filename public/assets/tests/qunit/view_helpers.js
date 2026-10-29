@@ -35,6 +35,7 @@ QUnit.test('relative_time', assert => {
   assert.equal(func(4, 'week'), '2022-12-13T10:00:00.000Z')
   assert.equal(func(8, 'month'), '2023-07-15T09:00:00.000Z')
   assert.equal(func(2, 'year'), '2024-11-15T10:00:00.000Z')
+  assert.equal(func(3, 'day', false), '2022-11-18')
 
   clock.restore()
 })

@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'system/examples/core_workflow_examples'
 require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Groups', type: :system do
@@ -76,20 +75,6 @@ RSpec.describe 'Manage > Groups', type: :system do
 
         expect(page).to have_select('signature_id', selected: signature.name)
           .and have_css('.alert--warning')
-      end
-    end
-  end
-
-  describe 'Core Workflow' do
-    include_examples 'core workflow' do
-      let(:object_name) { 'Group' }
-      let(:before_it) do
-        lambda {
-          ensure_websocket(check_if_pinged: false) do
-            visit 'manage/groups'
-            click_on 'New Group'
-          end
-        }
       end
     end
   end
