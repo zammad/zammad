@@ -1,4 +1,19 @@
 class App.UiElement.richtext.additions.RichTextToolButtonLink extends App.UiElement.richtext.additions.RichTextToolButton
+  @pickSelectedLink: (sel, textEditor) ->
+    return null unless sel.rangeCount is 1
+
+    link = @pickExisting(sel, textEditor)
+    return null unless link and textEditor[0].contains(link)
+
+    range = sel.getRangeAt(0)
+    linkRange = document.createRange()
+    linkRange.selectNode(link)
+
+    return null if range.compareBoundaryPoints(Range.START_TO_START, linkRange) < 0
+    return null if range.compareBoundaryPoints(Range.END_TO_END, linkRange) > 0
+
+    link
+
   @pickLinkInSingleContainer: (elem, containerToLookUpTo) ->
     if elem.nodeName == 'A'
       elem

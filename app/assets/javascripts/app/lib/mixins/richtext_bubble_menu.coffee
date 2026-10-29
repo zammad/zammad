@@ -160,6 +160,34 @@ App.RichtextBubbleMenu =
         action: (e, ce) ->
           ce.executeFormattingAction('insertUnorderedList')
       },
+      {
+        key: 'insertLink'
+        label: __('Insert link')
+        icon: 'chain'
+        action: (e, ce, selection, el, closeDropdown) ->
+          textEditor = el.find('[contenteditable]')
+          linkTool = App.UiElement.richtext.additions.RichTextToolButtonLink
+          existing = linkTool.pickSelectedLink(document.getSelection(), textEditor)
+
+          new App.RichtextLinkModal(
+            container: el.closest('.content')
+            editor:    textEditor
+            existing:  existing
+            confirm: (url) ->
+              if existing
+                $(existing).attr('href', url)
+              else
+                ce.restoreSelection(selection.ranges)
+                ce.insertLink(url)
+
+              textEditor.trigger('change')
+              closeDropdown()
+            remove: ->
+              $(existing).contents().unwrap()
+              textEditor.trigger('change')
+              closeDropdown()
+          )
+      },
     ]
 
   filteredActions: (ce) ->
