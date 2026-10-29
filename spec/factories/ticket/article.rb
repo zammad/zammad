@@ -98,6 +98,30 @@ FactoryBot.define do
       end
     end
 
+    # The flagged article of an error ticket, with the raw email and the processing log attached.
+    trait :email_unprocessable do
+      system_note
+
+      internal    { true }
+      preferences { { email_unprocessable: true } }
+
+      after(:create) do |article|
+        create(:store,
+               object:      'Ticket::Article',
+               o_id:        article.id,
+               filename:    'unprocessable_email.eml',
+               data:        "From: foo@bar@example.com\nSubject: Foo\n\nLorem ipsum dolor",
+               preferences: { 'Content-Type' => 'message/rfc822', 'Mime-Type' => 'message/rfc822', 'email_unprocessable' => 'raw' })
+
+        create(:store,
+               object:      'Ticket::Article',
+               o_id:        article.id,
+               filename:    'processing_log.txt',
+               data:        "Failed at: 2026-10-27T10:00:00Z\nException: RuntimeError\nMessage: Lorem ipsum\n",
+               preferences: { 'Content-Type' => 'text/plain', 'Mime-Type' => 'text/plain', 'email_unprocessable' => 'log' })
+      end
+    end
+
     trait :system_delivery_message do
       transient do
         type_name   { 'note' }

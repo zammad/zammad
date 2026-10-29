@@ -302,8 +302,12 @@ returns
 
         return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
       end
-    else
-      process(@channel, msg, false)
+    elsif (unprocessed = process_message(msg, count, count_all))
+      # Not even an error ticket could be created. The body fetch above implicitly set \Seen, which would hide
+      #   the message from the next run with keep_on_server, so it is made unread again to be retried.
+      keep_unread(message_id, count, count_all) if @keep_on_server
+
+      return unprocessed
     end
 
     # delete email from server after article was created
@@ -321,6 +325,18 @@ returns
     end
 
     MessageResult.new(success: true, after_action: after_action)
+  end
+
+  # Fetching the body with RFC822 implicitly sets \Seen (RFC 3501), and with keep_on_server the next run lists
+  #   only unseen messages. A message that could become no ticket at all, not even an error ticket, has to be
+  #   unread again to be retried; a message that became a ticket is marked seen as before.
+  def keep_unread(message_id, count, count_all)
+    Timeout.timeout(FETCH_MSG_TIMEOUT) do
+      @imap.store(message_id, '-FLAGS', [:Seen])
+    end
+  rescue Timeout::Error => e
+    Rails.logger.error "Unable to set -FLAGS for email #{count}/#{count_all} on server (#{@options[:host]}/#{@options[:user]}): #{e.inspect}"
+    raise e
   end
 
   def messages_iterator(keep_on_server, _options, reverse: false)

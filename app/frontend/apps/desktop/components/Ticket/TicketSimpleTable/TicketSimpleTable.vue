@@ -4,6 +4,7 @@
 import { computed, toRef } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
@@ -42,7 +43,9 @@ const props = defineProps<Props>()
 const items = computed<Array<TableItem>>(() =>
   props.tickets.map((ticket) => ({
     createdAt: ticket.createdAt,
-    customer: ticket.organization?.name || ticket.customer?.fullname,
+    customer:
+      ticket.organization?.name ||
+      (isSystemUser(ticket.customer) ? '-' : ticket.customer?.fullname),
     group: ticket.group?.name,
     id: ticket.id,
     internalId: ticket.internalId,

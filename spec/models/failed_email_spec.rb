@@ -5,6 +5,11 @@ require 'rails_helper'
 RSpec.describe FailedEmail, :aggregate_failures, type: :model do
   subject(:instance) { create(:failed_email) }
 
+  # A row that cannot be processed becomes an error ticket, so only a failing error ticket keeps it.
+  def fail_error_ticket_creation
+    allow_any_instance_of(Channel::EmailParser::ErrorTicket).to receive(:create!).and_raise('database gone')
+  end
+
   describe '#parsing_error' do
     it 'sets parsing error' do
       instance.parsing_error = 'text'
@@ -90,6 +95,18 @@ RSpec.describe FailedEmail, :aggregate_failures, type: :model do
       end
     end
 
+    context 'when the mail still cannot be processed' do
+      subject(:instance) { create(:failed_email, :invalid) }
+
+      it 'turns it into an error ticket and destroys the entry' do
+        ticket = instance.reprocess
+
+        expect(ticket.title).to eq('Unprocessable email')
+        expect(ticket.articles.first.attachments.map(&:filename)).to contain_exactly('unprocessable_email.eml', 'processing_log.txt')
+        expect(instance).to be_destroyed
+      end
+    end
+
     context 'when it fails' do
       before do
         allow_any_instance_of(Channel::EmailParser)
@@ -115,6 +132,7 @@ RSpec.describe FailedEmail, :aggregate_failures, type: :model do
     before do
       failed_email
       failed_but_correct_email
+      fail_error_ticket_creation
     end
 
     it 'creates one ticket for the parseable mail and keeps the other' do
@@ -178,31 +196,42 @@ RSpec.describe FailedEmail, :aggregate_failures, type: :model do
     context 'with unprocessable content' do
       subject(:instance) { create(:failed_email, data: Faker::Lorem.sentence) }
 
-      it 'fails on reimporting' do
-        expect(import_result).to be_nil
-        expect(instance.reload.retries).to eq(2)
+      it 'reimports it as an error ticket' do
+        expect { import_result }.to change(Ticket, :count).by(1)
+        expect(Ticket.last.title).to eq('Unprocessable email')
+        expect(import_result).to eq(file_path)
+        expect(file_path).not_to exist
       end
 
-      it 'keeps the file' do
-        expect(file_path).to exist
-      end
+      context 'when even the error ticket cannot be created' do
+        before { fail_error_ticket_creation }
 
-      context 'with changed valid file content' do
-        before { File.binwrite(file_path, create(:failed_email).data) }
-
-        it 'reimports correctly' do
-          expect { import_result }.to change(Ticket, :count).by(1)
-          expect(import_result).to eq(file_path)
-          expect(file_path).not_to exist
-        end
-      end
-
-      context 'with changed invalid file content' do
-        before { File.binwrite(file_path, Faker::Lorem.sentence) }
-
-        it 'fails to import again' do
+        it 'fails on reimporting' do
           expect(import_result).to be_nil
           expect(instance.reload.retries).to eq(2)
+        end
+
+        it 'keeps the file' do
+          expect(file_path).to exist
+        end
+
+        context 'with changed valid file content' do
+          before { File.binwrite(file_path, create(:failed_email).data) }
+
+          it 'reimports correctly' do
+            expect { import_result }.to change(Ticket, :count).by(1)
+            expect(import_result).to eq(file_path)
+            expect(file_path).not_to exist
+          end
+        end
+
+        context 'with changed invalid file content' do
+          before { File.binwrite(file_path, Faker::Lorem.sentence) }
+
+          it 'fails to import again' do
+            expect(import_result).to be_nil
+            expect(instance.reload.retries).to eq(2)
+          end
         end
       end
     end

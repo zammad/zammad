@@ -89,7 +89,7 @@ Some Text',
 
   def assert_process(files)
     files.each do |file|
-      result = Channel::EmailParser.new.process(file[:channel] || {}, file[:data], false)
+      result = Channel::EmailParser.new.process(file[:channel] || {}, file[:data])
 
       if file[:success]
         expect(result).to be_a(Array)

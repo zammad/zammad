@@ -30,6 +30,14 @@ FactoryBot.define do
       end
     end
 
+    trait :email_unprocessable do
+      title { 'Unprocessable email' }
+
+      after(:create) do |ticket|
+        create(:ticket_article, :email_unprocessable, ticket:)
+      end
+    end
+
     factory :twitter_ticket do
       preferences do
         {

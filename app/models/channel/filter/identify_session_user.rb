@@ -2,7 +2,7 @@
 
 class Channel::Filter::IdentifySessionUser < Channel::Filter::BaseIdentifyUser
   def self.run(_channel, mail, _transaction_params)
-    user = fetch_session_user(mail) || create_session_user(mail)
+    user = fetch_session_user(mail) || user_from_sender(mail)
 
     mail[ :'x-zammad-session-user-id' ] = user.id
   end
@@ -21,14 +21,5 @@ class Channel::Filter::IdentifySessionUser < Channel::Filter::BaseIdentifyUser
     end
 
     session_user
-  end
-
-  def self.create_session_user(mail)
-    user_create(
-      login:     mail[ :'x-zammad-customer-login' ] || mail[ :'x-zammad-customer-email' ] || mail[:from_email],
-      firstname: mail[ :'x-zammad-customer-firstname' ] || mail[:from_display_name],
-      lastname:  mail[ :'x-zammad-customer-lastname' ],
-      email:     mail[ :'x-zammad-customer-email' ] || mail[:from_email],
-    )
   end
 end

@@ -94,6 +94,19 @@ class Channel::Driver::BaseEmailInbound < Channel::EmailParser
     (count % ACTIVE_CHECK_INTERVAL).zero? && channel_has_changed?(@channel)
   end
 
+  # A message that could become no ticket at all, not even an error ticket, stays on the server
+  #   for the next run, and the remaining messages of this run are still fetched.
+  def process_message(msg, count, count_all)
+    process(@channel, msg)
+
+    nil
+  rescue => e
+    info = "  - message #{count}/#{count_all} could not be processed and stays on the server: #{e.inspect}"
+    Rails.logger.error info
+
+    MessageResult.new(success: false, after_action: [:result_error, "#{info}\n"])
+  end
+
   def fetch_wrap_up; end
 
   def server_identifier(options)

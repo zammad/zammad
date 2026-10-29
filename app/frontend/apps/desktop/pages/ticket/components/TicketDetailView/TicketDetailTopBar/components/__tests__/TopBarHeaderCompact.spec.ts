@@ -9,7 +9,10 @@ import { useArticleTranslationStore } from '#shared/entities/ticket-article/stor
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
-import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
+import {
+  testOptionsTopBar,
+  testOptionsTopBarSystemCustomer,
+} from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TopBarHeaderCompact from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue'
 
 const renderTopBarHeaderCompact = ({
@@ -96,5 +99,17 @@ describe('TopBarHeaderCompact', () => {
     const view = renderTopBarHeaderCompact()
 
     expect(view.queryByTestId('article-translation-target-menu')).not.toBeInTheDocument()
+  })
+
+  it('shows the system customer without name, indicator and popover', () => {
+    const view = renderTopBarHeaderCompact({ ticket: testOptionsTopBarSystemCustomer })
+
+    const avatar = view.getByRole('img', { name: 'Avatar (-)' })
+
+    expect(avatar).not.toHaveClass('opacity-60')
+    expect(avatar.closest('a')).toBeNull()
+    expect(avatar.closest('[aria-controls]')).toBeNull()
+    expect(view.queryByIconName('avatar-indicator-inactive')).not.toBeInTheDocument()
+    expect(view.queryByText('-')).not.toBeInTheDocument()
   })
 })

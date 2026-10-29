@@ -50,12 +50,7 @@ class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
 
     # take regular from as customer
     if !customer_user
-      customer_user = user_create(
-        login:     mail[ :'x-zammad-customer-login' ] || mail[ :'x-zammad-customer-email' ] || mail[:from_email],
-        firstname: mail[ :'x-zammad-customer-firstname' ] || mail[:from_display_name],
-        lastname:  mail[ :'x-zammad-customer-lastname' ],
-        email:     mail[ :'x-zammad-customer-email' ] || mail[:from_email],
-      )
+      customer_user = user_from_sender(mail)
     end
 
     # Apply explicit name overrides if provided, no matter how customer_user was
@@ -72,6 +67,8 @@ class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
   end
 
   def self.apply_name_headers!(customer_user, mail)
+    return if customer_user.id == 1
+
     name_attrs = {}
     name_attrs[:firstname] = sanitize_name(mail[:'x-zammad-customer-firstname']) if mail[:'x-zammad-customer-firstname'].present?
     name_attrs[:lastname]  = sanitize_name(mail[:'x-zammad-customer-lastname']) if mail[:'x-zammad-customer-lastname'].present?

@@ -6,8 +6,8 @@ import { computed } from 'vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { EnumObjectManagerObjects, type Organization, type User } from '#shared/graphql/types.ts'
-import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
 
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import CommonTicketEscalationIndicator from '#desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
@@ -31,7 +31,9 @@ const objectAttributes = computed(() =>
   ),
 )
 
-const isOwnerSystemUser = computed(() => props.ticket.owner.id === SYSTEM_USER_ID)
+const isOwnerSystemUser = computed(() => isSystemUser(props.ticket.owner))
+
+const isCustomerSystemUser = computed(() => isSystemUser(props.ticket.customer))
 </script>
 
 <template>
@@ -59,7 +61,8 @@ const isOwnerSystemUser = computed(() => props.ticket.owner.id === SYSTEM_USER_I
   </CommonSectionCollapse>
 
   <CommonSectionCollapse id="ticket-customer-popover" :title="__('Customer')" no-collapse>
-    <UserInfo :user="ticket.customer as User" size="small" dense />
+    <CommonLabel v-if="isCustomerSystemUser">-</CommonLabel>
+    <UserInfo v-else :user="ticket.customer as User" size="small" dense />
   </CommonSectionCollapse>
 
   <CommonSectionCollapse

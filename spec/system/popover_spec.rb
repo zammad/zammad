@@ -480,6 +480,58 @@ RSpec.describe 'Popover', type: :system do
     end
   end
 
+  context 'when a ticket has no customer' do
+    let(:group)  { Group.find_by(name: 'Users') }
+    let(:ticket) { create(:ticket, group:, customer: User.find(1)) }
+
+    shared_examples 'showing the customer cell without popover' do
+      it 'shows the customer cell without popover' do
+        row = find("tr.item[data-id='#{ticket.id}']")
+        cell = row.find('td', exact_text: '-')
+
+        expect(row).to have_no_css('.user-popover')
+
+        cell.hover
+        expect(page).to have_no_css('.popover')
+      end
+    end
+
+    context 'when shown in an overview' do
+      before do
+        ticket
+
+        visit '#ticket/view/all_unassigned'
+      end
+
+      it 'keeps the popover on the customer cell of other tickets' do
+        within :active_content do
+          expect(page).to have_css("tr.item[data-id='#{Ticket.first.id}'] .user-popover[data-id='#{Ticket.first.customer_id}']")
+        end
+      end
+
+      it_behaves_like 'showing the customer cell without popover'
+    end
+
+    context 'when shown in a ticket list' do
+      let(:source_ticket) { create(:ticket, group:, customer: User.find(1)) }
+
+      before do
+        ticket
+
+        visit "#ticket/zoom/#{source_ticket.id}"
+
+        within :active_content do
+          find('[data-tab="ticket"] .js-actions').click
+          click('[data-type="ticket-merge"]')
+        end
+
+        modal_ready
+      end
+
+      it_behaves_like 'showing the customer cell without popover'
+    end
+  end
+
   def trigger_popover(selector, **)
     find(selector, **) do |elem|
       elem.evaluate_script('Object.keys($(this).data()).includes("bs.popover")')

@@ -25,6 +25,7 @@ import {
   type TicketArticleRetrySecurityProcessMutation,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
 import { TicketWithMentionLimitDocument } from '#mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.api.ts'
 
@@ -1193,5 +1194,100 @@ describe('with ticket on a whatsapp channel', () => {
     await view.events.click(contextTriggers[0])
 
     expect(view.queryByText('Reply')).not.toBeInTheDocument()
+  })
+})
+
+describe('system customer', () => {
+  it('shows the logo avatar without name and inactive styling', async () => {
+    const ticket = defaultTicket()
+
+    ticket.ticket.customer = {
+      ...ticket.ticket.customer,
+      id: SYSTEM_USER_ID,
+      internalId: SYSTEM_USER_INTERNAL_ID,
+      firstname: '-',
+      lastname: '',
+      fullname: '-',
+      active: false,
+    }
+    ticket.ticket.organization = null
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({ ticket })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    const titleBlock = view.getByTestId('ticket-title')
+    const avatar = getByRole(titleBlock, 'img', { name: 'Avatar (-)' })
+
+    expect(avatar).not.toHaveClass('opacity-60')
+    expect(view.getByTestId('title-content')).toHaveTextContent(/^Test Ticket View/)
+  })
+})
+
+describe('unprocessable email', () => {
+  const flaggedArticles = () => {
+    const articles = defaultArticles()
+    const firstArticle = articles.firstArticles!.edges[0].node
+
+    firstArticle.internal = true
+    firstArticle.preferences = { email_unprocessable: true }
+    firstArticle.attachmentsWithoutInline = [
+      {
+        __typename: 'StoredFile',
+        id: convertToGraphQLId('Store', 41),
+        internalId: 41,
+        name: 'unprocessable_email.eml',
+        type: 'message/rfc822',
+        size: 100,
+        preferences: { email_unprocessable: 'raw' },
+      },
+      {
+        __typename: 'StoredFile',
+        id: convertToGraphQLId('Store', 42),
+        internalId: 42,
+        name: 'processing_log.txt',
+        type: 'text/plain',
+        size: 100,
+        preferences: { email_unprocessable: 'log' },
+      },
+    ]
+
+    return articles
+  }
+
+  it('shows a warning with download actions in place of the flagged article', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({ articles: flaggedArticles() })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    const articlesList = view.getByRole('group', { name: 'Articles' })
+    const alert = getByRole(articlesList, 'alert')
+
+    expect(alert).toHaveClasses(['border-yellow', 'bg-yellow-highlight', 'text-yellow'])
+    expect(alert).toHaveTextContent(
+      'This ticket was created because the email could not be processed.',
+    )
+    expect(getByRole(alert, 'button', { name: 'Download raw email' })).toBeInTheDocument()
+    expect(getByRole(alert, 'button', { name: 'Download processing log' })).toBeInTheDocument()
+
+    expect(articlesList.firstElementChild).toBe(alert)
+    expect(view.getByTestId('ticket-title')).not.toContainElement(alert)
+
+    expect(articlesList).not.toHaveTextContent('Body of a test ticket')
+    expect(view.getAllByRole('comment')[0]).toHaveTextContent('energy equals power times time')
+  })
+
+  it('shows no warning for a first article without the flag', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    expect(view.queryByText('Download raw email')).not.toBeInTheDocument()
   })
 })

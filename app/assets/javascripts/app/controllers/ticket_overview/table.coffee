@@ -174,18 +174,7 @@ class App.TicketOverviewTable extends App.Controller
           id: object.id
         value
 
-      callbackUserPopover = (value, object, attribute, attributes) ->
-        return value if !object
-        refObjectId = undefined
-        if attribute.name is 'customer_id'
-          refObjectId = object.customer_id
-        if attribute.name is 'owner_id'
-          refObjectId = object.owner_id
-        return value if !refObjectId
-        attribute.class = 'user-popover'
-        attribute.data =
-          id: refObjectId
-        value
+      callbackUserPopover = App.TicketListCallbacks.userPopover
 
       callbackOrganizationPopover = (value, object, attribute, attributes) ->
         return value if !object

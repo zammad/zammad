@@ -268,6 +268,54 @@ RSpec.describe Channel::Filter::IdentifySender, type: :channel_filter do
       end
     end
 
+    context 'when the FROM address is invalid' do
+      let(:mail_hash) { { from_email: 'foo@bar@example.com', from_display_name: 'Foo Bar' } }
+
+      it 'creates a customer with the address as login and no email' do
+        filter(mail_hash)
+
+        expect(User.find(mail_hash[:'x-zammad-ticket-customer_id'])).to have_attributes(
+          login:     'foo@bar@example.com',
+          email:     '',
+          firstname: 'Foo',
+          lastname:  'Bar',
+        )
+      end
+
+      context 'when a user with the address as login exists' do
+        let!(:user) { create(:customer, login: 'foo@bar@example.com', email: '') }
+
+        it 'sets customer to the given user', :aggregate_failures do
+          expect { filter(mail_hash) }.not_to change(User, :count)
+
+          expect(mail_hash[:'x-zammad-ticket-customer_id']).to eq(user.id)
+        end
+      end
+    end
+
+    context 'when the mail has no sender address' do
+      let(:mail_hash) { { to: 'support@example.com' } }
+
+      it 'sets customer to the system account', :aggregate_failures do
+        expect { filter(mail_hash) }.not_to change(User, :count)
+
+        expect(mail_hash[:'x-zammad-ticket-customer_id']).to eq(1)
+      end
+
+      context 'when x-zammad-customer name headers are present' do
+        let(:mail_hash) do
+          {
+            'x-zammad-customer-firstname': 'Foo',
+            'x-zammad-customer-lastname':  'Bar',
+          }
+        end
+
+        it 'does not rename the system account' do
+          expect { filter(mail_hash) }.not_to change { User.find(1).fullname }
+        end
+      end
+    end
+
     it 'calls create_recipients' do
       allow(described_class).to receive(:create_recipients)
 

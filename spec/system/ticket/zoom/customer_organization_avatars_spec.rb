@@ -19,6 +19,22 @@ RSpec.describe 'Ticket zoom > Customer & Organization Avatars', authenticated_as
     visit "#ticket/zoom/#{ticket.id}"
   end
 
+  context 'without customer' do
+    let(:customer) { User.find(1) }
+
+    it 'displays the logo avatar without popover in the header' do
+      within '.ticketZoom-header' do
+        expect(page).to have_css('.js-avatar .avatar .icon-logo')
+          .and have_no_css('.user-popover')
+          .and have_no_css('.avatar--organization')
+
+        find('.js-avatar .avatar').hover
+      end
+
+      expect(page).to have_no_css('.popover')
+    end
+  end
+
   context 'without organization' do
     before do
       click('.content.active .tabsSidebar-tab[data-tab="customer"]')

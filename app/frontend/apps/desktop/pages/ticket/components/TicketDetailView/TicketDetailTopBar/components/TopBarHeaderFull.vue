@@ -14,6 +14,7 @@ import ArticleTranslationTargetMenu from '#desktop/pages/ticket/components/Ticke
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue'
 import TicketInformationBadgeList from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList.vue'
 
+import TopBarHeaderCustomerLine from './TopBarHeaderCustomerLine.vue'
 import { useTopBarHeader } from './useTopBarHeader.ts'
 
 const {
@@ -22,6 +23,7 @@ const {
   ticketNumberWithTicketHook,
   isTicketAgent,
   isTicketEditable,
+  isSystemCustomer,
   copyTicketNumberToClipboard,
   isUpdatingTitle,
   updateTitle,
@@ -93,6 +95,8 @@ const items = computed(() => [
           :avatar-config="{
             responsive: true,
             size: 'normal',
+            noIndicator: isSystemCustomer,
+            noMuted: isSystemCustomer,
           }"
           :popover-config="{
             placement: 'arrowStart',
@@ -115,18 +119,7 @@ const items = computed(() => [
 
       <div class="w-full grow justify-self-center">
         <div class="mb-3.5 flex flex-col justify-center">
-          <div class="mb-1 flex items-center gap-1">
-            <CommonLabel tag="p" class="line-clamp-1! max-w-1/2 shrink break-all">
-              {{ ticket.customer.fullname }}
-            </CommonLabel>
-            <span v-if="ticket.organization?.name" aria-hidden="true"> &middot; </span>
-            <CommonLabel
-              v-if="ticket.organization?.name"
-              class="line-clamp-1! flex-1 grow break-all"
-            >
-              {{ ticket.organization?.name }}
-            </CommonLabel>
-          </div>
+          <TopBarHeaderCustomerLine :ticket="ticket" />
 
           <CommonInlineEdit
             v-model:editing="isUpdatingTitle"

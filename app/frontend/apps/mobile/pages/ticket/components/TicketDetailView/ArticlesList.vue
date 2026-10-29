@@ -18,6 +18,7 @@ import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
 import ArticleSeparatorMore from './ArticleSeparatorMore.vue'
 import ArticleSeparatorNew from './ArticleSeparatorNew.vue'
 import ArticleSystem from './ArticleSystem.vue'
+import UnprocessableEmailWarning from './UnprocessableEmailWarning.vue'
 
 interface Props {
   articles: TicketArticle[]
@@ -97,6 +98,7 @@ const markSeen = (id: string) => {
         @seen="markSeen(row.key)"
         @show-context="showArticleContext(row.article, ticket)"
       />
+      <UnprocessableEmailWarning v-if="row.type === 'unprocessable-email'" :article="row.article" />
       <ArticleDeliveryMessage
         v-if="row.type === 'delivery'"
         :content="row.content"

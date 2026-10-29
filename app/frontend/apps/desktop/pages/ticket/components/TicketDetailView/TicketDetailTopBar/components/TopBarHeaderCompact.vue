@@ -20,6 +20,7 @@ const {
   ticketNumberWithTicketHook,
   isTicketAgent,
   isTicketEditable,
+  isSystemCustomer,
   copyTicketNumberToClipboard,
   isUpdatingTitle,
   updateTitle,
@@ -69,6 +70,8 @@ defineExpose({ titleLine })
           class="z-11 h-min shrink-0"
           :avatar-config="{
             size: 'small',
+            noIndicator: isSystemCustomer,
+            noMuted: isSystemCustomer,
           }"
           :popover-config="{
             placement: 'arrowStart',

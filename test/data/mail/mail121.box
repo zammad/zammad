@@ -1,0 +1,14 @@
+From: "Foo Bar" <foo@bar@example.com>
+To: support@example.com
+Subject: Order status
+Date: Mon, 26 Oct 2026 09:12:44 +0100
+Message-ID: <invalid-from-20261026091244@example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+could you please tell me the status of my order?
+
+Thanks

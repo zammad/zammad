@@ -4,6 +4,7 @@
 import { watch, computed } from 'vue'
 
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
+import { isSystemUserId } from '#shared/entities/user/utils/isSystemUser.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
@@ -15,9 +16,11 @@ import {
   type TicketSidebarButtonBadgeDetails,
 } from '#desktop/pages/ticket/types/sidebar.ts'
 
+import TicketSidebarContent from '../TicketSidebarContent.vue'
 import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 
 import TicketSidebarCustomerContent from './TicketSidebarCustomerContent.vue'
+import { useChangeCustomerMenuItem } from './useChangeCustomerMenuItem.ts'
 
 const props = defineProps<TicketSidebarProps>()
 
@@ -32,12 +35,18 @@ const customerId = computed(() =>
     : undefined,
 )
 
+const isSystemCustomer = computed(() => isSystemUserId(customerId.value))
+
 const {
   user: customer,
   secondaryOrganizations,
   objectAttributes,
   fetchMoreSecondaryOrganizations,
-} = useUserDetail(customerId)
+} = useUserDetail(computed(() => (isSystemCustomer.value ? undefined : customerId.value)))
+
+const changeCustomerMenuItem = useChangeCustomerMenuItem(props.context)
+
+const noCustomerActions = [changeCustomerMenuItem]
 
 const calculateBadgeType = (value: number) => {
   // If the sidebar is open in the ticket detail view,
@@ -48,6 +57,8 @@ const calculateBadgeType = (value: number) => {
 }
 
 const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
+  if (isSystemCustomer.value) return
+
   const label = __('Open tickets')
   const value = customer.value?.ticketsCount?.open
 
@@ -81,14 +92,26 @@ if (customerId.value) emit('show')
     :selected="selected"
     :badge="badge"
   >
+    <TicketSidebarContent
+      v-if="isSystemCustomer"
+      v-model="persistentStates.scrollPosition"
+      :title="sidebarPlugin.title"
+      :icon="sidebarPlugin.icon"
+      :actions="noCustomerActions"
+    >
+      <CommonLabel size="small">
+        {{ $t('No customer assigned yet.') }}
+      </CommonLabel>
+    </TicketSidebarContent>
     <TicketSidebarCustomerContent
-      v-if="customer"
+      v-else-if="customer"
       v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
       :customer="customer"
       :secondary-organizations="secondaryOrganizations"
       :object-attributes="objectAttributes"
+      :change-customer-menu-item="changeCustomerMenuItem"
       @load-more-secondary-organizations="fetchMoreSecondaryOrganizations"
     />
   </TicketSidebarWrapper>

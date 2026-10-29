@@ -108,8 +108,8 @@ class Channel::Driver::MicrosoftGraphInbound < Channel::Driver::BaseEmailInbound
 
         return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
       end
-    else
-      process(@channel, msg, false)
+    elsif (unprocessed = process_message(msg, count, count_all))
+      return unprocessed
     end
 
     if @keep_on_server

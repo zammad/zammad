@@ -124,8 +124,8 @@ class Channel::Driver::Pop3 < Channel::Driver::BaseEmailInbound
 
         return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
       end
-    else
-      process(@channel, message.pop, false)
+    elsif (unprocessed = process_message(mail, count, count_all))
+      return unprocessed
     end
 
     message.delete

@@ -7,9 +7,11 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
@@ -70,6 +72,15 @@ const mockedUser = {
 }
 const defaultTicket = createDummyTicket()
 
+// The sidebar owns the item; here it stands in with the ticket's update policy as its condition.
+const changeCustomerMenuItem = (ticket: TicketById): MenuItem => ({
+  key: 'ticket-change-customer',
+  label: 'Change customer',
+  icon: 'user',
+  show: () => ticket.policy.update,
+  onClick: vi.fn(),
+})
+
 mockRouterHooks()
 
 const renderTicketSidebarCustomerContent = async (
@@ -102,6 +113,7 @@ const renderTicketSidebarCustomerContent = async (
       context: {
         screenType: screen,
       },
+      changeCustomerMenuItem: changeCustomerMenuItem(ticket),
     },
     provide: [
       [

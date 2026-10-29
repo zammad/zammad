@@ -3,11 +3,17 @@
 import { computedWithControl } from '@vueuse/shared'
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { isUnprocessableEmailArticle } from '#shared/entities/ticket-article/composables/useTicketArticleUnprocessableEmail.ts'
 
 import type { Ref } from 'vue'
 
 interface ArticleRow {
   type: 'article-bubble'
+  article: TicketArticle
+}
+
+interface UnprocessableEmailRow {
+  type: 'unprocessable-email'
   article: TicketArticle
 }
 
@@ -28,7 +34,13 @@ interface SystemRaw {
   reaction?: Maybe<string>
 }
 
-export type TicketArticleRow = (ArticleRow | SystemRaw | MoreRow | ArticleDeliveryRow) & {
+export type TicketArticleRow = (
+  | ArticleRow
+  | UnprocessableEmailRow
+  | SystemRaw
+  | MoreRow
+  | ArticleDeliveryRow
+) & {
   key: string
 }
 
@@ -41,7 +53,13 @@ export const useTicketArticleRows = (
     const needMoreButton = articles.value.length < totalCount.value
 
     return articles.value.reduce((memo, article, index) => {
-      if (article.preferences?.delivery_message) {
+      if (isUnprocessableEmailArticle(article)) {
+        memo.push({
+          type: 'unprocessable-email',
+          article,
+          key: article.internalId.toString(),
+        })
+      } else if (article.preferences?.delivery_message) {
         memo.push({
           type: 'delivery',
           content: article.bodyWithUrls,

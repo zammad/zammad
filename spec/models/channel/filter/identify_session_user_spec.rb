@@ -79,5 +79,46 @@ RSpec.describe Channel::Filter::IdentifySessionUser, type: :channel_filter do
         )
       end
     end
+
+    context 'when the FROM address is invalid' do
+      let(:from_email) { 'foo@bar@example.com' }
+      let(:from_name)  { 'Foo Bar' }
+
+      it 'creates a new customer with the address as login and no email' do
+        filter(mail_hash)
+
+        expect(User.find(mail_hash[:'x-zammad-session-user-id'])).to have_attributes(
+          login:     from_email,
+          email:     '',
+          firstname: 'Foo',
+          lastname:  'Bar',
+        )
+      end
+
+      context 'when a user with the address as login exists' do
+        let!(:user) { create(:customer, login: from_email, email: '') }
+
+        it 'uses the given user' do
+          filter(mail_hash)
+
+          expect(mail_hash[:'x-zammad-session-user-id']).to eq(user.id)
+        end
+      end
+    end
+
+    context 'when the mail has no FROM' do
+      let(:mail_hash) { Channel::EmailParser.new.parse(<<~RAW.chomp, allow_missing_attribute_exceptions: false) }
+        To: #{to_email}
+        Subject: Test subject
+
+        Some nice text!
+      RAW
+
+      it 'uses the system account', :aggregate_failures do
+        expect { filter(mail_hash) }.not_to change(User, :count)
+
+        expect(mail_hash[:'x-zammad-session-user-id']).to eq(1)
+      end
+    end
   end
 end

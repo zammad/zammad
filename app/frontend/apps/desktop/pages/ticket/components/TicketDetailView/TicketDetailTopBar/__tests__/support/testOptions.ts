@@ -5,6 +5,7 @@ import { nullableMock } from '#tests/support/utils.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
 export const testOptionsTopBar: TicketById = nullableMock<TicketById>({
   __typename: 'Ticket',
@@ -103,4 +104,21 @@ export const testOptionsTopBar: TicketById = nullableMock<TicketById>({
   closeEscalationAt: null,
   updateEscalationAt: null,
   initialChannel: null,
+})
+
+export const testOptionsTopBarSystemCustomer: TicketById = nullableMock<TicketById>({
+  ...testOptionsTopBar,
+  customer: {
+    ...testOptionsTopBar.customer,
+    id: SYSTEM_USER_ID,
+    internalId: SYSTEM_USER_INTERNAL_ID,
+    firstname: '-',
+    lastname: '',
+    fullname: '-',
+    email: '',
+    active: false,
+    organization: null,
+    hasSecondaryOrganizations: false,
+  },
+  organization: null,
 })

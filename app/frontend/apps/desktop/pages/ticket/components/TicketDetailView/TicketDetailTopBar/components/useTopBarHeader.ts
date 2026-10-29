@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 
 import { useTicketNumber } from '#desktop/entities/ticket/composables/useTicketNumber.ts'
 import { useTicketEditTitle } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts'
@@ -18,6 +19,8 @@ export const useTopBarHeader = () => {
   const { ticketNumber, ticketNumberWithTicketHook, copyTicketNumberToClipboard } =
     useTicketNumber(ticket)
 
+  const isSystemCustomer = computed(() => isSystemUser(ticket.value?.customer))
+
   const { updateTitle } = useTicketEditTitle(ticketId)
 
   return {
@@ -26,6 +29,7 @@ export const useTopBarHeader = () => {
     ticketNumberWithTicketHook,
     isTicketAgent,
     isTicketEditable,
+    isSystemCustomer,
     copyTicketNumberToClipboard,
     isUpdatingTitle,
     updateTitle,

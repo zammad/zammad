@@ -7,6 +7,7 @@ import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import type { TicketByList } from '#shared/entities/ticket/types.ts'
+import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -86,6 +87,9 @@ const session = useSessionStore()
 const ticketPopoverSlots = computed(() =>
   session.hasPermission('ticket.agent') ? ['column-cell-title', 'column-cell-number'] : [],
 )
+
+const isSystemCustomer = (item: TicketByList, ticketAttribute: keyof TicketByList) =>
+  ticketAttribute === 'customer' && isSystemUser(item.customer)
 
 // Matching the general ticket structure for the default layout column width
 const columnWidths = computed(() =>
@@ -201,7 +205,17 @@ const skeletonColumns = computed(() => columnWidths.value.length)
           :key="slotName"
           #[slotName]="{ item, isRowSelected, attribute }"
         >
+          <CommonLabel
+            v-if="isSystemCustomer(item as TicketByList, ticketAttribute)"
+            class="block! shrink-0 truncate outline-offset-0! group-hover:text-contrast group-active:text-white group-active:dark:text-white"
+            :class="{
+              'text-contrast!': isRowSelected,
+            }"
+          >
+            -
+          </CommonLabel>
           <UserPopoverWithTrigger
+            v-else
             :popover-config="{ orientation: 'autoHorizontal' }"
             :user="(item as TicketByList)[ticketAttribute] as AvatarUser"
             class="w-full outline-none!"

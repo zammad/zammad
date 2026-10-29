@@ -1,0 +1,13 @@
+<% for warning in @warnings: %>
+<div id="article-<%= warning.articleId %>" class="alert alert--warning" role="alert">
+  <div class="alert-row"><%- @T('This ticket was created because the email could not be processed. Download the raw email to see what was received, and the processing log to see why processing failed.') %></div>
+  <div class="alert-row ticketZoom-emailUnprocessable-actions">
+    <% if warning.rawEmailUrl: %>
+      <a class="btn btn--action btn--small btn--no-margin" href="<%= warning.rawEmailUrl %>" download><%- @T('Download raw email') %></a>
+    <% end %>
+    <% if warning.processingLogUrl: %>
+      <a class="btn btn--action btn--small btn--no-margin" href="<%= warning.processingLogUrl %>" download><%- @T('Download processing log') %></a>
+    <% end %>
+  </div>
+</div>
+<% end %>

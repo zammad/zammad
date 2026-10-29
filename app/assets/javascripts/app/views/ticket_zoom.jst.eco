@@ -27,6 +27,7 @@
           <div class="js-ticketMetaContainer"></div>
         </div>
       </div>
+      <div class="ticketZoom-emailUnprocessable js-emailUnprocessable hide"></div>
       <div class="ticket-article"></div>
       <div class="article-new"></div>
     </div>

@@ -38,4 +38,51 @@ describe('ticket detail view', () => {
 
     await expect(view.container).toBeAccessible()
   })
+
+  it('has no accessibility violations with the unprocessable email warning', async () => {
+    mockPermissions(['ticket.agent'])
+
+    mockTicketQuery({
+      ticket: createDummyTicket(),
+    })
+
+    mockLinkListQuery({
+      linkList: [],
+    })
+
+    const testArticle = createDummyArticle({
+      internal: true,
+      preferences: { email_unprocessable: true },
+      attachmentsWithoutInline: [
+        {
+          internalId: 21,
+          name: 'unprocessable_email.eml',
+          type: 'message/rfc822',
+          preferences: { email_unprocessable: 'raw' },
+        },
+        {
+          internalId: 22,
+          name: 'processing_log.txt',
+          type: 'text/plain',
+          preferences: { email_unprocessable: 'log' },
+        },
+      ],
+    })
+
+    mockTicketArticlesQuery({
+      articles: {
+        totalCount: 1,
+        edges: [{ node: testArticle }],
+      },
+      firstArticles: {
+        edges: [{ node: testArticle }],
+      },
+    })
+
+    const view = await visitView('/tickets/1')
+
+    expect(await view.findByRole('button', { name: 'Download raw email' })).toBeInTheDocument()
+
+    await expect(view.container).toBeAccessible()
+  })
 })

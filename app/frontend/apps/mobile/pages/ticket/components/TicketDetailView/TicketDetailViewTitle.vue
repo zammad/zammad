@@ -8,6 +8,7 @@ import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvat
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import CommonTicketEscalationIndicator from '#mobile/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
@@ -30,12 +31,12 @@ const { hasChannelAlert, channelAlert } = useTicketChannel(ticketReactive)
 
 const locale = useLocaleStore()
 
+const isSystemCustomer = computed(() => isSystemUser(props.ticket.customer))
+
 const customer = computed(() => {
   const { customer } = props.ticket
-  if (!customer) return ''
-  const { fullname } = customer
-  if (fullname === '-') return ''
-  return fullname
+  if (!customer || isSystemCustomer.value) return ''
+  return customer.fullname
 })
 </script>
 
@@ -48,7 +49,12 @@ const customer = computed(() => {
         :link="`/tickets/${ticket.internalId}/information`"
       >
         <div class="flex ltr:mr-3 rtl:ml-3">
-          <CommonUserAvatar class="z-10" :entity="ticket.customer" />
+          <CommonUserAvatar
+            class="z-10"
+            :entity="ticket.customer"
+            :no-indicator="isSystemCustomer"
+            :no-muted="isSystemCustomer"
+          />
           <CommonOrganizationAvatar
             v-if="ticket.organization"
             class="z-0 ltr:-translate-x-1 rtl:translate-x-1"
@@ -70,7 +76,7 @@ const customer = computed(() => {
               {{ customer }}
             </div>
             <template v-if="ticket.organization">
-              <div class="px-1">·</div>
+              <div v-if="customer" class="px-1">·</div>
               <div class="max-w-[40vw] truncate">
                 {{ ticket.organization.name }}
               </div>

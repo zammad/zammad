@@ -88,4 +88,27 @@ RSpec.describe 'Ticket zoom > Sidebar', authenticated_as: :user, time_zone: 'Eur
       end
     end
   end
+
+  describe 'customer tab of a ticket without customer' do
+    let(:group)  { create(:group) }
+    let(:user)   { create(:agent, groups: [group]) }
+    let(:ticket) { create(:ticket, customer: User.find(1), group: group) }
+
+    before do
+      User.find(1).update!(preferences: { tickets_open: 3 })
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'shows that no customer is assigned yet' do
+      within(:active_content) do
+        click '.tabsSidebar-tab[data-tab=customer]'
+
+        expect(find('.sidebar[data-tab=customer]'))
+          .to have_text('No customer assigned yet.')
+          .and have_no_css('.avatar')
+        expect(find('.tabsSidebar-tab[data-tab=customer]')).to have_no_css('.js-tabCounter')
+      end
+    end
+  end
 end

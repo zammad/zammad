@@ -1,8 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FailedEmail < ApplicationModel
+  # A row that still cannot be processed becomes an error ticket, like a mail that fails today.
   def reprocess(params = {})
-    ticket, _article, _user, _mail = Channel::EmailParser.new.process_with_timeout(params, data)
+    ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, data)
 
     raise __('Unknown error: Could not create a ticket from this email.') if !ticket
 

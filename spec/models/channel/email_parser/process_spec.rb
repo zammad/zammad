@@ -3274,7 +3274,7 @@ Content-Type: text/html; charset=us-ascii; format=flowed
   files.each.with_index(1) do |file, index|
     it "processes mail #{index} as expected" do
       data   = file[:data].respond_to?(:call) ? file[:data].call : file[:data]
-      result = Channel::EmailParser.new.process(file[:channel] || {}, data, false)
+      result = Channel::EmailParser.new.process(file[:channel] || {}, data)
 
       if file[:success]
         expect(result).to be_a(Array)

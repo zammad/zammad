@@ -6,6 +6,7 @@ import { watchEffect, computed } from 'vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
+import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
@@ -32,7 +33,9 @@ const errorCallback = createQueryErrorHandler({
   forbidden: __('You have insufficient rights to view this user.'),
 })
 
-const customerId = computed(() => ticket.value?.customer.id)
+const isSystemCustomer = computed(() => isSystemUser(ticket.value?.customer))
+
+const customerId = computed(() => (isSystemCustomer.value ? undefined : ticket.value?.customer.id))
 
 const {
   user,
@@ -54,50 +57,55 @@ const ticketsData = computed(() => getTicketData(user.value))
 </script>
 
 <template>
-  <CommonLoader :loading="loadingWithoutCachedResult">
-    <div v-if="user" class="mb-3 flex items-center gap-3">
-      <CommonUserAvatar aria-hidden="true" size="normal" :entity="user" />
-      <div>
-        <h2 class="text-lg font-medium">
-          {{ user.fullname }}
-        </h2>
-        <h3 v-if="user.organization">
-          <CommonLink :link="`/organizations/${user.organization.internalId}`" class="text-blue">
-            {{ user.organization.name }}
-          </CommonLink>
-        </h3>
+  <p v-if="isSystemCustomer" class="py-3 text-center text-base">
+    {{ $t('No customer assigned yet.') }}
+  </p>
+  <template v-else>
+    <CommonLoader :loading="loadingWithoutCachedResult">
+      <div v-if="user" class="mb-3 flex items-center gap-3">
+        <CommonUserAvatar aria-hidden="true" size="normal" :entity="user" />
+        <div>
+          <h2 class="text-lg font-medium">
+            {{ user.fullname }}
+          </h2>
+          <h3 v-if="user.organization">
+            <CommonLink :link="`/organizations/${user.organization.internalId}`" class="text-blue">
+              {{ user.organization.name }}
+            </CommonLink>
+          </h3>
+        </div>
       </div>
+    </CommonLoader>
+    <div v-if="user">
+      <ObjectAttributes
+        :attributes="objectAttributes"
+        :object="user"
+        :skip-attributes="['firstname', 'lastname', 'organization_ids']"
+        :always-show-after-fields="user.policy.update"
+      >
+        <template v-if="user.policy.update" #after-fields>
+          <CommonButton
+            class="p-4"
+            variant="primary"
+            transparent-background
+            @click="openEditUserDialog(user!)"
+          >
+            {{ $t('Edit Customer') }}
+          </CommonButton>
+        </template>
+      </ObjectAttributes>
+      <CommonOrganizationsList
+        :organizations="secondaryOrganizations.array"
+        :total-count="secondaryOrganizations.totalCount"
+        :disable-show-more="loading"
+        :label="__('Secondary organizations')"
+        @show-more="fetchMoreSecondaryOrganizations"
+      />
+      <CommonTicketStateList
+        v-if="ticketsData"
+        :counts="ticketsData.count"
+        :tickets-link-query="ticketsData.query"
+      />
     </div>
-  </CommonLoader>
-  <div v-if="user">
-    <ObjectAttributes
-      :attributes="objectAttributes"
-      :object="user"
-      :skip-attributes="['firstname', 'lastname', 'organization_ids']"
-      :always-show-after-fields="user.policy.update"
-    >
-      <template v-if="user.policy.update" #after-fields>
-        <CommonButton
-          class="p-4"
-          variant="primary"
-          transparent-background
-          @click="openEditUserDialog(user!)"
-        >
-          {{ $t('Edit Customer') }}
-        </CommonButton>
-      </template>
-    </ObjectAttributes>
-    <CommonOrganizationsList
-      :organizations="secondaryOrganizations.array"
-      :total-count="secondaryOrganizations.totalCount"
-      :disable-show-more="loading"
-      :label="__('Secondary organizations')"
-      @show-more="fetchMoreSecondaryOrganizations"
-    />
-    <CommonTicketStateList
-      v-if="ticketsData"
-      :counts="ticketsData.count"
-      :tickets-link-query="ticketsData.query"
-    />
-  </div>
+  </template>
 </template>

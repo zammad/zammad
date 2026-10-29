@@ -230,6 +230,34 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
           expect { channel.fetch(true) }.not_to change(Ticket::Article, :count)
           expect(channel.reload).to have_attributes(status_in: 'ok')
         end
+
+        it 'keeps a message unread that could become no ticket at all, so that the next fetch retries it' do
+          allow_any_instance_of(described_class).to receive(:_process).and_raise('content parser gone')
+          allow_any_instance_of(Channel::EmailParser::ErrorTicket).to receive(:create!).and_raise('database gone')
+
+          imap.append(folder, email1, [], Time.zone.now)
+
+          # fetch messages - neither a ticket nor an error ticket can be created
+          expect { channel.fetch(true) }.not_to change(Ticket, :count)
+          expect(channel.reload).to have_attributes(status_in: 'error', last_log_in: include('could not be processed and stays on the server'))
+
+          # message is still on server and still unseen
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).not_to include(:Seen)
+
+          # fetch messages - the error ticket can be created again, so the message is imported now
+          allow_any_instance_of(Channel::EmailParser::ErrorTicket).to receive(:create!).and_call_original
+
+          expect { channel.fetch(true) }.to change(Ticket, :count).by(1)
+          expect(channel.reload).to have_attributes(status_in: 'ok')
+          expect(Ticket.last).to have_attributes(title: 'Unprocessable email')
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen)
+        end
       end
 
       context 'without keep_on_server flag' do

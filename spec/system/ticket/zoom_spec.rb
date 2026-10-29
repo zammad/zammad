@@ -291,4 +291,112 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'error ticket of an unprocessable email', authenticated_as: :authenticate do
+    let(:group)  { Group.find_by(name: 'Users') }
+    let(:ticket) { create(:ticket, :email_unprocessable, group:) }
+    let(:user)   { create(:agent, groups: [group]) }
+
+    def authenticate
+      ticket
+      user
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    context 'when the user is an agent' do
+      let(:article) { ticket.articles.first }
+      let(:note)    { create(:ticket_article, ticket:, body: 'Looked into the raw email.') }
+
+      def authenticate
+        ticket
+        note
+        user
+      end
+
+      def attachment_url(marker)
+        attachment = article.attachments.find { it.preferences['email_unprocessable'] == marker }
+
+        "api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{attachment.id}?disposition=attachment"
+      end
+
+      def fetch_text(url)
+        page.evaluate_async_script('fetch(arguments[0]).then((response) => response.text()).then(arguments[1])', url)
+      end
+
+      it 'shows the warning with both downloads in place of the flagged article' do
+        within :active_content do
+          within ".ticketZoom-emailUnprocessable:not(.hide) #article-#{article.id}.alert--warning" do
+            expect(page).to have_text('This ticket was created because the email could not be processed. Download the raw email to see what was received, and the processing log to see why processing failed.')
+            expect(page).to have_link('Download raw email', href: attachment_url('raw'))
+            expect(page).to have_link('Download processing log', href: attachment_url('log'))
+          end
+
+          within '.ticketZoom-emailUnprocessable + .ticket-article' do
+            expect(page).to have_css("#article-#{note.id}", text: 'Looked into the raw email.')
+            expect(page).to have_no_css("#article-#{article.id}")
+          end
+        end
+      end
+
+      it 'downloads the raw email and the processing log' do
+        within :active_content do
+          raw_email      = find_link('Download raw email')[:href]
+          processing_log = find_link('Download processing log')[:href]
+
+          expect(fetch_text(raw_email)).to include('Subject: Foo')
+          expect(fetch_text(processing_log)).to include('Exception: RuntimeError')
+        end
+      end
+    end
+
+    context 'when a later article is flagged as well' do
+      let(:later_article) { create(:ticket_article, :email_unprocessable, ticket:) }
+      let(:note)          { create(:ticket_article, ticket:, body: 'Looked into both raw emails.') }
+
+      def authenticate
+        ticket
+        later_article
+        note
+        user
+      end
+
+      it 'shows a warning for each flagged article and none of them as an article' do
+        within :active_content do
+          expect(page).to have_css('.ticketZoom-emailUnprocessable:not(.hide) .alert--warning', count: 2)
+          expect(page).to have_css(".ticketZoom-emailUnprocessable #article-#{ticket.articles.first.id}.alert--warning")
+          expect(page).to have_css(".ticketZoom-emailUnprocessable #article-#{later_article.id}.alert--warning")
+
+          within '.ticket-article' do
+            expect(page).to have_css("#article-#{note.id}", text: 'Looked into both raw emails.')
+            expect(page).to have_no_css("#article-#{ticket.articles.first.id}")
+            expect(page).to have_no_css("#article-#{later_article.id}")
+          end
+        end
+      end
+    end
+
+    context 'when the user is the customer' do
+      let(:user) { ticket.customer }
+
+      it 'shows no warning' do
+        within :active_content do
+          expect(page).to have_css('.ticketZoom-header .ticket-title', text: ticket.title)
+          expect(page).to have_no_css('.ticketZoom-emailUnprocessable .alert')
+        end
+      end
+    end
+
+    context 'when the first article is not flagged' do
+      let(:ticket) { create(:ticket, group:).tap { create(:ticket_article, ticket: it) } }
+
+      it 'shows no warning' do
+        within :active_content do
+          expect(page).to have_css('.ticket-article-item')
+          expect(page).to have_no_css('.ticketZoom-emailUnprocessable .alert')
+        end
+      end
+    end
+  end
 end

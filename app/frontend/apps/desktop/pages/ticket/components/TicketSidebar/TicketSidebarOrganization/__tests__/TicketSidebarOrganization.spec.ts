@@ -1,13 +1,16 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
 import {
   mockUserQuery,
   waitForUserQueryCalls,
 } from '#shared/entities/user/graphql/queries/user.mocks.ts'
+import { SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
 import organizationSidebarPlugin from '../../plugins/organization.ts'
@@ -108,5 +111,33 @@ describe('TicketSidebarOrganization.vue', () => {
     })
 
     expect(wrapper.emitted('hide')).toHaveLength(1) // immediate: true
+  })
+
+  it('hides sidebar without loading the system customer', async () => {
+    const wrapper = renderComponent(TicketSidebarOrganization, {
+      props: {
+        sidebar: 'organization',
+        sidebarPlugin: organizationSidebarPlugin,
+        selected: true,
+        context: {
+          screenType: TicketSidebarScreenType.TicketDetailView,
+          formValues: {
+            customer_id: SYSTEM_USER_INTERNAL_ID,
+          },
+        },
+      },
+      router: true,
+      global: {
+        stubs: {
+          teleport: true,
+        },
+      },
+      form: true,
+    })
+
+    await waitForNextTick()
+
+    expect(wrapper.emitted('hide')).toHaveLength(1)
+    expect(getGraphQLMockCalls(UserDocument)).toHaveLength(0)
   })
 })

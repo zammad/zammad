@@ -359,6 +359,10 @@ class App.TicketZoom extends App.Controller
     @last_ticket_article_ids = @ticket_article_ids
     @last_article_id         = article_id
 
+  # The flagged articles of unprocessable emails are shown as warning boxes only.
+  articleViewIds: =>
+    _.difference(@ticket_article_ids, App.TicketZoomEmailUnprocessable.flaggedArticleIds(@ticket_article_ids))
+
   setPosition: (position) =>
     @$('.main').scrollTop(position)
 
@@ -624,12 +628,17 @@ class App.TicketZoom extends App.Controller
         ticket_id: @ticket_id
       )
 
+      @emailUnprocessable = new App.TicketZoomEmailUnprocessable(
+        el:                 elLocal.find('.js-emailUnprocessable')
+        ticket_article_ids: @ticket_article_ids
+      )
+
       @articleView = new App.TicketZoomArticleView(
         ticket:             @ticket
         el:                 elLocal.find('.ticket-article')
         ui:                 @
         highlighter:        @highlighter
-        ticket_article_ids: @ticket_article_ids
+        ticket_article_ids: @articleViewIds()
         time_accountings:   @time_accountings
         form_id:            @form_id
       )
@@ -667,8 +676,11 @@ class App.TicketZoom extends App.Controller
 
     # show article
     else
-      @articleView.execute(
+      @emailUnprocessable.execute(
         ticket_article_ids: @ticket_article_ids
+      )
+      @articleView.execute(
+        ticket_article_ids: @articleViewIds()
         time_accountings:   @time_accountings
       )
 

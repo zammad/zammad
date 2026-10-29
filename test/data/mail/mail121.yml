@@ -1,0 +1,14 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Foo Bar" <foo@bar@example.com>'
+from_email: foo@bar@example.com
+from_display_name: Foo Bar
+to: support@example.com
+subject: Order status
+body: |
+  Hello,
+
+  could you please tell me the status of my order?
+
+  Thanks
+content_type: text/plain
+attachments: []

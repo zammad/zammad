@@ -75,7 +75,7 @@ class SecureMailing::Backend::HandlerIncoming < SecureMailing::Backend::Handler
       mail[:mail_instance].header[header] = nil
     end
 
-    Channel::EmailParser.new.parse("#{mail[:mail_instance].header}#{decrypted_body}").each do |key, value|
+    Channel::EmailParser.new.parse("#{mail[:mail_instance].header}#{decrypted_body}", allow_missing_attribute_exceptions: false).each do |key, value|
       mail[key] = value
     end
 

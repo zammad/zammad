@@ -13,6 +13,7 @@ import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 import type { TicketByList } from '#shared/entities/ticket/types.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
 
 import type { ListTableProps } from '#desktop/components/CommonTable/types.ts'
 
@@ -114,6 +115,33 @@ describe('TicketListTable', () => {
     expect(wrapper.getByText('Agent 1 Test')).toBeInTheDocument()
     expect(wrapper.getByText('open')).toBeInTheDocument()
     expect(wrapper.getByText('3 high')).toBeInTheDocument()
+  })
+
+  it('displays a ticket of the system customer as having no customer', async () => {
+    const wrapper = await renderListTable({
+      headers: ['title', 'customer'],
+      items: [
+        {
+          ...tableItems[0],
+          customer: {
+            __typename: 'User',
+            id: SYSTEM_USER_ID,
+            fullname: 'System',
+          },
+        },
+      ],
+      totalCount: 1,
+      caption: 'Table caption',
+      tableId: 'ticket-list-table',
+      maxItems: 1000,
+      loading: false,
+      loadingNewPage: false,
+    })
+
+    const customerCell = wrapper.getByText('-')
+
+    expect(customerCell.closest('[aria-controls]')).toBeNull()
+    expect(wrapper.queryByText('System')).not.toBeInTheDocument()
   })
 
   describe('Ai Agent', () => {

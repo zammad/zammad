@@ -9,7 +9,10 @@ import { useArticleTranslationStore } from '#shared/entities/ticket-article/stor
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
-import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
+import {
+  testOptionsTopBar,
+  testOptionsTopBarSystemCustomer,
+} from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TopBarHeaderFull from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue'
 
 const copyToClipboardMock = vi.fn()
@@ -120,6 +123,33 @@ describe('TopBarHeaderFull', () => {
         },
       },
     ])
+  })
+
+  it('shows the system customer without name, indicator and popover', () => {
+    const view = renderTopBarHeaderFull({ ticket: testOptionsTopBarSystemCustomer })
+
+    const avatar = view.getByRole('img', { name: 'Avatar (-)' })
+
+    expect(avatar).not.toHaveClass('opacity-60')
+    expect(avatar.closest('a')).toBeNull()
+    expect(avatar.closest('[aria-controls]')).toBeNull()
+    expect(view.queryByIconName('avatar-indicator-inactive')).not.toBeInTheDocument()
+    expect(view.queryByText('-')).not.toBeInTheDocument()
+    expect(view.getByRole('heading', { level: 2 })).toHaveTextContent('Welcome to Zammad!')
+  })
+
+  it('shows the organization of a system customer ticket without separator', () => {
+    const view = renderTopBarHeaderFull({
+      ticket: {
+        ...testOptionsTopBarSystemCustomer,
+        organization: testOptionsTopBar.organization,
+      },
+    })
+
+    const organizationName = view.getByText('Zammad Foundation')
+
+    expect(organizationName.parentElement).not.toHaveTextContent('·')
+    expect(view.queryByText('-')).not.toBeInTheDocument()
   })
 
   it('renders flex-col on narrow container', () => {

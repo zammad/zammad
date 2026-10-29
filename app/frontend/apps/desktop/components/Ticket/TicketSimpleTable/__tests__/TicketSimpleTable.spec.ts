@@ -4,6 +4,7 @@ import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
 
 import TicketSimpleTable from '#desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue'
 
@@ -47,6 +48,27 @@ describe('TicketSimpleData', () => {
     expect(wrapper.getAllByRole('status', { name: 'open' })).toHaveLength(2)
     expect(wrapper.getAllByText('Test Agents')).toHaveLength(2)
     expect(wrapper.getAllByText('2011-12-11')).toHaveLength(2)
+  })
+
+  it('displays a ticket of the system customer as having no customer', () => {
+    mockApplicationConfig({ ticket_hook: 'Ticket#' })
+
+    const wrapper = renderComponent(TicketSimpleTable, {
+      props: {
+        tickets: [
+          createDummyTicket({
+            customer: { id: SYSTEM_USER_ID, fullname: 'System' },
+            organization: null,
+          }),
+        ],
+        label: 'Tickets',
+      },
+      form: true,
+      router: true,
+    })
+
+    expect(wrapper.getByText('-')).toBeInTheDocument()
+    expect(wrapper.queryByText('System')).not.toBeInTheDocument()
   })
 
   it('emits table data on row click', async () => {

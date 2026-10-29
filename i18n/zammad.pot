@@ -3360,7 +3360,7 @@ msgid "Change Your Password"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/useChangeCustomerMenuItem.ts:37
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
@@ -3941,7 +3941,7 @@ msgid "Closed Tickets"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets.vue:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:141
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:111
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:31
 msgid "Closed tickets"
 msgstr ""
@@ -4477,6 +4477,10 @@ msgstr ""
 msgid "Could not fetch security keys"
 msgstr ""
 
+#: app/models/channel/email_parser.rb:100
+msgid "Could not find any header field in the email."
+msgstr ""
+
 #: app/controllers/channels_admin/microsoft_graph_controller.rb:16
 msgid "Could not find the channel."
 msgstr ""
@@ -4761,7 +4765,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:24
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
-#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:37
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
@@ -6721,6 +6725,15 @@ msgstr ""
 msgid "Download original email"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:61
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:57
+msgid "Download processing log"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:52
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:47
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:103
 msgid "Download raw email"
 msgstr ""
@@ -6848,7 +6861,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:86
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:93
 msgid "Edit Customer"
 msgstr ""
 
@@ -6884,7 +6897,7 @@ msgstr ""
 msgid "Edit checklist title"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:50
 msgid "Edit customer"
 msgstr ""
 
@@ -6921,8 +6934,8 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:112
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:147
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:140
 msgid "Edit ticket title"
 msgstr ""
 
@@ -8839,7 +8852,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:31
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:36
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/graphql/gql/types/overview_type.rb:95
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -12582,6 +12595,12 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:101
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:61
+msgid "No customer assigned yet."
+msgstr ""
+
 #: app/models/group.rb:41
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
@@ -12836,7 +12855,7 @@ msgstr ""
 msgid "No webhook available, please create a new one or activate an existing one at \"Manage > Webhook\""
 msgstr ""
 
-#: app/models/channel/email_parser.rb:119
+#: app/models/channel/email_parser.rb:141
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
@@ -13448,8 +13467,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets.vue:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:51
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:101
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:23
 msgid "Open tickets"
 msgstr ""
@@ -16260,9 +16279,9 @@ msgid "Search…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:81
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:82
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:149
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:101
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1186
 msgid "Secondary organizations"
@@ -20324,6 +20343,16 @@ msgstr ""
 msgid "This ticket already has a checklist."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:37
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:34
+msgid "This ticket was created because the email could not be processed. Download the raw email to see what was received, and the processing log to see why processing failed."
+msgstr ""
+
+#: app/models/channel/email_parser/error_ticket.rb:5
+msgid "This ticket was created because the email could not be processed. The original email and the processing log are attached."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_categorizer.rb:15
 msgid "This type of AI agent can categorize incoming tickets into an appropriate category based on their content and topic."
 msgstr ""
@@ -20807,7 +20836,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:122
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:92
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:50
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:158
@@ -20965,7 +20994,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
-#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:34
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:35
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:87
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:57
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
@@ -21627,6 +21656,10 @@ msgstr ""
 msgid "Unpin this panel"
 msgstr ""
 
+#: app/models/channel/email_parser/error_ticket.rb:4
+msgid "Unprocessable email"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:118
 msgid "Unread messages count"
 msgstr ""
@@ -22077,7 +22110,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee:3
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:81
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:68
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:86
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:93
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:2
@@ -22242,7 +22275,7 @@ msgid "User updated successfully."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/user/routes.ts:21
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:31
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:32
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
 msgid "User with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -22278,7 +22311,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:71
 #: app/assets/javascripts/app/controllers/cti.coffee:227
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:96
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:27
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:85
@@ -23180,7 +23213,7 @@ msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/user/routes.ts:20
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:32
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:33
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:33
 msgid "You have insufficient rights to view this user."
 msgstr ""
@@ -23654,7 +23687,7 @@ msgstr ""
 msgid "closed"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:140
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:110
 msgid "closed tickets"
 msgstr ""
 
@@ -24642,7 +24675,7 @@ msgstr ""
 msgid "open"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:100
 msgid "open tickets"
 msgstr ""
 

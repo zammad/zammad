@@ -7357,6 +7357,31 @@ a.list-group-item.active > .badge,
   }
 }
 
+.ticketZoom-emailUnprocessable {
+  max-width: 1080px;
+  margin: 40px auto 0;
+  padding: 0 76px;
+
+  @include phone {
+    margin-top: 30px;
+    padding: 0 10px;
+  }
+
+  .alert {
+    margin-bottom: 0;
+  }
+
+  &-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+
+  .ticketZoom &:not(.hide) + .ticket-article {
+    margin-top: 30px;
+  }
+}
+
 .ticketZoom > .overview-navigator {
   margin-top: 32px;
 

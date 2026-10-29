@@ -3,6 +3,7 @@
 import { controlledComputed } from '@vueuse/shared'
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { isUnprocessableEmailArticle } from '#shared/entities/ticket-article/composables/useTicketArticleUnprocessableEmail.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -15,6 +16,11 @@ export const ARTICLE_PAGE_SIZE = 100
 
 interface ArticleRow {
   type: 'article-bubble'
+  article: TicketArticle
+}
+
+interface UnprocessableEmailRow {
+  type: 'unprocessable-email'
   article: TicketArticle
 }
 
@@ -46,6 +52,7 @@ interface SystemRaw {
 
 type TicketArticleRow = (
   | ArticleRow
+  | UnprocessableEmailRow
   | SystemRaw
   | MoreRow
   | NewRow
@@ -53,6 +60,30 @@ type TicketArticleRow = (
   | ArticleDeliveryRow
 ) & {
   key: string
+}
+
+const articleRow = (article: TicketArticle): TicketArticleRow => {
+  const key = article.id
+
+  if (isUnprocessableEmailArticle(article)) {
+    return { type: 'unprocessable-email', article, key }
+  }
+  if (article.preferences?.delivery_message) {
+    return { type: 'delivery', content: article.bodyWithUrls, key }
+  }
+  if (
+    article.sender?.name === EnumTicketArticleSenderName.System &&
+    article.type?.name !== 'note'
+  ) {
+    return {
+      type: 'system',
+      subject: article.subject,
+      to: article.to?.raw || '',
+      reaction: article.preferences?.whatsapp?.reaction?.emoji,
+      key,
+    }
+  }
+  return { type: 'article-bubble', article, key }
 }
 
 export const useTicketArticleRows = (articles: Ref<TicketArticle[]>, totalCount: Ref<number>) => {
@@ -67,7 +98,8 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>, totalCount:
     // assuming it is sorted by createdAt
     articles.value.forEach((article, index) => {
       const date = i18n.date(article.createdAt)
-      if (!dates.has(date)) {
+      // The warning of an unprocessable email stands on its own, without a date separator.
+      if (!isUnprocessableEmailArticle(article) && !dates.has(date)) {
         dates.add(date)
         rows.push({
           type: 'date',
@@ -75,30 +107,7 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>, totalCount:
           key: date,
         })
       }
-      if (article.preferences?.delivery_message) {
-        rows.push({
-          type: 'delivery',
-          content: article.bodyWithUrls,
-          key: article.id,
-        })
-      } else if (
-        article.sender?.name === EnumTicketArticleSenderName.System &&
-        article.type?.name !== 'note'
-      ) {
-        rows.push({
-          type: 'system',
-          subject: article.subject,
-          to: article.to?.raw || '',
-          reaction: article.preferences?.whatsapp?.reaction?.emoji,
-          key: article.id,
-        })
-      } else {
-        rows.push({
-          type: 'article-bubble',
-          article,
-          key: article.id,
-        })
-      }
+      rows.push(articleRow(article))
       // after "description" (always first) article is added, add "more" button
       if (index === 0 && needMoreButton) {
         const remainingCount = totalCount.value - articles.value.length

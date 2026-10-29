@@ -13,6 +13,7 @@ import ArticleBubble from '#desktop/pages/ticket/components/TicketDetailView/Art
 import ArticleMore from '#desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue'
 import DeliveryMessage from '#desktop/pages/ticket/components/TicketDetailView/DeliveryMessage.vue'
 import SystemMessage from '#desktop/pages/ticket/components/TicketDetailView/SystemMessage.vue'
+import UnprocessableEmailWarning from '#desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue'
 import { useArticleContext } from '#desktop/pages/ticket/composables/useArticleContext.ts'
 import { useTicketArticleRows } from '#desktop/pages/ticket/composables/useTicketArticlesRows.ts'
 
@@ -219,6 +220,10 @@ defineExpose({ goToAdjacentArticle })
         :aria-posinset="rowIndex + 1"
       >
         <ArticleBubble v-if="row.type === 'article-bubble'" :article="row.article" />
+        <UnprocessableEmailWarning
+          v-else-if="row.type === 'unprocessable-email'"
+          :article="row.article"
+        />
         <ArticleMore
           v-else-if="row.type === 'more'"
           :disabled="isFetchingMore"

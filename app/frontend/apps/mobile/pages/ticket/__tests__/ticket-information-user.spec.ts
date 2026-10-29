@@ -8,13 +8,14 @@ import { waitUntilApisResolved } from '#tests/support/utils.ts'
 
 import type { UserQuery } from '#shared/graphql/types.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
+import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
 import {
   defaultUser,
   mockUserDetailsApis,
 } from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
 
-import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
+import { defaultTicket, mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 const visitTicketUser = async (user: ConfidentTake<UserQuery, 'user'>) => {
   mockTicketDetailViewGql()
@@ -111,6 +112,35 @@ describe('visiting ticket user page', () => {
     expect(getRegion('Note')).toHaveTextContent('This user is cool')
     expect(getRegion('Department')).toHaveTextContent('Department of Health and Safety')
     expect(getRegion('Address')).toHaveTextContent('Berlin')
+  })
+
+  it('shows the system customer as no customer without loading it', async () => {
+    mockPermissions(['ticket.agent'])
+
+    const ticket = defaultTicket()
+
+    ticket.ticket.customer = {
+      ...ticket.ticket.customer,
+      id: SYSTEM_USER_ID,
+      internalId: SYSTEM_USER_INTERNAL_ID,
+      firstname: '-',
+      lastname: '',
+      fullname: '-',
+      active: false,
+    }
+
+    mockTicketDetailViewGql({ ticket })
+
+    const { mockUser } = mockUserDetailsApis(undefined, {
+      skipMockOnlineNotificationSeen: true,
+    })
+
+    const view = await visitView('/tickets/1/information/customer')
+
+    expect(await view.findByText('No customer assigned yet.')).toBeInTheDocument()
+    expect(view.getByRole('tab', { name: 'Customer' })).toBeInTheDocument()
+    expect(mockUser.calls.resolve).toBe(0)
+    expect(view.queryByRole('button', { name: 'Edit Customer' })).not.toBeInTheDocument()
   })
 
   it('cannot edit user without permission', async () => {

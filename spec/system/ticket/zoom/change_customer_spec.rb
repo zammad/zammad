@@ -35,4 +35,40 @@ RSpec.describe 'Ticket zoom > Sidebar > Customer', :aggregate_failures, type: :s
       end
     end
   end
+
+  context 'when the ticket has no customer yet' do
+    let(:customer) { create(:customer) }
+    let(:ticket)   { create(:ticket, group: Group.find_by(name: 'Users'), customer: User.find(1)) }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'assigns a customer from the sidebar' do
+      click '.tabsSidebar-tab[data-tab=customer]'
+
+      within '.sidebar[data-tab=customer]' do
+        expect(page).to have_text('No customer assigned yet.')
+
+        click '#userAction'
+        click_on 'Change Customer'
+      end
+
+      modal_ready
+
+      in_modal do
+        find('[name="customer_id"] ~ .user-select.token-input').fill_in with: customer.firstname
+        find('.recipientList-entry.js-object', text: customer.fullname).click
+
+        click '.js-submit'
+      end
+
+      within '.sidebar[data-tab=customer]' do
+        expect(page).to have_no_text('No customer assigned yet.').and have_text(customer.fullname)
+      end
+
+      await_empty_ajax_queue
+      expect(ticket.reload.customer).to eq(customer)
+    end
+  end
 end

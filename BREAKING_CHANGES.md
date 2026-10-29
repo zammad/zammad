@@ -89,6 +89,37 @@ instead.
 
 ## 7.3
 
+### Unprocessable emails no longer create `FailedEmail` records
+
+**Who is affected?** Admins who notice unprocessable emails through the health check or handle them
+with the `zammad:email_parser:failed_email` rake tasks, and developers of packages that call
+`Channel::EmailParser#process` with its third argument.
+
+An inbound email that could not be processed used to be stored as a `FailedEmail` record outside any
+ticket. The record counted towards the `emails that could not be processed` issue of the health
+check and the "Monitoring" section, and waited for an admin to export or reprocess it with
+`zammad run rake zammad:email_parser:failed_email:export_all` or
+`zammad run rake zammad:email_parser:failed_email:reprocess_all`.
+
+Mail processing now creates a ticket for every email instead. A malformed or missing `From` header
+no longer prevents a ticket: the customer is created from the address without an email address, or
+the ticket gets the system account as customer. An email that still cannot be processed becomes an
+error ticket titled `Unprocessable email` in the group of the receiving email channel, with the raw
+email and a processing log attached to an internal note. No new `FailedEmail` records are created,
+so the health check and the system report no longer report new failures; records that exist before
+the update are kept and not migrated, and the rake tasks keep working on them. Reprocessing such a
+record turns it into an error ticket and removes it when the email still cannot be processed.
+
+`Channel::EmailParser#process` lost its third argument, which chose between raising and returning
+`false` on a failure. The method now creates the error ticket itself and raises only when not even
+that is possible. Calls that still pass three arguments fail with `ArgumentError`.
+
+⚠️ Watch for tickets titled `Unprocessable email` instead of the health check to notice processing
+failures, handle the `FailedEmail` records left from before the update with the rake tasks one last
+time, and drop the third argument from calls to `Channel::EmailParser#process`.
+
+**Related issue:** [#6507](https://github.com/zammad/zammad/issues/6507)
+
 ### Indexes on name-like columns are no longer turned into `LOWER()` indexes
 
 **Who is affected?** Developers of custom packages, patches or add-ons whose migrations index a column

@@ -90,7 +90,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       it 'ensures tests were dynamically generated' do
-        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(120)
+        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(121)
       end
     end
 
@@ -392,15 +392,15 @@ RSpec.describe Channel::EmailParser, type: :model do
       describe 'handle database failures' do
         subject(:instance) { described_class.new }
 
-        let(:mail_data)    { attributes_for(:failed_email)[:data] }
+        let(:mail_data) { attributes_for(:failed_email)[:data] }
 
         before do
           allow(instance).to receive(:process_with_timeout).and_raise('error')
-          allow_any_instance_of(FailedEmail).to receive(:valid?).and_return(false)
+          allow_any_instance_of(Ticket).to receive(:valid?).and_return(false)
         end
 
-        it 'raises error even if exception is false' do
-          expect { instance.process({}, mail_data, false) }
+        it 'raises when the error ticket cannot be created either' do
+          expect { instance.process({}, mail_data) }
             .to raise_error(ActiveRecord::ActiveRecordError)
         end
       end
@@ -1508,6 +1508,127 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'handling senders that are no valid email address' do
+      shared_examples 'creating a ticket without a failed email' do
+        it 'creates a ticket and no failed email' do
+          expect { described_class.new.process({}, raw_mail) }
+            .to change(Ticket, :count).by(1)
+            .and not_change(FailedEmail, :count)
+        end
+      end
+
+      context 'when the sender address is invalid' do
+        let(:mail_file) { Rails.root.join('test/data/mail/mail121.box') }
+
+        include_examples 'creating a ticket without a failed email'
+
+        it 'creates a customer with the address as login and no email' do
+          ticket, = described_class.new.process({}, raw_mail)
+
+          expect(ticket.customer).to have_attributes(
+            login:     'foo@bar@example.com',
+            email:     '',
+            firstname: 'Foo',
+            lastname:  'Bar',
+          )
+        end
+
+        it 'keeps the body readable' do
+          _ticket, article, = described_class.new.process({}, raw_mail)
+
+          expect(article.body).to include('could you please tell me the status of my order?')
+        end
+
+        it 'assigns a second mail from the same sender to the same customer' do
+          first_ticket, = described_class.new.process({}, raw_mail)
+
+          expect { described_class.new.process({}, raw_mail.sub('invalid-from-20261026091244', 'invalid-from-second')) }
+            .to not_change(User, :count)
+
+          expect(Ticket.last.customer).to eq(first_ticket.customer)
+        end
+      end
+
+      context 'when the invalid sender address is padded with spaces' do
+        let(:raw_mail) { <<~RAW.chomp }
+          From: Foo < foo@bar@example.com >
+          To: support@example.com
+          Subject: Foo
+
+          Lorem ipsum dolor
+        RAW
+
+        include_examples 'creating a ticket without a failed email'
+
+        it 'assigns a second mail from the same sender to the same customer' do
+          first_ticket, = described_class.new.process({}, raw_mail)
+          second_ticket, = described_class.new.process({}, raw_mail.sub('Subject: Foo', 'Subject: Bar'))
+
+          expect(second_ticket.customer).to eq(first_ticket.customer)
+        end
+
+        it 'does not mark the customer with a failed delivery, since no address is kept' do
+          ticket, = described_class.new.process({}, raw_mail)
+
+          expect(ticket.customer.preferences).not_to include('mail_delivery_failed')
+        end
+      end
+
+      context 'when the sender is a word that is no address' do
+        let(:raw_mail) { <<~RAW.chomp }
+          From: domain\\jdoe
+          To: support@example.com
+          Subject: Foo
+
+          Lorem ipsum dolor
+        RAW
+
+        include_examples 'creating a ticket without a failed email'
+
+        it 'creates a customer with the word as login and no email' do
+          ticket, = described_class.new.process({}, raw_mail)
+
+          expect(ticket.customer).to have_attributes(login: 'domain\\jdoe', email: '')
+        end
+      end
+
+      context 'when the mail has no sender field' do
+        let(:mail_file) { Rails.root.join('test/data/mail/no_sender.box') }
+
+        include_examples 'creating a ticket without a failed email'
+
+        it 'assigns the system account as customer' do
+          ticket, article, = described_class.new.process({}, raw_mail)
+
+          expect(ticket.customer_id).to eq(1)
+          expect(article).to have_attributes(created_by_id: 1, sender: Ticket::Article::Sender.lookup(name: 'Customer'))
+        end
+
+        it 'creates no user for the sender' do
+          expect { described_class.new.process({}, raw_mail) }
+            .to not_change { User.where.not(email: 'support@example.com').count }
+        end
+      end
+
+      context 'when the sender is an empty group' do
+        let(:raw_mail) { <<~RAW.chomp }
+          From: undisclosed-recipients:;
+          To: support@example.com
+          Subject: Foo
+
+          Lorem ipsum dolor
+        RAW
+
+        include_examples 'creating a ticket without a failed email'
+
+        it 'assigns the system account as customer' do
+          ticket, = described_class.new.process({}, raw_mail)
+
+          expect(ticket.customer_id).to eq(1)
+        end
+      end
+    end
+
     describe 'signature detection', performs_jobs: true do
       let(:raw_mail) { header + File.read(message_file) }
 
@@ -1962,21 +2083,374 @@ RSpec.describe Channel::EmailParser, type: :model do
     end
 
     context 'when an unprocessable mail is received' do
-      let(:parser) { described_class.new }
-      let(:mail)   { attributes_for(:failed_email)[:data] }
+      let(:parser)  { described_class.new }
+      let(:channel) { {} }
+      let(:from)    { 'Foo Bar <foo.bar@example.com>' }
+      let(:mail)    { "From: #{from}\nTo: support@example.com\nSubject: Foo\n\nLorem ipsum dolor" }
+      let(:error)   { Timeout::Error.new('execution expired') }
+      let(:result)  { parser.process(channel, mail) }
+      let(:ticket)  { result.first }
+      let(:article) { result.second }
 
       before do
-        allow(parser).to receive(:_process).and_raise(Timeout::Error)
+        allow(parser).to receive(:_process).and_raise(error)
       end
 
-      it 'saves the unprocessable email' do
-        begin
-          parser.process({}, mail)
-        rescue RuntimeError
-          # expected
+      it 'creates an error ticket and no failed email' do
+        expect { result }
+          .to change(Ticket, :count).by(1)
+          .and not_change(FailedEmail, :count)
+      end
+
+      it 'returns the error ticket, its article and its customer' do
+        expect(result).to eq([ticket, article, ticket.customer, nil])
+      end
+
+      it 'titles the ticket with a fixed text' do
+        expect(ticket.title).to eq('Unprocessable email')
+      end
+
+      it 'creates the ticket as the system account and restores the current user' do
+        agent = create(:agent)
+
+        UserInfo.with_user_id(agent.id) do
+          expect(ticket.created_by_id).to eq(1)
+          expect(UserInfo.current_user_id).to eq(agent.id)
+        end
+      end
+
+      it 'creates one internal article flagged as unprocessable' do
+        expect(ticket.articles.reload).to contain_exactly(have_attributes(
+                                                            internal:    true,
+                                                            from:        from,
+                                                            body:        'This ticket was created because the email could not be processed. The original email and the processing log are attached.',
+                                                            type:        Ticket::Article::Type.lookup(name: 'note'),
+                                                            sender:      Ticket::Article::Sender.lookup(name: 'System'),
+                                                            preferences: include(email_unprocessable: true),
+                                                          ))
+      end
+
+      it 'attaches the raw email and the processing log with their markers' do
+        expect(article.attachments).to contain_exactly(
+          have_attributes(filename: 'unprocessable_email.eml', content: mail, preferences: include('Mime-Type' => 'message/rfc822', 'email_unprocessable' => 'raw')),
+          have_attributes(filename: 'processing_log.txt', content: include('Exception: Timeout::Error', 'Message: execution expired'), preferences: include('Mime-Type' => 'text/plain', 'email_unprocessable' => 'log')),
+        )
+      end
+
+      context 'when the exception message carries bytes of an encoding that cannot be detected' do
+        let(:error) { RuntimeError.new("can not parse |J\xFCrgen|".b) }
+
+        before do
+          allow(CharDet).to receive(:detect).and_return({ 'encoding' => nil, 'confidence' => 0 })
         end
 
-        expect(FailedEmail).to be_exist
+        it 'still creates the error ticket and logs the message as far as it can be read' do
+          expect { result }.to change(Ticket, :count).by(1)
+
+          processing_log = article.attachments.find { |attachment| attachment.preferences['email_unprocessable'] == 'log' }.content
+
+          expect(processing_log).to include('Exception: RuntimeError', 'Message: can not parse |J?rgen|')
+        end
+      end
+
+      context 'when the mail carries a Message-ID' do
+        let(:mail) { "From: #{from}\nMessage-ID: <error-1@example.com>\nSubject: Foo\n\nLorem ipsum dolor" }
+
+        it 'stores it on the article, so that the mail is skipped when it is fetched again' do
+          expect(article.message_id).to eq('<error-1@example.com>')
+
+          validator = Channel::Driver::BaseEmailInbound::MessageValidator.new({ 'Message-ID' => '<error-1@example.com>' })
+
+          expect(validator.already_imported?(true, channel)).to be(true)
+        end
+      end
+
+      context 'when the system language is German' do
+        before do
+          create(:translation, locale: 'de-de', source: 'Unprocessable email', target: 'Nicht verarbeitbare E-Mail')
+          Setting.set('locale_default', 'de-de')
+        end
+
+        it 'titles the ticket in German and keeps the title when the system language changes' do
+          expect(ticket.title).to eq('Nicht verarbeitbare E-Mail')
+
+          Setting.set('locale_default', 'en-us')
+
+          expect(ticket.reload.title).to eq('Nicht verarbeitbare E-Mail')
+        end
+      end
+
+      describe 'picking the group' do
+        let!(:fallback_group) { Group.where(active: true).reorder(id: :asc).first }
+
+        context 'when the channel has a group' do
+          let(:group)   { create(:group) }
+          let(:channel) { create(:email_channel, group:) }
+
+          it 'uses the group of the channel' do
+            expect(ticket).to have_attributes(group: group, preferences: include(channel_id: channel.id))
+          end
+        end
+
+        context 'when the mail is delivered without a channel' do
+          it 'falls back to the first active group' do
+            expect(ticket.group).to eq(fallback_group)
+          end
+        end
+      end
+
+      describe 'identifying the customer' do
+        context 'when the sender is an existing user' do
+          let!(:user) { create(:customer, email: 'foo.bar@example.com') }
+
+          it 'uses that user' do
+            expect(ticket.customer).to eq(user)
+          end
+        end
+
+        context 'when the sender has a name and an address' do
+          it 'creates a customer with that name, the address as login and no email' do
+            expect(ticket.customer).to have_attributes(firstname: 'Foo', lastname: 'Bar', login: 'foo.bar@example.com', email: '')
+          end
+
+          it 'assigns a later error ticket to the same customer' do
+            first_customer = ticket.customer
+
+            expect(described_class.new.tap { |p| allow(p).to receive(:_process).and_raise(error) }.process({}, mail).third)
+              .to eq(first_customer)
+          end
+        end
+
+        context 'when the sender is only an address' do
+          let(:from) { 'foo.bar@example.com' }
+
+          it 'creates a customer with the address as login and first name' do
+            expect(ticket.customer).to have_attributes(firstname: 'foo.bar@example.com', login: 'foo.bar@example.com', email: '')
+          end
+        end
+
+        context 'when the sender is no address' do
+          let(:from) { 'Undisclosed' }
+
+          it 'creates a customer with the value as login and first name' do
+            expect(ticket.customer).to have_attributes(firstname: 'Undisclosed', login: 'undisclosed', email: '')
+          end
+        end
+
+        context 'when the sender name is RFC 2047 encoded' do
+          let(:from) { '=?UTF-8?B?SsO8cmdlbiBNw7xsbGVy?= <juergen@example.com>' }
+
+          it 'decodes the name for the customer and the article' do
+            expect(ticket.customer).to have_attributes(firstname: 'Jürgen', lastname: 'Müller', login: 'juergen@example.com')
+            expect(article.from).to eq('"Jürgen Müller" <juergen@example.com>')
+          end
+        end
+
+        context 'when the sender is an empty group' do
+          let(:from) { 'undisclosed-recipients:;' }
+
+          it 'assigns the system account without creating a user' do
+            expect { result }.not_to change { User.where.not(id: 1).count }
+            expect(ticket.customer_id).to eq(1)
+          end
+        end
+
+        context 'when the mail has no sender' do
+          let(:mail) { "To: support@example.com\nSubject: Foo\n\nLorem ipsum dolor" }
+
+          it 'assigns the system account without creating a user' do
+            expect { result }.not_to change { User.where.not(id: 1).count }
+            expect(ticket.customer_id).to eq(1)
+          end
+        end
+
+        context 'when the mail has no From but another sender field' do
+          let(:mail) { "Sender: ops@example.com\nTo: support@example.com\nSubject: Foo\n\nLorem ipsum dolor" }
+
+          it 'creates the customer from that field, as regular processing would' do
+            expect(ticket.customer).to have_attributes(login: 'ops@example.com', firstname: 'ops@example.com', email: '')
+            expect(article.from).to be_nil
+          end
+        end
+
+        context 'when the customer cannot be created' do
+          before do
+            allow(Channel::Filter::BaseIdentifyUser).to receive(:user_create_without_email).and_raise(ActiveRecord::RecordInvalid)
+          end
+
+          it 'falls back to the system account' do
+            expect(ticket.customer_id).to eq(1)
+          end
+        end
+
+        context 'when the customer insert fails on the database' do
+          # The login is cut to the column length on save, after the uniqueness
+          #   validation compared the full address, so the insert hits the unique index.
+          let(:from) { "#{'a' * 300}@example.com" }
+
+          before { create(:customer, login: 'a' * 255) }
+
+          it 'falls back to the system account' do
+            expect(ticket.customer_id).to eq(1)
+          end
+        end
+      end
+
+      context 'when the error ticket cannot be created either' do
+        before do
+          allow_any_instance_of(Channel::EmailParser::ErrorTicket).to receive(:create!).and_raise('database gone')
+        end
+
+        it 'raises so that the mail stays on the server' do
+          expect { result }.to raise_error(RuntimeError, 'database gone')
+        end
+      end
+
+      context 'when the ticket of the error ticket cannot be created' do
+        before do
+          allow(Ticket).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
+        end
+
+        it 'leaves no customer behind' do
+          expect { result }
+            .to raise_error(ActiveRecord::RecordInvalid)
+            .and not_change(User, :count)
+        end
+      end
+
+      context 'when creating the error ticket exceeds the time limit' do
+        before do
+          stub_const('Channel::EmailParser::PROCESS_TIME_MAX', 0.1)
+          allow(Ticket).to receive(:create!) { sleep 1 }
+        end
+
+        it 'raises so that the mail stays on the server' do
+          expect { result }.to raise_error(Timeout::Error)
+        end
+      end
+    end
+
+    context 'when the input is no mail at all' do
+      let(:input) { attributes_for(:failed_email, :invalid)[:data] }
+
+      it 'creates an error ticket for the system account with the input and the reason attached' do
+        ticket, article, = described_class.new.process({}, input)
+
+        expect(ticket).to have_attributes(title: 'Unprocessable email', customer_id: 1)
+        expect(article.attachments).to contain_exactly(
+          have_attributes(filename: 'unprocessable_email.eml', content: input),
+          have_attributes(filename: 'processing_log.txt', content: include('Exception: Exceptions::MissingAttribute', 'Message: Could not find any header field in the email.')),
+        )
+      end
+    end
+
+    context 'when processing fails after the mail became a ticket' do
+      let(:raw_mail) { "From: foo@example.com\nTo: support@example.com\nSubject: Foo\n\nLorem ipsum dolor" }
+
+      before do
+        create(:trigger,
+               condition: { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } },
+               perform:   { 'ticket.action' => { 'value' => 'delete' } })
+      end
+
+      it 'creates no error ticket for the mail' do
+        expect { described_class.new.process({}, raw_mail) }
+          .to not_change(Ticket, :count)
+          .and not_change(FailedEmail, :count)
+      end
+
+      it 'returns the ticket the mail became' do
+        ticket, = described_class.new.process({}, raw_mail)
+
+        expect(ticket.title).to eq('Foo')
+      end
+    end
+
+    context 'when processing a sample mail fails on its own' do
+      let(:mail_file)      { Rails.root.join('test/data/mail/mail038.box') }
+      let(:mail)           { File.read(mail_file) }
+      let(:result)         { described_class.new.process({}, mail) }
+      let(:raw_email)      { result.second.attachments.find { |attachment| attachment.preferences['email_unprocessable'] == 'raw' }.content }
+      let(:processing_log) { result.second.attachments.find { |attachment| attachment.preferences['email_unprocessable'] == 'log' }.content }
+
+      context 'when it exceeds the time limit' do
+        before do
+          stub_const('Channel::EmailParser::PROCESS_TIME_MAX', 0.1)
+          allow(Channel::Filter::Trusted).to receive(:run) { sleep 1 }
+        end
+
+        it 'creates an error ticket with the sample mail, logging the timeout' do
+          expect(result.first.title).to eq('Unprocessable email')
+          expect(raw_email.b).to eq(File.binread(mail_file))
+          expect(processing_log).to include('Exception: Timeout::Error')
+        end
+      end
+
+      context 'when the content cannot be parsed' do
+        before do
+          freeze_time
+          allow_any_instance_of(Channel::EmailParser::MessageWalker).to receive(:process_message_body).and_raise(ArgumentError, 'invalid byte sequence in UTF-8')
+        end
+
+        it 'creates an error ticket with the sample mail as it was received' do
+          expect(result.first.title).to eq('Unprocessable email')
+          expect(raw_email.b).to eq(File.binread(mail_file))
+        end
+
+        it 'logs the failure time, the exception and its backtrace' do
+          expect(processing_log.lines.first(3)).to eq([
+                                                        "Failed at: #{Time.zone.now.iso8601}\n",
+                                                        "Exception: ArgumentError\n",
+                                                        "Message: invalid byte sequence in UTF-8\n",
+                                                      ])
+          expect(processing_log).to include('app/models/channel/email_parser/content_parser.rb')
+            .and include('app/models/channel/email_parser.rb')
+        end
+      end
+    end
+  end
+
+  describe '#process_oversized_mail' do
+    let(:channel)           { create(:email_channel) }
+    let(:raw_incoming_mail) { "From: #{from}\nTo: support@example.com\nSubject: Foo\n\nLorem ipsum dolor" }
+
+    before do
+      create(:email_address, channel:)
+      allow(channel).to receive(:deliver)
+    end
+
+    context 'when the mail has a sender address' do
+      let(:from) { 'foo@example.com' }
+
+      it 'sends a postmaster reply' do
+        described_class.new.process_oversized_mail(channel, raw_incoming_mail)
+
+        expect(channel).to have_received(:deliver).with(include(to: 'foo@example.com'))
+      end
+    end
+
+    context 'when the sender address is empty' do
+      let(:from) { '<>' }
+
+      it 'sends no postmaster reply' do
+        described_class.new.process_oversized_mail(channel, raw_incoming_mail)
+
+        expect(channel).not_to have_received(:deliver)
+      end
+    end
+
+    context 'when the mail has no sender field at all' do
+      let(:raw_incoming_mail) { "To: support@example.com\nSubject: Foo\n\nLorem ipsum dolor" }
+
+      it 'skips the postmaster reply without logging an error' do
+        allow(Rails.logger).to receive(:info)
+        allow(Rails.logger).to receive(:error)
+
+        described_class.new.process_oversized_mail(channel, raw_incoming_mail)
+
+        expect(channel).not_to have_received(:deliver)
+        expect(Rails.logger).to have_received(:info).with('Mail too large has no sender address. Skipping postmaster reply.')
+        expect(Rails.logger).not_to have_received(:error)
       end
     end
   end

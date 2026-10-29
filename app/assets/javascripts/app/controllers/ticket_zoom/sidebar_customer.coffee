@@ -59,6 +59,8 @@ class SidebarCustomer extends App.Controller
 
   badgeRender: (el) =>
     @badgeEl = el
+    return @badgeRenderLocal() if @ticket.customer_id is 1
+
     if App.User.exists(@ticket.customer_id)
       user = App.User.find(@ticket.customer_id)
       @badgeRenderLocal(user)
@@ -74,6 +76,11 @@ class SidebarCustomer extends App.Controller
 
   showCustomer: (el) =>
     @elSidebar = el
+
+    if @ticket.customer_id is 1
+      @elSidebar.html("<div class=\"sidebar-block\">#{App.i18n.translateInline('No customer assigned yet.')}</div>")
+      return
+
     new App.WidgetUser(
       el:       @elSidebar
       user_id:  @ticket.customer_id

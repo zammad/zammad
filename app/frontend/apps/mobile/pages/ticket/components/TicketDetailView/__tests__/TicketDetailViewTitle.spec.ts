@@ -4,6 +4,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { EnumChannelArea } from '#shared/graphql/types.ts'
+import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
 import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 
@@ -94,5 +95,57 @@ describe('TicketDetailViewTitle.vue', () => {
     )
 
     expect(alert).toHaveClass('common-alert-warning')
+  })
+
+  it('shows the system customer without name and inactive styling', () => {
+    mockPermissions(['ticket.agent'])
+    const { ticket: currentTicket } = defaultTicket()
+
+    currentTicket.customer = {
+      ...currentTicket.customer,
+      id: SYSTEM_USER_ID,
+      internalId: SYSTEM_USER_INTERNAL_ID,
+      firstname: 'System',
+      lastname: '',
+      fullname: 'System',
+      active: false,
+    }
+    currentTicket.organization = null
+
+    const view = renderComponent(TicketDetailViewTitle, {
+      props: {
+        ticket: currentTicket,
+      },
+      router: true,
+    })
+
+    const avatar = view.getByRole('img', { name: 'Avatar (System)' })
+
+    expect(avatar).not.toHaveClass('opacity-60')
+    expect(view.getByTestId('title-content')).not.toHaveTextContent('System')
+  })
+
+  it('shows the organization of the system customer without a separator', () => {
+    mockPermissions(['ticket.agent'])
+    const { ticket: currentTicket } = defaultTicket()
+
+    currentTicket.customer = {
+      ...currentTicket.customer,
+      id: SYSTEM_USER_ID,
+      internalId: SYSTEM_USER_INTERNAL_ID,
+      fullname: 'System',
+    }
+
+    const view = renderComponent(TicketDetailViewTitle, {
+      props: {
+        ticket: currentTicket,
+      },
+      router: true,
+    })
+
+    const title = view.getByTestId('title-content')
+
+    expect(title).toHaveTextContent(currentTicket.organization!.name!)
+    expect(title).not.toHaveTextContent('·')
   })
 })
