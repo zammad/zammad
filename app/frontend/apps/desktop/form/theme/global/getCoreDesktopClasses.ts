@@ -51,6 +51,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (classes: FormThemeClas
     }),
     text: textInputClasses(classes.text),
     textarea: extendClasses(textInputClasses(classes.textarea), {
+      wrapper: 'formkit-disabled:pointer-events-auto',
       inner: 'h-full',
     }),
     password: textInputClasses(classes.password),
