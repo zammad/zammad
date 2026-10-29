@@ -272,4 +272,33 @@ RSpec.describe 'Ticket zoom > Core Workflow', type: :system do
       expect(page).to have_select('state_id', selected: 'open')
     end
   end
+
+  describe 'Ticket state resets to the first dropdown option when the sidebar renders with stale Core Workflow data #3880', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), state: Ticket::State.find_by(name: 'open')) }
+
+    def authenticate
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'keeps the saved ticket state when discarding changes' do
+      expect(page).to have_select('state_id', selected: 'open')
+
+      page.select '3 high', from: 'priority_id'
+      expect(page).to have_css('.js-reset:not(.hide)')
+
+      # Simulate a concurrent update (e.g. by a trigger) to a state outside of the
+      # agent edit filter, which reaches the client before the sidebar received
+      # new Core Workflow data for it.
+      Ticket.where(id: ticket.id).update_all(state_id: Ticket::State.find_by(name: 'new').id, updated_at: Time.current)
+      page.execute_script("App.Collection.loadAssets(#{ticket.reload.assets({}).to_json}); $('.js-reset').trigger('click')")
+
+      expect(page).to have_select('state_id', selected: 'new')
+      expect(page).to have_no_css('.sidebar[data-tab="ticket"] .form-group.is-changed')
+    end
+  end
 end

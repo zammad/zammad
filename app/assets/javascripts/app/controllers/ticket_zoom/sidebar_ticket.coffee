@@ -10,9 +10,11 @@ class Edit extends App.Controller
 
       @ticket   = App.Ticket.find(@ticket.id)
       if data.form_meta
-        @formMeta = data.form_meta
+        @formMeta          = data.form_meta
+        @formMetaUpdatedAt = @ticket.updated_at
       @render(data.draft)
     )
+    @formMetaUpdatedAt = @ticket.updated_at
     @render()
 
   render: (draft = {}) =>
@@ -26,6 +28,11 @@ class Edit extends App.Controller
       defaults = _.extend(defaults, taskState)
       # remove core workflow data because it should trigger a request to get data
       # for the new ticket + eventually changed task state
+      @formMeta.core_workflow = undefined
+
+    # the cached core workflow data belongs to the ticket version it was fetched with,
+    # a ticket changed in the meantime (e.g. by a trigger) needs a fresh request (#3880)
+    if defaults.updated_at isnt @formMetaUpdatedAt
       @formMeta.core_workflow = undefined
 
     # reset updated_at for the sidbar because we render a new state
