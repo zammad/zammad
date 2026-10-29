@@ -24,29 +24,6 @@
       "note": "Ordering SQL assembled from constants only: the column is a literal symbol at every call site, quoted with quote_column_name, and the locale ids are bound through sanitize_sql_array in .preferred_translation_sql. The sorting mode selects a branch, it is never interpolated."
     },
     {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "0fcd117fd53301f531142fc075ee8d30219c1239affce9322f9939ac0572ba3b",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "app/models/ticket/number.rb",
-      "line": 45,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Setting.get(\"ticket_number\").constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Number",
-        "method": "Ticket::Number.adapter"
-      },
-      "user_input": "Setting.get(\"ticket_number\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": "Setting.get(\"ticket_number\") returns defined ticket number backend class names"
-    },
-    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "15d4ddbc3ac2ae0a0fe27218a42a1920fe2c1868ae5f504422c4af8ffe893beb",
@@ -457,29 +434,6 @@
       "note": "`name` is always the fixed CTE name from #recursive_tree_cte_name ('recursive_tree'), never derived from user/request input."
     },
     {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "7541faf8d3249dc4ac24f9c354024614ae79b0d6cd4c057f034ea88be1154bf7",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "lib/application_lib.rb",
-      "line": 26,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Setting.get(setting).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ApplicationLib::ClassMethods",
-        "method": "load_adapter_by_setting"
-      },
-      "user_input": "Setting.get(setting)",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": "ApplicationLib.load_adapter_by_setting works as designed"
-    },
-    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "768e035d4bcb32ab79f5f747ccd5561d3c5f3a8ea74b2be08638d892be2249b2",
@@ -836,52 +790,6 @@
         89
       ],
       "note": "`recursive_tree_cte_name` is a fixed literal ('recursive_tree') and `table_name` is the model's own Rails table name -- neither is ever derived from user/request input."
-    },
-    {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "d48809837203098f7be4803f19b4f180f93361030bcf145560c65582d44f8edc",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "app/models/channel/email_parser.rb",
-      "line": 173,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Setting.get(setting.name).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Channel::EmailParser",
-        "method": "_process"
-      },
-      "user_input": "Setting.get(setting.name)",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": "Setting.where(area: 'Postmaster::PreFilter').order(:name) returns defined postmaster backend class names"
-    },
-    {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "d48809837203098f7be4803f19b4f180f93361030bcf145560c65582d44f8edc",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "app/models/channel/email_parser.rb",
-      "line": 329,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Setting.get(setting.name).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Channel::EmailParser",
-        "method": "_process"
-      },
-      "user_input": "Setting.get(setting.name)",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": "Setting.where(area: 'Postmaster::PreFilter').order(:name) returns defined postmaster backend class names"
     },
     {
       "warning_type": "Remote Code Execution",

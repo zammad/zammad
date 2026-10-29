@@ -42,7 +42,9 @@ returns
 
   # load backend based on config
   def self.adapter
-    Setting.get('ticket_number')&.constantize ||
-      raise(__("The setting 'ticket_number' was not configured."))
+    generator = Setting.get('ticket_number')
+    raise __("The setting 'ticket_number' was not configured.") if generator.blank?
+
+    load_adapter(generator) || raise("The setting 'ticket_number' names '#{generator}', which is not a ticket number generator.")
   end
 end

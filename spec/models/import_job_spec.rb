@@ -11,9 +11,21 @@ RSpec.describe ImportJob do
 
   let(:test_backend_name) { 'Import::Test' }
   let(:test_backend_class) do
-    Class.new(Import::Base) do
+    Class.new(Import::IntegrationBase) do
+      def self.active?
+        true
+      end
+
+      def self.queueable?
+        true
+      end
+
       def start
         @import_job.result = { state: 'Done' }
+      end
+
+      def reschedule?(_delayed_job)
+        false
       end
     end
   end
@@ -257,6 +269,12 @@ RSpec.describe ImportJob do
 
     it 'detects not existing backends' do
       expect(described_class.backend_valid?('InvalidBackend')).to be false
+    end
+
+    it 'detects classes that are no scheduled import backend', :aggregate_failures do
+      expect(described_class.backend_valid?('Hashie::Mash')).to be false
+      expect(described_class.backend_valid?('Import::IntegrationBase')).to be false
+      expect(described_class.backend_valid?('Import::Zendesk')).to be false
     end
   end
 

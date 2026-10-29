@@ -39,6 +39,23 @@ RSpec.describe Auth::Backend do
           expect { instance.valid? }.not_to raise_exception
         end
       end
+
+      %w[Hashie::Mash Auth::Backend::Base].each do |adapter|
+        context "when adapter is #{adapter}" do
+          before do
+            Setting.where(area: 'Security::Authentication').destroy_all
+            create(:setting,
+                   area:  'Security::Authentication',
+                   state: {
+                     adapter: adapter
+                   },)
+          end
+
+          it 'skips it' do
+            expect(instance.valid?).to be(false)
+          end
+        end
+      end
     end
 
     context 'when backend prioritization is relevant' do

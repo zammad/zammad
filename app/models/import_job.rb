@@ -161,10 +161,7 @@ class ImportJob < ApplicationModel
   #
   # return [Boolean]
   def self.backend_valid?(backend)
-    backend.constantize
-    true
-  rescue NameError
-    false
+    ApplicationLib.load_subclass(backend, base: Import::IntegrationBase).present?
   end
 
   # Returns a list of valid import backends.

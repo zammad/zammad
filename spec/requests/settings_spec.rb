@@ -676,6 +676,48 @@ RSpec.describe 'Settings', type: :request do
     end
   end
 
+  describe 'PUT /api/v1/settings/:id with a backend class', authenticated_as: :delegated_admin do
+    let(:delegated_admin) do
+      role = create(:role)
+      role.permission_grant(permission)
+
+      create(:agent, roles: [Role.find_by(name: 'Agent'), role])
+    end
+    let(:setting) { Setting.find_by(name: setting_name) }
+
+    def update_setting(value)
+      put "/api/v1/settings/#{setting.id}", params: { id: setting.id, state_current: { value: value } }, as: :json
+    end
+
+    {
+      'admin.security'    => ['auth_internal', { priority: 1, adapter: 'Hashie::Mash' }, 'Hashie::Mash'],
+      'admin.system'      => ['geo_ip_backend', 'KnowledgeBase::MenuItem', 'KnowledgeBase::MenuItem'],
+      'admin.ticket'      => %w[ticket_number JSON JSON],
+      'admin.text_module' => ['Stats::TicketReopen', 'JSON', 'JSON'],
+    }.each do |granted, (name, value, class_name)|
+      context "with #{granted}" do
+        let(:permission)   { granted }
+        let(:setting_name) { name }
+
+        it "rejects #{class_name} for #{name}", :aggregate_failures do
+          expect { update_setting(value) }.not_to change { setting.reload.state_current }
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(json_response['error']).to include("'#{class_name}' is not a valid backend for this setting.")
+        end
+      end
+    end
+
+    context 'with a backend of the setting' do
+      let(:permission)   { 'admin.ticket' }
+      let(:setting_name) { 'ticket_number' }
+
+      it 'updates the setting', :aggregate_failures do
+        expect { update_setting('Ticket::Number::Date') }.to change { Setting.get('ticket_number') }.to('Ticket::Number::Date')
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
   describe 'vector index rebuild response', authenticated_as: :admin, performs_jobs: true do
     let(:connection) do
       create(:ai_provider_connection, :default_embedding, provider: 'open_ai',

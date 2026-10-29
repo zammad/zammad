@@ -5,6 +5,12 @@ class Auth
 
     attr_reader :auth
 
+    # @param name [String] class name stored as `adapter` of a 'Security::Authentication' setting
+    # @return [Class, nil] the backend class, nil for anything but a subclass of Auth::Backend::Base
+    def self.adapter_class(name)
+      ApplicationLib.load_subclass(name, base: Auth::Backend::Base)
+    end
+
     def initialize(auth)
       @auth = auth
     end
@@ -23,7 +29,10 @@ class Auth
 
     def instances
       configs.filter_map do |config|
-        config[:adapter].constantize.new(config, auth)
+        adapter = self.class.adapter_class(config[:adapter])
+        raise "'#{config[:adapter]}' is not an authentication backend" if !adapter
+
+        adapter.new(config, auth)
       rescue => e
         Rails.logger.error "Failed to load Auth::Backend from Setting '#{config}'"
         Rails.logger.error e

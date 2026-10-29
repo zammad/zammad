@@ -216,6 +216,40 @@ requires `admin.organization`, and agent tokens receive `403 Forbidden`.
 
 ## 7.2
 
+### Settings naming a backend class accept only the backend they are made for
+
+**Who is affected?** Developers of add-ons that register a postmaster filter, transaction backend,
+dashboard stats backend, service backend or ticket number generator through a setting, and
+integrations or scripts that write such a setting through `PUT /api/v1/settings/{id}` or
+`Setting.set`.
+
+The 50 settings whose value names a Ruby class ran whatever loaded class they named: the `adapter` of
+`auth_internal`, `auth_developer` and `auth_ldap`, `image_backend`, `geo_ip_backend`,
+`geo_location_backend`, `geo_calendar_backend`, `ticket_number`, `import_backends`, the `Stats::*`
+dashboard backends, the postmaster filter registrations such as `0000_postmaster_filter_trusted` and
+the transaction backend registrations such as `0100_trigger`. They are now checked when they are
+saved and where they are used:
+
+- The postmaster filter, transaction backend, dashboard stats and authentication settings accept only
+  the class they were created with. `ticket_number` and the service backends accept only one of their
+  select options, `import_backends` only subclasses of `Import::IntegrationBase`. Any other value is
+  answered with `422` by `PUT /api/v1/settings/{id}` and with `ActiveRecord::RecordInvalid` by
+  `Setting.set`. On update, a postmaster filter, transaction backend, dashboard stats or
+  authentication setting storing another class is reset to the one it was created with, while the
+  other settings keep a stored value the check rejects; both are logged as a warning.
+- A class outside `Channel::Filter`, `Transaction`, `Stats`, `Ticket::Number`, `Service::Image`,
+  `Service::GeoIp`, `Service::GeoLocation` and `Service::GeoCalendar`, or an authentication adapter
+  that is no subclass of `Auth::Backend::Base`, is no longer run: a postmaster pre filter outside
+  `Channel::Filter` fails the processing of every mail, a post filter, transaction backend, import
+  backend or authentication adapter is skipped with an error in the log, a service backend acts as
+  switched off, and `ticket_number` fails the creation of every ticket.
+
+⚠️ Define add-on backends in the namespace that loads them, e.g. `Channel::Filter::MyAddonCheck`, and
+register each under a setting of its own. An add-on migration that renames such a class has to set
+the new name as the setting's `state_initial` as well as its `state_current`.
+
+**Related advisory:** [GHSA-6wx3-xr2r-5xqf](https://github.com/zammad/zammad/security/advisories/GHSA-6wx3-xr2r-5xqf)
+
 ### The settings API limits delegated admins to the settings their permissions cover
 
 **Who is affected?** Roles and API tokens holding an admin sub-permission such as `admin.security`
