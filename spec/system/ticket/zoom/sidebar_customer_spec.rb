@@ -85,6 +85,38 @@ RSpec.describe 'Ticket zoom > Sidebar > Customer', type: :system do
       click '.user-tickets[data-type=closed]'
       expect(page).to have_text(ticket_closed.title)
     end
+
+    it 'keeps the ticket list closed when it loads after the pointer left' do
+      response_gate = Queue.new
+      request_entered = Queue.new
+
+      allow_any_instance_of(TicketsController).to receive(:ticket_customer).and_wrap_original do |method, *args|
+        request_entered << true
+        response_gate.pop(timeout: 10)
+        method.call(*args)
+      end
+
+      visit "#ticket/zoom/#{ticket_open.id}"
+      click '.tabsSidebar-tab[data-tab=customer]'
+
+      find('.user-tickets[data-type=open]') do |elem|
+        elem.evaluate_script('Object.keys($(this).data()).includes("bs.popover")')
+      end.hover
+
+      expect(page).to have_css('.popover')
+      request_entered.pop(timeout: 10)
+
+      find('.menu').hover
+
+      expect(page).to have_no_css('.popover')
+
+      response_gate.close
+      wait.until { page.evaluate_script('$.active').zero? }
+
+      expect(page).to have_no_css('.popover', wait: 0)
+    ensure
+      response_gate&.close
+    end
   end
 
   describe 'Sidebar - Organization' do

@@ -12,6 +12,13 @@ class App.PopoverProviderAjax extends App.PopoverProvider
   fetch: (event, elem) ->
 
   replaceOnShow: (event, content) ->
+    popover = $(event.target).data('bs.popover')
+    return if !popover
+
+    # The pointer left while the content was loading: showing the tip again would keep it open, and
+    #   a tip left waiting for its hide would stay loading if the pointer came back in the meantime.
+    return $(event.target).popover('hide') if !popover.isInStateTrue()
+
     $(event.target).popover('hide')
     $(event.target).attr('data-content', content).data('bs.popover').setContent()
     @popoverLoop = true
