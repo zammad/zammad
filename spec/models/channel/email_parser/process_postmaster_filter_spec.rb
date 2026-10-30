@@ -25,10 +25,12 @@ RSpec.describe 'Channel::EmailParser process with postmaster filters', type: :mo
   context 'when a pre filter names a class outside of Channel::Filter' do
     before { Setting.set('0000_postmaster_filter_trusted', 'JSON', validate: false) }
 
-    it 'stops the processing without calling it' do
-      expect { process_mail }
-        .to raise_error(RuntimeError, %r{'JSON' is not a postmaster filter})
-        .and not_change(Ticket, :count)
+    it 'stops the processing without calling it and creates an error ticket instead', :aggregate_failures do
+      ticket, article, = process_mail
+      processing_log   = article.attachments.find { |attachment| attachment.preferences['email_unprocessable'] == 'log' }.content
+
+      expect(ticket.title).to eq('Unprocessable email')
+      expect(processing_log).to include("'JSON' is not a postmaster filter")
     end
   end
 
