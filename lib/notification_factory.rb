@@ -88,8 +88,9 @@ returns
     File.read(APPLICATION_TEMPLATE_PATH_STRING % data)
   end
 
-  # Only a template read from app/views, shipped or placed there by the operator, runs ERB and
-  # reads every setting; anything written in the admin interface is rendered by the Renderer alone.
+  # Only a template read from app/views, shipped or placed there by the operator, runs ERB, reads
+  # every setting and reaches every object; anything written in the admin interface is rendered by
+  # the Renderer alone.
   def self.render_file_template(template, data, escape: true)
     NotificationFactory::Renderer.new(
       objects:           data[:objects],
@@ -99,6 +100,7 @@ returns
       escape:            escape,
       trusted:           true,
       read_all_settings: true,
+      read_all_objects:  true,
     ).render
   end
 

@@ -8,6 +8,7 @@ class NotificationFactory::Renderer
   ].freeze
 
   def read_all_settings? = @read_all_settings
+  def read_all_objects? = @read_all_objects
   def ignore_missing_objects? = @ignore_missing_objects
 
 =begin
@@ -25,6 +26,7 @@ examples how to use
       url_encode: false, # Perform URI encoding on replaced values
       trusted: false,     # Allow ERB tags in the template?
       read_all_settings: false, # Resolve #{config.*} for every setting, not only those sent to the frontend?
+      read_all_objects: false, # Call any method on any object, not only what ObjectAccess allows?
     ).render
 
     message_body = NotificationFactory::Renderer.new(
@@ -38,7 +40,7 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, read_all_settings: false, ignore_missing_objects: false, trim_mode: nil)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, read_all_settings: false, read_all_objects: false, ignore_missing_objects: false, trim_mode: nil)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
@@ -47,6 +49,7 @@ examples how to use
     @url_encode = url_encode
     @trusted = trusted
     @read_all_settings = read_all_settings
+    @read_all_objects = read_all_objects
     @ignore_missing_objects = ignore_missing_objects
     @trim_mode = trim_mode
   end
@@ -120,7 +123,7 @@ examples how to use
         temp = object_refs
         object_refs = display_value(previous_object_refs, method, object_methods_s, object_refs)
         previous_object_refs = temp
-      elsif index == object_methods.length - 1 && (is_textarea_attribute = textarea_attributes(object_refs).include?(method))
+      elsif index == object_methods.length - 1 && (is_textarea_attribute = textarea_attributes(object_refs).include?(method) && !object_withheld?(object_refs, method))
         temp = object_refs
         object_refs = object_refs.send(method.to_sym)&.text2html
         previous_object_refs = temp
@@ -151,7 +154,7 @@ examples how to use
             break
           end
 
-          parameters << parameter.to_i
+          parameters << p.to_i
         end
 
         # Ensure that e.g. 'ticket.title.slice(3,4)' is not allowed, but 'ticket.owner.avatar(150,150)' is
@@ -172,6 +175,11 @@ examples how to use
       # if method exists
       if !object_refs.respond_to?(method.to_sym) && method_whitelist.exclude?(method)
         value = debug("\#{#{object_name}.#{object_methods_s} / no such method}")
+        break
+      end
+
+      if object_withheld?(object_refs, method)
+        value = debug("\#{#{object_name}.#{object_methods_s} / not allowed}")
         break
       end
 
@@ -254,6 +262,10 @@ examples how to use
   # empty, as it always did.
   def config_withheld?(key)
     !read_all_settings? && Setting.known?(key) && !Setting.template_readable?(key)
+  end
+
+  def object_withheld?(object, method)
+    !read_all_objects? && !ObjectAccess.allows?(object, method)
   end
 
   def missing_object(placeholder, name = placeholder)
