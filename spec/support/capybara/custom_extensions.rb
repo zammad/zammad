@@ -31,6 +31,8 @@ class Capybara::Node::Element
     (checks + 1).times do
       sleep wait
 
+      # Follows a node the app replaced in the meantime.
+      reload
       current = position.call
 
       return self if current && previous == current
