@@ -6,16 +6,25 @@ RSpec.describe 'Manage > Integration > Icinga', type: :system do
   let(:icinga_sender)     { 'some@othersender.com' }
   let(:icinga_auto_close) { 'no' }
 
-  before do
-    visit 'system/integration/icinga'
+  context 'when enabled with the switch' do
+    before { visit 'system/integration/icinga' }
 
-    # enable icinga
-    check 'setting-switch', allow_label_click: true
-    wait_for_setting('icinga_integration', true)
+    it 'stores the integration as enabled' do
+      expect(page).to have_unchecked_field('setting-switch', visible: :all)
+
+      check 'setting-switch', allow_label_click: true
+      wait_for_setting('icinga_integration', true)
+    end
   end
 
   context 'for icinga config' do
+    # Enabled in the backend: enabling it in the page makes the frontend re-fetch all settings,
+    #   and a re-fetch that reads before the config is saved overwrites the config in the frontend.
     before do
+      Setting.set('icinga_integration', true)
+
+      visit 'system/integration/icinga'
+
       within :active_content, '.main' do
         fill_in 'icinga_sender',	with: icinga_sender
         select icinga_auto_close,	from: 'icinga_auto_close'

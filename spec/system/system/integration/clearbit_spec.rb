@@ -7,16 +7,25 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
   let(:source)      { 'source1' }
   let(:destination) { 'destination1' }
 
-  before do
-    visit 'system/integration/clearbit'
+  context 'when enabled with the switch' do
+    before { visit 'system/integration/clearbit' }
 
-    # enable clearbit
-    check 'setting-switch', allow_label_click: true
-    wait_for_setting('clearbit_integration', true)
+    it 'stores the integration as enabled' do
+      expect(page).to have_unchecked_field('setting-switch', visible: :all)
+
+      check 'setting-switch', allow_label_click: true
+      wait_for_setting('clearbit_integration', true)
+    end
   end
 
   context 'for clearbit config' do
+    # Enabled in the backend: enabling it in the page makes the frontend re-fetch all settings,
+    #   and a re-fetch that reads before the config is saved overwrites the config in the frontend.
     before do
+      Setting.set('clearbit_integration', true)
+
+      visit 'system/integration/clearbit'
+
       within :active_content, '.main' do
         fill_in 'api_key',	with: api_key
 
