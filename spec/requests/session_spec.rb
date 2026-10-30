@@ -267,6 +267,36 @@ RSpec.describe 'Sessions endpoints', type: :request do
     end
   end
 
+  describe 'session ping' do
+    let(:password)    { SecureRandom.urlsafe_base64(20) }
+    let(:agent)       { create(:agent, password: password) }
+    let(:fingerprint) { SecureRandom.urlsafe_base64(40) }
+
+    def sign_in
+      post '/api/v1/signin', params: { fingerprint:, username: agent.login, password: }, as: :json
+    end
+
+    it 'stores no ping in an anonymous session' do
+      get '/api/v1/signshow', as: :json
+
+      expect(session[:ping]).to be_nil
+    end
+
+    it 'stores a ping when the user signs in' do
+      sign_in
+
+      expect(session[:ping]).to be_present
+    end
+
+    it 'refreshes the ping of a signed-in session' do
+      sign_in
+      travel 1.minute
+      get '/api/v1/signshow', params: { fingerprint: }, as: :json
+
+      expect(session[:ping]).to eq(Time.zone.now.iso8601)
+    end
+  end
+
   describe 'GET /auth/sso (single sign-on)' do
 
     before do

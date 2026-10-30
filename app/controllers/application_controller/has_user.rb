@@ -64,6 +64,7 @@ module ApplicationController::HasUser
 
   def current_user_set(user, auth_type = 'session')
     session[:user_id] = user.id
+    session[:ping]    = Time.zone.now.iso8601
 
     @_auth_type      = auth_type
     @_current_user   = user
@@ -90,11 +91,14 @@ module ApplicationController::HasUser
   def session_update
     # sleep 0.6
 
-    session[:ping] = Time.zone.now.iso8601
-
-    # check if remote ip needs to be updated
+    # Only signed-in sessions time out by their ping (SessionTimeoutJob). Writing it for anonymous
+    #   sessions too would let parallel requests overwrite each other's session data, e.g. the
+    #   origin of a third-party login.
     if session[:user_id]
-      if !session[:remote_ip] || session[:remote_ip] != request.remote_ip # rubocop:disable Style/SoleNestedConditional
+      session[:ping] = Time.zone.now.iso8601
+
+      # check if remote ip needs to be updated
+      if !session[:remote_ip] || session[:remote_ip] != request.remote_ip
         session[:remote_ip] = request.remote_ip
         session[:geo]       = Service::GeoIp.location(request.remote_ip)
       end
