@@ -115,8 +115,13 @@ RSpec.describe 'Ticket zoom > Core Workflow', type: :system do
       true
     end
 
+    # The examples change the ticket in the backend and expect the change to be
+    #   pushed to the open ticket, which only reaches a logged-in websocket session.
     before do
       visit "#ticket/zoom/#{ticket.id}"
+      ensure_websocket
+      wait_for_authenticated_session
+      ensure_websocket_push_delivery
     end
 
     context 'when operator set_fixed_to' do

@@ -294,6 +294,14 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       true
     end
 
+    # Changes made in the backend reach the open ticket only through a push to a
+    #   logged-in websocket session.
+    def ensure_ticket_push_delivery
+      ensure_websocket
+      wait_for_authenticated_session
+      ensure_websocket_push_delivery
+    end
+
     # The accounted time shares one row with the channel in a second column.
     it 'shows the accounted time of the article next to the channel', :aggregate_failures do
       within :active_ticket_article, accounted_article do
@@ -319,6 +327,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         expect(page).to have_no_css('.article-meta-row', text: %r{Accounted\ Time}i, visible: :all)
       end
 
+      ensure_ticket_push_delivery
       create(:ticket_time_accounting, ticket: ticket, ticket_article: unaccounted_article, time_unit: 7)
       ticket.update!(title: "#{ticket.title} - updated")
 
@@ -362,6 +371,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
           expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i, visible: :all)
         end
 
+        ensure_ticket_push_delivery
         create(:ticket_time_accounting, ticket: ticket, ticket_article: unaccounted_article, time_unit: 7, type: inactive_type)
         ticket.update!(title: "#{ticket.title} - updated")
 
