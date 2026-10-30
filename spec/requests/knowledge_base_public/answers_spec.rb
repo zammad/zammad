@@ -21,6 +21,22 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
         get help_answer_path(locale_name, category, draft_answer)
         expect(response).to have_http_status :not_found
       end
+
+      context 'with an answer in a category without published answers' do
+        let(:hidden_category) { create(:knowledge_base_category, :containing_internal, knowledge_base: knowledge_base, translations: [build(:knowledge_base_category_translation, title: 'SecretCanary', kb_locale: primary_locale)]) }
+
+        before do
+          # The feed icon prints the category title in the layout head and the feed picker.
+          knowledge_base.update!(show_feed_icon: true)
+
+          get help_answer_path(locale_name, hidden_category, hidden_category.answers.first)
+        end
+
+        it 'returns NOT FOUND without the category title', :aggregate_failures do
+          expect(response).to have_http_status :not_found
+          expect(response.body).not_to match(%r{secretcanary}i)
+        end
+      end
     end
 
     context 'when visitor is an editor' do
