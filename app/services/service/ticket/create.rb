@@ -237,6 +237,8 @@ class Service::Ticket::Create < Service::Base
       raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
+    Pundit.authorize(current_user, shared_draft, :destroy?)
+
     shared_draft.destroy!
   end
 end

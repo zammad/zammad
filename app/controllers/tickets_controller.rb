@@ -92,7 +92,11 @@ class TicketsController < ApplicationController
           raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
         end
 
-        shared_draft&.destroy
+        if shared_draft
+          authorize!(shared_draft, :destroy?)
+
+          shared_draft.destroy
+        end
       end
 
       # Prevent direct access to checklist via API
@@ -578,7 +582,11 @@ class TicketsController < ApplicationController
       raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
-    shared_draft&.destroy
+    return if !shared_draft
+
+    authorize!(shared_draft, :destroy?)
+
+    shared_draft.destroy
   end
 
   def handle_macro_perform_changes(id, perform_changes)

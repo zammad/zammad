@@ -305,6 +305,26 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         expect { service_result }
           .to raise_error(Exceptions::UnprocessableContent)
       end
+
+      # A user who may not create the ticket never reaches the draft: the
+      #   transaction rolls the destroy back. Only a customer, who may create a
+      #   ticket in any group, can consume a draft they have no access to.
+      context 'when the user has no create access to the shared draft group' do
+        let(:user) { create(:customer) }
+
+        before { ticket_data[:customer] = user }
+
+        it 'raises error' do
+          expect { service_result }
+            .to raise_error(Pundit::NotAuthorizedError)
+        end
+
+        it 'does not destroy given shared draft' do
+          suppress(Pundit::NotAuthorizedError) { service_result }
+
+          expect(Ticket::SharedDraftStart).to exist(shared_draft.id)
+        end
+      end
     end
 
     describe 'issue trackers handling' do
