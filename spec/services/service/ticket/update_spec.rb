@@ -105,6 +105,25 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
         expect { service_result }
           .to raise_error(Exceptions::UnprocessableContent)
       end
+
+      context 'when the user may not update the ticket' do
+        let(:user) do
+          create(:agent).tap do |agent|
+            agent.user_groups.create! group: group, access: :read
+          end
+        end
+
+        it 'raises error' do
+          expect { service_result }
+            .to raise_error(Pundit::NotAuthorizedError)
+        end
+
+        it 'does not destroy given shared draft' do
+          suppress(Pundit::NotAuthorizedError) { service_result }
+
+          expect(Ticket::SharedDraftZoom).to exist(shared_draft.id)
+        end
+      end
     end
   end
 end
