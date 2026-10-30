@@ -219,7 +219,7 @@ GEM
     crass (1.0.8)
     csv (3.3.6)
     daemons (1.4.1)
-    dalli (5.2.2)
+    dalli (5.2.5)
       logger
     dartsass-rails (0.5.1)
       railties (>= 6.0.0)
