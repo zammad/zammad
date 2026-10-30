@@ -285,7 +285,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
             webhook_group = find('.js-setNotification').rect
             row_actions   = find('.js-rowActions').rect
 
-            expect(webhook_group.x + webhook_group.width).to be <= row_actions.x
+            expect(webhook_group['x'] + webhook_group['width']).to be <= row_actions['x']
           end
         end
       end
