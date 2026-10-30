@@ -74,6 +74,28 @@ RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, authenticated_as: :
 
         expect(mock_channel.mock_broadcasted_first.data).to include('unseenCount' => 0, 'unseenPushTags' => [])
       end
+
+      context 'with more unseen notifications than the list window' do
+        before { allow(Gql::ZammadSchema).to receive(:default_page_size).and_return(2) }
+
+        it 'counts only the notifications the list shows, but tags every unseen one' do
+          travel 1.minute
+          newer = create(:online_notification, user_id: agent.id, o: create(:ticket))
+          travel 1.minute
+          newest = create(:online_notification, user_id: agent.id, o: create(:ticket))
+
+          expect(mock_channel.mock_broadcasted_at(-1).data).to include(
+            'unseenCount'    => 2,
+            'unseenPushTags' => contain_exactly("ticket-#{notification.o_id}", "ticket-#{newer.o_id}", "ticket-#{newest.o_id}"),
+          )
+        end
+      end
+
+      it 'does not count notifications the list cannot show, but tags them' do
+        unlisted = create(:online_notification, user_id: agent.id, o: create(:macro))
+
+        expect(mock_channel.mock_broadcasted_first.data).to include('unseenCount' => 1, 'unseenPushTags' => contain_exactly("ticket-#{notification.o_id}", "online-notification-#{unlisted.id}"))
+      end
     end
   end
 end

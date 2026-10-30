@@ -2518,7 +2518,7 @@ export type Mutations = {
   onlineNotificationDelete?: Maybe<OnlineNotificationDeletePayload>;
   /** Deletes all online notifications for the current user */
   onlineNotificationDeleteAll?: Maybe<OnlineNotificationDeleteAllPayload>;
-  /** Marks notifications for active user as seen */
+  /** Marks all notifications of the current user as seen */
   onlineNotificationMarkAllAsSeen?: Maybe<OnlineNotificationMarkAllAsSeenPayload>;
   /** Mark an online notification as seen */
   onlineNotificationSeen?: Maybe<OnlineNotificationSeenPayload>;
@@ -2946,12 +2946,6 @@ export type MutationsMentionUnsubscribeArgs = {
 /** All available mutations */
 export type MutationsOnlineNotificationDeleteArgs = {
   onlineNotificationId: Scalars['ID']['input'];
-};
-
-
-/** All available mutations */
-export type MutationsOnlineNotificationMarkAllAsSeenArgs = {
-  onlineNotificationIds: Array<Scalars['ID']['input']>;
 };
 
 
@@ -3682,8 +3676,8 @@ export type OnlineNotificationMarkAllAsSeenPayload = {
   __typename?: 'OnlineNotificationMarkAllAsSeenPayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
-  /** The seen notifications. */
-  onlineNotifications?: Maybe<Array<OnlineNotification>>;
+  /** Was the marking successful? */
+  success: Scalars['Boolean']['output'];
 };
 
 /** Meta information for an online notification */

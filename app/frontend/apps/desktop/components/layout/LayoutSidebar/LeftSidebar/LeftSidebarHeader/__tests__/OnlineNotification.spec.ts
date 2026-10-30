@@ -19,10 +19,15 @@ import {
   mockOnlineNotificationDeleteAllMutationError,
   waitForOnlineNotificationDeleteAllMutationCalls,
 } from '#shared/entities/online-notification/graphql/mutations/deleteAll.mocks.ts'
-import { waitForOnlineNotificationMarkAllAsSeenMutationCalls } from '#shared/entities/online-notification/graphql/mutations/markAllAsSeen.mocks.ts'
+import {
+  mockOnlineNotificationMarkAllAsSeenMutationError,
+  waitForOnlineNotificationMarkAllAsSeenMutationCalls,
+} from '#shared/entities/online-notification/graphql/mutations/markAllAsSeen.mocks.ts'
+import { OnlineNotificationsDocument } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.api.ts'
 import { mockOnlineNotificationsQuery } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.mocks.ts'
 import { getOnlineNotificationsCountSubscriptionHandler } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import OnlineNotification from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue'
@@ -72,6 +77,36 @@ const node = {
     title: 'Bunch of articles',
   },
 }
+const pageInfo = { endCursor: 'Nw', hasNextPage: false }
+
+const mockNotificationList = (nodes: (typeof node)[]) =>
+  mockOnlineNotificationsQuery({
+    onlineNotifications: { edges: nodes.map((node) => ({ node })), pageInfo },
+  })
+
+const triggerUnseenCount = (unseenCount: number) =>
+  getOnlineNotificationsCountSubscriptionHandler().trigger({
+    onlineNotificationsCount: { unseenCount },
+  })
+
+// What the server does on a change: the list answers the refetch with the new
+//   state, the count subscription announces it.
+const changeNotificationList = async (
+  listMock: ReturnType<typeof mockNotificationList>,
+  nodes: (typeof node)[],
+) => {
+  listMock.updateDefaults({
+    onlineNotifications: { edges: nodes.map((node) => ({ node })), pageInfo },
+  })
+
+  await triggerUnseenCount(nodes.filter((node) => !node.seen).length)
+}
+
+const waitForRefetch = async () => {
+  await waitUntil(() => getGraphQLMockCalls(OnlineNotificationsDocument).length >= 2)
+  await waitForNextTick(true)
+}
+
 vi.mock('#shared/composables/useOnlineNotification/useOnlineNotificationSound.ts', () => ({
   useOnlineNotificationSound: () => ({
     play: playSoundSpy,
@@ -147,11 +182,7 @@ describe('OnlineNotification', () => {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
     expect(wrapper.getByRole('button', { name: 'Show notifications' })).toBeInTheDocument()
 
@@ -165,11 +196,7 @@ describe('OnlineNotification', () => {
   it('displays unseen notifications count', async () => {
     const wrapper = renderComponent(OnlineNotification)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 10,
-      },
-    })
+    await triggerUnseenCount(10)
 
     expect(wrapper.getByRole('status', { name: 'Unseen notifications count' })).toHaveTextContent(
       '10',
@@ -185,35 +212,121 @@ describe('OnlineNotification', () => {
   })
 
   it('makes a notification sound if a new unseen message comes in', async () => {
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [{ node }],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
-      },
-    })
+    const listMock = mockNotificationList([])
 
     renderComponent(OnlineNotification, {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await changeNotificationList(listMock, [node])
 
     await waitUntilSpyCalled(playSoundSpy)
 
     expect(playSoundSpy).toHaveBeenCalled()
+  })
+
+  it('alerts for a new notification although the unseen count stays the same', async () => {
+    const listMock = mockNotificationList([node])
+
+    renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await triggerUnseenCount(1)
+
+    const newerNode = { ...node, id: convertToGraphQLId('OnlineNotification', 2) }
+
+    // A full window: the oldest unseen entry drops out as the new one enters.
+    listMock.updateDefaults({
+      onlineNotifications: { edges: [{ node: newerNode }], pageInfo },
+    })
+    await triggerUnseenCount(1)
+
+    await waitUntilSpyCalled(showWebNotificationSpy)
+
+    expect(playSoundSpy).toHaveBeenCalledOnce()
+    expect(showWebNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ tag: newerNode.id }),
+    )
+  })
+
+  it('alerts once when subscription updates overlap for the same notification', async () => {
+    const listMock = mockNotificationList([])
+
+    renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await triggerUnseenCount(0)
+
+    // One change creates several notifications, so the second update arrives
+    //   while the refetch of the first one is still on the wire.
+    const { refetch } = QueryHandler.prototype
+    const refetchSpy = vi
+      .spyOn(QueryHandler.prototype, 'refetch')
+      .mockImplementation(async function (this: unknown) {
+        await new Promise((resolve) => {
+          setTimeout(resolve, 20)
+        })
+        return refetch.call(this as QueryHandler<Record<string, unknown>, Record<string, unknown>>)
+      })
+
+    // The Vitest config only clears call history, so the spy would outlive the test.
+    onTestFinished(() => refetchSpy.mockRestore())
+
+    listMock.updateDefaults({
+      onlineNotifications: { edges: [{ node }], pageInfo },
+    })
+    await triggerUnseenCount(1)
+    await triggerUnseenCount(1)
+
+    await waitUntilSpyCalled(showWebNotificationSpy)
+    await waitForNextTick(true)
+
+    expect(playSoundSpy).toHaveBeenCalledOnce()
+    expect(showWebNotificationSpy).toHaveBeenCalledOnce()
+  })
+
+  it('does not alert when an older unseen notification enters the list window', async () => {
+    const seenNode = { ...node, id: convertToGraphQLId('OnlineNotification', 2), seen: true }
+    const listMock = mockNotificationList([seenNode])
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await triggerUnseenCount(0)
+
+    // The seen entry was removed, so an unseen one from beyond the window takes its place.
+    await changeNotificationList(listMock, [node])
+
+    await waitForRefetch()
+
+    expect(wrapper.getByRole('status', { name: 'Unseen notifications count' })).toHaveTextContent(
+      '1',
+    )
+    expect(playSoundSpy).not.toHaveBeenCalled()
+    expect(showWebNotificationSpy).not.toHaveBeenCalled()
+  })
+
+  it('does not alert for a notification that arrives seen', async () => {
+    const listMock = mockNotificationList([])
+
+    renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await triggerUnseenCount(0)
+
+    await changeNotificationList(listMock, [{ ...node, seen: true }])
+
+    await waitForRefetch()
+
+    expect(playSoundSpy).not.toHaveBeenCalled()
+    expect(showWebNotificationSpy).not.toHaveBeenCalled()
   })
 
   it('does not play a notification sound if the sound is disabled', async () => {
@@ -232,11 +345,7 @@ describe('OnlineNotification', () => {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await triggerUnseenCount(1)
 
     expect(playSoundSpy).not.toHaveBeenCalled()
   })
@@ -266,31 +375,15 @@ describe('OnlineNotification', () => {
   )
 
   it('shows a browser notification when the permission is granted', async () => {
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [{ node }],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
-      },
-    })
+    const listMock = mockNotificationList([])
 
     renderComponent(OnlineNotification, {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await changeNotificationList(listMock, [node])
 
     await waitUntilSpyCalled(showWebNotificationSpy)
 
@@ -306,31 +399,15 @@ describe('OnlineNotification', () => {
     async (permission) => {
       mockNotification(permission)
 
-      mockOnlineNotificationsQuery({
-        onlineNotifications: {
-          edges: [{ node }],
-          pageInfo: {
-            endCursor: 'Nw',
-            hasNextPage: false,
-          },
-        },
-      })
+      const listMock = mockNotificationList([])
 
       const wrapper = renderComponent(OnlineNotification, {
         router: true,
       })
 
-      await getOnlineNotificationsCountSubscriptionHandler().trigger({
-        onlineNotificationsCount: {
-          unseenCount: 0,
-        },
-      })
+      await triggerUnseenCount(0)
 
-      await getOnlineNotificationsCountSubscriptionHandler().trigger({
-        onlineNotificationsCount: {
-          unseenCount: 1,
-        },
-      })
+      await changeNotificationList(listMock, [node])
 
       await waitUntilSpyCalled(playSoundSpy)
 
@@ -346,31 +423,15 @@ describe('OnlineNotification', () => {
     mockWebLocks()
     holdLockFromAnotherTab(BROWSER_NOTIFICATION_LOCK)
 
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [{ node }],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
-      },
-    })
+    const listMock = mockNotificationList([])
 
     const wrapper = renderComponent(OnlineNotification, {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await changeNotificationList(listMock, [node])
 
     await waitUntilSpyCalled(playSoundSpy)
 
@@ -383,31 +444,15 @@ describe('OnlineNotification', () => {
   it('closes its browser notifications when another tab takes over', async () => {
     mockWebLocks()
 
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [{ node }],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
-      },
-    })
+    const listMock = mockNotificationList([])
 
     renderComponent(OnlineNotification, {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await changeNotificationList(listMock, [node])
 
     await waitUntilSpyCalled(showWebNotificationSpy)
 
@@ -425,11 +470,7 @@ describe('OnlineNotification', () => {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await triggerUnseenCount(1)
 
     expect(playSoundSpy).not.toHaveBeenCalled()
   })
@@ -441,11 +482,7 @@ describe('OnlineNotification', () => {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await triggerUnseenCount(1)
 
     expect(playSoundSpy).not.toHaveBeenCalled()
   })
@@ -475,9 +512,29 @@ describe('OnlineNotification', () => {
 
     const calls = await waitForOnlineNotificationMarkAllAsSeenMutationCalls()
 
-    expect(calls.at(-1)?.variables).toEqual({
-      onlineNotificationIds: [node.id],
+    expect(calls.at(-1)?.variables).toEqual({})
+  })
+
+  it('restores the unseen entries when marking all as read fails', async () => {
+    mockOnlineNotificationMarkAllAsSeenMutationError('Something went wrong', {
+      type: GraphQLErrorTypes.UnknownError,
     })
+
+    mockNotificationList([node])
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'mark all as read' }))
+
+    await waitForOnlineNotificationMarkAllAsSeenMutationCalls()
+
+    // The optimistic update marked the entry as seen and hid the button; the
+    //   failed mutation has to bring both back.
+    expect(await wrapper.findByRole('button', { name: 'mark all as read' })).toBeInTheDocument()
   })
 
   it('clears all notifications once everything is read', async () => {
@@ -627,33 +684,17 @@ describe('OnlineNotification', () => {
       type: GraphQLErrorTypes.UnknownError,
     })
 
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [{ node }],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
-      },
-    })
+    const listMock = mockNotificationList([])
 
     const wrapper = renderComponent(OnlineNotification, {
       router: true,
     })
 
-    // A rising unseen count shows a web notification, which is the one that must survive
+    // A new notification shows a web notification, which is the one that must survive
     //   the failed mutation.
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await changeNotificationList(listMock, [node])
 
     await waitUntilSpyCalled(showWebNotificationSpy)
 
@@ -672,31 +713,15 @@ describe('OnlineNotification', () => {
   })
 
   it('closes open web notifications after clearing all notifications', async () => {
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [{ node }],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
-      },
-    })
+    const listMock = mockNotificationList([])
 
     const wrapper = renderComponent(OnlineNotification, {
       router: true,
     })
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 0,
-      },
-    })
+    await triggerUnseenCount(0)
 
-    await getOnlineNotificationsCountSubscriptionHandler().trigger({
-      onlineNotificationsCount: {
-        unseenCount: 1,
-      },
-    })
+    await changeNotificationList(listMock, [node])
 
     await waitUntilSpyCalled(showWebNotificationSpy)
 

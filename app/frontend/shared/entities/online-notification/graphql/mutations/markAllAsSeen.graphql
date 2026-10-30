@@ -1,9 +1,6 @@
-mutation onlineNotificationMarkAllAsSeen($onlineNotificationIds: [ID!]!) {
-  onlineNotificationMarkAllAsSeen(onlineNotificationIds: $onlineNotificationIds) {
-    onlineNotifications {
-      id
-      seen
-    }
+mutation onlineNotificationMarkAllAsSeen {
+  onlineNotificationMarkAllAsSeen {
+    success
     errors {
       ...errors
     }

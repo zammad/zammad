@@ -44,13 +44,9 @@ const markingAsSeen = ref(false)
 const runMarkAllRead = async () => {
   markingAsSeen.value = true
 
-  const onlineNotificationIds = notifications.value
-    .filter((elem) => !elem.seen)
-    .map((elem) => elem.id)
-
   mutationTriggered = true
 
-  await markAllRead(onlineNotificationIds)
+  await markAllRead()
 
   markingAsSeen.value = false
 }

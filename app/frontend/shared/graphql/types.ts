@@ -1576,12 +1576,10 @@ export type OnlineNotificationDeleteAllMutationVariables = Exact<{ [key: string]
 
 export type OnlineNotificationDeleteAllMutation = { onlineNotificationDeleteAll: { __typename: 'OnlineNotificationDeleteAllPayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
-export type OnlineNotificationMarkAllAsSeenMutationVariables = Exact<{
-  onlineNotificationIds: Array<string | number> | string | number;
-}>;
+export type OnlineNotificationMarkAllAsSeenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnlineNotificationMarkAllAsSeenMutation = { onlineNotificationMarkAllAsSeen: { __typename: 'OnlineNotificationMarkAllAsSeenPayload', onlineNotifications: Array<{ __typename: 'OnlineNotification', id: string, seen: boolean }> | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type OnlineNotificationMarkAllAsSeenMutation = { onlineNotificationMarkAllAsSeen: { __typename: 'OnlineNotificationMarkAllAsSeenPayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type OnlineNotificationSeenMutationVariables = Exact<{
   objectId: string | number;

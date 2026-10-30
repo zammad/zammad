@@ -247,6 +247,36 @@ RSpec.describe OnlineNotificationsController, type: :request do
       end
     end
 
+    shared_examples 'marking all online notifications as read' do
+      let(:another_online_notification) do
+        create(:online_notification, o_id: online_notification.o_id, user_id: user_id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
+      end
+
+      before { online_notification && another_online_notification && different_online_notification && authenticated_as(user) }
+
+      context 'when marking all online notifications as read' do
+        let(:path) { '/api/v1/online_notifications/mark_all_as_read' }
+
+        it 'returns a successful response' do
+          post path, params: {}, as: :json
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'marks all online notifications of the current user as seen' do
+          post path, params: {}, as: :json
+
+          expect([online_notification.reload, another_online_notification.reload]).to all(have_attributes(seen: true))
+        end
+
+        it 'keeps online notifications belonging to other users unseen' do
+          post path, params: {}, as: :json
+
+          expect(different_online_notification.reload).to have_attributes(seen: false)
+        end
+      end
+    end
+
     shared_examples 'getting a different online notification' do
       before { authenticated_as(user) }
 
@@ -286,6 +316,8 @@ RSpec.describe OnlineNotificationsController, type: :request do
 
       it_behaves_like 'clearing all online notifications'
 
+      it_behaves_like 'marking all online notifications as read'
+
       it_behaves_like 'getting a different online notification'
     end
 
@@ -306,6 +338,8 @@ RSpec.describe OnlineNotificationsController, type: :request do
 
       it_behaves_like 'clearing all online notifications'
 
+      it_behaves_like 'marking all online notifications as read'
+
       it_behaves_like 'getting a different online notification'
     end
 
@@ -325,6 +359,8 @@ RSpec.describe OnlineNotificationsController, type: :request do
       it_behaves_like 'getting specific associated online notification'
 
       it_behaves_like 'clearing all online notifications'
+
+      it_behaves_like 'marking all online notifications as read'
 
       it_behaves_like 'getting a different online notification'
     end

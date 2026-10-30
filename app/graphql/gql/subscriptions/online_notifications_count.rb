@@ -2,6 +2,8 @@
 
 module Gql::Subscriptions
   class OnlineNotificationsCount < BaseSubscription
+    include Gql::Concerns::HandlesOnlineNotificationList
+
     description 'Updates unseen notifications count'
 
     subscription_scope :current_user_id
@@ -11,9 +13,9 @@ module Gql::Subscriptions
 
     # Resolved per requested field, so a client that asks for the count alone
     #   does not pay for the tags.
-    Payload = Struct.new(:unseen) do
+    Payload = Struct.new(:unseen_in_window, :unseen) do
       def unseen_count
-        unseen.count
+        unseen_in_window.count
       end
 
       def unseen_push_tags
@@ -31,12 +33,14 @@ module Gql::Subscriptions
 
     private
 
-    def scope
-      OnlineNotification.where(user: context.current_user)
-    end
-
+    # The count covers only the notifications the list shows: the user cannot
+    #   reach the ones outside its window, so a count of them could not be
+    #   cleared. The push tags cover every unseen notification, as a device
+    #   closes the pushes whose tags are missing.
     def response
-      Payload.new(scope.where(seen: false))
+      unseen = OnlineNotification.where(user: context.current_user, seen: false)
+
+      Payload.new(unseen.where(id: online_notification_list(context.current_user).select(:id)), unseen)
     end
   end
 end

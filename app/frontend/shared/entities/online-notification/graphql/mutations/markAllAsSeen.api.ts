@@ -7,12 +7,9 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const OnlineNotificationMarkAllAsSeenDocument = gql`
-    mutation onlineNotificationMarkAllAsSeen($onlineNotificationIds: [ID!]!) {
-  onlineNotificationMarkAllAsSeen(onlineNotificationIds: $onlineNotificationIds) {
-    onlineNotifications {
-      id
-      seen
-    }
+    mutation onlineNotificationMarkAllAsSeen {
+  onlineNotificationMarkAllAsSeen {
+    success
     errors {
       ...errors
     }

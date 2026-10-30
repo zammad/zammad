@@ -57,7 +57,7 @@ export const useOnlineNotificationActions = () => {
     }
   }
 
-  const updateAllSeenNotificationCache = (ids: Scalars['ID']['output'][]) => {
+  const updateAllSeenNotificationCache = () => {
     const data = getCacheData()
 
     if (!data) return
@@ -66,13 +66,9 @@ export const useOnlineNotificationActions = () => {
 
     const clonedQueryCache = cloneDeep(existingQueryCache)
 
-    ids.forEach((id) =>
-      clonedQueryCache.onlineNotifications.edges.forEach(({ node }) => {
-        if (node.id === id) {
-          node.seen = true
-        }
-      }),
-    )
+    clonedQueryCache.onlineNotifications.edges.forEach(({ node }) => {
+      node.seen = true
+    })
 
     cache.writeQuery({
       ...queryOptions,
@@ -133,17 +129,17 @@ export const useOnlineNotificationActions = () => {
   const seenNotification = async (id: Scalars['ID']['output']) => {
     const revertCache = updateSeenNotificationCache(id)
 
-    return seenNotificationMutation.send({ objectId: id }).catch(() => revertCache)
+    return seenNotificationMutation.send({ objectId: id }).catch(() => revertCache?.())
   }
 
   const markAllSeenMutation = new MutationHandler(useOnlineNotificationMarkAllAsSeenMutation(), {
     errorNotificationMessage: __('Cannot set online notifications as seen'),
   })
 
-  const markAllRead = async (ids: Scalars['ID']['output'][]) => {
-    const revertCache = updateAllSeenNotificationCache(ids)
+  const markAllRead = async () => {
+    const revertCache = updateAllSeenNotificationCache()
 
-    return markAllSeenMutation.send({ onlineNotificationIds: ids }).catch(() => revertCache)
+    return markAllSeenMutation.send().catch(() => revertCache?.())
   }
 
   const deleteNotificationMutation = new MutationHandler(useOnlineNotificationDeleteMutation())
@@ -155,7 +151,7 @@ export const useOnlineNotificationActions = () => {
       .send({
         onlineNotificationId: id,
       })
-      .catch(() => revertCache)
+      .catch(() => revertCache?.())
   }
 
   const deleteAllMutation = new MutationHandler(useOnlineNotificationDeleteAllMutation(), {

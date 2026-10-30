@@ -172,13 +172,7 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
 =end
 
   def mark_all_as_read
-    OnlineNotification
-      .list(current_user, limit: nil, access: 'ignore')
-      .where(seen: false)
-      .in_batches
-      .each_record do |notification|
-        notification.update!(seen: true)
-      end
+    Service::OnlineNotification::MarkAllAsSeen.with_current_user(current_user).execute
 
     render json: {}, status: :ok
   end

@@ -106,6 +106,21 @@ RSpec.describe Gql::Queries::OnlineNotifications, authenticated_as: :user, type:
 
         expect(gql.result.nodes.pluck('id')).to eq(notifications.sort_by { |n| n[:created_at] }.reverse.map { |n| gql.id(n) })
       end
+
+      it 'breaks ties on the timestamp by the newest id first' do
+        tied = Array.new(3) { create(:online_notification, user: user, created_at: DateTime.parse('2024-01-01 12:00:00')) }
+        gql.execute(query)
+
+        expect(gql.result.nodes.pluck('id')).to eq(tied.sort_by(&:id).reverse.map { |n| gql.id(n) })
+      end
+
+      it 'returns no more than the default page size' do
+        allow(Gql::ZammadSchema).to receive(:default_page_size).and_return(3)
+        notifications
+        gql.execute(query)
+
+        expect(gql.result.nodes.pluck('id')).to eq(notifications.sort_by { |n| n[:created_at] }.last(3).reverse.map { |n| gql.id(n) })
+      end
     end
 
     context 'with a non-existing meta object type' do

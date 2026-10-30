@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { whenever } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -12,6 +11,7 @@ import { useOnlineNotificationActions } from '#shared/entities/online-notificati
 import { useOnlineNotificationCount } from '#shared/entities/online-notification/composables/useOnlineNotificationCount.ts'
 import { useOnlineNotificationList } from '#shared/entities/online-notification/composables/useOnlineNotificationList.ts'
 import type { OnlineNotification } from '#shared/graphql/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { edgesToArray } from '#shared/utils/helpers.ts'
 import { cleanupMarkup } from '#shared/utils/markup.ts'
 
@@ -50,7 +50,7 @@ const { waitForConfirmation } = useConfirmation()
 
 let mutationTriggered = false
 let hasInitialCountRun = false
-let previousUnseenCount = 0
+let lastAlertedId = 0
 
 const router = useRouter()
 
@@ -87,9 +87,7 @@ const closeWebNotifications = () => {
 const runMarkAllRead = async () => {
   mutationTriggered = true
 
-  const ids = notificationList.value.map((notification) => notification.id)
-
-  await markAllRead(ids)
+  await markAllRead()
 
   mutationTriggered = false
 
@@ -126,51 +124,58 @@ const runClearAll = async () => {
   }
 }
 
-notificationsCountSubscription.watchOnResult(async (result) => {
+const isNewerThan = (notification: OnlineNotification, previous?: OnlineNotification) =>
+  !previous || getIdFromGraphQLId(notification.id) > getIdFromGraphQLId(previous.id)
+
+// The count covers the list window only, so it does not tell a new notification
+//   apart from an old one entering the window from below, and does not rise at
+//   all when a new one pushes an unseen entry out. The newest entry does.
+notificationsCountSubscription.watchOnResult(async () => {
   if (!hasInitialCountRun) {
-    previousUnseenCount = result.onlineNotificationsCount.unseenCount
     hasInitialCountRun = true
     return
   }
 
-  if (mutationTriggered) {
-    previousUnseenCount = result.onlineNotificationsCount.unseenCount
-    return
-  }
+  if (mutationTriggered) return
+
+  const previousNewest = notificationList.value[0]
 
   const { data } = await refetch()
+
+  const notification = edgesToArray(data?.onlineNotifications)[0] as OnlineNotification | undefined
+
+  if (!notification || notification.seen || !isNewerThan(notification, previousNewest)) return
+
+  // Overlapping updates refetch the same newest entry, so the alert is claimed
+  //   before anything awaits.
+  const notificationId = getIdFromGraphQLId(notification.id)
+
+  if (notificationId <= lastAlertedId) return
+
+  lastAlertedId = notificationId
+
+  if (isEnabled.value) play()
 
   // The permission is requested centrally after login; without it, the
   //   browser notification is skipped and only the badge and sound remain.
   //   The same goes for a tab that is not the one showing them.
-  if (
-    permissionGranted.value &&
-    isNotifyingTab.value &&
-    data?.onlineNotifications &&
-    result.onlineNotificationsCount.unseenCount > previousUnseenCount
-  ) {
-    const notifications = edgesToArray(data.onlineNotifications)
-    if (!notifications) return
+  if (!permissionGranted.value || !isNotifyingTab.value) return
 
-    const notification = notifications[0] as OnlineNotification
-    const { message, link } = useActivityMessage(ref(notification))
-    const title = cleanupMarkup(message)
+  const { message, link } = useActivityMessage(ref(notification))
+  const title = cleanupMarkup(message)
 
-    const webNotification = await show({
-      title,
-      icon: `/assets/images/logo.svg`,
-      tag: notification.id,
-      dir: 'auto',
-      silent: true,
-    })
+  const webNotification = await show({
+    title,
+    icon: `/assets/images/logo.svg`,
+    tag: notification.id,
+    dir: 'auto',
+    silent: true,
+  })
 
-    if (webNotification) {
-      webNotificationList.set(notification.id, webNotification)
-      webNotification.onclick = () => handleOpenWebNotification(notification, link)
-    }
+  if (webNotification) {
+    webNotificationList.set(notification.id, webNotification)
+    webNotification.onclick = () => handleOpenWebNotification(notification, link)
   }
-
-  previousUnseenCount = result.onlineNotificationsCount.unseenCount
 })
 
 // The tab that took over is in front and shows the badge itself.
@@ -178,13 +183,6 @@ watch(isNotifyingTab, (notifying) => {
   if (!notifying) closeWebNotifications()
 })
 
-whenever(
-  unseenCount,
-  (newCount, oldCount) => {
-    if (isEnabled.value && oldCount !== undefined && newCount > oldCount) play()
-  },
-  { flush: 'post' },
-)
 const truncatedUnseenCount = computed(() =>
   unseenCount.value && unseenCount.value > 99 ? '99+' : unseenCount.value,
 )

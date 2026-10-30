@@ -91,51 +91,40 @@ describe('selecting a online notification', () => {
   })
 
   it('can mark all notification as read', async () => {
-    const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve(
-      mockOnlineNotificationQuery([
-        {
-          seen: false,
-        },
-        {
-          seen: false,
-        },
-        {
-          seen: true,
-        },
-      ]),
-    )
+    // The mutation returns no entries; the list refetches on the next count
+    //   update and reflects the server state.
+    let markedAll = false
+
+    const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willBehave(() => ({
+      data: mockOnlineNotificationQuery(
+        markedAll
+          ? [{ seen: true }, { seen: true }, { seen: true }]
+          : [{ seen: false }, { seen: false }, { seen: true }],
+      ),
+    }))
 
     const view = await visitView('/notifications')
 
     await triggerNextOnlineNotificationCount(2)
 
-    await waitUntil(() => mockApi.calls.resolve)
+    await waitUntil(() => mockApi.calls.behave)
 
     expect(view.getAllByLabelText('Notification read')).toHaveLength(1)
 
     mockGraphQLApi(OnlineNotificationMarkAllAsSeenDocument).willResolve({
       onlineNotificationMarkAllAsSeen: {
         errors: null,
-        onlineNotifications: [
-          {
-            id: '1',
-            seen: true,
-            __typename: 'OnlineNotification',
-          },
-          {
-            id: '2',
-            seen: true,
-            __typename: 'OnlineNotification',
-          },
-        ],
+        success: true,
       },
     })
 
     await view.events.click(view.getByText('Mark all as read'))
 
-    expect(view.getAllByLabelText('Notification read')).toHaveLength(3)
+    markedAll = true
 
     await triggerNextOnlineNotificationCount(0)
+
+    await waitUntil(() => view.getAllByLabelText('Notification read').length === 3)
 
     expect(view.container).not.toHaveTextContent('Mark all as read')
   })
@@ -233,13 +222,7 @@ describe('selecting a online notification', () => {
     mockGraphQLApi(OnlineNotificationMarkAllAsSeenDocument).willResolve({
       onlineNotificationMarkAllAsSeen: {
         errors: null,
-        onlineNotifications: [
-          {
-            id: '2',
-            seen: true,
-            __typename: 'OnlineNotification',
-          },
-        ],
+        success: true,
       },
     })
 

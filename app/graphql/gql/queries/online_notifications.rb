@@ -2,23 +2,14 @@
 
 module Gql::Queries
   class OnlineNotifications < BaseQuery
+    include Gql::Concerns::HandlesOnlineNotificationList
 
     description 'Online notifications for a given user'
 
     type Gql::Types::OnlineNotificationType.connection_type, null: false
 
     def resolve(...)
-      OnlineNotification
-        .list(
-          context.current_user,
-          access: 'ignore'
-        )
-        .where(
-          # Make sure to limit it to known meta object types.
-          object_lookup_id: ObjectLookup.where(
-            name: Gql::Types::ActivityMessageMetaObjectType.possible_types.map { |t| t.name.delete_prefix('Gql::Types::').delete_suffix('Type') }
-          ).select(:id)
-        )
+      online_notification_list(context.current_user)
     end
   end
 end

@@ -164,7 +164,7 @@ return online notifications of an user.
   def self.list(user, limit: 200, access: 'read')
     relation = OnlineNotification
       .where(user_id: user.id)
-      .reorder(created_at: :desc)
+      .reorder(created_at: :desc, id: :desc)
       .limit(limit)
 
     return relation if access == 'ignore'

@@ -15306,31 +15306,8 @@
             },
             {
               "name": "onlineNotificationMarkAllAsSeen",
-              "description": "Marks notifications for active user as seen",
-              "args": [
-                {
-                  "name": "onlineNotificationIds",
-                  "description": "Unique identifiers ofnotifications which should be deleted.",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "LIST",
-                      "name": null,
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "name": null,
-                        "ofType": {
-                          "kind": "SCALAR",
-                          "name": "ID",
-                          "ofType": null
-                        }
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
+              "description": "Marks all notifications of the current user as seen",
+              "args": [],
               "type": {
                 "kind": "OBJECT",
                 "name": "OnlineNotificationMarkAllAsSeenPayload",
@@ -19477,20 +19454,16 @@
               "deprecationReason": null
             },
             {
-              "name": "onlineNotifications",
-              "description": "The seen notifications.",
+              "name": "success",
+              "description": "Was the marking successful?",
               "args": [],
               "type": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "OnlineNotification",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
                 }
               },
               "isDeprecated": false,
