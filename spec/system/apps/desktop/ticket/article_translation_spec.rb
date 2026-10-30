@@ -221,6 +221,9 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     end
 
     it 'leaves an arriving article alone' do
+      # The article only reaches the page reloaded above through its new subscription.
+      wait_for_subscription_start('ticketArticleUpdates', entity: ticket)
+
       new_article = create(:ticket_article, ticket:, body: 'Anything new?', content_type: 'text/plain')
 
       within "[data-test-id=\"article-bubble-container-#{new_article.id}\"]" do
