@@ -69,7 +69,7 @@ export const useOrganizationDetail = (
   const organization = computed(() => organizationResult.value?.organization as Organization)
 
   const fetchMoreMembers = () => {
-    if (!organizationId) return
+    if (!organizationId.value) return
 
     hasLoadedMore.value = true
 

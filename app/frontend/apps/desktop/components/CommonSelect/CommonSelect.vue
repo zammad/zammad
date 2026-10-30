@@ -99,7 +99,7 @@ let inputElementBounds: UseElementBoundingReturn
 let windowHeight: Ref<number>
 
 const hasDirectionUp = computed(() => {
-  if (!inputElementBounds || !windowHeight) return false
+  if (!inputElementBounds) return false
   return inputElementBounds.y.value > windowHeight.value / 2
 })
 
