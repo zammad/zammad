@@ -317,7 +317,7 @@ Some Text',
       it 'processes the secured content and keeps the original mail attributes' do
         customer_id_before = existing_ticket.customer_id
 
-        ticket, article, = Channel::EmailParser.new.process({ trusted: false }, mail, false)
+        ticket, article, = Channel::EmailParser.new.process({ trusted: false }, mail)
 
         # The secured content is processed, so the re-parse really happened.
         expect(article.body).to include('Secured body')
