@@ -46,31 +46,10 @@ ref, never blocks: the hook prints one line and skips. Human commits are not gat
 covers them. The agent-facing guidance on reading a blocked audit and on when to run fallow by hand is in
 `.dev/agent_docs/code_analysis.md`.
 
-## Connect Your Agents
+## Agent Permissions
 
 The read-only fallow commands (`pnpm analyse:fallow*`, `dead-code`, `dupes`, `trace`, `explain` and
 `fix --dry-run`) are allowed in the shared `.claude/settings.json`; `fallow fix --yes` still asks.
-
-### MCP Server
-
-fallow ships an MCP server with tools such as `trace_export`, `find_dupes`, `check_changed` and `audit`. The CLI
-remains the primary interface; the MCP server is an optional layer with typed results. Codex reads the committed
-registration in `.codex/config.toml` once the checkout is a trusted project. For Claude Code, register it in the root
-`.mcp.json` of the checkout, which is gitignored because it also holds personal servers, running the pinned
-version through pnpm:
-
-```json
-{
-  "mcpServers": {
-    "fallow": {
-      "command": "pnpm",
-      "args": ["exec", "fallow-mcp"]
-    }
-  }
-}
-```
-
-Restart active agent sessions after changing their MCP configuration.
 
 ## Auto-Fix
 
@@ -101,5 +80,5 @@ that exist for addons with a `@public` JSDoc tag or list them under `ignoreExpor
 - Packages that are only referenced by name in a config (`eslint-import-resolver-typescript`) or by the TypeScript
   compiler (`tslib` via `importHelpers`) are listed under `ignoreDependencies`.
 
-The upstream [documentation](https://fallow.tools/docs/) covers the configuration keys, output formats and the MCP
-tools in detail.
+The upstream [documentation](https://fallow.tools/docs/) covers the configuration keys and output formats in
+detail.

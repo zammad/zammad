@@ -10,4 +10,7 @@ minimumReleaseAgeExclude:
 overrides:
   '@sa11y/vitest>vitest': ^5.0.5
   'lightningcss': ^1.33.0
+permissions:
+  fallow:
+    skills: false
 verifyDepsBeforeRun: false

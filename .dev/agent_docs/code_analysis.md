@@ -4,8 +4,8 @@
 reports what the linters cannot see across files: unused files, exports, enum,
 class and store members, unused dependencies, import cycles, copy-paste
 duplication and oversized functions. It covers the Vue/TypeScript stack only,
-not Ruby or CoffeeScript. The config is `.fallowrc.json`; the hooks, permissions
-and the MCP server are described in
+not Ruby or CoffeeScript. The config is `.fallowrc.json`; the hooks and
+permissions are described in
 `doc/developer_manual/development_environment/fallow-setup.md`.
 
 ## What runs on its own

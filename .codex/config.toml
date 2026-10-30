@@ -1,3 +1,0 @@
-[mcp_servers.fallow]
-command = "pnpm"
-args = ["exec", "fallow-mcp"]
