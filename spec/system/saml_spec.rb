@@ -139,6 +139,9 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       click_on 'John Doe'
       find('span', text: 'Sign out', class: 'pf-v5-c-menu__item-text').click
 
+      # Navigating away while the IDP still redirects to its login page aborts the navigation.
+      expect(page).to have_text('Sign in')
+
       visit '/'
       expect(page).to have_current_route('login')
       find_by_id('app')
