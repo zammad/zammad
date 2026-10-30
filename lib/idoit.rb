@@ -18,7 +18,11 @@ returns
     raise __('Invalid i-doit configuration (missing endpoint or api_token).') if api_token.blank? || endpoint.blank?
 
     params = {
-      apikey: api_token,
+      apikey:   api_token,
+      language: _current_language,
+      filter:   {
+        enabled: true,
+      },
     }
 
     _query('cmdb.object_types', params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
@@ -92,8 +96,13 @@ or with filter:
     raise __("The required field 'endpoint' is missing from the config.") if setting[:endpoint].blank?
 
     params = {
-      apikey: setting[:api_token],
+      apikey:   setting[:api_token],
+      language: _current_language,
     }
+
+    filter ||= {}
+    filter = filter.merge(enabled: true) if method == 'cmdb.object_types'
+
     if filter.present?
       params[:filter] = filter
     end
@@ -152,5 +161,9 @@ or with filter:
 
     url.gsub!(%r{src/jsonrpc.php}, '')
     url.gsub(%r{([^:])//+}, '\\1/')
+  end
+
+  def self._current_language
+    (UserInfo.current_user&.locale || Locale.default).split('-').first
   end
 end
