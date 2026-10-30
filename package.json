@@ -72,7 +72,7 @@
     "@types/rails__actioncable": "^8.0.3",
     "@types/sinonjs__fake-timers": "^15.0.1",
     "@types/ua-parser-js": "^0.7.39",
-    "@typescript-eslint/parser": "^8.72.0",
+    "@typescript-eslint/parser": "^8.72.1",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vue/compiler-dom": "^3.5.43",
     "@vue/devtools-api": "^8.2.1",
