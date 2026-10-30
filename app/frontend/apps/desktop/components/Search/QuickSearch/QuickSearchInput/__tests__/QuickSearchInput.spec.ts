@@ -5,6 +5,8 @@ import { ref } from 'vue'
 import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import emitter from '#shared/utils/emitter.ts'
+
 import QuickSearchInput from '../QuickSearchInput.vue'
 
 const renderQuickSearchInput = () => {
@@ -94,5 +96,17 @@ describe('QuickSearchInput', () => {
     expect(router.currentRoute.value.params).toEqual({
       searchTerm: 'testExample',
     })
+  })
+
+  it('activates and prefills the search when requested via emitter', async () => {
+    const { wrapper, modelValue, searchActive } = renderQuickSearchInput()
+
+    emitter.emit('set-quick-search-field', 'preferences.idoit.object_ids:26')
+
+    await waitForNextTick()
+
+    expect(modelValue.value).toBe('preferences.idoit.object_ids:26')
+    expect(searchActive.value).toBe(true)
+    expect(wrapper.getByRole('searchbox', { name: 'Search…' })).toHaveFocus()
   })
 })

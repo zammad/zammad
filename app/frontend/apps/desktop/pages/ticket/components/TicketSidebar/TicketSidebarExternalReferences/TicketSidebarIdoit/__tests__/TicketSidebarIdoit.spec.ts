@@ -13,6 +13,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import emitter from '#shared/utils/emitter.ts'
 
 import TicketSidebarIdoit from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
@@ -51,9 +52,15 @@ const mockedData = [
   },
 ]
 
-const renderIdoitSidebar = (isTicketEditable = true, objects = mockedData, customMocks = false) => {
+const renderIdoitSidebar = (
+  isTicketEditable = true,
+  objects = mockedData,
+  customMocks = false,
+  esEnabled = false,
+) => {
   mockApplicationConfig({
     idoit_integration: true,
+    es_enabled: esEnabled,
   })
 
   if (!customMocks) {
@@ -232,6 +239,37 @@ describe('TicketSidebarIdoit', () => {
 
     expect(group).toHaveTextContent('Type')
     expect(group).toHaveTextContent('Application')
+  })
+
+  it('shows the object ID as plain text without Elasticsearch', async () => {
+    const wrapper = renderIdoitSidebar(true, [mockedData[0]])
+
+    const group = await wrapper.findByRole('group')
+
+    expect(group).toHaveTextContent('ID')
+    expect(group).toHaveTextContent('111')
+    expect(within(group).queryByRole('link', { name: '111' })).not.toBeInTheDocument()
+  })
+
+  it('opens the quick search for tickets linked to the object when clicking its ID', async () => {
+    const emitSpy = vi.spyOn(emitter, 'emit')
+
+    const wrapper = renderIdoitSidebar(true, [mockedData[0]], false, true)
+
+    const group = await wrapper.findByRole('group')
+
+    const link = within(group).getByRole('link', { name: '111' })
+
+    expect(link).toHaveAccessibleDescription('Search tickets linked to this i-doit object')
+
+    await wrapper.events.click(link)
+
+    await waitForNextTick()
+
+    expect(emitSpy).toHaveBeenCalledWith(
+      'set-quick-search-field',
+      'preferences.idoit.object_ids:111',
+    )
   })
 
   it('adds a new object with issues present', async () => {

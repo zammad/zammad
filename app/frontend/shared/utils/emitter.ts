@@ -5,6 +5,7 @@ import mitt, { type Emitter } from 'mitt'
 type StaticEvents = {
   'session-invalid': void
   'focus-quick-search-field': void
+  'set-quick-search-field': string
   'reset-quick-search-field': void
   'primary-sidebar-transition': void
   'resize-layout': void

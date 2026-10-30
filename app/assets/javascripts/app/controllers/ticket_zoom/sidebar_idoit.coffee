@@ -87,11 +87,18 @@ class SidebarIdoit extends App.Controller
   showList: (objects) =>
     list = $(App.view('ticket_zoom/sidebar_idoit')(
       objects: objects
+      searchable: App.Config.get('es_enabled')
     ))
     list.on('click', '.js-delete', (e) =>
       e.preventDefault()
       objectId = $(e.currentTarget).attr 'data-object-id'
       @delete(objectId)
+    )
+    list.on('click', '.js-idoitObjectId', (e) ->
+      e.preventDefault()
+      objectId = $(e.currentTarget).attr 'data-object-id'
+      return if _.isEmpty(objectId)
+      App.GlobalSearchWidget.search(objectId, 'preferences.idoit.object_ids')
     )
     @html(list)
 

@@ -6,12 +6,14 @@ import { computed, ref, toRef, watch } from 'vue'
 
 import type { FormRef } from '#shared/components/Form/types.ts'
 import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import { useQuickSearchInput } from '#desktop/components/Search/QuickSearch/useQuickSearchInput.ts'
 import type { TicketSidebarPlugin } from '#desktop/pages/ticket/components/TicketSidebar/plugins/types.ts'
 import TicketSidebarContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue'
 import ExternalReferenceContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceContent.vue'
@@ -36,6 +38,13 @@ interface Props {
 const props = defineProps<Props>()
 
 const persistentStates = defineModel<ObjectLike>({ required: true })
+
+const config = toRef(useApplicationStore(), 'config')
+
+const { openQuickSearchWith } = useQuickSearchInput()
+
+const searchLinkedTickets = (idoitObjectId: number) =>
+  openQuickSearchWith(`preferences.idoit.object_ids:${idoitObjectId}`)
 
 const skipNextObjectUpdate = ref(false)
 
@@ -210,7 +219,21 @@ if (props.ticketId) {
             @remove="removeObject"
           />
 
-          <ExternalReferenceContent :label="$t('ID')" :values="[object.idoitObjectId.toString()]" />
+          <ExternalReferenceContent v-if="config.es_enabled" :label="$t('ID')">
+            <CommonLink
+              v-tooltip.supportive="$t('Search tickets linked to this i-doit object')"
+              link="#"
+              size="medium"
+              @click.prevent="searchLinkedTickets(object.idoitObjectId)"
+            >
+              {{ object.idoitObjectId }}
+            </CommonLink>
+          </ExternalReferenceContent>
+          <ExternalReferenceContent
+            v-else
+            :label="$t('ID')"
+            :values="[object.idoitObjectId.toString()]"
+          />
 
           <ExternalReferenceContent :label="$t('Status')" :values="[object.status]" />
           <ExternalReferenceContent :label="$t('Type')" :values="[object.type]" />

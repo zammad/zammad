@@ -3011,7 +3011,7 @@ msgid "CAPTCHA provider options"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:18
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:501
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:504
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
@@ -3347,7 +3347,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:14
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:126
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:133
 msgid "Change Customer"
 msgstr ""
 
@@ -3941,7 +3941,7 @@ msgid "Closed Tickets"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets.vue:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:111
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:109
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:31
 msgid "Closed tickets"
 msgstr ""
@@ -4361,7 +4361,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:171
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:179
 msgid "Copied!"
 msgstr ""
 
@@ -4418,8 +4418,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/popover/ticket_overview_title.jst.eco:5
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:102
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:46
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:61
 msgid "Copy ticket number"
 msgstr ""
 
@@ -4477,7 +4477,7 @@ msgstr ""
 msgid "Could not fetch security keys"
 msgstr ""
 
-#: app/models/channel/email_parser.rb:100
+#: app/models/channel/email_parser.rb:104
 msgid "Could not find any header field in the email."
 msgstr ""
 
@@ -4498,7 +4498,7 @@ msgstr ""
 msgid "Could not load the two-factor authentication configuration for this user."
 msgstr ""
 
-#: app/models/channel/email_parser.rb:32
+#: app/models/channel/email_parser.rb:34
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
 
@@ -4885,7 +4885,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:27
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:279
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:293
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
@@ -4946,8 +4946,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:89
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:61
-#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:35
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:63
+#: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:36
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:93
@@ -6726,14 +6726,14 @@ msgid "Download original email"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:61
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:55
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:58
 msgid "Download processing log"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:52
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:46
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:48
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:103
 msgid "Download raw email"
 msgstr ""
@@ -6897,7 +6897,7 @@ msgstr ""
 msgid "Edit checklist title"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:50
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:48
 msgid "Edit customer"
 msgstr ""
 
@@ -7012,7 +7012,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:59
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:44
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:66
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
@@ -8222,7 +8222,7 @@ msgstr ""
 msgid "First Steps"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:114
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:117
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:89
 msgid "First article"
 msgstr ""
@@ -9230,7 +9230,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:8
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:115
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:122
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:63
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
@@ -9329,7 +9329,7 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:4
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:9
 msgid "ID:"
 msgstr ""
 
@@ -9654,7 +9654,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:145
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:156
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:34
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:56
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:6
 msgid "Inbound Call"
 msgstr ""
@@ -10637,7 +10637,7 @@ msgstr ""
 msgid "Lastname, Firstname"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:108
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:111
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:83
 msgid "Latest article"
 msgstr ""
@@ -11602,7 +11602,7 @@ msgid "Mention user"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:121
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:128
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:75
 msgid "Merge"
@@ -12268,7 +12268,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:193
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:490
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:493
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:21
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:71
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
@@ -12596,7 +12596,7 @@ msgid "No content to show"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:81
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:101
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:103
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:61
 msgid "No customer assigned yet."
 msgstr ""
@@ -12855,7 +12855,7 @@ msgstr ""
 msgid "No webhook available, please create a new one or activate an existing one at \"Manage > Webhook\""
 msgstr ""
 
-#: app/models/channel/email_parser.rb:141
+#: app/models/channel/email_parser.rb:145
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
@@ -13467,8 +13467,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets.vue:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:60
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:101
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:99
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:23
 msgid "Open tickets"
 msgstr ""
@@ -13586,7 +13586,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:93
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:14
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:68
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:28
 #: app/frontend/apps/desktop/pages/organization/routes.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
@@ -13739,7 +13739,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:146
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:157
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:44
 msgid "Outbound Call"
 msgstr ""
 
@@ -13823,7 +13823,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:522
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:55
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:57
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
@@ -14565,7 +14565,7 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:134
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:138
 msgid "Priority icon"
 msgstr ""
 
@@ -14882,7 +14882,7 @@ msgstr ""
 msgid "Reauthenticate"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:18
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:40
 msgid "Received Call"
 msgstr ""
 
@@ -15941,7 +15941,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1222
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1234
 msgid "Saving failed."
 msgstr ""
 
@@ -16253,6 +16253,10 @@ msgstr ""
 msgid "Search the knowledge base"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:7
+msgid "Search tickets linked to this i-doit object"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue:16
 msgid "Search within %s…"
 msgstr ""
@@ -16279,7 +16283,7 @@ msgid "Search…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:81
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:82
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:80
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:149
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:101
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
@@ -16579,7 +16583,7 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:26
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:48
 msgid "Send Email"
 msgstr ""
 
@@ -17605,7 +17609,7 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:150
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:154
 msgid "State icon"
 msgstr ""
 
@@ -17635,7 +17639,7 @@ msgstr ""
 msgid "Status import"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:10
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:16
 msgid "Status:"
 msgstr ""
 
@@ -18961,7 +18965,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:828
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
 #: app/assets/javascripts/app/controllers/object_manager.coffee:271
@@ -18980,7 +18984,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:337
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:156
 #: app/assets/javascripts/app/controllers/user.coffee:241
 msgid "The object could not be updated."
 msgstr ""
@@ -20122,7 +20126,7 @@ msgstr ""
 msgid "This group exceeds the allowed nesting depth."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:763
 #: app/controllers/concerns/creates_ticket_articles.rb:45
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
@@ -20344,8 +20348,8 @@ msgid "This ticket already has a checklist."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:37
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:31
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:35
 msgid "This ticket was created because the email could not be processed. Download the raw email to see what was received, and the processing log to see why processing failed."
 msgstr ""
 
@@ -20413,7 +20417,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:12
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:6
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:6
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:23
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:25
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:14
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/signature.coffee:15
@@ -20429,7 +20433,7 @@ msgstr ""
 msgid "Ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:798
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 msgid "Ticket %s created!"
 msgstr ""
 
@@ -20836,7 +20840,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:90
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:50
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:158
@@ -21518,7 +21522,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:11
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:17
 msgid "Type:"
 msgstr ""
 
@@ -21616,7 +21620,7 @@ msgstr ""
 msgid "Unknown error"
 msgstr ""
 
-#: app/models/failed_email.rb:7
+#: app/models/failed_email.rb:8
 msgid "Unknown error: Could not create a ticket from this email."
 msgstr ""
 
@@ -23284,7 +23288,7 @@ msgstr ""
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:780
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:417
 msgid "You used %s in the text but no attachment could be found. Do you want to continue?"
 msgstr ""
@@ -23687,7 +23691,7 @@ msgstr ""
 msgid "closed"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:108
 msgid "closed tickets"
 msgstr ""
 
@@ -24675,7 +24679,7 @@ msgstr ""
 msgid "open"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:98
 msgid "open tickets"
 msgstr ""
 
