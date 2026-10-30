@@ -23,7 +23,7 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       find(:css, '.js-input').send_keys(customer.firstname)
       expect(page).to have_css('.searchableSelect-option-text')
       click '.searchableSelect-option-text'
-      fill_in 'Are you sure?', with: 'DELETE'
+      find('input[name="preferences::sure"]').set('DELETE')
       expect(page).to have_no_text('DELETE ORGANIZATION?')
       click '.js-submit'
 
@@ -51,7 +51,7 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
         find(:css, '.js-input').send_keys(customer.firstname)
         expect(page).to have_css('.searchableSelect-option-text')
         click '.searchableSelect-option-text'
-        fill_in 'Are you sure?', with: 'DELETE'
+        find('input[name="preferences::sure"]').set('DELETE')
         expect(page).to have_text('DELETE ORGANIZATION?')
         click '.js-submit'
 
@@ -68,7 +68,7 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
         find(:css, '.js-input').send_keys(customer.email)
         expect(page).to have_css('.searchableSelect-option-text')
         click '.searchableSelect-option-text'
-        fill_in 'Are you sure?', with: 'DELETE'
+        find('input[name="preferences::sure"]').set('DELETE')
         expect(page).to have_text('DELETE ORGANIZATION?')
         click '.js-submit'
 
@@ -117,7 +117,7 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       click 'h2.js-headline'
       click_on 'Delete Customer'
 
-      fill_in 'Are you sure?', with: 'DELETE'
+      find('input[name="preferences::sure"]').set('DELETE')
       click '.js-submit'
 
       expect(page).to have_text('in process')
