@@ -141,7 +141,8 @@
     # audit diffs `base...HEAD`, which needs the merge base in the checkout. The MR diff
     #   base is that merge base, so deepen HEAD's history (depth 1 at checkout, GIT_DEPTH
     #   has no effect here) until the base commit is an ancestor.
-    - git fetch --quiet origin "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+    # Without --depth, fetching the base into the shallow checkout pulls its whole history.
+    - git fetch --quiet --depth=1 origin "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
     - |
       for _ in 1 2 3 4 5 6 7 8 9 10; do
         git merge-base --is-ancestor "$CI_MERGE_REQUEST_DIFF_BASE_SHA" HEAD && break
