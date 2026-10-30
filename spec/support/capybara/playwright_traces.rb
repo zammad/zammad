@@ -26,8 +26,12 @@ PLAYWRIGHT_TRACE_KEEP_DIR    = Rails.root.join('tmp/playwright-traces')
 PLAYWRIGHT_TRACE_SNAPSHOTS = ENV['PLAYWRIGHT_TRACE'] == 'full'
 
 RSpec.configure do |config|
-  config.before(:each, type: :system) do
+  config.before(:each, type: :system) do |example|
     next if !page.driver.is_a?(Capybara::Playwright::Driver)
+
+    # Examples with required_envs work with real credentials, which a trace would keep in
+    #   its action log and screenshots - and failed traces end up in the CI artifacts.
+    next if example.metadata[:required_envs]
 
     page.driver.with_playwright_page do |pw_page|
       pw_page.context.tracing.start(screenshots: true, snapshots: PLAYWRIGHT_TRACE_SNAPSHOTS)

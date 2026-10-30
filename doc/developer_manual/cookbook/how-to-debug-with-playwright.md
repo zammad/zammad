@@ -115,6 +115,7 @@ PLAYWRIGHT_TRACE=full SELENIUM_BROWSER=playwright bundle exec rspec spec/system/
 
 ### Limitations
 
+- Examples tagged with `required_envs` are not traced, because they work with real credentials.
 - Only the default Capybara session is traced. Additional sessions opened via `using_session` run in their own browser
   context and do not appear in the trace.
 - The trace file is named after the example, so a retried example (see `rspec-retry`) leaves only the trace of its last
