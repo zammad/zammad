@@ -12,7 +12,7 @@ RSpec.describe 'Richtext Bubble Menu', authenticated_as: :authenticate, type: :s
   let(:text_tool_name)           { Faker::Lorem.unique.sentence }
 
   def authenticate
-    skip('does not work with Chromium-based drivers') if %i[zammad_chrome zammad_playwright zammad_playwright_mobile].include?(Capybara.current_driver)
+    skip('does not work with Chromium-based drivers') if %i[zammad_chromium zammad_chromium_mobile].include?(Capybara.current_driver)
 
     allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(true)
 

@@ -230,7 +230,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     begin
       select_option_by_label(label, **find_options)
-    rescue Capybara::ElementNotFound, Selenium::WebDriver::Error::StaleElementReferenceError
+    rescue Capybara::ElementNotFound, Capybara::Playwright::Node::StaleReferenceError
       # An asynchronous form re-render (e.g. the processing of a form updater response of a
       #  previous field change) may close the dropdown again right after it was opened.
       # In this case open the dropdown once again and retry.
@@ -1005,7 +1005,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     input_element.click
 
     wait.until { input_element.evaluate_script(EDITOR_CARET_TO_START_JS) }
-  rescue Selenium::WebDriver::Error::TimeoutError
+  rescue BrowserTestHelper::Waiter::TimeoutError
     raise 'The caret did not stay at the start of the editor'
   end
 

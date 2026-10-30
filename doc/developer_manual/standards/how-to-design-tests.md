@@ -24,5 +24,5 @@ other code parts.
 ## 3. Test User Stories
 
 Only certain important user stories need to be covered in high-level end-to-end and integration tests (browser-based,
-Capybara/Selenium). These test scenarios should be defined and communicated beforehand, as they will be used to ensure
+Capybara/Playwright). These test scenarios should be defined and communicated beforehand, as they will be used to ensure
 that the full stack is working correctly and provides the desired user experience.

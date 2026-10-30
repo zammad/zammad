@@ -50,7 +50,7 @@ declare global {
 }
 
 if (VITE_TEST_MODE) {
-  // Register globally for access from Capybara/Selenium.
+  // Register globally for access from Capybara/Playwright.
   window.testFlags = testFlags
 }
 

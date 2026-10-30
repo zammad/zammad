@@ -71,7 +71,7 @@ RSpec.describe 'Desktop > Knowledge Base > Sorting', app: :desktop_view, authent
 
     begin
       wait.until { listed(kind) == titles }
-    rescue Selenium::WebDriver::Error::TimeoutError
+    rescue BrowserTestHelper::Waiter::TimeoutError
       raise "Expected the #{kind} listed as #{titles.inspect}, got #{listed(kind).inspect}"
     end
   end
@@ -250,8 +250,8 @@ RSpec.describe 'Desktop > Knowledge Base > Sorting', app: :desktop_view, authent
       zulu  = find('li.draggable', text: 'Zulu subcategory')
       alpha = find('li.draggable', text: 'Alpha subcategory')
 
-      # `.to_s` because the drivers disagree on the type: Selenium answers with the string, the
-      #   Playwright driver with the native boolean (as `spec/system/manage/sla_spec.rb` does).
+      # `.to_s` because the Playwright driver answers with the native boolean instead of the string
+      #   (as `spec/system/manage/sla_spec.rb` does).
       expect(zulu['draggable'].to_s).to eq('true')
 
       zulu.drag_to(alpha, html5: true)
@@ -320,8 +320,8 @@ RSpec.describe 'Desktop > Knowledge Base > Sorting', app: :desktop_view, authent
       expect_keyboard_on(:categories, 'Zulu subcategory')
       expect(page).to have_css('#announcer-message', text: 'Zulu subcategory selected.', visible: :all)
 
-      # `:right`, not `:arrow_right`: Selenium knows both spellings, the Playwright driver only
-      #   this one (`Capybara::Playwright::Node::KEYS`).
+      # `:right`, not `:arrow_right`: the Playwright driver only knows this spelling
+      #   (`Capybara::Playwright::Node::KEYS`).
       send_keys(:right)
 
       # The arrow key moved the grid's own idea of where the keyboard is, so the next press acts on

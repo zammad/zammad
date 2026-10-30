@@ -23,7 +23,7 @@ RSpec.describe 'Ticket Handling with i-doit', integration: true, required_envs: 
         last_error = e
         false
       end
-    rescue Selenium::WebDriver::Error::TimeoutError
+    rescue BrowserTestHelper::Waiter::TimeoutError
       raise "i-doit at #{api_endpoint} did not become responsive, last error: #{last_error.inspect}"
     end
   end

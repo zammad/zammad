@@ -61,7 +61,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
 
     context 'with security keys method' do
       before do
-        skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chrome zammad_playwright].exclude?(Capybara.current_driver)
+        skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chromium].exclude?(Capybara.current_driver)
 
         stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
         visit '/'

@@ -12,8 +12,8 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do |example|
 
-    ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
-    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
+    ENV['FAKE_LOGIN_USER_ID'] = nil
+    ENV['FAKE_LOGIN_PENDING'] = nil
 
     # there is no way to authenticated in a not set up system
     next if !example.metadata.fetch(:set_up, true)
@@ -28,10 +28,10 @@ RSpec.configure do |config|
     if authentication_type == :form
       login(**credentials, app: example.metadata[:app])
     else
-      ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = User.find_by(email: credentials[:username]).id.to_s
+      ENV['FAKE_LOGIN_USER_ID'] = User.find_by(email: credentials[:username]).id.to_s
 
       if %i[desktop_view mobile].exclude?(example.metadata[:app])
-        ENV['FAKE_SELENIUM_LOGIN_PENDING'] = 'true'
+        ENV['FAKE_LOGIN_PENDING'] = 'true'
       end
     end
   end

@@ -71,9 +71,9 @@ class SessionsController < ApplicationController
 
   # "Delete" a login, aka "log the user out"
   def destroy
-    if %w[test development].include?(Rails.env) && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present?
-      ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
-      ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
+    if %w[test development].include?(Rails.env) && ENV['FAKE_LOGIN_USER_ID'].present?
+      ENV['FAKE_LOGIN_USER_ID'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
+      ENV['FAKE_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
     end
 
     return saml_destroy if saml_session?

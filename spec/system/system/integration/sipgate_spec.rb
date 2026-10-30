@@ -42,7 +42,7 @@ RSpec.describe 'Manage > Integration > sipgate.io', type: :system do
         result = page.evaluate_script(state_js)
         result == true
       end
-    rescue Selenium::WebDriver::Error::TimeoutError
+    rescue BrowserTestHelper::Waiter::TimeoutError
       raise "Frontend settings collection did not settle: #{result}"
     end
   end

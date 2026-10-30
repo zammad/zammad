@@ -40,10 +40,10 @@ RSpec.configure do |config|
     #   port websocket_server.rb actually listens on.
     Setting.set('websocket_port', WS_PORT.to_s)
 
-    browser_name = ENV.fetch('SELENIUM_BROWSER', 'firefox')
+    browser_name = ENV.fetch('TEST_BROWSER', 'chromium')
 
     # If mobile user agent was requested by the example,
-    #   use an appropriate driver (e.g. zammad_chrome_mobile).
+    #   use an appropriate driver (e.g. zammad_chromium_mobile).
     if example.metadata[:mobile_user_agent].present?
       browser_name += '_mobile'
 
@@ -55,7 +55,7 @@ RSpec.configure do |config|
       end
     end
 
-    # set custom Zammad driver (e.g. zammad_chrome) for special
+    # set custom Zammad driver (e.g. zammad_chromium) for special
     # functionalities and CI requirements
     driven_by(:"zammad_#{browser_name}")
 
@@ -80,13 +80,7 @@ RSpec.configure do |config|
       browser_height = 1000
     end
 
-    # PLAYWRIGHT PILOT: the Playwright driver has no Selenium `manage` API - use
-    #   Capybara's window abstraction, which the driver maps to viewport resizing.
-    if page.driver.is_a?(Capybara::Playwright::Driver)
-      page.current_window.resize_to(browser_width, browser_height)
-    else
-      page.driver.browser.manage.window.resize_to(browser_width, browser_height)
-    end
+    page.current_window.resize_to(browser_width, browser_height)
 
     # Remember the size so that additional sessions (see CommonActions#using_session)
     #   can be brought to the same size - their windows otherwise keep the driver's
@@ -103,15 +97,13 @@ RSpec.configure do |config|
     # Also end the session whenever the user agent was mocked, in order to get a fresh
     #   session for subsequent examples.
     # Make sure additional sessions (from using_sessions) are always ended
-    #   after every test and not kept alive. Selenium will automatically close
-    #   idle sessions which can cause 404 errors later.
-    #   (see https://github.com/teamcapybara/capybara/issues/2237)
+    #   after every test and not kept alive.
     Capybara.send(:session_pool).reverse_each do |_mode, session|
       next if session.eql?(Capybara.current_session) && (capybara_examples_performed % 100).nonzero? && !example.metadata[:mobile_user_agent]
 
       PlaywrightSessionQuit.call(session)
 
-      # session.quit is a real WebDriver network call with no timeout of its own - specs
+      # session.quit is a real browser call with no timeout of its own - specs
       #   using multiple sessions (e.g. chat_spec.rb's using_session :customer) have been
       #   observed stalling the whole suite for 18+ minutes when it hangs. Bound it so a
       #   stuck session delays things by seconds instead.
@@ -132,16 +124,11 @@ RSpec.configure do |config|
   retry_exceptions = [
     Net::OpenTimeout,
     Net::ReadTimeout,
-    Selenium::WebDriver::Error::InvalidArgumentError,
-    Selenium::WebDriver::Error::SessionNotCreatedError,
-    Selenium::WebDriver::Error::UnknownError,
   ].freeze
 
   config.around(:each, type: :system) do |example|
     use_vcr = example.metadata.fetch(:use_vcr, false)
 
-    # WebMock makes it impossible to have persistent http connections to Selenium,
-    #    which may cause overhead and Net::OpenTimeout errors.
     WebMock.disable! if !use_vcr
     # rspec-retry
     example.run_with_retry retry: 3, exceptions_to_retry: retry_exceptions

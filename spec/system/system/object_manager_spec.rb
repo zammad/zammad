@@ -465,8 +465,8 @@ RSpec.describe 'System > Objects', type: :system do
       number = 1
       page.all('input.js-key').each do |input|
         # #send_keys must receive a String: capybara-playwright-driver's key
-        # dispatcher (unlike Selenium's) silently drops non-String/Symbol/Array
-        # arguments instead of coercing them, so an Integer here is a no-op.
+        # dispatcher silently drops non-String/Symbol/Array arguments instead
+        # of coercing them, so an Integer here is a no-op.
         input.send_keys(number.to_s)
         number += 1
       end

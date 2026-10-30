@@ -2,7 +2,7 @@
 
 # The hostname and the port of this run are resolved there - recomputing them
 #   here would let the two files disagree (e.g. for CAPYBARA_HOSTNAME setups
-#   like .devcontainer/with-selenium).
+#   like .devcontainer/with-playwright).
 require_relative 'driven_by'
 
 RSpec.configure do |config|

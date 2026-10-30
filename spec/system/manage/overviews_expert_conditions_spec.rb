@@ -192,8 +192,8 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             priority_condition = find('.js-filterElement:nth-child(3)')
             priority_height = priority_condition.evaluate_script('this.offsetHeight').to_i
 
-            # Ensure the draggable is fully inside the viewport so Selenium does not raise
-            # MoveTargetOutOfBoundsError when the condition list grows beyond the viewport height.
+            # Ensure the draggable is fully inside the viewport, also when the condition list grows
+            # beyond the viewport height.
             scroll_into_view(state_condition_draggable, position: :center)
 
             # Drag the state condition right above the priority, but drop it to the same subclause.
@@ -248,8 +248,8 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             priority_condition = find('.js-filterElement:nth-child(3)')
             priority_height = priority_condition.evaluate_script('this.offsetHeight').to_i
 
-            # Ensure the draggable is fully inside the viewport so Selenium does not raise
-            # MoveTargetOutOfBoundsError when the condition list grows beyond the viewport height.
+            # Ensure the draggable is fully inside the viewport, also when the condition list grows
+            # beyond the viewport height.
             scroll_into_view(state_condition_draggable, position: :center)
 
             # Drag the state condition above the priority, but drop it on the same level as the subclause to break it.

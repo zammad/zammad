@@ -38,11 +38,9 @@ RSpec.describe 'Ticket zoom > Navigation', type: :system do
     # ticket_zoom.jst.eco renders the pagination navigator twice - once for the
     #   always-visible header (.ticketZoom-controls) and once for the sticky
     #   scroll header (.scrollPageHeader), which is only revealed on scroll via a
-    #   CSS transform. Selenium's `displayed?` filters the latter out, but
-    #   Playwright's bounding-box visibility check does not, so a bare
-    #   '.pagination .btn--split--last' selector is ambiguous under Playwright.
-    #   Scope to the always-visible header to keep the selector unambiguous on
-    #   both drivers.
+    #   CSS transform. Playwright's bounding-box visibility check does not
+    #   filter the latter out, so a bare '.pagination .btn--split--last'
+    #   selector is ambiguous. Scope to the always-visible header instead.
     it 'previous is not clickable for the first item' do
       open_nth_item(0)
 

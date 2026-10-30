@@ -3,7 +3,7 @@
 # This file overwrites `Capybara::Node::Finders#all` to set the default value
 # of the `allow_reload` keyword argument to `true` (default: `false`) to enable
 # automatic reload of stale elements and avoid
-# `Selenium::WebDriver::Error::StaleElementReferenceError` exceptions.
+# `Capybara::Playwright::Node::StaleReferenceError` exceptions.
 
 module ZammadActivateReloadOfStaleElements
 

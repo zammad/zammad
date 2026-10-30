@@ -786,11 +786,6 @@ GEM
     sass-embedded (1.105.1-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
     securerandom (0.4.1)
-    selenium-webdriver (4.51.0)
-      base64 (~> 0.2)
-      logger (~> 1.4)
-      rubyzip (>= 1.2.2, < 4.0)
-      websocket (~> 1.0)
     shoulda-matchers (8.0.1)
       activesupport (>= 7.2)
     simple_po_parser (1.1.6)
@@ -896,7 +891,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    websocket (1.2.11)
     websocket-driver (0.8.2)
       base64
       websocket-extensions (>= 0.1.0)
@@ -1038,7 +1032,6 @@ DEPENDENCIES
   ruby-lsp
   ruby-lsp-rails
   ruby-lsp-rspec
-  selenium-webdriver
   shoulda-matchers
   simpleidn
   slack-ruby-client

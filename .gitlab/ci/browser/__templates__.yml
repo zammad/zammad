@@ -15,29 +15,7 @@
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t ~searchindex spec/system
 
-.template_browser-core_capybara_chrome:
-  extends:
-    - .template_browser-core_capybara
-    - .variables_selenium_chrome
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, selenium-chrome]
-    - !reference [.services, redis]
-
-.template_browser-core_capybara_firefox:
-  extends:
-    - .template_browser-core_capybara
-    - .variables_selenium_firefox
-  # Chrome covers the same specs, so the Firefox lane is advisory in merge requests.
-  rules:
-    - !reference [.rule_fragments, variable_filters]
-    - !reference [.rule_fragments, then_manual_in_mr]
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, selenium-firefox]
-    - !reference [.services, redis]
-
-.template_browser-core_capybara_playwright:
+.template_browser-core_capybara_chromium:
   extends:
     - .template_browser-core_capybara
     - .variables_playwright
@@ -46,10 +24,14 @@
     - !reference [.services, playwright]
     - !reference [.services, redis]
 
-.template_browser-core_capybara_playwright_firefox:
+.template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
     - .variables_playwright_firefox
+  # Chromium covers the same specs, so the Firefox lane is advisory in merge requests.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
   services:
     - !reference [.services, postgresql]
     - !reference [.services, playwright]

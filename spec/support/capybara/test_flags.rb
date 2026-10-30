@@ -4,7 +4,7 @@ module TestFlags
   def wait_for_test_flag(flag, skip_clearing: false, timeout: Capybara.default_max_wait_time)
     begin
       wait(timeout).until { page.evaluate_script("window.testFlags && window.testFlags.get('#{flag.gsub("'", "\\'")}', #{skip_clearing})") }
-    rescue Selenium::WebDriver::Error::TimeoutError
+    rescue BrowserTestHelper::Waiter::TimeoutError
       raise "Test flag #{flag} not set"
     end
   end
@@ -36,7 +36,7 @@ module TestFlags
     # an active subscriber for the event stream before continuing.
     begin
       wait.until { graphql_event_stream_subscribed?(name, entity: entity, scope: scope) }
-    rescue Selenium::WebDriver::Error::TimeoutError
+    rescue BrowserTestHelper::Waiter::TimeoutError
       raise "GraphQL event stream for subscription #{name} has no subscriber"
     end
   end

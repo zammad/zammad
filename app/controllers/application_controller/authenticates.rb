@@ -24,8 +24,8 @@ module ApplicationController::Authenticates
   end
 
   def authentication_check_only
-    if %w[test development].include?(Rails.env) && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present? && session[:user_id].blank?
-      session[:user_id] = ENV['FAKE_SELENIUM_LOGIN_USER_ID'].to_i
+    if %w[test development].include?(Rails.env) && ENV['FAKE_LOGIN_USER_ID'].present? && session[:user_id].blank?
+      session[:user_id] = ENV['FAKE_LOGIN_USER_ID'].to_i
       session[:user_device_updated_at] = Time.zone.now
       session[:authentication_type] = 'password'
     end

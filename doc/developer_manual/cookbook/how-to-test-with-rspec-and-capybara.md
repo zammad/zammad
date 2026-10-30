@@ -7,7 +7,7 @@ Switching between running tests and doing development work (by running `dev` fro
 should be effortless without any issues.
 
 RSpec is the recommended way of writing back end tests for Zammad,
-and in combination with Capybara also Selenium based end-to-end tests.
+and in combination with Capybara also Playwright-based end-to-end tests.
 
 This page explains some Zammad specific extensions that make testing easier.
 
@@ -32,11 +32,11 @@ Note that it's also possible to run a specific test case by including the line n
 bundle exec rspec spec/system/ticket/zoom_spec.rb:1072
 ```
 
-If you would like to specify the used browser for Capybara end-to-end tests, simply set the `SELENIUM_BROWSER` environment
+Capybara end-to-end tests run in Chromium by default. To use Firefox instead, set the `TEST_BROWSER` environment
 variable:
 
 ```sh
-SELENIUM_BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
+TEST_BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
 ```
 
 Also running failed tests only is possible with the option `--only-failures`.
@@ -45,9 +45,8 @@ Also running failed tests only is possible with the option `--only-failures`.
 bundle exec rspec --only-failures spec/system/ticket/zoom_spec.rb
 ```
 
-Besides the Selenium browsers there is a Playwright driver, which records a trace of every example and is therefore
-useful to debug a failing browser test. See
-[How to debug system tests with Playwright](how-to-debug-with-playwright.md).
+The browsers are driven by Playwright, which needs a one-time browser download and records a trace of every example to
+debug a failing browser test. See [How to debug system tests with Playwright](how-to-debug-with-playwright.md).
 
 ## Ports Used by a Test Run
 
@@ -210,7 +209,7 @@ end
 
 ### `authenticated_as`
 
-As the default the login in selenium will be simulated and not the real form in the frontend.
+By default, the login in the browser is simulated instead of using the real form in the frontend.
 
 With the `authentication_type` it's possible to switch to the real form with he value `form`.
 

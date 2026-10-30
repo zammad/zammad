@@ -33,7 +33,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
     context 'with security keys method' do
       before do
-        skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chrome zammad_playwright].exclude?(Capybara.current_driver)
+        skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chromium].exclude?(Capybara.current_driver)
         Setting.set('two_factor_authentication_method_security_keys', true)
         Setting.set('two_factor_authentication_recovery_codes', false)
         Setting.set('two_factor_authentication_enforce_role_ids', [])

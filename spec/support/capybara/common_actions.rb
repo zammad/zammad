@@ -22,8 +22,8 @@ module CommonActions
   #
   # return [nil]
   def login(username:, password:, remember_me: false, app: self.class.metadata[:app], skip_waiting: false)
-    ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
-    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
+    ENV['FAKE_LOGIN_USER_ID'] = nil
+    ENV['FAKE_LOGIN_PENDING'] = nil
 
     if !page.current_path || page.current_path.exclude?('login')
       visit '/', skip_waiting: true, app: app
@@ -127,8 +127,8 @@ module CommonActions
   #  logout
   #
   def logout(app: self.class.metadata[:app])
-    ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
-    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
+    ENV['FAKE_LOGIN_USER_ID'] = nil
+    ENV['FAKE_LOGIN_PENDING'] = nil
 
     visit('logout', app: app)
 
@@ -393,15 +393,6 @@ module CommonActions
       elem.base.obscured?
     rescue *page.driver.invalid_element_errors
       true
-    rescue Selenium::WebDriver::Error::UnknownError => e
-      # Newer Chrome versions may return the following error for a missing element:
-      #
-      #   unknown error: unhandled inspector error: {"code":-32000,"message":"No node with given id found"}
-      #   (Session info: chrome=113.0.5672.126)"
-      #
-      #   This error is currently unrecognized by `Selenium::WebDriver.invalid_element_errors`,
-      #   so we make an explicit exception.
-      e.to_s.include? '"code":-32000'
     end
   end
 
@@ -422,18 +413,8 @@ module CommonActions
     expected = @zammad_browser_window_size
     return if expected.blank?
 
-    # PLAYWRIGHT PILOT: no Selenium `manage` API - use Capybara's window abstraction.
-    if page.driver.is_a?(Capybara::Playwright::Driver)
-      window = page.current_window
-      window.resize_to(*expected) if window.size != expected
-
-      return
-    end
-
-    window = page.driver.browser.manage.window
-    return if [window.size.width, window.size.height] == expected
-
-    window.resize_to(*expected)
+    window = page.current_window
+    window.resize_to(*expected) if window.size != expected
   end
 
   # Show the popover on hover
@@ -496,10 +477,10 @@ module CommonActions
   private
 
   def wait_for_pending_login(skip_waiting)
-    return if !ENV['FAKE_SELENIUM_LOGIN_PENDING']
+    return if !ENV['FAKE_LOGIN_PENDING']
 
     # When visiting the first route after login, confirm currently logged in user.
-    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
+    ENV['FAKE_LOGIN_PENDING'] = nil
     current_login if !skip_waiting
 
     nil

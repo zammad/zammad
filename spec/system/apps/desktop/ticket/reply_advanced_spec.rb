@@ -37,8 +37,6 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
   end
 
   before do
-    skip 'Editor scenario relies on Chrome-specific selection/cursor behavior.' if Capybara.current_driver == :zammad_firefox
-
     Setting.set('time_accounting', true)
     Setting.set('time_accounting_types', true)
     Setting.set('time_accounting_unit', 'minute')
@@ -259,8 +257,7 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
       # An action that wrapped out of the visible toolbar row stays in the
       # DOM, but is disabled (ActionButton.vue) and reachable only via the
       # overflow menu. Detect direct availability via the enabled state:
-      # Selenium reports the clipped button as invisible, Playwright as
-      # visible, but both agree on the disabled property.
+      # Playwright reports the clipped button as visible.
       if has_button?(label, disabled: false, wait: 0.5)
         in_toolbar = true
         find_button(label, disabled: false).click
@@ -489,9 +486,9 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     # Capybara::DSL#find it calls super into (which re-resolves the also
     # overridden `page`), so the result is wrapped twice. #element only
     # peels one layer, still leaving a delegator that Capybara does not
-    # recognize as an element (silently scrolls nowhere under Selenium,
-    # and the Playwright driver raises when serializing it as a script
-    # argument). #to_capybara_node unwraps any number of delegator layers.
+    # recognize as an element (the Playwright driver raises when
+    # serializing it as a script argument). #to_capybara_node unwraps any
+    # number of delegator layers.
     page.scroll_to(button.to_capybara_node, align: :center)
     wait.until { !button.obscured? }
 

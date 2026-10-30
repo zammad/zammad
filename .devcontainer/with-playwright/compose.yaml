@@ -1,0 +1,22 @@
+name: "zammad-devcontainer"
+
+include: [../default/compose.yaml]
+
+# The browser server shares the network namespace of the devcontainer, so it
+# answers on localhost:4444 there, and the browsers it launches reach the
+# Capybara server on localhost as well. It launches Chromium or Firefox, as the
+# test run asks for. The version must match the playwright package of the
+# checkout (package.json), see spec/support/capybara/playwright_driver.rb.
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    network_mode: service:devcontainer
+    depends_on:
+      - devcontainer
+    init: true
+    shm_size: 2g
+    user: pwuser
+    working_dir: /home/pwuser
+    # --unsafe lets the server accept the Chromium args the driver passes.
+    command: npx --yes playwright@1.64.1 run-server --host 0.0.0.0 --port 4444 --unsafe
+    restart: unless-stopped

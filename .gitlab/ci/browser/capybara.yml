@@ -1,32 +1,9 @@
-capybara:chrome:
+capybara:chromium:
   extends:
-    - .template_browser-core_capybara_chrome
+    - .template_browser-core_capybara_chromium
   parallel: 16
 
 capybara:firefox:
   extends:
     - .template_browser-core_capybara_firefox
-  parallel: 16
-
-# Shadow lane for the Playwright driver evaluation: runs automatically on develop
-#   and in scheduled pipelines next to capybara:chrome, is only started on demand
-#   in merge requests, and never gates - allow_failure keeps a red lane from
-#   blocking the pipeline.
-capybara:playwright:
-  extends:
-    - .template_browser-core_capybara_playwright
-  rules:
-    - !reference [.rule_fragments, variable_filters]
-    - !reference [.rule_fragments, then_manual_in_mr]
-  allow_failure: true
-  parallel: 16
-
-# Evaluation lane for Playwright's Firefox, not decided yet whether it stays -
-#   only started on demand and never gates.
-capybara:firefox:playwright:
-  extends:
-    - .template_browser-core_capybara_playwright_firefox
-  rules:
-    - !reference [.rule_fragments, variable_filters]
-    - !reference [.rule_fragments, then_manual]
   parallel: 16

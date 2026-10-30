@@ -19,7 +19,7 @@ PLAYWRIGHT_TRACE_KEEP_DIR    = Rails.root.join('tmp/playwright-traces')
 
 # DOM snapshots additionally give the trace viewer its time travel - inspecting
 #   the live DOM at every step - but they are captured per Playwright action, and
-#   this driver's emulation layer issues several browser calls where Selenium
+#   this driver's emulation layer issues several browser calls where WebDriver
 #   issues one (`Element#text` alone costs four). Measured on desktop specs they
 #   cost 27-46% of runtime, against ~3% for the screenshots, so they are opt-in:
 #   set PLAYWRIGHT_TRACE=full for a run that needs them.
@@ -27,8 +27,6 @@ PLAYWRIGHT_TRACE_SNAPSHOTS = ENV['PLAYWRIGHT_TRACE'] == 'full'
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do |example|
-    next if !page.driver.is_a?(Capybara::Playwright::Driver)
-
     # Examples with required_envs work with real credentials, which a trace would keep in
     #   its action log and screenshots - and failed traces end up in the CI artifacts.
     next if example.metadata[:required_envs]

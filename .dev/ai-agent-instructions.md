@@ -83,9 +83,9 @@ small methods are preferred over explanation.
 ### Backend
 
 ```bash
-RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/path/to/file_spec.rb                                     # Run specific RSpec test
-SELENIUM_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb  # Run specific system spec (always headless)
-bundle exec rubocop --autocorrect app/path/to/file.rb                                                           # Lint specific Ruby file(s)
+RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/path/to/file_spec.rb                                 # Run specific RSpec test
+TEST_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb  # Run specific system spec (always headless)
+bundle exec rubocop --autocorrect app/path/to/file.rb                                                       # Lint specific Ruby file(s)
 ```
 
 ### Frontend

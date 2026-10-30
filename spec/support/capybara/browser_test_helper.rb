@@ -3,10 +3,9 @@
 module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
 
   # Sometimes tests refer to elements that get removed/re-added to the DOM when
-  # updating the UI. This causes Selenium to throw a StaleElementReferenceError exception.
+  # updating the UI. This causes the driver to raise a StaleReferenceError exception.
   # This method catches this error and retries the given amount of times re-raising
   # the exception if the element is still stale.
-  # @see https://developer.mozilla.org/en-US/docs/Web/WebDriver/Errors/StaleElementReference WebDriver definition
   #
   # @example
   #  retry_on_stale do
@@ -17,12 +16,12 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   #    find('.now-here-soon-gone').click
   #  end
   #
-  # @raise [Selenium::WebDriver::Error::StaleElementReferenceError] If element is still stale after given number of retries
+  # @raise [Capybara::Playwright::Node::StaleReferenceError] If element is still stale after given number of retries
   def retry_on_stale(retries: 3)
     tries ||= 0
 
     yield
-  rescue Selenium::WebDriver::Error::StaleElementReferenceError, Capybara::Playwright::Node::StaleReferenceError
+  rescue Capybara::Playwright::Node::StaleReferenceError
     raise if tries == retries
 
     wait_time = tries
@@ -37,17 +36,12 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # Get the current cookies from the browser with the driver object.
   #
   def cookies
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.manage.all_cookies
-    else
-      page.driver.with_playwright_page do |pw_page|
-        pw_page.context.cookies.map { |cookie| normalize_playwright_cookie(cookie) }
-      end
+    page.driver.with_playwright_page do |pw_page|
+      pw_page.context.cookies.map { |cookie| normalize_playwright_cookie(cookie) }
     end
   end
 
-  # Align the Playwright cookie shape with Selenium's: symbol keys and
-  # expires as Time or nil (Playwright reports session cookies as -1).
+  # Symbol keys and expires as Time or nil (Playwright reports session cookies as -1).
   #
   def normalize_playwright_cookie(cookie)
     normalized = cookie.transform_keys { |key| key.underscore.to_sym }
@@ -74,12 +68,8 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
 
     return if !cookie
 
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.manage.delete_cookie(cookie[:name])
-    else
-      page.driver.with_playwright_page do |pw_page|
-        pw_page.context.clear_cookies(name: cookie[:name])
-      end
+    page.driver.with_playwright_page do |pw_page|
+      pw_page.context.clear_cookies(name: cookie[:name])
     end
   end
 
@@ -104,8 +94,7 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     find("[href=\"#icon-#{name}\"]").find(:xpath, '..')
   end
 
-  # This is a wrapper around the Selenium::WebDriver::Wait class
-  # with additional methods.
+  # Polls the given block until it returns a truthy value.
   # @see BrowserTestHelper::Waiter
   #
   # @example
@@ -114,10 +103,8 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # @example
   #  wait(5, interval: 0.5).until { ... }
   #
-  def wait(seconds = Capybara.default_max_wait_time, **kwargs)
-    wait_args   = Hash(kwargs).merge(timeout: seconds)
-    wait_handle = Selenium::WebDriver::Wait.new(wait_args)
-    Waiter.new(wait_handle)
+  def wait(seconds = Capybara.default_max_wait_time, **)
+    Waiter.new(timeout: seconds, **)
   end
 
   # Setting's class-level cache can serve a stale value for a while after a write
@@ -155,42 +142,19 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     # Waiting not supported/required by mobile app.
     return if %i[desktop_view mobile].include?(self.class.metadata[:app]) # self.class needed to get metadata from within an `it` block.
 
-    # page.evaluate_script silently discards any present alerts, which is not desired.
-    # PLAYWRIGHT PILOT: alert probing is Selenium-only (`browser` is private on the
-    #   Playwright driver); Playwright handles dialogs via async handlers instead.
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      begin
-        return if page.driver.browser.switch_to.alert
-      rescue Selenium::WebDriver::Error::NoSuchAlertError # rubocop:disable Lint/SuppressedException
-      end
-    end
-
     # skip on non app related context
     return if page.evaluate_script('typeof(App) !== "function" || typeof($) !== "function"')
 
     # Always wait a little bit to allow for triggering of requests.
     sleep 0.1
 
-    script_timeout_retried = false
-
-    begin
-      wait(5).until do
-        page.evaluate_script('App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').eql? true
-      end
-    rescue Selenium::WebDriver::Error::ScriptTimeoutError
-      # The main thread was blocked by long-running synchronous work (e.g. drawing a huge
-      #   inline image onto a canvas), so the check itself could not run. The browser is
-      #   responsive again once the error surfaces - check once more before giving up.
-      raise if script_timeout_retried
-
-      script_timeout_retried = true
-      retry
+    wait(5).until do
+      page.evaluate_script('App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').eql? true
     end
-  rescue Selenium::WebDriver::Error::TimeoutError, Selenium::WebDriver::Error::JavascriptError, Playwright::Error
+  rescue Waiter::TimeoutError, Playwright::Error
     nil # Page may navigate away mid-check (e.g. SAML redirect), making App undefined.
-    #   Playwright::Error is the equivalent of both Selenium classes here: the
-    #   guard above cannot prevent this, as the document can be replaced between
-    #   it and the check below, and Playwright::TimeoutError subclasses it.
+    #   The guard above cannot prevent this, as the document can be replaced
+    #   between it and the check below.
   end
 
   # Waits until all pending Core Workflow requests of the legacy frontend are
@@ -219,13 +183,9 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # move_mouse_by(100, 200)
   #
   def move_mouse_by(x_axis, y_axis)
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.action.move_by(x_axis, y_axis).perform
-    else
-      page.driver.with_playwright_page do |pw_page|
-        position = playwright_mouse_position
-        playwright_mouse_move(pw_page, position[:x] + x_axis, position[:y] + y_axis)
-      end
+    page.driver.with_playwright_page do |pw_page|
+      position = playwright_mouse_position
+      playwright_mouse_move(pw_page, position[:x] + x_axis, position[:y] + y_axis)
     end
   end
 
@@ -235,24 +195,18 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # move_mouse_to(page.find('button.hover_me'))
   #
   def move_mouse_to(element)
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      element.in_fixed_position
-      page.driver.browser.action.move_to_location(element.native.location.x, element.native.location.y).perform
-    else
-      page.driver.with_playwright_page do |pw_page|
-        box = playwright_fixed_bounding_box(element)
-        playwright_mouse_move(pw_page, box['x'], box['y'])
-      end
+    page.driver.with_playwright_page do |pw_page|
+      box = playwright_fixed_bounding_box(element)
+      playwright_mouse_move(pw_page, box['x'], box['y'])
     end
   end
 
   # Places the collapsed text cursor immediately before the given element by
   # setting the browser's Selection directly, instead of clicking at the
   # element's pixel location. A coordinate click is unreliable for a collapsed,
-  # zero-content element such as the <br> of an empty line: Selenium and
-  # Playwright's bundled Chromium report different bounding boxes for it (one
-  # gives the real line height, the other collapses to 0), so identical click
-  # coordinates can land on different lines depending on the driver.
+  # zero-content element such as the <br> of an empty line: its bounding box
+  # can collapse to a height of 0, so a click at its coordinates can land on a
+  # different line.
   #
   # @example
   # place_cursor_before(blockquote_empty_line)
@@ -276,16 +230,12 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # click_and_hold(tr[data-id='1'])
   #
   def click_and_hold(element)
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.action.click_and_hold(element).perform
-    else
-      # element is the native node here, i.e. a Playwright::ElementHandle.
-      page.driver.with_playwright_page do |pw_page|
-        element.scroll_into_view_if_needed
-        box = element.bounding_box
-        playwright_mouse_move(pw_page, box['x'] + (box['width'] / 2), box['y'] + (box['height'] / 2))
-        pw_page.mouse.down
-      end
+    # element is the native node here, i.e. a Playwright::ElementHandle.
+    page.driver.with_playwright_page do |pw_page|
+      element.scroll_into_view_if_needed
+      box = element.bounding_box
+      playwright_mouse_move(pw_page, box['x'] + (box['width'] / 2), box['y'] + (box['height'] / 2))
+      pw_page.mouse.down
     end
   end
 
@@ -306,21 +256,12 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     #  Then, click and hold the left mouse button.
     #  Next, move the mouse vertically, just below the top edge of the browser.
     #  Finally, move the mouse slightly horizontally to simulate a non-linear drag.
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.action
-        .move_to_location(element.location.x + 50, element.location.y + 10)
-        .click_and_hold
-        .move_by(0, -element.location.y + 3)
-        .move_by(3, 0)
-        .perform
-    else
-      page.driver.with_playwright_page do |pw_page|
-        box = element.bounding_box
-        playwright_mouse_move(pw_page, box['x'] + 50, box['y'] + 10)
-        pw_page.mouse.down
-        playwright_mouse_move(pw_page, box['x'] + 50, 13, steps: 5)
-        playwright_mouse_move(pw_page, box['x'] + 53, 13)
-      end
+    page.driver.with_playwright_page do |pw_page|
+      box = element.bounding_box
+      playwright_mouse_move(pw_page, box['x'] + 50, box['y'] + 10)
+      pw_page.mouse.down
+      playwright_mouse_move(pw_page, box['x'] + 50, 13, steps: 5)
+      playwright_mouse_move(pw_page, box['x'] + 53, 13)
     end
   end
 
@@ -329,12 +270,10 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   #
   # The entries flex-wrap inside a container capped by `max-height` with
   # `overflow: hidden`, so only some of them fall within the visible clipped
-  # area - the rest are still rendered in the DOM, just occluded. Capybara's
-  # Selenium driver treats such clipped-out elements as not visible, but the
+  # area - the rest are still rendered in the DOM, just occluded. The
   # Playwright driver's visibility check only walks the CSS
   # display/visibility/opacity chain and does not consider clipping by an
-  # ancestor's overflow, so it counts all of them. Computing the count here
-  # keeps the assertion meaningful on both drivers.
+  # ancestor's overflow, so it would count all of them.
   #
   # @example
   # wait.until { visible_macro_entry_count == 32 }
@@ -360,17 +299,13 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # slide_mouse_to(circle, x_offset: 20, y_coord: target_y)
   #
   def slide_mouse_to(element, x_offset:, y_coord:)
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.action.move_to_location(element.native.location.x + x_offset, y_coord).perform
-    else
-      page.driver.with_playwright_page do |pw_page|
-        # The element may still be sliding into place (e.g. a drop target
-        #   revealed by a preceding hover/drag step) - #bounding_box also
-        #   returns nil while it's not yet visible, so read its settled
-        #   position instead of racing the animation.
-        box = playwright_fixed_bounding_box(element)
-        playwright_mouse_move(pw_page, box['x'] + x_offset, y_coord)
-      end
+    page.driver.with_playwright_page do |pw_page|
+      # The element may still be sliding into place (e.g. a drop target
+      #   revealed by a preceding hover/drag step) - #bounding_box also
+      #   returns nil while it's not yet visible, so read its settled
+      #   position instead of racing the animation.
+      box = playwright_fixed_bounding_box(element)
+      playwright_mouse_move(pw_page, box['x'] + x_offset, y_coord)
     end
   end
 
@@ -380,16 +315,12 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
   # release_mouse
   #
   def release_mouse
-    if page.driver.is_a?(Capybara::Selenium::Driver)
-      page.driver.browser.action.release.perform
-    else
-      page.driver.with_playwright_page { |pw_page| pw_page.mouse.up }
-    end
+    page.driver.with_playwright_page { |pw_page| pw_page.mouse.up }
     await_empty_ajax_queue
   end
 
-  # Playwright's Mouse#move is absolute while Selenium's move_by is relative -
-  # remember the pointer position so relative moves can be reproduced.
+  # Playwright's Mouse#move is absolute - remember the pointer position so
+  # relative moves can be reproduced.
   #
   def playwright_mouse_move(pw_page, x_coord, y_coord, steps: 1)
     pw_page.mouse.move(x_coord, y_coord, steps: steps)
@@ -430,9 +361,36 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     raise "Element still moving after #{checks} checks"
   end
 
-  class Waiter < SimpleDelegator
+  class Waiter
+    class TimeoutError < StandardError; end
 
-    # This method is a derivation of Selenium::WebDriver::Wait#until
+    def initialize(timeout:, interval: 0.2, message: nil)
+      @timeout  = timeout
+      @interval = interval
+      @message  = message
+    end
+
+    # Returns the first truthy result of the given block.
+    #
+    # @raise [Waiter::TimeoutError] If the block returned no truthy result in time
+    #
+    # @example
+    #  wait.until { Ticket.last.state.name == 'closed' }
+    #
+    def until
+      deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + @timeout
+
+      while Process.clock_gettime(Process::CLOCK_MONOTONIC) <= deadline
+        result = yield
+        return result if result
+
+        sleep @interval
+      end
+
+      raise TimeoutError, @message || "timed out after #{@timeout} seconds"
+    end
+
+    # This method is a derivation of #until
     # which ignores Capybara::ElementNotFound exceptions raised
     # in the given block.
     #
@@ -446,13 +404,13 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
       rescue Capybara::ElementNotFound
         # doesn't exist yet
       end
-    rescue Selenium::WebDriver::Error::TimeoutError => e
+    rescue TimeoutError => e
       # cleanup backtrace
       e.set_backtrace(e.backtrace.drop(3))
       raise e
     end
 
-    # This method is a derivation of Selenium::WebDriver::Wait#until
+    # This method is a derivation of #until
     # which ignores Capybara::ElementNotFound exceptions raised
     # in the given block.
     #
@@ -467,7 +425,7 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
       rescue Capybara::ElementNotFound
         true
       end
-    rescue Selenium::WebDriver::Error::TimeoutError => e
+    rescue TimeoutError => e
       # cleanup backtrace
       e.set_backtrace(e.backtrace.drop(3))
       raise e
@@ -480,12 +438,10 @@ module BrowserTestHelper # rubocop:disable Metrics/ModuleLength
     #
     def until_constant
       previous = nil
-      timeout  = __getobj__.instance_variable_get(:@timeout)
-      interval = __getobj__.instance_variable_get(:@interval)
-      rounds   = (timeout / interval).to_i
+      rounds   = (@timeout / @interval).to_i
 
       rounds.times do
-        sleep interval
+        sleep @interval
 
         latest = yield
 

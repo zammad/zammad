@@ -103,7 +103,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
 
     def wait_for_subscription_url(label)
       wait.until { find_input(label).input_element.value.presence }
-    rescue Selenium::WebDriver::Error::TimeoutError
+    rescue BrowserTestHelper::Waiter::TimeoutError
       raise "Subscription URL input '#{label}' was not populated"
     end
 

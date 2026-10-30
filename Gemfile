@@ -228,13 +228,10 @@ group :development, :test do
   # for testing Pundit authorisation policies in RSpec
   gem 'pundit-matchers'
 
-  # UI tests w/ Selenium
+  # UI tests w/ Playwright. playwright-ruby-client is pulled in by the driver;
+  #   it is declared here so Renovate sees it and can keep it in lockstep with
+  #   the playwright npm package.
   gem 'capybara'
-  gem 'selenium-webdriver'
-
-  # Playwright pilot (throwaway evaluation). playwright-ruby-client is pulled in
-  #   by the driver; it is declared here so Renovate sees it and can keep it in
-  #   lockstep with the playwright npm package.
   gem 'capybara-playwright-driver'
   gem 'playwright-ruby-client'
 

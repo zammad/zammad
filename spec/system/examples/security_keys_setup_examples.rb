@@ -11,7 +11,7 @@ RSpec.shared_examples 'security keys setup', authenticated_as: :authenticate do
   end
 
   before do
-    skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chrome zammad_playwright].exclude?(Capybara.current_driver)
+    skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chromium].exclude?(Capybara.current_driver)
   end
 
   it 'sets up security keys method' do

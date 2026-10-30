@@ -23,10 +23,10 @@ For testing, you can use the HTML-files which are used in the chat tests:
 - [public/assets/chat/znuny.html](/public/assets/chat/znuny.html)
 - [public/assets/chat/znuny-no-jquery.html](/public/assets/chat/znuny-no-jquery.html)
 
-## Selenium Testing
+## Browser Testing
 
-For selenium two browser tests exist, one for the version with JQuery and one without JQuery.
-The improvements for the tests needs to be done in both files.
+Two browser tests exist, one for the version with JQuery and one without JQuery.
+The improvements for the tests need to be done in both files.
 
 ## Backporting to stable
 

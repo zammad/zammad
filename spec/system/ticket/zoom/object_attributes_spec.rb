@@ -238,11 +238,10 @@ RSpec.describe 'Ticket zoom > Object manager attributes', type: :system do
 
     # The dropdown keeps a flat, always-rendered options list (`.js-optionsList`) underneath the
     # currently active submenu panel (`.js-optionsSubmenu`), which is overlaid via absolute
-    # positioning rather than by hiding the list. Capybara's Selenium driver treats fully covered
-    # elements as not visible, but the Playwright driver's visibility check only walks the CSS
-    # display/visibility/opacity chain and does not consider such occlusion, so it still reports
-    # the covered list's stale options (e.g. 'TreeA') as visible. Restricting the check to the
-    # panel that is actually on top keeps this assertion meaningful and driver-independent.
+    # positioning rather than by hiding the list. The Playwright driver's visibility check only
+    # walks the CSS display/visibility/opacity chain and does not consider such occlusion, so it
+    # still reports the covered list's stale options (e.g. 'TreeA') as visible. Restricting the
+    # check to the panel that is actually on top keeps this assertion meaningful.
     def visible_group_search_option_texts
       page.evaluate_script(<<~JS)
         Array.from(

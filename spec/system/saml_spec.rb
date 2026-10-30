@@ -56,7 +56,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     expect(page).to have_text('Sign out')
   end
 
-  # TODO: Should be replaced with tests for the new desktop-view (or the test in general should be removed outside of selenium).
+  # TODO: Should be replaced with tests for the new desktop-view (or the test in general should be removed outside of browser tests).
   describe 'SP login and SP logout' do
     before do
       saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:, security:)

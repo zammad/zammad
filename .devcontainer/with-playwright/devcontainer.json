@@ -1,7 +1,7 @@
 // For format details, see https://containers.dev/implementors/json_reference/.
 // For config options, see the README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
-  "name": "Zammad (with Selenium)",
+  "name": "Zammad (with Playwright)",
   "dockerComposeFile": "compose.yaml",
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -40,19 +40,18 @@
   ],
   "containerEnv": {
     "VITE_TEST_MODE": "1", // needed for test flag support
-    // The grids share the network namespace of the devcontainer (see compose.yaml), so the
-    // browser reaches the Capybara server on localhost, the default CAPYBARA_HOSTNAME.
-    "SELENIUM_REMOTE_URL": "http://localhost:4444/wd/hub",
-    "SELENIUM_BROWSER": "chrome",
-    // "SELENIUM_REMOTE_URL": "http://localhost:4445/wd/hub",
-    // "SELENIUM_BROWSER": "firefox",
-    "SELENIUM_BROWSER_HEADLESS": "true"
+    // The browser server shares the network namespace of the devcontainer (see compose.yaml),
+    // so the browser reaches the Capybara server on localhost, the default CAPYBARA_HOSTNAME.
+    "PLAYWRIGHT_SERVER_URL": "ws://localhost:4444/",
+    // Must match the image and the run-server version in compose.yaml.
+    "PLAYWRIGHT_VERSION": "1.64.1",
+    "TEST_BROWSER": "chromium"
+    // "TEST_BROWSER": "firefox"
   },
   "forwardPorts": [
     3000,
     3036,
     4444,
-    4445,
     6042,
     9200
   ],
@@ -64,10 +63,7 @@
       "label": "Vite dev server"
     },
     "4444": {
-      "label": "Selenium Chrome standalone server"
-    },
-    "4445": {
-      "label": "Selenium Firefox standalone server"
+      "label": "Playwright browser server"
     },
     "6042": {
       "label": "WebSocket legacy server"
@@ -76,6 +72,6 @@
       "label": "Elasticsearch HTTP API"
     }
   },
-  "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-selenium/scripts/post_create.sh",
+  "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-playwright/scripts/post_create.sh",
   "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
 }

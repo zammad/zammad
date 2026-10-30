@@ -33,6 +33,19 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
+        "/^\\.devcontainer/with-playwright/(compose\\.yaml|devcontainer\\.json)$/"
+      ],
+      "matchStrings": [
+        "mcr\\.microsoft\\.com/playwright:v(?<currentValue>[0-9.]+)-",
+        "playwright@(?<currentValue>[0-9.]+)",
+        "\"PLAYWRIGHT_VERSION\": \"(?<currentValue>[^\"]+)\""
+      ],
+      "depNameTemplate": "playwright",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
         "/^lib/form_spam_protection/captcha/.*\\.rb$/"
       ],
       "matchStrings": ["cdn\\.jsdelivr\\.net/npm/(?<depName>[^@]+)@(?<currentValue>[^/]+)/"],
@@ -114,6 +127,12 @@
       ],
       "groupName": "Playwright packages",
       "groupSlug": "playwright"
+    },
+    {
+      "description": "The image tag follows the playwright package, see the custom manager above.",
+      "matchManagers": ["docker-compose"],
+      "matchPackageNames": ["mcr.microsoft.com/playwright"],
+      "enabled": false
     },
     {
       "matchDepNames": ["ruby", "docker.io/library/ruby"],

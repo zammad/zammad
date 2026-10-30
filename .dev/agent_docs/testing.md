@@ -4,7 +4,7 @@
 
 - Test at the **lowest level** possible — unit over request over E2E
 - Focus on the object under test, mock dependencies where it makes sense
-- Only important user stories get E2E/system tests (Capybara + Selenium)
+- Only important user stories get E2E/system tests (Capybara + Playwright)
 - Service specs cover behavior, GraphQL specs only the GraphQL layer —
   see `.dev/agent_docs/testing_services_and_graphql.md`
 
@@ -43,13 +43,18 @@ but omit it when frontend files have changed.
 - `db_strategy: :reset` — reset database after examples that modify
   the schema
 
-### System tests (Capybara + Selenium)
+### System tests (Capybara + Playwright)
 
-Set `SELENIUM_BROWSER_HEADLESS=1` when running system specs — otherwise
-Selenium opens a real, visible browser window.
+Specs run in Chromium; `TEST_BROWSER=firefox` switches to Firefox.
+
+When Playwright launches the browser locally (`PLAYWRIGHT_SERVER_URL` is
+not set), set `TEST_BROWSER_HEADLESS=1` — otherwise it opens a real, visible
+browser window — and run a one-time `pnpm playwright:install` per checkout to
+download Chromium. A remote browser server (CI, the `with-playwright`
+devcontainer) is always headless and needs neither.
 
 ```bash
-SELENIUM_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb
+TEST_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb
 ```
 
 ### Stale legacy assets

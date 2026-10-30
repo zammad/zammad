@@ -89,8 +89,8 @@ FactoryBot.define do
 
           VirtualAuthenticator.register(page)
 
-          # evaluate_script returns the resolved promise value on both Selenium and Playwright
-          #   (Playwright's execute_script always discards the return value).
+          # evaluate_script returns the resolved promise value (Playwright's execute_script
+          #   always discards the return value).
           public_key_credential = page.evaluate_script("navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(#{initiate_configuration.as_json.to_h}) }).then((publicKeyCredential) => publicKeyCredential.toJSON())")
           webauthn_credential   = WebAuthn::Credential.from_create(public_key_credential)
 

@@ -6,31 +6,7 @@
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t searchindex spec/system
 
-.template_browser-core_capybara_chrome_es:
-  extends:
-    - .template_browser-core_capybara_es
-    - .variables_selenium_chrome
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, elasticsearch]
-    - !reference [.services, selenium-chrome]
-    - !reference [.services, redis]
-
-.template_browser-core_capybara_firefox_es:
-  extends:
-    - .template_browser-core_capybara_es
-    - .variables_selenium_firefox
-  # Like the non-ES Firefox lane: advisory in merge requests.
-  rules:
-    - !reference [.rule_fragments, variable_filters]
-    - !reference [.rule_fragments, then_manual_in_mr]
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, elasticsearch]
-    - !reference [.services, selenium-firefox]
-    - !reference [.services, redis]
-
-.template_browser-core_capybara_playwright_es:
+.template_browser-core_capybara_chromium_es:
   extends:
     - .template_browser-core_capybara_es
     - .variables_playwright
@@ -40,21 +16,24 @@
     - !reference [.services, playwright]
     - !reference [.services, redis]
 
-capybara:es:chrome:
+.template_browser-core_capybara_firefox_es:
   extends:
-    - .template_browser-core_capybara_chrome_es
+    - .template_browser-core_capybara_es
+    - .variables_playwright_firefox
+  # Like the non-ES Firefox lane: advisory in merge requests.
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, then_manual_in_mr]
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, playwright]
+    - !reference [.services, redis]
+
+capybara:es:chromium:
+  extends:
+    - .template_browser-core_capybara_chromium_es
 
 capybara:es:firefox:
   extends:
     - .template_browser-core_capybara_firefox_es
-
-# Shadow lane for the Playwright driver evaluation, twin of capybara:es:chrome:
-#   the searchindex-tagged system specs are excluded from the main capybara
-#   lanes, so the capybara:playwright shadow lane never covers them.
-capybara:es:playwright:
-  extends:
-    - .template_browser-core_capybara_playwright_es
-  rules:
-    - !reference [.rule_fragments, variable_filters]
-    - !reference [.rule_fragments, then_manual_in_mr]
-  allow_failure: true

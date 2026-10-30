@@ -105,11 +105,8 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
         find(:richtext).send_keys(:enter)
         await_empty_ajax_queue
 
-        # Firefox 139+ has a bug that causes the leading space to be removed.
-        # Hopefully this will either get fixed in Firefox.
-        # Otherwise this editor will be deprecated soon anyway...
-        # The Playwright driver's faster typing triggers the same space loss in Chromium.
-        if %i[zammad_firefox zammad_playwright zammad_playwright_mobile].include?(Capybara.current_driver)
+        # The Playwright driver's fast typing causes the leading space to be removed in Chromium.
+        if %i[zammad_chromium zammad_chromium_mobile].include?(Capybara.current_driver)
           expect(find(:richtext).text).to include('Testing TestyFFFF1 GGGG1')
           next
         end
@@ -150,7 +147,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
         #   upstream (capybara-playwright-driver#155, same root cause as the
         #   caret race in #set_text). Until then keep the core protection of
         #   issue #3717: the existing text stays intact and both mentions exist.
-        if %i[zammad_playwright zammad_playwright_mobile].include?(Capybara.current_driver)
+        if %i[zammad_chromium zammad_chromium_mobile].include?(Capybara.current_driver)
           expect(find(:richtext).text).to include('FFFF1 GGGG1 Testing Testy')
           expect(find(:richtext).all('a[data-mention-user-id]').count).to eq(2)
           next
