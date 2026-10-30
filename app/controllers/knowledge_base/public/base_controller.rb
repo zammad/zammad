@@ -131,7 +131,11 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     @can_preview = policy(@knowledge_base).update?
   end
 
+  # The layout links the category, titles the object and builds the breadcrumb from the alternative;
+  #   the failed action may have assigned them before it found the visitor must not see them.
   def not_found(e)
+    @category = @object = @alternative = nil
+
     @knowledge_base = policy_scope(KnowledgeBase).first
 
     if @knowledge_base.nil?
@@ -140,7 +144,8 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     end
 
     @page_title_error = :not_found
-    render 'knowledge_base/public/not_found', status: :not_found
+    # `formats`: the feed switches the request to Atom, and this page exists in HTML only.
+    render 'knowledge_base/public/not_found', status: :not_found, formats: :html
   end
 
   def mask_as_not_found(e)

@@ -6,6 +6,9 @@ RSpec.describe 'KnowledgeBase public feed', type: :request do
   include_context 'basic Knowledge Base'
 
   before do
+    # Skip asset generation: the not found page links stylesheets the test environment does not compile.
+    allow_any_instance_of(ActionView::Base).to receive(:compute_asset_path).and_return('')
+
     published_answer
     travel 1.minute
     published_answer_in_other_category
@@ -29,17 +32,63 @@ RSpec.describe 'KnowledgeBase public feed', type: :request do
   end
 
   describe '#category' do
-    before do
-      get help_category_feed_path(locale_name, category)
+    context 'with a public category' do
+      before do
+        get help_category_feed_path(locale_name, category)
+      end
+
+      it 'lists entries', :aggregate_failures do
+        expect(response.body).to include(published_answer.translations.first.title)
+        expect(response.body).not_to include(published_answer_in_other_category.translations.first.title)
+      end
+
+      it 'uses category title' do
+        expect(response.body).to include(category.translations.first.title)
+      end
     end
 
-    it 'lists entries', :aggregate_failures do
-      expect(response.body).to include(published_answer.translations.first.title)
-      expect(response.body).not_to include(published_answer_in_other_category.translations.first.title)
+    context 'when the category has no published answers' do
+      let(:hidden_category) { create(:knowledge_base_category, :containing_internal, knowledge_base: knowledge_base, translations: [build(:knowledge_base_category_translation, title: 'SecretCanary', kb_locale: primary_locale)]) }
+
+      before do
+        # The feed icon prints the category title in the layout head and the feed picker.
+        knowledge_base.update!(show_feed_icon: true)
+      end
+
+      context 'when visited anonymously' do
+        before do
+          get help_category_feed_path(locale_name, hidden_category)
+        end
+
+        it 'is not found', :aggregate_failures do
+          expect(response).to have_http_status(:not_found)
+          expect(response.body).not_to match(%r{secretcanary}i)
+        end
+      end
+
+      # The guard is the policy, not the published content alone: editors keep the feed.
+      context 'when visited by an editor' do
+        before do
+          authenticated_as(create(:admin), via: :browser)
+
+          get help_category_feed_path(locale_name, hidden_category)
+        end
+
+        it 'serves the feed', :aggregate_failures do
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include('SecretCanary')
+        end
+      end
     end
 
-    it 'uses category title' do
-      expect(response.body).to include(category.translations.first.title)
+    context 'when the category does not exist' do
+      before do
+        get help_category_feed_path(locale_name, 0)
+      end
+
+      it 'is not found' do
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 

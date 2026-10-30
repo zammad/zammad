@@ -19,7 +19,10 @@ class KnowledgeBase::Public::FeedsController < KnowledgeBase::Public::BaseContro
 
   def category
     @category = find_category(params[:category])
-    @answers  = @category
+
+    raise ActiveRecord::RecordNotFound if @category.nil? || !policy(@category).show_public?
+
+    @answers = @category
       .self_with_children_answers
       .sorted_by_published(system_locale_via_uri)
       .limit(10)

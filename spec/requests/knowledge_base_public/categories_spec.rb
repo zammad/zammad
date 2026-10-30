@@ -385,4 +385,17 @@ RSpec.describe 'KnowledgeBase public categories', type: :request do
       expect(response.body).to include('Please add categories and/or answers')
     end
   end
+
+  describe 'browsing a category without published answers' do
+    let(:hidden_category) { create(:knowledge_base_category, :containing_internal, knowledge_base: knowledge_base, translations: [build(:knowledge_base_category_translation, title: 'SecretCanary', kb_locale: primary_locale)]) }
+
+    before { get help_category_path(locale_name, hidden_category) }
+
+    # The breadcrumb of the alternative translations page would tell a hidden id from a missing one.
+    it 'answers not found without the alternative translations breadcrumb', :aggregate_failures do
+      expect(response).to have_http_status(:not_found)
+      expect(response.body).not_to include('Alternative Translations')
+      expect(response.body).not_to match(%r{secretcanary}i)
+    end
+  end
 end
