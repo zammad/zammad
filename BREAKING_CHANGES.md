@@ -169,6 +169,31 @@ of a setting are maintained by Zammad itself.
 
 **Related advisory:** [GHSA-772p-w6hj-6p6v](https://github.com/zammad/zammad/security/advisories/GHSA-772p-w6hj-6p6v)
 
+### Templates written in the admin interface only reach ticket, article, user, organization and group data
+
+**Who is affected?** Admins whose triggers, scheduler jobs, macros, text modules, signatures, AI
+text tools, AI agents, link templates or external data source search URLs use a placeholder that
+steps into another object, such as `#{ticket.group.email_address.email}` or `#{ticket.owner.roles}`,
+or that calls a method other than a documented one, such as `#{ticket.title.reverse}`.
+
+A placeholder could call any method on the object it reached, so a chain could lead from a ticket to
+every record in the database. A placeholder now reaches tickets, articles, users, organizations,
+groups, ticket states and priorities and article types and senders: their attributes except
+`password` and `preferences`, custom object attributes included, the associations among them, and
+the documented helpers such as `fullname`, `longname`, `tags`, `body_as_html` and `avatar`. In an
+external data source search URL, `#{search.term}` keeps working. On a plain value only `first` and
+`last` (optionally with a count), `downcase`, `upcase`, `strip`, `to_s`, `text2html`, `size` and
+`count` are allowed. Any other step renders as `#{<placeholder> / not allowed}` (or `-` where the
+renderer hides errors). The placeholders documented in the admin documentation keep working.
+
+⚠️ Replace such placeholders before updating, for example with a trigger condition or a custom
+object attribute that carries the value. Unlike for settings, the update does not list the affected
+templates: search the triggers, scheduler jobs, macros, text modules, signatures, AI text tools, AI
+agents, link templates and external data source search URLs by hand for placeholders that leave the
+objects named above.
+
+**Related advisory:** [GHSA-gffj-jpc4-76hv](https://github.com/zammad/zammad/security/advisories/GHSA-gffj-jpc4-76hv)
+
 ### `PUT /api/v1/online_notifications/{id}` only updates `seen`
 
 **Who is affected?** Integrations that write any attribute other than `seen` through
