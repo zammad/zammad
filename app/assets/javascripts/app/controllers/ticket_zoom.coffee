@@ -342,6 +342,7 @@ class App.TicketZoom extends App.Controller
     # only switch if url contains the article id so it does not always move to the article on opening
     article_id = window.location.hash.match(/ticket\/zoom\/\d+\/(\d+)/)?[1]
     if article_id && article_id isnt @last_article_id
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id }) if !@last_ticket_article_ids
       @scrollToPosition('article', 300, article_id)
 
     # scroll to end if new article has been added

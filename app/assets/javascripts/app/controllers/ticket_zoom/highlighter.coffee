@@ -38,8 +38,6 @@ class App.TicketZoomHighlighter extends App.Controller
 
     return if @ticket.currentView() isnt 'agent'
 
-    @currentHighlights = {}
-
     rangy.init()
 
     @highlighter = rangy.createHighlighter(document, 'TextRange')
@@ -99,9 +97,11 @@ class App.TicketZoomHighlighter extends App.Controller
     return if !article.preferences.highlight
     return if _.isEmpty(article.preferences.highlight)
     return if article.preferences.highlight is 'type:TextRange'
-    return if @currentHighlights[ticket_article_id] is article.preferences.highlight
-    @currentHighlights[ticket_article_id] = article.preferences.highlight
+
+    # deserialize replaces all highlights, keep the ones of the other articles
+    others = _.reject(@highlighter.highlights, (highlight) -> highlight.containerElementId is "article-content-#{ticket_article_id}")
     @highlighter.deserialize(article.preferences.highlight)
+    @highlighter.highlights = others.concat(@highlighter.highlights)
 
   # the serialization creates one string for the entire ticket
   # containing the offsets and the highlight classes
@@ -155,7 +155,7 @@ class App.TicketZoomHighlighter extends App.Controller
       # if there's already something selected,
       # don't go into highlight mode
       # just toggle the selected
-      if !selection.isCollapsed
+      if !selection.isCollapsed && @updateSelectedArticle(currentTarget: selection.anchorNode)
         @toggleHighlightAtSelection(@content, @article_id)
       #else
         # toggle ui
@@ -174,7 +174,9 @@ class App.TicketZoomHighlighter extends App.Controller
     @highlightEnable()
 
     # check if selection exists - highlight it or remove highlight
-    @toggleHighlightAtSelection(@content, @article_id)
+    selection = rangy.getSelection()
+    if !selection.isCollapsed && @updateSelectedArticle(currentTarget: selection.anchorNode)
+      @toggleHighlightAtSelection(@content, @article_id)
 
   onMouseDown: (e) =>
     if @updateSelectedArticle(e)
@@ -207,8 +209,8 @@ class App.TicketZoomHighlighter extends App.Controller
   # ================
   #
   # - only works when the selection starts and ends inside an article
-  # - clears highlights in selection
-  # - or highlights the selection
+  # - clears highlights in selection (click or same color)
+  # - or highlights the selection (other colors are overwritten)
   # - clears the selection
 
   toggleHighlightAtSelection: (article, article_id) =>
@@ -219,14 +221,15 @@ class App.TicketZoomHighlighter extends App.Controller
     # activate selection background
     article.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
-    if @highlighter.selectionOverlapsHighlight selection
+    highlights = @highlighter.getHighlightsInSelection selection
+    if highlights.length && (selection.isCollapsed || _.every(highlights, (highlight) => highlight.classApplier.className is @highlightClass))
       @highlighter.unhighlightSelection()
       selection.removeAllRanges()
       @highlightDisable()
       @storeHighlights(article_id)
       return
 
-    if selection && selection.rangeCount > 0
+    if selection && !selection.isCollapsed
       @highlighter.highlightSelection @highlightClass,
         selection: selection
         containerElementId: article.get(0).id
