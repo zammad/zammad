@@ -2319,9 +2319,10 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       context 'when creating the error ticket exceeds the time limit' do
+        # Without database work inside the limit: an interrupt during a statement breaks the transaction instead.
         before do
           stub_const('Channel::EmailParser::PROCESS_TIME_MAX', 0.1)
-          allow(Ticket).to receive(:create!) { sleep 1 }
+          allow_any_instance_of(Channel::EmailParser::ErrorTicket).to receive(:create!) { sleep 1 }
         end
 
         it 'raises so that the mail stays on the server' do
@@ -2373,10 +2374,11 @@ RSpec.describe Channel::EmailParser, type: :model do
       let(:raw_email)      { result.second.attachments.find { |attachment| attachment.preferences['email_unprocessable'] == 'raw' }.content }
       let(:processing_log) { result.second.attachments.find { |attachment| attachment.preferences['email_unprocessable'] == 'log' }.content }
 
-      context 'when it exceeds the time limit' do
+      # The time limit itself is covered by #process_with_timeout: a shortened PROCESS_TIME_MAX
+      #   would also cut off the error ticket creation on a slow runner.
+      context 'when a filter runs into a timeout' do
         before do
-          stub_const('Channel::EmailParser::PROCESS_TIME_MAX', 0.1)
-          allow(Channel::Filter::Trusted).to receive(:run) { sleep 1 }
+          allow(Channel::Filter::Trusted).to receive(:run).and_raise(Timeout::Error, 'execution expired')
         end
 
         it 'creates an error ticket with the sample mail, logging the timeout' do
@@ -2407,6 +2409,19 @@ RSpec.describe Channel::EmailParser, type: :model do
             .and include('app/models/channel/email_parser.rb')
         end
       end
+    end
+  end
+
+  describe '#process_with_timeout' do
+    let(:parser) { described_class.new }
+
+    before do
+      stub_const('Channel::EmailParser::PROCESS_TIME_MAX', 0.1)
+      allow(parser).to receive(:_process) { sleep 1 }
+    end
+
+    it 'stops processing that exceeds the time limit' do
+      expect { parser.process_with_timeout({}, 'mail') }.to raise_error(Timeout::Error)
     end
   end
 
