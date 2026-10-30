@@ -94,5 +94,102 @@ RSpec.describe Whatsapp::Webhook::Message::Text, :aggregate_failures, current_us
         )
       end
     end
+    context 'when only a BSUID is available' do
+      let(:bsuid)    { "MY.#{Faker::Number.unique.number(digits: 15)}" }
+      let(:username) { Faker::Internet.unique.username }
+
+      let(:bsuid_json) do
+        payload = JSON.parse(json)
+        value   = payload['entry'][0]['changes'][0]['value']
+
+        value['contacts'][0] = {
+          'profile' => { 'name' => from[:name], 'username' => username },
+          'user_id' => bsuid,
+        }
+        value['messages'][0].delete('from')
+        value['messages'][0]['from_user_id'] = bsuid
+
+        payload.to_json
+      end
+
+      let(:bsuid_data) { JSON.parse(bsuid_json).deep_symbolize_keys }
+
+      def process(payload = bsuid_data)
+        described_class.new(data: payload, channel:).process
+      end
+
+      def payload_for(user_id:, name: from[:name], user: username)
+        JSON.parse(bsuid_json).tap do |payload|
+          value = payload['entry'][0]['changes'][0]['value']
+          value['contacts'][0] = { 'profile' => { 'name' => name, 'username' => user }, 'user_id' => user_id }
+          value['messages'][0]['from_user_id'] = user_id
+        end.to_json.then { |j| JSON.parse(j).deep_symbolize_keys }
+      end
+
+      it 'creates a user without phone number, identified by the BSUID' do
+        expect { process }.to change(User, :count).by(1)
+
+        user = Authorization.find_by(provider: 'whatsapp', uid: bsuid).user
+
+        expect(user).to have_attributes(mobile: be_blank, login: bsuid)
+        expect(user.fullname).to eq(from[:name])
+      end
+
+      it 'stores the username on the authorization and the ticket' do
+        process
+
+        expect(Authorization.find_by(provider: 'whatsapp', uid: bsuid)).to have_attributes(username:)
+        expect(Ticket.last.preferences[:whatsapp][:from]).to include(user_id: bsuid, username:, display_name: from[:name], phone_number: nil)
+      end
+
+      it 'uses the username in the ticket title instead of a phone number' do
+        process
+
+        expect(Ticket.last.title).to eq("#{from[:name]} (#{username}) via WhatsApp")
+      end
+
+      it 'resolves repeated messages of the same BSUID to the same user and ticket' do
+        process
+
+        expect { process }.to not_change(User, :count).and not_change(Ticket, :count)
+      end
+
+      it 'treats the username as display information only' do
+        process
+        user = Authorization.find_by(provider: 'whatsapp', uid: bsuid).user
+
+        expect { process(payload_for(user_id: bsuid, user: 'renamed.user')) }.to not_change(User, :count)
+
+        expect(Authorization.find_by(provider: 'whatsapp', uid: bsuid)).to have_attributes(user_id: user.id, username: 'renamed.user')
+      end
+
+      it 'creates different users for different BSUIDs' do
+        process
+
+        expect { process(payload_for(user_id: "MY.#{Faker::Number.unique.number(digits: 15)}", user: username)) }
+          .to change(User, :count).by(1)
+      end
+
+      it 'links the BSUID to an existing phone user and keeps the phone number' do
+        process(data)
+
+        phone_user = User.by_mobile(number: "+#{from[:phone]}")
+
+        payload = JSON.parse(json).tap do |p|
+          p['entry'][0]['changes'][0]['value']['messages'][0]['from_user_id'] = bsuid
+        end
+
+        expect { process(JSON.parse(payload.to_json).deep_symbolize_keys) }.to not_change(User, :count)
+        expect(Authorization.find_by(provider: 'whatsapp', uid: bsuid).user).to eq(phone_user)
+      end
+    end
+
+    context 'when a phone number is available' do
+      it 'does not create an authorization and keeps the phone as login' do
+        expect { described_class.new(data:, channel:).process }.to not_change(Authorization, :count)
+
+        expect(User.by_mobile(number: "+#{from[:phone]}")).to have_attributes(login: from[:phone])
+      end
+    end
   end
 end
