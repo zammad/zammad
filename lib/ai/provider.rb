@@ -391,6 +391,11 @@ class AI::Provider
     raise 'not implemented'
   end
 
+  # Mail attachments keep MIME parameters (e.g. "image/png; name=image.png"), which providers reject.
+  def image_media_type(prompt_image)
+    (prompt_image.preferences['Content-Type'] || prompt_image.preferences['Mime-Type']).to_s.split(';').first.to_s.strip
+  end
+
   def embeddings(input:)
     raise 'not implemented'
   end
