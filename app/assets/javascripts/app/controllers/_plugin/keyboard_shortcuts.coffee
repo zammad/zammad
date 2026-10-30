@@ -483,7 +483,7 @@ App.Config.set(
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 lastArticleWithReply = $('.active.content .ticket-article .icon-reply').last()
-                lastArticleWithReplyAll = lastArticleWithReply.parent().find('.icon-reply-all')
+                lastArticleWithReplyAll = lastArticleWithReply.closest('.article-actions').find('.icon-reply-all')
                 if lastArticleWithReplyAll.get(0)
                   lastArticleWithReplyAll.trigger('click')
                   return
