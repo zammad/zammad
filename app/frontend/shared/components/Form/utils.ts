@@ -14,6 +14,17 @@ export const getNodeByName = (formId: string, selector: string) => {
   return getNode(getNodeId(formId, selector))
 }
 
+export const FIELD_AUTOFOCUS_EVENT = 'autofocused'
+
+// Tells the field it was focused for the user rather than tabbed to, so a
+//   dropdown field can open and the user can start typing right away.
+export const autofocusFormField = (element: HTMLElement) => {
+  element.focus()
+  element.scrollIntoView({ block: 'nearest' })
+
+  getNode(element.id)?.emit(FIELD_AUTOFOCUS_EVENT, undefined, false)
+}
+
 export const setMessage = (
   node: FormKitNode,
   message: Partial<FormKitMessage> & Pick<FormKitMessage, 'key'>,

@@ -125,9 +125,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -221,9 +219,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     raise 'Element is not a field of type select' if !type_select?
 
-    element.click
-
-    wait_for_test_flag('common-select.opened')
+    open_dropdown
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -271,9 +267,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     raise 'Element is not a field of type select' if !type_select?
 
-    element.click
-
-    wait_for_test_flag('common-select.opened')
+    open_dropdown
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -587,6 +581,19 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     input_element['data-multiple'] == 'true'
   end
 
+  # An autofocused dropdown field opens by itself once its surroundings settled, and a click would close it again.
+  def open_dropdown
+    if desktop_view?
+      element.assert_no_selector('[data-dropdown-opening]')
+
+      element.click if input_element['aria-expanded'] != 'true'
+    else
+      element.click
+    end
+
+    wait_until_opened
+  end
+
   def wait_until_opened
     return wait_until_opened_desktop_view if desktop_view?
     return wait_for_test_flag('common-select.opened') if type_select?
@@ -669,9 +676,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def search_for_tags_option(query, gql_filename: '', gql_number: 1)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     within menu_element do
       # Filter input in desktop view is part of the element, not the dropdown/dialog.
@@ -698,11 +703,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def search_for_autocomplete_option(query, label: query, gql_filename: '', gql_number: 1, already_open: false, use_action: false, **find_options)
-    if !already_open
-      element.click
-
-      wait_until_opened
-    end
+    open_dropdown if !already_open
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -736,9 +737,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def search_for_tags_options(queries, gql_filename: '', gql_number: 1)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -769,9 +768,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def search_for_autocomplete_options(queries, labels: queries, gql_filename: '', gql_number: 1, use_action: false, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     within menu_element do
       queries.each_with_index do |query, index|
@@ -811,9 +808,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def select_treeselect_option(label, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -832,9 +827,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def select_tags_option(label, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     select_option_by_label(label, **find_options)
 
@@ -846,9 +839,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def select_autocomplete_option(label, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -863,9 +854,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def select_treeselect_options(labels, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -887,9 +876,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def select_tags_options(labels, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -905,9 +892,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def select_autocomplete_options(labels, **find_options)
-    element.click
-
-    wait_until_opened
+    open_dropdown
 
     raise 'Field does not support multiple selection' if !multi_select?
 

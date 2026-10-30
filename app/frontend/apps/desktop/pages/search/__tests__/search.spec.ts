@@ -285,9 +285,12 @@ describe('search view', () => {
 
       const ticketState = await view.findByLabelText('State')
 
+      // The Group field is autofocused, so its dropdown opens by itself.
+      await view.findByRole('menu')
+
       await view.events.click(ticketState)
 
-      expect(await view.findByRole('menu')).toBeInTheDocument()
+      expect(await view.findByRole('option', { name: 'closed' })).toBeInTheDocument()
 
       await view.events.click(view.getByRole('option', { name: 'closed' }))
 

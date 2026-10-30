@@ -46,6 +46,9 @@ RSpec.describe 'Desktop > Ticket > Merge', app: :desktop_view, authenticated_as:
 
       click_on('Merge')
 
+      # The target ticket field is autofocused, so its dropdown opens by itself.
+      expect(page).to have_css('[role="combobox"][aria-expanded="true"]')
+
       within_form do
         find_autocomplete('Target ticket').search_for_option(ticket.number)
       end

@@ -58,7 +58,12 @@ import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
 import { getFormClasses } from './initializeFormClasses.ts'
 import initializeFieldInitialValuesCleanupPlugin from './plugins/initializeFieldInitialValuesCleanupPlugin.ts'
 import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
-import { getNodeByName as getFormkitFieldNode, getNodeId, setErrors } from './utils.ts'
+import {
+  autofocusFormField,
+  getNodeByName as getFormkitFieldNode,
+  getNodeId,
+  setErrors,
+} from './utils.ts'
 
 import type {
   ChangedField,
@@ -212,8 +217,7 @@ const autofocusFirstInput = (node: FormKitNode) => {
   nextTick(() => {
     const firstInput = getFirstFocusableElement(formElement.value)
 
-    firstInput?.focus()
-    firstInput?.scrollIntoView({ block: 'nearest' })
+    if (firstInput) autofocusFormField(firstInput)
 
     const formName = node.context?.id || node.name
     testFlags.set(`${formName}.focused`)

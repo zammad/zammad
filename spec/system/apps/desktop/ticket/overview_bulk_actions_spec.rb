@@ -109,6 +109,8 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
 
     # Wait for the form to be initially settled
     wait_for_form_to_settle('form-tickets-bulk-edit')
+    # The group field is autofocused, so its dropdown opens by itself.
+    expect(page).to have_css('[role="combobox"][aria-expanded="true"]')
 
     # NB: Due to dropdown menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.
@@ -145,6 +147,8 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
 
     # Wait for the form to be initially settled
     wait_for_form_to_settle('form-tickets-bulk-edit')
+    # The group field is autofocused, so its dropdown opens by itself.
+    expect(page).to have_css('[role="combobox"][aria-expanded="true"]')
 
     # NB: Due to dropdown menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.
@@ -182,6 +186,8 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
 
     # Wait for the form to be initially settled
     wait_for_form_to_settle('form-tickets-bulk-edit')
+    # The group field is autofocused, so its dropdown opens by itself.
+    expect(page).to have_css('[role="combobox"][aria-expanded="true"]')
 
     within 'aside[role="complementary"]' do
       click 'button[aria-label="Macros"]'

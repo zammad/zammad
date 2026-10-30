@@ -16,6 +16,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import useFlatSelectOptions from '#shared/components/Form/fields/FieldTreeSelect/composables/useFlatSelectOptions.ts'
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import { autofocusFormField } from '#shared/components/Form/utils.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
@@ -275,6 +276,29 @@ describe('Form - Field - TreeSelect - Dropdown', () => {
     selectOptions.forEach((selectOption, index) => {
       expect(selectOption).toHaveTextContent(testOptions[index].label!)
     })
+  })
+
+  it('opens the dropdown only when autofocused', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        id: 'autofocused-field',
+        clearable: true,
+        options: testOptions,
+      },
+    })
+
+    const field = wrapper.getByLabelText('Treeselect')
+
+    field.focus()
+    await waitForNextTick()
+
+    expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+
+    autofocusFormField(field)
+
+    expect(await wrapper.findByRole('menu')).toBeInTheDocument()
   })
 })
 

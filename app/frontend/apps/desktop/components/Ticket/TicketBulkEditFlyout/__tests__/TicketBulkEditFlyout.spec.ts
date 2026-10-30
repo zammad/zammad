@@ -113,6 +113,9 @@ describe('TicketBulkEditFlyout', () => {
     const wrapper = renderBulkEditFlyout()
     const ticketState = await wrapper.findByLabelText('State')
 
+    // The Group field is autofocused, so its dropdown opens by itself.
+    await wrapper.findByRole('menu')
+
     await wrapper.events.click(ticketState)
 
     expect(await wrapper.findByRole('menu')).toBeInTheDocument()
@@ -143,10 +146,7 @@ describe('TicketBulkEditFlyout', () => {
   it('add a note to the tickets', async () => {
     const wrapper = renderBulkEditFlyout()
 
-    const group = await wrapper.findByLabelText('Group')
-    await wrapper.events.click(group)
-
-    await wrapper.events.click(wrapper.getByRole('option', { name: 'test group' }))
+    await wrapper.events.click(await wrapper.findByRole('option', { name: 'test group' }))
 
     await wrapper.events.click(wrapper.getByLabelText('Note'))
 
@@ -306,6 +306,9 @@ describe('TicketBulkEditFlyout', () => {
 
     const ticketState = await wrapper.findByLabelText('State')
 
+    // The Group field is autofocused, so its dropdown opens by itself.
+    await wrapper.findByRole('menu')
+
     await wrapper.events.click(ticketState)
 
     await wrapper.events.click(wrapper.getByRole('option', { name: 'closed' }))
@@ -383,6 +386,9 @@ describe('TicketBulkEditFlyout', () => {
     const wrapper = renderBulkEditFlyout()
 
     await wrapper.findByLabelText('State')
+
+    // The Group field is autofocused, so its dropdown opens by itself.
+    await wrapper.findByRole('menu')
 
     await wrapper.events.click(wrapper.getByLabelText('Note'))
 

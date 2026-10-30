@@ -2,14 +2,7 @@
 
 <script setup lang="ts">
 import { useLazyQuery } from '@vue/apollo-composable'
-import {
-  refDebounced,
-  useDebounceFn,
-  useElementBounding,
-  useElementVisibility,
-  useWindowSize,
-  watchOnce,
-} from '@vueuse/core'
+import { refDebounced, useDebounceFn, watchOnce } from '@vueuse/core'
 import gql from 'graphql-tag'
 import { cloneDeep, escapeRegExp, isEqual, uniqBy } from 'lodash-es'
 import { useTemplateRef } from 'vue'
@@ -23,7 +16,6 @@ import type {
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import useSelectOptions from '#shared/composables/useSelectOptions.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import { i18n } from '#shared/i18n.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
@@ -33,6 +25,7 @@ import { deaccent } from '#shared/utils/labelMatching.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
+import { useSelectDropdown } from '#desktop/form/composables/useSelectDropdown/useSelectDropdown.ts'
 
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 
@@ -147,7 +140,18 @@ const select = useTemplateRef('select')
 
 const filter = ref('')
 
-const { activateTabTrap, deactivateTabTrap } = useTrapTab(input, true)
+const {
+  deactivateTabTrap,
+  isBelowHalfScreen,
+  isInputVisible,
+  openSelectDropdown,
+  openOrMoveFocusToDropdown,
+} = useSelectDropdown(props.context, {
+  input,
+  output: outputElement,
+  filterInput,
+  dropdown: select,
+})
 
 const clearFilter = () => {
   filter.value = ''
@@ -373,14 +377,6 @@ const suggestedOptionLabel = computed(() => {
   return exactMatches[0].label || exactMatches[0].value.toString()
 })
 
-const inputElementBounds = useElementBounding(input)
-const isInputVisible = !!VITE_TEST_MODE || useElementVisibility(input)
-const windowSize = useWindowSize()
-
-const isBelowHalfScreen = computed(() => {
-  return inputElementBounds.y.value > windowSize.height.value / 2
-})
-
 const onCloseDropdown = () => {
   clearChildOptions()
   clearFilter()
@@ -395,34 +391,7 @@ const foldDropdown = (event?: MouseEvent) => {
   }
 }
 
-const openSelectDropdown = () => {
-  if (props.context.disabled) return
-  if (!input.value) return
-
-  select.value?.openDropdown(inputElementBounds, windowSize.height)
-
-  requestAnimationFrame(() => {
-    activateTabTrap()
-    if (props.context.noFiltering) outputElement.value?.focus()
-    else filterInput.value?.focus()
-  })
-}
-
 defineExpose({ openSelectDropdown })
-
-const openOrMoveFocusToDropdown = (lastOption = false) => {
-  if (!select.value?.isOpen) {
-    return openSelectDropdown()
-  }
-
-  deactivateTabTrap()
-
-  nextTick(() => {
-    requestAnimationFrame(() => {
-      select.value?.moveFocusToDropdown(lastOption)
-    })
-  })
-}
 
 const onFocusFilterInput = () => {
   filterInput.value?.focus()

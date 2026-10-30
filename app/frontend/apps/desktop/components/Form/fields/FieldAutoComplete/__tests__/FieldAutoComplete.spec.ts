@@ -17,6 +17,7 @@ import {
   mockAutocompleteSearchUserQuery,
   waitForAutocompleteSearchUserQueryCalls,
 } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.mocks.ts'
+import { autofocusFormField } from '#shared/components/Form/utils.ts'
 import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -206,6 +207,28 @@ describe('Form - Field - AutoComplete - Dropdown', () => {
     await wrapper.events.click(wrapper.baseElement)
 
     expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+  })
+
+  it('opens the dropdown only when autofocused', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        id: 'autofocused-field',
+        options: testOptions,
+      },
+    })
+
+    const field = wrapper.getByLabelText('Select…')
+
+    field.focus()
+    await waitForNextTick()
+
+    expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+
+    autofocusFormField(field)
+
+    expect(await wrapper.findByRole('menu')).toBeInTheDocument()
   })
 })
 

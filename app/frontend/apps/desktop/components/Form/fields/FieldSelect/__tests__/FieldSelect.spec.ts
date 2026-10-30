@@ -10,6 +10,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+import { autofocusFormField } from '#shared/components/Form/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import type { SetRequired } from 'type-fest'
@@ -112,6 +113,201 @@ describe('Form - Field - Select - Dropdown', () => {
     await wrapper.events.click(wrapper.baseElement)
 
     expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+  })
+
+  it('opens the dropdown only when autofocused', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        id: 'autofocused-field',
+        clearable: true,
+        options: testOptions,
+      },
+    })
+
+    const field = wrapper.getByLabelText('Select')
+
+    field.focus()
+    await waitForNextTick()
+
+    expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+
+    autofocusFormField(field)
+
+    expect(await wrapper.findByRole('menu')).toBeInTheDocument()
+  })
+
+  it('keeps the dropdown of an autofocused field with a value closed', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        id: 'autofocused-field',
+        clearable: true,
+        options: testOptions,
+        value: testOptions[1].value,
+      },
+    })
+
+    const field = wrapper.getByLabelText('Select')
+
+    autofocusFormField(field)
+    await new Promise((resolve) => setTimeout(resolve, 200))
+
+    expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+    expect(field).toHaveFocus()
+    expect(wrapper.getByTestId('field-select')).not.toHaveAttribute('data-dropdown-opening')
+  })
+
+  describe('with a running ancestor transition', () => {
+    let isTransitionRunning: boolean
+
+    beforeEach(() => {
+      isTransitionRunning = true
+
+      const transition = { effect: { target: document.body } } as unknown as Animation
+
+      document.getAnimations = vi.fn(() => (isTransitionRunning ? [transition] : []))
+    })
+
+    afterEach(() => {
+      Reflect.deleteProperty(document, 'getAnimations')
+    })
+
+    it('opens an autofocused dropdown only after the transition ended', async () => {
+      const wrapper = renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          id: 'autofocused-field',
+          clearable: true,
+          options: testOptions,
+        },
+      })
+
+      autofocusFormField(wrapper.getByLabelText('Select'))
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+
+      isTransitionRunning = false
+
+      expect(await wrapper.findByRole('menu')).toBeInTheDocument()
+    })
+
+    it('does not open an autofocused dropdown when the focus moved elsewhere during the transition', async () => {
+      const wrapper = renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          id: 'autofocused-field',
+          clearable: true,
+          options: testOptions,
+        },
+      })
+
+      const otherField = document.createElement('input')
+      document.body.appendChild(otherField)
+      onTestFinished(() => otherField.remove())
+
+      autofocusFormField(wrapper.getByLabelText('Select'))
+      otherField.focus()
+
+      isTransitionRunning = false
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+      expect(otherField).toHaveFocus()
+    })
+
+    it('does not reopen an autofocused dropdown the user opened and closed during the transition', async () => {
+      const wrapper = renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          id: 'autofocused-field',
+          clearable: true,
+          options: testOptions,
+        },
+      })
+
+      const field = wrapper.getByLabelText('Select')
+
+      autofocusFormField(field)
+
+      expect(wrapper.getByTestId('field-select')).toHaveAttribute('data-dropdown-opening')
+
+      await wrapper.events.click(field)
+      expect(await wrapper.findByRole('menu')).toBeInTheDocument()
+      expect(wrapper.getByTestId('field-select')).not.toHaveAttribute('data-dropdown-opening')
+
+      await wrapper.events.click(field)
+      expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+
+      isTransitionRunning = false
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+    })
+
+    it('marks an autofocused field until its dropdown opened', async () => {
+      const wrapper = renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          id: 'autofocused-field',
+          clearable: true,
+          options: testOptions,
+        },
+      })
+
+      autofocusFormField(wrapper.getByLabelText('Select'))
+
+      expect(wrapper.getByTestId('field-select')).toHaveAttribute('data-dropdown-opening', 'true')
+
+      isTransitionRunning = false
+
+      expect(await wrapper.findByRole('menu')).toBeInTheDocument()
+      expect(wrapper.getByTestId('field-select')).not.toHaveAttribute('data-dropdown-opening')
+    })
+
+    it('does not open a dropdown on mount when the focus moved elsewhere during the transition', async () => {
+      const otherField = document.createElement('input')
+      document.body.appendChild(otherField)
+      onTestFinished(() => otherField.remove())
+
+      const wrapper = renderComponent(FormKit, {
+        ...wrapperParameters,
+        props: {
+          ...commonProps,
+          options: testOptions,
+          autoOpenDropdown: true,
+        },
+      })
+
+      await waitForNextTick()
+      otherField.focus()
+
+      isTransitionRunning = false
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
+      expect(otherField).toHaveFocus()
+    })
+  })
+
+  it('opens the dropdown on mount when requested, without the field having focus', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        options: testOptions,
+        autoOpenDropdown: true,
+      },
+    })
+
+    expect(await wrapper.findByRole('menu')).toBeInTheDocument()
   })
 })
 

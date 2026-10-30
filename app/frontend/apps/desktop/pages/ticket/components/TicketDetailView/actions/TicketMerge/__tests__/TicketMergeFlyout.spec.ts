@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
@@ -45,6 +47,27 @@ describe('TicketMergeFlyout', () => {
     ).toBeInTheDocument()
 
     // Rest is already tested in TicketTable
+  })
+
+  it('opens the target ticket search right away', async () => {
+    mockTicketRelationAndRecentTicketListsQuery({
+      ticketsRecentlyViewed: [],
+      ticketsRecentByCustomer: [],
+    })
+
+    const wrapper = renderComponent(TicketMergeFlyout, {
+      props: {
+        ticket: createDummyTicket(),
+        name: 'TicketMergeFlyout',
+      },
+      form: true,
+      flyout: true,
+      router: true,
+    })
+
+    expect(await wrapper.findByRole('menu')).toBeInTheDocument()
+
+    await waitFor(() => expect(wrapper.getByRole('searchbox')).toHaveFocus())
   })
 
   it('should select ticket on row click and submit ticket merge', async () => {

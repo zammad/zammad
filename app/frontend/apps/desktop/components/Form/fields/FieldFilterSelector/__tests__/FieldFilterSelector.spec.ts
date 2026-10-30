@@ -470,4 +470,114 @@ describe('Fields - FieldFilterSelector', () => {
     expect(await view.findByRole('option', { name: 'Users' })).toBeInTheDocument()
     expect(view.getByRole('option', { name: 'Sales' })).toBeInTheDocument()
   })
+
+  describe('after adding a filter', () => {
+    const groupAttributes: FilterAttribute[] = [
+      { name: 'ticket.group_id', label: 'Group', operators: ['is'] },
+      { name: 'ticket.title', label: 'Title', operators: ['matches'] },
+    ]
+
+    const filterAttributeOptions = {
+      'ticket.group_id': [
+        { value: 1, label: 'Users' },
+        { value: 2, label: 'Sales' },
+      ],
+    }
+
+    // Outlasts the ancestor animation wait an autofocused dropdown goes through before it opens.
+    const waitPastDropdownAutoOpen = () => new Promise((resolve) => setTimeout(resolve, 300))
+
+    it('opens the dropdown of a newly added select filter', async () => {
+      const view = renderFilterSelector([], {
+        filterAttributes: groupAttributes,
+        filterAttributeOptions,
+      })
+
+      await view.events.click(view.getByRole('button', { name: 'Add filter' }))
+      await view.events.click(
+        (await view.findByRole('option', { name: 'Group' })).firstChild as Element,
+      )
+
+      expect(await view.findByRole('option', { name: 'Users' })).toBeInTheDocument()
+    })
+
+    it('keeps the dropdown of a restored select filter closed', async () => {
+      const view = renderFilterSelector(
+        [{ name: 'ticket.group_id', operator: 'is', value: null }],
+        {
+          filterAttributes: groupAttributes,
+          filterAttributeOptions,
+        },
+      )
+
+      expect(view.getByLabelText('Group')).toBeInTheDocument()
+
+      await waitPastDropdownAutoOpen()
+
+      expect(view.queryByRole('option', { name: 'Users' })).not.toBeInTheDocument()
+    })
+
+    it('keeps a select filter closed when it is restored after being removed', async () => {
+      const view = renderFilterSelector([], {
+        filterAttributes: groupAttributes,
+        filterAttributeOptions,
+      })
+
+      await view.events.click(view.getByRole('button', { name: 'Add filter' }))
+      await view.events.click(
+        (await view.findByRole('option', { name: 'Group' })).firstChild as Element,
+      )
+      await view.findByRole('option', { name: 'Users' })
+
+      await view.events.keyboard('{Escape}')
+      await waitFor(() =>
+        expect(view.queryByRole('option', { name: 'Users' })).not.toBeInTheDocument(),
+      )
+
+      await view.events.click(view.getByRole('button', { name: 'Remove filter' }))
+      await waitFor(() => expect(view.queryByLabelText('Group')).not.toBeInTheDocument())
+
+      getNode('filterSelector')?.input([{ name: 'ticket.group_id', operator: 'is', value: null }])
+      await waitFor(() => expect(view.getByLabelText('Group')).toBeInTheDocument())
+      await waitPastDropdownAutoOpen()
+
+      expect(view.queryByRole('option', { name: 'Users' })).not.toBeInTheDocument()
+    })
+
+    it('focuses the input of a newly added text filter', async () => {
+      const view = renderFilterSelector([], {
+        filterAttributes: groupAttributes,
+        filterAttributeOptions,
+      })
+
+      await view.events.click(view.getByRole('button', { name: 'Add filter' }))
+      await view.events.click(
+        (await view.findByRole('option', { name: 'Title' })).firstChild as Element,
+      )
+
+      await waitFor(() => expect(view.getByLabelText('Title')).toHaveFocus())
+    })
+
+    it('focuses the count input of a multi-input row instead of opening its unit dropdown', async () => {
+      const view = renderFilterSelector([], {
+        filterAttributes: [
+          {
+            name: 'ticket.created_at',
+            label: 'Created at',
+            operators: ['in range', 'within last (relative)'],
+            attributeFieldType: 'datetime',
+          },
+        ],
+      })
+
+      await view.events.click(view.getByRole('button', { name: 'Add filter' }))
+      await view.events.click(await view.findByRole('button', { name: 'Created at' }))
+      await view.events.click(
+        (await view.findByRole('option', { name: 'within last (relative)' })).firstChild as Element,
+      )
+
+      await waitFor(() => expect(view.getByLabelText('Value')).toHaveFocus())
+      expect(view.queryByRole('option', { name: 'day(s)' })).not.toBeInTheDocument()
+    })
+  })
 })

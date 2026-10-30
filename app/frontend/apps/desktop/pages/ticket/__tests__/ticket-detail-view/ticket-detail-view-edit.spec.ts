@@ -520,9 +520,19 @@ describe('Ticket detail view', () => {
 
       await view.events.click(view.getByRole('link', { name: 'Add CC' }))
 
-      // Revealing CC unhides the field, focuses it, and removes the link.
+      // Revealing CC unhides the field, opens its dropdown for typing, and removes the link.
       expect(view.getByLabelText('CC').closest('.formkit-outer')).not.toHaveClass('hidden')
-      expect(view.getByLabelText('CC')).toHaveFocus()
+      await waitFor(() =>
+        expect(view.getByLabelText('CC')).toHaveAttribute('aria-expanded', 'true'),
+      )
+      await waitFor(() =>
+        expect(
+          getByRole(
+            view.getByLabelText('CC').closest('.formkit-outer') as HTMLElement,
+            'searchbox',
+          ),
+        ).toHaveFocus(),
+      )
       expect(view.queryByRole('link', { name: 'Add CC' })).not.toBeInTheDocument()
     })
 

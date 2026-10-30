@@ -13,6 +13,7 @@ import { EXTENSION_NAME as LINK_EXTENSION_NAME } from '#shared/components/Form/f
 import { getSelection } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { autofocusFormField } from '#shared/components/Form/utils.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -40,7 +41,8 @@ onMounted(async () => {
   await waitForFormSettled()
 
   // FormKit does not honour autofocus, so the picker is focused by hand, like the URL form does.
-  container.value?.querySelector<HTMLElement>('[role="combobox"]')?.focus()
+  const picker = container.value?.querySelector<HTMLElement>('[role="combobox"]')
+  if (picker) autofocusFormField(picker)
 })
 
 // The answer this link already points at, if the caret sits inside one. Its title is not queried
