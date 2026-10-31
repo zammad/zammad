@@ -249,6 +249,18 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
         end
       end
 
+      context 'with an article offering reply all' do
+        let(:article) { create(:ticket_article, ticket: ticket, cc: 'other@example.com') }
+
+        it 'opens the email reply all' do
+          send_keys(['r'])
+
+          within :active_content do
+            expect(page).to have_field('cc', with: 'other@example.com', visible: :all)
+          end
+        end
+      end
+
       context 'with an HTML article without body content' do
         # Incoming email skips the body validation, so such articles can exist.
         let(:article) { super().tap { |article| article.update_columns(content_type: 'text/html', body: '') } }
