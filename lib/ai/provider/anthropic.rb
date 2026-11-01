@@ -105,7 +105,7 @@ class AI::Provider::Anthropic < AI::Provider
                     type:   'image',
                     source: {
                       type:       'base64',
-                      media_type: prompt_image.preferences['Content-Type'],
+                      media_type: image_media_type(prompt_image),
                       data:       Base64.strict_encode64(prompt_image.content_ocr)
                     },
                   },
