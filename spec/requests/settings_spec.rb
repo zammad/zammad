@@ -395,6 +395,25 @@ RSpec.describe 'Settings', type: :request do
       expect(response).to have_http_status(:forbidden)
     end
 
+    context 'when the SSO setting is updated', authenticated_as: :admin do
+      let(:setting) { Setting.find_by(name: 'auth_sso') }
+
+      it 'updates the setting' do
+        expect { put "/api/v1/settings/#{setting.id}", params: { id: setting.id, state_current: { value: true } }, as: :json }
+          .to change { Setting.get('auth_sso') }.to(true)
+      end
+
+      context 'when running as an online service' do
+        before { Setting.set('system_online_service', true) }
+
+        it 'can not update the setting', :aggregate_failures do
+          expect { put "/api/v1/settings/#{setting.id}", params: { id: setting.id, state_current: { value: true } }, as: :json }
+            .not_to change { Setting.get('auth_sso') }
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
     context 'when reset is used', authenticated_as: :admin do
       it 'can not reset protected setting', :aggregate_failures do
         setting = Setting.find_by(name: 'application_secret')

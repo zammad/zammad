@@ -6075,11 +6075,12 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: {
-    controller:       'SettingsAreaSwitch',
-    sub:              ['auth_sso_trusted_ips'],
-    title_i18n:       [__('SSO')],
-    description_i18n: [__('SSO'), 'REMOTE_USER', 'HTTP_REMOTE_USER', 'X-Forwarded-User'],
-    permission:       ['admin.security'],
+    controller:             'SettingsAreaSwitch',
+    sub:                    ['auth_sso_trusted_ips'],
+    title_i18n:             [__('SSO')],
+    description_i18n:       [__('SSO'), 'REMOTE_USER', 'HTTP_REMOTE_USER', 'X-Forwarded-User'],
+    permission:             ['admin.security'],
+    online_service_disable: true,
   },
   state:       false,
   frontend:    true
@@ -6102,8 +6103,9 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: {
-    permission:  ['admin.security'],
-    validations: ['Setting::Validation::SsoTrustedIps'],
+    permission:             ['admin.security'],
+    validations:            ['Setting::Validation::SsoTrustedIps'],
+    online_service_disable: true,
   },
   state:       '',
   frontend:    false
