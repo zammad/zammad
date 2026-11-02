@@ -140,11 +140,15 @@ returns
     end
 
     Ticket.raw_selectors(overview.condition, {
-                           access:       overview.condition.to_s.include?('ticket.mention_user_ids') ? 'read' : 'overview',
+                           access:       access_for_overview(overview),
                            current_user: user,
                            order_by:     order_clause,
                            locale:       user.preferences['locale'] || Locale.default,
                          })
+  end
+
+  def self.access_for_overview(overview)
+    overview.condition.to_s.include?('ticket.mention_user_ids') ? 'read' : 'overview'
   end
 
   DB_QUERY_PARAMS = Struct.new(:query_condition, :bind_condition, :tables, :order_by, :direction)

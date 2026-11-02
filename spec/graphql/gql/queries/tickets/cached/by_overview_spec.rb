@@ -207,6 +207,22 @@ RSpec.describe Gql::Queries::Tickets::Cached::ByOverview, :aggregate_failures, t
         end
       end
 
+      context 'with a different user who may see the overview\'s tickets in overviews only' do
+        let(:other_agent) { create(:agent).tap { |other| other.group_ids_access_map = { ticket.group.id => 'overview' } } }
+
+        it 'does not use the cache on second call' do
+          gql.execute(query, variables:)
+
+          gql.graphql_current_user = other_agent
+
+          ensure_fragment_writes do
+            gql.execute(query, variables:)
+          end
+          expect(gql.result.nodes).to eq([])
+          expect(gql.result.data).to include('totalCount' => 0)
+        end
+      end
+
       context 'with a different user with same permissions' do
         let(:other_agent) { create(:agent, groups: [ticket.group]) }
 
@@ -242,6 +258,139 @@ RSpec.describe Gql::Queries::Tickets::Cached::ByOverview, :aggregate_failures, t
             end
             expect(gql.result.nodes).to eq([])
             expect(gql.result.data).to include('totalCount' => 0, 'collectionSignature' => '[]')
+          end
+        end
+
+        context 'when the users are customers as well' do
+          let(:agent)       { create(:agent_and_customer, groups: [ticket.group]) }
+          let(:other_agent) { create(:agent_and_customer, groups: [ticket.group]) }
+
+          context 'with an own ticket outside the group permissions excluded by the overview' do
+            before { create(:ticket, customer: agent, group: create(:group), state: Ticket::State.find_by(name: 'closed')) }
+
+            it 'uses the cache on second call' do
+              gql.execute(query, variables:)
+
+              gql.graphql_current_user = other_agent
+
+              ensure_no_fragment_writes do
+                ensure_no_ticket_queries do
+                  gql.execute(query, variables:)
+                end
+              end
+              expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number))
+            end
+          end
+
+          context 'with an own ticket outside the group permissions created while the cache is filled' do
+            let(:created_ticket) { create(:ticket, customer: agent, group: create(:group)) }
+
+            before do
+              allow(Ticket::Overviews::CachePartition).to receive(:new).and_wrap_original do |original, *args|
+                original.call(*args).tap { created_ticket }
+              end
+            end
+
+            it 'does not pass it on to the other user' do
+              gql.execute(query, variables:)
+
+              gql.graphql_current_user = other_agent
+              gql.execute(query, variables:)
+
+              expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number))
+            end
+          end
+
+          context 'with a personalized overview and an own ticket outside the group permissions' do
+            let(:overview)         { create(:overview, condition: { 'ticket.customer_id' => { operator: 'is', pre_condition: 'current_user.id' } }) }
+            let!(:customer_ticket) { create(:ticket, customer: agent, group: create(:group)) }
+
+            it 'leaves the cache behind together with the customer permission' do
+              gql.execute(query, variables:)
+              expect(gql.result.nodes).to contain_exactly(include('number' => customer_ticket.number))
+
+              agent.update!(roles: Role.where(name: 'Agent'))
+              Auth::RequestCache.clear
+              gql.graphql_current_user = agent.reload
+
+              ensure_fragment_writes do
+                ensure_ticket_queries do
+                  gql.execute(query, variables:)
+                end
+              end
+              expect(gql.result.nodes).to eq([])
+              expect(gql.result.data).to include('totalCount' => 0)
+            end
+          end
+
+          shared_examples 'not sharing the cache' do
+            before { customer_ticket }
+
+            it 'does not use the cache on second call' do
+              gql.execute(query, variables:)
+              expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number), include('number' => customer_ticket.number))
+
+              gql.graphql_current_user = other_agent
+
+              ensure_fragment_writes do
+                ensure_ticket_queries do
+                  gql.execute(query, variables:)
+                end
+              end
+              expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number))
+              expect(gql.result.data).to include('totalCount' => 1)
+            end
+          end
+
+          context 'with an own ticket outside the group permissions' do
+            let(:customer_ticket) { create(:ticket, customer: agent, group: create(:group)) }
+
+            include_examples 'not sharing the cache'
+          end
+
+          context 'with a ticket of a shared organization outside the group permissions' do
+            let(:organization)    { create(:organization, shared: true) }
+            let(:agent)           { create(:agent_and_customer, groups: [ticket.group], organization:) }
+            let(:customer_ticket) { create(:ticket, customer: create(:customer, organization:), group: create(:group)) }
+
+            include_examples 'not sharing the cache'
+          end
+
+          context 'with a ticket of a shared organization of both users outside the group permissions' do
+            let(:organization) { create(:organization, shared: true) }
+            let(:agent)            { create(:agent_and_customer, groups: [ticket.group], organization:) }
+            let(:other_agent)      { create(:agent_and_customer, groups: [ticket.group], organization:) }
+            let!(:customer_ticket) { create(:ticket, customer: create(:customer, organization:), group: create(:group)) }
+
+            it 'uses the cache on second call' do
+              gql.execute(query, variables:)
+
+              gql.graphql_current_user = other_agent
+
+              ensure_no_fragment_writes do
+                ensure_no_ticket_queries do
+                  gql.execute(query, variables:)
+                end
+              end
+              expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number), include('number' => customer_ticket.number))
+            end
+          end
+
+          context 'with own tickets only inside the group permissions' do
+            let!(:customer_ticket) { create(:ticket, customer: agent, group: ticket.group) }
+
+            it 'uses the cache on second call' do
+              gql.execute(query, variables:)
+
+              gql.graphql_current_user = other_agent
+
+              ensure_no_fragment_writes do
+                ensure_no_ticket_queries do
+                  gql.execute(query, variables:)
+                end
+              end
+              expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number), include('number' => customer_ticket.number))
+            end
           end
         end
       end
@@ -295,6 +444,22 @@ RSpec.describe Gql::Queries::Tickets::Cached::ByOverview, :aggregate_failures, t
       it 'raises authorization error' do
         gql.execute(query, variables:)
         expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+
+      context 'with a non-personalized overview for customers' do
+        let(:overview)       { create(:overview, role_ids: [Role.find_by(name: 'Customer').id]) }
+        let(:other_customer) { create(:customer) }
+        let!(:ticket)        { create(:ticket, customer:) }
+
+        it 'does not share the cache with another customer' do
+          gql.execute(query, variables:)
+          expect(gql.result.nodes).to contain_exactly(include('number' => ticket.number))
+
+          gql.graphql_current_user = other_customer
+          gql.execute(query, variables:)
+          expect(gql.result.nodes).to eq([])
+          expect(gql.result.data).to include('totalCount' => 0)
+        end
       end
     end
 
