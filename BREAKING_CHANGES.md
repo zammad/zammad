@@ -73,6 +73,32 @@ instead.
 
 ## 7.2
 
+### The SSO login rejects conflicting login sources, and the shipped proxy configurations clear `Remote-User`
+
+**Who is affected?** Admins of package installations whose nginx or Apache configuration was set up
+from the files shipped with an earlier version, and admins of SSO setups whose proxy passes more
+than one login source to Zammad.
+
+`GET /auth/sso` took the login from the first present of `REMOTE_USER`, the `Remote-User` request
+header (`HTTP_REMOTE_USER`) and `X-Forwarded-User`, in that order. Behind a reverse proxy,
+`Remote-User` is just a header the client can send itself, and the shipped nginx and Apache
+configurations only cleared `X-Forwarded-User`, so a client could override the login set by the proxy
+with its own `Remote-User` header. The login now collects all present sources and answers
+`401 Unauthorized` when they name different logins (compared case-insensitively). Setups that
+provide exactly one source, or the same login in several sources, keep working.
+
+The shipped `contrib/nginx/zammad.conf`, `contrib/nginx/zammad_ssl.conf`,
+`contrib/apache2/zammad.conf` and `contrib/apache2/zammad_ssl.conf` now also clear the `Remote-User`
+header next to `X-Forwarded-User`. The Docker images rebuild their nginx configuration from the
+shipped one on every start, so the change applies to them automatically. Package installations keep
+the web server configuration they already have.
+
+⚠️ Add `proxy_set_header Remote-User "";` (nginx) respectively `RequestHeader unset Remote-User`
+(Apache) next to the existing `X-Forwarded-User` line of an existing web server configuration. In an
+SSO setup, let the proxy set exactly one of the two headers and clear the other.
+
+**Related advisory:** [GHSA-4749-hj8h-f4jf](https://github.com/zammad/zammad/security/advisories/GHSA-4749-hj8h-f4jf)
+
 ### Settings naming a backend class accept only the backend they are made for
 
 **Who is affected?** Developers of add-ons that register a postmaster filter, transaction backend,
