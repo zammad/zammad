@@ -240,4 +240,239 @@ RSpec.describe Ticket::Search do
       include_examples 'search for tickets'
     end
   end
+
+  describe 'internal article access' do
+    let(:group)          { create(:group) }
+    let(:other_group)    { create(:group) }
+    let(:organization)   { create(:organization, shared: true, note: organization_note) }
+    let(:customer)       { create(:customer, organization:) }
+    let(:colleague)      { create(:customer, organization:) }
+    let(:owner)          { create(:agent, groups: [group], note: owner_note) }
+    let(:agent)          { create(:agent, groups: [group]) }
+    let(:agent_customer) { create(:agent_and_customer, groups: [group]) }
+
+    let(:public_term)           { "public#{SecureRandom.hex(8)}" }
+    let(:internal_term)         { "internal#{SecureRandom.hex(8)}" }
+    let(:title_term)            { "title#{SecureRandom.hex(8)}" }
+    let(:foreign_public_term)   { "public#{SecureRandom.hex(8)}" }
+    let(:foreign_internal_term) { "internal#{SecureRandom.hex(8)}" }
+    let(:tag)                   { "tag#{SecureRandom.hex(8)}" }
+    let(:owner_note)            { "note#{SecureRandom.hex(8)}" }
+    let(:organization_note)     { "note#{SecureRandom.hex(8)}" }
+
+    let(:ticket)               { create(:ticket, group:, customer:, organization:, owner:) }
+    let(:internal_only_ticket) { create(:ticket, group:, customer:, organization:, title: title_term) }
+    let(:colleague_ticket)     { create(:ticket, group:, customer: colleague, organization:) }
+    let(:foreign_ticket)       { create(:ticket, group: other_group, customer: agent_customer) }
+
+    before do
+      create(:ticket_article, ticket:, body: public_term)
+      create(:ticket_article, ticket:, body: internal_term, internal: true)
+      create(:ticket_article, ticket: internal_only_ticket, body: internal_term, internal: true)
+      create(:ticket_article, ticket: colleague_ticket, body: public_term)
+      create(:ticket_article, ticket: foreign_ticket, body: foreign_public_term)
+      create(:ticket_article, ticket: foreign_ticket, body: foreign_internal_term, internal: true)
+      ticket.tag_add(tag, 1)
+    end
+
+    def search(query, **params)
+      Ticket.search(current_user: user, query: query, **params)
+    end
+
+    def condition(name, value)
+      { name => { operator: 'contains', value: value } }
+    end
+
+    def tag_condition
+      { operator: 'AND', conditions: [{ name: 'ticket.tags', operator: 'contains all', value: tag }] }
+    end
+
+    shared_examples 'search for tickets' do
+      context 'when user is customer' do
+        let(:user) { customer }
+
+        it 'finds the tickets by a public article' do
+          expect(search(public_term)).to contain_exactly(ticket, colleague_ticket)
+        end
+
+        it 'does not find the ticket by an internal article' do
+          expect(search(internal_term)).to eq([])
+        end
+
+        it 'finds the ticket with internal articles only by its title' do
+          expect(search(title_term)).to eq([internal_only_ticket])
+        end
+
+        it 'does not find the ticket by a condition on an internal article' do
+          expect(search(public_term, condition: condition('article.body', internal_term))).to eq([])
+        end
+
+        it 'does not find the ticket by a condition on a tag' do
+          expect(search(public_term, condition: tag_condition)).to eq([])
+        end
+
+        it 'does not find the ticket by a condition on the owner note' do
+          expect(search(public_term, condition: condition('owner.note', owner_note))).to eq([])
+        end
+
+        it 'does not find the tickets by a condition on the organization note' do
+          expect(search(public_term, condition: condition('organization.note', organization_note))).to eq([])
+        end
+
+        it 'finds the ticket by a condition on the owner name' do
+          expect(search(public_term, condition: condition('owner.lastname', owner.lastname))).to eq([ticket])
+        end
+
+        it 'finds the ticket of the colleague by a condition on the customer name' do
+          expect(search(public_term, condition: condition('customer.lastname', colleague.lastname))).to eq([colleague_ticket])
+        end
+      end
+
+      context 'when user is agent' do
+        let(:user) { agent }
+
+        it 'finds the tickets by an internal article' do
+          expect(search(internal_term)).to contain_exactly(ticket, internal_only_ticket)
+        end
+
+        it 'finds the ticket by a condition on an internal article' do
+          expect(search(public_term, condition: condition('article.body', internal_term))).to eq([ticket])
+        end
+
+        it 'finds the ticket by a condition on a tag' do
+          expect(search(public_term, condition: tag_condition)).to eq([ticket])
+        end
+
+        it 'finds the ticket by a condition on the owner note' do
+          expect(search(public_term, condition: condition('owner.note', owner_note))).to eq([ticket])
+        end
+
+        it 'finds the tickets by a condition on the organization note' do
+          expect(search(public_term, condition: condition('organization.note', organization_note))).to contain_exactly(ticket, colleague_ticket)
+        end
+      end
+
+      context 'when user is agent and customer' do
+        let(:user) { agent_customer }
+
+        it 'finds the ticket of an accessible group by an internal article' do
+          expect(search(internal_term)).to contain_exactly(ticket, internal_only_ticket)
+        end
+
+        it 'finds the own ticket of another group by a public article' do
+          expect(search(foreign_public_term)).to eq([foreign_ticket])
+        end
+
+        it 'does not find the own ticket of another group by an internal article' do
+          expect(search(foreign_internal_term)).to eq([])
+        end
+
+        it 'finds the ticket of an accessible group by a condition on an internal article' do
+          expect(search(public_term, condition: condition('article.body', internal_term))).to eq([ticket])
+        end
+
+        it 'does not find the own ticket of another group by a condition on an internal article' do
+          expect(search(foreign_public_term, condition: condition('article.body', foreign_internal_term))).to eq([])
+        end
+      end
+    end
+
+    context 'with elasticsearch', searchindex: true do
+      before do
+        create(:ticket_article, :with_attachment, ticket:, attachment_filename: 'test.rtf', internal: true)
+
+        searchindex_model_reload([Ticket, User])
+      end
+
+      include_examples 'search for tickets'
+
+      context 'when user is customer' do
+        let(:user) { customer }
+
+        it 'does not find the ticket by an internal article via field syntax' do
+          expect(search("article.body:#{internal_term}")).to eq([])
+        end
+
+        it 'does not find the ticket by an internal attachment' do
+          expect(search('RTF document')).to eq([])
+        end
+
+        it 'does not find the ticket by a tag' do
+          expect(search(tag)).to eq([])
+        end
+
+        it 'does not find the ticket by a tag via field syntax' do
+          expect(search("tags:#{tag}")).to eq([])
+        end
+
+        it 'does not exclude the ticket by negating an internal article' do
+          expect(search("#{public_term} -#{internal_term}")).to contain_exactly(ticket, colleague_ticket)
+        end
+
+        it 'finds the ticket by a public article via field syntax' do
+          expect(search("article.body:#{public_term}")).to contain_exactly(ticket, colleague_ticket)
+        end
+
+        it 'finds the ticket by a visible attribute via field syntax' do
+          expect(search("title:#{title_term}")).to eq([internal_only_ticket])
+        end
+
+        it 'finds the tickets via operators and grouping' do
+          expect(search("(#{public_term} OR #{title_term}) AND NOT #{tag}")).to contain_exactly(ticket, internal_only_ticket, colleague_ticket)
+        end
+
+        it 'does not find the ticket of the colleague by their email' do
+          expect(search(colleague.email)).to eq([])
+        end
+
+        it 'does not find the ticket of the colleague by their email via field syntax' do
+          expect(search("customer.email:#{colleague.email.split('@').first}*")).to eq([])
+        end
+
+        it 'finds the ticket of the colleague by their name' do
+          expect(search(colleague.lastname)).to eq([colleague_ticket])
+        end
+
+        context 'with a custom attribute', db_strategy: :reset do
+          let(:value) { "value#{SecureRandom.hex(8)}" }
+
+          before do
+            create(:object_manager_attribute_text, name: 'contract_number')
+            ObjectManager::Attribute.migration_execute
+            ticket.reload.update!(contract_number: value)
+
+            searchindex_model_reload([Ticket])
+          end
+
+          it 'does not find the ticket by a hidden attribute via field wildcard' do
+            expect(search("\\*number:#{value}")).to eq([])
+          end
+        end
+      end
+
+      context 'when user is agent' do
+        let(:user) { agent }
+
+        it 'finds the tickets by an internal article via field syntax' do
+          expect(search("article.body:#{internal_term}")).to contain_exactly(ticket, internal_only_ticket)
+        end
+
+        it 'finds the ticket by an internal attachment' do
+          expect(search('RTF document')).to eq([ticket])
+        end
+
+        it 'finds the ticket by a tag' do
+          expect(search(tag)).to eq([ticket])
+        end
+
+        it 'finds the ticket of the colleague by their email' do
+          expect(search(colleague.email)).to eq([colleague_ticket])
+        end
+      end
+    end
+
+    context 'with db only' do
+      include_examples 'search for tickets'
+    end
+  end
 end
