@@ -217,7 +217,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.8)
-    csv (3.3.6)
+    csv (3.3.7)
     daemons (1.4.1)
     dalli (5.2.5)
       logger
