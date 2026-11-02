@@ -96,6 +96,21 @@ see e.g. also app/models/user/search.rb
 
 =begin
 
+This function provides the possibility to replace the fulltext condition
+for the searches in the elasticsearch. E.g. to search different fields
+depending on the access of the current user. Returning nil keeps the
+default condition of the search index backend.
+
+see e.g. also app/models/ticket/search.rb
+
+=end
+
+    def search_query_condition(params)
+      # optional
+    end
+
+=begin
+
 search objects via search index
 
   result = Model.search(
@@ -254,7 +269,7 @@ returns
       result = SearchIndexBackend.search_by_index(
         params[:query],
         to_s,
-        params.merge(query_extension: search_query_extension(params), with_total_count: true)
+        params.merge(query_extension: search_query_extension(params), query_condition: search_query_condition(params), with_total_count: true)
       )
 
       if params[:only_total_count].blank?

@@ -80,8 +80,8 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
 
   %w[group priority state].each do |relation|
     describe "Updating referenced data between ticket and #{relation}" do
-      let(:user)   { create(:customer) }
-      let(:ticket) { create(:ticket, customer: user) }
+      let(:user)   { create(:agent, groups: [ticket.group]) }
+      let(:ticket) { create(:ticket) }
 
       before do
         ticket.send(relation).update!(name: 'NewTestPhrase')
