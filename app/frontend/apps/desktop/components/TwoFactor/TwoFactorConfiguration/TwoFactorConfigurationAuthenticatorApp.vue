@@ -16,6 +16,7 @@ import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/use
 import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
 import { useUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
 import UserError from '#shared/errors/UserError.ts'
+import { getGraphQLErrorType } from '#shared/errors/utils.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -26,7 +27,6 @@ import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts
 import { usePasswordCheckTwoFactor } from '#desktop/entities/two-factor-configuration/composables/usePasswordCheckTwoFactor.ts'
 
 import type { TwoFactorConfigurationComponentPropsWithRequiredToken } from '../types.ts'
-import type { ApolloError } from '@apollo/client/errors'
 
 const props = defineProps<TwoFactorConfigurationComponentPropsWithRequiredToken>()
 
@@ -49,9 +49,9 @@ const initiationQuery = new QueryHandler(
 
 const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(props.formSubmitCallback)
 
-initiationQuery.onError((error: ApolloError) => {
+initiationQuery.onError((error) => {
   if (
-    error?.graphQLErrors?.[0]?.extensions?.type !==
+    getGraphQLErrorType(error) !==
     'Gql::Concerns::HandlesPasswordRevalidationToken::InvalidTokenError'
   )
     return

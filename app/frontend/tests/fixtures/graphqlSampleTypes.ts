@@ -2,7 +2,7 @@
 
 import gql from 'graphql-tag'
 
-import type { TypedDocumentNode } from '@apollo/client/core'
+import type { TypedDocumentNode } from '@apollo/client'
 
 export type ID = number
 
@@ -23,7 +23,7 @@ export const SampleDocument = gql`
 `
 
 export const SampleMutationDocument = gql`
-  query getSample($id: ID!) {
+  mutation sampleUpdate($id: ID!) {
     Sample(id: $id) {
       id
       title

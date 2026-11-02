@@ -15,7 +15,7 @@ import { useOrganizationQuery } from '../graphql/queries/organization.api.ts'
 import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
 import { useOrganizationObjectAttributesStore } from '../stores/objectAttributes.ts'
 
-import type { WatchQueryFetchPolicy } from '@apollo/client/core'
+import type { WatchQueryFetchPolicy } from '@apollo/client'
 
 const SECONDARY_ORGANIZATIONS_FETCH_COUNT = 5
 

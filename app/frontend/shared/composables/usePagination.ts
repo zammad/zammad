@@ -9,7 +9,7 @@ import type {
   PaginationVariables,
 } from '#shared/types/server/apollo/handler.ts'
 
-import type { OperationVariables } from '@apollo/client/core'
+import type { OperationVariables } from '@apollo/client'
 
 export const usePagination = <
   TQueryResult extends OperationQueryResult = OperationQueryResult,

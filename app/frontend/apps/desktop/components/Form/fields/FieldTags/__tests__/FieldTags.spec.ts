@@ -42,6 +42,10 @@ const testProps = {
 
 describe('Form - Field - Tags - Features', () => {
   it('supports adding and removing of new tags', async () => {
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: [],
+    })
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -50,10 +54,6 @@ describe('Form - Field - Tags - Features', () => {
         clearable: true,
         canCreate: true,
       },
-    })
-
-    mockAutocompleteSearchTagQuery({
-      autocompleteSearchTag: [],
     })
 
     await wrapper.events.click(await wrapper.findByLabelText('Select…'))
@@ -89,6 +89,10 @@ describe('Form - Field - Tags - Features', () => {
   })
 
   it('prevents adding new tags when the setting is disabled', async () => {
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: [],
+    })
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -96,10 +100,6 @@ describe('Form - Field - Tags - Features', () => {
         debounceInterval: 0,
         canCreate: false,
       },
-    })
-
-    mockAutocompleteSearchTagQuery({
-      autocompleteSearchTag: [],
     })
 
     await wrapper.events.click(await wrapper.findByLabelText('Select…'))
@@ -118,6 +118,10 @@ describe('Form - Field - Tags - Features', () => {
   })
 
   it('supports selecting tags via keyboard shortcuts', async () => {
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: [],
+    })
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -126,10 +130,6 @@ describe('Form - Field - Tags - Features', () => {
         clearable: true,
         canCreate: true,
       },
-    })
-
-    mockAutocompleteSearchTagQuery({
-      autocompleteSearchTag: [],
     })
 
     await wrapper.events.click(await wrapper.findByLabelText('Select…'))
@@ -178,16 +178,16 @@ describe('Form - Field - Tags - Features', () => {
 
 describe('Form - Field - Tags - Query', () => {
   it('fetches remote options via GraphQL query', async () => {
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: testOptions,
+    })
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
         debounceInterval: 0,
       },
-    })
-
-    mockAutocompleteSearchTagQuery({
-      autocompleteSearchTag: testOptions,
     })
 
     await wrapper.events.click(await wrapper.findByLabelText('Select…'))
@@ -220,16 +220,16 @@ describe('Form - Field - Tags - Query', () => {
   })
 
   it('replaces local options with selection', async () => {
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: testOptions,
+    })
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
         debounceInterval: 0,
       },
-    })
-
-    mockAutocompleteSearchTagQuery({
-      autocompleteSearchTag: testOptions,
     })
 
     await wrapper.events.click(await wrapper.findByLabelText('Select…'))

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { DefaultApolloClient, provideApolloClient } from '@vue/apollo-composable'
+import { DefaultApolloClient, provideApolloClient } from '@vue/apollo-composable/compat'
 
 import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
 

@@ -4,6 +4,7 @@
 import { computed, nextTick, onMounted, shallowRef, useTemplateRef, unref } from 'vue'
 
 import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
+import { getGraphQLErrorType } from '#shared/errors/utils.ts'
 import { useAiAnalyticsUsageMutation } from '#shared/graphql/mutations/aiAnalyticsUsage.api.ts'
 import type { AiAnalyticsMetadata, AiAnalyticsUsageInput } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -14,8 +15,6 @@ import getUuid from '#shared/utils/getUuid.ts'
 import type { UiState } from '#desktop/components/CommonAIFeedback/types.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { ButtonVariant } from '#desktop/components/CommonButton/types.ts'
-
-import type { ApolloError } from '@apollo/client/core'
 
 interface Props {
   analyticsMeta: DeepPartial<AiAnalyticsMetadata>
@@ -59,8 +58,7 @@ const submitUsage = async (input: AiAnalyticsUsageInput) => {
 
 // Feedback may have been given meanwhile in another view of the same result.
 const isFeedbackAlreadyProvided = (error: unknown) =>
-  (error as ApolloError)?.graphQLErrors?.[0]?.extensions?.type ===
-  GraphQLErrorTypes.AiFeedbackAlreadyProvided
+  getGraphQLErrorType(error) === GraphQLErrorTypes.AiFeedbackAlreadyProvided
 
 const submitFeedback = async (input: AiAnalyticsUsageInput) => {
   try {

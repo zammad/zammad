@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { omit } from 'lodash-es'
 import { computed, ref, watch } from 'vue'
 
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
@@ -28,7 +29,7 @@ import type {
   EmailInboundData,
   EmailInboundMessagesData,
 } from '../types/email-inbound-outbound.ts'
-import type { SetNonNullable, SetOptional } from 'type-fest'
+import type { SetNonNullable } from 'type-fest'
 import type { Ref } from 'vue'
 
 export const useEmailChannelConfiguration = (
@@ -175,19 +176,16 @@ export const useEmailChannelConfiguration = (
           result?.channelEmailGuessConfiguration?.result.inboundConfiguration &&
           result?.channelEmailGuessConfiguration?.result.outboundConfiguration
         ) {
-          const inboundConfiguration = result.channelEmailGuessConfiguration.result
-            .inboundConfiguration as SetOptional<
-            SetNonNullable<Required<ChannelEmailInboundConfiguration>>,
-            '__typename'
-          >
-          delete inboundConfiguration.__typename
+          // Apollo hands out frozen result objects, so the configurations are copied.
+          const inboundConfiguration = omit(
+            result.channelEmailGuessConfiguration.result.inboundConfiguration,
+            '__typename',
+          ) as SetNonNullable<Required<Omit<ChannelEmailInboundConfiguration, '__typename'>>>
 
-          const outboundConfiguration = result.channelEmailGuessConfiguration.result
-            .outboundConfiguration as SetOptional<
-            SetNonNullable<Required<ChannelEmailOutboundConfiguration>>,
-            '__typename'
-          >
-          delete outboundConfiguration.__typename
+          const outboundConfiguration = omit(
+            result.channelEmailGuessConfiguration.result.outboundConfiguration,
+            '__typename',
+          ) as SetNonNullable<Required<Omit<ChannelEmailOutboundConfiguration, '__typename'>>>
 
           emailChannelForms.emailInbound.updateFieldValues(inboundConfiguration)
           emailChannelForms.emailOutbound.updateFieldValues(outboundConfiguration)

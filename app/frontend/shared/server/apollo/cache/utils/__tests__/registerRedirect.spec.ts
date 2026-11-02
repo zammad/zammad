@@ -65,4 +65,14 @@ describe('registerRedirect', () => {
       vi.mocked(console.warn).mockClear()
     },
   )
+
+  it('keeps a stored null over a redirect to a dangling reference', () => {
+    const cache = new InMemoryCache(registerRedirect({}, 'ticket', 'Ticket'))
+    const query = detailQuery('ticket')
+    const variables = { ticketId: 'gid://zammad/Ticket/404' }
+
+    cache.writeQuery({ query, variables, data: { ticket: null } })
+
+    expect(cache.readQuery({ query, variables })).toEqual({ ticket: null })
+  })
 })

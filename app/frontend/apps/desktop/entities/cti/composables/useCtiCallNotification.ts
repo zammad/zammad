@@ -2,7 +2,7 @@
 
 import { useEventListener } from '@vueuse/core'
 import { tryOnScopeDispose } from '@vueuse/shared'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { CtiSidebarQuery } from '#shared/graphql/types.ts'
@@ -82,9 +82,27 @@ export const useCtiCallNotification = () => {
     notifications.set(call.id, notification)
   }
 
+  // Counted as they finish, since a load may begin and end between two runs
+  //   of the watcher below when its answer arrives within the same tick.
+  const finishedLoads = ref(0)
+  let isLoadPending = false
+
   watch(
-    [isActive, ringingCalls, isLoading],
-    ([active, calls, loading], [, , wasLoading]) => {
+    isLoading,
+    (loading) => {
+      if (loading) {
+        isLoadPending = true
+      } else if (isLoadPending) {
+        isLoadPending = false
+        finishedLoads.value += 1
+      }
+    },
+    { immediate: true, flush: 'sync' },
+  )
+
+  watch(
+    [isActive, ringingCalls, finishedLoads],
+    ([active, calls, loads], [, , previousLoads]) => {
       if (!active) {
         closeAll()
         knownCallIds = undefined
@@ -99,8 +117,8 @@ export const useCtiCallNotification = () => {
 
       // The list a load answers with is a baseline, too: the sidebar query
       //   refetches after a reconnect, so the calls that rang during the
-      //   outage arrive this way. An unchanged list only turns the flag off.
-      const newCalls = loading || wasLoading ? [] : calls.filter(isNew)
+      //   outage arrive this way. An unchanged list only counts the load.
+      const newCalls = isLoadPending || loads !== previousLoads ? [] : calls.filter(isNew)
 
       knownCallIds = callIds
 

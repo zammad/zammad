@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FieldPolicy } from '@apollo/client/cache'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 /**
  * Whenever you are configuring the behavior for a nested fields on specific type

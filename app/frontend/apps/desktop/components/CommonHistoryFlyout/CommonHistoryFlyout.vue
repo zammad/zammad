@@ -21,8 +21,8 @@ import HistoryEvent from './HistoryEvent.vue'
 import HistoryEventHeader from './HistoryEventHeader.vue'
 import HistoryEventIssuer from './HistoryEventIssuer.vue'
 
-import type { OperationVariables } from '@apollo/client/core'
-import type { UseQueryReturn } from '@vue/apollo-composable'
+import type { OperationVariables } from '@apollo/client'
+import type { UseQueryReturn } from '@vue/apollo-composable/compat'
 
 interface HistoryQueryResult {
   [key: string]: Array<HistoryGroup> | undefined

@@ -2,7 +2,7 @@
 
 import type { ClientSkipSubscriptionsContext } from '#shared/types/server/apollo/client.ts'
 
-import type { Operation } from '@apollo/client/core'
+import type { Operation } from '@apollo/client'
 
 export const getSkipSubscriptions = (operation: Operation): ClientSkipSubscriptionsContext =>
   operation.getContext().skipSubscriptions || []

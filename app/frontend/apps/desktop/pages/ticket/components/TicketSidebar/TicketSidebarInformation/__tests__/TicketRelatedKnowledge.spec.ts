@@ -65,6 +65,7 @@ const buildLinkedAnswer = (
   ],
   content: {
     __typename: 'KnowledgeBaseAnswerTranslationContent',
+    id: convertToGraphQLId('KnowledgeBase::Answer::Translation::Content', id),
     bodyExcerpt: `Excerpt for ${title}`,
   },
   answer: {

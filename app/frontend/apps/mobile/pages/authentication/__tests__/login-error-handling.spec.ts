@@ -82,7 +82,11 @@ describe('testing login error handling', () => {
           session: null,
           errors: [
             {
+              __typename: 'UserError',
               message: 'Login failed. Please double-check your two-factor authentication method.',
+              field: null,
+              messagePlaceholder: null,
+              exception: null,
             },
           ],
           twoFactorRequired: null,

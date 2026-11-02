@@ -15,7 +15,7 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
-import type { WatchQueryFetchPolicy } from '@apollo/client/core'
+import type { WatchQueryFetchPolicy } from '@apollo/client'
 
 export const SECONDARY_ORGANIZATIONS_FETCH_COUNT = 5
 

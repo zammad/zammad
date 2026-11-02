@@ -2,7 +2,7 @@
 
 import type { ClientErrorContext } from '#shared/types/server/apollo/client.ts'
 
-import type { Operation } from '@apollo/client/core'
+import type { Operation } from '@apollo/client'
 
 export default function getErrorContext(operation: Operation): ClientErrorContext {
   const defaultErrorContext: ClientErrorContext = {

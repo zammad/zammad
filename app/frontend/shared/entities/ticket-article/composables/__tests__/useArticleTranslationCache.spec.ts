@@ -11,14 +11,19 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { useArticleTranslationCache } from '../useArticleTranslationCache.ts'
 
-import type { InMemoryCache } from '@apollo/client/core'
+import type { InMemoryCache } from '@apollo/client'
 
-const articleId = convertToGraphQLId('Ticket::Article', 1)
 const cache = mockedApolloClient.cache as InMemoryCache
 let scope: EffectScope
+let articleId: string
+let articleCount = 0
 
 beforeEach(() => {
   scope = effectScope()
+  // Apollo keeps a fragment watch alive for a tick after its last unsubscribe and the
+  //   store reset between tests detaches it, so a shared id would reuse a dead watch.
+  articleCount += 1
+  articleId = convertToGraphQLId('Ticket::Article', articleCount)
 })
 afterEach(() => scope.stop())
 

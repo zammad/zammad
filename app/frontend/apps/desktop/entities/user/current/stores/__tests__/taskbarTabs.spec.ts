@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, Observable, type FetchResult } from '@apollo/client/core'
+import { ApolloLink, Observable, type FetchResult } from '@apollo/client'
 import { createPinia, setActivePinia } from 'pinia'
 
 import { mockedApolloClient } from '#tests/graphql/builders/mocks.ts'

@@ -220,11 +220,16 @@ describe('Caller log paging and live updates', () => {
 
     await push({ addLog: call(10) })
 
-    await waitFor(() => expect(getRow(view, call(10))).toBeInTheDocument())
+    // The table fetches the next page on its own once the longer list leaves room, and
+    //   a page's rows reach the list a tick after its fetch - wait for them, so that the
+    //   load more below does not start from the cursor of the page before.
+    await waitFor(() => expect(getRow(view, call(2))).toBeInTheDocument())
+
+    expect(rowIds(view)).toEqual([call(10).id, call(4).id, call(3).id, call(2).id])
 
     await triggerLoadMore?.()
 
-    await waitFor(() => expect(getRow(view, call(2))).toBeInTheDocument())
+    await waitFor(() => expect(getGraphQLMockCalls(CtiLogsDocument)).toHaveLength(3))
 
     expect(rowIds(view)).toEqual([call(10).id, call(4).id, call(3).id, call(2).id])
   })

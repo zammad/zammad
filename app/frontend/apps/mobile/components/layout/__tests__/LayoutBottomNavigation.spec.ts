@@ -56,7 +56,9 @@ describe('bottom navigation in layout', () => {
     await subscription.next({
       data: {
         onlineNotificationsCount: {
+          __typename: 'OnlineNotificationsCountPayload',
           unseenCount: 1,
+          unseenPushTags: [],
         },
       },
     })

@@ -10,14 +10,14 @@ import { getApolloClient } from '#shared/server/apollo/client.ts'
 
 import { TicketExternalReferencesIdoitObjectListDocument } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIdoitObjectList.api.ts'
 
-import type { ApolloCache, FetchResult } from '@apollo/client/core'
+import type { ApolloCache, FetchResult } from '@apollo/client'
 import type { Ref } from 'vue'
 
 export const useIdoitCacheHandlers = (objectIds: Ref<number[]>, ticketId: Ref<ID | undefined>) => {
   const { cache } = getApolloClient()
 
   const modifyObjectItemAddCache = (
-    cache: ApolloCache<TicketExternalReferencesIdoitObjectListQuery>,
+    cache: ApolloCache,
     { data }: Omit<FetchResult<TicketExternalReferencesIdoitObjectAddMutation>, 'context'>,
   ) => {
     if (!data) return

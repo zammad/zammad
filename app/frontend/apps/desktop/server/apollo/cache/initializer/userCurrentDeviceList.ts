@@ -2,7 +2,7 @@
 
 import registerIncomingQueryMerge from '#shared/server/apollo/cache/utils/registerIncomingQueryMerge.ts'
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function register(config: InMemoryCacheConfig) {
   return registerIncomingQueryMerge(config, 'userCurrentDeviceList')

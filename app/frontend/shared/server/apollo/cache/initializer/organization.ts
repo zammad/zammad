@@ -4,7 +4,7 @@ import registerNotNormalizedObjectFieldsMerge from '#shared/server/apollo/cache/
 
 import registerRelayStylePagination from '../utils/registerRelayStylePagination.ts'
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function register(config: InMemoryCacheConfig) {
   registerNotNormalizedObjectFieldsMerge(config, 'Organization', ['allMembers', 'ticketsCount'])

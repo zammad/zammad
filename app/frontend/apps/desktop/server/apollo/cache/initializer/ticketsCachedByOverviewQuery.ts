@@ -8,8 +8,8 @@ import registerRelayStylePagination from '#shared/server/apollo/cache/utils/regi
 import { useTicketsCachedByOverviewCache } from '#desktop/entities/ticket/composables/useTicketsCachedByOverviewCache.ts'
 
 import type { InMemoryCache } from '@apollo/client/cache'
-import type { FieldMergeFunction, FieldPolicy } from '@apollo/client/cache/inmemory/policies'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { FieldMergeFunction, FieldPolicy } from '@apollo/client/cache'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 const modifyOverviewsCache = (
   cache: InMemoryCache,

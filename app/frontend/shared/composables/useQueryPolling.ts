@@ -7,7 +7,7 @@ import type { QueryHandler } from '#shared/server/apollo/handler'
 import { connected } from '#shared/server/connection.ts'
 import type { OperationQueryResult } from '#shared/types/server/apollo/handler'
 
-import type { OperationVariables } from '@apollo/client/core'
+import type { OperationVariables } from '@apollo/client'
 
 export type QueryPollingOptions = {
   enabled?: boolean // Enable polling, default is true.

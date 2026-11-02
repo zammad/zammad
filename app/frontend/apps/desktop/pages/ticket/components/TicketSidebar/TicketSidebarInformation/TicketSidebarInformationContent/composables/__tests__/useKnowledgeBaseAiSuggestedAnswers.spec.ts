@@ -5,6 +5,7 @@ import { computed, defineComponent, nextTick, ref, toRef, type PropType } from '
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { holdOperation } from '#tests/support/holdOperation.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { getTicketArticleUpdatesSubscriptionHandler } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.mocks.ts'
@@ -274,6 +275,8 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     mountComposable()
     await waitFor(() => expect(api.answers.value).toHaveLength(1))
 
+    const release = holdOperation('ticketAIRelatedKnowledgeBaseAnswers')
+
     raiseArticleCount()
     await nextTick()
     expect(api.pending.value).toBe(true)
@@ -283,6 +286,8 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     api.refreshKeepingAnswers()
 
     expect(api.pending.value).toBe(true)
+
+    release()
   })
 
   it('refetches when the ticket gained an article', async () => {
@@ -442,6 +447,8 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     mountComposable()
     await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
 
+    const release = holdOperation('ticketAIRelatedKnowledgeBaseAnswers')
+
     mountComposable({ subscriptionEnabled: false, fetchPolicy: 'network-only' })
 
     // The cache is served before any network answer, so this is the moment a `cache-and-network`
@@ -449,6 +456,8 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     await nextTick()
     expect(api.answers.value).toEqual([])
     expect(api.loading.value).toBe(true)
+
+    release()
 
     await waitFor(() => expect(api.loading.value).toBe(false))
     expect(api.answers.value).toHaveLength(1)

@@ -59,7 +59,7 @@ describe('Ticket Overviews > Empty states', () => {
     })
 
     expect(
-      within(secondaryNavigationSidebar).getByRole('link', {
+      await within(secondaryNavigationSidebar).findByRole('link', {
         name: 'My Assigned Tickets0', // 0 comes from the ticket count
       }),
     ).toBeInTheDocument()

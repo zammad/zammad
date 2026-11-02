@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useLazyQuery } from '@vue/apollo-composable'
+import { useLazyQuery } from '@vue/apollo-composable/compat'
 import { refDebounced, useDebounceFn, watchOnce } from '@vueuse/core'
 import gql from 'graphql-tag'
 import { cloneDeep, escapeRegExp, isEqual, uniqBy } from 'lodash-es'
@@ -199,7 +199,7 @@ const autocompleteQueryHandler = new QueryHandler(
     }),
     () => ({
       enabled: !!(debouncedFilter.value || defaultFilter.value),
-      cachePolicy: 'no-cache', // Do not use cache, because we want always up-to-date results.
+      fetchPolicy: 'cache-and-network', // Show cached results immediately, then refresh from the server.
     }),
   ),
 )

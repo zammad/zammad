@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import UserError from '#shared/errors/UserError.ts'
 
-import type { ApolloError } from '@apollo/client/core'
+import type { ErrorLike } from '@apollo/client'
 
-export const handleUserErrors = (error: UserError | ApolloError) => {
+export const handleUserErrors = (error: UserError | ErrorLike) => {
   if (error instanceof UserError) {
     useNotifications().notify({
       id: error.userErrorId,
@@ -16,6 +18,15 @@ export const handleUserErrors = (error: UserError | ApolloError) => {
       type: NotificationTypes.Error,
     })
   }
+}
+
+// The backend's exception class of a failed operation, e.g. 'Exceptions::Forbidden'.
+export const getGraphQLErrorType = (error: unknown): string | undefined => {
+  if (!CombinedGraphQLErrors.is(error)) return undefined
+
+  const type = error.errors[0]?.extensions?.type
+
+  return typeof type === 'string' ? type : undefined
 }
 
 // Re-labels the fields of a user error, for forms whose field names differ from the attribute

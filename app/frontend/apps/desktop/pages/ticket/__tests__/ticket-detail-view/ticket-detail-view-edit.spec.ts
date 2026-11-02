@@ -1179,7 +1179,8 @@ describe('Ticket detail view', () => {
       expect(await view.findByRole('button', { name: 'Update' })).toHaveClass('bg-green-200')
       expect(view.getByRole('button', { name: 'Drafts & macros' })).toHaveClass('bg-green-200')
 
-      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
+      // The floating toolbar offers the same action under the same name.
+      await view.events.click(await view.findByTestId('ticket-detail-show-article-form-button'))
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 

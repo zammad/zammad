@@ -1,10 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloError } from '@apollo/client/errors'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import UserError from '#shared/errors/UserError.ts'
-import { handleUserErrors, remapUserErrorFields } from '#shared/errors/utils.ts'
+import {
+  getGraphQLErrorType,
+  handleUserErrors,
+  remapUserErrorFields,
+} from '#shared/errors/utils.ts'
 
 describe('errpr utils', () => {
   describe('handleUserErrors', () => {
@@ -34,11 +38,35 @@ describe('errpr utils', () => {
     })
 
     it('ignore npne UserErrors', () => {
-      handleUserErrors(new ApolloError({ errorMessage: 'Some error' }))
+      handleUserErrors(new Error('Some error'))
 
       const { notifications } = useNotifications()
 
       expect(notifications.value.length).toBe(0)
+    })
+  })
+
+  describe('getGraphQLErrorType', () => {
+    it('returns the backend exception class of a GraphQL error', () => {
+      const error = new CombinedGraphQLErrors({
+        errors: [{ message: 'Not authorized', extensions: { type: 'Exceptions::Forbidden' } }],
+      })
+
+      expect(getGraphQLErrorType(error)).toBe('Exceptions::Forbidden')
+    })
+
+    it('returns undefined when the GraphQL error carries no exception class', () => {
+      const withoutType = new CombinedGraphQLErrors({ errors: [{ message: 'Something failed' }] })
+      const withNonStringType = new CombinedGraphQLErrors({
+        errors: [{ message: 'Something failed', extensions: { type: 42 } }],
+      })
+
+      expect(getGraphQLErrorType(withoutType)).toBeUndefined()
+      expect(getGraphQLErrorType(withNonStringType)).toBeUndefined()
+    })
+
+    it('returns undefined for anything that is not a GraphQL error', () => {
+      expect(getGraphQLErrorType(new Error('Some error'))).toBeUndefined()
     })
   })
 
@@ -73,7 +101,7 @@ describe('errpr utils', () => {
     })
 
     it('passes anything that is not a user error through unchanged', () => {
-      const error = new ApolloError({ errorMessage: 'Some error' })
+      const error = new Error('Some error')
 
       expect(remapUserErrorFields(error, { 'translations.title': 'title' })).toBe(error)
     })

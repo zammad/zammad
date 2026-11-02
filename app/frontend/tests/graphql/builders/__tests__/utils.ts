@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { render } from '@testing-library/vue'
-import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable'
+import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable/compat'
 
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -13,8 +13,8 @@ import {
   type TestSubscriptionHandler,
 } from '../mocks.ts'
 
-import type { DocumentNode, OperationVariables } from '@apollo/client/core'
-import type { OptionsParameter } from '@vue/apollo-composable/dist/useQuery'
+import type { DocumentNode, OperationVariables } from '@apollo/client'
+import type { OptionsParameter } from '@vue/apollo-composable/compat'
 
 interface EnhancedQueryHandler<R, V extends OperationVariables> extends QueryHandler<R, V> {
   getMockedData: () => { data: R }

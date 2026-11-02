@@ -7,7 +7,7 @@ import type SubscriptionHandler from '#shared/server/apollo/handler/Subscription
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import type { TaskbarLiveAppUser, TaskbarLiveUser } from '../types.ts'
-import type { OperationVariables } from '@apollo/client/core'
+import type { OperationVariables } from '@apollo/client'
 
 // The live users of one taskbar key, flattened to one entry per user.
 //

@@ -21,6 +21,7 @@ const triggerNextOnlineNotificationCount = async (newCount = 0) => {
       onlineNotificationsCount: {
         __typename: 'OnlineNotificationsCountPayload',
         unseenCount: newCount,
+        unseenPushTags: [],
       },
     },
   })

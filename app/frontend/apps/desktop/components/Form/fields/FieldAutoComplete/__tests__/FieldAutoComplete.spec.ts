@@ -9,6 +9,7 @@ import { h } from 'vue'
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { holdOperation } from '#tests/support/holdOperation.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
 import type { SelectOption, SelectValue } from '#shared/components/CommonSelect/types.ts'
@@ -304,6 +305,44 @@ describe('Form - Field - AutoComplete - Query', () => {
     expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
   })
 
+  it('shows cached options immediately when repeating a search and refreshes them', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchUserQuery({ autocompleteSearchUser: [testOptions[0]] })
+    await wrapper.events.type(filterElement, 'foo')
+    await waitFor(() => expect(wrapper.getByRole('option')).toHaveTextContent('foo'))
+
+    mockAutocompleteSearchUserQuery({ autocompleteSearchUser: [testOptions[1]] })
+    await wrapper.events.clear(filterElement)
+    await wrapper.events.type(filterElement, 'bar')
+    await waitFor(() => expect(wrapper.getByRole('option')).toHaveTextContent('bar'))
+
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: [{ ...testOptions[0], label: 'foo refreshed' }],
+    })
+    const release = holdOperation('autocompleteSearchUser')
+
+    try {
+      await wrapper.events.clear(filterElement)
+      await wrapper.events.type(filterElement, 'foo')
+      await waitFor(() => expect(wrapper.getByRole('option')).toHaveTextContent('foo'))
+      expect(wrapper.queryByText('foo refreshed')).not.toBeInTheDocument()
+    } finally {
+      release()
+    }
+
+    await waitFor(() => expect(wrapper.getByRole('option')).toHaveTextContent('foo refreshed'))
+  })
+
   it('replaces local options with selection', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
@@ -545,6 +584,10 @@ describe('Form - Field - AutoComplete - Query', () => {
   })
 
   it('supports default filter for initial query', async () => {
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -553,10 +596,6 @@ describe('Form - Field - AutoComplete - Query', () => {
         defaultFilter: '*',
         multiple: true,
       },
-    })
-
-    mockAutocompleteSearchUserQuery({
-      autocompleteSearchUser: testOptions,
     })
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))

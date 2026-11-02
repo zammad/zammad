@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { provideApolloClient } from '@vue/apollo-composable'
+import { provideApolloClient } from '@vue/apollo-composable/compat'
 import {
   createMockClient as createMockedClient,
   type MockApolloClient,
@@ -35,16 +35,25 @@ export const clearMockClient = () => {
 const createMockClient = (handlers: ClientRequestHandler[]) => {
   if (!mockClient) {
     const cache = createCache(cacheInitializerModules)
-    mockClient = createMockedClient({ cache })
+    mockClient = createMockedClient({
+      cache,
+      // The devtools-suggestion timer would fire after the jsdom window is gone.
+      devtools: { enabled: false },
+      // Version 1 stayed quiet about unmocked operations; specs rely on that.
+      suppressMissingHandlerWarning: true,
+    })
     provideApolloClient(mockClient)
   }
 
-  handlers.forEach((clientRequestHandler) =>
-    mockClient?.setRequestHandler(
-      clientRequestHandler.operationDocument,
-      clientRequestHandler.handler,
-    ),
-  )
+  handlers.forEach(({ operationDocument, handler }) => {
+    try {
+      mockClient?.setRequestHandler(operationDocument, handler)
+    } catch {
+      // A later, more specific mock replaces the one a suite registered before.
+      mockClient?.removeRequestHandler(operationDocument)
+      mockClient?.setRequestHandler(operationDocument, handler)
+    }
+  })
 
   return mockClient
 }

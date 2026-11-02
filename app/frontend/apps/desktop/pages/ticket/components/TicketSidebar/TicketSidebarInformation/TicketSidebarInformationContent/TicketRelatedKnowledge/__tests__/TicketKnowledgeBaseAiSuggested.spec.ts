@@ -88,6 +88,7 @@ const relatedAnswer = (id: number, title: string, score = 90): RelatedAnswer => 
     ],
     content: {
       __typename: 'KnowledgeBaseAnswerTranslationContent',
+      id: convertToGraphQLId('KnowledgeBase::Answer::Translation::Content', id),
       bodyExcerpt: null,
     },
     answer: {

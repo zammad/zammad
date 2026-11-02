@@ -12,7 +12,7 @@ import { useKnowledgeBaseAnswerDeleteMutation } from '../graphql/mutations/knowl
 import { useKnowledgeBaseStore } from '../stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '../utils/routeLocation.ts'
 
-import type { Reference, StoreObject } from '@apollo/client/core'
+import type { Reference, StoreObject } from '@apollo/client'
 
 // The `knowledgeBaseAnswers` connection as it sits in the cache: edges holding references to the
 //   normalized answers, not the denormalized query result. A cached field can always be a

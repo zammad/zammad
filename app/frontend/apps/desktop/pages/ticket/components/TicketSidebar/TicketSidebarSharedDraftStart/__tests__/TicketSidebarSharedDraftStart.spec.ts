@@ -4,6 +4,9 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { mockTicketSharedDraftStartListQueryError } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
+
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
 import sharedDraftStartSidebarPlugin from '../../plugins/shared-draft-start.ts'
 import TicketSidebarSharedDraftStart from '../TicketSidebarSharedDraftStart.vue'
@@ -38,7 +41,7 @@ const renderTicketSidebarSharedDraftStart = async (
     ...options,
   })
 
-  if (context.formValues.group_id) await waitForNextTick()
+  await waitForNextTick(true)
 
   return result
 }
@@ -55,6 +58,11 @@ describe('TicketSidebarSharedDraftStart.vue', () => {
   })
 
   it('does not show sidebar when group ID is absent', async () => {
+    // Without a group the backend cannot resolve the list.
+    mockTicketSharedDraftStartListQueryError('Group could not be found.', {
+      type: GraphQLErrorTypes.UnknownError,
+    })
+
     const wrapper = await renderTicketSidebarSharedDraftStart({
       formValues: {
         group_id: null,
@@ -62,5 +70,6 @@ describe('TicketSidebarSharedDraftStart.vue', () => {
     })
 
     expect(wrapper.emitted('show')).toBeUndefined()
+    expect(wrapper.emitted('hide')).toHaveLength(1)
   })
 })

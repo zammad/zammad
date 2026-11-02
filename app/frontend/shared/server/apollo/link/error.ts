@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { onError } from '@apollo/client/link/error'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
+import { ErrorLink } from '@apollo/client/link/error'
 
 import {
   authenticationGenerationOutdated,
@@ -12,16 +13,16 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import emitter from '#shared/utils/emitter.ts'
 import log from '#shared/utils/log.ts'
 
-const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
+const errorLink = new ErrorLink(({ error, operation }) => {
   const errorContext = getErrorContext(operation)
 
   const errorMessages: Array<string> = []
 
   // If the error is an AbortError, ignore it and forward the operation to avoid communication failure
-  if (networkError?.name === 'AbortError') return
+  if (error.name === 'AbortError') return
 
-  if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, extensions, path }) => {
+  if (CombinedGraphQLErrors.is(error)) {
+    error.errors.forEach(({ message, extensions, path }) => {
       const { type, backtrace }: GraphQLErrorExtensionsHandler = {
         type: (extensions?.type as GraphQLErrorTypes) || GraphQLErrorTypes.NetworkError,
         backtrace: extensions?.backtrace as string,
@@ -53,14 +54,10 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 
       errorMessages.push(errorMessage, backtrace)
     })
-  }
-
-  if (networkError) {
+  } else if (!VITE_TEST_MODE) {
     // Suppress error message in Capybara test context, as it can happen if the
     //  test session is reset to 'about:blank' while requests are still running.
-    if (!VITE_TEST_MODE) {
-      errorMessages.push(`[Network error]: ${networkError}`)
-    }
+    errorMessages.push(`[Network error]: ${error}`)
   }
 
   if (!errorMessages.length || errorContext.logLevel === 'silent') return

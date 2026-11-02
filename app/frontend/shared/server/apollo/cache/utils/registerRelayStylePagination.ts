@@ -2,8 +2,8 @@
 
 import { relayStylePagination } from '@apollo/client/utilities'
 
-import type { FieldPolicy } from '@apollo/client/cache/inmemory/policies'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { FieldPolicy } from '@apollo/client/cache'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function registerRelayStylePagination(
   config: InMemoryCacheConfig,

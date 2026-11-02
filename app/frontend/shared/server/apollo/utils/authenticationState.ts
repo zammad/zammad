@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Operation } from '@apollo/client/core'
+import type { Operation } from '@apollo/client'
 
 const OPERATION_CONTEXT_KEY = 'authenticationGeneration'
 

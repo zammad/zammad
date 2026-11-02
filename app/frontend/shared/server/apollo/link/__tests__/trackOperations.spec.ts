@@ -1,18 +1,16 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  ApolloClient,
-  ApolloLink,
-  execute,
-  gql,
-  InMemoryCache,
-  Observable,
-} from '@apollo/client/core'
+import { ApolloClient, ApolloLink, execute, gql, InMemoryCache, Observable } from '@apollo/client'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
 import trackOperationsLink, { cancelActiveOperations } from '../trackOperations.ts'
 
-import type { DefaultContext, FetchResult } from '@apollo/client/core'
+import type { DefaultContext, FetchResult } from '@apollo/client'
+
+// Apollo Client 4 executes a link only on behalf of a client.
+const executionContext = {
+  client: new ApolloClient({ cache: new InMemoryCache(), link: ApolloLink.empty() }),
+}
 
 const subscriptionDocument = gql`
   subscription sampleUpdates {
@@ -50,7 +48,7 @@ const setup = () => {
   const link = ApolloLink.from([trackOperationsLink, terminatingLink])
 
   const start = (query = subscriptionDocument, context?: DefaultContext) =>
-    execute(link, { query, context }).subscribe(() => {})
+    execute(link, { query, context }, executionContext).subscribe(() => {})
 
   return { start, teardownSpy }
 }
@@ -143,7 +141,7 @@ describe('trackOperationsLink', () => {
       new ActionCableLink({ cable: cable as never }),
     ])
 
-    execute(link, { query: subscriptionDocument }).subscribe(() => {})
+    execute(link, { query: subscriptionDocument }, executionContext).subscribe(() => {})
 
     expect(cable.subscriptions.create).toHaveBeenCalledOnce()
     expect(unsubscribeSpy).not.toHaveBeenCalled()

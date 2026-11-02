@@ -84,7 +84,10 @@ describe('TicketSidebarOrganization.vue', () => {
       },
     })
 
-    expect(wrapper.emitted('hide')).toHaveLength(1) // immediate: true
+    await waitForNextTick()
+
+    expect(wrapper.emitted('hide')).toBeTruthy()
+    expect(wrapper.emitted('show')).toBeUndefined()
   })
 
   it('hides sidebar when customer has no organization', async () => {
@@ -110,7 +113,10 @@ describe('TicketSidebarOrganization.vue', () => {
       },
     })
 
-    expect(wrapper.emitted('hide')).toHaveLength(1) // immediate: true
+    await waitForNextTick()
+
+    expect(wrapper.emitted('hide')).toBeTruthy()
+    expect(wrapper.emitted('show')).toBeUndefined()
   })
 
   it('hides sidebar without loading the system customer', async () => {

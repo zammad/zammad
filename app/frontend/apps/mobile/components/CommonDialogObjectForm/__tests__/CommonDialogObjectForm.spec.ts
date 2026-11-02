@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useMutation } from '@vue/apollo-composable'
+import { useMutation } from '@vue/apollo-composable/compat'
 import gql from 'graphql-tag'
 import { keyBy } from 'lodash-es'
 

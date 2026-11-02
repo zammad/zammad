@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink } from '@apollo/client/core'
+import { ApolloLink } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { print } from 'graphql/language/printer'
 import { capitalize, cloneDeep, isEmpty } from 'lodash-es'
+import { map } from 'rxjs'
 
 import {
   authenticationGenerationOutdated,
@@ -43,45 +44,47 @@ const debugLink = new ApolloLink((operation, forward) => {
 
   log.debug(`[GraphQL - Request] - ${operationType} - ${operation.operationName}:`, requestOutput)
 
-  return forward(operation).map((data) => {
-    const context = operation.getContext()
-    const end = new Date()
+  return forward(operation).pipe(
+    map((data) => {
+      const context = operation.getContext()
+      const end = new Date()
 
-    const responseHeaders: Record<string, string> = {}
-    if (context?.response?.headers) {
-      context.response.headers.forEach((value: string, key: string) => {
-        responseHeaders[key] = value
-      })
-    }
+      const responseHeaders: Record<string, string> = {}
+      if (context?.response?.headers) {
+        context.response.headers.forEach((value: string, key: string) => {
+          responseHeaders[key] = value
+        })
+      }
 
-    const duration = end.getTime() - context.start.getTime()
+      const duration = end.getTime() - context.start.getTime()
 
-    // Operations which were left over from the authenticated app can still fail
-    //  after the authentication was invalidated, or even after a new login. The
-    //  error link already mentions them in a single line, so don't dump their
-    //  whole response on top.
-    if (
-      (authenticationInvalidated() || authenticationGenerationOutdated(operation)) &&
-      data.errors?.length &&
-      data.errors.every((error) => error.extensions?.type === GraphQLErrorTypes.NotAuthorized)
-    ) {
+      // Operations which were left over from the authenticated app can still fail
+      //  after the authentication was invalidated, or even after a new login. The
+      //  error link already mentions them in a single line, so don't dump their
+      //  whole response on top.
+      if (
+        (authenticationInvalidated() || authenticationGenerationOutdated(operation)) &&
+        data.errors?.length &&
+        data.errors.every((error) => error.extensions?.type === GraphQLErrorTypes.NotAuthorized)
+      ) {
+        return data
+      }
+
+      const responseOutput: DebugLinkResponseOutput = {
+        data,
+      }
+
+      if (!isEmpty(responseHeaders)) {
+        responseOutput.responseHeaders = responseHeaders
+      }
+
+      log.debug(
+        `[GraphQL - Response] - ${operationType} - ${operation.operationName} (took ${duration}ms):`,
+        cloneDeep(responseOutput),
+      )
       return data
-    }
-
-    const responseOutput: DebugLinkResponseOutput = {
-      data,
-    }
-
-    if (!isEmpty(responseHeaders)) {
-      responseOutput.responseHeaders = responseHeaders
-    }
-
-    log.debug(
-      `[GraphQL - Response] - ${operationType} - ${operation.operationName} (took ${duration}ms):`,
-      cloneDeep(responseOutput),
-    )
-    return data
-  })
+    }),
+  )
 })
 
 export default debugLink

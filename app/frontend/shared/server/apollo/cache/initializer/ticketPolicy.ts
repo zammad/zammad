@@ -1,9 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import registerNotNormalizedObjectFieldsMerge from '#shared/server/apollo/cache/utils/registerNotNormalizedObjectFieldsMerge.ts'
+import registerFieldPolicy from '#shared/server/apollo/cache/utils/registerFieldPolicy.ts'
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function register(config: InMemoryCacheConfig) {
-  return registerNotNormalizedObjectFieldsMerge(config, 'Ticket', ['policy'])
+  return registerFieldPolicy(config, 'Ticket', {
+    policy: { merge: true },
+    // The server always sends the complete list and its entries have no identity,
+    // so the incoming list replaces the cached one.
+    timeUnitsPerType: { merge: false },
+  })
 }

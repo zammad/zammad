@@ -42,6 +42,7 @@ const data = (
         categoryIcon: 'folder',
         position: 0,
         isDeletable: true,
+        directAnswerCount: answerCount,
         directSubcategoryCount: 0,
         breadcrumb: [],
         policy: {
@@ -51,7 +52,7 @@ const data = (
           createSubcategory: true,
           createAnswer: true,
           updateAnswer: true,
-          permissions: [],
+          destroyAnswer: true,
         },
       },
     ],

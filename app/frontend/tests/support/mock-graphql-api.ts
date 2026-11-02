@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { NetworkStatus } from '@apollo/client/core'
+import { NetworkStatus } from '@apollo/client'
 import {
   createMockSubscription,
   type IMockSubscription,
@@ -146,7 +146,25 @@ export const mockGraphQLApi = (operationDocument: DocumentNode): MockGraphQLInst
   }
 
   const willFailWithUserError = (result: OperationResultWithUserError) => {
-    userErrorSpy.mockResolvedValue({ data: result })
+    // Apollo Client reads a mutation result back from the cache and drops objects
+    //  with missing fields, so complete the user errors like the server does.
+    const data = Object.fromEntries(
+      Object.entries(result).map(([key, payload]) => [
+        key,
+        {
+          ...payload,
+          errors: payload.errors.map((error) => ({
+            __typename: 'UserError' as const,
+            field: null,
+            messagePlaceholder: null,
+            exception: null,
+            ...error,
+          })),
+        },
+      ]),
+    )
+
+    userErrorSpy.mockResolvedValue({ data })
     createMockClient([
       {
         operationDocument,
@@ -204,11 +222,7 @@ export const mockGraphQLApi = (operationDocument: DocumentNode): MockGraphQLInst
   return instance
 }
 
-export interface ExtendedIMockSubscription<T = unknown> extends Omit<
-  IMockSubscription,
-  'next' | 'closed'
-> {
-  closed: () => boolean
+export interface ExtendedIMockSubscription<T = unknown> extends Omit<IMockSubscription, 'next'> {
   next: (result: RequestHandlerResponse<T>) => Promise<void>
 }
 
@@ -232,6 +246,5 @@ export const mockGraphQLSubscription = <T>(
     },
     error: mockSubscription.error.bind(mockSubscription),
     complete: mockSubscription.complete.bind(mockSubscription),
-    closed: () => mockSubscription.closed,
   }
 }

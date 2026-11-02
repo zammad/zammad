@@ -1,18 +1,19 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, Observable } from '@apollo/client/core'
+import { ApolloLink } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { Observable } from 'rxjs'
 
 import log from '#shared/utils/log.ts'
 
 import getSubscriptionContext from '../utils/getSubscriptionContext.ts'
 
-import type { ObservableSubscription, Operation } from '@apollo/client/core'
+import type { Subscription } from 'rxjs'
 
-const activeOperations = new Set<ObservableSubscription>()
+const activeOperations = new Set<Subscription>()
 
 // Mutations are never cancelled - the logout itself is one.
-const isTrackedOperation = (operation: Operation) => {
+const isTrackedOperation = (operation: ApolloLink.Operation) => {
   const definition = getMainDefinition(operation.query)
 
   if (definition.kind !== 'OperationDefinition') return false
@@ -44,7 +45,7 @@ const isTrackedOperation = (operation: Operation) => {
 const trackOperationsLink = new ApolloLink((operation, forward) => {
   if (!isTrackedOperation(operation)) return forward(operation)
 
-  return new Observable((observer) => {
+  return new Observable<ApolloLink.Result>((observer) => {
     const subscription = forward(operation).subscribe(observer)
 
     activeOperations.add(subscription)

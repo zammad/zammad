@@ -5,7 +5,12 @@ import type { PageInfo } from '#shared/graphql/types.ts'
 import type { ReactiveFunction } from '#shared/types/utils.ts'
 
 import type { GraphQLHandlerError } from '../../error.ts'
-import type { OperationVariables } from '@apollo/client/core'
+import type {
+  DefaultContext,
+  ErrorLike,
+  OperationVariables,
+  TypedDocumentNode,
+} from '@apollo/client'
 import type {
   UseMutationReturn,
   UseQueryReturn,
@@ -13,7 +18,8 @@ import type {
   UseSubscriptionReturn,
   UseSubscriptionOptions,
   UseMutationOptions,
-} from '@vue/apollo-composable'
+} from '@vue/apollo-composable/compat'
+import type { DocumentNode } from 'graphql'
 import type { Ref } from 'vue'
 
 export type OperationReturn<TResult, TVariables extends OperationVariables> =
@@ -21,13 +27,43 @@ export type OperationReturn<TResult, TVariables extends OperationVariables> =
   | UseMutationReturn<TResult, TVariables>
   | UseSubscriptionReturn<TResult, TVariables>
 
-export type OperationQueryOptionsReturn<TResult, TVariables extends OperationVariables> =
-  | UseQueryOptions<TResult, TVariables>
-  | Ref<UseQueryOptions<TResult, TVariables>>
+export type OperationQueryOptionsReturn<TResult, TVariables extends OperationVariables> = Readonly<
+  Ref<UseQueryOptions<TResult, TVariables> | undefined>
+>
 
-export type OperationSubscriptionOptionsReturn<TResult, TVariables extends OperationVariables> =
-  | UseSubscriptionOptions<TResult, TVariables>
-  | Ref<UseSubscriptionOptions<TResult, TVariables>>
+export type OperationSubscriptionOptionsReturn<
+  TResult,
+  TVariables extends OperationVariables,
+> = Readonly<Ref<UseSubscriptionOptions<TResult, TVariables> | undefined>>
+
+export interface SubscribeToMoreUpdateQueryOptions<
+  TResult,
+  TSubscriptionVariables extends OperationVariables,
+  TSubscriptionData,
+> {
+  subscriptionData: { data: TSubscriptionData }
+  variables?: TSubscriptionVariables
+  // The previous result is only complete when the cache holds every field of the query, and
+  //   `null` while it holds nothing for it yet.
+  previousData?: TResult | null
+  complete?: boolean
+}
+
+export interface SubscribeToMoreOptions<
+  TResult,
+  TSubscriptionVariables extends OperationVariables,
+  TSubscriptionData,
+> {
+  document: DocumentNode | TypedDocumentNode<TSubscriptionData, TSubscriptionVariables>
+  variables?: TSubscriptionVariables
+  // Returning `null` or `undefined` leaves the query result untouched.
+  updateQuery?: (
+    previousResult: TResult | null,
+    options: SubscribeToMoreUpdateQueryOptions<TResult, TSubscriptionVariables, TSubscriptionData>,
+  ) => TResult | null | undefined
+  onError?: (error: ErrorLike) => void
+  context?: DefaultContext
+}
 
 export type OperationSubscriptionsResult = {
   __typename?: 'Subscriptions'

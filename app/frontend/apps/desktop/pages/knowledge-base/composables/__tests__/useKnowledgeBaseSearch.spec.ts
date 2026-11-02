@@ -7,6 +7,7 @@ import { defineComponent, toRef, type PropType } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { holdOperation } from '#tests/support/holdOperation.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import {
@@ -288,11 +289,18 @@ describe('useKnowledgeBaseSearch', () => {
 
     await waitFor(() => expect([api.answerCount.value, api.categoryCount.value]).toEqual([2, 5]))
 
+    const release = holdOperation(
+      'knowledgeBaseSearch',
+      (variables) => variables.query === 'scanner',
+    )
+
     await view.rerender({ query: 'scanner' })
 
     expect([api.answerCount.value, api.categoryCount.value]).toEqual([undefined, undefined])
     expect(api.results.value).toEqual([])
     expect(api.loading.value).toBe(true)
+
+    release()
 
     await waitFor(() => expect([api.answerCount.value, api.categoryCount.value]).toEqual([2, 5]))
     expect(api.loading.value).toBe(false)
@@ -312,12 +320,19 @@ describe('useKnowledgeBaseSearch', () => {
       ]),
     )
 
+    const release = holdOperation(
+      'knowledgeBaseSearch',
+      (variables) => variables.query === 'scanner',
+    )
+
     // A new term and a switch to the categories in one update: their 'printer' hits are still in
     //   hand, and must not stand in for 'scanner'.
     await view.rerender({ query: 'scanner', entity: EnumKnowledgeBaseSearchEntity.Category })
 
     expect(api.results.value).toEqual([])
     expect(api.loading.value).toBe(true)
+
+    release()
 
     await waitFor(() =>
       expect(api.results.value.map((result) => result.item.translation?.title)).toEqual([

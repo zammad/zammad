@@ -138,6 +138,7 @@ export default defineConfig(async ({ mode, command }) => {
                 'graphql-tag',
                 '@apollo/client',
                 '@vue/apollo-composable',
+                'rxjs',
                 '@rails/actioncable',
               ],
               formkit: [

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 /**
  * Whenever we are trying to merge a root query field

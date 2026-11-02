@@ -14,3 +14,7 @@ permissions:
   fallow:
     skills: false
 verifyDepsBeforeRun: false
+peerDependencyRules:
+  allowedVersions:
+    # @vue/apollo-composable 5.0.0-alpha.4 declares @vueuse/core ^14; the repo is on 15.
+    '@vue/apollo-composable>@vueuse/core': '15'

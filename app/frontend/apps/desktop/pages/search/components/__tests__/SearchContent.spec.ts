@@ -7,6 +7,7 @@ import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-obj
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { holdOperation } from '#tests/support/holdOperation.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
@@ -228,6 +229,34 @@ describe('SearchContent', () => {
     expect((await callsForCountsQuery).length).toBe(2)
   })
 
+  it('returns to the idle state when the term is cleared before the first result arrives', async () => {
+    mockTicketSearchResult(1, [createSampleTicket(469, 'Foo ticket title', 12469)])
+    const releaseDetailSearch = holdOperation('detailSearch')
+
+    const wrapper = renderSearchContent({ searchTerm: 'ticket' })
+
+    // The skeleton stands in for the held first page.
+    await wrapper.findAllByRole('status')
+    expect(
+      wrapper.queryByText('Start typing or apply filters to get the search results.'),
+    ).not.toBeInTheDocument()
+
+    await wrapper.rerender({ searchTerm: '' })
+
+    // The idle prompt only renders once the table is no longer loading.
+    expect(
+      await wrapper.findByText('Start typing or apply filters to get the search results.'),
+    ).toBeInTheDocument()
+
+    releaseDetailSearch()
+    await waitForNextTick()
+
+    expect(
+      wrapper.getByText('Start typing or apply filters to get the search results.'),
+    ).toBeInTheDocument()
+    expect(wrapper.queryByText('Foo ticket title')).not.toBeInTheDocument()
+  })
+
   it('displays entity counts for agent', async () => {
     mockTicketSearchResult(0, [])
     mockSearchCountsQuery({
@@ -309,9 +338,9 @@ describe('SearchContent', () => {
 
     const wrapper = renderSearchContent({ searchTerm: 'Foo ticket title' })
 
-    await waitForDetailSearchQueryCalls()
-
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Sort by Title ascending' }))
+    await wrapper.events.click(
+      await wrapper.findByRole('button', { name: 'Sort by Title ascending' }),
+    )
     const mocks = await waitForDetailSearchQueryCalls()
 
     expect(mocks[1].variables.orderDirection).toBe('ASCENDING')

@@ -29,6 +29,7 @@ describe('the taskbar tabs of one answer in two locales', () => {
       prio: internalId,
       changed: false,
       dirty: false,
+      notify: false,
       updatedAt: '2026-09-02T10:00:00Z',
       formId: null,
       formNewArticlePresent: false,

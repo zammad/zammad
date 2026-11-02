@@ -10,8 +10,8 @@ import type {
 
 import { BaseHandler } from './BaseHandler.ts'
 
-import type { FetchResult, OperationVariables } from '@apollo/client/core'
-import type { UseSubscriptionReturn } from '@vue/apollo-composable'
+import type { OperationVariables } from '@apollo/client'
+import type { SubscriptionResultV4, UseSubscriptionReturn } from '@vue/apollo-composable/compat'
 import type { Ref, WatchStopHandle } from 'vue'
 
 export default class SubscriptionHandler<
@@ -32,15 +32,15 @@ export default class SubscriptionHandler<
     this.operationResult.stop()
   }
 
-  public result(): Ref<Maybe<TResult> | undefined> {
+  public restart(): void {
+    this.operationResult.restart()
+  }
+
+  public result(): Readonly<Ref<Maybe<TResult> | undefined>> {
     return this.operationResult.result
   }
 
-  public onResult(
-    callback: (
-      result: FetchResult<TResult, Record<string, unknown>, Record<string, unknown>>,
-    ) => void,
-  ) {
+  public onResult(callback: (result: SubscriptionResultV4<TResult>) => void) {
     return this.operationResult.onResult(callback)
   }
 

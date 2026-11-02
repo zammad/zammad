@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink } from '@apollo/client/core'
-import { asyncMap } from '@apollo/client/utilities'
+import { ApolloLink } from '@apollo/client'
 import { waitFor } from '@testing-library/vue'
+import { concatMap } from 'rxjs'
 import { defineComponent, h, nextTick, ref } from 'vue'
 
 import { getGraphQLMockCalls, mockedApolloClient } from '#tests/graphql/builders/mocks.ts'
@@ -221,12 +221,14 @@ describe('useTicketArticleTranslation', () => {
       mockedApolloClient.setLink(
         new ApolloLink((operation, forward) => {
           if (operation.operationName !== 'ticketArticleTranslate') return forward(operation)
-          return asyncMap(forward(operation), async (result) => {
-            await new Promise<void>((resolve) => {
-              release = resolve
-            })
-            return result
-          })
+          return forward(operation).pipe(
+            concatMap(async (result) => {
+              await new Promise<void>((resolve) => {
+                release = resolve
+              })
+              return result
+            }),
+          )
         }).concat(originalLink),
       )
 

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, createHttpLink, from } from '@apollo/client/core'
+import { ApolloLink, HttpLink } from '@apollo/client'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'
-import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename'
+import { RemoveTypenameFromVariablesLink } from '@apollo/client/link/remove-typename'
 import { getMainDefinition } from '@apollo/client/utilities'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
@@ -22,7 +22,6 @@ import getBatchContext from './utils/getBatchContext.ts'
 import { getSkipSubscriptions } from './utils/getSkipSubscriptions.ts'
 import getWebsocketContext from './utils/getWebsocketContext.ts'
 
-import type { Operation } from '@apollo/client/core'
 import type { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
 
 // Should subsequent HTTP calls be batched together?
@@ -34,9 +33,9 @@ const enableQueriesOverWebsocket = false
 const connectionSettings = {
   uri: '/graphql',
   credentials: 'same-origin', // Must have for CSRF validation via Rails.
-}
+} as const
 
-const noBatchLink = createHttpLink(connectionSettings)
+const noBatchLink = new HttpLink(connectionSettings)
 
 const batchLink = new BatchHttpLink({
   ...connectionSettings,
@@ -53,7 +52,7 @@ const operationIsLoginLogout = (definition: OperationDefinitionNode | FragmentDe
   )
 }
 
-const requiresBatchLink = (op: Operation) => {
+const requiresBatchLink = (op: ApolloLink.Operation) => {
   if (!enableBatchLink) return false
 
   const definition = getMainDefinition(op.query)
@@ -69,7 +68,7 @@ const requiresBatchLink = (op: Operation) => {
 
 const httpLink = ApolloLink.split(requiresBatchLink, batchLink, noBatchLink)
 
-const requiresHttpLink = (op: Operation) => {
+const requiresHttpLink = (op: ApolloLink.Operation) => {
   const definition = getMainDefinition(op.query)
 
   const websocketContext = getWebsocketContext(op)
@@ -98,7 +97,7 @@ const actionCableLink = new ActionCableLink({
 
 const splitLink = ApolloLink.split(requiresHttpLink, httpLink, actionCableLink)
 
-const link = from([
+const link = ApolloLink.from([
   ...(VITE_TEST_MODE ? [testFlagsLink] : []),
   csrfLink,
   authenticationGenerationLink,
@@ -106,7 +105,7 @@ const link = from([
   setAuthorizationLink,
   skipSubscriptionsLink,
   debugLink,
-  removeTypenameFromVariables(),
+  new RemoveTypenameFromVariablesLink(),
   trackOperationsLink,
   splitLink,
 ])

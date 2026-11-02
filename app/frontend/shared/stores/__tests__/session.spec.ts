@@ -17,6 +17,7 @@ const userData = {
   firstname: 'John',
   lastname: 'Doe',
   fullname: 'John Doe',
+  hasContentTranslationAutoAvailable: false,
   email: 'zammad@example.com',
   image: 'c2715a3e92c7e375b8c212d25d431e2a',
   preferences: {
@@ -24,6 +25,7 @@ const userData = {
   },
   personalSettings: {
     __typename: 'UserPersonalSettings',
+    callerNotificationEnabled: false,
     notificationConfig: {
       __typename: 'UserPersonalSettingsNotificationConfig',
       groupIds: [1],

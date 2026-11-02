@@ -78,7 +78,8 @@ export const forwardEmail = async (
       config.api_path,
     )
 
-    return Object.assign(file, {
+    // Apollo Client 4 freezes mutation results, so the links go on a copy.
+    return Object.assign({}, file, {
       preview: previewUrl,
       inline: inlineUrl,
     })

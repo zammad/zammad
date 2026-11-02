@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, execute, gql, Observable } from '@apollo/client/core'
+import { ApolloClient, ApolloLink, execute, gql, InMemoryCache, Observable } from '@apollo/client'
 
 import log from '#shared/utils/log.ts'
 
@@ -15,6 +15,11 @@ const queryDocument = gql`
     }
   }
 `
+
+// Apollo Client 4 executes a link only on behalf of a client.
+const executionContext = {
+  client: new ApolloClient({ cache: new InMemoryCache(), link: ApolloLink.empty() }),
+}
 
 const notAuthorizedResult = {
   data: null,
@@ -42,9 +47,11 @@ const executeWithDeferredResult = (result: unknown, leadingLinks: ApolloLink[] =
   )
 
   const finished = new Promise<void>((resolve) => {
-    execute(ApolloLink.from([...leadingLinks, debugLink, terminatingLink]), {
-      query: queryDocument,
-    }).subscribe({
+    execute(
+      ApolloLink.from([...leadingLinks, debugLink, terminatingLink]),
+      { query: queryDocument },
+      executionContext,
+    ).subscribe({
       next: () => {},
       error: () => resolve(),
       complete: () => resolve(),

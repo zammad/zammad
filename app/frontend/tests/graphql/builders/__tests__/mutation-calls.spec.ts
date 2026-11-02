@@ -209,7 +209,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
       const handler = getMutationHandler(TestUserSignupMutationDocument)
 
       await expect(() => handler.send({})).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userSignup) non-nullable field "input" is not defined]`,
+        `[Error: (Variables error for mutation userSignup) non-nullable field "input" is not defined]`,
       )
     })
 
@@ -224,7 +224,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userUpdate) non-nullable field "name" is not defined]`,
+        `[Error: (Variables error for mutation userUpdate) non-nullable field "name" is not defined]`,
       )
     })
 
@@ -236,7 +236,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           input: { email: 'email', password: 'password', invalidField: true },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userSignup) field "invalidField" is not defined on UserSignupInput]`,
+        `[Error: (Variables error for mutation userSignup) field "invalidField" is not defined on UserSignupInput]`,
       )
     })
 
@@ -249,7 +249,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           input: { email: 'email', password: 'password' },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userSignup) field "invalidField" is not defined on mutation userSignup]`,
+        `[Error: (Variables error for mutation userSignup) field "invalidField" is not defined on mutation userSignup]`,
       )
     })
 
@@ -264,7 +264,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userUpdate) field "invalidField" is not defined on ObjectAttributeValueInput]`,
+        `[Error: (Variables error for mutation userUpdate) field "invalidField" is not defined on ObjectAttributeValueInput]`,
       )
     })
 
@@ -276,7 +276,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           input: { email: 123, password: 'password' },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userSignup) expected string for "email", got number]`,
+        `[Error: (Variables error for mutation userSignup) expected string for "email", got number]`,
       )
     })
 
@@ -288,7 +288,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           input: 123,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userSignup) expected object for "input", got number]`,
+        `[Error: (Variables error for mutation userSignup) expected object for "input", got number]`,
       )
     })
 
@@ -303,7 +303,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation userUpdate) expected string for "name", got number]`,
+        `[Error: (Variables error for mutation userUpdate) expected string for "name", got number]`,
       )
     })
 
@@ -323,7 +323,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation login) twoFactorMethod should be one of "security_keys", "authenticator_app", but instead got "unknown_method_to_test_error"]`,
+        `[Error: (Variables error for mutation login) twoFactorMethod should be one of "security_keys", "authenticator_app", but instead got "unknown_method_to_test_error"]`,
       )
     })
   })

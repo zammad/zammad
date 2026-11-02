@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TypePolicy } from '@apollo/client/cache'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 // You can use a merge function to intelligently combine nested objects that
 // are not normalized in your cache, assuming those objects are nested within the same normalized parent.

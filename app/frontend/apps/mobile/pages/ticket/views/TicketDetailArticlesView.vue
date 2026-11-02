@@ -2,8 +2,8 @@
 
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
-import { computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, nextTick, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import {
@@ -163,22 +163,25 @@ useHeader({
   }),
 })
 
-// don't scroll only if articles are already loaded when you opened the page
-// and there is a saved scroll position
-// otherwise if we only check the scroll position we will never scroll to the bottom
-// because it can be defined when we open the page the first time
-if (articleResult.value && window.history?.state?.scroll) {
+const router = useRouter()
+
+// Don't scroll when going back to articles that are already loaded: the browser restores the
+// scroll position of a history entry itself. The router keeps no position of its own to check
+// (it has no scroll behavior), but an entry gone back to still names the one it was left for.
+const restoresScrollPosition = Boolean(articleResult.value && router.options.history.state.forward)
+
+if (restoresScrollPosition) {
   scrolledToBottom.value = true
 }
-
-const route = useRoute()
 
 let ignoreQuery = false
 
 // scroll to the article in the hash or to the last available article
 const initialScroll = async () => {
-  if (route.hash) {
-    const articleNode = document.querySelector(route.hash)
+  const initialRoute = router.currentRoute.value
+
+  if (initialRoute.hash) {
+    const articleNode = document.querySelector(initialRoute.hash)
 
     if (articleNode) {
       return scrollElement(articleNode)
@@ -187,7 +190,9 @@ const initialScroll = async () => {
     if (!articleNode && !ignoreQuery) {
       ignoreQuery = true
       await loadPreviousArticles()
-      const node = document.querySelector(route.hash)
+      if (router.currentRoute.value !== initialRoute) return false
+
+      const node = document.querySelector(initialRoute.hash)
       if (node) {
         return scrollElement(node)
       }
@@ -199,7 +204,7 @@ const initialScroll = async () => {
 
   const lastArticle = await waitForElement(`#article-${internalId}`)
 
-  if (!lastArticle) return false
+  if (!lastArticle || router.currentRoute.value !== initialRoute) return false
 
   return scrollElement(lastArticle)
 }
@@ -211,9 +216,15 @@ const stopScrollWatch = watch(
     // nothing is used from the cache.
     if (articles.value.length === 0) return
 
+    // Cached articles trigger the immediate watcher before the view is mounted.
+    await nextTick()
+
     if (hasScroll() && !isAtTheBottom()) {
       scrollDownState.value = true
     }
+
+    // The browser puts the saved position back on its own, and a scroll started after it wins.
+    if (restoresScrollPosition) return
 
     const scrolled = await initialScroll()
     if (scrolled) stopScrollWatch()

@@ -23,6 +23,8 @@ import {
 } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceSummarize.mocks.ts'
 import { getTicketAiAssistanceSummaryUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketAIAssistanceSummaryUpdates.mocks.ts'
 
+import type { NormalizedCacheObject } from '@apollo/client/cache'
+
 // The count the ticket's own updates subscription keeps current - that is what the summary watches,
 //   rather than opening an article subscription of its own.
 const ticketCacheId = (ticketId: string | number = 1) =>
@@ -38,7 +40,9 @@ const raiseArticleCount = async (ticketId: string) => {
   //   to ignore it - wait for a real baseline first so the bump is seen as an actual change.
   await waitFor(() =>
     expect(
-      mockedApolloClient.cache.extract()[ticketCacheId(ticketId) as string]?.articleCount,
+      (mockedApolloClient.cache.extract() as NormalizedCacheObject)[
+        ticketCacheId(ticketId) as string
+      ]?.articleCount,
     ).toEqual(expect.any(Number)),
   )
 

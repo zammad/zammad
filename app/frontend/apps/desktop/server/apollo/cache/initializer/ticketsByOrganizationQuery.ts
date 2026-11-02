@@ -2,7 +2,7 @@
 
 import registerRelayStylePagination from '#shared/server/apollo/cache/utils/registerRelayStylePagination.ts'
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function register(config: InMemoryCacheConfig): InMemoryCacheConfig {
   return registerRelayStylePagination(config, 'ticketsByOrganization', [

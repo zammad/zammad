@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, execute, gql, Observable } from '@apollo/client/core'
+import { ApolloClient, ApolloLink, execute, gql, InMemoryCache, Observable } from '@apollo/client'
 import { createPinia, setActivePinia } from 'pinia'
 
 import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
@@ -59,6 +59,11 @@ const authenticateStore = () => {
   return authentication
 }
 
+// Apollo Client 4 executes a link only on behalf of a client.
+const executionContext = {
+  client: new ApolloClient({ cache: new InMemoryCache(), link: ApolloLink.empty() }),
+}
+
 // Starts a subscription through the real tracking link, so that the logout has
 //  something to cancel. Its teardown is what unsubscribes the Action Cable
 //  channel in the application.
@@ -67,9 +72,11 @@ const startTrackedSubscription = () => {
 
   const terminatingLink = new ApolloLink(() => new Observable(() => teardownSpy))
 
-  execute(ApolloLink.from([trackOperationsLink, terminatingLink]), {
-    query: subscriptionDocument,
-  }).subscribe(() => {})
+  execute(
+    ApolloLink.from([trackOperationsLink, terminatingLink]),
+    { query: subscriptionDocument },
+    executionContext,
+  ).subscribe(() => {})
 
   return teardownSpy
 }
@@ -82,9 +89,11 @@ const startTrackedQuery = () => {
 
   const terminatingLink = new ApolloLink(() => new Observable(() => teardownSpy))
 
-  execute(ApolloLink.from([trackOperationsLink, terminatingLink]), {
-    query: queryDocument,
-  }).subscribe(() => {})
+  execute(
+    ApolloLink.from([trackOperationsLink, terminatingLink]),
+    { query: queryDocument },
+    executionContext,
+  ).subscribe(() => {})
 
   return teardownSpy
 }

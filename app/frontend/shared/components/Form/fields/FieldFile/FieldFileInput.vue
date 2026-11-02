@@ -43,11 +43,16 @@ const uploadFiles = computed<FileUploaded[]>({
 const contentFiles = ref<Record<string, string>>({})
 const loadingFiles = ref<FieldFileLoading[]>([])
 
+// Kept out of the form value: committing the flag would count as a change and
+//  trigger the form updater while the removal is still in flight.
+const processingFileIds = ref(new Set<string>())
+
 // TODO: We improved now the upload cache endpoint also working for show, so maybe we could use this for preview.
 const uploadFilesWithContent = computed<FieldFileUploaded[]>(() => {
   return uploadFiles.value.map((file) => {
     const content = contentFiles.value[file.id]
-    return { ...file, content }
+    const isProcessing = processingFileIds.value.has(file.id)
+    return { ...file, content, isProcessing }
   })
 })
 
@@ -157,18 +162,18 @@ const removeFile = async (file: FileUploaded) => {
     return
   }
 
-  const toBeDeletedFile = uploadFiles.value.find((file) => file.id === fileId)
-  if (toBeDeletedFile) {
-    toBeDeletedFile.isProcessing = true
-  }
+  processingFileIds.value.add(fileId)
 
-  removeFileMutation.send({ formId: props.context.formId, fileIds: [fileId] }).then((data) => {
-    if (data?.formUploadCacheRemove?.success) {
-      uploadFiles.value = uploadFiles.value.filter((elem) => {
-        return elem.id !== fileId
-      })
-    }
-  })
+  removeFileMutation
+    .send({ formId: props.context.formId, fileIds: [fileId] })
+    .then((data) => {
+      if (data?.formUploadCacheRemove?.success) {
+        uploadFiles.value = uploadFiles.value.filter((elem) => elem.id !== fileId)
+      }
+    })
+    .finally(() => {
+      processingFileIds.value.delete(fileId)
+    })
 }
 
 const uploadTitle = computed(() => {

@@ -2,7 +2,7 @@
 
 import type { ClientWebsocketContext } from '#shared/types/server/apollo/client.ts'
 
-import type { Operation } from '@apollo/client/core'
+import type { Operation } from '@apollo/client'
 
 export default function getBatchContext(operation: Operation): ClientWebsocketContext {
   const defaultWebsocketContext: ClientWebsocketContext = {

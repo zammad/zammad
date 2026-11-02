@@ -1,11 +1,17 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink, execute, gql, Observable } from '@apollo/client/core'
+import { ApolloClient, ApolloLink, execute, gql, InMemoryCache } from '@apollo/client'
+import { of } from 'rxjs'
 
 import { browserTabId } from '../../utils/browserTabId.ts'
 import skipSubscriptionsLink from '../skipSubscriptions.ts'
 
-import type { DefaultContext } from '@apollo/client/core'
+import type { DefaultContext } from '@apollo/client'
+
+// Apollo Client 4 executes a link only on behalf of a client.
+const executionContext = {
+  client: new ApolloClient({ cache: new InMemoryCache(), link: ApolloLink.empty() }),
+}
 
 const mutationDocument = gql`
   mutation sampleUpdate {
@@ -21,13 +27,14 @@ const sendAndCaptureHeaders = (context?: DefaultContext) => {
   const terminatingLink = new ApolloLink((operation) => {
     sentContext = operation.getContext()
 
-    return Observable.of({ data: {} })
+    return of({ data: {} })
   })
 
-  execute(ApolloLink.from([skipSubscriptionsLink, terminatingLink]), {
-    query: mutationDocument,
-    context,
-  }).subscribe(() => {})
+  execute(
+    ApolloLink.from([skipSubscriptionsLink, terminatingLink]),
+    { query: mutationDocument, context },
+    executionContext,
+  ).subscribe(() => {})
 
   return sentContext?.headers
 }

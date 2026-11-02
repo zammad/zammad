@@ -2,7 +2,7 @@
 
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApolloClient } from '@vue/apollo-composable'
+import { useApolloClient } from '@vue/apollo-composable/compat'
 import { random } from 'lodash-es'
 
 // import authenticationGuard from '#shared/router/guards/before/authentication.ts'

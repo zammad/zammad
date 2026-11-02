@@ -3,7 +3,7 @@ import * as Types from '#shared/graphql/types.ts';
 import gql from 'graphql-tag';
 import { TicketArticleTranslationAvailabilityFragmentDoc } from '../fragments/ticketArticleTranslationAvailability.api';
 import { TicketArticleTranslationFragmentDoc } from '../fragments/ticketArticleTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable';
+import * as VueApolloComposable from '#shared/server/apollo/vueApollo.ts';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 

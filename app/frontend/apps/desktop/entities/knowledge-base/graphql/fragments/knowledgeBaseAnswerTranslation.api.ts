@@ -12,6 +12,7 @@ export const KnowledgeBaseAnswerTranslationFragmentDoc = gql`
     title
   }
   content {
+    id
     bodyExcerpt
   }
   answer {

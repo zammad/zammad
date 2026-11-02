@@ -41,7 +41,7 @@ import {
 } from '../graphql/queries/userCurrentAvatarList.api.ts'
 import { UserCurrentAvatarUpdatesDocument } from '../graphql/subscriptions/userCurrentAvatarUpdates.api.ts'
 
-import type { ApolloCache, NormalizedCacheObject } from '@apollo/client/core'
+import type { ApolloCache } from '@apollo/client'
 
 const user = toRef(useSessionStore(), 'user')
 
@@ -95,7 +95,7 @@ const cropImageFlyout = useFlyout({
 })
 
 const modifyDefaultAvatarCache = (
-  cache: ApolloCache<NormalizedCacheObject>,
+  cache: ApolloCache,
   avatar: Avatar | undefined,
   newValue: boolean,
 ) => {

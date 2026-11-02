@@ -1,18 +1,12 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  ApolloClient,
-  ApolloLink,
-  Observable,
-  type FetchResult,
-  type Operation,
-} from '@apollo/client/core'
+import { ApolloClient, ApolloLink } from '@apollo/client'
 import {
   cloneDeep,
   mergeDeep,
-  removeConnectionDirectiveFromDocument,
-} from '@apollo/client/utilities'
-import { provideApolloClient } from '@vue/apollo-composable'
+  removeDirectivesFromDocument,
+} from '@apollo/client/utilities/internal'
+import { provideApolloClient } from '@vue/apollo-composable/compat'
 import { visit, print } from 'graphql'
 import {
   Kind,
@@ -26,7 +20,8 @@ import {
   type SelectionNode,
   type FragmentDefinitionNode,
 } from 'graphql'
-import { noop } from 'lodash-es'
+import { isMatch, noop } from 'lodash-es'
+import { Observable } from 'rxjs'
 
 import { waitForNextTick } from '#tests/support/utils.ts'
 import { waitUntil } from '#tests/support/vitest-wrapper.ts'
@@ -68,7 +63,7 @@ const stripNames = (query: DocumentNode) => {
 }
 
 const normalize = (query: DocumentNode) => {
-  const directiveless = removeConnectionDirectiveFromDocument(query)
+  const directiveless = removeDirectivesFromDocument([{ name: 'connection' }], query)
   const stripped = directiveless !== null ? stripNames(directiveless) : null
   return stripped === null ? query : stripped
 }
@@ -236,21 +231,37 @@ export interface TestSubscriptionHandler<T extends Record<string, any> = any> {
   closed(): boolean
 }
 
-const mockSubscriptionHanlders = new Map<string, TestSubscriptionHandler<Record<string, any>>>()
+interface RegisteredSubscriptionHandler {
+  variables: Record<string, unknown>
+  handler: TestSubscriptionHandler<Record<string, any>>
+}
+
+const mockSubscriptionHandlers = new Map<string, RegisteredSubscriptionHandler[]>()
+
+// Two subscriptions of one document can be open at once (e.g. link updates for a ticket and for
+//   a knowledge base answer); `variables` picks one, otherwise the last one that is still open wins.
 export const getGraphQLSubscriptionHandler = <T extends Record<string, any>>(
   documentOrName: DocumentNode | (keyof T & string),
+  variables?: Record<string, unknown>,
 ) => {
   const key =
     typeof documentOrName === 'string'
       ? getCachedKey('subscription', documentOrName)
       : getCachedKey(documentOrName)
 
-  return mockSubscriptionHanlders.get(key) as TestSubscriptionHandler<T>
+  const registered = mockSubscriptionHandlers.get(key) || []
+  const candidates = variables
+    ? registered.filter((entry) => isMatch(entry.variables, variables))
+    : registered
+
+  const open = candidates.filter((entry) => !entry.handler.closed())
+
+  return (open.at(-1) ?? candidates.at(-1))?.handler as TestSubscriptionHandler<T>
 }
 
 afterEach(() => {
   mockCalls.clear()
-  mockSubscriptionHanlders.clear()
+  mockSubscriptionHandlers.clear()
   mockDefaults.clear()
   mockCalls.clear()
 })
@@ -307,17 +318,17 @@ const getQueryDefaults = (
 //  - mocks mutations, respects defaults, but also looks for "$input" variable and updates the object if it's inside the first level
 //  - mocks result for subscriptions, respects defaults
 class MockLink extends ApolloLink {
-  request(operation: Operation): Observable<FetchResult> | null {
+  request(operation: ApolloLink.Operation): Observable<ApolloLink.Result> {
     const { query, variables } = operation
     const definition = query.definitions[0]
     if (definition.kind !== Kind.OPERATION_DEFINITION) {
-      return null
+      throw new Error(`Cannot mock a document without an operation: ${print(query)}`)
     }
     const fragments = query.definitions.filter(
       (def) => def.kind === Kind.FRAGMENT_DEFINITION,
     ) as FragmentDefinitionNode[]
     const queryKey = requestToKey(query)
-    return new Observable((observer) => {
+    return new Observable<ApolloLink.Result>((observer) => {
       const { operation } = definition
 
       try {
@@ -330,15 +341,28 @@ class MockLink extends ApolloLink {
         throw err
       }
 
+      // Apollo Client 3 delivered link results in a later task, and specs rely on
+      //  observing the loading state in between - keep that contract.
+      const emitLater = (emit: () => void) => {
+        let cancelled = false
+        queueMicrotask(() => {
+          if (!cancelled) emit()
+        })
+        return () => {
+          cancelled = true
+        }
+      }
+
       // Return operation errors if they got set we're assuming one error per operation
       const calls = mockCalls.get(queryKey) || []
 
       const errorCall = calls.find((call) => call.result.errors)
       if (errorCall) {
         calls.push({ document: query, result: errorCall.result, variables })
-        observer.next(cloneDeep(errorCall.result))
-        observer.complete()
-        return noop
+        return emitLater(() => {
+          observer.next(cloneDeep(errorCall.result))
+          observer.complete()
+        })
       }
 
       if (operation === OperationTypeNode.SUBSCRIPTION) {
@@ -358,7 +382,10 @@ class MockLink extends ApolloLink {
           complete: observer.complete.bind(observer),
           closed: () => observer.closed,
         }
-        mockSubscriptionHanlders.set(queryKey, handler)
+        mockSubscriptionHandlers.set(queryKey, [
+          ...(mockSubscriptionHandlers.get(queryKey) || []),
+          { variables, handler },
+        ])
 
         // Recorded like a query's, so a spec can assert what a subscription was started *with* -
         //   a subscription keyed off the wrong thing delivers nothing and looks like silence.
@@ -374,18 +401,18 @@ class MockLink extends ApolloLink {
         const calls = mockCalls.get(queryKey) || []
         calls.push({ document: query, result: result.data, variables })
         mockCalls.set(queryKey, calls)
-        observer.next(
-          cloneDeep({
-            data: stripQueryData(definition, fragments, result.data),
-          }),
-        )
-        observer.complete()
+        return emitLater(() => {
+          observer.next(
+            cloneDeep({
+              data: stripQueryData(definition, fragments, result.data),
+            }),
+          )
+          observer.complete()
+        })
       } catch (e) {
         console.error(e)
         throw e
       }
-
-      return noop
     })
   }
 }
@@ -423,6 +450,16 @@ vi.mock('#shared/server/apollo/client.ts', () => {
   }
 })
 
-afterEach(() => {
-  mockedApolloClient.clearStore()
+// Apollo shares one `watchFragment` observable per fragment and object and tears it down a
+//   macrotask after its last subscriber leaves; `clearStore` leaves it in place, so the next test
+//   would subscribe to it and get this test's data replayed. Timers may be faked, so drop it directly.
+const dropFragmentWatches = () => {
+  const cache = mockedApolloClient.cache as unknown as { fragmentWatches: object }
+  const Registry = cache.fragmentWatches.constructor as new (weakness: boolean) => object
+  cache.fragmentWatches = new Registry(true)
+}
+
+afterEach(async () => {
+  await mockedApolloClient.clearStore()
+  dropFragmentWatches()
 })

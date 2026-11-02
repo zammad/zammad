@@ -207,7 +207,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
       if (!updates.addItem && !updates.updateItem && !updates.removeItem)
         return null as unknown as UserCurrentTaskbarItemListQuery
 
-      if (!previous.userCurrentTaskbarItemList || updates.updateItem) return previous
+      if (!previous?.userCurrentTaskbarItemList || updates.updateItem) return previous
 
       const previousTaskbarTabList = previous.userCurrentTaskbarItemList
 

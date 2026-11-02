@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloLink } from '@apollo/client/core'
+import { ApolloLink } from '@apollo/client'
 
 import { rememberAuthenticationGeneration } from '#shared/server/apollo/utils/authenticationState.ts'
 

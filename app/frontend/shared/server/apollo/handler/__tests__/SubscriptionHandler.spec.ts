@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { NetworkStatus } from '@apollo/client/core'
-import { useSubscription } from '@vue/apollo-composable'
+import { NetworkStatus } from '@apollo/client'
+import { useSubscription } from '@vue/apollo-composable/compat'
 import { createMockSubscription } from 'mock-apollo-client'
 import { effectScope } from 'vue'
 
@@ -11,6 +11,7 @@ import type {
   SampleUpdatedSubscriptionVariables,
 } from '#tests/fixtures/graphqlSampleTypes.ts'
 import createMockClient from '#tests/support/mock-apollo-client.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -280,6 +281,46 @@ describe('SubscriptionHandler', () => {
             'Authentication required',
           )
         })
+      })
+    })
+  })
+
+  describe('restart', () => {
+    beforeEach(() => {
+      mockClient()
+    })
+
+    it('closes the running subscription and opens a new one', async () => {
+      await scope.run(async () => {
+        const openedSubscriptions: IMockSubscription[] = []
+        const subscriptionHandlerSpy = vi.fn(() => {
+          const subscription = createMockSubscription()
+          openedSubscriptions.push(subscription)
+          return subscription
+        })
+
+        createMockClient([
+          { operationDocument: SampleTypedSubscriptionDocument, handler: subscriptionHandlerSpy },
+        ])
+
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
+        const resultCallbackSpy = vi.fn()
+        subscriptionHandlerObject.onResult((result) => resultCallbackSpy(result))
+
+        expect(subscriptionHandlerSpy).toHaveBeenCalledTimes(1)
+
+        subscriptionHandlerObject.restart()
+        await waitForNextTick()
+
+        expect(subscriptionHandlerSpy).toHaveBeenCalledTimes(2)
+
+        openedSubscriptions[0].next({ data: subscriptionSampleResult })
+
+        expect(resultCallbackSpy).not.toHaveBeenCalled()
+
+        openedSubscriptions[1].next({ data: subscriptionSampleResultUpdated })
+
+        expect(resultCallbackSpy).toHaveBeenCalledWith({ data: subscriptionSampleResultUpdated })
       })
     })
   })

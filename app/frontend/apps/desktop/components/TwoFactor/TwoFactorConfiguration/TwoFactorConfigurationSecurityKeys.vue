@@ -14,6 +14,7 @@ import { useUserCurrentTwoFactorRemoveMethodCredentialsMutation } from '#shared/
 import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
 import { useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
 import UserError from '#shared/errors/UserError.ts'
+import { getGraphQLErrorType } from '#shared/errors/utils.ts'
 import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -198,7 +199,7 @@ const setupCredential = async () => {
   })
 
   if (
-    initiateQueryResult.error?.graphQLErrors?.[0]?.extensions?.type ===
+    getGraphQLErrorType(initiateQueryResult.error) ===
     'Gql::Concerns::HandlesPasswordRevalidationToken::InvalidTokenError'
   ) {
     redirectToPasswordCheck()

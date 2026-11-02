@@ -17,6 +17,7 @@ import {
   mockKnowledgeBaseFeedQuery,
   waitForKnowledgeBaseFeedQueryCalls,
 } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseFeed.mocks.ts'
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 
 const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 
@@ -86,6 +87,10 @@ describe('knowledge base feed', () => {
         pageInfo: { endCursor: null, hasNextPage: false },
       },
     })
+
+    // The reader's linked tickets. Left to the builder, the list holds answer translations too,
+    //   whose selection writes the opened answer's translation without ids and unsettles its query.
+    mockLinkListQuery({ linkList: [] })
   })
 
   const openFeedFlyout = async (path: `/${string}`) => {

@@ -95,20 +95,31 @@ describe('article selections', () => {
           node: Object.assign({}, result.articles.edges[0].node, edge.node),
         }),
       )
-    const retainedEdges = pageEdges(10, 2000)
-    handler.articleResult.value = {
+
+    // The result ref is read-only, so the retained window is widened through the query cache.
+    handler.articlesQuery.operationResult.updateQuery(() => ({
       ...result,
-      articles: { ...result.articles, edges: retainedEdges },
-    }
+      articles: { ...result.articles, edges: pageEdges(10, 2000) },
+    }))
+    await waitFor(() => expect(handler.articleResult.value?.articles.edges.length).toBe(2000))
     const previous = handler.loadedArticleSelections.value[0]
 
-    handler.articleResult.value = {
-      ...result,
+    // Older articles arrive the way they do in the app, so the relay merge keeps the edge identities.
+    mockTicketArticlesQuery({
       articles: {
-        ...result.articles,
-        edges: [...pageEdges(9, 1), ...retainedEdges],
+        edges: edges(9, 1),
+        totalCount: 3000,
+        pageInfo: { startCursor: 'cursor-9', endCursor: 'cursor-9', hasPreviousPage: true },
       },
-    }
+    })
+    await handler.articlesQuery.fetchMore({
+      variables: {
+        pageSize: 1,
+        beforeCursor: 'cursor-10',
+        loadFirstArticles: false,
+      },
+    })
+    await waitFor(() => expect(handler.articleResult.value?.articles.edges.length).toBe(2001))
 
     expect(handler.loadedArticleSelections.value).toHaveLength(2)
     expect(handler.loadedArticleSelections.value[0]).toBe(previous)

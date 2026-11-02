@@ -2,7 +2,7 @@
 
 import registerOffsetStylePagination from '#shared/server/apollo/cache/utils/registerOffsetStylePagination.ts'
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function register(config: InMemoryCacheConfig) {
   return registerOffsetStylePagination(config, 'search', [

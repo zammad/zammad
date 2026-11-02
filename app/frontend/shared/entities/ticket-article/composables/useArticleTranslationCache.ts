@@ -11,7 +11,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 
-import type { InMemoryCache } from '@apollo/client/core'
+import type { InMemoryCache } from '@apollo/client'
 
 type TranslationFields = Pick<TicketArticleTranslationFragment, 'translation'> &
   Pick<TicketArticleTranslationAvailabilityFragment, 'translationAvailable'>

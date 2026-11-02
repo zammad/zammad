@@ -67,7 +67,15 @@ describe('non-form two factor', () => {
   it('shows an error if initiated method returns errors', async () => {
     const error = 'Backend cannot handle request right now!'
     prepareInitialData({
-      errors: [{ message: error }],
+      errors: [
+        {
+          __typename: 'UserError',
+          message: error,
+          field: null,
+          messagePlaceholder: null,
+          exception: null,
+        },
+      ],
     })
 
     const view = renderTwoFactor({

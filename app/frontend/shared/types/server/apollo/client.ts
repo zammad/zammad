@@ -3,8 +3,8 @@
 import type { Subscriptions } from '#shared/graphql/types.ts'
 
 import type { ImportGlobEagerOutput } from '../../utils.ts'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
-import type { FetchResult } from '@apollo/client/core'
+import type { FetchResult } from '@apollo/client'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 import type { DocumentNode } from 'graphql'
 import type { App } from 'vue'
 

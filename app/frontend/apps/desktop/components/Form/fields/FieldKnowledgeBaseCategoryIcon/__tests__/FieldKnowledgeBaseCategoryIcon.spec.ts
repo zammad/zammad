@@ -173,10 +173,14 @@ describe('Form - Field - KnowledgeBaseCategoryIcon - Query', () => {
       props: { ...testProps, iconSet: undefined },
     })
 
-    const calls = await waitForAutocompleteSearchKnowledgeBaseCategoryIconQueryCalls()
+    // The knowledge base is still loading when the field first searches, so the set it falls back to
+    //   reaches the search that follows.
+    await waitFor(async () => {
+      const calls = await waitForAutocompleteSearchKnowledgeBaseCategoryIconQueryCalls()
 
-    expect(calls.at(-1)?.variables).toEqual({
-      input: expect.objectContaining({ iconSet: 'ionicons' }),
+      expect(calls.at(-1)?.variables).toEqual({
+        input: expect.objectContaining({ iconSet: 'ionicons' }),
+      })
     })
   })
 

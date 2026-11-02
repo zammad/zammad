@@ -7,7 +7,7 @@ import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { OperationQueryResult } from '#shared/types/server/apollo/handler.ts'
 
-import type { OperationVariables } from '@apollo/client/core'
+import type { OperationVariables } from '@apollo/client'
 
 export const useSorting = <
   TQueryResult extends OperationQueryResult = OperationQueryResult,

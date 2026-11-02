@@ -2,7 +2,7 @@
 
 import registerIncomingTypeMerge from '../utils/registerIncomingTypeMerge.ts'
 
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 export default function register(config: InMemoryCacheConfig) {
   return registerIncomingTypeMerge(config, 'Checklist', ['items'])

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { effectScope, ref } from 'vue'
 
 import { waitUntil } from '#tests/support/utils.ts'
 
@@ -13,7 +13,7 @@ describe('useOnlineNotificationSeen', () => {
     const mockSeen = mockOnlineNotificationSeenGql()
     const object = ref<ObjectWithId | undefined>(undefined)
 
-    useOnlineNotificationSeen(object)
+    effectScope(true).run(() => useOnlineNotificationSeen(object))
 
     object.value = { id: '2' }
 
@@ -28,7 +28,7 @@ describe('useOnlineNotificationSeen', () => {
     const mockSeen = mockOnlineNotificationSeenGql()
     const object = ref<ObjectWithId | undefined>({ id: '3' })
 
-    useOnlineNotificationSeen(object)
+    effectScope(true).run(() => useOnlineNotificationSeen(object))
 
     await waitUntil(() => mockSeen.calls.resolve)
 

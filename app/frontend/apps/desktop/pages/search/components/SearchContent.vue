@@ -4,16 +4,7 @@
 import { watchThrottled } from '@vueuse/core'
 import { debounce, isEqual } from 'lodash-es'
 import { storeToRefs } from 'pinia'
-import {
-  computed,
-  ref,
-  useTemplateRef,
-  watch,
-  type Ref,
-  nextTick,
-  shallowRef,
-  onBeforeMount,
-} from 'vue'
+import { computed, ref, useTemplateRef, watch, type Ref, nextTick, shallowRef } from 'vue'
 import { stringifyQuery, useRoute, useRouter } from 'vue-router'
 
 import { useSorting } from '#shared/composables/list/useSorting.ts'
@@ -21,6 +12,7 @@ import {
   type DetailSearchQueryVariables,
   type EnumOrderDirection,
   EnumSearchableModels,
+  type SearchCountsQueryVariables,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
@@ -138,12 +130,13 @@ const syncFiltersFromRoute = () => {
   setEntityFilters(queryEntity, queryFilters)
 }
 
-// First mount only — reactivation is handled by usePage's onReactivate below.
-onBeforeMount(syncFiltersFromRoute)
+// First mount only — reactivation is handled by usePage's onReactivate below. Before the queries
+//   below are created, so a deep link's first request already carries its filters.
+syncFiltersFromRoute()
 
 // On a fresh deep-link the object-attribute schema may still be loading, so
-// onBeforeMount's decode runs against an incomplete schema — re-sync once it's
-// ready. Later reactivations already see a populated schema.
+// the setup-time decode above ran against an incomplete schema — re-sync once
+// it's ready. Later reactivations already see a populated schema.
 const initialQueryEntity = routeEntity()
 if (entityFieldsLoadingByEntity.value[initialQueryEntity]) {
   watch(
@@ -326,12 +319,40 @@ const { pageActive } = usePage({
   },
 })
 
-const searchQueryVariables = computed(() => ({
-  search: currentSearchTerm.value,
-  limit: PAGE_SIZE,
-  onlyIn: selectedEntity.value,
-  filter: currentFilterSelector.value,
-}))
+// Conditions under which each query needs to be running. Detail looks at
+// the visible entity only; counts looks at every other entity that has a
+// filter, or at every other entity whenever a search term is present.
+const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
+
+const shouldCountsRun = computed(
+  () =>
+    searchPluginNames.value.length > 1 &&
+    (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
+)
+
+// Both sets of variables stand still while their query is not to run: a term cleared to '' would
+//   otherwise reach the query as a change of variables and cost a round trip, before the watchers
+//   below get to stop it.
+const searchQueryVariables = computed<DetailSearchQueryVariables>((previous) => {
+  if (previous && !shouldDetailRun.value) return previous
+
+  return {
+    search: currentSearchTerm.value,
+    limit: PAGE_SIZE,
+    onlyIn: selectedEntity.value,
+    filter: currentFilterSelector.value,
+  }
+})
+
+const searchCountsVariables = computed<SearchCountsQueryVariables>((previous) => {
+  if (previous && !shouldCountsRun.value) return previous
+
+  return {
+    search: currentSearchTerm.value,
+    onlyIn: notVisibleSearchEntities.value,
+    filters: entityFiltersSelector.value,
+  }
+})
 
 const detailSearchQuery = new QueryHandler(
   useDetailSearchLazyQuery(searchQueryVariables, {
@@ -348,21 +369,14 @@ const detailSearchQuery = new QueryHandler(
 )
 
 const searchCountsQuery = new QueryHandler(
-  useSearchCountsLazyQuery(
-    () => ({
-      search: currentSearchTerm.value,
-      onlyIn: notVisibleSearchEntities.value,
-      filters: entityFiltersSelector.value,
-    }),
-    {
-      context: {
-        batch: {
-          active: false,
-        },
+  useSearchCountsLazyQuery(searchCountsVariables, {
+    context: {
+      batch: {
+        active: false,
       },
-      fetchPolicy: 'cache-and-network', // TODO: for now until the cache handling is implemented
     },
-  ),
+    fetchPolicy: 'cache-and-network', // TODO: for now until the cache handling is implemented
+  }),
   {
     triggerRefetchOnConnectionReconnect: () => pageActive.value,
   },
@@ -428,9 +442,12 @@ watch(currentSearchCountsResult, (countsResult) => {
 // search, entity switch). While a previous result is remembered we keep it on
 // screen instead of swapping in the skeleton — otherwise the list would flash
 // hidden on every search-term / filter change while the next response loads.
+// A query stopped mid-flight keeps reporting `loading`, so an idle search is
+// never loading.
 const detailSearchLoading = detailSearchQuery.loadingWithoutCachedResult()
 const isLoading = computed(
-  () => currentSearchResult.value === undefined && detailSearchLoading.value,
+  () =>
+    shouldDetailRun.value && currentSearchResult.value === undefined && detailSearchLoading.value,
 )
 
 // Real total for the visible entity — not just the items loaded into the table.
@@ -542,16 +559,6 @@ const setNewSearchState = (searchTerm: string) => {
   selectAllActive.value = false
   bulkContext.value = { searchQuery: searchTerm, searchFilter: currentFilterSelector.value }
 }
-
-// Conditions under which each query needs to be running. Detail looks at
-// the visible entity only; counts looks at every other entity that has a
-// filter, or at every other entity whenever a search term is present.
-const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
-const shouldCountsRun = computed(
-  () =>
-    searchPluginNames.value.length > 1 &&
-    (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
-)
 
 watch(
   detailCriteria,

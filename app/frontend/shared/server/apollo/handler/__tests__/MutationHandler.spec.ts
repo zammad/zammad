@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useMutation } from '@vue/apollo-composable'
+import { useMutation } from '@vue/apollo-composable/compat'
+import { effectScope, nextTick } from 'vue'
 
 import { SampleTypedMutationDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
 import type {
@@ -64,12 +65,14 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
 }
 
 describe('MutationHandler', () => {
-  const sampleMutation = () => {
-    mutationFunctionCallSpy()
-    return useMutation<SampleUpdateMutation, SampleUpdateMutationVariables>(
-      SampleTypedMutationDocument,
-    )
-  }
+  // vue-apollo composables have to be created inside an effect scope.
+  const sampleMutation = () =>
+    effectScope(true).run(() => {
+      mutationFunctionCallSpy()
+      return useMutation<SampleUpdateMutation, SampleUpdateMutationVariables>(
+        SampleTypedMutationDocument,
+      )
+    })!
 
   describe('constructor', () => {
     beforeEach(() => {
@@ -109,11 +112,22 @@ describe('MutationHandler', () => {
       expect(mutationHandlerObject.loading().value).toBe(false)
     })
 
-    it('loading state should be changed after called send function', () => {
+    it('loading state should be changed after called send function', async () => {
       expect.assertions(1)
+      createMockClient([
+        {
+          operationDocument: SampleTypedMutationDocument,
+          handler: () =>
+            new Promise((resolve) => {
+              setTimeout(() => resolve({ data: mutationSampleResult }), 10)
+            }),
+        },
+      ])
       const mutationHandlerObject = new MutationHandler(sampleMutation())
-      mutationHandlerObject.send()
+      const sending = mutationHandlerObject.send()
+      await nextTick()
       expect(mutationHandlerObject.loading().value).toBe(true)
+      await sending
     })
 
     it('loading state will be updated', async () => {

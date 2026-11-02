@@ -76,7 +76,7 @@ export const useConfigurationTwoFactor = () => {
   })
 
   // We need to restart the subscription when enabled two factor method list changed.
-  watch(twoFactorEnabledMethods, () => userCurrentTwoFactorSubscription.operationResult.restart())
+  watch(twoFactorEnabledMethods, () => userCurrentTwoFactorSubscription.restart())
 
   return {
     twoFactorConfigurationMethods,

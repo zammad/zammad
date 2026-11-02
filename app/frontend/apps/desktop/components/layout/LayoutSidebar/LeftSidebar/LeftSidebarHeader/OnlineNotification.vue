@@ -130,7 +130,7 @@ const isNewerThan = (notification: OnlineNotification, previous?: OnlineNotifica
 // The count covers the list window only, so it does not tell a new notification
 //   apart from an old one entering the window from below, and does not rise at
 //   all when a new one pushes an unseen entry out. The newest entry does.
-notificationsCountSubscription.watchOnResult(async () => {
+notificationsCountSubscription.onResult(async () => {
   if (!hasInitialCountRun) {
     hasInitialCountRun = true
     return

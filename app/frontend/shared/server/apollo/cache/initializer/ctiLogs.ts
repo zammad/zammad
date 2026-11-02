@@ -2,9 +2,10 @@
 
 import { relayStylePagination } from '@apollo/client/utilities'
 
-import type { FieldFunctionOptions, FieldPolicy } from '@apollo/client/cache/inmemory/policies'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
-import type { TRelayPageInfo } from '@apollo/client/utilities/policies/pagination'
+import type { PageInfo } from '#shared/graphql/types.ts'
+
+import type { FieldFunctionOptions, FieldPolicy } from '@apollo/client/cache'
+import type { InMemoryCacheConfig } from '@apollo/client/cache'
 
 interface Edge {
   node?: { __ref?: string } | null
@@ -13,7 +14,7 @@ interface Edge {
 
 interface Connection {
   edges: Edge[]
-  pageInfo: TRelayPageInfo
+  pageInfo: PageInfo
 }
 
 type Merge = (

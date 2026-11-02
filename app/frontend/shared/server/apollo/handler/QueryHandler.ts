@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
-import { ApolloError, isApolloError } from '@apollo/client/errors'
-import { getOperationName } from '@apollo/client/utilities'
-import { useApolloClient } from '@vue/apollo-composable'
-import { watch, computed } from 'vue'
+import { toErrorLike } from '@apollo/client/errors'
+import { useApolloClient } from '@vue/apollo-composable/compat'
+import { getOperationAST } from 'graphql'
+import { watch, computed, getCurrentScope, onScopeDispose } from 'vue'
 
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { BaseHandler } from '#shared/server/apollo/handler/BaseHandler.ts'
@@ -10,21 +10,18 @@ import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
   QueryHandlerOptions,
+  SubscribeToMoreOptions,
+  SubscribeToMoreUpdateQueryOptions,
   WatchResultCallback,
 } from '#shared/types/server/apollo/handler.ts'
 import type { ReactiveFunction } from '#shared/types/utils.ts'
 
+import type { ApolloClient, ErrorLike, ObservableQuery, OperationVariables } from '@apollo/client'
 import type {
-  ApolloQueryResult,
-  FetchMoreOptions,
-  FetchMoreQueryOptions,
-  ObservableQuery,
-  OperationVariables,
-  QueryOptions,
-  SubscribeToMoreOptions,
-  Unmasked,
-} from '@apollo/client/core'
-import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
+  ApolloQueryResultV4,
+  UseQueryOptions,
+  UseQueryReturn,
+} from '@vue/apollo-composable/compat'
 import type { ComputedRef, Ref, WatchStopHandle } from 'vue'
 
 export default class QueryHandler<
@@ -33,6 +30,8 @@ export default class QueryHandler<
   TOptions extends QueryHandlerOptions = QueryHandlerOptions,
 > extends BaseHandler<TResult, TVariables, UseQueryReturn<TResult, TVariables>, TOptions> {
   private lastCancel: (() => void) | null = null
+
+  private loadCalled = false
 
   protected initialize(): void {
     super.initialize()
@@ -113,7 +112,9 @@ export default class QueryHandler<
    *
    * If an error was throws, `data` is `null`, and `error` is the thrown error.
    */
-  public async query(options: Omit<QueryOptions<TVariables, TResult>, 'query'> = {}) {
+  public async query(
+    options: Partial<Omit<ApolloClient.QueryOptions<TResult, TVariables>, 'query'>> = {},
+  ) {
     const {
       options: defaultOptions,
       document: { value: node },
@@ -122,9 +123,7 @@ export default class QueryHandler<
       throw new Error(`No query document available.`)
     }
     if (import.meta.env.DEV && !('load' in this.operationResult)) {
-      let error = `${getOperationName(
-        node!,
-      )} is initialized with "useQuery" instead of "useLazyQuery". `
+      let error = `${getOperationAST(node!)?.name?.value} is initialized with "useQuery" instead of "useLazyQuery". `
       error += `If you need to get the value immediately with ".query()", use "useLazyQuery" instead to not start extra network requests. `
       error += `"useQuery" should be used inside components to dynamically react to changed data.`
       throw new Error(error)
@@ -134,7 +133,7 @@ export default class QueryHandler<
     const aborter = typeof AbortController !== 'undefined' ? new AbortController() : null
     this.lastCancel = () => aborter?.abort()
     const { fetchPolicy: defaultFetchPolicy, ...defaultOptionsValue } =
-      'value' in defaultOptions ? defaultOptions.value : defaultOptions
+      defaultOptions.value ?? ({} as UseQueryOptions<TResult, TVariables>)
     const fetchPolicy =
       options.fetchPolicy ||
       (defaultFetchPolicy !== 'cache-and-network' ? defaultFetchPolicy : undefined)
@@ -151,13 +150,13 @@ export default class QueryHandler<
             signal: aborter?.signal,
           },
         },
-      })
+      } as ApolloClient.QueryOptions<TResult, TVariables>)
     } catch (error) {
       // TODO: do we need to handleError here also in a genric way?
 
       return {
         data: null,
-        error: error as ApolloError,
+        error: error as ErrorLike,
       }
     } finally {
       this.lastCancel = null
@@ -168,14 +167,24 @@ export default class QueryHandler<
     return this.operationResult.options
   }
 
-  public result(): Ref<TResult | undefined> {
+  public result(): Readonly<Ref<TResult | undefined>> {
     return this.operationResult.result
   }
 
-  public watchQuery(): Ref<ObservableQuery<TResult, TVariables> | null | undefined> {
+  public watchQuery(): Readonly<Ref<ObservableQuery<TResult, TVariables> | null | undefined>> {
     return this.operationResult.query
   }
 
+  /**
+   * Subscribes to a related subscription and merges its data into the query result.
+   *
+   * Unlike the raw composable, the options may be reactive: whenever the getter
+   * yields new options or the underlying query is (re)created, the previous
+   * subscription is closed and a new one is opened.
+   *
+   * Returns a function which stops the subscription; it is also stopped
+   * automatically when the current effect scope is disposed.
+   */
   public subscribeToMore<
     TSubscriptionVariables extends OperationVariables = TVariables,
     TSubscriptionData = TResult,
@@ -185,44 +194,75 @@ export default class QueryHandler<
       | ReactiveFunction<
           SubscribeToMoreOptions<TResult, TSubscriptionVariables, TSubscriptionData>
         >,
-  ): void {
+  ): () => void {
     type Options = SubscribeToMoreOptions<TResult, TSubscriptionVariables, TSubscriptionData>
+    type ApolloOptions = ObservableQuery.SubscribeToMoreOptions<
+      TResult,
+      TSubscriptionVariables,
+      TSubscriptionData,
+      TVariables
+    >
+
+    const getOptions = typeof options === 'function' ? options : () => options
 
     // Without an 'onError' callback, Apollo logs an unhandled subscription error
     //  to the console itself. Route it through the handler instead, so that an
     //  expected authentication error during logout stays quiet, while any other
     //  failure is still reported like the error of the query itself.
-    const withDefaultErrorHandling = (subscribeToMoreOptions: Options): Options => {
-      if (subscribeToMoreOptions.onError) return subscribeToMoreOptions
+    //
+    // The 'updateQuery' callback keeps the shape Zammad always used: the
+    //  previous result as a whole and `null` or `undefined` for "no change".
+    const toApolloOptions = ({ updateQuery, onError, ...rest }: Options): ApolloOptions =>
+      ({
+        ...rest,
+        onError: (error: unknown) => {
+          if (onError) return onError(toErrorLike(error))
 
-      return {
-        ...subscribeToMoreOptions,
-        onError: (error) => {
-          // A subscription can also fail with a plain network error, which the
-          //  handler expects in its Apollo shape.
-          this.handleError(isApolloError(error) ? error : new ApolloError({ networkError: error }))
+          this.handleError(toErrorLike(error))
         },
-      }
+        updateQuery: updateQuery
+          ? (previousData: unknown, updateOptions: unknown) =>
+              updateQuery(
+                previousData as TResult | null,
+                updateOptions as SubscribeToMoreUpdateQueryOptions<
+                  TResult,
+                  TSubscriptionVariables,
+                  TSubscriptionData
+                >,
+              ) ?? undefined
+          : undefined,
+      }) as ApolloOptions
+
+    let unsubscribe: (() => void) | undefined
+
+    // vue-apollo ignores 'subscribeToMore' while the observable query does not
+    //  exist yet (a lazy query before 'load()', a disabled query), so wait for it.
+    const stopWatching = watch(
+      [this.watchQuery(), getOptions] as const,
+      ([query, resolvedOptions]) => {
+        unsubscribe?.()
+        unsubscribe = undefined
+
+        if (!query) return
+
+        unsubscribe = this.operationResult.subscribeToMore(toApolloOptions(resolvedOptions))
+      },
+      { immediate: true },
+    )
+
+    const stop = () => {
+      unsubscribe?.()
+      unsubscribe = undefined
+      stopWatching()
     }
 
-    if (typeof options === 'function') {
-      return this.operationResult.subscribeToMore(() => withDefaultErrorHandling(options()))
-    }
+    if (getCurrentScope()) onScopeDispose(stop)
 
-    return this.operationResult.subscribeToMore(withDefaultErrorHandling(options))
+    return stop
   }
 
   public fetchMore(
-    options: FetchMoreQueryOptions<TVariables, TResult> &
-      FetchMoreOptions<TResult, TVariables> & {
-        updateQuery?: (
-          previousQueryResult: Unmasked<TResult>,
-          options: {
-            fetchMoreResult: Unmasked<TResult>
-            variables: TVariables
-          },
-        ) => Unmasked<TResult>
-      },
+    options: ObservableQuery.FetchMoreOptions<TResult, TVariables>,
   ): Promise<Maybe<TResult>> {
     return new Promise((resolve, reject) => {
       const fetchMore = this.operationResult.fetchMore(options)
@@ -233,8 +273,12 @@ export default class QueryHandler<
       }
 
       fetchMore
-        .then((result) => {
-          resolve(result.data)
+        .then(async (result) => {
+          // Apollo hands the merged page to the query from a timeout set before this resolves, and
+          //   drops it if another `fetchMore` starts first - callers read `result()` right after.
+          await new Promise((delivered) => setTimeout(delivered))
+
+          resolve((result.data ?? null) as Maybe<TResult>)
         })
         .catch(() => {
           reject(this.operationError().value)
@@ -255,7 +299,7 @@ export default class QueryHandler<
 
       refetch
         .then((result) => {
-          resolve({ data: result.data })
+          resolve({ data: result?.data ?? null })
         })
         .catch(() => {
           reject(this.operationError().value)
@@ -263,28 +307,32 @@ export default class QueryHandler<
     })
   }
 
-  public load(variables?: TVariables, options?: UseQueryOptions<TResult, TVariables>): void {
+  /**
+   * Starts a lazy query. Does nothing for a query created with "useQuery".
+   */
+  public load(variables?: TVariables): void {
     const operation = this.operationResult as unknown as {
-      load?: (
-        document?: unknown,
-        variables?: TVariables,
-        options?: UseQueryOptions<TResult, TVariables>,
-      ) => false | Promise<TResult>
+      load?: (document?: unknown, variables?: TVariables) => false | Promise<unknown>
     }
 
     if (typeof operation.load !== 'function') {
       return
     }
 
-    const result = operation.load(undefined, variables, options)
+    this.loadCalled = true
+
+    const result = operation.load(undefined, variables)
     if (result instanceof Promise) {
       // error is handled in BaseHandler
       result.catch(() => {})
     }
   }
 
+  /**
+   * True for a lazy query which was not loaded yet.
+   */
   public isFirstRun(): boolean {
-    return this.operationResult.forceDisabled.value
+    return 'load' in this.operationResult && !this.loadCalled
   }
 
   public start(): void {
@@ -338,7 +386,22 @@ export default class QueryHandler<
     )
   }
 
-  public onResult(callback: (result: ApolloQueryResult<TResult | undefined>) => void) {
-    return this.operationResult.onResult(callback)
+  /**
+   * Calls back with every new result, like vue-apollo v4 did: the state changes
+   * which v5 reports in addition - no data yet, a failed fetch (see `onError`,
+   * a failed refetch still carries the previous data), or the previous data
+   * repeated while a refetch is loading - are left out.
+   */
+  public onResult(callback: (result: ApolloQueryResultV4<TResult>) => void) {
+    let lastData: TResult | undefined
+
+    return this.operationResult.onResult((result) => {
+      if (result.data === undefined || result.error) return
+      if (result.loading && result.data === lastData) return
+
+      lastData = result.data
+
+      callback(result)
+    })
   }
 }

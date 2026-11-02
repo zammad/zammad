@@ -2,7 +2,7 @@
 
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
-import { provideApolloClient } from '@vue/apollo-composable'
+import { provideApolloClient } from '@vue/apollo-composable/compat'
 import { escapeRegExp } from 'lodash-es'
 import { createMockClient } from 'mock-apollo-client'
 
