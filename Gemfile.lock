@@ -114,7 +114,7 @@ GEM
     acts_as_list (1.2.6)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
-    addressable (2.9.0)
+    addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     android_key_attestation (0.3.0)
@@ -314,7 +314,7 @@ GEM
     google-protobuf (4.36.0)
       bigdecimal
       rake (~> 13.3)
-    graphql (2.6.10)
+    graphql (2.6.14)
       base64
       fiber-storage
       logger
@@ -578,7 +578,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     racc (1.8.1)
-    rack (3.2.7)
+    rack (3.2.8)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
     rack-oauth2 (2.3.0)
@@ -742,7 +742,7 @@ GEM
     ruby-saml (1.18.1)
       nokogiri (>= 1.13.10)
       rexml
-    rubyntlm (0.6.5)
+    rubyntlm (0.6.8)
       base64
     rubyzip (3.5.0)
     safety_net_attestation (0.5.0)
