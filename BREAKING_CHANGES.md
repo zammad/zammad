@@ -73,6 +73,30 @@ instead.
 
 ## 7.2
 
+### The ticket search matches only customer visible data for customers
+
+**Who is affected?** Customers, and integrations that search tickets with a `ticket.customer` account
+through the search box, `GET /api/v1/tickets/search` or the GraphQL search, and rely on matches in
+internal articles, tags, hidden attributes or the email address of organization colleagues.
+
+The ticket search applied the access check only to which tickets may match. The search term itself
+was matched against the whole ticket: internal articles with their attachments and, with
+Elasticsearch, tags, mentions, checklists and every indexed attribute, including arbitrary
+`field:value` syntax. A customer could therefore learn whether an internal note contains a term by
+watching which of their tickets show up. For the customer access, the search now matches only
+non-internal articles with their attachments and the ticket fields `title`, `number`, `hook_number`,
+`state.name`, `customer.firstname`, `customer.lastname` and `organization.name`. Field syntax on any
+other field is treated as literal text. The `condition` parameter of `GET /api/v1/tickets/search` and
+the `filter` argument of the GraphQL search accept only ticket attributes visible to customers plus
+`customer.firstname`, `customer.lastname`, `owner.firstname`, `owner.lastname` and
+`organization.name`; any other condition returns no result for a customer, and for a user with both
+roles only tickets of their agent groups. Agents are not affected, and no reindex is needed.
+
+⚠️ Adapt integrations that search as a customer and rely on such matches, for example use a
+colleague's name instead of their email address to find their tickets.
+
+**Related advisory:** [GHSA-32wx-47p6-qqvw](https://github.com/zammad/zammad/security/advisories/GHSA-32wx-47p6-qqvw)
+
 ### The SSO login rejects conflicting login sources, and the shipped proxy configurations clear `Remote-User`
 
 **Who is affected?** Admins of package installations whose nginx or Apache configuration was set up
