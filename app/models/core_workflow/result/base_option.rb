@@ -41,7 +41,10 @@ class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
   def init_value_default
     return if !@result_object.payload['screen'].starts_with?('create')
 
-    value = @result_object.attributes.new_only&.try(field)
+    new_only = @result_object.attributes.new_only
+    return if !new_only&.has_attribute?(field)
+
+    value = new_only[field]
     return if excluded_by_restrict_values?(value)
 
     value

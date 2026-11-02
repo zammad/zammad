@@ -3,6 +3,18 @@
 class CoreWorkflow::Condition
   include ::Mixin::HasBackends
 
+  # Mirrors the association groups in core_workflow_condition.coffee;
+  # a new group there has to be added here as well.
+  TRAVERSABLE_ASSOCIATIONS = %w[customer organization group].freeze
+
+  # Mirrors the non-column attributes core_workflow_condition.coffee offers;
+  # tags and group_ids_* have their own handlers.
+  NON_COLUMN_ATTRIBUTES = %w[role_ids permission_ids mention_user_ids].freeze
+
+  # Unlike nil (missing object or empty attribute) an unknown key fails the
+  # condition before the operator runs, so 'not set' cannot match it.
+  INVALID_KEY = Object.new.freeze
+
   attr_accessor :user, :payload, :workflow, :attribute_object, :result_object, :check
 
   def initialize(result_object:, workflow: nil)
@@ -58,7 +70,28 @@ class CoreWorkflow::Condition
   end
 
   def condition_key_value_obj(attribute, obj)
-    obj.try(attribute.to_sym)
+    return if obj.nil?
+    return INVALID_KEY if !obj.is_a?(ActiveRecord::Base)
+
+    if TRAVERSABLE_ASSOCIATIONS.include?(attribute) && obj.class.reflect_on_association(attribute.to_sym)
+      return obj.public_send(attribute)
+    end
+
+    if obj.has_attribute?(attribute) && readable_attribute?(obj, attribute)
+      return obj[attribute]
+    end
+
+    return obj.public_send(attribute) if NON_COLUMN_ATTRIBUTES.include?(attribute) && obj.respond_to?(attribute)
+
+    INVALID_KEY
+  end
+
+  # Defers to the model's filter_attributes (password, token, ...) instead
+  # of a second list; a record without the filter has nothing to hide.
+  def readable_attribute?(obj, attribute)
+    return true if !obj.respond_to?(:filter_attributes)
+
+    obj.filter_attributes({ attribute => nil }).key?(attribute)
   end
 
   def condition_key_value(key)
@@ -68,7 +101,9 @@ class CoreWorkflow::Condition
     obj       = condition_key_value_object(key_split)
     key_split.each do |attribute|
       obj = condition_key_value_tags(attribute, obj) || condition_key_value_group_permissions(attribute, obj) || condition_key_value_obj(attribute, obj)
+      break if obj.equal?(INVALID_KEY)
     end
+    return if obj.equal?(INVALID_KEY)
 
     condition_value_result(obj)
   end
@@ -107,6 +142,8 @@ class CoreWorkflow::Condition
   def condition_match?(key, condition)
     pre_condition(condition)
     value_key = condition_key_value(key)
+    return false if value_key.nil?
+
     condition_value_match?(key, condition, value_key)
   end
 
