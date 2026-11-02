@@ -1,15 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OmniAuth::Strategies::WeiboDatabase < OmniAuth::Strategies::Weibo
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'weibo'
 
-  def initialize(app, *args, &)
+  def self.setup
+    config = Setting.get('auth_weibo_credentials') || {}
 
-    # database lookup
-    config  = Setting.get('auth_weibo_credentials') || {}
-    args[0] = config['client_id']
-    args[1] = config['client_secret']
-    super
+    {
+      client_id:     config['client_id'],
+      client_secret: config['client_secret'],
+    }
   end
-
 end

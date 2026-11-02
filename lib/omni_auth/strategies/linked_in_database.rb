@@ -1,15 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OmniAuth::Strategies::LinkedInDatabase < OmniAuth::Strategies::LinkedIn
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'linkedin'
 
-  def initialize(app, *args, &)
+  def self.setup
+    config = Setting.get('auth_linkedin_credentials') || {}
 
-    # database lookup
-    config  = Setting.get('auth_linkedin_credentials') || {}
-    args[0] = config['app_id']
-    args[1] = config['app_secret']
-    super
+    {
+      client_id:     config['app_id'],
+      client_secret: config['app_secret'],
+    }
   end
 
   # Workaround from current omniauth-linkedin gem issue:

@@ -1,15 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OmniAuth::Strategies::GithubDatabase < OmniAuth::Strategies::GitHub
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'github'
 
-  def initialize(app, *args, &)
+  def self.setup
+    config = Setting.get('auth_github_credentials') || {}
 
-    # database lookup
-    config  = Setting.get('auth_github_credentials') || {}
-    args[0] = config['app_id']
-    args[1] = config['app_secret']
-    super
+    {
+      client_id:     config['app_id'],
+      client_secret: config['app_secret'],
+    }
   end
-
 end

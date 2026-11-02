@@ -3,25 +3,27 @@
 require 'jwt'
 
 class OmniAuth::Strategies::MicrosoftOffice365Database < OmniAuth::Strategies::MicrosoftOffice365
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'microsoft_office365'
 
-  def initialize(app, *args, &)
+  # Override the gem's DEFAULT_SCOPE ("openid User.Read Contacts.Read") to drop
+  # the Contacts.Read permission. Setting the scope option here makes the gem
+  # skip its `params[:scope] ||= DEFAULT_SCOPE` fallback.
+  option :scope, 'openid User.Read'
 
-    # database lookup
-    config  = Setting.get('auth_microsoft_office365_credentials') || {}
-    args[0] = config['app_id']
-    args[1] = config['app_secret']
-    tenant  = config['app_tenant'].presence || 'common'
+  def self.setup
+    config = Setting.get('auth_microsoft_office365_credentials') || {}
+    tenant = config['app_tenant'].presence || 'common'
 
-    super
-
-    @options[:client_options][:authorize_url] = "/#{tenant}/oauth2/v2.0/authorize"
-    @options[:client_options][:token_url]     = "/#{tenant}/oauth2/v2.0/token"
-
-    # Override the gem's DEFAULT_SCOPE ("openid User.Read Contacts.Read") to drop
-    # the Contacts.Read permission. Setting the scope option here makes the gem
-    # skip its `params[:scope] ||= DEFAULT_SCOPE` fallback.
-    @options[:scope] = 'openid User.Read'
+    {
+      client_id:      config['app_id'],
+      client_secret:  config['app_secret'],
+      client_options: {
+        authorize_url: "/#{tenant}/oauth2/v2.0/authorize",
+        token_url:     "/#{tenant}/oauth2/v2.0/token",
+      },
+    }
   end
 
   # The gem's raw_info only calls the Graph /me REST endpoint, which never
