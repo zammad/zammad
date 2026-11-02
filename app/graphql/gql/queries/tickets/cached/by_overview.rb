@@ -2,8 +2,6 @@
 
 module Gql::Queries
   class Tickets::Cached::ByOverview < BaseQuery
-    include Gql::Concerns::HandlesOverviewCaching
-
     description 'Fetch tickets of a given ticket overview'
 
     # These arguments (and the ones from pagination such as first:) are part of the cache key.
@@ -41,9 +39,12 @@ module Gql::Queries
     end
 
     def maybe_cached_value(cache_ttl:, overview:, order_by:, order_direction:)
-      cache_fragment(cache_key: { exclude_arguments: [:renew_cache] }, object_cache_key: object_cache_key(overview), expires_in: cache_ttl) do
-        # This will fetch tickets with 'overview' permissions, which logically include 'read' permissions.
-        ::Ticket::Overviews.tickets_for_overview(overview, context.current_user, order_by: order_by, order_direction: order_direction)
+      partition = ::Ticket::Overviews::CachePartition.new(overview, context.current_user)
+
+      # query_cache_key of graphql-fragment_cache already covers all arguments and selected fields,
+      #   the partition key covers the access of the current user.
+      cache_fragment(cache_key: { exclude_arguments: [:renew_cache] }, object_cache_key: partition.key, expires_in: cache_ttl) do
+        partition.readable_tickets(order_by:, order_direction:)
       end
     end
   end

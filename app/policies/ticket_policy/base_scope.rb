@@ -26,21 +26,20 @@ class TicketPolicy < ApplicationPolicy
         bind.push(user.group_ids_access(self.class::ACCESS_TYPE))
       end
 
-      if user.permissions?('ticket.customer')
-        sql.push('tickets.customer_id = ?')
-        bind.push(user.id)
-
-        if user.all_organization_ids.present?
-          Organization.where(id: user.all_organization_ids).select(&:shared).each do |organization|
-            sql.push('tickets.organization_id = ?')
-            bind.push(organization.id)
-          end
-        end
-      end
+      customer_sql, customer_bind = customer_conditions
+      sql.concat(customer_sql)
+      bind.concat(customer_bind)
 
       sql.push '0 = 1' if sql.empty? # Forbid unlimited access for all other permissions.
 
       scope.where sql.join(' OR '), *bind
+    end
+
+    # The organizations whose tickets the user may see as a customer.
+    def shared_organization_ids
+      return [] if !user.permissions?('ticket.customer') || user.all_organization_ids.blank?
+
+      @shared_organization_ids ||= Organization.where(id: user.all_organization_ids, shared: true).pluck(:id)
     end
 
     # #resolve is UNDEFINED BEHAVIOR for the abstract base class (but not its subclasses)
@@ -48,6 +47,22 @@ class TicketPolicy < ApplicationPolicy
       return false if args.first.to_s == 'resolve' && instance_of?(TicketPolicy::BaseScope)
 
       super
+    end
+
+    private
+
+    def customer_conditions
+      return [[], []] if !user.permissions?('ticket.customer')
+
+      sql  = ['tickets.customer_id = ?']
+      bind = [user.id]
+
+      shared_organization_ids.each do |organization_id|
+        sql.push('tickets.organization_id = ?')
+        bind.push(organization_id)
+      end
+
+      [sql, bind]
     end
   end
 end
