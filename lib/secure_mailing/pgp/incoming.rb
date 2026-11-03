@@ -285,7 +285,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
   end
 
   def sign_keys
-    @sign_keys ||= pgp_keys(mail[:mail_instance].from.first, :sign, false)
+    @sign_keys ||= pgp_keys(original_from_email, :sign, false)
   end
 
   def decrypt_keys

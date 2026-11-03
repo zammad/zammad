@@ -515,6 +515,65 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
         end
       end
 
+      # Sender and routing headers are kept from the original mail, while the subject is still
+      # taken from the content (RFC 8551 protected headers).
+      context 'when the encrypted message has sender and routing headers in the content' do
+        let(:mail) do
+          inner = <<~INNER.gsub(%r{\n}, "\r\n")
+            Content-Type: text/plain
+            From: inner@example.com
+            Reply-To: inner@example.com
+            To: other-group@example.com
+            References: <inner-thread@example.com>
+            Message-ID: <inner-msgid@example.com>
+            Subject: protected inner subject
+
+            Secured PGP body
+          INNER
+
+          encrypted = SecureMailing::PGP::Tool.new.with_private_keyring do |pgp_tool|
+            pgp_tool.import(recipient_key.key)
+            pgp_tool.encrypt(inner, [recipient_key.fingerprint])[:stdout]
+          end
+
+          pgp_mail               = Mail.new
+          pgp_mail.from          = 'sender@example.com'
+          pgp_mail.to            = recipient_email_address
+          pgp_mail.subject       = 'outer subject'
+          pgp_mail.body          = nil
+          pgp_mail.content_type  = 'multipart/encrypted; protocol="application/pgp-encrypted"; boundary=OpenPGPMIMEBoundary'
+          pgp_mail.add_part(Mail::Part.new do
+            body         'Version: 1'
+            content_type 'application/pgp-encrypted'
+          end)
+          pgp_mail.add_part(Mail::Part.new do
+            body                encrypted
+            content_type        'application/octet-stream; name="encrypted.asc"'
+            content_disposition 'inline; filename="encrypted.asc"'
+          end)
+
+          mail = Channel::EmailParser.new.parse(pgp_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'keeps the outer sender and routing but still adopts the protected subject' do
+          expect(mail[:body]).to include('Secured PGP body')
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+          # Sender / routing identity is kept from the original mail.
+          expect(mail[:from]).to eq('sender@example.com')
+          expect(mail[:from_email]).to eq('sender@example.com')
+          expect(mail[:'reply-to']).to be_nil
+          expect(mail[:to]).to eq(recipient_email_address)
+          # Threading identity (used to select/link tickets) is not taken from the content.
+          expect(mail[:references]).to be_nil
+          expect(mail[:message_id]).not_to include('inner-msgid')
+          # The encrypted Subject is a protected header and is still adopted.
+          expect(mail[:subject]).to eq('protected inner subject')
+        end
+      end
+
       context 'when private key present' do
 
         let(:mail) do
@@ -650,6 +709,72 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
         end
 
         it_behaves_like 'decrypting and verifying signature'
+      end
+
+      # The signing key is resolved from the envelope sender, which is also what the article is
+      # attributed to, and not from the From of the re-parsed content.
+      context 'when the encrypted message has a signed entity and a From header in the content' do
+        before do
+          create(:pgp_key, :with_private, fixture: sender_email_address)
+        end
+
+        let!(:recipient_key) { create(:pgp_key, :with_private, fixture: recipient_email_address) }
+
+        let(:mail) do
+          signed = Channel::EmailBuild.build(
+            from:         sender_email_address,
+            to:           recipient_email_address,
+            body:         raw_body,
+            content_type: content_type,
+            security:     {
+              type:       'PGP',
+              sign:       { success: true },
+              encryption: { success: false },
+            }
+          )
+
+          inner = <<~INNER
+            Content-Type: #{signed.header['Content-Type']}
+            Content-Transfer-Encoding: #{signed.header['Content-Transfer-Encoding']}
+            From: #{sender_email_address}
+
+            #{signed.body}
+          INNER
+
+          encrypted = SecureMailing::PGP::Tool.new.with_private_keyring do |pgp_tool|
+            pgp_tool.import(recipient_key.key)
+            pgp_tool.encrypt(inner, [recipient_key.fingerprint])[:stdout]
+          end
+
+          pgp_mail              = Mail.new
+          pgp_mail.from         = cc_recipient_email_address
+          pgp_mail.to           = recipient_email_address
+          pgp_mail.subject      = 'outer subject'
+          pgp_mail.body         = nil
+          pgp_mail.content_type = 'multipart/encrypted; protocol="application/pgp-encrypted"; boundary=OpenPGPMIMEBoundary'
+          pgp_mail.add_part(Mail::Part.new do
+            body         'Version: 1'
+            content_type 'application/pgp-encrypted'
+          end)
+          pgp_mail.add_part(Mail::Part.new do
+            body                encrypted
+            content_type        'application/octet-stream; name="encrypted.asc"'
+            content_disposition 'inline; filename="encrypted.asc"'
+          end)
+
+          mail = Channel::EmailParser.new.parse(pgp_mail.to_s)
+          SecureMailing.incoming(mail)
+
+          mail
+        end
+
+        it 'decrypts, but resolves the signing key from the envelope sender' do
+          expect(mail[:body]).to include(raw_body)
+          expect(mail[:from]).to eq(cc_recipient_email_address)
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The public PGP key could not be found.')
+        end
       end
 
       context 'when the mail is signed and encrypted (detached signature)' do
