@@ -241,7 +241,16 @@ describe('grouping form fields', { retries: 3 }, () => {
     cy.findByLabelText('Text').type('test')
     cy.findByLabelText('Tel').type('+123456789')
     cy.findByLabelText('Textarea').type('test')
-    cy.findByLabelText('Date 2').type('2021-01-01')
+    // The mobile date field is picker-only, so the date is picked from the decade view down.
+    cy.findByLabelText('Date 2').click()
+    cy.findByRole('button', { name: 'Open the months overlay' }).click()
+    cy.findByRole('button', { name: 'Open the years overlay' }).click()
+    Cypress._.times(Math.floor(new Date().getFullYear() / 10) - 202, () => {
+      cy.findByRole('button', { name: 'Previous decade' }).click()
+    })
+    cy.findByRole('button', { name: '2021' }).click()
+    cy.findByRole('button', { name: 'January 2021' }).click()
+    cy.findByRole('button', { name: 'Friday, January 1st, 2021' }).click()
 
     cy.findByLabelText('Treeselect')
       .click()

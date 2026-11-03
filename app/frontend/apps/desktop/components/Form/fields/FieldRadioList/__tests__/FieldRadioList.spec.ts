@@ -109,8 +109,10 @@ describe('Form - Field - Radio List - option with a date field', () => {
   const renderWithDateField = () => renderRadioListInput({ options: testOptionsWithDateField })
 
   const pickDate = async (view: Awaited<ReturnType<typeof renderRadioListInput>>) => {
-    await view.events.type(view.getByLabelText('Date'), DATE)
-    await view.events.keyboard('{Enter}')
+    await view.events.type(view.getByLabelText('Date'), DATE, {
+      initialSelectionStart: 0,
+      initialSelectionEnd: 0,
+    })
   }
 
   it('renders the date field inside the group, below its own option', async () => {
@@ -285,8 +287,10 @@ describe('Form - Field - Radio List - several options with a date field', () => 
     expect(await view.findByLabelText('Date B')).toBeInTheDocument()
     expect(view.queryByLabelText('Date A')).not.toBeInTheDocument()
 
-    await view.events.type(view.getByLabelText('Date B'), '2021-04-13 11:10')
-    await view.events.keyboard('{Enter}')
+    await view.events.type(view.getByLabelText('Date B'), '2021-04-13 11:10', {
+      initialSelectionStart: 0,
+      initialSelectionEnd: 0,
+    })
 
     await waitFor(() => {
       expect(getNode('radioList')?.value).toBe('2021-04-13T11:10:00Z')

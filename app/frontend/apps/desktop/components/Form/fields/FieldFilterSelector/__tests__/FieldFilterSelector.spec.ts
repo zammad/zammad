@@ -406,7 +406,7 @@ describe('Fields - FieldFilterSelector', () => {
   })
 
   it('labels a multi-operator `in range` row as "Field - Operator"', async () => {
-    // A single native date-range field is routed through the fieldset/legend so
+    // A single date range field is routed through the fieldset/legend so
     // it, too, spells out the operator.
     const view = renderFilterSelector(
       [{ name: 'ticket.created_at', operator: 'in range', value: ['2026-01-01', '2026-02-01'] }],
@@ -414,6 +414,52 @@ describe('Fields - FieldFilterSelector', () => {
     )
 
     expect(view.getByRole('group', { name: 'Created at - in range' })).toBeInTheDocument()
+  })
+
+  it('renders a datetime `in range` row as a date range of timestamps and restores an external value', async () => {
+    const view = renderFilterSelector(
+      [
+        {
+          name: 'ticket.created_at',
+          operator: 'in range',
+          value: ['2026-01-01T08:00:00Z', '2026-02-01T08:00:00Z'],
+        },
+      ],
+      { filterAttributes: [dateAttribute] },
+    )
+
+    // The attribute's time part reaches the range field as its time panel, so the bounds stay
+    // timestamps for the backend selector.
+    expect(view.getAllByIconName('calendar-date-time')).toHaveLength(2)
+    expect(view.getByLabelText('Start date')).toHaveDisplayValue('2026-01-01 08:00')
+    expect(view.getByLabelText('End date')).toHaveDisplayValue('2026-02-01 08:00')
+
+    getNode('filterSelector')?.input([
+      {
+        name: 'ticket.created_at',
+        operator: 'in range',
+        value: ['2026-03-01T10:00:00Z', '2026-03-05T10:00:00Z'],
+      },
+    ])
+    await waitForNextTick()
+
+    expect(view.getByLabelText('Start date')).toHaveDisplayValue('2026-03-01 10:00')
+    expect(view.getByLabelText('End date')).toHaveDisplayValue('2026-03-05 10:00')
+  })
+
+  it('renders a date `in range` row without a time part', async () => {
+    const view = renderFilterSelector(
+      [{ name: 'ticket.due_at', operator: 'in range', value: ['2026-01-01', '2026-02-01'] }],
+      {
+        filterAttributes: [
+          { ...dateAttribute, name: 'ticket.due_at', label: 'Due at', attributeFieldType: 'date' },
+        ],
+      },
+    )
+
+    expect(view.getAllByIconName('calendar-event')).toHaveLength(2)
+    expect(view.getByLabelText('Start date')).toHaveDisplayValue('2026-01-01')
+    expect(view.getByLabelText('End date')).toHaveDisplayValue('2026-02-01')
   })
 
   it('omits the operator from the label for single-operator attributes', async () => {

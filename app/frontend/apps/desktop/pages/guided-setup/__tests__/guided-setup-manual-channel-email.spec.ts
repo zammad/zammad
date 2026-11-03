@@ -627,6 +627,7 @@ describe('guided setup manual channel email', () => {
       await view.events.type(
         getByLabelText(inboundMessagesForm, 'Archive cut-off time'),
         '2025-01-01 00:00',
+        { initialSelectionStart: 0, initialSelectionEnd: 0 },
       )
 
       await getNode('channel-email-inbound-messages')?.settled

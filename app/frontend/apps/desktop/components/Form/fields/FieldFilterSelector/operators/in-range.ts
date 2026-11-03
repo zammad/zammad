@@ -8,12 +8,14 @@ export default <Operator>{
   filterFields(attribute) {
     const fieldType = attribute.attributeFieldType
 
-    // Date/datetime fields have native range support — a single picker whose
-    // value is already the `[from, to]` array the backend `in range` selector
-    // consumes, so no compound `list` is needed. `partialRange: false` makes the
-    // picker emit only a complete range, never a half-selected `[from, null]`.
+    // The date range field's value is already the `[from, to]` array the backend `in range`
+    // selector consumes, so no compound `list` is needed. `withTime` decides the value format,
+    // so a datetime attribute keeps its ISO timestamps through the time panel.
+    // `partialRange: false` commits only a complete range, never a half-selected `[from, null]`.
     if (fieldType === 'date' || fieldType === 'datetime') {
-      return [{ type: fieldType, props: { range: true, clearable: true, partialRange: false } }]
+      const withTime = fieldType === 'datetime'
+
+      return [{ type: 'daterange', props: { withTime, clearable: true, partialRange: false } }]
     }
 
     // Numbers have no native range field, so a `list` aggregates two bounds

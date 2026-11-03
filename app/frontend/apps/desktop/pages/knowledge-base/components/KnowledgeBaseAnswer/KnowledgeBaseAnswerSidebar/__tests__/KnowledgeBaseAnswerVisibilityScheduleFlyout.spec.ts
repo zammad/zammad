@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
+
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -83,7 +85,10 @@ describe('KnowledgeBaseAnswerVisibilityScheduleFlyout', () => {
     const view = renderFlyout()
 
     await view.events.click(await view.findByRole('radio', { name: /Public/ }))
-    await view.events.type(view.getByLabelText('Schedule for'), '2027-01-10 14:00')
+    await view.events.type(view.getByLabelText('Schedule for'), '2027-01-10 14:00', {
+      initialSelectionStart: 0,
+      initialSelectionEnd: 0,
+    })
 
     await view.events.click(view.getByRole('button', { name: 'Add schedule' }))
 
@@ -117,14 +122,14 @@ describe('KnowledgeBaseAnswerVisibilityScheduleFlyout', () => {
     expect(notify).not.toHaveBeenCalled()
   })
 
-  // `futureOnly` only limits what the picker offers - a date typed into the text input sails past
-  //   it, and the service would then refuse it. The rule is what actually holds, and it puts the
-  //   complaint on the field rather than at the top of the flyout.
+  // `futureOnly` only limits what the input takes - a date that reaches the field another way
+  //   sails past it, and the service would then refuse it. The rule is what actually holds, and it
+  //   puts the complaint on the field rather than at the top of the flyout.
   it('refuses a date that is not in the future', async () => {
     const view = renderFlyout()
 
     await view.events.click(await view.findByRole('radio', { name: /Public/ }))
-    await view.events.type(view.getByLabelText('Schedule for'), '2020-01-10 14:00')
+    getNode(view.getByLabelText('Schedule for').id)?.input('2020-01-10T14:00:00Z', false)
 
     await view.events.click(view.getByRole('button', { name: 'Add schedule' }))
     await waitForNextTick()
@@ -141,7 +146,10 @@ describe('KnowledgeBaseAnswerVisibilityScheduleFlyout', () => {
   describe('when the backend refuses the schedule', () => {
     const submit = async (view: ReturnType<typeof renderFlyout>) => {
       await view.events.click(await view.findByRole('radio', { name: /Archived/ }))
-      await view.events.type(view.getByLabelText('Schedule for'), '2027-01-10 14:00')
+      await view.events.type(view.getByLabelText('Schedule for'), '2027-01-10 14:00', {
+        initialSelectionStart: 0,
+        initialSelectionEnd: 0,
+      })
       await view.events.click(view.getByRole('button', { name: 'Add schedule' }))
       await waitForKnowledgeBaseAnswerVisibilityScheduleAddMutationCalls()
       await waitForNextTick()

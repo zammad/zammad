@@ -200,7 +200,6 @@
         "/^@vue/",
         "/^vue/",
         "!@vue/eslint-config-typescript",
-        "!@vuepic/vue-datepicker",
         "!/^@vueuse/"
       ],
       "groupName": "Vue packages",

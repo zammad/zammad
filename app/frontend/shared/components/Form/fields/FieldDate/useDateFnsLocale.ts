@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computedAsync } from '@vueuse/core'
+import { enUS } from 'date-fns/locale/en-US'
 
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import type { Locale } from 'date-fns'
-import type { Ref } from 'vue'
 
 export const importDateFnsLocale = async (localeKey: string) => {
   switch (localeKey.toLowerCase()) {
@@ -29,8 +29,6 @@ export const importDateFnsLocale = async (localeKey: string) => {
       return await import('date-fns/locale/en-CA')
     case 'en-gb':
       return await import('date-fns/locale/en-GB')
-    case 'en-us':
-      return await import('date-fns/locale/en-US')
     case 'es-ca':
       return await import('date-fns/locale/ca')
     case 'es-co':
@@ -109,16 +107,17 @@ export const importDateFnsLocale = async (localeKey: string) => {
       return await import('date-fns/locale/zh-CN')
     case 'zh-tw':
       return await import('date-fns/locale/zh-TW')
-    case 'rw': // date-fns does not have a locale for Kinyarwanda, so we fall back to English (United States)
+    // date-fns bundles English (United States) as its default locale anyway, so it is not split
+    // off. It also stands in for Kinyarwanda, which date-fns does not have.
     default:
-      return await import('date-fns/locale/en-US')
+      return { enUS }
   }
 }
 
 export const useDateFnsLocale = () => {
   const localeStore = useLocaleStore()
 
-  const dateFnsLocale = computedAsync(async () => {
+  const dateFnsLocale = computedAsync<Locale>(async () => {
     const localeKey = localeStore?.localeData?.locale
 
     if (localeKey) {
@@ -127,8 +126,8 @@ export const useDateFnsLocale = () => {
       if (locale) return locale
     }
 
-    return (await import('date-fns/locale/en-US')).enUS
-  }) as Ref<Locale>
+    return enUS
+  }, enUS)
 
   return { dateFnsLocale }
 }

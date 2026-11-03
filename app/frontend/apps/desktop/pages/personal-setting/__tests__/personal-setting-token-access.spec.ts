@@ -242,7 +242,10 @@ describe('personal settings for token access', () => {
     await view.events.type(name, 'A new token')
 
     const input = view.getByLabelText('Expiration date')
-    await view.events.type(input, '2024-12-31{Enter}')
+    await view.events.type(input, '2024-12-31', {
+      initialSelectionStart: 0,
+      initialSelectionEnd: 0,
+    })
 
     const permissionsField = within(view.getByLabelText('Permissions'))
     const permissions = permissionsField.getAllByRole('treeitem')

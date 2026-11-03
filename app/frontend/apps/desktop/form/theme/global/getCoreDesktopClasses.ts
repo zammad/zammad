@@ -62,6 +62,11 @@ export const getCoreDesktopClasses: FormThemeExtension = (classes: FormThemeClas
     search: textInputClasses(classes.search),
     date: textInputClasses(classes.date),
     datetime: textInputClasses(classes.datetime),
+    daterange: extendClasses(classes.daterange, {
+      wrapper: 'flex flex-col items-start justify-start',
+      label: 'mb-1 block text-sm text-normal',
+      inner: 'w-full',
+    }),
     checkbox: {
       outer: 'leading-none',
       wrapper:

@@ -41,6 +41,52 @@ RSpec.describe 'Desktop > Personal Setting > Token Access', app: :desktop_view, 
     end
   end
 
+  context 'when an expiration date is set' do
+    let(:tomorrow) { Date.tomorrow }
+
+    def expect_token_expiring_tomorrow
+      expect_token_created('Expiring token', 'ticket.agent')
+
+      expect(agent.tokens.find_by(action: 'api').expires_at.to_date).to eq(tomorrow)
+    end
+
+    it 'creates a token with the picked expiration date' do
+      open_new_token_flyout
+
+      within '#flyout-new-access-token' do
+        fill_in 'Name', with: 'Expiring token'
+
+        find_datepicker('Expiration date').select_date(tomorrow)
+        expect(find_datepicker('Expiration date')).to have_date(tomorrow)
+
+        permission_switch('ticket').ancestor('[role="treeitem"]').find('[aria-label="Toggle group"]').click
+        permission_switch('ticket.agent').click
+
+        click_on 'Create'
+      end
+
+      expect_token_expiring_tomorrow
+    end
+
+    it 'creates a token with the typed expiration date' do
+      open_new_token_flyout
+
+      within '#flyout-new-access-token' do
+        fill_in 'Name', with: 'Expiring token'
+
+        find_datepicker('Expiration date').type_date(tomorrow)
+        expect(find_datepicker('Expiration date')).to have_date(tomorrow)
+
+        permission_switch('ticket').ancestor('[role="treeitem"]').find('[aria-label="Toggle group"]').click
+        permission_switch('ticket.agent').click
+
+        click_on 'Create'
+      end
+
+      expect_token_expiring_tomorrow
+    end
+  end
+
   context 'when the parent of a granted permission is inactive' do
     before { Permission.find_by!(name: 'chat').update!(active: false) }
 

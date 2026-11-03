@@ -7,14 +7,13 @@ import { mountFormField, checkFormMatchesSnapshot } from '#cy/utils.ts'
 
 import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 
-// :TODO fix please the suite
-describe.skip('testing visuals for "FieldDate"', () => {
+describe('testing visuals for "FieldDate"', () => {
   const inputs = [
-    { type: 'date', input: '2021-01-01' },
-    { type: 'datetime', input: '2021-01-01 13:12' },
+    { type: 'date', value: '2021-01-01' },
+    { type: 'datetime', value: '2021-01-01T13:12:00Z' },
   ]
 
-  inputs.forEach(({ type, input }) => {
+  inputs.forEach(({ type, value }) => {
     it(`renders basic ${type}`, () => {
       mountFormField(type, {
         id: 'datetime',
@@ -28,10 +27,20 @@ describe.skip('testing visuals for "FieldDate"', () => {
           checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.findByLabelText('Date')
-        .type(`${input}{enter}`)
+        .click()
         .then(() => {
-          checkFormMatchesSnapshot({ subTitle: 'filled', type })
+          checkFormMatchesSnapshot({ subTitle: 'open', type })
         })
+    })
+
+    it(`renders filled ${type}`, () => {
+      mountFormField(type, {
+        id: 'datetime',
+        label: 'Date',
+        maxDate: '2021-01-31',
+        value,
+      })
+      checkFormMatchesSnapshot({ type })
     })
 
     it(`renders help for ${type}`, () => {
@@ -59,14 +68,9 @@ describe.skip('testing visuals for "FieldDate"', () => {
         .then(() => {
           checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
-      cy.findByLabelText('Date')
-        .type(`${input}{enter}`)
-        .then(() => {
-          checkFormMatchesSnapshot({ subTitle: 'filled', type })
-        })
     })
 
-    it('renders invalid', () => {
+    it(`renders invalid ${type}`, () => {
       mountFormField(type, {
         id: 'datetime',
         label: 'Date',
@@ -77,28 +81,19 @@ describe.skip('testing visuals for "FieldDate"', () => {
       checkFormMatchesSnapshot({ type })
     })
 
-    it('renders linked', () => {
+    it(`renders linked ${type}`, () => {
       mountFormField(type, {
         id: 'datetime',
         label: 'Date',
         link: '/',
         maxDate: '2021-01-31',
+        value,
       })
       checkFormMatchesSnapshot({ type })
-      cy.findByLabelText('Date')
-        .focus()
-        .then(() => {
-          checkFormMatchesSnapshot({ subTitle: 'focused', type })
-        })
-      cy.findByLabelText('Date')
-        .type(`${input}{enter}`)
-        .then(() => {
-          checkFormMatchesSnapshot({ subTitle: 'filled', type })
-        })
     })
 
-    it('renders disabled', () => {
-      mountFormField('date', {
+    it(`renders disabled ${type}`, () => {
+      mountFormField(type, {
         id: 'datetime',
         label: 'Date',
         disabled: true,
@@ -108,13 +103,8 @@ describe.skip('testing visuals for "FieldDate"', () => {
     })
 
     it(`renders hidden ${type}`, () => {
-      mountFormField(type, { id: 'datetime', label: type, labelSrOnly: true })
+      mountFormField(type, { id: 'datetime', label: type, labelSrOnly: true, value })
       checkFormMatchesSnapshot({ type })
-      cy.findByLabelText(type)
-        .type(`${input}{enter}`)
-        .then(() => {
-          checkFormMatchesSnapshot({ subTitle: 'filled', type })
-        })
     })
   })
 })

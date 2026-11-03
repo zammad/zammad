@@ -310,8 +310,8 @@ find_radio('articleSenderType').select_choice('Outbound Call')
 
 find_datepicker('Date Picker').select_date(Date.tomorrow)
 find_datepicker('Pending till').select_datetime('2023-01-01T09:00:00.000Z')
-find_datepicker('Date').type_date(Date.today)
-find_datepicker('Date Time').type_datetime(DateTime.now)
+find_datepicker('Date').type_date(Date.today) # desktop view only
+find_datepicker('Date Time').type_datetime(DateTime.now) # desktop view only
 
 find_select('Owner').select_option('Test Admin Agent')
 find_select('Multi Select').select_options(['Option 1', 'Option 2'])

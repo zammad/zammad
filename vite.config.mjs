@@ -127,7 +127,6 @@ export default defineConfig(async ({ mode, command }) => {
             const manualChunksMap = {
               lodash: ['lodash-es'],
               vue: ['vue', 'vue-router', 'pinia'],
-              datepicker: ['@vuepic/vue-datepicker'],
               linkifyjs: ['linkifyjs', 'linkify-string'],
               graphql: [
                 'graphql',
@@ -235,13 +234,6 @@ export default defineConfig(async ({ mode, command }) => {
           log.includes('<Suspense> is an experimental feature')
         )
           return false
-      },
-      // perf improvements
-      server: {
-        deps: {
-          // vue-datepicker imports from date-fns and we don't want it to import ES version
-          inline: ['@vuepic/vue-datepicker'],
-        },
       },
       alias: [
         // ESM version of date-fns exports a lot of extra files which takes 500ms to load on M4 Mac

@@ -840,6 +840,10 @@ msgstr ""
 msgid "AI writing assistant tools"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+msgid "AM/PM"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: db/seeds/permissions.rb:281
@@ -1841,7 +1845,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:151
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:148
 msgid "An error occurred during the operation."
 msgstr ""
 
@@ -2088,7 +2092,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:723
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:42
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:288
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:65
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:66
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:43
 msgid "Archive emails"
 msgstr ""
@@ -2120,7 +2124,7 @@ msgstr ""
 msgid "Are you sure to remove this article?"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:147
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr ""
 
@@ -2352,15 +2356,15 @@ msgstr ""
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
 msgid "Attach another file"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
 msgid "Attach file"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:184
 msgid "Attach files"
 msgstr ""
 
@@ -2408,7 +2412,7 @@ msgid "Attachments are stored in the filesystem."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:28
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:42
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:45
 msgid "Attendees"
 msgstr ""
 
@@ -2633,11 +2637,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1335
+#: app/frontend/shared/components/Form/Form.vue:1337
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1344
+#: app/frontend/shared/components/Form/Form.vue:1346
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2772,6 +2776,14 @@ msgstr ""
 msgid "Back to search results"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:123
+msgid "Back to the calendar"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:94
+msgid "Back to the time picker"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:99
 msgid "Background color"
 msgstr ""
@@ -2845,7 +2857,7 @@ msgid "Before you start, make sure to check the following points to ensure a smo
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:93
 msgid "Begin forwarded message"
 msgstr ""
 
@@ -3075,6 +3087,11 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:6
 #: db/seeds/permissions.rb:65
 msgid "Calendar"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:197
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:215
+msgid "Calendar week"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
@@ -3368,6 +3385,7 @@ msgstr ""
 msgid "Change customer"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr ""
@@ -3618,6 +3636,8 @@ msgstr ""
 msgid "Child"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
 msgstr ""
@@ -3774,17 +3794,16 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:432
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:402
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:280
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:340
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:191
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 msgid "Clear selection"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:109
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr ""
 
@@ -3915,10 +3934,6 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
 #: db/seeds/settings.rb:3109
 msgid "Close tab on ticket close"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
-msgid "Close the time picker"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:76
@@ -4242,7 +4257,7 @@ msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:308
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:307
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:168
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
@@ -4339,7 +4354,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:73
 #: app/assets/javascripts/app/views/login.jst.eco:125
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/continue-to-mobile.ts:14
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:318
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:317
 msgid "Continue to mobile"
 msgstr ""
 
@@ -4474,7 +4489,7 @@ msgstr ""
 msgid "Could not fetch WhatsApp phone number details."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:88
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:89
 msgid "Could not fetch security keys"
 msgstr ""
 
@@ -4519,7 +4534,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:134
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:135
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:115
 msgid "Could not remove two-factor authentication method."
 msgstr ""
@@ -4767,7 +4782,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
@@ -5129,16 +5144,9 @@ msgstr ""
 msgid "Date field"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
-msgid "Datepicker input field"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:65
-msgid "Datepicker menu"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Day"
 msgstr ""
 
@@ -5160,16 +5168,12 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:83
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:316
 msgid "Decrement hours value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:344
 msgid "Decrement minutes value"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
-msgid "Decrement seconds value"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:354
@@ -6085,7 +6089,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:11
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:149
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:154
 msgid "Delete"
 msgstr ""
 
@@ -6294,7 +6298,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/form.jst.eco:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:8
 #: app/assets/javascripts/app/views/translation/index.jst.eco:9
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:53
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:56
 msgid "Description"
 msgstr ""
 
@@ -6648,8 +6652,10 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:273
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue:141
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:261
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:367
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:169
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:139
 msgid "Done"
@@ -6787,7 +6793,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:274
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:279
 msgid "Drop files here"
 msgstr ""
 
@@ -7089,7 +7095,7 @@ msgstr ""
 msgid "Email Outbound"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:69
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:70
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:116
 msgid "Email account"
 msgstr ""
@@ -7115,7 +7121,7 @@ msgstr ""
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:63
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:64
 msgid "Email inbound"
 msgstr ""
 
@@ -7124,13 +7130,13 @@ msgstr ""
 msgid "Email notification"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:67
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:68
 msgid "Email outbound"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:891
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:405
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:152
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:153
 msgid "Email sending and receiving could not be verified. Please check your settings."
 msgstr ""
 
@@ -7488,6 +7494,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:32
+#: app/frontend/apps/desktop/components/Form/fields/FieldDateRange/FieldDateRangeInput.vue:147
 msgid "End date"
 msgstr ""
 
@@ -8362,7 +8369,7 @@ msgid "Forgot Password Screen"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco:53
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:158
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:157
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:82
 msgid "Forgot password?"
 msgstr ""
@@ -8632,7 +8639,7 @@ msgid "Getting an Access Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco:2
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:403
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:404
 msgid "Getting key information from the browser…"
 msgstr ""
 
@@ -9017,7 +9024,7 @@ msgid "Have the BETA switch between the old and the new UI always available in t
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:3
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:277
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:276
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:139
 msgid "Having problems?"
 msgstr ""
@@ -9278,6 +9285,8 @@ msgid "Hour(s)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr ""
 
@@ -9421,7 +9430,7 @@ msgid "If you don't see the email, check other places it might be, like your jun
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco:105
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:298
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:297
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:156
 msgid "If you have problems with the third-party login you can request a one-time password login as an admin."
 msgstr ""
@@ -9732,16 +9741,12 @@ msgstr ""
 msgid "Increment (SystemID.Counter)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:72
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:299
 msgid "Increment hours value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:74
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:327
 msgid "Increment minutes value"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
-msgid "Increment seconds value"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:270
@@ -11773,6 +11778,8 @@ msgid "Minute(s)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr ""
 
@@ -11850,6 +11857,7 @@ msgid "Monitoring Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 msgid "Month"
 msgstr ""
 
@@ -12040,7 +12048,7 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:30
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswerTable.vue:41
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:111
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:112
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:28
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:95
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:84
@@ -12057,7 +12065,7 @@ msgid "Name Identifier Format"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:131
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:396
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:397
 msgid "Name for this security key"
 msgstr ""
 
@@ -12108,7 +12116,7 @@ msgstr ""
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:154
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:152
 msgid "Negative feedback"
 msgstr ""
 
@@ -12374,7 +12382,7 @@ msgstr ""
 msgid "New user"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:232
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:231
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:144
 msgid "New user?"
 msgstr ""
@@ -12382,14 +12390,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:638
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:170
+#: app/assets/javascripts/app/controllers/webhook.coffee:172
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:120
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:31
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:17
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:54
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:55
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:56
 #: app/frontend/shared/form/i18n/locales.ts:65
 msgid "Next"
 msgstr ""
@@ -12406,6 +12414,10 @@ msgstr ""
 msgid "Next answer: %s"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:145
+msgid "Next decade"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:76
 msgid "Next image"
 msgstr ""
@@ -12417,7 +12429,7 @@ msgstr ""
 msgid "Next in overview"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:105
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:147
 msgid "Next month"
 msgstr ""
 
@@ -12425,7 +12437,7 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:143
 msgid "Next year"
 msgstr ""
 
@@ -12568,7 +12580,7 @@ msgstr ""
 msgid "No checklist templates have been created yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:171
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:169
 msgid "No comment"
 msgstr ""
 
@@ -12616,7 +12628,7 @@ msgstr ""
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:82
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:84
 msgid "No events can be shown because the calendar file does not contain any."
 msgstr ""
 
@@ -13427,27 +13439,19 @@ msgstr ""
 msgid "Open quick search"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:307
 msgid "Open the hours overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:335
 msgid "Open the minutes overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:104
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:119
 msgid "Open the months overlay"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:99
-msgid "Open the seconds overlay"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:67
-msgid "Open the time picker"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:103
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:121
 msgid "Open the years overlay"
 msgstr ""
 
@@ -13656,7 +13660,7 @@ msgid "Organizations with \"%s\""
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:22
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:38
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:41
 msgid "Organizer"
 msgstr ""
 
@@ -13938,7 +13942,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:127
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:83
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:117
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
@@ -14396,7 +14400,7 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:147
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:145
 msgid "Positive feedback"
 msgstr ""
 
@@ -14432,7 +14436,7 @@ msgstr ""
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:296
+#: app/assets/javascripts/app/controllers/webhook.coffee:298
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -14508,6 +14512,10 @@ msgstr ""
 msgid "Previous answer: %s"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:134
+msgid "Previous decade"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:64
 msgid "Previous image"
 msgstr ""
@@ -14516,7 +14524,7 @@ msgstr ""
 msgid "Previous in overview"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:106
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:136
 msgid "Previous month"
 msgstr ""
 
@@ -14524,7 +14532,7 @@ msgstr ""
 msgid "Previous page"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:108
+#: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:132
 msgid "Previous year"
 msgstr ""
 
@@ -14997,7 +15005,7 @@ msgstr ""
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:189
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:187
 msgid "Regenerate"
 msgstr ""
 
@@ -15011,7 +15019,7 @@ msgstr ""
 msgid "Regeneration Of ID"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:234
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:233
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:150
 msgid "Register"
 msgstr ""
@@ -15090,7 +15098,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:43
 #: app/assets/javascripts/app/views/login.jst.eco:45
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:147
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:146
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:70
 msgid "Remember me"
 msgstr ""
@@ -15128,7 +15136,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:81
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:150
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerScheduledVisibility.vue:69
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
 #: app/frontend/shared/form/i18n/locales.ts:29
@@ -15391,7 +15399,7 @@ msgid "Request password login for admin?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:303
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:302
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:161
 msgid "Request the password login here."
 msgstr ""
@@ -15550,7 +15558,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:635
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:642
 msgid "Results"
 msgstr ""
 
@@ -15561,7 +15569,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:12
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:16
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:68
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:65
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:104
@@ -16050,7 +16058,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:633
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:640
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -16188,7 +16196,7 @@ msgstr ""
 msgid "Search or enter phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:687
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:694
 msgid "Search result for: %s"
 msgstr ""
 
@@ -16305,6 +16313,10 @@ msgstr ""
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+msgid "Seconds"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:67
 msgid "Secret"
 msgstr ""
@@ -16375,13 +16387,13 @@ msgstr ""
 msgid "Security key verification failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:374
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:375
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:9
 msgid "Security keys"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:1
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:374
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:375
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
@@ -16838,7 +16850,7 @@ msgid "Set to public"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:160
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:60
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:61
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:151
 msgid "Set up"
 msgstr ""
@@ -17185,7 +17197,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue:77
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:154
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:13
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:239
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:238
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:160
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:80
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:158
@@ -17485,6 +17497,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:28
+#: app/frontend/apps/desktop/components/Form/fields/FieldDateRange/FieldDateRangeInput.vue:135
 msgid "Start date"
 msgstr ""
 
@@ -17774,7 +17787,7 @@ msgstr ""
 msgid "Submit Comment"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:174
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:172
 msgid "Submit comment"
 msgstr ""
 
@@ -17906,7 +17919,7 @@ msgstr ""
 msgid "Switch to new layout"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:327
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:326
 msgid "Switch to old interface"
 msgstr ""
 
@@ -18208,7 +18221,7 @@ msgid "Textarea field"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:182
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:180
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:372
 msgid "Thank you for your feedback."
 msgstr ""
@@ -18223,7 +18236,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:166
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:164
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
@@ -18472,10 +18485,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:213
 msgid "The browser is outdated. It does not support WebSocket - the technology we use for the chat."
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:110
-msgid "The calendar icon"
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/cti/composables/useCallerLogDoneToggle.ts:16
@@ -18749,8 +18758,12 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:339
+#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:341
 msgid "The entry was created, but it is hidden by the current search or filter."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+msgid "The entry was not a valid date and has been cleared."
 msgstr ""
 
 #: lib/sessions/event.rb:61
@@ -18835,7 +18848,7 @@ msgstr ""
 msgid "The hostname could not be found."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:119
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:257
 msgid "The hours overlay"
 msgstr ""
 
@@ -18946,7 +18959,7 @@ msgstr ""
 msgid "The login is not possible."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:121
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:277
 msgid "The minutes overlay"
 msgstr ""
 
@@ -18954,12 +18967,9 @@ msgstr ""
 msgid "The model list could not be fetched: %s"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:113
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:213
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:230
 msgid "The month picker"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:113
-msgid "The month picker overlay"
 msgstr ""
 
 #: app/models/ticket/number.rb:14
@@ -19397,12 +19407,8 @@ msgstr ""
 msgid "The scheduler run was started."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:328
+#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:330
 msgid "The search index could not be updated yet, the list may be outdated."
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:124
-msgid "The seconds overlay"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:525
@@ -19423,7 +19429,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:614
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:200
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:222
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:220
 msgid "The server settings could not be automatically detected. Please configure them manually."
 msgstr ""
 
@@ -19584,10 +19590,6 @@ msgstr ""
 msgid "The tickets could not be merged."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:111
-msgid "The time picker"
-msgstr ""
-
 #: app/services/service/user/signup.rb:50
 msgid "The token could not be generated."
 msgstr ""
@@ -19720,12 +19722,9 @@ msgstr ""
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:227
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:244
 msgid "The year picker"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:115
-msgid "The year picker overlay"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:74
@@ -20643,7 +20642,7 @@ msgstr ""
 msgid "Ticket articles translation"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:63
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:62
 msgid "Ticket could not be created."
 msgstr ""
 
@@ -20680,7 +20679,7 @@ msgstr ""
 msgid "Ticket has %s viewers"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:44
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:45
 msgid "Ticket has been created successfully."
 msgstr ""
 
@@ -21069,7 +21068,7 @@ msgid "To make translations easier you can enable and disable the inline transla
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:3
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:385
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:386
 msgid "To register a new security key with your account, press the button below."
 msgstr ""
 
@@ -21098,14 +21097,15 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:70
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:61
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:285
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:376
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:263
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:354
 msgid "Toggle AM/PM mode"
 msgstr ""
 
@@ -21131,10 +21131,6 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 msgid "Toggle header row"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:64
-msgid "Toggle the overlay"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
@@ -21363,7 +21359,7 @@ msgid "Try again"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:4
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:279
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:278
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:144
 #: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts:96
 msgid "Try another method"
@@ -21403,7 +21399,7 @@ msgstr ""
 msgid "Turn on to get notified on this device about updates to your tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:285
+#: app/assets/javascripts/app/controllers/webhook.coffee:287
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -21475,14 +21471,14 @@ msgstr ""
 msgid "Two-factor authentication is required, but you don't have sufficient permissions to set it up. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:210
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:211
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:111
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:117
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:191
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:170
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:171
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:133
 msgid "Two-factor authentication method was removed."
 msgstr ""
@@ -21493,11 +21489,11 @@ msgid "Two-factor authentication method was set as default."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:304
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:305
 msgid "Two-factor authentication method was set up successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:274
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:275
 msgid "Two-factor method could not be configured."
 msgstr ""
 
@@ -22303,7 +22299,7 @@ msgid "Username"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:44
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:128
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:127
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:48
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:41
 msgid "Username / Email"
@@ -22922,6 +22918,7 @@ msgid "Writing assistant could not generate text. Please try again or contact yo
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 msgid "Year"
 msgstr ""
 
@@ -23466,7 +23463,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:4
 #: app/assets/javascripts/app/views/login.jst.eco:7
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:198
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:197
 #: app/frontend/apps/mobile/pages/authentication/components/LoginHeader.vue:25
 msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""
@@ -24444,7 +24441,7 @@ msgstr ""
 msgid "matches regex"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:35
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:37
 msgid "max"
 msgstr ""
 
@@ -24468,7 +24465,7 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:29
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:31
 msgid "min"
 msgstr ""
 
@@ -24648,6 +24645,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
 msgid "not set"
 msgstr ""
 

@@ -55,6 +55,7 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
+import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -533,6 +534,8 @@ const buttonGroupOptions: CommonButtonItem[] = [
 
 const application = useApplicationStore()
 
+const { canBrowse: canBrowseKnowledgeBase } = useKnowledgeBaseAccess()
+
 // The second role shows a locked row: it inherits editor from the parent, so nothing below
 //   may override it.
 const kbPermissionRows: KnowledgeBasePermissionRow[] = [
@@ -676,16 +679,20 @@ const formSchema = defineFormSchema([
       `,
     },
   },
-  {
-    type: 'kbCategoryIcon',
-    name: 'kb_category_icon',
-    label: 'Knowledge Base Category Icon',
-    props: {
-      // Pinned, so the catalog does not depend on how the knowledge base is themed.
-      iconSet: 'FontAwesome',
-    },
-    value: 'f115',
-  },
+  ...(canBrowseKnowledgeBase.value
+    ? [
+        {
+          type: 'kbCategoryIcon',
+          name: 'kb_category_icon',
+          label: 'Knowledge Base Category Icon',
+          props: {
+            // Pinned, so the catalog does not depend on how the knowledge base is themed.
+            iconSet: 'FontAwesome',
+          },
+          value: 'f115',
+        },
+      ]
+    : []),
   {
     type: 'kbPermissions',
     name: 'kb_permissions',
@@ -783,18 +790,17 @@ const formSchema = defineFormSchema([
     },
   },
   {
-    name: 'date_1',
-    label: 'Date range',
-    type: 'date',
-    props: {
-      clearable: true,
-      range: true,
-    },
-  },
-  {
     name: 'datetime_0',
     label: 'Date/Time',
     type: 'datetime',
+    props: {
+      clearable: true,
+    },
+  },
+  {
+    name: 'daterange_0',
+    label: 'Date range',
+    type: 'daterange',
     props: {
       clearable: true,
     },

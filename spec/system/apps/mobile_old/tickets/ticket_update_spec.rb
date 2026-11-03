@@ -145,7 +145,9 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
           expect(page).to have_css('[role="status"][aria-label="Validation failed"]')
 
-          date_input.type_datetime(date)
+          date_input.select_datetime(date)
+
+          expect(date_input).to have_datetime(date)
         end
 
         ticket.reload

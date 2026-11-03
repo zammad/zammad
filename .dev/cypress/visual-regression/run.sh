@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+npm install --global corepack
+
 corepack enable pnpm
 
 pnpm install --frozen-lockfile --ignore-scripts

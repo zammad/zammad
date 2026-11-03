@@ -46,12 +46,12 @@ const schema = defineFormSchema([
         placeholder: __('e.g. Easter holiday'),
       },
       {
-        type: 'date',
+        type: 'daterange',
         name: 'date_range',
         label: __('Start and end date'),
         props: {
           clearable: true,
-          range: true,
+          partialRange: false,
         },
       },
       {

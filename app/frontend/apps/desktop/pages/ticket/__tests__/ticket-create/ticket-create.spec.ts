@@ -158,9 +158,9 @@ describe('ticket create view', () => {
       await view.events.click(view.getByRole('option', { name: 'pending reminder' }))
 
       // Date selection Field on pending reminder
-      await view.events.click(view.getByLabelText('Pending till'))
+      await view.events.click(view.getByRole('button', { name: 'Choose date' }))
 
-      const dateCells: Element[] = await view.findAllByRole('gridcell', { name: /29/ })
+      const dateCells: Element[] = await view.findAllByRole('button', { name: /29th/ })
 
       await view.events.click(<Element>dateCells.at(-1))
 
