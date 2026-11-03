@@ -3127,4 +3127,27 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#search_index_update_inline' do
+    let(:organization) { create(:organization) }
+    let(:user)         { create(:agent, organization: organization) }
+
+    before do
+      allow(SearchIndexBackend).to receive_messages(enabled?: true, update_inline: true)
+    end
+
+    it 'clears a removed reference explicitly' do
+      user.update!(organization: nil)
+      user.search_index_update_inline
+
+      expect(SearchIndexBackend).to have_received(:update_inline).with('User', hash_including('organization_id' => nil, 'organization' => nil))
+    end
+
+    it 'drops ignored attributes when leaving references to the background job' do
+      allow(user).to receive(:search_index_inline_include_references?).and_return(false)
+      user.search_index_update_inline
+
+      expect(SearchIndexBackend).to have_received(:update_inline).with('User', hash_excluding('image', 'login_failed'))
+    end
+  end
 end

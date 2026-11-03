@@ -19,5 +19,10 @@ class Organization
 
       attributes
     end
+
+    # members are left to the background job, the document grows with every member
+    def search_index_inline_include_references?
+      false
+    end
   end
 end

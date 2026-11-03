@@ -305,6 +305,7 @@ ProviderConnectionFormMixin =
         container:     @container
         handlers:      @handlers
         callback:      @callback
+        saveHeaders:   @saveHeaders
         screen:        @screen
         small:         @small
         large:         @large
@@ -600,10 +601,11 @@ ProviderConnectionFormMixin =
 
     ui = @
     object.save(
-      done: ->
+      headers: @saveHeaders?()
+      done: (settings, xhr) ->
         vectorIndexRebuildStarted = consumeVectorIndexRebuildStarted(@, App.AIProviderConnection)
 
-        ui.callback?(App[ui.genericObject].fullLocal(@id))
+        ui.callback?(App[ui.genericObject].fullLocal(@id), xhr)
         ui.closeWithFade()
 
         if vectorIndexRebuildStarted

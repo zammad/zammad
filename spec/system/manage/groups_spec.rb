@@ -141,4 +141,108 @@ RSpec.describe 'Manage > Groups', type: :system do
       expect(page).to have_select('email_address_id', text: "#{email_address.name} <#{email_address.email}>")
     end
   end
+
+  describe 'when creating a group while a search is active', searchindex: true do
+    before do
+      create(:group, name: 'KeepFilter Alpha')
+      searchindex_model_reload([Group])
+
+      visit '#manage/groups'
+    end
+
+    it 'keeps the search query and shows the new group' do
+      find('.js-search').fill_in with: 'KeepFilter'
+
+      expect(page).to have_css('.js-tableBody tr', count: 1)
+
+      click_on 'New Group'
+
+      in_modal do
+        fill_in 'Name', with: 'KeepFilter Beta'
+        click_on 'Submit'
+      end
+
+      expect(page).to have_css('.js-tableBody tr', count: 2)
+      expect(find('.js-search').value).to eq('KeepFilter')
+    end
+
+    it 'keeps the search query when editing a group' do
+      find('.js-search').fill_in with: 'KeepFilter'
+
+      expect(page).to have_css('.js-tableBody tr', count: 1)
+
+      find('.js-tableBody tr', text: 'KeepFilter Alpha').click
+
+      in_modal do
+        fill_in 'Name', with: 'KeepFilter Alpha Renamed'
+        click_on 'Submit'
+      end
+
+      expect(page).to have_css('.js-tableBody tr', text: 'KeepFilter Alpha Renamed', count: 1)
+      expect(find('.js-search').value).to eq('KeepFilter')
+    end
+
+    it 'notifies about a new group hidden by the search' do
+      find('.js-search').fill_in with: 'KeepFilter'
+
+      expect(page).to have_css('.js-tableBody tr', count: 1)
+
+      click_on 'New Group'
+
+      in_modal do
+        fill_in 'Name', with: 'Other Group'
+        click_on 'Submit'
+      end
+
+      expect(page).to have_text('The entry was created, but it is hidden by the current search or filter.')
+      expect(page).to have_css('.js-tableBody tr', count: 1)
+      expect(find('.js-search').value).to eq('KeepFilter')
+    end
+
+    context 'when the search index cannot be updated inline' do
+      before do
+        allow(SearchIndexBackend).to receive(:update_inline).and_raise('Elasticsearch is not available')
+      end
+
+      it 'keeps the search and warns about the outdated list' do
+        find('.js-search').fill_in with: 'KeepFilter'
+
+        expect(page).to have_css('.js-tableBody tr', count: 1)
+
+        click_on 'New Group'
+
+        in_modal do
+          fill_in 'Name', with: 'KeepFilter Beta'
+          click_on 'Submit'
+        end
+
+        expect(page).to have_text('The search index could not be updated yet, the list may be outdated.')
+        expect(find('.js-search').value).to eq('KeepFilter')
+      end
+    end
+
+    context 'when the search result spans more than one page' do
+      before do
+        49.times { |index| create(:group, name: format('KeepFilter %02d', index)) }
+        searchindex_model_reload([Group])
+      end
+
+      it 'does not notify about a new group on another page' do
+        find('.js-search').fill_in with: 'KeepFilter'
+
+        expect(page).to have_current_route('manage/groups/1/KeepFilter')
+        expect(page).to have_css('.js-tableBody tr', count: 50)
+
+        click_on 'New Group'
+
+        in_modal do
+          fill_in 'Name', with: 'KeepFilter Zebra'
+          click_on 'Submit'
+        end
+
+        expect(page).to have_css('.js-page', text: '2')
+        expect(page).to have_no_text('The entry was created, but it is hidden by the current search or filter.')
+      end
+    end
+  end
 end

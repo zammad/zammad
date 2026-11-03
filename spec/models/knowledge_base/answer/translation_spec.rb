@@ -461,4 +461,17 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
       end
     end
   end
+
+  describe '#search_index_update_inline' do
+    subject(:translation) { create(:knowledge_base_answer_translation) }
+
+    before do
+      allow(SearchIndexBackend).to receive_messages(enabled?: true, update_inline: true)
+    end
+
+    it 'leaves documents with attachments to the background job', :aggregate_failures do
+      expect(translation.search_index_update_inline).to be(false)
+      expect(SearchIndexBackend).not_to have_received(:update_inline)
+    end
+  end
 end

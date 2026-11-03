@@ -1766,4 +1766,61 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       expect(result['label']).to eq('Tick')
     end
   end
+
+  describe 'search index is updated inline on request', authenticated_as: :admin, performs_jobs: false, searchindex: true do
+    let(:admin) { create(:admin) }
+
+    def search_ids(query)
+      User.search(query: query, current_user: admin, sort_by: 'id').map(&:id)
+    end
+
+    context 'when the client asks for it' do
+      before do
+        add_headers('X-Zammad-Search-Index-Inline' => 'true')
+      end
+
+      it 'finds a created user' do
+        post '/api/v1/users', params: { firstname: 'Searchable', lastname: 'User', role_ids: [Role.find_by(name: 'Agent').id] }, as: :json
+
+        expect(response).to have_http_status(:created)
+        expect(search_ids('Searchable')).to eq([json_response['id']])
+      end
+
+      it 'finds an updated user' do
+        user = create(:agent, firstname: 'Searchable')
+
+        put "/api/v1/users/#{user.id}", params: { firstname: 'Renamed' }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(search_ids('Renamed')).to eq([user.id])
+      end
+    end
+
+    context 'when the client does not ask for it' do
+      it 'leaves indexing to the background job' do
+        post '/api/v1/users', params: { firstname: 'Searchable', lastname: 'User', role_ids: [Role.find_by(name: 'Agent').id] }, as: :json
+
+        expect(response).to have_http_status(:created)
+        expect(search_ids('Searchable')).to be_empty
+      end
+    end
+
+    context 'when an agent asks for it', authenticated_as: :agent do
+      let(:agent) { create(:agent) }
+
+      before do
+        add_headers('X-Zammad-Search-Index-Inline' => 'true')
+      end
+
+      it 'leaves indexing to the background job', :aggregate_failures do
+        customer = create(:customer, firstname: 'Searchable')
+
+        put "/api/v1/users/#{customer.id}", params: { firstname: 'Renamed' }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(response.headers).not_to have_key('X-Zammad-Search-Index-Updated')
+        expect(search_ids('Renamed')).to be_empty
+      end
+    end
+  end
 end

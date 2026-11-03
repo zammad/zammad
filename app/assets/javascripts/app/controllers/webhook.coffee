@@ -158,6 +158,8 @@ class Index extends App.ControllerSubContent
       handlers:          [@authTypeHandler, @customPayloadCollapseHandler]
       validateOnSubmit:  @validateOnSubmit
       preDefinedWebhook: webhook
+      saveHeaders:       @genericController.saveHeaders
+      callback:          @genericController.afterCreate
     )
 
 class WebhookIndex extends App.ControllerGenericIndex

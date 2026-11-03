@@ -128,6 +128,12 @@ class Group < ApplicationModel
     end
   end
 
+  def search_index_inline_cascaded?
+    return false if !saved_change_to_attribute?(:parent_id) && !saved_change_to_attribute?(:name_last)
+
+    all_children.exists?
+  end
+
   # Returns all ancestors (any depth), ordered from the nearest parent up to the root, using a
   # recursive CTE instead of one query per level. See HasRecursiveCteQuery#with_recursive_tree_cte
   # for cycle-safety and column-naming notes.

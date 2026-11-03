@@ -33,3 +33,68 @@ QUnit.test('generic index: search navigation is not cancelled by a concurrent de
     done()
   }, 1000)
 })
+
+// Regression tests for https://github.com/zammad/zammad/issues/6487
+//
+// After a save, the list only trusts the search index when the response
+// confirmed the inline index update. A missing or negative header must never
+// turn into the "hidden by the current search or filter" hint.
+QUnit.module('generic index: search index state after save (#6487)', hooks => {
+  var ctrl, notifications
+
+  hooks.beforeEach(() => {
+    notifications = []
+    ctrl = {
+      searchQuery:   'foo',
+      pageData:      { pagerTotalCount: 1, pagerPerPage: 50 },
+      $:             function() { return { length: 0 } },
+      notify:        function(data) { notifications.push(data.msg) },
+      delayedRender: function() {},
+    }
+  })
+
+  QUnit.test('a missing response header counts as not updated', assert => {
+    App.ControllerGenericIndex.prototype.afterSave.call(ctrl, { id: 1 }, undefined)
+
+    assert.strictEqual(ctrl.searchIndexUpdated, false)
+  })
+
+  QUnit.test('a negative response header counts as not updated', assert => {
+    var xhr = { getResponseHeader: function() { return 'false' } }
+    App.ControllerGenericIndex.prototype.afterSave.call(ctrl, { id: 1 }, xhr)
+
+    assert.strictEqual(ctrl.searchIndexUpdated, false)
+  })
+
+  QUnit.test('a positive response header counts as updated', assert => {
+    var xhr = { getResponseHeader: function() { return 'true' } }
+    App.ControllerGenericIndex.prototype.afterSave.call(ctrl, { id: 1 }, xhr)
+
+    assert.strictEqual(ctrl.searchIndexUpdated, true)
+  })
+
+  QUnit.test('warns about an outdated list instead of the hidden hint when the index was not updated', assert => {
+    App.ControllerGenericIndex.prototype.notifyAfterSave.call(ctrl, [], 1, false)
+
+    assert.deepEqual(notifications, ['The search index could not be updated yet, the list may be outdated.'])
+  })
+
+  QUnit.test('shows the hidden hint when the index was updated and the new entry is not part of the result', assert => {
+    App.ControllerGenericIndex.prototype.notifyAfterSave.call(ctrl, [{ id: 2 }], 1, true)
+
+    assert.deepEqual(notifications, ['The entry was created, but it is hidden by the current search or filter.'])
+  })
+
+  QUnit.test('stays quiet when the new entry is part of the result', assert => {
+    App.ControllerGenericIndex.prototype.notifyAfterSave.call(ctrl, [{ id: 1 }], 1, true)
+
+    assert.deepEqual(notifications, [])
+  })
+
+  QUnit.test('stays quiet when the result spans more than one page', assert => {
+    ctrl.pageData.pagerTotalCount = 51
+    App.ControllerGenericIndex.prototype.notifyAfterSave.call(ctrl, [{ id: 2 }], 1, true)
+
+    assert.deepEqual(notifications, [])
+  })
+})

@@ -97,6 +97,11 @@ class App.ControllerGenericIndex extends App.Controller
       @title @pageData.objects, true
 
     if @pageData.pagerAjax
+      createdItemId       = @createdItemId
+      searchIndexUpdated  = @searchIndexUpdated
+      @createdItemId      = undefined
+      @searchIndexUpdated = undefined
+
       sortBy  = @table?.customOrderBy || @table?.lastOrderBy || @defaultSortBy  || 'id'
       orderBy = @table?.customOrderDirection || @table?.lastOrderDirection || @defaultOrder || 'ASC'
 
@@ -145,6 +150,7 @@ class App.ControllerGenericIndex extends App.Controller
             @table.renderState = undefined if @table
           @stopLoading()
           @renderObjects(collection)
+          @notifyAfterSave(collection, createdItemId, searchIndexUpdated)
 
           @renderCallback() if @renderCallback
 
@@ -278,12 +284,8 @@ class App.ControllerGenericIndex extends App.Controller
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
       screen:           @editScreen
-      callback: =>
-        @resetActiveTabs()
-        if @searchQuery
-          @navigate "#{@pageData.pagerBaseUrl}"
-        else
-          @delayedRender()
+      saveHeaders:      @saveHeaders
+      callback:         @afterSave
     )
 
   newControllerClass: ->
@@ -304,12 +306,39 @@ class App.ControllerGenericIndex extends App.Controller
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
       screen:           @createScreen
-      callback: =>
-        @resetActiveTabs()
-        if @searchQuery
-          @navigate "#{@pageData.pagerBaseUrl}"
-        else
-          @delayedRender()
+      saveHeaders:      @saveHeaders
+      callback:         @afterCreate
+    )
+
+  saveHeaders: =>
+    return if !@searchBar
+    return if _.isEmpty(@searchQuery)
+    { 'X-Zammad-Search-Index-Inline': 'true' }
+
+  afterCreate: (item, xhr) =>
+    @createdItemId = item?.id
+    @afterSave(item, xhr)
+
+  afterSave: (item, xhr) =>
+    @searchIndexUpdated = xhr?.getResponseHeader('X-Zammad-Search-Index-Updated') is 'true'
+    @delayedRender()
+
+  notifyAfterSave: (collection, createdItemId, searchIndexUpdated) ->
+    if searchIndexUpdated is false && @searchQuery
+      @notify(
+        type: 'warning'
+        msg:  __('The search index could not be updated yet, the list may be outdated.')
+      )
+      return
+
+    return if !createdItemId
+    return if !@searchQuery && !@$('.tab.active').length
+    return if @pageData.pagerTotalCount > @pageData.pagerPerPage
+    return if _.find(collection, (item) -> item.id is createdItemId)
+
+    @notify(
+      type: 'warning'
+      msg:  __('The entry was created, but it is hidden by the current search or filter.')
     )
 
   clone: (item) =>
@@ -331,6 +360,3 @@ class App.ControllerGenericIndex extends App.Controller
       description: App[ @genericObject ].description
       container:   @container
     )
-
-  resetActiveTabs: ->
-    @$('.tab.active').removeClass('active')

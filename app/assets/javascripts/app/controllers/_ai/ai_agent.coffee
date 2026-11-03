@@ -539,10 +539,11 @@ class NewAIAgent extends App.ControllerGenericNew
     # Save object.
     ui = @
     @item.save(
-      done: ->
+      headers: @saveHeaders?()
+      done: (settings, xhr) ->
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)
-          ui.callback(item)
+          ui.callback(item, xhr)
         ui.close()
 
       fail: (settings, details) =>

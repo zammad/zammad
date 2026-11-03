@@ -128,6 +128,8 @@ class UsersController < ApplicationController
       user.update!(clean_params)
     end
 
+    model_search_index_update(user)
+
     Service::User::NotifyPasswordChange.with_current_user(current_user).execute(user: user)
 
     if response_expand?
@@ -839,6 +841,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     user.associations_from_param(params)
 
     user.save!
+
+    model_search_index_update(user)
 
     if params[:invite].present?
       token = Token.create(action: 'PasswordReset', user_id: user.id)

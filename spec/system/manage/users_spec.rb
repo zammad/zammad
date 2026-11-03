@@ -98,6 +98,27 @@ RSpec.describe 'Manage > Users', type: :system do
       end
     end
 
+    it 'keeps the active role filter' do
+      visit '#manage/users'
+
+      within(:active_content) do
+        find('.userSearch .tab', text: 'Customer').click
+
+        expect(page).to have_css('.userSearch .tab.active', text: 'Customer')
+
+        find('[data-type=new]').click
+
+        find('[name=firstname]').fill_in with: 'NewTestUserFirstName'
+        find('[name=lastname]').fill_in with: 'User'
+        find('span.label-text', text: 'Customer').first(:xpath, './/..').click
+
+        click '.js-submit'
+
+        expect(page).to have_css('table td', text: 'NewTestUserFirstName')
+        expect(page).to have_css('.userSearch .tab.active', text: 'Customer')
+      end
+    end
+
     describe 'select an Organization' do
       before do
         create(:organization, name: 'Example Inc.', active: true)

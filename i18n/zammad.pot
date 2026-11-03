@@ -1875,7 +1875,7 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:768
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:770
 #: lib/ai/provider/concerns/handles_response.rb:22
 msgid "An unknown error occurred"
 msgstr ""
@@ -2746,7 +2746,7 @@ msgid "BETA UI illustration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:816
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:818
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:433
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:390
@@ -3160,7 +3160,7 @@ msgstr ""
 msgid "Can't create user!"
 msgstr ""
 
-#: app/controllers/application_controller/renders_models.rb:110
+#: app/controllers/application_controller/renders_models.rb:135
 msgid "Can't delete, object has references."
 msgstr ""
 
@@ -3538,7 +3538,7 @@ msgstr ""
 msgid "Check item"
 msgstr ""
 
-#: lib/search_index_backend.rb:468
+#: lib/search_index_backend.rb:477
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -4303,7 +4303,7 @@ msgstr ""
 msgid "Context menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:392
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:393
 msgid "Context window size"
 msgstr ""
 
@@ -5208,7 +5208,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:495
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:496
 #: app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee:21
 msgid "Default (%s)"
 msgstr ""
@@ -6826,7 +6826,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:648
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:650
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -6998,7 +6998,7 @@ msgstr ""
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
-#: lib/search_index_backend.rb:464
+#: lib/search_index_backend.rb:473
 msgid "Elasticsearch is not reachable. It's possible that it's not running. Please check whether it is installed."
 msgstr ""
 
@@ -7167,11 +7167,11 @@ msgstr ""
 msgid "Embed video"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:359
 msgid "Embedding Model"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:387
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:388
 msgid "Embedding dimensions"
 msgstr ""
 
@@ -7941,7 +7941,7 @@ msgstr ""
 msgid "External data source field"
 msgstr ""
 
-#: lib/search_index_backend.rb:790
+#: lib/search_index_backend.rb:804
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -10641,7 +10641,7 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:433
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:434
 msgid "Leave empty to use URL (Completions)"
 msgstr ""
 
@@ -10657,7 +10657,7 @@ msgstr ""
 msgid "Legal Information"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:390
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:391
 msgid "Length of the vectors the embedding model produces. Filled in for a model whose size is known."
 msgstr ""
 
@@ -11805,15 +11805,15 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:344
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:345
 msgid "Model"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:402
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:403
 msgid "Model used for image text recognition. Leave empty to use the model of this connection."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:366
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:367
 msgid "Model used for vector embedding in semantic search. Required for the provider that serves semantic search."
 msgstr ""
 
@@ -11976,7 +11976,7 @@ msgstr ""
 msgid "Nagios integration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:533
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:534
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:42
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:328
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
@@ -12382,7 +12382,7 @@ msgid "New user?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:636
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:638
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -12603,7 +12603,7 @@ msgstr ""
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:271
+#: app/controllers/users_controller.rb:273
 msgid "No email!"
 msgstr ""
 
@@ -12770,7 +12770,7 @@ msgstr ""
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:240
 #: app/controllers/tickets_controller.rb:461
-#: app/controllers/users_controller.rb:559
+#: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr ""
 
@@ -12801,7 +12801,7 @@ msgstr ""
 msgid "No tickets in this state."
 msgstr ""
 
-#: app/controllers/users_controller.rb:256
+#: app/controllers/users_controller.rb:258
 msgid "No token!"
 msgstr ""
 
@@ -13107,7 +13107,7 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:395
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:396
 msgid "Number of input tokens the embedding model takes at once. Filled in for a model whose limit is known."
 msgstr ""
 
@@ -13136,7 +13136,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
 msgstr ""
 
@@ -14316,13 +14316,13 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
-#: app/controllers/users_controller.rb:367
+#: app/controllers/users_controller.rb:369
 msgid "Please provide your current password."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:372
+#: app/controllers/users_controller.rb:374
 msgid "Please provide your new password."
 msgstr ""
 
@@ -17732,7 +17732,7 @@ msgid "Subject & References - Additional search for same article subject and sam
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:655
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:657
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -18370,7 +18370,7 @@ msgstr ""
 msgid "The Zammad AI connection is managed by the platform and cannot be created or changed here."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:696
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:698
 msgid "The Zammad AI provider is managed by the platform and cannot be fully edited here."
 msgstr ""
 
@@ -18640,7 +18640,7 @@ msgid "The context window size must be a positive number."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:387
+#: app/controllers/users_controller.rb:389
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr ""
@@ -18741,6 +18741,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:162
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:721
 msgid "The entry could not be created."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:339
+msgid "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
 #: lib/sessions/event.rb:61
@@ -18865,7 +18869,7 @@ msgstr ""
 msgid "The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:466
+#: lib/search_index_backend.rb:475
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
@@ -18940,7 +18944,7 @@ msgstr ""
 msgid "The minutes overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:774
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:776
 msgid "The model list could not be fetched: %s"
 msgstr ""
 
@@ -18956,9 +18960,9 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:556
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:626
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:70
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:828
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
@@ -18972,15 +18976,15 @@ msgstr ""
 msgid "The object could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:624
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:626
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:70
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:337
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:149
-#: app/assets/javascripts/app/controllers/user.coffee:241
+#: app/assets/javascripts/app/controllers/user.coffee:244
 msgid "The object could not be updated."
 msgstr ""
 
@@ -19142,11 +19146,11 @@ msgstr ""
 msgid "The provider could not be updated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:487
 msgid "The provider offered no matching model for this field, so it has to be entered manually."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:486
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:487
 msgid "The provider offered no models to choose from, so it has to be entered manually."
 msgstr ""
 
@@ -19195,7 +19199,7 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:658
+#: app/controllers/users_controller.rb:662
 #: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr ""
@@ -19270,11 +19274,11 @@ msgstr ""
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:500
+#: app/controllers/users_controller.rb:502
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:713
+#: lib/search_index_backend.rb:727
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -19302,7 +19306,7 @@ msgstr ""
 msgid "The required parameter 'params' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:395
+#: app/controllers/users_controller.rb:397
 msgid "The required parameter 'password' is missing."
 msgstr ""
 
@@ -19318,7 +19322,7 @@ msgstr ""
 msgid "The required parameter 'permission' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:651
+#: app/controllers/users_controller.rb:655
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
@@ -19334,7 +19338,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:714
+#: lib/search_index_backend.rb:728
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -19385,6 +19389,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee:76
 msgid "The scheduler run was started."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:328
+msgid "The search index could not be updated yet, the list may be outdated."
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:124
@@ -21123,7 +21131,7 @@ msgstr ""
 msgid "Toggle the overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:339
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21491,7 +21499,7 @@ msgstr ""
 msgid "Two-factor method has been configured successfully."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:529
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:530
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -21533,7 +21541,7 @@ msgstr ""
 msgid "UID Field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:419
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
@@ -21551,15 +21559,15 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:423
 msgid "URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:427
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:430
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:431
 msgid "URL (OCR)"
 msgstr ""
 
@@ -22269,7 +22277,7 @@ msgstr ""
 msgid "User taskbar tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:226
+#: app/assets/javascripts/app/controllers/user.coffee:229
 msgid "User updated successfully."
 msgstr ""
 
@@ -24480,7 +24488,7 @@ msgstr ""
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:904
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:906
 msgid "must be a positive number"
 msgstr ""
 

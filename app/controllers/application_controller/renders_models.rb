@@ -25,6 +25,8 @@ module ApplicationController::RendersModels
     # save object
     generic_object.save!
 
+    model_search_index_update(generic_object)
+
     model_item_render(generic_object, status: :created)
   end
 
@@ -51,7 +53,31 @@ module ApplicationController::RendersModels
 
     end
 
+    model_search_index_update(generic_object)
+
     model_item_render(generic_object)
+  end
+
+  # index right away so the client can re-run its current search after the response
+  def model_search_index_update(object)
+    return if !search_index_inline?
+
+    response.headers['X-Zammad-Search-Index-Updated'] = model_search_index_updated?(object).to_s
+  end
+
+  def model_search_index_updated?(object)
+    return true if !object.is_a?(HasSearchIndexBackend)
+
+    object.search_index_update_inline
+  rescue => e
+    Rails.logger.error "Unable to update search index for #{object.class}.find(#{object.id}) inline: #{e.inspect}"
+    false
+  end
+
+  def search_index_inline?
+    return false if !request.headers['X-Zammad-Search-Index-Inline'].to_s.casecmp?('true')
+
+    current_user.permissions?('admin.*')
   end
 
   def model_destroy_render(object, params)

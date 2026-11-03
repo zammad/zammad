@@ -97,6 +97,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     attrs
   end
 
+  def search_index_inline_supported?
+    false
+  end
+
   scope :vector_index_scope, lambda {
     # Index every answer regardless of its publication state (drafts and archived ones included) —
     # whether a user may receive it as a suggestion is decided by the search, which filters by

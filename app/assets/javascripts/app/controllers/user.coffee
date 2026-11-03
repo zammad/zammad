@@ -179,6 +179,8 @@ class App.ControllerGenericIndexUser extends App.ControllerGenericIndex
         handlers: [removeGroupPermissions, hideOrganizationHelp, App.FormHandlerUserPasswordChangeHint.run]
         screen: 'edit'
         veryLarge: true
+        saveHeaders: @saveHeaders
+        callback: @afterSave
         contentFormParams: ->
           @item.group_ids = undefined if not @item.active # do not submit empty group_ids if user is inactive
           @item
@@ -211,10 +213,11 @@ class App.ControllerGenericIndexUser extends App.ControllerGenericIndex
           ui = @
           @item.save(
             removedFields: @controller.removedFields(@controller.form)
-            done: ->
+            headers:       @saveHeaders?()
+            done: (settings, xhr) ->
               if ui.callback
                 item = App[ ui.genericObject ].fullLocal(@id)
-                ui.callback(item)
+                ui.callback(item, xhr)
 
               if wasInactive and item.active
                 wasInactive = false

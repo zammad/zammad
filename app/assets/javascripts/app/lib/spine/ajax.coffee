@@ -128,6 +128,13 @@ class Base
       failResponseNoTrigger: options.failResponseNoTrigger
     }
 
+    # ---
+    # Zammad
+    # ---
+    if options.headers
+      hash.headers = $.extend({}, @defaults.headers, options.headers)
+    # ---
+
     if jsonObject
       # ---
       # Zammad
@@ -218,7 +225,11 @@ class Singleton extends Base
       if data? and Object.getOwnPropertyNames(data).length and not @record.destroyed
         @record.refresh(data, ajax: false)
       @record.trigger('ajaxSuccess', @record, @model.fromJSON(data), status, xhr, settings)
-      options.done?.call(@record, settings)
+      # ---
+      # Zammad
+      # ---
+      options.done?.call(@record, settings, xhr)
+      # ---
 
   failResponse: (options) =>
     (xhr, statusText, error, settings) =>

@@ -212,4 +212,17 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
       end
     end
   end
+
+  describe '#search_index_update_inline' do
+    let(:ticket) { create(:ticket) }
+
+    before do
+      allow(SearchIndexBackend).to receive_messages(enabled?: true, update_inline: true)
+    end
+
+    it 'leaves documents with attachments to the background job', :aggregate_failures do
+      expect(ticket.search_index_update_inline).to be(false)
+      expect(SearchIndexBackend).not_to have_received(:update_inline)
+    end
+  end
 end

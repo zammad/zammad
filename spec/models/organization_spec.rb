@@ -391,4 +391,26 @@ RSpec.describe Organization, type: :model do
       end
     end
   end
+
+  describe 'search index updates' do
+    let(:organization) { create(:organization) }
+
+    before do
+      create(:agent, organization: organization)
+
+      allow(SearchIndexBackend).to receive_messages(enabled?: true, add: true, update_inline: true)
+    end
+
+    it 'sends members to the search index' do
+      organization.search_index_update_backend
+
+      expect(SearchIndexBackend).to have_received(:add).with('Organization', hash_including('members'))
+    end
+
+    it 'leaves members to the background job when updating inline' do
+      organization.search_index_update_inline
+
+      expect(SearchIndexBackend).to have_received(:update_inline).with('Organization', hash_excluding('members'))
+    end
+  end
 end

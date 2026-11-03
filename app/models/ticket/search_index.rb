@@ -3,6 +3,10 @@
 module Ticket::SearchIndex
   extend ActiveSupport::Concern
 
+  def search_index_inline_supported?
+    false
+  end
+
   def search_index_attribute_lookup(include_references: true)
     attributes = super
     return if !attributes

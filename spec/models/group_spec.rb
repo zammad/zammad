@@ -376,4 +376,25 @@ RSpec.describe Group, type: :model do
       end
     end
   end
+
+  describe '#search_index_update_inline' do
+    let(:group) { create(:group) }
+
+    before do
+      allow(SearchIndexBackend).to receive_messages(enabled?: true, update_inline: true)
+    end
+
+    it 'reports a renamed group without children as indexed' do
+      group.update!(name_last: 'Renamed')
+
+      expect(group.search_index_update_inline).to be(true)
+    end
+
+    it 'reports a renamed group with children as left to the background job' do
+      create(:group, parent: group)
+      group.update!(name_last: 'Renamed')
+
+      expect(group.search_index_update_inline).to be(false)
+    end
+  end
 end

@@ -155,6 +155,68 @@ returns
     true
   end
 
+=begin
+
+update the search index right away, e.g. inside a request, the object is searchable when
+the call returns - models can leave expensive references to the background job via
+search_index_inline_include_references?, opt out via search_index_inline_supported? and
+report records changed by their callbacks via search_index_inline_cascaded?
+
+  ticket = Ticket.find(123)
+  result = ticket.search_index_update_inline
+
+returns
+
+  result = true  # the search index reflects the record
+  result = false # the record, or records changed with it, are left to the background job
+
+=end
+
+  def search_index_update_inline
+    return true if ignore_search_indexing?(:update)
+    return true if !SearchIndexBackend.enabled?
+    return false if !search_index_inline_supported?
+
+    attributes = search_index_attribute_lookup(include_references: search_index_inline_include_references?)
+    return true if !attributes
+
+    SearchIndexBackend.update_inline(self.class.to_s, search_index_inline_attributes(attributes))
+    !search_index_inline_cascaded?
+  end
+
+  def search_index_inline_include_references?
+    true
+  end
+
+  # documents with attachments depend on the ingest pipeline, which a partial update cannot run
+  def search_index_inline_supported?
+    true
+  end
+
+  # records changed by callbacks of this save are left to the background job
+  def search_index_inline_cascaded?
+    false
+  end
+
+  # drops ignored attributes and clears nil references, which a partial update would keep otherwise
+  def search_index_inline_attributes(attributes)
+    attributes.delete_if { |attribute_name, _| self.class.search_index_attribute_ignored?(attribute_name) }
+    return attributes if !search_index_inline_include_references?
+
+    self.attributes.each do |attribute_name, value|
+      next if !value.nil?
+      next if self.class.search_index_attribute_ignored?(attribute_name)
+      next if !search_index_attribute_method(attribute_name)
+
+      attribute_ref_name = self.class.search_index_attribute_ref_name(attribute_name)
+      next if self.class.search_index_attribute_ignored?(attribute_ref_name)
+
+      attributes[attribute_ref_name] = nil
+    end
+
+    attributes
+  end
+
   def ignore_search_indexing?(_action)
     false
   end

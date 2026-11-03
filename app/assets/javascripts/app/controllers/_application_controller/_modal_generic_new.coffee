@@ -53,10 +53,11 @@ class App.ControllerGenericNew extends App.ControllerModal
     ui = @
     object.save(
       removedFields: @controller.removedFields(@controller.form)
-      done: ->
+      headers:       @saveHeaders?()
+      done: (settings, xhr) ->
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)
-          ui.callback(item)
+          ui.callback(item, xhr)
         ui.close()
 
       fail: (settings, details) =>
