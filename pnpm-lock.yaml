@@ -285,7 +285,7 @@ importers:
         specifier: ^15.0.0
         version: 15.0.0(vue@3.5.43(typescript@6.0.3))
       '@wry/equality':
-        specifier: ^0.5.6
+        specifier: ^0.5.7
         version: 0.5.7
       async-mutex:
         specifier: ^0.5.0

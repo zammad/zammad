@@ -153,7 +153,7 @@
     "@vueuse/core": "^15.0.0",
     "@vueuse/router": "^15.0.0",
     "@vueuse/shared": "^15.0.0",
-    "@wry/equality": "^0.5.6",
+    "@wry/equality": "^0.5.7",
     "async-mutex": "^0.5.0",
     "date-fns": "^4.4.0",
     "echarts": "^6.1.0",
