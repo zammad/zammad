@@ -230,8 +230,9 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   def sender_is_signer?
     signers = email_addresses_from_subject_alt_name
 
-    result = signers.include?(mail[:mail_instance].from.first.downcase)
-    Rails.logger.warn { "S/MIME mail #{mail[:message_id]} signed by #{signers.join(', ')} but sender is #{mail[:mail_instance].from.first}" } if !result
+    sender = original_from_email
+    result = signers.include?(sender)
+    Rails.logger.warn { "S/MIME mail #{mail[:message_id]} signed by #{signers.join(', ')} but sender is #{sender}" } if !result
 
     result
   end
