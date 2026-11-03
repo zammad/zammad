@@ -113,8 +113,8 @@ msgid "%s (option)"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:29
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:589
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:558
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:227
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:145
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
@@ -707,15 +707,15 @@ msgstr ""
 msgid "AI Knowledge Base"
 msgstr ""
 
-#: db/seeds/settings.rb:6593
+#: db/seeds/settings.rb:6595
 msgid "AI Knowledge Base Answer Suggestions"
 msgstr ""
 
-#: db/seeds/settings.rb:6607
+#: db/seeds/settings.rb:6609
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
 msgstr ""
 
-#: db/seeds/settings.rb:6579
+#: db/seeds/settings.rb:6581
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr ""
 
@@ -785,7 +785,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee:6
 #: app/models/audit_log/object_type_labels.rb:6
-#: db/seeds/settings.rb:6483
+#: db/seeds/settings.rb:6485
 msgid "AI provider"
 msgstr ""
 
@@ -1249,7 +1249,7 @@ msgstr ""
 msgid "Add Bot"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:258
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:259
 msgid "Add CC"
 msgstr ""
 
@@ -1368,7 +1368,7 @@ msgstr ""
 msgid "Add empty checklist"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:550
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:556
 msgid "Add filter"
 msgstr ""
 
@@ -1709,8 +1709,8 @@ msgid "All groups will be considered for dispatching tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:165
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:105
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:103
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:60
 msgid "All notifications will be deleted. This action cannot be undone."
 msgstr ""
 
@@ -1739,7 +1739,7 @@ msgstr ""
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 
-#: db/seeds/settings.rb:6468
+#: db/seeds/settings.rb:6470
 msgid "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
 
@@ -1787,7 +1787,7 @@ msgstr ""
 msgid "Allow users to create new tags."
 msgstr ""
 
-#: db/seeds/settings.rb:6459
+#: db/seeds/settings.rb:6461
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 
@@ -1867,7 +1867,7 @@ msgstr ""
 msgid "An open-source monitoring tool."
 msgstr ""
 
-#: app/frontend/shared/components/Form/utils.ts:57
+#: app/frontend/shared/components/Form/utils.ts:68
 msgid "An unexpected error has occurred."
 msgstr ""
 
@@ -1911,7 +1911,7 @@ msgid "Another ticket was merged into ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee:11
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:181
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:183
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerContent.vue:61
 msgid "Answer"
 msgstr ""
@@ -2377,7 +2377,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:217
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:329
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:331
 msgid "Attachment"
 msgstr ""
 
@@ -2408,6 +2408,7 @@ msgid "Attachments are stored in the filesystem."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:28
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:42
 msgid "Attendees"
 msgstr ""
 
@@ -2517,7 +2518,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:6166
+#: db/seeds/settings.rb:6168
 msgid "Authenticator App"
 msgstr ""
 
@@ -2566,7 +2567,7 @@ msgstr ""
 msgid "Auto Assignment Selector"
 msgstr ""
 
-#: db/seeds/settings.rb:6445
+#: db/seeds/settings.rb:6447
 msgid "Auto Shutdown"
 msgstr ""
 
@@ -2632,11 +2633,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1331
+#: app/frontend/shared/components/Form/Form.vue:1335
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1340
+#: app/frontend/shared/components/Form/Form.vue:1344
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -3020,7 +3021,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:280
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:282
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr ""
@@ -3182,7 +3183,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue:24
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:209
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:211
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue:77
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:201
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
@@ -3272,7 +3273,7 @@ msgstr ""
 msgid "Cannot process external data source %s. %s"
 msgstr ""
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:140
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:136
 msgid "Cannot set online notifications as seen"
 msgstr ""
 
@@ -3472,7 +3473,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:129
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:114
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:169
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:170
 msgid "Channel"
 msgstr ""
 
@@ -3593,7 +3594,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
 #: db/seeds/permissions.rb:359
-#: db/seeds/settings.rb:6278
+#: db/seeds/settings.rb:6280
 msgid "Checklists"
 msgstr ""
 
@@ -3734,7 +3735,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:6
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:62
 msgid "Clear all"
 msgstr ""
 
@@ -3747,8 +3748,8 @@ msgid "Clear all filters"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:108
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:62
 msgid "Clear all notifications"
 msgstr ""
 
@@ -3772,10 +3773,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:432
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:680
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:402
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:313
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:375
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:280
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:340
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:191
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
@@ -3983,7 +3984,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr ""
 
-#: db/seeds/settings.rb:6085
+#: db/seeds/settings.rb:6086
 msgid "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO header acceptance."
 msgstr ""
 
@@ -4016,7 +4017,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:6158
+#: db/seeds/settings.rb:6160
 msgid "Complete the sign-in with your security key."
 msgstr ""
 
@@ -4361,7 +4362,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:179
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:178
 msgid "Copied!"
 msgstr ""
 
@@ -5039,35 +5040,35 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: db/seeds/settings.rb:6319
+#: db/seeds/settings.rb:6321
 msgid "Dashboard activity stream"
 msgstr ""
 
-#: db/seeds/settings.rb:6333
+#: db/seeds/settings.rb:6335
 msgid "Dashboard activity stream own activities"
 msgstr ""
 
-#: db/seeds/settings.rb:6403
+#: db/seeds/settings.rb:6405
 msgid "Dashboard assigned tickets widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6389
+#: db/seeds/settings.rb:6391
 msgid "Dashboard channel distribution widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6347
+#: db/seeds/settings.rb:6349
 msgid "Dashboard first steps"
 msgstr ""
 
-#: db/seeds/settings.rb:6375
+#: db/seeds/settings.rb:6377
 msgid "Dashboard mood widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6431
+#: db/seeds/settings.rb:6433
 msgid "Dashboard reopening rate widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6417
+#: db/seeds/settings.rb:6419
 msgid "Dashboard tickets in process widget"
 msgstr ""
 
@@ -5075,7 +5076,7 @@ msgstr ""
 msgid "Dashboard views"
 msgstr ""
 
-#: db/seeds/settings.rb:6361
+#: db/seeds/settings.rb:6363
 msgid "Dashboard waiting time widget"
 msgstr ""
 
@@ -5534,7 +5535,7 @@ msgstr ""
 msgid "Defines if application is used as online service."
 msgstr ""
 
-#: db/seeds/settings.rb:6109
+#: db/seeds/settings.rb:6111
 msgid "Defines if calendar weeks are shown in the picker of date/datetime fields to easily select the correct date."
 msgstr ""
 
@@ -5542,7 +5543,7 @@ msgstr ""
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:6201
+#: db/seeds/settings.rb:6203
 msgid "Defines if recovery codes can be used by users in the event they lose access to other two-factor authentication methods."
 msgstr ""
 
@@ -5558,7 +5559,7 @@ msgstr ""
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr ""
 
-#: db/seeds/settings.rb:6486
+#: db/seeds/settings.rb:6488
 msgid "Defines if the AI provider is configured."
 msgstr ""
 
@@ -5582,11 +5583,11 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6707
+#: db/seeds/settings.rb:6709
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
-#: db/seeds/settings.rb:6253
+#: db/seeds/settings.rb:6255
 msgid "Defines if the change of the primary organization of a user will update the 100 most recent tickets for this user as well."
 msgstr ""
 
@@ -5614,11 +5615,11 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr ""
 
-#: db/seeds/settings.rb:6169
+#: db/seeds/settings.rb:6171
 msgid "Defines if the two-factor authentication method authenticator app is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:6137
+#: db/seeds/settings.rb:6139
 msgid "Defines if the two-factor authentication method security keys is enabled or not."
 msgstr ""
 
@@ -5814,7 +5815,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6684
+#: db/seeds/settings.rb:6686
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5858,7 +5859,7 @@ msgstr ""
 msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6568
+#: db/seeds/settings.rb:6570
 msgid "Defines the fixed instructions that guide the AI Writing Assistant on e.g. how to format its output."
 msgstr ""
 
@@ -5894,7 +5895,7 @@ msgstr ""
 msgid "Defines the maximum number of allowed open tabs before auto cleanup removes surplus tabs when creating new tabs."
 msgstr ""
 
-#: db/seeds/settings.rb:6610
+#: db/seeds/settings.rb:6612
 msgid "Defines the minimum relevance score (in percent) a knowledge base answer must reach to be suggested in the ticket sidebar."
 msgstr ""
 
@@ -5910,11 +5911,11 @@ msgstr ""
 msgid "Defines the port of the WebSocket server."
 msgstr ""
 
-#: db/seeds/settings.rb:6747
+#: db/seeds/settings.rb:6749
 msgid "Defines the private key used to sign web push notifications."
 msgstr ""
 
-#: db/seeds/settings.rb:6760
+#: db/seeds/settings.rb:6762
 msgid "Defines the public key browsers use to subscribe to web push notifications."
 msgstr ""
 
@@ -6019,7 +6020,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6675
+#: db/seeds/settings.rb:6677
 msgid "Defines which knowledge base categories are excluded from the vector database. Sub-categories of an excluded category are excluded as well. Note that the vector database has to be rebuilt after removing a category from this list, so that its answers get indexed."
 msgstr ""
 
@@ -6027,7 +6028,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6477
+#: db/seeds/settings.rb:6479
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
@@ -6121,8 +6122,8 @@ msgid "Delete User"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:109
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:67
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:63
 msgid "Delete all"
 msgstr ""
 
@@ -6293,6 +6294,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/form.jst.eco:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:8
 #: app/assets/javascripts/app/views/translation/index.jst.eco:9
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:53
 msgid "Description"
 msgstr ""
 
@@ -6318,15 +6320,15 @@ msgstr ""
 msgid "Desktop"
 msgstr ""
 
-#: db/seeds/settings.rb:6456
+#: db/seeds/settings.rb:6458
 msgid "Desktop BETA UI Switch"
 msgstr ""
 
-#: db/seeds/settings.rb:6465
+#: db/seeds/settings.rb:6467
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr ""
 
-#: db/seeds/settings.rb:6474
+#: db/seeds/settings.rb:6476
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
@@ -6567,7 +6569,7 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
-#: db/seeds/settings.rb:6263
+#: db/seeds/settings.rb:6265
 msgid "Do not update any tickets."
 msgstr ""
 
@@ -6655,7 +6657,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:89
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:69
 msgid "Download"
 msgstr ""
 
@@ -7225,7 +7227,7 @@ msgstr ""
 msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile."
 msgstr ""
 
-#: db/seeds/settings.rb:6198
+#: db/seeds/settings.rb:6200
 msgid "Enable Recovery Codes"
 msgstr ""
 
@@ -7245,7 +7247,7 @@ msgstr ""
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 
-#: db/seeds/settings.rb:6281
+#: db/seeds/settings.rb:6283
 msgid "Enable checklists."
 msgstr ""
 
@@ -7265,11 +7267,11 @@ msgstr ""
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
 msgstr ""
 
-#: db/seeds/settings.rb:6582
+#: db/seeds/settings.rb:6584
 msgid "Enable or disable AI generation of knowledge base answers from ticket content."
 msgstr ""
 
-#: db/seeds/settings.rb:6448
+#: db/seeds/settings.rb:6450
 msgid "Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy."
 msgstr ""
 
@@ -7277,7 +7279,7 @@ msgstr ""
 msgid "Enable or disable the automatic translation of ticket articles when an agent opens a ticket."
 msgstr ""
 
-#: db/seeds/settings.rb:6596
+#: db/seeds/settings.rb:6598
 msgid "Enable or disable the display of AI suggested knowledge base answers in the ticket sidebar."
 msgstr ""
 
@@ -7289,7 +7291,7 @@ msgstr ""
 msgid "Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session."
 msgstr ""
 
-#: db/seeds/settings.rb:6503
+#: db/seeds/settings.rb:6505
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
@@ -7297,19 +7299,19 @@ msgstr ""
 msgid "Enable or disable the translation of ticket articles."
 msgstr ""
 
-#: db/seeds/settings.rb:6652
+#: db/seeds/settings.rb:6654
 msgid "Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend."
 msgstr ""
 
-#: db/seeds/settings.rb:6554
+#: db/seeds/settings.rb:6556
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
-#: db/seeds/settings.rb:6322
+#: db/seeds/settings.rb:6324
 msgid "Enable the activity stream on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6406
+#: db/seeds/settings.rb:6408
 msgid "Enable the assigned tickets widget on the dashboard."
 msgstr ""
 
@@ -7317,31 +7319,31 @@ msgstr ""
 msgid "Enable the banner for the BETA switch"
 msgstr ""
 
-#: db/seeds/settings.rb:6392
+#: db/seeds/settings.rb:6394
 msgid "Enable the channel distribution widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6308
+#: db/seeds/settings.rb:6310
 msgid "Enable the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6350
+#: db/seeds/settings.rb:6352
 msgid "Enable the first steps tab on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6378
+#: db/seeds/settings.rb:6380
 msgid "Enable the mood widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6434
+#: db/seeds/settings.rb:6436
 msgid "Enable the reopening rate widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6420
+#: db/seeds/settings.rb:6422
 msgid "Enable the tickets in process widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6364
+#: db/seeds/settings.rb:6366
 msgid "Enable the waiting time widget on the dashboard."
 msgstr ""
 
@@ -7349,7 +7351,7 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr ""
 
-#: db/seeds/settings.rb:6536
+#: db/seeds/settings.rb:6538
 msgid "Enable ticket summary for following matching tickets."
 msgstr ""
 
@@ -7487,6 +7489,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:32
 msgid "End date"
 msgstr ""
 
@@ -7512,11 +7515,11 @@ msgstr ""
 msgid "Endpoint Settings"
 msgstr ""
 
-#: db/seeds/settings.rb:6225
+#: db/seeds/settings.rb:6227
 msgid "Enforce the setup of the two-factor authentication"
 msgstr ""
 
-#: db/seeds/settings.rb:6232
+#: db/seeds/settings.rb:6234
 msgid "Enforced for user roles"
 msgstr ""
 
@@ -7776,22 +7779,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:230
 msgid "Escape pressed. No item selected."
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:53
-msgid "Event ending"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:44
-msgid "Event location"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:48
-msgid "Event starting"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:40
-msgid "Event summary"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:283
@@ -8222,7 +8209,7 @@ msgstr ""
 msgid "First Steps"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:117
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:116
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:89
 msgid "First article"
 msgstr ""
@@ -8638,7 +8625,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:6190
+#: db/seeds/settings.rb:6192
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
 
@@ -9325,11 +9312,11 @@ msgid "How to use it"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:213
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:222
 msgid "ID"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:9
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:6
 msgid "ID:"
 msgstr ""
 
@@ -9932,7 +9919,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:22
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:213
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:214
 msgid "Internal"
 msgstr ""
 
@@ -9948,7 +9935,7 @@ msgstr ""
 msgid "Internal error"
 msgstr ""
 
-#: db/seeds/settings.rb:6666
+#: db/seeds/settings.rb:6668
 msgid "Internal record of the embedding model and vector size the knowledge base index was last built with. Used to detect a stale index by comparison, without probing Elasticsearch."
 msgstr ""
 
@@ -10443,7 +10430,7 @@ msgstr ""
 msgid "Knowledge base navigation"
 msgstr ""
 
-#: db/seeds/settings.rb:6635
+#: db/seeds/settings.rb:6637
 msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
@@ -10637,7 +10624,7 @@ msgstr ""
 msgid "Lastname, Firstname"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:111
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:110
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:83
 msgid "Latest article"
 msgstr ""
@@ -10790,7 +10777,7 @@ msgstr ""
 msgid "Link already exists"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:213
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:215
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:321
 msgid "Link answer"
 msgstr ""
@@ -10809,7 +10796,7 @@ msgid "Link knowledge base answer"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:154
 msgid "Link objects"
 msgstr ""
 
@@ -10879,7 +10866,7 @@ msgstr ""
 msgid "List of issue labels"
 msgstr ""
 
-#: db/seeds/settings.rb:6638
+#: db/seeds/settings.rb:6640
 msgid "List of self-hosted video servers. This list is used for content security policy."
 msgstr ""
 
@@ -10967,6 +10954,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:6
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:13
 #: app/assets/javascripts/app/views/session.jst.eco:10
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:23
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:100
 msgid "Location"
 msgstr ""
@@ -11435,7 +11423,7 @@ msgid "March"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:129
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:125
 msgid "Mark all as read"
 msgstr ""
 
@@ -12620,7 +12608,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:128
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:116
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:112
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:247
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:138
 msgid "No entries"
@@ -12628,6 +12616,10 @@ msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb:60
 msgid "No entries were found in the selected folder(s)."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:82
+msgid "No events can be shown because the calendar file does not contain any."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:28
@@ -13295,7 +13287,7 @@ msgid "Online Service"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:181
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:162
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:158
 msgid "Online notifications could not be cleared."
 msgstr ""
 
@@ -13666,6 +13658,7 @@ msgid "Organizations with \"%s\""
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:22
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:38
 msgid "Organizer"
 msgstr ""
 
@@ -13892,7 +13885,7 @@ msgstr ""
 msgid "Packages"
 msgstr ""
 
-#: db/seeds/settings.rb:6731
+#: db/seeds/settings.rb:6733
 msgid "Packages Token"
 msgstr ""
 
@@ -14487,7 +14480,7 @@ msgstr ""
 msgid "Preview Width"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:87
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:67
 msgid "Preview calendar"
 msgstr ""
 
@@ -14722,7 +14715,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:27
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:214
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:215
 msgid "Public"
 msgstr ""
 
@@ -14975,7 +14968,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6693
+#: db/seeds/settings.rb:6695
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -15181,7 +15174,7 @@ msgstr ""
 msgid "Remove file: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:522
 msgid "Remove filter"
 msgstr ""
 
@@ -15205,7 +15198,7 @@ msgstr ""
 msgid "Remove item"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:199
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:201
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:163
 msgid "Remove link"
 msgstr ""
@@ -15329,7 +15322,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:74
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:394
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:396
 msgid "Reply"
 msgstr ""
 
@@ -15422,7 +15415,7 @@ msgstr ""
 msgid "Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim to match the incoming email address, before trusting that address for account auto-linking. Both claims must first be configured as optional claims on the Azure app registration. Until that is done, enabling this blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
 
-#: db/seeds/settings.rb:6228
+#: db/seeds/settings.rb:6230
 msgid "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
 
@@ -15462,7 +15455,7 @@ msgstr ""
 msgid "Reset overview order"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchInput/QuickSearchInput.vue:68
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchInput/QuickSearchInput.vue:73
 msgid "Reset search"
 msgstr ""
 
@@ -15590,7 +15583,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6704
+#: db/seeds/settings.rb:6706
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -16253,7 +16246,8 @@ msgstr ""
 msgid "Search the knowledge base"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:7
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:224
 msgid "Search tickets linked to this i-doit object"
 msgstr ""
 
@@ -16322,7 +16316,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:152
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:303
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:305
 #: db/seeds/permissions.rb:215
 msgid "Security"
 msgstr ""
@@ -16342,7 +16336,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:6134
+#: db/seeds/settings.rb:6136
 msgid "Security Keys"
 msgstr ""
 
@@ -16458,7 +16452,7 @@ msgstr ""
 msgid "Select all entries"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:546
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:552
 msgid "Select attribute"
 msgstr ""
 
@@ -16692,7 +16686,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6694
+#: db/seeds/settings.rb:6696
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -17016,7 +17010,7 @@ msgstr ""
 msgid "Show additional notes for ticket creation depending on the selected type."
 msgstr ""
 
-#: db/seeds/settings.rb:6336
+#: db/seeds/settings.rb:6338
 msgid "Show agents only their own activities in the activity stream."
 msgstr ""
 
@@ -17030,7 +17024,7 @@ msgstr ""
 msgid "Show authenticator app secret"
 msgstr ""
 
-#: db/seeds/settings.rb:6106
+#: db/seeds/settings.rb:6108
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
 
@@ -17484,6 +17478,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:28
 msgid "Start date"
 msgstr ""
 
@@ -17622,7 +17617,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:215
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:238
 msgid "Status"
 msgstr ""
 
@@ -17705,7 +17700,7 @@ msgstr ""
 msgid "Stores the credentials (e.g. site key and secret) of the selected CAPTCHA provider."
 msgstr ""
 
-#: db/seeds/settings.rb:6517
+#: db/seeds/settings.rb:6519
 msgid "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
 
@@ -17728,7 +17723,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:292
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:294
 msgid "Subject"
 msgstr ""
 
@@ -18984,12 +18979,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:337
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:156
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:149
 #: app/assets/javascripts/app/controllers/user.coffee:241
 msgid "The object could not be updated."
 msgstr ""
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:130
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:126
 msgid "The online notification could not be marked as seen."
 msgstr ""
 
@@ -19217,11 +19212,11 @@ msgstr ""
 msgid "The required event field 'execution' is unknown or missing."
 msgstr ""
 
-#: lib/idoit.rb:21
+#: lib/idoit.rb:25
 msgid "The required field 'api_token' is missing from the config."
 msgstr ""
 
-#: lib/idoit.rb:22
+#: lib/idoit.rb:26
 msgid "The required field 'endpoint' is missing from the config."
 msgstr ""
 
@@ -20317,7 +20312,7 @@ msgstr ""
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
 msgstr ""
 
-#: db/seeds/settings.rb:6734
+#: db/seeds/settings.rb:6736
 msgid "This setting defines the token to access the support.zammad.com instance for package remote commands."
 msgstr ""
 
@@ -20519,7 +20514,7 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
-#: db/seeds/settings.rb:6250
+#: db/seeds/settings.rb:6252
 msgid "Ticket Organization Reassignment"
 msgstr ""
 
@@ -20584,15 +20579,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
 #: db/seeds/permissions.rb:245
-#: db/seeds/settings.rb:6500
+#: db/seeds/settings.rb:6502
 msgid "Ticket Summary"
 msgstr ""
 
-#: db/seeds/settings.rb:6514
+#: db/seeds/settings.rb:6516
 msgid "Ticket Summary Config"
 msgstr ""
 
-#: db/seeds/settings.rb:6533
+#: db/seeds/settings.rb:6535
 msgid "Ticket Summary Selector"
 msgstr ""
 
@@ -20761,7 +20756,7 @@ msgstr ""
 msgid "Ticket tags updated successfully."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:145
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
 msgid "Ticket title"
 msgstr ""
 
@@ -21022,7 +21017,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:241
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:242
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
 msgstr ""
@@ -21335,7 +21330,7 @@ msgstr ""
 msgid "Triggers activated by actions are executed whenever a ticket is created or updated, while triggers activated by time events are executed when certain times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: db/seeds/settings.rb:6082
+#: db/seeds/settings.rb:6083
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -21517,7 +21512,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:216
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr ""
@@ -21643,7 +21638,7 @@ msgstr ""
 msgid "Unlink knowledge base answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:218
 msgid "Unlink object"
 msgstr ""
 
@@ -21680,13 +21675,13 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:212
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:210
 msgid "Unseen notifications count"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:599
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:267
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:331
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:296
 msgid "Unselect option"
 msgstr ""
 
@@ -21827,7 +21822,7 @@ msgstr ""
 msgid "Update successful."
 msgstr ""
 
-#: db/seeds/settings.rb:6262
+#: db/seeds/settings.rb:6264
 msgid "Update the most recent tickets."
 msgstr ""
 
@@ -22395,19 +22390,19 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: db/seeds/settings.rb:6649
+#: db/seeds/settings.rb:6651
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6663
+#: db/seeds/settings.rb:6665
 msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:6681
+#: db/seeds/settings.rb:6683
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
-#: db/seeds/settings.rb:6672
+#: db/seeds/settings.rb:6674
 msgid "Vector DB knowledge base excluded categories"
 msgstr ""
 
@@ -22506,7 +22501,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:186
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:188
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:596
 msgid "View answer"
 msgstr ""
@@ -22543,7 +22538,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:188
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:48
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:200
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr ""
@@ -22627,11 +22622,11 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: db/seeds/settings.rb:6744
+#: db/seeds/settings.rb:6746
 msgid "Web Push VAPID Private Key"
 msgstr ""
 
-#: db/seeds/settings.rb:6757
+#: db/seeds/settings.rb:6759
 msgid "Web Push VAPID Public Key"
 msgstr ""
 
@@ -22886,11 +22881,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
 #: db/seeds/permissions.rb:251
-#: db/seeds/settings.rb:6551
+#: db/seeds/settings.rb:6553
 msgid "Writing Assistant"
 msgstr ""
 
-#: db/seeds/settings.rb:6565
+#: db/seeds/settings.rb:6567
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 

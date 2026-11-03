@@ -1,22 +1,22 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useTemplateRef, watch } from 'vue'
 
 import { getAttachmentLinks } from '#shared/composables/getAttachmentLinks.ts'
+import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import getUuid from '#shared/utils/getUuid.ts'
 import openExternalLink from '#shared/utils/openExternalLink.ts'
 
+import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
-import type { TableSimpleHeader } from '#desktop/components/CommonTable/types'
 import { useCalendarIcsFileEventsQuery } from '#desktop/entities/calendar/ics-file/graphql/queries/events.api.ts'
 
-import CommonTableSkeleton from '../CommonTable/Skeleton/CommonTableSkeleton.vue'
+import CommonCalendarPreviewFlyoutEvent from './CommonCalendarPreviewFlyoutEvent.vue'
+import CommonCalendarPreviewFlyoutSkeleton from './CommonCalendarPreviewFlyoutSkeleton.vue'
 
 interface Props {
   fileId: string
@@ -34,37 +34,17 @@ const calendarEventsQuery = new QueryHandler(
 const calendarEventsQueryResult = calendarEventsQuery.result()
 const calendarEventsQueryLoading = calendarEventsQuery.loadingWithoutCachedResult()
 
-const tableHeaders: TableSimpleHeader[] = [
-  {
-    key: 'summary',
-    label: __('Event summary'),
-  },
-  {
-    key: 'location',
-    label: __('Event location'),
-  },
-  {
-    key: 'start',
-    label: __('Event starting'),
-    type: 'timestamp_absolute',
-  },
-  {
-    key: 'end',
-    label: __('Event ending'),
-    type: 'timestamp_absolute',
-  },
-]
+const events = computed(() => calendarEventsQueryResult.value?.calendarIcsFileEvents ?? [])
 
-const tableItems = computed(() => {
-  if (!calendarEventsQueryResult.value?.calendarIcsFileEvents) return []
+const eventsElement = useTemplateRef('events-list')
 
-  return calendarEventsQueryResult.value?.calendarIcsFileEvents.map((event) => ({
-    id: getUuid(),
-    summary: event.title,
-    location: event.location,
-    start: event.startDate,
-    end: event.endDate,
-  }))
+const { setupLinksHandlers } = useHtmlLinks('/desktop')
+
+// The linkified fields come in via `v-html`, so their anchors get the click handlers that open
+//   them in a new tab attached here. Watching the element, not the events: the loader mounts the
+//   list a frame after the result arrives, so the events alone would fire too early.
+watch(eventsElement, (element) => {
+  if (element) setupLinksHandlers(element)
 })
 
 const downloadCalendar = () => {
@@ -93,17 +73,25 @@ const downloadCalendar = () => {
     no-close-on-action
     @action="downloadCalendar"
   >
-    <CommonLoader :loading="calendarEventsQueryLoading">
-      <template #skeleton>
-        <CommonTableSkeleton :rows="3" :columns="tableHeaders.length" />
-      </template>
+    <div class="@container">
+      <CommonLoader :loading="calendarEventsQueryLoading">
+        <template #skeleton>
+          <CommonCalendarPreviewFlyoutSkeleton />
+        </template>
 
-      <CommonSimpleTable
-        :caption="__('Preview calendar')"
-        class="mb-4 w-full"
-        :headers="tableHeaders"
-        :items="tableItems"
-      />
-    </CommonLoader>
+        <!-- A file that cannot be parsed has no result, it only gets the error notification. -->
+        <CommonAlert v-if="calendarEventsQueryResult && !events.length" variant="warning">
+          {{ $t('No events can be shown because the calendar file does not contain any.') }}
+        </CommonAlert>
+
+        <div v-else ref="events-list" class="mb-4 flex flex-col gap-3">
+          <template v-for="(event, index) in events" :key="index">
+            <CommonDivider v-if="index > 0" />
+
+            <CommonCalendarPreviewFlyoutEvent :event="event" />
+          </template>
+        </div>
+      </CommonLoader>
+    </div>
   </CommonFlyout>
 </template>
