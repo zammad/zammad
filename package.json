@@ -159,7 +159,7 @@
     "echarts": "^6.1.0",
     "graphql": "^16.14.2",
     "graphql-ruby-client": "^1.16.0",
-    "graphql-tag": "^2.12.6",
+    "graphql-tag": "^2.12.7",
     "linkify-string": "^4.4.0",
     "linkifyjs": "^4.4.0",
     "lodash-es": "^4.18.1",

@@ -303,7 +303,7 @@ importers:
         specifier: ^1.16.0
         version: 1.16.0(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2))(graphql@16.14.2)
       graphql-tag:
-        specifier: ^2.12.6
+        specifier: ^2.12.7
         version: 2.12.7(graphql@16.14.2)
       linkify-string:
         specifier: ^4.4.0
