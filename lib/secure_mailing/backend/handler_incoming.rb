@@ -3,6 +3,18 @@
 class SecureMailing::Backend::HandlerIncoming < SecureMailing::Backend::Handler
   attr_accessor :mail, :content_type
 
+  # When re-parsing decrypted or embedded content, these keys keep the value of the original
+  # mail instead of being overwritten by the parsed content: the sender, recipients and threading
+  # identity, the X-Zammad-* headers (matched separately, incl. their `raw-` twins) and the values
+  # Channel::EmailParser derives from them. The subject and the message content are still taken
+  # from the parsed content. Extend the list when further such keys are added.
+  ORIGINAL_MAIL_KEYS = %w[
+    from reply-to return-path sender
+    to cc bcc delivered-to x-original-to envelope-to
+    from_email from_local from_domain from_display_name x-any-recipient
+    message-id message_id references in-reply-to
+  ].freeze
+
   def initialize(mail)
     super()
 
@@ -76,9 +88,7 @@ class SecureMailing::Backend::HandlerIncoming < SecureMailing::Backend::Handler
     end
 
     Channel::EmailParser.new.parse("#{mail[:mail_instance].header}#{decrypted_body}", allow_missing_attribute_exceptions: false).each do |key, value|
-      # Keep the X-Zammad headers (and their raw- twins) of the original mail instead of taking
-      # them from the re-parsed content.
-      next if key.to_s.match?(%r{^(raw-)?x-zammad}i)
+      next if keep_from_original_mail?(key)
 
       mail[key] = value
     end
@@ -89,6 +99,19 @@ class SecureMailing::Backend::HandlerIncoming < SecureMailing::Backend::Handler
   def update_content_type
     # By parsing the decrypted body, the content type might have changed.
     @content_type = mail[:mail_instance].content_type
+  end
+
+  # See ORIGINAL_MAIL_KEYS: whether a key re-parsed from decrypted / embedded content keeps the
+  # value of the original mail instead of being overwritten by the parsed content.
+  def keep_from_original_mail?(key)
+    key = key.to_s.downcase
+    return true if key.match?(%r{^(raw-)?x-zammad})
+
+    ORIGINAL_MAIL_KEYS.include?(key.delete_prefix('raw-'))
+  end
+
+  def original_from_email
+    mail[:from_email].to_s.downcase
   end
 
   def log
