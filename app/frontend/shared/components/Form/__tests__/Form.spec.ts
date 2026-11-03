@@ -377,6 +377,89 @@ describe('Form.vue', () => {
 })
 
 describe('Form.vue - Edge Cases', () => {
+  it.each(['select', 'recipient'])(
+    'does not report an initial empty %s field as changed when it becomes visible',
+    async (type) => {
+      const wrapper = await renderForm({
+        props: {
+          id: 'late-array-form',
+          schema: [
+            { type: 'text', name: 'title', label: 'Title' },
+            {
+              type,
+              name: 'selection',
+              label: 'Selection',
+              if: '$showSelection',
+              props: {
+                multiple: true,
+                options: [{ value: 'agent@example.com', label: 'Agent' }],
+              },
+            },
+          ],
+          schemaData: { showSelection: false },
+          initialValues: { selection: [] },
+        },
+      })
+
+      expect(wrapper.queryByLabelText('Selection')).not.toBeInTheDocument()
+      expect(wrapper.emitted().changed).toBeUndefined()
+
+      await wrapper.rerender({ schemaData: { showSelection: true } })
+      expect(await wrapper.findByLabelText('Selection')).toBeInTheDocument()
+
+      const selection = getNode('late-array-form')!.at('selection')!
+      await selection.settled
+
+      expect(selection.value).toEqual([])
+      expect(wrapper.emitted().changed).toBeUndefined()
+
+      await selection.input(['agent@example.com'])
+      await selection.input([])
+
+      expect(wrapper.emitted().changed).toEqual([
+        ['selection', ['agent@example.com'], [], false],
+        ['selection', [], ['agent@example.com'], false],
+      ])
+    },
+  )
+
+  it('does not request a form update when an empty multi-select becomes visible', async () => {
+    const formUpdater = mockGraphQLApi(FormUpdaterDocument).willResolve({
+      formUpdater: { fields: {}, flags: {} },
+    })
+
+    const wrapper = await renderForm({
+      props: {
+        id: 'late-array-updater-form',
+        formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+        schema: [
+          { type: 'text', name: 'title', label: 'Title' },
+          {
+            type: 'select',
+            name: 'selection',
+            label: 'Selection',
+            if: '$showSelection',
+            props: {
+              multiple: true,
+              options: [{ value: 'agent@example.com', label: 'Agent' }],
+            },
+          },
+        ],
+        schemaData: { showSelection: false },
+        initialValues: { selection: [] },
+      },
+    })
+
+    expect(formUpdater.calls.resolve).toBe(1)
+
+    await wrapper.rerender({ schemaData: { showSelection: true } })
+    expect(await wrapper.findByLabelText('Selection')).toBeInTheDocument()
+    await getNode('late-array-updater-form')!.settled
+    await waitForNextTick(true)
+
+    expect(formUpdater.calls.resolve).toBe(1)
+  })
+
   it('can use initial values', async () => {
     const wrapper = await renderForm({
       props: {

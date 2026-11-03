@@ -1058,11 +1058,13 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
       return
     }
 
-    if (
-      !formKitInitialNodesSettled.value ||
-      formResetRunning.value ||
-      (!currentCreatedFormFields.has(node.name) && !newValue) // It's the initial value commit for the field, when it's not "fully" created yet.
-    ) {
+    // The initial value commit of a field which is not "fully" created yet - a
+    //  multi-value field starts with an empty list instead of an empty value.
+    const initialEmptyCommit =
+      !currentCreatedFormFields.has(node.name) &&
+      (!newValue || (Array.isArray(newValue) && newValue.length === 0))
+
+    if (!formKitInitialNodesSettled.value || formResetRunning.value || initialEmptyCommit) {
       updaterChangedFields.delete(node.name)
       previousValues.set(node, cloneDeep(newValue))
       return
