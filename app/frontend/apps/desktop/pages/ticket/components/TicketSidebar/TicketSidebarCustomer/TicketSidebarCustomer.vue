@@ -99,7 +99,7 @@ if (customerId.value) emit('show')
       :icon="sidebarPlugin.icon"
       :actions="noCustomerActions"
     >
-      <CommonLabel size="small">
+      <CommonLabel size="small" class="text-muted!">
         {{ $t('No customer assigned yet.') }}
       </CommonLabel>
     </TicketSidebarContent>

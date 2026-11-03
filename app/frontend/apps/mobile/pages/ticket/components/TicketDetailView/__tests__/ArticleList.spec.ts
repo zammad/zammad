@@ -114,8 +114,12 @@ it('renders the warning of an unprocessable email in place of the flagged articl
   const alert = view.getByRole('alert')
 
   expect(alert).toHaveAttribute('id', 'article-1')
-  expect(alert).toHaveClasses(['border-yellow', 'bg-yellow-highlight', 'text-yellow'])
-  expect(view.getByRole('button', { name: 'Download raw email' })).toHaveClass('bg-yellow')
+  expect(alert.firstElementChild).toHaveClasses([
+    'border-yellow',
+    'bg-yellow-highlight',
+    'text-yellow',
+  ])
+  expect(view.getByRole('button', { name: 'Raw email' })).toHaveClass('bg-yellow')
   expect(alert).toHaveTextContent(
     'This ticket was created because the email could not be processed. Download the raw email to see what was received, and the processing log to see why processing failed.',
   )
@@ -126,7 +130,7 @@ it('renders the warning of an unprocessable email in place of the flagged articl
     'The original email and the processing log are attached.',
   )
 
-  await view.events.click(view.getByRole('button', { name: 'Download raw email' }))
+  await view.events.click(view.getByRole('button', { name: 'Raw email' }))
 
   expect(openExternalLinkMock).toHaveBeenLastCalledWith(
     '/api/attachments/41?disposition=attachment',
@@ -134,7 +138,7 @@ it('renders the warning of an unprocessable email in place of the flagged articl
     'unprocessable_email.eml',
   )
 
-  await view.events.click(view.getByRole('button', { name: 'Download processing log' }))
+  await view.events.click(view.getByRole('button', { name: 'Processing log' }))
 
   expect(openExternalLinkMock).toHaveBeenLastCalledWith(
     '/api/attachments/42?disposition=attachment',

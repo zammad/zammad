@@ -38,6 +38,8 @@ const customer = computed(() => {
   if (!customer || isSystemCustomer.value) return ''
   return customer.fullname
 })
+
+const hasCustomerLine = computed(() => Boolean(customer.value || props.ticket.organization))
 </script>
 
 <template>
@@ -61,11 +63,12 @@ const customer = computed(() => {
             :entity="ticket.organization"
           />
         </div>
+        <!-- Without the customer line, the title is centered on the avatar instead. -->
         <div
           class="overflow-hidden ltr:mr-1 rtl:ml-1"
-          :class="{ 'ltr:-ml-1 rtl:-mr-1': ticket.organization }"
+          :class="{ 'ltr:-ml-1 rtl:-mr-1': ticket.organization, 'pt-1.75': !hasCustomerLine }"
         >
-          <div class="flex text-sm/4 text-gray-100">
+          <div v-if="hasCustomerLine" class="flex text-sm/4 text-gray-100">
             <div
               class="truncate"
               :class="{

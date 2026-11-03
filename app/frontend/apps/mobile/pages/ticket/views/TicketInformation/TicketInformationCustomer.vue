@@ -57,7 +57,7 @@ const ticketsData = computed(() => getTicketData(user.value))
 </script>
 
 <template>
-  <p v-if="isSystemCustomer" class="py-3 text-center text-base">
+  <p v-if="isSystemCustomer" class="py-3 text-base text-gray">
     {{ $t('No customer assigned yet.') }}
   </p>
   <template v-else>

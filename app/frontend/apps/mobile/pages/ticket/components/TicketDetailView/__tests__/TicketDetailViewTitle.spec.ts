@@ -123,6 +123,11 @@ describe('TicketDetailViewTitle.vue', () => {
 
     expect(avatar).not.toHaveClass('opacity-60')
     expect(view.getByTestId('title-content')).not.toHaveTextContent('System')
+
+    const heading = view.getByRole('heading', { level: 1 })
+
+    expect(heading.parentElement?.firstElementChild).toBe(heading)
+    expect(heading.parentElement).toHaveClass('pt-1.75')
   })
 
   it('shows the organization of the system customer without a separator', () => {
@@ -147,5 +152,10 @@ describe('TicketDetailViewTitle.vue', () => {
 
     expect(title).toHaveTextContent(currentTicket.organization!.name!)
     expect(title).not.toHaveTextContent('·')
+
+    const heading = view.getByRole('heading', { level: 1 })
+
+    expect(heading.parentElement?.firstElementChild).not.toBe(heading)
+    expect(heading.parentElement).not.toHaveClass('pt-1.75')
   })
 })

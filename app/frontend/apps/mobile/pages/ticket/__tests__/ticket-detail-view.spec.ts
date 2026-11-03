@@ -1330,12 +1330,16 @@ describe('unprocessable email', () => {
     const articlesList = view.getByRole('group', { name: 'Articles' })
     const alert = getByRole(articlesList, 'alert')
 
-    expect(alert).toHaveClasses(['border-yellow', 'bg-yellow-highlight', 'text-yellow'])
+    expect(alert.firstElementChild).toHaveClasses([
+      'border-yellow',
+      'bg-yellow-highlight',
+      'text-yellow',
+    ])
     expect(alert).toHaveTextContent(
       'This ticket was created because the email could not be processed.',
     )
-    expect(getByRole(alert, 'button', { name: 'Download raw email' })).toBeInTheDocument()
-    expect(getByRole(alert, 'button', { name: 'Download processing log' })).toBeInTheDocument()
+    expect(getByRole(alert, 'button', { name: 'Raw email' })).toBeInTheDocument()
+    expect(getByRole(alert, 'button', { name: 'Processing log' })).toBeInTheDocument()
 
     expect(articlesList.firstElementChild).toBe(alert)
     expect(view.getByTestId('ticket-title')).not.toContainElement(alert)
@@ -1351,6 +1355,6 @@ describe('unprocessable email', () => {
 
     await waitUntilTicketLoaded()
 
-    expect(view.queryByText('Download raw email')).not.toBeInTheDocument()
+    expect(view.queryByText('Raw email')).not.toBeInTheDocument()
   })
 })

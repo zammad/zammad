@@ -6728,14 +6728,12 @@ msgid "Download original email"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:55
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:58
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:60
 msgid "Download processing log"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:46
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:50
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:103
 msgid "Download raw email"
 msgstr ""
@@ -14599,6 +14597,10 @@ msgstr ""
 msgid "Process ticket escalations."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:69
+msgid "Processing log"
+msgstr ""
+
 #: db/seeds/settings.rb:94
 msgid "Product Name"
 msgstr ""
@@ -14842,6 +14844,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:107
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:46
 msgid "Raw"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:60
+msgid "Raw email"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
@@ -20351,8 +20357,8 @@ msgid "This ticket already has a checklist."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:36
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:46
 msgid "This ticket was created because the email could not be processed. Download the raw email to see what was received, and the processing log to see why processing failed."
 msgstr ""
 

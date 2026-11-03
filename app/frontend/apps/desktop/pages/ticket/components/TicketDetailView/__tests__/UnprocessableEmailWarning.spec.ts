@@ -47,8 +47,12 @@ describe('UnprocessableEmailWarning', () => {
   it('shows the warning for a flagged first article', () => {
     const view = renderWarning(flaggedArticle as TicketArticle)
 
-    expect(view.getByRole('alert')).toHaveTextContent(warningText)
-    expect(view.getByRole('button', { name: 'Download raw email' })).toBeInTheDocument()
+    const alert = view.getByRole('alert')
+    const rawEmailButton = view.getByRole('button', { name: 'Download raw email' })
+
+    expect(alert).toHaveTextContent(warningText)
+    expect(rawEmailButton).toBeInTheDocument()
+    expect(alert).not.toContainElement(rawEmailButton)
     expect(view.getByRole('button', { name: 'Download processing log' })).toBeInTheDocument()
   })
 

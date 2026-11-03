@@ -7369,6 +7369,19 @@ a.list-group-item.active > .badge,
 
   .alert {
     margin-bottom: 0;
+    padding: 10px 20px;
+    border: 1px solid var(--border-alt);
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .alert-row {
+    margin: 0;
+  }
+
+  .alert-row + .alert-row {
+    margin-top: 10px;
   }
 
   &-actions {

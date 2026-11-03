@@ -251,13 +251,19 @@ describe('Ticket detail view', () => {
       expect(warning).toHaveTextContent(
         'This ticket was created because the email could not be processed.',
       )
-      expect(within(warning).getByRole('button', { name: 'Download raw email' })).toBeVisible()
-      expect(within(warning).getByRole('button', { name: 'Download processing log' })).toBeVisible()
 
       const [flaggedRow] = within(feed).getAllByRole('article')
 
       expect(flaggedRow).toHaveAttribute('id', `article-${flaggedArticle.internalId}`)
       expect(flaggedRow).toContainElement(warning)
+
+      const rawEmailButton = within(flaggedRow).getByRole('button', { name: 'Download raw email' })
+
+      expect(rawEmailButton).toBeVisible()
+      expect(warning).not.toContainElement(rawEmailButton)
+      expect(
+        within(flaggedRow).getByRole('button', { name: 'Download processing log' }),
+      ).toBeVisible()
       expect(feed).not.toHaveTextContent('flagged article body')
 
       expect(view.getAllByTestId('article-content')).toHaveLength(1)
