@@ -22,11 +22,13 @@ import {
 } from 'graphql'
 import { isMatch, noop } from 'lodash-es'
 import { Observable } from 'rxjs'
+import { afterEach } from 'vitest'
 
 import { waitForNextTick } from '#tests/support/utils.ts'
 import { waitUntil } from '#tests/support/vitest-wrapper.ts'
 
 import createCache from '#shared/server/apollo/cache.ts'
+import * as apolloClientModule from '#shared/server/apollo/client.ts'
 import type { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
@@ -439,16 +441,11 @@ const createMockClient = () => {
 // this enabled automocking - if this file is not imported somehow, fetch request will throw an error
 export const mockedApolloClient = createMockClient()
 
-vi.mock('#shared/server/apollo/client.ts', () => {
-  return {
-    clearApolloClientStore: async () => {
-      await mockedApolloClient.clearStore()
-    },
-    getApolloClient: () => {
-      return mockedApolloClient
-    },
-  }
-})
+// Not a `vi.mock`: the browser has fetched the client module before this one runs. A spec (or
+//   `visitView`) that mocks the module itself has no seam and keeps its own `getApolloClient`.
+if ('setApolloClient' in apolloClientModule) {
+  apolloClientModule.setApolloClient(mockedApolloClient)
+}
 
 // Apollo shares one `watchFragment` observable per fragment and object and tears it down a
 //   macrotask after its last subscriber leaves; `clearStore` leaves it in place, so the next test

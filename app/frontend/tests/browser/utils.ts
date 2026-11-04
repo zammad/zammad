@@ -3,6 +3,8 @@
 import { FormKit } from '@formkit/vue'
 import { provideApolloClient } from '@vue/apollo-composable'
 import { createMockClient } from 'mock-apollo-client'
+import { onTestFinished } from 'vitest'
+import { commands } from 'vitest/browser'
 import { render } from 'vitest-browser-vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
@@ -13,25 +15,51 @@ import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
 import createCache from '#shared/server/apollo/cache.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import initializeStore from '#shared/stores/index.ts'
-import type { ConfigList } from '#shared/types/store.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { ConfigList, UserData } from '#shared/types/store.ts'
 
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
+import initializeGlobalDirectives from '#mobile/initializer/initializeGlobalDirectives.ts'
 import { initializeMobileIcons } from '#mobile/initializer/initializeMobileIcons.ts'
 import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
 import { cacheInitializerModules } from '#mobile/server/apollo/index.ts'
 
+import type { RouteResponse } from './commands.mts'
 import type { App, Component } from 'vue'
 
+declare module 'vitest/browser' {
+  interface BrowserCommands {
+    routeRequest: (url: string, response: RouteResponse) => Promise<void>
+    unrouteRequest: (url: string) => Promise<void>
+  }
+}
+
 export interface MountOptions {
-  // Applied before the component is set up, which may read it only once.
+  // Applied before the component is set up, which may read them only once.
   config?: Partial<ConfigList>
+  permissions?: string[]
+}
+
+// The store outlives the test, so a mount without permissions must not see those of an earlier one.
+const mockPermissions = (permissions?: string[]) => {
+  const session = useSessionStore()
+
+  session.user = permissions
+    ? ({
+        __typename: 'User',
+        id: '123',
+        internalId: 1,
+        objectAttributeValues: [],
+        permissions: { __typename: 'UserPermission', names: permissions },
+      } as unknown as UserData)
+    : null
 }
 
 export const mountComponent = (
   component: Component,
   props: Record<string, unknown> = {},
-  { config }: MountOptions = {},
+  { config, permissions }: MountOptions = {},
 ) => {
   const router = createRouter({
     history: createMemoryHistory('/'),
@@ -42,8 +70,10 @@ export const mountComponent = (
     () => initializeAppName('mobile'),
     initializeStore,
     () => Object.assign(useApplicationStore().config, config),
+    () => mockPermissions(permissions),
     initializeGlobalComponentStyles,
     initializeGlobalComponents,
+    initializeGlobalDirectives,
     initializeGlobalProperties,
     initializeMobileIcons,
     initializeForm,
@@ -73,4 +103,11 @@ export const mockApolloClient = () => {
   provideApolloClient(client)
 
   return client
+}
+
+// The page and its routes outlive the test, other test files run on it afterwards.
+export const routeRequest = async (url: string, response: RouteResponse) => {
+  await commands.routeRequest(url, response)
+
+  onTestFinished(() => commands.unrouteRequest(url))
 }

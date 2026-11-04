@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { createRequire } from 'node:module'
-
 import { faker } from '@faker-js/faker'
 import {
   Kind,
@@ -13,16 +11,17 @@ import {
   type NamedTypeNode,
 } from 'graphql'
 import { uniqBy } from 'lodash-es'
+import { afterEach } from 'vitest'
 
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
+import introspection from '../../../../graphql/graphql_introspection.json'
+
 import logger from './logger.ts'
 import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
 
-const _require = createRequire(import.meta.url)
-const introspection = _require('../../../../graphql/graphql_introspection.json')
 // oxlint-disable no-use-before-define
 
 export interface ResolversMeta {

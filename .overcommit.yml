@@ -83,6 +83,7 @@ PreCommit:
     include:
       - '**/*.js'
       - '**/*.ts'
+      - '**/*.mts'
       - '**/*.vue'
   Oxlint:
     required_executable: 'pnpm'
@@ -103,6 +104,7 @@ PreCommit:
     include:
       - 'app/frontend/**/*.js'
       - 'app/frontend/**/*.ts'
+      - 'app/frontend/**/*.mts'
       - 'app/frontend/**/*.vue'
       - '.eslint-plugin-zammad/**/*.js'
       - '.eslint-plugin-zammad/**/*.ts'

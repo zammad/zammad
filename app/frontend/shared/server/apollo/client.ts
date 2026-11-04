@@ -35,6 +35,11 @@ export const getApolloClient = () => {
   return apolloClient
 }
 
+// Lets the automocked test client stand in where `createApolloClient` never runs.
+export const setApolloClient = (client: ApolloClient) => {
+  apolloClient = client
+}
+
 export const clearApolloClientStore = async () => {
   await apolloClient.clearStore()
 }

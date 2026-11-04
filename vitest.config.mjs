@@ -6,6 +6,10 @@ import { dirname, join, resolve } from 'node:path'
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
+import {
+  routeRequestCommand,
+  unrouteRequestCommand,
+} from './app/frontend/tests/browser/commands.mts'
 import viteConfig from './vite.config.mjs'
 
 const require = createRequire(import.meta.url)
@@ -72,6 +76,11 @@ export default defineConfig(async (env) => ({
         extends: true,
         test: {
           name: 'browser',
+          // The waits and the mocker log read these from `import.meta.env`; the browser has no `process.env`.
+          env: {
+            CI: process.env.CI ?? '',
+            VITEST_LOG_GQL_FACTORY: process.env.VITEST_LOG_GQL_FACTORY ?? '',
+          },
           include: ['**/*.browser.spec.ts'],
           setupFiles: ['./tests/browser/setup.ts'],
           testTimeout: isCI ? 30_000 : 10_000,
@@ -87,6 +96,7 @@ export default defineConfig(async (env) => ({
             // iPhone 12, as the screenshots show the fields of the mobile view.
             viewport: { width: 390, height: 844 },
             testerHtmlPath: './tests/browser/tester.html',
+            commands: { routeRequest: routeRequestCommand, unrouteRequest: unrouteRequestCommand },
             locators: {
               testIdAttribute: 'data-test-id',
             },

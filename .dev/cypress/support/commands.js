@@ -56,7 +56,7 @@ Cypress.Commands.add('selectText', { prevSubject: true }, (subject, direction, s
     .wrap(subject)
     .realPress([
       'Shift',
-      ...new Array(size).fill(direction === 'right' ? 'ArrowRight' : 'ArrowLeft'),
+      ...Array.from({ length: size }, () => (direction === 'right' ? 'ArrowRight' : 'ArrowLeft')),
     ])
 })
 
@@ -73,15 +73,5 @@ Cypress.Commands.add(
     const actual = normalizeHTML(subject[0].innerHTML)
     const wanted = normalizeHTML(expected)
     expect(actual).to.contain(wanted)
-  },
-)
-
-Cypress.Commands.add(
-  'shouldHaveNormalizedHtml',
-  { prevSubject: 'element' },
-  (subject, expected) => {
-    const actual = normalizeHTML(subject[0].innerHTML)
-    const wanted = normalizeHTML(expected)
-    expect(actual).to.equal(wanted)
   },
 )

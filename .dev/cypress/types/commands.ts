@@ -74,7 +74,6 @@ declare global {
 
     interface Chainable<Subject> {
       shouldContainNormalizedHtml(expected: string): Chainable<Subject>
-      shouldHaveNormalizedHtml(expected: string): Chainable<Subject>
     }
   }
 }

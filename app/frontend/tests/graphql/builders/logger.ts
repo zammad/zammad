@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { onTestFailed } from 'vitest'
+import { afterEach, beforeEach, onTestFailed } from 'vitest'
 
 const logs: unknown[][] = []
 
@@ -10,7 +10,7 @@ afterEach(() => {
 
 const logger = {
   log(...messages: unknown[]) {
-    if (process.env.VITEST_LOG_GQL_FACTORY) {
+    if (import.meta.env.VITEST_LOG_GQL_FACTORY) {
       console.log(...messages)
     } else {
       logs.push(messages)

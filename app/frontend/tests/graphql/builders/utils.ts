@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { afterEach } from 'vitest'
+
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 const parents = new WeakMap()

@@ -15,15 +15,6 @@ import { mockUserCurrentOverviewListQuery } from '#desktop/pages/personal-settin
 
 import { useTicketOverviewsStore } from '../ticketOverviews.ts'
 
-vi.mock('#shared/server/apollo/client.ts', () => ({
-  getApolloClient: () => ({
-    cache: {
-      writeQuery: vi.fn(),
-      readQuery: vi.fn(),
-    },
-  }),
-}))
-
 describe('useTicketOverviewsStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
