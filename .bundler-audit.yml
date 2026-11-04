@@ -1,0 +1,10 @@
+---
+# Advisories ignored by `bundle-audit check` (CI job 'lint: bundle-audit').
+#
+# Only for advisories that have no fixed version yet, or that do not affect Zammad.
+# Give every entry a comment with the reason and the date to look at it again:
+#
+#   ignore:
+#     # No fixed version yet, re-check 2026-12-01.
+#     - GHSA-xxxx-xxxx-xxxx
+ignore: []

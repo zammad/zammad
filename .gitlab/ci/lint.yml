@@ -46,7 +46,7 @@
     - bundle exec rails zeitwerk:check
     - .gitlab/check_graphql_api_consistency.sh
 
-'lint: ruby & security':
+'lint: ruby & brakeman':
   extends:
     - .template_lint
     - .template_ruby
@@ -64,9 +64,6 @@
     - echo "Rubocop check…"
     - bundle exec .dev/rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
-    - echo "bundler-audit security check…"
-    - gem exec bundle-audit update
-    - gem exec bundle-audit
     - echo "Native gem platforms check…"
     - .gitlab/check_native_gem_platforms.rb
     - echo "Brakeman security check…"
@@ -78,6 +75,35 @@
     - if [[ ! -z "$GEM_FILES" ]]; then echo $GEM_FILES; exit 1; fi # Raise error if files were found.
     - echo "Finally, ensure cleanup.sh passes…"
     - script/build/cleanup.sh
+
+# The advisory database is fetched at runtime, so a newly published advisory fails this
+#   job without any change in the commit. It therefore blocks only where that is the
+#   point: merge requests that change the gems, and the scheduled pipelines. Everywhere
+#   else it only warns, and the test jobs do not wait for it (see job_needs.yml).
+# Advisories that cannot be fixed yet are ignored in .bundler-audit.yml.
+'lint: bundle-audit':
+  extends:
+    - .template_lint
+    - .template_ruby
+  timeout: 5 minutes
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .bundler-audit.yml
+        - Gemfile
+        - Gemfile.lock
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - when: on_success
+      allow_failure: true
+  before_script:
+    - !reference [.scripts, source_rvm]
+    - !reference [.scripts, bundle_install]
+  after_script: []
+  script:
+    - bundle exec bundle-audit check --update
 
 'lint: markdown, coffee & css':
   extends:

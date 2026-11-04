@@ -237,6 +237,7 @@ group :development, :test do
 
   # code QA
   gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'overcommit', require: false
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false

@@ -170,6 +170,9 @@ GEM
       racc
     browser (6.2.0)
     builder (3.3.0)
+    bundler-audit (0.9.3)
+      bundler (>= 1.2.0)
+      thor (~> 1.0)
     byk (1.1.0)
     camertron-eprun (2.0.0)
     capybara (3.40.0)
@@ -938,6 +941,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   browser
+  bundler-audit
   byk
   capybara
   capybara-playwright-driver

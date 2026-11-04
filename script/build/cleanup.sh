@@ -23,6 +23,7 @@ rm coffeelint.json
 rm .markdownlint.yml
 rm .overcommit.*
 rm .gitleaks.toml
+rm .bundler-audit.yml
 
 # Yard
 rm .yardopts
