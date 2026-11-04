@@ -876,6 +876,51 @@ RSpec.describe Ticket::Article, type: :model do
       expect(body).to eq("<p>Translated</p><img src=\"#{url}\">")
       expect(article.body).to start_with('<img src="cid:')
     end
+
+    it 'matches Content-IDs without angle brackets' do
+      file = article.attachments.first
+      file.update!(preferences: file.preferences.merge('Content-ID' => cid))
+
+      body, attachments, inline = described_class.insert_urls(article)
+
+      expect(body).to eq("<img src=\"#{url}\"> some text")
+      expect(attachments).to be_empty
+      expect(inline.map(&:id)).to eq([file.id])
+    end
+
+    it 'keeps the first match when bare and bracketed Content-IDs are duplicated' do
+      bracketed = article.attachments.first
+      bare = create(:store, object: 'Ticket::Article', o_id: article.id, data: 'fake', filename: 'duplicate.jpg',
+                            preferences: { 'Content-Type' => 'image/jpeg', 'Content-ID' => cid })
+
+      [[bracketed, bare], [bare, bracketed]].each do |files|
+        allow(article).to receive(:attachments).and_return(files)
+
+        body, attachments, inline = described_class.insert_urls(article)
+
+        expect(body).to include("/#{files.first.id}?view=inline")
+        expect(attachments).to eq([files.last])
+        expect(inline).to eq([files.first])
+      end
+    end
+
+    it 'preserves references whose Content-ID has no attachment' do
+      body, attachments, inline = described_class.insert_urls(article, '<img src="cid:missing">')
+
+      expect(body).to eq('<img src="cid:missing">')
+      expect(attachments.map(&:id)).to eq(article.attachments.map(&:id))
+      expect(inline).to be_empty
+    end
+
+    it 'reads attachment metadata once for repeated image references' do
+      files = article.attachments.to_a
+      allow(article).to receive(:attachments).and_return(files)
+      allow(files.first).to receive(:preferences).and_call_original
+
+      described_class.insert_urls(article, "<img src=\"cid:#{cid}\">" * 10)
+
+      expect(files.first).to have_received(:preferences).once
+    end
   end
 
   describe '.without_system_notifications' do

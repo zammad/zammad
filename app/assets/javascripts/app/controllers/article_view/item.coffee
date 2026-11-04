@@ -27,9 +27,11 @@ class App.ArticleViewItem extends App.ControllerObserver
     'click .js-securityRetryProcess':            'retrySecurityProcess'
     'click .js-retryWhatsAppAttachmentDownload': 'retryWhatsAppAttachmentDownload'
     'click .js-fetchOriginalFormatting':         'fetchOriginalFormatting'
+    'showFullBody':                              'showFullBody'
 
   @SEE_MORE_MIN_HEIGHT: 90
   @SEE_MORE_MAX_HEIGHT: 560
+  @SEE_MORE_MAX_ELEMENTS: 300
 
   constructor: ->
     super
@@ -135,11 +137,12 @@ class App.ArticleViewItem extends App.ControllerObserver
     else if article.content_type is 'text/html'
       body = article.body
 
-      domBody = $('<div>').html(body)
+      domBody = $(document.implementation.createHTMLDocument().createElement('div')).html(body)
       domBody.find('img')
         .addBack('img')
         .each((i, el) ->
           el = $(el)
+          el.attr('loading', 'lazy')
 
           if el[0].style.height
             el.css('max-height', el[0].style.height)
@@ -215,6 +218,10 @@ class App.ArticleViewItem extends App.ControllerObserver
       article['delivery_status_icon']    = icon
       article['delivery_status_message'] = msg
 
+    @fullBody = undefined
+    if !@seeMoreOpen && !article.preferences.highlight
+      article['html'] = @truncateBody(article['html'])
+
     @html App.view('ticket_zoom/article_view')(
       ticket:        @ticket
       article:       article
@@ -254,6 +261,10 @@ class App.ArticleViewItem extends App.ControllerObserver
     return if @shown
     @shown = true
 
+    @fitImages()
+    @measureSeeMore()
+
+  fitImages: =>
     @textBubbleImages.each (i, el) =>
       if el.style.width
         el.style.maxWidth = el.style.width
@@ -261,8 +272,6 @@ class App.ArticleViewItem extends App.ControllerObserver
       
       if !el.complete
         $(el).one 'load', @measureSeeMore
-
-    @measureSeeMore()
 
   measureSeeMore: =>
     maxHeight               = @constructor.SEE_MORE_MAX_HEIGHT
@@ -305,7 +314,7 @@ class App.ArticleViewItem extends App.ControllerObserver
 
       bubbleContent.attr('data-height', bubbleContentHeight + 30)
       bubbleContent.attr('data-height-origin', newHeight)
-      bubbleContent.css('height', "#{newHeight}px")
+      bubbleContent.css('height', if @seeMoreOpen then 'auto' else "#{newHeight}px")
       bubbleOverflowContainer.removeClass('hide')
 
     # if height is higher then maxHeight
@@ -316,8 +325,45 @@ class App.ArticleViewItem extends App.ControllerObserver
       bubbleContent.css('height', newHeight)
       bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(@label)
       bubbleOverflowContainer.removeClass('hide')
+    else if @fullBody
+      bubbleContent.attr('data-height-origin', bubbleContentHeight)
+      bubbleContent.css('height', "#{bubbleContentHeight}px")
+      bubbleOverflowContainer.removeClass('hide')
     else
       bubbleOverflowContainer.addClass('hide')
+
+  # Long quote chains are slow to lay out even while clipped by "See more",
+  # so the page only gets the start of the body until the rest is asked for.
+  truncateBody: (html) ->
+    return html if !html
+
+    container = document.implementation.createHTMLDocument().createElement('div')
+    container.innerHTML = html
+    walker = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT)
+    count = 0
+    while count < @constructor.SEE_MORE_MAX_ELEMENTS && walker.nextNode()
+      count += 1
+    return html if count < @constructor.SEE_MORE_MAX_ELEMENTS
+
+    lastNode = walker.currentNode
+    node = lastNode
+    while node isnt container
+      node.parentNode.removeChild(node.nextSibling) while node.nextSibling
+      node = node.parentNode
+    lastNode.parentNode.removeChild(lastNode)
+
+    @fullBody = html
+    container.innerHTML
+
+  showFullBody: =>
+    return if !@fullBody
+
+    body = @textBubbleContent.children('.richtext-content')
+    body.html(@fullBody)
+    @fullBody = undefined
+    @refreshElements()
+    @fitImages()
+    @textBubbleContent.attr('data-height', body.outerHeight() + 30)
 
   retrySecurityProcess: (e) ->
     e.preventDefault()
@@ -505,6 +551,7 @@ class App.ArticleViewItem extends App.ControllerObserver
       height = bubbleContent.attr('data-height-origin')
       @seeMoreOpen = false
     else
+      @showFullBody()
       @label = App.i18n.translateContent('See less')
       height = bubbleContent.attr('data-height')
       @seeMoreOpen = true
@@ -553,3 +600,8 @@ class App.ArticleViewItem extends App.ControllerObserver
 
   updateFormId: (newFormId) ->
     @articleActions?.form_id = newFormId
+
+# Safari does not load deferred images automatically when printing.
+$(window).on 'beforeprint', ->
+  $('.ticket-article-item:visible').trigger('showFullBody')
+  $('.ticket-article-item img[loading=lazy]').attr('loading', 'eager')
