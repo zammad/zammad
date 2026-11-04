@@ -70,16 +70,8 @@ module Service::Template::Interpolation::Engine::Parser
 
   def escape_replace_value(value, is_string_like: false)
     if is_string_like
-      value.to_s
-        # Escape backslashes first so a value's own backslashes cannot alter the
-        # following escapes or produce invalid JSON.
-        .gsub(%r{\\}) { '\\\\' }
-        .gsub(%r{"}, '\"')
-        .gsub(%r{\n}, '\n')
-        .gsub(%r{\r}, '\r')
-        .gsub(%r{\t}, '\t')
-        .gsub(%r{\f}, '\f')
-        .gsub(%r{\v}, '\v')
+      # Not to_json: ActiveSupport would also escape <, > and & in the payload.
+      JSON.generate(value.to_s.scrub)[1..-2]
     else
       value.to_json
     end
