@@ -10,6 +10,7 @@ import {
   sanitizedContentType,
   canPreviewFile,
   allowedImageTypes,
+  convertFileList,
 } from '#shared/utils/files.ts'
 
 describe('files utility', () => {
@@ -191,6 +192,73 @@ describe('files utility', () => {
 
       const result = allowedImageTypes()
       expect(result).toHaveLength(0)
+    })
+  })
+
+  describe('convertFileList', () => {
+    const pngFile = () => new File(['png'], 'image.png', { type: 'image/png' })
+
+    // jsdom neither loads images nor draws on a canvas.
+    beforeEach(() => {
+      vi.stubGlobal(
+        'Image',
+        class {
+          width = 10
+
+          height = 10
+
+          onload = () => {}
+
+          set src(_value: string) {
+            setTimeout(() => this.onload())
+          }
+        },
+      )
+      vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
+        drawImage: vi.fn(),
+      } as unknown as CanvasRenderingContext2D)
+      vi.spyOn(HTMLCanvasElement.prototype, 'toDataURL').mockImplementation(
+        (type) => `data:${type};base64,Y29tcHJlc3NlZA==`,
+      )
+    })
+
+    it('uses the type and file extension of an image compressed to another format', async () => {
+      const [file] = await convertFileList([pngFile()], {
+        compress: true,
+        onCompress: () => ({ type: 'image/jpeg' }),
+      })
+
+      expect(file).toEqual({
+        name: 'image.jpg',
+        type: 'image/jpeg',
+        content: 'data:image/jpeg;base64,Y29tcHJlc3NlZA==',
+      })
+    })
+
+    it('keeps the type and name of an image compressed to the same format', async () => {
+      const [file] = await convertFileList([pngFile()], { compress: true })
+
+      expect(file).toMatchObject({ name: 'image.png', type: 'image/png' })
+    })
+
+    it('keeps the type and name of an image whose compression failed', async () => {
+      vi.mocked(HTMLCanvasElement.prototype.toDataURL).mockImplementation(() => {
+        throw new Error('tainted canvas')
+      })
+
+      const [file] = await convertFileList([pngFile()], {
+        compress: true,
+        onCompress: () => ({ type: 'image/jpeg' }),
+      })
+
+      expect(file).toMatchObject({ name: 'image.png', type: 'image/png' })
+      expect(file.content).toMatch(/^data:image\/png;base64,/)
+    })
+
+    it('keeps the type and name of a file which is not compressed', async () => {
+      const [file] = await convertFileList([pngFile()])
+
+      expect(file).toMatchObject({ name: 'image.png', type: 'image/png' })
     })
   })
 })

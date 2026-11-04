@@ -157,6 +157,27 @@ export const dataURLToBlob = (dataURL: string) => {
   return new Blob([ia], { type: mimeString })
 }
 
+/**
+ * Splits a file name into its base and its extension, so a truncated name can keep the
+ *   extension visible ("very-long-repor….pdf" instead of "very-long-report-2024-fi…").
+ */
+export const splitFileName = (fileName: string) => {
+  const name = fileName.trim() || 'file'
+  const lastDot = name.lastIndexOf('.')
+
+  // No extension if:
+  // - no dot in filename (README)
+  // - dot is first character → hidden file (.gitignore)
+  if (lastDot <= 0) {
+    return { base: name, ext: '' }
+  }
+
+  return {
+    base: name.slice(0, lastDot),
+    ext: name.slice(lastDot),
+  }
+}
+
 export const convertFileList = async (
   filesList: Maybe<FileList | File[]>,
   options: CompressOptions = {},
@@ -164,15 +185,23 @@ export const convertFileList = async (
   const files = Array.from(filesList || [])
 
   const promises = files.map(async (file) => {
+    let { name, type } = file
     let base64 = await blobToBase64(file)
 
-    if (options?.compress && (file.type == 'image/jpeg' || file.type == 'image/png')) {
-      base64 = await compressImage(base64, file.type, options)
+    if (options?.compress && (type == 'image/jpeg' || type == 'image/png')) {
+      base64 = await compressImage(base64, type, options)
+
+      // The compression may store the image in another format, e.g. a PNG as JPEG.
+      const compressedType = base64.match(/^data:([^;,]+)/)?.[1]
+      if (compressedType && compressedType !== type) {
+        type = compressedType
+        name = `${splitFileName(name).base}.${compressedType === 'image/jpeg' ? 'jpg' : compressedType.split('/')[1]}`
+      }
     }
 
     return {
-      name: file.name,
-      type: file.type,
+      name,
+      type,
       content: base64,
     }
   })
@@ -264,27 +293,6 @@ export const getAcceptableFileTypesString = (allowedFiles: AllowedFile[]): strin
     })
   })
   return Array.from(result).join(', ')
-}
-
-/**
- * Splits a file name into its base and its extension, so a truncated name can keep the
- *   extension visible ("very-long-repor….pdf" instead of "very-long-report-2024-fi…").
- */
-export const splitFileName = (fileName: string) => {
-  const name = fileName.trim() || 'file'
-  const lastDot = name.lastIndexOf('.')
-
-  // No extension if:
-  // - no dot in filename (README)
-  // - dot is first character → hidden file (.gitignore)
-  if (lastDot <= 0) {
-    return { base: name, ext: '' }
-  }
-
-  return {
-    base: name.slice(0, lastDot),
-    ext: name.slice(lastDot),
-  }
 }
 
 /**

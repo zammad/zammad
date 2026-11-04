@@ -117,6 +117,8 @@ describe('FieldEditor basic functionality', () => {
     expect(uploadHandler).toHaveBeenCalledOnce()
     // Inline images are compressed to JPEG before the upload.
     expect(uploadHandler.mock.calls[0][0].files[0]).toMatchObject({
+      name: 'example.jpg',
+      type: 'image/jpeg',
       content: expect.stringMatching(/^data:image\/jpeg;base64,/),
       inline: true,
     })
