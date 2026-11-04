@@ -27,6 +27,8 @@ export default defineConfig({
   // and therefore reports elements moved out of the viewport via `transform` as
   // visible.
   visibilityStrategy: 'legacy',
+  // https://github.com/cypress-io/cypress/issues/6960
+  watchForFileChanges: !isCYCI,
   expose: {
     CY_CI: isCYCI,
     pluginVisualRegressionDiffConfig: {
