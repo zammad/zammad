@@ -114,10 +114,12 @@ generate email with S/MIME
         content = attachment_content(attachment)
         next if content.nil?
 
+        encoded_filename = Mail::Encodings.decode_encode attachment.filename, :encode
+
         attachment = Mail::Part.new do
-          content_type attachment.preferences['Content-Type']
+          content_type "#{attachment.preferences['Content-Type']}; name=\"#{encoded_filename}\""
           content_id "<#{attachment.preferences['Content-ID']}>"
-          content_disposition attachment.preferences['Content-Disposition'] || 'inline'
+          content_disposition "#{attachment.preferences['Content-Disposition'] || 'inline'}; filename=\"#{encoded_filename}\""
           content_transfer_encoding 'binary'
           body content.force_encoding('BINARY')
         end
