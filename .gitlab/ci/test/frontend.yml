@@ -29,7 +29,6 @@ frontend:cypress:
   before_script:
     - !reference [.scripts, pnpm_install_cypress]
   script:
-    - sysctl -w fs.inotify.max_user_watches=524288 # see https://github.com/cypress-io/cypress/issues/6960
     - pnpm test:ci:ct
   artifacts:
     expire_in: 1 week

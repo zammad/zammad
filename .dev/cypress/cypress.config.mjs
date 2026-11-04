@@ -20,6 +20,8 @@ export default defineConfig({
   downloadsFolder: '.dev/cypress/downloads',
   screenshotsFolder: '.dev/cypress/screenshots',
   videoCompression: false,
+  // https://github.com/cypress-io/cypress/issues/6960
+  watchForFileChanges: !isCYCI,
   env: {
     CY_CI: isCYCI,
     pluginVisualRegressionDiffConfig: {
