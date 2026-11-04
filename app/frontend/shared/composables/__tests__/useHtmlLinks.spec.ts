@@ -9,6 +9,7 @@ const buildSampleElement = () => {
 
   elem.innerHTML = `some text
   <a href="http://example.com/asd" external>external</a>
+  <a href="http://example.com/plain" plain>plain</a>
   <a href="/desktop/test" internal>internal</a>
   <a href="/desktop/blank" blank target=_blank>blank</a>
   <a data-mention-user-id="123" mention>mention</a>
@@ -69,6 +70,22 @@ describe('setupLinkHandlers', () => {
     elem.querySelector<HTMLLinkElement>('a[blank]')?.click()
 
     expect(spy).toHaveBeenCalledWith('/desktop/blank', '_blank')
+  })
+
+  it('opens external link without target in an isolated new tab', () => {
+    vi.stubGlobal('open', vi.fn())
+    const spy = vi.spyOn(window, 'open')
+
+    const elem = buildSampleElement()
+
+    const { setupLinksHandlers } = useHtmlLinks('/desktop')
+
+    setupLinksHandlers(elem)
+
+    elem.querySelector<HTMLLinkElement>('a[plain]')?.click()
+
+    expect(routerPush).not.toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledWith('http://example.com/plain', '_blank', 'noopener,noreferrer')
   })
 
   it('opens external link directly', () => {

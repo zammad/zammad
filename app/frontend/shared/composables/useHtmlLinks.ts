@@ -46,7 +46,7 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
 
       if (!link.target) {
         event.preventDefault()
-        window.open(link.href)
+        window.open(link.href, '_blank', 'noopener,noreferrer')
       }
     } catch {
       // skip

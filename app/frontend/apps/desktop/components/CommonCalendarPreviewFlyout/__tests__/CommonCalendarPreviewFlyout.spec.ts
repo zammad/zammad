@@ -158,7 +158,11 @@ describe('CommonCalendarPreviewFlyout.vue', () => {
       await wrapper.findByRole('link', { name: 'https://meet.example.com/zammad' }),
     )
 
-    expect(windowOpenSpy).toHaveBeenCalledWith('https://meet.example.com/zammad')
+    expect(windowOpenSpy).toHaveBeenCalledWith(
+      'https://meet.example.com/zammad',
+      '_blank',
+      'noopener,noreferrer',
+    )
 
     windowOpenSpy.mockRestore()
   })
