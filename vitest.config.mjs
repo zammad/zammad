@@ -120,6 +120,11 @@ export default defineConfig(async (env) => ({
                     testFileName,
                     `${arg}-${browserName}${ext}`,
                   ),
+                comparatorName: 'pixelmatch',
+                comparatorOptions: {
+                  // Chromium sometimes rasterizes a single edge pixel of a floating label differently.
+                  allowedMismatchedPixels: 10,
+                },
               },
             },
           },
