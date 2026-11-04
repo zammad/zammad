@@ -33,7 +33,8 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^\\.devcontainer/with-playwright/(compose\\.yaml|devcontainer\\.json)$/"
+        "/^\\.devcontainer/with-playwright/(compose\\.yaml|devcontainer\\.json)$/",
+        "/^package\\.json$/"
       ],
       "matchStrings": [
         "mcr\\.microsoft\\.com/playwright:v(?<currentValue>[0-9.]+)-",
@@ -172,6 +173,8 @@
       "matchCategories": ["js"],
       "matchPackageNames": [
         "vitest",
+        "/^@vitest\\//",
+        "vitest-browser-vue",
         "jsdom",
         "@vue/test-utils",
         "@pinia/testing",
@@ -185,7 +188,7 @@
       "matchCategories": ["js"],
       "groupName": "Vite packages",
       "groupSlug": "vite-related",
-      "matchPackageNames": ["/^vite/", "/^@vitejs/", "!vitest"]
+      "matchPackageNames": ["/^vite/", "/^@vitejs/", "!/^vitest/"]
     },
     {
       "matchCategories": ["js"],

@@ -122,6 +122,7 @@
         - pnpm-workspace.yaml
         - 'tsconfig*.json'
         - vite.config.mjs
+        - vitest.config.mjs
       when: on_success
 
   # Closing entry: offer a manual start and never block the pipeline. `allow_failure`

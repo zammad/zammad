@@ -153,6 +153,25 @@ Cypress is only used when pure Node.js testing is not possible
 (e.g. the editor). See
 `doc/developer_manual/cookbook/how-to-test-with-vitest-and-cypress.md`.
 
+### Browser specs (Vitest browser mode, replacing Cypress)
+
+`*.browser.spec.ts` files run in Chromium through Vitest's Playwright
+provider, not in jsdom. `vitest.config.mjs` defines both suites as projects:
+`unit` (jsdom, `pnpm test`) and `browser` (`pnpm test:browser`). The browser always runs
+in a Playwright server container, also locally, so that reference
+screenshots (`__screenshots__/`) are the same for everyone:
+
+```bash
+pnpm playwright:server                                # once, does not exit
+pnpm test:browser --run app/frontend/path/to/file.browser.spec.ts
+```
+
+`PLAYWRIGHT_SERVER_URL` points to another server (CI, the `with-playwright`
+devcontainer). A missing reference screenshot is created and fails the test;
+`--update` records changed ones again. Mount with
+`#tests/browser/utils.ts` and find elements through `page` from
+`vitest/browser`.
+
 ### Vitest utils
 
 To handle some vue specific setup we use:

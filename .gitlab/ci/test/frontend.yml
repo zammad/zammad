@@ -57,3 +57,32 @@ frontend:cypress:
       - .dev/cypress/**/__diff_output__/*
       - .dev/cypress/videos/**/*
       - .dev/cypress/screenshots/**/*
+
+frontend:vitest:browser:
+  stage: test
+  extends:
+    - .no_artifact_dependencies
+    - .variables_playwright
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, frontend_changes_in_mr]
+    - !reference [.rule_fragments, then_manual_in_mr]
+  needs:
+    - !reference [.needs, nodejs]
+    - !reference [.needs, lint]
+  timeout: 15 minutes
+  cache: !reference [.cache, read_only_nodejs]
+  services:
+    - !reference [.services, playwright]
+  before_script:
+    - !reference [.scripts, pnpm_install]
+  script:
+    - pnpm test:browser --run --reporter=default --reporter=junit --outputFile.junit=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest-browser.xml
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      # Actual and diff images of failed screenshot comparisons.
+      - app/frontend/.vitest/attachments/*
+    reports:
+      junit: tmp/junit/*.xml

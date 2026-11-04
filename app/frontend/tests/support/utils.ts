@@ -46,7 +46,7 @@ export const waitForNextTick = async (withTimeout = false) => {
 
 export const waitUntil = async (
   condition: () => unknown,
-  // Must stay below the outer `testTimeout` (vite.config.mjs) with real margin — see
+  // Must stay below the outer `testTimeout` (vitest.config.mjs) with real margin — see
   // tests/support/vitest-wrapper.ts for why equal values cause misleading failures.
   msThreshold = process.env.CI ? 20_000 : 1_000,
 ) => {

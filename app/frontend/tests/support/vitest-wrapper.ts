@@ -2,7 +2,7 @@
 
 import { vi } from 'vitest'
 
-// Must stay well below the outer `testTimeout` (vite.config.mjs), which is shared across the
+// Must stay well below the outer `testTimeout` (vitest.config.mjs), which is shared across the
 // whole test — not reset per wait. A wait called partway through a test only has whatever
 // budget the outer timeout has left, so equal values (as CI's used to be, 30s/30s) mean the
 // outer timeout — with its unhelpful "test timed out" message pointing at the wrong line —
