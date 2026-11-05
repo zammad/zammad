@@ -388,13 +388,16 @@ returns
         email:         hash['info']['email'],
         image_source:  hash['info']['image'],
         web:           url,
-        address:       hash['info']['location'],
         note:          hash['info']['description'],
         source:        hash['provider'],
         role_ids:      Role.signup_role_ids,
         updated_by_id: 1,
         created_by_id: 1,
       }
+
+      # Admins can delete the address attribute in the object manager.
+      data[:address] = hash['info']['location'] if has_attribute?(:address)
+
       if hash['info']['first_name'].present? && hash['info']['last_name'].present?
         data[:firstname] = hash['info']['first_name']
         data[:lastname] = hash['info']['last_name']

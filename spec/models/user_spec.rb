@@ -286,6 +286,32 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Class methods:' do
+    describe '.create_from_hash!' do
+      let(:auth_hash) do
+        {
+          'provider' => 'openid_connect',
+          'uid'      => SecureRandom.uuid,
+          'login'    => 'oidc-user',
+          'info'     => { 'email' => 'oidc-user@example.com', 'name' => 'OIDC User', 'location' => 'Berlin' },
+        }
+      end
+
+      it 'stores the location as address' do
+        expect(described_class.create_from_hash!(auth_hash)).to have_attributes(address: 'Berlin')
+      end
+
+      context 'when the address attribute was deleted', db_strategy: :reset do
+        before do
+          ObjectManager::Attribute.remove(object: 'User', name: 'address')
+          ObjectManager::Attribute.migration_execute
+        end
+
+        it 'creates the user' do
+          expect { described_class.create_from_hash!(auth_hash) }.to change(described_class, :count).by(1)
+        end
+      end
+    end
+
     describe '.identify' do
       it 'returns users by given login' do
         expect(described_class.identify(user.login)).to eq(user)
