@@ -236,7 +236,7 @@
 'lint: sbom':
   extends: .template_lint
   image:
-    name: 'anchore/syft:v1.56.0-debug'
+    name: 'anchore/syft:v1.56.0-debug'  # Use -debug because it brings a /bin/sh that GitLab needs.
     entrypoint: ['']
   timeout: 5 minutes
   rules:

@@ -110,6 +110,10 @@ RUN if compgen -G "packages/*/*.zpm" > /dev/null; then \
 RUN touch db/schema.rb && \
     ZAMMAD_SAFE_MODE=1 DATABASE_URL=postgresql://zammad:/zammad bundle exec rake assets:precompile
 
+# Image scans cannot see the JS dependencies, they only exist compiled into the assets. The SBOM
+#   generator of the image attestation picks up this file instead.
+RUN pnpm sbom --prod --lockfile-only --sbom-format cyclonedx --sbom-type application > pnpm-lock.cdx.json
+
 RUN script/build/cleanup.sh
 
 # Precompile bootsnap code for faster boot times
