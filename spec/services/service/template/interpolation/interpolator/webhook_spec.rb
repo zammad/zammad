@@ -258,6 +258,29 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       end
     end
 
+    context 'when the replacement value contains control characters' do
+      let(:value)     { "echo $(date +\\%H)\vvt\bbs\u0001ctl\ttab\nnl" }
+      let(:article)   { create(:ticket_article, body: value) }
+      let(:template)  { { 'article.body' => '#{article.body}' }.to_json }
+      let(:json_data) { { 'article.body' => value } }
+
+      it 'escapes them into valid JSON and round-trips the value' do
+        expect(service_result).to eq(json_data)
+      end
+    end
+
+    context 'when the replacement value contains invalid UTF-8' do
+      let(:ticket)    { create(:ticket) }
+      let(:template)  { { 'ticket.note' => '#{ticket.title}' }.to_json }
+      let(:json_data) { { 'ticket.note' => "bad\uFFFDbyte" } }
+
+      before { allow(ticket).to receive(:title).and_return("bad\xFFbyte") }
+
+      it 'replaces the invalid bytes and returns valid JSON' do
+        expect(service_result).to eq(json_data)
+      end
+    end
+
     context 'when object attributes are used in the placeholder', db_strategy: :reset do
       let(:ticket) { create(:ticket, object_manager_attribute_name => object_manager_attribute_value) }
 
