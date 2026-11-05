@@ -23,3 +23,11 @@ export const routeRequestCommand = defineBrowserCommand<[url: string, response: 
 export const unrouteRequestCommand = defineBrowserCommand<[url: string]>(({ page }, url) =>
   page.unroute(url),
 )
+
+// The mouse stays where the previous test, also of another file, left it, and its hover styles
+//   end up in later screenshots. The bottom right corner is outside the mounted components.
+export const moveMouseAwayCommand = defineBrowserCommand(async ({ page }) => {
+  const { width, height } = page.viewportSize()!
+
+  await page.mouse.move(width - 1, height - 1)
+})

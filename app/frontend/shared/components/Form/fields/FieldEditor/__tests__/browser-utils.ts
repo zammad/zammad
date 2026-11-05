@@ -5,7 +5,8 @@ import { FormKit } from '@formkit/vue'
 import { expect } from 'vitest'
 import { page, userEvent, type Locator } from 'vitest/browser'
 
-import { mountComponent, type mockApolloClient, type MountOptions } from '#tests/browser/utils.ts'
+import type { MountOptions } from '#tests/browser/types.ts'
+import { mountComponent, type mockApolloClient } from '#tests/browser/utils.ts'
 
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormUploadCacheAddDocument } from '#shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts'

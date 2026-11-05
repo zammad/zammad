@@ -16,7 +16,7 @@ import createCache from '#shared/server/apollo/cache.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import initializeStore from '#shared/stores/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import type { ConfigList, UserData } from '#shared/types/store.ts'
+import type { UserData } from '#shared/types/store.ts'
 
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
@@ -26,20 +26,8 @@ import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
 import { cacheInitializerModules } from '#mobile/server/apollo/index.ts'
 
 import type { RouteResponse } from './commands.mts'
+import type { MountOptions } from './types.ts'
 import type { App, Component } from 'vue'
-
-declare module 'vitest/browser' {
-  interface BrowserCommands {
-    routeRequest: (url: string, response: RouteResponse) => Promise<void>
-    unrouteRequest: (url: string) => Promise<void>
-  }
-}
-
-export interface MountOptions {
-  // Applied before the component is set up, which may read them only once.
-  config?: Partial<ConfigList>
-  permissions?: string[]
-}
 
 // The store outlives the test, so a mount without permissions must not see those of an earlier one.
 const mockPermissions = (permissions?: string[]) => {

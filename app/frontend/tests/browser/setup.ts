@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { beforeAll } from 'vitest'
+import { beforeAll, beforeEach } from 'vitest'
+import { commands } from 'vitest/browser'
 
 import '#mobile/styles/main.css'
 import '#shared/components/CommonIcon/injectIcons.ts'
@@ -12,3 +13,5 @@ globalThis.__ = (source) => source
 beforeAll(async () => {
   await Promise.all([...document.fonts].map((face) => face.load()))
 })
+
+beforeEach(() => commands.moveMouseAway())

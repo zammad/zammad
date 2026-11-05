@@ -7,6 +7,7 @@ import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
 import {
+  moveMouseAwayCommand,
   routeRequestCommand,
   unrouteRequestCommand,
 } from './app/frontend/tests/browser/commands.mts'
@@ -96,7 +97,11 @@ export default defineConfig(async (env) => ({
             // iPhone 12, as the screenshots show the fields of the mobile view.
             viewport: { width: 390, height: 844 },
             testerHtmlPath: './tests/browser/tester.html',
-            commands: { routeRequest: routeRequestCommand, unrouteRequest: unrouteRequestCommand },
+            commands: {
+              moveMouseAway: moveMouseAwayCommand,
+              routeRequest: routeRequestCommand,
+              unrouteRequest: unrouteRequestCommand,
+            },
             locators: {
               testIdAttribute: 'data-test-id',
             },
