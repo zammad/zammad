@@ -1,0 +1,20 @@
+# Syft reads this file from its working directory. Select the settings for what is
+#   scanned with a profile, e.g. `syft scan dir:. --profile repository`.
+profiles:
+  # The dependencies that ship with Zammad, as declared in the lockfiles of the
+  #   checkout. The other lockfiles only hold build and development tooling.
+  repository:
+    default-catalogers:
+      - ruby-gemfile-cataloger
+      - javascript-lock-cataloger
+    # Only packages: the file catalogers would add the lockfiles themselves. Both
+    #   settings are needed, either alone makes syft warn about the other.
+    select-catalogers:
+      - -file
+    file:
+      metadata:
+        selection: none
+    exclude:
+      - ./.eslint-plugin-zammad/**
+      - ./public/assets/chat/**
+      - ./public/assets/images/**
