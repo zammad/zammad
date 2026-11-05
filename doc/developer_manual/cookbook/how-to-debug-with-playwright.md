@@ -133,7 +133,11 @@ Chromium can stream its screen to Chrome DevTools without any X server. The debu
 `9222` to the host. On your host open `chrome://inspect`, add `localhost:9222` under "Configure...", and click "inspect"
 on the page. You get a live screencast and can interact with it. Pause the spec with `binding.pry` or a `sleep` to look
 around. The devcontainer sets `PLAYWRIGHT_REMOTE_DEBUGGING_PORT=9222` for this; set it yourself to get the same outside
-of it. Only one browser can bind that port, so run a single spec file at a time.
+of it.
+
+Chromium binds that port on `127.0.0.1` and, once that is taken, on `::1` if IPv6 is available. When neither is free, the
+launch of the next browser hangs until it times out. Run a single spec file at a time, and unset the variable for specs
+that open more browser sessions (`using_session`).
 
 ## Version Lockstep
 

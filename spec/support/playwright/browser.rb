@@ -38,7 +38,8 @@ module PlaywrightNative
     # The app's self-signed certificates are covered by the context's ignoreHTTPSErrors for
     #   page traffic, but something browser-side still validates them once per page and
     #   floods the log with "SSL alert number 46". The remote debugging port gives a live view
-    #   of the headless browser in DevTools; only one browser can bind it, so it is opt-in.
+    #   of the headless browser in DevTools. It is opt-in: once the port is taken on 127.0.0.1
+    #   and ::1, the next browser launch hangs until it times out.
     def self.chromium_launch_options
       args = ['--ignore-certificate-errors']
       args << "--remote-debugging-port=#{ENV['PLAYWRIGHT_REMOTE_DEBUGGING_PORT']}" if ENV['PLAYWRIGHT_REMOTE_DEBUGGING_PORT'].present?
