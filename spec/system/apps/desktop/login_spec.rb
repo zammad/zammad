@@ -74,6 +74,9 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
       click_on 'Sign out'
       wait.until { expect(page).to have_no_css('[aria-label="John Doe"]') }
 
+      # The SAML logout redirects through Keycloak back to Zammad, a visit before that interrupts it.
+      expect_current_route '/login', wait: 20
+
       visit '/'
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
       expect_current_route '/login'
