@@ -66,10 +66,18 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       #   ticket's local checklist_id arrives, rendering its "no checklist yet" empty state -
       #   which then only self-corrects on a generic ticket-reload event, not reliably in time.
       #   Refresh (a real fetch, independent of that push) and reopen the tab if that happens.
-      refresh if page.has_button?('Add empty checklist', wait: 5)
+      stale_sessions = []
+      if page.has_button?('Add empty checklist', wait: 5)
+        stale_sessions = Sessions.sessions
+        refresh
+      end
 
       open_checklist_sidebar
       await_empty_ajax_queue
+
+      # The examples change items in the database and expect the push - it is dropped until the
+      #   (reloaded) websocket has logged in.
+      wait_for_authenticated_session(user: action_user, except: stale_sessions)
     end
 
     it 'does show handle subscriptions' do
