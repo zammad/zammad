@@ -3,7 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { expect } from 'vitest'
-import { page, userEvent } from 'vitest/browser'
+import { page, userEvent, type Locator } from 'vitest/browser'
 
 import { mountComponent, type mockApolloClient, type MountOptions } from '#tests/browser/utils.ts'
 
@@ -18,7 +18,7 @@ import type { TiptapEditorHTMLElement } from '@tiptap/core'
 export const EDITOR_IMAGE = 'img:not(.ProseMirror-separator)'
 
 // The browser runs on Linux in the Playwright server container.
-export const MOVE_TO_START = '{Control>}{Home}{/Control}'
+const MOVE_TO_START = '{Control>}{Home}{/Control}'
 export const MOVE_TO_END = '{Control>}{End}{/Control}'
 
 export const mountEditor = (props: Record<string, unknown> = {}, options?: MountOptions) =>
@@ -88,7 +88,18 @@ export const editorElements = (selector: string) =>
 // tiptap keeps its editor on the element for tests.
 const tiptapEditor = () => (page.getByRole('textbox').element() as TiptapEditorHTMLElement).editor!
 
-export const editorSelection = () => tiptapEditor().state.selection
+const editorSelection = () => tiptapEditor().state.selection
+
+// Within 200 ms of focusing, ProseMirror takes a cursor at the document start for a browser
+//   reset and restores its own.
+export const moveCursorToStart = async (editor: Locator) => {
+  await expect
+    .poll(async () => {
+      await userEvent.type(editor, MOVE_TO_START)
+      return editorSelection().from
+    })
+    .toBe(1)
+}
 
 const editorOwnsCursor = () => {
   const { view } = tiptapEditor()

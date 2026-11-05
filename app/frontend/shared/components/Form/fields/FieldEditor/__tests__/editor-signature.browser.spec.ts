@@ -8,8 +8,8 @@ import {
   findEditor,
   getEditorContext,
   MOVE_TO_END,
-  MOVE_TO_START,
   mountEditor,
+  moveCursorToStart,
 } from './browser-utils.ts'
 
 const html = String.raw
@@ -129,7 +129,8 @@ describe('correctly adds signature', () => {
         '<p dir="auto" data-marker="signature-before"><br class="ProseMirror-trailingBreak"></p><blockquote dir="auto" ',
       )
 
-    await userEvent.type(editor, `${MOVE_TO_START}text`)
+    await moveCursorToStart(editor)
+    await userEvent.keyboard('text')
 
     await expect.poll(editorHtml).toContain('<p dir="auto">text</p><div data-signature')
 

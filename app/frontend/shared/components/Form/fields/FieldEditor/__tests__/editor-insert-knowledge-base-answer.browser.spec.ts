@@ -13,11 +13,10 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import {
   editorHtml,
-  editorSelection,
   findEditor,
   getEditorContext,
-  MOVE_TO_START,
   mountEditor,
+  moveCursorToStart,
   pressCursorKey,
   selectText,
 } from './browser-utils.ts'
@@ -124,14 +123,7 @@ describe('inserting a knowledge base answer from outside the editor', () => {
 
     await insertAnswer()
 
-    // Within 200 ms of focusing, ProseMirror takes a cursor at the document start for a browser
-    //   reset and restores its own.
-    await expect
-      .poll(async () => {
-        await userEvent.type(editor, MOVE_TO_START)
-        return editorSelection().from
-      })
-      .toBe(1)
+    await moveCursorToStart(editor)
     await userEvent.keyboard('Hi ')
 
     await transform.waitForCalls()
