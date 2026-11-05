@@ -296,7 +296,12 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
   end
 
   describe 'Indicator', performs_jobs: true do
-    before { visit "ticket/zoom/#{ticket.id}" }
+    before do
+      visit "ticket/zoom/#{ticket.id}"
+
+      # The examples rely on the push of the new article, which is dropped until the websocket has logged in.
+      wait_for_authenticated_session(user: agent)
+    end
 
     context 'when summary was updated before opening the tab' do
       it 'dot is visible but gone after looking at the sidebar' do
@@ -363,6 +368,8 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
         perform_enqueued_jobs(only: TicketAIAssistanceSummarizeJob)
 
+        # The update re-renders the tab badge, and a click during that re-render is lost.
+        expect(page).to have_css('.sidebar[data-tab="summary"]', text: updated_summary, visible: :hidden)
         expect(page).to have_no_css('.tabsSidebar-tab[data-tab=summary] .tabsSidebar-tab-dot')
 
         click '.tabsSidebar-tab[data-tab=summary]'
