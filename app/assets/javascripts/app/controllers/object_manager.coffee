@@ -150,11 +150,16 @@ class Items extends App.ControllerSubContent
       if item.to_create is true || item.to_delete is true || item.to_migrate is true || item.to_config is true
         itemsToChange.push item
 
-    @html App.view('object_manager/index')(
+    html = App.view('object_manager/index')(
       head:          @object
       items:         items
       itemsToChange: itemsToChange
     )
+
+    # Collection pushes re-render unchanged data; replacing the buttons drops a click in progress.
+    return if html is @renderedHtml
+    @renderedHtml = html
+    @html html
 
   new: (e) =>
     e.preventDefault()

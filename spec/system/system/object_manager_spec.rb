@@ -45,6 +45,9 @@ RSpec.describe 'System > Objects', type: :system do
   context 'when creating but then discarding fields again' do
     before do
       visit '/#system/object_manager'
+
+      # The discard button only disappears with the push of the discarded attribute.
+      wait_for_authenticated_session
     end
 
     it 'discards the changes again' do
