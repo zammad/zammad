@@ -81,8 +81,9 @@ end
 #   launched alike. The self-signed certs of the :puma_wrapper Capybara server
 #   are covered for page/WSS traffic by the context's ignoreHTTPSErrors, but
 #   something browser-side still validates them once per example and floods the
-#   log with "SSL alert number 46".
-PLAYWRIGHT_LAUNCH_OPTIONS = { args: ['--ignore-certificate-errors'] }.freeze
+#   log with "SSL alert number 46". Remote debugging port allows for live view
+#   of the headless browser via local DevTools.
+PLAYWRIGHT_LAUNCH_OPTIONS = { args: ['--ignore-certificate-errors', '--remote-debugging-port=9222'] }.freeze
 
 # `connect_to_browser_server` has no launch-option parameter, but the server
 #   reads them from the endpoint's `launch-options` query (or an equivalent

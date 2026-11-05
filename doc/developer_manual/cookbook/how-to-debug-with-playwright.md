@@ -28,10 +28,11 @@ pnpm exec playwright install firefox
 ### In the Devcontainer
 
 The `with-playwright` stack runs a Playwright browser server next to the devcontainer and points the tests at it via
-`PLAYWRIGHT_SERVER_URL`, so nothing has to be installed there. Its browsers are always headless.
+`PLAYWRIGHT_SERVER_URL`, so nothing has to be installed there. Its browsers are always headless, and the stack also comes
+with built-in debugging tools, so it's not needed to run the commands above.
 
-In the other stacks the browser is launched inside the devcontainer itself, so the download above is needed there as
-well. The devcontainer image does not ship Chromium's shared libraries, and `playwright install` refuses to continue
+However, in the other stacks the browser is launched inside the devcontainer itself, so the download above is needed there
+as well. The devcontainer image does not ship Chromium's shared libraries, and `playwright install` refuses to continue
 without them:
 
 ```text
@@ -44,7 +45,7 @@ Please install them with the following command:
 Install them once, then download the browser:
 
 ```sh
-sudo "$(pnpm bin)/playwright" install-deps chromium
+sudo env PATH="$PATH" pnpm playwright install-deps chrome-for-testing
 pnpm playwright:install
 ```
 
@@ -124,6 +125,14 @@ screenshots and logs. Download the artifacts of the failed job and open the `.zi
 described above.
 
 CI does not use the local browsers - it talks to the `zammad-playwright` service container via `PLAYWRIGHT_SERVER_URL`.
+
+## Remote Debugging via Chromium DevTools
+
+The devcontainer Playwright stack also provides an out-of-the-box live view of the headless browser via DevTools. Headless
+Chromium can stream its screen to Chrome DevTools without any X server. The debugging port is automatically forwarded at
+`9222` to the host. On your host open `chrome://inspect`, add `localhost:9222` under "Configure...", and click "inspect"
+on the page. You get a live screencast and can interact with it. Pause the spec with `binding.pry` or a `sleep` to look
+around. Only one browser can bind that port, so run a single spec at a time.
 
 ## Version Lockstep
 

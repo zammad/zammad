@@ -44,3 +44,8 @@ RAILS_ENV='test' bundle exec rails db:drop db:create zammad:ci:test:prepare
 echo "== Precompile test assets =="
 
 RAILS_ENV='test' bundle exec rails assets:precompile
+
+echo "== Install Playwright browser for debugging =="
+
+sudo env PATH="$PATH" pnpm playwright install-deps chrome-for-testing
+pnpm playwright:install

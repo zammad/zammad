@@ -53,7 +53,8 @@
     3036,
     4444,
     6042,
-    9200
+    9200,
+    9222
   ],
   "portsAttributes": {
     "3000": {
@@ -70,6 +71,9 @@
     },
     "9200": {
       "label": "Elasticsearch HTTP API"
+    },
+    "9222": {
+      "label": "Playwright Chromium DevTools"
     }
   },
   "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-playwright/scripts/post_create.sh",
