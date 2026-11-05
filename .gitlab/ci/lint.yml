@@ -247,7 +247,8 @@
       when: on_success
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
-    - when: never
+    # - when: never
+    - when: on_success  # TODO: revert
   script:
     - >
       /syft scan dir:.
