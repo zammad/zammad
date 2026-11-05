@@ -119,8 +119,8 @@ class UserAgent
     return request if options[:signature_token].blank?
     return request if request.body.blank?
 
-    signature = OpenSSL::HMAC.hexdigest('sha1', options[:signature_token], request.body)
-    request['X-Hub-Signature'] = "sha1=#{signature}"
+    request['X-Hub-Signature']     = "sha1=#{OpenSSL::HMAC.hexdigest('sha1', options[:signature_token], request.body)}"
+    request['X-Hub-Signature-256'] = "sha256=#{OpenSSL::HMAC.hexdigest('sha256', options[:signature_token], request.body)}"
 
     request
   end
@@ -267,7 +267,7 @@ class UserAgent
   # @option options [Integer] :open_socket_tries count to retry connection
   # @option options [Boolean] :verify_ssl
   # @option options [Hash] :headers to apply to request
-  # @option options [String] :signature_token to set as X-Hub-Sighature header
+  # @option options [String] :signature_token to sign the body with, sent as X-Hub-Signature (HMAC-SHA1) and X-Hub-Signature-256 (HMAC-SHA256) headers
   # @option options [Boolean] :json is POST-style data parameters posted as JSON and response shall be parsed as JSON
   # @option options [Boolean] :jsonParseDisable disable response parsing as JSON of :json is enabled
   # @option options [String] :user for basic authentication

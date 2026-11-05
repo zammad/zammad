@@ -122,22 +122,28 @@ RSpec.describe TriggerWebhookJob, type: :job do
     end
 
     context 'with trigger token configured' do
-      it 'includes X-Hub-Signature header' do
+      it 'includes X-Hub-Signature and X-Hub-Signature-256 headers of the sent body' do
         expect(WebMock).to have_requested(:post, endpoint)
           .with(body: payload, headers: headers)
-          .with { |req| req.headers['X-Zammad-Delivery'].is_a?(String) }
-          .with { |req| req.headers['X-Hub-Signature'].is_a?(String) }
+          .with { |req|
+            req.headers['X-Zammad-Delivery'].is_a?(String) &&
+              req.headers['X-Hub-Signature'] == "sha1=#{OpenSSL::HMAC.hexdigest('sha1', token, req.body)}" &&
+              req.headers['X-Hub-Signature-256'] == "sha256=#{OpenSSL::HMAC.hexdigest('sha256', token, req.body)}"
+          }
       end
     end
 
     context 'without trigger token configured' do
       let(:token) { nil }
 
-      it "doesn't include X-Hub-Signature header" do
+      it "doesn't include X-Hub-Signature and X-Hub-Signature-256 headers" do
         expect(WebMock).to have_requested(:post, endpoint)
           .with(body: payload, headers: headers)
-          .with { |req| req.headers['X-Zammad-Delivery'].is_a?(String) }
-          .with { |req| !req.headers.key?('X-Hub-Signature') }
+          .with { |req|
+            req.headers['X-Zammad-Delivery'].is_a?(String) &&
+              !req.headers.key?('X-Hub-Signature') &&
+              !req.headers.key?('X-Hub-Signature-256')
+          }
       end
     end
 

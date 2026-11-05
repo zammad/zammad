@@ -7,9 +7,10 @@
   </p>
   <h2><%- @T('Header') %></h2>
   <pre>
-  X-Zammad-Trigger:  Name of the Trigger
-  X-Zammad-Delivery: 6d600811-06a3-40af-aebd-a2d8213e85aa
-  X-Hub-Signature:   sha1=06007ef23c38e435f49091cdfa3c770b3d85d7be
+  X-Zammad-Trigger:    Name of the Trigger
+  X-Zammad-Delivery:   6d600811-06a3-40af-aebd-a2d8213e85aa
+  X-Hub-Signature:     sha1=06007ef23c38e435f49091cdfa3c770b3d85d7be
+  X-Hub-Signature-256: sha256=8b4e5e5e2d9a3b0c6f1e7d2a4c9b8f3e1d6a5c7b9e2f4a8d0c3b6e9f1a2d5c8e
   </pre>
   <h2><%- @T('Body') %></h2>
   <pre><%= @payload %></pre>

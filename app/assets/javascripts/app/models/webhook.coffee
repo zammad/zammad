@@ -12,7 +12,7 @@ class App.Webhook extends App.Model
     { name: 'basic_auth_username', display: __('Username'),                  tag: 'input',       type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'basic_auth_password', display: __('Password'),                  tag: 'input',       type: 'text', input_type: 'password', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'bearer_token',        display: __('Bearer Token'),              tag: 'input',       type: 'text', input_type: 'password', limit: 250, null: true },
-    { name: 'signature_token',     display: __('HMAC SHA1 Signature Token'), tag: 'input',       type: 'text', input_type: 'password', limit: 200, null: true },
+    { name: 'signature_token',     display: __('HMAC signature token'),      tag: 'input',       type: 'text', input_type: 'password', limit: 200, null: true, help: __('Used to sign each request with HMAC-SHA1 (X-Hub-Signature header) and HMAC-SHA256 (X-Hub-Signature-256 header).') },
     { name: 'customized_payload',  display: __('Custom Payload'),            tag: 'switch',      null: true, label_class: 'hidden' },
     { name: 'custom_payload',      display: __('Custom Payload'),            tag: 'code_editor', null: true, collapsible: true, label_class: 'hidden', hint: __('To revert back to the default payload, simply turn off the "Custom Payload" switch above.') },
     { name: 'note',                display: __('Note'),                      tag: 'richtext',    null: true, note: '', limit: 250 },

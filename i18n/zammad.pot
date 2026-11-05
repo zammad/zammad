@@ -2907,7 +2907,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:115
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:17
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:31
-#: app/assets/javascripts/app/views/widget/payload_example.jst.eco:14
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco:15
 msgid "Body"
 msgstr ""
 
@@ -8639,7 +8639,7 @@ msgid "Getting an Access Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco:2
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:404
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:405
 msgid "Getting key information from the browser…"
 msgstr ""
 
@@ -8940,7 +8940,7 @@ msgid "Growth/Enterprise API (api.deepl.com)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
-msgid "HMAC SHA1 Signature Token"
+msgid "HMAC signature token"
 msgstr ""
 
 #: db/seeds/settings.rb:5583
@@ -12065,7 +12065,7 @@ msgid "Name Identifier Format"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:131
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:397
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:398
 msgid "Name for this security key"
 msgstr ""
 
@@ -16387,13 +16387,13 @@ msgstr ""
 msgid "Security key verification failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:375
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:376
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:9
 msgid "Security keys"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:1
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:375
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:376
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
@@ -21068,7 +21068,7 @@ msgid "To make translations easier you can enable and disable the inline transla
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:3
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:386
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:387
 msgid "To register a new security key with your account, press the button below."
 msgstr ""
 
@@ -21471,14 +21471,14 @@ msgstr ""
 msgid "Two-factor authentication is required, but you don't have sufficient permissions to set it up. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:211
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:212
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:111
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:117
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:191
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:171
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:172
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:133
 msgid "Two-factor authentication method was removed."
 msgstr ""
@@ -21489,11 +21489,11 @@ msgid "Two-factor authentication method was set as default."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:305
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:306
 msgid "Two-factor authentication method was set up successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:275
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:276
 msgid "Two-factor method could not be configured."
 msgstr ""
 
@@ -22095,6 +22095,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:353
 msgid "Used in object views"
+msgstr ""
+
+#: app/assets/javascripts/app/models/webhook.coffee:15
+msgid "Used to sign each request with HMAC-SHA1 (X-Hub-Signature header) and HMAC-SHA256 (X-Hub-Signature-256 header)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
