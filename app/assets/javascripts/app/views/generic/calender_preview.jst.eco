@@ -7,14 +7,18 @@
         <p><%- App.Utils.linkify(event.location) %></p>
       <% end %>
       <div class="event-row">
-        <div>
-          <h4><%- @T('Start date') %></h4>
-          <p><%- @datetime(event.start_date) %></p>
-        </div>
-        <div>
-          <h4><%- @T('End date') %></h4>
-          <p><%- @datetime(event.end_date) %></p>
-        </div>
+        <% if event.start_date: %>
+          <div>
+            <h4><%- @T('Start date') %></h4>
+            <p><%- @datetime(event.start_date) %></p>
+          </div>
+        <% end %>
+        <% if event.end_date: %>
+          <div>
+            <h4><%- @T('End date') %></h4>
+            <p><%- @datetime(event.end_date) %></p>
+          </div>
+        <% end %>
       </div>
       <div class="event-row">
         <% if !_.isEmpty(event.organizer): %>
@@ -28,7 +32,7 @@
           <h4><%- @T('Attendees') %></h4>
           <ul>
             <% for attendee in event.attendees: %>
-              <li><%- attendee %></li>
+              <li><%= attendee %></li>
             <% end %>
           </ul>
           </div>

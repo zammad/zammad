@@ -45,6 +45,32 @@ RSpec.describe Gql::Queries::Calendar::IcsFile::Events, authenticated_as: :user,
       )
     end
 
+    # Participant handling is covered in spec/services/service/calendar/ics_file/parse_spec.rb.
+    context 'when a participant has no valid email address' do
+      let(:calendar_file) do
+        create(:store, :ics, object: 'Ticket', o_id: ticket.id, data: <<~ICS)
+          BEGIN:VCALENDAR
+          VERSION:2.0
+          BEGIN:VEVENT
+          UID:participants
+          DTSTAMP:20261105T090000Z
+          DTSTART:20261105T100000Z
+          DTEND:20261105T110000Z
+          SUMMARY:Team sync
+          ORGANIZER:mailto:
+          ATTENDEE;CN=Room booking:mailto:
+          END:VEVENT
+          END:VCALENDAR
+        ICS
+      end
+
+      it 'returns the events' do
+        expect(gql.result.data).to contain_exactly(
+          include('title' => 'Team sync', 'organizer' => nil, 'attendees' => ['Room booking']),
+        )
+      end
+    end
+
     context 'when the agent has no permission to access the ticket' do
       let(:user) { create(:agent, groups: []) }
 

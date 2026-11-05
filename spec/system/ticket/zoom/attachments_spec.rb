@@ -102,6 +102,30 @@ RSpec.describe 'Ticket zoom > Attachments', type: :system do
         end
       end
 
+      context 'when an attendee name contains markup' do
+        let(:store_file_content_name) do
+          <<~ICS
+            BEGIN:VCALENDAR
+            VERSION:2.0
+            BEGIN:VEVENT
+            UID:markup
+            DTSTAMP:20261105T090000Z
+            DTSTART:20261105T100000Z
+            DTEND:20261105T110000Z
+            SUMMARY:Team sync
+            ATTENDEE;CN="<b>Room booking</b>":mailto:
+            END:VEVENT
+            END:VCALENDAR
+          ICS
+        end
+
+        it 'shows the name as plain text' do
+          in_modal do
+            expect(page).to have_text('<b>Room booking</b>')
+          end
+        end
+      end
+
       it 'shows calender data in the model' do
         in_modal do
           expect(page).to have_text expected_event['title']
@@ -111,6 +135,31 @@ RSpec.describe 'Ticket zoom > Attachments', type: :system do
           expect(page).to have_text expected_event['description']
         end
         click '.js-cancel'
+      end
+
+      context 'when an event has no end date' do
+        let(:store_file_content_name) do
+          <<~ICS
+            BEGIN:VCALENDAR
+            VERSION:2.0
+            BEGIN:VEVENT
+            UID:duration
+            DTSTAMP:20261104T090000Z
+            DTSTART:20261111T090000Z
+            DURATION:PT90M
+            SUMMARY:Duration only
+            END:VEVENT
+            END:VCALENDAR
+          ICS
+        end
+
+        it 'shows the start date only' do
+          in_modal do
+            expect(page).to have_text('Duration only')
+              .and have_text(%r{Start date}i)
+              .and have_no_text(%r{End date}i)
+          end
+        end
       end
     end
   end
