@@ -14,18 +14,14 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^\\.gitlab/ci/.*\\.yml$/"
-      ],
+      "managerFilePatterns": ["/^\\.gitlab/ci/.*\\.yml$/"],
       "matchStrings": ["DEVCONTAINERS_CLI_VERSION: '(?<currentValue>[^']+)'"],
       "depNameTemplate": "@devcontainers/cli",
       "datasourceTemplate": "npm"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^\\.gitlab/ci/.*\\.yml$/"
-      ],
+      "managerFilePatterns": ["/^\\.gitlab/ci/.*\\.yml$/"],
       "matchStrings": ["PLAYWRIGHT_VERSION: '(?<currentValue>[^']+)'"],
       "depNameTemplate": "playwright",
       "datasourceTemplate": "npm"
@@ -46,9 +42,7 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^lib/form_spam_protection/captcha/.*\\.rb$/"
-      ],
+      "managerFilePatterns": ["/^lib/form_spam_protection/captcha/.*\\.rb$/"],
       "matchStrings": ["cdn\\.jsdelivr\\.net/npm/(?<depName>[^@]+)@(?<currentValue>[^/]+)/"],
       "datasourceTemplate": "npm"
     }
@@ -62,14 +56,10 @@
     }
   },
   "gitlabci": {
-    "managerFilePatterns": [
-      "/^\\.gitlab/ci/.*\\.yml$/"
-    ]
+    "managerFilePatterns": ["/^\\.gitlab/ci/.*\\.yml$/"]
   },
   "devcontainer": {
-    "managerFilePatterns": [
-      "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
-    ]
+    "managerFilePatterns": ["/^\\.devcontainer/[^/]+/devcontainer\\.json$/"]
   },
   "npm": {
     "lockFileMaintenance": {
@@ -108,24 +98,12 @@
       "enabled": false
     },
     {
-      "matchCategories": ["js"],
-      "matchFileNames": [".dev/cypress/package.json"],
-      "addLabels": ["cypress"]
-    },
-    {
       "matchManagers": ["dockerfile", "docker-compose"],
-      "matchFileNames": [
-        ".dev/**",
-        ".gitlab/packager.io/**"
-      ],
+      "matchFileNames": [".dev/**", ".gitlab/packager.io/**"],
       "enabled": false
     },
     {
-      "matchPackageNames": [
-        "playwright",
-        "playwright-ruby-client",
-        "capybara-playwright-driver"
-      ],
+      "matchPackageNames": ["playwright", "playwright-ruby-client", "capybara-playwright-driver"],
       "groupName": "Playwright packages",
       "groupSlug": "playwright"
     },
@@ -226,13 +204,7 @@
     },
     {
       "matchCategories": ["js"],
-      "matchPackageNames": [
-        "postcss",
-        "postcss-html",
-        "sass",
-        "autoprefixer",
-        "/tailwind/"
-      ],
+      "matchPackageNames": ["postcss", "postcss-html", "sass", "autoprefixer", "/tailwind/"],
       "groupName": "Tailwind/Styling packages",
       "groupSlug": "tailwind-styling-related"
     }

@@ -37,7 +37,7 @@ export default function useEditorActions(
 ) {
   const { focused, isActive } = useEditorActionHelper(editor)
 
-  // this is primarily used by cypress tests, where it requires an actual input in the DOM tree
+  // kept in the DOM tree, so that browser specs can upload images through it
   let fileInput: HTMLInputElement | null = null
 
   const getInputForImage = () => {

@@ -63,8 +63,6 @@ PreCommit:
       - 'vendor'
     include:
       - 'app/frontend/**/*'
-      - '**/*.cy.ts'
-      - '**/cypress/**/*.ts'
       - './vite.config.*'
       - './vitest.setup.ts'
   # Custom Eslint hook, necessary due to dropping of the "compact" formatter in v9.

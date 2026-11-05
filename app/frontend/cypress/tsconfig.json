@@ -1,8 +1,0 @@
-{
-  "extends": "../../../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["cypress", "@testing-library/cypress", "cypress-real-events"]
-  },
-  "include": ["**/*.cy.ts", "**/cypress/**/*.ts"],
-  "exclude": ["node_modules"]
-}

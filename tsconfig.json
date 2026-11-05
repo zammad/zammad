@@ -1,12 +1,5 @@
 {
   "extends": "./tsconfig.base.json",
   "include": ["app/frontend/**/*", "./vite.config.*", "./vitest.setup.ts"],
-  "exclude": [
-    "app/frontend/cypress/**/*",
-    "**/*.cy.ts",
-    "**/.dev/cypress/**/*",
-    "node_modules",
-    "public",
-    "vendor"
-  ]
+  "exclude": ["node_modules", "public", "vendor"]
 }

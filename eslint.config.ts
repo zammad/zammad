@@ -25,7 +25,6 @@ const testFiles = [
   'app/frontend/tests/**',
   'app/frontend/**/__tests__/**',
   'app/frontend/**/*.spec.*',
-  'app/frontend/cypress/**',
   '.eslint-plugin-zammad/**',
 ]
 
@@ -199,11 +198,6 @@ export default defineConfigWithVueTs(
           pathGroups: [
             {
               pattern: '#tests/**',
-              group: 'internal',
-              position: 'before',
-            },
-            {
-              pattern: '#cy/**',
               group: 'internal',
               position: 'before',
             },

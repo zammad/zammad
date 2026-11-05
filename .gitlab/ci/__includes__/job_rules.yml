@@ -51,7 +51,6 @@
 #   artifacts - say so in a comment.
 
 .rule_fragments:
-
   # Never run in forks, e.g. because project specific secrets or runners are needed.
   main_repository_only:
     - if: $CI_PROJECT_PATH != "zammad/zammad"
@@ -112,7 +111,6 @@
       changes:
         - .gitlab/ci/__includes__/**/*
         - .gitlab/ci/test/frontend.yml
-        - .dev/cypress/**/*
         - .eslint-plugin-zammad/**/*
         - app/frontend/**/*
         - app/graphql/graphql_introspection.json

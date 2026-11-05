@@ -5,7 +5,6 @@
     "app/frontend/tests/vitest.setup.ts",
     "app/frontend/build/**/*.{js,mjs,ts}",
     "app/frontend/**/*.graphql",
-    "app/frontend/cypress/**/*.cy.ts",
     "app/frontend/shared/server/action_cable/types.ts"
   ],
   "dynamicallyLoaded": [
@@ -26,7 +25,6 @@
     "public/**",
     "tmp/**",
     ".dev/**",
-    "!.dev/cypress/**",
     "spec/**",
     ".eslint-plugin-zammad/**",
     "!app/frontend/build/**"
@@ -68,10 +66,6 @@
     "non-existing",
     "postcss-html"
   ],
-  "ignoreUnresolvedImports": ["cypress", "cypress/**"],
-  "workspaces": {
-    "patterns": [".dev/cypress"]
-  },
   "duplicates": {
     "near": true
   },
@@ -81,8 +75,7 @@
   "rules": {
     "complexity-crap": "off",
     "complexity-cyclomatic": "warn",
-    "complexity-cognitive": "warn",
-    "package-cycle": "off"
+    "complexity-cognitive": "warn"
   },
   "overrides": [
     {

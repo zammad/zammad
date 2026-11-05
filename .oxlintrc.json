@@ -1,13 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "typescript",
-    "import",
-    "unicorn",
-    "promise",
-    "vitest",
-    "oxc"
-  ],
+  "plugins": ["typescript", "import", "unicorn", "promise", "vitest", "oxc"],
   "categories": {
     "correctness": "error",
     "perf": "error"
@@ -38,8 +31,7 @@
       "files": [
         "app/frontend/tests/**",
         "app/frontend/**/__tests__/**",
-        "app/frontend/**/*.spec.*",
-        "app/frontend/cypress/**"
+        "app/frontend/**/*.spec.*"
       ],
       "rules": {
         "typescript/no-explicit-any": "off"

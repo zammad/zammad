@@ -12,10 +12,6 @@
   pnpm_install_chat: &pnpm_install_chat
     - *pnpm_init
     - pnpm --dir public/assets/chat install
-  pnpm_install_cypress: &pnpm_install_cypress
-    - *pnpm_install
-    - export CYPRESS_CACHE_FOLDER="${CI_PROJECT_DIR}/tmp/cache/.cypress"
-    - pnpm cypress:install
   pnpm_install_eslint_plugin_zammad: &pnpm_install_eslint_plugin_zammad
     - *pnpm_init
     - pnpm --dir .eslint-plugin-zammad install
@@ -23,7 +19,6 @@
     - *pnpm_init
     - *pnpm_install
     - *pnpm_install_chat
-    - *pnpm_install_cypress
     - *pnpm_install_eslint_plugin_zammad
   configure_environment:
     - bundle exec ruby .gitlab/configure_environment.rb

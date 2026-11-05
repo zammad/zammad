@@ -17,7 +17,6 @@
   paths:
     - tmp/cache/.corepack
     - tmp/cache/.pnpm-store
-    - tmp/cache/.cypress
 
 .cache_eslint: &cache_eslint
   key:

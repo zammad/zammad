@@ -23,8 +23,8 @@ const imageSize = () => {
   return { width, height }
 }
 
-// Synthetic events like Cypress `trigger`, which by default fires at the centre of the element.
-//   The resize handle reads the `pageX`/`pageY` deltas between them.
+// Synthetic events, by default at the centre of the element. The resize handle reads the
+//   `pageX`/`pageY` deltas between them.
 const triggerMouse = (element: Element, type: string, position?: { x: number; y: number }) => {
   const rect = element.getBoundingClientRect()
 

@@ -39,7 +39,7 @@ const hmrClientOptions = () => {
 }
 
 export default defineConfig(async ({ mode, command }) => {
-  const isTesting = ['test', 'cypress'].includes(mode)
+  const isTesting = mode === 'test'
   const isBuild = command === 'build'
 
   const require = createRequire(import.meta.url)
