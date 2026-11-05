@@ -9,10 +9,17 @@ import { mountComponent, type mockApolloClient, type MountOptions } from '#tests
 
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormUploadCacheAddDocument } from '#shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts'
+import Form from '#shared/components/Form/Form.vue'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import type { TiptapEditorHTMLElement } from '@tiptap/core'
 
 // ProseMirror renders `img.ProseMirror-separator` cursor helpers next to inline atoms.
 export const EDITOR_IMAGE = 'img:not(.ProseMirror-separator)'
+
+// The browser runs on Linux in the Playwright server container.
+export const MOVE_TO_START = '{Control>}{Home}{/Control}'
+export const MOVE_TO_END = '{Control>}{End}{/Control}'
 
 export const mountEditor = (props: Record<string, unknown> = {}, options?: MountOptions) =>
   mountComponent(
@@ -22,6 +29,44 @@ export const mountEditor = (props: Record<string, unknown> = {}, options?: Mount
       name: 'editor',
       type: 'editor',
       ...props,
+    },
+    options,
+  )
+
+export const mountEditorWithAttachments = (
+  knowledgeBaseMeta: Record<string, unknown> = {},
+  options?: MountOptions,
+) =>
+  mountComponent(
+    Form,
+    {
+      schema: [
+        {
+          isLayout: true,
+          component: 'FormGroup',
+          children: [
+            {
+              name: 'editor',
+              type: 'editor',
+              props: {
+                meta: {
+                  mentionKnowledgeBase: {
+                    attachmentsNodeName: 'attachments',
+                    ...knowledgeBaseMeta,
+                  },
+                },
+              },
+            },
+            {
+              name: 'attachments',
+              type: 'file',
+              props: {
+                multiple: true,
+              },
+            },
+          ],
+        },
+      ],
     },
     options,
   )
@@ -40,8 +85,32 @@ export const editorHtml = () => page.getByRole('textbox').element().innerHTML
 export const editorElements = (selector: string) =>
   Array.from(page.getByRole('textbox').element().querySelectorAll<HTMLElement>(selector))
 
+// tiptap keeps its editor on the element for tests.
+const tiptapEditor = () => (page.getByRole('textbox').element() as TiptapEditorHTMLElement).editor!
+
+export const editorSelection = () => tiptapEditor().state.selection
+
+const editorOwnsCursor = () => {
+  const { view } = tiptapEditor()
+  const { anchorNode, anchorOffset, focusNode, focusOffset } = document.getSelection()!
+
+  return (
+    !!anchorNode &&
+    !!focusNode &&
+    view.posAtDOM(anchorNode, anchorOffset) === view.state.selection.anchor &&
+    view.posAtDOM(focusNode, focusOffset) === view.state.selection.head
+  )
+}
+
+// The editor takes a moved cursor over only on the next `selectionchange`: keys and commands that
+//   read its selection before that still act on the old position.
+export const pressCursorKey = async (keys: string) => {
+  await userEvent.keyboard(keys)
+  await expect.poll(editorOwnsCursor).toBe(true)
+}
+
 export const selectText = (direction: 'left' | 'right', size: number) =>
-  userEvent.keyboard(
+  pressCursorKey(
     `{Shift>}${(direction === 'right' ? '{ArrowRight}' : '{ArrowLeft}').repeat(size)}{/Shift}`,
   )
 

@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { flushPromises } from '@vue/test-utils'
+
 import {
   EnumObjectManagerObjects,
   EnumSearchableModels,
@@ -120,6 +122,40 @@ describe('calling queries with mocked data works correctly', () => {
 
     expect(mock2).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage2)
     expect(data2).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage2)
+  })
+
+  it('query holds the answer back until the defaults promise settles', async () => {
+    const exampleImage = 'https://example.com/image.png'
+
+    let release: () => void = () => {}
+
+    const avatar = mockGraphQLResult<TestAvatarQuery>(
+      TestAvatarDocument,
+      () =>
+        new Promise((resolve) => {
+          release = () => resolve({ userCurrentAvatarActive: { imageFull: exampleImage } })
+        }),
+    )
+
+    let answered = false
+
+    const handler = getQueryHandler<TestAvatarQuery>(TestAvatarDocument)
+    const query = handler.query().then((result) => {
+      answered = true
+      return result
+    })
+
+    const [call] = await avatar.waitForCalls()
+    await flushPromises()
+
+    expect(answered).toBe(false)
+
+    release()
+
+    const { data } = await query
+
+    expect(data).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage)
+    expect(call.result).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage)
   })
 
   it('query correctly uses default data when updating the same object', async () => {

@@ -3,7 +3,14 @@
 import { describe, expect, it } from 'vitest'
 import { userEvent } from 'vitest/browser'
 
-import { editorHtml, findEditor, getEditorContext, mountEditor } from './browser-utils.ts'
+import {
+  editorHtml,
+  findEditor,
+  getEditorContext,
+  MOVE_TO_END,
+  MOVE_TO_START,
+  mountEditor,
+} from './browser-utils.ts'
 
 const html = String.raw
 
@@ -19,10 +26,6 @@ const PARSED_SIGNATURE =
 const WRAPPED_SIGNATURE = (id: string, str: string) => {
   return `<div data-signature="true" dir="auto" class="signature" data-signature-id="${id}">${str}</div>`
 }
-
-// The browser runs on Linux in the Playwright server container.
-const MOVE_TO_START = '{Control>}{Home}{/Control}'
-const MOVE_TO_END = '{Control>}{End}{/Control}'
 
 describe('correctly adds signature', () => {
   it('add signature into an empty editor', async () => {

@@ -4,8 +4,6 @@ import { FormKit } from '@formkit/vue'
 
 import { mountComponent } from '#cy/utils.ts'
 
-import Form from '#shared/components/Form/Form.vue'
-
 export const mountEditor = (
   props: Record<string, unknown> = {},
   permissions?: string[],
@@ -20,49 +18,6 @@ export const mountEditor = (
     },
     permissions,
     config,
-  })
-}
-
-export const mountEditorWithAttachments = (
-  permissions?: string[],
-  knowledgeBaseMeta: Record<string, unknown> = {},
-) => {
-  const props = {
-    schema: [
-      {
-        isLayout: true,
-        component: 'FormGroup',
-        children: [
-          {
-            name: 'editor',
-            type: 'editor',
-            props: {
-              meta: {
-                mentionKnowledgeBase: {
-                  attachmentsNodeName: 'attachments',
-                  ...knowledgeBaseMeta,
-                },
-              },
-            },
-          },
-          {
-            name: 'attachments',
-            type: 'file',
-            props: {
-              multiple: true,
-            },
-          },
-        ],
-      },
-    ],
-  }
-
-  return mountComponent(Form, {
-    props,
-    attrs: {
-      class: 'form',
-    },
-    permissions,
   })
 }
 

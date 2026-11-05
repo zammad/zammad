@@ -203,9 +203,10 @@ export const mockGraphQLResultWithError = <T extends Record<string, any>>(
   }
 }
 
+// A defaults function that returns a promise holds the answer back until it settles.
 export type MockDefaultsValue<T, V = Record<string, never>> =
   | DeepPartial<T>
-  | ((variables: V) => DeepPartial<T>)
+  | ((variables: V) => DeepPartial<T> | Promise<DeepPartial<T>>)
 
 export const mockGraphQLResult = <
   T extends Record<string, any>,
@@ -280,14 +281,10 @@ const getInputObjectType = (variableNode: TypeNode): string | null => {
 
 // assume "$input" value is the default, but test defaults will take precedence
 const getQueryDefaults = (
-  requestKey: string,
+  userDefaults: any,
   definition: OperationDefinitionNode,
   variables: Record<string, any> = {},
 ): Record<string, any> => {
-  let userDefaults = mockDefaults.get(requestKey)
-  if (typeof userDefaults === 'function') {
-    userDefaults = userDefaults(variables)
-  }
   if (!variables.input || definition.operation !== OperationTypeNode.MUTATION) return userDefaults
   const inputVariableNode = definition.variableDefinitions?.find((node) => {
     return node.variable.name.value === 'input'
@@ -396,21 +393,47 @@ class MockLink extends ApolloLink {
 
         return noop
       }
+      const emitData = (data: unknown) => {
+        observer.next(cloneDeep({ data: stripQueryData(definition, fragments, data) }))
+        observer.complete()
+      }
+
       try {
-        const defaults = getQueryDefaults(queryKey, definition, variables)
+        const userDefaults = mockDefaults.get(queryKey)
+        const defaultsValue =
+          typeof userDefaults === 'function' ? userDefaults(variables) : userDefaults
+
+        // Recorded before the answer, so a spec can wait for the request it is holding back.
+        if (defaultsValue instanceof Promise) {
+          const call: MockCall = { document: query, result: {}, variables }
+          calls.push(call)
+          mockCalls.set(queryKey, calls)
+
+          let cancelled = false
+
+          defaultsValue
+            .then((value) => {
+              if (cancelled) return
+
+              call.result = mockOperation(
+                query,
+                variables,
+                getQueryDefaults(value, definition, variables),
+              )
+              emitData(call.result)
+            })
+            .catch((error) => observer.error(error))
+
+          return () => {
+            cancelled = true
+          }
+        }
+
+        const defaults = getQueryDefaults(defaultsValue, definition, variables)
         const returnResult = mockOperation(query, variables, defaults)
-        const result = { data: returnResult }
-        const calls = mockCalls.get(queryKey) || []
-        calls.push({ document: query, result: result.data, variables })
+        calls.push({ document: query, result: returnResult, variables })
         mockCalls.set(queryKey, calls)
-        return emitLater(() => {
-          observer.next(
-            cloneDeep({
-              data: stripQueryData(definition, fragments, result.data),
-            }),
-          )
-          observer.complete()
-        })
+        return emitLater(() => emitData(returnResult))
       } catch (e) {
         console.error(e)
         throw e
