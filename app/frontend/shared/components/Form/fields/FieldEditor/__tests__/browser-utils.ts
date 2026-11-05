@@ -127,11 +127,22 @@ export const selectText = (direction: 'left' | 'right', size: number) =>
   )
 
 const loadedEditorContext = () => {
-  const context = getNode('editor')?.context
+  const context = getNode('editor')?.context as Required<FieldEditorContext> | undefined
 
   if (!context || !('_loaded' in context)) return undefined
 
-  return context as unknown as Required<FieldEditorContext>
+  return context
+}
+
+// The searches are debounced: on a loaded runner, a pause within the typed term can search for a
+//   part of it first.
+export const waitForLastSearch = async (
+  suggestions: { waitForCalls: () => Promise<{ variables: Record<string, unknown> }[]> },
+  variables: Record<string, unknown>,
+) => {
+  await expect
+    .poll(async () => (await suggestions.waitForCalls()).at(-1)?.variables)
+    .toMatchObject(variables)
 }
 
 export const getEditorContext = async () => {

@@ -6,7 +6,7 @@ import { page, userEvent } from 'vitest/browser'
 import { mockMentionSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { findEditor, mountEditor, pressCursorKey } from './browser-utils.ts'
+import { findEditor, mountEditor, pressCursorKey, waitForLastSearch } from './browser-utils.ts'
 
 describe('Testing "user mention" popup: "@@" command', () => {
   it('inserts a user mention  > allows spaces in search', async () => {
@@ -39,6 +39,10 @@ describe('Testing "user mention" popup: "@@" command', () => {
 
     // Search for John
     await userEvent.type(editor, '@@Jo mail.com') // supports space
+    await waitForLastSearch(suggestions, {
+      query: 'Jo mail.com',
+      groupId: convertToGraphQLId('Group', '1'),
+    })
 
     // But select Bob
     const popup = page.getByTestId('mention-user')
@@ -63,11 +67,5 @@ describe('Testing "user mention" popup: "@@" command', () => {
     await expect.element(link).toMatchTextContent('Bob Wandyke')
     await expect.element(link).toHaveAttribute('data-mention-user-id', '3')
     await expect.element(link).toHaveAttribute('href', 'http://example.zammad.com/#user/profile/3')
-
-    const [call] = await suggestions.waitForCalls()
-    expect(call.variables).toMatchObject({
-      query: 'Jo mail.com',
-      groupId: convertToGraphQLId('Group', '1'),
-    })
   })
 })

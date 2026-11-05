@@ -6,7 +6,7 @@ import { page, userEvent } from 'vitest/browser'
 import { mockMentionSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { editorHtml, findEditor, mountEditor } from './browser-utils.ts'
+import { editorHtml, findEditor, mountEditor, waitForLastSearch } from './browser-utils.ts'
 
 describe('Testing "user mention" popup: "@@" command', () => {
   it('inserts a user mention > allows spaces in search but exit on Esc', async () => {
@@ -39,6 +39,10 @@ describe('Testing "user mention" popup: "@@" command', () => {
 
     // Search for John
     await userEvent.type(editor, '@@Jo mail.com') // supports space
+    await waitForLastSearch(suggestions, {
+      query: 'Jo mail.com',
+      groupId: convertToGraphQLId('Group', '1'),
+    })
 
     const popup = page.getByTestId('mention-user')
 
@@ -52,11 +56,5 @@ describe('Testing "user mention" popup: "@@" command', () => {
     await expect.poll(editorHtml).toContain('<p dir="auto">@@Jo mail.c123</p>')
     await userEvent.type(editor, '{ArrowLeft}{ArrowLeft}654')
     await expect.poll(editorHtml).toContain('<p dir="auto">@@Jo mail.c165423</p>')
-
-    const [call] = await suggestions.waitForCalls()
-    expect(call.variables).toMatchObject({
-      query: 'Jo mail.com',
-      groupId: convertToGraphQLId('Group', '1'),
-    })
   })
 })

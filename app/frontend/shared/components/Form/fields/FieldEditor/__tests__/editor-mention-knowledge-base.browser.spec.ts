@@ -7,7 +7,7 @@ import { mockKnowledgeBaseAnswerSuggestionContentTransformMutation } from '#shar
 import { mockKnowledgeBaseAnswerSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { findEditor, mountEditorWithAttachments } from './browser-utils.ts'
+import { findEditor, mountEditorWithAttachments, waitForLastSearch } from './browser-utils.ts'
 
 describe('Testing "knowledge base" popup: "??" command', () => {
   it('inserts a knowledge base mention', async () => {
@@ -59,10 +59,7 @@ describe('Testing "knowledge base" popup: "??" command', () => {
 
     await userEvent.keyboard('How to c') // supports space
 
-    // The search is debounced, a slow keystroke can search for a part of the term first.
-    await expect
-      .poll(async () => (await suggestions.waitForCalls()).at(-1)?.variables)
-      .toMatchObject({ query: 'How to c' })
+    await waitForLastSearch(suggestions, { query: 'How to c' })
 
     await expect.element(popup).toMatchTextContent('How to create a ticket?')
     await popup.getByText('How to create a ticket?').click()

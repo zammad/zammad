@@ -6,7 +6,12 @@ import { page, userEvent } from 'vitest/browser'
 import { mockKnowledgeBaseAnswerSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { editorHtml, findEditor, mountEditorWithAttachments } from './browser-utils.ts'
+import {
+  editorHtml,
+  findEditor,
+  mountEditorWithAttachments,
+  waitForLastSearch,
+} from './browser-utils.ts'
 
 describe('Testing "knowledge base" popup: "??" command', () => {
   it('inserts a knowledge base mention > but exit on Esc > keyboard keys should still work', async () => {
@@ -29,6 +34,7 @@ describe('Testing "knowledge base" popup: "??" command', () => {
 
     const editor = await findEditor()
     await userEvent.type(editor, '??How to c')
+    await waitForLastSearch(suggestions, { query: 'How to c' })
 
     const popup = page.getByTestId('mention-knowledge-base')
 
@@ -42,8 +48,5 @@ describe('Testing "knowledge base" popup: "??" command', () => {
     await expect.poll(editorHtml).toContain('<p dir="auto">??How to123</p>')
     await userEvent.type(editor, '{ArrowLeft}{ArrowLeft}654')
     await expect.poll(editorHtml).toContain('<p dir="auto">??How to165423</p>')
-
-    const [call] = await suggestions.waitForCalls()
-    expect(call.variables).toMatchObject({ query: 'How to c' })
   })
 })

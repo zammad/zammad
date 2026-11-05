@@ -6,7 +6,7 @@ import { page, userEvent } from 'vitest/browser'
 import { mockTextModuleSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { editorHtml, findEditor, mountEditor } from './browser-utils.ts'
+import { editorHtml, findEditor, mountEditor, waitForLastSearch } from './browser-utils.ts'
 
 describe('Testing "text" popup: "::" command', () => {
   it('inserts a text > allows spaces in search', async () => {
@@ -24,6 +24,7 @@ describe('Testing "text" popup: "::" command', () => {
     await mountEditor({}, { permissions: ['ticket.agent'] })
 
     await userEvent.type(await findEditor(), '::weitere fragen') // supports space
+    await waitForLastSearch(suggestions, { query: 'weitere fragen' })
 
     const popup = page.getByTestId('mention-text')
 
@@ -35,8 +36,5 @@ describe('Testing "text" popup: "::" command', () => {
     await expect
       .poll(editorHtml)
       .toContain('<p dir="auto">Für weitere Fragen stehe ich gerne zur Verfügun123</p>')
-
-    const [call] = await suggestions.waitForCalls()
-    expect(call.variables).toMatchObject({ query: 'weitere fragen' })
   })
 })

@@ -7,7 +7,7 @@ import { useNotifications } from '#shared/components/CommonNotifications/index.t
 import { mockMentionSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { findEditor, mountEditor, pressCursorKey } from './browser-utils.ts'
+import { findEditor, mountEditor, pressCursorKey, waitForLastSearch } from './browser-utils.ts'
 
 describe('Testing "user mention" popup: "@@" command', () => {
   it('shows notification when no group is provided', async () => {
@@ -52,6 +52,7 @@ describe('Testing "user mention" popup: "@@" command', () => {
 
     const editor = await findEditor()
     await userEvent.type(editor, '@@Jo')
+    await waitForLastSearch(suggestions, { query: 'Jo', groupId: convertToGraphQLId('Group', '1') })
 
     const popup = page.getByTestId('mention-user')
 
@@ -74,8 +75,5 @@ describe('Testing "user mention" popup: "@@" command', () => {
     await expect.element(link).toMatchTextContent('Bob Wandyke')
     await expect.element(link).toHaveAttribute('data-mention-user-id', '3')
     await expect.element(link).toHaveAttribute('href', 'http://example.zammad.com/#user/profile/3')
-
-    const [call] = await suggestions.waitForCalls()
-    expect(call.variables).toMatchObject({ query: 'Jo', groupId: convertToGraphQLId('Group', '1') })
   })
 })
