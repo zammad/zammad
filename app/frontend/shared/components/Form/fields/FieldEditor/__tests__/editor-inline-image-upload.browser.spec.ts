@@ -4,7 +4,8 @@ import { getNode } from '@formkit/core'
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 
-import { mountComponent, routeRequest, type MountOptions } from '#tests/browser/utils.ts'
+import type { MountOptions } from '#tests/browser/types.ts'
+import { mountComponent, routeRequest } from '#tests/browser/utils.ts'
 
 import { claimInlineImages } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
 import { mockTextModuleSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.mocks.ts'
