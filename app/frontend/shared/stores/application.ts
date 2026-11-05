@@ -103,7 +103,10 @@ export const useApplicationStore = defineStore(
     const getConfig = async (): Promise<void> => {
       const configQuery = getApplicationConfigQuery()
 
-      const { data: result } = await configQuery.refetch()
+      // Without the config the application cannot start, so a failure has to stop the caller.
+      const { data: result, error } = await configQuery.refetch()
+      if (error) throw error
+
       if (result?.applicationConfig) {
         result.applicationConfig.forEach((item) => {
           config.value[item.key] = item.value

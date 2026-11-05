@@ -161,7 +161,8 @@ const tableActions: MenuItem[] = [
 
       if (!removeCredentialsResult?.userCurrentTwoFactorRemoveMethodCredentials?.success) return
 
-      await configurationQuery.refetch()
+      const { error } = await configurationQuery.refetch()
+      if (error) return
 
       props.successCallback?.()
 

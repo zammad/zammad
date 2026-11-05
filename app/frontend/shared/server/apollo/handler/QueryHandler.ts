@@ -48,7 +48,7 @@ export default class QueryHandler<
           this.handlerOptions.triggerRefetchOnConnectionReconnect()) ||
         this.handlerOptions.triggerRefetchOnConnectionReconnect
       ) {
-        this.refetch().catch(() => {})
+        this.refetch()
       }
     })
   }
@@ -286,10 +286,14 @@ export default class QueryHandler<
     })
   }
 
+  /**
+   * Resolves with the error instead of rejecting, like `query()`: `onError` already reports it,
+   * and most callers do not await a refetch, so a rejection would go uncaught.
+   */
   public refetch(
     variables?: Partial<TVariables>,
-  ): Promise<{ data: Maybe<TResult>; error?: unknown }> {
-    return new Promise((resolve, reject) => {
+  ): Promise<{ data: Maybe<TResult>; error?: ErrorLike }> {
+    return new Promise((resolve) => {
       const refetch = this.operationResult.refetch(variables as TVariables)
 
       if (!refetch) {
@@ -301,8 +305,8 @@ export default class QueryHandler<
         .then((result) => {
           resolve({ data: result?.data ?? null })
         })
-        .catch(() => {
-          reject(this.operationError().value)
+        .catch((error) => {
+          resolve({ data: null, error: this.operationError().value ?? toErrorLike(error) })
         })
     })
   }

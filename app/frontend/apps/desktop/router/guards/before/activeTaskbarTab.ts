@@ -31,7 +31,9 @@ const activeTaskbarTab: NavigationGuard = async (to: RouteLocationNormalized) =>
   // TODO: instead of that I would only load the single item so that the page can already start working?
   if (taskbarTabStore.loading) await taskbarTabStore.waitForTaskbarListLoaded()
 
-  taskbarTabStore.upsertTaskbarTab(taskbarTabEntityType, taskbarTabEntityKey, to)
+  // Not awaited, so the page opens without waiting for the taskbar. A failure is already reported by
+  //   the mutation handler, and would otherwise go uncaught, e.g. when a reload aborts the request.
+  taskbarTabStore.upsertTaskbarTab(taskbarTabEntityType, taskbarTabEntityKey, to).catch(() => {})
 
   // Remember the entity key for the current taskbar tab,
   //   so it can be used for checking the entity access.

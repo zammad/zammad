@@ -45,8 +45,7 @@ export const useCallerLog = (enabled: Ref<boolean>) => {
   const loadedPageSize = () =>
     Math.max(Math.ceil(logs.value.length / CALLER_LOG_PAGE_SIZE), 1) * CALLER_LOG_PAGE_SIZE
 
-  const refetchLoadedWindow = () =>
-    logsQuery.refetch({ cursor: null, pageSize: loadedPageSize() }).catch(() => {})
+  const refetchLoadedWindow = () => logsQuery.refetch({ cursor: null, pageSize: loadedPageSize() })
 
   // The cursors encode offsets, so a row missing from the middle of the list would make the
   //   next page skip one; while further pages exist, the loaded window is read again instead.

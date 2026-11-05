@@ -299,7 +299,7 @@ describe('QueryHandler', () => {
 
         handlerCallSpy.mockImplementation(() => Promise.resolve(querySampleErrorResult))
 
-        await queryHandlerObject.refetch().catch(() => {})
+        await queryHandlerObject.refetch()
         await waitForNextTick()
 
         expect(resultCallbackSpy).toHaveBeenCalledTimes(1)
@@ -452,21 +452,18 @@ describe('QueryHandler', () => {
         })
       })
 
-      it('refetch with error', async () => {
+      it('refetch with error resolves with the error instead of rejecting', async () => {
         await scope.run(async () => {
-          expect.assertions(1)
           const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
-
-          const errorCallbackSpy = vi.fn()
 
           await waitFirstResult(queryHandlerObject)
 
           // Refetch after first load again.
-          await queryHandlerObject.refetch().catch((error) => {
-            errorCallbackSpy(error)
-          })
+          const { data, error } = await queryHandlerObject.refetch()
 
-          expect(errorCallbackSpy).toHaveBeenCalled()
+          expect(data).toBeNull()
+          expect(error).toBe(queryHandlerObject.operationError().value)
+          expect(error).toBeTruthy()
         })
       })
     })

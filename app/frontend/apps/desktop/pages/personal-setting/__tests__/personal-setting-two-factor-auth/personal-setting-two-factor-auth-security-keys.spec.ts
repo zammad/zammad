@@ -9,6 +9,7 @@ import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import {
   mockUserCurrentTwoFactorGetMethodConfigurationQuery,
+  mockUserCurrentTwoFactorGetMethodConfigurationQueryError,
   waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls,
 } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.mocks.ts'
 import {
@@ -18,12 +19,78 @@ import {
 import { mockUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.mocks.ts'
 import { mockUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import {
   mockUserCurrentPasswordCheckMutation,
   waitForUserCurrentPasswordCheckMutationCalls,
 } from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts'
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
+
+const openSecurityKeysWithCredential = async () => {
+  const view = await visitView('/personal-setting/two-factor-auth')
+
+  await getUserCurrentTwoFactorUpdatesSubscriptionHandler().trigger({
+    userCurrentTwoFactorUpdates: {
+      configuration: {
+        enabledAuthenticationMethods: [
+          {
+            authenticationMethod: EnumTwoFactorAuthenticationMethod.SecurityKeys,
+            configured: true,
+          },
+        ],
+        recoveryCodesExist: true,
+      },
+    },
+  })
+
+  const actionMenuButton = view.getByRole('button', {
+    name: 'Action menu button for security keys',
+  })
+
+  await view.events.click(actionMenuButton)
+
+  const actionMenuItem = view.getByRole('button', { name: 'Edit' })
+
+  await view.events.click(actionMenuItem)
+
+  const flyout = await view.findByRole('complementary', {
+    name: 'Set up two-factor authentication: Confirm password',
+  })
+
+  const flyoutContent = within(flyout)
+
+  const passwordInput = flyoutContent.getByLabelText('Current password')
+
+  mockUserCurrentPasswordCheckMutation({
+    userCurrentPasswordCheck: {
+      success: true,
+    },
+  })
+
+  mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+    userCurrentTwoFactorGetMethodConfiguration: {
+      credentials: [
+        {
+          nickname: 'foobar',
+          public_key: 'foobar',
+          created_at: '2024-01-01T00:00:00Z',
+        },
+      ],
+    },
+  })
+
+  await view.events.type(passwordInput, 'test')
+  await view.events.click(view.getByRole('button', { name: 'Next' }))
+
+  await waitForUserCurrentPasswordCheckMutationCalls()
+  await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
+
+  expect(flyout).toHaveTextContent('foobar')
+  expect(within(flyout).getByLabelText('2024-01-01 00:00')).toBeInTheDocument()
+
+  return { view, flyout }
+}
 
 describe('Two-factor Authentication - Security Keys', () => {
   beforeEach(() => {
@@ -89,66 +156,7 @@ describe('Two-factor Authentication - Security Keys', () => {
   })
 
   it('supports removal of existing security keys', async () => {
-    const view = await visitView('/personal-setting/two-factor-auth')
-
-    await getUserCurrentTwoFactorUpdatesSubscriptionHandler().trigger({
-      userCurrentTwoFactorUpdates: {
-        configuration: {
-          enabledAuthenticationMethods: [
-            {
-              authenticationMethod: EnumTwoFactorAuthenticationMethod.SecurityKeys,
-              configured: true,
-            },
-          ],
-          recoveryCodesExist: true,
-        },
-      },
-    })
-
-    const actionMenuButton = view.getByRole('button', {
-      name: 'Action menu button for security keys',
-    })
-
-    await view.events.click(actionMenuButton)
-
-    const actionMenuItem = view.getByRole('button', { name: 'Edit' })
-
-    await view.events.click(actionMenuItem)
-
-    const flyout = await view.findByRole('complementary', {
-      name: 'Set up two-factor authentication: Confirm password',
-    })
-
-    const flyoutContent = within(flyout)
-
-    const passwordInput = flyoutContent.getByLabelText('Current password')
-
-    mockUserCurrentPasswordCheckMutation({
-      userCurrentPasswordCheck: {
-        success: true,
-      },
-    })
-
-    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
-      userCurrentTwoFactorGetMethodConfiguration: {
-        credentials: [
-          {
-            nickname: 'foobar',
-            public_key: 'foobar',
-            created_at: '2024-01-01T00:00:00Z',
-          },
-        ],
-      },
-    })
-
-    await view.events.type(passwordInput, 'test')
-    await view.events.click(view.getByRole('button', { name: 'Next' }))
-
-    await waitForUserCurrentPasswordCheckMutationCalls()
-    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
-
-    expect(flyout).toHaveTextContent('foobar')
-    expect(within(flyout).getByLabelText('2024-01-01 00:00')).toBeInTheDocument()
+    const { view, flyout } = await openSecurityKeysWithCredential()
 
     mockUserCurrentTwoFactorRemoveMethodCredentialsMutation({
       userCurrentTwoFactorRemoveMethodCredentials: {
@@ -172,6 +180,29 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     expect(flyout).not.toHaveTextContent('foobar')
     expect(flyout).not.toHaveTextContent('just now')
+  })
+
+  it('does not confirm the removal when the credentials cannot be reloaded', async () => {
+    const { view } = await openSecurityKeysWithCredential()
+
+    mockUserCurrentTwoFactorRemoveMethodCredentialsMutation({
+      userCurrentTwoFactorRemoveMethodCredentials: {
+        success: true,
+      },
+    })
+
+    mockUserCurrentTwoFactorGetMethodConfigurationQueryError('Credentials unavailable', {
+      type: GraphQLErrorTypes.NetworkError,
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Remove' }))
+
+    await waitForUserCurrentTwoFactorRemoveMethodCredentialsMutationCalls()
+
+    expect(await view.findByText('Could not fetch security keys')).toBeInTheDocument()
+    expect(
+      view.queryByText('Two-factor authentication method was removed.'),
+    ).not.toBeInTheDocument()
   })
 
   it('supports submitting of nickname via keyboard', async () => {

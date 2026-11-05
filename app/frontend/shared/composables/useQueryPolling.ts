@@ -61,7 +61,7 @@ export const useQueryPolling = <
 
     const poll = async () => {
       const pollVariables = typeof variables === 'function' ? variables() : variables?.value
-      await query.refetch(pollVariables as TVariables).catch(() => {})
+      await query.refetch(pollVariables as TVariables)
 
       // Only schedule next poll after current one completes
       if (isPolling.value) {

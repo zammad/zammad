@@ -172,11 +172,8 @@ export const useKnowledgeBaseCategorySubcategories = (
   //   a breadcrumb ancestor, or a displayed child (whose subtree counts and
   //   visibility may shift). Ancestors are in the category's breadcrumb, so a
   //   change deep in a child's subtree still lists that child.
-  // Caught, because QueryHandler.refetch rejects on failure and nothing awaits these: a ping
-  //   arriving while offline would otherwise raise an unhandled rejection. The handler itself
-  //   reports the failure (its `errorCallback` above), so there is nothing to do here.
   const refetchDisplayed = (args: { categoryId?: string; locale?: string }) =>
-    knowledgeBaseCategorySubcategories.refetch(args).catch(() => {})
+    knowledgeBaseCategorySubcategories.refetch(args)
 
   // Handed over by useKnowledgeBaseContentUpdates rather than taken from the store directly, so a
   //   view that is kept alive off screen does not refetch until it is looked at again.

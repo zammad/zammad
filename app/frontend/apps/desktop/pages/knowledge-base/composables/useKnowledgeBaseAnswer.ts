@@ -114,12 +114,10 @@ export const useKnowledgeBaseAnswer = (
       //   flush, while this runs in the current one. The section keeps a single reader alive
       //   across answers, so an unpinned refetch would ask for the one being navigated away from -
       //   and a 404 for *that* answer would redirect away from the one being opened.
-      knowledgeBaseAnswerQuery
-        .refetch({
-          answerId: answerId?.value as string,
-          locale: locale?.value,
-        })
-        .catch(() => {})
+      knowledgeBaseAnswerQuery.refetch({
+        answerId: answerId?.value as string,
+        locale: locale?.value,
+      })
     },
     () => {
       onScreen.value = false
@@ -359,16 +357,10 @@ export const useKnowledgeBaseAnswer = (
       //   a changed `answerId`/`locale` into the underlying query on its next
       //   reactivity flush, so a ping arriving in the same tick as a locale
       //   switch would otherwise refetch with the args being navigated away from.
-      // Caught, because QueryHandler.refetch *rejects* on failure: nothing awaits this one, and a
-      //   failed refresh is already handled by the handler itself (`operationError`, which
-      //   `answerConfirmed` above reads). Without it a ping arriving offline raises an unhandled
-      //   rejection - the same reason the handler's own reconnect refetch catches (QueryHandler).
-      knowledgeBaseAnswerQuery
-        .refetch({
-          answerId: answerId?.value as string,
-          locale: locale?.value,
-        })
-        .catch(() => {})
+      knowledgeBaseAnswerQuery.refetch({
+        answerId: answerId?.value as string,
+        locale: locale?.value,
+      })
     }
   })
 

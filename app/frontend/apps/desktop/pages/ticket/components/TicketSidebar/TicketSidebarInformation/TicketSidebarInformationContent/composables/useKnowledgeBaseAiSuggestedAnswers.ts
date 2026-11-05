@@ -100,12 +100,9 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
 
     keepingAnswers.value = keepAnswers && !refreshIsWaiting
 
-    queryHandler
-      .refetch()
-      .catch(() => {})
-      .finally(() => {
-        keepingAnswers.value = false
-      })
+    queryHandler.refetch().finally(() => {
+      keepingAnswers.value = false
+    })
   }
 
   // Content-free ping: the embedding the search relies on may have settled. Always subscribed while
