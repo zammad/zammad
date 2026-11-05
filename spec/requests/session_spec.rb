@@ -362,6 +362,11 @@ RSpec.describe 'Sessions endpoints', type: :request do
             expect(json_response).to include('error' => 'Maintenance mode enabled!')
           end
         end
+
+        it 'does not update the last login' do
+          expect { get '/auth/sso', as: :json, headers: { 'X-Forwarded-User' => login } }
+            .not_to change { user.reload.last_login }
+        end
       end
 
       context 'in "REMOTE_USER" request env var' do
@@ -406,6 +411,22 @@ RSpec.describe 'Sessions endpoints', type: :request do
         it 'sets the :user_id session parameter on the client' do
           expect { get '/auth/sso', as: :json, headers: headers }
             .to change { request&.session&.fetch(:user_id) }.to(user.id)
+        end
+
+        it 'updates the last login' do
+          freeze_time
+
+          expect { get '/auth/sso', as: :json, headers: headers }
+            .to change { user.reload.last_login }.from(nil).to(Time.zone.now)
+        end
+
+        context 'with failed logins before' do
+          let(:user) { create(:agent, login_failed: 2) }
+
+          it 'resets the failed logins' do
+            expect { get '/auth/sso', as: :json, headers: headers }
+              .to change { user.reload.login_failed }.from(2).to(0)
+          end
         end
       end
     end
