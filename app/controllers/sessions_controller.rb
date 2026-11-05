@@ -65,6 +65,7 @@ class SessionsController < ApplicationController
     authentication_check_prerequesits(user, 'SSO')
 
     initiate_session_for(user, 'SSO')
+    user.update_last_login
 
     redirect_after_omniauth('/#')
   end

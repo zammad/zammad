@@ -396,6 +396,11 @@ RSpec.describe 'Sessions endpoints', type: :request do
         before { Setting.set('maintenance_mode', true) }
 
         include_examples 'refusing the login with 403 Forbidden'
+
+        it 'does not update the last login' do
+          expect { get '/auth/sso', as: :json, headers: { 'X-Forwarded-User' => login } }
+            .not_to change { user.reload.last_login }
+        end
       end
 
       context 'in Import Mode' do
@@ -446,6 +451,22 @@ RSpec.describe 'Sessions endpoints', type: :request do
         it 'sets the :user_id session parameter on the client' do
           expect { get '/auth/sso', as: :json, headers: headers }
             .to change { request&.session&.fetch(:user_id) }.to(user.id)
+        end
+
+        it 'updates the last login' do
+          freeze_time
+
+          expect { get '/auth/sso', as: :json, headers: headers }
+            .to change { user.reload.last_login }.from(nil).to(Time.zone.now)
+        end
+
+        context 'with failed logins before' do
+          let(:user) { create(:agent, login_failed: 2) }
+
+          it 'resets the failed logins' do
+            expect { get '/auth/sso', as: :json, headers: headers }
+              .to change { user.reload.login_failed }.from(2).to(0)
+          end
         end
       end
     end
