@@ -34,11 +34,10 @@ returns
       timezone: params[:timezone],
     }
 
-    selector = params[:selector].clone
+    selector = Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
     if params[:params].present? && params[:params][:selector].present?
-      selector = selector.merge(params[:params][:selector])
+      selector = Selector::Base.and(selector, params[:params][:selector])
     end
-    selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
 
     result_es = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user] }, aggs_interval)
 
@@ -87,11 +86,10 @@ returns
       limit = 100
     end
 
-    selector = params[:selector].clone
+    selector = Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
     if params[:params] && params[:params][:selector]
-      selector = selector.merge(params[:params][:selector])
+      selector = Selector::Base.and(selector, params[:params][:selector])
     end
-    selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
 
     result = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user], limit: limit }, aggs_interval)
     result[:ticket_ids] = result.delete(:object_ids)

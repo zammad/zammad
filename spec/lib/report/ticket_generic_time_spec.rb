@@ -4,6 +4,17 @@ require 'rails_helper'
 require 'lib/report_examples'
 
 RSpec.describe Report::TicketGenericTime, searchindex: true do
+  # report profile in expert mode (#6527)
+  let(:expert_selector) do
+    {
+      'operator'   => 'OR',
+      'conditions' => [
+        { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '2 normal').id] },
+        { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '3 high').id] },
+      ],
+    }
+  end
+
   include_examples 'with report examples'
 
   describe '.aggs' do
@@ -17,6 +28,38 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
       )
 
       expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 0]
+    end
+
+    it 'gets monthly aggregated results by created_at excluding merged tickets in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    expert_selector,
+        params:      { field: 'created_at' },
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 0]
+    end
+
+    it 'gets monthly aggregated results by created_at with backend selector in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    expert_selector,
+        params:      {
+          field:    'created_at',
+          selector: {
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::Article::Sender.lookup(name: 'Agent').id,
+            },
+          },
+        },
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
     end
 
     context 'when report profile has a ticket tag condition' do
@@ -259,6 +302,36 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
       )
 
       expect(result).to match_tickets ticket_7, ticket_6, ticket_5, ticket_4, ticket_3, ticket_2, ticket_1
+    end
+
+    it 'gets items in year range by created_at excluding merged tickets in expert mode' do
+      result = described_class.items(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        selector:    expert_selector,
+        params:      { field: 'created_at' },
+      )
+
+      expect(result).to match_tickets ticket_7, ticket_6, ticket_5, ticket_4, ticket_3, ticket_2, ticket_1
+    end
+
+    it 'gets items in year range by created_at with backend selector in expert mode' do
+      result = described_class.items(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        selector:    expert_selector,
+        params:      {
+          field:    'created_at',
+          selector: {
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::Article::Sender.lookup(name: 'Agent').id,
+            },
+          },
+        },
+      )
+
+      expect(result).to match_tickets ticket_6, ticket_5
     end
 
     it 'gets items in year range by created_at before oct 31st' do

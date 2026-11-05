@@ -4,6 +4,23 @@ require 'rails_helper'
 require 'lib/report_examples'
 
 RSpec.describe Report::TicketMoved, searchindex: true do
+  # report profile in expert mode (#6527)
+  let(:expert_selector) do
+    {
+      'operator'   => 'AND',
+      'conditions' => [
+        { 'name' => 'ticket.group_id', 'operator' => 'is', 'value' => [Group.lookup(name: 'Users').id] },
+        {
+          'operator'   => 'OR',
+          'conditions' => [
+            { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '2 normal').id] },
+            { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '3 high').id] },
+          ],
+        },
+      ],
+    }
+  end
+
   include_examples 'with report examples'
 
   describe '.aggs' do
@@ -40,6 +57,64 @@ RSpec.describe Report::TicketMoved, searchindex: true do
       expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
     end
 
+    it 'gets monthly aggregated results in users group in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    expert_selector,
+        params:      {
+          type: 'in',
+        },
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+    end
+
+    it 'gets no results with group condition inside an OR block in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    {
+          'operator'   => 'OR',
+          'conditions' => [
+            { 'name' => 'ticket.group_id', 'operator' => 'is', 'value' => [Group.lookup(name: 'Users').id] },
+            { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '3 high').id] },
+          ],
+        },
+        params:      {
+          type: 'in',
+        },
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    end
+
+    it 'gets no results with group condition inside a NOT block in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    {
+          'operator'   => 'AND',
+          'conditions' => [
+            {
+              'operator'   => 'NOT',
+              'conditions' => [
+                { 'name' => 'ticket.group_id', 'operator' => 'is', 'value' => [Group.lookup(name: 'Users').id] },
+              ],
+            },
+          ],
+        },
+        params:      {
+          type: 'out',
+        },
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    end
+
     it 'gets monthly aggregated results not in merged state and outgoing' do
       result = described_class.aggs(
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
@@ -73,6 +148,20 @@ RSpec.describe Report::TicketMoved, searchindex: true do
       expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
     end
 
+    it 'gets monthly aggregated results in users group and outgoing in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    expert_selector,
+        params:      {
+          type: 'out',
+        },
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+    end
+
   end
 
   describe '.items' do
@@ -86,6 +175,19 @@ RSpec.describe Report::TicketMoved, searchindex: true do
             'value'    => [Group.lookup(name: 'Users').id],
           }
         },
+        params:      {
+          type: 'in',
+        },
+      )
+
+      expect(result).to match_tickets ticket_1
+    end
+
+    it 'gets items in year range in users group in expert mode' do
+      result = described_class.items(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        selector:    expert_selector,
         params:      {
           type: 'in',
         },
@@ -117,6 +219,19 @@ RSpec.describe Report::TicketMoved, searchindex: true do
             'value'    => [Group.lookup(name: 'Users').id],
           }
         },
+        params:      {
+          type: 'out',
+        },
+      )
+
+      expect(result).to match_tickets ticket_2
+    end
+
+    it 'gets items in year range in users group and outgoing in expert mode' do
+      result = described_class.items(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        selector:    expert_selector,
         params:      {
           type: 'out',
         },

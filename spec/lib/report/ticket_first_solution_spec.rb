@@ -4,6 +4,17 @@ require 'rails_helper'
 require 'lib/report_examples'
 
 RSpec.describe Report::TicketFirstSolution, searchindex: true do
+  # report profile in expert mode (#6527)
+  let(:expert_selector) do
+    {
+      'operator'   => 'OR',
+      'conditions' => [
+        { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '2 normal').id] },
+        { 'name' => 'ticket.priority_id', 'operator' => 'is', 'value' => [Ticket::Priority.lookup(name: '3 high').id] },
+      ],
+    }
+  end
+
   include_examples 'with report examples'
 
   describe '.aggs' do
@@ -13,6 +24,17 @@ RSpec.describe Report::TicketFirstSolution, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         interval:    'month',
         selector:    {},
+      )
+
+      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0]
+    end
+
+    it 'gets monthly aggregated results excluding merged tickets in expert mode' do
+      result = described_class.aggs(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:    'month',
+        selector:    expert_selector,
       )
 
       expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0]
@@ -90,6 +112,15 @@ RSpec.describe Report::TicketFirstSolution, searchindex: true do
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {},
+      )
+      expect(result).to match_tickets ticket_5, ticket_6, ticket_7
+    end
+
+    it 'gets items in year range excluding merged tickets in expert mode' do
+      result = described_class.items(
+        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+        selector:    expert_selector,
       )
       expect(result).to match_tickets ticket_5, ticket_6, ticket_7
     end

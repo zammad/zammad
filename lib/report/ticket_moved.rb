@@ -22,7 +22,7 @@ returns
   def self.aggs(params_origin)
     params = duplicate_preserving_current_user(params_origin)
 
-    selector = params[:selector]['ticket.group_id']
+    selector = Selector::Base.condition(params[:selector], 'ticket.group_id')
 
     if !selector
       return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -53,10 +53,9 @@ returns
         params[:range_end] = params[:range_start] + 1.minute
       end
       local_params = group_attributes(selector, params)
-      local_selector = params[:selector].clone
-      local_selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
+      local_selector = Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
       if params[:params][:type] == 'out'
-        local_selector.delete('ticket.group_id')
+        local_selector = Selector::Base.without(local_selector, 'ticket.group_id')
       end
       defaults = {
         object:    'Ticket',
@@ -95,7 +94,7 @@ returns
 
   def self.items(params)
 
-    selector = params[:selector]['ticket.group_id']
+    selector = Selector::Base.condition(params[:selector], 'ticket.group_id')
 
     if !selector
       return {
@@ -104,9 +103,9 @@ returns
       }
     end
     local_params = group_attributes(selector, params)
-    local_selector = params[:selector].merge!(without_merged_tickets_selector) # do not show merged tickets in reports
+    local_selector = Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
     if params[:params][:type] == 'out'
-      local_selector.delete('ticket.group_id')
+      local_selector = Selector::Base.without(local_selector, 'ticket.group_id')
     end
     defaults = {
       object:    'Ticket',
@@ -130,8 +129,8 @@ returns
   end
 
   def self.group_attributes(selector, params)
-    group_id = selector['value']
-    case selector['operator']
+    group_id = selector[:value]
+    case selector[:operator]
     when 'is'
       if params[:params][:type] == 'in'
         return {

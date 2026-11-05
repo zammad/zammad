@@ -45,8 +45,7 @@ returns
         params[:range_end] = params[:range_start] + 1.minute
       end
 
-      local_selector = params[:selector].clone
-      local_selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
+      local_selector = Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
 
       query, bind_params, tables = Ticket.selector2sql(local_selector)
       ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
@@ -88,8 +87,7 @@ returns
 =end
 
   def self.items(params)
-    local_selector = params[:selector].clone
-    local_selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
+    local_selector = Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
 
     query, bind_params, tables = Ticket.selector2sql(local_selector)
     ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(

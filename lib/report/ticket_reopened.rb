@@ -47,7 +47,6 @@ returns
         params[:range_end] = params[:range_start] + 1.minute
       end
 
-      params[:selector].merge!(without_merged_tickets_selector) # do not show merged tickets in reports
       count = history_count(
         object:    'Ticket',
         type:      'updated',
@@ -56,7 +55,7 @@ returns
         id_not_to: ticket_state_ids,
         start:     params[:range_start],
         end:       params[:range_end],
-        selector:  params[:selector]
+        selector:  Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
       )
       result.push count
       params[:range_start] = params[:range_end]
@@ -93,7 +92,7 @@ returns
       id_not_to: ticket_state_ids,
       start:     params[:range_start],
       end:       params[:range_end],
-      selector:  params[:selector]
+      selector:  Selector::Base.and(params[:selector], without_merged_tickets_selector) # do not show merged tickets in reports
     )
     return result if params[:sheet].present?
 

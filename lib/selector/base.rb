@@ -44,6 +44,40 @@ class Selector::Base
     result
   end
 
+  # combines selectors as an AND clause, works for the simple hash form and the expert mode form (#6527)
+  def self.and(*selectors)
+    {
+      operator:   'AND',
+      conditions: selectors.map { |selector| migrate_selector(selector.deep_symbolize_keys) },
+    }
+  end
+
+  # looks up a condition that acts as a top level filter, so only AND blocks are searched
+  def self.condition(selector, name)
+    migrated = migrate_selector(selector.deep_symbolize_keys)
+    return if migrated[:operator] != 'AND'
+
+    migrated[:conditions].each do |entry|
+      found = entry.key?(:conditions) ? condition(entry, name) : (entry if entry[:name] == name)
+      return found if found
+    end
+    nil
+  end
+
+  def self.without(selector, name)
+    migrated = migrate_selector(selector.deep_symbolize_keys)
+    return migrated if migrated[:operator] != 'AND'
+
+    migrated.merge(
+      conditions: migrated[:conditions].filter_map do |entry|
+        next without(entry, name) if entry.key?(:conditions)
+        next if entry[:name] == name
+
+        entry
+      end
+    )
+  end
+
   def set_static_conditions
     conditions = static_conditions_ticket + static_conditions_article + static_conditions_ticket_update + static_conditions_user_one
     return if conditions.blank?
