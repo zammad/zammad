@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :agent, type: :system do
+RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :agent, type: :playwright do
   # The seeded agent role already carries cti.agent.
   let(:agent)    { create(:agent) }
   let(:customer) { create(:customer, firstname: 'Franz', lastname: 'Bauer') }
@@ -22,6 +22,13 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
            })
   end
 
+  let(:calls)         { table_rows('Caller log') }
+  let(:customer_link) { main_content.get_by_role('link', name: "Avatar (#{customer.fullname})") }
+
+  def phone_link(number)
+    main_content.get_by_role('link', name: number, exact: true)
+  end
+
   before do
     Setting.set('cti_integration', true)
     missed_call
@@ -29,68 +36,60 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
 
   context 'with the cti.agent permission' do
     it 'shows the caller log' do
-      visit '/cti'
+      open_desktop('/cti')
 
-      within 'main' do
-        expect(page).to have_text('Franz Bauer')
-          .and have_text('Not reached')
-          .and have_link('+49 30 609854180', href: 'tel:4930609854180')
-          .and have_link('+49 30 609811111', href: 'tel:4930609811111')
-      end
+      expect(main_content).to contain_text('Franz Bauer')
+      expect(main_content).to contain_text('Not reached')
+      expect(phone_link('+49 30 609854180')).to have_attribute('href', 'tel:4930609854180')
+      expect(phone_link('+49 30 609811111')).to have_attribute('href', 'tel:4930609811111')
     end
 
     it 'opens the matched user through the avatar' do
-      visit '/cti'
+      open_desktop('/cti')
 
-      within 'main' do
-        find("a[href='/desktop/users/#{customer.id}']").click
-      end
+      customer_link.click
 
-      expect(page).to have_current_path("/desktop/users/#{customer.id}")
-      expect(page).to have_text('Franz Bauer')
+      expect(page).to have_url(%r{/desktop/users/#{customer.id}$})
+      expect(main_content).to contain_text('Franz Bauer')
     end
 
     # The same gate as the user popover: without ticket or user permissions there is nothing to open.
     context 'with only the cti.agent permission' do
-      let(:agent) { create(:agent, roles: [role_cti_only]) }
+      let(:agent)         { create(:agent, roles: [role_cti_only]) }
       let(:role_cti_only) { create(:role, permission_names: %w[cti.agent]) }
 
       it 'names the matched user without a link' do
-        visit '/cti'
+        open_desktop('/cti')
 
-        within 'main' do
-          expect(page).to have_text('Franz Bauer')
-            .and have_no_link(href: "/desktop/users/#{customer.id}")
-        end
+        expect(main_content).to contain_text('Franz Bauer')
+        expect(customer_link).to have_count(0)
       end
     end
 
     it 'shows a new call and its state changes without reloading' do
-      visit '/cti'
+      open_desktop('/cti')
       wait_for_subscription_start('ctiLogUpdates', scope: agent)
 
-      within 'main' do
-        expect(page).to have_css('[data-item-id]', count: 1)
+      expect(calls).to have_count(1)
 
-        incoming_call = create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false)
+      incoming_call = create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false)
 
-        expect(page).to have_css('[data-item-id]', count: 2)
-          .and have_link(href: 'tel:4930100099999')
-          .and have_text('Ringing…')
+      expect(calls).to have_count(2)
+      expect(phone_link('+49 30 100099999')).to be_visible
+      expect(main_content).to contain_text('Ringing…')
 
-        # The newest call sits on top.
-        expect(first('[data-item-id]')['data-item-id']).to eq(Gql::ZammadSchema.id_from_object(incoming_call))
+      # The newest call sits on top.
+      expect(calls.first).to have_attribute('data-item-id', Gql::ZammadSchema.id_from_object(incoming_call))
 
-        incoming_call.update!(state: 'answer', done: true)
+      incoming_call.update!(state: 'answer', done: true)
 
-        expect(page).to have_text('Connected')
-          .and have_no_text('Ringing…')
+      expect(main_content).to contain_text('Connected')
+      expect(main_content).to not_contain_text('Ringing…')
 
-        incoming_call.destroy!
+      incoming_call.destroy!
 
-        expect(page).to have_css('[data-item-id]', count: 1)
-          .and have_no_link(href: 'tel:4930100099999')
-      end
+      expect(calls).to have_count(1)
+      expect(phone_link('+49 30 100099999')).to have_count(0)
     end
 
     # The navigation entry is fed by the sidebar query and its subscription, not by the table.
@@ -98,24 +97,22 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
       let(:agent) { create(:agent, preferences: { cti: true }) }
 
       it 'shows a ringing call in the navigation until it is answered' do
-        visit '/cti'
+        open_desktop('/cti')
         # The push replaces the query result as a whole, a late initial answer would hide the call.
         wait_for_query('ctiSidebar')
         wait_for_subscription_start('ctiSidebarUpdates', scope: agent)
 
-        within '#page-navigation' do
-          expect(page).to have_no_css('ul[aria-label="Ringing calls"]')
+        ringing_calls = page_navigation.get_by_role('list', name: 'Ringing calls')
 
-          incoming_call = create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false)
+        expect(ringing_calls).to have_count(0)
 
-          within 'ul[aria-label="Ringing calls"]' do
-            expect(page).to have_text('+49 30 100099999')
-          end
+        incoming_call = create(:cti_log, direction: 'in', state: 'newCall', from: '4930100099999', to: '4930609811111', done: false)
 
-          incoming_call.update!(state: 'answer')
+        expect(ringing_calls).to contain_text('+49 30 100099999')
 
-          expect(page).to have_no_css('ul[aria-label="Ringing calls"]')
-        end
+        incoming_call.update!(state: 'answer')
+
+        expect(ringing_calls).to have_count(0)
       end
     end
 
@@ -124,104 +121,83 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
       before { create(:cti_log, :inbound, :not_reached, from: '4930100099999', to: '4930609811111') }
 
       it 'creates a user for the caller, opens a ticket for them and names them in the entry' do
-        visit '/cti'
+        open_desktop('/cti')
         wait_for_subscription_start('ctiLogUpdates', scope: agent)
 
-        within 'main' do
-          expect(page).to have_link('+49 30 100099999', href: 'tel:4930100099999')
+        expect(phone_link('+49 30 100099999')).to have_attribute('href', 'tel:4930100099999')
 
-          find('button[aria-label="New user"]').click
-        end
+        main_content.get_by_role('button', name: 'New user').click
 
-        within '#flyout-user-create-flyout' do
-          find_input('First name').type('Erika')
-          find_input('Last name').type('Mustermann')
+        new_user = flyout('New user')
+        fill_field('First name', 'Erika', within: new_user)
+        fill_field('Last name', 'Mustermann', within: new_user)
+        new_user.get_by_role('button', name: 'Create').click
 
-          click_on 'Create'
-        end
-
-        expect(page).to have_current_path(%r{/desktop/tickets/create/[^?]+\?customer_id=\d+$})
+        expect(page).to have_url(%r{/desktop/tickets/create/[^?]+\?customer_id=\d+$})
 
         user = User.find_by!(firstname: 'Erika', lastname: 'Mustermann')
 
         expect(user.phone).to eq('+49 30 100099999')
-        expect(page).to have_current_path(%r{\?customer_id=#{user.id}$})
+        expect(page).to have_url(%r{\?customer_id=#{user.id}$})
         wait_for_form_to_settle('ticket-create')
 
-        expect(find_autocomplete('Customer')).to have_text('Erika Mustermann')
+        expect(field('Customer', within: main_content)).to contain_text('Erika Mustermann')
 
         # Leaving before the customer sidebar has shown up would teleport its content into
         #   the tab kept alive off the document, and the next patch of it throws.
-        expect(page).to have_css('#ticketSidebar', text: 'Erika Mustermann')
+        expect(content_sidebar).to contain_text('Erika Mustermann')
 
         # Back through the navigation, not a reload.
-        within '#page-navigation' do
-          click_on 'Phone'
-        end
+        page_navigation.get_by_role('link', name: 'Phone').click
 
-        within 'main' do
-          expect(page).to have_text('Erika Mustermann')
-        end
+        expect(main_content).to contain_text('Erika Mustermann')
       end
     end
 
     it 'marks a call as handled and back' do
-      visit '/cti'
+      open_desktop('/cti')
 
-      within 'main' do
-        find('[role="checkbox"]').click
+      handled = main_content.get_by_role('checkbox')
 
-        wait.until { missed_call.reload.done }
+      handled.click
+      wait_until { missed_call.reload.done }
 
-        expect(page).to have_css('[role="checkbox"][aria-checked="true"]')
-          .and have_css('[data-item-id].opacity-50')
+      expect(handled).to have_attribute('aria-checked', 'true')
+      expect(calls.first).to contain_class('opacity-50')
 
-        find('[role="checkbox"]').click
+      handled.click
+      wait_until { !missed_call.reload.done }
 
-        wait.until { !missed_call.reload.done }
-
-        expect(page).to have_css('[role="checkbox"][aria-checked="false"]')
-          .and have_no_css('[data-item-id].opacity-50')
-      end
+      expect(handled).to have_attribute('aria-checked', 'false')
+      expect(calls.first).to not_contain_class('opacity-50')
     end
 
     # The old caller log stopped at cti_config[:view_limit] (default 60); this one pages on scroll.
     context 'with more calls than the old view limit' do
-      let(:call_count) { Cti::Log.view_limit + 10 }
-
-      let(:number_of) { ->(index) { "49301000#{format('%04d', index)}" } }
-
-      def scroll_caller_log_to_bottom
-        page.execute_script(<<~JS)
-          const container = document.querySelector('main .overflow-y-auto')
-          container.scrollTop = container.scrollHeight
-        JS
-      end
-
-      before do
-        call_count.times do |index|
+      let(:older_calls) do
+        Array.new(Cti::Log.view_limit + 10) do |index|
           travel 1.second
-          create(:cti_log, from: number_of.call(index), to: '4930609811111')
+          create(:cti_log, from: "49301000#{format('%04d', index)}", to: '4930609811111')
         end
       end
+
+      before { older_calls }
 
       it 'loads further calls as the agent scrolls down' do
-        visit '/cti'
+        open_desktop('/cti')
 
-        within 'main' do
-          expect(page).to have_css('[data-item-id]', count: 25)
-            .and have_link(href: "tel:#{number_of.call(call_count - 1)}")
-            .and have_no_link(href: "tel:#{number_of.call(0)}")
+        expect(calls).to have_count(25)
+        expect(phone_link(older_calls.last.from_pretty)).to be_visible
+        expect(phone_link(older_calls.first.from_pretty)).to have_count(0)
 
-          # Two further pages of 25 reach past the old limit; the oldest call sits on the last one.
-          [50, call_count + 1].each do |loaded_rows|
-            scroll_caller_log_to_bottom
+        # Two further pages of 25 reach past the old limit; the oldest call sits on the last one.
+        [50, older_calls.size + 1].each do |loaded_rows|
+          calls.last.scroll_into_view_if_needed
 
-            expect(page).to have_css('[data-item-id]', count: loaded_rows)
-          end
-
-          expect(page).to have_link(href: "tel:#{number_of.call(0)}")
+          expect(calls).to have_count(loaded_rows)
         end
+
+        expect(phone_link(older_calls.first.from_pretty)).to be_visible
       end
     end
   end
@@ -231,10 +207,10 @@ RSpec.describe 'Desktop > Caller log', app: :desktop_view, authenticated_as: :ag
     let(:role_without_cti)   { create(:role, permission_names: %w[ticket.agent]) }
 
     it 'refuses access' do
-      visit '/cti'
+      open_desktop('/cti')
 
-      expect(page).to have_text('Forbidden')
-        .and have_no_text('Franz Bauer')
+      expect(page.locator('body')).to contain_text('Forbidden')
+      expect(page.locator('body')).to not_contain_text('Franz Bauer')
     end
   end
 end

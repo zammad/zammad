@@ -17,8 +17,6 @@
 
 require 'capybara/playwright'
 
-PLAYWRIGHT_CLI_PATH = Rails.root.join('node_modules/.bin/playwright').to_s
-
 # Capybara::Playwright::Driver#quit is private, so Session#quit's
 #   `@driver.quit if @driver.respond_to?(:quit)` silently skips it and leaks the
 #   session's node.js + browser processes until suite exit. Every place that
@@ -50,55 +48,8 @@ Capybara.register_driver(:zammad_firefox_mobile) do |app|
   build_playwright_driver(app, browser_type: :firefox, user_agent: 'Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/112.0 Firefox/112.0')
 end
 
-# The playwright npm package must stay in lockstep with the
-#   playwright-ruby-client gem, or the two protocol sides drift apart silently.
-#   Local runs and CI are provisioned from separate pins (package.json vs the
-#   PLAYWRIGHT_VERSION CI variable), so verify both against the gem before
-#   starting a browser. Only major.minor has to match, like Playwright's own
-#   server handshake: the gem is released per minor version, the npm package
-#   and the server image get patch releases in between.
-def assert_playwright_version_lockstep
-  expected = Playwright::COMPATIBLE_PLAYWRIGHT_VERSION
-  minor    = ->(version) { version.to_s.split('.').first(2).join('.') }
-
-  # The package.json pin provisions local runs and is always checked - a missing
-  #   entry means there is nothing to launch, so it must not pass as "no drift".
-  #   PLAYWRIGHT_VERSION provisions the browser server and only exists in CI
-  #   (services.yml), so it is checked when set.
-  package_json = JSON.parse(Rails.root.join('package.json').read)
-  pins = { 'package.json' => package_json.dig('devDependencies', 'playwright') || package_json.dig('dependencies', 'playwright') }
-  pins['PLAYWRIGHT_VERSION'] = ENV['PLAYWRIGHT_VERSION'] if ENV['PLAYWRIGHT_VERSION'].present?
-
-  drifted = pins.reject { |_source, pin| minor.call(pin) == minor.call(expected) }
-  return if drifted.none?
-
-  raise "playwright version drift: the playwright-ruby-client gem needs #{minor.call(expected)}.x, but " \
-        "#{drifted.map { |source, pin| "#{source} has #{pin ? pin.inspect : 'no playwright entry'}" }.join(', ')}. " \
-        'Keep the package.json devDependency, the PLAYWRIGHT_VERSION CI variable and the gem in lockstep.'
-end
-
-# Chromium launch arguments, applied in both modes so local and CI browsers are
-#   launched alike. The self-signed certs of the :puma_wrapper Capybara server
-#   are covered for page/WSS traffic by the context's ignoreHTTPSErrors, but
-#   something browser-side still validates them once per example and floods the
-#   log with "SSL alert number 46". Remote debugging port allows for live view
-#   of the headless browser via local DevTools.
-PLAYWRIGHT_LAUNCH_OPTIONS = { args: ['--ignore-certificate-errors', '--remote-debugging-port=9222'] }.freeze
-
-# `connect_to_browser_server` has no launch-option parameter, but the server
-#   reads them from the endpoint's `launch-options` query (or an equivalent
-#   header). It only honors args when started with `--unsafe`, see services.yml.
-def playwright_server_endpoint_url(launch_options)
-  url = ENV['PLAYWRIGHT_SERVER_URL']
-  return url if launch_options.blank?
-
-  separator = url.include?('?') ? '&' : '?'
-
-  "#{url}#{separator}launch-options=#{CGI.escape(launch_options.to_json)}"
-end
-
 def build_playwright_driver(app, user_agent: nil, browser_type: :chromium)
-  assert_playwright_version_lockstep
+  PlaywrightNative::Browser.assert_version_lockstep
 
   options = {
     browser_type:      browser_type,
@@ -119,18 +70,18 @@ def build_playwright_driver(app, user_agent: nil, browser_type: :chromium)
 
   # The launch arguments are Chromium flags, so only Chromium gets them - and in
   #   both modes, otherwise local and CI browsers would launch differently.
-  launch_options = browser_type == :chromium ? PLAYWRIGHT_LAUNCH_OPTIONS : {}
+  launch_options = browser_type == :chromium ? PlaywrightNative::Browser.chromium_launch_options : {}
 
   if ENV['PLAYWRIGHT_SERVER_URL'].present?
     # Remote browser server (CI): `playwright run-server` in the
     #   zammad-playwright service container, which launches a browser per
     #   connection with the launch options passed below; headless is its
     #   default. The context options above are applied client-side.
-    options[:browser_server_endpoint_url] = playwright_server_endpoint_url(launch_options)
+    options[:browser_server_endpoint_url] = PlaywrightNative::Browser.server_endpoint_url(launch_options)
   else
     # Local subprocess: the driver launches the browser itself, so the same
     #   launch options are passed straight through (BrowserOptions::LAUNCH_PARAMS).
-    options[:playwright_cli_executable_path] = PLAYWRIGHT_CLI_PATH
+    options[:playwright_cli_executable_path] = PlaywrightNative::Browser::CLI_PATH
     options[:headless] = ENV['TEST_BROWSER_HEADLESS'].present?
     options.merge!(launch_options)
   end

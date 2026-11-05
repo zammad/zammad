@@ -45,6 +45,8 @@
     "PLAYWRIGHT_SERVER_URL": "ws://localhost:4444/",
     // Must match the image and the run-server version in compose.yaml.
     "PLAYWRIGHT_VERSION": "1.64.1",
+    // Live view of the headless Chromium in DevTools, forwarded below.
+    "PLAYWRIGHT_REMOTE_DEBUGGING_PORT": "9222",
     "TEST_BROWSER": "chromium"
     // "TEST_BROWSER": "firefox"
   },

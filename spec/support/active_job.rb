@@ -37,7 +37,7 @@ RSpec.configure do |config|
     performs_jobs: true, # examples performing Jobs
   }
 
-  config.include ZammadActiveJobSystemHelper, performs_jobs: true, type: :system
+  config.include ZammadActiveJobSystemHelper, performs_jobs: true, browser_app: true
 
   activate_for.each do |key, value|
     config.include ZammadActiveJobHelper, key => value

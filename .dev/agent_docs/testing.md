@@ -4,7 +4,7 @@
 
 - Test at the **lowest level** possible — unit over request over E2E
 - Focus on the object under test, mock dependencies where it makes sense
-- Only important user stories get E2E/system tests (Capybara + Playwright)
+- Only important user stories get E2E/system tests (Playwright; legacy app via Capybara)
 - Service specs cover behavior, GraphQL specs only the GraphQL layer —
   see `.dev/agent_docs/testing_services_and_graphql.md`
 
@@ -78,20 +78,43 @@ includes changes that arrived with a pull or rebase, not only your own.
 
 ### Ports of a test run
 
-The suite serves Capybara on `CAPYBARA_PORT` (default `3001`) and its websocket
-server on `WS_PORT` (default `6043`) — next to, never on, the ports of the
-development stack, so a run does not collide with a stack of the same checkout.
-Set both to run two suites side by side; they still share the `test` database,
+The suite serves Capybara on `CAPYBARA_PORT` (default `3001`), Playwright specs
+on `TEST_APP_PORT` (default `3002`) and the websocket server on `WS_PORT`
+(default `6043`) — next to, never on, the ports of the development stack, so a
+run does not collide with a stack of the same checkout. Set them to run two
+suites side by side; they still share the `test` database,
 the Redis keys and the Elasticsearch indices, so those (`DATABASE_URL`,
 `REDIS_URL`, `ES_INDEX`) need separating as well.
 
 ```bash
-CAPYBARA_PORT=3101 WS_PORT=6143 bundle exec rspec spec/system/path/to/file_spec.rb
+CAPYBARA_PORT=3101 TEST_APP_PORT=3102 WS_PORT=6143 bundle exec rspec spec/system/path/to/file_spec.rb
 ```
 
-### Capybara form helpers (new frontend stack)
+### Playwright specs (desktop view)
 
-System tests for the Vue frontend use custom helpers to interact
+New system specs for the desktop view use `type: :playwright`: Playwright
+directly, without Capybara. A spec ported from Capybara replaces its Capybara
+version, never keep both.
+
+- Find elements by role and accessible name, form fields by their label —
+  `page.get_by_role('button', name: 'Create', exact: true)`. No CSS classes,
+  ids or `data-test-id`; a missing accessible name is an app bug.
+- Page areas: `main_content`, `page_navigation`, `content_sidebar`,
+  `flyout(title)`, `notification(text)`, `table_rows(caption)`.
+- Forms: `fill_field`, `select_option`, `search_for_option` (autocomplete and
+  tree select), all with `within:`. They wait for the form updater themselves —
+  never count form updater calls.
+- `have_text` is the whole text, `contain_text` a part; negations are
+  `not_contain_text` etc. Compare plain Ruby arrays with `eq([])`, Playwright's
+  matchers take over `be_empty`.
+- Regular expressions anchor with `^`/`$`, not `\A`/`\z`.
+
+Support code: `spec/support/playwright/`. Full reference:
+`doc/developer_manual/cookbook/how-to-test-with-playwright.md`
+
+### Capybara form helpers (legacy specs)
+
+System tests still on Capybara use custom helpers to interact
 with FormKit-based fields:
 
 ```ruby

@@ -35,24 +35,10 @@ module TestFlags
     # so an event triggered right away can still get lost. Wait until Redis reports
     # an active subscriber for the event stream before continuing.
     begin
-      wait.until { graphql_event_stream_subscribed?(name, entity: entity, scope: scope) }
+      wait.until { GraphqlEventStream.subscribed?(name, entity: entity, scope: scope) }
     rescue BrowserTestHelper::Waiter::TimeoutError
       raise "GraphQL event stream for subscription #{name} has no subscriber"
     end
-  end
-
-  def graphql_event_stream_subscribed?(name, entity: nil, scope: nil)
-    @redis ||= Zammad::Service::Redis.new
-
-    # Scope to the channel prefix of the current environment
-    channel_prefix = Rails.application.config.action_cable.cable[:channel_prefix]
-
-    # A subscription scoped per user puts the user id in front of the name, e.g. "graphql-event:5:ctiSidebarUpdates:".
-    #   Without the scope, the channel of another user could satisfy the wait.
-    pattern = scope ? "#{channel_prefix}:graphql-event:#{scope.id}:#{name}:*" : "#{channel_prefix}:graphql-event:*#{name}*"
-    pattern += "#{entity.to_global_id}*" if entity
-
-    @redis.pubsub('CHANNELS', pattern).any?
   end
 
   def wait_for_form_to_settle(form)

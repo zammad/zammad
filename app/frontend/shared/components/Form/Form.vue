@@ -750,6 +750,8 @@ const updateChangedFields = (
   changedFields: Record<string, Partial<FormSchemaField>>,
   changesCanTriggerFormUpdater = false,
 ) => {
+  const deferredInputs: Promise<unknown>[] = []
+
   const handleUpdatedInitialFieldValue = (
     fieldName: string,
     value: FormFieldValue,
@@ -765,7 +767,7 @@ const updateChangedFields = (
     }
   }
 
-  Object.keys(changedFields).forEach(async (fieldName) => {
+  const fieldUpdates = Object.keys(changedFields).map(async (fieldName) => {
     if (!schemaData.fields[fieldName]) return
 
     const { initialValue, value, ...changedFieldProps } = changedFields[fieldName]
@@ -850,7 +852,7 @@ const updateChangedFields = (
           // from node.input() will automatically trigger dirty re-evaluation.
           // The plugin already captured _init synchronously during field creation,
           // before settled resolves, so the baseline is correct.
-          node.settled.then(() => node.input(value, false))
+          deferredInputs.push(node.settled.then(() => node.input(value, false)))
         } else {
           node?.input(value, false)
         }
@@ -858,9 +860,21 @@ const updateChangedFields = (
     }
   })
 
+  // Resolves once every field has its new value, also the ones set in a later tick.
+  return Promise.all(fieldUpdates)
+    .then(() => nextTick())
+    .then(() => Promise.all(deferredInputs))
+}
+
+const finishFormUpdate = (fieldsUpdated: Promise<unknown>) => {
   nextTick(() => {
     updaterChangedFields.clear()
     formNode.value?.store.remove('formUpdaterProcessing')
+  })
+
+  fieldsUpdated.then(() => {
+    const formName = formNode.value?.context?.id || formNode.value?.name
+    testFlags.set(`${formName}.formUpdater.applied`)
   })
 }
 
@@ -1411,10 +1425,12 @@ const initializeFormSchema = () => {
       if (queryResult?.data?.formUpdater) {
         Object.assign(schemaData.flags, queryResult.data.formUpdater.flags)
 
-        updateChangedFields(
-          changeFields.value
-            ? merge(queryResult.data.formUpdater.fields, changeFields.value)
-            : queryResult.data.formUpdater.fields,
+        finishFormUpdate(
+          updateChangedFields(
+            changeFields.value
+              ? merge(queryResult.data.formUpdater.fields, changeFields.value)
+              : queryResult.data.formUpdater.fields,
+          ),
         )
       }
 
@@ -1422,7 +1438,7 @@ const initializeFormSchema = () => {
     })
   } else {
     executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
-    if (changeFields.value) updateChangedFields(changeFields.value)
+    if (changeFields.value) finishFormUpdate(updateChangedFields(changeFields.value))
 
     setFormSchemaInitialized()
   }
@@ -1534,6 +1550,7 @@ export default {
     :plugins="localFormKitPlugins"
     :sections-schema="formKitSectionsSchema"
     :disabled="disabled"
+    :aria-busy="formUpdaterProcessing || undefined"
     @node="setFormNode"
     @submit="onSubmit"
     @submit-raw="onSubmitRaw"

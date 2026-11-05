@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.configure do |config|
-  config.before(:each, type: :system) do |example|
+  config.before(:each, browser_app: true) do |example|
     # check if system should get set up
     next if !example.metadata.fetch(:set_up, true)
 

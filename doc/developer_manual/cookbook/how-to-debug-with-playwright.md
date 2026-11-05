@@ -132,7 +132,8 @@ The devcontainer Playwright stack also provides an out-of-the-box live view of t
 Chromium can stream its screen to Chrome DevTools without any X server. The debugging port is automatically forwarded at
 `9222` to the host. On your host open `chrome://inspect`, add `localhost:9222` under "Configure...", and click "inspect"
 on the page. You get a live screencast and can interact with it. Pause the spec with `binding.pry` or a `sleep` to look
-around. Only one browser can bind that port, so run a single spec at a time.
+around. The devcontainer sets `PLAYWRIGHT_REMOTE_DEBUGGING_PORT=9222` for this; set it yourself to get the same outside
+of it. Only one browser can bind that port, so run a single spec file at a time.
 
 ## Version Lockstep
 
@@ -151,7 +152,8 @@ Bumping the gem therefore also means bumping `package.json` and the CI variable 
 
 | File | Purpose |
 | --- | --- |
-| `spec/support/capybara/playwright_driver.rb` | Driver registration, browser and context options, version check |
+| `spec/support/playwright/browser.rb` | Browser launch and server connection, launch options, version check |
+| `spec/support/capybara/playwright_driver.rb` | Driver registration, context options |
 | `spec/support/capybara/playwright_traces.rb` | Trace recording and the keep-on-failure logic |
 | `spec/support/capybara/playwright_driver_patches.rb` | Compensations for gaps in `capybara-playwright-driver` |
 

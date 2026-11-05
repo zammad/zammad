@@ -6,7 +6,7 @@ include: [../default/compose.yaml]
 # answers on localhost:4444 there, and the browsers it launches reach the
 # Capybara server on localhost as well. It launches Chromium or Firefox, as the
 # test run asks for. The version must match the playwright package of the
-# checkout (package.json), see spec/support/capybara/playwright_driver.rb.
+# checkout (package.json), see spec/support/playwright/browser.rb.
 services:
   playwright:
     image: mcr.microsoft.com/playwright:v1.64.1-noble

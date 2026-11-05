@@ -2,78 +2,96 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as: :agent, type: :system do
+RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as: :agent, type: :playwright do
   let(:agent)         { create(:agent, groups: [group, another_group]) }
   let(:group)         { create(:group) }
   let(:another_group) { create(:group) }
   let(:ticket_type)   { create(:ticket_type) }
   let(:customer)      { create(:customer, :with_org) }
 
+  let(:heading) { page.get_by_role('heading', level: 1) }
+
+  def open_ticket_create
+    open_desktop('/ticket/create')
+    wait_for_form_to_settle('ticket-create')
+  end
+
   context 'when creating a ticket' do
     before do
       customer
-      visit '/ticket/create'
-      wait_for_form_to_settle('ticket-create')
+      open_ticket_create
     end
 
-    # Clicking a toolbar button blurs the editor, and the action re-focuses it only
-    #   deferred (Tiptap's focus() waits for the next animation frame). If the next
-    #   keystrokes arrive before that, WebDriver focuses the editor itself and Chrome
-    #   places the caret at the very end of the content, so the text ends up outside
-    #   the block which was just created (e.g. in a paragraph after the empty list).
-    #   Wait for the editor to have the focus before typing on.
-    def click_editor_action(editor, label)
-      find("button[aria-label=\"#{label}\"]").click
+    # The editor has no accessible name of its own, its field tells it apart.
+    let(:text)    { field('Text') }
+    let(:editor)  { text.get_by_role('textbox') }
+    let(:toolbar) { text.get_by_role('toolbar') }
 
-      wait.until { editor.input_element.evaluate_script('document.activeElement === this') }
+    def type_text(*keys)
+      after_form_update_of(text) do
+        keys.each { |key| key.is_a?(Symbol) ? page.keyboard.press(key.to_s.capitalize) : page.keyboard.type(key) }
+      end
+    end
+
+    # The body is sometimes applied to the editor once more after typing, and parsing puts
+    #   the href of a link first, so the markup is compared without the attribute order.
+    def without_attribute_order(html)
+      fragment = Nokogiri::HTML5.fragment(html)
+      fragment.css('*').each do |element|
+        attributes = element.attribute_nodes.map { |attribute| [attribute.name, attribute.value] }.sort
+        element.attribute_nodes.each(&:remove)
+        attributes.each { |name, value| element[name] = value }
+      end
+      fragment.to_html
+    end
+
+    # A toolbar button takes the focus, and the editor gets it back one animation frame later.
+    def click_editor_action(label)
+      toolbar.get_by_role('button', name: label, exact: true).click
+      expect(editor).to be_focused
     end
 
     it 'creates a new ticket' do
-      find('[role="tab"]', text: 'Send email').click
+      await_form_updater('ticket-create') { page.get_by_role('tab', name: 'Send email').click }
 
-      within_form(form_updater_gql_number: 2) do
-        expect(page).to have_css('h1', text: 'New ticket')
-        find_input('Title').type('Example Ticket Title')
-        expect(page).to have_css('h1', text: 'Example Ticket Title')
+      expect(heading).to have_text('New ticket')
+      fill_field('Title', 'Example Ticket Title')
+      expect(heading).to have_text('Example Ticket Title')
 
-        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+      search_for_option('Customer', customer.email, option: customer.fullname)
 
-        find_autocomplete('CC').search_for_option(Faker::Internet.unique.email, use_action: true)
-
-        text = find_editor('Text')
-
-        text.type('# ', skip_waiting: true, wait_for: 0.1) # markdown shortcut, editor is still considered empty
-          .type('Heading', click: false)
-          .type(:enter, click: false)
-
-        click_editor_action(text, 'Format as bold')
-        text.type('Bold Text ', click: false).type(:enter, click: false)
-        click_editor_action(text, 'Format as bold')
-
-        click_editor_action(text, 'Format as italic')
-        text.type('Italic Text ', click: false).type(:enter, click: false)
-
-        click_editor_action(text, 'Add bullet list')
-        text.type('Bullet List ', click: false).type(:enter, click: false).type(:enter, click: false)
-
-        click_editor_action(text, 'Add ordered list')
-        text.type('Ordered List ', click: false).type(:enter, click: false).type(:enter, click: false)
-
-        find('button[aria-label="Add link"]').click
-
-        fill_in 'url', with: 'https://zammad.com'
-
-        find('[data-id="floating-popover"] button[type="submit"]', text: 'Add link').click
-
-        find_treeselect('Group').search_for_option(another_group.name)
-
-        find_select('Priority').select_option('3 high')
-
+      search_for_option('CC', Faker::Internet.unique.email) do |menu|
+        menu.get_by_role('button').click
       end
 
-      click_on 'Create'
+      editor.click
+      type_text('# ', 'Heading', :enter)
 
-      expect(page).to have_text('Ticket has been created successfully')
+      click_editor_action('Format as bold')
+      type_text('Bold Text ', :enter)
+      click_editor_action('Format as bold')
+
+      click_editor_action('Format as italic')
+      type_text('Italic Text ', :enter)
+
+      click_editor_action('Add bullet list')
+      type_text('Bullet List ', :enter, :enter)
+
+      click_editor_action('Add ordered list')
+      type_text('Ordered List ', :enter, :enter)
+
+      toolbar.get_by_role('button', name: 'Add link', exact: true).click
+
+      link_dialog = page.get_by_role('dialog')
+      fill_field('Link URL', 'https://zammad.com', within: link_dialog)
+      link_dialog.get_by_role('button', name: 'Add link').click
+
+      search_for_option('Group', another_group.name)
+      select_option('Priority', '3 high')
+
+      page.get_by_role('button', name: 'Create', exact: true).click
+
+      expect(notification('Ticket has been created successfully')).to be_visible
 
       expect(Ticket.last).to have_attributes(
         title:    'Example Ticket Title',
@@ -82,7 +100,7 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
         customer: customer,
       )
 
-      expect(Ticket.last.articles.first.body).to start_with('<h1 dir="auto">Heading</h1><p dir="auto"><strong>Bold Text </strong></p><p dir="auto"><em>Italic Text </em></p><ul dir="auto"><li dir="auto"><p dir="auto">Bullet List </p></li></ul><ol dir="auto"><li dir="auto"><p dir="auto">Ordered List </p></li></ol><p dir="auto"><a rel="nofollow noreferrer noopener" href="https://zammad.com" target="_blank">https://zammad.com</a></p>')
+      expect(without_attribute_order(Ticket.last.articles.first.body)).to start_with(without_attribute_order('<h1 dir="auto">Heading</h1><p dir="auto"><strong>Bold Text </strong></p><p dir="auto"><em>Italic Text </em></p><ul dir="auto"><li dir="auto"><p dir="auto">Bullet List </p></li></ul><ol dir="auto"><li dir="auto"><p dir="auto">Ordered List </p></li></ol><p dir="auto"><a rel="nofollow noreferrer noopener" href="https://zammad.com" target="_blank">https://zammad.com</a></p>'))
     end
   end
 
@@ -110,25 +128,18 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
       ObjectManager::Attribute.migration_execute
       template
 
-      visit '/ticket/create'
-      wait_for_form_to_settle('ticket-create')
+      open_ticket_create
     end
 
     it 'applies the template correctly' do
-      click_on 'Apply template'
-      click_on template.name
+      page.get_by_role('button', name: 'Apply template').click
+      await_form_updater('ticket-create') { page.get_by_role('menuitem', name: template.name).click }
 
-      wait_for_form_updater(2)
+      expect(main_content).to contain_text(customer.fullname)
 
-      wait_for_gql('shared/entities/user/graphql/queries/user.graphql')
+      page.get_by_role('button', name: 'Create', exact: true).click
 
-      expect(page).to have_text(customer.fullname)
-
-      click_on 'Create'
-
-      wait_for_gql('shared/entities/ticket/graphql/mutations/create.graphql')
-
-      expect(page).to have_text('Ticket has been created successfully')
+      expect(notification('Ticket has been created successfully')).to be_visible
 
       expect(Ticket.last).to have_attributes(
         title:    'Template Ticket Title',
@@ -147,15 +158,12 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
       create(:object_manager_attribute_multi_tree_select, :shown_screen, display: 'Topics', default: ['Incident', 'Incident::Hardware::Mouse'])
       ObjectManager::Attribute.migration_execute
 
-      visit '/ticket/create'
-      wait_for_form_to_settle('ticket-create')
+      open_ticket_create
     end
 
-    # Checked on `.element`, since the field wrapper's `find` searches the whole page.
     it 'prefills the default values' do
-      expect(find_treeselect('Category').element).to have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
-      expect(find_treeselect('Topics').element).to have_css('[role="listitem"]', exact_text: 'Incident')
-        .and have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
+      expect(field('Category').get_by_role('listitem')).to have_text([%r{^Incident › Hardware › Mouse$}])
+      expect(field('Topics').get_by_role('listitem')).to have_text([%r{^Incident$}, %r{^Incident › Hardware › Mouse$}])
     end
   end
 
@@ -166,18 +174,16 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
       create(:object_manager_attribute_multi_tree_select, object_name: 'User', screens:, display: 'Topics', default: ['Incident', 'Incident::Hardware::Mouse'])
       ObjectManager::Attribute.migration_execute
 
-      visit '/ticket/create'
-      wait_for_form_to_settle('ticket-create')
+      open_ticket_create
     end
 
     it 'prefills the default values when creating a new customer' do
-      find('a[aria-label="Create new customer"]').click
+      page.get_by_role('link', name: 'Create new customer').click
 
-      within '#flyout-user-create-flyout' do
-        expect(find_treeselect('Category').element).to have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
-        expect(find_treeselect('Topics').element).to have_css('[role="listitem"]', exact_text: 'Incident')
-          .and have_css('[role="listitem"]', exact_text: 'Incident › Hardware › Mouse')
-      end
+      user_create = flyout('Create new customer')
+
+      expect(field('Category', within: user_create).get_by_role('listitem')).to have_text([%r{^Incident › Hardware › Mouse$}])
+      expect(field('Topics', within: user_create).get_by_role('listitem')).to have_text([%r{^Incident$}, %r{^Incident › Hardware › Mouse$}])
     end
   end
 end

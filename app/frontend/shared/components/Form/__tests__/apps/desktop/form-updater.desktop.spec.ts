@@ -23,6 +23,7 @@ import {
   type FormUpdaterQuery,
 } from '#shared/graphql/types.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
+import testFlags from '#shared/utils/testFlags.ts'
 
 import { FormUpdaterDocument } from '../../../graphql/queries/formUpdater.api.ts'
 import additionalFrontendObjectAttributes from '../../mocks/additionalFrontendObjectAttributes.json'
@@ -452,6 +453,39 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     Object.values(formFields).forEach((fieldLabel) => {
       expect(wrapper.queryByLabelText(fieldLabel)).not.toBeInTheDocument()
     })
+  })
+
+  it('marks the form as busy while a form updater request is open and flags the applied answer', async () => {
+    const result = { formUpdater: { fields: {}, flags: {} } }
+    const { wrapper, mockFormUpdaterApi } = await renderForm(result)
+
+    let answer = () => {}
+    mockFormUpdaterApi.spies.resolve.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          answer = () => resolve({ data: result })
+        }),
+    )
+
+    const form = wrapper.baseElement.querySelector('form')
+    const appliedFlag = `${form?.id}.formUpdater.applied`
+
+    // The answer of the initial request.
+    await waitUntil(() => testFlags.get(appliedFlag))
+
+    expect(form).not.toHaveAttribute('aria-busy')
+
+    await selectValue(wrapper, 'Type', 'Incident')
+
+    await waitFor(() => expect(form).toHaveAttribute('aria-busy', 'true'))
+
+    expect(testFlags.get(appliedFlag)).toBe(false)
+
+    await waitUntil(() => mockFormUpdaterApi.spies.resolve.mock.calls.length === 2)
+    answer()
+
+    await waitFor(() => expect(form).not.toHaveAttribute('aria-busy'))
+    await waitUntil(() => testFlags.get(appliedFlag))
   })
 
   it('show field after new form updater result comes in (from remove)', async () => {

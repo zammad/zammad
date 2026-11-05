@@ -10,7 +10,7 @@ require_relative 'driven_by'
 
 RSpec.configure do |config|
 
-  config.before(:each, type: :system) do |example|
+  config.before(:each, browser_app: true) do |example|
 
     ENV['FAKE_LOGIN_USER_ID'] = nil
     ENV['FAKE_LOGIN_PENDING'] = nil
