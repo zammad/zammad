@@ -139,7 +139,7 @@ class SessionsController < ApplicationController
     session[:persistent] = true
 
     # Persist the browser cookie so it survives browser restarts, matching the persistent server-side
-    # session. See #6260.
+    # session. See #6260. Refreshed on every further request in ApplicationController::HasUser#session_update (#6495).
     request.env['rack.session.options'][:expire_after] = omniauth_cookie_lifetime(authorization.user)
 
     # remember omniauth login
@@ -322,16 +322,6 @@ class SessionsController < ApplicationController
 
     session.delete(:switched_from_user_id)
     authentication_check_prerequesits(auth.user, 'session')
-  end
-
-  # Cookie lifetime for OAuth/OIDC logins: tie it to the same session timeout the server enforces,
-  # so cookie and session expire together. A disabled (0) timeout falls back to the idle window of
-  # SessionHelper.cleanup_expired. Note that the cookie expiry is fixed at login time and not
-  # refreshed per request, so with a disabled timeout an actively used session outlives its cookie
-  # and the user has to re-authenticate once the fallback lifetime is up. See #6260.
-  def omniauth_cookie_lifetime(user)
-    timeout = SessionTimeoutJob::Session.timeout_for(user)
-    timeout >= 1 ? timeout.seconds : SessionHelper::MAX_SESSION_LIFETIME
   end
 
   def initiate_session_for(user, type = 'password')

@@ -87,6 +87,27 @@ module ApplicationController::HasUser
     UserInfo.current_switched_from_user_id = session[:switched_from_user_id]
   end
 
+  # Cookie lifetime for OAuth/OIDC logins: tie it to the same session timeout the server enforces,
+  # so cookie and session expire together. A disabled (0) timeout falls back to the idle window of
+  # SessionHelper.cleanup_expired. See #6260.
+  # Cached because the permission lookup costs two queries per request; a stale value is harmless since
+  # SessionTimeoutJob enforces the exact timeout anyway.
+  def omniauth_cookie_lifetime(user)
+    cache_key = "omniauth_cookie_lifetime/#{user.cache_key_with_version}/#{Digest::MD5.hexdigest(Setting.get('session_timeout').to_json)}"
+
+    Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+      timeout = SessionTimeoutJob::Session.timeout_for(user)
+      timeout >= 1 ? timeout.seconds : SessionHelper::MAX_SESSION_LIFETIME
+    end
+  end
+
+  # Refresh the OAuth/OIDC cookie expiry on every request so it slides with the ping-based server-side timeout (#6495).
+  def refresh_omniauth_cookie_lifetime
+    return if session[:authentication_type] != 'omniauth' || !current_user_real
+
+    request.env['rack.session.options'][:expire_after] = omniauth_cookie_lifetime(current_user_real)
+  end
+
   # update session updated_at
   def session_update
     # sleep 0.6
@@ -96,6 +117,8 @@ module ApplicationController::HasUser
     #   origin of a third-party login.
     if session[:user_id]
       session[:ping] = Time.zone.now.iso8601
+
+      refresh_omniauth_cookie_lifetime
 
       # check if remote ip needs to be updated
       if !session[:remote_ip] || session[:remote_ip] != request.remote_ip
