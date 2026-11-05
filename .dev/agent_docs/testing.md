@@ -149,11 +149,7 @@ GraphQL requests are mocked via the auto mocker. Activate it by
 importing `#tests/graphql/builders/mocks.ts` or by importing a
 `.mocks.ts` file next to a GraphQL operation.
 
-Cypress is only used when pure Node.js testing is not possible
-(e.g. the editor). See
-`doc/developer_manual/cookbook/how-to-test-with-vitest-and-cypress.md`.
-
-### Browser specs (Vitest browser mode, replacing Cypress)
+### Browser specs (Vitest browser mode)
 
 `*.browser.spec.ts` files run in Chromium through Vitest's Playwright
 provider, not in jsdom. `vitest.config.mjs` defines both suites as projects:

@@ -124,7 +124,7 @@ Before running tests for the first time, prepare the test database and compile a
 
 Further testing:
 
-- [How to test with Vitest and Cypress](../cookbook/how-to-test-with-vitest-and-cypress.md)
+- [How to test with Vitest](../cookbook/how-to-test-with-vitest.md)
 
 ## Linting
 
