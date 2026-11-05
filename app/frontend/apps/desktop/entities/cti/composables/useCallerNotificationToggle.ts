@@ -20,14 +20,15 @@ export const useCallerNotificationToggle = () => {
     errorNotificationMessage: __('The caller notification could not be updated.'),
   })
 
-  // Replaced rather than mutated in place: query results are frozen.
   const setLocalState = (enabled: boolean) => {
     if (!session.user?.personalSettings) return
 
-    session.user.personalSettings = {
-      ...session.user.personalSettings,
-      callerNotificationEnabled: enabled,
-    }
+    session.updateUser({
+      personalSettings: {
+        ...session.user.personalSettings,
+        callerNotificationEnabled: enabled,
+      },
+    })
   }
 
   // Optimistic like the theme store: the switch follows the click, and a failed write puts it back.

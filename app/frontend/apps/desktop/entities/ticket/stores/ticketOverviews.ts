@@ -53,7 +53,8 @@ const DEFAULT_CONFIG: TicketOverviewQueryPollingConfig = {
 }
 
 export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
-  const user = toRef(useSessionStore(), 'user')
+  const session = useSessionStore()
+  const user = toRef(session, 'user')
   const config = toRef(useApplicationStore(), 'config')
 
   const localConfig = useLocalStorage(
@@ -350,11 +351,14 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
 
     if (user.value?.preferences) {
       // Update user preferences with the new mapping using overviewsById
-      user.value.preferences.overviews_last_used = Object.fromEntries(
-        Object.entries(newOverviewsLastUsed).map(([overviewId, lastUsedAt]) => [
-          overviewsById.value[overviewId].internalId,
-          lastUsedAt,
-        ]),
+      session.setUserPreference(
+        'overviews_last_used',
+        Object.fromEntries(
+          Object.entries(newOverviewsLastUsed).map(([overviewId, lastUsedAt]) => [
+            overviewsById.value[overviewId].internalId,
+            lastUsedAt,
+          ]),
+        ),
       )
     }
 

@@ -43,7 +43,8 @@ import { UserCurrentAvatarUpdatesDocument } from '../graphql/subscriptions/userC
 
 import type { ApolloCache } from '@apollo/client'
 
-const user = toRef(useSessionStore(), 'user')
+const session = useSessionStore()
+const user = toRef(session, 'user')
 
 const { breadcrumbItems } = useBreadcrumb()
 
@@ -164,9 +165,7 @@ const storeAvatar = (image: ImageFileData) => {
 
   addAvatarMutation.send().then((data) => {
     if (data?.userCurrentAvatarAdd?.avatar) {
-      if (user.value) {
-        user.value.image = data.userCurrentAvatarAdd.avatar.imageHash
-      }
+      session.updateUser({ image: data.userCurrentAvatarAdd.avatar.imageHash })
 
       notify({
         id: 'avatar-upload-success',

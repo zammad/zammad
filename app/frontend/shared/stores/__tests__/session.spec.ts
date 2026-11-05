@@ -164,6 +164,37 @@ describe('Session Store', () => {
     expect(session.user).toEqual(updatedUserData)
   })
 
+  it('updates the user after a frozen subscription result', async () => {
+    const session = useSessionStore()
+
+    mockGraphQLApi(CurrentUserDocument).willResolve({
+      currentUser: userData,
+    })
+    const userUpdateSubscription = mockGraphQLSubscription(CurrentUserUpdatesDocument)
+
+    await session.getCurrentUser()
+
+    await userUpdateSubscription.next({
+      data: {
+        userUpdates: {
+          __typename: 'UserUpdatesPayload',
+          user: { ...userData, firstname: 'Jane' },
+        },
+      },
+    })
+
+    expect(Object.isFrozen(session.user)).toBe(true)
+
+    session.setUserPreference('theme', 'dark')
+    session.updateUser({ image: 'new-image-hash' })
+
+    expect(session.user).toMatchObject({
+      firstname: 'Jane',
+      image: 'new-image-hash',
+      preferences: { locale: 'de-de', theme: 'dark' },
+    })
+  })
+
   it('resumes the automatic third-party login redirect for an existing session', async () => {
     localStorage.setItem('third-party-login-auto-redirect-paused', 'true')
     sessionStorage.setItem('third-party-login-auto-redirect-at', String(Date.now()))

@@ -55,7 +55,8 @@ watch(activeAvatar, (newValue) => {
   state.resizedImage = newValue?.imageResize || ''
 })
 
-const user = toRef(useSessionStore(), 'user')
+const session = useSessionStore()
+const user = toRef(session, 'user')
 
 const avatarDeleteDisabled = computed(() => {
   return !activeAvatar.value?.deletable
@@ -95,9 +96,7 @@ const addAvatar = () => {
         activeAvatar.value = data.userCurrentAvatarAdd.avatar
         avatarImage.value = undefined
 
-        if (user.value) {
-          user.value.image = data.userCurrentAvatarAdd.avatar.imageHash
-        }
+        session.updateUser({ image: data.userCurrentAvatarAdd.avatar.imageHash })
       }
     })
     .catch((errors: UserError) => {
@@ -137,9 +136,7 @@ const removeAvatar = () => {
       activeAvatar.value = undefined
 
       // reset image value in user store
-      if (user.value) {
-        user.value.image = undefined
-      }
+      session.updateUser({ image: undefined })
     }
   })
 }
