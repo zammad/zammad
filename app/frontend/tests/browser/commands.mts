@@ -5,15 +5,24 @@ import { resolve } from 'node:path'
 
 import { defineBrowserCommand } from '@vitest/browser-playwright'
 
-export interface RouteResponse {
-  // Relative to `app/frontend/tests/browser/fixtures`.
-  fixture: string
-  contentType?: string
-  status?: number
-}
+export type RouteResponse =
+  | {
+      // Relative to `app/frontend/tests/browser/fixtures`.
+      fixture: string
+      contentType?: string
+      status?: number
+    }
+  // Fails like a dropped connection, `fetch()` rejects with a `TypeError`.
+  | { networkError: true }
 
 export const routeRequestCommand = defineBrowserCommand<[url: string, response: RouteResponse]>(
-  async ({ page, project }, url, { fixture, contentType, status = 200 }) => {
+  async ({ page, project }, url, response) => {
+    if ('networkError' in response) {
+      await page.route(url, (route) => route.abort('failed'))
+      return
+    }
+
+    const { fixture, contentType, status = 200 } = response
     const body = await readFile(resolve(project.config.root, 'tests/browser/fixtures', fixture))
 
     await page.route(url, (route) => route.fulfill({ status, contentType, body }))

@@ -172,7 +172,8 @@ devcontainer). A missing reference screenshot is created and fails the test;
 `#tests/browser/utils.ts` and find elements through `page` from
 `vitest/browser`. Pass `config` and `permissions` to `mountComponent` before
 mounting, and answer HTTP requests with a fixture from
-`tests/browser/fixtures/` via `routeRequest` (it unroutes after the test).
+`tests/browser/fixtures/` via `routeRequest` (it unroutes after the test), or
+fail them with `{ networkError: true }`.
 GraphQL operations are automocked as in the unit specs: the generated
 `*.mocks.ts` helpers (`mockXQuery`, `waitForXQueryCalls`,
 `getXSubscriptionHandler`) work in both projects.
