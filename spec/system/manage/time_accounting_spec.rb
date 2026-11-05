@@ -94,6 +94,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
           end
 
           wait_for_setting('time_accounting_unit', unit)
+          wait_for_setting('time_accounting_unit_custom', custom_unit)
           expect(Setting.get('time_accounting_unit')).to eq(unit)
           expect(Setting.get('time_accounting_unit_custom')).to eq(custom_unit)
         end
