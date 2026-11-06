@@ -57,6 +57,10 @@ devcontainer) is always headless and needs neither.
 TEST_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb
 ```
 
+To prove a flaky system spec stable, loop it in CI with the push option
+`-o ci.variable="BROWSER_TEST_FILTER=spec/system/path/to/file_spec.rb"`
+(see `doc/developer_manual/cookbook/how-to-run-filtered-ci-pipelines.md`).
+
 ### Stale legacy assets
 
 System specs for the legacy (CoffeeScript) app run against the compiled
@@ -196,6 +200,11 @@ fail them with `{ networkError: true }`.
 GraphQL operations are automocked as in the unit specs: the generated
 `*.mocks.ts` helpers (`mockXQuery`, `waitForXQueryCalls`,
 `getXSubscriptionHandler`) work in both projects.
+
+To prove a flaky browser spec stable, loop it in CI with the push option
+`-o ci.variable="VITEST_BROWSER_TEST_FILTER=file.browser.spec.ts"`, and
+optionally `VITEST_BROWSER_TEST_NAME_PATTERN` for `-t` (see
+`doc/developer_manual/cookbook/how-to-run-filtered-ci-pipelines.md`).
 
 ### Vitest utils
 

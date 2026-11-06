@@ -47,6 +47,9 @@ Then run the browser tests like the unit tests:
 - Run a single test file: `pnpm test:browser --run editor-basic.browser.spec.ts`
 - Run all browser tests: `pnpm test:browser --run`
 
+To check whether a flaky browser test is stable, loop it in CI, see
+[How to run filtered CI pipelines](how-to-run-filtered-ci-pipelines.md#loop-a-browser-test).
+
 #### Screenshots
 
 Visual regression tests take a screenshot of an element with `toMatchScreenshot()` and compare it with the reference

@@ -30,26 +30,19 @@ frontend:vitest:
     - .template_vitest_shard
   parallel: 5
 
-frontend:vitest:browser:
+.template_vitest_browser:
   stage: test
   extends:
     - .no_artifact_dependencies
     - .variables_playwright
-  rules:
-    - !reference [.rule_fragments, variable_filters]
-    - !reference [.rule_fragments, frontend_changes_in_mr]
-    - !reference [.rule_fragments, then_manual_in_mr]
   needs:
     - !reference [.needs, nodejs]
     - !reference [.needs, lint]
-  timeout: 15 minutes
   cache: !reference [.cache, read_only_nodejs]
   services:
     - !reference [.services, playwright]
   before_script:
     - !reference [.scripts, pnpm_install]
-  script:
-    - pnpm test:browser --run --reporter=default --reporter=junit --outputFile.junit=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest-browser.xml
   artifacts:
     expire_in: 1 week
     when: always
@@ -58,3 +51,40 @@ frontend:vitest:browser:
       - app/frontend/.vitest/attachments/*
     reports:
       junit: tmp/junit/*.xml
+
+frontend:vitest:browser:
+  extends:
+    - .template_vitest_browser
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, frontend_changes_in_mr]
+    - !reference [.rule_fragments, then_manual_in_mr]
+  timeout: 15 minutes
+  script:
+    - pnpm test:browser --run --reporter=default --reporter=junit --outputFile.junit=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest-browser.xml
+
+# Loops the browser specs selected with VITEST_BROWSER_TEST_FILTER, optionally narrowed
+#   to the examples matching VITEST_BROWSER_TEST_NAME_PATTERN. A separate Vitest run per
+#   loop, so that flakes of a cold start show up, too.
+frontend:vitest:browser:filtered:
+  extends:
+    - .template_vitest_browser
+  rules:
+    - !reference [.rule_fragments, then_vitest_browser_test_filter_only]
+  timeout: 1 hour
+  variables:
+    VITEST_BROWSER_TEST_FILTER_LOOP_COUNT: 50
+  script:
+    - |
+      # An invalid count makes `seq` produce nothing, which would turn the job green
+      #   without running a single test.
+      [ "$VITEST_BROWSER_TEST_FILTER_LOOP_COUNT" -gt 0 ] 2>/dev/null || { echo "> VITEST_BROWSER_TEST_FILTER_LOOP_COUNT must be a positive number, got '$VITEST_BROWSER_TEST_FILTER_LOOP_COUNT'."; exit 1; }
+      report=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest-browser.xml
+      for i in $(seq $VITEST_BROWSER_TEST_FILTER_LOOP_COUNT)
+      do
+        echo "> Run $i of $VITEST_BROWSER_TEST_FILTER_LOOP_COUNT: $VITEST_BROWSER_TEST_FILTER $VITEST_BROWSER_TEST_NAME_PATTERN"
+        pnpm test:browser --run --bail=1 ${VITEST_BROWSER_TEST_NAME_PATTERN:+-t "$VITEST_BROWSER_TEST_NAME_PATTERN"} --reporter=default --reporter=junit --outputFile.junit=$report $VITEST_BROWSER_TEST_FILTER || exit 1
+        # A filter that selects only skipped tests lets Vitest exit successfully, which
+        #   would turn the job green without running the spec under test.
+        [ "$(grep -c '<testcase' $report)" -gt "$(grep -c '<skipped' $report)" ] || { echo "> Run $i did not run a single test, check the filter."; exit 1; }
+      done

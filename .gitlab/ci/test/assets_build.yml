@@ -5,9 +5,11 @@ assets:build:
     - !reference [.needs, nodejs]
     - !reference [.needs, lint]
   timeout: 15 minutes
-  # No `rules:` on purpose: the browser jobs of a filtered pipeline ($JOB_FILTER,
-  #   $BROWSER_TEST_FILTER) still need the assets built here, as the specs
-  #   themselves skip the compilation ($CI_SKIP_ASSETS_PRECOMPILE).
+  # Without the variable filters on purpose: the browser jobs of a filtered pipeline
+  #   ($JOB_FILTER, $BROWSER_TEST_FILTER) still need the assets built here, as the
+  #   specs themselves skip the compilation ($CI_SKIP_ASSETS_PRECOMPILE).
+  rules:
+    - !reference [.rule_fragments, then_unless_vitest_browser_test_filter_only]
   extends:
     - .template_ruby
     - .no_artifact_dependencies

@@ -1,8 +1,10 @@
 # Write CI cache once for faster runs
-# No `rules:` on purpose: filtered pipelines ($JOB_FILTER, $BROWSER_TEST_FILTER)
-#   need the cache, too.
+# Without the variable filters on purpose: filtered pipelines ($JOB_FILTER,
+#   $BROWSER_TEST_FILTER) need the cache, too.
 'write cache: ruby':
   stage: pre
+  rules:
+    - !reference [.rule_fragments, then_unless_vitest_browser_test_filter_only]
   cache: !reference [.cache, read_write_ruby]
   before_script:
     - !reference [.scripts, source_rvm]
@@ -10,7 +12,7 @@
     - !reference [.scripts, bundle_install]
   after_script: []
 
-# No `rules:` on purpose, see above.
+# No `rules:` on purpose: all filtered pipelines need the cache, too.
 'write cache: nodejs':
   stage: pre
   cache: !reference [.cache, read_write_nodejs]

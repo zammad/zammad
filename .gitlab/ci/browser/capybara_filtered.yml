@@ -11,10 +11,17 @@
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
     - |
+      # An invalid count makes `seq` produce nothing, which would turn the job green
+      #   without running a single test.
+      [ "$BROWSER_TEST_FILTER_LOOP_COUNT" -gt 0 ] 2>/dev/null || { echo "> BROWSER_TEST_FILTER_LOOP_COUNT must be a positive number, got '$BROWSER_TEST_FILTER_LOOP_COUNT'."; exit 1; }
+      report=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/rspec.xml
       for i in $(seq $BROWSER_TEST_FILTER_LOOP_COUNT)
       do
         echo "> Run $i of $BROWSER_TEST_FILTER_LOOP_COUNT: $BROWSER_TEST_FILTER"
         bundle exec rspec --fail-fast $BROWSER_TEST_FILTER || exit 1
+        # A filter that selects only pending examples lets RSpec exit successfully, which
+        #   would turn the job green without running the spec under test.
+        [ "$(grep -c '<testcase' $report)" -gt "$(grep -c '<skipped' $report)" ] || { echo "> Run $i did not run a single example, check the filter."; exit 1; }
       done
 
 capybara:filtered:chromium:

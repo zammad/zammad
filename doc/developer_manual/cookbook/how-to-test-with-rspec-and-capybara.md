@@ -48,6 +48,9 @@ bundle exec rspec --only-failures spec/system/ticket/zoom_spec.rb
 The browsers are driven by Playwright, which needs a one-time browser download and records a trace of every example to
 debug a failing browser test. See [How to debug system tests with Playwright](how-to-debug-with-playwright.md).
 
+To check whether a flaky system test is stable, loop it in CI, see
+[How to run filtered CI pipelines](how-to-run-filtered-ci-pipelines.md#loop-a-system-test).
+
 ## Ports Used by a Test Run
 
 A run claims two ports, both taken from the environment. Their defaults sit
