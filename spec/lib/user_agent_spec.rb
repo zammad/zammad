@@ -708,6 +708,7 @@ RSpec.describe UserAgent, :aggregate_failures do
 
       before do
         allow(HostnameSafetyCheck).to receive(:validate!)
+        allow(HostnameSafetyCheck).to receive(:safe_addresses).and_return([])
       end
 
       context 'when safety validation is on' do
@@ -733,9 +734,13 @@ RSpec.describe UserAgent, :aggregate_failures do
 
           http_instance = instance_double(Net::HTTP).tap do |dbl|
             allow(dbl).to receive_messages(
+              :ipaddr           => resolved_ip,
+              :open_timeout     => 30,
               :open_timeout=    => nil,
               :read_timeout=    => nil,
               :set_debug_output => nil,
+              :start            => nil,
+              :started?         => false,
               :request          => nil,
               :proxy?           => false,
             )
@@ -747,7 +752,7 @@ RSpec.describe UserAgent, :aggregate_failures do
 
           described_class.get(url, {}, { validate_safety: true })
 
-          expect(http_instance).to have_received(:ipaddr=).with(resolved_ip)
+          expect(http_instance).to have_received(:ipaddr=).with(resolved_ip).at_least(:once)
         end
 
         it 'connects to the pinned IP instead of re-resolving DNS' do
@@ -934,6 +939,115 @@ RSpec.describe UserAgent, :aggregate_failures do
         described_class.get('http://example.com')
 
         expect(Net::HTTP).not_to have_received(:Proxy)
+      end
+    end
+  end
+
+  describe '.connect_with_address_fallback' do
+    let(:hostname)      { 'dualstack.example.com' }
+    let(:http)          { Net::HTTP.new(hostname, 443) }
+    let(:total_timeout) { 30 }
+    let(:attempts)      { [] }
+    let(:unreachable)   { [] }
+    let(:connect_error) { Errno::ENETUNREACH }
+
+    before do
+      http.ipaddr       = '2001:db8::1'
+      http.open_timeout = total_timeout
+
+      allow(HostnameSafetyCheck).to receive(:safe_addresses).with(hostname).and_return(['2001:db8::1', '203.0.113.10'])
+
+      allow(http).to receive(:start) do
+        attempts << http.ipaddr
+        raise connect_error if unreachable.include?(http.ipaddr)
+
+        http
+      end
+    end
+
+    context 'when the pinned address is reachable' do
+      it 'connects to it' do
+        described_class.connect_with_address_fallback(http, hostname, nil, total_timeout)
+
+        expect(attempts).to eq(['2001:db8::1'])
+      end
+    end
+
+    context 'when the pinned address is unreachable' do
+      let(:unreachable) { ['2001:db8::1'] }
+
+      it 'connects to the next safe address' do
+        described_class.connect_with_address_fallback(http, hostname, nil, total_timeout)
+
+        expect(attempts).to eq(['2001:db8::1', '203.0.113.10'])
+      end
+
+      context 'when its address family is not supported' do
+        let(:connect_error) { Errno::EAFNOSUPPORT }
+
+        it 'connects to the next safe address' do
+          described_class.connect_with_address_fallback(http, hostname, nil, total_timeout)
+
+          expect(attempts).to eq(['2001:db8::1', '203.0.113.10'])
+        end
+      end
+    end
+
+    # Open timeout and total timeout are equal, as with the webhook defaults.
+    context 'when the pinned address silently drops the connection' do
+      let(:total_timeout) { 1 }
+      let(:unreachable)   { ['2001:db8::1'] }
+
+      before do
+        allow(http).to receive(:start) do
+          attempts << http.ipaddr
+
+          if unreachable.include?(http.ipaddr)
+            sleep http.open_timeout
+            raise Net::OpenTimeout
+          end
+
+          http
+        end
+      end
+
+      it 'connects to the next safe address within the total timeout' do
+        Timeout.timeout(total_timeout) do
+          described_class.connect_with_address_fallback(http, hostname, nil, total_timeout)
+        end
+
+        expect(attempts).to eq(['2001:db8::1', '203.0.113.10'])
+      end
+
+      it 'restores the configured open timeout' do
+        described_class.connect_with_address_fallback(http, hostname, nil, total_timeout)
+
+        expect(http.open_timeout).to eq(total_timeout)
+      end
+    end
+
+    context 'when no address is reachable' do
+      let(:unreachable) { ['2001:db8::1', '203.0.113.10'] }
+
+      it 'raises the error and keeps the pinned address' do
+        expect { described_class.connect_with_address_fallback(http, hostname, nil, total_timeout) }
+          .to raise_error(Errno::ENETUNREACH)
+
+        expect(attempts).to eq(['2001:db8::1', '203.0.113.10'])
+        expect(http.ipaddr).to eq('2001:db8::1')
+      end
+    end
+
+    context 'when the connection fails for another reason' do
+      before do
+        allow(http).to receive(:start).and_raise(OpenSSL::SSL::SSLError)
+      end
+
+      it 'does not try other addresses' do
+        expect { described_class.connect_with_address_fallback(http, hostname, nil, total_timeout) }
+          .to raise_error(OpenSSL::SSL::SSLError)
+
+        expect(http).to have_received(:start).once
       end
     end
   end
