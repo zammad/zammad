@@ -6,6 +6,7 @@ import type { NotificationClassMap } from '#shared/components/CommonNotification
 let notificationClasses: NotificationClassMap = {
   base: 'common-notification',
   baseContainer: 'common-notification-container',
+  button: 'common-notification-button',
   error: 'common-notification-error',
   info: 'common-notification-info',
   message: 'common-notification-message',

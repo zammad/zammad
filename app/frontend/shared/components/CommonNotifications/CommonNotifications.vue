@@ -51,16 +51,8 @@ const handleClose = (notification: Notification, clickFromCloseButton = false) =
     >
       <li v-for="notification in notifications" :key="notification.id" class="pointer-events-auto">
         <CommonNotificationsItem
-          class="grid w-fit gap-1"
-          :class="[
-            notificationTypeClassMap.base,
-            notificationTypeClassMap[notification.type],
-            {
-              'cursor-pointer': !notification.currentProgress,
-              'grid-cols-[min-content_1fr_fit-content]': notification.currentProgress,
-              'grid-cols-[min-content_1fr]': !notification.currentProgress,
-            },
-          ]"
+          class="w-fit"
+          :class="[notificationTypeClassMap.base, notificationTypeClassMap[notification.type]]"
           :notification="notification"
           @action="handleAction"
           @close="handleClose"
