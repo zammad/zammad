@@ -48,7 +48,8 @@ Playwright for JavaScript and Python, so the
 [Playwright documentation](https://playwright.dev/docs/locators) applies directly.
 
 `open_desktop(route)` and `open_mobile(route)` open a route of the app and wait until it
-has loaded. An example with `app: :mobile` runs in a phone-sized viewport.
+has loaded. `reload_page` reloads the page and waits the same way. An example with
+`app: :mobile` runs in a phone-sized viewport.
 
 ### Several tabs
 

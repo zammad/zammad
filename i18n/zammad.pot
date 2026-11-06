@@ -1397,7 +1397,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:331
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:128
 msgid "Add link"
 msgstr ""
 
@@ -2697,6 +2697,10 @@ msgstr ""
 msgid "Avatar"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:225
+msgid "Avatar (%s)"
+msgstr ""
+
 #: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
 #: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
@@ -3205,7 +3209,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:30
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:236
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:262
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:267
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:217
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:68
@@ -4376,7 +4380,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:178
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:183
 msgid "Copied!"
 msgstr ""
 
@@ -7170,7 +7174,7 @@ msgid "Emails before the cut-off time are imported as archived tickets. Emails a
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:310
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:144
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:103
 msgid "Embed video"
 msgstr ""
 
@@ -8222,7 +8226,7 @@ msgstr ""
 msgid "First Steps"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:116
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:121
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:89
 msgid "First article"
 msgstr ""
@@ -9168,7 +9172,7 @@ msgstr ""
 msgid "Hidden articles: %s"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:87
 msgid "Hide"
 msgstr ""
 
@@ -9180,7 +9184,7 @@ msgstr ""
 msgid "Hide authenticator app secret"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:87
 msgid "Hide notification"
 msgstr ""
 
@@ -10635,7 +10639,7 @@ msgstr ""
 msgid "Lastname, Firstname"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:110
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:115
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:83
 msgid "Latest article"
 msgstr ""
@@ -10788,7 +10792,7 @@ msgstr ""
 msgid "Link already exists"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:215
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:161
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:321
 msgid "Link answer"
 msgstr ""
@@ -11028,7 +11032,7 @@ msgstr ""
 msgid "Lost network connection"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:365
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:370
 msgid "Lost network connection!"
 msgstr ""
 
@@ -14150,6 +14154,7 @@ msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting.vue:32
 msgid "Personal settings"
 msgstr ""
 
@@ -15571,7 +15576,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:642
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:646
 msgid "Results"
 msgstr ""
 
@@ -15900,7 +15905,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:225
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:120
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:270
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:275
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:64
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
@@ -16071,7 +16076,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:640
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:644
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -16209,7 +16214,7 @@ msgstr ""
 msgid "Search or enter phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:694
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:698
 msgid "Search result for: %s"
 msgstr ""
 
@@ -21388,7 +21393,7 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:368
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:373
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:20
 msgid "Trying to reconnect…"
 msgstr ""

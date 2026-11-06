@@ -35,6 +35,12 @@ module PlaywrightNative
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
     end
 
+    # The reloaded app has to load again, like after open_desktop and open_mobile.
+    def reload_page
+      page.reload
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
+    end
+
     # Another tab of the same browser, it shares the cookies and the storage of `page`.
     def open_tab
       browser_context.new_page

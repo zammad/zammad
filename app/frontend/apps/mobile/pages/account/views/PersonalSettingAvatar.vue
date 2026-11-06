@@ -219,7 +219,12 @@ const actions = computed<CommonButtonOption[]>(() => [
   <div v-if="user" class="px-4">
     <div class="flex flex-col items-center py-6">
       <CommonLoader :loading="avatarLoading">
-        <CommonAvatar v-if="state.resizedImage" :image="state.resizedImage" size="xl" />
+        <CommonAvatar
+          v-if="state.resizedImage"
+          :image="state.resizedImage"
+          :aria-label="$t('Avatar (%s)', user.fullname)"
+          size="xl"
+        />
         <CommonUserAvatar v-else :entity="user" size="xl" personal />
         <CommonButtonGroup class="mt-6" mode="full" :options="actions" />
       </CommonLoader>

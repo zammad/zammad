@@ -55,7 +55,7 @@ const tooltipMessages = computed(() => {
 </script>
 
 <template>
-  <div
+  <li
     class="flex min-h-[54px] cursor-move items-center gap-2 border-b border-gray-300 p-3 last:border-0"
     data-test-id="overviewItem"
     :draggable="draggable ? 'true' : undefined"
@@ -91,5 +91,5 @@ const tooltipMessages = computed(() => {
       </CommonTooltip>
     </div>
     <CommonIcon v-if="draggable" name="change-order" size="small" class="shrink-0 text-gray" />
-  </div>
+  </li>
 </template>

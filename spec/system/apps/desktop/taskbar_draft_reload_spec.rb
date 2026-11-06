@@ -2,33 +2,28 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Taskbar > Draft after a reload', app: :desktop_view, authenticated_as: :agent, type: :system do
+RSpec.describe 'Desktop > Taskbar > Draft after a reload', app: :desktop_view, authenticated_as: :agent, type: :playwright do
   let(:group)          { create(:group) }
   let(:agent)          { create(:agent, groups: [group], roles: [Role.find_by(name: 'Agent'), kb_editor_role]) }
   let(:kb_editor_role) { create(:role, permission_names: %w[knowledge_base.editor]) }
 
   def wait_for_stored_draft(title)
-    wait.until { Taskbar.where(user_id: agent.id).any? { |taskbar| taskbar.state.to_s.include?(title) } }
-  end
-
-  def wait_for_input_value(label, value)
-    wait.until { find_input(label).input_element.value == value }
+    wait_until("No taskbar stores the draft #{title}") do
+      Taskbar.where(user_id: agent.id).any? { |taskbar| taskbar.state.to_s.include?(title) }
+    end
   end
 
   it 'restores a ticket create draft after a reload' do
-    visit '/ticket/create'
+    open_desktop('/ticket/create')
     wait_for_form_to_settle('ticket-create')
 
-    within_form(form_updater_gql_number: 1) do
-      find_input('Title').type('Draft ticket title')
-    end
-
+    fill_field('Title', 'Draft ticket title')
     wait_for_stored_draft('Draft ticket title')
 
-    refresh
+    reload_page
     wait_for_form_to_settle('ticket-create')
 
-    wait_for_input_value('Title', 'Draft ticket title')
+    expect(field('Title').get_by_role('textbox')).to have_value('Draft ticket title')
   end
 
   context 'with a knowledge base' do
@@ -38,19 +33,16 @@ RSpec.describe 'Desktop > Taskbar > Draft after a reload', app: :desktop_view, a
     before { create(:knowledge_base_category, knowledge_base:) }
 
     it 'restores a knowledge base answer create draft after a reload' do
-      visit "/knowledge-base/locale/#{locale}/answer/create"
+      open_desktop("/knowledge-base/locale/#{locale}/answer/create")
       wait_for_form_to_settle('knowledge-base-answer-create')
 
-      within_form(form_updater_gql_number: 1) do
-        find_input('Title').type('Draft answer title')
-      end
-
+      fill_field('Title', 'Draft answer title')
       wait_for_stored_draft('Draft answer title')
 
-      refresh
+      reload_page
       wait_for_form_to_settle('knowledge-base-answer-create')
 
-      wait_for_input_value('Title', 'Draft answer title')
+      expect(field('Title').get_by_role('textbox')).to have_value('Draft answer title')
     end
   end
 end

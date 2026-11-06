@@ -113,7 +113,7 @@ const updateDndDisabledConfig = (disabled: boolean) => {
       :header-label="__('Included ticket overviews')"
       data-test-id="includedOverviews"
     >
-      <div ref="dndParentRef">
+      <ul ref="dndParentRef" :aria-label="$t('Included ticket overviews')">
         <TicketOverviewEditItem
           v-for="overview in includedOverviews"
           :key="overview.id"
@@ -123,7 +123,7 @@ const updateDndDisabledConfig = (disabled: boolean) => {
           @action="removeFromFavorites(overview.id)"
           @action-active="updateDndDisabledConfig"
         />
-      </div>
+      </ul>
       <div v-if="!includedOverviews.length" class="ms-3 flex min-h-[54px] items-center">
         <p>{{ $t('No entries') }}</p>
       </div>
@@ -134,13 +134,15 @@ const updateDndDisabledConfig = (disabled: boolean) => {
       :header-label="__('More ticket overviews')"
       data-test-id="excludedOverviews"
     >
-      <TicketOverviewEditItem
-        v-for="overview of excludedOverviews"
-        :key="overview.id"
-        action="add"
-        :overview="overview"
-        @action="addToFavorites(overview.id)"
-      />
+      <ul v-if="excludedOverviews.length" :aria-label="$t('More ticket overviews')">
+        <TicketOverviewEditItem
+          v-for="overview of excludedOverviews"
+          :key="overview.id"
+          action="add"
+          :overview="overview"
+          @action="addToFavorites(overview.id)"
+        />
+      </ul>
       <div v-if="!excludedOverviews.length" class="ms-3 flex min-h-[54px] items-center">
         <p>{{ $t('No entries') }}</p>
       </div>
