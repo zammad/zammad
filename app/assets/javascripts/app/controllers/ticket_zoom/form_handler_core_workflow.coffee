@@ -67,8 +67,10 @@ class App.FormHandlerCoreWorkflow
     return true
 
   # checks if the ajax or websocket endpoint should be used
+  #   (long polling would delay every response until the next poll)
   @useWebSockets: ->
     return if !App.WebSocket.channel()
+    return if App.WebSocket.channel() is 'ajax'
     return !App.Config.get('core_workflow_ajax_mode')
 
   @restrictValuesAttributeCache: (attribute, values) ->
