@@ -76,6 +76,135 @@ describe('CommonPopover.vue', () => {
     )
   })
 
+  it('takes over the name of an owner labelled by another element', async () => {
+    const wrapper = renderComponent({
+      components: { CommonPopover },
+      template: html`
+        <CommonPopover ref="popover" :owner="popoverTarget"
+          ><span>Example Content</span></CommonPopover
+        >
+        <span id="owner-label">User menu</span>
+        <button ref="popoverTarget" aria-labelledby="owner-label" @click="toggle">AB</button>
+      `,
+      setup() {
+        const { popover, popoverTarget, toggle } = usePopover()
+
+        return {
+          toggle,
+          popover,
+          popoverTarget,
+        }
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'User menu' }))
+
+    expect(await wrapper.findByRole('region', { name: 'User menu' })).toHaveTextContent(
+      'Example Content',
+    )
+  })
+
+  it('is named after its owner when the owner refers to a missing label', async () => {
+    const wrapper = renderComponent({
+      components: { CommonPopover },
+      template: html`
+        <CommonPopover ref="popover" :owner="popoverTarget"
+          ><span>Example Content</span></CommonPopover
+        >
+        <button
+          ref="popoverTarget"
+          aria-labelledby="missing-label"
+          aria-label="Actions"
+          @click="toggle"
+        >
+          AB
+        </button>
+      `,
+      setup() {
+        const { popover, popoverTarget, toggle } = usePopover()
+
+        return {
+          toggle,
+          popover,
+          popoverTarget,
+        }
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Actions' }))
+
+    expect(await wrapper.findByRole('region', { name: 'Actions' })).toHaveTextContent(
+      'Example Content',
+    )
+  })
+
+  it('follows a label change of its owner while open', async () => {
+    const wrapper = renderComponent({
+      components: { CommonPopover },
+      template: html`
+        <CommonPopover ref="popover" :owner="popoverTarget"
+          ><span>Example Content</span></CommonPopover
+        >
+        <span id="first-label">User menu</span>
+        <span id="second-label">Account menu</span>
+        <button ref="popoverTarget" aria-labelledby="first-label" @click="toggle">AB</button>
+      `,
+      setup() {
+        const { popover, popoverTarget, toggle } = usePopover()
+
+        return {
+          toggle,
+          popover,
+          popoverTarget,
+        }
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'User menu' }))
+    expect(await wrapper.findByRole('region', { name: 'User menu' })).toBeInTheDocument()
+
+    wrapper
+      .getByRole('button', { name: 'User menu' })
+      .setAttribute('aria-labelledby', 'second-label')
+
+    expect(await wrapper.findByRole('region', { name: 'Account menu' })).toBeInTheDocument()
+  })
+
+  it('is named after a new owner that replaces the old one while open', async () => {
+    const wrapper = renderComponent({
+      components: { CommonPopover },
+      template: html`
+        <CommonPopover ref="popover" :owner="useSecond ? second : first" no-close-on-click-outside
+          ><span>Example Content</span></CommonPopover
+        >
+        <button ref="first" @click="toggle">First</button>
+        <button ref="second">Second</button>
+        <button @click="useSecond = true">Switch</button>
+      `,
+      setup() {
+        const { popover, toggle } = usePopover()
+        const first = ref()
+        const second = ref()
+        const useSecond = ref(false)
+
+        return {
+          toggle,
+          popover,
+          first,
+          second,
+          useSecond,
+        }
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'First' }))
+    expect(await wrapper.findByRole('region', { name: 'First' })).toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Switch' }))
+
+    expect(await wrapper.findByRole('region', { name: 'Second' })).toBeInTheDocument()
+  })
+
   it('ignores horizontal orientation on small screens and falls back to vertical orientation', async () => {
     isSmallScreen.value = false
 

@@ -14,6 +14,7 @@ import {
   type MaybeElementRef,
   type VueInstance,
   unrefElement,
+  useMutationObserver,
 } from '@vueuse/core'
 import {
   type ComponentPublicInstance,
@@ -25,6 +26,7 @@ import {
   toRef,
   type UnwrapRef,
   useTemplateRef,
+  watch,
 } from 'vue'
 
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
@@ -344,6 +346,29 @@ const ensureOwnerId = () => {
   if (element && !element.id) element.id = `popover-owner-${getUuid()}`
 }
 
+// The name computation does not follow the owner's own aria-labelledby, so the popover takes it over.
+const ownerLabelledBy = () => {
+  const element = unrefElement(props.owner)
+  const labelledBy = element?.getAttribute('aria-labelledby')
+
+  if (labelledBy?.split(/\s+/).some((id) => document.getElementById(id))) return labelledBy
+
+  return element?.id
+}
+
+const popoverLabelledBy = ref<string>()
+
+const updatePopoverLabelledBy = () => {
+  popoverLabelledBy.value = ownerLabelledBy()
+}
+
+// Watched only while open, the owner may change its label in the meantime.
+useMutationObserver(
+  () => (showPopover.value ? unrefElement(props.owner) : undefined),
+  updatePopoverLabelledBy,
+  { attributeFilter: ['aria-labelledby'] },
+)
+
 const updateOwnerAriaExpandedState = () => {
   const element = unrefElement(props.owner)
 
@@ -358,6 +383,13 @@ let removeOnKeyUpEscapeHandler: () => void
 
 const lastActiveElement = ref<HTMLElement>()
 const ownerElement = useCurrentElement(toRef(props, 'owner') as MaybeElementRef<VueInstance>)
+
+watch(ownerElement, () => {
+  if (!showPopover.value) return
+
+  ensureOwnerId()
+  updatePopoverLabelledBy()
+})
 
 const isLastActiveElementOwner = computed(() => lastActiveElement.value === ownerElement.value)
 
@@ -431,6 +463,7 @@ const openPopoverImmediate = () => {
   })
 
   ensureOwnerId()
+  updatePopoverLabelledBy()
   showPopover.value = true
   emit('open')
 
@@ -540,7 +573,7 @@ useOnEmitter('resize-layout', () => {
         class="popover fixed flex print:hidden"
         :class="[classes.base]"
         :style="popoverStyle"
-        :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
+        :aria-labelledby="popoverLabelledBy"
         v-bind="$attrs"
       >
         <div
