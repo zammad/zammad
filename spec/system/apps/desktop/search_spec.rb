@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authenticate, searchindex: true, type: :system do
+RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authenticate, searchindex: true, type: :playwright do
   let(:group)                { create(:group) }
   let(:agent)                { create(:agent, groups: [group]) }
   let(:customer)             { create(:customer, :with_org) }
@@ -13,6 +13,8 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
   let(:old_agent_article)    { create(:ticket_article, :outbound_email, ticket: old_ticket, from: agent.email, body: answer) }
   let(:new_ticket)           { create(:ticket, title: 'New Ticket Title', group:, customer:) }
   let(:new_customer_article) { create(:ticket_article, :inbound_email, ticket: new_ticket, from: customer.email, body: question) }
+
+  let(:quick_search) { main_sidebar.get_by_role('searchbox', name: 'Search…') }
 
   def authenticate
     travel_to 6.months.ago
@@ -27,85 +29,62 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
     agent
   end
 
+  # The route of the search encodes the search term, a name may contain an apostrophe.
+  def expect_route(route)
+    wait_until("Route #{route} not reached") { CGI.unescape(page.url).include?(route) }
+  end
+
   before do
-    visit "/tickets/#{new_ticket.id}"
+    open_desktop("/tickets/#{new_ticket.id}")
   end
 
   it 'can search for related issues to answer customer ticket' do
-    within 'main' do
-      expect(page).to have_text(customer.fullname)
-        .and have_text(new_customer_article.body)
-    end
+    expect(main_content).to contain_text(customer.fullname)
+    expect(main_content).to contain_text(new_customer_article.body)
 
-    within 'aside[aria-label="Main sidebar"]' do
-      # The missing closing bracket used to be silently tolerated by Chrome's
-      #   lenient CSS parser, but Playwright's selector engine rejects it.
-      find('[role="searchbox"][aria-label="Search…"]').fill_in with: customer.fullname
+    quick_search.fill(customer.fullname)
 
-      expect(page).to have_text('Found users')
-        .and have_link(customer.fullname)
+    expect(main_sidebar).to contain_text('Found users')
+    expect(main_sidebar.get_by_role('link', name: customer.fullname)).to be_visible
 
-      click_on 'detailed search'
-    end
+    main_sidebar.get_by_role('link', name: 'detailed search').click
+    expect_route("/search/#{customer.fullname}")
 
-    # CGI.escapeURIComponent encodes apostrophes as %27, but Vue Router's
-    # encodeURI does not. Decode the URL before comparing to handle both.
-    wait.until { CGI.unescape(current_url).include?("/search/#{customer.fullname}") }
+    detailed_search = main_content.get_by_role('searchbox', name: 'Search…')
 
-    within 'main' do
-      find('[role="tab"]', text: 'User').click
+    main_content.get_by_role('tab', name: 'User').click
+    expect(main_content.get_by_role('link', name: customer.login)).to be_visible
 
-      expect(page).to have_link(customer.login)
+    main_content.get_by_role('tab', name: 'Ticket').click
+    detailed_search.fill('foobar')
+    expect(main_content).to contain_text('No search results for this query.')
 
-      find('[role="tab"]', text: 'Ticket').click
-      find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'foobar'
+    main_content.get_by_role('button', name: 'Clear search').click
+    expect(main_content).to contain_text('Start typing or apply filters to get the search results.')
 
-      expect(page).to have_text('No search results for this query.')
+    detailed_search.fill("state.name: closed AND article.from: #{agent.fullname} AND customer.firstname: #{customer.firstname}")
+    main_content.get_by_role('link', name: old_ticket.number).click
+    expect_route("/tickets/#{old_ticket.id}")
 
-      find('[role="button"][aria-label="Clear search"]').click
+    expect(main_content).to contain_text(agent.fullname)
+    expect(main_content).to contain_text(answer)
 
-      expect(page).to have_text('Start typing or apply filters to get the search results.')
+    page.get_by_role('tree', name: 'User taskbar tabs').get_by_role('link', name: 'New Ticket Title').click
 
-      find('[role="searchbox"][aria-label="Search…"]').fill_in with: "state.name: closed AND article.from: #{agent.fullname} AND customer.firstname: #{customer.firstname}"
+    main_content.get_by_role('button', name: 'Add internal note').click
 
-      click_on old_ticket.number
-    end
+    fill_field('Text', answer)
 
-    wait.until { current_url.include?("/tickets/#{old_ticket.id}") }
+    page.get_by_role('button', name: 'Update', exact: true).click
 
-    within 'main' do
-      expect(page).to have_text(agent.fullname)
-        .and have_text(answer)
-    end
-
-    within '#user-taskbar-tabs' do
-      click_on 'New Ticket Title'
-    end
-
-    within 'main' do
-      find('button', text: 'Add internal note').click
-      find_editor('Text').type(answer)
-
-      wait_for_form_updater
-    end
-
-    within 'footer' do
-      click_on 'Update'
-
-      wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
-    end
-
-    expect(new_ticket.reload.articles.last.body).to include(answer)
+    wait_until('The note was not added') { new_ticket.reload.articles.last.body.include?(answer) }
   end
 
-  # The quicksearch group for knowledge base answers. `kb_active` needs no setting up - creating an
-  #   active knowledge base sets it through KnowledgeBase#set_kb_active_setting - and the agent
-  #   holds knowledge_base.reader through the default Agent role, so `canBrowse` is satisfied and
-  #   the group's plugin is offered.
   context 'with a knowledge base' do
     include_context 'basic Knowledge Base'
 
     let(:answer_title) { 'Ocarina tuning guide' }
+    let(:answer_route) { "/knowledge-base/locale/#{primary_locale.system_locale.locale}/answer/#{kb_answer.id}" }
 
     let(:kb_answer) do
       create(:knowledge_base_answer, :published, category:, translation_attributes: { title: answer_title })
@@ -118,71 +97,54 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
     end
 
     it 'finds a knowledge base answer and opens it' do
-      within 'aside[aria-label="Main sidebar"]' do
-        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+      quick_search.fill('Ocarina')
 
-        expect(page).to have_text('Found knowledge base answers').and have_link(answer_title)
+      expect(main_sidebar).to contain_text('Found knowledge base answers')
 
-        click_on answer_title
-      end
-
-      wait.until { current_url.include?("/knowledge-base/locale/#{primary_locale.system_locale.locale}/answer/#{kb_answer.id}") }
+      main_sidebar.get_by_role('link', name: answer_title).click
+      expect_route(answer_route)
     end
 
-    # The details popover, loaded only when it opens - so this is also the one check that the new
+    # The details popover, loaded only when it opens - so this is also the one check that the
     #   light query works against the real backend rather than a mock.
     it 'shows the answer details in a popover' do
-      within 'aside[aria-label="Main sidebar"]' do
-        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+      quick_search.fill('Ocarina')
 
-        expect(page).to have_link(answer_title)
+      main_sidebar.get_by_role('link', name: answer_title).hover
 
-        find('a', text: answer_title).hover
-      end
-
-      within '[role="region"]' do
-        expect(page).to have_text(answer_title)
-          .and have_text('Language')
-          .and have_text('Published')
-      end
+      details = page.get_by_role('region', name: answer_title)
+      expect(details).to contain_text('Language')
+      expect(details).to contain_text('Published')
     end
 
     it 'omits the group when the knowledge base is deactivated' do
       knowledge_base.update!(active: false)
 
-      refresh
+      page.reload
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 
-      within 'aside[aria-label="Main sidebar"]' do
-        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
-        wait_for_gql('apps/desktop/components/Search/graphql/queries/quickSearch.graphql')
+      quick_search.fill('Ocarina')
+      wait_for_query('quickSearch')
 
-        expect(page).to have_no_text('Found knowledge base answers')
-      end
+      expect(main_sidebar).to not_contain_text('Found knowledge base answers')
     end
 
-    # The detailed search tab. Reached by clicking rather
-    #   than by visiting the URL, because visiting a /search URL directly does not establish the
-    #   taskbar tab.
+    # Reached by clicking rather than by visiting the URL, because visiting a /search URL directly
+    #   does not establish the taskbar tab.
     it 'lists the answer in its own detailed search tab and opens it' do
-      within 'aside[aria-label="Main sidebar"]' do
-        find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+      quick_search.fill('Ocarina')
 
-        expect(page).to have_text('Found knowledge base answers')
+      expect(main_sidebar).to contain_text('Found knowledge base answers')
+      main_sidebar.get_by_role('link', name: 'detailed search').click
 
-        click_on 'detailed search'
+      main_content.get_by_role('tab', name: 'Knowledge base answer').click
+
+      ['Name', 'Updated at', 'Visibility'].each do |column|
+        expect(main_content.get_by_role('columnheader', name: column)).to be_visible
       end
 
-      within 'main' do
-        find('[role="tab"]', text: 'Knowledge base answer').click
-
-        expect(page).to have_css('th', text: 'Name')
-          .and have_css('th', text: 'Updated at')
-          .and have_css('th', text: 'Visibility')
-
-        click_on answer_title
-      end
-
-      wait.until { current_url.include?("/knowledge-base/locale/#{primary_locale.system_locale.locale}/answer/#{kb_answer.id}") }
+      main_content.get_by_role('link', name: answer_title).click
+      expect_route(answer_route)
     end
 
     context 'with more answers than the group shows' do
@@ -201,17 +163,12 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
       end
 
       it 'caps the group and links to the detailed search for the rest' do
-        within 'aside[aria-label="Main sidebar"]' do
-          find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'Ocarina'
+        quick_search.fill('Ocarina')
 
-          expect(page).to have_text('Found knowledge base answers')
+        expect(main_sidebar).to contain_text('Found knowledge base answers')
+        main_sidebar.get_by_role('link', name: '2 more').click
 
-          click_on '2 more'
-        end
-
-        within 'main' do
-          expect(page).to have_css('[role="tab"][aria-selected="true"]', text: 'Knowledge base answer')
-        end
+        expect(main_content.get_by_role('tab', name: 'Knowledge base answer')).to have_attribute('aria-selected', 'true')
       end
     end
   end

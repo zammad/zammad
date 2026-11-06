@@ -12,6 +12,11 @@ module PlaywrightNative
       raise "Test flag #{flag} not set"
     end
 
+    # Unlike wait_for_test_flag, it neither waits nor clears the flag.
+    def test_flag_set?(flag)
+      page.evaluate('(flag) => window.testFlags.get(flag, true)', arg: flag)
+    end
+
     def wait_for_query(name, number: 1, skip_clearing: false)
       wait_for_test_flag("__gql query #{name} #{number}", skip_clearing:)
     end

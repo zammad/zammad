@@ -13,10 +13,9 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
     user_menu.click
   end
 
-  # The sidebar has no accessible name, and its links share names with the main navigation.
   def open_personal_settings(section)
     page.get_by_role('link', name: 'Personal settings').click
-    page.locator('#personal-settings-sidebar').get_by_role('link', name: section, exact: true).click
+    page.get_by_role('complementary', name: 'Personal settings').get_by_role('link', name: section, exact: true).click
   end
 
   describe 'appearance selection' do

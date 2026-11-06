@@ -2,86 +2,63 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :system do
+RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :playwright do
+  let(:home) { page.get_by_role('heading', name: 'Home', level: 1) }
+
+  def sign_out
+    open_mobile('/account')
+    page.get_by_role('button', name: 'Sign out', exact: true).click
+  end
+
   context 'when logging in with two factor auth' do
-    let(:user)                 { User.find_by(login: 'admin@example.com') }
-    let(:code)                 { two_factor_pref.configuration[:code] }
-    let(:recover_code_enabled) { false }
-    let!(:two_factor_pref)     { create(:user_two_factor_preference, :authenticator_app, user:) }
-    let(:token)                { 'token' }
+    let(:user)             { User.find_by(login: 'admin@example.com') }
+    let(:code)             { two_factor_pref.configuration[:code] }
+    let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user:) }
 
     before do
       Setting.set('two_factor_authentication_method_authenticator_app', true)
 
-      visit '/login'
-
-      login(
-        username:     'admin@example.com',
-        password:     'test',
-        remember_me:  true,
-        skip_waiting: true,
-      )
+      open_mobile('/login')
+      sign_in(username: 'admin@example.com', password: 'test', remember_me: true)
     end
 
     it 'can login with correct code' do
-      expect(page).to have_text('Security code')
-      expect(page).to have_no_text('Try another method')
+      expect(main_content).to contain_text('Security code')
+      expect(main_content).to not_contain_text('Try another method')
 
-      find_input('Security code').type(code)
-      find_button('Sign in').click
+      fill_field('Security code', code)
+      page.get_by_role('button', name: 'Sign in', exact: true).click
 
-      expect(page).to have_text('Home')
+      expect(home).to be_visible
 
-      logout
-      expect_current_route '/login'
+      sign_out
+      expect(page).to have_url(%r{/mobile/login$})
     end
   end
 
-  context 'when logging in via external authentication provider', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KC_BOOTSTRAP_ADMIN_USERNAME KC_BOOTSTRAP_ADMIN_PASSWORD] do
-    let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
-    let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
-    let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
-    let(:saml_client_json)             { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('#ZAMMAD_BASE_URL', zammad_base_url) }
-    let(:saml_realm_zammad_descriptor) { "#{saml_base_url}/realms/zammad/protocol/saml/descriptor" }
-    let(:saml_realm_zammad_accounts)   { "#{saml_base_url}/realms/zammad/account" }
-
-    before do
-      saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:)
-      saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:)
-    end
+  context 'when logging in via external authentication provider', integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KC_BOOTSTRAP_ADMIN_USERNAME KC_BOOTSTRAP_ADMIN_PASSWORD] do
+    include_context 'when signing in via Keycloak SAML'
 
     it 'can login via external authentication provider' do
-      visit '/login'
-      expect(page).to have_text('Or sign in using')
-      expect(page).to have_text('SAML')
+      open_mobile('/login')
+      expect(page.get_by_text('Or sign in using')).to be_visible
 
-      find_button('SAML').click
+      page.get_by_role('button', name: 'SAML').click
+      saml_sign_in_keycloak
 
-      saml_login_keycloak
+      # SAML redirects in CI do not work because of missing HTTP referrer headers.
+      open_mobile('/')
+      expect(home).to be_visible
 
-      # Workaround: SAML redirects in CI don't work correctly because of missing HTTP referrer headers.
-      # The redirect will go to / instead of /mobile, so check where we are and switch to mobile if needed.
-      expect(page).to have_text('JD') # Logged in, either in legacy interface or in mobile.
+      sign_out
 
-      begin
-        # Check if we are already in mobile.
-        page.find('span', text: 'Home', wait: 0)
-      rescue
-        visit '/'
-        expect(page).to have_text('Home')
-      end
+      # Single logout passes through Keycloak and may come back to the legacy interface.
+      expect(page.get_by_role('button', name: 'Sign in', exact: true)).to be_visible
+      open_mobile('/')
+      expect(page).to have_url(%r{/mobile/login$})
 
-      # Manual logout
-      click_on 'JD' # avatar
-      click_on 'Sign out'
-      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
-      expect(page).to have_current_path(%r{/login})
-
-      visit '/'
-      expect_current_route '/login'
-
-      visit saml_realm_zammad_accounts
-      expect(page).to have_text('Sign in')
+      page.goto(saml_realm_zammad_accounts)
+      expect(page.locator('body')).to contain_text('Sign in')
     end
   end
 end

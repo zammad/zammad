@@ -30,6 +30,25 @@ module PlaywrightNative
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
     end
 
+    def open_mobile(route)
+      page.goto("/mobile#{route}")
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
+    end
+
+    # Another tab of the same browser, it shares the cookies and the storage of `page`.
+    def open_tab
+      browser_context.new_page
+    end
+
+    # The helpers act on `page`, so a block of them acts on another tab this way.
+    def on_tab(tab)
+      previous = page
+      @page = tab
+      yield
+    ensure
+      @page = previous
+    end
+
     def self.new_context(example)
       context = Browser.browser.new_context(
         baseURL:           AppServer.url,
@@ -58,23 +77,37 @@ module PlaywrightNative
 
     # Keeps a screenshot and the trace of a failed example, like Playwright's retain-on-failure.
     def self.close_context(context, example, page)
-      file_name = example.id.delete_prefix('./').gsub(%r{[^\w-]+}, '_')
-
       if example.exception
-        if page
-          FileUtils.mkdir_p(SCREENSHOT_DIR)
-          page.screenshot(path: SCREENSHOT_DIR.join("#{file_name}.png").to_s)
-          puts "[Screenshot] #{SCREENSHOT_DIR.join("#{file_name}.png")}"
-        end
-
-        FileUtils.mkdir_p(TRACE_DIR)
-        context.tracing.stop(path: TRACE_DIR.join("#{file_name}.zip").to_s)
-        puts "[Trace] #{TRACE_DIR.join("#{file_name}.zip")}, open with: pnpm exec playwright show-trace <file>"
+        keep_failure_artifacts(context, example, page)
       else
-        context.tracing.stop
+        within_browser_timeout { context.tracing.stop }
       end
     ensure
-      context.close
+      within_browser_timeout { context.close }
+    end
+
+    def self.keep_failure_artifacts(context, example, page)
+      file_name = example.id.delete_prefix('./').gsub(%r{[^\w-]+}, '_')
+
+      # The trace tells more than the screenshot, so a failed screenshot must not cost it.
+      if page
+        begin
+          FileUtils.mkdir_p(SCREENSHOT_DIR)
+          within_browser_timeout { page.screenshot(path: SCREENSHOT_DIR.join("#{file_name}.png").to_s) }
+          puts "[Screenshot] #{SCREENSHOT_DIR.join("#{file_name}.png")}"
+        rescue Timeout::Error, Playwright::Error => e
+          puts "[Screenshot] failed: #{e.message}"
+        end
+      end
+
+      FileUtils.mkdir_p(TRACE_DIR)
+      within_browser_timeout { context.tracing.stop(path: TRACE_DIR.join("#{file_name}.zip").to_s) }
+      puts "[Trace] #{TRACE_DIR.join("#{file_name}.zip")}, open with: pnpm exec playwright show-trace <file>"
+    end
+
+    # Closing and tracing have no timeout of their own, a hung browser would block the whole run.
+    def self.within_browser_timeout(&)
+      Timeout.timeout(PLAYWRIGHT_TIMEOUT, Timeout::Error, "The browser did not answer within #{PLAYWRIGHT_TIMEOUT} seconds", &)
     end
   end
 end

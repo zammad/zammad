@@ -22,9 +22,8 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
       open_ticket_create
     end
 
-    # The editor has no accessible name of its own, its field tells it apart.
     let(:text)    { field('Text') }
-    let(:editor)  { text.get_by_role('textbox') }
+    let(:editor)  { text.get_by_role('textbox', name: 'Text') }
     let(:toolbar) { text.get_by_role('toolbar') }
 
     def type_text(*keys)

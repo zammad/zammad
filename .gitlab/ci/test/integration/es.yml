@@ -15,7 +15,7 @@
   timeout: 30 minutes
   script:
     - !reference [.scripts, zammad_db_init]
-    - bundle exec rspec --tag searchindex --tag ~type:system
+    - bundle exec rspec --tag searchindex --tag ~browser_app
 
 # Lowest and highest supported Elasticsearch versions. 'stable' is tested in
 #   every pipeline, 'latest' automatically only in scheduled pipelines and

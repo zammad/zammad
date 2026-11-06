@@ -2,9 +2,15 @@
 
 module PlaywrightNative
   module FormHelpers
-    # The form field with this label, i.e. its FormKit outer element.
+    # The form field with this label, i.e. its FormKit outer element. Views kept alive in the
+    #   background, like other taskbar tabs, keep their hidden fields.
     def field(label, within: page)
-      within.locator('.formkit-outer', has: page.locator('label').get_by_text(label, exact: true))
+      within.locator('.formkit-outer', has: page.locator('label').get_by_text(label, exact: true)).filter(visible: true)
+    end
+
+    # The selected options of a select, autocomplete or tree select.
+    def selected_options(label, within: page)
+      field(label, within:).get_by_role('combobox').get_by_role('listitem')
     end
 
     def fill_field(label, value, within: page)
@@ -30,23 +36,32 @@ module PlaywrightNative
     end
 
     # A field marked data-triggers-form-updater asks the server again after a change, and the
-    #   form renders the answer anew.
+    #   form renders the answer anew. A field teleported out of its form, like the ticket
+    #   attributes in the sidebar, has no form around it, so any form of the page may answer.
     def after_form_update_of(field, &)
       return yield if field.get_attribute('data-triggers-form-updater') != 'true'
 
-      await_form_updater(field.evaluate('outer => outer.closest("form").id'), &)
+      forms = field.evaluate('outer => outer.closest("form") ? [outer.closest("form").id] : [...document.forms].map((form) => form.id)')
+
+      await_form_updater(*forms, &)
     end
 
     # The form is aria-busy while its form updater request is open and sets a test flag once it
     #   has applied the answer. One answer can lead to the next request, so the change waits for
     #   quiet forms before and after.
-    def await_form_updater(form)
+    def await_form_updater(*forms)
+      flags = forms.map { |form| "#{form}.formUpdater.applied" }
+
       wait_for_quiet_forms
-      page.evaluate('(flag) => window.testFlags.clear(flag)', arg: "#{form}.formUpdater.applied")
+      page.evaluate('(flags) => flags.forEach((flag) => window.testFlags.clear(flag))', arg: flags)
 
       yield
 
-      wait_for_test_flag("#{form}.formUpdater.applied")
+      begin
+        page.wait_for_function('(flags) => flags.some((flag) => window.testFlags.get(flag))', arg: flags)
+      rescue Playwright::TimeoutError
+        raise "Form updater answer not applied to #{forms.join(', ')}"
+      end
       wait_for_quiet_forms
     end
 

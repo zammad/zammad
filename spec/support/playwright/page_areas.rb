@@ -10,6 +10,10 @@ module PlaywrightNative
       page.get_by_role('main')
     end
 
+    def main_sidebar
+      page.get_by_role('complementary', name: 'Main sidebar')
+    end
+
     def content_sidebar
       page.get_by_role('complementary', name: 'Content sidebar')
     end

@@ -94,20 +94,23 @@ the Redis keys and the Elasticsearch indices, so those (`DATABASE_URL`,
 CAPYBARA_PORT=3101 TEST_APP_PORT=3102 WS_PORT=6143 bundle exec rspec spec/system/path/to/file_spec.rb
 ```
 
-### Playwright specs (desktop view)
+### Playwright specs (desktop view and mobile app)
 
-New system specs for the desktop view use `type: :playwright`: Playwright
-directly, without Capybara. A spec ported from Capybara replaces its Capybara
-version, never keep both.
+New system specs for the desktop view and the mobile app use
+`type: :playwright`: Playwright directly, without Capybara. A spec ported from
+Capybara replaces its Capybara version, never keep both.
 
 - Find elements by role and accessible name, form fields by their label —
   `page.get_by_role('button', name: 'Create', exact: true)`. No CSS classes,
   ids or `data-test-id`; a missing accessible name is an app bug.
-- Page areas: `main_content`, `page_navigation`, `content_sidebar`,
-  `flyout(title)`, `notification(text)`, `table_rows(caption)`.
+- Open the app with `open_desktop(route)` or `open_mobile(route)`; another tab
+  with `open_tab`, the helpers act on it inside `on_tab(tab) { … }`.
+- Page areas: `main_content`, `page_navigation`, `main_sidebar`,
+  `content_sidebar`, `flyout(title)`, `notification(text)`, `table_rows(caption)`.
 - Forms: `fill_field`, `select_option`, `search_for_option` (autocomplete and
-  tree select), all with `within:`. They wait for the form updater themselves —
-  never count form updater calls.
+  tree select), `selected_options`, all with `within:`. They wait for the form
+  updater themselves — never count form updater calls. `sign_in` fills the
+  login form for `authenticated_as: false`.
 - `have_text` is the whole text, `contain_text` a part; negations are
   `not_contain_text` etc. Compare plain Ruby arrays with `eq([])`, Playwright's
   matchers take over `be_empty`.

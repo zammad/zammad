@@ -84,8 +84,37 @@ module ZammadSpecSupportSAML
     expect(page).to have_no_text('Sign In')
   end
 
+  # The same for specs of type :playwright.
+  def saml_sign_in_keycloak
+    expect(page).to have_url(%r{/realms/zammad/protocol/saml\?SAMLRequest=.+})
+    # Firefox drops a submit while the login page is still loading.
+    page.wait_for_load_state
+
+    # Keycloak names it "Username or email" or "Username", depending on the realm.
+    page.get_by_label('Username').fill('john.doe')
+    page.get_by_label('Password', exact: true).fill('test')
+    page.get_by_role('button', name: 'Sign In', exact: true).click
+
+    expect(page).to not_have_url(%r{/realms/zammad/})
+  end
+
 end
 
 RSpec.configure do |config|
   config.include ZammadSpecSupportSAML, integration_standalone: :saml
+end
+
+# Keycloak and Zammad set up for each other, for specs of type :playwright.
+RSpec.shared_context 'when signing in via Keycloak SAML' do
+  let(:zammad_base_url)              { PlaywrightNative::AppServer.url }
+  let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
+  let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
+  let(:saml_client_json)             { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('#ZAMMAD_BASE_URL', zammad_base_url) }
+  let(:saml_realm_zammad_descriptor) { "#{saml_base_url}/realms/zammad/protocol/saml/descriptor" }
+  let(:saml_realm_zammad_accounts)   { "#{saml_base_url}/realms/zammad/account" }
+
+  before do
+    saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:)
+    saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:)
+  end
 end
