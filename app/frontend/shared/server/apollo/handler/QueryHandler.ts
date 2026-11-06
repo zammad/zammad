@@ -24,6 +24,8 @@ import type {
 } from '@vue/apollo-composable/compat'
 import type { ComputedRef, Ref, WatchStopHandle } from 'vue'
 
+type SettledResult<TResult> = { data: Maybe<TResult>; error?: ErrorLike }
+
 export default class QueryHandler<
   TResult = OperationQueryResult,
   TVariables extends OperationVariables = OperationVariables,
@@ -261,54 +263,50 @@ export default class QueryHandler<
     return stop
   }
 
-  public fetchMore(
+  /**
+   * Never rejects: a failure is reported once through the error handling and resolves with its
+   * error, since most callers neither await nor catch it and a rejection would go uncaught.
+   */
+  public async fetchMore(
     options: ObservableQuery.FetchMoreOptions<TResult, TVariables>,
-  ): Promise<Maybe<TResult>> {
-    return new Promise((resolve, reject) => {
-      const fetchMore = this.operationResult.fetchMore(options)
+  ): Promise<SettledResult<TResult>> {
+    const fetchMore = this.operationResult.fetchMore(options)
+    if (!fetchMore) return { data: null }
 
-      if (!fetchMore) {
-        resolve(null)
-        return
-      }
+    try {
+      const result = await fetchMore
 
-      fetchMore
-        .then(async (result) => {
-          // Apollo hands the merged page to the query from a timeout set before this resolves, and
-          //   drops it if another `fetchMore` starts first - callers read `result()` right after.
-          await new Promise((delivered) => setTimeout(delivered))
+      // Apollo hands the merged page to the query from a timeout set before this resolves, and
+      //   drops it if another `fetchMore` starts first - callers read `result()` right after.
+      await new Promise((delivered) => setTimeout(delivered))
 
-          resolve((result.data ?? null) as Maybe<TResult>)
-        })
-        .catch(() => {
-          reject(this.operationError().value)
-        })
-    })
+      return { data: (result.data ?? null) as Maybe<TResult> }
+    } catch (error) {
+      const errorLike = toErrorLike(error)
+
+      // A failed page leaves the query itself untouched, so `onError` never hears of it.
+      if (errorLike.name !== 'AbortError') this.handleError(errorLike)
+
+      return { data: null, error: errorLike }
+    }
   }
 
   /**
-   * Resolves with the error instead of rejecting, like `query()`: `onError` already reports it,
-   * and most callers do not await a refetch, so a rejection would go uncaught.
+   * Never rejects: a failure is reported once through the error handling and resolves with its
+   * error, since most callers neither await nor catch it and a rejection would go uncaught.
    */
-  public refetch(
-    variables?: Partial<TVariables>,
-  ): Promise<{ data: Maybe<TResult>; error?: ErrorLike }> {
-    return new Promise((resolve) => {
-      const refetch = this.operationResult.refetch(variables as TVariables)
+  public async refetch(variables?: Partial<TVariables>): Promise<SettledResult<TResult>> {
+    const refetch = this.operationResult.refetch(variables as TVariables)
+    if (!refetch) return { data: null }
 
-      if (!refetch) {
-        resolve({ data: null })
-        return
-      }
+    try {
+      const result = await refetch
 
-      refetch
-        .then((result) => {
-          resolve({ data: result?.data ?? null })
-        })
-        .catch((error) => {
-          resolve({ data: null, error: this.operationError().value ?? toErrorLike(error) })
-        })
-    })
+      return { data: result?.data ?? null }
+    } catch (error) {
+      // A failed refetch is the query's own error, `onError` already reported it.
+      return { data: null, error: this.operationError().value ?? toErrorLike(error) }
+    }
   }
 
   /**
@@ -392,15 +390,14 @@ export default class QueryHandler<
 
   /**
    * Calls back with every new result, like vue-apollo v4 did: the state changes
-   * which v5 reports in addition - no data yet, a failed fetch (see `onError`,
-   * a failed refetch still carries the previous data), or the previous data
-   * repeated while a refetch is loading - are left out.
+   * which v5 reports in addition - no data yet, or the previous data repeated
+   * while a refetch is loading - are left out.
    */
   public onResult(callback: (result: ApolloQueryResultV4<TResult>) => void) {
     let lastData: TResult | undefined
 
     return this.operationResult.onResult((result) => {
-      if (result.data === undefined || result.error) return
+      if (result.data === undefined) return
       if (result.loading && result.data === lastData) return
 
       lastData = result.data

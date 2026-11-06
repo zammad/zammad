@@ -267,8 +267,8 @@ importers:
         specifier: 3.32.2
         version: 3.32.2(@floating-ui/dom@1.8.0)(@tiptap/core@3.32.2(@tiptap/pm@3.32.2))(@tiptap/pm@3.32.2)(vue@3.5.43(typescript@6.0.3))
       '@vue/apollo-composable':
-        specifier: 5.0.0-alpha.4
-        version: 5.0.0-alpha.4(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)
+        specifier: 5.0.0-beta.1
+        version: 5.0.0-beta.1(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)
       '@vue/runtime-core':
         specifier: ^3.5.43
         version: 3.5.43
@@ -3350,8 +3350,8 @@ packages:
       vue:
         optional: true
 
-  '@vue/apollo-composable@5.0.0-alpha.4':
-    resolution: {integrity: sha512-9tR/CAvoLbLqh27n+PTPAKBemBxjaJoAmnM+Huan25tXQnelOML0HVicSVnFnzcoJubs3A4ndHwfqdDx68nw9A==}
+  '@vue/apollo-composable@5.0.0-beta.1':
+    resolution: {integrity: sha512-OM2ymQYzbVBylZNb+9qYup40DHvJxSA2ot6Zku4j2ODm7NwyWJhQGLnf6Mr9cDyRcVEVA931IXGf9v2Wngx9yA==}
     peerDependencies:
       '@apollo/client': ^4.1.0
       '@vue/reactivity': ^3.5.0
@@ -9659,7 +9659,7 @@ snapshots:
     optionalDependencies:
       vue: 3.5.43(typescript@6.0.3)
 
-  '@vue/apollo-composable@5.0.0-alpha.4(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)':
+  '@vue/apollo-composable@5.0.0-beta.1(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)':
     dependencies:
       '@apollo/client': 4.3.5(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2)
       '@vue/reactivity': 3.5.43

@@ -498,20 +498,24 @@ const fetchNextPage = async () => {
   // skipping results.
   if (detailSearchLoading.value) return
 
-  offset.value += PAGE_SIZE
+  const requestedOffset = offset.value + PAGE_SIZE
+
+  offset.value = requestedOffset
 
   loadingNewPage.value = true
 
-  try {
-    await detailSearchQuery.fetchMore({
-      variables: {
-        limit: PAGE_SIZE,
-        offset: offset.value,
-      },
-    })
-  } finally {
-    loadingNewPage.value = false
-  }
+  const { error } = await detailSearchQuery.fetchMore({
+    variables: {
+      limit: PAGE_SIZE,
+      offset: requestedOffset,
+    },
+  })
+
+  // Let the next attempt request the same page again - unless the search changed in the
+  //   meantime and `resetPagination()` already restarted at the first page.
+  if (error && offset.value === requestedOffset) offset.value -= PAGE_SIZE
+
+  loadingNewPage.value = false
 }
 
 const {

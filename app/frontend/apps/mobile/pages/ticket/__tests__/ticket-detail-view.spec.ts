@@ -1014,8 +1014,8 @@ it('ignores a pending article scroll after navigating away', async () => {
   })
 
   let finishLoadingArticles!: () => void
-  const pendingArticles = new Promise<null>((resolve) => {
-    finishLoadingArticles = () => resolve(null)
+  const pendingArticles = new Promise<{ data: null }>((resolve) => {
+    finishLoadingArticles = () => resolve({ data: null })
   })
   const fetchMore = vi
     .spyOn(QueryHandler.prototype, 'fetchMore')

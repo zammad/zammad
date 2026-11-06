@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useMutation } from '@vue/apollo-composable/compat'
-import { effectScope, nextTick } from 'vue'
+import { nextTick } from 'vue'
 
 import { SampleTypedMutationDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
 import type {
@@ -65,14 +65,12 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
 }
 
 describe('MutationHandler', () => {
-  // vue-apollo composables have to be created inside an effect scope.
-  const sampleMutation = () =>
-    effectScope(true).run(() => {
-      mutationFunctionCallSpy()
-      return useMutation<SampleUpdateMutation, SampleUpdateMutationVariables>(
-        SampleTypedMutationDocument,
-      )
-    })!
+  const sampleMutation = () => {
+    mutationFunctionCallSpy()
+    return useMutation<SampleUpdateMutation, SampleUpdateMutationVariables>(
+      SampleTypedMutationDocument,
+    )
+  }
 
   describe('constructor', () => {
     beforeEach(() => {

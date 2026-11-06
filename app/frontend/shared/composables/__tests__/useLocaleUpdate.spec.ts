@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { beforeEach, describe, expect, vi } from 'vitest'
-import { effectScope } from 'vue'
 
 import { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
 import { waitUntil } from '#tests/support/utils.ts'
@@ -11,9 +10,6 @@ import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import { useLocaleUpdate } from '../useLocaleUpdate.ts'
-
-// The composable creates a mutation, which needs an effect scope like in a component.
-const setupLocaleUpdate = () => effectScope(true).run(useLocaleUpdate)!
 
 const mockUpdateLocaleMutationHandler = () => {
   const sendMock = vi.fn()
@@ -36,22 +32,22 @@ describe('useLocaleUpdate', () => {
     })
   })
   it('return translation link and label', () => {
-    const { translation } = setupLocaleUpdate()
+    const { translation } = useLocaleUpdate()
     expect(translation.link).toBe('https://translations.zammad.org/')
   })
   it('isSavingLocale is initially false', () => {
-    const { isSavingLocale } = setupLocaleUpdate()
+    const { isSavingLocale } = useLocaleUpdate()
     expect(isSavingLocale.value).toBe(false)
   })
   it('returns correct modelCurrentLocale', () => {
-    const { modelCurrentLocale } = setupLocaleUpdate()
+    const { modelCurrentLocale } = useLocaleUpdate()
     // default locale is 'en-us'
     expect(modelCurrentLocale.value).toBe('en-us')
   })
   it('returns a list of locales', async () => {
     const { loadLocales } = useLocaleStore()
     await loadLocales()
-    const { localeOptions } = setupLocaleUpdate()
+    const { localeOptions } = useLocaleUpdate()
     const expectedOptions = [
       { value: 'de-de', label: 'Deutsch' },
       { value: 'en-us', label: 'English (United States)' },
@@ -60,7 +56,7 @@ describe('useLocaleUpdate', () => {
   })
   it('updates modelCurrentLocale correctly', async () => {
     const { sendMock } = mockUpdateLocaleMutationHandler()
-    const { modelCurrentLocale, isSavingLocale } = setupLocaleUpdate()
+    const { modelCurrentLocale, isSavingLocale } = useLocaleUpdate()
     modelCurrentLocale.value = 'de-de'
     expect(isSavingLocale.value).toBe(true)
     expect(sendMock).toHaveBeenCalledOnce()

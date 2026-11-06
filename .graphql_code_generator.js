@@ -92,7 +92,7 @@ const config = {
         importOperationTypesFrom: 'Types',
         // Generated composables keep the v4 call signatures on vue-apollo v5 internals until
         // every call site is migrated to the native v5 API.
-        vueApolloComposableImportFrom: '#shared/server/apollo/vueApollo.ts',
+        vueApolloComposableImportFrom: '@vue/apollo-composable/compat',
       },
       documentTransforms: [graphqlDocumentExtensionsTransform],
     },

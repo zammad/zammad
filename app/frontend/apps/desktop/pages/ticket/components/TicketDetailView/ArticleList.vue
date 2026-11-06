@@ -64,15 +64,14 @@ const articleElements = useTemplateRef<HTMLElement[]>('article-elements')
 
 const { topHeaderHeight } = useActiveArticle(rows, articleElements, () => props.scrollContainer)
 
-const loadPrevious = async () => {
-  await context.articlesQuery.fetchMore({
+const loadPrevious = () =>
+  context.articlesQuery.fetchMore({
     variables: {
       pageSize: PAGE_SIZE,
       loadFirstArticles: false,
       beforeCursor: context.articles.value?.articles.pageInfo.startCursor,
     },
   })
-}
 
 const isFetchingMore = context.articlesQuery.loading()
 
@@ -93,7 +92,10 @@ const getPreviousArticleElement = async (key: string): Promise<Element | null> =
 
   if (elem || !hasMoreButton.value) return elem
 
-  await loadPrevious()
+  // A failed page leaves the cursor where it was, so looking again would request it endlessly.
+  const { error } = await loadPrevious()
+  if (error) return null
+
   return getPreviousArticleElement(key)
 }
 

@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/ticketAttributes.api';
 import { TicketMentionFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/ticketMention.api';
 import { ReferencingTicketFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/referencingTicket.api';
-import * as VueApolloComposable from '#shared/server/apollo/vueApollo.ts';
+import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 

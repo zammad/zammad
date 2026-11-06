@@ -466,6 +466,57 @@ describe('QueryHandler', () => {
           expect(error).toBeTruthy()
         })
       })
+
+      it('reports a failed lazy load without an unhandled rejection', async () => {
+        await scope.run(async () => {
+          const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
+
+          queryHandlerObject.load()
+
+          await vi.waitFor(() => expect(queryHandlerObject.operationError().value).toBeTruthy())
+        })
+      })
+    })
+
+    describe('fetchMore and refetch after a successful first page', () => {
+      beforeEach(() => {
+        mockClient()
+      })
+
+      it.each([
+        ['fetchMore', 'GraphQL', GraphQLErrorTypes.UnknownError],
+        ['fetchMore', 'NetworkError', GraphQLErrorTypes.NetworkError],
+        ['refetch', 'GraphQL', GraphQLErrorTypes.UnknownError],
+        ['refetch', 'NetworkError', GraphQLErrorTypes.NetworkError],
+      ] as const)(
+        'reports a failed %s with a %s error once and resolves with it',
+        async (method, errorType, expectedType) => {
+          await scope.run(async () => {
+            const errorCallback = vi.fn()
+            const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), { errorCallback })
+
+            await waitFirstResult(queryHandlerObject)
+
+            handlerCallSpy.mockImplementation(() =>
+              errorType === 'GraphQL'
+                ? Promise.resolve(querySampleErrorResult)
+                : Promise.reject(querySampleNetworkErrorResult),
+            )
+
+            const { data, error } =
+              method === 'fetchMore'
+                ? await queryHandlerObject.fetchMore({})
+                : await queryHandlerObject.refetch()
+
+            expect(data).toBeNull()
+            expect(error).toBeTruthy()
+            expect(errorCallback).toHaveBeenCalledOnce()
+            expect(errorCallback).toHaveBeenCalledWith(
+              expect.objectContaining({ type: expectedType }),
+            )
+          })
+        },
+      )
     })
 
     describe('Network errors', () => {
@@ -507,7 +558,7 @@ describe('QueryHandler', () => {
       await scope.run(async () => {
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-        await expect(queryHandlerObject.fetchMore({})).resolves.toEqual(querySampleResult)
+        await expect(queryHandlerObject.fetchMore({})).resolves.toEqual({ data: querySampleResult })
       })
     })
   })
