@@ -23,6 +23,10 @@ const emit = defineEmits<{
 
 const notificationTypeClassMap = getNotificationClasses()
 
+const closesOnClick = computed(
+  () => !props.notification.persistent && props.notification.currentProgress === undefined,
+)
+
 const maxProgress = computed<number>(() => props.notification.maxProgress ?? 1)
 
 const notificationMessageHtml = computed(() =>
@@ -33,68 +37,58 @@ const notificationMessageHtml = computed(() =>
 <template>
   <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
   <Component
-    :is="notification.persistent || notification.currentProgress !== undefined ? 'div' : 'button'"
+    :is="closesOnClick ? 'button' : 'div'"
+    class="flex flex-col gap-2 text-start"
+    :class="{ 'cursor-pointer': closesOnClick }"
     data-test-id="notification"
-    @keydown.enter="
-      !notification.persistent && notification.currentProgress === undefined
-        ? emit('close', notification)
-        : undefined
-    "
-    @click="
-      !notification.persistent && notification.currentProgress === undefined
-        ? emit('close', notification)
-        : undefined
-    "
+    @keydown.enter="closesOnClick ? emit('close', notification) : undefined"
+    @click="closesOnClick ? emit('close', notification) : undefined"
   >
-    <CommonIcon
-      class="col-span-1 self-center"
-      :name="`common-notification-${notification.type}`"
-      size="tiny"
-      decorative
-    />
+    <div class="flex items-start gap-1.5">
+      <CommonIcon
+        class="mt-0.5 shrink-0"
+        :name="`common-notification-${notification.type}`"
+        size="tiny"
+        decorative
+      />
 
-    <!-- eslint-disable vue/no-v-html -->
-    <p
-      class="col-start-2 self-center text-sm"
-      :class="[
-        notificationTypeClassMap.message,
-        {
-          'cursor-default': notification.persistent || notification.currentProgress !== undefined,
-        },
-      ]"
-      v-html="notificationMessageHtml"
-    />
+      <div class="flex min-w-0 grow flex-col gap-1.5">
+        <!-- eslint-disable vue/no-v-html -->
+        <p
+          class="text-sm"
+          :class="notificationTypeClassMap.message"
+          v-html="notificationMessageHtml"
+        />
 
-    <button
-      v-if="notification.persistent && notification.actionLabel && notification.actionCallback"
-      class="col-start-3 ps-2.5 text-sm/snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
-      :class="{
-        'row-span-2': notification.currentProgress !== undefined,
-      }"
-      @click.stop="emit('action', notification)"
-    >
-      {{ $t(notification.actionLabel) }}
-    </button>
+        <CommonProgressBar
+          v-if="notification.currentProgress !== undefined"
+          class="min-w-64"
+          size="small"
+          variant="inverted"
+          :max="maxProgress.toString()"
+          :value="
+            notification.currentProgress ? notification.currentProgress.toString() : undefined
+          "
+        />
+      </div>
+    </div>
 
-    <button
-      v-if="notification.persistent"
-      class="col-start-4 ps-2.5 pe-1.5 text-sm/snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
-      :class="{
-        'row-span-2': notification.currentProgress !== undefined,
-      }"
-      :aria-label="$t('Hide notification')"
-      @click.stop="emit('close', notification, true)"
-    >
-      {{ $t(notification.closeLabel || __('Hide')) }}
-    </button>
+    <div v-if="notification.persistent" class="flex items-center justify-end gap-1">
+      <button
+        v-if="notification.actionLabel && notification.actionCallback"
+        :class="notificationTypeClassMap.button"
+        @click.stop="emit('action', notification)"
+      >
+        {{ $t(notification.actionLabel) }}
+      </button>
 
-    <CommonProgressBar
-      v-if="notification.currentProgress !== undefined"
-      class="col-start-2 col-end-3 row-start-2 w-full"
-      size="small"
-      variant="inverted"
-      :max="maxProgress.toString()"
-      :value="notification.currentProgress ? notification.currentProgress.toString() : undefined"
-    />
+      <button
+        :class="notificationTypeClassMap.button"
+        :aria-label="$t('Hide notification')"
+        @click.stop="emit('close', notification, true)"
+      >
+        {{ $t(notification.closeLabel || __('Hide')) }}
+      </button>
+    </div>
   </Component>
 </template>

@@ -76,6 +76,8 @@ export const initializeGlobalComponentStyles = () => {
   initializeNotificationClasses({
     base: 'rounded-lg p-2 border-transparent focus-visible-app-default',
     baseContainer: 'mx-auto',
+    button:
+      'rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors hover:text-black focus-visible-app-default dark:hover:text-white',
     error: 'bg-pink-100 dark:bg-red-900 text-red-500',
     info: 'bg-blue-500 dark:bg-blue-950 text-blue-800',
     message: '',
