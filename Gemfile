@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '3.4.9'
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.1.0'
 gem 'rake'
 
 # core - rails additions
@@ -21,6 +21,7 @@ gem 'puma', group: :puma
 gem 'pg', '~> 1.5', '>= 1.5.4', group: :postgres
 
 # core - asynchrous task execution
+gem 'benchmark' # undeclared delayed_job dependency
 gem 'daemons'
 gem 'delayed_job', git: 'https://github.com/zammad-deps/delayed_job', branch: 'threadsafe'
 gem 'delayed_job_active_record', git: 'https://github.com/zammad-deps/delayed_job_active_record', branch: 'update-limit-143'

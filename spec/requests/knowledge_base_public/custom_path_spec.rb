@@ -46,7 +46,7 @@ RSpec.describe 'KnowledgeBase public custom path', type: :request do
       before { fetch path: path, port: 8080 }
 
       it { expect(response).to have_http_status(:found) }
-      it { expect(response).to redirect_to ":8080/path/#{locale}" }
+      it { expect(response).to redirect_to "http://www.example.com:8080/path/#{locale}" }
     end
 
     context 'when called with the path and subdomain' do
