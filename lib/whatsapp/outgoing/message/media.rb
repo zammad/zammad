@@ -11,7 +11,7 @@ class Whatsapp::Outgoing::Message::Media < Whatsapp::Outgoing::Message
 
   attr_reader :medias_api
 
-  def initialize(access_token:, phone_number_id:, recipient_number:)
+  def initialize(access_token:, phone_number_id:, recipient_number: nil, recipient: nil)
     super
 
     @medias_api = WhatsappSdk::Api::Medias.new client
@@ -57,23 +57,23 @@ class Whatsapp::Outgoing::Message::Media < Whatsapp::Outgoing::Message
   end
 
   def deliver_audio(media_id:, caption:)
-    messages_api.send_audio(sender_id: phone_number_id.to_i, recipient_number: recipient_number.to_i, audio_id: media_id.to_s)
+    messages_api.send_audio(sender_id: phone_number_id.to_i, **recipient_params, audio_id: media_id.to_s)
   end
 
   def deliver_document(media_id:, caption:)
-    messages_api.send_document(sender_id: phone_number_id.to_i, recipient_number: recipient_number.to_i, document_id: media_id.to_s, caption:)
+    messages_api.send_document(sender_id: phone_number_id.to_i, **recipient_params, document_id: media_id.to_s, caption:)
   end
 
   def deliver_image(media_id:, caption:)
-    messages_api.send_image(sender_id: phone_number_id.to_i, recipient_number: recipient_number.to_i, image_id: media_id.to_s, caption:)
+    messages_api.send_image(sender_id: phone_number_id.to_i, **recipient_params, image_id: media_id.to_s, caption:)
   end
 
   def deliver_sticker(media_id:, caption:)
-    messages_api.send_sticker(sender_id: phone_number_id.to_i, recipient_number: recipient_number.to_i, sticker_id: media_id.to_s)
+    messages_api.send_sticker(sender_id: phone_number_id.to_i, **recipient_params, sticker_id: media_id.to_s)
   end
 
   def deliver_video(media_id:, caption:)
-    messages_api.send_video(sender_id: phone_number_id.to_i, recipient_number: recipient_number.to_i, video_id: media_id.to_s, caption:)
+    messages_api.send_video(sender_id: phone_number_id.to_i, **recipient_params, video_id: media_id.to_s, caption:)
   end
 
 end
