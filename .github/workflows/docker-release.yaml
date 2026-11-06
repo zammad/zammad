@@ -23,7 +23,7 @@ jobs:
         runs-on:
           - runner: ubuntu-26.04
             platform: 'amd64'
-          - runner: ['self-hosted', 'arm64']
+          - runner: ubuntu-26.04-arm
             platform: 'arm64'
     runs-on: ${{ matrix.runs-on.runner }}
     steps:
