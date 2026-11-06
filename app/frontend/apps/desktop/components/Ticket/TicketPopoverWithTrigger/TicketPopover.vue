@@ -37,7 +37,11 @@ const loading = ticketInfoForPopoverQuery.loadingWithoutCachedResult()
     ref="popover-section"
     data-type="popover"
     class="p-3"
-    :class="withContent ? 'w-xl max-w-full space-y-3' : 'max-w-md space-y-2'"
+    :class="
+      withContent
+        ? 'flex min-h-16 w-xl max-w-full flex-col justify-center gap-3'
+        : 'max-w-md space-y-2'
+    "
   >
     <TicketPopoverSkeleton :loading="loading">
       <template v-if="ticketData">

@@ -517,6 +517,26 @@ RSpec.describe 'Popover', type: :system do
       end
     end
 
+    context 'with a ticket the agent sees as its customer' do
+      let(:agent)  { create(:agent_and_customer, groups: [group]) }
+      let(:ticket) { create(:ticket, group: create(:group), customer: agent, title: 'Travel expenses') }
+
+      before do
+        visit "#ticket/view/#{create(:overview).link}"
+      end
+
+      it 'shows the headline without loading the content', :aggregate_failures do
+        within :active_content do
+          trigger_popover(popover_trigger, text: ticket.title)
+        end
+
+        expect(page).to have_css('.popover .ticket-overview-popover-headline', text: ticket.title)
+        expect(page).to have_css('.popover .ticket-overview-popover-content')
+        expect(page).to have_no_css('.popover .page-loading')
+        expect(requests).to be_empty
+      end
+    end
+
     context 'when logged in as customer', authenticated_as: :customer do
       let(:customer) { create(:customer) }
       let(:ticket)   { create(:ticket, group:, customer:, title: 'Login via SSO fails') }
