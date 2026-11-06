@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
 import { describe } from 'vitest'
 
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitUntil } from '#tests/support/vitest-wrapper.ts'
 
@@ -11,6 +13,19 @@ import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
 import { waitForUserCurrentAppearanceMutationCalls } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentAppearance.mocks.ts'
 
 describe('appearance page', () => {
+  it('lists the personal settings in their own sidebar', async () => {
+    mockUserCurrent()
+    mockPermissions(['user_preferences.appearance'])
+
+    const view = await visitView('/personal-setting/appearance')
+
+    expect(
+      within(view.getByRole('complementary', { name: 'Personal settings' })).getByRole('link', {
+        name: 'Appearance',
+      }),
+    ).toBeInTheDocument()
+  })
+
   describe('light/dark mode appearance', () => {
     it('should have dark theme set', async () => {
       mockUserCurrent({

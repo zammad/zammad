@@ -42,6 +42,12 @@ describe('VideoEmbedForm', () => {
     })
   })
 
+  it('is a dialog named after its action', () => {
+    const view = renderForm(renderEditor())
+
+    expect(view.getByRole('dialog', { name: 'Embed video' })).toBeInTheDocument()
+  })
+
   it('inserts the marker of a built-in provider', async () => {
     const editor = renderEditor()
 

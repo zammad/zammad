@@ -71,6 +71,16 @@ const renderToolbar = (editor: Editor) =>
   })
 
 describe('KnowledgeBaseAnswerLinkForm', () => {
+  it('is a dialog named after its action', () => {
+    const editor = renderEditor('<p>Hello</p>')
+
+    const view = renderForm(editor)
+
+    expect(view.getByRole('dialog', { name: 'Link answer' })).toBeInTheDocument()
+
+    editor.destroy()
+  })
+
   it('inserts a link carrying the internal translation id', async () => {
     const editor = renderEditor('<p>Hello</p>')
 

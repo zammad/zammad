@@ -48,6 +48,7 @@ describe('LinkForm', () => {
       form: true,
     })
 
+    expect(wrapper.getByRole('dialog', { name: 'Add link' })).toBeTruthy()
     expect(wrapper.getByRole('textbox', { name: 'Link URL' })).toBeTruthy()
     expect(wrapper.getByRole('textbox', { name: 'Link text' })).toBeTruthy()
     expect(wrapper.getByRole('button', { name: 'Add link' })).toBeTruthy()

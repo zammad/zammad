@@ -100,7 +100,7 @@ const { button, buttonContainer, form: formClass } = getEditorEditorLinkFormClas
 </script>
 
 <template>
-  <div ref="container" class="z-20" role="dialog">
+  <div ref="container" class="z-20" role="dialog" :aria-label="$t('Embed video')">
     <Form
       ref="form"
       :class="formClass"

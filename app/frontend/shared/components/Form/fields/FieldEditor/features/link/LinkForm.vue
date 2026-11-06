@@ -125,7 +125,7 @@ const { button, buttonContainer, form: formClass } = getEditorEditorLinkFormClas
 </script>
 
 <template>
-  <div ref="container" class="z-20" role="dialog">
+  <div ref="container" class="z-20" role="dialog" :aria-label="$t('Add link')">
     <Form
       ref="form"
       :class="formClass"

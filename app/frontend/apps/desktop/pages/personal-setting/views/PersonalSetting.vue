@@ -29,6 +29,7 @@ defineOptions({
   <div class="grid h-full grid-cols-1 lg:grid-cols-[260px_1fr]">
     <LayoutSidebar
       id="personal-settings-sidebar"
+      :aria-label="$t('Personal settings')"
       class="hidden lg:flex"
       :name="SidebarName.PersonalSetting"
       background-variant="secondary"
