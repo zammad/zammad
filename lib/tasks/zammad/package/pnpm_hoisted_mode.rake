@@ -10,10 +10,8 @@ ensure
   FileUtils.rm_f(tmp)
 end
 
-def pnpm_restore_node_linker(path, original_value)
-  current = File.exist?(path) ? (YAML.safe_load_file(path) || {}) : {}
-  original_value.nil? ? current.delete('nodeLinker') : current['nodeLinker'] = original_value
-  current.empty? ? FileUtils.rm_f(path) : pnpm_write_config_atomically(path, current.to_yaml)
+def pnpm_restore_config(path, original_content)
+  original_content.nil? ? FileUtils.rm_f(path) : pnpm_write_config_atomically(path, original_content)
 rescue => e
   warn "WARNING: Failed to restore pnpm config (#{path}): #{e.message}"
   warn "WARNING: You may need to manually remove or reset 'nodeLinker' in that file."
@@ -33,13 +31,14 @@ namespace :zammad do
       # nodeLinker must be set via pnpm-workspace.yaml (global config is ignored for this setting).
       config_file = Rails.root.join('pnpm-workspace.yaml').to_s
 
-      config               = File.exist?(config_file) ? (YAML.safe_load_file(config_file) || {}) : {}
-      original_node_linker = config['nodeLinker']
+      # Keep the original file content to restore it verbatim (formatting, comments) instead of re-serializing it.
+      original_content     = File.exist?(config_file) ? File.read(config_file) : nil
+      config               = YAML.safe_load(original_content.to_s) || {}
       config['nodeLinker'] = 'hoisted'
 
       pnpm_write_config_atomically(config_file, config.to_yaml)
 
-      at_exit { pnpm_restore_node_linker(config_file, original_node_linker) }
+      at_exit { pnpm_restore_config(config_file, original_content) }
     end
   end
 end
