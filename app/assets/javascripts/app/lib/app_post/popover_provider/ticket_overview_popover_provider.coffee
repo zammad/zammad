@@ -48,6 +48,11 @@ class TicketOverview extends App.PopoverProviderAjax
     ticket = @ticketFor(elem)
     return if !ticket
 
+    # The content is for agents only, so a ticket seen as its customer keeps just the headline.
+    if ticket.currentView() isnt 'agent'
+      $(elem).attr('data-content', @renderContent(ticket, {}))
+      return
+
     cached = @cachedDataFor(ticket)
     if cached
       $(elem).attr('data-content', @renderContent(ticket, cached))
