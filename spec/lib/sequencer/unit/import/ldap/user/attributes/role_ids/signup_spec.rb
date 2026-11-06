@@ -17,8 +17,9 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Signup,
     }
 
     provided = process(
-      ldap_config: ldap_config,
-      mapped:      mapped,
+      ldap_config:     ldap_config,
+      mapped:          mapped,
+      signup_role_ids: [3],
     )
 
     expect(provided[:mapped][:role_ids]).to eq(mapped[:role_ids])
@@ -31,8 +32,9 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Signup,
     }
 
     provided = process(
-      ldap_config: ldap_config,
-      mapped:      {},
+      ldap_config:     ldap_config,
+      mapped:          {},
+      signup_role_ids: [3],
     )
 
     expect(provided[:mapped]).not_to have_key(:role_ids)
@@ -47,10 +49,11 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Signup,
     }
 
     provided = process(
-      ldap_config: ldap_config,
-      mapped:      {},
+      ldap_config:     ldap_config,
+      mapped:          {},
+      signup_role_ids: [3],
     )
 
-    expect(provided[:mapped][:role_ids]).not_to be_nil
+    expect(provided[:mapped][:role_ids]).to eq([3])
   end
 end

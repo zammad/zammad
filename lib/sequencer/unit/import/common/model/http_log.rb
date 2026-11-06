@@ -6,6 +6,7 @@ class Sequencer::Unit::Import::Common::Model::HttpLog < Sequencer::Unit::Base
 
   def process
     return if dry_run
+    return if action == :unchanged && !log_unchanged?
 
     ::HttpLog.create(
       direction:     'out',
@@ -26,6 +27,10 @@ class Sequencer::Unit::Import::Common::Model::HttpLog < Sequencer::Unit::Base
   end
 
   private
+
+  def log_unchanged?
+    true
+  end
 
   def url
     "#{action} -> #{remote_id}"

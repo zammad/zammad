@@ -13,6 +13,9 @@ class Sequencer::Unit::Import::Common::Model::Associations::Assign < Sequencer::
     register_changes
     return if dry_run
 
+    # Assigning unchanged associations is a no-op that still loads the associated records.
+    return if changes.blank?
+
     instance.assign_attributes(associations)
   rescue => e
     handle_failure(e)

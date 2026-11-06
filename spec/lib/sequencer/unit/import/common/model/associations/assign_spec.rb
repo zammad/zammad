@@ -58,6 +58,28 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
     it 'keeps `:action => :unchanged`' do
       expect(process(parameters)).to include(action: :unchanged)
     end
+
+    it 'does not assign the associations again' do
+      allow(instance).to receive(:assign_attributes).and_call_original
+      process(parameters)
+      expect(instance).not_to have_received(:assign_attributes)
+    end
+  end
+
+  context 'when given the same role_ids in a different order' do
+    let(:instance)     { User.find(create(:agent, roles: Role.where(name: %w[Admin Agent])).id) }
+    let(:associations) { { role_ids: instance.role_ids.reverse } }
+    let(:action)       { :unchanged }
+
+    it 'keeps `:action => :unchanged`' do
+      expect(process(parameters)).to include(action: :unchanged)
+    end
+
+    it 'does not assign the role_ids again' do
+      allow(instance).to receive(:assign_attributes).and_call_original
+      process(parameters)
+      expect(instance).not_to have_received(:assign_attributes)
+    end
   end
 
   context 'when given an empty `associations` hash' do

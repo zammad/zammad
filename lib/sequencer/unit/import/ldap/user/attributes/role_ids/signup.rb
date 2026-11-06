@@ -6,7 +6,7 @@ class Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Signup < Sequenc
 
   skip_any_action
 
-  uses :mapped, :ldap_config
+  uses :mapped, :ldap_config, :signup_role_ids
 
   def process
     # return if a mapping entry was found
@@ -21,7 +21,7 @@ class Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Signup < Sequenc
     # a mapping entry is present
     provide_mapped do
       {
-        role_ids: Role.signup_roles.map(&:id)
+        role_ids: signup_role_ids
       }
     end
   end
