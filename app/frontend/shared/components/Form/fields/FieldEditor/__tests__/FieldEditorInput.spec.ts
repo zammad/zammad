@@ -41,4 +41,21 @@ describe('FieldEditorInput', () => {
       expect(getNode('editor')?.value).toContain('Quoted message')
     })
   })
+
+  it('is a multiline textbox named by its label', async () => {
+    const view = renderComponent(FormKit, {
+      form: true,
+      props: {
+        id: 'editor',
+        name: 'editor',
+        type: 'editor',
+        label: 'Text',
+      },
+    })
+
+    expect(await view.findByRole('textbox', { name: 'Text' })).toHaveAttribute(
+      'aria-multiline',
+      'true',
+    )
+  })
 })

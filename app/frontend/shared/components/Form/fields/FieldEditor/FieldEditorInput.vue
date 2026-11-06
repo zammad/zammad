@@ -152,6 +152,8 @@ const editor = useEditor({
   editorProps: {
     attributes: {
       role: 'textbox',
+      'aria-labelledby': `label-${props.context.id}`,
+      'aria-multiline': 'true',
       name: props.context.node.name,
       id: props.context.id,
       class: props.context.classes.input,
@@ -233,6 +235,8 @@ if (VITE_TEST_MODE) {
         editorProps: {
           attributes: {
             role: 'textbox',
+            'aria-labelledby': `label-${id}`,
+            'aria-multiline': 'true',
             name: props.context.node.name,
             id,
             class: props.context.classes.input,

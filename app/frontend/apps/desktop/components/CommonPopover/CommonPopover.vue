@@ -33,6 +33,7 @@ import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { getPopoverClasses } from '#shared/initializer/initializePopover.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
@@ -336,6 +337,13 @@ const { moveNextFocusToTrap } = useTrapTab(popoverElement)
 
 const { instances } = usePopoverInstances()
 
+// The popover is named after its owner, so an owner without an id gets one.
+const ensureOwnerId = () => {
+  const element = unrefElement(props.owner)
+
+  if (element && !element.id) element.id = `popover-owner-${getUuid()}`
+}
+
 const updateOwnerAriaExpandedState = () => {
   const element = unrefElement(props.owner)
 
@@ -422,6 +430,7 @@ const openPopoverImmediate = () => {
     if (instance.isOpen.value) instance.closePopover()
   })
 
+  ensureOwnerId()
   showPopover.value = true
   emit('open')
 

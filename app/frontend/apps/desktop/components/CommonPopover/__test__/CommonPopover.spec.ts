@@ -66,6 +66,16 @@ describe('CommonPopover.vue', () => {
     expect(wrapper.queryByText('Example Content')).not.toBeInTheDocument()
   })
 
+  it('is named after its owner, also when the owner has no id', async () => {
+    const wrapper = renderPopover()
+
+    await wrapper.events.click(wrapper.getByText('Click me'))
+
+    expect(await wrapper.findByRole('region', { name: 'Click me' })).toHaveTextContent(
+      'Example Content',
+    )
+  })
+
   it('ignores horizontal orientation on small screens and falls back to vertical orientation', async () => {
     isSmallScreen.value = false
 
