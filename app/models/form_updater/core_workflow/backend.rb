@@ -6,12 +6,15 @@ class FormUpdater::CoreWorkflow::Backend
   end
 
   attr_accessor :perform_result, :result, :relation_fields, :object
+  attr_reader :field_types
 
-  def initialize(perform_result:, result:, relation_fields:, object:)
+  # @param field_types [FormUpdater::FieldTypes] the field layer's types of the form's fields
+  def initialize(perform_result:, result:, relation_fields:, object:, field_types:)
     @perform_result  = perform_result
     @result          = result
     @relation_fields = relation_fields
     @object          = object
+    @field_types     = field_types
   end
 
   def perform

@@ -69,31 +69,8 @@ module ApplicationController::Authenticates
 
     # check http token based authentication
     authenticate_with_http_token do |token_string, _options|
-      logger.debug { "http token auth check '#{token_string}'" }
-      request.session_options[:skip] = true # do not send a session cookie
-      if Setting.get('api_token_access') == false
-        raise Exceptions::Forbidden, 'API token access disabled!'
-      end
-
-      user = Token.check(
-        action:        'api',
-        token:         token_string,
-        inactive_user: true,
-      )
-
-      if user
-        token = Token.find_by(token: token_string)
-
-        token.last_used_at = Time.zone.now
-        token.save!
-
-        raise Exceptions::NotAuthorized, __('Not authorized (token expired)!') if token.expired?
-
-        @_token = token # remember for Pundit authorization / permit!
-      end
-
-      @_token_auth = token_string # remember for permission_check
-      return authentication_check_prerequesits(user, 'token_auth') if user
+      user = authentication_check_api_token(token_string)
+      return user if user
 
       authentication_errors.push(__("Can't find User for Token"))
     end
@@ -125,6 +102,37 @@ module ApplicationController::Authenticates
     return false if authentication_errors.blank?
 
     raise Exceptions::NotAuthorized, authentication_errors.join(', ')
+  end
+
+  # A personal access token, shared by the REST API and the MCP endpoint.
+  #
+  # @return [User, nil] nil when no token of an existing user matches
+  def authentication_check_api_token(token_string)
+    logger.debug { 'http token auth check' }
+    request.session_options[:skip] = true # do not send a session cookie
+    if Setting.get('api_token_access') == false
+      raise Exceptions::Forbidden, 'API token access disabled!'
+    end
+
+    user = Token.check(
+      action:        'api',
+      token:         token_string,
+      inactive_user: true,
+    )
+
+    if user
+      token = Token.find_by(token: token_string)
+
+      token.last_used_at = Time.zone.now
+      token.save!
+
+      raise Exceptions::NotAuthorized, __('Not authorized (token expired)!') if token.expired?
+
+      @_token = token # remember for Pundit authorization / permit!
+    end
+
+    @_token_auth = token_string # remember for permission_check
+    authentication_check_prerequesits(user, 'token_auth') if user
   end
 
   def authentication_check_prerequesits(user, auth_type)

@@ -1,0 +1,117 @@
+{
+  "name": "set_ticket_tags",
+  "title": "Set ticket tags",
+  "description": "Add tags to a ticket and remove tags from it, by name. Name only the tags to add or remove; the others stay. Names are matched to the existing tags without regard to case; a name that matches none adds nothing and the answer names the closest tags, so ask the user which one they mean. Set create_new_tags only when the user asked for a new tag; Zammad creates it only where the user may. list_tags lists the tags there are.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "add": {
+        "type": "array",
+        "description": "Tags to add, by name.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "remove": {
+        "type": "array",
+        "description": "Tags to remove, by name.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "create_new_tags": {
+        "type": "boolean",
+        "description": "Create the tags to add that do not exist yet. Only when the user asked for a new tag.",
+        "default": false
+      },
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_id": {
+        "type": "integer"
+      },
+      "ticket_number": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "added": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "removed": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "already_set": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Tags to add the ticket had already."
+      },
+      "not_set": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Tags to remove the ticket did not have."
+      },
+      "created": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Tags that did not exist and were created."
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "The ticket's tags afterwards."
+      }
+    },
+    "required": [
+      "ticket_id",
+      "ticket_number",
+      "url",
+      "added",
+      "removed",
+      "already_set",
+      "not_set",
+      "created",
+      "tags"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": true,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": false
+  }
+}

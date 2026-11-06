@@ -18,11 +18,17 @@ class Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Relation < Ser
 
     {
       value: item.id,
-      label: item.name,
+      label: label(item),
     }
   end
 
   private
+
+  # A record by the name it is stored under, as the instructions list it; a user, who has none, as the field layer
+  #   names them.
+  def label(item)
+    item.respond_to?(:name) ? item.name : type.label(item.id)
+  end
 
   def relation_type
     relation_name = RELATION_MAPPING[object_attribute.data_option[:relation]] || object_attribute.data_option[:relation]

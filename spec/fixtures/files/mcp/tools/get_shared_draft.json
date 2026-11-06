@@ -1,0 +1,140 @@
+{
+  "name": "get_shared_draft",
+  "title": "Get shared draft",
+  "description": "Read the shared draft of a ticket in full: the reply an agent saved in Zammad to send later, with its type, recipients, subject, who saved it and its text. get_ticket names whether a ticket has one. send_shared_draft sends it as it is; save_shared_draft replaces it.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "A link to the ticket in Zammad."
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "url"
+        ]
+      },
+      "shared_draft": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string",
+            "description": "The article type it is sent as."
+          },
+          "internal": {
+            "type": "boolean"
+          },
+          "to": {
+            "type": "string"
+          },
+          "cc": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "saved_by": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "User"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string",
+                "description": "The user's full name, as the user or an agent wrote it."
+              },
+              "email": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "description": "Link to the user in Zammad."
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "name"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attachment_count": {
+            "type": "integer",
+            "description": "Its files, which only Zammad sends with it."
+          },
+          "ticket_fields": {
+            "type": "boolean",
+            "description": "It changes ticket fields as well when an agent sends it in Zammad."
+          },
+          "secured": {
+            "type": "boolean",
+            "description": "The agent chose to sign or encrypt it, which only Zammad does when an agent sends it."
+          },
+          "text": {
+            "type": "string",
+            "description": "The draft's text, as plain text, without the signature Zammad adds when it is sent."
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "internal",
+          "saved_by",
+          "updated_at",
+          "text"
+        ]
+      }
+    },
+    "required": [
+      "ticket",
+      "shared_draft"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

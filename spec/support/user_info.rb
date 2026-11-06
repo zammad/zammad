@@ -19,5 +19,6 @@ RSpec.configure do |config|
 
   config.after do |_example|
     UserInfo.current_user_id = nil
+    UserInfo.current_token   = nil
   end
 end

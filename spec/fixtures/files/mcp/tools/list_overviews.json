@@ -1,0 +1,63 @@
+{
+  "name": "list_overviews",
+  "title": "List overviews",
+  "description": "List the user's overviews in Zammad: the saved ticket lists an admin set up for the team, such as \"My Assigned Tickets\" or \"Escalated Tickets\", in the user's order, each with the count of its tickets and its link. Call it when the user asks which lists there are or how many tickets wait where. get_overview_tickets reads the tickets of one, by its ID or by its name, also without this list first. The user's own open tickets are search_tickets with owner \"me\" and state_type_category \"open\".",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "overviews": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "Overview"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name the user sees, in the user's language."
+            },
+            "stored_name": {
+              "type": "string",
+              "description": "The name as an admin stored it, where the user sees a translation."
+            },
+            "ticket_count": {
+              "type": "integer",
+              "description": "How many tickets the user may see in the overview."
+            },
+            "url": {
+              "type": "string",
+              "description": "Link to the overview in Zammad."
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "name",
+            "ticket_count"
+          ]
+        }
+      }
+    },
+    "required": [
+      "overviews"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

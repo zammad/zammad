@@ -6641,6 +6641,32 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('MCP server'),
+  name:        'api_mcp_access',
+  area:        'API::Base',
+  description: __('Enable the MCP server, so that AI clients can use Zammad with personal access tokens.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'api_mcp_access',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    permission: ['admin.api'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
   title:       __('Knowledge base self-hosted video servers'),
   name:        'kb_self_hosted_video_servers',
   area:        'Kb::Core',

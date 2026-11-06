@@ -113,14 +113,16 @@ class FormUpdater::Updater
 
   def resolve_relation_fields
     relation_fields.each do |name, relation_field|
-      relation_resolver = get_relation_resolver(relation_field)
-
       result_initialize_field(name)
 
-      result[relation_field[:name]][:options] = relation_resolver.options
+      result[relation_field[:name]][:options] = relation_options(relation_field)
 
       ensure_field_value_int(result[relation_field[:name]])
     end
+  end
+
+  def relation_options(relation_field)
+    get_relation_resolver(relation_field).options
   end
 
   def ensure_field_value_int(field)

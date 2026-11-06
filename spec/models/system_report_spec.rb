@@ -241,6 +241,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ai_assistance_kb_answer_suggestions',
           'ai_assistance_kb_answer_suggestions_relevance_score',
           'ai_provider',
+          'api_mcp_access',
           'ui_richtext_bubble_menu',
           'ui_desktop_beta_switch_admin_menu',
           'ui_desktop_beta_switch_role_ids',

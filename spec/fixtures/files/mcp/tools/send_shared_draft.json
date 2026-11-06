@@ -1,0 +1,87 @@
+{
+  "name": "send_shared_draft",
+  "title": "Send shared draft",
+  "description": "Send the shared draft of a ticket as it is saved, as an agent sends it in Zammad: its type, recipients, subject and text, in reply to the message it answers, with the group's email signature. Zammad deletes the draft once it is sent. get_shared_draft reads it first. Where supported the client must confirm the complete prepared message. Otherwise use client tool approval. A draft with files, ticket field changes, or signing or encryption is refused: an agent sends it from Zammad. Do not retry an uncertain write automatically.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "time_unit": {
+        "type": "number",
+        "description": "The time the user says they spent, where Zammad accounts time; never an estimate."
+      },
+      "skip_time_accounting": {
+        "type": "boolean",
+        "description": "true once the user said they account no time for this message, as Zammad's Skip does. Never on your own."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "article_id": {
+        "type": "integer"
+      },
+      "ticket_id": {
+        "type": "integer"
+      },
+      "ticket_number": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "internal": {
+        "type": "boolean"
+      },
+      "to": {
+        "type": "string"
+      },
+      "cc": {
+        "type": "string"
+      },
+      "outcome": {
+        "type": "string",
+        "enum": [
+          "saved",
+          "queued"
+        ]
+      }
+    },
+    "required": [
+      "article_id",
+      "ticket_id",
+      "ticket_number",
+      "url",
+      "type",
+      "internal",
+      "to",
+      "cc",
+      "outcome"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": true,
+    "idempotentHint": false,
+    "openWorldHint": true,
+    "readOnlyHint": false
+  }
+}

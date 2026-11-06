@@ -4,10 +4,11 @@ require 'rails_helper'
 
 RSpec.describe FormUpdater::CoreWorkflow::Options do
   subject(:field) do
-    described_class.perform(perform_result:, result:, relation_fields: {}, object:)
+    described_class.perform(perform_result:, result:, relation_fields: {}, object:, field_types:)
     result.fetch('example')
   end
 
+  let(:field_types)        { FormUpdater::FieldTypes.new(object_type: Ticket, user: create(:agent), record: nil) }
   let(:result)             { {} }
   let(:object)             { nil }
   let(:options)            { { 'current' => 'Current' } }
@@ -19,6 +20,10 @@ RSpec.describe FormUpdater::CoreWorkflow::Options do
       all_options:        { 'example' => options },
       historical_options: historical_options,
     }
+  end
+
+  before do
+    create(:object_manager_attribute_select, name: 'example', data_option_options: options)
   end
 
   it 'omits unknown options when the field has no option history' do

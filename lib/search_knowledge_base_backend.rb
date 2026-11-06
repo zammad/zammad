@@ -48,9 +48,18 @@ class SearchKnowledgeBaseBackend
   #   merged over DEFAULT_HIGHLIGHT_OPTIONS key by key. Without it Elasticsearch's defaults apply, i.e.
   #   up to five 100 character fragments, marked with HIGHLIGHT_START/END.
   # @option params [Hash<String=>String>, Hash<Symbol=>Symbol>] :order_by hash with column => asc/desc
+  # @option params [Boolean] :include_drafts_and_archived (true) false leaves out the drafts and
+  #   archived answers a user could see, such as an editor, before the hits are counted; only for
+  #   a search of answers alone
+  # @option params [Boolean] :raise_on_failure (false) raise SearchIndexBackend::SearchFailedError where Elasticsearch
+  #   did not run the search, instead of finding nothing
 
   def initialize(params)
     @params = params.compact
+
+    if !include_drafts_and_archived? && indexes != [KnowledgeBase::Answer::Translation.name]
+      raise ArgumentError, 'leaving out drafts and archived answers needs a search of answers alone'
+    end
 
     prepare_scope_ids
   end
@@ -63,6 +72,9 @@ class SearchKnowledgeBaseBackend
     if use_internal_assets? # cache for later use
       @granular_permissions_handler = KnowledgeBase::InternalAssets.new(user)
     end
+
+    # Without drafts and archived answers, the query takes the answers the user may read (#options_apply_answer_ids).
+    @readable_answer_translation_ids = translation_ids_for_answers(user) if !include_drafts_and_archived?
 
     raw_results = raw_results(query, pagination: pagination)
 
@@ -84,7 +96,7 @@ class SearchKnowledgeBaseBackend
   def search_fallback_for_index(query, index)
     index
       .constantize
-      .search_sql_text_fallback("%#{query}%")
+      .search_sql_text_fallback("%#{SqlHelper.quote_like(query)}%")
       .apply_kb_scope(@cached_scope_ids)
       .where(kb_locale: kb_locales)
       .reorder(**search_fallback_order)
@@ -148,7 +160,7 @@ class SearchKnowledgeBaseBackend
   def translation_ids_for_type(type, user)
     case type
     when KnowledgeBase::Answer::Translation.name
-      translation_ids_for_answers(user)
+      @readable_answer_translation_ids || translation_ids_for_answers(user)
     when KnowledgeBase::Category::Translation.name
       translation_ids_for_categories(user)
     when KnowledgeBase::Translation.name
@@ -171,6 +183,9 @@ class SearchKnowledgeBaseBackend
           relation.published
         end
       end
+
+    # `internal` covers both internally and publicly published answers.
+    scope = scope.internal if !include_drafts_and_archived?
 
     flatten_translation_ids(scope)
   end
@@ -242,13 +257,18 @@ class SearchKnowledgeBaseBackend
     @params.fetch(:flavor, :public).to_sym
   end
 
+  def include_drafts_and_archived?
+    @params.fetch(:include_drafts_and_archived, true)
+  end
+
   def base_options
     {
-      query_extension: {
+      query_extension:  {
         bool: {
           must: [ { terms: { kb_locale_id: kb_locale_ids } } ]
         }
-      }
+      },
+      raise_on_failure: @params[:raise_on_failure],
     }
   end
 
@@ -278,6 +298,14 @@ class SearchKnowledgeBaseBackend
     return if !@params.fetch(:scope, nil)
 
     hash[:query_extension][:bool][:must].push({ terms: { scope_id: @cached_scope_ids } })
+  end
+
+  # Without drafts and archived answers, Elasticsearch gets the answers the database lets the user
+  #   read, so that no other answer takes a place among the hits it is asked for.
+  def options_apply_answer_ids(hash)
+    return if include_drafts_and_archived?
+
+    hash[:query_extension][:bool][:must].push({ terms: { _id: @readable_answer_translation_ids } })
   end
 
   def options_apply_pagination(hash, pagination)
@@ -353,6 +381,7 @@ class SearchKnowledgeBaseBackend
     options_apply_score(output)
     options_apply_highlight(output)
     options_apply_scope(output)
+    options_apply_answer_ids(output)
     options_apply_pagination(output, pagination)
     options_apply_order(output)
     options_apply_fulltext(output)

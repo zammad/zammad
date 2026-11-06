@@ -1,0 +1,32 @@
+  <div class="page-header-title">
+    <h2><%- @T('Applications') %> (OAuth Authentication)</h2>
+    &nbsp;
+  </div>
+
+<p><%- @T('Manage applications that can use Zammad as an OAuth provider and applications that you\'ve authorized to use your account.') %></p>
+
+<div class="js-appList"></div>
+
+<button class="btn js-appNew"><%- @T('New Application') %></button>
+
+<br>
+<br>
+
+<div>
+  <table class="settings-list" style="width: 100%;">
+    <caption><%- @T('OAuth URLs are:') %></caption>
+    <thead>
+      <tr>
+        <th width="40%"><%- @T('Action') %>
+        <th width="60%"><%- @T('URL') %>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%- @T('Requesting the Grant') %>
+        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/authorize
+      <tr>
+        <td><%- @T('Getting an Access Token') %>
+        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/token
+    </tbody>
+  </table>
+</div>

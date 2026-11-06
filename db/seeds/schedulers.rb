@@ -94,6 +94,15 @@ Scheduler.create_or_update(
   created_by_id: 1,
 )
 Scheduler.create_or_update(
+  name:          __('Delete expired MCP confirmations.'),
+  method:        'AI::MCPConfirmation.cleanup',
+  period:        1.day,
+  prio:          2,
+  active:        true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
   name:          __('Close chat sessions where participants are offline.'),
   method:        'Chat.cleanup_close',
   period:        15.minutes,

@@ -13,7 +13,7 @@
 # Users without any knowledge base permission are limited to published answers, which they can read
 # on the public help site.
 # Locale restriction is optional (off by default) and applied in the query, so it does not eat into
-# the limit.
+# the limit. The relevance floor is the sidebar's setting unless the caller passes its own.
 class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
   requires_current_user!
 
@@ -30,11 +30,13 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
 
   attr_reader :embedding, :limit, :locale, :include_drafts_and_archived
 
-  def initialize(embedding:, limit: DEFAULT_LIMIT, locale: nil, include_drafts_and_archived: false)
+  # @param minimum_score [Float, nil] the relevance floor as Elasticsearch scores, 0..1
+  def initialize(embedding:, limit: DEFAULT_LIMIT, locale: nil, include_drafts_and_archived: false, minimum_score: nil)
     @embedding                   = embedding
     @limit                       = limit
     @locale                      = locale
     @include_drafts_and_archived = include_drafts_and_archived
+    @minimum_score               = minimum_score
   end
 
   def execute
@@ -92,24 +94,25 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
       .pluck(:id)
   end
 
-  # Returns ordered (best-first) `{ translation:, score: }` hashes.
+  # Returns ordered (best-first) `{ translation:, score:, passage: }` hashes. The passage is the text
+  # of the chunk that matched best, without the title the index puts in front of every chunk.
   #
   # TODO(PoC): the raw similarity score is surfaced to the frontend for debugging/calibration. Before
   # this ships, decide how (or whether) to expose it — mxbai-embed-large has a high baseline so the
   # raw cosine-derived value reads uniformly high; a normalised relevance would be more meaningful.
   def build_results(hits)
-    scores = best_scores_per_translation(hits)
+    best = best_hits_per_translation(hits)
 
-    translations_for(scores.keys)
-      .sort_by { |translation| -scores[translation.id] }
+    translations_for(best.keys)
+      .sort_by { |translation| -score_of(best[translation.id]) }
       .first(limit)
-      .map { |translation| { translation:, score: scores[translation.id] } }
+      .map { |translation| { translation:, score: score_of(best[translation.id]), passage: passage_of(best[translation.id], translation) } }
   end
 
   # Minimum relevance to surface a result. A vector search always returns its nearest neighbours, so
   # without a floor we would always show something, even for unrelated tickets. Elasticsearch maps
   # cosine similarity to (1 + cos) / 2 in 0..1 (so ~0.5 means "unrelated"), while admins configure
-  # the threshold in percent — hence the conversion.
+  # the threshold in percent — hence the conversion. A caller's own floor is given in 0..1 already.
   def minimum_score
     @minimum_score ||= begin
       configured = Setting.get('ai_assistance_kb_answer_suggestions_relevance_score')
@@ -118,17 +121,25 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
     end
   end
 
-  # Multiple chunks of the same translation can match; keep the best score per translation and drop
+  # Multiple chunks of the same translation can match; keep the best one per translation and drop
   # anything below the relevance floor.
-  def best_scores_per_translation(hits)
+  def best_hits_per_translation(hits)
     hits.each_with_object({}) do |hit, memo|
-      score = hit['_score'].to_f
+      score = score_of(hit)
       next if score < minimum_score
 
       id = hit.dig('_source', 'object_id').to_i
 
-      memo[id] = score if !memo.key?(id) || memo[id] < score
+      memo[id] = hit if !memo.key?(id) || score_of(memo[id]) < score
     end
+  end
+
+  def score_of(hit)
+    hit['_score'].to_f
+  end
+
+  def passage_of(hit, translation)
+    hit.dig('_source', 'content').to_s.delete_prefix("#{translation.title}\n\n")
   end
 
   def translations_for(translation_ids)

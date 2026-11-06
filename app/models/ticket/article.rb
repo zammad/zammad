@@ -107,15 +107,16 @@ class Ticket::Article < ApplicationModel
   # @param article [Ticket::Article] the article for which to replace the URLs
   # @param body [String] a stand-in for the article body, e.g. its translation; the article is
   #   not modified
+  # @param attachments [Array<Store>] the article's files, where the caller loaded them already; read once otherwise
   # @return [Array(String, Array<Attachment>, Array<Attachment>)] the modified body, the remaining attachments and the inline attachments
   #
   # Example usage:
   # body, attachments, inline_attachments = Ticket::Article.insert_urls(article)
-  def self.insert_urls(article, body = article.body)
-    if article.attachments.blank? ||
+  def self.insert_urls(article, body = article.body, attachments: article.attachments.to_a)
+    if attachments.blank? ||
        !article.content_type.match?(%r{text/html}i) ||
        body !~ %r{<img}i
-      return [body, article.attachments, []]
+      return [body, attachments, []]
     end
 
     inline_attachments = {}
@@ -126,7 +127,7 @@ class Ticket::Article < ApplicationModel
       tag_end = $4
       replace = item
 
-      file = article.attachments.find do |file|
+      file = attachments.find do |file|
         content_id = file.preferences['Content-ID']
         content_id == cid || content_id == "<#{cid}>"
       end
@@ -139,7 +140,7 @@ class Ticket::Article < ApplicationModel
       replace
     end
 
-    new_attachments, inline = article.attachments.partition { !inline_attachments[it.id] }
+    new_attachments, inline = attachments.partition { !inline_attachments[it.id] }
 
     [new_body, new_attachments, inline]
   end

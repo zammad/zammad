@@ -65,6 +65,16 @@ RSpec.describe Service::AI::Agent::Run::Context::Instruction::ObjectAttributes::
       end
     end
 
+    context 'when the filter values are empty, as an admin may write them' do
+      let(:filter_values) { nil }
+
+      it 'returns all active groups' do
+        group # create the group
+
+        expect(relation_context.prepare_for_instruction).to include(value: group.id, label: 'Test Group')
+      end
+    end
+
     context 'when filter values are provided with integer keys' do
       let(:filter_values) { { group.id => 'Test group description' } }
 

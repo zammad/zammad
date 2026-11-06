@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchIndexBackend
+  # Raised by a search that asks for it with :raise_on_failure, where Elasticsearch did not run it: a missing index, a
+  #   query it cannot parse, no answer. Without the option, such a search logs the error and finds nothing.
+  class SearchFailedError < StandardError; end
 
   SUPPORTED_ES_VERSION_MINIMUM   = '8.15.0'.freeze
   SUPPORTED_ES_VERSION_LESS_THAN = '10'.freeze
@@ -457,14 +460,19 @@ remove whole data from index
     data = if response.success?
              Array.wrap(response.data&.dig('hits', 'hits'))
            else
-             Rails.logger.error humanized_error(
+             error = humanized_error(
                verb:     'GET',
                url:      url,
                payload:  query_data,
                response: response,
              )
+             raise SearchFailedError, error if options[:raise_on_failure]
+
+             Rails.logger.error error
              []
            end
+
+    raise_incomplete_search(response, url) if options[:raise_on_failure]
 
     data.map! do |item|
       Rails.logger.debug { "... #{item['_type']} #{item['_id']}" }
@@ -871,6 +879,16 @@ helper method for making HTTP calls
     Rails.logger.debug { "# #{response.code}" }
 
     response
+  end
+
+  # Elasticsearch answers a search that timed out or failed on a shard with success and the hits it got, which may be
+  #   none at all.
+  def self.raise_incomplete_search(response, url)
+    timed_out     = response.data&.dig('timed_out') == true
+    failed_shards = response.data&.dig('_shards', 'failed').to_i
+    return if !timed_out && failed_shards.zero?
+
+    raise SearchFailedError, "Elasticsearch did not complete the search at #{url}: timed out #{timed_out}, failed shards #{failed_shards}."
   end
 
   def self.timeouts_for(request_type)

@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# What linking does is covered by spec/services/service/link/add_spec.rb — this covers the GraphQL surface only:
+#   authorization, how the service's refusals reach the client, and the payload.
 RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
   %w[child parent normal].each do |link_type|
     context "with link type #{link_type}" do
@@ -72,6 +74,18 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
             expect { gql.execute(mutation, variables: variables) }
               .not_to change(Link, :count)
             expect(gql.result.data[:link]).to be_nil
+            expect(gql.result.data[:errors]).to contain_exactly(
+              hash_including('message' => 'Link already exists', 'field' => nil)
+            )
+          end
+        end
+
+        context 'when the two are linked the other way round already' do
+          before { create(:link, from: from, to: to, link_type: 'normal') }
+
+          it 'returns the error of the link service' do
+            expect { gql.execute(mutation, variables: variables) }
+              .not_to change(Link, :count)
             expect(gql.result.data[:errors]).to contain_exactly(
               hash_including('message' => 'Link already exists', 'field' => nil)
             )

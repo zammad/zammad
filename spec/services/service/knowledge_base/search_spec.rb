@@ -38,14 +38,14 @@ RSpec.describe Service::KnowledgeBase::Search do
     end
   end
 
-  def search_output(query = search_term, entity: :answer, scope: nil, for_user: user)
+  def search_output(query = search_term, entity: :answer, scope: nil, for_user: user, **)
     described_class
       .with_current_user(for_user)
-      .execute(query: query, knowledge_base: knowledge_base, entity: entity, scope: scope, locale: primary_locale)
+      .execute(query: query, knowledge_base: knowledge_base, entity: entity, scope: scope, locale: primary_locale, **)
   end
 
-  def search(query = search_term, entity: :answer, scope: nil, for_user: user)
-    search_output(query, entity: entity, scope: scope, for_user: for_user).results
+  def search(query = search_term, entity: :answer, scope: nil, for_user: user, **)
+    search_output(query, entity: entity, scope: scope, for_user: for_user, **).results
   end
 
   def visibility_of(category)
@@ -169,6 +169,14 @@ RSpec.describe Service::KnowledgeBase::Search do
 
     it 'returns nothing for a blank query, so entering the page searches for nothing' do
       expect(search('')).to be_empty
+    end
+
+    it 'finds nothing where Elasticsearch did not run the search' do
+      expect(search('laptop / email')).to be_empty
+    end
+
+    it 'raises where Elasticsearch did not run the search and the caller asks for it' do
+      expect { search('laptop / email', raise_on_failure: true) }.to raise_error(SearchIndexBackend::SearchFailedError)
     end
 
     it 'finds answers' do
@@ -310,6 +318,16 @@ RSpec.describe Service::KnowledgeBase::Search do
         expect(items).to include(matching_answer)
         expect(items).not_to include(internal_answer_hit, draft_answer_hit)
       end
+
+      it 'finds no drafts or archived answers for an editor either, where they are left out', :aggregate_failures do
+        archived_answer_hit = create(:knowledge_base_answer, :archived, category: category, translation_attributes: { title: 'Ocarina history' })
+        searchindex_model_reload([KnowledgeBase::Answer::Translation])
+
+        items = search(for_user: create(:admin), include_drafts_and_archived: false).map(&:item)
+
+        expect(items).to include(matching_answer, internal_answer_hit)
+        expect(items).not_to include(draft_answer_hit, archived_answer_hit)
+      end
     end
 
     # CategoryType#visibility renders the status icon of a result from this. It is batched here
@@ -419,6 +437,15 @@ RSpec.describe Service::KnowledgeBase::Search do
       preview = result_for(body_only_answer).body_preview
 
       expect(preview.map(&:highlight)).to eq([false])
+    end
+
+    # The fallback lists the newest hits first, here the draft and the archived answer.
+    it 'leaves drafts and archived answers out where asked to, before it counts its hits' do
+      create(:knowledge_base_answer, :draft, category: category, translation_attributes: { title: 'Ocarina repairs' })
+      create(:knowledge_base_answer, :archived, category: category, translation_attributes: { title: 'Ocarina history' })
+
+      expect(search(for_user: create(:admin), include_drafts_and_archived: false, limit: 1).map(&:item))
+        .to contain_exactly(have_attributes(visibility: :published))
     end
 
     it_behaves_like 'an answers-only, unenriched search'

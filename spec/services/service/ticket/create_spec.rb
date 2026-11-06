@@ -114,6 +114,15 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         )
     end
 
+    it 'fills in the sender and the recipient of an agent\'s article, but keeps those of a prepared one', :aggregate_failures do
+      ticket_data[:article] = { body: 'Hello', type: 'phone', sender: 'Agent', to: 'someone@example.com' }
+
+      expect(service_result.articles.first.to).not_to eq('someone@example.com')
+
+      prepared = described_class.with_current_user(user).execute(ticket_data: ticket_data.merge(article: { body: 'Hello', type: 'phone', sender: 'Agent', to: 'someone@example.com' }), prepared_article: true)
+      expect(prepared.articles.first.to).to eq('someone@example.com')
+    end
+
     context 'when email article should be created, but to is not present' do
       let(:customer) { create(:customer, email: '') }
 

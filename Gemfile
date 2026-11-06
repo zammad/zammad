@@ -121,6 +121,9 @@ gem 'omniauth-weibo-oauth2'
 # Rate limiting
 gem 'rack-attack'
 
+# feature - MCP server
+gem 'mcp', '~> 1.8', '>= 1.8.1'
+
 # channels
 gem 'koala'
 gem 'telegram-bot-ruby'

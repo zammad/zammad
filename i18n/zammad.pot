@@ -807,7 +807,7 @@ msgstr ""
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:13
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
 #: app/services/service/ai/agent/run.rb:15
-#: app/services/service/ai/feature.rb:131
+#: app/services/service/ai/feature.rb:132
 #: app/services/service/ai/feature/ocr.rb:32
 #: app/services/service/ai/ticket/embed_base.rb:25
 #: app/services/service/ai/vectordb/base.rb:12
@@ -819,7 +819,7 @@ msgstr ""
 msgid "AI provider is not configured."
 msgstr ""
 
-#: app/services/service/ai/feature.rb:16
+#: app/services/service/ai/feature.rb:17
 msgid "AI service result is missing expected keys"
 msgstr ""
 
@@ -845,7 +845,6 @@ msgid "AM/PM"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
-#: app/assets/javascripts/app/views/api.jst.eco:2
 #: db/seeds/permissions.rb:281
 msgid "API"
 msgstr ""
@@ -1047,7 +1046,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
-#: app/assets/javascripts/app/views/api.jst.eco:62
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:20
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:7
 #: app/assets/javascripts/app/views/generic/actions.jst.eco:5
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:24
@@ -1626,7 +1625,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:832
+#: app/models/user.rb:834
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2015,7 +2014,7 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/api.coffee:127
+#: app/assets/javascripts/app/controllers/api.coffee:128
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:76
 msgid "Application"
 msgstr ""
@@ -2024,7 +2023,7 @@ msgstr ""
 msgid "Application secret"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:44
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:2
 msgid "Applications"
 msgstr ""
 
@@ -2335,7 +2334,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:734
+#: app/models/user.rb:736
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2352,7 +2351,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:811
+#: app/models/user.rb:813
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2411,7 +2410,7 @@ msgstr ""
 msgid "Attachments are stored in the filesystem."
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:28
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:32
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:45
 msgid "Attendees"
 msgstr ""
@@ -2431,7 +2430,7 @@ msgstr ""
 msgid "Attention: These will be your login and password after the import is completed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/object_manager.coffee:164
+#: app/assets/javascripts/app/controllers/object_manager.coffee:169
 msgid "Attribute"
 msgstr ""
 
@@ -2637,11 +2636,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1337
+#: app/frontend/shared/components/Form/Form.vue:1351
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1346
+#: app/frontend/shared/components/Form/Form.vue:1360
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2692,7 +2691,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:122
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:164
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
 #: db/seeds/permissions.rb:469
 msgid "Avatar"
@@ -3156,8 +3155,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:240
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:115
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:376
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:205
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:375
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:202
 msgid "Camera"
 msgstr ""
 
@@ -3181,7 +3180,7 @@ msgstr ""
 msgid "Can't delete, object has references."
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:90
+#: app/controllers/application_controller/authenticates.rb:67
 msgid "Can't find User for Token"
 msgstr ""
 
@@ -3206,7 +3205,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:109
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:30
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:236
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:265
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:262
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:217
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:68
@@ -3556,7 +3555,7 @@ msgstr ""
 msgid "Check item"
 msgstr ""
 
-#: lib/search_index_backend.rb:477
+#: lib/search_index_backend.rb:485
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -3705,39 +3704,39 @@ msgstr ""
 msgid "City"
 msgstr ""
 
-#: db/seeds/schedulers.rb:160
+#: db/seeds/schedulers.rb:169
 msgid "Clean up 'AuditLog'."
 msgstr ""
 
-#: db/seeds/schedulers.rb:178
+#: db/seeds/schedulers.rb:187
 msgid "Clean up 'Cti::Log'."
 msgstr ""
 
-#: db/seeds/schedulers.rb:187
+#: db/seeds/schedulers.rb:196
 msgid "Clean up 'DataPrivacyTask'."
 msgstr ""
 
-#: db/seeds/schedulers.rb:169
+#: db/seeds/schedulers.rb:178
 msgid "Clean up 'HttpLog'."
 msgstr ""
 
-#: db/seeds/schedulers.rb:196
+#: db/seeds/schedulers.rb:205
 msgid "Clean up 'Ticket::DailyEventLock'."
 msgstr ""
 
-#: db/seeds/schedulers.rb:115
+#: db/seeds/schedulers.rb:124
 msgid "Clean up ActiveJob locks."
 msgstr ""
 
-#: db/seeds/schedulers.rb:242
+#: db/seeds/schedulers.rb:251
 msgid "Clean up cache."
 msgstr ""
 
-#: db/seeds/schedulers.rb:106
+#: db/seeds/schedulers.rb:115
 msgid "Clean up closed sessions."
 msgstr ""
 
-#: db/seeds/schedulers.rb:124
+#: db/seeds/schedulers.rb:133
 msgid "Clean up dead sessions."
 msgstr ""
 
@@ -3745,7 +3744,7 @@ msgstr ""
 msgid "Clean up expired sessions."
 msgstr ""
 
-#: db/seeds/schedulers.rb:277
+#: db/seeds/schedulers.rb:286
 msgid "Clean up mobile taskbars."
 msgstr ""
 
@@ -3889,7 +3888,7 @@ msgstr ""
 msgid "Close In Min"
 msgstr ""
 
-#: db/seeds/schedulers.rb:97
+#: db/seeds/schedulers.rb:106
 msgid "Close chat sessions where participants are offline."
 msgstr ""
 
@@ -5587,7 +5586,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6709
+#: db/seeds/settings.rb:6735
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5819,7 +5818,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6686
+#: db/seeds/settings.rb:6712
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5915,11 +5914,11 @@ msgstr ""
 msgid "Defines the port of the WebSocket server."
 msgstr ""
 
-#: db/seeds/settings.rb:6749
+#: db/seeds/settings.rb:6775
 msgid "Defines the private key used to sign web push notifications."
 msgstr ""
 
-#: db/seeds/settings.rb:6762
+#: db/seeds/settings.rb:6788
 msgid "Defines the public key browsers use to subscribe to web push notifications."
 msgstr ""
 
@@ -6024,7 +6023,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6677
+#: db/seeds/settings.rb:6703
 msgid "Defines which knowledge base categories are excluded from the vector database. Sub-categories of an excluded category are excluded as well. Note that the vector database has to be rebuilt after removing a category from this list, so that its answers get indexed."
 msgstr ""
 
@@ -6088,7 +6087,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:11
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:151
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:154
 msgid "Delete"
 msgstr ""
@@ -6151,7 +6150,7 @@ msgstr ""
 msgid "Delete article"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:151
 msgid "Delete avatar"
 msgstr ""
 
@@ -6168,6 +6167,10 @@ msgstr ""
 msgid "Delete existing data of your system."
 msgstr ""
 
+#: db/seeds/schedulers.rb:97
+msgid "Delete expired MCP confirmations."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
 msgid "Delete immediately"
 msgstr ""
@@ -6176,7 +6179,7 @@ msgstr ""
 msgid "Delete object"
 msgstr ""
 
-#: db/seeds/schedulers.rb:205
+#: db/seeds/schedulers.rb:214
 msgid "Delete obsolete classic IMAP backup."
 msgstr ""
 
@@ -6196,7 +6199,7 @@ msgstr ""
 msgid "Delete old recently closed entries."
 msgstr ""
 
-#: db/seeds/schedulers.rb:151
+#: db/seeds/schedulers.rb:160
 msgid "Delete old stats store entries."
 msgstr ""
 
@@ -6204,7 +6207,7 @@ msgstr ""
 msgid "Delete old token entries."
 msgstr ""
 
-#: db/seeds/schedulers.rb:233
+#: db/seeds/schedulers.rb:242
 msgid "Delete old upload cache entries."
 msgstr ""
 
@@ -6228,7 +6231,7 @@ msgstr ""
 msgid "Delete this access token"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:346
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:345
 msgid "Delete this avatar"
 msgstr ""
 
@@ -6601,7 +6604,7 @@ msgstr ""
 msgid "Do you really want to delete this object?"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:152
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:149
 msgid "Do you really want to delete your current avatar?"
 msgstr ""
 
@@ -6656,7 +6659,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue:141
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:261
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:367
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:169
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:139
 msgid "Done"
 msgstr ""
@@ -7002,7 +7005,7 @@ msgstr ""
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
-#: lib/search_index_backend.rb:473
+#: lib/search_index_backend.rb:481
 msgid "Elasticsearch is not reachable. It's possible that it's not running. Please check whether it is installed."
 msgstr ""
 
@@ -7104,7 +7107,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:744
+#: app/models/user.rb:746
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -7218,12 +7221,12 @@ msgstr ""
 msgid "Enable Chat"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:33
+#: app/assets/javascripts/app/views/api/access.jst.eco:27
 #: db/seeds/settings.rb:3663
 msgid "Enable REST API access using the username/email address and password for the authentication user."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:15
+#: app/assets/javascripts/app/views/api/access.jst.eco:9
 msgid "Enable REST API using tokens (not username/email address and password). All users need to create their own access tokens in the user profile."
 msgstr ""
 
@@ -7303,12 +7306,17 @@ msgstr ""
 msgid "Enable or disable the translation of ticket articles."
 msgstr ""
 
-#: db/seeds/settings.rb:6654
+#: db/seeds/settings.rb:6680
 msgid "Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend."
 msgstr ""
 
 #: db/seeds/settings.rb:6556
 msgid "Enable or disable the writing assistant text tools."
+msgstr ""
+
+#: app/assets/javascripts/app/views/api/access.jst.eco:45
+#: db/seeds/settings.rb:6640
+msgid "Enable the MCP server, so that AI clients can use Zammad with personal access tokens."
 msgstr ""
 
 #: db/seeds/settings.rb:6324
@@ -7491,7 +7499,7 @@ msgstr ""
 msgid "Encryption:"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:18
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:32
 #: app/frontend/apps/desktop/components/Form/fields/FieldDateRange/FieldDateRangeInput.vue:147
@@ -7807,7 +7815,7 @@ msgstr ""
 msgid "Example tag"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:17
+#: app/assets/javascripts/app/views/api/access.jst.eco:11
 msgid "Example:"
 msgstr ""
 
@@ -7854,7 +7862,7 @@ msgstr ""
 msgid "Execute configured macros"
 msgstr ""
 
-#: db/seeds/schedulers.rb:214
+#: db/seeds/schedulers.rb:223
 msgid "Execute import jobs."
 msgstr ""
 
@@ -7946,7 +7954,7 @@ msgstr ""
 msgid "External data source field"
 msgstr ""
 
-#: lib/search_index_backend.rb:804
+#: lib/search_index_backend.rb:821
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -8565,11 +8573,11 @@ msgstr ""
 msgid "Generate"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/api.coffee:180
+#: app/assets/javascripts/app/controllers/api.coffee:181
 msgid "Generate Access Token for |%s|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/api.coffee:167
+#: app/assets/javascripts/app/controllers/api.coffee:168
 msgid "Generate Token"
 msgstr ""
 
@@ -8588,7 +8596,7 @@ msgstr ""
 msgid "Generate recovery codes: %s"
 msgstr ""
 
-#: db/seeds/schedulers.rb:142
+#: db/seeds/schedulers.rb:151
 msgid "Generate user-based stats."
 msgstr ""
 
@@ -8634,7 +8642,7 @@ msgstr ""
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:70
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:28
 msgid "Getting an Access Token"
 msgstr ""
 
@@ -8979,7 +8987,7 @@ msgstr ""
 msgid "HTTP type"
 msgstr ""
 
-#: db/seeds/schedulers.rb:223
+#: db/seeds/schedulers.rb:232
 msgid "Handle data privacy tasks."
 msgstr ""
 
@@ -9938,7 +9946,7 @@ msgstr ""
 msgid "Internal error"
 msgstr ""
 
-#: db/seeds/settings.rb:6668
+#: db/seeds/settings.rb:6694
 msgid "Internal record of the embedding model and vector size the knowledge base index was last built with. Used to detect a stale index by comparison, without probing Elasticsearch."
 msgstr ""
 
@@ -10016,7 +10024,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:683
+#: app/models/user.rb:685
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10433,7 +10441,7 @@ msgstr ""
 msgid "Knowledge base navigation"
 msgstr ""
 
-#: db/seeds/settings.rb:6637
+#: db/seeds/settings.rb:6663
 msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
@@ -10664,7 +10672,7 @@ msgstr ""
 msgid "Length of the vectors the embedding model produces. Filled in for a model whose size is known."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:196
 msgid "Library"
 msgstr ""
 
@@ -10869,7 +10877,7 @@ msgstr ""
 msgid "List of issue labels"
 msgstr ""
 
-#: db/seeds/settings.rb:6640
+#: db/seeds/settings.rb:6666
 msgid "List of self-hosted video servers. This list is used for content security policy."
 msgstr ""
 
@@ -11032,6 +11040,11 @@ msgstr ""
 msgid "MAC address (unique identifier of the report)"
 msgstr ""
 
+#: app/assets/javascripts/app/views/api/access.jst.eco:42
+#: db/seeds/settings.rb:6637
+msgid "MCP server"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:113
 msgid "Machine-translated, some formatting may be lost."
 msgstr ""
@@ -11080,7 +11093,7 @@ msgstr ""
 msgid "Maintenance Mode"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:120
+#: app/controllers/application_controller/authenticates.rb:127
 msgid "Maintenance mode enabled!"
 msgstr ""
 
@@ -11178,7 +11191,7 @@ msgstr ""
 msgid "Manage all users of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:48
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:6
 msgid "Manage applications that can use Zammad as an OAuth provider and applications that you've authorized to use your account."
 msgstr ""
 
@@ -11390,7 +11403,6 @@ msgstr ""
 msgid "Manage your notification settings"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
@@ -11874,7 +11886,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:763
+#: app/models/user.rb:765
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12151,7 +12163,7 @@ msgstr ""
 msgid "New AI Agent"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/api.coffee:190
+#: app/assets/javascripts/app/controllers/api.coffee:191
 msgid "New Access Token is"
 msgstr ""
 
@@ -12163,7 +12175,7 @@ msgstr ""
 msgid "New Answer"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:52
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:10
 msgid "New Application"
 msgstr ""
 
@@ -12474,7 +12486,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:36
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:16
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco:5
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:49
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:53
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:65
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:63
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:12
@@ -12874,7 +12886,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:60
-#: app/graphql/gql/types/ticket_type.rb:115
+#: app/graphql/gql/types/ticket_type.rb:105
 #: db/seeds/settings.rb:2048
 msgid "None"
 msgstr ""
@@ -12931,7 +12943,7 @@ msgstr ""
 msgid "Not authorized (feature not possible)"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:82
+#: app/controllers/application_controller/authenticates.rb:117
 msgid "Not authorized (token expired)!"
 msgstr ""
 
@@ -13129,6 +13141,7 @@ msgstr ""
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/api.coffee:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:12
 msgid "OAuth"
 msgstr ""
@@ -13138,11 +13151,11 @@ msgstr ""
 msgid "OAuth Configuration"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:59
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:17
 msgid "OAuth URLs are:"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:102
+#: app/controllers/application_controller/authenticates.rb:79
 msgid "OAuth2 token is expired!"
 msgstr ""
 
@@ -13194,11 +13207,11 @@ msgstr ""
 msgid "Object Manager"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/object_manager.coffee:166
+#: app/assets/javascripts/app/controllers/object_manager.coffee:171
 msgid "Object Manager Attribute"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/object_manager.coffee:167
+#: app/assets/javascripts/app/controllers/object_manager.coffee:172
 msgid "Object Manager Attributes"
 msgstr ""
 
@@ -13218,7 +13231,7 @@ msgstr ""
 msgid "Object with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/object_manager.coffee:340
+#: app/assets/javascripts/app/controllers/object_manager.coffee:345
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:54
 #: db/seeds/permissions.rb:287
 msgid "Objects"
@@ -13659,7 +13672,7 @@ msgstr ""
 msgid "Organizations with \"%s\""
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:22
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:26
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:41
 msgid "Organizer"
 msgstr ""
@@ -13887,7 +13900,7 @@ msgstr ""
 msgid "Packages"
 msgstr ""
 
-#: db/seeds/settings.rb:6733
+#: db/seeds/settings.rb:6759
 msgid "Packages Token"
 msgstr ""
 
@@ -13957,7 +13970,7 @@ msgstr ""
 msgid "Password & Authentication"
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:30
+#: app/assets/javascripts/app/views/api/access.jst.eco:24
 msgid "Password Access"
 msgstr ""
 
@@ -14982,7 +14995,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6695
+#: db/seeds/settings.rb:6721
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -15404,7 +15417,7 @@ msgstr ""
 msgid "Request the password login here."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco:67
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:25
 msgid "Requesting the Grant"
 msgstr ""
 
@@ -15597,7 +15610,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6706
+#: db/seeds/settings.rb:6732
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -15841,7 +15854,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:288
+#: app/controllers/sessions_controller.rb:289
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -15887,7 +15900,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:225
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:120
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:273
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:270
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:64
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
@@ -16299,17 +16312,17 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:751
+#: app/models/user.rb:753
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
 #: app/models/concerns/checks_secondary_organizations_on_commit.rb:21
-#: app/models/user.rb:757
+#: app/models/user.rb:759
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
 #: app/models/organization.rb:116
-#: app/models/user.rb:991
+#: app/models/user.rb:993
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr ""
 
@@ -16507,7 +16520,7 @@ msgstr ""
 msgid "Select the type of ticket your are creating"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:315
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:314
 msgid "Select this avatar"
 msgstr ""
 
@@ -16688,7 +16701,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr ""
 
-#: app/models/ticket/article.rb:353
+#: app/models/ticket/article.rb:354
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -16704,7 +16717,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6696
+#: db/seeds/settings.rb:6722
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -16949,7 +16962,7 @@ msgid "Shared draft"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:225
+#: app/services/service/ticket/create.rb:231
 #: app/services/service/ticket/update.rb:86
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
@@ -17494,7 +17507,7 @@ msgstr ""
 msgid "Start and end date"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:12
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldDateRange/FieldDateRangeInput.vue:135
@@ -17923,7 +17936,7 @@ msgstr ""
 msgid "Switch to old interface"
 msgstr ""
 
-#: db/seeds/schedulers.rb:133
+#: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
@@ -18281,6 +18294,10 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr ""
 
+#: app/assets/javascripts/app/views/api/access.jst.eco:45
+msgid "The MCP server works only while token access is enabled."
+msgstr ""
+
 #: app/services/service/avatar/image_validate.rb:20
 msgid "The MIME type of the image is invalid."
 msgstr ""
@@ -18465,8 +18482,8 @@ msgstr ""
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:254
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:129
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:253
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:128
 msgid "The avatar could not be deleted."
 msgstr ""
 
@@ -18474,12 +18491,12 @@ msgstr ""
 msgid "The avatar could not be fetched."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:220
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:219
 msgid "The avatar could not be selected."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:161
-#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:82
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:162
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:83
 msgid "The avatar could not be uploaded."
 msgstr ""
 
@@ -18888,7 +18905,7 @@ msgstr ""
 msgid "The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:475
+#: lib/search_index_backend.rb:483
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
@@ -18983,7 +19000,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:828
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
-#: app/assets/javascripts/app/controllers/object_manager.coffee:271
+#: app/assets/javascripts/app/controllers/object_manager.coffee:276
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
 msgstr ""
@@ -18998,7 +19015,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
-#: app/assets/javascripts/app/controllers/object_manager.coffee:337
+#: app/assets/javascripts/app/controllers/object_manager.coffee:342
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:149
 #: app/assets/javascripts/app/controllers/user.coffee:244
 msgid "The object could not be updated."
@@ -19057,7 +19074,7 @@ msgstr ""
 msgid "The personal access token could not be deleted."
 msgstr ""
 
-#: app/services/service/ticket/create.rb:112
+#: app/services/service/ticket/create.rb:118
 msgid "The phone number is invalid."
 msgstr ""
 
@@ -19149,7 +19166,7 @@ msgstr ""
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb:99
+#: app/controllers/application_controller/authenticates.rb:76
 #: app/controllers/integration/check_mk_controller.rb:142
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
 #: app/services/service/user/password_reset/update.rb:28
@@ -19294,7 +19311,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:727
+#: lib/search_index_backend.rb:744
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -19354,7 +19371,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:728
+#: lib/search_index_backend.rb:745
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -19679,7 +19696,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:273
+#: app/controllers/sessions_controller.rb:274
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr ""
@@ -20325,7 +20342,7 @@ msgstr ""
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
 msgstr ""
 
-#: db/seeds/settings.rb:6736
+#: db/seeds/settings.rb:6762
 msgid "This setting defines the token to access the support.zammad.com instance for package remote commands."
 msgstr ""
 
@@ -21134,7 +21151,7 @@ msgid "Toggle header row"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
-#: app/assets/javascripts/app/controllers/api.coffee:11
+#: app/assets/javascripts/app/controllers/api.coffee:9
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:91
@@ -21143,12 +21160,13 @@ msgid "Token"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
-#: app/assets/javascripts/app/views/api.jst.eco:12
+#: app/assets/javascripts/app/views/api/access.jst.eco:6
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: db/seeds/permissions.rb:507
 msgid "Token Access"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/api.coffee:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 msgid "Token access"
 msgstr ""
@@ -21545,7 +21563,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:419
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:13
-#: app/assets/javascripts/app/views/api.jst.eco:63
+#: app/assets/javascripts/app/views/api/access.jst.eco:47
+#: app/assets/javascripts/app/views/api/oauth.jst.eco:21
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:12
@@ -21781,7 +21800,7 @@ msgstr ""
 msgid "Update Escalation At"
 msgstr ""
 
-#: db/seeds/schedulers.rb:268
+#: db/seeds/schedulers.rb:277
 msgid "Update Exchange OAuth2 token."
 msgstr ""
 
@@ -21968,7 +21987,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:372
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:371
 msgid "Upload"
 msgstr ""
 
@@ -22249,7 +22268,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:171
+#: app/controllers/sessions_controller.rb:172
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr ""
@@ -22404,19 +22423,19 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: db/seeds/settings.rb:6651
+#: db/seeds/settings.rb:6677
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6665
+#: db/seeds/settings.rb:6691
 msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:6683
+#: db/seeds/settings.rb:6709
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
-#: db/seeds/settings.rb:6674
+#: db/seeds/settings.rb:6700
 msgid "Vector DB knowledge base excluded categories"
 msgstr ""
 
@@ -22511,7 +22530,7 @@ msgstr ""
 msgid "Video server not allowed. Please add to the list of allowed video servers."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/api.coffee:41
+#: app/assets/javascripts/app/controllers/api.coffee:68
 msgid "View"
 msgstr ""
 
@@ -22636,11 +22655,11 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: db/seeds/settings.rb:6746
+#: db/seeds/settings.rb:6772
 msgid "Web Push VAPID Private Key"
 msgstr ""
 
-#: db/seeds/settings.rb:6759
+#: db/seeds/settings.rb:6785
 msgid "Web Push VAPID Public Key"
 msgstr ""
 
@@ -23365,19 +23384,19 @@ msgstr ""
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:174
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:173
 msgid "Your avatar"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:230
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:229
 msgid "Your avatar has been changed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:262
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:261
 msgid "Your avatar has been deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:174
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:173
 msgid "Your avatar has been uploaded."
 msgstr ""
 
@@ -24369,7 +24388,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:950
+#: app/models/user.rb:952
 msgid "is too long"
 msgstr ""
 

@@ -344,6 +344,7 @@ GEM
       promise.rb (~> 0.7.2)
     graphql-fragment_cache (1.22.2)
       graphql (>= 2.1.4)
+    hana (1.3.7)
     hashdiff (1.2.1)
     hashie (5.2.0)
       logger
@@ -383,6 +384,11 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
+    json_schemer (2.5.0)
+      bigdecimal
+      hana (~> 1.3)
+      regexp_parser (~> 2.0)
+      simpleidn (~> 0.2)
     jwt (3.3.0)
       base64
     koala (3.8.0)
@@ -420,6 +426,8 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
+    mcp (1.8.1)
+      json_schemer (>= 2.4)
     messagebird-rest (5.0.0)
       jwt (< 4)
     method_source (1.1.0)
@@ -980,6 +988,7 @@ DEPENDENCIES
   localhost
   macaddr
   mail
+  mcp (~> 1.8, >= 1.8.1)
   messagebird-rest
   mime-types
   net-http

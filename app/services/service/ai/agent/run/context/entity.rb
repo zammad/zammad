@@ -126,16 +126,6 @@ class Service::AI::Agent::Run::Context::Entity
   end
 
   def determine_object_attribute_class(object_attribute)
-    object_attribute_classes.find do |klass|
-      klass.applicable?(object_attribute)
-    end
-  end
-
-  def object_attribute_classes
-    [
-      Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Relation,
-      Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Options,
-      Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Default,
-    ]
+    Service::AI::Agent::Run::Context::Entity::ObjectAttributes.for(object_attribute)
   end
 end

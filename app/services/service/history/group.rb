@@ -40,9 +40,11 @@
 class Service::History::Group < Service::Base
   requires_current_user!
 
+  INTERVAL = 15.seconds
+
   attr_reader :object, :interval
 
-  def initialize(object:, interval: 15.seconds)
+  def initialize(object:, interval: INTERVAL)
     @object = object
     @interval = interval
   end

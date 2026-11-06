@@ -1,0 +1,82 @@
+{
+  "name": "add_internal_note",
+  "title": "Add internal note",
+  "description": "Add an internal note to a ticket. Only agents see it; it is never sent to the customer. Name the ticket by its ticket_number, ticket_id or ticket_url, and give the note as plain text or, with content_type text/html, as HTML.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "text": {
+        "type": "string",
+        "description": "The note, in the format content_type names."
+      },
+      "content_type": {
+        "type": "string",
+        "description": "The format of text. text/html for headings, lists, tables or links; Zammad removes unsafe markup.",
+        "enum": [
+          "text/plain",
+          "text/html"
+        ],
+        "default": "text/plain"
+      },
+      "time_unit": {
+        "type": "number",
+        "description": "The time the user says they spent, where Zammad accounts time; never an estimate."
+      },
+      "skip_time_accounting": {
+        "type": "boolean",
+        "description": "true once the user said they account no time for this message, as Zammad's Skip does. Never on your own."
+      }
+    },
+    "required": [
+      "text"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "article_id": {
+        "type": "integer",
+        "description": "The internal ID of the note."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket."
+      },
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad."
+      },
+      "url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      }
+    },
+    "required": [
+      "article_id",
+      "ticket_id",
+      "ticket_number",
+      "url"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false,
+    "readOnlyHint": false
+  }
+}

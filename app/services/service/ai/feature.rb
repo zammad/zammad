@@ -5,6 +5,7 @@
 # handles stored results and analytics. Concrete features are registered by subclassing.
 class Service::AI::Feature < Service::Base
   include Mixin::RequiredSubPaths
+  include AI::PromptText
 
   PROMPT_PATH_STRING = Rails.root.join('app/services/service/ai/feature/prompts/%{type}/%{service}.txt.erb').to_s.freeze
 
@@ -239,17 +240,5 @@ class Service::AI::Feature < Service::Base
 
   def render_prompt(prompt_template)
     ERB.new(prompt_template.to_s, trim_mode: '-').result(binding)
-  end
-
-  # Prompt templates wrap ticket content in an XML-like structure; escape interpolated
-  # values so the content cannot break or fake that structure.
-  def xml_text(value)
-    value.to_s.encode(xml: :text)
-  end
-
-  # CDATA keeps the content readable for the model (no entity escaping); splitting ']]>'
-  # prevents breaking out of the section.
-  def cdata(value)
-    "<![CDATA[#{value.to_s.gsub(']]>', ']]]]><![CDATA[>')}]]>"
   end
 end

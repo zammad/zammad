@@ -3,7 +3,7 @@
 class FormUpdater::CoreWorkflow
   include ::Mixin::HasBackends
 
-  def self.perform_mapping(perform_result, result, relation_fields:, object:)
+  def self.perform_mapping(perform_result, result, relation_fields:, object:, field_types:)
     initialize_fields(perform_result, result)
 
     backends.each do |backend|
@@ -12,6 +12,7 @@ class FormUpdater::CoreWorkflow
         result:,
         relation_fields:,
         object:,
+        field_types:,
       )
     end
   end

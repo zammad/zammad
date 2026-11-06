@@ -1,14 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::AI::Agent::Run::Context::Instruction::ObjectAttributes::Relation < Service::AI::Agent::Run::Context::Instruction::ObjectAttributes
-  ALLOWED_RELATIONS = {
-    'Group'          => 'Group',
-    'TicketState'    => 'Ticket::State',
-    'TicketPriority' => 'Ticket::Priority',
-  }.freeze
+  ALLOWED_RELATIONS = %w[Group TicketState TicketPriority].freeze
 
   def self.applicable?(object_attribute)
-    object_attribute.data_option[:relation].present? && ALLOWED_RELATIONS.key?(object_attribute.data_option[:relation])
+    object_attribute.data_option[:relation].present? && ALLOWED_RELATIONS.include?(object_attribute.data_option[:relation])
   end
 
   def prepare_for_instruction
@@ -36,18 +32,9 @@ class Service::AI::Agent::Run::Context::Instruction::ObjectAttributes::Relation 
     nil
   end
 
+  # Every record the field may hold, the admin's choice of them where given, in the order the database returns them, as
+  #   the instructions have listed them so far.
   def items
-    @items ||= begin
-      if filter_values.present?
-        relation_type.where(active: true).where(id: filter_keys)
-      else
-        relation_type.where(active: true)
-      end
-    end
-  end
-
-  def relation_type
-    relation_name = ALLOWED_RELATIONS[object_attribute.data_option[:relation]]
-    relation_name.constantize
+    @items ||= type.records(allowed: filter_keys.presence&.map(&:to_s)).reorder(nil)
   end
 end

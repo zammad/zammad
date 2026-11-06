@@ -2,100 +2,34 @@
 
 class Service::AI::Agent::Run::Context::Instruction::ObjectAttributes::Options < Service::AI::Agent::Run::Context::Instruction::ObjectAttributes
   def self.applicable?(object_attribute)
-    object_attribute.data_option[:options].present?
+    object_attribute.data_option[:options].present? && object_attribute.data_option[:relation].blank?
   end
 
   def prepare_for_instruction
-    if options.is_a?(Hash)
-      return prepare_hash_options
-    end
+    choices.map do |value, label|
+      result = { value:, label: }
 
-    prepare_array_options
+      description = filter_values[value]
+      result[:description] = description if description.present?
+
+      result
+    end
   end
 
   private
 
-  def prepare_hash_options
-    if filter_values.present?
-      filter_values.filter_map do |value, description|
-        next if value.blank?
+  # The field layer's list in the admin's order, narrowed to the admin's choice and in its order where given; options
+  #   kept as an array — a tree, or a list in an order of its own — by their values, as the instructions have named them.
+  def choices
+    pairs = Service::EntityAttribute::Option.flatten(type.option_list || []).reject(&:disabled).to_h { |option| [option.value, option.label] }
+    return tree_choices(pairs) if object_attribute.data_option[:options].is_a?(Array)
 
-        if options.key?(value)
-          result = {
-            value: value,
-            label: options[value]
-          }
-
-          # Add description if provided
-          result[:description] = description if description.present?
-
-          result
-        end
-      end
-    else
-      options.map do |value, label|
-        {
-          value: value,
-          label: label
-        }
-      end
-    end
+    filter_keys.present? ? pairs.slice(*filter_keys.map(&:to_s)).to_a : pairs.to_a
   end
 
-  def prepare_array_options
-    if filter_values.present?
-      collect_matching_options(options, filter_keys)
-    else
-      collect_all_options_flat(options)
-    end
-  end
+  def tree_choices(pairs)
+    pairs = pairs.slice(*pairs.keys.intersection(filter_keys.map(&:to_s))) if filter_keys.present?
 
-  def collect_matching_options(options, filter_keys)
-    result = []
-    options.each do |option|
-      if option['disabled'].blank? && filter_keys.include?(option['value'])
-        option_result = build_option_structure(option).except(:children)
-
-        # Add description if available in filter_values
-        if filter_values.key?(option['value'].to_s) || filter_values.key?(option['value'])
-          key = filter_values.key?(option['value'].to_s) ? option['value'].to_s : option['value']
-          option_result[:description] = filter_values[key]
-        end
-
-        result << option_result
-      end
-      if option['children'].present?
-        result += collect_matching_options(option['children'], filter_keys)
-      end
-    end
-    result
-  end
-
-  def collect_all_options_flat(options)
-    result = []
-    options.each do |option|
-      if option['disabled'].blank?
-        result << build_option_structure(option).except(:children)
-      end
-      if option['children'].present?
-        result += collect_all_options_flat(option['children'])
-      end
-    end
-    result
-  end
-
-  def build_option_structure(option)
-    result = {
-      value: option['value'],
-      label: option['value'],
-    }
-    if option['children'].present?
-      result[:children] = option['children'].map { |child| build_option_structure(child) }
-    end
-    result
-  end
-
-  def options
-    @options ||= object_attribute.data_option[:options]
+    pairs.keys.map { |value| [value, value] }
   end
 end

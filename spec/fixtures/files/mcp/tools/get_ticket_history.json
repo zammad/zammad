@@ -1,0 +1,211 @@
+{
+  "name": "get_ticket_history",
+  "title": "Get ticket history",
+  "description": "Read what happened to one ticket of Zammad, as its history in Zammad shows it: who changed which field from which value to which and when — state, group, owner, priority and the other fields —, tags, mentions, merges, the checklist, time events, notifications and sent emails. A change made by a trigger, a scheduler, a postmaster filter, a macro or an AI agent names it. Newest first, page by page. Read a referenced message with get_ticket_articles using its message_position as a position. Name the ticket by its ticket_number, ticket_id or ticket_url.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "limit": {
+        "type": "integer",
+        "description": "How many entries a page holds at least; a change of several entries comes whole.",
+        "default": 30,
+        "minimum": 1,
+        "maximum": 100
+      },
+      "cursor": {
+        "type": "string",
+        "description": "next_cursor of the previous page, for the older changes."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "Ticket"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "Link to the ticket in Zammad."
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "number"
+        ]
+      },
+      "entry_count": {
+        "type": "integer",
+        "description": "How many entries the ticket's history holds."
+      },
+      "changes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "time": {
+              "type": "string"
+            },
+            "issuer": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "What made the change instead of a person: Trigger, Scheduler, Postmaster filter, Macro or AI agent."
+                },
+                "type": {
+                  "const": "User"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "deleted": {
+                  "type": "boolean"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Link to the user in Zammad."
+                }
+              },
+              "required": [
+                "name"
+              ]
+            },
+            "entries": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "description": "The kind of entry, as Zammad records it: created, updated, added, removed, merged_into, notification, …."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The entry in words."
+                  },
+                  "field": {
+                    "type": "string",
+                    "description": "The changed field by its label."
+                  },
+                  "field_key": {
+                    "type": "string",
+                    "description": "The stable attribute name, independent of its display label."
+                  },
+                  "subject": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "message",
+                          "checklist_item"
+                        ]
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "message_position": {
+                        "type": "integer",
+                        "description": "Current position to pass to get_ticket_articles to read this message."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id"
+                    ]
+                  },
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "ticket": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "Ticket"
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "number": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "description": "Link to the ticket in Zammad."
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "description"
+                ]
+              }
+            }
+          },
+          "required": [
+            "time",
+            "issuer",
+            "entries"
+          ]
+        }
+      },
+      "has_more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string",
+        "description": "Pass it as cursor for the older changes."
+      }
+    },
+    "required": [
+      "ticket",
+      "entry_count",
+      "changes",
+      "has_more"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

@@ -39,10 +39,11 @@ class Link < ApplicationModel
       'link_object_source_id = ? AND link_object_source_value = ?', linkobject.id, data[:link_object_value]
     )
 
+    # The types and objects come from the lookup cache: a ticket can have hundreds of links.
     list.each do |item|
       link = {}
-      link['link_type']         = @map[ Link::Type.find(item.link_type_id).name ]
-      link['link_object']       = Link::Object.find(item.link_object_target_id).name
+      link['link_type']         = @map[ Link::Type.lookup(id: item.link_type_id).name ]
+      link['link_object']       = Link::Object.lookup(id: item.link_object_target_id).name
       link['link_object_value'] = item.link_object_target_value
       items.push link
     end
@@ -53,8 +54,8 @@ class Link < ApplicationModel
     )
     list.each do |item|
       link = {}
-      link['link_type']         = Link::Type.find(item.link_type_id).name
-      link['link_object']       = Link::Object.find(item.link_object_source_id).name
+      link['link_type']         = Link::Type.lookup(id: item.link_type_id).name
+      link['link_object']       = Link::Object.lookup(id: item.link_object_source_id).name
       link['link_object_value'] = item.link_object_source_value
       items.push link
     end

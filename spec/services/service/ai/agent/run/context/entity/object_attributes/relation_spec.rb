@@ -60,6 +60,16 @@ RSpec.describe Service::AI::Agent::Run::Context::Entity::ObjectAttributes::Relat
       end
     end
 
+    context 'with a user, such as the owner' do
+      let(:agent)            { create(:agent, firstname: 'Nina', lastname: 'Agent') }
+      let(:object_attribute) { ObjectManager::Attribute.get(object: 'Ticket', name: 'owner_id') }
+      let(:entity_value)     { agent.id }
+
+      it 'gives the user by name' do
+        expect(relation_context.prepare).to eq({ value: agent.id, label: 'Nina Agent' })
+      end
+    end
+
     context 'with mapped relations' do
       let(:ticket_state) { create(:ticket_state, name: 'Another state') }
       let(:object_attribute) { build(:object_manager_attribute_select, data_option: { relation: 'TicketState' }) }

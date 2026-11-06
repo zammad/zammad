@@ -540,6 +540,56 @@ RSpec.describe SearchIndexBackend do
     end
   end
 
+  describe '.search_by_index with raise_on_failure', searchindex: true do
+    it 'finds nothing without raising, by default, where the index is missing' do
+      expect(described_class.search_by_index('test', 'MissingIndex')).to eq([])
+    end
+
+    it 'raises where the index is missing' do
+      expect { described_class.search_by_index('test', 'MissingIndex', raise_on_failure: true) }
+        .to raise_error(described_class::SearchFailedError)
+    end
+
+    it 'raises where Elasticsearch refuses the query' do
+      expect { described_class.search_by_index('laptop / email', 'Ticket', raise_on_failure: true) }
+        .to raise_error(described_class::SearchFailedError)
+    end
+
+    it 'raises where Elasticsearch cannot be reached' do
+      Setting.set('es_url', 'http://127.0.0.1:1')
+
+      expect { described_class.search_by_index('test', 'Ticket', raise_on_failure: true) }
+        .to raise_error(described_class::SearchFailedError)
+    end
+
+    it 'finds nothing without raising where the search ran' do
+      expect(described_class.search_by_index('nothing-matches-this', 'Ticket', raise_on_failure: true)).to eq([])
+    end
+
+    context 'when Elasticsearch answers with an incomplete search' do
+      {
+        'a timeout'      => { 'timed_out' => true, '_shards' => { 'failed' => 0 } },
+        'a failed shard' => { 'timed_out' => false, '_shards' => { 'failed' => 1 } },
+      }.each do |name, status|
+        context "with #{name}" do
+          before do
+            response = UserAgent::Result.new(success: true, code: 200, data: status.merge('hits' => { 'hits' => [] }))
+            allow(described_class).to receive(:make_request).and_return(response)
+          end
+
+          it 'raises' do
+            expect { described_class.search_by_index('test', 'Ticket', raise_on_failure: true) }
+              .to raise_error(described_class::SearchFailedError, include('did not complete'))
+          end
+
+          it 'finds what it got without raising, by default' do
+            expect(described_class.search_by_index('test', 'Ticket')).to eq([])
+          end
+        end
+      end
+    end
+  end
+
   describe '.selectors', searchindex: true do
     let(:initialize_object_manager_attributes) { nil }
     let(:group1)                               { create(:group) }

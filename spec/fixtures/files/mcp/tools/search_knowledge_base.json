@@ -1,0 +1,164 @@
+{
+  "name": "search_knowledge_base",
+  "title": "Search knowledge base",
+  "description": "Search the knowledge base of Zammad for how something is done or what the team decided, by words (mode \"keyword\") or by meaning (mode \"semantic\"). By words, the query takes words or Lucene query syntax, as Zammad's knowledge base search does: fields such as title: or tags:, quotes for a phrase, AND, OR, NOT. By meaning, it takes a short question and says how well the answers fit. The best answers come with their text, the others with the part that matched; get_knowledge_base_answer reads one in full. Pass next_cursor as cursor, with the same other arguments, for more answers. Without mode, it searches by words.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "What to look for: a short question or a few words."
+      },
+      "limit": {
+        "type": "integer",
+        "description": "How many answers to return.",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 10
+      },
+      "mode": {
+        "type": "string",
+        "description": "keyword (the default) searches by words: write one to three words as they stand in an answer, codes and names as written, other words in a language of the knowledge base. semantic searches by meaning, where the helpdesk has it set up, and says how well the answers fit: for a question in the user's own words, or in another language than the knowledge base's.",
+        "enum": [
+          "semantic",
+          "keyword"
+        ],
+        "default": "keyword"
+      },
+      "cursor": {
+        "type": "string",
+        "description": "next_cursor of the previous result, for the next answers."
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string"
+      },
+      "mode": {
+        "enum": [
+          "semantic",
+          "keyword"
+        ],
+        "description": "How the search ran: by meaning or by words."
+      },
+      "semantic_search": {
+        "enum": [
+          "ready",
+          "off",
+          "pending",
+          "failed"
+        ],
+        "description": "Whether the search by meaning could run where it was asked for; off, pending and failed searched by words instead."
+      },
+      "keyword_search": {
+        "const": "failed",
+        "description": "The search by words failed: only answers that hold an identifier of the query are listed."
+      },
+      "coverage": {
+        "enum": [
+          "covered",
+          "weak",
+          "none",
+          "unknown"
+        ],
+        "description": "How well the answers fit, on the first page: covered, weak, none, or unknown for a search by words."
+      },
+      "answers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "KnowledgeBase::Answer"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "locale": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "description": "Link to the answer in Zammad."
+            },
+            "visibility": {
+              "enum": [
+                "public",
+                "internal",
+                "draft",
+                "archived"
+              ],
+              "description": "public: customers may read the answer too."
+            },
+            "edited_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "text": {
+              "type": "string",
+              "description": "The answer's text, as the knowledge base's editors wrote it."
+            },
+            "truncated": {
+              "type": "boolean"
+            },
+            "part": {
+              "enum": [
+                "passage",
+                "start"
+              ],
+              "description": "Which part of a cut text is shown: the passage that matched, or the start."
+            },
+            "full_length": {
+              "type": "integer",
+              "description": "The length of a cut text in full, in characters."
+            },
+            "contains": {
+              "type": "string",
+              "description": "An identifier of the query the answer holds."
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "title",
+            "locale",
+            "visibility",
+            "text",
+            "truncated"
+          ]
+        }
+      },
+      "has_more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string",
+        "description": "Pass it as cursor, with the same other arguments, for the next answers."
+      }
+    },
+    "required": [
+      "query",
+      "mode",
+      "answers",
+      "has_more"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

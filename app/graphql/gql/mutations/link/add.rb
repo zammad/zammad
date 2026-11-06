@@ -17,17 +17,7 @@ module Gql::Mutations
       target = fetch_authorized_link_object(input.target_id)
       type   = input.type
 
-      link = ::Link.add(
-        link_type:                type,
-        link_object_source:       source.class.name,
-        link_object_source_value: source.id,
-        link_object_target:       target.class.name,
-        link_object_target_value: target.id
-      )
-
-      if !link.valid?
-        return error_response({ message: link.errors.full_messages.first })
-      end
+      Service::Link::Add.execute(source:, target:, type:)
 
       {
         link: {
@@ -35,6 +25,8 @@ module Gql::Mutations
           type: type
         }
       }
+    rescue Exceptions::UnprocessableContent => e
+      error_response({ message: e.message })
     end
   end
 end

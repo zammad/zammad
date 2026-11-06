@@ -328,6 +328,17 @@ RSpec.describe 'Api Auth', type: :request do
       expect(admin_token.last_used_at).to be_within(1.second).of(Time.zone.now)
     end
 
+    # The personal access token check comes first and is shared with the MCP endpoint, which refuses OAuth tokens.
+    it 'does OAuth token auth when the bearer token is no personal access token', :aggregate_failures do
+      oauth_app    = Doorkeeper::Application.create!(name: 'Spec', redirect_uri: 'https://localhost', scopes: '')
+      access_token = Doorkeeper::AccessToken.create!(application: oauth_app, resource_owner_id: agent.id, scopes: '')
+
+      get '/api/v1/users/me', headers: { 'Authorization' => "Bearer #{access_token.token}" }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['id']).to eq(agent.id)
+    end
+
     it 'does session auth - admin' do
       admin = create(:admin)
 

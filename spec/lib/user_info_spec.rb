@@ -164,6 +164,29 @@ RSpec.describe UserInfo do
 
   end
 
+  describe '.with_token' do
+    let(:agent) { create(:agent) }
+    let(:token) { create(:token, user: agent, preferences: { permission: %w[user_preferences.calendar] }) }
+
+    after { described_class.current_token = nil }
+
+    it 'narrows the permissions of the token\'s user in the given block' do
+      described_class.with_token(token) do
+        expect(agent.permissions?('ticket.agent')).to be(false)
+      end
+
+      expect(agent.permissions?('ticket.agent')).to be(true)
+    end
+
+    it 'resets to the surrounding token, also after an exception' do
+      surrounding = create(:token, user: agent)
+      described_class.current_token = surrounding
+
+      expect { described_class.with_token(token) { raise 'error' } }.to raise_error('error')
+      expect(described_class.current_token).to eq(surrounding)
+    end
+  end
+
   describe '#assets' do
 
     it 'is unprivileged without any user context', :aggregate_failures do

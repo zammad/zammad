@@ -15,7 +15,7 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
     perform_result = CoreWorkflow.perform(payload: perform_payload, user: current_user, assets: false, form_updater: true)
     return if perform_result.blank?
 
-    FormUpdater::CoreWorkflow.perform_mapping(perform_result, result, relation_fields:, object:)
+    FormUpdater::CoreWorkflow.perform_mapping(perform_result, result, relation_fields:, object:, field_types:)
 
     return if perform_result[:flags].blank?
 
@@ -23,6 +23,26 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
   end
 
   private
+
+  # A relation the field layer lists for the form: the records of Core Workflow's values it lets the user choose, so that
+  #   the form and the layer's other clients offer the same records.
+  def relation_options(relation_field)
+    type = field_types[relation_field[:name]] if relation_field[:filter_ids]
+    return super if !type.is_a?(Service::EntityAttribute::Type::Relation)
+
+    options = type.option_list(allowed: relation_field[:filter_ids].map(&:to_s))
+
+    FormUpdater::OptionList.form_options(options, integer: true, tree: options.any? { |option| option.children.any? })
+  end
+
+  def field_types
+    @field_types ||= FormUpdater::FieldTypes.new(object_type:, user: current_user, record: field_record)
+  end
+
+  # A new ticket's fields are those of a ticket not saved yet; a bulk edit changes several tickets, so none is the record.
+  def field_record
+    object || (object_type.new if self.class.instance_variable_get(:@core_workflow_screen) == 'create_middle')
+  end
 
   def perform_payload
     # Copy data to avoid changing the original data inside core workflow.

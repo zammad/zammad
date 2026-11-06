@@ -99,17 +99,7 @@ module Gql::Types
     end
 
     def state_color_code
-      return 'escalating' if ticket_is_escalating?
-
-      if %w[new open].include?(state_type_name)
-        'open'
-      elsif state_type_name == 'pending reminder'
-        ticket_is_over_pending_time? ? 'open' : 'pending'
-      elsif state_type_name == 'pending action'
-        'pending'
-      else
-        'closed'
-      end
+      Service::Ticket::StateColorCode.execute(ticket: @object)
     end
 
     def time_units_per_type
@@ -142,21 +132,7 @@ module Gql::Types
     end
 
     def external_references
-      output = {}
-
-      if Setting.get('github_integration')
-        output[:github] = @object.preferences.dig('github', 'issue_links')
-      end
-
-      if Setting.get('gitlab_integration')
-        output[:gitlab] = @object.preferences.dig('gitlab', 'issue_links')
-      end
-
-      if Setting.get('idoit_integration')
-        output[:idoit] = @object.preferences.dig('idoit', 'object_ids')&.map(&:to_i)
-      end
-
-      output.compact_blank.presence
+      Service::Ticket::ExternalReferences::List.execute(ticket: @object)
     end
 
     def ai_summary_enabled
@@ -182,18 +158,6 @@ module Gql::Types
     end
 
     private
-
-    def ticket_is_escalating?
-      @object.escalation_at && @object.escalation_at < Time.zone.now
-    end
-
-    def ticket_is_over_pending_time?
-      @object.pending_time && @object.pending_time < Time.zone.now
-    end
-
-    def state_type_name
-      @state_type_name ||= @object.state.state_type.name
-    end
 
     def time_units_per_type_data
       return [] if !@object.ticket_time_accounting.exists?(['type_id IS NOT NULL'])

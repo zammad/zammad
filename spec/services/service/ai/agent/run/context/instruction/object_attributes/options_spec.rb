@@ -57,6 +57,25 @@ RSpec.describe Service::AI::Agent::Run::Context::Instruction::ObjectAttributes::
       end
     end
 
+    context 'with a select whose options keep the admin\'s order' do
+      let(:object_attribute) do
+        build(:object_manager_attribute_select, data_option: { 'options' => [{ 'name' => 'Key one', 'value' => 'k1' }, { 'name' => 'Key two', 'value' => 'k2' }], 'customsort' => 'on' })
+      end
+
+      it 'lists them by their values, in that order' do
+        expect(options_context.prepare_for_instruction).to eq([{ value: 'k1', label: 'k1' }, { value: 'k2', label: 'k2' }])
+      end
+    end
+
+    context 'with an empty choice of the admin' do
+      let(:object_attribute) { create(:object_manager_attribute_boolean) }
+      let(:filter_values)    { nil }
+
+      it 'lists every option' do
+        expect(options_context.prepare_for_instruction.pluck(:value)).to eq(%w[true false])
+      end
+    end
+
     context 'with boolean options' do
       let(:object_attribute) { create(:object_manager_attribute_boolean) }
 

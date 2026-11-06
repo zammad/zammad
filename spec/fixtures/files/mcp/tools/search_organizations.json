@@ -1,0 +1,116 @@
+{
+  "name": "search_organizations",
+  "title": "Search organizations",
+  "description": "Find organizations of Zammad — the inactive ones included — by words of their name or their domain, as Zammad's search finds them. Each row names the organization's ID, domain, VIP flag and number of members; the other tools take the ID, and get_organization reads an organization in detail. Pass next_cursor as cursor, with the same query, for the next organizations.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Words of a name or a domain, e.g. \"Acme\" or \"acme.example\"."
+      },
+      "limit": {
+        "type": "integer",
+        "description": "How many organizations to list.",
+        "default": 10,
+        "minimum": 1,
+        "maximum": 50
+      },
+      "cursor": {
+        "type": "string",
+        "description": "next_cursor of the previous result, for the next organizations."
+      },
+      "sort_by": {
+        "type": "string",
+        "description": "The field to sort by. Otherwise the active organizations first, the newest created first.",
+        "enum": [
+          "name",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "order_by": {
+        "type": "string",
+        "description": "The direction: asc for the oldest, earliest or A first, desc for the newest, latest or Z first. Otherwise desc.",
+        "enum": [
+          "asc",
+          "desc"
+        ]
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "The words searched for."
+      },
+      "organizations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "Organization"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "description": "Link to the organization in Zammad."
+            },
+            "domain": {
+              "type": "string",
+              "description": "The email domain of its members."
+            },
+            "member_count": {
+              "type": "integer"
+            },
+            "active": {
+              "const": false,
+              "description": "Only where the organization is inactive."
+            },
+            "vip": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "name",
+            "member_count"
+          ]
+        }
+      },
+      "has_more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string",
+        "description": "Pass it as cursor, with the same query, for the next organizations."
+      }
+    },
+    "required": [
+      "query",
+      "organizations",
+      "has_more"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

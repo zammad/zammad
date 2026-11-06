@@ -1,0 +1,121 @@
+{
+  "name": "link_tickets",
+  "title": "Link tickets",
+  "description": "Link two tickets of Zammad, as the ticket view does. Name the ticket that gets the link by its ticket_number, ticket_id or ticket_url, and the other ticket by other_ticket_number, other_ticket_id or other_ticket_url. link says what the other ticket is to the named one, as get_ticket names its links: parent (the parent of this ticket), normal (linked) or child (a child of this ticket). Two tickets are linked once; a link is neither changed nor removed here — the user does that in Zammad.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "other_ticket_number": {
+        "type": "string",
+        "description": "The other ticket: the ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "other_ticket_id": {
+        "type": "integer",
+        "description": "The other ticket: the internal ID of the ticket, e.g. 8812."
+      },
+      "other_ticket_url": {
+        "type": "string",
+        "description": "The other ticket: A link to the ticket in Zammad."
+      },
+      "link": {
+        "type": "string",
+        "description": "What the other ticket is to the named one: parent, normal or child.",
+        "enum": [
+          "parent",
+          "normal",
+          "child"
+        ]
+      }
+    },
+    "required": [
+      "link"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "A link to the ticket in Zammad."
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "url"
+        ],
+        "description": "The ticket that got the link."
+      },
+      "other_ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "A link to the ticket in Zammad."
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "url"
+        ],
+        "description": "The ticket it is linked to."
+      },
+      "link": {
+        "type": "string",
+        "enum": [
+          "parent",
+          "normal",
+          "child"
+        ],
+        "description": "What the other ticket is to the ticket."
+      },
+      "linked_before": {
+        "type": "boolean",
+        "description": "The two were linked already; nothing changed, and link is the kind they have."
+      }
+    },
+    "required": [
+      "ticket",
+      "other_ticket",
+      "link",
+      "linked_before"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": false
+  }
+}

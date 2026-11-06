@@ -9,15 +9,20 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
   let(:limit)     { 3 }
   let(:locale)    { nil }
 
-  def hit(translation, score)
+  # A chunk as the index holds it: the title, a blank line, a part of the text.
+  def hit(translation, score, text = "The text of #{translation.title}.")
     {
       '_score'  => score,
       '_source' => {
         'object_name' => 'KnowledgeBase::Answer::Translation',
         'object_id'   => translation.id.to_s,
-        'content'     => translation.title,
+        'content'     => "#{translation.title}\n\n#{text}",
       },
     }
+  end
+
+  def result(translation, score)
+    { translation:, score:, passage: "The text of #{translation.title}." }
   end
 
   def stub_search(hits)
@@ -55,9 +60,9 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
                   ])
 
       expect(service).to eq([
-                              { translation: answer_1.translations.first, score: 0.98 },
-                              { translation: answer_2.translations.first, score: 0.92 },
-                              { translation: answer_3.translations.first, score: 0.86 },
+                              result(answer_1.translations.first, 0.98),
+                              result(answer_2.translations.first, 0.92),
+                              result(answer_3.translations.first, 0.86),
                             ])
     end
 
@@ -71,15 +76,36 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
         .to eq([answer_1.translations.first])
     end
 
-    it 'deduplicates an answer that matches with multiple chunks, keeping the best score' do
+    it 'deduplicates an answer that matches with multiple chunks, keeping the best score and its passage' do
       translation = answer_1.translations.first
 
       stub_search([
-                    hit(translation, 0.85),
-                    hit(translation, 0.95),
+                    hit(translation, 0.85, 'Remove the account first.'),
+                    hit(translation, 0.95, 'Then add it again.'),
                   ])
 
-      expect(service).to eq([{ translation:, score: 0.95 }])
+      expect(service).to eq([{ translation:, score: 0.95, passage: 'Then add it again.' }])
+    end
+
+    it 'keeps a passage whole when the title in front of it changed since it was indexed' do
+      translation = answer_1.translations.first
+      stub_search([hit(translation, 0.95).deep_merge('_source' => { 'content' => "Old title\n\nRemove the account." })])
+
+      expect(service.first[:passage]).to eq("Old title\n\nRemove the account.")
+    end
+
+    context 'when the caller passes its own floor' do
+      subject(:service) { described_class.with_current_user(user).execute(embedding:, limit:, minimum_score: 0.78) }
+
+      it 'keeps the hits above it, whatever the sidebar\'s setting says' do
+        stub_search([
+                      hit(answer_1.translations.first, 0.81),
+                      hit(answer_2.translations.first, 0.79),
+                      hit(answer_3.translations.first, 0.77),
+                    ])
+
+        expect(service.pluck(:translation)).to eq([answer_1.translations.first, answer_2.translations.first])
+      end
     end
 
     it 'ignores hits below the configured relevance score' do

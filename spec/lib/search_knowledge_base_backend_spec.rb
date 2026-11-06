@@ -59,6 +59,13 @@ RSpec.describe SearchKnowledgeBaseBackend do
             SearchIndexBackend.make_request_and_validate(url, data: { index: { 'highlight.max_analyzed_offset': 1000 } }, method: :put)
           end
 
+          # An index setting outlives the database transaction: left in place, it makes Elasticsearch refuse to
+          #   highlight any longer text in a later example and fail the whole search.
+          after do
+            url = "#{Setting.get('es_url')}/_all/_settings"
+            SearchIndexBackend.make_request_and_validate(url, data: { index: { 'highlight.max_analyzed_offset': nil } }, method: :put)
+          end
+
           let(:attachment) { fixture_file_upload('spec/fixtures/files/upload/lipsum.pdf') }
 
           let :published_answer do
@@ -69,6 +76,55 @@ RSpec.describe SearchKnowledgeBaseBackend do
             expect(instance.search('Suspendisse', user: user)).to be_present
           end
         end
+      end
+    end
+
+    describe '#search without drafts and archived answers' do
+      let(:options) do
+        {
+          knowledge_base:              knowledge_base,
+          locale:                      primary_locale,
+          scope:                       nil,
+          flavor:                      :agent,
+          index:                       'KnowledgeBase::Answer::Translation',
+          include_drafts_and_archived: false,
+        }
+      end
+
+      let(:answers) do
+        %i[draft internal published archived].index_with do |state|
+          create(:knowledge_base_answer, state, category: category, translation_attributes: { title: "Kalimba #{state}" })
+        end
+      end
+
+      before do
+        answers
+        searchindex_model_reload([KnowledgeBase::Answer::Translation])
+      end
+
+      it 'leaves them out in Elasticsearch already, for an editor too', :aggregate_failures do
+        published = answers.values_at(:internal, :published).map { |answer| translation_id(answer) }
+
+        expect(instance.search('kalimba', user:).pluck(:id)).to match_array(published)
+        expect(instance.raw_results('kalimba').pluck(:id)).to match_array(published)
+      end
+
+      it 'looks the readable answers up once per search' do
+        allow(instance).to receive(:translation_ids_for_answers).and_call_original
+
+        instance.search('kalimba', user:)
+
+        expect(instance).to have_received(:translation_ids_for_answers).once
+      end
+
+      it 'finds an answer published since the index took it, as the database says' do
+        answers[:draft].update!(internal_at: 1.minute.ago)
+
+        expect(instance.search('kalimba', user:).pluck(:id)).to include(translation_id(answers[:draft]))
+      end
+
+      it 'refuses a search beyond answers, whose documents the answers would filter out' do
+        expect { described_class.new(options.except(:index)) }.to raise_error(ArgumentError)
       end
     end
 
@@ -257,11 +313,6 @@ RSpec.describe SearchKnowledgeBaseBackend do
 
       # Mentions the term three times, each separated by more than the default fragment_size of 100
       #   characters, so Elasticsearch's default of up to five fragments returns several of them.
-      #
-      # Deliberately kept well under 1000 characters: the 'with big attachment' group above PUTs
-      #   highlight.max_analyzed_offset=1000 onto every index, and an index setting is not rolled
-      #   back with the database transaction. A body longer than that makes Elasticsearch refuse to
-      #   highlight the field and fail the whole request, which reads here as "found nothing".
       let(:long_body_match) do
         create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Percussion upkeep' }).tap do |elem|
           filler = 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam. '
@@ -332,6 +383,15 @@ RSpec.describe SearchKnowledgeBaseBackend do
 
         expect(highlight.first).to eq("#{marked('Kalimba')} & #{marked('castanets')}")
       end
+    end
+  end
+
+  context 'without ES' do
+    it 'looks for the database\'s wildcards as they stand' do
+      create(:knowledge_base_answer, :published, category:, translation_attributes: { title: 'Printer offline' })
+      discount = create(:knowledge_base_answer, :published, category:, translation_attributes: { title: 'A discount of 50% for students' })
+
+      expect(instance.search('%').pluck(:id)).to eq([translation_id(discount)])
     end
   end
 

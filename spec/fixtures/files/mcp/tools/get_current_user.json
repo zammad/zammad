@@ -1,0 +1,125 @@
+{
+  "name": "get_current_user",
+  "title": "Get current user",
+  "description": "Find out whom this connection to Zammad works for: the user, their organization, language and time zone, the groups whose tickets they work with and how, and how much of the knowledge base they may read. Call it when a question depends on who the user is, such as which groups they work in.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "User"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "description": "The user's full name, as the user or an agent wrote it."
+          },
+          "email": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "Link to the user in Zammad."
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "name"
+        ]
+      },
+      "organization": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "Organization"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "Link to the organization in Zammad."
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "name"
+        ]
+      },
+      "locale": {
+        "type": "string",
+        "description": "The user's language, e.g. \"en-us\"."
+      },
+      "time_zone": {
+        "type": "string",
+        "description": "The time zone of the times in the tools' results."
+      },
+      "groups": {
+        "type": "array",
+        "description": "The groups whose tickets the user works with, and how.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The group's name, its levels joined by \" › \", as the group filter of search_tickets takes it."
+            },
+            "access": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "full",
+                  "read",
+                  "create",
+                  "change",
+                  "overview"
+                ]
+              }
+            }
+          },
+          "required": [
+            "name",
+            "access"
+          ]
+        }
+      },
+      "knowledge_base": {
+        "enum": [
+          "editor",
+          "reader",
+          "published"
+        ],
+        "description": "What of the knowledge base the user may read at most: editor every answer, reader the internally and publicly published ones, published the published ones only. Missing where there is no knowledge base."
+      }
+    },
+    "required": [
+      "user",
+      "locale",
+      "time_zone",
+      "groups"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

@@ -1098,6 +1098,17 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.index :identifier, unique: true
     end
 
+    create_table :ai_mcp_confirmations do |t|
+      t.string :request_id, limit: 36, null: false
+      t.string :action_digest, limit: 64, null: false
+      t.datetime :expires_at, limit: 3, null: false
+      t.datetime :consumed_at, limit: 3
+      t.timestamps limit: 3, null: false
+
+      t.index :request_id, unique: true
+      t.index :expires_at
+    end
+
     create_table :recent_closes do |t|
       t.references :recently_closed_object, polymorphic: true, null: false, type: :integer
       t.references :user, null: false, foreign_key: true, type: :integer

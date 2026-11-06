@@ -1,9 +1,3 @@
-<div class="page-header-title">
-  <h1><%- @T('API') %> <small><%- @T('Management') %></small></h1>
-</div>
-
-<div class="page-content">
-
   <div class="page-header-title">
     <div class="zammad-switch zammad-switch--small js-TokenAccess">
        <input name="api_token_access" type="checkbox" id="api_token_access" <% if App.Setting.get('api_token_access'): %>checked<% end %>>
@@ -41,36 +35,19 @@ curl -u <%= @S('email') %>:some_password <%= @C('http_type') %>://<%= @C('fqdn')
 <hr>
 
   <div class="page-header-title">
-    <h2><%- @T('Applications') %> (OAuth Authentication)</h2>
-    &nbsp;
+    <div class="zammad-switch zammad-switch--small js-McpAccess">
+       <input name="api_mcp_access" type="checkbox" id="api_mcp_access" aria-labelledby="api_mcp_access_title" <% if App.Setting.get('api_mcp_access'): %>checked<% end %>>
+       <label for="api_mcp_access"></label>
+    </div>
+    <h2 id="api_mcp_access_title"><%- @T('MCP server') %> (Model Context Protocol)</h2>
   </div>
 
-<p><%- @T('Manage applications that can use Zammad as an OAuth provider and applications that you\'ve authorized to use your account.') %></p>
+<p><%- @T('Enable the MCP server, so that AI clients can use Zammad with personal access tokens.') %> <%- @T('The MCP server works only while token access is enabled.') %></p>
 
-<div class="js-appList"></div>
+<p><%- @T('URL') %>: <code><%= @C('http_type') %>://<%= @C('fqdn') %>/mcp</code></p>
 
-<button class="btn js-appNew"><%- @T('New Application') %></button>
+<p><%- @T('Example:') %></p>
 
-<br>
-<br>
-
-<div>
-  <table class="settings-list" style="width: 100%;">
-    <caption><%- @T('OAuth URLs are:') %></caption>
-    <thead>
-      <tr>
-        <th width="40%"><%- @T('Action') %>
-        <th width="60%"><%- @T('URL') %>
-    </thead>
-    <tbody>
-      <tr>
-        <td><%- @T('Requesting the Grant') %>
-        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/authorize
-      <tr>
-        <td><%- @T('Getting an Access Token') %>
-        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/token
-    </tbody>
-  </table>
-</div>
-
-</div>
+<code>
+claude mcp add --transport http zammad <%= @C('http_type') %>://<%= @C('fqdn') %>/mcp --header "Authorization: Bearer …"
+</code>

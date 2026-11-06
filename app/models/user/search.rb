@@ -7,6 +7,18 @@ class User
     include CanSearch
 
     included do
+      scope :search_sql_query_extension, lambda { |params|
+        query = params[:query]&.delete('*')
+        next if query.blank?
+
+        pattern = "%#{SqlHelper.quote_like(query.to_s.downcase)}%"
+        search_columns = columns.select { |column| column.type == :string && !column.try(:array) }.map(&:name)
+
+        where_or_cis(search_columns, pattern).or(
+          where("LOWER(CONCAT(users.firstname, ' ', users.lastname)) LIKE :pattern OR LOWER(CONCAT(users.lastname, ' ', users.firstname)) LIKE :pattern", pattern:)
+        )
+      }
+
       scope :search_sql_extension, lambda { |params|
         statement = all
 

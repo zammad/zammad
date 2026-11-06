@@ -1,0 +1,105 @@
+{
+  "name": "link_knowledge_base_answer",
+  "title": "Link knowledge base answer",
+  "description": "Link a knowledge base answer to a ticket of Zammad, as the ticket view does. Name the ticket by its ticket_number, ticket_id or ticket_url, and the answer by its answer_id, as a knowledge base search found it, with the locale of its text where the search named one. get_ticket then lists the answer as linked. A link is neither changed nor removed here — the user does that in Zammad.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "answer_id": {
+        "type": "integer",
+        "description": "The ID of the knowledge base answer."
+      },
+      "locale": {
+        "type": "string",
+        "description": "The locale whose text to link, e.g. \"de-de\", as a search named it: a preference. Where the answer has no text in it, its text in the agent's locale, else in the primary one is linked; answer.locale in the result says which. Leave it out for the agent's own."
+      }
+    },
+    "required": [
+      "answer_id"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "A link to the ticket in Zammad."
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "url"
+        ],
+        "description": "The ticket that got the link."
+      },
+      "answer": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "KnowledgeBase::Answer"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "Link to the answer in Zammad."
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "title",
+          "locale"
+        ],
+        "description": "The answer, in the locale of the text linked."
+      },
+      "linked_before": {
+        "type": "boolean",
+        "description": "The two were linked already; nothing changed."
+      }
+    },
+    "required": [
+      "ticket",
+      "answer",
+      "linked_before"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": false
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "get_knowledge_base_answer",
+  "title": "Get knowledge base answer",
+  "description": "Read one knowledge base answer of Zammad in full, by its ID: one a knowledge base search found, or one get_ticket lists as linked to a ticket. In the locale asked for, else in the user's, else in the knowledge base's primary one.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "answer_id": {
+        "type": "integer",
+        "description": "The ID of the knowledge base answer."
+      },
+      "locale": {
+        "type": "string",
+        "description": "The locale of its text, e.g. \"de-de\", as a search or the ticket named it. Leave it out for the agent's own."
+      }
+    },
+    "required": [
+      "answer_id"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "answer": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "KnowledgeBase::Answer"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "Link to the answer in Zammad."
+          },
+          "visibility": {
+            "enum": [
+              "public",
+              "internal",
+              "draft",
+              "archived"
+            ],
+            "description": "public: customers may read the answer too."
+          },
+          "edited_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "text": {
+            "type": "string",
+            "description": "The answer's text, as the knowledge base's editors wrote it."
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "part": {
+            "enum": [
+              "passage",
+              "start"
+            ],
+            "description": "Which part of a cut text is shown: the passage that matched, or the start."
+          },
+          "full_length": {
+            "type": "integer",
+            "description": "The length of a cut text in full, in characters."
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "title",
+          "locale",
+          "visibility",
+          "text",
+          "truncated"
+        ]
+      }
+    },
+    "required": [
+      "answer"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

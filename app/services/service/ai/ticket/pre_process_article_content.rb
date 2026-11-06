@@ -5,11 +5,16 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   MARKER_START     = "[OCR_TEXT_START]\n".freeze
   MARKER_END       = "\n[OCR_TEXT_END]".freeze
 
-  attr_reader :articles, :skip_quotes_strip_first_article, :link_style
+  attr_reader :articles, :skip_quotes_strip_first_article, :keep_quotes, :skip_ocr, :link_style
 
-  def initialize(articles:, skip_quotes_strip_first_article: false, link_style: :markdown)
+  # @param skip_ocr [Boolean] no OCR even when an OCR connection is configured, for callers that must not start
+  #   an AI call per image
+  # @param keep_quotes [Boolean] keeps the quotes and signatures of every email, for callers that read a message whole
+  def initialize(articles:, skip_quotes_strip_first_article: false, keep_quotes: false, skip_ocr: false, link_style: :markdown)
     @articles                        = articles
     @skip_quotes_strip_first_article = skip_quotes_strip_first_article
+    @keep_quotes                     = keep_quotes
+    @skip_ocr                        = skip_ocr
     @link_style                      = link_style
   end
 
@@ -26,7 +31,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   def use_ocr
     return @use_ocr if defined?(@use_ocr)
 
-    @use_ocr = AI::ProviderConnection.for_ocr.present?
+    @use_ocr = !skip_ocr && AI::ProviderConnection.for_ocr.present?
   end
 
   def non_plain_article?(article)
@@ -57,7 +62,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
         sender_name:       article.author.fullname,
         created_at:        article.created_at,
         visibility:        article.internal ? 'internal' : 'public',
-        text:,
+        text:              AI::HiddenText.remove_characters(text),
         inline_images:,
         image_attachments:,
       }.compact
@@ -101,9 +106,10 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
     (attachment.preferences['Content-ID'] || attachment.preferences['Content-Id'])&.gsub(%r{[<>]}, '')
   end
 
+  # Text the agent cannot see goes before the HTML becomes plain text, where it would read like any other line.
   def strip_html_and_maybe_remove_quotes(text, article)
-    text_for_quote_removal = non_plain_article?(article) ? text.html2text(link_style:) : text
-    if article.type == Ticket::Article::Type.lookup(name: 'email') && (!skip_quotes_strip_first_article || article.id != first_article_id)
+    text_for_quote_removal = non_plain_article?(article) ? AI::HiddenText.remove_from_html(text).html2text(link_style:) : text
+    if !keep_quotes && article.type == Ticket::Article::Type.lookup(name: 'email') && (!skip_quotes_strip_first_article || article.id != first_article_id)
       Text::QuoteRemover
         .new(text: text_for_quote_removal, remove_signatures: true)
         .remove

@@ -1,0 +1,141 @@
+{
+  "name": "search_users",
+  "title": "Search users",
+  "description": "Find users of Zammad — customers and agents, the inactive ones included — by words of their name, an email, a login or a phone number, as Zammad's search finds them. Each row names the user's ID, email, phone, mobile and organization, so that two people of the same name can be told apart; the other tools take the ID or the email, and get_user reads a user in detail. Pass next_cursor as cursor, with the same query, for the next users.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Words of a name, an email, a login or a phone number, e.g. \"Huber\" or \"+49 30 123456\"."
+      },
+      "limit": {
+        "type": "integer",
+        "description": "How many users to list.",
+        "default": 10,
+        "minimum": 1,
+        "maximum": 50
+      },
+      "cursor": {
+        "type": "string",
+        "description": "next_cursor of the previous result, for the next users."
+      },
+      "sort_by": {
+        "type": "string",
+        "description": "The field to sort by. Otherwise the active users first, the newest created first.",
+        "enum": [
+          "lastname",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "order_by": {
+        "type": "string",
+        "description": "The direction: asc for the oldest, earliest or A first, desc for the newest, latest or Z first. Otherwise desc.",
+        "enum": [
+          "asc",
+          "desc"
+        ]
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "The words searched for."
+      },
+      "users": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "User"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string",
+              "description": "The user's full name, as the user or an agent wrote it."
+            },
+            "email": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "description": "Link to the user in Zammad."
+            },
+            "phone": {
+              "type": "string"
+            },
+            "mobile": {
+              "type": "string"
+            },
+            "organization": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "const": "Organization"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Link to the organization in Zammad."
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "name"
+              ]
+            },
+            "vip": {
+              "type": "boolean"
+            },
+            "active": {
+              "const": false,
+              "description": "Only where the user is inactive."
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "name"
+          ]
+        }
+      },
+      "has_more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string",
+        "description": "Pass it as cursor, with the same query, for the next users."
+      }
+    },
+    "required": [
+      "query",
+      "users",
+      "has_more"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  }
+}

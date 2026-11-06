@@ -128,4 +128,15 @@ module UserInfo
   ensure
     self.current_user_id = old_user_id
   end
+
+  # The token narrows the permissions of its user for the block, as in a request it authenticated (User#permissions?).
+  def self.with_token(token)
+    old_token = current_token
+
+    self.current_token = token
+
+    yield
+  ensure
+    self.current_token = old_token
+  end
 end

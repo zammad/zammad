@@ -436,6 +436,35 @@ RSpec.describe 'Settings', type: :request do
     end
   end
 
+  describe 'MCP server switch' do
+    let(:setting) { Setting.find_by(name: 'api_mcp_access') }
+    let(:admin_branding) do
+      role = create(:role)
+      role.permission_grant('admin.branding')
+
+      create(:admin_only, roles: [role])
+    end
+
+    def switch_on
+      put "/api/v1/settings/#{setting.id}", params: { state_current: { value: true } }, as: :json
+    end
+
+    it 'is changed with the API permission', authenticated_as: :admin_api do
+      expect { switch_on }.to change { Setting.get('api_mcp_access') }.from(false).to(true)
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'is not changed with another admin permission', authenticated_as: :admin_branding do
+      expect { switch_on }.not_to change { Setting.get('api_mcp_access') }
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'is not changed by an agent', authenticated_as: :agent do
+      expect { switch_on }.not_to change { Setting.get('api_mcp_access') }
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
   describe 'vector index rebuild response', authenticated_as: :admin, performs_jobs: true do
     let(:connection) do
       create(:ai_provider_connection, :default_embedding, provider: 'open_ai',

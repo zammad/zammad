@@ -22,93 +22,30 @@ class FormUpdater::CoreWorkflow::Options < FormUpdater::CoreWorkflow::Backend
     end
   end
 
+  # The options Core Workflow allows, as the field layer lists them. A value it allows that the list lacks — an option
+  #   the admin removed, or one set over the API — stays on the field, so the form keeps it as it is.
   def set_options(name, values, all_options, historical_options)
-    # Currently we implemented a special handling for the historical options, because we need to detect if we have
-    # one option inside the given options from core workflow, so that the frontend can add this option for
-    # the current value from the field.
-    # This happens when the value from the field is no longer present in the current configured options from the
-    # object manager attribute.
-    options = if all_options.instance_of?(Hash)
-                options_hash(name, values, all_options, historical_options)
-              else
-                # Remember which option values are touched inside the recursive options build function, so that
-                #  we can check if we have a untouched option inside the option values.
-                # Then we need to add the historical options inside the frontend field to the options.
-                touched_values_count = 0
+    options = field_types[name]&.option_list(allowed: values)
+    return if options.nil?
 
-                result_options_array = options_array(values, all_options, historical_options, touched_values_count)
+    tree    = all_options.is_a?(Array)
+    options = options.sort_by { |option| values.index(option.value) } if !tree
+    result[name][:options] = FormUpdater::OptionList.form_options(options, tree:)
 
-                if touched_values_count < values.length
-                  uncheck_reject_non_existent_values(name)
-                end
-
-                result_options_array
-              end
-
-    result[name][:options] = options
+    keep_unlisted_values(name, values, options, historical_options.to_h.stringify_keys, tree:)
   end
 
-  def options_hash(name, values, all_options, historical_options)
-    all_options = all_options.stringify_keys
-    historical_options = historical_options.to_h.stringify_keys
+  def keep_unlisted_values(name, values, options, historical_options, tree:)
+    # A tree has always kept the field's value, listed or not.
+    return uncheck_reject_non_existent_values(name) if tree && values.any?
 
-    values.each_with_object([]) do |value, options|
-      next if value.empty?
+    listed = Service::EntityAttribute::Option.flatten(options).map(&:value)
 
-      label = option_hash_label(name, value, all_options, historical_options)
+    values.each do |value|
+      next if value.empty? || listed.include?(value)
 
-      next if label.blank?
-
-      options << {
-        value: value,
-        label: label,
-      }
+      uncheck_reject_non_existent_values(name) if historical_options[value].present? || object_current_value?(name, value)
     end
-  end
-
-  def options_array(values, all_options, historical_options, touched_values_count)
-    all_options.each_with_object([]) do |option, options|
-      children = []
-      if option['children'].present?
-        children = options_array(values, option['children'], historical_options, touched_values_count)
-      end
-
-      value_exists = values.include?(option['value'])
-
-      next if children.blank? && !value_exists
-
-      touched_values_count += 1
-
-      options << option_array_resolved(option['name'], option['value'], !value_exists, children)
-    end
-  end
-
-  def option_array_resolved(label, value, disabled, children)
-    resolved_option = {
-      value:    value,
-      label:    label,
-      disabled: disabled,
-    }
-
-    if children.any?
-      resolved_option[:children] = children
-    end
-
-    resolved_option
-  end
-
-  def option_hash_label(name, value, all_options, historical_options)
-    return all_options[value] if all_options[value].present?
-
-    # When the not existing option is inside the historical options or is the current value of the object we need to add the
-    # option inside the frontend field.
-    # The situations can happen, when options are removed in the object attribute configuration or when unknown values are
-    # used from API level (or other special situations).
-    if historical_options[value].present? || object_current_value?(name, value)
-      uncheck_reject_non_existent_values(name)
-    end
-
-    nil
   end
 
   def object_current_value?(name, value)
