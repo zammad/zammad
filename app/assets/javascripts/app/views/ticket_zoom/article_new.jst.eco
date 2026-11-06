@@ -14,8 +14,8 @@
   <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>
-    <div class="editControls-item is-hidden pop-select">
-      <% if @articleTypes.length > 1: %>
+    <% if @articleTypes.length > 1: %>
+      <div class="editControls-item is-hidden pop-select">
         <div class="editControls-iconHolder centered js-selectedArticleType">
           <% for articleType in @articleTypes: %>
           <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
@@ -30,8 +30,8 @@
           </div>
           <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
     <% if @internalSelector: %>
     <div class="editControls-item is-hidden js-toggleVisibility js-selectInternalPublic">
       <div class="editControls-iconHolder">
