@@ -8,7 +8,7 @@ minimumReleaseAgeExclude:
   - '@vitest/spy@5.0.0'
   - vitest@5.0.0
 overrides:
-  '@sa11y/vitest>vitest': ^5.0.5
+  '@sa11y/vitest>vitest': ^5.1.0
   'lightningcss': ^1.33.0
 permissions:
   fallow:
