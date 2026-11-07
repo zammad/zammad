@@ -183,8 +183,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       '@formkit/drag-and-drop':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.6.2
+        version: 0.6.3
       '@formkit/i18n':
         specifier: ^2.1.2
         version: 2.1.2
@@ -1392,8 +1392,8 @@ packages:
   '@formkit/dev@2.1.2':
     resolution: {integrity: sha512-cYFyx6zcOoQ8wzxQlsk2QFkHmDzPp+JJmuDopyvNvHl3fd9fgsgMHbLElk55IstEHXCCQJqFS17lN+Q9a88bkQ==}
 
-  '@formkit/drag-and-drop@0.6.1':
-    resolution: {integrity: sha512-DNKoPqdg9RW7k0zZlF2FH636Cc16V3tuGDVKWNHpSXr3amF4nmQZfieoLNVRxqWxXVFJq2DY+vf8SCD10JyjAA==}
+  '@formkit/drag-and-drop@0.6.3':
+    resolution: {integrity: sha512-vFrYuFSGkE6enocW4+8OxlA8bUAnccESqqSlMEig2Uxx2gWC98BCGwZ5j9coWbNkUVJXpuCot1RmNLNLApVQJA==}
     peerDependencies:
       '@marko/runtime-tags': '>=6.0.166'
     peerDependenciesMeta:
@@ -7789,7 +7789,7 @@ snapshots:
       '@formkit/core': 2.1.2
       '@formkit/utils': 2.1.2
 
-  '@formkit/drag-and-drop@0.6.1': {}
+  '@formkit/drag-and-drop@0.6.3': {}
 
   '@formkit/i18n@2.1.2':
     dependencies:
