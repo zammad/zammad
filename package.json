@@ -127,7 +127,7 @@
     "@formkit/utils": "^2.1.2",
     "@formkit/validation": "^2.1.2",
     "@formkit/vue": "^2.1.2",
-    "@rails/actioncable": "~8.1.400",
+    "@rails/actioncable": "~8.1.401",
     "@tiptap/core": "3.32.2",
     "@tiptap/extension-blockquote": "3.32.2",
     "@tiptap/extension-character-count": "3.32.2",

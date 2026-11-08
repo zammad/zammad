@@ -207,8 +207,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2(vue@3.5.43(typescript@6.0.3))
       '@rails/actioncable':
-        specifier: ~8.1.400
-        version: 8.1.400
+        specifier: ~8.1.401
+        version: 8.1.401
       '@tiptap/core':
         specifier: 3.32.2
         version: 3.32.2(@tiptap/pm@3.32.2)
@@ -2172,8 +2172,8 @@ packages:
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
-  '@rails/actioncable@8.1.400':
-    resolution: {integrity: sha512-Qffc3/I9xcpeaal12hmi9EPRV3hz9FvakUHBR7kL0jpZviWwO9dyaG8F1ltcjkHIdFxQ5QqzRyequAWHMq17xQ==}
+  '@rails/actioncable@8.1.401':
+    resolution: {integrity: sha512-eZdEy9UmnsaeDHr5G5nFhdgsaMo9EZVq2JMAjqtNmVDqnKWHwvTMt0Ah1CWBf7g7BDLR3WCDgHS2aOhbpjqkWw==}
 
   '@repeaterjs/repeater@3.1.0':
     resolution: {integrity: sha512-TaoVksZRSx2KWYYpyLQtMQXXeS98VsgZImzW65xmiVgbYhXLk+aEsmzPLirqVuE4/XuUapH2iMtxUzaBNDzdSQ==}
@@ -8607,7 +8607,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
-  '@rails/actioncable@8.1.400': {}
+  '@rails/actioncable@8.1.401': {}
 
   '@repeaterjs/repeater@3.1.0': {}
 
