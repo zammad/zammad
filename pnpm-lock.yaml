@@ -183,7 +183,7 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       '@formkit/drag-and-drop':
-        specifier: ^0.6.2
+        specifier: ^0.6.3
         version: 0.6.3
       '@formkit/i18n':
         specifier: ^2.1.2
