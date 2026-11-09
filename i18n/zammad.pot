@@ -1593,7 +1593,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:182
-#: app/models/user.rb:807
+#: app/models/user.rb:809
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1831,7 +1831,7 @@ msgstr ""
 msgid "An unknown error occurred"
 msgstr ""
 
-#: lib/calendar_subscriptions.rb:31
+#: lib/calendar_subscriptions.rb:33
 msgid "An unknown method name was requested."
 msgstr ""
 
@@ -2273,7 +2273,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:709
+#: app/models/user.rb:711
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2290,7 +2290,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:159
-#: app/models/user.rb:786
+#: app/models/user.rb:788
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -3244,7 +3244,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:14
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:126
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:133
 msgid "Change Customer"
 msgstr ""
 
@@ -6869,7 +6869,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:719
+#: app/models/user.rb:721
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -8923,7 +8923,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:8
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:115
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:122
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:63
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
@@ -9713,7 +9713,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:658
+#: app/models/user.rb:660
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10691,7 +10691,7 @@ msgstr ""
 msgid "Lost network connection"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:365
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:370
 msgid "Lost network connection!"
 msgstr ""
 
@@ -11243,7 +11243,7 @@ msgid "Mention user"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:121
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:128
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 msgid "Merge"
@@ -11521,7 +11521,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:738
+#: app/models/user.rb:740
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -15325,7 +15325,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:288
+#: app/controllers/sessions_controller.rb:289
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -15783,11 +15783,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:726
+#: app/models/user.rb:728
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:732
+#: app/models/user.rb:734
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -17691,8 +17691,8 @@ msgstr ""
 msgid "The 'logout_token' is invalid."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:23
-#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:26
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:22
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:25
 msgid "The 24 hour customer service window is now closed, no further WhatsApp messages can be sent."
 msgstr ""
 
@@ -19031,7 +19031,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:273
+#: app/controllers/sessions_controller.rb:274
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr ""
@@ -19752,7 +19752,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:12
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:6
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:6
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:23
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:25
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:14
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/signature.coffee:15
@@ -20627,7 +20627,7 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:368
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:373
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr ""
@@ -21484,7 +21484,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:171
+#: app/controllers/sessions_controller.rb:172
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr ""
@@ -22392,8 +22392,8 @@ msgstr ""
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:29
-#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:35
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:28
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:34
 msgid "You have a 24 hour window to send WhatsApp messages in this conversation. The customer service window closes %s."
 msgstr ""
 
@@ -23567,7 +23567,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:925
+#: app/models/user.rb:927
 msgid "is too long"
 msgstr ""
 
