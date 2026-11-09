@@ -62,22 +62,6 @@ small methods are preferred over explanation.
   is publicly mirrored, and the comment points at the vulnerable code in
   installations that are not updated yet.
 
-### UI Principles
-
-- Icon-only buttons need `v-tooltip` supplying the accessible name.
-- Hover/focus-only visible actions need to display on touch fallback
-- Responsive grids should adapt to their container
-- Translatable strings: use complete, meaningful source strings,
-  sentence case for English source strings, and check for existing
-  near-duplicate strings before adding new ones.
-- Red marks the point of no return: `danger` and `remove` stay only on
-  controls that act immediately. A trigger that only opens a confirmation
-  dialog or a confirming flyout is not red: a button becomes `tertiary`
-  with an icon naming the action (`trash3` for delete and discard,
-  `arrow-counterclockwise` for reset), a menu item carries no variant, a
-  `remove` icon button keeps its icon and takes the variant UX names per
-  place. The decisive button in the dialog or flyout is `danger`.
-
 ## Essential Commands
 
 ### Backend
@@ -101,31 +85,24 @@ pnpm generate-setting-types                       # Regenerate Config types afte
 
 ### Development stack
 
-A browser-clickable instance for this checkout. Start it via `bin/dev` rather
-than `forego` directly, and wait for it to answer before using it.
+A browser-clickable instance for this checkout: `RAILS_ENV=development bundle
+exec rake db:create zammad:bootstrap:reset` once per checkout, then `bin/dev`
+(not `forego` directly; it does not exit, so run it in the background, and
+wait for it to answer before using it). Serves on `localhost:3000`, websocket
+on `6042`, Vite on `3036` — move them via `ZAMMAD_RAILS_PORT`,
+`ZAMMAD_WEBSOCKET_PORT`, `VITE_RUBY_PORT` exported (not per-process) before
+`bin/dev`.
 
-```bash
-RAILS_ENV=development bundle exec rake db:create zammad:bootstrap:reset  # once per checkout
-bin/dev                                                                  # does not exit; run it in the background
-```
-
-It serves on `localhost:3000`, with the websocket server on `6042` and Vite on
-`3036`. Export `ZAMMAD_RAILS_PORT`, `ZAMMAD_WEBSOCKET_PORT` and
-`VITE_RUBY_PORT` before `bin/dev` to move them — the whole stack has to agree
-on them, so export, do not set them per process.
-The `with-caddy` devcontainer variant additionally serves the whole stack on
-`localhost:8080` through a reverse proxy, for TLS tunnels; see its README.
-
-`zammad:bootstrap:reset` migrates, seeds and runs the auto wizard, which creates
-`admin@example.com` / `test`. Plain `zammad:db:init` skips the wizard and leaves
-the browser on the getting-started screen. Never run `zammad:bootstrap:init` or
+`zammad:bootstrap:reset` seeds and runs the auto wizard (`admin@example.com` /
+`test`); `zammad:db:init` skips it. Never run `zammad:bootstrap:init` or
 `zammad:setup:db_config`: they overwrite `config/database.yml` and prompt on
-stdin, which hangs a non-interactive session.
+stdin, hanging a non-interactive session.
 
-The test suite uses its own ports (`3001` and `6043`) and its own database, so
-it can run while the stack is up. Several checkouts, however, share the
-development database and Redis — only one stack per machine unless
-`DATABASE_URL` and `REDIS_URL` say otherwise.
+The test suite runs on its own ports (see `.dev/agent_docs/testing.md`) and
+database, so it can run while this stack is up. Several checkouts share the
+development database and Redis, so only one stack per machine unless
+`DATABASE_URL`/`REDIS_URL` say otherwise.
+See the `dev-stack` skill for devcontainer/TLS-tunnel details.
 
 ## Development Lifecycle
 
@@ -150,7 +127,7 @@ You MUST read the relevant file(s) below before responding when working on that 
 - `.dev/agent_docs/graphql_patterns.md` — How to add/modify GraphQL types,
   mutations, queries, and subscriptions
 - `.dev/agent_docs/frontend_patterns.md` — Vue component conventions,
-  composables, routing, and the form system
+  composables, routing, the form system, and UI principles
 - `.dev/agent_docs/frontend_addon_layer.md` — How an addon extends the Vue
   frontend via the build-time weave (Vapor-safe, multi-addon)
 - `.dev/agent_docs/legacy_model_patterns.md` — Concerns needed by new models
