@@ -4,8 +4,8 @@
 import { computed, toRef, watch } from 'vue'
 
 import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
-import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
-import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import EntityAttributeContent from '#shared/components/EntityAttributes/EntityAttribute.vue'
+import type { EntityAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import type { TicketByList } from '#shared/entities/ticket/types.ts'
 import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
@@ -124,7 +124,7 @@ const skeletonColumns = computed(() => columnWidths.value.length)
         :has-bulk-action="bulkEditActive"
         :disable-bulk-action="isBulkTaskRunning"
         :caption="caption"
-        :object="EnumObjectManagerObjects.Ticket"
+        :entity="EnumObjectManagerObjects.Ticket"
         :headers="headers"
         :disable-relation-sorting="disableRelationSorting"
         :order-by="orderBy"
@@ -227,9 +227,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
                 'text-contrast!': isRowSelected,
               }"
             >
-              <ObjectAttributeContent
+              <EntityAttributeContent
                 mode="table"
-                :attribute="attribute as unknown as ObjectAttribute"
+                :attribute="attribute as unknown as EntityAttribute"
                 :object="item"
               />
             </CommonLabel>
@@ -257,9 +257,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
             @keydown.stop
           >
             <span class="block truncate">
-              <ObjectAttributeContent
+              <EntityAttributeContent
                 mode="table"
-                :attribute="attribute as unknown as ObjectAttribute"
+                :attribute="attribute as unknown as EntityAttribute"
                 :object="item"
               />
             </span>
@@ -278,9 +278,9 @@ const skeletonColumns = computed(() => columnWidths.value.length)
                 'text-contrast!': isRowSelected,
               }"
             >
-              <ObjectAttributeContent
+              <EntityAttributeContent
                 mode="table"
-                :attribute="attribute as unknown as ObjectAttribute"
+                :attribute="attribute as unknown as EntityAttribute"
                 :object="item"
               />
             </CommonLabel>

@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import EntityAttributeContent from '#shared/components/EntityAttributes/EntityAttribute.vue'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
@@ -16,14 +16,14 @@ interface Props {
 
 defineProps<Props>()
 
-const { attributesLookup } = useObjectAttributes(EnumObjectManagerObjects.TicketArticle)
+const { attributesLookup } = useEntityAttributes(EnumObjectManagerObjects.TicketArticle)
 
 const detectedLanguageAttribute = computed(() => attributesLookup.value.get('detected_language'))
 </script>
 
 <template>
   <CommonLabel class="text-contrast!">
-    <ObjectAttributeContent
+    <EntityAttributeContent
       v-if="detectedLanguageAttribute"
       :attribute="detectedLanguageAttribute"
       :object="context.article"

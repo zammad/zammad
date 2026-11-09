@@ -3,7 +3,7 @@
 import FormUpdaterUser from '#tests/graphql/factories/types/FormUpdaterUser.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
-import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import type { CallerLogEntry, CallerLogMatch, RingingCall } from '../../types.ts'

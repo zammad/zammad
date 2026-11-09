@@ -134,7 +134,7 @@ const syncFiltersFromRoute = () => {
 //   below are created, so a deep link's first request already carries its filters.
 syncFiltersFromRoute()
 
-// On a fresh deep-link the object-attribute schema may still be loading, so
+// On a fresh deep-link the entity attributes may still be loading, so
 // the setup-time decode above ran against an incomplete schema — re-sync once
 // it's ready. Later reactivations already see a populated schema.
 const initialQueryEntity = routeEntity()

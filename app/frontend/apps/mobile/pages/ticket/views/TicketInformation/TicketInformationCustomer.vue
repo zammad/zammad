@@ -4,7 +4,7 @@
 import { watchEffect, computed } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
 import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
@@ -41,7 +41,7 @@ const {
   user,
   loading,
   loadingWithoutCachedResult,
-  objectAttributes,
+  entityAttributes,
   secondaryOrganizations,
   fetchMoreSecondaryOrganizations,
 } = useUserDetail(customerId, 3, 100, errorCallback)
@@ -77,8 +77,8 @@ const ticketsData = computed(() => getTicketData(user.value))
       </div>
     </CommonLoader>
     <div v-if="user">
-      <ObjectAttributes
-        :attributes="objectAttributes"
+      <EntityAttributes
+        :attributes="entityAttributes"
         :object="user"
         :skip-attributes="['firstname', 'lastname', 'organization_ids']"
         :always-show-after-fields="user.policy.update"
@@ -93,7 +93,7 @@ const ticketsData = computed(() => getTicketData(user.value))
             {{ $t('Edit Customer') }}
           </CommonButton>
         </template>
-      </ObjectAttributes>
+      </EntityAttributes>
       <CommonOrganizationsList
         :organizations="secondaryOrganizations.array"
         :total-count="secondaryOrganizations.totalCount"

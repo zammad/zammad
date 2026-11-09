@@ -10,7 +10,7 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
 import { autofocusFormField } from '#shared/components/Form/utils.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'

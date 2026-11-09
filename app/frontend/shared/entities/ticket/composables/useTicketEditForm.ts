@@ -158,7 +158,7 @@ export const useTicketEditForm = (
       },
       {
         screen: 'edit',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
     ],
   }
@@ -309,7 +309,7 @@ export const useTicketEditForm = (
     {
       name: 'body',
       screen: 'edit',
-      object: EnumObjectManagerObjects.TicketArticle,
+      entity: EnumObjectManagerObjects.TicketArticle,
       validation: articleTypeFieldProps.body.validation,
       props: {
         ticketId: computed(() => ticket.value?.internalId),

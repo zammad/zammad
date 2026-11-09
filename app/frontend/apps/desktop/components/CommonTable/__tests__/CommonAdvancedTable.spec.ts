@@ -10,7 +10,7 @@ import { type ExtendedMountingOptions, renderComponent } from '#tests/support/co
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumObjectManagerObjects, EnumOrderDirection } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
@@ -87,7 +87,7 @@ const renderTable = async (
     store: true,
     ...options,
     props: {
-      object: EnumObjectManagerObjects.Ticket,
+      entity: EnumObjectManagerObjects.Ticket,
       ...props,
     },
   })

@@ -5,8 +5,8 @@ import { computed, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/types.ts'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useOrganizationObjectAttributesStore } from '#shared/entities/organization/stores/objectAttributes.ts'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
+import { useOrganizationEntityAttributesStore } from '#shared/entities/organization/stores/entityAttributes.ts'
 import type { Organization } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
@@ -42,7 +42,7 @@ const loading = organizationInfoForPopoverQuery.loadingWithoutCachedResult()
 
 const organizationMembers = computed(() => normalizeEdges(organization.value?.allMembers) || [])
 
-const viewScreenAttributes = toRef(useOrganizationObjectAttributesStore(), 'viewScreenAttributes')
+const viewScreenAttributes = toRef(useOrganizationEntityAttributesStore(), 'viewScreenAttributes')
 
 const router = useRouter()
 
@@ -63,7 +63,7 @@ const goToOrganizationProfile = () => {
       <div v-if="organization" class="space-y-2">
         <OrganizationInfo :organization="organization" no-link />
 
-        <ObjectAttributes
+        <EntityAttributes
           :class="{
             'border-b border-neutral-100 pb-2.5 dark:border-gray-900':
               organizationMembers?.totalCount,

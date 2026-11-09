@@ -13,7 +13,7 @@ import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import { useOrganizationQuery } from '../graphql/queries/organization.api.ts'
 import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
-import { useOrganizationObjectAttributesStore } from '../stores/objectAttributes.ts'
+import { useOrganizationEntityAttributesStore } from '../stores/entityAttributes.ts'
 
 import type { WatchQueryFetchPolicy } from '@apollo/client'
 
@@ -81,7 +81,7 @@ export const useOrganizationDetail = (
     })
   }
 
-  const viewScreenAttributes = toRef(useOrganizationObjectAttributesStore(), 'viewScreenAttributes')
+  const viewScreenAttributes = toRef(useOrganizationEntityAttributesStore(), 'viewScreenAttributes')
 
   const allOrganizationMembers = computed(
     () => normalizeEdges(organization.value?.allMembers) || [],
@@ -107,7 +107,7 @@ export const useOrganizationDetail = (
     loadingWithoutCachedResult,
     organizationQuery,
     organization,
-    objectAttributes: viewScreenAttributes,
+    entityAttributes: viewScreenAttributes,
     organizationMembers,
     fetchMoreMembers,
   }

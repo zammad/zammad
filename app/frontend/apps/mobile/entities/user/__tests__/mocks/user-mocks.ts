@@ -5,7 +5,7 @@ import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
 import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
 import type { UserQuery } from '#shared/graphql/types.ts'

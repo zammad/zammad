@@ -22,9 +22,9 @@ import {
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { useObjectAttributeFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeFormFields.ts'
-import { useObjectAttributeLoadFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields.ts'
-import { flattenObjectAttributeValues } from '#shared/entities/object-attributes/utils.ts'
+import { useEntityAttributeFormFields } from '#shared/entities/core/attributes/composables/useEntityAttributeFormFields.ts'
+import { useEntityAttributeLoadFormFields } from '#shared/entities/core/attributes/composables/useEntityAttributeLoadFormFields.ts'
+import { flattenObjectAttributeValues } from '#shared/entities/core/attributes/utils.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { extractEntityIds } from '#shared/form/utils/entity.ts'
 import type {
@@ -123,9 +123,9 @@ export interface Props {
   disabled?: boolean
   shouldAutofocus?: boolean
 
-  // Some special properties for working with object attribute fields inside of a form schema.
-  useObjectAttributes?: boolean
-  objectAttributeSkippedFields?: string[]
+  // Some special properties for working with entity attribute fields inside of a form schema.
+  useEntityAttributes?: boolean
+  entityAttributeSkippedFields?: string[]
 
   clearValuesAfterSubmit?: boolean
 
@@ -154,7 +154,7 @@ const props = withDefaults(defineProps<Props>(), {
     return reactive({})
   },
   validationVisibility: FormValidationVisibility.Submit,
-  useObjectAttributes: false,
+  useEntityAttributes: false,
 })
 
 const formId = props.formId ? props.formId : getUuid()
@@ -1133,7 +1133,7 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
 }
 
 const buildStaticSchema = () => {
-  const { getFormFieldSchema, getFormFieldsFromScreen } = useObjectAttributeFormFields(
+  const { getFormFieldSchema, getFormFieldsFromScreen } = useEntityAttributeFormFields(
     fixedAndSkippedFields,
     props.initialEntityObject?.policy,
   )
@@ -1217,11 +1217,11 @@ const buildStaticSchema = () => {
       }
     }
 
-    if ('object' in node && getFormFieldSchema && getFormFieldsFromScreen) {
+    if ('entity' in node && getFormFieldSchema && getFormFieldsFromScreen) {
       if ('name' in node && node.name && !node.type) {
-        const { screen, object, ...fieldNode } = node
+        const { screen, entity, ...fieldNode } = node
 
-        const resolvedField = getFormFieldSchema(fieldNode.name, object, screen)
+        const resolvedField = getFormFieldSchema(fieldNode.name, entity, screen)
 
         if (!resolvedField) return null
 
@@ -1230,7 +1230,7 @@ const buildStaticSchema = () => {
           ...fieldNode,
         } as FormSchemaField
       } else if ('screen' in node && !('name' in node)) {
-        const resolvedFields = getFormFieldsFromScreen(node.screen, node.object)
+        const resolvedFields = getFormFieldsFromScreen(node.screen, node.entity)
         const formKitFields: ResolveFormKitSchemaNode[] = []
         resolvedFields.forEach((screenField) => {
           updateSchemaDataField(screenField)
@@ -1449,48 +1449,48 @@ const initializeFormSchema = () => {
 if (props.schema) {
   showInitialLoadingAnimation.value = true
 
-  if (props.useObjectAttributes) {
-    // TODO: rebuild schema, when object attributes
+  if (props.useEntityAttributes) {
+    // TODO: rebuild schema, when entity attributes
     // was changed from outside(not such important,
     // because we have currently the reload solution like in the desktop view).
-    if (props.objectAttributeSkippedFields) {
-      fixedAndSkippedFields.push(...props.objectAttributeSkippedFields)
+    if (props.entityAttributeSkippedFields) {
+      fixedAndSkippedFields.push(...props.entityAttributeSkippedFields)
     }
 
-    const objectAttributeObjects: EnumObjectManagerObjects[] = []
+    const entityAttributeEntities: EnumObjectManagerObjects[] = []
 
-    const addObjectAttributeToObjects = (object: EnumObjectManagerObjects) => {
-      if (objectAttributeObjects.includes(object)) return
+    const addEntityAttributeEntity = (entity: EnumObjectManagerObjects) => {
+      if (entityAttributeEntities.includes(entity)) return
 
-      objectAttributeObjects.push(object)
+      entityAttributeEntities.push(entity)
     }
 
-    const detectObjectAttributeObjects = (schema: FormSchemaNode[] = props.schema) => {
+    const detectEntityAttributeEntities = (schema: FormSchemaNode[] = props.schema) => {
       schema.forEach((item) => {
         if (typeof item === 'string') return
 
-        if ('object' in item) {
+        if ('entity' in item) {
           if ('name' in item && item.name && !item.type) {
             fixedAndSkippedFields.push(item.name)
           }
 
-          addObjectAttributeToObjects(item.object)
+          addEntityAttributeEntity(item.entity)
         }
 
         if ('children' in item && Array.isArray(item.children)) {
-          detectObjectAttributeObjects(item.children)
+          detectEntityAttributeEntities(item.children)
         }
       })
     }
 
-    detectObjectAttributeObjects()
+    detectEntityAttributeEntities()
 
-    // We need only to fetch object attributes, when there are used in the given schema.
-    if (objectAttributeObjects.length > 0) {
-      const { objectAttributesLoading } = useObjectAttributeLoadFormFields(objectAttributeObjects)
+    // We need only to fetch entity attributes, when there are used in the given schema.
+    if (entityAttributeEntities.length > 0) {
+      const { entityAttributesLoading } = useEntityAttributeLoadFormFields(entityAttributeEntities)
 
       const unwatchTriggerFormInitialize = watch(
-        objectAttributesLoading,
+        entityAttributesLoading,
         (loading) => {
           if (!loading) {
             nextTick(() => unwatchTriggerFormInitialize())

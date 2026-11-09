@@ -39,7 +39,7 @@ export const useAnswerFormSchema = ({
   const application = useApplicationStore()
 
   // Whether the `tags` field below offers creating one that does not exist yet, which follows the
-  //   `tag_new` setting like the object attribute resolver does for ticket forms. Decided here
+  //   `tag_new` setting like the tag field resolver does for ticket forms. Decided here
   //   rather than taken as an option: it belongs to that field, and only a form that *has* the
   //   field has any use for it.
   //
@@ -128,7 +128,7 @@ export const useAnswerFormSchema = ({
           : [
               {
                 // In the content column, as the design has it. Creating new tags follows the `tag_new`
-                //   setting, like the object attribute resolver does for ticket forms. On submit the values
+                //   setting, like the tag field resolver does for ticket forms. On submit the values
                 //   ride the mutation's `tags` input - `tagAssignmentUpdate` needs a persisted record.
                 name: 'tags',
                 label: __('Tags'),

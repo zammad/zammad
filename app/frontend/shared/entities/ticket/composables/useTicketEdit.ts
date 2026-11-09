@@ -7,8 +7,8 @@ import { transformEditorHtml } from '#shared/components/Form/fields/FieldEditor/
 import type { FormValues, FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { useCheckBodyAttachmentReference } from '#shared/composables/form/useCheckBodyAttachmentReference.ts'
-import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useEntityAttributeFormData } from '#shared/entities/core/attributes/composables/useEntityAttributeFormData.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import { useTicketUpdateMutation } from '#shared/entities/ticket/graphql/mutations/update.api.ts'
 import type {
   TicketArticleReceivedFormValues,
@@ -120,7 +120,7 @@ export const useTicketEdit = (
     return !!ticketGroup?.context?.state.valid
   })
 
-  const { attributesLookup: ticketObjectAttributesLookup } = useObjectAttributes(
+  const { attributesLookup: ticketEntityAttributesLookup } = useEntityAttributes(
     EnumObjectManagerObjects.Ticket,
   )
 
@@ -177,9 +177,9 @@ export const useTicketEdit = (
     const article = processArticle(form.value.formId, formArticle)
 
     const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-      useObjectAttributeFormData(
+      useEntityAttributeFormData(
         EnumObjectManagerObjects.Ticket,
-        ticketObjectAttributesLookup.value,
+        ticketEntityAttributesLookup.value,
         formData,
       )
 

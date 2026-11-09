@@ -4,7 +4,7 @@
 import { computed, ref, watchEffect } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 
@@ -34,7 +34,7 @@ const {
   organizationQuery,
   loading,
   loadingWithoutCachedResult,
-  objectAttributes,
+  entityAttributes,
   fetchMoreMembers,
 } = useOrganizationDetail(organizationId, 3, 100, errorCallback)
 
@@ -63,9 +63,9 @@ const ticketsData = computed(() => getTicketData(organization.value))
     </div>
   </CommonLoader>
   <div v-if="organization">
-    <ObjectAttributes
+    <EntityAttributes
       :object="organization"
-      :attributes="objectAttributes"
+      :attributes="entityAttributes"
       :skip-attributes="['name']"
     >
       <template v-if="organization.policy.update" #after-fields>
@@ -78,7 +78,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
           {{ $t('Edit organization') }}
         </CommonButton>
       </template>
-    </ObjectAttributes>
+    </EntityAttributes>
 
     <OrganizationMembersList
       :members="organizationMembers"

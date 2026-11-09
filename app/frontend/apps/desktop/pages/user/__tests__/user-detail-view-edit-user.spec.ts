@@ -9,7 +9,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
-import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { waitForUserUpdateMutationCalls } from '#shared/entities/user/graphql/mutations/update.mocks.ts'
 import { mockUserQuery } from '#shared/entities/user/graphql/queries/user.mocks.ts'
 import type { User } from '#shared/graphql/types.ts'

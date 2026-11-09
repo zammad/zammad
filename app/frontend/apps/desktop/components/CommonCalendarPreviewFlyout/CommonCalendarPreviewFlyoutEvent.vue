@@ -4,7 +4,7 @@
 import type { CalendarIcsFileEventsQuery } from '#shared/graphql/types.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
 
-import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
+import CommonEntityAttribute from '#desktop/components/CommonEntityAttribute/CommonEntityAttribute.vue'
 
 interface Props {
   event: CalendarIcsFileEventsQuery['calendarIcsFileEvents'][number]
@@ -20,29 +20,29 @@ defineProps<Props>()
     </CommonLabel>
 
     <!-- eslint-disable vue/no-v-html -->
-    <CommonObjectAttribute v-if="event.location" :label="__('Location')">
+    <CommonEntityAttribute v-if="event.location" :label="__('Location')">
       <div v-html="textToHtml(event.location)" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
     <div class="grid grid-cols-1 gap-3 @sm:grid-cols-2">
-      <CommonObjectAttribute v-if="event.startDate" :label="__('Start date')">
+      <CommonEntityAttribute v-if="event.startDate" :label="__('Start date')">
         <CommonDateTime :date-time="event.startDate" type="absolute" />
-      </CommonObjectAttribute>
+      </CommonEntityAttribute>
 
-      <CommonObjectAttribute v-if="event.endDate" :label="__('End date')">
+      <CommonEntityAttribute v-if="event.endDate" :label="__('End date')">
         <CommonDateTime :date-time="event.endDate" type="absolute" />
-      </CommonObjectAttribute>
+      </CommonEntityAttribute>
     </div>
 
     <div
       v-if="event.organizer || event.attendees?.length"
       class="grid grid-cols-1 gap-3 @sm:grid-cols-2"
     >
-      <CommonObjectAttribute v-if="event.organizer" :label="__('Organizer')">
+      <CommonEntityAttribute v-if="event.organizer" :label="__('Organizer')">
         <div v-html="textToHtml(event.organizer)" />
-      </CommonObjectAttribute>
+      </CommonEntityAttribute>
 
-      <CommonObjectAttribute v-if="event.attendees?.length" :label="__('Attendees')">
+      <CommonEntityAttribute v-if="event.attendees?.length" :label="__('Attendees')">
         <ul class="list-disc ps-4">
           <li
             v-for="(attendee, index) in event.attendees"
@@ -50,12 +50,12 @@ defineProps<Props>()
             v-html="textToHtml(attendee)"
           />
         </ul>
-      </CommonObjectAttribute>
+      </CommonEntityAttribute>
     </div>
 
-    <CommonObjectAttribute v-if="event.description" :label="__('Description')">
+    <CommonEntityAttribute v-if="event.description" :label="__('Description')">
       <div v-html="textToHtml(event.description)" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
     <!-- eslint-enable vue/no-v-html -->
   </article>
 </template>

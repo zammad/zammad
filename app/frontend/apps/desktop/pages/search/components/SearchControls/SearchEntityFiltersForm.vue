@@ -7,7 +7,7 @@ import { computed, nextTick, toRef, useTemplateRef, watch, type Ref } from 'vue'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormRef, FormSchemaField, FormFieldValue } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
 
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'

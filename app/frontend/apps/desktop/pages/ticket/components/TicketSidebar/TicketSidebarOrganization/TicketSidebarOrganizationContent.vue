@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script lang="ts" setup>
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
+import type { EntityAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import { useOrganizationNoteUpdateMutation } from '#shared/entities/organization/graphql/mutations/noteUpdate.api.ts'
 import type { Organization, User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -20,7 +20,7 @@ import TicketSidebarContent from '../TicketSidebarContent.vue'
 interface Props extends TicketSidebarContentProps {
   organization: Organization
   organizationMembers: ReturnType<typeof normalizeEdges<Partial<User>>>
-  objectAttributes: ObjectAttribute[]
+  entityAttributes: EntityAttribute[]
 }
 
 const props = defineProps<Props>()
@@ -55,9 +55,9 @@ const actions: MenuItem[] = [
   >
     <OrganizationInfo :organization="organization" />
 
-    <ObjectAttributes
+    <EntityAttributes
       :object="organization"
-      :attributes="objectAttributes"
+      :attributes="entityAttributes"
       :skip-attributes="['name', 'vip', 'active']"
       :inline-editable="{
         note: useOrganizationNoteUpdateMutation,

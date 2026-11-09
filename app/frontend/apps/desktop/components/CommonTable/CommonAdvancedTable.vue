@@ -6,10 +6,10 @@ import { isEqual, merge } from 'lodash-es'
 import { computed, nextTick, ref, shallowRef, toRef, useTemplateRef, watch } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 
-import ObjectAttribute from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import type { ObjectAttribute as ObjectAttributeType } from '#shared/entities/object-attributes/types/store.ts'
-import { flattenObjectAttributeValues } from '#shared/entities/object-attributes/utils.ts'
+import EntityAttributeContent from '#shared/components/EntityAttributes/EntityAttribute.vue'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
+import type { EntityAttribute } from '#shared/entities/core/attributes/types/store.ts'
+import { flattenObjectAttributeValues } from '#shared/entities/core/attributes/utils.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumObjectManagerObjects, EnumOrderDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -44,8 +44,8 @@ const cellAlignmentClasses = {
   left: 'justify-start text-left',
 }
 
-const { attributesLookup: objectAttributesLookup } = props.object
-  ? useObjectAttributes(props.object)
+const { attributesLookup: entityAttributesLookup } = props.entity
+  ? useEntityAttributes(props.entity)
   : { attributesLookup: null }
 
 const localAttributesLookup = computed(() => {
@@ -69,8 +69,8 @@ const addLocalHeaders = (table: TableAttribute[]) =>
   localHeaders.value.forEach((headerName) => {
     // Try to find matching attribute from both sources
     const localAttribute = findAttribute(headerName, localAttributesLookup.value)
-    const objectAttribute = objectAttributesLookup?.value
-      ? findAttribute(headerName, objectAttributesLookup.value)
+    const objectAttribute = entityAttributesLookup?.value
+      ? findAttribute(headerName, entityAttributesLookup.value)
       : null
 
     // Skip if no attribute definition found
@@ -78,7 +78,7 @@ const addLocalHeaders = (table: TableAttribute[]) =>
 
     const attributeExtension = props.attributeExtensions?.[headerName]
 
-    // Convert ObjectAttribute to TableAttribute structure if it exists
+    // Convert EntityAttribute to TableAttribute structure if it exists
     const mergedAttribute = objectAttribute
       ? (merge(
           {
@@ -279,8 +279,8 @@ const groupByAttribute = computed(() => {
 
   // Try to find matching attribute from both sources
   const localAttribute = findAttribute(props.groupBy, localAttributesLookup.value)
-  const objectAttribute = objectAttributesLookup?.value
-    ? findAttribute(props.groupBy, objectAttributesLookup.value)
+  const objectAttribute = entityAttributesLookup?.value
+    ? findAttribute(props.groupBy, entityAttributesLookup.value)
     : null
 
   return (localAttribute || objectAttribute) as TableAttribute
@@ -441,7 +441,7 @@ const endOfListMessage = computed(() => {
 })
 
 const getLinkColorClasses = (item: TableAdvancedItem) => {
-  if (props.object !== EnumObjectManagerObjects.Ticket) return ''
+  if (props.entity !== EnumObjectManagerObjects.Ticket) return ''
 
   return getTicketPriorityLinkColorClasses((item as TicketById).priority?.uiColor)
 }
@@ -617,9 +617,9 @@ watch(
                     @click.stop
                     @keydown.stop
                   >
-                    <ObjectAttribute
+                    <EntityAttributeContent
                       mode="table"
-                      :attribute="tableAttribute as unknown as ObjectAttributeType"
+                      :attribute="tableAttribute as unknown as EntityAttribute"
                       :object="item"
                     />
                   </CommonLink>
@@ -633,9 +633,9 @@ watch(
                       },
                     ]"
                   >
-                    <ObjectAttribute
+                    <EntityAttributeContent
                       mode="table"
-                      :attribute="tableAttribute as unknown as ObjectAttributeType"
+                      :attribute="tableAttribute as unknown as EntityAttribute"
                       :object="item"
                     />
                   </CommonLabel>

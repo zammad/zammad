@@ -69,7 +69,7 @@ const renderTable = async (props: Partial<ListTableProps<CallerLogEntry>> = {}) 
   const wrapper = renderComponent(CallerLogTable, {
     router: true,
     routerRoutes,
-    // The caller popover renders object attributes, which need the form system.
+    // The caller popover renders entity attributes, which need the form system.
     form: true,
     flyout: true,
     props: {

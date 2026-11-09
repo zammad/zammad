@@ -25,7 +25,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
     visit "/tickets/#{ticket.id}"
 
     wait_for_gql('apps/mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.graphql')
-    wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql')
+    wait_for_gql('shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.graphql')
 
     # Switch to ticket information screen.
     click '[data-test-id="title-content"]'
@@ -33,7 +33,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
     click_on('Customer')
 
     wait_for_gql('shared/entities/user/graphql/queries/user.graphql')
-    wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql', number: 2)
+    wait_for_gql('shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.graphql', number: 2)
   end
 
   it 'shows customer data' do

@@ -5,7 +5,7 @@ import { computed } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
@@ -38,7 +38,7 @@ const {
   organizationMembers,
   loading,
   loadingWithoutCachedResult,
-  objectAttributes,
+  entityAttributes,
   fetchMoreMembers,
 } = useOrganizationDetail(organizationId, 3, 100, errorCallback)
 
@@ -73,9 +73,9 @@ const ticketData = computed(() => getTicketData(organization.value))
       </div>
     </div>
 
-    <ObjectAttributes
+    <EntityAttributes
       :object="organization"
-      :attributes="objectAttributes"
+      :attributes="entityAttributes"
       :skip-attributes="['name']"
     />
 

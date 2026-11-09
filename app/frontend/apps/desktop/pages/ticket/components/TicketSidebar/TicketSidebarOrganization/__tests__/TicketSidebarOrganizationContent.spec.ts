@@ -38,7 +38,7 @@ const renderTicketSidebarOrganizationContent = async (options: any = {}) => {
         ],
         totalCount: 2,
       },
-      objectAttributes: [
+      entityAttributes: [
         {
           name: 'domain',
           display: 'Domain',

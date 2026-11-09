@@ -128,14 +128,14 @@ export interface FormSchemaDOMElement extends FormSchemaLayoutBase {
   attrs?: FormKitSchemaAttributes
 }
 
-export interface FormSchemaFieldsForObjectAttributeScreen {
+export interface FormSchemaFieldsForEntityAttributeScreen {
   screen: string
-  object: EnumObjectManagerObjects
+  entity: EnumObjectManagerObjects
 }
 
-export type FormSchemaFieldObjectAttribute = SetRequired<Partial<FormSchemaField>, 'name'> & {
+export type FormSchemaFieldEntityAttribute = SetRequired<Partial<FormSchemaField>, 'name'> & {
   screen?: string
-  object: EnumObjectManagerObjects
+  entity: EnumObjectManagerObjects
 }
 
 export type FormSchemaLayout = FormSchemaComponent | FormSchemaDOMElement
@@ -144,8 +144,8 @@ export type FormSchemaNodeWithChildren = (FormSchemaLayout | FormSchemaGroupOrLi
   children:
     | (
         | FormSchemaField
-        | FormSchemaFieldObjectAttribute
-        | FormSchemaFieldsForObjectAttributeScreen
+        | FormSchemaFieldEntityAttribute
+        | FormSchemaFieldsForEntityAttributeScreen
         | FormSchemaNodeWithChildren
         | string
       )[]
@@ -156,8 +156,8 @@ export type FormSchemaNodeWithChildren = (FormSchemaLayout | FormSchemaGroupOrLi
 export type FormSchemaNode =
   | FormSchemaNodeWithChildren
   | FormSchemaField
-  | FormSchemaFieldObjectAttribute
-  | FormSchemaFieldsForObjectAttributeScreen
+  | FormSchemaFieldEntityAttribute
+  | FormSchemaFieldsForEntityAttributeScreen
   | string
 
 export interface ReactiveFormSchemaDataField {

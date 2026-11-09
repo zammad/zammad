@@ -1,20 +1,20 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { initButtonGroup } from '#shared/components/ObjectAttributes/attributes/AttributeRichtext/initializeRichtextButtons.ts'
+import { initButtonGroup } from '#shared/components/EntityAttributes/attributes/AttributeRichtext/initializeRichtextButtons.ts'
 import { setupCommonVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonEntityAttribute from '#desktop/components/CommonEntityAttribute/CommonEntityAttribute.vue'
+import CommonEntityAttributeContainer from '#desktop/components/CommonEntityAttribute/CommonEntityAttributeContainer.vue'
 import CommonInlineEditButtons from '#desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue'
-import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
-import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
 import FieldFileList from '#desktop/components/Form/fields/FieldFile/FieldFileList.vue'
 
 export const initializeDesktopVisuals = () => {
   setupCommonVisualConfig({
     // TODO: for later implementation
-    objectAttributes: {
-      outer: CommonObjectAttributeContainer,
-      wrapper: CommonObjectAttribute,
+    entityAttributes: {
+      outer: CommonEntityAttributeContainer,
+      wrapper: CommonEntityAttribute,
       classes: {
         link: 'text-sm',
       },

@@ -13,7 +13,7 @@
     "app/frontend/apps/*/pages/**/routes/*.ts",
     "app/frontend/apps/*/pages/authentication/after-auth/plugins/*.ts",
     "app/frontend/apps/*/server/apollo/cache/initializer/*.ts",
-    "app/frontend/shared/entities/*/stores/objectAttributes.ts",
+    "app/frontend/shared/entities/*/attributes.ts",
     "app/frontend/shared/entities/two-factor/plugins/*.ts",
     "app/frontend/shared/components/Form/fields/**/index.ts",
     "app/frontend/shared/form/theme/global/extensions/*.ts",

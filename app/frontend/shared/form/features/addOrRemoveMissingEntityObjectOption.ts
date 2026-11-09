@@ -3,8 +3,8 @@
 import { isEqual } from 'lodash-es'
 
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
-import type { OptionValueLookup } from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
-import { flattenObjectAttributeValues } from '#shared/entities/object-attributes/utils.ts'
+import type { OptionValueLookup } from '#shared/entities/core/attributes/form/resolver/fields/select.ts'
+import { flattenObjectAttributeValues } from '#shared/entities/core/attributes/utils.ts'
 import { useEntity, type EntityName } from '#shared/entities/useEntity.ts'
 import { extractEntityIds } from '#shared/form/utils/entity.ts'
 import type { EntityObject } from '#shared/types/entity.ts'

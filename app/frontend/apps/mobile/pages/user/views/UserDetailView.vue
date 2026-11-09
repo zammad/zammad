@@ -4,7 +4,7 @@
 import { computed, ref } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
@@ -39,7 +39,7 @@ const {
   user,
   loading,
   loadingWithoutCachedResult,
-  objectAttributes,
+  entityAttributes,
   secondaryOrganizations,
   fetchMoreSecondaryOrganizations,
 } = useUserDetail(userId, 3, 100, errorCallback)
@@ -120,8 +120,8 @@ const ticketsData = computed(() => {
       </CommonLink>
     </div>
 
-    <ObjectAttributes
-      :attributes="objectAttributes"
+    <EntityAttributes
+      :attributes="entityAttributes"
       :object="user"
       :skip-attributes="['firstname', 'lastname', 'organization_ids']"
     />

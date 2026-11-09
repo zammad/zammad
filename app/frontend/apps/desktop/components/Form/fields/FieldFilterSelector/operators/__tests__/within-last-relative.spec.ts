@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 
 import withinLastRelative from '../within-last-relative.ts'
 

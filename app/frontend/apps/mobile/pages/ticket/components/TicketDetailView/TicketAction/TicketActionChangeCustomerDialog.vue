@@ -47,12 +47,12 @@ const cancelDialog = async () => {
 const formSchema = defineFormSchema([
   {
     name: 'customer_id',
-    object: EnumObjectManagerObjects.Ticket,
+    entity: EnumObjectManagerObjects.Ticket,
     required: true,
   },
   {
     name: 'organization_id',
-    object: EnumObjectManagerObjects.Ticket,
+    entity: EnumObjectManagerObjects.Ticket,
   },
 ])
 
@@ -87,7 +87,7 @@ const { changeCustomer } = useTicketChangeCustomer(toRef(props, 'ticket'), {
       :schema="formSchema"
       :handlers="[useTicketFormOrganizationHandler()]"
       :initial-entity-object="ticket"
-      use-object-attributes
+      use-entity-attributes
       @submit="changeCustomer($event as FormSubmitData<TicketCustomerUpdateFormData>)"
     />
   </CommonDialog>

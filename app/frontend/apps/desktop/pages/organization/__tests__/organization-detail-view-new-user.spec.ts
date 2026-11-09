@@ -7,7 +7,7 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
-import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { mockOrganizationQuery } from '#shared/entities/organization/graphql/queries/organization.mocks.ts'
 import { waitForUserAddMutationCalls } from '#shared/entities/user/graphql/mutations/add.mocks.ts'
 import type { Organization } from '#shared/graphql/types.ts'

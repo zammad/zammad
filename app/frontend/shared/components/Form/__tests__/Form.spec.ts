@@ -15,7 +15,7 @@ import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { Props } from '#shared/components/Form/Form.vue'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import UserError from '#shared/errors/UserError.ts'
 import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
@@ -791,8 +791,8 @@ describe('Form.vue - Edge Cases', () => {
   })
 })
 
-describe('Form.vue - with object attributes', () => {
-  it('render form schema with object attributes', async () => {
+describe('Form.vue - with entity attributes', () => {
+  it('render form schema with entity attributes', async () => {
     mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
       objectManagerFrontendAttributes: frontendObjectAttributes,
     })
@@ -800,20 +800,20 @@ describe('Form.vue - with object attributes', () => {
     const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
-        useObjectAttributes: true,
+        useEntityAttributes: true,
         schema: [
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             name: 'title',
             screen: 'create_top',
           },
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             name: 'customer_id',
             screen: 'create_top',
           },
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             screen: 'create_middle',
           },
         ],
@@ -834,7 +834,7 @@ describe('Form.vue - with object attributes', () => {
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
   })
 
-  it('render object attributes with historical options (create situation)', async () => {
+  it('render entity attributes with historical options (create situation)', async () => {
     mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
       objectManagerFrontendAttributes: frontendObjectAttributes,
     })
@@ -842,10 +842,10 @@ describe('Form.vue - with object attributes', () => {
     const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
-        useObjectAttributes: true,
+        useEntityAttributes: true,
         schema: [
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             screen: 'create_middle',
           },
         ],
@@ -861,7 +861,7 @@ describe('Form.vue - with object attributes', () => {
     expect(wrapper.getByLabelText('Type')).toHaveTextContent('')
   })
 
-  it('render object attributes with historical options (edit situation)', async () => {
+  it('render entity attributes with historical options (edit situation)', async () => {
     mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
       objectManagerFrontendAttributes: frontendObjectAttributes,
     })
@@ -869,10 +869,10 @@ describe('Form.vue - with object attributes', () => {
     const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
-        useObjectAttributes: true,
+        useEntityAttributes: true,
         schema: [
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             screen: 'edit',
           },
         ],
@@ -897,20 +897,20 @@ describe('Form.vue - with object attributes', () => {
       ...wrapperParameters,
       props: {
         shouldAutofocus: true,
-        useObjectAttributes: true,
+        useEntityAttributes: true,
         schema: [
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             name: 'title',
             screen: 'create_top',
           },
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             name: 'customer_id',
             screen: 'create_top',
           },
           {
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
             screen: 'create_middle',
           },
         ],

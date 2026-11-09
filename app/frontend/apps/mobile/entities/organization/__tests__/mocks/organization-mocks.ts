@@ -3,7 +3,7 @@
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { nullableMock } from '#tests/support/utils.ts'
 
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import type {
   ObjectManagerFrontendAttributesPayload,
   OrganizationQuery,

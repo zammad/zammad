@@ -1,0 +1,16 @@
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
+
+<script setup lang="ts">
+import { textToHtml } from '#shared/utils/helpers.ts'
+
+import type { EntityAttributeTextarea } from './attributeTextareaTypes.ts'
+import type { EntityAttributeProps } from '../../types.ts'
+
+defineProps<EntityAttributeProps<EntityAttributeTextarea, string>>()
+</script>
+
+<template>
+  <!--      eslint-disable vue/no-v-html -->
+  <div v-if="mode === 'view'" v-html="textToHtml(value)" />
+  <template v-else>{{ value }}</template>
+</template>

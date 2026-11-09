@@ -41,7 +41,7 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
     <div v-else-if="items.length">
       <CommonAdvancedTable
         :caption="caption"
-        :object="EnumObjectManagerObjects.Organization"
+        :entity="EnumObjectManagerObjects.Organization"
         :headers="headers"
         :disable-relation-sorting="disableRelationSorting"
         :order-by="orderBy"

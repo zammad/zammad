@@ -87,7 +87,7 @@ export default defineConfigWithVueTs(
             '^(avatar-selected|border-shadow-b|bottom-navigation|color-indicator|content|cropper)$',
             '^(draggable|editor-action-popover|editor-overflow-popover|field-autocomplete-dialog)$',
             '^(file-list|formkit-link|icon|indicator|inner-article-body|left|line-more)$',
-            '^(line-more-wrapper|line-new|object-attributes?|object-attribute-spanned-column)$',
+            '^(line-more-wrapper|line-new|entity-attributes?|entity-attribute-spanned-column)$',
             '^(popover|print-area|progress-bar|select-dialog|select-overlay|show-action-bar)$',
             '^(select-scroll-shadows(--alt|--base)?|(bottom|show|top)-gradient)$',
             '^(ticket-detail-grid-full|vip|window|wrapper)$',

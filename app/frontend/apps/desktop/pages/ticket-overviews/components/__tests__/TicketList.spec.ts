@@ -8,7 +8,7 @@ import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
-import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'

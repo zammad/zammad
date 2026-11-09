@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { isSystemUser } from '#shared/entities/user/utils/isSystemUser.ts'
 import { EnumObjectManagerObjects, type Organization, type User } from '#shared/graphql/types.ts'
@@ -23,9 +23,9 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { attributes } = useObjectAttributes(EnumObjectManagerObjects.Ticket)
+const { attributes } = useEntityAttributes(EnumObjectManagerObjects.Ticket)
 
-const objectAttributes = computed(() =>
+const entityAttributes = computed(() =>
   attributes.value.filter((attribute) =>
     ['number', 'created_at', 'group_id', 'priority_id'].includes(attribute.name),
   ),
@@ -74,10 +74,10 @@ const isCustomerSystemUser = computed(() => isSystemUser(props.ticket.customer))
     <OrganizationInfo size="small" dense :organization="ticket.organization as Organization" />
   </CommonSectionCollapse>
 
-  <ObjectAttributes
+  <EntityAttributes
     class="border-t border-neutral-100 pt-2.5 dark:border-gray-900"
     :object="ticket"
-    :attributes="objectAttributes"
+    :attributes="entityAttributes"
     include-static
   />
 </template>

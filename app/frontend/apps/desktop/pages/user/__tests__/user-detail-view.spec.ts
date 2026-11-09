@@ -387,7 +387,7 @@ describe('User Detail View', () => {
       })
     })
 
-    describe('Object attributes', () => {
+    describe('Entity attributes', () => {
       it('displays user attributes', async () => {
         const view = await visitView('/users/2')
 

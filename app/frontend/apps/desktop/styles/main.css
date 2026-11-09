@@ -165,17 +165,17 @@
   }
 
   /*
-    Responsive multi-column mode for object attributes:
-    - compatibility layer for object attributes via legacy `.formGroup--halfSize` class
-    - container query via optional TW `@container/object-attributes` class
+    Responsive multi-column mode for entity attributes:
+    - compatibility layer for entity attributes via legacy `.formGroup--halfSize` class
+    - container query via optional TW `@container/entity-attributes` class
   */
-  .object-attributes .object-attribute {
-    @apply col-span-full @md/object-attributes:col-span-1;
+  .entity-attributes .entity-attribute {
+    @apply col-span-full @md/entity-attributes:col-span-1;
 
     /* Optional full-width style for configured attributes. */
-    &.object-attribute-spanned-column,
+    &.entity-attribute-spanned-column,
     &:last-of-type:nth-of-type(odd) {
-      @apply @md/object-attributes:col-span-full;
+      @apply @md/entity-attributes:col-span-full;
     }
   }
 

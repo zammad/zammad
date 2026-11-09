@@ -61,7 +61,7 @@ const renderForm = () => {
       schema: defineFormSchema([
         {
           screen: 'edit',
-          object: EnumObjectManagerObjects.Organization,
+          entity: EnumObjectManagerObjects.Organization,
         },
       ]),
       mutation: useMutationOrganizationUpdate,

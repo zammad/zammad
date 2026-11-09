@@ -248,7 +248,7 @@ describe('Organization Detail View', () => {
     })
   })
 
-  describe('Object attributes', () => {
+  describe('Entity attributes', () => {
     it('displays organization attributes', async () => {
       const { main } = await visitOrganizationView()
 

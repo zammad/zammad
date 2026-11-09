@@ -16,7 +16,7 @@ import type { Component } from 'vue'
 /**
  * Overrides the default attributes for the filter selector.
  * It looks for the name key
- * ⚠️ We might undo this later directly on the object attributes
+ * ⚠️ We might undo this later directly on the entity attributes
  * Intermediate solution until there
  */
 export type FilterSelectorEntityOverride = Pick<FilterSelectorEntry, 'name' | 'label'> & {

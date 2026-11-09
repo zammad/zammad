@@ -96,7 +96,7 @@ const renderTicketSidebarCustomerContent = async (
       sidebarPlugin: customerSidebarPlugin,
       customer: options.user || mockedUser,
       secondaryOrganizations,
-      objectAttributes: [
+      entityAttributes: [
         {
           name: 'email',
           display: 'Email',
