@@ -357,6 +357,12 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page).to have_css("div[data-attribute-name='#{field_name}'].is-readonly")
+
+        # Pointer events stay on, so overflowing content remains scrollable and
+        #   selectable, while the hidden caret avoids an editable look (#6494).
+        textarea = page.find("div[data-attribute-name='#{field_name}'] textarea[name='#{field_name}']")
+        expect(textarea.evaluate_script('getComputedStyle(this).pointerEvents')).to eq('auto')
+        expect(textarea.evaluate_script('getComputedStyle(this).caretColor')).to eq('rgba(0, 0, 0, 0)')
       end
     end
 

@@ -32,7 +32,10 @@ describe('verifying a token for the admin password auth', () => {
     const username = await view.findByLabelText('Username / Email')
 
     expect(username).toBeInTheDocument()
-    expect(username).toBeDisabled()
+
+    // The disabled field renders as readonly, so its content stays reachable (#6494).
+    expect(username).toHaveAttribute('readonly')
+    expect(username).toHaveAttribute('tabindex', '-1')
     expect(username).toHaveValue('admin@example.com')
 
     expect(view.getByText('Password')).toBeInTheDocument()
