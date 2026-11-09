@@ -14,11 +14,13 @@ targets:
       - jemalloc
       - imlib2
       - shared-mime-info
+      - libatomic # required for Node.js
       - redis
     build_dependencies:
       # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
       - epel-release
       - shared-mime-info
+      - libatomic # required for Node.js
   centos-10:
     dependencies:
       - curl
@@ -30,11 +32,13 @@ targets:
       - jemalloc
       - imlib2
       - shared-mime-info
+      - libatomic # required for Node.js
       - valkey
     build_dependencies:
       # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
       - epel-release
       - shared-mime-info
+      - libatomic # required for Node.js
   debian-12:
     dependencies:
       - curl
