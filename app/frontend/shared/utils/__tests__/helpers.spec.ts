@@ -86,10 +86,14 @@ describe('ensureImagesKeepAspectRatio', () => {
 
   it('replaces explicit height with max-height and sets height: auto', () => {
     const input = '<img src="foo.png" style="height: 200px;">'
-    const output = ensureImagesKeepAspectRatio(input)
+    const output = document.createElement('div')
+    output.innerHTML = ensureImagesKeepAspectRatio(input)
 
-    expect(output).toContain('max-height: 200px')
-    expect(output).toContain('height: auto')
+    // jsdom serializes `max-width` and `max-height` together as a `max-size` shorthand.
+    const { style } = output.querySelector('img')!
+
+    expect(style.maxHeight).toBe('200px')
+    expect(style.height).toBe('auto')
   })
 
   it('sets max-width when an inline width is present', () => {

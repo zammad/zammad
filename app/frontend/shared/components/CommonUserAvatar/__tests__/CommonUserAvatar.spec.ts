@@ -55,7 +55,9 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(avatar).toHaveStyle('background-image: url(/api/users/image/100.png)')
+    expect(avatar).toHaveStyle(
+      `background-image: url(${window.location.origin}/api/users/image/100.png)`,
+    )
     expect(avatar).not.toHaveTextContent('JD')
   })
 

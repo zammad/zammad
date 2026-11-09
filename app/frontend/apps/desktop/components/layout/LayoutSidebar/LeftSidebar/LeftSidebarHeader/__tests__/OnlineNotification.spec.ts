@@ -163,6 +163,9 @@ describe('OnlineNotification', () => {
   beforeEach(() => {
     mockNotification('granted')
 
+    // A tab in front takes the notification lock over, these examples start in the background.
+    vi.spyOn(document, 'hasFocus').mockReturnValue(false)
+
     mockUserCurrent({
       preferences: {
         notification_sound: {

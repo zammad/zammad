@@ -45,7 +45,7 @@ describe('CommonAvatar.vue', () => {
       "don't render initials, when image is present to not overlap it",
     ).not.toHaveTextContent('VL')
     expect(avatar).toHaveStyle({
-      'background-image': 'url("/api/v1/users/image/123")',
+      'background-image': `url("${window.location.origin}/api/v1/users/image/123")`,
     })
 
     await view.rerender({ image: 'data:image/png;base64,1' })
