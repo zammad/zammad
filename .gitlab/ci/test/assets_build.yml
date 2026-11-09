@@ -42,8 +42,17 @@ assets:build:pwa:
   stage: test
   extends:
     - .template_ruby
-    - .job_rules_default
     - .no_artifact_dependencies
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, backend_changes_in_mr]
+    - !reference [.rule_fragments, frontend_changes_in_mr]
+    - !reference [.rule_fragments, legacy_frontend_changes_in_mr]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .gitlab/ci/test/assets_build.yml
+      when: on_success
+    - !reference [.rule_fragments, then_manual_in_mr]
   needs:
     - !reference [.needs, ruby]
     - !reference [.needs, nodejs]

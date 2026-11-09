@@ -101,7 +101,6 @@
         - Gemfile
         - Gemfile.lock
         - Rakefile
-        - VERSION
       when: on_success
 
   # Start the frontend test jobs in a merge request only if it touches what they
@@ -121,6 +120,15 @@
         - 'tsconfig*.json'
         - vite.config.mjs
         - vitest.config.mjs
+      when: on_success
+
+  # Start the jobs that build or test the legacy frontend in a merge request only if
+  #   it touches it. These jobs boot the backend as well, so list this together with
+  #   `backend_changes_in_mr`.
+  legacy_frontend_changes_in_mr:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - app/assets/**/*
       when: on_success
 
   # Closing entry: offer a manual start and never block the pipeline. `allow_failure`

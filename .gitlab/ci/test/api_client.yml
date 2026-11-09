@@ -2,8 +2,15 @@
   stage: test
   extends:
     - .template_ruby
-    - .job_rules_default
     - .tags_docker_low_concurrency
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - !reference [.rule_fragments, backend_changes_in_mr]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .gitlab/ci/test/api_client.yml
+      when: on_success
+    - !reference [.rule_fragments, then_manual_in_mr]
   needs:
     - !reference [.needs, ruby]
     - !reference [.needs, lint]

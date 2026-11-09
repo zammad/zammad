@@ -17,9 +17,9 @@
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --tag searchindex --tag ~browser_app
 
-# Lowest and highest supported Elasticsearch versions. 'stable' is tested in
-#   every pipeline, 'latest' automatically only in scheduled pipelines and
-#   manually triggerable in all others.
+# Lowest and highest supported Elasticsearch versions. 'stable' is tested like
+#   the other backend tests, 'latest' automatically only in scheduled pipelines
+#   and manually triggerable in all others.
 rspec:es:
   extends:
     - .template_integration_es
@@ -28,7 +28,15 @@ rspec:es:
       - ELASTICSEARCH_TAG: [stable, latest]
   rules:
     - !reference [.rule_fragments, variable_filters]
-    # The lowest supported version is covered in every pipeline.
-    - if: $ELASTICSEARCH_TAG == "stable"
+    - if: $ELASTICSEARCH_TAG == "latest" && $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
-    - !reference [.rule_fragments, then_manual_unless_scheduled]
+    - if: $ELASTICSEARCH_TAG == "latest"
+      when: manual
+      allow_failure: true
+    - !reference [.rule_fragments, backend_changes_in_mr]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .gitlab/ci/test/integration.yml
+        - .gitlab/ci/test/integration/es.yml
+      when: on_success
+    - !reference [.rule_fragments, then_manual_in_mr]
