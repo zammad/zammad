@@ -45,7 +45,7 @@ RSpec.describe Service::AI::Tool::UpdateTicket, :aggregate_failures do
       { 'argument' => 'priority', 'label' => 'Priority', 'from' => '2 normal', 'to' => '3 high' },
     )
     expect(result[:structuredContent]).to include('ticket_number' => ticket.number, 'url' => "https://support.example.com/#ticket/zoom/#{ticket.id}")
-    expect(ticket.history_get.reverse.find { |entry| entry['attribute'] == 'state' }).to include('value_to' => 'closed', 'created_by_id' => agent.id)
+    expect(ticket.history_get.rfind { |entry| entry['attribute'] == 'state' }).to include('value_to' => 'closed', 'created_by_id' => agent.id)
   end
 
   it 'sets a pending state with its time, given in the system time zone' do

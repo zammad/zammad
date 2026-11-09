@@ -396,12 +396,12 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
 
         if article.nil?
           last_article = all_articles.last
-          last_internal_article = all_articles.reverse.find(&:internal?)
-          last_external_article = all_articles.reverse.find { |a| !a.internal? }
+          last_internal_article = all_articles.to_a.rfind(&:internal?)
+          last_external_article = all_articles.to_a.rfind { |a| !a.internal? }
         else
           last_article = article
-          last_internal_article = article.internal? ? article : all_articles.reverse.find(&:internal?)
-          last_external_article = article.internal? ? all_articles.reverse.find { |a| !a.internal? } : article
+          last_internal_article = article.internal? ? article : all_articles.to_a.rfind(&:internal?)
+          last_external_article = article.internal? ? all_articles.to_a.rfind { |a| !a.internal? } : article
         end
 
         {

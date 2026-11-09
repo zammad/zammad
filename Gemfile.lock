@@ -684,6 +684,8 @@ GEM
       prism (>= 1.6.0)
       rbs (>= 4.0.0)
       tsort
+    readline (0.0.4)
+      reline
     redis (5.4.1)
       redis-client (>= 0.22.0)
     redis-client (0.31.0)
@@ -1026,6 +1028,7 @@ DEPENDENCIES
   rails (~> 8.1.0)
   rake
   rchardet (>= 1.8.0)
+  readline
   redis (< 6)
   rotp
   rspec-rails
@@ -1070,7 +1073,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 3.4.12p148
+  ruby 4.0.9p0
 
 BUNDLED WITH
-   2.6.9
+  4.0.20

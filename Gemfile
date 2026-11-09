@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.4.12'
+ruby '4.0.9'
 gem 'rails', '~> 8.1.0'
 gem 'rake'
 
@@ -199,6 +199,7 @@ gem 'pry-remote'
 gem 'pry-rescue'
 gem 'pry-stack_explorer'
 gem 'pry-theme'
+gem 'readline' # undeclared dependency of pry-remote
 
 # monitoring / system report
 gem 'macaddr'

@@ -33,7 +33,7 @@ class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disabl
   end
 
   def all_articles
-    @all_articles ||= record.articles
+    @all_articles ||= record.articles.to_a
   end
 
   def last_articles
@@ -46,8 +46,8 @@ class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disabl
       first_internal_article: all_articles.find(&:internal?),
       first_external_article: all_articles.find { |a| !a.internal? },
       last_article:           all_articles.last,
-      last_internal_article:  all_articles.reverse.find(&:internal?),
-      last_external_article:  all_articles.reverse.find { |a| !a.internal? },
+      last_internal_article:  all_articles.rfind(&:internal?),
+      last_external_article:  all_articles.rfind { |a| !a.internal? },
     }
   end
 
@@ -57,8 +57,8 @@ class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disabl
       first_internal_article: all_articles.find(&:internal?),
       first_external_article: all_articles.find { |a| !a.internal? },
       last_article:           article,
-      last_internal_article:  article.internal? ? article : all_articles.reverse.find(&:internal?),
-      last_external_article:  article.internal? ? all_articles.reverse.find { |a| !a.internal? } : article,
+      last_internal_article:  article.internal? ? article : all_articles.rfind(&:internal?),
+      last_external_article:  article.internal? ? all_articles.rfind { |a| !a.internal? } : article,
     }
   end
 

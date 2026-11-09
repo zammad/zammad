@@ -759,9 +759,9 @@ RSpec.describe UserAgent, :aggregate_failures do
           described_class.get('http://localhost:3000/test', {}, { validate_safety: true })
 
           expect(TCPSocket).to have_received(:open)
-            .with(resolved_ip, anything, anything, anything)
+            .with(resolved_ip, any_args)
           expect(TCPSocket).not_to have_received(:open)
-            .with(a_string_matching(%r{localhost}), anything, anything, anything)
+            .with(a_string_matching(%r{localhost}), any_args)
         end
       end
 
