@@ -7,7 +7,7 @@ export const useOrganizationFormSchema = () => {
   const buildOrganizationSchema = (screen: 'edit' | 'create', schema?: FormSchemaNode[]) => [
     {
       screen,
-      object: EnumObjectManagerObjects.Organization,
+      entity: EnumObjectManagerObjects.Organization,
     },
     ...(schema ? schema : []),
   ]

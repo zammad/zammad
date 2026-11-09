@@ -1,0 +1,67 @@
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import type {
+  FieldResolverModule,
+  EntityAttributeTreeSelectOption,
+} from '#shared/entities/core/attributes/types/resolver.ts'
+
+import { FieldResolverSelect } from './select.ts'
+
+export interface ObjectTreeSelectOption {
+  label?: string
+  value: string
+  children?: ObjectTreeSelectOption[]
+}
+
+export class FieldResolverTreeselect extends FieldResolverSelect {
+  fieldType = 'treeselect'
+
+  multiFieldAttributeType = 'multi_tree_select'
+
+  public override getFilterOperatorProps() {
+    const props = super.getFilterOperatorProps()
+
+    // Override only `<filterOperatorName>.type`; preserve any other operator
+    // props the parent declared. Reading `filterOperatorName` (rather than
+    // hardcoding `is`) keeps the multi-treeselect subclass working when it
+    // switches to `contains one`.
+    return {
+      ...props,
+      [this.filterOperatorName]: {
+        ...props?.[this.filterOperatorName],
+        type: 'treeselect',
+      },
+    }
+  }
+
+  mappedOptions(): ObjectTreeSelectOption[] {
+    const mapTreeSelectOptions = (options: EntityAttributeTreeSelectOption[]) => {
+      return options.reduce(
+        (treeSelectOptions: ObjectTreeSelectOption[], { children, name, value }) => {
+          const treeSelectOption: ObjectTreeSelectOption = {
+            label: name,
+            value,
+          }
+
+          if (children) {
+            treeSelectOption.children = mapTreeSelectOptions(children)
+          }
+
+          treeSelectOptions.push(treeSelectOption)
+
+          return treeSelectOptions
+        },
+        [],
+      )
+    }
+
+    return mapTreeSelectOptions(
+      this.attributeConfig.options as unknown as EntityAttributeTreeSelectOption[],
+    )
+  }
+}
+
+export default <FieldResolverModule>{
+  type: 'tree_select',
+  resolver: FieldResolverTreeselect,
+}

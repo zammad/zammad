@@ -7,8 +7,8 @@ import { waitFor } from '@testing-library/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import type { ObjectSelectOption } from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { ObjectSelectOption } from '#shared/entities/core/attributes/form/resolver/fields/select.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import { mockAutocompleteSearchTagQuery } from '#shared/entities/tags/graphql/queries/autocompleteTags.mocks.ts'
 import { i18n } from '#shared/i18n.ts'
 

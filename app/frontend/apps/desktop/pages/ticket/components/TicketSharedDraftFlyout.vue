@@ -24,10 +24,10 @@ import type {
 import { normalizeImageSizingInHtml } from '#shared/utils/markup.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonEntityAttribute from '#desktop/components/CommonEntityAttribute/CommonEntityAttribute.vue'
+import CommonEntityAttributeContainer from '#desktop/components/CommonEntityAttribute/CommonEntityAttributeContainer.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
-import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
-import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
 
 const props = defineProps<{
   sharedDraftId: string
@@ -176,27 +176,27 @@ const headerTitle = computed(() => {
   >
     <div v-if="sharedDraft" class="flex flex-col gap-3">
       <!-- TODO: Surely we should also display the name of the shared draft somewhere, no? -->
-      <!-- <CommonObjectAttributeContainer>
-        <CommonObjectAttribute :label="__('Name')">
+      <!-- <CommonEntityAttributeContainer>
+        <CommonEntityAttribute :label="__('Name')">
           {{ sharedDraft?.name }}
-        </CommonObjectAttribute>
-      </CommonObjectAttributeContainer> -->
+        </CommonEntityAttribute>
+      </CommonEntityAttributeContainer> -->
 
       <div class="flex items-start gap-y-3">
-        <CommonObjectAttributeContainer v-if="sharedDraft?.updatedBy" class="grow">
-          <CommonObjectAttribute :label="__('Author')">
+        <CommonEntityAttributeContainer v-if="sharedDraft?.updatedBy" class="grow">
+          <CommonEntityAttribute :label="__('Author')">
             <div class="flex items-center gap-1.5">
               <CommonUserAvatar :entity="sharedDraft?.updatedBy" size="small" />
               <CommonLabel>{{ sharedDraft.updatedBy.fullname }}</CommonLabel>
             </div>
-          </CommonObjectAttribute>
-        </CommonObjectAttributeContainer>
+          </CommonEntityAttribute>
+        </CommonEntityAttributeContainer>
 
-        <CommonObjectAttributeContainer class="grow">
-          <CommonObjectAttribute :label="__('Last changed')">
+        <CommonEntityAttributeContainer class="grow">
+          <CommonEntityAttribute :label="__('Last changed')">
             <CommonDateTime :date-time="sharedDraft?.updatedAt" />
-          </CommonObjectAttribute>
-        </CommonObjectAttributeContainer>
+          </CommonEntityAttribute>
+        </CommonEntityAttributeContainer>
       </div>
 
       <!--
@@ -204,12 +204,12 @@ const headerTitle = computed(() => {
           But keep in mind this might not be easily possible, since we are missing some information from the query.
           For example, we have only `owner_id`/`state_id`/`priority_id`, what about lookup objects?!
       -->
-      <CommonObjectAttributeContainer v-if="sharedDraftContent">
-        <CommonObjectAttribute :label="__('Text')">
+      <CommonEntityAttributeContainer v-if="sharedDraftContent">
+        <CommonEntityAttribute :label="__('Text')">
           <!-- eslint-disable vue/no-v-html -->
           <span v-html="sharedDraftContent" />
-        </CommonObjectAttribute>
-      </CommonObjectAttributeContainer>
+        </CommonEntityAttribute>
+      </CommonEntityAttributeContainer>
     </div>
 
     <template #footer>

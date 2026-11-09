@@ -164,7 +164,7 @@ const formSchema = defineFormSchema([
           },
           {
             screen: 'create_top',
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
           },
           // Because of the current field screen settings in the backend
           // seed we need to add this manually.
@@ -187,7 +187,7 @@ const formSchema = defineFormSchema([
           {
             name: 'body',
             screen: 'create_top',
-            object: EnumObjectManagerObjects.TicketArticle,
+            entity: EnumObjectManagerObjects.TicketArticle,
             required: true,
             props: {
               meta: {
@@ -257,13 +257,13 @@ const formSchema = defineFormSchema([
         children: [
           {
             screen: 'create_middle',
-            object: EnumObjectManagerObjects.Ticket,
+            entity: EnumObjectManagerObjects.Ticket,
           },
         ],
       },
       {
         screen: 'create_bottom',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
     ],
   },
@@ -395,7 +395,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         :handlers="[useTicketFormOrganizationHandler()]"
         :change-fields="changedFields"
         :form-updater-additional-params="formUpdaterAdditionalParams"
-        use-object-attributes
+        use-entity-attributes
         form-class="flex flex-col gap-3 min-w-xs"
         @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"
       />

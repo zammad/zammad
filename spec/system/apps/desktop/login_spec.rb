@@ -65,7 +65,7 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
       wait.until { expect(page).to have_css('[aria-label="John Doe"]') }
       wait_for_test_flag('common-popover.mounted-user-menu-popover')
       wait_for_gql('apps/desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.graphql')
-      wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql', number: 4)
+      wait_for_gql('shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.graphql', number: 4)
       sleep 0.3
 
       find('[aria-label="John Doe"]').click

@@ -9,8 +9,8 @@ import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useEntityAttributeFormData } from '#shared/entities/core/attributes/composables/useEntityAttributeFormData.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import { useUserAddMutation } from '#shared/entities/user/graphql/mutations/add.api.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
@@ -35,15 +35,15 @@ const { notify } = useNotifications()
 const schema = defineFormSchema([
   {
     screen: 'invite_agent',
-    object: EnumObjectManagerObjects.User,
+    entity: EnumObjectManagerObjects.User,
   },
 ])
 
-const { attributesLookup } = useObjectAttributes(EnumObjectManagerObjects.User)
+const { attributesLookup } = useEntityAttributes(EnumObjectManagerObjects.User)
 
 const inviteUser = async (formData: FormSubmitData) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(EnumObjectManagerObjects.User, attributesLookup.value, formData)
+    useEntityAttributeFormData(EnumObjectManagerObjects.User, attributesLookup.value, formData)
 
   const input: UserInput = {
     ...internalObjectAttributeValues,
@@ -76,7 +76,7 @@ const inviteUser = async (formData: FormSubmitData) => {
     form-class="mb-2.5"
     :schema="schema"
     :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterUserInvite"
-    use-object-attributes
+    use-entity-attributes
     clear-values-after-submit
     @submit="inviteUser"
   />

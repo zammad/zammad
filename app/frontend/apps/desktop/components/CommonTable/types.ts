@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Props as CommonLinkProps } from '#shared/components/CommonLink/CommonLink.vue'
-import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { EntityAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import type { EnumObjectManagerObjects, EnumOrderDirection } from '#shared/graphql/types.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -93,8 +93,8 @@ export interface TableAttribute {
     }
     tooltip?: (item: TableAdvancedItem) => string | undefined
   }
-  dataType: ObjectAttribute['dataType']
-  dataOption?: ObjectAttribute['dataOption']
+  dataType: EntityAttribute['dataType']
+  dataOption?: EntityAttribute['dataOption']
 }
 
 export interface AdvancedTableProps extends BaseTableProps {
@@ -113,7 +113,7 @@ export interface AdvancedTableProps extends BaseTableProps {
    * reference (e.g. `customer_id`) and not by the displayed value.
    */
   disableRelationSorting?: boolean
-  object?: EnumObjectManagerObjects
+  entity?: EnumObjectManagerObjects
   /**
    * Used to set a default selected row
    * Is not used for checkbox

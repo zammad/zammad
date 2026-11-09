@@ -4,7 +4,7 @@ import type {
   ObjectSelectValue,
   OptionValueLookup,
   SelectValueWithoutBoolean,
-} from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
+} from '#shared/entities/core/attributes/form/resolver/fields/select.ts'
 
 import type { FormKitFrameworkContext, FormKitNode } from '@formkit/core'
 

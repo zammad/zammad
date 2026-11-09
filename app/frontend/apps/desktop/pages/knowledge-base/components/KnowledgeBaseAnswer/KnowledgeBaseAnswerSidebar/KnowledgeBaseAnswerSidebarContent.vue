@@ -7,8 +7,8 @@ import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
-import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
-import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
+import CommonEntityAttribute from '#desktop/components/CommonEntityAttribute/CommonEntityAttribute.vue'
+import CommonEntityAttributeContainer from '#desktop/components/CommonEntityAttribute/CommonEntityAttributeContainer.vue'
 import { visibilityMeta } from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 import { useKnowledgeBaseAnswerReachedDates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts'
 
@@ -33,42 +33,42 @@ const editedByLabel = computed(() => {
 </script>
 
 <template>
-  <CommonObjectAttributeContainer class="p-3">
-    <CommonObjectAttribute :label="__('Visibility')">
+  <CommonEntityAttributeContainer class="p-3">
+    <CommonEntityAttribute :label="__('Visibility')">
       {{ $t(visibilityMeta[answer.visibility].label) }}
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute
+    <CommonEntityAttribute
       v-if="reachedDates.internalAt"
       :label="visibilityMeta[EnumKnowledgeBaseVisibility.Internal].timestampLabel"
     >
       <CommonDateTime :date-time="reachedDates.internalAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute
+    <CommonEntityAttribute
       v-if="reachedDates.publishedAt"
       :label="visibilityMeta[EnumKnowledgeBaseVisibility.Published].timestampLabel"
     >
       <CommonDateTime :date-time="reachedDates.publishedAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute
+    <CommonEntityAttribute
       v-if="reachedDates.archivedAt"
       :label="visibilityMeta[EnumKnowledgeBaseVisibility.Archived].timestampLabel"
     >
       <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute v-if="answer.translation?.editedAt" :label="__('Last updated')">
+    <CommonEntityAttribute v-if="answer.translation?.editedAt" :label="__('Last updated')">
       <CommonDateTime :date-time="answer.translation!.editedAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute v-if="editedByLabel" :label="__('Updated by')">
+    <CommonEntityAttribute v-if="editedByLabel" :label="__('Updated by')">
       <span v-tooltip.supportive="editedByLabel" class="line-clamp-1">
         {{ editedByLabel }}
       </span>
-    </CommonObjectAttribute>
-  </CommonObjectAttributeContainer>
+    </CommonEntityAttribute>
+  </CommonEntityAttributeContainer>
 
   <!-- Editors only, and read-only here: what an answer is going to become is editorial, and this is
        the reading view - the entry is removed, and a new one scheduled, from the edit tab. Gated on

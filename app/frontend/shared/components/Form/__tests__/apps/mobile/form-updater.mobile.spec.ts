@@ -14,7 +14,7 @@ import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 
 import Form from '#shared/components/Form/Form.vue'
 import type { Props } from '#shared/components/Form/Form.vue'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import {
   EnumFormUpdaterId,
@@ -221,14 +221,14 @@ const renderForm = async (
     ...wrapperParameters,
     ...options,
     props: {
-      useObjectAttributes: true,
+      useEntityAttributes: true,
       schema: [
         {
-          object: EnumObjectManagerObjects.Ticket,
+          entity: EnumObjectManagerObjects.Ticket,
           name: 'title',
         },
         {
-          object: EnumObjectManagerObjects.Ticket,
+          entity: EnumObjectManagerObjects.Ticket,
           screen: 'create_middle',
         },
         {

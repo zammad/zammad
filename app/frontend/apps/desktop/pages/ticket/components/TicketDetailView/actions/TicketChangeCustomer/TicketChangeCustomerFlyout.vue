@@ -28,13 +28,13 @@ const { form } = useForm()
 const formSchema = defineFormSchema([
   {
     name: 'customer_id',
-    object: EnumObjectManagerObjects.Ticket,
+    entity: EnumObjectManagerObjects.Ticket,
     required: true,
   },
   {
     show: false,
     name: 'organization_id',
-    object: EnumObjectManagerObjects.Ticket,
+    entity: EnumObjectManagerObjects.Ticket,
   },
 ])
 
@@ -62,7 +62,7 @@ const { changeCustomer } = useTicketChangeCustomer(toRef(props, 'ticket'), {
       should-autofocus
       :handlers="[useTicketFormOrganizationHandler()]"
       :initial-entity-object="ticket"
-      use-object-attributes
+      use-entity-attributes
       :schema="formSchema"
       @submit="changeCustomer($event as FormSubmitData<TicketCustomerUpdateFormData>)"
     />

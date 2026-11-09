@@ -18,7 +18,7 @@ import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import { TicketCreateDocument } from '#shared/entities/ticket/graphql/mutations/create.api.ts'
 
 import { defaultOrganization } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'

@@ -3,9 +3,9 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
-import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
+import EntityAttributeContent from '#shared/components/EntityAttributes/EntityAttribute.vue'
 import { useArticleSecurity } from '#shared/composables/useArticleSecurity.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import { useWhatsapp } from '#shared/entities/ticket/channel/composables/useWhatsapp.ts'
 import { useTicketAccountedTime } from '#shared/entities/ticket/composables/useTicketAccountedTime.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
@@ -79,7 +79,7 @@ const {
   signedStatusMessage,
 } = useArticleSecurity(toRef(props.article))
 
-const { attributesLookup } = useObjectAttributes(EnumObjectManagerObjects.TicketArticle)
+const { attributesLookup } = useEntityAttributes(EnumObjectManagerObjects.TicketArticle)
 
 const detectedLanguageAttribute = computed(() => attributesLookup.value.get('detected_language'))
 
@@ -104,7 +104,7 @@ const activityTypeSentence = computed(() => formatAccountedTimeType(props.articl
         v-if="isTicketAgent && article.detectedLanguage"
         :label="__('Detected language')"
       >
-        <ObjectAttributeContent
+        <EntityAttributeContent
           v-if="detectedLanguageAttribute"
           :attribute="detectedLanguageAttribute"
           :object="article"

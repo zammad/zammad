@@ -21,7 +21,7 @@ export const useUserEdit = () => {
       {
         name: 'active',
         screen: 'edit',
-        object: EnumObjectManagerObjects.User,
+        entity: EnumObjectManagerObjects.User,
       },
     ]),
     { showDirtyMark: true },

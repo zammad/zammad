@@ -709,7 +709,9 @@ const formSchema = defineFormSchema([
     type: 'externalDataSource',
     name: 'external_data_source',
     label: 'External Data Source',
-    object: EnumObjectManagerObjects.Ticket,
+    props: {
+      object: EnumObjectManagerObjects.Ticket,
+    },
     help: 'Please add external_data_source attribute on Ticket object. Otherwise this field will not work.',
   },
   {

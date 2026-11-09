@@ -12,9 +12,9 @@ import type {
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import { flattenObjectAttributeValues } from '#shared/entities/object-attributes/utils.ts'
+import { useEntityAttributeFormData } from '#shared/entities/core/attributes/composables/useEntityAttributeFormData.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
+import { flattenObjectAttributeValues } from '#shared/entities/core/attributes/utils.ts'
 import type { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
@@ -73,7 +73,7 @@ const initialFlatObject = {
   ...objectAttributes,
 }
 
-const { attributesLookup: objectAttributesLookup } = useObjectAttributes(props.type)
+const { attributesLookup: entityAttributesLookup } = useEntityAttributes(props.type)
 
 const changedFormField = (
   fieldName: string,
@@ -85,7 +85,7 @@ const changedFormField = (
 
 const saveObject = async (formData: FormSubmitData) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(props.type, objectAttributesLookup.value, formData)
+    useEntityAttributeFormData(props.type, entityAttributesLookup.value, formData)
 
   const result = await updateMutation.send({
     ...(props.object?.id && { id: props.object.id }),
@@ -119,7 +119,7 @@ const saveObject = async (formData: FormSubmitData) => {
       ref="form"
       class="pt-4 pb-6"
       should-autofocus
-      use-object-attributes
+      use-entity-attributes
       :schema="schema"
       :initial-entity-object="initialFlatObject"
       :change-fields="formChangeFields"

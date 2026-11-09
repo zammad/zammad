@@ -1,0 +1,16 @@
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import type { FieldResolverModule } from '#shared/entities/core/attributes/types/resolver.ts'
+
+import { FieldResolverTreeselect } from './treeselect.ts'
+
+export class FieldResolverMultiTreeselect extends FieldResolverTreeselect {
+  // Multi-value tree-selects use `contains one` in the advanced filter — same
+  // rationale as `FieldResolverMultiselect`.
+  protected override filterOperatorName = 'contains one'
+}
+
+export default <FieldResolverModule>{
+  type: 'multi_tree_select',
+  resolver: FieldResolverMultiTreeselect,
+}

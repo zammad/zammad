@@ -6,7 +6,7 @@ import '#desktop/styles/main.css'
 import '#desktop/styles/custom/index.ts'
 
 import { initializeAppName } from '#shared/composables/useAppName.ts'
-import { initializeDefaultObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { initializeDefaultEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composables/initializeTwoFactorPlugins.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
@@ -76,10 +76,10 @@ export const mountApp = async () => {
     authentication.authenticated = true
     initalizeAfterSessionCheck.push(session.getCurrentUser())
 
-    // Pre-warm the default object-attribute queries in parallel with the
+    // Pre-warm the default entity attribute queries in parallel with the
     // current-user and config requests, so the cache is hot by the time the
     // first form mounts and asks for them.
-    initializeDefaultObjectAttributes()
+    initializeDefaultEntityAttributes()
   }
 
   await Promise.all(initalizeAfterSessionCheck)

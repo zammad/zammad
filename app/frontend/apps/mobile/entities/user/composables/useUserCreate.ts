@@ -24,7 +24,7 @@ export const useUserCreate = (options: UserCreateOptions = {}) => {
       {
         name: 'active',
         screen: 'create',
-        object: EnumObjectManagerObjects.User,
+        entity: EnumObjectManagerObjects.User,
       },
     ]),
   )

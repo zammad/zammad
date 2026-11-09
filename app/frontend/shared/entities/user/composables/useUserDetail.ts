@@ -3,7 +3,7 @@
 import { computed, type ComputedRef, ref, type Ref, toRef } from 'vue'
 
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
-import { useUserObjectAttributesStore } from '#shared/entities/user/stores/objectAttributes.ts'
+import { useUserEntityAttributesStore } from '#shared/entities/user/stores/entityAttributes.ts'
 import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
 import type {
   UserUpdatesSubscriptionVariables,
@@ -82,7 +82,7 @@ export const useUserDetail = (
     })
   }
 
-  const viewScreenAttributes = toRef(useUserObjectAttributesStore(), 'viewScreenAttributes')
+  const viewScreenAttributes = toRef(useUserEntityAttributesStore(), 'viewScreenAttributes')
 
   const allSecondaryOrganizations = computed(() =>
     normalizeEdges(user.value?.secondaryOrganizations),
@@ -108,7 +108,7 @@ export const useUserDetail = (
     loadingWithoutCachedResult,
     user,
     userQuery,
-    objectAttributes: viewScreenAttributes,
+    entityAttributes: viewScreenAttributes,
     secondaryOrganizations,
     fetchMoreSecondaryOrganizations,
   }

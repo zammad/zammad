@@ -5,8 +5,8 @@ import { computed, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useUserObjectAttributesStore } from '#shared/entities/user/stores/objectAttributes.ts'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
+import { useUserEntityAttributesStore } from '#shared/entities/user/stores/entityAttributes.ts'
 import type { User } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
@@ -42,7 +42,7 @@ const loading = userInfoForPopoverQuery.loadingWithoutCachedResult()
 
 const secondaryOrganizations = computed(() => normalizeEdges(user.value?.secondaryOrganizations))
 
-const viewScreenAttributes = toRef(useUserObjectAttributesStore(), 'viewScreenAttributes')
+const viewScreenAttributes = toRef(useUserEntityAttributesStore(), 'viewScreenAttributes')
 
 const router = useRouter()
 
@@ -63,7 +63,7 @@ const goToUserProfile = () => {
       <div v-if="user" class="space-y-2">
         <UserInfo :user="user" :no-link="noProfileLink" :is-maybe="isMaybe" />
 
-        <ObjectAttributes
+        <EntityAttributes
           :class="{
             'border-b border-neutral-100 pb-2.5 dark:border-gray-900':
               secondaryOrganizations?.totalCount,

@@ -6,8 +6,8 @@ import { effectScope } from 'vue'
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import { waitForObjectManagerFrontendAttributesQueryCalls } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
+import { waitForObjectManagerFrontendAttributesQueryCalls } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import {
   type HistoryRecordEvent,
@@ -733,7 +733,7 @@ describe('useHistoryEvents', () => {
         setActivePinia(createPinia())
 
         await scope.run(async () => {
-          useObjectAttributes(EnumObjectManagerObjects.Ticket)
+          useEntityAttributes(EnumObjectManagerObjects.Ticket)
 
           await waitForObjectManagerFrontendAttributesQueryCalls()
         })
@@ -829,7 +829,7 @@ describe('useHistoryEvents', () => {
         setActivePinia(createPinia())
 
         await scope.run(async () => {
-          useObjectAttributes(EnumObjectManagerObjects.Ticket)
+          useEntityAttributes(EnumObjectManagerObjects.Ticket)
 
           await waitForObjectManagerFrontendAttributesQueryCalls()
         })

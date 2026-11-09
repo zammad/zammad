@@ -137,7 +137,7 @@ const ticketTitleSection = getFormSchemaGroupSection(
     {
       name: 'title',
       required: true,
-      object: EnumObjectManagerObjects.Ticket,
+      entity: EnumObjectManagerObjects.Ticket,
       screen: 'create_top',
       outerClass: '$reset formkit-outer w-full grow justify-center flex items-center flex-col',
       wrapperClass: '$reset formkit-disabled:opacity-30 flex w-full',
@@ -242,7 +242,7 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
         },
         {
           screen: 'create_top',
-          object: EnumObjectManagerObjects.Ticket,
+          entity: EnumObjectManagerObjects.Ticket,
           name: 'customer_id',
           value: customUserId ? Number(customUserId) : undefined,
           props: {
@@ -251,7 +251,7 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
         },
         {
           screen: 'create_top',
-          object: EnumObjectManagerObjects.Ticket,
+          entity: EnumObjectManagerObjects.Ticket,
         },
         // Because of the current field screen settings in the backend
         // seed we need to add this manually.
@@ -272,7 +272,7 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
       children: [
         {
           screen: 'create_middle',
-          object: EnumObjectManagerObjects.Ticket,
+          entity: EnumObjectManagerObjects.Ticket,
         },
       ],
     },
@@ -282,7 +282,7 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
       children: [
         {
           screen: 'create_bottom',
-          object: EnumObjectManagerObjects.Ticket,
+          entity: EnumObjectManagerObjects.Ticket,
         },
       ],
     },
@@ -306,7 +306,7 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
         {
           name: 'body',
           screen: 'create_top',
-          object: EnumObjectManagerObjects.TicketArticle,
+          entity: EnumObjectManagerObjects.TicketArticle,
           props: {
             meta: {
               mentionText: {
@@ -525,7 +525,7 @@ export default {
       :change-fields="changedFields"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
       should-autofocus
-      use-object-attributes
+      use-entity-attributes
       @submit="submitTicket($event as FormSubmitData<TicketFormData>)"
     />
   </div>

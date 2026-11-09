@@ -11,8 +11,8 @@ import {
   type KnowledgeBaseAnswerTranslationFragment,
 } from '#shared/graphql/types.ts'
 
-import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
-import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
+import CommonEntityAttribute from '#desktop/components/CommonEntityAttribute/CommonEntityAttribute.vue'
+import CommonEntityAttributeContainer from '#desktop/components/CommonEntityAttribute/CommonEntityAttributeContainer.vue'
 import { visibilityMeta } from '#desktop/components/KnowledgeBase/KnowledgeBaseAnswerIcon/visibilityMeta.ts'
 import { useKnowledgeBaseAnswerReachedDates } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
@@ -58,31 +58,31 @@ const categoryPath = computed(() => {
 </script>
 
 <template>
-  <CommonObjectAttributeContainer
+  <CommonEntityAttributeContainer
     class="grid-cols-1! *:col-span-1 @lg:grid-cols-2! @3xl:grid-cols-3!"
   >
-    <CommonObjectAttribute
+    <CommonEntityAttribute
       v-if="reachedDates.internalAt"
       :label="visibilityMeta[EnumKnowledgeBaseVisibility.Internal].timestampLabel"
     >
       <CommonDateTime :date-time="reachedDates.internalAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute
+    <CommonEntityAttribute
       v-if="reachedDates.publishedAt"
       :label="visibilityMeta[EnumKnowledgeBaseVisibility.Published].timestampLabel"
     >
       <CommonDateTime :date-time="reachedDates.publishedAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute
+    <CommonEntityAttribute
       v-if="reachedDates.archivedAt"
       :label="visibilityMeta[EnumKnowledgeBaseVisibility.Archived].timestampLabel"
     >
       <CommonDateTime :date-time="reachedDates.archivedAt" type="relative" />
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute v-if="categoryTitle" :label="__('Category')">
+    <CommonEntityAttribute v-if="categoryTitle" :label="__('Category')">
       <CommonLink
         v-tooltip.supportive="categoryPath"
         :link="categoryRoute"
@@ -92,15 +92,15 @@ const categoryPath = computed(() => {
       >
         {{ categoryTitle }}
       </CommonLink>
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute :label="__('Language')">
+    <CommonEntityAttribute :label="__('Language')">
       <CommonLabel>
         {{ systemLocale.name }}
       </CommonLabel>
-    </CommonObjectAttribute>
+    </CommonEntityAttribute>
 
-    <CommonObjectAttribute v-if="tags.length" :label="__('Tags')">
+    <CommonEntityAttribute v-if="tags.length" :label="__('Tags')">
       <ul class="flex flex-wrap gap-1.5">
         <li
           v-for="tag in tags"
@@ -114,6 +114,6 @@ const categoryPath = computed(() => {
           </CommonLabel>
         </li>
       </ul>
-    </CommonObjectAttribute>
-  </CommonObjectAttributeContainer>
+    </CommonEntityAttribute>
+  </CommonEntityAttributeContainer>
 </template>

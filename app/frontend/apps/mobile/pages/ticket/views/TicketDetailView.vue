@@ -429,7 +429,7 @@ const showBottomBanner = computed(() => {
         :initial-values="initialTicketValue"
         :initial-entity-object="ticket"
         :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketEdit"
-        use-object-attributes
+        use-entity-attributes
         :aria-hidden="!formVisible"
         :class="formVisible ? 'visible' : 'hidden'"
         @submit="saveTicketForm($event as FormSubmitData<TicketUpdateFormData>)"

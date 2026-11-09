@@ -4,9 +4,9 @@
 import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import { useTicketSubscribe } from '#shared/entities/ticket/composables/useTicketSubscribe.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
@@ -23,7 +23,7 @@ import TicketObjectAttributes from '../../components/TicketDetailView/TicketObje
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
-const { attributes: objectAttributes } = useObjectAttributes(EnumObjectManagerObjects.Ticket)
+const { attributes: entityAttributes } = useEntityAttributes(EnumObjectManagerObjects.Ticket)
 
 const { form, initialFormTicketValue, ticket, updateFormLocation, ticketQuery } =
   useTicketInformation()
@@ -134,10 +134,10 @@ const hasEscalation = computed(() => {
     {{ $t('Discard your unsaved changes') }}
   </FormKit>
 
-  <ObjectAttributes
+  <EntityAttributes
     v-if="!isTicketEditable && ticket"
     :object="ticket"
-    :attributes="objectAttributes"
+    :attributes="entityAttributes"
     :skip-attributes="['title', 'number', 'customer_id', 'organization_id']"
   />
 

@@ -21,7 +21,7 @@ const renderTooltip = (type: 'popup' | 'inline', props: Props) => {
       default: '<span data-test-id="trigger">T</span>',
     },
     visuals: {
-      objectAttributes: {} as any,
+      entityAttributes: {} as any,
       tooltip: {
         type,
         component: CustomComponent,

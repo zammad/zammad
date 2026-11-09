@@ -3,8 +3,8 @@
 import { isEqual } from 'lodash-es'
 import { computed, reactive, toValue } from 'vue'
 
-import { useObjectAttributesStore } from '#shared/entities/object-attributes/stores/objectAttributes.ts'
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import { useEntityAttributesStore } from '#shared/entities/core/attributes/stores/entityAttributes.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import {
   EnumSearchableModels,
   type EnumObjectManagerObjects,
@@ -33,7 +33,7 @@ export const useSearchAdvancedFilters = (
   selectedEntity: Ref<string>,
   initialFilters: FilterSelectorEntry[] = [],
 ) => {
-  const { getObjectAttributesForObject, loadObjectAttributesForObject } = useObjectAttributesStore()
+  const { getEntityAttributes, loadEntityAttributes } = useEntityAttributesStore()
   const { hasPermission } = useSessionStore()
 
   const { plugins: visiblePlugins } = useSearchPlugins()
@@ -56,7 +56,7 @@ export const useSearchAdvancedFilters = (
   const filterPlugins = computed(() => visiblePlugins.value.filter(isFilterablePlugin))
 
   filterPlugins.value.forEach((plugin) => {
-    loadObjectAttributesForObject(plugin.object)
+    loadEntityAttributes(plugin.object)
   })
 
   // Filter-plugin membership doesn't change during a session, so per-entity
@@ -107,7 +107,7 @@ export const useSearchAdvancedFilters = (
     Object.fromEntries(
       filterPlugins.value.map((plugin) => [
         plugin.name,
-        toValue(getObjectAttributesForObject(plugin.object)?.filterAttributes) ?? [],
+        toValue(getEntityAttributes(plugin.object)?.filterAttributes) ?? [],
       ]),
     ),
   )
@@ -121,7 +121,7 @@ export const useSearchAdvancedFilters = (
     Object.fromEntries(
       filterPlugins.value.map((plugin) => [
         plugin.name,
-        toValue(getObjectAttributesForObject(plugin.object)?.loading) ?? false,
+        toValue(getEntityAttributes(plugin.object)?.loading) ?? false,
       ]),
     ),
   )

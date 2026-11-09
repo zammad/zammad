@@ -2,7 +2,7 @@
 
 import { parse, stringify, type IStringifyOptions, type IParseOptions } from 'qs'
 
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'
 

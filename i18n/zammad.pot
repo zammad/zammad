@@ -1018,8 +1018,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
+#: app/frontend/shared/entities/ticket/attributes.ts:14
 #: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr ""
 
@@ -1401,7 +1401,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:331
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:128
 msgid "Add link"
 msgstr ""
 
@@ -3966,7 +3966,7 @@ msgid "Closed tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:77
+#: app/frontend/shared/entities/ticket/attributes.ts:77
 #: app/graphql/gql/types/overview_type.rb:106
 msgid "Closing time"
 msgstr ""
@@ -4384,7 +4384,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/auth_provider.coffee:32
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:178
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:183
 msgid "Copied!"
 msgstr ""
 
@@ -4791,9 +4791,9 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:25
+#: app/frontend/shared/entities/organization/attributes.ts:21
+#: app/frontend/shared/entities/ticket/attributes.ts:102
+#: app/frontend/shared/entities/user/attributes.ts:22
 #: app/graphql/gql/types/overview_type.rb:109
 msgid "Created at"
 msgstr ""
@@ -4817,9 +4817,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
 #: app/assets/javascripts/app/models/user.coffee:23
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
+#: app/frontend/shared/entities/organization/attributes.ts:11
+#: app/frontend/shared/entities/ticket/attributes.ts:91
+#: app/frontend/shared/entities/user/attributes.ts:11
 #: app/graphql/gql/types/overview_type.rb:108
 msgid "Created by"
 msgstr ""
@@ -7182,7 +7182,7 @@ msgid "Emails before the cut-off time are imported as archived tickets. Emails a
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:310
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:144
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/video-embed/VideoEmbedForm.vue:103
 msgid "Embed video"
 msgstr ""
 
@@ -7765,7 +7765,7 @@ msgid "Escalation Times"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:21
+#: app/frontend/shared/entities/ticket/attributes.ts:21
 #: app/graphql/gql/types/overview_type.rb:98
 msgid "Escalation at"
 msgstr ""
@@ -7775,7 +7775,7 @@ msgstr ""
 msgid "Escalation at (Close Time)"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:42
+#: app/frontend/shared/entities/ticket/attributes.ts:42
 msgid "Escalation at (Close time)"
 msgstr ""
 
@@ -7784,7 +7784,7 @@ msgstr ""
 msgid "Escalation at (First Response Time)"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:28
+#: app/frontend/shared/entities/ticket/attributes.ts:28
 msgid "Escalation at (First response time)"
 msgstr ""
 
@@ -7793,7 +7793,7 @@ msgstr ""
 msgid "Escalation at (Update Time)"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:35
+#: app/frontend/shared/entities/ticket/attributes.ts:35
 msgid "Escalation at (Update time)"
 msgstr ""
 
@@ -8234,7 +8234,7 @@ msgstr ""
 msgid "First Steps"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:116
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:121
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:89
 msgid "First article"
 msgstr ""
@@ -8250,7 +8250,7 @@ msgid "First name"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:70
+#: app/frontend/shared/entities/ticket/attributes.ts:70
 #: app/graphql/gql/types/overview_type.rb:105
 msgid "First response"
 msgstr ""
@@ -9180,7 +9180,7 @@ msgstr ""
 msgid "Hidden articles: %s"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:87
 msgid "Hide"
 msgstr ""
 
@@ -9192,7 +9192,7 @@ msgstr ""
 msgid "Hide authenticator app secret"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:87
 msgid "Hide notification"
 msgstr ""
 
@@ -10573,28 +10573,28 @@ msgid "Last changed"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:84
+#: app/frontend/shared/entities/ticket/attributes.ts:84
 #: app/graphql/gql/types/overview_type.rb:107
 msgid "Last closing time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:21
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:49
+#: app/frontend/shared/entities/ticket/attributes.ts:49
 #: app/graphql/gql/types/overview_type.rb:102
 msgid "Last contact"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/ticket.coffee:22
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:56
+#: app/frontend/shared/entities/ticket/attributes.ts:56
 #: app/graphql/gql/types/overview_type.rb:103
 msgid "Last contact (agent)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:248
 #: app/assets/javascripts/app/models/ticket.coffee:23
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:63
+#: app/frontend/shared/entities/ticket/attributes.ts:63
 #: app/graphql/gql/types/overview_type.rb:104
 msgid "Last contact (customer)"
 msgstr ""
@@ -10613,7 +10613,7 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:127
+#: app/frontend/shared/entities/ticket/attributes.ts:127
 msgid "Last owner update"
 msgstr ""
 
@@ -10651,7 +10651,7 @@ msgstr ""
 msgid "Lastname, Firstname"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:110
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_overview_popover_provider.coffee:115
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:83
 msgid "Latest article"
 msgstr ""
@@ -10804,7 +10804,7 @@ msgstr ""
 msgid "Link already exists"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:215
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue:161
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:321
 msgid "Link answer"
 msgstr ""
@@ -11044,7 +11044,7 @@ msgstr ""
 msgid "Lost network connection"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:365
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:370
 msgid "Lost network connection!"
 msgstr ""
 
@@ -14178,6 +14178,7 @@ msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting.vue:32
 msgid "Personal settings"
 msgstr ""
 
@@ -21429,7 +21430,7 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:368
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:373
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:20
 msgid "Trying to reconnect…"
 msgstr ""
@@ -21949,9 +21950,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:30
 #: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswerTable.vue:51
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
+#: app/frontend/shared/entities/organization/attributes.ts:38
+#: app/frontend/shared/entities/ticket/attributes.ts:120
+#: app/frontend/shared/entities/user/attributes.ts:41
 #: app/graphql/gql/types/overview_type.rb:111
 msgid "Updated at"
 msgstr ""
@@ -21973,9 +21974,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:66
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
+#: app/frontend/shared/entities/organization/attributes.ts:28
+#: app/frontend/shared/entities/ticket/attributes.ts:109
+#: app/frontend/shared/entities/user/attributes.ts:30
 #: app/graphql/gql/types/overview_type.rb:110
 msgid "Updated by"
 msgstr ""
@@ -24657,8 +24658,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:56
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:19
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:82
-#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:13
+#: app/frontend/shared/components/EntityAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
+#: app/frontend/shared/entities/core/attributes/form/resolver/fields/active.ts:13
 #: db/seeds/settings.rb:681
 msgid "no"
 msgstr ""
@@ -25250,8 +25251,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:55
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:18
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
-#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:12
+#: app/frontend/shared/components/EntityAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
+#: app/frontend/shared/entities/core/attributes/form/resolver/fields/active.ts:12
 #: db/seeds/object_manager_attributes.rb:1533
 #: db/seeds/settings.rb:680
 msgid "yes"

@@ -4,7 +4,7 @@
 import { computed, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
 import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useOrganizationEntity } from '#shared/entities/organization/composables/useOrganizationEntity.ts'
@@ -48,7 +48,7 @@ const organizationId = computed(() => convertToGraphQLId('Organization', props.i
 const {
   organization,
   loadingWithoutCachedResult,
-  objectAttributes,
+  entityAttributes,
   organizationMembers,
   fetchMoreMembers,
 } = useOrganizationDetail(
@@ -178,8 +178,8 @@ const scrollTo = (position: 'start' | 'end' = 'end') => {
                 </template>
               </CommonSimpleEntityList>
             </CommonSectionContainer>
-            <ObjectAttributes
-              :attributes="objectAttributes"
+            <EntityAttributes
+              :attributes="entityAttributes"
               :object="organization"
               :skip-attributes="['name']"
               :inline-editable="{ note: useOrganizationNoteUpdateMutation }"

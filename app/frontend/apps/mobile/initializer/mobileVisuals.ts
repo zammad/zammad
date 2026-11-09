@@ -10,7 +10,7 @@ import FieldFileList from '#mobile/components/Form/fields/FieldFile/FieldFileLis
 
 export const initializeMobileVisuals = () => {
   setupCommonVisualConfig({
-    objectAttributes: {
+    entityAttributes: {
       outer: CommonSectionMenu,
       wrapper: CommonSectionMenuItem,
       classes: {

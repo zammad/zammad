@@ -799,7 +799,7 @@ const handleShowArticleForm = (
           :initial-entity-object="ticket"
           :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketEdit"
           :form-updater-additional-params="formUpdaterAdditionalParams"
-          use-object-attributes
+          use-entity-attributes
           :schema-component-library="{
             Teleport: markRaw(Teleport) as unknown as Component,
           }"

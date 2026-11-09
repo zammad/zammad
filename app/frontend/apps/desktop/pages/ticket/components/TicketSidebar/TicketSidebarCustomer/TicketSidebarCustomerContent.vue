@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import EntityAttributes from '#shared/components/EntityAttributes/EntityAttributes.vue'
+import type { EntityAttribute } from '#shared/entities/core/attributes/types/store.ts'
 import { useUserNoteUpdateMutation } from '#shared/entities/user/graphql/mutations/noteUpdate.api.ts'
 import { EnumTicketStateTypeCategory, type Organization, type User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -26,7 +26,7 @@ import TicketSidebarContent from '../TicketSidebarContent.vue'
 interface Props extends TicketSidebarContentProps {
   customer: User
   secondaryOrganizations: ReturnType<typeof normalizeEdges<Partial<Organization>>>
-  objectAttributes: ObjectAttribute[]
+  entityAttributes: EntityAttribute[]
   // Owned by the sidebar, which also offers it when there is no customer.
   changeCustomerMenuItem: MenuItem
 }
@@ -62,8 +62,8 @@ const actions = computed<MenuItem[]>(() => [
   >
     <UserInfo :user="customer" has-organization-popover />
 
-    <ObjectAttributes
-      :attributes="objectAttributes"
+    <EntityAttributes
+      :attributes="entityAttributes"
       :object="customer"
       :skip-attributes="['firstname', 'lastname', 'organization_id', 'organization_ids']"
       :inline-editable="{ note: useUserNoteUpdateMutation }"

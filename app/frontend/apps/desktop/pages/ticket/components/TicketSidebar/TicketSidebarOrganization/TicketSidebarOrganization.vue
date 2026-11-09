@@ -64,7 +64,7 @@ const organizationInternalId = computed(() => {
   return customer.value?.organization?.id
 })
 
-const { organization, organizationMembers, objectAttributes, fetchMoreMembers } =
+const { organization, organizationMembers, entityAttributes, fetchMoreMembers } =
   useOrganizationDetail(organizationInternalId)
 </script>
 
@@ -82,7 +82,7 @@ const { organization, organizationMembers, objectAttributes, fetchMoreMembers } 
       :sidebar-plugin="sidebarPlugin"
       :organization="organization"
       :organization-members="organizationMembers"
-      :object-attributes="objectAttributes"
+      :entity-attributes="entityAttributes"
       @load-more-members="fetchMoreMembers"
     />
   </TicketSidebarWrapper>

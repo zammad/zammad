@@ -8,9 +8,9 @@ import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
+import { useEntityAttributeFormData } from '#shared/entities/core/attributes/composables/useEntityAttributeFormData.ts'
+import { useEntityAttributes } from '#shared/entities/core/attributes/composables/useEntityAttributes.ts'
 import { useMacros, useTicketMacros } from '#shared/entities/macro/composables/useMacros.ts'
-import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import type {
   TicketArticleReceivedFormValues,
   TicketBulkEditFormData,
@@ -76,27 +76,27 @@ const formSchema = defineFormSchema([
       {
         name: 'group_id',
         screen: 'overview_bulk',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
       {
         name: 'owner_id',
         screen: 'overview_bulk',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
       {
         name: 'state_id',
         screen: 'overview_bulk',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
       {
         name: 'pending_time',
         screen: 'overview_bulk',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
       {
         name: 'priority_id',
         screen: 'overview_bulk',
-        object: EnumObjectManagerObjects.Ticket,
+        entity: EnumObjectManagerObjects.Ticket,
       },
       {
         name: 'showArticle',
@@ -122,7 +122,7 @@ const formSchema = defineFormSchema([
           },
           {
             name: 'body',
-            object: EnumObjectManagerObjects.TicketArticle,
+            entity: EnumObjectManagerObjects.TicketArticle,
             props: {
               mode: ['note'],
             },
@@ -156,7 +156,7 @@ const formSchema = defineFormSchema([
 // To make popover be above the flyout backdrop
 provideFieldEditorOptions({ zIndex: '40' })
 
-const { attributesLookup: ticketObjectAttributesLookup } = useObjectAttributes(
+const { attributesLookup: ticketEntityAttributesLookup } = useEntityAttributes(
   EnumObjectManagerObjects.Ticket,
 )
 
@@ -218,9 +218,9 @@ const bulkEditTickets = async (formData: FormSubmitData<TicketBulkEditFormData>)
     Object.entries(formData).filter(([, value]) => value),
   ) as FormSubmitData<TicketBulkEditFormData>
 
-  const { internalObjectAttributeValues } = useObjectAttributeFormData<TicketBulkEditFormData>(
+  const { internalObjectAttributeValues } = useEntityAttributeFormData<TicketBulkEditFormData>(
     EnumObjectManagerObjects.Ticket,
-    ticketObjectAttributesLookup.value,
+    ticketEntityAttributesLookup.value,
     cleanedFormData,
   )
 
@@ -316,7 +316,7 @@ const schemaData = reactive({
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketBulkEdit"
       :form-updater-additional-params="bulkSelector"
       should-autofocus
-      use-object-attributes
+      use-entity-attributes
       :schema="formSchema"
       :schema-data="schemaData"
       @submit="bulkEditTickets($event as FormSubmitData<TicketBulkEditFormData>)"

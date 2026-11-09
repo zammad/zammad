@@ -7,7 +7,7 @@ export const useUserFormSchema = () => {
   const buildUserSchema = (screen: 'edit' | 'create', schema?: FormSchemaNode[]) => [
     {
       screen,
-      object: EnumObjectManagerObjects.User,
+      entity: EnumObjectManagerObjects.User,
     },
     ...(schema ? schema : []),
   ]

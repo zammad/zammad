@@ -4,7 +4,7 @@ import { waitFor } from '@testing-library/vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
-import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { FilterAttribute } from '#shared/entities/core/attributes/types/store.ts'
 
 import SearchEntityFiltersForm from '../SearchControls/SearchEntityFiltersForm.vue'
 
