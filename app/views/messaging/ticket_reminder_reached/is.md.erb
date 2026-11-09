@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Áminning!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Áminning!_
 Beiðni þarnast athygli: áminningartíma náð fyrir (#{ticket.title}) hjá viðskiptavini "*#{ticket.customer.longname}*".
 
 <% if @objects[:article] %>

@@ -20251,7 +20251,7 @@ msgid "This new desktop BETA UI is currently in development and not ready for pr
 msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb:117
-#: app/graphql/gql/zammad_schema.rb:113
+#: app/graphql/gql/zammad_schema.rb:114
 msgid "This object already exists."
 msgstr ""
 
@@ -21139,7 +21139,7 @@ msgstr ""
 msgid "Toggle dark mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:183
 msgid "Toggle group"
 msgstr ""
 

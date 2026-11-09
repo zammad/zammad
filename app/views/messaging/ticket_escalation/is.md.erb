@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Forgangur hækkaður þann #{ticket.escalation_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Forgangur hækkaður þann #{ticket.escalation_at}_
 Beiðni (#{ticket.title}) frá "#{ticket.customer.longname}" hefur verið með hækkuðum forgangi síðan "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>
