@@ -16,6 +16,7 @@ class Gql::ZammadSchema < GraphQL::Schema
   default_max_page_size 2000
   default_page_size 100
   max_complexity 10_000
+  complexity_cost_calculation_mode :future
 
   max_depth 8, count_introspection_fields: false
 
