@@ -70,23 +70,32 @@ describe('Form - Field - Inputs (Text) (Formkit-BuildIn)', () => {
     expect(emittedInput[6][0]).toBe('Example')
   })
 
-  it('can be disabled', async () => {
+  it('renders the disabled state as readonly, so content stays reachable', async () => {
     const input = wrapper.getByLabelText('Title')
 
-    expect(input).toBeEnabled()
+    expect(input).not.toHaveAttribute('readonly')
+    expect(input).not.toHaveAttribute('tabindex')
+    expect(input).not.toHaveAttribute('aria-disabled')
 
     await wrapper.rerender({
       disabled: true,
     })
 
-    expect(input).toBeDisabled()
+    // Readonly instead of disabled, so overflowing content stays scrollable
+    //   and selectable (#6494).
+    expect(input).not.toHaveAttribute('disabled')
+    expect(input).toHaveAttribute('readonly')
+    expect(input).toHaveAttribute('tabindex', '-1')
+    expect(input).toHaveAttribute('aria-disabled', 'true')
 
-    // Rest the disabled state again and check if it's enabled again.
+    // Reset the disabled state again and check if it's enabled again.
     await wrapper.rerender({
       disabled: false,
     })
 
-    expect(input).toBeEnabled()
+    expect(input).not.toHaveAttribute('readonly')
+    expect(input).not.toHaveAttribute('tabindex')
+    expect(input).not.toHaveAttribute('aria-disabled')
   })
 })
 
@@ -132,6 +141,23 @@ describe('Form - Field - Color (Formkit-BuildIn)', () => {
 
   it('can render a color input', () => {
     expect(wrapper.getByLabelText('Color')).toHaveAttribute('type', 'color')
+  })
+
+  it('stays really disabled, because the native picker ignores readonly', async () => {
+    await wrapper.rerender({
+      disabled: true,
+    })
+
+    const input = wrapper.getByLabelText('Color')
+
+    expect(input).toBeDisabled()
+    expect(input).not.toHaveAttribute('readonly')
+
+    await wrapper.rerender({
+      disabled: false,
+    })
+
+    expect(input).toBeEnabled()
   })
 })
 
@@ -202,6 +228,23 @@ describe('Form - Field - Time (Formkit-BuildIn)', () => {
   it('can render a time input', () => {
     const input = wrapper.getByLabelText('Time')
     expect(input).toHaveAttribute('type', 'time')
+  })
+
+  it('stays really disabled, because the native picker ignores readonly', async () => {
+    await wrapper.rerender({
+      disabled: true,
+    })
+
+    const input = wrapper.getByLabelText('Time')
+
+    expect(input).toBeDisabled()
+    expect(input).not.toHaveAttribute('readonly')
+
+    await wrapper.rerender({
+      disabled: false,
+    })
+
+    expect(input).toBeEnabled()
   })
 })
 

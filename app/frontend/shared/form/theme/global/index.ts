@@ -2,8 +2,10 @@
 
 import type { FormThemeClasses } from '#shared/types/form.ts'
 
+// Disabled text fields render as readonly to keep their content reachable
+//   (#6494) — without a caret, so they do not look editable.
 const defaultTextInput: Record<string, string> = {
-  input: 'block focus:outline-hidden focus:ring-0',
+  input: 'block focus:outline-hidden focus:ring-0 formkit-disabled:caret-transparent',
 }
 
 const classes: FormThemeClasses = {

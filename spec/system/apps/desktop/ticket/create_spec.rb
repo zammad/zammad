@@ -166,6 +166,34 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
     end
   end
 
+  context 'when a core workflow sets a textarea attribute read-only', db_strategy: :reset do
+    before do
+      create(:object_manager_attribute_textarea, :shown_screen, name: 'notes', display: 'Notes', default: "Line\n" * 20)
+      ObjectManager::Attribute.migration_execute
+      create(:core_workflow,
+             :active_and_screen,
+             object:  'Ticket',
+             screen:  'create_middle',
+             perform: {
+               'ticket.notes': {
+                 operator:     'set_readonly',
+                 set_readonly: true
+               },
+             })
+
+      open_ticket_create
+    end
+
+    # The disabled wrapper turns pointer events off, the textarea has to turn them back
+    #   on, so its overflowing content stays scrollable and selectable (#6494).
+    it 'keeps the overflowing content reachable' do
+      textarea = field('Notes').get_by_role('textbox')
+
+      expect(textarea).to have_attribute('readonly', '')
+      expect(textarea).to have_css('pointer-events', 'auto')
+    end
+  end
+
   context 'when user tree select attributes have a default', db_strategy: :reset do
     before do
       screens = { create: { '-all-' => { shown: true } } }

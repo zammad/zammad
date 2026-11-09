@@ -22,7 +22,7 @@ export const useInlineMode = (
   const isInlineMode = computed(() => context.value.inline)
 
   const onWrapperClick = () => {
-    if (isEditing.value || !isInlineMode.value) return
+    if (isEditing.value || !isInlineMode.value || context.value.disabled) return
     isEditing.value = true
   }
 
