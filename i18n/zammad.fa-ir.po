@@ -3153,11 +3153,11 @@ msgstr ""
 "به طور خودکار فایل chat.css را بارگیری می‌کند. اگر می‌خواهید از css خود "
 "استفاده کنید، فقط آن را روی false تنظیم کنید."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "ذخیره خودکار در حال انجام…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "ذخیره خودکار بیشتر از حد انتظار طول می‌کشد…"
 
@@ -3385,8 +3385,8 @@ msgstr ""
 "قبل از شروع، حتماً نکات زیر را بررسی کنید تا از انتقال روان و استفاده از "
 "نمونه Zammad خود اطمینان حاصل کنید:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "شروع پیام ارجاع شده"
 
@@ -3578,7 +3578,7 @@ msgstr "تنظیمات ارائه دهنده کپچا"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3719,7 +3719,7 @@ msgstr ""
 "مجددا امتحان کنید."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4114,7 +4114,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "فهرست بررسی"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "مورد فهرست بررسی"
 
@@ -4413,7 +4413,7 @@ msgstr "اینجا کلیک نمایید"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "برای راه‌اندازی یک روش احراز هویت دو عاملی اینجا کلیک کنید."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "برای ویرایش کلیک کنید…"
 
@@ -5793,7 +5793,7 @@ msgstr "به‌روزرسانی پایگاه داده لازم است"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "تاریخ"
 
@@ -8030,6 +8030,7 @@ msgstr "تنظیمات الاستیک‌سرچ بایستی انجام شود!"
 msgid "Elasticsearch version"
 msgstr "نسخه Elasticsearch"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -8041,6 +8042,7 @@ msgstr "نسخه Elasticsearch"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -9720,7 +9722,7 @@ msgstr "کپچای دوستانه"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "از تاریخ"
 
@@ -11199,7 +11201,7 @@ msgstr ""
 "کد ویجت را در کد منبع هر صفحه‌ای که چت باید در آن قابل مشاهده باشد، وارد "
 "کنید. باید در انتهای کد منبع صفحه قبل از تگ بسته §</body>§ قرار گیرد."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 msgid "Inserting image not possible due to source restrictions"
 msgstr "درج تصویر به دلیل محدودیت‌های منبع امکان‌پذیر نیست"
 
@@ -13247,7 +13249,7 @@ msgid "Mismatching phone number id."
 msgstr "شناسه شماره تلفن نامطابق."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 #, fuzzy
 #| msgid "Stores the AI provider configuration."
 msgid "Missing embedding model in the provider configuration"
@@ -13823,6 +13825,8 @@ msgstr "استراتژی برچسب‌های جدید"
 msgid "New text module"
 msgstr "ماژول متن جدید"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -14582,7 +14586,7 @@ msgstr "اعلان خوانده شد"
 msgid "Notification sender"
 msgstr "فرستنده اعلان"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr "اعلان ارسال شد به"
 
@@ -14783,7 +14787,7 @@ msgstr "بسیار خوب"
 msgid "Ollama"
 msgstr "Ollama"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "در %s، %s نوشت:"
@@ -14816,7 +14820,9 @@ msgid ""
 "names."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "آنلاین"
@@ -15814,7 +15820,7 @@ msgstr "لطفاً قبل از اجرا، منبع واردات را پیکرب�
 msgid "Please contact your administrator."
 msgstr "لطفا با ادمین تماس بگیرید."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -15884,7 +15890,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "لطفاً برای ورود ادامه دهید"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "لطفا دریافت‌کننده را در قسمت \"TO\" یا \"CC\" وارد کنید."
 
@@ -17185,7 +17191,7 @@ msgstr "تغییر اندازه پنل مقاله"
 msgid "Resize column"
 msgstr "تغییر اندازه ستون"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "تغییر اندازه قاب"
 
@@ -19501,7 +19507,7 @@ msgstr "استان"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "موضوع"
@@ -19675,7 +19681,7 @@ msgstr "%s با %s جابجا شد. %s به موقعیت %s منتقل شد."
 msgid "Switch back to old layout"
 msgstr "بازگشت به طرح قدیمی"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 #, fuzzy
 #| msgid "Click here"
 msgid "Switch here"
@@ -19977,7 +19983,7 @@ msgstr "ویرایش متن"
 msgid "Text field"
 msgstr "جانوشت متن"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "متن جاافتاده"
@@ -19995,7 +20001,7 @@ msgstr "ماژول‌های متن"
 msgid "Text modules are …"
 msgstr "ماژول‌های متن عبارتند از…"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "متن موردنیاز است"
 
@@ -20146,7 +20152,7 @@ msgstr "کلید امضای PGP لغو شده است."
 msgid "The Telegram bot could not be saved."
 msgstr "بات تلگرام قابل ذخیره نیست."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "فایل Telegram بزرگتر از 20 مگابایت مجاز است."
 
@@ -20673,7 +20679,7 @@ msgstr "امکان ایجاداین ورودی وجود ندارد."
 msgid "The event could not be processed."
 msgstr "درخواست قابل انجام نیست."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "فایل نمی‌تواند از ربات بازیابی شود."
 
@@ -21335,7 +21341,7 @@ msgstr "مولفه الزامی «مقدار» وارد نشده است."
 msgid "The required value 'group_id' is missing."
 msgstr "مولفه الزامی «شناسه گروه» وارد نشده است."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "پاسخ پردازش نشد."
@@ -22297,7 +22303,7 @@ msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "این یک گواهی X509 معتبر نیست. لطفاً قالب گواهی را بررسی کنید."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr ""
 
@@ -22925,11 +22931,20 @@ msgstr "ایجاد کردن تیکت"
 msgid "Ticket customer updated successfully."
 msgstr "مشتری تیکت به‌روز شد."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
 msgstr "بالاسپاری تیکت"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+#, fuzzy
+#| msgid "5. Ticket Escalation Warning"
+msgid "Ticket escalation warning"
+msgstr "۵. هشدار بالاسپاری تیکت"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
@@ -22988,8 +23003,10 @@ msgstr "تنظیمات نمای کلی تیکت ذخیره می‌شود."
 msgid "Ticket overviews"
 msgstr "نمای کلی تیکت‌ها"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "فرارسیدن زمان یادآوری تیکت"
@@ -23080,9 +23097,11 @@ msgstr "برچسب‌های تیکت به‌روز شدند."
 msgid "Ticket title"
 msgstr "عنوان تیکت"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "بروز شدن تیکت"
@@ -23371,7 +23390,7 @@ msgstr "عنوان فرم"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -24458,7 +24477,7 @@ msgstr "در حال بارگزاری"
 msgid "Uploading file: %s"
 msgstr "بارگیری %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "در حال بارگذاری…"
 
@@ -25246,7 +25265,7 @@ msgstr "خوش آمدید!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "خوش آمدید! احساس رایگان برای پرسیدن سوال از من!"
 
@@ -26448,7 +26467,7 @@ msgstr "چت"
 msgid "checked"
 msgstr "علامت زده شد"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "آیتم چک‌لیست '%s' علامت زده شد"
 
@@ -26740,7 +26759,7 @@ msgstr "%s توسط من ویرایش شده"
 msgid "email"
 msgstr "ایمیل"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "ایمیل به '%s' ارسال شد"
 
@@ -26826,7 +26845,7 @@ msgstr "برای پاسخگویی یک عامل"
 msgid "forward"
 msgstr "جلو"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "از"
 
@@ -27451,8 +27470,14 @@ msgstr "بدون مقدار"
 msgid "note"
 msgstr "یادداشت"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
+msgstr "اعلان به '%s' ارسال شد"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#, fuzzy
+#| msgid "notification sent to '%s'"
+msgid "notification sent to '%s' (%s: %s)"
 msgstr "اعلان به '%s' ارسال شد"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
@@ -27541,7 +27566,7 @@ msgstr "ربع ساعت"
 msgid "reached"
 msgstr "فرارسیده"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "با یک %s به پیام از %s '%s' واکنش نشان داد"
 
@@ -27580,7 +27605,7 @@ msgstr "حذف"
 msgid "remove option"
 msgstr "حذف گزینه"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "واکنش به پیام از %s '%s' حذف شد"
 
@@ -27789,7 +27814,7 @@ msgstr "پیام شخصی telegram"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "theme,color,style,dark mode,night mode,light mode"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "این تیکت در تیکت %s ادغام شد"
 
@@ -27798,7 +27823,7 @@ msgstr "این تیکت در تیکت %s ادغام شد"
 msgid "ticket"
 msgstr "تیکت"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "تیکت %s در این تیکت ادغام شد"
 
@@ -27838,15 +27863,15 @@ msgstr "ردیابی شده در"
 msgid "translation,locale,localization"
 msgstr "translation,locale,localization"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "تریگر '%s' به دلیل رسیدن یادآوری در انتظار انجام شد"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "عامل «%s» اجرا شد به دلیل اینکه تیکت بالاسپاری شده"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "عامل «%s» اجرا شد به دلیل اینکه تیکت به زودی بالاسپاری می‌شود"
 
@@ -27875,7 +27900,7 @@ msgstr "twofactor,2fa,security key,passkey,authenticator app"
 msgid "unassign user"
 msgstr "عدم تخصیص کاربر"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "علامت آیتم چک‌لیست '%s' برداشته شد"
 
@@ -28601,9 +28626,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #~ msgid "4. Ticket Escalation"
 #~ msgstr "۴. بالاسپاری تیکت"
-
-#~ msgid "5. Ticket Escalation Warning"
-#~ msgstr "۵. هشدار بالاسپاری تیکت"
 
 #~ msgid "Add sender initials to end of a tweet."
 #~ msgstr "اضافه کردن پاراف فرستنده در پایان توییت."

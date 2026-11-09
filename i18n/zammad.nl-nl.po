@@ -3325,11 +3325,11 @@ msgstr ""
 "Het chat.css-bestand wordt automatisch geladen. Als je eigen CSS wilt "
 "gebruiken, zet deze waarde op false."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "Autosave bezig…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "Het automatisch opslaan duurt langer dan verwacht…"
 
@@ -3564,8 +3564,8 @@ msgstr ""
 "Voordat je begint: controleer de volgende punten zodat de migratie soepel "
 "verloopt en Zammad daarna goed werkt:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "Start doorgestuurd bericht"
 
@@ -3765,7 +3765,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3908,7 +3908,7 @@ msgstr ""
 "Probeer opnieuw."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4331,7 +4331,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "Checklist"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "Checklist-item"
 
@@ -4627,7 +4627,7 @@ msgstr "Klik hier"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Klik hier om een twee-factor-authenticatiemethode in te stellen."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "Klik om te bewerken…"
 
@@ -6066,7 +6066,7 @@ msgstr "Database update nodig"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "Datum"
 
@@ -8405,6 +8405,7 @@ msgstr "Elasticsearch moet geconfigureerd worden!"
 msgid "Elasticsearch version"
 msgstr "Elasticsearch-versie"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -8416,6 +8417,7 @@ msgstr "Elasticsearch-versie"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -10171,7 +10173,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "Van"
 
@@ -11705,7 +11707,7 @@ msgstr ""
 "zichtbaar moet zijn. Deze moet aan het einde van de broncode van de pagina "
 "geplaatst worden voordat de §</body>§ slottag geplaatst wordt."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 #, fuzzy
 #| msgid "It is not possible to delete your current account."
 msgid "Inserting image not possible due to source restrictions"
@@ -13852,7 +13854,7 @@ msgid "Mismatching phone number id."
 msgstr "Mismatch telefoonnummer id."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 #, fuzzy
 #| msgid "Stores the GitHub configuration."
 msgid "Missing embedding model in the provider configuration"
@@ -14444,6 +14446,8 @@ msgstr "Nieuwe categorie"
 msgid "New text module"
 msgstr "Nieuwe tekstmodule"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -15231,7 +15235,7 @@ msgstr "Notificatie gelezen"
 msgid "Notification sender"
 msgstr "Notificatie"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 #, fuzzy
 #| msgid "notification sent to '%s'"
 msgid "Notification sent to"
@@ -15450,7 +15454,7 @@ msgstr "Ok"
 msgid "Ollama"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "Op %s schreef %s:"
@@ -15485,7 +15489,9 @@ msgid ""
 "names."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
@@ -16560,7 +16566,7 @@ msgstr "Configureer de importbron voordat je deze uitvoert."
 msgid "Please contact your administrator."
 msgstr "Neem contact op met de beheerder."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -16629,7 +16635,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "Ga verder met inloggen"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Ontvanger nodig in \"TO\" of \"CC\"."
 
@@ -18017,7 +18023,7 @@ msgstr "Formaat artikelpaneel wijzigen"
 msgid "Resize column"
 msgstr "Kolom verwijderen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "Formaat van frame wijzigen"
 
@@ -20515,7 +20521,7 @@ msgstr "Straat"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "Onderwerp"
@@ -20702,7 +20708,7 @@ msgstr ""
 msgid "Switch back to old layout"
 msgstr "Terugschakelen naar oude lay-out"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 #, fuzzy
 #| msgid "Click here"
 msgid "Switch here"
@@ -21018,7 +21024,7 @@ msgstr "Tekstbewerking"
 msgid "Text field"
 msgstr "Tekstveld"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "Tekst ontbreekt"
@@ -21036,7 +21042,7 @@ msgstr "Tekst modules"
 msgid "Text modules are …"
 msgstr "Tekst modules zijn…"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "Tekst benodigd"
 
@@ -21197,7 +21203,7 @@ msgstr "De PGP-handtekeningsleutel is ingetrokken."
 msgid "The Telegram bot could not be saved."
 msgstr "De Telegrambot kon niet worden opgeslagen."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Het Telegram-bestand is groter dan het toegestane 20 MB."
 
@@ -21726,7 +21732,7 @@ msgstr "De vermelding kon niet worden gemaakt."
 msgid "The event could not be processed."
 msgstr "Het verzoek kon niet worden verwerkt."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "Het bestand kon niet uit de bot worden opgehaald."
 
@@ -22403,7 +22409,7 @@ msgstr "De vereiste parameter 'value' ontbreekt."
 msgid "The required value 'group_id' is missing."
 msgstr "De vereiste parameter 'group_id' ontbreekt."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 #, fuzzy
 #| msgid "The request could not be processed."
@@ -23367,7 +23373,7 @@ msgid ""
 msgstr ""
 "Dit is geen geldig X509-certificaat. Controleer het certificaatformaat."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr ""
 
@@ -23980,11 +23986,20 @@ msgstr "Ticket creatie"
 msgid "Ticket customer updated successfully."
 msgstr "Ticketklant succesvol geüpdatet."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
 msgstr "Ticket escalatie"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+#, fuzzy
+#| msgid "5. Ticket Escalation Warning"
+msgid "Ticket escalation warning"
+msgstr "5. Ticket Escalatie Waarschuwing"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
@@ -24055,8 +24070,10 @@ msgstr "Ticketoverzicht instellingen zijn opgeslagen."
 msgid "Ticket overviews"
 msgstr "Ticket Overzichten"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "Ticket herinnering behaald"
@@ -24147,9 +24164,11 @@ msgstr "Tickettags zijn bijgewerkt."
 msgid "Ticket title"
 msgstr "Ticket titel"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "Ticket bijwerken"
@@ -24448,7 +24467,7 @@ msgstr "Titel van het formulier"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -25616,7 +25635,7 @@ msgstr "Uploading"
 msgid "Uploading file: %s"
 msgstr "Download %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "Uploading…"
 
@@ -26456,7 +26475,7 @@ msgstr "Welkom!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Welkom! Stel gerust een vraag!"
 
@@ -27694,7 +27713,7 @@ msgstr "chat"
 msgid "checked"
 msgstr "afgevinkt"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "Checklist item '%s' afgevinkt"
 
@@ -27996,7 +28015,7 @@ msgstr "%s door mij aangepast"
 msgid "email"
 msgstr "e-mail"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "E-mail verzonden naar '%s'"
 
@@ -28084,7 +28103,7 @@ msgstr "voor een behandelaar om te reageren"
 msgid "forward"
 msgstr "doorsturen"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "van"
 
@@ -28740,8 +28759,14 @@ msgstr "niet verzonden (niet gedefineerd)"
 msgid "note"
 msgstr "notitie"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
+msgstr "Notificatie verzonden naar '%s'"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#, fuzzy
+#| msgid "notification sent to '%s'"
+msgid "notification sent to '%s' (%s: %s)"
 msgstr "Notificatie verzonden naar '%s'"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
@@ -28832,7 +28857,7 @@ msgstr "kwartier"
 msgid "reached"
 msgstr "bereikt"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "reageerde met een %s op bericht van %s '%s'"
 
@@ -28872,7 +28897,7 @@ msgstr "verwijderen"
 msgid "remove option"
 msgstr "optie verwijderen"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "verwijderde reactie op bericht van %s '%s'"
 
@@ -29085,7 +29110,7 @@ msgstr "telegram privé bericht"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "thema, kleur, stijl, donkere modus, nachtmodus, lichtmodus"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "Dit ticket is samengevoegd met ticket %s"
 
@@ -29094,7 +29119,7 @@ msgstr "Dit ticket is samengevoegd met ticket %s"
 msgid "ticket"
 msgstr "ticket"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "ticket %s werd samengevoegd met dit ticket"
 
@@ -29134,16 +29159,16 @@ msgstr "gevolgd in"
 msgid "translation,locale,localization"
 msgstr "vertaling, locale, lokalisatie"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 "trigger '%s' is uitgevoerd omdat de herinnering in afwachting is bereikt"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "trigger '%s' is uitgevoerd omdat het ticket is geëscaleerd"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "trigger '%s' is uitgevoerd omdat het ticket binnenkort zal escaleren"
 
@@ -29176,7 +29201,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "Niet toegewezen gebruiker"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "Open checklist-item '%s'"
 
@@ -29902,9 +29927,6 @@ msgstr "∅ Wachttijd vandaag"
 
 #~ msgid "4. Ticket Escalation"
 #~ msgstr "4. Ticket Escalatie"
-
-#~ msgid "5. Ticket Escalation Warning"
-#~ msgstr "5. Ticket Escalatie Waarschuwing"
 
 #~ msgid ""
 #~ "A team communication tool for the 21st century. Compatible with tools "

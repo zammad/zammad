@@ -3079,11 +3079,11 @@ msgid ""
 msgstr ""
 "يحمّل ملف chat.css تلقائياً. إذا أردت استخدام CSS الخاص بك، فعيّنه على false."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "جارٍ الحفظ التلقائي…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "الحفظ التلقائي يستغرق وقتًا أطول من المتوقع…"
 
@@ -3304,8 +3304,8 @@ msgstr ""
 "قبل البدء، تأكد من مراجعة النقاط التالية لضمان ترحيل سلس واستخدام سليم لنسخة "
 "Zammad:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "بداية الرسالة المُعاد توجيهها"
 
@@ -3491,7 +3491,7 @@ msgstr "خيارات مزوّد CAPTCHA"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3631,7 +3631,7 @@ msgstr ""
 "المحاولة مرة أخرى."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4012,7 +4012,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "قائمة التحقق"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "عنصر قائمة التحقق"
 
@@ -4300,7 +4300,7 @@ msgstr "انقر هنا"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "اضغط هنا لإعداد طريقة المصادقة الثنائية."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "انقر للتعديل…"
 
@@ -5653,7 +5653,7 @@ msgstr "مطلوب تحديث قاعدة البيانات"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "التاريخ"
 
@@ -7820,6 +7820,7 @@ msgstr "يجب إعداد Elasticsearch!"
 msgid "Elasticsearch version"
 msgstr "إصدار Elasticsearch"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -7831,6 +7832,7 @@ msgstr "إصدار Elasticsearch"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -9463,7 +9465,7 @@ msgstr "Friendly Captcha"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "من"
 
@@ -10910,7 +10912,7 @@ msgstr ""
 "أدخل شيفرة الأداة في الشيفرة المصدرية لكل صفحة تريد أن تظهر فيها الدردشة. "
 "يجب وضعها في نهاية الشيفرة المصدرية للصفحة قبل وسم الإغلاق §</body>§."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 msgid "Inserting image not possible due to source restrictions"
 msgstr "تعذر إدراج الصورة بسبب قيود المصدر"
 
@@ -12897,7 +12899,7 @@ msgid "Mismatching phone number id."
 msgstr "معرّف رقم الهاتف غير متطابق."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 msgid "Missing embedding model in the provider configuration"
 msgstr "نموذج التضمين غير موجود في إعدادات المزود"
 
@@ -13467,6 +13469,8 @@ msgstr "استراتيجية الوسوم الجديدة"
 msgid "New text module"
 msgstr "وحدة نص جديدة"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -14205,7 +14209,7 @@ msgstr "إشعار مقروء"
 msgid "Notification sender"
 msgstr "مرسل الإشعارات"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr "تم إرسال إشعار إلى"
 
@@ -14404,7 +14408,7 @@ msgstr "موافق"
 msgid "Ollama"
 msgstr "Ollama"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "في %s، كتب %s:"
@@ -14438,7 +14442,9 @@ msgid ""
 msgstr ""
 "خادم فيديو مستضاف ذاتيًا واحد أو أكثر غير صالح. يرجى التحقق من أسماء المضيفين."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "متصل"
@@ -15414,7 +15420,7 @@ msgstr "يرجى تهيئة مصدر الاستيراد قبل التشغيل."
 msgid "Please contact your administrator."
 msgstr "يرجى التواصل مع مسؤول النظام."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -15484,7 +15490,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "يرجى المتابعة إلى تسجيل الدخول"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "يرجى إدخال مستلم في حقل \"إلى\" أو \"نسخة (CC)\"."
 
@@ -16748,7 +16754,7 @@ msgstr "تغيير حجم لوحة الرسائل"
 msgid "Resize column"
 msgstr "تغيير حجم العمود"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "تغيير حجم الإطار"
 
@@ -18996,7 +19002,7 @@ msgstr "شارع"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "الموضوع"
@@ -19164,7 +19170,7 @@ msgstr "تم تبديل %s مع %s. تم نقل %s إلى الموضع %s."
 msgid "Switch back to old layout"
 msgstr "الرجوع إلى التخطيط القديم"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 #, fuzzy
 #| msgid "Click here"
 msgid "Switch here"
@@ -19460,7 +19466,7 @@ msgstr "تحرير النص"
 msgid "Text field"
 msgstr "حقل نصي"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "النص مفقود"
@@ -19478,7 +19484,7 @@ msgstr "وحدات النص"
 msgid "Text modules are …"
 msgstr "وحدات النص هي …"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "النص مطلوب"
 
@@ -19629,7 +19635,7 @@ msgstr "تم إبطال مفتاح توقيع PGP."
 msgid "The Telegram bot could not be saved."
 msgstr "تعذر حفظ بوت Telegram."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "ملف Telegram أكبر من الحد المسموح به وهو 20 ميجابايت."
 
@@ -20169,7 +20175,7 @@ msgstr "تعذر إنشاء الإدخال."
 msgid "The event could not be processed."
 msgstr "تعذرت معالجة الحدث."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "تعذر جلب الملف من الروبوت."
 
@@ -20814,7 +20820,7 @@ msgstr "المعامل المطلوب 'value' مفقود."
 msgid "The required value 'group_id' is missing."
 msgstr "القيمة المطلوبة 'group_id' مفقودة."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "تعذرت معالجة الاستجابة."
@@ -21737,7 +21743,7 @@ msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "هذه ليست شهادة X509 صالحة. يرجى التحقق من تنسيق الشهادة."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr ""
 
@@ -22326,10 +22332,19 @@ msgstr "إنشاء التذكرة"
 msgid "Ticket customer updated successfully."
 msgstr "تم تحديث عميل التذكرة بنجاح."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
+msgstr "تصعيد التذكرة"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket escalation warning"
 msgstr "تصعيد التذكرة"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
@@ -22387,8 +22402,10 @@ msgstr "تم حفظ إعدادات النظرات العامة للتذاكر."
 msgid "Ticket overviews"
 msgstr "النظرات العامة للتذاكر"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "حان موعد تذكير التذكرة"
@@ -22479,9 +22496,11 @@ msgstr "تم تحديث وسوم التذكرة بنجاح."
 msgid "Ticket title"
 msgstr "عنوان التذكرة"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "تحديث التذكرة"
@@ -22768,7 +22787,7 @@ msgstr "عنوان النموذج"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -23828,7 +23847,7 @@ msgstr "جارٍ الرفع"
 msgid "Uploading file: %s"
 msgstr "جارٍ رفع الملف: %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "جارٍ الرفع…"
 
@@ -24593,7 +24612,7 @@ msgstr "مرحبًا!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "أهلاً بك! يسعدنا الإجابة عن أسئلتك!"
 
@@ -25760,7 +25779,7 @@ msgstr "الدردشة"
 msgid "checked"
 msgstr "محدد"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "تم تحديد عنصر قائمة التحقق '%s'"
 
@@ -26045,7 +26064,7 @@ msgstr "عُدّل %s بواسطتي"
 msgid "email"
 msgstr "البريد الإلكتروني"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "تم إرسال بريد إلكتروني إلى '%s'"
 
@@ -26129,7 +26148,7 @@ msgstr "لرد الوكيل"
 msgid "forward"
 msgstr "إعادة توجيه"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "من"
 
@@ -26747,8 +26766,14 @@ msgstr "غير معيّن (غير محدد)"
 msgid "note"
 msgstr "ملاحظة"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
+msgstr "تم إرسال إشعار إلى '%s'"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#, fuzzy
+#| msgid "notification sent to '%s'"
+msgid "notification sent to '%s' (%s: %s)"
 msgstr "تم إرسال إشعار إلى '%s'"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
@@ -26837,7 +26862,7 @@ msgstr "ربع ساعة"
 msgid "reached"
 msgstr "تم الوصول"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "تفاعل بـ %s مع رسالة من %s '%s'"
 
@@ -26876,7 +26901,7 @@ msgstr "إزالة"
 msgid "remove option"
 msgstr "إزالة خيار"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "أزال التفاعل مع رسالة من %s '%s'"
 
@@ -27081,7 +27106,7 @@ msgstr "رسالة شخصية عبر Telegram"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "سمة,لون,نمط,الوضع الداكن,الوضع الليلي,الوضع الفاتح"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "تم دمج هذه التذكرة في التذكرة %s"
 
@@ -27090,7 +27115,7 @@ msgstr "تم دمج هذه التذكرة في التذكرة %s"
 msgid "ticket"
 msgstr "تذكرة"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "تم دمج التذكرة %s في هذه التذكرة"
 
@@ -27130,15 +27155,15 @@ msgstr "مُتابَع في"
 msgid "translation,locale,localization"
 msgstr "ترجمة,لغة,توطين"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "تم تنفيذ المحفز '%s' لحلول موعد التذكير المعلّق"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "تم تنفيذ المحفز '%s' بسبب تصعيد التذكرة"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "تم تنفيذ المحفز '%s' لقرب تصعيد التذكرة"
 
@@ -27167,7 +27192,7 @@ msgstr "ثنائية,2fa,مفتاح الأمان,مفتاح المرور,تطب�
 msgid "unassign user"
 msgstr "إلغاء تعيين المستخدم"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "تم إلغاء تحديد عنصر قائمة التحقق '%s'"
 
@@ -27859,11 +27884,6 @@ msgstr "∅ وقت الانتظار اليوم"
 #, fuzzy
 #~| msgid "Ticket escalation"
 #~ msgid "4. Ticket Escalation"
-#~ msgstr "تصعيد التذكرة"
-
-#, fuzzy
-#~| msgid "Ticket escalation"
-#~ msgid "5. Ticket Escalation Warning"
 #~ msgstr "تصعيد التذكرة"
 
 #~ msgid ""

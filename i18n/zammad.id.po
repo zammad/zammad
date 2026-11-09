@@ -3328,11 +3328,11 @@ msgstr ""
 "Memuat file chat.css secara otomatis. Jika Anda ingin menggunakan css Anda "
 "sendiri, atur ke false."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "Penyimpanan otomatis sedang berlangsung…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "Penyimpanan otomatis memakan waktu lebih lama dari yang diharapkan…"
 
@@ -3562,8 +3562,8 @@ msgstr ""
 "Sebelum Anda memulai, pastikan untuk memeriksa poin-poin berikut untuk "
 "memastikan migrasi dan penggunaan instance Zammad Anda yang lancar:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "Mulai pesan yang diteruskan"
 
@@ -3761,7 +3761,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3904,7 +3904,7 @@ msgstr ""
 "cocok. Harap coba lagi."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4307,7 +4307,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "Daftar Periksa"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "Item Daftar Periksa"
 
@@ -4626,7 +4626,7 @@ msgstr "Klik di sini"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Klik di sini untuk menyiapkan metode autentikasi dua faktor."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "Klik untuk mengedit…"
 
@@ -6042,7 +6042,7 @@ msgstr "Pembaruan Database Diperlukan"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "Tanggal"
 
@@ -8383,6 +8383,7 @@ msgstr "Elasticsearch perlu dikonfigurasi!"
 msgid "Elasticsearch version"
 msgstr "Versi Elasticsearch"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -8394,6 +8395,7 @@ msgstr "Versi Elasticsearch"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -10125,7 +10127,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "Dari"
 
@@ -11640,7 +11642,7 @@ msgstr ""
 "menampilkan chat. Kode ini harus ditempatkan di akhir kode sumber halaman "
 "sebelum tag penutup §</body>§."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 msgid "Inserting image not possible due to source restrictions"
 msgstr "Penyisipan gambar tidak memungkinkan karena batasan sumber"
 
@@ -13752,7 +13754,7 @@ msgid "Mismatching phone number id."
 msgstr "ID nomor telepon tidak cocok."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 #, fuzzy
 #| msgid "Stores the AI provider configuration."
 msgid "Missing embedding model in the provider configuration"
@@ -14338,6 +14340,8 @@ msgstr "Kategori Baru"
 msgid "New text module"
 msgstr "Modul teks baru"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -15113,7 +15117,7 @@ msgstr "Notifikasi dibaca"
 msgid "Notification sender"
 msgstr "Pengirim Notifikasi"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 #, fuzzy
 #| msgid "notification sent to '%s'"
 msgid "Notification sent to"
@@ -15322,7 +15326,7 @@ msgstr "Ok"
 msgid "Ollama"
 msgstr "Ollama"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "Pada %s, %s menulis:"
@@ -15357,7 +15361,9 @@ msgid ""
 "names."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
@@ -16401,7 +16407,7 @@ msgstr "Harap konfigurasi sumber impor sebelum menjalankan."
 msgid "Please contact your administrator."
 msgstr "Harap hubungi administrator Anda."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -16471,7 +16477,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "Harap lanjutkan untuk login"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Harap berikan penerima di \"TO\" atau \"CC\"."
 
@@ -17830,7 +17836,7 @@ msgstr "Ubah ukuran panel artikel"
 msgid "Resize column"
 msgstr "Ubah ukuran kolom"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "Ubah ukuran frame"
 
@@ -20268,7 +20274,7 @@ msgstr "Jalan"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "Subjek"
@@ -20449,7 +20455,7 @@ msgstr "Menukar %s dengan %s. %s dipindahkan ke posisi %s."
 msgid "Switch back to old layout"
 msgstr "Kembali ke tata letak lama"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 #, fuzzy
 #| msgid "Click here"
 msgid "Switch here"
@@ -20764,7 +20770,7 @@ msgstr "Pengeditan teks"
 msgid "Text field"
 msgstr "Bidang teks"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "Teks tidak ada"
@@ -20782,7 +20788,7 @@ msgstr "Modul teks"
 msgid "Text modules are …"
 msgstr "Modul teks adalah …"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "Teks diperlukan"
 
@@ -20938,7 +20944,7 @@ msgstr "Kunci tanda tangan PGP telah dicabut."
 msgid "The Telegram bot could not be saved."
 msgstr "Bot Telegram tidak dapat disimpan."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "File Telegram lebih besar dari yang diizinkan 20 MB."
 
@@ -21468,7 +21474,7 @@ msgstr "Entri tidak dapat dibuat."
 msgid "The event could not be processed."
 msgstr "Permintaan tidak dapat diproses."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "File tidak dapat diambil dari bot."
 
@@ -22142,7 +22148,7 @@ msgstr "Parameter yang diperlukan 'value' tidak ada."
 msgid "The required value 'group_id' is missing."
 msgstr "Nilai yang diperlukan 'group_id' tidak ada."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "Respons tidak dapat diproses."
@@ -23105,7 +23111,7 @@ msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "Ini bukan sertifikat X509 yang valid. Harap periksa format sertifikat."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr ""
 
@@ -23714,10 +23720,19 @@ msgstr "Pembuatan tiket"
 msgid "Ticket customer updated successfully."
 msgstr "Pelanggan tiket berhasil diperbarui."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
+msgstr "Eskalasi tiket"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket escalation warning"
 msgstr "Eskalasi tiket"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
@@ -23785,8 +23800,10 @@ msgstr "Pengaturan Ikhtisar Tiket telah disimpan."
 msgid "Ticket overviews"
 msgstr "Ikhtisar Tiket"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "Pengingat tiket tercapai"
@@ -23878,9 +23895,11 @@ msgstr "Tag tiket berhasil diperbarui."
 msgid "Ticket title"
 msgstr "Judul tiket"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "Pembaruan tiket"
@@ -24173,7 +24192,7 @@ msgstr "Judul formulir"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -25312,7 +25331,7 @@ msgstr "Mengunggah"
 msgid "Uploading file: %s"
 msgstr "Unduh %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "Mengunggah…"
 
@@ -26117,7 +26136,7 @@ msgstr "Selamat datang!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Selamat datang! Jangan ragu untuk mengajukan pertanyaan!"
 
@@ -27350,7 +27369,7 @@ msgstr "obrolan"
 msgid "checked"
 msgstr "dicentang"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "mencentang item daftar periksa '%s'"
 
@@ -27647,7 +27666,7 @@ msgstr "diedit %s oleh saya"
 msgid "email"
 msgstr "email"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "email dikirim ke '%s'"
 
@@ -27735,7 +27754,7 @@ msgstr "untuk agen merespons"
 msgid "forward"
 msgstr "teruskan"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "dari"
 
@@ -28374,8 +28393,14 @@ msgstr "tidak diatur (tidak ditentukan)"
 msgid "note"
 msgstr "catatan"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
+msgstr "notifikasi dikirim ke '%s'"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#, fuzzy
+#| msgid "notification sent to '%s'"
+msgid "notification sent to '%s' (%s: %s)"
 msgstr "notifikasi dikirim ke '%s'"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
@@ -28466,7 +28491,7 @@ msgstr "seperempat jam"
 msgid "reached"
 msgstr "tercapai"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "reaksi dengan %s ke pesan dari %s '%s'"
 
@@ -28506,7 +28531,7 @@ msgstr "hapus"
 msgid "remove option"
 msgstr "hapus opsi"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "menghapus reaksi pada pesan dari %s '%s'"
 
@@ -28718,7 +28743,7 @@ msgstr "pesan pribadi telegram"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "tema, warna, gaya, mode gelap, mode malam, mode terang"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "tiket ini digabungkan ke tiket %s"
 
@@ -28727,7 +28752,7 @@ msgstr "tiket ini digabungkan ke tiket %s"
 msgid "ticket"
 msgstr "tiket"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "tiket %s digabungkan ke tiket ini"
 
@@ -28767,15 +28792,15 @@ msgstr "dilacak di"
 msgid "translation,locale,localization"
 msgstr "terjemahan,lokasi,lokalisasi"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "pemicu '%s' dilakukan karena pengingat tertunda tercapai"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "pemicu '%s' dilakukan karena tiket dieskalasi"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "pemicu '%s' dilakukan karena tiket akan segera dieskalasi"
 
@@ -28806,7 +28831,7 @@ msgstr "twofactor,2fa,kunci keamanan,passkey,app autentikator"
 msgid "unassign user"
 msgstr "batalkan penugasan pengguna"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "menghapus centang item daftar periksa '%s'"
 

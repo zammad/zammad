@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-30 22:12+0000\n"
+"PO-Revision-Date: 2026-11-04 22:12+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.9.1\n"
+"X-Generator: Weblate 2026.11\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2273,10 +2273,8 @@ msgid "Alternative Translations"
 msgstr "Alternatív fordítások"
 
 #: db/seeds/settings.rb:339
-#, fuzzy
-#| msgid "Fully Qualified Domain Name"
 msgid "Alternative fully qualified domain name"
-msgstr "Teljesen minősített tartománynév"
+msgstr "Alternatív teljesen minősített tartománynév"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:16
 msgid "Alternative name"
@@ -3166,11 +3164,11 @@ msgstr ""
 "Automatikusan betölti a chat.css fájlt. Ha a saját CSS-fájlját szeretné "
 "használni, akkor egyszerűen csak állítsa hamisra."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "Automatikus mentés folyamatban…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "Az automatikus mentés tovább tart a vártnál…"
 
@@ -3396,8 +3394,8 @@ msgstr ""
 "Mielőtt elkezdené, ellenőrizze a következő pontokat, hogy biztosítsa a "
 "Zammad-példányának zökkenőmentes költöztetését és használatát:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "Továbbított üzenet kezdése"
 
@@ -3591,7 +3589,7 @@ msgstr "CAPTCHA-szolgáltató beállításai"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3732,7 +3730,7 @@ msgstr ""
 "meg újra."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4118,7 +4116,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "Ellenőrzőlista"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "Ellenőrzőlista-elem"
 
@@ -4429,7 +4427,7 @@ msgstr "Kattintson ide"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Kattintson ide egy kétfaktoros hitelesítési módszer beállításához."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "Kattintson a szerkesztéshez…"
 
@@ -5821,7 +5819,7 @@ msgstr "Adatbázis-frissítés szükséges"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "Dátum"
 
@@ -6201,6 +6199,8 @@ msgid ""
 "Defines an additional fully qualified domain name of the system, which is "
 "accepted as an origin for WebSocket connections."
 msgstr ""
+"Meghatározza a rendszer további, teljesen minősített tartománynevét, amely "
+"eredetként lesz elfogadva a WebSocket-kapcsolatoknál."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid ""
@@ -6892,10 +6892,10 @@ msgid ""
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
 "by the application, to build links to the tickets within your system."
 msgstr ""
-"Meghatározza a rendszer teljes képzésű tartománynevét. Ezt a beállítást az "
-"#{setting.fqdn} változójaként használják, amely az alkalmazás által használt "
-"üzenetküldés összes űrlapján megtalálható a jegyekre mutató hivatkozások "
-"készítéséhez a rendszeren belül."
+"Meghatározza a rendszer teljesen minősített tartománynevét. Ezt a beállítást "
+"az #{setting.fqdn} változójaként használják, amely az alkalmazás által "
+"használt üzenetküldés összes űrlapján megtalálható a jegyekre mutató "
+"hivatkozások készítéséhez a rendszeren belül."
 
 #: db/seeds/settings.rb:4844
 msgid "Defines the group of created tickets."
@@ -8142,6 +8142,7 @@ msgstr "Az Elasticsearch beállítása szükséges!"
 msgid "Elasticsearch version"
 msgstr "Elasticsearch verziója"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -8153,6 +8154,7 @@ msgstr "Elasticsearch verziója"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -9841,7 +9843,7 @@ msgstr "Friendly Captcha"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "Ettől"
 
@@ -11335,7 +11337,7 @@ msgstr ""
 "csevegés látható lesz. Az oldal forráskódjának végén kell elhelyezni a §</"
 "body>§ zárócímke előtt."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 msgid "Inserting image not possible due to source restrictions"
 msgstr "Kép beszúrása nem lehetséges a forráskorlátozások miatt"
 
@@ -11547,7 +11549,7 @@ msgstr "Érvénytelen objektumválasztó feltételek"
 
 #: app/models/overview.rb:61
 msgid "Invalid order direction '%s', only ASC or DESC are allowed."
-msgstr ""
+msgstr "Érvénytelen sorrendirány („%s”), csak ASC vagy DESC engedélyezett."
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:102
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:69
@@ -13347,7 +13349,7 @@ msgid "Mismatching phone number id."
 msgstr "Nem egyező telefonszám-azonosító."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 msgid "Missing embedding model in the provider configuration"
 msgstr "Hiányzik a beágyazási modell a szolgáltató beállításában"
 
@@ -13919,6 +13921,8 @@ msgstr "Új címkék stratégiája"
 msgid "New text module"
 msgstr "Új szövegmodul"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -14667,7 +14671,7 @@ msgstr "Értesítés elolvasva"
 msgid "Notification sender"
 msgstr "Értesítés küldője"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr "Értesítés elküldve ide:"
 
@@ -14868,7 +14872,7 @@ msgstr "Rendben"
 msgid "Ollama"
 msgstr "Ollama"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "%s-kor %s ezt írta:"
@@ -14903,7 +14907,9 @@ msgstr ""
 "Egy vagy több saját üzemeltetésű videokiszolgáló érvénytelen. Ellenőrizze a "
 "gépneveket."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Elérhető"
@@ -15899,7 +15905,7 @@ msgstr "Állítsa be az importálás forrását a futtatás előtt."
 msgid "Please contact your administrator."
 msgstr "Vegye fel a kapcsolatot az adminisztrátorral."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -15969,7 +15975,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "Folytassa a bejelentkezéshez"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Adjon meg egy címzettet a „TO” vagy „CC” mezőben."
 
@@ -16023,7 +16029,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:96
 msgid "Please sign in to continue."
-msgstr ""
+msgstr "Jelentkezzen be a folytatáshoz."
 
 #: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:4
 msgid ""
@@ -17264,7 +17270,7 @@ msgstr "Bejegyzéspanel átméretezése"
 msgid "Resize column"
 msgstr "Oszlop átméretezése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "Keret átméretezése"
 
@@ -19567,7 +19573,7 @@ msgstr "Utca"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "Tárgy"
@@ -19736,11 +19742,9 @@ msgstr "A(z) %s kicserélve ezzel: %s. A(z) %s áthelyezve ebbe a pozícióba: %
 msgid "Switch back to old layout"
 msgstr "Visszaváltás a régi elrendezésre"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
-#, fuzzy
-#| msgid "Click here"
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 msgid "Switch here"
-msgstr "Kattintson ide"
+msgstr "Átváltás ide"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
 msgid "Switch to new layout"
@@ -20036,7 +20040,7 @@ msgstr "Szövegszerkesztés"
 msgid "Text field"
 msgstr "Szövegmező"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "Hiányzó szöveg"
@@ -20054,7 +20058,7 @@ msgstr "Szövegmodulok"
 msgid "Text modules are …"
 msgstr "A szövegmodulok …"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "Szöveg szükséges"
 
@@ -20209,7 +20213,7 @@ msgstr "A PGP aláírási kulcs vissza lett vonva."
 msgid "The Telegram bot could not be saved."
 msgstr "A Telegram-botot nem sikerült elmenteni."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "A Telegram-fájl nagyobb mint a megengedett 20 MB."
 
@@ -20785,7 +20789,7 @@ msgstr "A bejegyzést nem sikerült létrehozni."
 msgid "The event could not be processed."
 msgstr "Az eseményt nem sikerült feldolgozni."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "A fájlt nem sikerült lekérni a bottól."
 
@@ -21442,7 +21446,7 @@ msgstr "A szükséges „value” paraméter hiányzik."
 msgid "The required value 'group_id' is missing."
 msgstr "A szükséges „group_id” érték hiányzik."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "A választ nem sikerült feldolgozni."
@@ -21812,7 +21816,7 @@ msgstr "A felhasználói tokent nem sikerült előállítani."
 #: app/assets/javascripts/app/controllers/user/form_handler_user_password_change_hint.coffee:19
 #: app/frontend/shared/entities/user/composables/useUserPasswordChangeHint.ts:27
 msgid "The user will be notified of the password change by email."
-msgstr ""
+msgstr "A felhasználó e-mailben lesz értesítve a jelszó megváltoztatásáról."
 
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:88
@@ -22429,13 +22433,13 @@ msgid ""
 msgstr ""
 "Ez nem érvényes X509-tanúsítvány. Ellenőrizze a tanúsítvány formátumát."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
-msgstr ""
+msgstr "Ez nem az a cím, amelyre a Zammad be van állítva."
 
 #: app/assets/javascripts/app/controllers/_plugin/unknown_address_detection.coffee:37
 msgid "This isn't the address Zammad is set up for. Switch here."
-msgstr ""
+msgstr "Ez nem az a cím, amelyre a Zammad be van állítva. Átváltás ide."
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:102
@@ -23044,11 +23048,18 @@ msgstr "Jegylétrehozás"
 msgid "Ticket customer updated successfully."
 msgstr "A jegy ügyfele sikeresen frissítve."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
 msgstr "Jegyeszkaláció"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+msgid "Ticket escalation warning"
+msgstr "Jegyeszkaláció figyelmeztetés"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
@@ -23105,8 +23116,10 @@ msgstr "A jegyáttekintés beállításai mentve lettek."
 msgid "Ticket overviews"
 msgstr "Jegyáttekintések"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "Jegyemlékeztető elérve"
@@ -23197,9 +23210,11 @@ msgstr "A jegycímkék sikeresen frissítve."
 msgid "Ticket title"
 msgstr "Jegycím"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "Jegyfrissítés"
@@ -23490,7 +23505,7 @@ msgstr "Az űrlap címe"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -24571,7 +24586,7 @@ msgstr "Feltöltés"
 msgid "Uploading file: %s"
 msgstr "Fájl feltöltése: %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "Feltöltés…"
 
@@ -25350,7 +25365,7 @@ msgstr "Üdvözöljük!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Üdvözöljük! Kérdezzen tőlem nyugodtan!"
 
@@ -25894,16 +25909,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:88
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/resendVerificationEmail.ts:22
-#, fuzzy
-#| msgid ""
-#| "You cannot view or change the group permissions of an inactive user. "
-#| "Activate them first to manage their permissions."
 msgid ""
 "You cannot resend the verification email to an inactive user. Activate them "
 "first."
 msgstr ""
-"Nem tekintheti meg vagy nem változtathatja meg egy inaktív felhasználó "
-"csoportjogosultságait. Először aktiválja őket a jogosultságaik kezeléséhez."
+"Nem tudja újraküldeni az ellenőrző e-mailt egy inaktív felhasználónak. "
+"Először aktiválja őt."
 
 #: app/assets/javascripts/app/controllers/user.coffee:156
 msgid ""
@@ -26561,7 +26572,7 @@ msgstr "csevegés"
 msgid "checked"
 msgstr "bejelölve"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "bejelölt ellenőrzőlista-elem: „%s”"
 
@@ -26847,7 +26858,7 @@ msgstr "szerkesztve: %s – általam"
 msgid "email"
 msgstr "e-mail"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "az e-mail elküldve ide: „%s”"
 
@@ -26931,7 +26942,7 @@ msgstr "egy ügyintézőnek a válaszadáshoz"
 msgid "forward"
 msgstr "továbbítás"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "ettől"
 
@@ -27549,9 +27560,13 @@ msgstr "nincs beállítva (nincs meghatározva)"
 msgid "note"
 msgstr "jegyzet"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
 msgstr "az értesítés elküldve ide: „%s”"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+msgid "notification sent to '%s' (%s: %s)"
+msgstr "az értesítés elküldve ide: „%s” (%s: %s)"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
 msgid "notifications,tickets"
@@ -27639,7 +27654,7 @@ msgstr "negyedóra"
 msgid "reached"
 msgstr "elérte"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "reagált ezzel: %s %s „%s” üzenetére"
 
@@ -27679,7 +27694,7 @@ msgstr "eltávolítás"
 msgid "remove option"
 msgstr "lehetőség eltávolítása"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "eltávolította a reakcióját %s üzenetéről: „%s”"
 
@@ -27884,7 +27899,7 @@ msgstr "Telegram személyes üzenet"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "téma,szín,stílus,sötét mód,éjszakai mód,világos mód"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "ez a jegy egyesítve lett ebbe a jegybe: %s"
 
@@ -27893,7 +27908,7 @@ msgstr "ez a jegy egyesítve lett ebbe a jegybe: %s"
 msgid "ticket"
 msgstr "jegy"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "a(z) %s jegy egyesítve lett ebbe a jegybe"
 
@@ -27933,18 +27948,18 @@ msgstr "követve itt"
 msgid "translation,locale,localization"
 msgstr "fordítás,területi beállítás,honosítás"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 "a(z) „%s” eseményindító végrehajtásra került, mert elérte a függőben lévő "
 "emlékeztetőt"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 "a(z) „%s” eseményindító végrehajtásra került, mert a jegy eszkalálódott"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 "a(z) „%s” eseményindító végrehajtásra került, mert a jegy hamarosan "
@@ -27975,7 +27990,7 @@ msgstr "kétfaktoros,2fa,biztonsági kulcs,jelkulcs,hitelesítő alkalmazás"
 msgid "unassign user"
 msgstr "felhasználó hozzárendelésének feloldása"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "nem bejelölt ellenőrzőlista-elem: „%s”"
 
@@ -28700,9 +28715,6 @@ msgstr "∅ Várakozási idő ma"
 
 #~ msgid "4. Ticket Escalation"
 #~ msgstr "4. Jegy eszkaláció"
-
-#~ msgid "5. Ticket Escalation Warning"
-#~ msgstr "5. Jegy eszkaláció figyelmeztetés"
 
 #~ msgid ""
 #~ "A team communication tool for the 21st century. Compatible with tools "

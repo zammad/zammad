@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-10-14 22:12+0000\n"
+"PO-Revision-Date: 2026-10-30 22:12+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/sr_Cyrl/>\n"
@@ -3119,11 +3119,11 @@ msgstr ""
 "Аутоматски учитава chat.css датотеку. Уколико желите да користите своје "
 "стилове, подесите на false."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "Снимање у току…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "Снимање траје нешто дуже…"
 
@@ -3347,8 +3347,8 @@ msgstr ""
 "Пре него што започнете увоз, обратите пажњу на следеће ставке ради "
 "омогућавања глатке миграције и интеграције ваше Zammad инстанце:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "Почетак прослеђене поруке"
 
@@ -3538,7 +3538,7 @@ msgstr "Опције CAPTCHA провајдера"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3681,7 +3681,7 @@ msgstr ""
 "покушајте поново."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4062,7 +4062,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "Списак задатака"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "Задатак"
 
@@ -4358,7 +4358,7 @@ msgstr "Кликни овде"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Кликни овде за поставку метода двофакторске аутентификације."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "Кликни за уређивање…"
 
@@ -5735,7 +5735,7 @@ msgstr "Неопходно ажурирање базе података"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "Датум"
 
@@ -7670,7 +7670,7 @@ msgstr "Преузми оригинални имејл"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:103
 msgid "Download raw email"
-msgstr "Преузми изворни имејл"
+msgstr "Преузми изворну имејл поруку"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:380
 msgid "Downloading attachments…"
@@ -7957,6 +7957,7 @@ msgstr "Неопходно је подесити Elasticsearch!"
 msgid "Elasticsearch version"
 msgstr "Elasticsearch верзија"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -7968,6 +7969,7 @@ msgstr "Elasticsearch верзија"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -9630,7 +9632,7 @@ msgstr "Friendly Captcha"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "Од"
 
@@ -11100,7 +11102,7 @@ msgstr ""
 "буде видљиво. Неопходно је убацити га на крај изворног кода стране пре "
 "затвореног §</body>§ елемента."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 msgid "Inserting image not possible due to source restrictions"
 msgstr "Није могуће убацивање сличице услед рестрикција изворног ресурса"
 
@@ -13098,7 +13100,7 @@ msgid "Mismatching phone number id."
 msgstr "Број телефона се не подудара."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 msgid "Missing embedding model in the provider configuration"
 msgstr "Недостаје модел векторизације у подешавањима провајдера"
 
@@ -13668,6 +13670,8 @@ msgstr "Стратегија нових ознака"
 msgid "New text module"
 msgstr "Нови текстуални исечак"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -14411,7 +14415,7 @@ msgstr "Прочитано обавештење"
 msgid "Notification sender"
 msgstr "Пошиљалац обавештења"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr "Обавештење послато"
 
@@ -14610,7 +14614,7 @@ msgstr "У реду"
 msgid "Ollama"
 msgstr "Ollama"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "У %s, %s је написао/ла:"
@@ -14645,7 +14649,9 @@ msgstr ""
 "Један или више самостално хостованих видео сервера је неисправан. Молимо "
 "проверите адресе сервера."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Доступан(а)"
@@ -15631,7 +15637,7 @@ msgstr "Молимо подесите извор увоза пре почетк�
 msgid "Please contact your administrator."
 msgstr "Молимо контактирајте администратора."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -15703,7 +15709,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "Молимо наставите на пријаву"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Неопходан прималац у „За” или „CC”."
 
@@ -16221,7 +16227,7 @@ msgstr "Резултат може бити оцењен само једанпу�
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:107
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:46
 msgid "Raw"
-msgstr "Сирово"
+msgstr "Извор"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 msgid "Reacted with %s to message %s from %s"
@@ -16979,7 +16985,7 @@ msgstr "Промени висину панела чланка"
 msgid "Resize column"
 msgstr "Прошири колону"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "Промени ширину рама"
 
@@ -19258,7 +19264,7 @@ msgstr "Улица"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "Предмет"
@@ -19426,7 +19432,7 @@ msgstr "Замењен редослед %s са %s. Измењена позиц�
 msgid "Switch back to old layout"
 msgstr "Повратак на стари распоред"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 msgid "Switch here"
 msgstr "Пређите овде"
 
@@ -19721,7 +19727,7 @@ msgstr "Уређивање текста"
 msgid "Text field"
 msgstr "Поље текста"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "Недостаје текст"
@@ -19739,7 +19745,7 @@ msgstr "Текстуални исечци"
 msgid "Text modules are …"
 msgstr "Текстуални исечци су …"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "Неопходан текст"
 
@@ -19892,7 +19898,7 @@ msgstr "PGP кључ потписа је опозван."
 msgid "The Telegram bot could not be saved."
 msgstr "Није било могуће сачувати Telegram бот."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Telegram датотека је већа од дозвољених 20 MB."
 
@@ -20457,7 +20463,7 @@ msgstr "Није било могуће додати унос."
 msgid "The event could not be processed."
 msgstr "Није било могуће обрадити догађај."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "Није било могуће преузети датотеку од бота."
 
@@ -21110,7 +21116,7 @@ msgstr "Није пронађен обавезни параметар ’value�
 msgid "The required value 'group_id' is missing."
 msgstr "Није пронађена обавезна вредност ’group_id’."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "Није било могуће обрадити одговор."
@@ -22065,7 +22071,7 @@ msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "Ово није важећи X509 сертификат. Молимо проверите формат сертификата."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr "Користите адресу за коју Zammad није подешен."
 
@@ -22666,11 +22672,18 @@ msgstr "Отварање тикета"
 msgid "Ticket customer updated successfully."
 msgstr "Клијент тикета је успешно освежен."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
 msgstr "Ескалација тикета"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+msgid "Ticket escalation warning"
+msgstr "Упозорење на ескалацију тикета"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
@@ -22727,8 +22740,10 @@ msgstr "Подешавања прегледа тикета су сачувана
 msgid "Ticket overviews"
 msgstr "Прегледи тикета"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "Достигнуто време чекања тикета"
@@ -22819,9 +22834,11 @@ msgstr "Ознаке тикета су успешно освежене."
 msgid "Ticket title"
 msgstr "Наслов тикета"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "Освежавање тикета"
@@ -23106,7 +23123,7 @@ msgstr "Наслов форме"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -24179,7 +24196,7 @@ msgstr "Отпремање"
 msgid "Uploading file: %s"
 msgstr "Отпремање датотеке: %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "Отпремање…"
 
@@ -24953,7 +24970,7 @@ msgstr "Добродошли!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Добродошли! Слободно ми поставите питање!"
 
@@ -26149,7 +26166,7 @@ msgstr "ћаскање"
 msgid "checked"
 msgstr "означено"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "oзначен задатак ’%s’"
 
@@ -26434,7 +26451,7 @@ msgstr "измењено %s од стране мене"
 msgid "email"
 msgstr "имејл"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "имејл послат на ’%s’"
 
@@ -26518,7 +26535,7 @@ msgstr "док оператер не одговори"
 msgid "forward"
 msgstr "проследи"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "од"
 
@@ -27135,9 +27152,13 @@ msgstr "није постављено (није одређено)"
 msgid "note"
 msgstr "напомена"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
 msgstr "обавештење послато ’%s’"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+msgid "notification sent to '%s' (%s: %s)"
+msgstr "обавештење послато ’%s’ (%s: %s)"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
 msgid "notifications,tickets"
@@ -27225,7 +27246,7 @@ msgstr "четврт сат(а)"
 msgid "reached"
 msgstr "достигнуто"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "је реаговао(ла) са %s на поруку од %s '%s'"
 
@@ -27264,7 +27285,7 @@ msgstr "уклони"
 msgid "remove option"
 msgstr "уклони опцију"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "је уклонио(ла) реакцију на поруку %s '%s'"
 
@@ -27469,7 +27490,7 @@ msgstr "лична telegram порука"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "изглед,боја,стил,тамни изглед,ноћни изглед,светли изглед"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "овај тикет је спојен са тикетом %s"
 
@@ -27478,7 +27499,7 @@ msgstr "овај тикет је спојен са тикетом %s"
 msgid "ticket"
 msgstr "тикет"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "тикет %s је спојен са овим тикетом"
 
@@ -27518,15 +27539,15 @@ msgstr "праћено у"
 msgid "translation,locale,localization"
 msgstr "превод,језици,локализација"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "окидач ’%s’ је извршен због достизања времена чекања"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "окидач ’%s’ је извршен због ескалације тикета"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "окидач ’%s’ је извршен због недуге ескалације тикета"
 
@@ -27556,7 +27577,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "скини доделу корисника"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "одзначен задатак ’%s’"
 
@@ -28265,9 +28286,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "4. Ticket Escalation"
 #~ msgstr "4. Ескалација тикета"
-
-#~ msgid "5. Ticket Escalation Warning"
-#~ msgstr "5. Упозорење на ескалацију тикета"
 
 #~ msgid ""
 #~ "A team communication tool for the 21st century. Compatible with tools "

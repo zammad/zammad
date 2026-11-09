@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-10-14 22:12+0000\n"
+"PO-Revision-Date: 2026-10-29 22:12+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
@@ -3146,11 +3146,11 @@ msgstr ""
 "Автоматично завантажує файл chat.css. Якщо Ви хочете використовувати власний "
 "css-файл, просто встановіть значення false."
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "Триває авто-збереження…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "Автозбереження триває довше, ніж очікувалося…"
 
@@ -3375,8 +3375,8 @@ msgstr ""
 "Перш ніж почати, перевірте наступні пункти, щоб забезпечити плавний перехід "
 "та використання екземпляра Zammad:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "Початок повідомлення, що надсилається"
 
@@ -3571,7 +3571,7 @@ msgstr "Варіанти постачальників CAPTCHA"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3715,7 +3715,7 @@ msgstr ""
 "Не вдається оновити пароль, введені паролі не збігаються. Спробуйте ще раз."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4099,7 +4099,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "Чеклист"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 msgid "Checklist Item"
 msgstr "Елемент чеклисту"
 
@@ -4400,7 +4400,7 @@ msgstr "Натисніть тут"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Натисніть тут, щоб налаштувати двофакторну автентифікацію."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr "Натисніть, щоб редагувати…"
 
@@ -5784,7 +5784,7 @@ msgstr "Необхідне оновлення бази даних"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "Дата"
 
@@ -8043,6 +8043,7 @@ msgstr "Elasticsearch потрібно налаштувати!"
 msgid "Elasticsearch version"
 msgstr "Версія Elasticsearch"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -8054,6 +8055,7 @@ msgstr "Версія Elasticsearch"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -9736,7 +9738,7 @@ msgstr "Дружня система Captcha"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "Відправник"
 
@@ -11238,7 +11240,7 @@ msgstr ""
 "відображатися чат. Його потрібно розмістити в кінці вихідного коду сторінки "
 "до закриваючого тегу §</body>§."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 msgid "Inserting image not possible due to source restrictions"
 msgstr "Вставка зображення неможлива через обмеження джерела"
 
@@ -13249,7 +13251,7 @@ msgid "Mismatching phone number id."
 msgstr "Невідповідність ідентифікатора номера."
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 msgid "Missing embedding model in the provider configuration"
 msgstr "У конфігурації провайдера відсутня модель вбудовування"
 
@@ -13823,6 +13825,8 @@ msgstr "Нова стратегія тегів"
 msgid "New text module"
 msgstr "Новий текстовий модуль"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -14574,7 +14578,7 @@ msgstr "Сповіщення прочитано"
 msgid "Notification sender"
 msgstr "Відправник сповіщення"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr "Повідомлення надіслано"
 
@@ -14775,7 +14779,7 @@ msgstr "Гаразд"
 msgid "Ollama"
 msgstr "Ollama"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "На %s, %s писав:"
@@ -14811,7 +14815,9 @@ msgstr ""
 "Один або кілька відеосерверів, розміщених на власних хостах, є недійсними. "
 "Будь ласка, перевірте імена хостів."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "В мережі"
@@ -15803,7 +15809,7 @@ msgstr "Будь ласка, налаштуйте джерело імпорту 
 msgid "Please contact your administrator."
 msgstr "Будь ласка, зверніться до адміністратора."
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -15875,7 +15881,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr "Будь ласка, увійдіть в систему"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Будь ласка, вкажіть одержувача в \"TO\" або \"CC\"."
 
@@ -17162,7 +17168,7 @@ msgstr "Змінити розмір панелі повідомлення"
 msgid "Resize column"
 msgstr "Змінити розмір стовпчика"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "Змінити розмір рамки"
 
@@ -19449,7 +19455,7 @@ msgstr "Вулиця"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "Тема"
@@ -19618,7 +19624,7 @@ msgstr "Поміняно місцями %s та %s. Переміщено %s на
 msgid "Switch back to old layout"
 msgstr "Повернутися до старого вигляду"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 msgid "Switch here"
 msgstr "Переключитися тут"
 
@@ -19914,7 +19920,7 @@ msgstr "Редагування тексту"
 msgid "Text field"
 msgstr "Текстове поле"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "Текст відсутній"
@@ -19932,7 +19938,7 @@ msgstr "Текстові модулі"
 msgid "Text modules are …"
 msgstr "Текстові модулі - це …"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "Необхідний текст"
 
@@ -20083,7 +20089,7 @@ msgstr "Ключ підпису PGP відкликано."
 msgid "The Telegram bot could not be saved."
 msgstr "Бота Telegram не вдалося зберегти."
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Розмір файлу Telegram перевищує дозволені 20 МБ."
 
@@ -20659,7 +20665,7 @@ msgstr "Запис не вдалося створити."
 msgid "The event could not be processed."
 msgstr "Подію не вдалося обробити."
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "Файл не вдалося отримати від бота."
 
@@ -21323,7 +21329,7 @@ msgstr "Відсутня обов'язковий параметр значенн
 msgid "The required value 'group_id' is missing."
 msgstr "Відсутнє значення «Ідентифікатор_групи» (group_id)."
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "Відповідь не вдалося обробити."
@@ -22295,7 +22301,7 @@ msgid ""
 msgstr ""
 "Це не дійсний сертифікат X509. Будь ласка, перевірте формат сертифіката."
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr "Це не та адреса, на яку налаштовано Zammad."
 
@@ -22906,11 +22912,18 @@ msgstr "Створення заявки"
 msgid "Ticket customer updated successfully."
 msgstr "Заявника успішно оновлено."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
 msgstr "Протермінування заявки"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+msgid "Ticket escalation warning"
+msgstr "Попередження про ескалацію проблеми з заявкою"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
@@ -22967,8 +22980,10 @@ msgstr "Налаштування огляду заявки збережено."
 msgid "Ticket overviews"
 msgstr "Огляд заявок"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "Нагадування про заявку виконано"
@@ -23059,9 +23074,11 @@ msgstr "Теги заявки успішно оновлені."
 msgid "Ticket title"
 msgstr "Назва заявки"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "Заявку оновлено"
@@ -23351,7 +23368,7 @@ msgstr "Заголовок форми"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -24431,7 +24448,7 @@ msgstr "Виконується завантаження"
 msgid "Uploading file: %s"
 msgstr "Завантаження файлу: %s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
 msgstr "Завантаження…"
 
@@ -25212,7 +25229,7 @@ msgstr "Ласкаво просимо!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Ласкаво просимо! Не соромтеся ставити мені запитання!"
 
@@ -26426,7 +26443,7 @@ msgstr "чат"
 msgid "checked"
 msgstr "вибрано"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 msgid "checked checklist item '%s'"
 msgstr "зазначений елемент '%s' чеклиста"
 
@@ -26711,7 +26728,7 @@ msgstr "відредаговано %s мною"
 msgid "email"
 msgstr "Email"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "електронний лист надіслано до '%s'"
 
@@ -26795,7 +26812,7 @@ msgstr "щоб агент відповів"
 msgid "forward"
 msgstr "переслати"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "від"
 
@@ -27416,9 +27433,13 @@ msgstr "не задано (не визначено)"
 msgid "note"
 msgstr "примітка"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 msgid "notification sent to '%s'"
 msgstr "сповіщення надіслано до '%s'"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+msgid "notification sent to '%s' (%s: %s)"
+msgstr "повідомлення надіслано на адресу «%s» (%s: %s)"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
 msgid "notifications,tickets"
@@ -27506,7 +27527,7 @@ msgstr "15 хвилин"
 msgid "reached"
 msgstr "одержаний/досягнутий"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "відреагував %s на повідомлення від %s '%s'"
 
@@ -27545,7 +27566,7 @@ msgstr "видалити"
 msgid "remove option"
 msgstr "видалити опцію"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 msgid "removed reaction to message from %s '%s'"
 msgstr "видалено реакцію на повідомлення від %s '%s'"
 
@@ -27750,7 +27771,7 @@ msgstr "телеграм: особисте повідомлення"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "тема, колір, стиль, темний режим, нічний режим, світлий режим"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 msgid "this ticket was merged into ticket %s"
 msgstr "ця заявка була об'єднана із заявкою %s"
 
@@ -27759,7 +27780,7 @@ msgstr "ця заявка була об'єднана із заявкою %s"
 msgid "ticket"
 msgstr "заявка"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "ticket %s was merged into this ticket"
 msgstr "заявка %s була об'єднана з цією заявкою"
 
@@ -27799,15 +27820,15 @@ msgstr "відстежується в"
 msgid "translation,locale,localization"
 msgstr "переклад,локаль,локалізація"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "спрацював тригер '%s', оскільки було отримано очікуване нагадування"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "спрацював тригер '%s', тому що заявку було протерміновано"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "спрацював тригер '%s', тому що заявка скоро буде ескалована"
 
@@ -27836,7 +27857,7 @@ msgstr "двофакторний, 2fa, ключ безпеки, пароль, д
 msgid "unassign user"
 msgstr "скасувати призначення користувача"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 msgid "unchecked checklist item '%s'"
 msgstr "не вказаний елемент чеклиста '%s'"
 
@@ -28577,9 +28598,6 @@ msgstr "∅ Час очікування сьогодні"
 
 #~ msgid "4. Ticket Escalation"
 #~ msgstr "4. Ескалація заявки"
-
-#~ msgid "5. Ticket Escalation Warning"
-#~ msgstr "5. Попередження про ескалацію заявки"
 
 #~ msgid ""
 #~ "A team communication tool for the 21st century. Compatible with tools "

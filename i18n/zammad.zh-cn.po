@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-02 07:25+0000\n"
+"PO-Revision-Date: 2026-11-06 10:05+0000\n"
 "Last-Translator: Bobby Zhang <my@minthe.cn>\n"
 "Language-Team: Chinese (Simplified Han script) <https://"
-"translations.zammad.org/projects/zammad/zammad-development/zh_Hans/>\n"
+"translations.zammad.org/projects/zammad/zammad-stable/zh_Hans/>\n"
 "Language: zh-cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2026.8.1\n"
+"X-Generator: Weblate 2026.11.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -977,10 +977,8 @@ msgid "4 weeks"
 msgstr "4周"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:33
-#, fuzzy
-#| msgid "2 hours"
 msgid "5 hours"
-msgstr "2小时"
+msgstr "5小时"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
@@ -1352,16 +1350,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:56
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
-#, fuzzy
-#| msgid "API error."
 msgid "API server error: %s"
-msgstr "API 错误。"
+msgstr "API 服务器错误: %s"
 
 #: lib/ai/provider/concerns/handles_response.rb:15
-#, fuzzy
-#| msgid "Loading failed, please try again later."
 msgid "API server unavailable - please try again later"
-msgstr "加载失败，请稍后重试。"
+msgstr "API 服务器不可用 - 请稍后重试。"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:43
@@ -3301,11 +3295,11 @@ msgid ""
 "set it to false."
 msgstr "自动加载chat.css文件。如果要使用自己的CSS，请将其设置为false。"
 
-#: app/frontend/shared/components/Form/Form.vue:1324
+#: app/frontend/shared/components/Form/Form.vue:1331
 msgid "Autosave in progress…"
 msgstr "自动保存正在进行中…"
 
-#: app/frontend/shared/components/Form/Form.vue:1333
+#: app/frontend/shared/components/Form/Form.vue:1340
 msgid "Autosaving is taking longer than expected…"
 msgstr "自动保存花费的时间比预期要长…"
 
@@ -3537,8 +3531,8 @@ msgid ""
 "migration and usage of your Zammad instance:"
 msgstr "在开始之前，请务必检查以下几点，以确保 Zammad 实例的顺利迁移和使用："
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:265
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:92
 msgid "Begin forwarded message"
 msgstr "开始转发消息"
 
@@ -3733,7 +3727,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:111
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
@@ -3872,7 +3866,7 @@ msgid ""
 msgstr "无法更新密码，您输入的密码错误。请再试一次。"
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:380
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -4301,7 +4295,7 @@ msgstr ""
 msgid "Checklist"
 msgstr "校验"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:79
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklist Item"
@@ -4605,7 +4599,7 @@ msgstr "点击这里"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "单击此处设置双因素身份验证方法。"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:50
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:51
 msgid "Click to edit…"
 msgstr ""
 
@@ -6028,7 +6022,7 @@ msgstr "需要更新数据库"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "Date"
 msgstr "日期"
 
@@ -8243,6 +8237,7 @@ msgstr "Elasticsearch需要配置！"
 msgid "Elasticsearch version"
 msgstr "Elasticsearch 版本"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:54
@@ -8254,6 +8249,7 @@ msgstr "Elasticsearch 版本"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
@@ -9972,7 +9968,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
 msgstr "发件人"
 
@@ -11473,7 +11469,7 @@ msgstr ""
 "将widget代码插入聊天可见的每个页面的源代码中。它应该放置在页面源代码末尾的 "
 "§</body>§ 结束标记之前。"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:104
 #, fuzzy
 #| msgid "It is not possible to delete your current account."
 msgid "Inserting image not possible due to source restrictions"
@@ -13732,7 +13728,7 @@ msgid "Mismatching phone number id."
 msgstr "电话号码ID不匹配。"
 
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
-#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:288
 #, fuzzy
 #| msgid "Stores the GitHub configuration."
 msgid "Missing embedding model in the provider configuration"
@@ -14360,6 +14356,8 @@ msgstr "类别"
 msgid "New text module"
 msgstr "新增引用"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:52
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
@@ -15252,7 +15250,7 @@ msgstr "通知寄件人"
 msgid "Notification sender"
 msgstr "通知寄件人"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "Notification sent to"
@@ -15492,7 +15490,7 @@ msgstr "好的"
 msgid "Ollama"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:499
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr "在 %s, %s 編輯:"
@@ -15527,7 +15525,9 @@ msgid ""
 "names."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:59
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:17
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "在线"
@@ -16630,7 +16630,7 @@ msgstr "请在运行前配置导入源。"
 msgid "Please contact your administrator."
 msgstr "请联系您的管理员。"
 
-#: lib/selector/sql.rb:200
+#: lib/selector/sql.rb:201
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -16694,7 +16694,7 @@ msgstr "请注意，此属性是在Zammad的下一个版本之一中弃用的。
 msgid "Please proceed to login"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:469
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "请在“TO”或“CC”中提供收件人。"
 
@@ -17038,7 +17038,7 @@ msgstr "产品名称"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:8
 msgid "Profile"
-msgstr "搜索条件"
+msgstr "个人资料"
 
 #: app/frontend/shared/composables/useLocaleUpdate.ts:39
 #, fuzzy
@@ -18099,7 +18099,7 @@ msgstr "调整侧面面板大小"
 msgid "Resize column"
 msgstr "删除列"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:135
 msgid "Resize frame"
 msgstr "调整框架"
 
@@ -19128,10 +19128,8 @@ msgid ""
 msgstr "\"在您的個人行事曆讀取工單 ex: iCal"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:304
-#, fuzzy
-#| msgid "Selector"
 msgid "Select"
-msgstr "選擇器"
+msgstr "选择"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:417
 #, fuzzy
@@ -20117,7 +20115,7 @@ msgstr "\"由于您超过 %s 分钟没有任何回复"
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> was closed."
-msgstr "\"由于您超过 %s 分钟没有回复"
+msgstr "由于您超过 <strong>%s</strong> 分钟没有回复。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:57
 msgid "Single selection field"
@@ -20594,7 +20592,7 @@ msgstr "街道"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "主题"
@@ -20786,7 +20784,7 @@ msgstr ""
 msgid "Switch back to old layout"
 msgstr ""
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:54
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:53
 #, fuzzy
 #| msgid "Click here"
 msgid "Switch here"
@@ -21099,7 +21097,7 @@ msgstr "编辑"
 msgid "Text field"
 msgstr "文本域"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:465
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:379
 msgid "Text missing"
 msgstr "文字遺失"
@@ -21117,7 +21115,7 @@ msgstr "引用"
 msgid "Text modules are …"
 msgstr "文本模块是…"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:483
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
 msgid "Text needed"
 msgstr "需要文字"
 
@@ -21275,7 +21273,7 @@ msgstr "PGP签名密钥已被撤销。"
 msgid "The Telegram bot could not be saved."
 msgstr "Telegram 机器人无法保存。"
 
-#: lib/telegram_helper.rb:686
+#: lib/telegram_helper.rb:688
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "电报文件大于允许的20 MB。"
 
@@ -21784,7 +21782,7 @@ msgstr "无法创建条目。"
 msgid "The event could not be processed."
 msgstr "无法处理该请求。"
 
-#: lib/telegram_helper.rb:694
+#: lib/telegram_helper.rb:696
 msgid "The file could not be retrieved from the bot."
 msgstr "该文件无法从机器人中检索。"
 
@@ -22464,7 +22462,7 @@ msgstr "缺少所需的参数“值”。"
 msgid "The required value 'group_id' is missing."
 msgstr "所需的值“ group_id”丢失。"
 
-#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider.rb:255 lib/ai/provider/concerns/lists_models.rb:116
 #: lib/ai/provider/custom_open_ai.rb:82
 #, fuzzy
 #| msgid "The request could not be processed."
@@ -23500,7 +23498,7 @@ msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "这不是有效的X509证书。请检查证书格式。"
 
-#: app/frontend/shared/composables/useUnknownAddressDetection.ts:50
+#: app/frontend/shared/composables/useUnknownAddressDetection.ts:49
 msgid "This isn't the address Zammad is set up for."
 msgstr ""
 
@@ -23864,28 +23862,6 @@ msgstr "工单 %s 已合并。"
 #. This is the template file app/views/mailer/ticket_update_merged_into/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_merged_into/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Ticket will escalate (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
-#| "b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "  #{t('Information')}:\n"
-#| "  <blockquote type=\"cite\">\n"
-#| "  #{article.body_as_html}\n"
-#| "  </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
-#| "\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-#| "</div>\n"
 msgid ""
 "Ticket (#{ticket.title}) was merged into another ticket\n"
 "\n"
@@ -23901,25 +23877,18 @@ msgid ""
 "target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
-"工单 (#{ticket.title}) 即将升级\n"
+"工单（#{ticket.title}）已被合并到其他工单中\n"
 "\n"
-"<div>您好 #{recipient.firstname},</div>\n"
+"<div>你好 #{recipient.firstname}，</div>\n"
 "<br>\n"
-"<div>来自客户 \"<b>#{ticket.customer.longname}</b>\" 的工单主题为 "
-"(#{ticket.title}) 即将在 \"#{ticket.escalation_at}\" 开始升级!</div>\n"
+"<div> \n"
+"工单（#{ticket.title}）已被“<b>#{current_user.longname}</b>”合并到另一个工单"
+"中。\n"
+" </div>\n"
 "<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
+"<div> \n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"target=\"zammad_app\">在 #{config.product_name} 中查看</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:24
@@ -24163,11 +24132,20 @@ msgstr "服务请求升级"
 msgid "Ticket customer updated successfully."
 msgstr "測試運行成功"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:55
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
 msgstr "服务请求升级"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:56
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:13
+#, fuzzy
+#| msgid "5. Ticket Escalation Warning"
+msgid "Ticket escalation warning"
+msgstr "5. 工单升级警告"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
@@ -24248,8 +24226,10 @@ msgstr "概览"
 msgid "Ticket overviews"
 msgstr "新增工单概览"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:54
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
 msgstr "工單到達提醒時間"
@@ -24377,9 +24357,11 @@ msgstr "測試運行成功"
 msgid "Ticket title"
 msgstr "工單更新"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:53
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:10
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
 msgstr "工單更新"
@@ -24714,7 +24696,7 @@ msgstr "表单标题"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
@@ -25951,7 +25933,7 @@ msgstr "上传中"
 msgid "Uploading file: %s"
 msgstr "下载％s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 #, fuzzy
 #| msgid "Uploading"
 msgid "Uploading…"
@@ -26830,7 +26812,7 @@ msgstr "欢迎！"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:640
+#: lib/telegram_helper.rb:642
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "欢迎！随时问我一个问题！"
 
@@ -28110,7 +28092,7 @@ msgstr "文字對話"
 msgid "checked"
 msgstr "选中"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:149
 #, fuzzy
 #| msgid "Checksum"
 msgid "checked checklist item '%s'"
@@ -28431,7 +28413,7 @@ msgstr "由我编辑％S"
 msgid "email"
 msgstr "E-Mail"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:122
 msgid "email sent to '%s'"
 msgstr "电子邮件发送至“％s”"
 
@@ -28521,7 +28503,7 @@ msgstr "代理人回应"
 msgid "forward"
 msgstr "向前"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:174
 msgid "from"
 msgstr "從"
 
@@ -29230,10 +29212,16 @@ msgstr "未設置 (未定義)"
 msgid "note"
 msgstr "備註"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:48
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "notification sent to '%s'"
+msgstr "通知寄件人"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:61
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "notification sent to '%s' (%s: %s)"
 msgstr "通知寄件人"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:25
@@ -29332,7 +29320,7 @@ msgstr "四分之一小时"
 msgid "reached"
 msgstr "已達"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 #, fuzzy
 #| msgid "%s ended switch to |%s|!"
 msgid "reacted with a %s to message from %s '%s'"
@@ -29379,7 +29367,7 @@ msgstr "移除"
 msgid "remove option"
 msgstr "移除选项"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
 #, fuzzy
 #| msgid "%s ended switch to |%s|!"
 msgid "removed reaction to message from %s '%s'"
@@ -29612,7 +29600,7 @@ msgstr "語音個人訊息"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "主题、颜色、风格、深色模式、夜间模式、浅色模式"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
 #, fuzzy
 #| msgid "Another ticket was merged into ticket |%s|"
 msgid "this ticket was merged into ticket %s"
@@ -29623,7 +29611,7 @@ msgstr "另一个工单已合并到工单 |%s|"
 msgid "ticket"
 msgstr "票"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 #, fuzzy
 #| msgid "Another ticket was merged into ticket |%s|"
 msgid "ticket %s was merged into this ticket"
@@ -29665,15 +29653,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr "翻译、区域设置、本地化"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "由于达到待处理提醒，进行了触发'％s'"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "触发'％s'由于票证升级而进行"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:130
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "进行触发'％s'，因为门票很快就会升级"
 
@@ -29704,7 +29692,7 @@ msgstr "双因素、2fa、安全密钥、密钥、身份验证器应用程序"
 msgid "unassign user"
 msgstr "解封用户\t"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:151
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "unchecked checklist item '%s'"
@@ -29744,7 +29732,7 @@ msgstr "当前用户组织"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:25
 msgid "vacation,holiday,replacement,time off"
-msgstr "假期、假期、轮换、休假。"
+msgstr "假期、节日、轮换、休息"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/web.ts:6
 #: db/seeds/ticket_article_types.rb:14
@@ -30474,9 +30462,6 @@ msgstr "∅轮候时间"
 
 #~ msgid "4. Ticket Escalation"
 #~ msgstr "4. 工单升级"
-
-#~ msgid "5. Ticket Escalation Warning"
-#~ msgstr "5. 工单升级警告"
 
 #~ msgid ""
 #~ "A team communication tool for the 21st century. Compatible with tools "
