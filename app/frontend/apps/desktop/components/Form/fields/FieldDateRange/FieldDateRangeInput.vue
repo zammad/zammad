@@ -78,7 +78,7 @@ const pickerProps = computed(() => {
     contextReactive.value
 
   return {
-    type: withTime ? 'datetime' : 'date',
+    type: withTime ? ('datetime' as const) : ('date' as const),
     outerClass: 'w-full min-w-0 grow basis-0',
     ignore: true,
     clearable,

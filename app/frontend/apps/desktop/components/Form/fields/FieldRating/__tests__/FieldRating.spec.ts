@@ -30,7 +30,7 @@ describe('Form - Field - Rating', () => {
 
     const starIcon = view.getByTestId(`field-rating-star-${star}`)
 
-    expect(node.context?.value).toBe('')
+    expect(node.context?.value).toBeUndefined()
     expect(starIcon).toHaveClasses(['icon-star'])
 
     await view.events.click(starIcon)

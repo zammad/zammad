@@ -11,10 +11,14 @@ import { i18n } from '#shared/i18n.ts'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
-import type { PermissionsChildOption, PermissionsParentOption, PermissionsProps } from './types.ts'
+import type {
+  PermissionsChildOption,
+  PermissionsContext,
+  PermissionsParentOption,
+} from './types.ts'
 
 const props = defineProps<{
-  context: PermissionsProps
+  context: PermissionsContext
 }>()
 
 const contextReactive = toRef(props, 'context')

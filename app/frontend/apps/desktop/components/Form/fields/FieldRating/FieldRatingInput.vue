@@ -22,6 +22,10 @@ const selectRating = (star: number) => {
   localValue.value = newRating
 }
 
+const updateFromNumberInput = (event: Event) => {
+  localValue.value = (event.target as HTMLInputElement).value
+}
+
 const hover = ref<number | null>(null)
 
 const getIconNameFor = (star: number) => {
@@ -107,15 +111,16 @@ const horizontalArrowKey = (direction?: 'start' | 'end') => {
     </span>
   </div>
   <!-- The number input field is presented to screen readers only. -->
-  <FormKit
+  <!-- A plain input, as a FormKit one would register a second node under the field's id. -->
+  <input
     :id="context.id"
-    v-model="localValue"
-    outer-class="sr-only"
+    class="sr-only"
     tabindex="-1"
     type="number"
     min="1"
     max="5"
+    :value="localValue"
     :disabled="context.disabled"
-    :ignore="true"
+    @input="updateFromNumberInput"
   />
 </template>

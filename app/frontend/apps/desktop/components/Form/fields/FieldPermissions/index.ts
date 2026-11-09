@@ -5,13 +5,16 @@ import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 
 import FieldPermissionsInput from './FieldPermissionsInput.vue'
 
-import type { PermissionsProps } from './types.ts'
+import type { PermissionsFieldProps } from './types.ts'
 import type { FormKitBaseSlots, FormKitInputs } from '@formkit/inputs'
 
 declare module '@formkit/inputs' {
   // oxlint-disable-next-line no-unused-vars
   interface FormKitInputProps<Props extends FormKitInputs<Props>> {
-    permissions: PermissionsProps
+    permissions: PermissionsFieldProps & {
+      type: 'permissions'
+      value?: string[]
+    }
   }
 
   interface FormKitInputSlots<Props extends FormKitInputs<Props>> {

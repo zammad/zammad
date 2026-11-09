@@ -17,6 +17,8 @@ export type PermissionsParentOption = {
   children?: PermissionsChildOption[]
 }
 
-export type PermissionsProps = FormFieldContext<{
+export interface PermissionsFieldProps {
   options: PermissionsParentOption[]
-}>
+}
+
+export type PermissionsContext = FormFieldContext<PermissionsFieldProps>
