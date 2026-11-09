@@ -92,14 +92,18 @@ const tiptapEditor = () => (page.getByRole('textbox').element() as TiptapEditorH
 const editorSelection = () => tiptapEditor().state.selection
 
 // Within 200 ms of focusing, ProseMirror takes a cursor at the document start for a browser
-//   reset and restores its own - unless a click focused it, as a user would.
+//   reset and restores its own - unless a click focused it, as a user would. On a busy CI
+//   runner a single click can take longer than the default poll timeout of one second.
 export const moveCursorToStart = async (editor: Locator) => {
   await expect
-    .poll(async () => {
-      await userEvent.click(editor)
-      await userEvent.keyboard(MOVE_TO_START)
-      return editorSelection().from
-    })
+    .poll(
+      async () => {
+        await userEvent.click(editor)
+        await userEvent.keyboard(MOVE_TO_START)
+        return editorSelection().from
+      },
+      { timeout: 5000 },
+    )
     .toBe(1)
 }
 
