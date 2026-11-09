@@ -426,7 +426,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
-    mcp (1.8.1)
+    mcp (1.9.0)
       json_schemer (>= 2.4)
     messagebird-rest (5.0.0)
       jwt (< 4)
