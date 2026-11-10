@@ -874,13 +874,13 @@ describe('Form - Field - TreeSelect - Features', () => {
       expect(selectOption).toHaveTextContent(testOptions[index].label!)
     })
 
-    vi.spyOn(console, 'warn')
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     await wrapper.rerender({
       sorting: 'foobar',
     })
 
-    expect(console.warn).toHaveBeenCalledWith('Unsupported sorting option "foobar"')
+    expect(warn).toHaveBeenCalledWith('Unsupported sorting option "foobar"')
   })
 
   it('supports label translation', async () => {

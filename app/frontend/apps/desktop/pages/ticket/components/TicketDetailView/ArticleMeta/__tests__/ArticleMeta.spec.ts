@@ -431,7 +431,7 @@ describe('Article Meta', () => {
 
         expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
         expect(wrapper.getByText('read by the customer')).toBeInTheDocument()
-        expect(wrapper.getByIconName('check-double-circle')).toBeInTheDocument()
+        expect(wrapper.getByIconName('check2-all-circle')).toBeInTheDocument()
       })
     })
   })

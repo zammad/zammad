@@ -70,11 +70,12 @@ describe('buildNavigationItems', () => {
 
   it('warns and falls back to a top level entry for an unknown group', (context) => {
     context.skipConsole = true
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     const items = buildNavigationItems([buildRoute('time-tracking', 100, 'toolz')], [tools])
 
     expect(items).toMatchObject([{ type: 'route' }])
-    expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('toolz'))
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('toolz'))
   })
 
   it('does not mutate the given routes', () => {

@@ -85,6 +85,6 @@ export default {
   'avatar-indicator-editing-desktop': 'desktop-edit',
   'avatar-indicator-editing-mobile': 'edit',
   'avatar-indicator-desktop': 'desktop',
-  'avatar-indicator-mobile': 'avatar-indicator-mobile',
-  'avatar-indicator-idle': 'avatar-indicator-idle',
+  'avatar-indicator-mobile': 'smartphone',
+  'avatar-indicator-idle': 'user-idle-2',
 }

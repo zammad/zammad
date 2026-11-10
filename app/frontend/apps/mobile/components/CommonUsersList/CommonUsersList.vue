@@ -35,7 +35,7 @@ const getAvatarIndicator = (user: AvatarUser) => {
         {{ user.fullname }}
       </span>
     </div>
-    <div v-if="getAvatarIndicator(user).indicatorIcon" class="flex items-center">
+    <div v-if="getAvatarIndicator(user).indicatorIcon.value" class="flex items-center">
       <CommonIcon
         :class="{ 'fill-gray': getAvatarIndicator(user).indicatorIsIdle.value }"
         :label="getAvatarIndicator(user).indicatorLabel.value"

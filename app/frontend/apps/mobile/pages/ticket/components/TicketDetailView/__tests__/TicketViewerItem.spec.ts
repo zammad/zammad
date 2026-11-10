@@ -83,5 +83,6 @@ describe('displaying single ticket viewer items', () => {
     const avatar = view.getByTestId('common-avatar')
 
     expect(avatar).toHaveClass('opacity-60')
+    expect(view.getByIconName('user-idle-2')).toBeInTheDocument()
   })
 })

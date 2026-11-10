@@ -248,16 +248,17 @@ vi.mock('@vueuse/core', async () => {
 beforeEach((context) => {
   context.skipConsole = false
 
+  // Resetting drops an implementation a test set on the console spies, so it cannot silence later tests.
   if (!vi.isMockFunction(console.warn)) {
     vi.spyOn(console, 'warn').mockClear()
   } else {
-    vi.mocked(console.warn).mockClear()
+    vi.mocked(console.warn).mockReset()
   }
 
   if (!vi.isMockFunction(console.error)) {
     vi.spyOn(console, 'error').mockClear()
   } else {
-    vi.mocked(console.error).mockClear()
+    vi.mocked(console.error).mockReset()
   }
 })
 

@@ -77,11 +77,14 @@ describe('errorLink', () => {
   it('reports an authentication error and invalidates the session', async () => {
     const emitSpy = vi.spyOn(emitter, 'emit')
     const errorSpy = vi.spyOn(log, 'error').mockImplementation(() => {})
+    const warnSpy = vi.spyOn(log, 'warn').mockImplementation(() => {})
+    onTestFinished(() => warnSpy.mockRestore())
 
     await executeWithError()
 
     expect(emitSpy).toHaveBeenCalledWith('session-invalid')
     expect(errorSpy).toHaveBeenCalled()
+    expect(warnSpy).toHaveBeenCalledWith('Session invalid, trigger logout and show login page.')
   })
 
   it('stays quiet about an authentication error when the authentication was already invalidated', async () => {

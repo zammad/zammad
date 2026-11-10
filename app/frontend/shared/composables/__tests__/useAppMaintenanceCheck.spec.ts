@@ -129,6 +129,7 @@ describe('useAppMaintenanceCheck', () => {
     context.skipConsole = true
 
     vi.spyOn(console, 'log').mockClear()
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     await subscriptionAppMaintenance.next({
       data: {
@@ -142,6 +143,11 @@ describe('useAppMaintenanceCheck', () => {
     expect(console.log).not.toHaveBeenCalledWith(
       'Uncaught Exception',
       new TypeError("Cannot read properties of undefined (reading 'type')"),
+    )
+    expect(error).toHaveBeenCalledWith(
+      "Missing field '%s' while writing result %o",
+      'appMaintenance',
+      expect.anything(),
     )
   })
 })

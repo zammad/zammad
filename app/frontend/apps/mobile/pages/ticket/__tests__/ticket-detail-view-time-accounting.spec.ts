@@ -64,7 +64,14 @@ const addArticleAndSave = async (
   await getNode('form-ticket-edit')?.settled
 
   await view.events.click(view.getByRole('button', { name: 'Add reply' }))
-  await view.events.type(await view.findByLabelText('Text'), 'Testing')
+
+  const replyDialog = await view.findByRole('dialog', { name: 'Add reply' })
+
+  // The reply form applies its article defaults after the dialog opens, text typed earlier is lost.
+  await within(replyDialog).findByText('Note')
+  await getNode('form-ticket-edit')?.settled
+
+  await view.events.type(within(replyDialog).getByLabelText('Text'), 'Testing')
 
   await getNode('form-ticket-edit')?.settled
 

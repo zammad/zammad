@@ -50,15 +50,15 @@ describe('CommonIcon.vue', () => {
 
   it('provides a label for assistive technologies', async () => {
     const wrapper = renderComponent(CommonIcon, {
-      props: { name: 'logo' },
+      props: { name: 'puzzle' },
     })
 
-    expect(wrapper.getByIconName('logo')).toHaveAccessibleName('logo')
+    expect(wrapper.getByIconName('puzzle')).toHaveAccessibleName('puzzle')
 
     await wrapper.rerender({
       label: 'Product Logo',
     })
 
-    expect(wrapper.getByIconName('logo')).toHaveAccessibleName('Product Logo')
+    expect(wrapper.getByIconName('puzzle')).toHaveAccessibleName('Product Logo')
   })
 })

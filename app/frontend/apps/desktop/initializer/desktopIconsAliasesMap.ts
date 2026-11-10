@@ -98,7 +98,7 @@ export default {
   hide: 'eye-slash',
 
   // WhatsApp status icons
-  read: 'check-double-circle',
+  read: 'check2-all-circle',
   delivered: 'check-all',
   send: 'check2',
 

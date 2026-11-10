@@ -11,6 +11,8 @@ import { useThemeStore } from '#desktop/stores/theme.ts'
 
 defineProps<Props>()
 
+defineOptions({ inheritAttrs: false })
+
 const themeSwitchInstance = useTemplateRef('theme-switch')
 
 const cycleThemeSwitchValue = () => {
@@ -28,13 +30,15 @@ const modelTheme = computed({
 </script>
 
 <template>
-  <CommonPopoverMenuItem v-bind="{ ...$props, ...$attrs }" @click="cycleThemeSwitchValue" />
-  <div class="flex items-center px-2">
-    <ThemeSwitch
-      ref="theme-switch"
-      v-model="modelTheme"
-      class="hover:outline-blue-300 dark:hover:outline-blue-950"
-      size="small"
-    />
+  <div class="flex grow">
+    <CommonPopoverMenuItem v-bind="{ ...$props, ...$attrs }" @click="cycleThemeSwitchValue" />
+    <div class="flex items-center px-2">
+      <ThemeSwitch
+        ref="theme-switch"
+        v-model="modelTheme"
+        class="hover:outline-blue-300 dark:hover:outline-blue-950"
+        size="small"
+      />
+    </div>
   </div>
 </template>

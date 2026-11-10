@@ -33,5 +33,6 @@ describe('list of users with avatars', () => {
     expect(links[0], 'has avatar').toHaveTextContent('JD')
     expect(links[1]).toHaveTextContent('Mariland Doe')
     expect(links[1], 'has avatar').toHaveTextContent('MD')
+    expect(view.queryByIconName('')).not.toBeInTheDocument()
   })
 })

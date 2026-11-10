@@ -10,6 +10,7 @@ import type {
   Ticket,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import log from '#shared/utils/log.ts'
 
 import ActivityMessage from '../ActivityMessage.vue'
 
@@ -154,13 +155,15 @@ describe('NotificationItem.vue', () => {
     )
   })
 
-  it('no output for not existing builder', (context) => {
-    context.skipConsole = true
+  it('no output for not existing builder', () => {
+    const error = vi.spyOn(log, 'error').mockImplementation(() => {})
+    onTestFinished(() => error.mockRestore())
 
     const view = renderActivityMessage({
       objectName: 'NotExisting',
     })
 
     expect(view.html()).not.toContain('a')
+    expect(error).toHaveBeenCalledWith('Object missing NotExisting.')
   })
 })

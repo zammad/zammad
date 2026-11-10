@@ -109,7 +109,7 @@ describe('CommonTabGroup', () => {
         props: {
           tabs: [
             { label: 'Tab 1', key: 'tab-1', icon: 'search' },
-            { label: 'Tab 2', key: 'tab-2', icon: 'check' },
+            { label: 'Tab 2', key: 'tab-2', icon: 'check2' },
             { label: 'Tab 3', key: 'tab-3', icon: 'x' },
           ],
         },
@@ -127,7 +127,7 @@ describe('CommonTabGroup', () => {
         props: {
           tabs: [
             { label: 'Tab 1', key: 'tab-1', icon: 'search' },
-            { label: 'Tab 2', key: 'tab-2', icon: 'check', tooltip: 'Explains tab 2' },
+            { label: 'Tab 2', key: 'tab-2', icon: 'check2', tooltip: 'Explains tab 2' },
           ],
         },
       })
@@ -162,7 +162,7 @@ describe('CommonTabGroup', () => {
           labelBreakpoint: '4xl',
           tabs: [
             { label: 'Tab 1', key: 'tab-1', icon: 'search' },
-            { label: 'Tab 2', key: 'tab-2', icon: 'check' },
+            { label: 'Tab 2', key: 'tab-2', icon: 'check2' },
           ],
         },
       })

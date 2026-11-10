@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { within } from '@testing-library/vue'
+import { waitFor, within } from '@testing-library/vue'
 
 import FormUpdaterOrganization from '#tests/graphql/factories/types/FormUpdaterOrganization.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -107,6 +107,8 @@ describe('Organization Detail View - Edit Organization', () => {
     const flyout = await view.findByRole('complementary', { name: 'Edit organization' })
 
     const name = await within(flyout).findByLabelText('Name')
+
+    await waitFor(() => expect(name).toBeVisible())
 
     await view.events.clear(name)
     await view.events.type(name, 'Updated organization name')
