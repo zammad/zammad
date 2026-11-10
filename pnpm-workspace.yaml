@@ -12,6 +12,8 @@ overrides:
   '@sa11y/vitest>vitest': ^5.1.0
   'lightningcss': ^1.33.0
 permissions:
+  '@apollo/client':
+    skills: false
   fallow:
     skills: false
 verifyDepsBeforeRun: false
