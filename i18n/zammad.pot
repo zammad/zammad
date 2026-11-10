@@ -19391,6 +19391,14 @@ msgstr ""
 msgid "The response could not be processed."
 msgstr ""
 
+#: lib/ai/provider/anthropic.rb:13
+msgid "The response was cut off because it reached the maximum output length."
+msgstr ""
+
+#: lib/ai/provider/anthropic.rb:14
+msgid "The response was cut off because the request and the response together exceeded the context window of the model."
+msgstr ""
+
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
 msgstr ""
