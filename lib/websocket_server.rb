@@ -18,8 +18,17 @@ class WebsocketServer
     AppVersion.start_maintenance_thread(process_name: 'websocket-server')
     Zammad::ProcessDebug.install_thread_status_handler
 
+    # EventMachine resolves its bind address with AI_ADDRCONFIG, which fails even for 127.0.0.1 on IPv6-only hosts (#6536).
+    server = TCPServer.new(@options[:b], @options[:p])
+    # EventMachine owns the descriptor from here on and closes it on shutdown; Ruby must not close it a second time.
+    server.autoclose = false
+
+    EventMachine.epoll
     EventMachine.run do
-      EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|
+      Signal.trap('TERM') { EventMachine::WebSocket.stop }
+      Signal.trap('INT')  { EventMachine::WebSocket.stop }
+
+      EventMachine.attach_server(server, EventMachine::WebSocket::Connection, host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|
 
         # register client connection
         ws.onopen do |handshake|
