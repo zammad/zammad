@@ -130,6 +130,9 @@
   before_script:
     - !reference [.scripts, pnpm_install]
     - !reference [.scripts, source_rvm]
+  variables:
+    # V8 derives its default heap limit from host RAM (~1.9 GB on 4 GB runners), too small for vue-tsc.
+    NODE_OPTIONS: '--max-old-space-size=2560'
   script:
     - echo "TypeScript compiler check…"
     - pnpm lint:ts
