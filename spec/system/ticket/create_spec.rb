@@ -294,6 +294,9 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       visit 'ticket/create'
 
       find('[data-type=email-out]').click
+
+      # Typing while the form is still updated loses the focus, and the "o" of ".com" then opens the overviews.
+      wait_for_core_workflow
     end
 
     it 'can be cleared by cutting out text' do
