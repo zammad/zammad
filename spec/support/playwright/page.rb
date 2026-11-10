@@ -41,6 +41,28 @@ module PlaywrightNative
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
     end
 
+    SCROLL_OFFSET = <<~JS.freeze
+      (element) => {
+        for (let area = element.parentElement; area; area = area.parentElement) {
+          const { overflowY } = getComputedStyle(area)
+          if (['auto', 'scroll'].includes(overflowY) && area.scrollHeight > area.clientHeight) return area.scrollTop
+        }
+
+        return document.scrollingElement.scrollTop
+      }
+    JS
+
+    # How far the area around the element is scrolled, e.g. the articles of a ticket.
+    def scroll_offset(element)
+      element.evaluate(SCROLL_OFFSET)
+    end
+
+    def wait_for_scroll_offset(element, offset)
+      page.wait_for_function("([element, offset]) => (#{SCROLL_OFFSET})(element) === offset", arg: [element.element_handle, offset])
+    rescue Playwright::TimeoutError
+      raise "Scroll offset #{offset} not reached, it is #{scroll_offset(element)}"
+    end
+
     # Another tab of the same browser, it shares the cookies and the storage of `page`.
     def open_tab
       browser_context.new_page

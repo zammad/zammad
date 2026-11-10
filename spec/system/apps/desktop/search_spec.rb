@@ -71,7 +71,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
 
     page.get_by_role('tree', name: 'User taskbar tabs').get_by_role('link', name: 'New Ticket Title').click
 
-    main_content.get_by_role('button', name: 'Add internal note').click
+    add_internal_note_button.click
 
     fill_field('Text', answer)
 

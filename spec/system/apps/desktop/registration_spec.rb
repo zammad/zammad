@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: false, performs_jobs: true, type: :system do
+RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: false, performs_jobs: true, type: :playwright do
 
   notification_url = ''
 
@@ -12,27 +12,28 @@ RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: f
     end
   end
 
-  it 'Register a new user and log in with the confirmation link' do
-    visit '/login'
+  it 'Register a new user and verify the email address with the confirmation link' do
+    open_desktop('/login')
 
-    click_on 'Register'
+    page.get_by_role('link', name: 'Register', exact: true).click
 
-    find_input('First name').type('John')
-    find_input('Email').type('john.doe@example.com')
-    find_input('Password').type('s3cr3tPassWord')
-    find_input('Confirm password').type('s3cr3tPassWord')
+    fill_field('First name', 'John')
+    fill_field('Email', 'john.doe@example.com')
+    fill_field('Password', 's3cr3tPassWord')
+    fill_field('Confirm password', 's3cr3tPassWord')
 
-    click_on 'Create my account'
+    page.get_by_role('button', name: 'Create my account', exact: true).click
 
-    expect(page).to have_text('Thanks for joining. Email sent to "john.doe@example.com".')
+    expect(main_content).to contain_text('Thanks for joining. Email sent to "john.doe@example.com".')
 
     # The verification mail is delivered in the background.
     perform_enqueued_jobs only: NotificationMailerJob
 
     expect(notification_url).to be_present
 
-    visit notification_url.sub(%r{.*/desktop/}, '')
+    open_desktop("/#{notification_url.sub(%r{.*/desktop/}, '')}")
 
-    expect_current_route '/'
+    expect(main_content).to contain_text('Woo hoo! Your email address has been verified!')
+    expect(User.find_by(email: 'john.doe@example.com')).to be_verified
   end
 end

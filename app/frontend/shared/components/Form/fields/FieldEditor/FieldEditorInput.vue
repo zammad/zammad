@@ -46,6 +46,10 @@ interface Props {
 
 const props = defineProps<Props>()
 
+// A remounted editor of the same form and field must not count as ready before it is.
+if (VITE_TEST_MODE)
+  testFlags.clear(`${props.context.formId}.${props.context.node.name}.editor.ready`)
+
 const placeholder = props.context.placeholder
   ? props.context.placeholder
   : props.context.inline

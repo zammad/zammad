@@ -4,7 +4,7 @@ require 'rails_helper'
 
 # The client half of the pickup path. Which view is resolved, and for whom, is covered by
 #   spec/graphql/gql/subscriptions/cti/call_pickup_spec.rb and the specs it names.
-RSpec.describe 'Desktop > Caller log > Call pickup', app: :desktop_view, authenticated_as: :agent, type: :system do
+RSpec.describe 'Desktop > Caller log > Call pickup', app: :desktop_view, authenticated_as: :agent, type: :playwright do
   let(:agent)    { create(:agent, preferences: { cti: true }) }
   let(:customer) { create(:customer, firstname: 'Franz', lastname: 'Bauer', phone: '+49 30 609854180') }
   let(:call)     { { 'direction' => 'in', 'from' => '4930609854180', 'to' => '4930609811111', 'call_id' => '4711' } }
@@ -22,7 +22,7 @@ RSpec.describe 'Desktop > Caller log > Call pickup', app: :desktop_view, authent
     Setting.set('cti_integration', true)
     customer
 
-    visit '/'
+    open_desktop('/')
     wait_for_subscription_start('ctiCallPickup')
   end
 
@@ -32,8 +32,8 @@ RSpec.describe 'Desktop > Caller log > Call pickup', app: :desktop_view, authent
     it 'opens the customer detail view' do
       pick_up_call
 
-      expect(page).to have_current_path("/desktop/users/#{customer.id}")
-      expect(page).to have_text('Franz Bauer')
+      expect(page).to have_url(%r{/desktop/users/#{customer.id}$})
+      expect(main_content).to contain_text('Franz Bauer')
     end
   end
 
@@ -41,8 +41,8 @@ RSpec.describe 'Desktop > Caller log > Call pickup', app: :desktop_view, authent
     it 'opens a ticket create tab carrying the customer' do
       pick_up_call
 
-      expect(page).to have_current_path(%r{/desktop/tickets/create/[^?]+\?customer_id=#{customer.id}$})
-      expect(find_autocomplete('Customer')).to have_text('Franz Bauer')
+      expect(page).to have_url(%r{/desktop/tickets/create/[^?]+\?customer_id=#{customer.id}$})
+      expect(selected_options('Customer')).to have_text('Franz Bauer')
     end
   end
 
@@ -55,21 +55,19 @@ RSpec.describe 'Desktop > Caller log > Call pickup', app: :desktop_view, authent
     it 'opens a ticket create tab with the number as the customer, who is created with the ticket' do
       pick_up_call
 
-      expect(page).to have_current_path(%r{/desktop/tickets/create/[^?]+\?customer_phone=})
+      expect(page).to have_url(%r{/desktop/tickets/create/[^?]+\?customer_phone=})
       wait_for_form_to_settle('ticket-create')
 
-      expect(find_autocomplete('Customer')).to have_text('+49 30 609812345')
-      expect(page).to have_no_css('#flyout-user-create-flyout')
+      expect(selected_options('Customer')).to have_text('+49 30 609812345')
+      expect(flyout('New user')).to have_count(0)
 
-      within_form(form_updater_gql_number: 1) do
-        find_input('Title').type('Call from an unknown number')
-        find_editor('Text').type('The caller asked for a quote.')
-        find_treeselect('Group').search_for_option(group.name)
-      end
+      fill_field('Title', 'Call from an unknown number')
+      type_in_editor('Text', 'The caller asked for a quote.')
+      search_for_option('Group', group.name)
 
-      click_on 'Create'
+      page.get_by_role('button', name: 'Create', exact: true).click
 
-      expect(page).to have_text('Ticket has been created successfully')
+      expect(notification('Ticket has been created successfully')).to be_visible
 
       customer = Ticket.last.customer
 

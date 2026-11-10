@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require_relative '../../../../lib/zammad/service/redis'
 
-RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: false, integration: true, required_envs: %w[MAIL_ADDRESS MAIL_PASS], set_up: false, type: :system do
+RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: false, integration: true, required_envs: %w[MAIL_ADDRESS MAIL_PASS], set_up: false, type: :playwright do
 
   before do
     # Import mail server CA certificate into the trust store.
@@ -18,58 +18,63 @@ RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: f
     Zammad::Service::Redis.new.del('Zammad::System::Setup')
   end
 
+  def button(name)
+    page.get_by_role('button', name:, exact: true)
+  end
+
   it 'Perform the basic system set-up' do
-    visit '/'
+    open_desktop('/')
 
-    click_on 'Set up a new system'
+    button('Set up a new system').click
 
-    expect(page).to have_field('First name', wait: 30)
+    expect(page.get_by_label('First name', exact: true)).to be_visible(timeout: 30_000)
 
     # Invalid password
-    fill_in 'First name', with: 'John'
-    fill_in 'Last name', with: 'Doe'
-    fill_in 'Email', with: 'john.doe@example.com'
-    fill_in 'Password', with: '1234'
-    fill_in 'Confirm password', with: '1234'
-    click_on 'Create account'
+    fill_field('First name', 'John')
+    fill_field('Last name', 'Doe')
+    fill_field('Email', 'john.doe@example.com')
+    fill_field('Password', '1234')
+    fill_field('Confirm password', '1234')
+    button('Create account').click
 
-    expect(page).to have_text('Invalid password')
+    expect(main_content).to contain_text('Invalid password')
 
     # Valid password, create account
-    fill_in 'Password', with: 'testTEST1234'
-    fill_in 'Confirm password', with: 'testTEST1234'
-    click_on 'Create account'
+    fill_field('Password', 'testTEST1234')
+    fill_field('Confirm password', 'testTEST1234')
+    button('Create account').click
 
-    fill_in 'Organization name', with: 'Test corp.'
-    find('input[name="logo"]', visible: :all).set(Rails.root.join('test/data/image/1000x1000.png'))
-    fill_in 'System URL', with: app_host
-    click_on 'Save and continue'
+    fill_field('Organization name', 'Test corp.')
+    file_chooser = page.expect_file_chooser { button('Upload image').click }
+    file_chooser.set_files(Rails.root.join('test/data/image/1000x1000.png').to_s)
+    fill_field('System URL', PlaywrightNative::AppServer.url)
+    button('Save and continue').click
 
     # Accept default setting (local MTA).
-    expect(page).to have_text('Email notification')
-    click_on 'Save and continue'
+    expect(page.get_by_role('heading', name: 'Email notification', level: 1)).to be_visible
+    button('Save and continue').click
 
-    click_on 'Email channel'
-    fill_in 'Full name', with: 'John Doe'
-    fill_in 'Email address', with: ENV['MAIL_ADDRESS']
-    fill_in 'Password', with: ENV['MAIL_PASS']
-    click_on 'Connect and continue'
+    button('Email channel').click
+    fill_field('Full name', 'John Doe')
+    fill_field('Email address', ENV['MAIL_ADDRESS'])
+    fill_field('Password', ENV['MAIL_PASS'])
+    button('Connect and continue').click
 
-    expect(page).to have_text('Verifying and saving your configuration…')
+    expect(main_content).to contain_text('Verifying and saving your configuration…')
 
-    expect(page).to have_text('Invite colleagues', wait: 2.minutes)
+    expect(page.get_by_role('heading', name: 'Invite colleagues', level: 1)).to be_visible(timeout: 2.minutes.in_milliseconds)
 
-    fill_in 'First name', with: 'Jim'
-    fill_in 'Last name', with: 'Doe'
-    fill_in 'Email', with: 'jim.doe@example.com'
-    click_on 'Send invitation'
-    expect(page).to have_text('Invitation sent!')
+    fill_field('First name', 'Jim')
+    fill_field('Last name', 'Doe')
+    fill_field('Email', 'jim.doe@example.com')
+    button('Send invitation').click
+    expect(notification('Invitation sent!')).to be_visible
 
-    click_on('Finish setup')
+    button('Finish setup').click
+
+    expect(page).to have_url(%r{/desktop/$})
 
     expect(NotificationFactory::Mailer).to have_received(:notification).once
-
-    expect_current_route('/')
 
     # TODO: check for "clues" in UI, not available yet.
   end

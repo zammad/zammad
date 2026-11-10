@@ -27,6 +27,12 @@ module PlaywrightNative
       page.get_by_role('alert').filter(hasText: text)
     end
 
+    # The ticket's floating toolbar offers an icon-only copy while the articles are not scrolled
+    #   to the end, the article list's button carries the text.
+    def add_internal_note_button
+      main_content.get_by_role('button', name: 'Add internal note', exact: true).filter(hasText: 'Add internal note')
+    end
+
     # The body rows of a table, without its header row.
     def table_rows(caption, within: page)
       within.get_by_role('table', name: caption).get_by_role('row').filter(has: page.get_by_role('cell'))

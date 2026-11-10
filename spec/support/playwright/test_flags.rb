@@ -35,6 +35,11 @@ module PlaywrightNative
       wait_for_test_flag("#{form}.settled")
     end
 
+    # Typing into an editor before it is ready may get lost. The flag is set once per editor.
+    def wait_for_editor_ready(textbox)
+      wait_for_test_flag("#{textbox.get_attribute('data-form-id')}.#{textbox.get_attribute('name')}.editor.ready", skip_clearing: true)
+    end
+
     # For state outside the browser, e.g. the database.
     def wait_until(message = 'Condition not met', timeout: PLAYWRIGHT_TIMEOUT)
       deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + timeout

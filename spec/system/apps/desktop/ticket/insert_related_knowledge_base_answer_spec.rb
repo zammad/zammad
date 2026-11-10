@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :desktop_view, authenticated_as: :authenticate, type: :system do
+RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :desktop_view, authenticated_as: :authenticate, type: :playwright do
   include_context 'basic Knowledge Base'
 
   let(:ticket)                { create(:ticket, group: Group.find_by(name: 'Users')) }
@@ -25,77 +25,60 @@ RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :
     true
   end
 
-  before do
-    wait_for_setting('kb_active', true)
-    wait_for_setting('vectordb_enabled', true)
+  def add_internal_note
+    add_internal_note_button.click
+    wait_for_editor_ready(editor('Text'))
+  end
 
-    visit "/tickets/#{ticket.id}"
+  before do
+    open_desktop("/tickets/#{ticket.id}")
     wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
   end
 
   it 'offers the linked and the suggested answer before a search term is typed, and inserts one with its attachment' do
-    within 'main' do
-      find('button', text: 'Add internal note').click
+    add_internal_note
+    type_in_editor('Text', '??')
 
-      editor = find_editor('Text')
-      wait_for_editor_ready(editor)
-      editor.input_element.send_keys('??')
-    end
+    answers = page.get_by_role('listbox', name: 'Knowledge base articles')
+    expect(answers).to contain_text('Start typing to search in knowledge base…')
 
-    within '[data-test-id="mention-knowledge-base"]' do
-      expect(page).to have_text('Start typing to search in knowledge base…')
-        .and have_text('Linked')
-        .and have_text('Suggested knowledge')
+    linked    = answers.get_by_role('group', name: 'Linked', exact: true).get_by_role('option')
+    suggested = answers.get_by_role('group', name: 'Suggested knowledge', exact: true).get_by_role('option')
 
-      within '[role="group"][aria-labelledby$="-section-linked"]' do
-        expect(page).to have_css('[role="option"]', count: 1, text: linked_translation.title)
-      end
+    expect(linked).to have_count(1)
+    expect(linked).to contain_text(linked_translation.title)
+    expect(suggested).to have_count(1)
+    expect(suggested).to contain_text(suggested_translation.title)
 
-      within '[role="group"][aria-labelledby$="-section-suggested"]' do
-        expect(page).to have_css('[role="option"]', count: 1, text: suggested_translation.title)
-      end
+    linked.click
 
-      find('[role="option"]', text: linked_translation.title).click
-    end
-
-    within '#ticketArticleReplyForm' do
-      expect(find_editor('Text').input_element).to have_text(linked_translation.content.body)
-      # The file list renders the extension apart from the base name.
-      expect(page).to have_text(%r{hello_world\s*\.txt})
-    end
+    expect(editor('Text')).to contain_text(linked_translation.content.body)
+    # The file list renders the extension apart from the base name.
+    expect(main_content).to contain_text(%r{hello_world\s*\.txt})
   end
 
   context 'when inserting from the sidebar' do
     def related_answer_row(translation)
-      find('#ticket-ai-knowledge-base-answers li', text: translation.title)
+      content_sidebar.get_by_role('listitem').filter(has: page.get_by_role('link', name: translation.title))
     end
 
+    # The pointer on the row opens the answer's popover over its actions, the keyboard does not.
     def insert_from_sidebar(translation)
-      button = related_answer_row(translation).find_button('Insert knowledge base answer', visible: :all)
-
-      # The row reveals its actions on focus as well as on hover, and focus does not depend on where
-      #   the pointer rests.
-      button.evaluate_script('this.focus()')
-      button.click
-    end
-
-    def editor_text
-      find_editor('Text').input_element.text
+      button = related_answer_row(translation).get_by_role('button', name: 'Insert knowledge base answer')
+      button.focus
+      button.press('Enter')
     end
 
     # The row actions only show while the row is hovered or focused, which is not what is checked here.
     it 'offers the insert action only while an article is being written' do
-      within related_answer_row(linked_translation) do
-        expect(page).to have_button('Unlink knowledge base answer', visible: :all)
-        expect(page).to have_no_button('Insert knowledge base answer', visible: :all)
-      end
+      row = related_answer_row(linked_translation)
 
-      within('main') { find('button', text: 'Add internal note').click }
-      wait_for_editor_ready(find_editor('Text'))
+      expect(row.get_by_role('button', name: 'Unlink knowledge base answer')).to have_count(1)
+      expect(row.get_by_role('button', name: 'Insert knowledge base answer')).to have_count(0)
 
-      within related_answer_row(linked_translation) do
-        expect(page).to have_button('Insert knowledge base answer', visible: :all)
-      end
+      add_internal_note
+
+      expect(row.get_by_role('button', name: 'Insert knowledge base answer')).to have_count(1)
     end
 
     context 'with a full quote reply' do
@@ -109,19 +92,15 @@ RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :
       end
 
       it 'inserts the answer above the quote when no cursor was placed' do
-        within "#article-#{article.id}" do
-          find('button', exact_text: 'Reply', visible: :all).click
-        end
+        main_content.get_by_role('button', name: 'Reply', exact: true).click
 
-        within '#ticketArticleReplyForm' do
-          expect(page).to have_css('blockquote', text: 'Customer question.')
-        end
+        expect(editor('Text').get_by_role('blockquote')).to contain_text('Customer question.')
 
         insert_from_sidebar(linked_translation)
 
-        expect(page).to have_css('#ticketArticleReplyForm [role="textbox"]', text: linked_translation.content.body)
+        expect(editor('Text')).to contain_text(linked_translation.content.body)
 
-        text = editor_text
+        text = editor('Text').inner_text
         expect(text.index(linked_translation.content.body)).to be < text.index('Customer question.')
       end
     end

@@ -19,6 +19,25 @@ module PlaywrightNative
       after_form_update_of(outer) { outer.get_by_label(label, exact: true).fill(value) }
     end
 
+    # The rich text editor of the field, a textbox named like it.
+    def editor(label, within: page)
+      field(label, within:).get_by_role('textbox', name: label)
+    end
+
+    # Types like a user: a string as text, a symbol presses the key of that name. A click focuses
+    #   the editor only if it has no focus yet, so a cursor placed before stays where it is.
+    def type_in_editor(label, *keys, within: page)
+      outer   = field(label, within:)
+      textbox = editor(label, within:)
+
+      wait_for_editor_ready(textbox)
+      textbox.click if !textbox.evaluate('(textbox) => textbox.contains(document.activeElement)')
+
+      after_form_update_of(outer) do
+        keys.each { |key| key.is_a?(Symbol) ? page.keyboard.press(key.to_s.camelize) : page.keyboard.type(key) }
+      end
+    end
+
     def select_option(label, option, within: page)
       choose_from_menu(label, within:) do |_combobox, menu|
         menu.get_by_role('option', name: option).click
@@ -72,6 +91,14 @@ module PlaywrightNative
       page.wait_for_function('() => !document.querySelector("form[aria-busy]")')
     end
 
+    # A menu that opens upwards grows from its bottom edge, a click on a moving option goes astray.
+    def wait_for_menu_to_open(menu)
+      page.wait_for_function(<<~JS, arg: menu.element_handle)
+        (menu) => !document.getAnimations().some(({ effect, playState }) =>
+          playState === 'running' && effect?.target && (effect.target.contains(menu) || menu.contains(effect.target)))
+      JS
+    end
+
     # The menu is teleported to the end of the document; the field's combobox names it in aria-controls.
     def choose_from_menu(label, within:)
       outer    = field(label, within:)
@@ -82,6 +109,7 @@ module PlaywrightNative
 
         menu = page.locator("##{combobox.get_attribute('aria-controls')}").get_by_role('menu')
         expect(menu).to be_visible
+        wait_for_menu_to_open(menu)
 
         yield combobox, menu
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Automatic third-party login redirect', app: :desktop_view, authenticated_as: false, type: :system do
+RSpec.describe 'Desktop > Automatic third-party login redirect', app: :desktop_view, authenticated_as: false, type: :playwright do
   let(:agent)         { create(:agent) }
   let(:authorization) { create(:authorization, user: agent, provider: 'github', uid: '123456') }
   let(:ticket)        { create(:ticket, group: Group.first) }
@@ -31,9 +31,9 @@ RSpec.describe 'Desktop > Automatic third-party login redirect', app: :desktop_v
   end
 
   it 'signs in through the provider and opens the requested ticket' do
-    visit "/tickets/#{ticket.id}"
+    page.goto("/desktop/tickets/#{ticket.id}")
 
-    expect_current_route "/tickets/#{ticket.id}"
-    expect(page).to have_text(ticket.title)
+    expect(page).to have_url(%r{/desktop/tickets/#{ticket.id}$})
+    expect(main_content).to contain_text(ticket.title)
   end
 end

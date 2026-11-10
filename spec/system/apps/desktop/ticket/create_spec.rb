@@ -23,14 +23,7 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
     end
 
     let(:text)    { field('Text') }
-    let(:editor)  { text.get_by_role('textbox', name: 'Text') }
     let(:toolbar) { text.get_by_role('toolbar') }
-
-    def type_text(*keys)
-      after_form_update_of(text) do
-        keys.each { |key| key.is_a?(Symbol) ? page.keyboard.press(key.to_s.capitalize) : page.keyboard.type(key) }
-      end
-    end
 
     # The body is sometimes applied to the editor once more after typing, and parsing puts
     #   the href of a link first, so the markup is compared without the attribute order.
@@ -47,7 +40,7 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
     # A toolbar button takes the focus, and the editor gets it back one animation frame later.
     def click_editor_action(label)
       toolbar.get_by_role('button', name: label, exact: true).click
-      expect(editor).to be_focused
+      expect(editor('Text')).to be_focused
     end
 
     it 'creates a new ticket' do
@@ -63,21 +56,20 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
         menu.get_by_role('button').click
       end
 
-      editor.click
-      type_text('# ', 'Heading', :enter)
+      type_in_editor('Text', '# ', 'Heading', :enter)
 
       click_editor_action('Format as bold')
-      type_text('Bold Text ', :enter)
+      type_in_editor('Text', 'Bold Text ', :enter)
       click_editor_action('Format as bold')
 
       click_editor_action('Format as italic')
-      type_text('Italic Text ', :enter)
+      type_in_editor('Text', 'Italic Text ', :enter)
 
       click_editor_action('Add bullet list')
-      type_text('Bullet List ', :enter, :enter)
+      type_in_editor('Text', 'Bullet List ', :enter, :enter)
 
       click_editor_action('Add ordered list')
-      type_text('Ordered List ', :enter, :enter)
+      type_in_editor('Text', 'Ordered List ', :enter, :enter)
 
       toolbar.get_by_role('button', name: 'Add link', exact: true).click
 

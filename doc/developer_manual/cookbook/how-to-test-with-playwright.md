@@ -112,7 +112,12 @@ select_option('Priority', '3 high')
 search_for_option('Group', group.name)                  # autocompletes and tree selects
 search_for_option('CC', email) { |menu| menu.get_by_role('button').click }
 expect(selected_options('Priority')).to have_text('3 high')
+type_in_editor('Text', 'Bold text', :enter)             # a symbol presses that key
+expect(editor('Text')).to contain_text('Bold text')
 ```
+
+`type_in_editor` waits until the editor is ready and clicks it only if it has no focus
+yet, so a cursor placed before stays where it is.
 
 The helpers only see visible fields: views kept alive in the background, like other
 taskbar tabs, keep their hidden fields.
