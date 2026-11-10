@@ -22,16 +22,16 @@ RSpec.describe GraphqlValidations::AliasesCount do
   end
 
   context 'when too many aliases are given' do
-    let(:aliases_count) { 11 }
+    let(:aliases_count) { 6 }
 
     it 'raises an error' do
       expect { schema.execute(query) }
-        .to raise_error(GraphqlValidations::Error, 'Too many aliases given (maximum is 10)')
+        .to raise_error(GraphqlValidations::Error, 'Too many aliases given (maximum is 5)')
     end
   end
 
   context 'when exactly at the alias limit' do
-    let(:aliases_count) { 10 }
+    let(:aliases_count) { 5 }
 
     it 'does not raise an error' do
       expect { schema.execute(query) }.not_to raise_error

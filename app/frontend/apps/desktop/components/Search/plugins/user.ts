@@ -15,7 +15,6 @@ export default <SearchPlugin>{
   priority: 200,
   quickSearchResultLabel: __('Found users'),
   quickSearchComponent: User,
-  quickSearchResultKey: 'quickSearchUsers',
   permissions: ['ticket.agent', 'admin.user'],
   detailSearchHeaders: ['login', 'firstname', 'lastname', 'organization', 'organization_ids'],
   detailSearchComponent: UserListTable,

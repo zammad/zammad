@@ -57,72 +57,40 @@ extension file.
 
 ### Example: adding a root field (operation extension)
 
-Base — `quickSearch.graphql`:
+Base — `userOverview.graphql` (illustrative, not a core document):
 
 ```graphql
-query quickSearch($search: String!, $limit: Int = 10) {
-  quickSearchOrganizations: search(search: $search, onlyIn: Organization, limit: $limit) {
-    totalCount
-    items {
-      __typename
-      ... on Organization {
-        id
-        name
-      }
-    }
+query userOverview($userId: ID!) {
+  user(userId: $userId) {
+    id
+    fullname
   }
 }
 ```
 
-Extension — `quickSearch.extensions/projectBaller.graphql`:
+Extension — `userOverview.extensions/projectBaller.graphql`:
 
 ```graphql
-query quickSearchProjectBallerProjects($search: String!, $limit: Int = 10) {
-  quickSearchProjectBallerProjects: search(
-    search: $search
-    onlyIn: ProjectBaller__Project
-    limit: $limit
-  ) {
-    totalCount
-    items {
-      __typename
-      ... on ProjectBallerProject {
-        id
-        name
-      }
-    }
+query userOverviewProjectBallerProjects($userId: ID!) {
+  projectBallerProjects(userId: $userId) {
+    id
+    name
   }
 }
 ```
 
-Merged operation (what codegen actually sees — still named `quickSearch`;
-`$limit` is deduplicated, not doubled):
+Merged operation (what codegen actually sees — still named `userOverview`;
+`$userId` is deduplicated, not doubled):
 
 ```graphql
-query quickSearch($search: String!, $limit: Int = 10) {
-  quickSearchOrganizations: search(search: $search, onlyIn: Organization, limit: $limit) {
-    totalCount
-    items {
-      __typename
-      ... on Organization {
-        id
-        name
-      }
-    }
+query userOverview($userId: ID!) {
+  user(userId: $userId) {
+    id
+    fullname
   }
-  quickSearchProjectBallerProjects: search(
-    search: $search
-    onlyIn: ProjectBaller__Project
-    limit: $limit
-  ) {
-    totalCount
-    items {
-      __typename
-      ... on ProjectBallerProject {
-        id
-        name
-      }
-    }
+  projectBallerProjects(userId: $userId) {
+    id
+    name
   }
 }
 ```
@@ -153,10 +121,14 @@ addon only ever adds files):
 
 | Place                | Base document                                                                                                                    | Paired UI registry                                                     |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Quick search         | `apps/desktop/components/Search/graphql/queries/quickSearch.graphql` (operation extension)                                       | `apps/desktop/components/Search/plugins/`                              |
+| Quick search         | `apps/desktop/components/Search/graphql/queries/quickSearch.graphql` (fragment on the entity type)                               | `apps/desktop/components/Search/plugins/`                              |
 | Detail search        | `apps/desktop/components/Search/graphql/queries/detailSearch.graphql` (fragment on the entity type)                              | `apps/desktop/components/Search/plugins/`                              |
 | Online notifications | `shared/entities/online-notification/graphql/queries/onlineNotifications.graphql` (fragment, spread into `metaObject`)           | `shared/composables/activity-message/activityMessageBuilder/builders/` |
 | Taskbar tabs         | `apps/desktop/entities/user/current/graphql/fragments/userCurrentTaskbarItemAttributes.graphql` (fragment, spread into `entity`) | `apps/desktop/components/UserTaskbarTabs/plugins/`                     |
+
+A quick search group is requested by its plugin: the plugin's `name` is the
+`EnumSearchableModels` value, which puts the type into the document's `onlyIn`
+list. The fragment only adds the fields the group renders.
 
 Extending the shared taskbar fragment covers the item-list query, its
 subscription and mutations at once — they all import that fragment.

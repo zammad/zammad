@@ -48,8 +48,7 @@ module Gql::Queries
     private
 
     # `total_count` is the whole permitted result set, `items` the requested window of it — the same
-    #   contract Service::Search answers with, so the quicksearch group's "%s more" arithmetic works
-    #   unchanged.
+    #   contract Service::Search answers with, so paging through the detailed search works unchanged.
     #
     # `order_by`, `order_direction` and `filter` have no meaning here and are ignored: the knowledge
     #   base's backend ranks by relevance, and it knows no selector conditions. Nothing sends them:

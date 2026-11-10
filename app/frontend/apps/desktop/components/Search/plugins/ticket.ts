@@ -16,7 +16,6 @@ export default <SearchPlugin>{
   priority: 100,
   quickSearchResultLabel: __('Found tickets'),
   quickSearchComponent: Ticket,
-  quickSearchResultKey: 'quickSearchTickets',
   permissions: ['ticket.agent', 'ticket.customer'],
   filterPermissions: ['ticket.agent'],
   detailSearchHeaders: (config) => {

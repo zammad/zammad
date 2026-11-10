@@ -15,7 +15,6 @@ export default <SearchPlugin>{
   priority: 400,
   quickSearchResultLabel: __('Found knowledge base answers'),
   quickSearchComponent: KnowledgeBaseAnswer,
-  quickSearchResultKey: 'quickSearchKnowledgeBaseAnswers',
 
   // Gated on `show` rather than on `permissions`, and deliberately: `canBrowse` is
   //   `kb_active_publicly || (kb_active && knowledge_base.*)`, which is both "a knowledge base is

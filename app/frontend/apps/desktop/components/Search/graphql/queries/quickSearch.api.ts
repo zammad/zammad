@@ -6,24 +6,9 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const QuickSearchDocument = gql`
-    query quickSearch($search: String!, $limit: Int = 10) {
-  quickSearchOrganizations: search(
-    search: $search
-    onlyIn: Organization
-    limit: $limit
-  ) {
-    totalCount
-    items {
-      __typename
-      ... on Organization {
-        id
-        internalId
-        name
-        active
-      }
-    }
-  }
-  quickSearchTickets: search(search: $search, onlyIn: Ticket, limit: $limit) {
+    query quickSearch($search: String!, $onlyIn: [EnumSearchableModels!]!, $limit: Int = 10) {
+  searchGrouped(search: $search, onlyIn: $onlyIn, limit: $limit) {
+    model
     totalCount
     items {
       __typename
@@ -38,16 +23,18 @@ export const QuickSearchDocument = gql`
         }
         stateColorCode
       }
-    }
-  }
-  quickSearchKnowledgeBaseAnswers: search(
-    search: $search
-    onlyIn: KnowledgeBase__Answer__Translation
-    limit: $limit
-  ) {
-    totalCount
-    items {
-      __typename
+      ... on User {
+        id
+        internalId
+        fullname
+        active
+      }
+      ... on Organization {
+        id
+        internalId
+        name
+        active
+      }
       ... on KnowledgeBaseAnswerTranslation {
         id
         title
@@ -63,18 +50,6 @@ export const QuickSearchDocument = gql`
             id
           }
         }
-      }
-    }
-  }
-  quickSearchUsers: search(search: $search, onlyIn: User, limit: $limit) {
-    totalCount
-    items {
-      __typename
-      ... on User {
-        id
-        internalId
-        fullname
-        active
       }
     }
   }

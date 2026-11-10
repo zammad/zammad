@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { refDebounced } from '@vueuse/core'
 import { whenever } from '@vueuse/shared'
+import { keyBy } from 'lodash-es'
 import { computed, toRef } from 'vue'
 
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -30,7 +31,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { sortedByPriorityPlugins } = useSearchPlugins()
+const { sortedByPriorityPlugins, searchPluginNames } = useSearchPlugins()
 
 const userSearchInput = toRef(props, 'search')
 
@@ -40,6 +41,7 @@ const quickSearchQuery = new QueryHandler(
   useQuickSearchLazyQuery(
     () => ({
       search: debouncedSearch.value,
+      onlyIn: searchPluginNames.value,
       limit: RESULT_LIMIT,
     }),
     {
@@ -64,22 +66,24 @@ whenever(
 )
 
 const mappedQuickSearchResults = computed<QuickSearchResultData[] | undefined>(() => {
-  const currentResult = quickSearchResult.value
+  const groups = quickSearchResult.value?.searchGrouped
 
-  if (!currentResult) return
+  if (!groups) return
 
+  const groupsByModel = keyBy(groups, 'model')
+
+  // Ordered by plugin priority on purpose: the server answers in its own model priority order.
   const matchedPlugins = sortedByPriorityPlugins.value.flatMap((plugin) => {
-    const searchResult = currentResult[plugin.quickSearchResultKey]
+    const searchResult = groupsByModel[plugin.name]
 
     if (!searchResult || searchResult.totalCount === 0) return []
 
     return [{ plugin, searchResult }]
   })
 
-  // The threshold counts the entity types the current user is shown, which is why the groups have
-  //   to be collected before it can be applied: a plugin left out by its permissions or its
-  //   `show()` - knowledge base answers without an active knowledge base - can still carry results
-  //   from the backend, and shortening the visible groups for a group nobody sees would be wrong.
+  // The threshold counts the groups the current user is shown, which is why they have to be
+  //   collected before it can be applied: a group without results, or one answered for a plugin
+  //   the user is no longer offered, must not shorten the groups that are displayed.
   const itemLimit =
     matchedPlugins.length > REDUCED_RESULT_LIMIT_TYPE_THRESHOLD
       ? REDUCED_RESULT_LIMIT

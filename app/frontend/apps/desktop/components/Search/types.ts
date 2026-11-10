@@ -1,11 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  EnumObjectManagerObjects,
-  EnumSearchableModels,
-  Item,
-  QuickSearchQuery,
-} from '#shared/graphql/types.ts'
+import type { EnumObjectManagerObjects, EnumSearchableModels, Item } from '#shared/graphql/types.ts'
 import type { ConfigList } from '#shared/types/config.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
@@ -31,7 +26,6 @@ export type SearchPlugin = {
   priority: number // TODO I think we need two prios (because sorting is different in quick search and entity tabs in detail search)
   quickSearchResultLabel: string
   quickSearchComponent: Component
-  quickSearchResultKey: Exclude<keyof QuickSearchQuery, '__typename'>
   permissions?: string[]
   show?: () => boolean
   /**

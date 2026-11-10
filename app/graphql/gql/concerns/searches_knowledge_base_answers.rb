@@ -35,16 +35,16 @@ module Gql::Concerns::SearchesKnowledgeBaseAnswers
   #   describes, not an exact total.
   #
   # nil when there is no active knowledge base to search. Deliberately not a raise, unlike the
-  #   knowledge base's own queries (see .dev/agent_docs/knowledge_base_patterns.md): quicksearch asks
-  #   for all four searchable entities in one document, so raising here would take the ticket, user
-  #   and organization groups down with it on every instance that has no knowledge base.
+  #   knowledge base's own queries (see .dev/agent_docs/knowledge_base_patterns.md): the grouped and
+  #   the counts search answer every requested model in one field, so raising here would take the
+  #   ticket, user and organization groups down with it on every instance that has no knowledge base.
   def knowledge_base_answer_hits(query)
     knowledge_base = ::KnowledgeBase.active.first
     return if knowledge_base.nil?
 
     # No locale argument reaches the generic search, so the user's preferred locale is resolved for
     #   them - the same one their knowledge base browsing uses. Stored on the context because it is
-    #   scoped to this field's subtree, which is what makes the aliased quicksearch document safe.
+    #   scoped to this field's subtree, so it cannot leak into another field of the same document.
     store_knowledge_base_locale(knowledge_base, nil)
 
     ::Service::KnowledgeBase::Search

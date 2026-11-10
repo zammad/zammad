@@ -262,20 +262,7 @@ describe('QuickSearch', () => {
     })
 
     it('display search results when typing', async () => {
-      mockQuickSearchQuery({
-        quickSearchUsers: {
-          totalCount: 0,
-          items: [],
-        },
-        quickSearchOrganizations: {
-          totalCount: 0,
-          items: [],
-        },
-        quickSearchTickets: {
-          totalCount: 0,
-          items: [],
-        },
-      })
+      mockQuickSearchQuery({ searchGrouped: [] })
 
       const wrapper = await renderQuickSearch('test')
 

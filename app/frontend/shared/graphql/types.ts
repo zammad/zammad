@@ -49,31 +49,17 @@ export type DetailSearchQuery = { search: { __typename: 'SearchResult', totalCou
 
 export type QuickSearchQueryVariables = Exact<{
   search: string;
+  onlyIn: Array<Types.EnumSearchableModels> | Types.EnumSearchableModels;
   limit?: number | null | undefined;
 }>;
 
 
-export type QuickSearchQuery = { quickSearchOrganizations: { __typename: 'SearchResult', totalCount: number, items: Array<
-      | { __typename: 'KnowledgeBaseAnswerTranslation' }
-      | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
-      | { __typename: 'Ticket' }
-      | { __typename: 'User' }
-    > }, quickSearchTickets: { __typename: 'SearchResult', totalCount: number, items: Array<
-      | { __typename: 'KnowledgeBaseAnswerTranslation' }
-      | { __typename: 'Organization' }
-      | { __typename: 'Ticket', id: string, internalId: number, title: string, number: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
-      | { __typename: 'User' }
-    > }, quickSearchKnowledgeBaseAnswers: { __typename: 'SearchResult', totalCount: number, items: Array<
+export type QuickSearchQuery = { searchGrouped: Array<{ __typename: 'SearchGroupedResult', model: Types.EnumSearchableModels, totalCount: number, items: Array<
       | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string } }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, category: { __typename: 'KnowledgeBaseCategory', id: string } } }
-      | { __typename: 'Organization' }
-      | { __typename: 'Ticket' }
-      | { __typename: 'User' }
-    > }, quickSearchUsers: { __typename: 'SearchResult', totalCount: number, items: Array<
-      | { __typename: 'KnowledgeBaseAnswerTranslation' }
-      | { __typename: 'Organization' }
-      | { __typename: 'Ticket' }
+      | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
+      | { __typename: 'Ticket', id: string, internalId: number, title: string, number: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
       | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
-    > } };
+    > }> };
 
 export type SearchCountsQueryVariables = Exact<{
   search: string;

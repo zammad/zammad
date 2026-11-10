@@ -4129,6 +4129,8 @@ export type Queries = {
   search: SearchResult;
   /** Generic object search, finds only hit counts across models */
   searchCounts: Array<SearchCountsResult>;
+  /** Generic object search across models, finds items grouped by model */
+  searchGrouped: Array<SearchGroupedResult>;
   /** The sessionId of the currently authenticated user. */
   session: Session;
   /** Fetch system import state */
@@ -4466,6 +4468,14 @@ export type QueriesSearchCountsArgs = {
 
 
 /** All available queries */
+export type QueriesSearchGroupedArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  onlyIn: Array<EnumSearchableModels>;
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** All available queries */
 export type QueriesTemplatesArgs = {
   onlyActive?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -4724,6 +4734,17 @@ export type Role = {
 /** Search count results */
 export type SearchCountsResult = {
   __typename?: 'SearchCountsResult';
+  /** Model that was searched in */
+  model: EnumSearchableModels;
+  /** Total count of found entries for the current model */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** Search results for one model */
+export type SearchGroupedResult = {
+  __typename?: 'SearchGroupedResult';
+  /** Found items, up to the requested limit */
+  items: Array<Item>;
   /** Model that was searched in */
   model: EnumSearchableModels;
   /** Total count of found entries for the current model */

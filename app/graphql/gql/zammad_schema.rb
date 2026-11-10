@@ -168,7 +168,7 @@ class Gql::ZammadSchema < GraphQL::Schema
   end
 
   def self.max_aliases_count
-    10
+    5
   end
 
   def self.max_directives_count

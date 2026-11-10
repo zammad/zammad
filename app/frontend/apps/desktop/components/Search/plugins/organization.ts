@@ -15,7 +15,6 @@ export default <SearchPlugin>{
   priority: 300,
   quickSearchResultLabel: __('Found organizations'),
   quickSearchComponent: Organization,
-  quickSearchResultKey: 'quickSearchOrganizations',
   permissions: ['ticket.agent', 'admin.organization'],
   detailSearchHeaders: ['name', 'shared'],
   detailSearchComponent: OrganizationListTable,

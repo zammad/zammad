@@ -335,8 +335,8 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
         end
       end
 
-      # The one thing this resolver does that the service does not, and what the quicksearch group's
-      #   "%s more" count rests on: `items` is the requested window while `totalCount` stays the
+      # The one thing this resolver does that the service does not, and what paging through the
+      #   detailed search rests on: `items` is the requested window while `totalCount` stays the
       #   whole permitted set.
       context 'with a limit below the number of hits' do
         let(:variables) { { search: search, onlyIn: 'KnowledgeBase__Answer__Translation', limit: 1 } }
@@ -358,9 +358,8 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
         end
       end
 
-      # Quicksearch asks for every searchable entity in one document, so this branch must answer
-      #   rather than raise - raising would take the ticket, user and organization groups down with
-      #   it on every instance that has no knowledge base.
+      # Shares its knowledge base branch with the grouped search, which answers every requested
+      #   model in one field and so must not raise - see Gql::Concerns::SearchesKnowledgeBaseAnswers.
       context 'without an active knowledge base' do
         let(:kb_setup) { knowledge_base.update!(active: false) }
 

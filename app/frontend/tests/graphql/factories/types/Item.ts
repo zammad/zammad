@@ -25,7 +25,8 @@ export default (_parent: any, _defaults: any, meta: ResolversMeta): DeepPartial<
   // Never return a falsy value here: the mocker's list branch would build `[undefined, …]`, which
   //   is still truthy, and generating a value for the bare `Item` union then throws.
   // The fallback picks a type per item, where the mocker would pick one for the whole list. That
-  //   only affects operations passing the entity as a literal instead of a variable (`quickSearch`).
+  //   only affects operations searching a list of entities (`quickSearch`) or passing no `onlyIn`
+  //   at all (`autocompleteSearchGeneric`).
   return {
     __typename: (searchedTypeName && possibleTypeNames.includes(searchedTypeName)
       ? searchedTypeName
