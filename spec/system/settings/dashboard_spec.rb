@@ -239,7 +239,13 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
             expect(page).to have_select('dashboard_activity_stream', selected: 'Do not show activities')
           end
 
+          # Turning the service back on renders the page anew, which must not happen while choosing.
+          #   Fetched here, as the fetch on the server's notification is skipped while an earlier one runs.
+          page.execute_script("$('#dashboard_activity_stream').addClass('js-renderedBefore')")
           Setting.set('system_online_service', false)
+          wait.until { page.evaluate_script('!App.Setting.fetchFullActive') }
+          page.execute_script('App.Setting.fetchFull(null, { clear: true })')
+          expect(page).to have_no_css('#dashboard_activity_stream.js-renderedBefore')
 
           within :active_content do
             select 'Own activities only', from: 'dashboard_activity_stream'
