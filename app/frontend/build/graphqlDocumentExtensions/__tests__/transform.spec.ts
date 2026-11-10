@@ -174,6 +174,21 @@ describe('graphqlDocumentExtensionsTransform', () => {
     expect(fragmentSpreadNames(namedFragment(document, 'userExtra').selectionSet)).toEqual([])
   })
 
+  it('spreads an add-on type fragment into the union of the grouped quick search shape', () => {
+    const [{ document }] = transformFixture('fragmentGroupedUnion')
+    const operation = document.definitions[0] as any
+    const groupSelectionSet = namedField(operation.selectionSet, 'searchGrouped').selectionSet
+    const itemsSelectionSet = namedField(groupSelectionSet, 'items').selectionSet
+
+    expect(fragmentSpreadNames(itemsSelectionSet)).toEqual(['addonProjectQuickSearch'])
+    expect(fragmentSpreadNames(groupSelectionSet)).toEqual([])
+    expect(print(document).match(/\.\.\.addonProjectQuickSearch\b/g)).toHaveLength(1)
+
+    expect(namedFragment(document, 'addonProjectQuickSearch').typeCondition.name.value).toBe(
+      'AddonProject',
+    )
+  })
+
   it('throws a clear error on a non-Field root selection instead of a bare TypeError', () => {
     expect(() => transformFixture('nonFieldRootSelection')).toThrow(/addon\.graphql/)
     expect(() => transformFixture('nonFieldRootSelection')).toThrow(

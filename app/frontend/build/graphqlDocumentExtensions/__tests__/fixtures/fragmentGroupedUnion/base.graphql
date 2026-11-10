@@ -1,0 +1,21 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# Mirrors the desktop quick search document: one grouped field whose `items`
+# union selects only the core types inline.
+
+query quickSearch($search: String!, $onlyIn: [SearchableModels!]!, $limit: Int = 10) {
+  searchGrouped(search: $search, onlyIn: $onlyIn, limit: $limit) {
+    model
+    totalCount
+    items {
+      __typename
+      ... on Ticket {
+        id
+        title
+      }
+      ... on User {
+        id
+        fullname
+      }
+    }
+  }
+}

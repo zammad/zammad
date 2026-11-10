@@ -1,9 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
-# Minimal schema fixture: a union-returning search field, mirroring the shape
-# of the real `search` query (SearchResult.items: [Item!]!).
+# Minimal schema fixture: union-returning search fields, mirroring the shape
+# of the real `search` query (SearchResult.items: [Item!]!) and of the grouped
+# quick search field (one group per model, each with its own union `items`).
 
 type Query {
   search(search: String!, limit: Int): SearchResult
+  searchGrouped(search: String!, onlyIn: [SearchableModels!]!, limit: Int): [SearchGroup!]!
 }
 
 type SearchResult {
@@ -11,7 +13,19 @@ type SearchResult {
   items: [Item!]!
 }
 
-union Item = Ticket | User
+type SearchGroup {
+  model: SearchableModels!
+  totalCount: Int!
+  items: [Item!]!
+}
+
+enum SearchableModels {
+  Ticket
+  User
+  AddonProject
+}
+
+union Item = Ticket | User | AddonProject
 
 type Ticket {
   id: ID!
@@ -21,6 +35,12 @@ type Ticket {
 type User {
   id: ID!
   fullname: String
+}
+
+# Stands in for a searchable type an add-on registers on the backend.
+type AddonProject {
+  id: ID!
+  name: String
 }
 
 # A real schema type that is deliberately NOT a member of the `Item` union,

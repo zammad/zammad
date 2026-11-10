@@ -6,6 +6,16 @@ How an external addon (szpm package) extends the new Vue frontend — without
 overwriting core files, without runtime monkey-patching, and in a way that
 survives the planned Vapor migration.
 
+The weave below is one of three parts, and the only one this file describes.
+The second is **GraphQL document extensions**: an addon adds fields or a
+fragment to a core `.graphql` document by dropping files into its sibling
+`<basename>.extensions/` directory, merged at codegen time — see
+`app/frontend/build/graphqlDocumentExtensions/README.md`. The third is the
+**plugin registries** that core discovers with `import.meta.glob` (search,
+taskbar tabs, activity messages and more), which an addon extends by dropping
+a plugin file. Check all three before concluding that core offers no
+registration path for an addon.
+
 ## Mechanism: build-time weave
 
 An addon's UI changes are applied by **rewriting the targeted core SFC's source

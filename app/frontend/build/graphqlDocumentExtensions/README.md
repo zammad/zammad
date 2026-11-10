@@ -55,6 +55,61 @@ set, an operation-type or variable-type conflict, a non-field root selection,
 or any other definition kind) fails the build loudly, naming the offending
 extension file.
 
+### Example: adding a searchable type to the quick search
+
+An addon whose `ProjectBaller::Project` model is already searchable on the
+backend (registered through the extension directory of the search result
+union, `app/graphql/gql/types/search_result/item_type/extensions/`) needs two
+frontend files, and no core edit.
+
+Fragment — `quickSearch.extensions/projectBallerProject.graphql`:
+
+```graphql
+fragment projectBallerProjectQuickSearch on ProjectBallerProject {
+  id
+  internalId
+  name
+}
+```
+
+`ProjectBallerProject` is a member of the `Item` union returned by the
+`items` field of `searchGrouped`, so the transform inserts
+`...projectBallerProjectQuickSearch` there, next to the core types' inline
+fragments. The fragment only adds the fields the result row renders.
+
+Plugin — `apps/desktop/components/Search/plugins/projectBallerProject.ts`:
+
+```ts
+import { EnumSearchableModels } from '#shared/graphql/types.ts'
+
+import ProjectBallerProject from '../QuickSearch/entities/ProjectBallerProject.vue'
+
+import type { SearchPlugin } from '../types.ts'
+
+export default <SearchPlugin>{
+  name: EnumSearchableModels.ProjectBallerProject,
+  label: __('Project'),
+  priority: 500,
+  quickSearchResultLabel: __('Found projects'),
+  quickSearchComponent: ProjectBallerProject,
+  permissions: ['ticket.agent'],
+  filtersDisabled: true,
+}
+```
+
+The plugin is what requests the group: its `name` puts the type into the
+document's `onlyIn` list, and the result list matches the answered group to
+the plugin by that same value. The enum value is the encoded model name
+(`ProjectBaller__Project`); codegen turns it into the key
+`ProjectBallerProject`, and both exist only once the addon's schema has been
+generated, which package install does. `priority` orders the group among the
+others, `permissions` (or `show`) decides who gets it. The row component
+(next to the core ones in `QuickSearch/entities/`) receives `item` and `mode`
+(`QuickSearchPluginProps`). The plugin also gets a tab in the detail search,
+which stays empty until `detailSearchHeaders` and `detailSearchComponent` are
+set and the detail search document is extended like below; the quick search
+links to that tab when a group has more results than it shows.
+
 ### Example: adding a root field (operation extension)
 
 Base — `userOverview.graphql` (illustrative, not a core document):
@@ -106,8 +161,8 @@ fragment projectBallerProjectDetailSearch on ProjectBallerProject {
 }
 ```
 
-`ProjectBallerProject` is a member of the `SearchResultItem` union returned
-by `detailSearch`'s `items` field, so the transform appends the fragment
+`ProjectBallerProject` is a member of the `Item` union returned by
+`detailSearch`'s `items` field, so the transform appends the fragment
 definition and inserts `...projectBallerProjectDetailSearch` into that
 field's selection set — no core edit, and no manual "which selection set"
 bookkeeping in the addon itself.
@@ -121,17 +176,30 @@ addon only ever adds files):
 
 | Place                | Base document                                                                                                                    | Paired UI registry                                                     |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Quick search         | `apps/desktop/components/Search/graphql/queries/quickSearch.graphql` (fragment on the entity type)                               | `apps/desktop/components/Search/plugins/`                              |
+| Quick search         | `apps/desktop/components/Search/graphql/queries/quickSearch.graphql` (fragment, spread into `searchGrouped` `items`)             | `apps/desktop/components/Search/plugins/`                              |
 | Detail search        | `apps/desktop/components/Search/graphql/queries/detailSearch.graphql` (fragment on the entity type)                              | `apps/desktop/components/Search/plugins/`                              |
 | Online notifications | `shared/entities/online-notification/graphql/queries/onlineNotifications.graphql` (fragment, spread into `metaObject`)           | `shared/composables/activity-message/activityMessageBuilder/builders/` |
 | Taskbar tabs         | `apps/desktop/entities/user/current/graphql/fragments/userCurrentTaskbarItemAttributes.graphql` (fragment, spread into `entity`) | `apps/desktop/components/UserTaskbarTabs/plugins/`                     |
 
-A quick search group is requested by its plugin: the plugin's `name` is the
-`EnumSearchableModels` value, which puts the type into the document's `onlyIn`
-list. The fragment only adds the fields the group renders.
-
 Extending the shared taskbar fragment covers the item-list query, its
 subscription and mutations at once — they all import that fragment.
+
+### Migrating a quick search operation extension
+
+The quick search used to request every type through its own aliased `search`
+root field, and an addon extended it with an operation extension adding one
+more, read by the plugin's `quickSearchResultKey`. The document now asks a
+single `searchGrouped` field for all types. An operation extension shipped for
+the old shape still merges and compiles, but nothing reads its field any
+more, while the plugin still puts the type into `onlyIn`. The group therefore
+still shows up, with rows that carry no data, because the grouped field has no
+selection for the addon's type, and the type is searched twice per query. To
+migrate:
+
+1. Delete the operation extension file.
+2. Add the fragment from the quick search example above.
+3. Remove `quickSearchResultKey` from the plugin, which keeps all its other
+   fields.
 
 ## Not yet proven (honest scope)
 

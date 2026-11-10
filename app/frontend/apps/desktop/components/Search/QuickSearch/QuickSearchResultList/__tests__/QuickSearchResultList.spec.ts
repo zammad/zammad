@@ -3,6 +3,7 @@
 import '#tests/graphql/builders/mocks.ts'
 
 import { waitFor } from '@testing-library/vue'
+import { defineComponent } from 'vue'
 
 import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -22,7 +23,10 @@ import {
   mockQuickSearchQuery,
   waitForQuickSearchQueryCalls,
 } from '../../../graphql/queries/quickSearch.mocks.ts'
+import { searchPlugins } from '../../../plugins/index.ts'
 import QuickSearchResultList from '../QuickSearchResultList.vue'
+
+import type { SearchPlugin } from '../../../types.ts'
 
 // The test router is created once per file and these replace its defaults wholesale, so every
 //   route any result item links to has to be here. The knowledge base answer route is what an
@@ -794,5 +798,129 @@ describe('QuickSearchResultList per entity type limit', () => {
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: '1' })
     expect(router.currentRoute.value.query).toEqual({ entity: 'Ticket' })
+  })
+})
+
+// The GraphQL mocker only knows core types, so the add-on plugin takes over a core type whose own
+//   plugin is switched off: the group has to reach the add-on component by the plugin name alone.
+describe('QuickSearchResultList add-on search plugin', () => {
+  const AddonSearchRow = defineComponent({
+    props: { item: { type: Object, required: true }, mode: { type: String, required: true } },
+    template: '<span data-test-id="addon-search-row">{{ item.title }}</span>',
+  })
+
+  const addonPlugin: SearchPlugin = {
+    name: EnumSearchableModels.KnowledgeBaseAnswerTranslation,
+    label: 'Add-on project',
+    priority: 1000,
+    quickSearchResultLabel: 'Found add-on projects',
+    quickSearchComponent: AddonSearchRow,
+    filtersDisabled: true,
+  }
+
+  beforeEach(() => {
+    searchPlugins.push(addonPlugin)
+
+    mockPermissions(['ticket.agent'])
+    mockApplicationConfig({ kb_active: false, kb_active_publicly: false })
+  })
+
+  afterEach(() => {
+    searchPlugins.splice(searchPlugins.indexOf(addonPlugin), 1)
+  })
+
+  const addonItems = (count: number) =>
+    Array.from({ length: count }, (_, index) =>
+      answerTranslation(index + 1, `Project ${index + 1}`),
+    )
+
+  it('requests the add-on type and renders its rows through the add-on component', async () => {
+    mockQuickSearchQuery(
+      quickSearchGroups({
+        [EnumSearchableModels.Ticket]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.User]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.Organization]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.KnowledgeBaseAnswerTranslation]: {
+          totalCount: 2,
+          items: addonItems(2),
+        },
+      }),
+    )
+
+    const wrapper = await renderQuickSearchResultList('project')
+
+    const calls = await waitForQuickSearchQueryCalls()
+
+    expect(calls.at(-1)?.variables.onlyIn).toContain(
+      EnumSearchableModels.KnowledgeBaseAnswerTranslation,
+    )
+
+    expect(await wrapper.findByText('Found add-on projects')).toBeInTheDocument()
+    expect(wrapper.queryByText('Found knowledge base answers')).not.toBeInTheDocument()
+
+    expect(wrapper.getAllByTestId('addon-search-row').map((row) => row.textContent)).toEqual([
+      'Project 1',
+      'Project 2',
+    ])
+
+    expect(wrapper.queryByRole('link', { name: /more$/ })).not.toBeInTheDocument()
+  })
+
+  it('orders, limits and links the add-on group like a core group', async () => {
+    mockQuickSearchQuery(
+      quickSearchGroups({
+        [EnumSearchableModels.KnowledgeBaseAnswerTranslation]: {
+          totalCount: 12,
+          items: addonItems(10),
+        },
+        [EnumSearchableModels.Organization]: {
+          totalCount: 1,
+          items: [
+            {
+              __typename: 'Organization',
+              id: convertToGraphQLId('Organization', 1),
+              internalId: 1,
+              name: 'Organization 1',
+            },
+          ],
+        },
+        [EnumSearchableModels.User]: {
+          totalCount: 1,
+          items: [
+            {
+              __typename: 'User',
+              id: convertToGraphQLId('User', 1),
+              internalId: 1,
+              fullname: 'User 1',
+            },
+          ],
+        },
+        [EnumSearchableModels.Ticket]: { totalCount: 0, items: [] },
+      }),
+    )
+
+    const wrapper = await renderQuickSearchResultList('1')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(await wrapper.findByText('Found add-on projects')).toBeInTheDocument()
+
+    expect(wrapper.getAllByText(/^Found /).map((label) => label.textContent?.trim())).toEqual([
+      'Found users',
+      'Found organizations',
+      'Found add-on projects',
+    ])
+
+    expect(wrapper.getAllByTestId('addon-search-row')).toHaveLength(5)
+
+    await wrapper.events.click(wrapper.getByRole('link', { name: '7 more' }))
+
+    const router = getTestRouter()
+
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
+
+    expect(router.currentRoute.value.query).toEqual({
+      entity: EnumSearchableModels.KnowledgeBaseAnswerTranslation,
+    })
   })
 })
