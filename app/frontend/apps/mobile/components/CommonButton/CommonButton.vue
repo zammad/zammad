@@ -82,9 +82,7 @@ const iconSizeClass = computed(() => {
     />
 
     <CommonIcon v-if="icon" class="shrink-0" :size="iconSizeClass" decorative :name="icon" />
-    <span v-else class="truncate"
-      ><slot>{{ $t(startCase(variant)) }}</slot></span
-    >
+    <span v-else class="truncate"><slot>{{ $t(startCase(variant)) }}</slot></span>
 
     <CommonIcon
       v-if="suffixIcon"
