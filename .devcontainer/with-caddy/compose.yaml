@@ -4,7 +4,7 @@ include: [../default/compose.yaml]
 
 services:
   caddy:
-    image: caddy:2.11.8-alpine
+    image: caddy:2.11.9-alpine
     # Shares the network namespace of the devcontainer: the dev services keep listening on
     # localhost only, and the proxy answers on localhost:8080 inside the devcontainer, which
     # VS Code forwards to the host like the other ports.
