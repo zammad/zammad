@@ -1,13 +1,16 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, toRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import type { FieldRatingProps } from './types.ts'
+
+const MAX_RATING = 5
 
 const props = defineProps<FieldRatingProps>()
 
@@ -15,39 +18,37 @@ const contextReactive = toRef(props, 'context')
 
 const { localValue } = useValue<string>(contextReactive)
 
-const selectRating = (star: number) => {
-  const newRating = String(star)
-  if (localValue.value === newRating) return
+const rating = computed(() => Number(localValue.value) || 0)
 
-  localValue.value = newRating
-}
+const valueText = computed(() =>
+  rating.value ? i18n.t('%s of %s stars', rating.value, MAX_RATING) : i18n.t('No rating'),
+)
 
-const updateFromNumberInput = (event: Event) => {
-  localValue.value = (event.target as HTMLInputElement).value
+// A rating of 0 clears the field, as it is no valid rating.
+const setRating = (newRating: number) => {
+  if (contextReactive.value.disabled || rating.value === newRating) return
+
+  localValue.value = newRating ? String(newRating) : ''
 }
 
 const hover = ref<number | null>(null)
 
 const getIconNameFor = (star: number) => {
   if (hover.value !== null) return star <= hover.value ? 'star-fill' : 'star'
-  return star <= (Number(localValue.value) || 0) ? 'star-fill' : 'star'
+  return star <= rating.value ? 'star-fill' : 'star'
 }
 
+// Only an optional rating can be cleared again, a required one stays between 1 and 5 once set.
+const minRating = computed(() => (contextReactive.value.state.required ? 1 : 0))
+
 const decreaseRating = () => {
-  const newRating = Math.max((Number(localValue.value) || 0) - 1, 0)
+  if (rating.value <= minRating.value) return
 
-  if (newRating > 0) {
-    selectRating(newRating)
-    return
-  }
-
-  if (!localValue.value) return
-
-  localValue.value = ''
+  setRating(rating.value - 1)
 }
 
 const increaseRating = () => {
-  selectRating(Math.min((Number(localValue.value) || 0) + 1, 5))
+  setRating(Math.min(rating.value + 1, MAX_RATING))
 }
 
 const locale = useLocaleStore()
@@ -68,28 +69,41 @@ const horizontalArrowKey = (direction?: 'start' | 'end') => {
 </script>
 
 <template>
-  <!-- The outer div is focusable to allow keyboard navigation and control, and is hidden from screen readers. -->
+  <!-- A spinbutton instead of a slider, as the latter requires a value even while no rating is set. -->
   <div
+    :id="context.id"
     data-test-id="field-rating-input"
     class="inline-flex items-center rounded-2xl bg-blue-200 p-2 px-2.25 focus-visible:outline focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:bg-gray-700"
+    role="spinbutton"
     tabindex="0"
-    aria-hidden="true"
+    :aria-labelledby="context.label ? `label-${context.id}` : undefined"
+    :aria-describedby="context.describedBy"
+    aria-valuemin="1"
+    :aria-valuemax="MAX_RATING"
+    :aria-valuenow="rating || undefined"
+    :aria-valuetext="valueText"
+    :aria-required="context.state.required || undefined"
+    :aria-invalid="context.state.invalid || undefined"
+    :aria-disabled="context.disabled || undefined"
     v-bind="context.attrs"
     @blur="context.handlers.blur"
     @keydown.arrow-left.prevent="horizontalArrowKey('start')"
     @keydown.arrow-right.prevent="horizontalArrowKey('end')"
     @keydown.arrow-up.prevent="increaseRating()"
     @keydown.arrow-down.prevent="decreaseRating()"
+    @keydown.home.prevent="setRating(1)"
+    @keydown.end.prevent="setRating(MAX_RATING)"
   >
-    <span v-for="star in 5" :key="star" class="relative h-4 w-5.5">
+    <span v-for="star in MAX_RATING" :key="star" class="relative h-4 w-5.5">
       <CommonIcon
         class="absolute h-4 w-5.5 text-transparent"
         :class="{
-          'animate-ping-once text-contrast!': star === (Number(localValue) || 0),
+          'animate-ping-once text-contrast!': star === rating,
           invisible: hover === null || hover !== star,
         }"
         name="star-fill"
         size="tiny"
+        decorative
       />
       <!-- This rule is save to disable because the element below is not part of tab order, the parent is. -->
       <!-- eslint-disable vuejs-accessibility/mouse-events-have-key-events -->
@@ -97,7 +111,7 @@ const horizontalArrowKey = (direction?: 'start' | 'end') => {
         class="relative h-4 w-5.5 cursor-pointer outline-0 formkit-disabled:opacity-50"
         :data-test-id="`field-rating-star-${star}`"
         :class="{
-          'text-contrast': hover !== null ? star <= hover : star <= (Number(localValue) || 0),
+          'text-contrast': hover !== null ? star <= hover : star <= rating,
         }"
         :name="getIconNameFor(star)"
         size="tiny"
@@ -105,22 +119,9 @@ const horizontalArrowKey = (direction?: 'start' | 'end') => {
         tabindex="-1"
         @mouseover="hover = star"
         @mouseleave="hover = null"
-        @click="selectRating(star)"
+        @click="setRating(star)"
       />
       <!-- eslint-enable vuejs-accessibility/mouse-events-have-key-events -->
     </span>
   </div>
-  <!-- The number input field is presented to screen readers only. -->
-  <!-- A plain input, as a FormKit one would register a second node under the field's id. -->
-  <input
-    :id="context.id"
-    class="sr-only"
-    tabindex="-1"
-    type="number"
-    min="1"
-    max="5"
-    :value="localValue"
-    :disabled="context.disabled"
-    @input="updateFromNumberInput"
-  />
 </template>

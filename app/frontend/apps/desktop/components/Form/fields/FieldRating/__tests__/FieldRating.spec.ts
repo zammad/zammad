@@ -148,23 +148,97 @@ describe('Form - Field - Rating', () => {
     })
   })
 
-  it.each([1, 2, 3, 4, 5])('supports screen readers (%s)', async (star) => {
+  it('is exposed to screen readers as a spinbutton', async () => {
     const view = renderRatingField()
+
+    const spinbutton = view.getByRole('spinbutton', { name: 'How would you rate Zammad?' })
+
+    expect(spinbutton).toHaveAttribute('aria-valuemin', '1')
+    expect(spinbutton).toHaveAttribute('aria-valuemax', '5')
+    expect(spinbutton).not.toHaveAttribute('aria-valuenow')
+    expect(spinbutton).toHaveAttribute('aria-valuetext', 'No rating')
+
+    await view.events.click(view.getByTestId('field-rating-star-3'))
+
+    expect(spinbutton).toHaveAttribute('aria-valuenow', '3')
+    expect(spinbutton).toHaveAttribute('aria-valuetext', '3 of 5 stars')
+  })
+
+  it('supports home and end keys', async () => {
+    const view = renderRatingField({
+      value: '3',
+    })
 
     const node = getNode('rating')!
 
-    const numberInput = view.getByLabelText('How would you rate Zammad?')
+    const spinbutton = view.getByRole('spinbutton')
 
-    expect(numberInput).toHaveAttribute('min', '1')
-    expect(numberInput).toHaveAttribute('max', '5')
-
-    const value = star.toString()
-
-    await view.events.type(numberInput, value)
+    await view.events.type(spinbutton, '{End}')
 
     await waitFor(() => {
-      expect(node.context?.value).toBe(value)
-      expect(numberInput).toHaveValue(star)
+      expect(node.context?.value).toBe('5')
     })
+
+    await view.events.type(spinbutton, '{Home}')
+
+    await waitFor(() => {
+      expect(node.context?.value).toBe('1')
+    })
+  })
+
+  it.each(['{ArrowDown}', '{ArrowLeft}'])('does not clear a required rating (%s)', async (key) => {
+    useLocaleStore().localeData = { dir: EnumTextDirection.Ltr } as any
+
+    const view = renderRatingField({
+      value: '1',
+      required: true,
+    })
+
+    const node = getNode('rating')!
+
+    const spinbutton = view.getByRole('spinbutton')
+
+    await view.events.type(spinbutton, key)
+
+    expect(node.context?.value).toBe('1')
+    expect(spinbutton).toHaveAttribute('aria-valuenow', '1')
+  })
+
+  it('describes the rating with its validation error', async () => {
+    const view = renderRatingField({
+      required: true,
+      validationVisibility: 'live',
+    })
+
+    const spinbutton = view.getByRole('spinbutton')
+
+    expect(spinbutton).toHaveAttribute('aria-required', 'true')
+    expect(spinbutton).toHaveAttribute('aria-invalid', 'true')
+    expect(spinbutton).toHaveAccessibleDescription('This field is required.')
+
+    await view.events.click(view.getByTestId('field-rating-star-4'))
+
+    await waitFor(() => {
+      expect(spinbutton).not.toHaveAttribute('aria-invalid')
+      expect(spinbutton).not.toHaveAccessibleDescription()
+    })
+  })
+
+  it('cannot be changed when disabled', async () => {
+    const view = renderRatingField({
+      value: '2',
+      disabled: true,
+    })
+
+    const node = getNode('rating')!
+
+    const spinbutton = view.getByRole('spinbutton')
+
+    expect(spinbutton).toHaveAttribute('aria-disabled', 'true')
+
+    await view.events.click(view.getByTestId('field-rating-star-5'))
+    await view.events.type(spinbutton, '{ArrowUp}')
+
+    expect(node.context?.value).toBe('2')
   })
 })

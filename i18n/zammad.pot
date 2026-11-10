@@ -293,7 +293,7 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:165
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:169
 msgid "%s more"
 msgstr ""
 
@@ -327,6 +327,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:208
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:44
 msgid "%s of %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRating/FieldRatingInput.vue:24
+msgid "%s of %s stars"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
@@ -1019,7 +1023,7 @@ msgstr ""
 msgid "Accounted time"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:47
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:46
 msgid "Accounted time - %s"
 msgstr ""
 
@@ -3831,7 +3835,7 @@ msgstr ""
 msgid "Click here to set up a two-factor authentication method."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:52
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:56
 msgid "Click to edit…"
 msgstr ""
 
@@ -12726,6 +12730,10 @@ msgstr ""
 msgid "No proxy for these comma-separated addresses. Supports wildcards like *.example.com. Note: Loopback addresses are always excluded from proxying."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRating/FieldRatingInput.vue:24
+msgid "No rating"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:260
 msgid "No recent searches"
 msgstr ""
@@ -12742,7 +12750,7 @@ msgstr ""
 msgid "No related knowledge base answer links."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:171
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:175
 msgid "No results for this query."
 msgstr ""
 
@@ -20730,7 +20738,7 @@ msgstr ""
 msgid "Ticket merged successfully"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:77
 msgid "Ticket number"
 msgstr ""
@@ -23883,7 +23891,7 @@ msgstr ""
 msgid "descending"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:125
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:129
 msgid "detailed search"
 msgstr ""
 

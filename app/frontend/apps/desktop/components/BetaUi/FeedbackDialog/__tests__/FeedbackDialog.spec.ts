@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import { EnumBetaUiFeedbackType } from '#shared/graphql/types.ts'
@@ -142,6 +144,23 @@ describe('FeedbackDialog', () => {
           type: EnumBetaUiFeedbackType.ManualFeedback,
         },
       })
+    })
+
+    it('describes the rating with its error when submitted without one', async () => {
+      const wrapper = renderFeedbackDialog()
+
+      const comment = await wrapper.findByRole('textbox', { name: 'Comment' })
+      await wrapper.events.type(comment, 'Great app you guys rock!')
+
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Send feedback' }))
+
+      const rating = wrapper.getByRole('spinbutton', { name: 'Your rating of the new BETA UI' })
+
+      await waitFor(() => {
+        expect(rating).toHaveAttribute('aria-invalid', 'true')
+      })
+
+      expect(rating).toHaveAccessibleDescription('This field is required.')
     })
   })
 })
