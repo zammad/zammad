@@ -9,6 +9,9 @@ minimumReleaseAgeExclude:
   - vitest@5.0.0
   - '@vue/apollo-composable@5.0.0-beta.1'
 overrides:
+  # @graphql-codegen/cli >= 7.4 loads the CommonJS build of each plugin, whose require() of the ESM-only
+  # auto-bind 5 lacks __esModule inside Vitest and breaks codegen in specs.
+  'auto-bind': ~4.0.0
   '@sa11y/vitest>vitest': ^5.1.0
   'lightningcss': ^1.33.0
 permissions:
