@@ -171,8 +171,8 @@ importers:
   .:
     dependencies:
       '@apollo/client':
-        specifier: ^4.3.5
-        version: 4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
+        specifier: ^4.3.7
+        version: 4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
       '@floating-ui/dom':
         specifier: ^1.8.0
         version: 1.8.0
@@ -268,7 +268,7 @@ importers:
         version: 3.33.0(@floating-ui/dom@1.8.0)(@tiptap/core@3.33.0(@tiptap/pm@3.33.0))(@tiptap/pm@3.33.0)(vue@3.5.43(typescript@6.0.3))
       '@vue/apollo-composable':
         specifier: 5.0.0-beta.1
-        version: 5.0.0-beta.1(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)
+        version: 5.0.0-beta.1(@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)
       '@vue/runtime-core':
         specifier: ^3.5.43
         version: 3.5.43
@@ -298,7 +298,7 @@ importers:
         version: 16.15.0
       graphql-ruby-client:
         specifier: ^1.16.0
-        version: 1.16.0(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(graphql@16.15.0)
+        version: 1.16.0(@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(graphql@16.15.0)
       graphql-tag:
         specifier: ^2.12.7
         version: 2.12.7(graphql@16.15.0)
@@ -387,6 +387,9 @@ importers:
       '@graphql-codegen/cli':
         specifier: ^7.2.0
         version: 7.2.0(@types/node@26.2.0)(graphql@16.15.0)(supports-color@10.2.2)(typescript@6.0.3)
+      '@graphql-codegen/fragment-matcher':
+        specifier: 7.1.1
+        version: 7.1.1(graphql@16.15.0)
       '@graphql-codegen/introspection':
         specifier: ^6.1.0
         version: 6.1.0(graphql@16.15.0)
@@ -515,7 +518,7 @@ importers:
         version: 0.24.0(supports-color@10.2.2)
       mock-apollo-client:
         specifier: ^2.0.0
-        version: 2.0.0(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))
+        version: 2.0.0(@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))
       oxfmt:
         specifier: ^0.76.0
         version: 0.76.0
@@ -591,8 +594,8 @@ packages:
     peerDependencies:
       ajv: '>=8'
 
-  '@apollo/client@4.3.5':
-    resolution: {integrity: sha512-phA1B82EisAHIjT6irj9Lm4I5516pASExgACUl8pzcnq5eGmNjBhImDgjSRHRt18u1Hrqw0uP71jKJtEjV/Fag==}
+  '@apollo/client@4.3.7':
+    resolution: {integrity: sha512-s+aetmVMhR/UkpsnyKqJb9uQBSv0c42Nb2S517H4Zbqc7GTdKNH/Su+Zv6euR+OHL1YosOhUm3DhvuQUi8Mxtg==}
     peerDependencies:
       graphql: ^16.0.0 || ^17.0.0
       graphql-ws: ^5.5.5 || ^6.0.3
@@ -1427,6 +1430,12 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
+  '@graphql-codegen/fragment-matcher@7.1.1':
+    resolution: {integrity: sha512-HGA5VjrhkbGdSDkG6LgcYtqxFUIEtTpWWsnsvRwr+0b06NyF4nrGWJ+aGitSyj99wVjhjUh7X7gZ1Ehf8iMVwQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+
   '@graphql-codegen/gql-tag-operations@6.1.0':
     resolution: {integrity: sha512-AmMcZFwonufvWJnQm7I0lBxKpAm+35BcCrOOvUlBoviohiR17aPoTGAOaNAEtpcpI86lnZ9m9AXUdiKMdm8nnQ==}
     engines: {node: '>=16'}
@@ -1453,6 +1462,12 @@ packages:
 
   '@graphql-codegen/plugin-helpers@7.1.0':
     resolution: {integrity: sha512-ieJH7kZ5oSZKBPJs7CvHMrFY/CLYLklqv74ir93qMwRna6geZsbIMoJzTDBXohxcQTITiProiYSGrEtZjIpYGg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+
+  '@graphql-codegen/plugin-helpers@7.4.2':
+    resolution: {integrity: sha512-5SmkQvoNg3orbCNWBIv6lD1Zk1/mJbgdqv5oUy2Pw8Q70sO1Y3CGOkdwnPUp5l/pm0GKApQUyqPJkqFaJKewpQ==}
     engines: {node: '>=16'}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -1648,6 +1663,12 @@ packages:
 
   '@graphql-tools/utils@12.0.0':
     resolution: {integrity: sha512-aMdIo/l+8j4lhamWAf+MWHr+lOW8zArSBKXspqtKHgt5I2JF9LS55KDLUe/L9AiJOV/O6qJJ60hgYydbnJHbxg==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+
+  '@graphql-tools/utils@12.1.0':
+    resolution: {integrity: sha512-+mOuIX7u83/BHG0L9JviMzKid1j35cxOWhLoox47TXHAJ6Tnn30RgrmEQPmk1FhmaQbhJEcwYBDVyieUvZopJw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -3442,6 +3463,10 @@ packages:
   '@whatwg-node/promise-helpers@1.3.2':
     resolution: {integrity: sha512-Nst5JdK47VIl9UcGwtv2Rcgyn5lWtZ0/mhRQ4G8NN2isxpq2TO30iqHzmwoJycjWuyUfg3GFXqP/gFHXeV57IA==}
     engines: {node: '>=16.0.0'}
+
+  '@whatwg-node/promise-helpers@2.0.1':
+    resolution: {integrity: sha512-ziVgm01A9irPLVBaUFei64qp771BrDXldbv5pY6kgFgNtA+7zq8ux6nj/6w8bELGH/+Ttnc76ox04HIjU8nqvg==}
+    engines: {node: '>=22.15.0'}
 
   '@wry/caches@1.0.1':
     resolution: {integrity: sha512-bXuaUNLVVkD20wcGBWRyo7j9N3TxePEWFZj2Y+r9OoUzfqmavM84+mFykRicNsBqatba5JLay1t48wxaXaWnlA==}
@@ -6843,7 +6868,7 @@ snapshots:
       jsonpointer: 5.0.1
       leven: 3.1.0
 
-  '@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)':
+  '@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.15.0)
       '@wry/caches': 1.0.1
@@ -7862,6 +7887,12 @@ snapshots:
       graphql: 16.15.0
       tslib: 2.9.1
 
+  '@graphql-codegen/fragment-matcher@7.1.1(graphql@16.15.0)':
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 7.4.2(graphql@16.15.0)
+      graphql: 16.15.0
+      tslib: 2.9.1
+
   '@graphql-codegen/gql-tag-operations@6.1.0(graphql@16.15.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 7.1.0(graphql@16.15.0)
@@ -7900,6 +7931,15 @@ snapshots:
   '@graphql-codegen/plugin-helpers@7.1.0(graphql@16.15.0)':
     dependencies:
       '@graphql-tools/utils': 11.2.2(graphql@16.15.0)
+      change-case-all: 2.1.0
+      common-tags: 1.8.2
+      graphql: 16.15.0
+      import-from: 4.0.0
+      tslib: 2.9.1
+
+  '@graphql-codegen/plugin-helpers@7.4.2(graphql@16.15.0)':
+    dependencies:
+      '@graphql-tools/utils': 12.1.0(graphql@16.15.0)
       change-case-all: 2.1.0
       common-tags: 1.8.2
       graphql: 16.15.0
@@ -8214,6 +8254,14 @@ snapshots:
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.15.0)
       '@whatwg-node/promise-helpers': 1.3.2
+      cross-inspect: 1.0.1
+      graphql: 16.15.0
+      tslib: 2.9.1
+
+  '@graphql-tools/utils@12.1.0(graphql@16.15.0)':
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.15.0)
+      '@whatwg-node/promise-helpers': 2.0.1
       cross-inspect: 1.0.1
       graphql: 16.15.0
       tslib: 2.9.1
@@ -9603,9 +9651,9 @@ snapshots:
     optionalDependencies:
       vue: 3.5.43(typescript@6.0.3)
 
-  '@vue/apollo-composable@5.0.0-beta.1(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)':
+  '@vue/apollo-composable@5.0.0-beta.1(@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(@vue/reactivity@3.5.43)(@vue/runtime-core@3.5.43)(@vueuse/core@15.0.0(vue@3.5.43(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)':
     dependencies:
-      '@apollo/client': 4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
+      '@apollo/client': 4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
       '@vue/reactivity': 3.5.43
       '@vue/runtime-core': 3.5.43
       '@vueuse/core': 15.0.0(vue@3.5.43(typescript@6.0.3))
@@ -9780,6 +9828,10 @@ snapshots:
       tslib: 2.9.1
 
   '@whatwg-node/promise-helpers@1.3.2':
+    dependencies:
+      tslib: 2.9.1
+
+  '@whatwg-node/promise-helpers@2.0.1':
     dependencies:
       tslib: 2.9.1
 
@@ -10932,9 +10984,9 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  graphql-ruby-client@1.16.0(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(graphql@16.15.0):
+  graphql-ruby-client@1.16.0(@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2))(graphql@16.15.0):
     dependencies:
-      '@apollo/client': 4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
+      '@apollo/client': 4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
       glob: 13.0.6
       graphql: 16.15.0
       minimist: 1.2.8
@@ -11798,9 +11850,9 @@ snapshots:
       pkg-types: 1.3.1
       ufo: 1.6.4
 
-  mock-apollo-client@2.0.0(@apollo/client@4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)):
+  mock-apollo-client@2.0.0(@apollo/client@4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)):
     dependencies:
-      '@apollo/client': 4.3.5(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
+      '@apollo/client': 4.3.7(graphql-ws@6.2.1(graphql@16.15.0)(ws@8.21.3))(graphql@16.15.0)(rxjs@7.8.2)
 
   mrmime@2.0.1: {}
 

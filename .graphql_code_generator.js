@@ -52,6 +52,12 @@ const config = {
     addDocBlocks: false,
   },
   generates: {
+    './app/frontend/shared/graphql/possibleTypes.api.ts': {
+      plugins: ['fragment-matcher'],
+      config: {
+        useExplicitTyping: true,
+      },
+    },
     './app/frontend/shared/graphql/schema-types.ts': {
       config: {
         scalars,

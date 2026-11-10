@@ -49,6 +49,7 @@
     "@faker-js/faker": "^10.6.0",
     "@graphql-codegen/add": "^7.1.0",
     "@graphql-codegen/cli": "^7.2.0",
+    "@graphql-codegen/fragment-matcher": "7.1.1",
     "@graphql-codegen/introspection": "^6.1.0",
     "@graphql-codegen/near-operation-file-preset": "^5.2.1",
     "@graphql-codegen/typescript": "^6.1.0",
@@ -115,7 +116,7 @@
     "vue-tsc": "^3.3.11"
   },
   "dependencies": {
-    "@apollo/client": "^4.3.5",
+    "@apollo/client": "^4.3.7",
     "@floating-ui/dom": "^1.8.0",
     "@formkit/core": "^2.3.0",
     "@formkit/dev": "^2.3.0",
