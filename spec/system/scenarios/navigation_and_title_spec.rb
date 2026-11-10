@@ -45,7 +45,7 @@ RSpec.describe 'Scenario > Navigation highlight and page title', authenticated_a
     expect_dashboard_state
     rerender
     expect_dashboard_state
-    page.refresh
+    refresh_with_wait
     expect_dashboard_state
 
     # Ticket zoom: title follows the ticket, task is active, no menu highlight.
@@ -54,7 +54,7 @@ RSpec.describe 'Scenario > Navigation highlight and page title', authenticated_a
     expect_zoom_state
     rerender
     expect_zoom_state
-    page.refresh
+    refresh_with_wait
     expect_zoom_state
 
     # Back to the dashboard via click.
@@ -63,7 +63,7 @@ RSpec.describe 'Scenario > Navigation highlight and page title', authenticated_a
     expect_dashboard_state
     rerender
     expect_dashboard_state
-    page.refresh
+    refresh_with_wait
     expect_dashboard_state
 
     # Admin area: Users title, neither menu nor task highlighted.
@@ -72,7 +72,7 @@ RSpec.describe 'Scenario > Navigation highlight and page title', authenticated_a
     expect_manage_state
     rerender
     expect_manage_state
-    page.refresh
+    refresh_with_wait
     expect_manage_state
   end
 end
