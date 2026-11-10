@@ -91,6 +91,9 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       click '.dropdown--actions'
       click_on 'Delete'
 
+      # The dialog focuses its first field once shown, which would take over the typing below.
+      modal_ready
+
       # Wait for the customer ticket preview and the confirmation input to finish
       # loading. The preview is rendered only after two nested AJAX calls complete.
       # Use the name attribute selector to avoid label-id ambiguity with the
@@ -116,6 +119,9 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       click '.tabsSidebar-tab[data-tab=customer]'
       click 'h2.js-headline'
       click_on 'Delete Customer'
+
+      # The dialog focuses its first field once shown, which would take over the typing below.
+      modal_ready
 
       find('input[name="preferences::sure"]').set('DELETE')
       click '.js-submit'
