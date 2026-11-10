@@ -3,8 +3,8 @@
 import { AutocompleteSearchObjectAttributeExternalDataSourceDocument } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
-import type { ExternalDataSourceProps } from './types.ts'
 import type { AutocompleteSelectValue } from '../FieldAutocomplete/types.ts'
+import type { ExternalDataSourceProps } from './types.ts'
 import type { JsonValue } from 'type-fest'
 import type { Ref } from 'vue'
 

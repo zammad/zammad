@@ -7,8 +7,8 @@ import { useAppName } from '#shared/composables/useAppName.ts'
 import { KeyboardKey } from '#shared/composables/useKeyboardEventBus/types.ts'
 import { useKeyboardEventBus } from '#shared/composables/useKeyboardEventBus/useKeyboardEventBus.ts'
 
-import type { FieldEditorProps } from './types'
 import type { FormFieldContext } from '../../types/field'
+import type { FieldEditorProps } from './types'
 
 export const useInlineMode = (
   context: Ref<FormFieldContext<FieldEditorProps>>,

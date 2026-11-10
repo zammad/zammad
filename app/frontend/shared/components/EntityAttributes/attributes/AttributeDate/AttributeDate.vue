@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 
-import type { EntityAttributeDate } from './attributeDateTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeDate } from './attributeDateTypes.ts'
 
 defineProps<EntityAttributeProps<EntityAttributeDate, string>>()
 </script>

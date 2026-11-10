@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { EntityAttributeBoolean } from './attributeBooleanTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeBoolean } from './attributeBooleanTypes.ts'
 
 const props = defineProps<EntityAttributeProps<EntityAttributeBoolean, boolean>>()
 

@@ -10,8 +10,8 @@ import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.
 
 import FieldTicketOptionIcon from './FieldTicketOptionIcon.vue'
 
-import type { AutoCompleteTicketOption } from './types'
 import type { AutoCompleteProps } from '../FieldAutoComplete/types.ts'
+import type { AutoCompleteTicketOption } from './types'
 
 interface Props {
   context: FormFieldContext<

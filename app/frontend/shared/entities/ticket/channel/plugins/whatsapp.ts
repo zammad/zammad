@@ -3,8 +3,8 @@
 import { EnumChannelArea } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import type { TicketChannelPlugin } from './types.ts'
 import type { TicketById } from '../../types.ts'
+import type { TicketChannelPlugin } from './types.ts'
 
 const ticketChannelPlugin: TicketChannelPlugin = {
   area: EnumChannelArea.WhatsAppBusiness,

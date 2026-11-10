@@ -5,8 +5,8 @@ import { computed } from 'vue'
 
 import { translateOption } from '../../utils.ts'
 
-import type { EntityAttributeSingleSelect } from './attributeSingleSelectTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeSingleSelect } from './attributeSingleSelectTypes.ts'
 
 const props = defineProps<EntityAttributeProps<EntityAttributeSingleSelect, string>>()
 

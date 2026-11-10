@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { textToHtml } from '#shared/utils/helpers.ts'
 
-import type { EntityAttributeTextarea } from './attributeTextareaTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeTextarea } from './attributeTextareaTypes.ts'
 
 defineProps<EntityAttributeProps<EntityAttributeTextarea, string>>()
 </script>

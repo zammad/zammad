@@ -28,8 +28,8 @@ import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrum
 
 import { useKnowledgeBaseHeaderLocales } from './useKnowledgeBaseHeaderLocales.ts'
 
-import type { TopBarHeaderProps } from './types.ts'
 import type { KnowledgeBaseAnswerCachedHeader, KnowledgeBaseAnswerHeader } from '../../types.ts'
+import type { TopBarHeaderProps } from './types.ts'
 
 type Props = {
   contentContainerElement: HTMLElement | null

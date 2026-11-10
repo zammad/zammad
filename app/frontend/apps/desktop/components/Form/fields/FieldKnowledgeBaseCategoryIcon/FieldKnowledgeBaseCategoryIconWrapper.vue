@@ -16,8 +16,8 @@ import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.
 import FieldKnowledgeBaseCategoryIconOption from './FieldKnowledgeBaseCategoryIconOption.vue'
 import FieldKnowledgeBaseCategoryIconSelected from './FieldKnowledgeBaseCategoryIconSelected.vue'
 
-import type { AutoCompleteKnowledgeBaseCategoryIconOption } from './types.ts'
 import type { AutoCompleteProps } from '../FieldAutoComplete/types.ts'
+import type { AutoCompleteKnowledgeBaseCategoryIconOption } from './types.ts'
 
 interface Props {
   context: FormFieldContext<

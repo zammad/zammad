@@ -29,8 +29,8 @@ import { knowledgeBaseBrowsedTitle } from '../../utils/knowledgeBaseBrowsedTitle
 
 import { useKnowledgeBaseHeaderLocales } from './useKnowledgeBaseHeaderLocales.ts'
 
-import type { TopBarHeaderProps } from './types.ts'
 import type { CategoryBreadcrumb, KnowledgeBaseSortingModes } from '../../types.ts'
+import type { TopBarHeaderProps } from './types.ts'
 
 type Props = {
   contentContainerElement: HTMLElement | null

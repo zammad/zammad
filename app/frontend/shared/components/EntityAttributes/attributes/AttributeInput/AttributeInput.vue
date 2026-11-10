@@ -6,8 +6,8 @@ import { computed } from 'vue'
 
 import { phoneify } from '#shared/utils/formatter.ts'
 
-import type { EntityAttributeInput } from './attributeInputTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeInput } from './attributeInputTypes.ts'
 
 const props =
   defineProps<

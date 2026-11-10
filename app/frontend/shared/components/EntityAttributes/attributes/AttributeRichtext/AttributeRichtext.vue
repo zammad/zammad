@@ -5,8 +5,8 @@ import { computed, useTemplateRef } from 'vue'
 
 import { isInlineAttributeEditable } from '#shared/components/EntityAttributes/utils.ts'
 
-import type { EntityAttributeRichtext } from './attributeRichtextTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeRichtext } from './attributeRichtextTypes.ts'
 import type { FormKitNode } from '@formkit/core'
 
 const props = defineProps<EntityAttributeProps<EntityAttributeRichtext, string>>()

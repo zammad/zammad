@@ -8,8 +8,8 @@ import { getOrganizationAvatarClasses } from '#shared/initializer/initializeOrga
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import { nextSmallerAvatarSize } from '../CommonAvatar/index.ts'
 
-import type { AvatarOrganization } from './types.ts'
 import type { AvatarSize } from '../CommonAvatar/index.ts'
+import type { AvatarOrganization } from './types.ts'
 
 export interface Props {
   entity: AvatarOrganization

@@ -2,9 +2,9 @@
 
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
-import type { FieldResolver } from './FieldResolver.ts'
 import type { FieldResolverClass, FieldResolverModule } from '../../types/resolver.ts'
 import type { EntityAttribute } from '../../types/store.ts'
+import type { FieldResolver } from './FieldResolver.ts'
 
 // fallow-ignore-file circular-dependency -- fallow lets this glob match the specs in fields/__tests__, Vite does not.
 const fieldResolverModules = import.meta.glob<FieldResolverModule>(

@@ -2,8 +2,8 @@
 
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
-import type { EntityAttribute } from './store.ts'
 import type { FieldResolver } from '../form/resolver/FieldResolver.ts'
+import type { EntityAttribute } from './store.ts'
 
 export interface ScreenConfig {
   required?: boolean

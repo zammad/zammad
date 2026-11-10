@@ -5,8 +5,8 @@ import { computed } from 'vue'
 
 import { translateOption } from '../../utils.ts'
 
-import type { EntityAttributeMultiSelect } from './attributeMultiSelectTypes.ts'
 import type { EntityAttributeProps } from '../../types.ts'
+import type { EntityAttributeMultiSelect } from './attributeMultiSelectTypes.ts'
 
 const props = defineProps<EntityAttributeProps<EntityAttributeMultiSelect, string[]>>()
 

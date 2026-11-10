@@ -22,8 +22,8 @@ import { useKnowledgeBaseCategoryUpdateMutation } from '#desktop/entities/knowle
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
-import type { CategoryFormData } from './types.ts'
 import type { EditableKnowledgeBaseCategory } from '../../types.ts'
+import type { CategoryFormData } from './types.ts'
 
 interface Props {
   name: string

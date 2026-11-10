@@ -17,8 +17,8 @@ import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 
 import logo from './assets/logo.svg'
 
-import type { AvatarUserAccess, AvatarUserLive, AvatarUser } from './types.ts'
 import type { AvatarSize } from '../CommonAvatar/index.ts'
+import type { AvatarUserAccess, AvatarUserLive, AvatarUser } from './types.ts'
 
 export interface Props {
   entity: AvatarUser
