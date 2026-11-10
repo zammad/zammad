@@ -403,5 +403,6 @@ class AI::Provider
   class RequestError < StandardError; end
   class ResponseError < StandardError; end
   class OutputFormatError < ResponseError; end
+  class OutputTruncatedError < OutputFormatError; end
   class CheckTemperatureSupportError < ResponseError; end
 end
