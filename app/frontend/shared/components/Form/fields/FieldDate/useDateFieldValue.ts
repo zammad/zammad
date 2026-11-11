@@ -93,6 +93,8 @@ export const useDateFieldValue = (context: Ref<DateFieldContext>) => {
 
     const value = formatValue(result)
     if (value !== localValue.value) localValue.value = value
+
+    return result
   }
 
   return {

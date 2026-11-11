@@ -74,11 +74,9 @@ const segmented = useSegmentedDateInput({
     return !isDayDisabled(date, bounds.value)
   },
   onApply: (date) => {
-    if (date) {
-      commit(date)
-    } else if (hasValue.value) {
-      localValue.value = null
-    }
+    if (date) return commit(date)
+
+    if (hasValue.value) localValue.value = null
   },
   onEmptied: () => announce(i18n.t('The entry was not a valid date and has been cleared.')),
 })
