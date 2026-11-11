@@ -27,9 +27,10 @@ export interface UseSegmentedDateInputOptions {
   defaultTime?: Ref<TimeOfDay | undefined>
   // Called with the date once every group is filled and the whole forms a real date, and with
   // `null` once every group is cleared. A partial or impossible entry leaves the value alone.
-  onApply: (date: Date | null) => void
+  // Returns the date stored when it differs from the one applied, a date kept inside the bounds.
+  onApply: (date: Date | null) => Date | void
   // Refuses a complete date, one outside the bounds say. It counts as impossible then: it is
-  // not applied, and leaving the field empties it.
+  // not applied, and leaving the field empties it unless it is the value the field was given.
   isAllowed?: (date: Date) => boolean
   // Called once leaving the field has thrown a partial or impossible entry away.
   onEmptied?: () => void
@@ -65,6 +66,10 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
   // The date the groups last agreed on, so a changed format (a switched locale) rewrites the
   // groups instead of emptying them.
   let current: Date | undefined
+
+  // The date the edits since the focus led to. A date set from outside drops it, so leaving the
+  // field keeps that date as it is, like one only visited.
+  let edited: Date | undefined
 
   const fill = (date: Date | undefined) => {
     values.value = segments.value.map((spec) => (date ? formatDate(date, spec.token) : null))
@@ -175,6 +180,19 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
     return date
   }
 
+  // Compared group by group, as a value can carry more precision (seconds) than the groups show.
+  const showsCurrent = () => {
+    const date = current
+    if (!date) return false
+
+    return segments.value.every(
+      (spec, index) => values.value[index] === formatDate(date, spec.token),
+    )
+  }
+
+  const isSameShown = (date: Date, other: Date) =>
+    segments.value.every((spec) => formatDate(date, spec.token) === formatDate(other, spec.token))
+
   const hasFocus = () => Boolean(options.el.value && document.activeElement === options.el.value)
 
   const selectActive = () => {
@@ -208,7 +226,16 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
     if (!date) return
 
     current = date
-    options.onApply(date)
+
+    const stored = options.onApply(date) ?? date
+
+    // The bounds may move the date onto the value already stored, which brings no `setDate`. The
+    // groups follow once the field is left, so a later group (the half of the day) still applies
+    // to the hour typed.
+    if (stored !== date && !focused.value) fill(stored)
+
+    current = stored
+    edited = stored
   }
 
   // Leaving a group completes what was typed into it so far and applies it.
@@ -235,6 +262,8 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
 
   const setDate = (date: Date | undefined) => {
     current = date
+
+    if (!date || !edited || !isSameShown(date, edited)) edited = undefined
 
     if (!date) {
       if (!isEmpty.value) fill(undefined)
@@ -454,6 +483,7 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
   // is selected once that has happened.
   const onFocus = (event: FocusEvent) => {
     focused.value = true
+    edited = undefined
 
     if (pointerFocus) return
 
@@ -511,6 +541,10 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
   // Once the field is left, only a real date may stay behind: a partial or impossible entry
   // empties the field, so neither it nor the value before it reaches the form.
   const settle = () => {
+    // A value only visited, not edited, stays as it is even outside the bounds, so an expired
+    // pending time is neither moved up to now nor emptied.
+    if (!edited && showsCurrent()) return
+
     fillDefaultTime()
 
     if (isEmpty.value || allowedDate()) {

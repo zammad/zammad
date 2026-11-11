@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { fireEvent } from '@testing-library/vue'
 
@@ -352,6 +353,134 @@ describe('Fields - FieldDate', () => {
       expect(emittedValues(view)).toEqual(['2021-04-13T11:10:00Z'])
       expect(input).toHaveDisplayValue('2021-04-13 11:10')
       expect(announced()).toBe('Minutes, 10')
+    })
+
+    it.each([
+      { name: 'earlier today', value: '2021-04-13T08:00:00Z', shown: '2021-04-13 08:00' },
+      { name: 'on an earlier day', value: '2021-04-12T08:00:00Z', shown: '2021-04-12 08:00' },
+      { name: 'with seconds', value: '2021-04-12T08:00:30Z', shown: '2021-04-12 08:00' },
+    ])(
+      'keeps an expired value $name that was only visited, if futureOnly present',
+      async ({ value, shown }) => {
+        const view = await renderDateField({ type: 'datetime', futureOnly: true, value })
+
+        const input = view.getByLabelText('Date')
+
+        await view.events.click(input)
+        await view.events.click(document.body)
+
+        expect(emittedValues(view)).toBeUndefined()
+        expect(input).toHaveDisplayValue(shown)
+        expect(announced()).not.toBe('The entry was not a valid date and has been cleared.')
+      },
+    )
+
+    it('shows the stored value once the field is left when a typed time is moved onto it, if futureOnly present', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+        futureOnly: true,
+        value: '2021-04-13T11:10:00Z',
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.type(input, '2021-04-13 08:00', caretAtStart)
+
+      expect(emittedValues(view)).toBeUndefined()
+      expect(input).toHaveDisplayValue('2021-04-13 08:00')
+
+      await view.events.click(document.body)
+
+      expect(emittedValues(view)).toBeUndefined()
+      expect(input).toHaveDisplayValue('2021-04-13 11:10')
+    })
+
+    it('keeps a typed hour moved onto the stored value for the half of the day, if futureOnly present', async () => {
+      i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
+
+      const view = await renderDateField({
+        type: 'datetime',
+        futureOnly: true,
+        value: '2021-04-13T11:10:00Z',
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.pointer({ target: input, offset: 12, keys: '[MouseLeft]' })
+      await view.events.keyboard('8')
+
+      expect(emittedValues(view)).toBeUndefined()
+      expect(input).toHaveDisplayValue('04/13/2021 08:10 am')
+
+      await view.events.keyboard('{ArrowRight}p')
+
+      expect(emittedValues(view)).toEqual(['2021-04-13T20:10:00Z'])
+
+      await view.events.click(document.body)
+
+      expect(emittedValues(view)).toEqual(['2021-04-13T20:10:00Z'])
+      expect(input).toHaveDisplayValue('04/13/2021 08:10 pm')
+    })
+
+    it('keeps an edited time inside the bounds once the field is left, if futureOnly present', async () => {
+      const view = await renderDateField({ type: 'datetime', futureOnly: true })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.type(input, '2021-04-13 11:15', caretAtStart)
+
+      expect(emittedValues(view)).toEqual(['2021-04-13T11:15:00Z'])
+
+      vi.setSystemTime(new Date('2021-04-13T11:20:00Z'))
+
+      await view.events.click(document.body)
+
+      expect(emittedValues(view)).toEqual(['2021-04-13T11:15:00Z', '2021-04-13T11:20:00Z'])
+      expect(input).toHaveDisplayValue('2021-04-13 11:20')
+    })
+
+    it('keeps an expired value set from outside while the field was edited, if futureOnly present', async () => {
+      const view = await renderDateField({ type: 'datetime', futureOnly: true })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.type(input, '2021-04-13 11:15', caretAtStart)
+
+      getNode('date')?.input('2021-04-12T08:00:00Z', false)
+      await waitForNextTick()
+
+      expect(input).toHaveDisplayValue('2021-04-12 08:00')
+
+      await view.events.click(document.body)
+
+      expect(emittedValues(view)).toEqual(['2021-04-13T11:15:00Z', '2021-04-12T08:00:00Z'])
+      expect(input).toHaveDisplayValue('2021-04-12 08:00')
+    })
+
+    it('keeps the time of an expired value for a day picked alongside the input, if futureOnly present', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+        futureOnly: true,
+        value: '2021-04-13T08:00:00Z',
+      })
+
+      const input = view.getByLabelText('Date') as HTMLInputElement
+      const groups = view.container.querySelector('[data-test-id="field-date-groups"]')!
+
+      vi.spyOn(groups, 'getBoundingClientRect').mockReturnValue({
+        width: 80,
+        right: 90,
+      } as DOMRect)
+
+      input.focus()
+      input.setSelectionRange(0, 0)
+      await fireEvent.click(input, { clientX: 200 })
+      await waitForNextTick()
+
+      await view.events.click(view.getByRole('button', { name: 'Wednesday, April 14th, 2021' }))
+
+      expect(emittedValues(view)).toEqual(['2021-04-14T08:00:00Z'])
+      expect(input).toHaveDisplayValue('2021-04-14 08:00')
     })
 
     it.each([
