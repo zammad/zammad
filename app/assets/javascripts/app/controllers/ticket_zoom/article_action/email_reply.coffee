@@ -15,22 +15,29 @@ class EmailReply extends App.Controller
 
       # check if reply all needs to be shown
       recipients = []
-      if article.sender.name is 'Customer'
-        if article.from
-          localRecipients = emailAddresses.parseAddressList(article.from)
-          if localRecipients
-            recipients = recipients.concat localRecipients
+      localAddresses = App.EmailAddress.all()
+      recipientIsLocal = false
       if article.to
         localRecipients = emailAddresses.parseAddressList(article.to)
         if localRecipients
           recipients = recipients.concat localRecipients
+          recipientIsLocal = _.some localRecipients, (recipient) ->
+            return false if _.isEmpty(recipient.address)
+            _.some localAddresses, (address) ->
+              recipient.address.toString().toLowerCase() is address.email.toString().toLowerCase()
+
+      # an agent who wrote to a system address gets the reply like a customer
+      if article.sender.name is 'Customer' || recipientIsLocal
+        if article.from
+          localRecipients = emailAddresses.parseAddressList(article.from)
+          if localRecipients
+            recipients = recipients.concat localRecipients
       if article.cc
         localRecipients = emailAddresses.parseAddressList(article.cc)
         if localRecipients
           recipients = recipients.concat localRecipients
 
       # remove system addresses
-      localAddresses = App.EmailAddress.all()
       foreignRecipients = []
       recipientUsed = {}
       for recipient in recipients
