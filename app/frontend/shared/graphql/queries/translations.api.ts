@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TranslationsDocument = gql`
     query translations($locale: String!, $cacheKey: String) {
@@ -14,10 +12,10 @@ export const TranslationsDocument = gql`
   }
 }
     `;
-export function useTranslationsQuery(variables: Types.TranslationsQueryVariables | VueCompositionApi.Ref<Types.TranslationsQueryVariables> | ReactiveFunction<Types.TranslationsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
+export function useTranslationsQuery(options: VueApolloComposable.useQuery.Options<Types.TranslationsQuery, Types.TranslationsQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, options);
 }
-export function useTranslationsLazyQuery(variables?: Types.TranslationsQueryVariables | VueCompositionApi.Ref<Types.TranslationsQueryVariables> | ReactiveFunction<Types.TranslationsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
+export function useTranslationsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TranslationsQuery, Types.TranslationsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, options);
 }
-export type TranslationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TranslationsQuery, Types.TranslationsQueryVariables>;
+export type TranslationsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TranslationsQuery, Types.TranslationsQueryVariables>;

@@ -6,10 +6,12 @@ import { watch, computed, getCurrentScope, onScopeDispose } from 'vue'
 
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { BaseHandler } from '#shared/server/apollo/handler/BaseHandler.ts'
+import { isNativeQueryResult } from '#shared/server/apollo/handler/utils/isNativeOperationResult.ts'
 import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
   QueryHandlerOptions,
+  QueryOperationReturn,
   SubscribeToMoreOptions,
   SubscribeToMoreUpdateQueryOptions,
   WatchResultCallback,
@@ -17,11 +19,7 @@ import type {
 import type { ReactiveFunction } from '#shared/types/utils.ts'
 
 import type { ApolloClient, ErrorLike, ObservableQuery, OperationVariables } from '@apollo/client'
-import type {
-  ApolloQueryResultV4,
-  UseQueryOptions,
-  UseQueryReturn,
-} from '@vue/apollo-composable/compat'
+import type { ApolloQueryResultV4, UseQueryOptions } from '@vue/apollo-composable/compat'
 import type { ComputedRef, Ref, WatchStopHandle } from 'vue'
 
 type SettledResult<TResult> = { data: Maybe<TResult>; error?: ErrorLike }
@@ -30,7 +28,7 @@ export default class QueryHandler<
   TResult = OperationQueryResult,
   TVariables extends OperationVariables = OperationVariables,
   TOptions extends QueryHandlerOptions = QueryHandlerOptions,
-> extends BaseHandler<TResult, TVariables, UseQueryReturn<TResult, TVariables>, TOptions> {
+> extends BaseHandler<TResult, TVariables, QueryOperationReturn<TResult, TVariables>, TOptions> {
   private lastCancel: (() => void) | null = null
 
   private loadCalled = false
@@ -134,14 +132,22 @@ export default class QueryHandler<
     const { client } = useApolloClient()
     const aborter = typeof AbortController !== 'undefined' ? new AbortController() : null
     this.lastCancel = () => aborter?.abort()
-    const { fetchPolicy: defaultFetchPolicy, ...defaultOptionsValue } =
-      defaultOptions.value ?? ({} as UseQueryOptions<TResult, TVariables>)
+    // Both shapes carry the (possibly still reactive) `variables` in their
+    // options — strip them and default to the resolved ones instead.
+    const {
+      fetchPolicy: defaultFetchPolicy,
+      variables: _,
+      ...defaultOptionsValue
+    } = (defaultOptions.value ?? {}) as UseQueryOptions<TResult, TVariables> & {
+      variables?: unknown
+    }
     const fetchPolicy =
       options.fetchPolicy ||
       (defaultFetchPolicy !== 'cache-and-network' ? defaultFetchPolicy : undefined)
     try {
       return await client.query<TResult, TVariables>({
         ...defaultOptionsValue,
+        variables: this.operationResult.variables.value,
         ...options,
         fetchPolicy,
         query: node!,
@@ -170,7 +176,9 @@ export default class QueryHandler<
   }
 
   public result(): Readonly<Ref<TResult | undefined>> {
-    return this.operationResult.result
+    // The native ref is typed with partial results too; `returnPartialData` is
+    // never enabled here.
+    return this.operationResult.result as Readonly<Ref<TResult | undefined>>
   }
 
   public watchQuery(): Readonly<Ref<ObservableQuery<TResult, TVariables> | null | undefined>> {
@@ -280,7 +288,9 @@ export default class QueryHandler<
       //   drops it if another `fetchMore` starts first - callers read `result()` right after.
       await new Promise((delivered) => setTimeout(delivered))
 
-      return { data: (result.data ?? null) as Maybe<TResult> }
+      const data = 'result' in result ? result.result : result.data
+
+      return { data: (data ?? null) as Maybe<TResult> }
     } catch (error) {
       const errorLike = toErrorLike(error)
 
@@ -301,8 +311,9 @@ export default class QueryHandler<
 
     try {
       const result = await refetch
+      const data = result && ('result' in result ? result.result : result.data)
 
-      return { data: result?.data ?? null }
+      return { data: (data ?? null) as Maybe<TResult> }
     } catch (error) {
       // A failed refetch is the query's own error, `onError` already reported it.
       return { data: null, error: this.operationError().value ?? toErrorLike(error) }
@@ -313,17 +324,21 @@ export default class QueryHandler<
    * Starts a lazy query. Does nothing for a query created with "useQuery".
    */
   public load(variables?: TVariables): void {
-    const operation = this.operationResult as unknown as {
-      load?: (document?: unknown, variables?: TVariables) => false | Promise<unknown>
-    }
+    const operation = this.operationResult
 
-    if (typeof operation.load !== 'function') {
+    if (!('load' in operation) || typeof operation.load !== 'function') {
       return
     }
 
     this.loadCalled = true
 
-    const result = operation.load(undefined, variables)
+    // Compat keeps v4's (document, variables) signature and returns `false` on a
+    // repeated call; native takes the variables directly, starts the query
+    // synchronously and always returns a Promise.
+    const result = isNativeQueryResult(operation)
+      ? operation.load(variables)
+      : operation.load(undefined, variables)
+
     if (result instanceof Promise) {
       // error is handled in BaseHandler
       result.catch(() => {})
@@ -396,13 +411,42 @@ export default class QueryHandler<
   public onResult(callback: (result: ApolloQueryResultV4<TResult>) => void) {
     let lastData: TResult | undefined
 
-    return this.operationResult.onResult((result) => {
+    const filteredCallback = (result: ApolloQueryResultV4<TResult>) => {
       if (result.data === undefined) return
       if (result.loading && result.data === lastData) return
 
       lastData = result.data
 
       callback(result)
-    })
+    }
+
+    // The native `onNextState` is what the compat `onResult` wraps; mirror its
+    // mapping so both shapes see the same sequence. Cast: vueuse's
+    // `Callback<TResult>` is a conditional type that stays unresolved on the
+    // open generic and accepts no callback at all.
+    if (isNativeQueryResult(this.operationResult)) {
+      const onNextState = this.operationResult.onNextState as (
+        fn: (state: {
+          result: TResult | undefined
+          loading: boolean
+          networkStatus: number
+          error?: ErrorLike
+        }) => void,
+      ) => { off: () => void }
+
+      return onNextState((state) => {
+        // Like the compat wrapper: an error state is reported through `onError`
+        // only (the error policy is never changed from 'none' here).
+        if (state.error) return
+
+        filteredCallback({
+          data: state.result,
+          loading: state.loading,
+          networkStatus: state.networkStatus,
+        })
+      })
+    }
+
+    return this.operationResult.onResult(filteredCallback)
   }
 }

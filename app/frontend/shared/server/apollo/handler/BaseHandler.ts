@@ -65,7 +65,8 @@ export abstract class BaseHandler<
     return this.operationResult.loading
   }
 
-  public operationError(): Readonly<Ref<Maybe<ErrorLike>>> {
+  // `null` without an error on compat, `undefined` on native.
+  public operationError(): Readonly<Ref<Maybe<ErrorLike> | undefined>> {
     return this.operationResult.error
   }
 

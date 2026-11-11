@@ -11,7 +11,9 @@ import type {
   OperationVariables,
   TypedDocumentNode,
 } from '@apollo/client'
+import type { useLazyQuery, useMutation, useQuery, useSubscription } from '@vue/apollo-composable'
 import type {
+  UseLazyQueryReturn,
   UseMutationReturn,
   UseQueryReturn,
   UseQueryOptions,
@@ -22,19 +24,42 @@ import type {
 import type { DocumentNode } from 'graphql'
 import type { Ref } from 'vue'
 
-export type OperationReturn<TResult, TVariables extends OperationVariables> =
+// Until every document is migrated (and the compat entry removed with it), a
+// handler accepts the compat (v4-style) and the native v5 composable result of
+// its operation kind alike.
+export type QueryOperationReturn<TResult, TVariables extends OperationVariables> =
   | UseQueryReturn<TResult, TVariables>
+  | UseLazyQueryReturn<TResult, TVariables>
+  | useQuery.Result<TResult, TVariables>
+  | useLazyQuery.Result<TResult, TVariables>
+
+export type MutationOperationReturn<TResult, TVariables extends OperationVariables> =
   | UseMutationReturn<TResult, TVariables>
+  | useMutation.Result<TResult, TVariables>
+
+export type SubscriptionOperationReturn<TResult, TVariables extends OperationVariables> =
   | UseSubscriptionReturn<TResult, TVariables>
+  | useSubscription.Result<TResult, TVariables>
+
+export type OperationReturn<TResult, TVariables extends OperationVariables> =
+  | QueryOperationReturn<TResult, TVariables>
+  | MutationOperationReturn<TResult, TVariables>
+  | SubscriptionOperationReturn<TResult, TVariables>
 
 export type OperationQueryOptionsReturn<TResult, TVariables extends OperationVariables> = Readonly<
-  Ref<UseQueryOptions<TResult, TVariables> | undefined>
+  Ref<UseQueryOptions<TResult, TVariables> | useQuery.Options<TResult, TVariables> | undefined>
 >
 
 export type OperationSubscriptionOptionsReturn<
   TResult,
   TVariables extends OperationVariables,
-> = Readonly<Ref<UseSubscriptionOptions<TResult, TVariables> | undefined>>
+> = Readonly<
+  Ref<
+    | UseSubscriptionOptions<TResult, TVariables>
+    | useSubscription.Options<TResult, TVariables>
+    | undefined
+  >
+>
 
 export interface SubscribeToMoreUpdateQueryOptions<
   TResult,
@@ -91,12 +116,12 @@ export type OperationMutationFunction<
   TVariables extends OperationVariables = any,
 > = (
   options?: OperationMutationOptions<TResult, TVariables>,
-) => UseMutationReturn<TResult, TVariables>
+) => MutationOperationReturn<TResult, TVariables>
 
 export type OperationQueryFunction<
   TResult = OperationQueryResult,
   TVariables extends OperationVariables = OperationVariables,
-> = (options: OperationVariables) => UseQueryReturn<TResult, TVariables>
+> = (options: OperationVariables) => QueryOperationReturn<TResult, TVariables>
 
 export type BaseConnection = {
   __typename?: string

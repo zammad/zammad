@@ -36,10 +36,16 @@ const mockQueryResult = (): LocalesQuery => {
   }
 }
 
+// A plain variable: the singleton query fires its one request in whichever
+// test loads the locales first, and `clearMocks` would wipe a spy before the
+// asserting example runs.
+let seenLocalesVariables: Record<string, unknown> | undefined
+
 const mockClient = () => {
   const mockApolloClient = createMockClient()
 
-  mockApolloClient.setRequestHandler(LocalesDocument, () => {
+  mockApolloClient.setRequestHandler(LocalesDocument, (variables) => {
+    seenLocalesVariables = variables
     return Promise.resolve({ data: mockQueryResult() })
   })
   mockApolloClient.setRequestHandler(TranslationsDocument, () => {
@@ -59,6 +65,14 @@ describe('Translations Store', () => {
 
   it('is empty by default', () => {
     expect(locale.localeData).toBe(null)
+  })
+
+  // The compat composable silently dropped the lazy query's default variables;
+  // the native one must send the store's intent.
+  it('requests only the active locales', async () => {
+    await locale.loadLocales()
+
+    expect(seenLocalesVariables).toEqual({ onlyActive: true })
   })
 
   it('sets rtl correctly', async () => {

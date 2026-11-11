@@ -22,7 +22,7 @@ const getLocalesQuery = () => {
 
   const scope = effectScope()
   scope.run(() => {
-    localesQuery = new QueryHandler(useLocalesLazyQuery({ onlyActive: true }))
+    localesQuery = new QueryHandler(useLocalesLazyQuery({ variables: { onlyActive: true } }))
   })
 
   return localesQuery

@@ -397,6 +397,9 @@ importers:
       '@graphql-codegen/near-operation-file-preset':
         specifier: 5.2.1
         version: 5.2.1(graphql@16.15.0)
+      '@graphql-codegen/plugin-helpers':
+        specifier: ^7.4.2
+        version: 7.4.2(graphql@16.15.0)
       '@graphql-codegen/typescript':
         specifier: ^6.1.2
         version: 6.1.2(graphql@16.15.0)
@@ -1463,12 +1466,6 @@ packages:
     engines: {node: '>=16'}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
-  '@graphql-codegen/plugin-helpers@7.1.0':
-    resolution: {integrity: sha512-ieJH7kZ5oSZKBPJs7CvHMrFY/CLYLklqv74ir93qMwRna6geZsbIMoJzTDBXohxcQTITiProiYSGrEtZjIpYGg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
   '@graphql-codegen/plugin-helpers@7.4.2':
     resolution: {integrity: sha512-5SmkQvoNg3orbCNWBIv6lD1Zk1/mJbgdqv5oUy2Pw8Q70sO1Y3CGOkdwnPUp5l/pm0GKApQUyqPJkqFaJKewpQ==}
@@ -7908,7 +7905,7 @@ snapshots:
 
   '@graphql-codegen/introspection@6.1.0(graphql@16.15.0)':
     dependencies:
-      '@graphql-codegen/plugin-helpers': 7.1.0(graphql@16.15.0)
+      '@graphql-codegen/plugin-helpers': 7.4.2(graphql@16.15.0)
       '@graphql-codegen/visitor-plugin-common': 7.5.0(graphql@16.15.0)
       graphql: 16.15.0
       tslib: 2.9.1
@@ -7927,15 +7924,6 @@ snapshots:
     dependencies:
       '@graphql-tools/utils': 11.2.2(graphql@16.15.0)
       change-case-all: 1.0.15
-      common-tags: 1.8.2
-      graphql: 16.15.0
-      import-from: 4.0.0
-      tslib: 2.9.1
-
-  '@graphql-codegen/plugin-helpers@7.1.0(graphql@16.15.0)':
-    dependencies:
-      '@graphql-tools/utils': 11.2.2(graphql@16.15.0)
-      change-case-all: 2.1.0
       common-tags: 1.8.2
       graphql: 16.15.0
       import-from: 4.0.0

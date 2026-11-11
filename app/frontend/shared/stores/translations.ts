@@ -48,13 +48,11 @@ const getTranslationsQuery = () => {
   const scope = effectScope()
 
   scope.run(() => {
-    translationsQuery = new QueryHandler(
-      useTranslationsLazyQuery({} as TranslationsQueryVariables),
-      {
-        // Don't show an error while app is loading as this would cause startup failure.
-        errorShowNotification: useApplicationStore().loaded,
-      },
-    )
+    // The variables arrive per call through `query({ variables })`.
+    translationsQuery = new QueryHandler(useTranslationsLazyQuery(), {
+      // Don't show an error while app is loading as this would cause startup failure.
+      errorShowNotification: useApplicationStore().loaded,
+    })
   })
 
   return translationsQuery

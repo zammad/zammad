@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { NetworkStatus } from '@apollo/client'
+import * as native from '@vue/apollo-composable'
 import { useSubscription } from '@vue/apollo-composable/compat'
 import { createMockSubscription } from 'mock-apollo-client'
 import { effectScope } from 'vue'
@@ -67,15 +68,31 @@ const mockClient = () => {
 
 const scope = effectScope()
 
-describe('SubscriptionHandler', () => {
+// Every case runs against the compat (v4-style) and the native v5 composables:
+// a handler must behave the same no matter which shape it was constructed from.
+describe.each(['compat', 'native'] as const)('SubscriptionHandler (%s)', (entry) => {
   const sampleSubscription = (variables: SampleUpdatedSubscriptionVariables, options = {}) => {
     subscriptionFunctionCallSpy()
+
+    if (entry === 'native') {
+      return native.useSubscription<SampleUpdatedSubscription, SampleUpdatedSubscriptionVariables>(
+        SampleTypedSubscriptionDocument,
+        { variables, ...options },
+      )
+    }
+
     return useSubscription<SampleUpdatedSubscription, SampleUpdatedSubscriptionVariables>(
       SampleTypedSubscriptionDocument,
       variables,
       options,
     )
   }
+
+  // The notification store accumulates across examples; the second entry run
+  // must not inherit the first one's notifications.
+  beforeEach(() => {
+    useNotifications().clearAllNotifications()
+  })
 
   describe('constructor', () => {
     beforeEach(() => {
@@ -309,7 +326,9 @@ describe('SubscriptionHandler', () => {
 
         expect(subscriptionHandlerSpy).toHaveBeenCalledTimes(1)
 
-        subscriptionHandlerObject.restart()
+        // Native restarts asynchronously - the handler resolves once the new
+        // subscription is open on either shape.
+        await subscriptionHandlerObject.restart()
         await waitForNextTick()
 
         expect(subscriptionHandlerSpy).toHaveBeenCalledTimes(2)

@@ -2,6 +2,7 @@
 
 import { ApolloClient, ApolloLink, InMemoryCache, NetworkStatus } from '@apollo/client'
 import { relayStylePagination } from '@apollo/client/utilities'
+import * as native from '@vue/apollo-composable'
 import { provideApolloClient, useLazyQuery, useQuery } from '@vue/apollo-composable/compat'
 import gql from 'graphql-tag'
 import { createMockSubscription } from 'mock-apollo-client'
@@ -102,21 +103,32 @@ const waitFirstResult = (queryHandler: QueryHandler<any, any>) =>
     })
   })
 
-describe('QueryHandler', () => {
+// Every case runs against the compat (v4-style) and the native v5 composables:
+// a handler must behave the same no matter which shape it was constructed from.
+describe.each(['compat', 'native'] as const)('QueryHandler (%s)', (entry) => {
   const sampleQuery = (variables: SampleQueryVariables, options = {}) => {
     queryFunctionCallSpy()
 
-    const query = useQuery<SampleQuery, SampleQueryVariables>(
-      SampleTypedQueryDocument,
-      variables,
-      options,
-    )
+    if (entry === 'native') {
+      return native.useQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, {
+        variables,
+        ...options,
+      })
+    }
 
-    return query
+    return useQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, variables, options)
   }
 
   const sampleLazyQuery = (variables: SampleQueryVariables, options = {}) => {
     queryFunctionCallSpy()
+
+    if (entry === 'native') {
+      return native.useLazyQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, {
+        variables,
+        ...options,
+      })
+    }
+
     return useLazyQuery<SampleQuery, SampleQueryVariables>(
       SampleTypedQueryDocument,
       variables,
@@ -125,6 +137,12 @@ describe('QueryHandler', () => {
   }
 
   const scope = effectScope()
+
+  // The notification store accumulates across examples; the second entry run
+  // must not inherit the first one's notifications.
+  beforeEach(() => {
+    useNotifications().clearAllNotifications()
+  })
 
   describe('constructor', () => {
     beforeEach(() => {
@@ -376,6 +394,30 @@ describe('QueryHandler', () => {
         await expect(queryHandlerObject.query()).resolves.toEqual(
           expect.objectContaining({ data: querySampleResult }),
         )
+      })
+    })
+
+    // The options carry the variables; `query()` must not spread them as
+    // reactive sources but send the resolved ones.
+    it('query() sends the default variables of a lazy query', async () => {
+      await scope.run(async () => {
+        const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 42 }))
+
+        await expect(queryHandlerObject.query()).resolves.toEqual(
+          expect.objectContaining({ data: querySampleResult }),
+        )
+
+        expect(handlerCallSpy).toHaveBeenCalledWith({ id: 42 })
+      })
+    })
+
+    it('query() lets explicit variables override the default ones', async () => {
+      await scope.run(async () => {
+        const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 42 }))
+
+        await queryHandlerObject.query({ variables: { id: 7 } })
+
+        expect(handlerCallSpy).toHaveBeenCalledWith({ id: 7 })
       })
     })
 
@@ -632,15 +674,24 @@ describe('QueryHandler', () => {
     // An infinite scroll asks for the next page as soon as the previous one resolved, and still
     //   sitting at the bottom is all it goes by. Resolving ahead of the merged page made it ask for
     //   the same page over and over, each request dropping the page before.
-    it('resolves once the merged page is in the result', async () => {
-      await scope.run(async () => {
-        const queryHandlerObject = new QueryHandler(
-          useQuery<ReturnType<typeof itemsPage>, { pageSize: number; cursor?: string }>(
+    type ItemsResult = ReturnType<typeof itemsPage>
+    type ItemsVariables = { pageSize: number; cursor?: string }
+
+    const itemsQuery = () =>
+      entry === 'native'
+        ? native.useQuery<ItemsResult, ItemsVariables>(ItemsDocument, {
+            variables: { pageSize: 10 },
+            fetchPolicy: 'cache-first',
+          })
+        : useQuery<ItemsResult, ItemsVariables>(
             ItemsDocument,
             { pageSize: 10 },
             { fetchPolicy: 'cache-first' },
-          ),
-        )
+          )
+
+    it('resolves once the merged page is in the result', async () => {
+      await scope.run(async () => {
+        const queryHandlerObject = new QueryHandler(itemsQuery())
 
         await vi.waitFor(() =>
           expect(queryHandlerObject.result().value?.items.edges).toHaveLength(10),

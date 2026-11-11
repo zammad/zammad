@@ -93,12 +93,9 @@ const config = {
         importTypesNamespace: '',
         extension: '.api.ts',
       },
-      plugins: ['typescript-vue-apollo'],
+      plugins: ['./app/frontend/build/vueApolloPlugin.js'],
       config: {
         importOperationTypesFrom: 'Types',
-        // Generated composables keep the v4 call signatures on vue-apollo v5 internals until
-        // every call site is migrated to the native v5 API.
-        vueApolloComposableImportFrom: '@vue/apollo-composable/compat',
       },
       documentTransforms: [graphqlDocumentExtensionsTransform],
     },

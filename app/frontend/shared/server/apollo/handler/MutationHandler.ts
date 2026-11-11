@@ -2,23 +2,36 @@
 
 import UserError from '#shared/errors/UserError.ts'
 import type { UserErrors } from '#shared/types/error.ts'
-import type { OperationMutationResult } from '#shared/types/server/apollo/handler.ts'
+import type {
+  MutationOperationReturn,
+  OperationMutationResult,
+} from '#shared/types/server/apollo/handler.ts'
 
 import { BaseHandler } from './BaseHandler.ts'
+import { isNativeMutationResult } from './utils/isNativeOperationResult.ts'
 
 import type { OperationVariables } from '@apollo/client'
-import type { MutateOverrideOptions, UseMutationReturn } from '@vue/apollo-composable/compat'
+import type { useMutation } from '@vue/apollo-composable'
+import type { MutateOverrideOptions } from '@vue/apollo-composable/compat'
 import type { Ref } from 'vue'
 
 export default class MutationHandler<
   TResult = OperationMutationResult,
   TVariables extends OperationVariables = OperationVariables,
-> extends BaseHandler<TResult, TVariables, UseMutationReturn<TResult, TVariables>> {
+> extends BaseHandler<TResult, TVariables, MutationOperationReturn<TResult, TVariables>> {
   public async send(
     variables?: TVariables,
     options?: MutateOverrideOptions<TResult>,
   ): Promise<Maybe<TResult>> {
-    const result = await this.operationResult.mutate(variables, options)
+    // The native `mutate` resolves `{ data, error }` instead of rejecting;
+    // `BaseHandler` registers `onError`, so it never throws either way and the
+    // `!result || result.error` branch below is the real error path.
+    const result = isNativeMutationResult(this.operationResult)
+      ? await this.operationResult.mutate({
+          ...(options as useMutation.MutateOptions<TResult, TVariables>),
+          variables,
+        })
+      : await this.operationResult.mutate(variables, options)
 
     // The error itself was already reported to 'onError' by vue-apollo.
     if (!result || result.error) {

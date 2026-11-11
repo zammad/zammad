@@ -70,3 +70,9 @@ end
 
 Fields inside `internal_fields` are restricted by checking for admin/agent permission.
 They return `nil` instead of errors when unauthorized.
+
+## Frontend Composable Generation
+
+`app/frontend/build/vueApolloV5Documents.js` lists the `.graphql` documents whose
+generated composables use the native vue-apollo v5 shape; a new document goes on
+it from the start, fragment-only documents never do.

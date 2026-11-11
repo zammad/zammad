@@ -52,6 +52,7 @@
     "@graphql-codegen/fragment-matcher": "7.1.1",
     "@graphql-codegen/introspection": "^6.1.0",
     "@graphql-codegen/near-operation-file-preset": "5.2.1",
+    "@graphql-codegen/plugin-helpers": "^7.4.2",
     "@graphql-codegen/typescript": "^6.1.2",
     "@graphql-codegen/typescript-operations": "^6.2.0",
     "@graphql-codegen/typescript-vue-apollo": "^5.0.1",
