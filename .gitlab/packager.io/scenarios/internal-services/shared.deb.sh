@@ -15,3 +15,5 @@ curl --retry 30 --retry-delay 1 --retry-connrefused http://localhost:3000 | grep
 # Try invoking the backup with default settings.
 zammad run cp /opt/zammad/contrib/backup/config.dist /opt/zammad/contrib/backup/config
 zammad run /opt/zammad/contrib/backup/zammad_backup.sh
+
+bash ./shared.sbom.sh
