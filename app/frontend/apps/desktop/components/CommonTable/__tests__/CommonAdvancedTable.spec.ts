@@ -141,7 +141,7 @@ describe('CommonAdvancedTable', () => {
       },
     )
 
-    expect(wrapper.getByText('Actions')).toBeInTheDocument()
+    expect(wrapper.getByRole('columnheader', { name: 'Actions' })).toBeInTheDocument()
     expect(wrapper.getByLabelText('Action menu button')).toBeInTheDocument()
   })
 

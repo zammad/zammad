@@ -395,8 +395,8 @@ useKeepAliveHooks({
           @reset="resetHeaderWidths"
         />
       </th>
-      <th v-if="actions" id="actions-header" scope="col" class="h-10 w-0 p-2.5 text-center">
-        <CommonLabel class="font-normal text-muted!" size="small">{{ $t('Actions') }} </CommonLabel>
+      <th v-if="actions" id="actions-header" scope="col" class="h-10 w-12.5">
+        <span class="sr-only">{{ $t('Actions') }}</span>
       </th>
     </tr>
     <tr v-if="selectAllLoadedActive && !hasLoadedAllItems" data-test-id="tableMetaHeader">
