@@ -2,7 +2,7 @@
 
 <div>Hej #{user.firstname},</div>
 <br>
-<div>Det verkar som du använder ditt konto med en <b>känd enhet från ett nytt land</b> på "#{user_device.created_at}":</div>
+<div>Det verkar som att du har använt ditt konto med en <b>känd enhet, men från ett nytt land</b> den "#{user_device.created_at}":</div>
 <br>
 <div>
 Din enhet: #{user_device.name}<br>
@@ -10,10 +10,10 @@ Din plats (relativ): #{user_device.location}<br>
 Din IP-adress: #{user_device.ip}<br>
 </div>
 <br>
-<div>Landet är tillagt till din lista på kända enheter, som du kan se här:</div>
+<div>Landet har lagts till i din lista över kända enheter, som du kan se här:</div>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>Om det inte var du, ta genast bort enheten från listan, byt ditt lösenord samt kontakta din administratör. Någon kan ha fått tillgång till ditt #{config.product_name}-konto.</div>
+<div>Om det inte var du, ta genast bort enheten från listan, byt ditt lösenord och kontakta din administratör. Någon kan ha fått obehörig åtkomst till ditt konto.</div>
 <br>
-<div>Ditt #{config.product_name} Team</div>
+<div>Ditt #{config.product_name}-team</div>
