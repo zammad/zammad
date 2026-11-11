@@ -36,7 +36,6 @@
     - echo "$PUSH_TO_GITHUB_SSH_PRIVATE_KEY" | ssh-add -
     - ssh-add -l
   script:
-    - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
   after_script: []
 
