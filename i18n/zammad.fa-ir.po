@@ -45,7 +45,7 @@ msgstr "dd.mm.yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "dd.mm.yyyy HH:MM"
 
-#: db/seeds/settings.rb:409
+#: db/seeds/settings.rb:430
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
@@ -561,7 +561,7 @@ msgstr "%s دقیقه قبل"
 msgid "%s months ago"
 msgstr "%s ماه قبل"
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:165
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:169
 msgid "%s more"
 msgstr "%s بیشتر"
 
@@ -595,6 +595,12 @@ msgstr "%s آبجکت به روز خواهد شد."
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:208
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:44
 msgid "%s of %s"
+msgstr "%s از %s"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRating/FieldRatingInput.vue:24
+#, fuzzy
+#| msgid "%s of %s"
+msgid "%s of %s stars"
 msgstr "%s از %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
@@ -766,6 +772,12 @@ msgstr "%{name} یک کلمه‌ی رزروشده است"
 msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "'%s' یک آدرس IP معتبر یا محدوده CIDR نیست."
 
+#: app/models/setting/validation/backend_class.rb:19
+#, fuzzy
+#| msgid "'%s' is not a valid IP address or CIDR range."
+msgid "'%s' is not a valid backend for this setting."
+msgstr "'%s' یک آدرس IP معتبر یا محدوده CIDR نیست."
+
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr "(وضعیت: %s)"
@@ -846,7 +858,7 @@ msgstr ""
 msgid "+ %s more"
 msgstr "+ %s مورد دیگر"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "1 day"
 msgstr "۱ روز"
 
@@ -855,7 +867,7 @@ msgid "1 day ago"
 msgstr "۱ روز پیش"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:32
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "1 hour"
 msgstr "۱ ساعت"
 
@@ -875,7 +887,7 @@ msgstr "یک دقیقه قبل"
 msgid "1 month ago"
 msgstr "یک ماه پیش"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "1 week"
 msgstr "۱ هفته"
 
@@ -887,11 +899,11 @@ msgstr "۱ هفته پیش"
 msgid "1 year ago"
 msgstr "یک سال پیش"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "2 hours"
 msgstr "۲ ساعت"
 
-#: db/seeds/settings.rb:2243
+#: db/seeds/settings.rb:2272
 msgid "2 lower case and 2 upper case characters"
 msgstr "۲ حرف کوچک و ۲ حرف بزرگ"
 
@@ -899,7 +911,7 @@ msgstr "۲ حرف کوچک و ۲ حرف بزرگ"
 msgid "2 normal"
 msgstr "عادی ۲"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "2 weeks"
 msgstr "۲ هفته"
 
@@ -911,11 +923,11 @@ msgstr "۲۰ ساعت"
 msgid "3 high"
 msgstr "بالا ۳"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "3 weeks"
 msgstr "۳ هفته"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "4 weeks"
 msgstr "۴ هفته"
 
@@ -967,7 +979,7 @@ msgstr ""
 "شود، به عنوان مثال وقتی عاملی در حال نوشتن ایمیل است یا یک تریگر در حال "
 "ارسال پاسخ خودکار است"
 
-#: db/seeds/settings.rb:4147
+#: db/seeds/settings.rb:4264
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "لیستی از بک‌اندهای واردات فعال که به طور خودکار زمان‌بندی می‌شوند."
 
@@ -983,7 +995,7 @@ msgstr ""
 "یک نشست جدید با حساب کاربری شما ایجاد شده است ، این نشست برای جلوگیری از "
 "تداخل متوقف می شود."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:152
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 "نسخه جدید از سامانه در دسترس است، لطفا مرورگر خود را مجددا بارگذاری نمایید."
@@ -1094,19 +1106,19 @@ msgstr "بازخورد و لاگ‌ها"
 msgid "AI Knowledge Base"
 msgstr "پایگاه دانش"
 
-#: db/seeds/settings.rb:6595
+#: db/seeds/settings.rb:6887
 #, fuzzy
 #| msgid "AI Knowledge Base Answers"
 msgid "AI Knowledge Base Answer Suggestions"
 msgstr "پاسخ‌های هوش مصنوعی پایگاه دانش"
 
-#: db/seeds/settings.rb:6609
+#: db/seeds/settings.rb:6901
 #, fuzzy
 #| msgid "Knowledge Base Answer \"|%s|\" has been created"
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
 msgstr "پاسخ پایگاه دانش \"|%s|\" ایجاد شد"
 
-#: db/seeds/settings.rb:6581
+#: db/seeds/settings.rb:6873
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr "پاسخ هوش مصنوعی پایگاه دانش از تیکت"
 
@@ -1181,7 +1193,7 @@ msgid "AI error log"
 msgstr "لاگ خطای هوش مصنوعی"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee:6
-#: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6485
+#: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6777
 msgid "AI provider"
 msgstr "ارائه‌دهنده هوش مصنوعی"
 
@@ -1253,7 +1265,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "کلید API"
 
-#: db/seeds/settings.rb:3660
+#: db/seeds/settings.rb:3696
 msgid "API Password Access"
 msgstr "رمز دسترسی API"
 
@@ -1262,7 +1274,7 @@ msgstr "رمز دسترسی API"
 msgid "API Token"
 msgstr "توکن API"
 
-#: db/seeds/settings.rb:3635
+#: db/seeds/settings.rb:3671
 msgid "API Token Access"
 msgstr "دسترسی به توکن API"
 
@@ -1390,7 +1402,7 @@ msgstr "Account Time"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:238
+#: app/controllers/channels_email_controller.rb:237
 msgid "Account already exists!"
 msgstr "این حساب کاربری وجود دارد!"
 
@@ -1416,12 +1428,12 @@ msgstr "زمان صرف‌شده"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
+#: app/frontend/shared/entities/ticket/attributes.ts:14
 #: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr "زمان محاسبه شده"
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:47
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:46
 msgid "Accounted time - %s"
 msgstr "زمان ثبت‌شده - %s"
 
@@ -1501,7 +1513,7 @@ msgstr "کلید منوی عملیات برای کلیدهای امنیتی"
 msgid "Actions"
 msgstr "فعالیت‌ها"
 
-#: db/seeds/settings.rb:2938
+#: db/seeds/settings.rb:2968
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "فعالسازی اجرای تریگرهای تیکت بصورت بازگشتی."
 
@@ -1509,7 +1521,7 @@ msgstr "فعالسازی اجرای تریگرهای تیکت بصورت باز�
 msgid "Activated by"
 msgstr "فعال شده توسط"
 
-#: db/seeds/settings.rb:1150
+#: db/seeds/settings.rb:1175
 msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
@@ -1903,7 +1915,7 @@ msgstr "سایر کانال‌ها"
 msgid "Additional actions"
 msgstr "عملیات بیشتر"
 
-#: db/seeds/settings.rb:3468
+#: db/seeds/settings.rb:3501
 msgid "Additional follow-up detection"
 msgstr "تشخیص پیگیری اضافی"
 
@@ -1915,7 +1927,7 @@ msgstr "اطلاعات بیشتر"
 msgid "Additional information and links"
 msgstr "اطلاعات و پیوندهای بیشتر"
 
-#: db/seeds/settings.rb:888
+#: db/seeds/settings.rb:913
 msgid "Additional notes for ticket create types."
 msgstr "یادداشت‌های بیشتر برای انواع ایجاد تیکت."
 
@@ -1923,11 +1935,11 @@ msgstr "یادداشت‌های بیشتر برای انواع ایجاد تیک
 msgid "Address"
 msgstr "نشانی"
 
-#: db/seeds/settings.rb:548
+#: db/seeds/settings.rb:573
 msgid "Address of the proxy server for http and https resources."
 msgstr "آدرس سرور پراکسی برای منابع http و https."
 
-#: db/seeds/settings.rb:3249
+#: db/seeds/settings.rb:3279
 msgid ""
 "Adds an invisible field to the web form and rejects submissions that fill it "
 "in, which automated clients tend to do."
@@ -1955,7 +1967,7 @@ msgstr "ورود با رمز عبور مدیر"
 msgid "Admin documentation"
 msgstr "مستندات مدیریت"
 
-#: db/seeds/permissions.rb:5 db/seeds/settings.rb:1190
+#: db/seeds/permissions.rb:5 db/seeds/settings.rb:1215
 msgid "Admin interface"
 msgstr "رابط کاربری مدیر"
 
@@ -2072,11 +2084,11 @@ msgstr "سن"
 msgid "Agent"
 msgstr "کارشناس"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3414
 msgid "Agent Name"
 msgstr "نام کارشناس"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3414
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "نام عامل + جداکننده From + نام نمایشی آدرس سیستم"
 
@@ -2084,11 +2096,11 @@ msgstr "نام عامل + جداکننده From + نام نمایشی آدرس �
 msgid "Agent chat"
 msgstr "گفت‌وگوی کارشناس"
 
-#: db/seeds/settings.rb:3735
+#: db/seeds/settings.rb:3771
 msgid "Agent idle timeout"
 msgstr "وقت آزاد کارشناس"
 
-#: app/models/role.rb:182 app/models/user.rb:834
+#: app/models/role.rb:195 app/models/user.rb:834
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
 
@@ -2096,7 +2108,7 @@ msgstr "Agent limit exceeded, please check your account settings."
 msgid "Agent phone"
 msgstr "تلفن کارشناس"
 
-#: db/seeds/permissions.rb:432 db/seeds/settings.rb:1199
+#: db/seeds/permissions.rb:432 db/seeds/settings.rb:1224
 msgid "Agent tickets"
 msgstr "تیکت‌های کارشناس"
 
@@ -2233,7 +2245,7 @@ msgstr ""
 "به عامل هوش مصنوعی اجازه دهید چندین دسته را از بین همه مقادیر ممکن انتخاب "
 "کند."
 
-#: db/seeds/settings.rb:6470
+#: db/seeds/settings.rb:6756
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2293,16 +2305,16 @@ msgstr "هیچ ترجمه‌ای برای این منطقه در دسترس نی
 msgid "Allow users to add new tags."
 msgstr "اجازه افزودن برچسب‌های جدید به کاربران."
 
-#: db/seeds/settings.rb:4312
+#: db/seeds/settings.rb:4433
 msgid "Allow users to create new tags."
 msgstr "مجوز ایجاد برچسب‌های جدید به کاربران."
 
-#: db/seeds/settings.rb:6461
+#: db/seeds/settings.rb:6744
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 "به کاربران اجازه دهید به طور خودکار به رابط کاربری دسکتاپ جدید سوئیچ کنند."
 
-#: db/seeds/settings.rb:1233
+#: db/seeds/settings.rb:1259
 msgid "Allow using one email address for multiple users."
 msgstr "امکان استفاده از یک ایمیل برای چندین کاربر."
 
@@ -2315,7 +2327,7 @@ msgstr "وب سایت‌های مجاز (جداشده با ;)"
 msgid "Also notify via email"
 msgstr "اعلان از طریق ایمیل"
 
-#: db/seeds/settings.rb:5349
+#: db/seeds/settings.rb:5599
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -2326,7 +2338,7 @@ msgstr ""
 msgid "Alternative Translations"
 msgstr "ترجمه‌های جایگزین"
 
-#: db/seeds/settings.rb:339
+#: db/seeds/settings.rb:354
 #, fuzzy
 #| msgid "Fully Qualified Domain Name"
 msgid "Alternative fully qualified domain name"
@@ -2532,19 +2544,19 @@ msgstr ""
 "متاسفیم، ما قادر به پردازش این نوع پیام به دلیل محدودیت‌های WhatsApp Business "
 "نیستیم."
 
-#: db/seeds/settings.rb:1497
+#: db/seeds/settings.rb:1526
 msgid "App ID"
 msgstr "آی‌دی اپلیکیشن"
 
-#: db/seeds/settings.rb:1503
+#: db/seeds/settings.rb:1532
 msgid "App Secret"
 msgstr "رمز اپلیکیشن"
 
-#: db/seeds/settings.rb:1842
+#: db/seeds/settings.rb:1871
 msgid "App Tenant ID"
 msgstr "شناسه مستاجر برنامه"
 
-#: db/seeds/settings.rb:27
+#: db/seeds/settings.rb:30
 msgid "App Version"
 msgstr "نسخه اپلیکیشن"
 
@@ -2556,11 +2568,11 @@ msgstr "نسخه اپلیکیشن"
 msgid "App could not be verified."
 msgstr "امکان تایید اپلیکیشن وجود ندارد."
 
-#: db/seeds/settings.rb:1493
+#: db/seeds/settings.rb:1522
 msgid "App credentials for Facebook."
 msgstr "اعتبارنامه برنامه برای Facebook."
 
-#: db/seeds/settings.rb:1428
+#: db/seeds/settings.rb:1457
 msgid "App credentials for Twitter."
 msgstr "اعتبارنامه برنامه برای Twitter."
 
@@ -2821,7 +2833,7 @@ msgstr "مطمئن هستید؟ موارد بسته شده اخیر شما از 
 msgid "Article"
 msgstr "بند"
 
-#: db/seeds/settings.rb:724
+#: db/seeds/settings.rb:749
 msgid "Article - visibility confirmation dialog"
 msgstr "بند - پنجره تایید قابلیت مشاهده"
 
@@ -2837,7 +2849,7 @@ msgstr "تعداد بند"
 msgid "Article Language Detection"
 msgstr "تشخیص زبان مقاله"
 
-#: db/seeds/settings.rb:6010
+#: db/seeds/settings.rb:6290
 #, fuzzy
 #| msgid "Alternative Translations"
 msgid "Article Translation"
@@ -2947,7 +2959,7 @@ msgstr "حداقل یک قانون تطبیق لازم است، ولی چیزی 
 msgid "At least one object must be selected."
 msgstr "حداقل یک آبجکت باید انتخاب گردد."
 
-#: app/models/role.rb:159 app/models/user.rb:813
+#: app/models/role.rb:172 app/models/user.rb:813
 msgid "At least one user needs to have admin permissions."
 msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
 
@@ -2982,7 +2994,7 @@ msgstr "فایل‌های ضمیمه"
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: db/seeds/settings.rb:3482
+#: db/seeds/settings.rb:3515
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "پیوست - جستجو برای پیگیری مجدد همچنین در پیوست‌ها."
 
@@ -3043,7 +3055,7 @@ msgstr "ویژگی"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "مقدار '%s' در مپینگ الزامی است"
 
-#: db/seeds/settings.rb:2029
+#: db/seeds/settings.rb:2058
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
@@ -3058,7 +3070,7 @@ msgid "Attributes"
 msgstr "مقادیر"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:32
-#: db/seeds/settings.rb:2789
+#: db/seeds/settings.rb:2819
 msgid "Attributes to compare"
 msgstr "مقادیر برای مقایسه"
 
@@ -3122,13 +3134,13 @@ msgstr "تصدیق هویت امکان‌پذیر نیست"
 msgid "Authentication required"
 msgstr "تصدیق هویت الزامی است"
 
-#: db/seeds/settings.rb:1255
+#: db/seeds/settings.rb:1281
 msgid "Authentication via %s"
 msgstr "احراز هویت از طریق %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:6168
+#: db/seeds/settings.rb:6448
 msgid "Authenticator App"
 msgstr "برنامه احراز کننده هویت"
 
@@ -3165,19 +3177,19 @@ msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:11
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:7
-#: db/seeds/settings.rb:2635
+#: db/seeds/settings.rb:2665
 msgid "Auto Assignment"
 msgstr "تخصیص خودکار"
 
-#: db/seeds/settings.rb:2678
+#: db/seeds/settings.rb:2708
 msgid "Auto Assignment Ignored Users"
 msgstr "تخصیص خودکار کاربران نادیده گرفته‌شده"
 
-#: db/seeds/settings.rb:2661
+#: db/seeds/settings.rb:2691
 msgid "Auto Assignment Selector"
 msgstr "تخصیص خودکار انتخاب‌کننده"
 
-#: db/seeds/settings.rb:6447
+#: db/seeds/settings.rb:6727
 msgid "Auto Shutdown"
 msgstr "خاموشی خودکار"
 
@@ -3185,7 +3197,7 @@ msgstr "خاموشی خودکار"
 msgid "Auto Wizard"
 msgstr "جادوگر خودکار"
 
-#: db/seeds/settings.rb:4672
+#: db/seeds/settings.rb:4910
 msgid "Auto close"
 msgstr "بستن خودکار"
 
@@ -3193,7 +3205,7 @@ msgstr "بستن خودکار"
 msgid "Auto create"
 msgstr "ایجاد خودکار"
 
-#: db/seeds/settings.rb:4698
+#: db/seeds/settings.rb:4936
 msgid "Auto-close state"
 msgstr "حالت بسته شدن خودکار"
 
@@ -3207,27 +3219,27 @@ msgstr "AutoWizard غیرفعال است"
 msgid "Automated setup"
 msgstr "تنظیم خودکار"
 
-#: db/seeds/settings.rb:6024
+#: db/seeds/settings.rb:6304
 #, fuzzy
 #| msgid "Custom Translation"
 msgid "Automatic Article Translation"
 msgstr "ترجمه سفارشی"
 
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6318
 #, fuzzy
 #| msgid "Alternative Translations"
 msgid "Automatic Article Translation Roles"
 msgstr "ترجمه‌های جایگزین"
 
-#: db/seeds/settings.rb:1094
+#: db/seeds/settings.rb:1119
 msgid "Automatic Third-party Login"
 msgstr ""
 
-#: db/seeds/settings.rb:1318
+#: db/seeds/settings.rb:1347
 msgid "Automatic account link on initial logon"
 msgstr "پیوند حساب خودکار در ورود اولیه به سیستم"
 
-#: db/seeds/settings.rb:1344
+#: db/seeds/settings.rb:1373
 msgid "Automatic account linking notification"
 msgstr "اعلان اتصال خودکار حساب کاربری"
 
@@ -3306,7 +3318,7 @@ msgstr ""
 "برچسب‌های موجود محدود به برچسب‌هایی هستند که در بخش مدیریت برچسب‌ها وجود دارند. "
 "عامل هوش مصنوعی قادر به تولید برچسب‌های جدید نخواهد بود. %l"
 
-#: db/seeds/settings.rb:931
+#: db/seeds/settings.rb:956
 msgid "Available types for a new ticket"
 msgstr "انواع موجود برای تیکت جدید"
 
@@ -3360,7 +3372,7 @@ msgstr "میانگین: %s%"
 msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr "Azure AI (نقاط پایانی مبتنی بر استقرار قدیمی)"
 
-#: db/seeds/settings.rb:3624
+#: db/seeds/settings.rb:3657
 msgid "BCC address for all outgoing emails"
 msgstr "آدرس BCC برای تمام ایمیل‌های خروجی"
 
@@ -3527,7 +3539,7 @@ msgstr "اتصال رمز عبور"
 msgid "Bind User"
 msgstr "اتصال نام کاربری"
 
-#: db/seeds/settings.rb:3601
+#: db/seeds/settings.rb:3634
 msgid "Block Notifications"
 msgstr "متوقف کردن اطلاع رسانی ها"
 
@@ -3563,7 +3575,7 @@ msgstr "آبی"
 msgid "Body"
 msgstr "بدنه"
 
-#: db/seeds/settings.rb:3481
+#: db/seeds/settings.rb:3514
 msgid "Body - Search for follow-up also in mail body."
 msgstr "بدنه - جستجو برای پیگیری مجدد همچنین در بدنه ایمیل."
 
@@ -3654,7 +3666,7 @@ msgstr ""
 msgid "But it's only available in these languages:"
 msgstr "اما فقط در این زبان‌ها در دسترس است:"
 
-#: db/seeds/settings.rb:3471
+#: db/seeds/settings.rb:3504
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -3689,11 +3701,11 @@ msgid "CA"
 msgstr "CA"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:41
-#: db/seeds/settings.rb:3271
+#: db/seeds/settings.rb:3301
 msgid "CAPTCHA provider"
 msgstr "ارائه‌دهنده کپچا"
 
-#: db/seeds/settings.rb:3282
+#: db/seeds/settings.rb:3312
 msgid "CAPTCHA provider options"
 msgstr "تنظیمات ارائه دهنده کپچا"
 
@@ -3738,19 +3750,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (عمومی)"
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5658
 msgid "CTI Token"
 msgstr "توکن CTI"
 
-#: db/seeds/settings.rb:5395
+#: db/seeds/settings.rb:5645
 msgid "CTI config"
 msgstr "تنظیمات CTI"
 
-#: db/seeds/settings.rb:5429
+#: db/seeds/settings.rb:5679
 msgid "CTI customer last activity"
 msgstr "آخرین فعالیت مشتری CTI"
 
-#: db/seeds/settings.rb:5367
+#: db/seeds/settings.rb:5617
 msgid "CTI integration"
 msgstr "یکپارچه‌سازی CTI"
 
@@ -4046,7 +4058,7 @@ msgstr "ایجاد شده توسط"
 msgid "Caution!"
 msgstr "احتیاط!"
 
-#: db/seeds/settings.rb:2055
+#: db/seeds/settings.rb:2084
 msgid "Certificate (PEM)"
 msgstr "گواهینامه (PEM)"
 
@@ -4319,7 +4331,7 @@ msgstr "الگوی چک‌لیست باید فعال باشد تا به عنوا
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:36
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:359 db/seeds/settings.rb:6280
+#: db/seeds/permissions.rb:359 db/seeds/settings.rb:6560
 msgid "Checklists"
 msgstr "فهرست‌های بررسی"
 
@@ -4327,15 +4339,15 @@ msgstr "فهرست‌های بررسی"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4819
+#: db/seeds/settings.rb:5057
 msgid "Checkmk integration"
 msgstr "ادغام Checkmk"
 
-#: db/seeds/settings.rb:4940
+#: db/seeds/settings.rb:5178
 msgid "Checkmk token"
 msgstr "توکن Checkmk"
 
-#: db/seeds/settings.rb:2556
+#: db/seeds/settings.rb:2586
 msgid "Checksum"
 msgstr "Checksum"
 
@@ -4572,11 +4584,11 @@ msgstr "پاک کردن مقدار"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5531
+#: db/seeds/settings.rb:5781
 msgid "Clearbit config"
 msgstr "پیکربندی Clearbit"
 
-#: db/seeds/settings.rb:5505
+#: db/seeds/settings.rb:5755
 msgid "Clearbit integration"
 msgstr "ادغام Clearbit"
 
@@ -4588,7 +4600,7 @@ msgstr "اینجا کلیک نمایید"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "برای راه‌اندازی یک روش احراز هویت دو عاملی اینجا کلیک کنید."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:52
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:56
 msgid "Click to edit…"
 msgstr "برای ویرایش کلیک کنید…"
 
@@ -4597,14 +4609,14 @@ msgstr "برای ویرایش کلیک کنید…"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:21
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:9
 #: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:9
-#: db/seeds/settings.rb:1562
+#: db/seeds/settings.rb:1591
 msgid "Client ID"
 msgstr "شناسه مشتری"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:17
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:17
 #: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:17
-#: db/seeds/settings.rb:1568
+#: db/seeds/settings.rb:1597
 msgid "Client Secret"
 msgstr "رمز مشتری"
 
@@ -4623,7 +4635,7 @@ msgstr "همسان‌سازی: %s"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:317
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:42
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:43
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4675,7 +4687,7 @@ msgstr "بستن پنل کناری"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:41
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
-#: db/seeds/settings.rb:3108
+#: db/seeds/settings.rb:3138
 msgid "Close tab"
 msgstr "بستن برگه"
 
@@ -4698,7 +4710,7 @@ msgstr "بستن برگه همزمان با بستن تیکت"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
-#: db/seeds/settings.rb:3109
+#: db/seeds/settings.rb:3139
 msgid "Close tab on ticket close"
 msgstr "بستن برگه همزمان با بستن تیکت"
 
@@ -4729,7 +4741,7 @@ msgid "Closed tickets"
 msgstr "تیکت‌های بسته شده"
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:77
+#: app/frontend/shared/entities/ticket/attributes.ts:77
 #: app/graphql/gql/types/overview_type.rb:110
 msgid "Closing time"
 msgstr "زمان بستن"
@@ -4753,7 +4765,7 @@ msgstr "جمع کردن این عنصر"
 msgid "Color %s highlight applied to \"%s\""
 msgstr "هایلایت رنگی %s روی «%s» اعمال شد"
 
-#: db/seeds/settings.rb:962
+#: db/seeds/settings.rb:987
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "استفاده از نمایشگر رنگی برای تیکت باز در پنجره کتاری."
 
@@ -4765,7 +4777,7 @@ msgstr "عرض ستون: %s پیکسل"
 msgid "Combined subscription URL"
 msgstr "URL اشتراک ترکیبی"
 
-#: db/seeds/settings.rb:6086
+#: db/seeds/settings.rb:6366
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4810,7 +4822,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:6160
+#: db/seeds/settings.rb:6440
 msgid "Complete the sign-in with your security key."
 msgstr "ورود را با کلید امنیتی خود کامل کنید."
 
@@ -4842,7 +4854,7 @@ msgstr "شرایط برای تیک‌تهای نمایش‌داده‌شده"
 msgid "Config"
 msgstr "تنظیم کردن"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:113
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
 msgid "Config has changed"
 msgstr "تنظیمات تغییر کرده است"
 
@@ -5100,11 +5112,17 @@ msgstr ""
 msgid "Content could not be loaded."
 msgstr "امکان بارگذاری محتوا وجود ندارد."
 
+#: app/models/store.rb:162
+#, fuzzy
+#| msgid "Content could not be loaded."
+msgid "Content is not a resizable image."
+msgstr "امکان بارگذاری محتوا وجود ندارد."
+
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
 msgstr "بارگیر محتوا"
 
-#: app/models/store.rb:88
+#: app/models/store.rb:90
 msgid "Content preview could not be generated."
 msgstr "امکان ایجاد پیش‌نمایش محتوا وجود ندارد."
 
@@ -5165,7 +5183,7 @@ msgstr "ادامه"
 msgid "Continue anyway"
 msgstr "در هر صورت ادامه بده"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:40
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:41
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -5295,7 +5313,7 @@ msgstr "کپی توکن"
 msgid "Copy user display name"
 msgstr "کپی نام نمایشی کاربر"
 
-#: db/seeds/settings.rb:643
+#: db/seeds/settings.rb:668
 msgid "Core Workflow Ajax Mode"
 msgstr "حالت Ajax گردش کار اصلی"
 
@@ -5676,9 +5694,9 @@ msgstr "بند داخلی ایجاد شده"
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:25
+#: app/frontend/shared/entities/organization/attributes.ts:21
+#: app/frontend/shared/entities/ticket/attributes.ts:102
+#: app/frontend/shared/entities/user/attributes.ts:22
 #: app/graphql/gql/types/overview_type.rb:113
 msgid "Created at"
 msgstr "ایجاد شده در تاریخ"
@@ -5702,9 +5720,9 @@ msgstr "ایجاد شده در:"
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
 #: app/assets/javascripts/app/models/user.coffee:23
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
+#: app/frontend/shared/entities/organization/attributes.ts:11
+#: app/frontend/shared/entities/ticket/attributes.ts:91
+#: app/frontend/shared/entities/user/attributes.ts:11
 #: app/graphql/gql/types/overview_type.rb:112
 msgid "Created by"
 msgstr "ایجاد شده توسط"
@@ -5849,6 +5867,12 @@ msgstr "آدرس سفارشی تنظیم نشده است"
 msgid "Custom instructions"
 msgstr "دستورالعمل‌های سفارشی"
 
+#: app/models/core_workflow.rb:91
+#, fuzzy
+#| msgid "The checklist feature is not active"
+msgid "Custom module '%s' is not available."
+msgstr "ویژگی چک‌لیست فعال نیست"
+
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
@@ -5901,7 +5925,7 @@ msgstr "نسبت مشتری و عامل (تعداد کاربران بر اساس
 msgid "Customer intent"
 msgstr "قصد مشتری"
 
-#: db/seeds/settings.rb:3525
+#: db/seeds/settings.rb:3558
 msgid "Customer selection based on sender and receiver list"
 msgstr "انتخاب مشتری براساس لیست ارسال‌کننده و دریافت‌کننده"
 
@@ -5911,7 +5935,7 @@ msgstr "انتخاب مشتری براساس لیست ارسال‌کننده و
 msgid "Customer sentiment"
 msgstr "احساس مشتری"
 
-#: db/seeds/permissions.rb:441 db/seeds/settings.rb:1208
+#: db/seeds/permissions.rb:441 db/seeds/settings.rb:1233
 msgid "Customer tickets"
 msgstr "تیکت‌های مشتری"
 
@@ -5958,49 +5982,49 @@ msgstr "حالت تاریک"
 #: app/assets/javascripts/app/controllers/dashboard.coffee:52
 #: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:31
-#: db/seeds/permissions.rb:203 db/seeds/settings.rb:5608
+#: db/seeds/permissions.rb:203 db/seeds/settings.rb:5875
 msgid "Dashboard"
 msgstr "پیشخوان"
 
-#: db/seeds/settings.rb:6321
+#: db/seeds/settings.rb:6601
 #, fuzzy
 #| msgid "Activity Stream"
 msgid "Dashboard activity stream"
 msgstr "جریان فعالیتها"
 
-#: db/seeds/settings.rb:6335
+#: db/seeds/settings.rb:6615
 #, fuzzy
 #| msgid "Delete old activity stream entries."
 msgid "Dashboard activity stream own activities"
 msgstr "حذف ورودی‌های قدیمی جریان فعالیت."
 
-#: db/seeds/settings.rb:6405
+#: db/seeds/settings.rb:6685
 msgid "Dashboard assigned tickets widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6391
+#: db/seeds/settings.rb:6671
 #, fuzzy
 #| msgid "Channel Distribution"
 msgid "Dashboard channel distribution widget"
 msgstr "توزیع کانال‌‌ها"
 
-#: db/seeds/settings.rb:6349
+#: db/seeds/settings.rb:6629
 #, fuzzy
 #| msgid "Dashboard"
 msgid "Dashboard first steps"
 msgstr "پیشخوان"
 
-#: db/seeds/settings.rb:6377
+#: db/seeds/settings.rb:6657
 #, fuzzy
 #| msgid "Dashboard"
 msgid "Dashboard mood widget"
 msgstr "پیشخوان"
 
-#: db/seeds/settings.rb:6433
+#: db/seeds/settings.rb:6713
 msgid "Dashboard reopening rate widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6419
+#: db/seeds/settings.rb:6699
 #, fuzzy
 #| msgid "My tickets in process"
 msgid "Dashboard tickets in process widget"
@@ -6012,7 +6036,7 @@ msgstr "تیکتهای درحال اقدام من"
 msgid "Dashboard views"
 msgstr "پیشخوان"
 
-#: db/seeds/settings.rb:6363
+#: db/seeds/settings.rb:6643
 msgid "Dashboard waiting time widget"
 msgstr ""
 
@@ -6041,7 +6065,7 @@ msgid "DataPrivacyTasks"
 msgstr "DataPrivacyTasks"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:7
-#: db/seeds/settings.rb:418
+#: db/seeds/settings.rb:439
 msgid "Database"
 msgstr "پایگاه داده"
 
@@ -6059,7 +6083,7 @@ msgstr "تاریخ"
 msgid "Date & time field"
 msgstr "فیلد تاریخ و زمان"
 
-#: db/seeds/settings.rb:2535
+#: db/seeds/settings.rb:2564
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "تاریخ (سال.ماه.روز.SystemID.شمارنده)"
 
@@ -6131,7 +6155,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/profile/password.jst.eco:44
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:214
-#: db/seeds/settings.rb:903
+#: db/seeds/settings.rb:928
 msgid "Default"
 msgstr "پیش‌فرض"
 
@@ -6151,11 +6175,11 @@ msgstr "رفتار پیش‌فرض"
 msgid "Default Notifications"
 msgstr "اعلان‌های پیش فرض"
 
-#: db/seeds/settings.rb:3757
+#: db/seeds/settings.rb:3793
 msgid "Default Screen"
 msgstr "پنجره پیش‌فرض"
 
-#: db/seeds/settings.rb:2696
+#: db/seeds/settings.rb:2726
 msgid "Default Ticket Agent Notifications"
 msgstr "پیش‌فرضِ اعلان‌های تیکت کارشناس"
 
@@ -6164,7 +6188,7 @@ msgstr "پیش‌فرضِ اعلان‌های تیکت کارشناس"
 msgid "Default at Signup"
 msgstr "گروه پیش فرض در زمان عضویت"
 
-#: db/seeds/settings.rb:4336
+#: db/seeds/settings.rb:4457
 msgid "Default calendar tickets subscriptions"
 msgstr "اشتراک‌های پیش‌فرض تقویم تیکت"
 
@@ -6201,7 +6225,7 @@ msgstr "اختلاف زمان پیش‌فرض (ساعت)"
 msgid "Default time diff (minutes)"
 msgstr "اختلاف زمان پیش‌فرض (دقیقه)"
 
-#: db/seeds/settings.rb:903
+#: db/seeds/settings.rb:928
 msgid "Default type for a new ticket"
 msgstr "نوع پیش‌فرض برای تیکت جدید"
 
@@ -6210,7 +6234,7 @@ msgid "Default value is required."
 msgstr "مقدار پیش‌فرض الزامی است."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
-#: db/seeds/settings.rb:2681
+#: db/seeds/settings.rb:2711
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
@@ -6218,28 +6242,28 @@ msgstr ""
 "تعریف یک استثنا از \"اختصاص خودکار\" برای کاربران خاص (به عنوان مثال مدیران "
 "اجرایی)."
 
-#: db/seeds/settings.rb:3860
+#: db/seeds/settings.rb:3929
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
 msgstr ""
 "تعریف اینکه آیا از آنالایزر asciifolding در Elasticsearch استفاده شود یا خیر."
 
-#: db/seeds/settings.rb:3824
+#: db/seeds/settings.rb:3881
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "تعریف حداکثر اندازه پیوست برای Elasticsearch."
 
-#: db/seeds/settings.rb:3833
+#: db/seeds/settings.rb:3893
 msgid "Define max. payload size for Elasticsearch."
 msgstr "تعریف حداکثر اندازه بارگذاری برای Elasticsearch."
 
-#: db/seeds/settings.rb:3851
+#: db/seeds/settings.rb:3917
 msgid "Define model configuration for Elasticsearch."
 msgstr "تعریف پیکربندی مدل برای Elasticsearch."
 
-#: db/seeds/settings.rb:3842
+#: db/seeds/settings.rb:3905
 msgid "Define pipeline name for Elasticsearch."
 msgstr "تعریف نام خط لوله برای Elasticsearch."
 
-#: db/seeds/settings.rb:4491
+#: db/seeds/settings.rb:4669
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -6247,11 +6271,11 @@ msgstr ""
 "تعریف فیلتر پست مستر برای بررسی اینکه آیا پیگیری‌ها ایجاد می‌شوند (بر اساس "
 "تنظیمات مدیریت)."
 
-#: db/seeds/settings.rb:4419
+#: db/seeds/settings.rb:4565
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "تعریف فیلتر پست مستر برای وارد کردن صندوق‌های پستی بایگانی."
 
-#: db/seeds/settings.rb:4416
+#: db/seeds/settings.rb:4562
 msgid "Define postmaster filter."
 msgstr "تعریف فیلتر پست مستر."
 
@@ -6269,7 +6293,7 @@ msgstr ""
 msgid "Define rules for adding tags in the system."
 msgstr "قوانین مربوط به افزودن برچسب‌ها در سیستم را تعریف کنید."
 
-#: db/seeds/settings.rb:2699
+#: db/seeds/settings.rb:2729
 msgid "Define the default agent notifications for new users."
 msgstr "تعیین اعلان‌های پیش‌فرض کارشناس برای کاربران جدید."
 
@@ -6281,7 +6305,7 @@ msgstr ""
 "قوانین استخراج را برای عامل هوش مصنوعی تعریف کنید، به عنوان مثال نحوه "
 "شناسایی متن هدف. برای مثال‌ها، لطفاً به مستندات ما مراجعه کنید."
 
-#: db/seeds/settings.rb:1044
+#: db/seeds/settings.rb:1069
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr "مشخص می‌کند که چه تعداد تیکت در نمای‌کلی نمایش داده شود."
 
@@ -6299,27 +6323,27 @@ msgstr ""
 msgid "Define which ticket article(s) should be analyzed."
 msgstr "تعیین کنید که کدام مقاله(های) تیکت باید تحلیل شوند."
 
-#: db/seeds/settings.rb:3806
+#: db/seeds/settings.rb:3857
 msgid "Defines Elasticsearch SSL verification."
 msgstr "مشخص کردن بررسی SSL الاستیک سرچ."
 
-#: db/seeds/settings.rb:3797
+#: db/seeds/settings.rb:3845
 msgid "Defines Elasticsearch index name."
 msgstr "نام شاخص Elasticsearch را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4073
+#: db/seeds/settings.rb:4178
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "کلید API احراز هویت نقطه پایانی Freshdesk را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3788
+#: db/seeds/settings.rb:3833
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "رمز عبور احراز هویت پایه HTTP Elasticsearch را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3779
+#: db/seeds/settings.rb:3821
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "کاربر احراز هویت پایه HTTP Elasticsearch را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3980
+#: db/seeds/settings.rb:4070
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
@@ -6327,7 +6351,7 @@ msgstr ""
 "رمز عبور احراز هویت پایه HTTP را تعریف می‌کند (فقط در صورتی که OTRS از طریق "
 "HTTP basic auth محافظت می‌شود)."
 
-#: db/seeds/settings.rb:3961
+#: db/seeds/settings.rb:4048
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
@@ -6335,52 +6359,52 @@ msgstr ""
 "کاربر احراز هویت پایه HTTP را تعریف می‌کند (فقط در صورتی که OTRS از طریق HTTP "
 "basic auth محافظت می‌شود)."
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4242
 msgid "Defines Kayako endpoint authentication password."
 msgstr "رمز عبور احراز هویت نقطه پایانی Kayako را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4110
+#: db/seeds/settings.rb:4221
 msgid "Defines Kayako endpoint authentication user."
 msgstr "کاربر احراز هویت نقطه پایانی Kayako را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3942
+#: db/seeds/settings.rb:4026
 msgid "Defines OTRS endpoint authentication key."
 msgstr "کلید احراز هویت نقطه پایانی OTRS را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4017
+#: db/seeds/settings.rb:4113
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "کلید API احراز هویت نقطه پایانی Zendesk را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4036
+#: db/seeds/settings.rb:4135
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "کاربر احراز هویت نقطه پایانی Zendesk را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4055
+#: db/seeds/settings.rb:4157
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "یک نقطه پایانی Freshdesk برای وارد کردن کاربران، تیکت‌ها، وضعیت‌ها و مقالات را "
 "تعریف می‌کند."
 
-#: db/seeds/settings.rb:4092
+#: db/seeds/settings.rb:4200
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
 "یک نقطه پایانی Kayako برای وارد کردن کاربران، تیکت‌ها، وضعیت‌ها و مقالات را "
 "تعریف می‌کند."
 
-#: db/seeds/settings.rb:3999
+#: db/seeds/settings.rb:4092
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "یک نقطه پایانی Zendesk برای وارد کردن کاربران، تیکت‌ها، وضعیت‌ها و مقالات را "
 "تعریف می‌کند."
 
-#: db/seeds/settings.rb:5609
+#: db/seeds/settings.rb:5876
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr "یک بک‌اند آماری پیش‌خوان را تعریف می‌کند که به طور خودکار زمان‌بندی می‌شود."
 
-#: db/seeds/settings.rb:3206
+#: db/seeds/settings.rb:3236
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
@@ -6388,7 +6412,7 @@ msgstr ""
 "محدودیتی را برای تعداد تیکت‌هایی که می‌توان از طریق فرم وب از یک آدرس IP در "
 "روز ایجاد کرد، تعریف می‌کند."
 
-#: db/seeds/settings.rb:3185
+#: db/seeds/settings.rb:3215
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
@@ -6396,25 +6420,25 @@ msgstr ""
 "محدودیتی را برای تعداد تیکت‌هایی که می‌توان از طریق فرم وب از یک آدرس IP در "
 "ساعت ایجاد کرد، تعریف می‌کند."
 
-#: db/seeds/settings.rb:3227
+#: db/seeds/settings.rb:3257
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
 "محدودیتی را برای تعداد تیکت‌هایی که می‌توان از طریق فرم وب در روز ایجاد کرد، "
 "تعریف می‌کند."
 
-#: db/seeds/settings.rb:2324
+#: db/seeds/settings.rb:2353
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "پس از چند ورود ناموفق حساب کاربری غیرفعال خواهد شد."
 
-#: db/seeds/settings.rb:3924
+#: db/seeds/settings.rb:4005
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
 "یک نقطه پایانی OTRS را برای وارد کردن کاربران، تیکت‌ها، وضعیت‌ها و مقالات "
 "تعریف می‌کند."
 
-#: db/seeds/settings.rb:342
+#: db/seeds/settings.rb:357
 msgid ""
 "Defines an additional fully qualified domain name of the system, which is "
 "accepted as an origin for WebSocket connections."
@@ -6438,12 +6462,12 @@ msgstr ""
 "یک آیکون اختیاری از این اولویت را در جداول تیکت تعریف می‌کند. مهم با یک علامت "
 "تعجب و اولویت پایین با یک پیکان رو به پایین رندر می‌شود."
 
-#: db/seeds/settings.rb:3815
+#: db/seeds/settings.rb:3869
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
 "پسوندهای پیوستی را که توسط Elasticsearch نادیده گرفته می‌شوند تعریف می‌کند."
 
-#: db/seeds/settings.rb:3770
+#: db/seeds/settings.rb:3809
 msgid "Defines endpoint of Elasticsearch."
 msgstr "نقطه پایانی Elasticsearch را تعریف می‌کند."
 
@@ -6455,7 +6479,7 @@ msgstr ""
 "پیکربندی سراسری را تعریف می‌کند که خلاصه در نمای بزرگنمایی تیکت چه زمانی "
 "تولید شود."
 
-#: db/seeds/settings.rb:3074
+#: db/seeds/settings.rb:3104
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
@@ -6463,7 +6487,7 @@ msgstr ""
 "گروه‌هایی را تعریف می‌کند که مشتری می‌تواند از طریق رابط وب در آنها تیکت ایجاد "
 "کند. عدم انتخاب به معنای در دسترس بودن همه گروه‌ها است."
 
-#: db/seeds/settings.rb:3371
+#: db/seeds/settings.rb:3404
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
@@ -6471,12 +6495,12 @@ msgstr ""
 "تعریف می‌کند که فیلد From ایمیل‌ها (ارسال شده از پاسخ‌ها و تیکت‌های ایمیل) چگونه "
 "باید به نظر برسد."
 
-#: db/seeds/settings.rb:2443
+#: db/seeds/settings.rb:2472
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr "تعریف می‌کند که زمان آخرین تماس مشتری تیکت‌ها چگونه محاسبه شود."
 
-#: db/seeds/settings.rb:354
+#: db/seeds/settings.rb:369
 msgid ""
 "Defines how to reach WebSocket server. \"websocket\" is default on "
 "production, \"websocketPort\" is for CI."
@@ -6484,29 +6508,29 @@ msgstr ""
 "تعریف می‌کند که چگونه به سرور WebSocket دسترسی پیدا کنیم. \"websocket\" در "
 "تولید پیش‌فرض است، \"websocketPort\" برای CI است."
 
-#: db/seeds/settings.rb:260
+#: db/seeds/settings.rb:275
 msgid ""
 "Defines how user names are displayed in dropdowns, overviews and selection "
 "fields."
 msgstr ""
 
-#: db/seeds/settings.rb:4822
+#: db/seeds/settings.rb:5060
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "تعریف می‌کند که آیا Checkmk (https://checkmk.com/) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5508
+#: db/seeds/settings.rb:5758
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "تعریف می‌کند که آیا Clearbit (http://www.clearbit.com) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5109
+#: db/seeds/settings.rb:5347
 msgid "Defines if Exchange is enabled or not."
 msgstr "آیا سرویس ایمیل (اکس‌چنج) فعال شده یا خیر."
 
-#: db/seeds/settings.rb:4626
+#: db/seeds/settings.rb:4864
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "تعریف می‌کند که آیا Icinga (http://www.icinga.org) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5719
+#: db/seeds/settings.rb:5995
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -6514,39 +6538,39 @@ msgstr ""
 "تعریف می‌کند که آیا دکمه نوار ناوبری پایگاه دانش برای کاربران بدون مجوز "
 "پایگاه دانش فعال است یا خیر."
 
-#: db/seeds/settings.rb:5704
+#: db/seeds/settings.rb:5980
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "تعریف می‌کند که آیا دکمه نوار ناوبری پایگاه دانش فعال است یا خیر."
 
-#: db/seeds/settings.rb:5056
+#: db/seeds/settings.rb:5294
 msgid "Defines if LDAP is enabled or not."
 msgstr "آیا LDAP فعال شده یا خیر."
 
-#: db/seeds/settings.rb:4955
+#: db/seeds/settings.rb:5193
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "تعریف می‌کند که آیا Monit (https://mmonit.com/monit/) فعال است یا خیر."
 
-#: db/seeds/settings.rb:4724
+#: db/seeds/settings.rb:4962
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "تعریف می‌کند که آیا Nagios (http://www.nagios.org) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5902
+#: db/seeds/settings.rb:6179
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "مشخص می‌کند آیا رمزنگاری PGP فعال شده یا خیر."
 
-#: db/seeds/settings.rb:5445
+#: db/seeds/settings.rb:5695
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "تعریف می‌کند که آیا Placetel (http://www.placetel.de) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5832
+#: db/seeds/settings.rb:6109
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "تعریف می‌کند که آیا رمزگذاری S/MIME فعال است یا خیر."
 
-#: db/seeds/settings.rb:3047
+#: db/seeds/settings.rb:3077
 msgid "Defines if a customer can create tickets via the web interface."
 msgstr "مشخص می‌کند آیا مشتری اجازه ساخت تیکت از درگاه وب را دارد."
 
-#: db/seeds/settings.rb:5983
+#: db/seeds/settings.rb:6263
 #, fuzzy
 #| msgid "Defines if the AI provider is configured."
 msgid "Defines if a translation service is configured."
@@ -6556,11 +6580,11 @@ msgstr "تعیین می‌کند که آیا ارائه‌دهنده هوش مص
 msgid "Defines if application is in init mode."
 msgstr "تعریف می‌کند که آیا برنامه در حالت راه‌اندازی است."
 
-#: db/seeds/settings.rb:87
+#: db/seeds/settings.rb:96
 msgid "Defines if application is used as online service."
 msgstr "تعریف می‌کند که آیا برنامه به عنوان سرویس آنلاین استفاده می‌شود."
 
-#: db/seeds/settings.rb:6111
+#: db/seeds/settings.rb:6391
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -6568,11 +6592,11 @@ msgstr ""
 "تعریف می‌کند که آیا هفته‌های تقویم در انتخابگر فیلدهای تاریخ/زمان برای انتخاب "
 "آسان تاریخ صحیح نشان داده شوند."
 
-#: db/seeds/settings.rb:5370
+#: db/seeds/settings.rb:5620
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "تعریف می‌کند که آیا ادغام عمومی CTI فعال است یا خیر."
 
-#: db/seeds/settings.rb:6203
+#: db/seeds/settings.rb:6483
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -6580,40 +6604,40 @@ msgstr ""
 "تعریف اینکه آیا کاربر می‌تواند کدهای بازیابی را استفاده کند در صورتی که دیگر "
 "روش‌های احراز هویت دوعاملی را از دست داده باشد."
 
-#: db/seeds/settings.rb:5287
+#: db/seeds/settings.rb:5537
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "تعریف می‌کند که آیا sipgate.io (http://www.sipgate.io) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5944
+#: db/seeds/settings.rb:6221
 msgid "Defines if system notification emails are PGP signed."
 msgstr "مشخص می‌کند که ایمیل‌های اعلانِ سیستمی با امضای PGP ارسال می‌شوند یا نه."
 
-#: db/seeds/settings.rb:5874
+#: db/seeds/settings.rb:6151
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr ""
 "مشخص می‌کند که ایمیل‌های اعلانِ سیستمی با امضای S/MIME ارسال می‌شوند یا نه."
 
-#: db/seeds/settings.rb:6488
+#: db/seeds/settings.rb:6780
 msgid "Defines if the AI provider is configured."
 msgstr "تعیین می‌کند که آیا ارائه‌دهنده هوش مصنوعی پیکربندی شده است یا خیر."
 
-#: db/seeds/settings.rb:5218
+#: db/seeds/settings.rb:5456
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
 "تعریف می‌کند که آیا ادغام GitHub (http://www.github.com) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5414
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 "تعریف می‌کند که آیا ادغام GitLab (http://www.gitlab.com) فعال است یا خیر."
 
-#: db/seeds/settings.rb:5972
+#: db/seeds/settings.rb:6249
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "آیا پیکربندی نام مستعار گیرنده PGP فعال است یا خیر."
 
-#: db/seeds/settings.rb:727
+#: db/seeds/settings.rb:752
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
@@ -6621,7 +6645,7 @@ msgstr ""
 "تعریف می‌کند که آیا عامل باید یک گفتگوی تأیید را هنگام تغییر دید مقاله به "
 "\"عمومی\" بپذیرد."
 
-#: db/seeds/settings.rb:77
+#: db/seeds/settings.rb:83
 msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
@@ -6629,7 +6653,7 @@ msgstr ""
 "تعریف می‌کند که آیا برنامه در حالت توسعه‌دهنده است (همه کاربران رمز عبور "
 "یکسانی دارند و بازنشانی رمز عبور بدون تحویل ایمیل کار می‌کند)."
 
-#: db/seeds/settings.rb:6735
+#: db/seeds/settings.rb:7037
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6637,7 +6661,7 @@ msgstr ""
 "تعریف می‌کند که آیا ویژگی منوی حباب ویرایشگر متن غنی فعال است. توجه داشته "
 "باشید که اگر دستیار نوشتن روشن باشد، این تنظیم نادیده گرفته می‌شود."
 
-#: db/seeds/settings.rb:6255
+#: db/seeds/settings.rb:6535
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6645,7 +6669,7 @@ msgstr ""
 "تعریف می‌کند که آیا تغییر سازمان اصلی یک کاربر، 100 تیکت اخیر این کاربر را "
 "نیز به‌روزرسانی می‌کند یا خیر."
 
-#: db/seeds/settings.rb:646
+#: db/seeds/settings.rb:671
 msgid ""
 "Defines if the core workflow communication should run over AJAX instead of "
 "WebSocket."
@@ -6653,27 +6677,27 @@ msgstr ""
 "تعریف می‌کند که آیا ارتباط گردش کار اصلی باید از طریق AJAX به جای WebSocket "
 "اجرا شود."
 
-#: db/seeds/settings.rb:672
+#: db/seeds/settings.rb:697
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr ""
 "تعریف می‌کند که آیا ایمیل باید در نتیجه ویجت کاربر/سازمان نمایش داده شود."
 
-#: db/seeds/settings.rb:5136
+#: db/seeds/settings.rb:5374
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr ""
 "تعریف می‌کند که آیا ادغام i-doit (https://www.i-doit.org/) فعال است یا خیر."
 
-#: db/seeds/settings.rb:2470
+#: db/seeds/settings.rb:2499
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 "تعریف می‌کند که آیا ویرایشگر شرایط تیکت از عبارات منطقی پیچیده پشتیبانی می‌کند."
 
-#: db/seeds/settings.rb:2496
+#: db/seeds/settings.rb:2525
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
@@ -6681,38 +6705,38 @@ msgstr ""
 "تعریف می‌کند که آیا ویرایشگر شرایط تیکت از عملگرهای عبارت منظم برای تریگرها و "
 "تخصیص خودکار تیکت پشتیبانی می‌کند."
 
-#: db/seeds/settings.rb:4276
+#: db/seeds/settings.rb:4397
 msgid "Defines if the time accounting types are enabled."
 msgstr "مشخص می‌کند که آیا محاسبه زمان فعال است."
 
-#: db/seeds/settings.rb:6171
+#: db/seeds/settings.rb:6451
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
 "تعریف می‌کند که آیا روش احراز هویت دو عاملی برنامه احراز هویت فعال است یا خیر."
 
-#: db/seeds/settings.rb:6139
+#: db/seeds/settings.rb:6419
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr ""
 "مشخص می‌کند که آیا روش احراز هویت دوعاملی کلیدهای امنیتی فعال است یا خیر."
 
-#: db/seeds/settings.rb:3128
+#: db/seeds/settings.rb:3158
 msgid "Defines if tickets can be created via web form."
 msgstr "آیا مشتری اجازه ایجاد تیکت از درگاه وب را دارد."
 
-#: db/seeds/settings.rb:4675
+#: db/seeds/settings.rb:4913
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "تعریف می‌کند که آیا در صورت بازیابی سرویس، تیکت‌ها باید بسته شوند."
 
-#: db/seeds/settings.rb:4527
+#: db/seeds/settings.rb:4721
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "فیلتر پست مستر را برای فیلترهای مدیریت شده از طریق رابط مدیریت تعریف می‌کند."
 
-#: db/seeds/settings.rb:4428
+#: db/seeds/settings.rb:4578
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
@@ -6720,7 +6744,7 @@ msgstr ""
 "فیلتر پست مستر را تعریف می‌کند تا بررسی کند آیا ایمیل توسط خود Zammad ایجاد "
 "شده است و فرستنده مقاله را تنظیم می‌کند."
 
-#: db/seeds/settings.rb:4437
+#: db/seeds/settings.rb:4591
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -6728,17 +6752,17 @@ msgstr ""
 "فیلتر پست مستر را تعریف می‌کند تا بررسی کند آیا ایمیل یک ایمیل اعلان خودساخته "
 "است، سپس آن را نادیده می‌گیرد تا از حلقه‌های ایمیل جلوگیری شود."
 
-#: db/seeds/settings.rb:4464
+#: db/seeds/settings.rb:4630
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "فیلتر پست مستر را برای مدیریت ایمیل امن تعریف می‌کند."
 
-#: db/seeds/settings.rb:4590
+#: db/seeds/settings.rb:4812
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "فیلتر پست مستر را برای شناسایی ایمیل‌های Jira برای پیگیری‌های صحیح تعریف می‌کند."
 
-#: db/seeds/settings.rb:4572
+#: db/seeds/settings.rb:4786
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6746,7 +6770,7 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی ایمیل‌های ServiceNow برای پیگیری‌های صحیح تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4374
+#: db/seeds/settings.rb:4500
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
@@ -6754,20 +6778,20 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی پاسخ‌های خودکار برای جلوگیری از پاسخ‌های خودکار "
 "از Zammad تعریف می‌کند."
 
-#: db/seeds/settings.rb:4392
+#: db/seeds/settings.rb:4526
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
 "فیلتر پست مستر را برای شناسایی تیکت پیگیری برای تیکت‌های ادغام شده تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4383
+#: db/seeds/settings.rb:4513
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 "فیلتر پست مستر را برای شناسایی پیگیری‌ها (بر اساس تنظیمات مدیریت) تعریف می‌کند."
 
-#: db/seeds/settings.rb:4482
+#: db/seeds/settings.rb:4656
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6775,7 +6799,7 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی ایمیل‌های خارج از دفتر برای تشخیص پیگیری و حفظ "
 "وضعیت فعلی تیکت تعریف می‌کند."
 
-#: db/seeds/settings.rb:4509
+#: db/seeds/settings.rb:4695
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6783,7 +6807,7 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی بازگشت‌های پست مستر تعریف می‌کند. و در صورت "
 "خرابی دائمی تحویل، ارسال اعلان را غیرفعال می‌کند."
 
-#: db/seeds/settings.rb:4500
+#: db/seeds/settings.rb:4682
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets."
@@ -6791,7 +6815,7 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی بازگشت‌های پست مستر تعریف می‌کند. و آنها را به "
 "عنوان پیگیری تیکت‌های اصلی مدیریت می‌کند."
 
-#: db/seeds/settings.rb:4518
+#: db/seeds/settings.rb:4708
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6799,19 +6823,19 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی بازگشت‌های پست مستر تعریف می‌کند. و در صورت "
 "خرابی دائمی تحویل، تیکت‌ها را دوباره باز می‌کند."
 
-#: db/seeds/settings.rb:4455
+#: db/seeds/settings.rb:4617
 msgid "Defines postmaster filter to identify sender user."
 msgstr "فیلتر پست مستر را برای شناسایی کاربر فرستنده تعریف می‌کند."
 
-#: db/seeds/settings.rb:4446
+#: db/seeds/settings.rb:4604
 msgid "Defines postmaster filter to identify session user."
 msgstr "فیلتر پست مستر را برای شناسایی کاربر جلسه تعریف می‌کند."
 
-#: db/seeds/settings.rb:4617
+#: db/seeds/settings.rb:4851
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "فیلتر پست مستر را برای شناسایی گروه تیکت تعریف می‌کند."
 
-#: db/seeds/settings.rb:4554
+#: db/seeds/settings.rb:4760
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6819,28 +6843,28 @@ msgstr ""
 "فیلتر پست مستر را برای مدیریت ایمیل‌های Checkmk (http://mathias-kettner.com/"
 "check_mk.html) تعریف می‌کند."
 
-#: db/seeds/settings.rb:4536
+#: db/seeds/settings.rb:4734
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "فیلتر پست مستر را برای مدیریت ایمیل‌های Icinga (http://www.icinga.org) تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4563
+#: db/seeds/settings.rb:4773
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "فیلتر پست مستر را برای مدیریت ایمیل‌های Monit (https://mmonit.com/monit/) "
 "تعریف می‌کند."
 
-#: db/seeds/settings.rb:4545
+#: db/seeds/settings.rb:4747
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 "فیلتر پست مستر را برای مدیریت ایمیل‌های Nagios (http://www.nagios.org) تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4365
+#: db/seeds/settings.rb:4487
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
@@ -6848,7 +6872,7 @@ msgstr ""
 "فیلتر پست مستر را برای حذف هدرهای X-Zammad از منابع غیرقابل اعتماد تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4473
+#: db/seeds/settings.rb:4643
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify auto responses to prevent auto "
@@ -6860,14 +6884,14 @@ msgstr ""
 "فیلتر پست مستر را برای شناسایی پاسخ‌های خودکار برای جلوگیری از پاسخ‌های خودکار "
 "از Zammad تعریف می‌کند."
 
-#: db/seeds/settings.rb:4401
+#: db/seeds/settings.rb:4539
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr ""
 "فیلتر پست مستر را برای تعیین مالک (بر اساس تخصیص پیگیری گروه) تعریف می‌کند."
 
-#: db/seeds/settings.rb:4410
+#: db/seeds/settings.rb:4552
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
@@ -6875,7 +6899,7 @@ msgstr ""
 "فیلتر پست مستر را برای تعیین فرستنده/از ایمیل بر اساس هدر reply-to تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4608
+#: db/seeds/settings.rb:4838
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6883,23 +6907,23 @@ msgstr ""
 "فیلتر پست مستر را تعریف می‌کند که دید مقاله را در صورت پاسخ به یک مقاله داخلی "
 "یا آخرین ایمیل خروجی داخلی بودن، به داخلی تنظیم می‌کند."
 
-#: db/seeds/settings.rb:4362
+#: db/seeds/settings.rb:4484
 msgid "Defines postmaster filter."
 msgstr "فیلتر پست مستر را تعریف می‌کند."
 
-#: db/seeds/settings.rb:231
+#: db/seeds/settings.rb:246
 msgid "Defines pretty date format."
 msgstr "فرمت مناسب برای تاریخ."
 
-#: db/seeds/settings.rb:5598
+#: db/seeds/settings.rb:5863
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "زمان پردازش را برای پاک‌کننده HTML تعریف می‌کند."
 
-#: db/seeds/settings.rb:5257
+#: db/seeds/settings.rb:5495
 msgid "Defines sync transaction backend."
 msgstr "بک‌اند تراکنش همگام‌سازی را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3274
+#: db/seeds/settings.rb:3304
 msgid ""
 "Defines the CAPTCHA provider used to protect the web form. Leave empty to "
 "disable. The list of available providers is derived from the registered "
@@ -6909,51 +6933,51 @@ msgstr ""
 "برای غیرفعال کردن، خالی بگذارید. فهرست ارائه‌دهنده‌های در دسترس از بک‌اندهای "
 "ثبت‌شده‌ی `FormSpamProtection::Captcha` استخراج می‌شود."
 
-#: db/seeds/settings.rb:5586
+#: db/seeds/settings.rb:5851
 msgid "Defines the CSS font information for HTML emails."
 msgstr "اطلاعات فونت CSS را برای ایمیل‌های HTML تعریف می‌کند."
 
-#: db/seeds/settings.rb:5398
+#: db/seeds/settings.rb:5648
 msgid "Defines the CTI config."
 msgstr "پیکربندی CTI را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4943
+#: db/seeds/settings.rb:5181
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "توکن Checkmk را برای اجازه به‌روزرسانی تعریف می‌کند."
 
-#: db/seeds/settings.rb:5534
+#: db/seeds/settings.rb:5784
 msgid "Defines the Clearbit config."
 msgstr "پیکربندی Clearbit را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5096
+#: db/seeds/settings.rb:5334
 msgid "Defines the Exchange OAuth config."
 msgstr "تعریف تنظیمات احراز هویت (OAuth) سرویس ایمیل اکس‌چنج."
 
-#: db/seeds/settings.rb:5083
+#: db/seeds/settings.rb:5321
 msgid "Defines the Exchange config."
 msgstr "تعریف تنظیمات سرویس ایمیل (اکس‌چنج)."
 
-#: db/seeds/settings.rb:381
+#: db/seeds/settings.rb:402
 msgid "Defines the HTTP protocol of your instance."
 msgstr "پروتکل HTTP نمونه خود را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5930
+#: db/seeds/settings.rb:6207
 msgid "Defines the PGP config."
 msgstr "تعریف پیکربندی PGP."
 
-#: db/seeds/settings.rb:5473
+#: db/seeds/settings.rb:5723
 msgid "Defines the Placetel config."
 msgstr "پیکربندی Placetel را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5860
+#: db/seeds/settings.rb:6137
 msgid "Defines the S/MIME config."
 msgstr "پیکربندی S/MIME را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5575
+#: db/seeds/settings.rb:5837
 msgid "Defines the agent limit."
 msgstr "تعریف محدودیت کارشناس."
 
-#: db/seeds/settings.rb:467
+#: db/seeds/settings.rb:489
 msgid ""
 "Defines the backend for geo IP lookups. Also shows location of an IP address "
 "if it is traceable."
@@ -6961,7 +6985,7 @@ msgstr ""
 "بک‌اند برای جستجوهای geo IP را تعریف می‌کند. همچنین در صورت امکان مکان یک آدرس "
 "IP را نشان می‌دهد."
 
-#: db/seeds/settings.rb:521
+#: db/seeds/settings.rb:545
 msgid ""
 "Defines the backend for geo calendar lookups. Used for initial calendar "
 "succession."
@@ -6969,7 +6993,7 @@ msgstr ""
 "بک‌اند برای جستجوهای تقویم جغرافیایی را تعریف می‌کند. برای توالی اولیه تقویم "
 "استفاده می‌شود."
 
-#: db/seeds/settings.rb:494
+#: db/seeds/settings.rb:517
 msgid ""
 "Defines the backend for geo location lookups to store geo locations for "
 "addresses."
@@ -6977,66 +7001,66 @@ msgstr ""
 "بک‌اند برای جستجوهای مکان جغرافیایی را تعریف می‌کند تا مکان‌های جغرافیایی را "
 "برای آدرس‌ها ذخیره کند."
 
-#: db/seeds/settings.rb:440
+#: db/seeds/settings.rb:461
 msgid "Defines the backend for user and organization image lookups."
 msgstr "بک‌اند برای جستجوهای تصویر کاربر و سازمان را تعریف می‌کند."
 
-#: db/seeds/settings.rb:187
+#: db/seeds/settings.rb:199
 msgid "Defines the backend service for ticket article language detection."
 msgstr "سرویس backend را برای تشخیص زبان مقاله تیکت تعریف می‌کند."
 
-#: db/seeds/settings.rb:6712
+#: db/seeds/settings.rb:7011
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 "استراتژی تکه‌تکه‌سازی (chunking) را برای پایگاه داده برداری پایگاه دانش تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:2983
+#: db/seeds/settings.rb:3013
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
 "پیکربندی نحوه ایجاد مقالات در یک محدوده دقیقه را به صورت سراسری تعریف می‌کند."
 
-#: db/seeds/settings.rb:2964
+#: db/seeds/settings.rb:2994
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
 "پیکربندی نحوه ایجاد مقالات در یک محدوده دقیقه در هر تیکت را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4258
+#: db/seeds/settings.rb:4379
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
 "واحد سفارشی را که در کنار فیلد ورودی حسابداری زمان نشان داده می‌شود تعریف "
 "می‌کند."
 
-#: db/seeds/settings.rb:4339
+#: db/seeds/settings.rb:4460
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "تنظیمات پیش‌فرض اشتراک تقویم تیکت را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3760
+#: db/seeds/settings.rb:3796
 msgid "Defines the default screen."
 msgstr "صفحه پیش‌فرض را تعریف می‌کند."
 
-#: db/seeds/settings.rb:167
+#: db/seeds/settings.rb:179
 msgid "Defines the default system language."
 msgstr "تعیین زبان پیش‌فرض سیستم."
 
-#: db/seeds/settings.rb:210
+#: db/seeds/settings.rb:225
 msgid "Defines the default system timezone."
 msgstr "تعیین منظقه زمانی پیش‌فرض سیستم."
 
-#: db/seeds/settings.rb:4294
+#: db/seeds/settings.rb:4415
 msgid "Defines the default time accounting type."
 msgstr "تعیین پیش‌فرضِ نوع زمان حساب کاربری."
 
-#: db/seeds/settings.rb:699
+#: db/seeds/settings.rb:724
 msgid "Defines the default visibility for new notes."
 msgstr "تعیین قابلیت مشاهده پیش‌فرض برای یادداشت جدید."
 
-#: db/seeds/settings.rb:5432
+#: db/seeds/settings.rb:5682
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -7044,7 +7068,7 @@ msgstr ""
 "مدت زمان فعالیت مشتری (بر حسب ثانیه) را در یک تماس تعریف می‌کند تا زمانی که "
 "گفتگوی نمایه کاربر نشان داده شود."
 
-#: db/seeds/settings.rb:6570
+#: db/seeds/settings.rb:6862
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -7052,7 +7076,7 @@ msgstr ""
 "دستورالعمل‌های ثابتی را تعریف می‌کند که دستیار نوشتن هوش مصنوعی را راهنمایی "
 "می‌کند، به عنوان مثال نحوه قالب‌بندی خروجی آن."
 
-#: db/seeds/settings.rb:319
+#: db/seeds/settings.rb:334
 msgid ""
 "Defines the fully qualified domain name of the system. This setting is used "
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
@@ -7062,31 +7086,31 @@ msgstr ""
 "متغیر، #{setting.fqdn} استفاده می‌شود که در همه اشکال پیام‌رسانی استفاده شده "
 "توسط برنامه، برای ساخت پیوندهایی به تیکت‌های داخل سیستم شما یافت می‌شود."
 
-#: db/seeds/settings.rb:4871
+#: db/seeds/settings.rb:5109
 msgid "Defines the group of created tickets."
 msgstr "گروه تیکت‌های ایجاد شده را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3162
+#: db/seeds/settings.rb:3192
 msgid "Defines the group of tickets created via web form."
 msgstr "گروه تیکت‌های ایجاد شده از طریق فرم وب را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5163
+#: db/seeds/settings.rb:5401
 msgid "Defines the i-doit config."
 msgstr "پیکربندی i-doit را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4160
+#: db/seeds/settings.rb:4278
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr "سطوح گزارش را برای اقدامات مختلف گزارش‌گیری Sequencer تعریف می‌کند."
 
-#: db/seeds/settings.rb:121
+#: db/seeds/settings.rb:133
 msgid "Defines the logo of the application, shown in the web interface."
 msgstr "تعیین لوگوی شرکت که در صفحه ورود به سایت نمایش داده می‌شود."
 
-#: db/seeds/settings.rb:3421
+#: db/seeds/settings.rb:3454
 msgid "Defines the maximum accepted email size in MB."
 msgstr "تعیین حداکثر حجم ایمیل دریافتی به مگابایت."
 
-#: db/seeds/settings.rb:1057
+#: db/seeds/settings.rb:1082
 msgid ""
 "Defines the maximum number of allowed open tabs before auto cleanup removes "
 "surplus tabs when creating new tabs."
@@ -7094,33 +7118,33 @@ msgstr ""
 "حداکثر تعداد برگه‌های باز مجاز را قبل از اینکه پاکسازی خودکار برگه‌های اضافی "
 "را هنگام ایجاد برگه‌های جدید حذف کند، تعریف می‌کند."
 
-#: db/seeds/settings.rb:6612
+#: db/seeds/settings.rb:6904
 msgid ""
 "Defines the minimum relevance score (in percent) a knowledge base answer "
 "must reach to be suggested in the ticket sidebar."
 msgstr ""
 
-#: db/seeds/settings.rb:97
+#: db/seeds/settings.rb:109
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
 msgstr "تعیین نام برنامه که در سایت، لبه‌ها و عنوان مرورگر نمایش داده می‌شود."
 
-#: db/seeds/settings.rb:2877
+#: db/seeds/settings.rb:2907
 msgid "Defines the permission level used for lookups."
 msgstr "سطح مجوز استفاده شده برای جستجوها را تعریف می‌کند."
 
-#: db/seeds/settings.rb:362
+#: db/seeds/settings.rb:380
 msgid "Defines the port of the WebSocket server."
 msgstr "پورت سرور WebSocket را تعریف می‌کند."
 
-#: db/seeds/settings.rb:6775
+#: db/seeds/settings.rb:7077
 #, fuzzy
 #| msgid "Defines the transaction backend to send agent notifications."
 msgid "Defines the private key used to sign web push notifications."
 msgstr "بک‌اند تراکنش را برای ارسال اعلان‌های عامل تعریف می‌کند."
 
-#: db/seeds/settings.rb:6788
+#: db/seeds/settings.rb:7090
 #, fuzzy
 #| msgid "Defines the transaction backend to send agent notifications."
 msgid ""
@@ -7131,29 +7155,29 @@ msgstr "بک‌اند تراکنش را برای ارسال اعلان‌های 
 msgid "Defines the random application secret."
 msgstr "راز تصادفی برنامه را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4652
+#: db/seeds/settings.rb:4890
 msgid "Defines the sender email address of Icinga emails."
 msgstr "آدرس ایمیل فرستنده ایمیل‌های Icinga را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4750
+#: db/seeds/settings.rb:4988
 msgid "Defines the sender email address of Nagios emails."
 msgstr "آدرس ایمیل فرستنده ایمیل‌های Nagios را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4848
+#: db/seeds/settings.rb:5086
 msgid "Defines the sender email address of the service emails."
 msgstr "آدرس ایمیل فرستنده ایمیل‌های سرویس را تعریف می‌کند."
 
-#: db/seeds/settings.rb:3581
+#: db/seeds/settings.rb:3614
 msgid "Defines the sender of email notifications."
 msgstr "تعیین فرستنده اعلان‌ از طریق ایمیل."
 
-#: db/seeds/settings.rb:3399
+#: db/seeds/settings.rb:3432
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
 msgstr "جداکننده بین نام واقعی عامل و آدرس ایمیل گروه داده شده را تعریف می‌کند."
 
-#: db/seeds/settings.rb:1178
+#: db/seeds/settings.rb:1203
 msgid ""
 "Defines the session timeout for inactivity of users. Based on the assigned "
 "permissions the highest timeout value will be used, otherwise the default."
@@ -7162,15 +7186,15 @@ msgstr ""
 "اختصاص داده شده، بالاترین مقدار زمان پایان استفاده می‌شود، در غیر این صورت از "
 "پیش‌فرض استفاده می‌شود."
 
-#: db/seeds/settings.rb:5336
+#: db/seeds/settings.rb:5586
 msgid "Defines the sipgate.io config."
 msgstr "پیکربندی sipgate.io را تعریف می‌کند."
 
-#: db/seeds/settings.rb:4701
+#: db/seeds/settings.rb:4939
 msgid "Defines the state of auto-closed tickets."
 msgstr "وضعیت تیکت‌های خودکار بسته شده را تعریف می‌کند."
 
-#: db/seeds/settings.rb:294
+#: db/seeds/settings.rb:309
 msgid ""
 "Defines the system identifier. Every ticket number contains this ID. This "
 "ensures that only tickets which belong to your system will be processed as "
@@ -7180,37 +7204,37 @@ msgstr ""
 "که فقط تیکت‌هایی که متعلق به سیستم شما هستند به عنوان پیگیری‌ها پردازش می‌شوند "
 "(هنگام برقراری ارتباط بین دو نمونه Zammad مفید است)."
 
-#: db/seeds/settings.rb:3099
+#: db/seeds/settings.rb:3129
 msgid "Defines the tab behaviour after a ticket action."
 msgstr "رفتار برگه را پس از یک اقدام تیکت تعریف می‌کند."
 
-#: db/seeds/settings.rb:2894
+#: db/seeds/settings.rb:2924
 msgid "Defines the ticket states used for lookups."
 msgstr "وضعیت‌های تیکت مورد استفاده برای جستجوها را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5731
+#: db/seeds/settings.rb:6008
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "بازه زمانی را تعریف می‌کند که در طی آن یک یادداشت خودساخته قابل حذف است."
 
-#: db/seeds/settings.rb:5487
+#: db/seeds/settings.rb:5737
 msgid "Defines the token for Placetel."
 msgstr "توکن Placetel را تعریف می‌کند."
 
-#: db/seeds/settings.rb:5278
+#: db/seeds/settings.rb:5524
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr "بک‌اند تراکنش را برای تشخیص امضاهای مشتری در ایمیل‌ها تعریف می‌کند."
 
-#: db/seeds/settings.rb:5260
+#: db/seeds/settings.rb:5498
 msgid "Defines the transaction backend to execute triggers."
 msgstr "بک‌اند تراکنش را برای اجرای تریگرها تعریف می‌کند."
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5511
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "بک‌اند تراکنش را برای ارسال اعلان‌های عامل تعریف می‌کند."
 
-#: db/seeds/settings.rb:5556
+#: db/seeds/settings.rb:5810
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -7218,11 +7242,11 @@ msgstr ""
 "بک‌اند تراکنش را تعریف می‌کند که شناسه‌های تماس‌گیرنده را در اشیاء تشخیص می‌دهد و "
 "آنها را برای جستجوهای CTI ذخیره می‌کند."
 
-#: db/seeds/settings.rb:5565
+#: db/seeds/settings.rb:5823
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr "بک‌اند تراکنش را تعریف می‌کند که تریگرهای مبتنی بر زمان را اجرا می‌کند."
 
-#: db/seeds/settings.rb:5547
+#: db/seeds/settings.rb:5797
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -7231,26 +7255,26 @@ msgstr ""
 "www.clearbit.com) غنی می‌کند."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:4240
+#: db/seeds/settings.rb:4361
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
 "واحدی را که در کنار فیلد ورودی حسابداری زمان نشان داده می‌شود تعریف می‌کند."
 
-#: db/seeds/settings.rb:2826
+#: db/seeds/settings.rb:2856
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr "پیام هشدار را که در صورت وجود تیکت منطبق نشان داده می‌شود تعریف می‌کند."
 
-#: db/seeds/settings.rb:2809
+#: db/seeds/settings.rb:2839
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr "عنوان هشدار را که در صورت وجود تیکت منطبق نشان داده می‌شود تعریف می‌کند."
 
-#: db/seeds/settings.rb:5266
+#: db/seeds/settings.rb:5508
 msgid "Defines transaction backend."
 msgstr "بک‌اند تراکنش را تعریف می‌کند."
 
-#: db/seeds/settings.rb:2860
+#: db/seeds/settings.rb:2890
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
@@ -7258,7 +7282,7 @@ msgstr ""
 "تعریف می‌کند که آیا تیکت‌های منطبق در صورت وجود تیکت‌های از قبل موجود نشان داده "
 "شوند."
 
-#: db/seeds/settings.rb:6703
+#: db/seeds/settings.rb:6999
 msgid ""
 "Defines which knowledge base categories are excluded from the vector "
 "database. Sub-categories of an excluded category are excluded as well. Note "
@@ -7266,16 +7290,16 @@ msgid ""
 "this list, so that its answers get indexed."
 msgstr ""
 
-#: db/seeds/settings.rb:3297
+#: db/seeds/settings.rb:3327
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr "تعریف می‌کند که کدام پارامترها مجاز به ارسال از طریق API فرم هستند."
 
-#: db/seeds/settings.rb:6479
+#: db/seeds/settings.rb:6768
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 "تعریف می‌کند که کدام نقش‌ها مجاز به دسترسی به سوئیچ BETA UI دسکتاپ هستند."
 
-#: db/seeds/settings.rb:2792
+#: db/seeds/settings.rb:2822
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr "تعریف می‌کند که کدام ویژگی‌های تیکت قبل از ایجاد تیکت بررسی می‌شوند."
 
@@ -7284,7 +7308,7 @@ msgid "Defines which tickets can use the ticket summary sidebar."
 msgstr ""
 "مشخص می‌کند کدام تیکت‌ها می‌توانند از نوار کناریِ خلاصه‌ی تیکت استفاده کنند."
 
-#: db/seeds/settings.rb:6041
+#: db/seeds/settings.rb:6321
 #, fuzzy
 #| msgid ""
 #| "Defines which user roles will receive a warning in case of matching "
@@ -7294,7 +7318,7 @@ msgstr ""
 "تعریف می‌کند کدام نقش‌های کاربر در صورت وجود تیکت‌های منطبق یک هشدار دریافت "
 "می‌کنند."
 
-#: db/seeds/settings.rb:2843
+#: db/seeds/settings.rb:2873
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
@@ -7591,15 +7615,15 @@ msgstr "طراحی"
 msgid "Desktop"
 msgstr "میزکار"
 
-#: db/seeds/settings.rb:6458
+#: db/seeds/settings.rb:6741
 msgid "Desktop BETA UI Switch"
 msgstr "سوئیچ رابط کاربری بتا دسکتاپ"
 
-#: db/seeds/settings.rb:6467
+#: db/seeds/settings.rb:6753
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "منوی مدیریت سوئیچ BETA UI دسکتاپ"
 
-#: db/seeds/settings.rb:6476
+#: db/seeds/settings.rb:6765
 msgid "Desktop BETA UI Switch Roles"
 msgstr "نقش‌های سوئیچ BETA UI دسکتاپ"
 
@@ -7632,7 +7656,7 @@ msgid "Destination group > Sending email address"
 msgstr "گروه مقصد > آدرس ایمیل فرستنده"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
-#: db/seeds/settings.rb:2763
+#: db/seeds/settings.rb:2793
 msgid "Detect Duplicate Ticket Creation"
 msgstr "تشخیص ایجاد تیکت تکراری"
 
@@ -7650,7 +7674,7 @@ msgstr "زبان تشخیص داده شده"
 msgid "Developer API (api-free.deepl.com)"
 msgstr ""
 
-#: db/seeds/settings.rb:74
+#: db/seeds/settings.rb:80
 msgid "Developer System"
 msgstr "سیستم توسعه‌دهنده"
 
@@ -7722,7 +7746,7 @@ msgstr ""
 "آیا تأیید کرده‌اید که کاربر به صندوق پستی دسترسی دارد؟ یا حذف این کانال و "
 "تغییر به استفاده از نوع صندوق پستی متفاوت را در نظر بگیرید. %l"
 
-#: db/seeds/settings.rb:2269
+#: db/seeds/settings.rb:2298
 msgid "Digit required"
 msgstr "عدد مورد نیاز است"
 
@@ -7757,7 +7781,7 @@ msgstr "غیر فعال‌سازی اطلاع رسانی ها"
 msgid "Disable the banner for the BETA switch"
 msgstr "غیرفعال کردن بنر برای سوئیچ BETA"
 
-#: db/seeds/settings.rb:1373
+#: db/seeds/settings.rb:1402
 msgid "Disables user creation on logon with a third-party application."
 msgstr "ایجاد کاربر در هنگام ورود با یک برنامه شخص ثالث را غیرفعال می‌کند."
 
@@ -7840,7 +7864,7 @@ msgid "Display Zammad with the new BETA user interface"
 msgstr "نمایش Zammad با رابط کاربری جدید BETA"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
-#: db/seeds/settings.rb:1977
+#: db/seeds/settings.rb:2006
 msgid "Display name"
 msgstr "نام نمایشی"
 
@@ -7864,7 +7888,7 @@ msgstr ""
 msgid "Do not sign email"
 msgstr "عدم امضای ایمیل"
 
-#: db/seeds/settings.rb:6265
+#: db/seeds/settings.rb:6545
 msgid "Do not update any tickets."
 msgstr "هیچ تیکتی را به‌روز نکن."
 
@@ -8289,47 +8313,47 @@ msgstr "ویرایش کاربر"
 msgid "Editor"
 msgstr "ویرایشگر"
 
-#: db/seeds/settings.rb:3857
+#: db/seeds/settings.rb:3926
 msgid "Elasticsearch Asciifolding Configuration"
 msgstr "پیکربندی Asciifolding Elasticsearch"
 
-#: db/seeds/settings.rb:3812
+#: db/seeds/settings.rb:3866
 msgid "Elasticsearch Attachment Extensions"
 msgstr "پسوندهای پیوست Elasticsearch"
 
-#: db/seeds/settings.rb:3821
+#: db/seeds/settings.rb:3878
 msgid "Elasticsearch Attachment Size"
 msgstr "اندازه پیوست Elasticsearch"
 
-#: db/seeds/settings.rb:3794
+#: db/seeds/settings.rb:3842
 msgid "Elasticsearch Endpoint Index"
 msgstr "شاخص نقطه پایانی Elasticsearch"
 
-#: db/seeds/settings.rb:3785
+#: db/seeds/settings.rb:3830
 msgid "Elasticsearch Endpoint Password"
 msgstr "رمز عبور نقطه پایانی Elasticsearch"
 
-#: db/seeds/settings.rb:3767
+#: db/seeds/settings.rb:3806
 msgid "Elasticsearch Endpoint URL"
 msgstr "آدرس URL نقطه پایانی Elasticsearch"
 
-#: db/seeds/settings.rb:3776
+#: db/seeds/settings.rb:3818
 msgid "Elasticsearch Endpoint User"
 msgstr "کاربر نقطه پایانی Elasticsearch"
 
-#: db/seeds/settings.rb:3848
+#: db/seeds/settings.rb:3914
 msgid "Elasticsearch Model Configuration"
 msgstr "تنظیمات قالب الاستیک‌سرچ"
 
-#: db/seeds/settings.rb:3839
+#: db/seeds/settings.rb:3902
 msgid "Elasticsearch Pipeline Name"
 msgstr "نام خط لوله Elasticsearch"
 
-#: db/seeds/settings.rb:3803
+#: db/seeds/settings.rb:3854
 msgid "Elasticsearch SSL verification"
 msgstr "تأیید SSL Elasticsearch"
 
-#: db/seeds/settings.rb:3830
+#: db/seeds/settings.rb:3890
 msgid "Elasticsearch Total Payload Size"
 msgstr "کل اندازه بارگذاری Elasticsearch"
 
@@ -8384,15 +8408,15 @@ msgstr "ایمیل (ورودی)"
 msgid "Email (out)"
 msgstr "ایمیل (خروجی)"
 
-#: db/seeds/settings.rb:778
+#: db/seeds/settings.rb:803
 msgid "Email - full quote"
 msgstr "ایمیل - نقل قول کامل"
 
-#: db/seeds/settings.rb:805
+#: db/seeds/settings.rb:830
 msgid "Email - quote header"
 msgstr "ایمیل - نقل قول هدر"
 
-#: db/seeds/settings.rb:751
+#: db/seeds/settings.rb:776
 msgid "Email - subject field"
 msgstr "ایمیل - فیلد موضوع"
 
@@ -8568,12 +8592,12 @@ msgstr "فعال کردن"
 msgid "Enable AI provider"
 msgstr "ارائه‌دهنده هوش مصنوعی"
 
-#: db/seeds/settings.rb:3708
+#: db/seeds/settings.rb:3744
 msgid "Enable Chat"
 msgstr "فعال کردن چت"
 
 #: app/assets/javascripts/app/views/api/access.jst.eco:27
-#: db/seeds/settings.rb:3663
+#: db/seeds/settings.rb:3699
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -8589,7 +8613,7 @@ msgstr ""
 "فعال کردن API REST با استفاده از توکن‌ها (نه نام کاربری/آدرس ایمیل و رمز "
 "عبور). همه کاربران باید توکن‌های دسترسی خود را در نمایه کاربر ایجاد کنند."
 
-#: db/seeds/settings.rb:3638
+#: db/seeds/settings.rb:3674
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
@@ -8597,11 +8621,11 @@ msgstr ""
 "فعال کردن API REST با استفاده از توکن‌ها (نه نام کاربری/آدرس ایمیل و رمز "
 "عبور). هر کاربر باید توکن‌های دسترسی خود را در نمایه کاربر ایجاد کند."
 
-#: db/seeds/settings.rb:6200
+#: db/seeds/settings.rb:6480
 msgid "Enable Recovery Codes"
 msgstr "فعال کردن کدهای بازیابی"
 
-#: db/seeds/settings.rb:3044
+#: db/seeds/settings.rb:3074
 msgid "Enable Ticket creation"
 msgstr "فعالسازی ایجاد تیکت"
 
@@ -8613,7 +8637,7 @@ msgstr ""
 "انتخاب نوع فعالیت را فعال کنید. این به عوامل اجازه می‌دهد هنگام افزودن زمان "
 "محاسبه شده، یکی از انواع زیر را انتخاب کنند."
 
-#: db/seeds/settings.rb:2664
+#: db/seeds/settings.rb:2694
 msgid "Enable auto assignment for following matching tickets."
 msgstr "اختصاص خودکار را برای تیکت‌های منطبق زیر فعال کنید."
 
@@ -8621,7 +8645,7 @@ msgstr "اختصاص خودکار را برای تیکت‌های منطبق ز�
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "اختصاص خودکار تیکت به کارشناس پس از اولین بازکردن."
 
-#: db/seeds/settings.rb:6283
+#: db/seeds/settings.rb:6563
 msgid "Enable checklists."
 msgstr "فعال کردن چک‌لیست‌ها."
 
@@ -8636,7 +8660,7 @@ msgid ""
 msgstr ""
 "فعال کردن محافظتِ هانی‌پات (یک فیلد نامرئی که ارسال‌های خودکار را گیر می‌اندازد)."
 
-#: db/seeds/settings.rb:808
+#: db/seeds/settings.rb:833
 msgid ""
 "Enable if you want a timestamped reply header to be automatically inserted "
 "in front of quoted messages."
@@ -8644,7 +8668,7 @@ msgstr ""
 "اگر می‌خواهید یک هدر پاسخ با زمان به طور خودکار در جلوی پیام‌های نقل قول شده "
 "درج شود، فعال کنید."
 
-#: db/seeds/settings.rb:781
+#: db/seeds/settings.rb:806
 msgid ""
 "Enable if you want to quote the full email in your answer. The quoted email "
 "will be put at the end of your answer. If you just want to quote a certain "
@@ -8656,7 +8680,7 @@ msgstr ""
 "کنید، فقط متن را علامت بزنید و دکمه پاسخ را فشار دهید (این ویژگی همیشه در "
 "دسترس است)."
 
-#: db/seeds/settings.rb:6584
+#: db/seeds/settings.rb:6876
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
@@ -8664,7 +8688,7 @@ msgstr ""
 "فعال یا غیرفعال کردن تولید پاسخ‌های پایگاه دانش توسط هوش مصنوعی از محتوای "
 "تیکت."
 
-#: db/seeds/settings.rb:6450
+#: db/seeds/settings.rb:6730
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -8675,7 +8699,7 @@ msgstr ""
 "کننده مانند systemd یا docker از یک خط مشی راه‌اندازی مجدد خودکار پشتیبانی "
 "کند."
 
-#: db/seeds/settings.rb:6027
+#: db/seeds/settings.rb:6307
 #, fuzzy
 #| msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgid ""
@@ -8683,7 +8707,7 @@ msgid ""
 "opens a ticket."
 msgstr "اختصاص خودکار تیکت به کارشناس پس از اولین بازکردن."
 
-#: db/seeds/settings.rb:6598
+#: db/seeds/settings.rb:6890
 #, fuzzy
 #| msgid ""
 #| "Enable or disable AI generation of knowledge base answers from ticket "
@@ -8704,7 +8728,7 @@ msgstr ""
 "حالت نگهداری Zammad را فعال یا غیرفعال کنید. اگر فعال باشد، _همه کاربران غیر "
 "مدیر خارج می‌شوند_ و _فقط مدیران می‌توانند یک جلسه جدید شروع کنند_."
 
-#: db/seeds/settings.rb:40
+#: db/seeds/settings.rb:46
 msgid ""
 "Enable or disable the maintenance mode of Zammad. If enabled, all non-"
 "administrators get logged out and only administrators can start a new "
@@ -8713,41 +8737,41 @@ msgstr ""
 "حالت نگهداری Zammad را فعال یا غیرفعال کنید. اگر فعال باشد، همه کاربران غیر "
 "مدیر خارج می‌شوند و فقط مدیران می‌توانند یک جلسه جدید شروع کنند."
 
-#: db/seeds/settings.rb:6505
+#: db/seeds/settings.rb:6797
 msgid "Enable or disable the ticket summary."
 msgstr "خلاصه تیکت را فعال یا غیرفعال کنید."
 
-#: db/seeds/settings.rb:6013
+#: db/seeds/settings.rb:6293
 #, fuzzy
 #| msgid "Enable or disable the ticket summary."
 msgid "Enable or disable the translation of ticket articles."
 msgstr "خلاصه تیکت را فعال یا غیرفعال کنید."
 
-#: db/seeds/settings.rb:6680
+#: db/seeds/settings.rb:6972
 msgid ""
 "Enable or disable the vector database, which is used for storing and "
 "retrieving vectorized data. Elasticsearch is used as the vector database "
 "backend."
 msgstr ""
 
-#: db/seeds/settings.rb:6556
+#: db/seeds/settings.rb:6848
 msgid "Enable or disable the writing assistant text tools."
 msgstr "ابزارهای متن دستیار نوشتن را فعال یا غیرفعال کنید."
 
 #: app/assets/javascripts/app/views/api/access.jst.eco:45
-#: db/seeds/settings.rb:6640
+#: db/seeds/settings.rb:6932
 msgid ""
 "Enable the MCP server, so that AI clients can use Zammad with personal "
 "access tokens."
 msgstr ""
 
-#: db/seeds/settings.rb:6324
+#: db/seeds/settings.rb:6604
 #, fuzzy
 #| msgid "Delete old activity stream entries."
 msgid "Enable the activity stream on the dashboard."
 msgstr "حذف ورودی‌های قدیمی جریان فعالیت."
 
-#: db/seeds/settings.rb:6408
+#: db/seeds/settings.rb:6688
 msgid "Enable the assigned tickets widget on the dashboard."
 msgstr ""
 
@@ -8755,43 +8779,43 @@ msgstr ""
 msgid "Enable the banner for the BETA switch"
 msgstr "بنر را برای سوئیچ BETA فعال کنید"
 
-#: db/seeds/settings.rb:6394
+#: db/seeds/settings.rb:6674
 msgid "Enable the channel distribution widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6310
+#: db/seeds/settings.rb:6590
 msgid "Enable the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6352
+#: db/seeds/settings.rb:6632
 msgid "Enable the first steps tab on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6380
+#: db/seeds/settings.rb:6660
 msgid "Enable the mood widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6436
+#: db/seeds/settings.rb:6716
 msgid "Enable the reopening rate widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6422
+#: db/seeds/settings.rb:6702
 msgid "Enable the tickets in process widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6366
+#: db/seeds/settings.rb:6646
 msgid "Enable the waiting time widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:2638
+#: db/seeds/settings.rb:2668
 msgid "Enable ticket auto assignment."
 msgstr "فعالسازی اختصاص خودکار تیکت‌ها."
 
-#: db/seeds/settings.rb:6538
+#: db/seeds/settings.rb:6830
 msgid "Enable ticket summary for following matching tickets."
 msgstr "فعال کردن خلاصه‌ی تیکت برای تیکت‌هایِ مطابق با معیارهای زیر."
 
-#: db/seeds/settings.rb:4195
+#: db/seeds/settings.rb:4316
 msgid "Enable time accounting."
 msgstr "فعالسازی حسابداری زمانی."
 
@@ -8799,7 +8823,7 @@ msgstr "فعالسازی حسابداری زمانی."
 msgid "Enable/disable inline translations"
 msgstr "فعال‌سازی/غیرفعال‌سازی ترجمه بین‌خطی"
 
-#: db/seeds/settings.rb:3711
+#: db/seeds/settings.rb:3747
 msgid "Enable/disable online chat."
 msgstr "فعالسازی/غیرفعالسازی چت آنلاین."
 
@@ -8807,12 +8831,12 @@ msgstr "فعالسازی/غیرفعالسازی چت آنلاین."
 msgid "Enabled"
 msgstr "فعال"
 
-#: db/seeds/settings.rb:863
+#: db/seeds/settings.rb:888
 msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "یک نوار کناری برای نمایش نمای‌کلی برای همه ضمیمه‌ها فعال می‌کند."
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:12
-#: db/seeds/settings.rb:2766
+#: db/seeds/settings.rb:2796
 msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
@@ -8820,7 +8844,7 @@ msgstr ""
 "هشدار به کاربران در هنگام ایجاد تیکت در صورت وجود تیکت موجود با ویژگی‌های "
 "مشابه را فعال می‌کند."
 
-#: db/seeds/settings.rb:6055
+#: db/seeds/settings.rb:6335
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -8836,15 +8860,15 @@ msgstr ""
 msgid "Enables console logging."
 msgstr "ثبت کنسول را فعال می‌کند."
 
-#: db/seeds/settings.rb:1016
+#: db/seeds/settings.rb:1041
 msgid "Enables display of ticket priority icons in UI."
 msgstr "نمایش آیکون‌های اولویت تیکت را در رابط کاربری فعال می‌کند."
 
-#: db/seeds/settings.rb:836
+#: db/seeds/settings.rb:861
 msgid "Enables preview of attachments."
 msgstr "فعالسازی پیش‌نمایش فایل‌های ضمیمه."
 
-#: db/seeds/settings.rb:1347
+#: db/seeds/settings.rb:1376
 msgid ""
 "Enables sending of an email notification to a user when they link their "
 "account with a third-party application."
@@ -8852,7 +8876,7 @@ msgstr ""
 "ارسال اعلان ایمیل به کاربر را هنگامی که حساب خود را با یک برنامه شخص ثالث "
 "پیوند می‌دهد، فعال می‌کند."
 
-#: db/seeds/settings.rb:1321
+#: db/seeds/settings.rb:1350
 msgid ""
 "Enables the automatic linking of an existing account on initial login via a "
 "third party application. If this is disabled, an existing user must first "
@@ -8864,50 +8888,50 @@ msgstr ""
 "و سپس حساب \"شخص ثالث\" خود را از طریق نمایه -> حساب‌های پیوند شده به حساب "
 "Zammad خود پیوند دهد."
 
-#: db/seeds/settings.rb:1258
+#: db/seeds/settings.rb:1284
 msgid "Enables user authentication via %s."
 msgstr "فعالسازی احراز هویت از طریق %s."
 
-#: db/seeds/settings.rb:1399
+#: db/seeds/settings.rb:1428
 msgid ""
 "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgstr ""
 "فعالسازی احراز هویت از طریق %s. ابتدا اپلیکیشن خود را در [%s](%s) رجیستر "
 "نمایید."
 
-#: db/seeds/settings.rb:1688
+#: db/seeds/settings.rb:1717
 msgid "Enables user authentication via GitHub."
 msgstr "فعالسازی احراز هویت از طریق گیت‌هاب."
 
-#: db/seeds/settings.rb:1753
+#: db/seeds/settings.rb:1782
 msgid "Enables user authentication via GitLab."
 msgstr "فعالسازی احراز هویت از طریق گیت‌لب."
 
-#: db/seeds/settings.rb:1558
+#: db/seeds/settings.rb:1587
 msgid "Enables user authentication via Google."
 msgstr "فعالسازی احراز هویت از طریق گوگل."
 
-#: db/seeds/settings.rb:1623
+#: db/seeds/settings.rb:1652
 msgid "Enables user authentication via LinkedIn."
 msgstr "فعالسازی احراز هویت از طریق لینکدین."
 
-#: db/seeds/settings.rb:1825
+#: db/seeds/settings.rb:1854
 msgid "Enables user authentication via Microsoft 365."
 msgstr "به کاربر قابلیت احراز هویت با Microsoft 365 را می‌دهد."
 
-#: db/seeds/settings.rb:2131
+#: db/seeds/settings.rb:2160
 msgid "Enables user authentication via OpenID Connect."
 msgstr "احراز هویت کاربر را از طریق OpenID Connect فعال می‌کند."
 
-#: db/seeds/settings.rb:1973
+#: db/seeds/settings.rb:2002
 msgid "Enables user authentication via SAML."
 msgstr "فعالسازی احراز هویت از طریق SAML."
 
-#: db/seeds/settings.rb:1909
+#: db/seeds/settings.rb:1938
 msgid "Enables user authentication via Weibo."
 msgstr "فعالسازی احراز هویت از طریق Weibo."
 
-#: db/seeds/settings.rb:1124
+#: db/seeds/settings.rb:1149
 msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
@@ -8983,11 +9007,11 @@ msgstr "دستگاه کاربر"
 msgid "Endpoint Settings"
 msgstr "تنظیمات دستگاه کاربر"
 
-#: db/seeds/settings.rb:6227
+#: db/seeds/settings.rb:6507
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "الزام تنظیم کردن احراز هویت دوعاملی"
 
-#: db/seeds/settings.rb:6234
+#: db/seeds/settings.rb:6514
 msgid "Enforced for user roles"
 msgstr "الزام‌شده برای نقش‌های کاربر"
 
@@ -9288,7 +9312,7 @@ msgid "Escalation Times"
 msgstr "زمان‌های بالاسپاری"
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:21
+#: app/frontend/shared/entities/ticket/attributes.ts:21
 #: app/graphql/gql/types/overview_type.rb:102
 msgid "Escalation at"
 msgstr "بالاسپاری‌ در"
@@ -9298,7 +9322,7 @@ msgstr "بالاسپاری‌ در"
 msgid "Escalation at (Close Time)"
 msgstr "بالاسپاری‌ در (زمان بسته شدن)"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:42
+#: app/frontend/shared/entities/ticket/attributes.ts:42
 msgid "Escalation at (Close time)"
 msgstr "تشدید در (زمان بسته شدن)"
 
@@ -9307,7 +9331,7 @@ msgstr "تشدید در (زمان بسته شدن)"
 msgid "Escalation at (First Response Time)"
 msgstr "بالاسپاری‌ در (زمان اولین واکنش)"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:28
+#: app/frontend/shared/entities/ticket/attributes.ts:28
 msgid "Escalation at (First response time)"
 msgstr "تشدید در (زمان اولین پاسخ)"
 
@@ -9316,7 +9340,7 @@ msgstr "تشدید در (زمان اولین پاسخ)"
 msgid "Escalation at (Update Time)"
 msgstr "بالاسپاری در (زمان به‌روزرسانی)"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:35
+#: app/frontend/shared/entities/ticket/attributes.ts:35
 msgid "Escalation at (Update time)"
 msgstr "تشدید در (زمان به‌روزرسانی)"
 
@@ -9412,15 +9436,15 @@ msgstr "کاربران استثناء"
 msgid "Exchange"
 msgstr "سیستم ایمیل (اکس‌چنج)"
 
-#: db/seeds/settings.rb:5093
+#: db/seeds/settings.rb:5331
 msgid "Exchange OAuth"
 msgstr "احراز هویت اکس‌چنج"
 
-#: db/seeds/settings.rb:5080
+#: db/seeds/settings.rb:5318
 msgid "Exchange config"
 msgstr "تنظیمات سیستم ایمیل (اکس‌چنج)"
 
-#: db/seeds/settings.rb:5106
+#: db/seeds/settings.rb:5344
 msgid "Exchange integration"
 msgstr "ادغام Exchange"
 
@@ -9529,7 +9553,7 @@ msgstr "جستجوی پیشرفته"
 msgid "External data source field"
 msgstr "فیلد منبع داده خارجی"
 
-#: lib/search_index_backend.rb:821
+#: lib/search_index_backend.rb:826
 msgid "Extract zammad-attachment information from arrays"
 msgstr "استخراج اطلاعات zammad-attachment از آرایه‌ها"
 
@@ -9544,7 +9568,7 @@ msgstr "قوانین استخراج"
 #: app/controllers/first_steps_controller.rb:27
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:47
-#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1481
+#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1510
 msgid "Facebook"
 msgstr "فیسبوک"
 
@@ -9556,7 +9580,7 @@ msgstr "شناسه فیسبوک"
 msgid "Facebook Account"
 msgstr "حساب کاربری فیسبوک"
 
-#: db/seeds/settings.rb:1490
+#: db/seeds/settings.rb:1519
 msgid "Facebook App Credentials"
 msgstr "اعتبارنامه برنامه Facebook"
 
@@ -9564,7 +9588,7 @@ msgstr "اعتبارنامه برنامه Facebook"
 msgid "Facebook App Secret"
 msgstr "رمز فیسبوک"
 
-#: db/seeds/settings.rb:1482
+#: db/seeds/settings.rb:1511
 msgid "Facebook Developer Site"
 msgstr "سایت برنامه‌نویس فیسبوک"
 
@@ -9688,7 +9712,7 @@ msgstr "بازخورد و لاگ‌ها"
 msgid "Feedback Form"
 msgstr "فرم بازخورد"
 
-#: db/seeds/settings.rb:2163
+#: db/seeds/settings.rb:2192
 msgid "Field that uniquely identifies the user. If unset, \"sub\" is used."
 msgstr ""
 "فیلدی که کاربر را به طور یکتا شناسایی می‌کند. اگر تنظیم نشود، از \"sub\" "
@@ -9715,7 +9739,7 @@ msgid "Filepath to Zammad directory"
 msgstr "مسیر فایل به دایرکتوری Zammad"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:5
-#: db/seeds/settings.rb:419
+#: db/seeds/settings.rb:440
 msgid "Filesystem"
 msgstr "سیستم فایل"
 
@@ -9818,7 +9842,7 @@ msgid "First name"
 msgstr "نام"
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:70
+#: app/frontend/shared/entities/ticket/attributes.ts:70
 #: app/graphql/gql/types/overview_type.rb:109
 msgid "First response"
 msgstr "اولین واکنش"
@@ -9828,7 +9852,7 @@ msgstr "اولین واکنش"
 msgid "First response time"
 msgstr "زمان اولین پاسخ"
 
-#: db/seeds/settings.rb:269
+#: db/seeds/settings.rb:284
 #, fuzzy
 #| msgid "First name"
 msgid "Firstname Lastname"
@@ -9990,11 +10014,11 @@ msgstr "رمز عبور خود را فراموش کردید؟"
 msgid "Form"
 msgstr "فرم"
 
-#: db/seeds/settings.rb:3294
+#: db/seeds/settings.rb:3324
 msgid "Form Allowed Parameters"
 msgstr "پارامترهای مجاز فرم"
 
-#: app/graphql/gql/queries/form_updater.rb:34
+#: app/graphql/gql/queries/form_updater.rb:36
 msgid "FormSchema could not be found."
 msgstr "FormSchema پیدا نشد."
 
@@ -10142,7 +10166,7 @@ msgstr "نام کامل"
 msgid "Full name"
 msgstr "نام کامل"
 
-#: db/seeds/settings.rb:316
+#: db/seeds/settings.rb:331
 msgid "Fully Qualified Domain Name"
 msgstr "نام دامنه کاملاً واجد شرایط"
 
@@ -10215,15 +10239,15 @@ msgstr "در حال تولید متن…"
 msgid "Generic API to integrate VoIP service provider with real-time push."
 msgstr "API عمومی برای ادغام ارائه‌دهنده خدمات VoIP با فشار بی‌درنگ."
 
-#: db/seeds/settings.rb:518
+#: db/seeds/settings.rb:542
 msgid "Geo Calendar Service"
 msgstr "سرویس تقویم جغرافیایی"
 
-#: db/seeds/settings.rb:464
+#: db/seeds/settings.rb:486
 msgid "Geo IP Service"
 msgstr "Geo IP Service"
 
-#: db/seeds/settings.rb:491
+#: db/seeds/settings.rb:514
 msgid "Geo Location Service"
 msgstr "سرویس مکان جغرافیایی"
 
@@ -10241,7 +10265,7 @@ msgstr "شروع کنید"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:6192
+#: db/seeds/settings.rb:6472
 msgid "Get the security code from the authenticator app on your device."
 msgstr "کد امنیتی را از برنامه احراز هویت در دستگاه خود دریافت کنید."
 
@@ -10259,23 +10283,23 @@ msgstr "دریافت اطلاعات کلید از مرورگر…"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
-#: db/seeds/settings.rb:1677
+#: db/seeds/settings.rb:1706
 msgid "GitHub"
 msgstr "گیت هاب"
 
-#: db/seeds/settings.rb:1685
+#: db/seeds/settings.rb:1714
 msgid "GitHub App Credentials"
 msgstr "احراز هویت اپلیکیشن گیت‌هاب"
 
-#: db/seeds/settings.rb:1678
+#: db/seeds/settings.rb:1707
 msgid "GitHub OAuth Applications"
 msgstr "برنامه‌های احراز هویت گیت هاب"
 
-#: db/seeds/settings.rb:5242
+#: db/seeds/settings.rb:5480
 msgid "GitHub config"
 msgstr "پیکربندی GitHub"
 
-#: db/seeds/settings.rb:5215
+#: db/seeds/settings.rb:5453
 msgid "GitHub integration"
 msgstr "ادغام GitHub"
 
@@ -10292,23 +10316,23 @@ msgstr "GitHub: پیوند مسئله"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
-#: db/seeds/settings.rb:1742
+#: db/seeds/settings.rb:1771
 msgid "GitLab"
 msgstr "گیت لب"
 
-#: db/seeds/settings.rb:1750
+#: db/seeds/settings.rb:1779
 msgid "GitLab App Credentials"
 msgstr "اعتبارنامه برنامه GitLab"
 
-#: db/seeds/settings.rb:1743
+#: db/seeds/settings.rb:1772
 msgid "GitLab Applications"
 msgstr "برنامه‌های گیت‌لب"
 
-#: db/seeds/settings.rb:5200
+#: db/seeds/settings.rb:5438
 msgid "GitLab config"
 msgstr "پیکربندی GitLab"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5411
 msgid "GitLab integration"
 msgstr "ادغام GitLab"
 
@@ -10390,15 +10414,15 @@ msgstr "پیام خداحافظی"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
-#: db/seeds/settings.rb:1547
+#: db/seeds/settings.rb:1576
 msgid "Google"
 msgstr "گوگل"
 
-#: db/seeds/settings.rb:1548
+#: db/seeds/settings.rb:1577
 msgid "Google API Console Site"
 msgstr "سایت کنسول API گوگل"
 
-#: db/seeds/settings.rb:1555
+#: db/seeds/settings.rb:1584
 msgid "Google App Credentials"
 msgstr "اعتبارنامه برنامه Google"
 
@@ -10463,7 +10487,7 @@ msgstr "پیام خوشآمد"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
-#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3071
+#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3101
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
 msgstr "گروه"
@@ -10514,11 +10538,11 @@ msgid "Group permissions"
 msgstr "دسترسی‌های گروه"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
-#: db/seeds/settings.rb:3071
+#: db/seeds/settings.rb:3101
 msgid "Group selection for Ticket creation"
 msgstr "گروه های در دسترس برای تیکت های ساخته شده توسط مشتری"
 
-#: db/seeds/settings.rb:3159
+#: db/seeds/settings.rb:3189
 msgid "Group selection for ticket creation"
 msgstr "گروه‌های در دسترس برای تیکت‌های ساخته شده توسط مشتری"
 
@@ -10560,11 +10584,11 @@ msgstr ""
 msgid "HMAC signature token"
 msgstr "توکن امضای HMAC SHA1"
 
-#: db/seeds/settings.rb:5583
+#: db/seeds/settings.rb:5848
 msgid "HTML Email CSS Font"
 msgstr "قلم CSS ایمیل HTML"
 
-#: db/seeds/settings.rb:5595
+#: db/seeds/settings.rb:5860
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "زمان پردازش پاک‌کننده HTML"
 
@@ -10592,7 +10616,7 @@ msgstr "نام کاربری احراز هویت ساده HTTP"
 msgid "HTTP Log"
 msgstr "لاگ HTTP"
 
-#: db/seeds/settings.rb:378
+#: db/seeds/settings.rb:399
 msgid "HTTP type"
 msgstr "نوع HTTP"
 
@@ -10886,11 +10910,11 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "هایلایت غیرفعال است."
 
-#: db/seeds/settings.rb:5747
+#: db/seeds/settings.rb:6024
 msgid "Highlights if the note a user is writing is public or private"
 msgstr "مشخص می‌کند که یادداشتی که کاربر می‌نویسد عمومی است یا خصوصی"
 
-#: db/seeds/settings.rb:5744
+#: db/seeds/settings.rb:6021
 msgid "Hint for adding an article to an existing ticket."
 msgstr "راهنمایی برای افزودن مقاله به یک تیکت موجود."
 
@@ -10921,7 +10945,7 @@ msgstr "خوراک iCalendar تعطیلات"
 msgid "Home"
 msgstr "خانه"
 
-#: db/seeds/settings.rb:3246
+#: db/seeds/settings.rb:3276
 msgid "Honeypot spam protection"
 msgstr "محافظت در برابر اسپمِ هانی‌پات"
 
@@ -11010,19 +11034,19 @@ msgstr "شناسه"
 msgid "ID:"
 msgstr "شناسه:"
 
-#: db/seeds/settings.rb:1984
+#: db/seeds/settings.rb:2013
 msgid "IDP SSO target URL"
 msgstr "آدرس URL هدف SSO IDP"
 
-#: db/seeds/settings.rb:1992
+#: db/seeds/settings.rb:2021
 msgid "IDP Single Logout target URL"
 msgstr "آدرس URL هدف خروج تکی IDP"
 
-#: db/seeds/settings.rb:2000
+#: db/seeds/settings.rb:2029
 msgid "IDP certificate"
 msgstr "گواهی IDP"
 
-#: db/seeds/settings.rb:2008
+#: db/seeds/settings.rb:2037
 msgid "IDP certificate fingerprint"
 msgstr "اثر انگشت گواهی IDP"
 
@@ -11034,7 +11058,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4623
+#: db/seeds/settings.rb:4861
 msgid "Icinga integration"
 msgstr "ادغام Icinga"
 
@@ -11058,7 +11082,7 @@ msgid ""
 "your current selections will be lost. Do you want to continue?"
 msgstr ""
 
-#: db/seeds/settings.rb:2142 lib/excel_sheet/ai/analytics/errors.rb:24
+#: db/seeds/settings.rb:2171 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
 msgid "Identifier"
 msgstr "شناسه"
@@ -11067,7 +11091,7 @@ msgstr "شناسه"
 msgid "Identifier of the chat topic."
 msgstr "شناسه موضوع چت."
 
-#: db/seeds/settings.rb:3738
+#: db/seeds/settings.rb:3774
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
 "زمان عدم فعالیت بر حسب ثانیه تا زمانی که عامل به طور خودکار آفلاین تنظیم شود."
@@ -11104,7 +11128,7 @@ msgid ""
 msgstr ""
 "اگر میزبان و سرویس بازیابی شده باشند، تیکت می‌تواند به طور خودکار بسته شود."
 
-#: db/seeds/settings.rb:3528
+#: db/seeds/settings.rb:3561
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -11112,7 +11136,7 @@ msgstr ""
 "اگر فرستنده یک عامل است، اولین کاربر در لیست گیرندگان را به عنوان مشتری "
 "تنظیم کنید."
 
-#: db/seeds/settings.rb:3604
+#: db/seeds/settings.rb:3637
 #, fuzzy
 #| msgid "If this regex matches, no notification will be sent by the sender."
 msgid "If this regex matches, no notification will be sent to the sender."
@@ -11199,7 +11223,7 @@ msgstr ""
 msgid "Ignore Escalation"
 msgstr "نادیده گرفتن بالاسپاری"
 
-#: db/seeds/settings.rb:3898
+#: db/seeds/settings.rb:3976
 msgid "Ignore Escalation/SLA Information"
 msgstr "نادیده گرفتن بالاسپاری/ اطلاعات SLA"
 
@@ -11207,11 +11231,11 @@ msgstr "نادیده گرفتن بالاسپاری/ اطلاعات SLA"
 msgid "Ignore Message"
 msgstr "صرف‌نظر از پیام"
 
-#: db/seeds/settings.rb:3901
+#: db/seeds/settings.rb:3979
 msgid "Ignore escalation/SLA information for import."
 msgstr "نادیده گرفتن بالاسپاری/ اطلاعات SLA برای درونبرد."
 
-#: db/seeds/settings.rb:2915
+#: db/seeds/settings.rb:2945
 msgid "Ignore system_id"
 msgstr "نادیده گرفتن system_id"
 
@@ -11219,7 +11243,7 @@ msgstr "نادیده گرفتن system_id"
 msgid "Image"
 msgstr "تصویر"
 
-#: db/seeds/settings.rb:437
+#: db/seeds/settings.rb:458
 msgid "Image Service"
 msgstr "سرویس تصاویر"
 
@@ -11228,6 +11252,10 @@ msgstr "سرویس تصاویر"
 #| msgid "Change Objects"
 msgid "Image actions"
 msgstr "تغییر آبجکت‌ها"
+
+#: app/models/store.rb:169
+msgid "Image exceeds the maximum resizable pixel count."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -11284,51 +11312,51 @@ msgstr "درونبرد %s"
 msgid "Import API key could not be extracted from URL."
 msgstr "کلید API واردات نمی‌تواند از URL استخراج شود."
 
-#: db/seeds/settings.rb:4070
+#: db/seeds/settings.rb:4175
 msgid "Import API key for requesting the Freshdesk API"
 msgstr "کلید API واردات برای درخواست API Freshdesk"
 
-#: db/seeds/settings.rb:4014
+#: db/seeds/settings.rb:4110
 msgid "Import API key for requesting the Zendesk API"
 msgstr "کلید API واردات برای درخواست API Zendesk"
 
-#: db/seeds/settings.rb:3889
+#: db/seeds/settings.rb:3964
 msgid "Import Backend"
 msgstr "بک‌اند واردات"
 
-#: db/seeds/settings.rb:4144
+#: db/seeds/settings.rb:4261
 msgid "Import Backends"
 msgstr "بک‌اندهای واردات"
 
-#: db/seeds/settings.rb:3921
+#: db/seeds/settings.rb:4002
 msgid "Import Endpoint"
 msgstr "نقطه پایانی واردات"
 
-#: db/seeds/settings.rb:3939
+#: db/seeds/settings.rb:4023
 msgid "Import Key"
 msgstr "درونبرد کلید"
 
-#: db/seeds/settings.rb:3867
+#: db/seeds/settings.rb:3939
 msgid "Import Mode"
 msgstr "حالت درونبرد"
 
-#: db/seeds/settings.rb:3977
+#: db/seeds/settings.rb:4067
 msgid "Import Password for HTTP basic authentication"
 msgstr "رمز عبور واردات برای احراز هویت پایه HTTP"
 
-#: db/seeds/settings.rb:4125
+#: db/seeds/settings.rb:4239
 msgid "Import Password for requesting the Kayako API"
 msgstr "رمز عبور واردات برای درخواست API Kayako"
 
-#: db/seeds/settings.rb:3958
+#: db/seeds/settings.rb:4045
 msgid "Import User for HTTP basic authentication"
 msgstr "کاربر واردات برای احراز هویت پایه HTTP"
 
-#: db/seeds/settings.rb:4107
+#: db/seeds/settings.rb:4218
 msgid "Import User for requesting the Kayako API"
 msgstr "کاربر واردات برای درخواست API Kayako"
 
-#: db/seeds/settings.rb:4033
+#: db/seeds/settings.rb:4132
 msgid "Import User for requesting the Zendesk API"
 msgstr "کاربر واردات برای درخواست API Zendesk"
 
@@ -11498,7 +11526,7 @@ msgstr "نام‌کاربری و رمزعبور ناقص"
 msgid "Incomplete ticket checklist"
 msgstr "چک‌لیست ناقص تیکت"
 
-#: db/seeds/settings.rb:2534
+#: db/seeds/settings.rb:2563
 msgid "Increment (SystemID.Counter)"
 msgstr "افزایش (SystemID.Counter)"
 
@@ -11549,7 +11577,7 @@ msgstr ""
 "فرآیند واردات را برای انتقال داده‌های خود به Zammad آغاز کنید. پیشرفت مهاجرت "
 "را در این صفحه پیگیری کنید تا به محض اتمام موفقیت‌آمیز واردات مطلع شوید."
 
-#: app/models/store.rb:100
+#: app/models/store.rb:102
 msgid "Inline content could not be generated."
 msgstr "امکان ایجاد محتوای بین‌خطی وجود نداشت."
 
@@ -11725,7 +11753,7 @@ msgstr "ویژگی‌های داخلی قابل حذف نیستند"
 msgid "Internal error"
 msgstr "خطای داخلی"
 
-#: db/seeds/settings.rb:6694
+#: db/seeds/settings.rb:6987
 msgid ""
 "Internal record of the embedding model and vector size the knowledge base "
 "index was last built with. Used to detect a stale index by comparison, "
@@ -11745,7 +11773,7 @@ msgstr "منتشر نشده"
 msgid "Internally published at"
 msgstr "منتشر نشده"
 
-#: app/models/import_job.rb:188
+#: app/models/import_job.rb:185
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
 "manually or wait until the next execution time."
@@ -11805,11 +11833,11 @@ msgstr "پارامتر وضعیت OAuth نامعتبر."
 msgid "Invalid auto wizard file."
 msgstr "فایل auto wizard نامعتبر."
 
-#: app/controllers/long_polling_controller.rb:82
+#: app/controllers/long_polling_controller.rb:83
 msgid "Invalid client_id in receive loop!"
 msgstr "client_id در حلقه دریافت نامعتبر!"
 
-#: app/controllers/long_polling_controller.rb:50
+#: app/controllers/long_polling_controller.rb:51
 msgid "Invalid client_id received!"
 msgstr "client_id دریافت شده نامعتبر!"
 
@@ -12016,7 +12044,7 @@ msgstr "URL مسئله"
 msgid "Issue status"
 msgstr "وضعیت مسئله"
 
-#: db/seeds/settings.rb:2150
+#: db/seeds/settings.rb:2179
 msgid "Issuer"
 msgstr "صادرکننده"
 
@@ -12206,11 +12234,11 @@ msgstr "پایگاه دانش"
 msgid "Knowledge Base Reader"
 msgstr "خواننده پایگاه دانش"
 
-#: db/seeds/settings.rb:5701
+#: db/seeds/settings.rb:5977
 msgid "Knowledge Base active"
 msgstr "فعالسازی مرکز دانش"
 
-#: db/seeds/settings.rb:5716
+#: db/seeds/settings.rb:5992
 msgid "Knowledge Base active publicly"
 msgstr "فعالسازی مرکز دانش بصورت عمومی"
 
@@ -12220,7 +12248,7 @@ msgstr "فعالسازی مرکز دانش بصورت عمومی"
 msgid "Knowledge Base language"
 msgstr "پاسخ موجود در پایگاه دانش"
 
-#: db/seeds/settings.rb:5690
+#: db/seeds/settings.rb:5963
 msgid "Knowledge Base multilingual support"
 msgstr "پایگاه دانش چندزبانه"
 
@@ -12302,7 +12330,7 @@ msgstr "پایگاه دانش در دسترس نیست یا به درستی پی
 msgid "Knowledge base navigation"
 msgstr "مقالات پایگاه دانش"
 
-#: db/seeds/settings.rb:6663
+#: db/seeds/settings.rb:6955
 #, fuzzy
 #| msgid "Knowledge base articles"
 msgid "Knowledge base self-hosted video servers"
@@ -12317,7 +12345,7 @@ msgstr "هیچ دسته‌بندی قابل ویرایشی در پایگاه د�
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
-#: app/models/audit_log/object_type_labels.rb:11 db/seeds/settings.rb:1292
+#: app/models/audit_log/object_type_labels.rb:11 db/seeds/settings.rb:1320
 msgid "LDAP"
 msgstr "LDAP"
 
@@ -12325,7 +12353,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "سرور میزبان LDAP"
 
-#: db/seeds/settings.rb:5053
+#: db/seeds/settings.rb:5291
 msgid "LDAP integration"
 msgstr "ادغام LDAP"
 
@@ -12358,7 +12386,7 @@ msgstr "طرح صفحه فرود"
 msgid "Language"
 msgstr "زبان"
 
-#: db/seeds/settings.rb:184
+#: db/seeds/settings.rb:196
 msgid "Language Detection Service"
 msgstr "سرویس تشخیص زبان"
 
@@ -12423,28 +12451,28 @@ msgid "Last changed"
 msgstr "آخرین تغییر"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:84
+#: app/frontend/shared/entities/ticket/attributes.ts:84
 #: app/graphql/gql/types/overview_type.rb:111
 msgid "Last closing time"
 msgstr "آخرین زمان بستن"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:21
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:49
+#: app/frontend/shared/entities/ticket/attributes.ts:49
 #: app/graphql/gql/types/overview_type.rb:106
 msgid "Last contact"
 msgstr "آخرین تماس"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/ticket.coffee:22
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:56
+#: app/frontend/shared/entities/ticket/attributes.ts:56
 #: app/graphql/gql/types/overview_type.rb:107
 msgid "Last contact (agent)"
 msgstr "آخرین تماس (کارشناس)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:248
 #: app/assets/javascripts/app/models/ticket.coffee:23
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:63
+#: app/frontend/shared/entities/ticket/attributes.ts:63
 #: app/graphql/gql/types/overview_type.rb:108
 msgid "Last contact (customer)"
 msgstr "آخرین تماس (مشتری)"
@@ -12465,7 +12493,7 @@ msgstr "آخرین ورود"
 msgid "Last name"
 msgstr "نام خانوادگی"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:127
+#: app/frontend/shared/entities/ticket/attributes.ts:127
 msgid "Last owner update"
 msgstr "آخرین به‌روزرسانی مالک"
 
@@ -12499,13 +12527,13 @@ msgstr "به‌روزرسانی دارد"
 msgid "Last used"
 msgstr "آخرین استفاده"
 
-#: db/seeds/settings.rb:270
+#: db/seeds/settings.rb:285
 #, fuzzy
 #| msgid "Last name"
 msgid "Lastname Firstname"
 msgstr "نام خانوادگی"
 
-#: db/seeds/settings.rb:271
+#: db/seeds/settings.rb:286
 #, fuzzy
 #| msgid "Last name"
 msgid "Lastname, Firstname"
@@ -12595,15 +12623,15 @@ msgstr "محدود کردن اعلان‌ها به گروه‌های خاص"
 msgid "Limit priorities and provide optional descriptions"
 msgstr "محدود کردن اولویت‌ها و ارائه توضیحات اختیاری"
 
-#: db/seeds/settings.rb:3203
+#: db/seeds/settings.rb:3233
 msgid "Limit tickets by IP per day"
 msgstr "محدود کردن روزانه تعداد تیکت‌ براساس آی‌پی"
 
-#: db/seeds/settings.rb:3182
+#: db/seeds/settings.rb:3212
 msgid "Limit tickets by IP per hour"
 msgstr "محدود کردن ساعتی تعداد تیکت‌ براساس آی‌پی"
 
-#: db/seeds/settings.rb:3224
+#: db/seeds/settings.rb:3254
 msgid "Limit tickets per day"
 msgstr "محدود کردن روزانه تعداد تیکت‌"
 
@@ -12708,7 +12736,7 @@ msgstr "متن لینک"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:139
 msgid "Link ticket"
 msgstr "پیوند تیکت"
 
@@ -12741,15 +12769,15 @@ msgstr "حساب‌های پیوند شده"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
-#: db/seeds/settings.rb:1612
+#: db/seeds/settings.rb:1641
 msgid "LinkedIn"
 msgstr "لینکدین"
 
-#: db/seeds/settings.rb:1620
+#: db/seeds/settings.rb:1649
 msgid "LinkedIn App Credentials"
 msgstr "اعتبارنامه برنامه LinkedIn"
 
-#: db/seeds/settings.rb:1613
+#: db/seeds/settings.rb:1642
 msgid "LinkedIn Developer Site"
 msgstr "وب‌سایت توسعه‌دهنده LinkedIn"
 
@@ -12765,7 +12793,7 @@ msgstr "لیست افزونه‌های نصب شده"
 msgid "List of issue labels"
 msgstr "لیست برچسب‌های مشکل"
 
-#: db/seeds/settings.rb:6666
+#: db/seeds/settings.rb:6958
 msgid ""
 "List of self-hosted video servers. This list is used for content security "
 "policy."
@@ -12834,7 +12862,7 @@ msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr "MTA محلی (Sendmail/Postfix/Exim/…) - از تنظیمات سرور استفاده کنید"
 
 #: app/assets/javascripts/app/models/job.coffee:13
-#: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:164
+#: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:176
 #: lib/excel_sheet/ai/analytics/errors.rb:27
 #: lib/excel_sheet/ai/analytics/with_usage.rb:27
 msgid "Locale"
@@ -12909,7 +12937,7 @@ msgstr "صفحه ورود"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:14
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:20
-#: db/seeds/settings.rb:118
+#: db/seeds/settings.rb:130
 msgid "Logo"
 msgstr "لوگو"
 
@@ -12921,7 +12949,7 @@ msgstr "خروج"
 msgid "Logs"
 msgstr ""
 
-#: db/seeds/settings.rb:1147
+#: db/seeds/settings.rb:1172
 msgid "Lost Password"
 msgstr "رمز عبور گمشده"
 
@@ -12942,7 +12970,7 @@ msgid "MAC address (unique identifier of the report)"
 msgstr "آدرس MAC (شناسه یکتا گزارش)"
 
 #: app/assets/javascripts/app/views/api/access.jst.eco:42
-#: db/seeds/settings.rb:6637
+#: db/seeds/settings.rb:6929
 msgid "MCP server"
 msgstr ""
 
@@ -12996,15 +13024,15 @@ msgstr "نوار کناری اصلی"
 msgid "Maintenance"
 msgstr "نگهداری"
 
-#: db/seeds/settings.rb:49
+#: db/seeds/settings.rb:55
 msgid "Maintenance Login"
 msgstr "ورود به حالت نگهداری سیستم"
 
-#: db/seeds/settings.rb:37
+#: db/seeds/settings.rb:43
 msgid "Maintenance Mode"
 msgstr "وضعیت نگهداری"
 
-#: app/controllers/application_controller/authenticates.rb:127
+#: app/controllers/application_controller/authenticates.rb:124
 msgid "Maintenance mode enabled!"
 msgstr "وضعیت نگهداری سیستم فعال شد!"
 
@@ -13409,7 +13437,7 @@ msgid "Match none (NOT)"
 msgstr "مطابقت هیچ کدام (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: db/seeds/settings.rb:2891
+#: db/seeds/settings.rb:2921
 msgid "Match tickets in following states"
 msgstr "تطابق تیکت‌ها با وضعیت‌های زیر"
 
@@ -13438,7 +13466,7 @@ msgstr "حداکثر چت‌های همزمان"
 msgid "Max. length"
 msgstr "حداکثر طول"
 
-#: db/seeds/settings.rb:3306
+#: db/seeds/settings.rb:3339
 msgid "Max. length of the subject in an email reply."
 msgstr "حداکثر طول موضوع در پاسخ ایمیل."
 
@@ -13462,27 +13490,27 @@ msgstr "حداکثر مقدار باید بیشتر یا مساوی با حدا�
 msgid "Maximal value must be lower than 2147483648"
 msgstr "حداکثر مقدار باید کمتر از 2147483648 باشد"
 
-#: db/seeds/settings.rb:3418
+#: db/seeds/settings.rb:3451
 msgid "Maximum Email Size"
 msgstr "حداکثر اندازه ایمیل"
 
-#: db/seeds/settings.rb:2999
+#: db/seeds/settings.rb:3029
 msgid "Maximum Recursive Ticket Triggers Depth"
 msgstr "حداکثر عمق بازگشتی تریگر تیکت"
 
-#: db/seeds/settings.rb:2321
+#: db/seeds/settings.rb:2350
 msgid "Maximum failed logins"
 msgstr "حداکثر ورودهای ناموفق"
 
-#: db/seeds/settings.rb:1054
+#: db/seeds/settings.rb:1079
 msgid "Maximum number of open tabs."
 msgstr "حداکثر تعداد برگه‌های باز."
 
-#: db/seeds/settings.rb:3002
+#: db/seeds/settings.rb:3032
 msgid "Maximum number of recursively executed triggers."
 msgstr "حداکثر تعداد تریگرهای اجرا شده به صورت بازگشتی."
 
-#: db/seeds/settings.rb:1041
+#: db/seeds/settings.rb:1066
 msgid "Maximum number of ticket shown in overviews"
 msgstr "حداکثر تعداد تیکت نشان داده شده در نمای کلی"
 
@@ -13593,7 +13621,7 @@ msgstr "وضعیت پیام"
 msgid "Message after sending form"
 msgstr "پیام پس از ارسال فرم"
 
-#: db/seeds/settings.rb:64
+#: db/seeds/settings.rb:70
 msgid "Message for login page."
 msgstr "پیام صفحه ورود."
 
@@ -13633,11 +13661,11 @@ msgstr "روش (نقطه پایانی AJAX)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
-#: db/seeds/settings.rb:1814
+#: db/seeds/settings.rb:1843
 msgid "Microsoft"
 msgstr "مایکروسافت"
 
-#: db/seeds/settings.rb:1822
+#: db/seeds/settings.rb:1851
 msgid "Microsoft 365 App Credentials"
 msgstr "گواهی‌های برنامه مایکروسافت 365"
 
@@ -13651,7 +13679,7 @@ msgstr "ایمیل Microsoft 365 Graph"
 msgid "Microsoft 365 IMAP Email"
 msgstr "ایمیل Microsoft 365 IMAP"
 
-#: db/seeds/settings.rb:1815
+#: db/seeds/settings.rb:1844
 msgid "Microsoft Application Registration Portal"
 msgstr "پورتال ثبت برنامه Microsoft"
 
@@ -13692,7 +13720,7 @@ msgstr "مهاجر نمی‌تواند خروجی OTRS را بخواند!"
 msgid "Milestone"
 msgstr "شاخص"
 
-#: db/seeds/settings.rb:2566
+#: db/seeds/settings.rb:2596
 msgid "Min. size of number"
 msgstr "حداقل اندازه عدد"
 
@@ -13712,7 +13740,7 @@ msgstr "حداقل مقدار باید بیشتر از -2147483648 باشد"
 msgid "Minimal value must be lower than 2147483648"
 msgstr "حداقل مقدار باید کمتر از 2147483648 باشد"
 
-#: db/seeds/settings.rb:2203
+#: db/seeds/settings.rb:2232
 msgid "Minimum length"
 msgstr "حداقل طول"
 
@@ -13800,7 +13828,7 @@ msgstr "دوشنبه"
 msgid "Monit"
 msgstr "نظارت"
 
-#: db/seeds/settings.rb:4952
+#: db/seeds/settings.rb:5190
 msgid "Monit integration"
 msgstr "ادغام Monit"
 
@@ -13810,7 +13838,7 @@ msgstr "ادغام Monit"
 msgid "Monitoring"
 msgstr "مانیتورینگ"
 
-#: db/seeds/settings.rb:3686
+#: db/seeds/settings.rb:3722
 msgid "Monitoring Token"
 msgstr "توکن مانیتورینگ"
 
@@ -13938,7 +13966,7 @@ msgstr "تیکتهای درحال اقدام من"
 msgid "Nagios"
 msgstr "نگیوس"
 
-#: db/seeds/settings.rb:4721
+#: db/seeds/settings.rb:4959
 msgid "Nagios integration"
 msgstr "ادغام Nagios"
 
@@ -14019,7 +14047,7 @@ msgstr "ادغام Nagios"
 msgid "Name"
 msgstr "نام"
 
-#: db/seeds/settings.rb:2016
+#: db/seeds/settings.rb:2045
 msgid "Name Identifier Format"
 msgstr "قالب شناسه نام"
 
@@ -14080,7 +14108,7 @@ msgstr "user_id یا organization_id به عنوان پارامتر مورد ن�
 msgid "Negative feedback"
 msgstr "بازخورد منفی"
 
-#: app/controllers/sessions_controller.rb:58
+#: app/controllers/sessions_controller.rb:56
 msgid ""
 "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
 "header could be found."
@@ -14216,7 +14244,7 @@ msgid "New Source"
 msgstr "منبع جدید"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4309
+#: db/seeds/settings.rb:4430
 msgid "New Tags"
 msgstr "برچسب‌های جدید"
 
@@ -14253,11 +14281,11 @@ msgstr "اتوماسیون جدید"
 msgid "New User"
 msgstr "کاربر جدید"
 
-#: db/seeds/settings.rb:1121
+#: db/seeds/settings.rb:1146
 msgid "New User Accounts"
 msgstr "حساب های کاربری جدید"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:150
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
 msgid "New Version"
 msgstr "نسخه جدید"
 
@@ -14454,7 +14482,7 @@ msgstr "صفحه بعد"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
-#: db/seeds/settings.rb:3110
+#: db/seeds/settings.rb:3140
 msgid "Next in overview"
 msgstr "تیکت بعدی"
 
@@ -14548,7 +14576,7 @@ msgstr "تنظیماتی برای Microsoft 365 موجود نیست!"
 msgid "No Microsoft Graph app configured!"
 msgstr "هیچ برنامه Microsoft Graph پیکربندی نشده است!"
 
-#: db/seeds/settings.rb:618
+#: db/seeds/settings.rb:643
 msgid "No Proxy"
 msgstr "بدون پراکسی"
 
@@ -14733,7 +14761,7 @@ msgid "No linked issues"
 msgstr "هیچ مشکلی پیوند داده نشده است"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:134
 msgid "No links added yet."
 msgstr "هنوز هیچ لینکی اضافه نشده است."
 
@@ -14763,7 +14791,7 @@ msgid "No private key found."
 msgstr "هیچ کلید خصوصی یافت نشد."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
-#: db/seeds/settings.rb:621
+#: db/seeds/settings.rb:646
 msgid ""
 "No proxy for these comma-separated addresses. Supports wildcards like "
 "*.example.com. Note: Loopback addresses are always excluded from proxying."
@@ -14771,6 +14799,12 @@ msgstr ""
 "بدون پروکسی برای این آدرس‌های جدا شده با کاما. از wildcardها مانند "
 "*.example.com پشتیبانی می‌کند. توجه: آدرس‌های loopback همیشه از پروکسی مستثنی "
 "هستند."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRating/FieldRatingInput.vue:24
+#, fuzzy
+#| msgid "Reporting"
+msgid "No rating"
+msgstr "گزارش‌دهی"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:260
 msgid "No recent searches"
@@ -14790,7 +14824,7 @@ msgstr "هیچ مقاله مرتبطی برای پردازش پیام وضعیت
 msgid "No related knowledge base answer links."
 msgstr "افزودن پاسخ از پایگاه دانش"
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:171
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:175
 msgid "No results for this query."
 msgstr "هیچ نتیجه‌ای برای این جستجو وجود ندارد."
 
@@ -14832,7 +14866,7 @@ msgstr ""
 msgid "No session available."
 msgstr "هیچ نشستی وجود ندارد."
 
-#: lib/stats.rb:21
+#: lib/stats.rb:10
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "هیچ تنظیمی با منطقه 'Dashboard::Stats' تعریف نشده است"
 
@@ -14917,7 +14951,7 @@ msgstr "اعلان خوانده نشده ای برای شما نیست. :)"
 msgid "No unread notifications."
 msgstr "هیچ اعلان خوانده نشده‌ای وجود ندارد."
 
-#: db/seeds/settings.rb:1370
+#: db/seeds/settings.rb:1399
 msgid "No user creation on logon"
 msgstr "بدون ایجاد کاربر در ورود"
 
@@ -14954,7 +14988,7 @@ msgstr "نه، متشکرم"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:60
-#: app/graphql/gql/types/ticket_type.rb:105 db/seeds/settings.rb:2048
+#: app/graphql/gql/types/ticket_type.rb:105 db/seeds/settings.rb:2077
 msgid "None"
 msgstr "هیچکدام"
 
@@ -15012,7 +15046,7 @@ msgstr "مجاز نیست"
 msgid "Not authorized (feature not possible)"
 msgstr "مجاز نیست (ویژگی امکان‌پذیر نیست)"
 
-#: app/controllers/application_controller/authenticates.rb:117
+#: app/controllers/application_controller/authenticates.rb:114
 msgid "Not authorized (token expired)!"
 msgstr "مجاز نیست (توکن منقضی شده است)!"
 
@@ -15078,7 +15112,7 @@ msgstr ""
 msgid "Note"
 msgstr "یادداشت"
 
-#: db/seeds/settings.rb:696
+#: db/seeds/settings.rb:721
 msgid "Note - default visibility"
 msgstr "یادداشت - قابلیت مشاهده پیش‌فرض"
 
@@ -15126,7 +15160,7 @@ msgstr "توجه:"
 msgid "Notification"
 msgstr "اعلان"
 
-#: db/seeds/settings.rb:3578
+#: db/seeds/settings.rb:3611
 msgid "Notification Sender"
 msgstr "ارسال کننده پیغام"
 
@@ -15237,8 +15271,14 @@ msgstr "پیکربندی احراز هویت (OAuth)"
 msgid "OAuth URLs are:"
 msgstr "آدرس‌های URL OAuth عبارتند از:"
 
-#: app/controllers/application_controller/authenticates.rb:79
+#: app/controllers/application_controller/authenticates.rb:76
 msgid "OAuth2 token is expired!"
+msgstr "توکن OAuth2 منقضی شده است!"
+
+#: app/controllers/application_controller/authenticates.rb:77
+#, fuzzy
+#| msgid "OAuth2 token is expired!"
+msgid "OAuth2 token is revoked!"
 msgstr "توکن OAuth2 منقضی شده است!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
@@ -15402,7 +15442,7 @@ msgstr "آنلاین"
 msgid "Online Forms"
 msgstr "فرم‌های آنلاین"
 
-#: db/seeds/settings.rb:84
+#: db/seeds/settings.rb:93
 msgid "Online Service"
 msgstr "سرویس آنلاین"
 
@@ -15429,11 +15469,11 @@ msgstr ""
 "فقط %s٪ از این زبان تا کنون ترجمه شده است. لطفاً به بهبود Zammad کمک کنید و "
 "ترجمه را کامل کنید."
 
-#: db/seeds/settings.rb:2051
+#: db/seeds/settings.rb:2080
 msgid "Only Encrypting"
 msgstr "فقط رمزنگاری کردن"
 
-#: db/seeds/settings.rb:2050
+#: db/seeds/settings.rb:2079
 msgid "Only Signing"
 msgstr "فقط امضا کردن"
 
@@ -15457,6 +15497,12 @@ msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr "فقط بسته‌های منابع شناخته شده، قابل اعتماد و تأیید شده باید نصب شوند."
 
+#: app/controllers/long_polling_controller.rb:92
+#, fuzzy
+#| msgid "Enables user authentication via %s."
+msgid "Only session based authentication is supported!"
+msgstr "فعالسازی احراز هویت از طریق %s."
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:21
@@ -15466,7 +15512,11 @@ msgid ""
 "list."
 msgstr "فقط 20 رکورد اخیر نمایش داده می‌شود. برای مشاهده لیست کامل دانلود کنید."
 
-#: db/seeds/settings.rb:30
+#: app/controllers/settings_controller.rb:32
+msgid "Only the product logo can be updated with an image."
+msgstr ""
+
+#: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
 msgstr "فقط در داخل برای انتشار نسخه برنامه وب فعلی به مشتریان استفاده می‌شود."
 
@@ -15588,7 +15638,7 @@ msgstr "باز کردن همپوشانی ماه"
 msgid "Open the years overlay"
 msgstr "باز کردن همپوشانی سال"
 
-#: db/seeds/settings.rb:959
+#: db/seeds/settings.rb:984
 msgid "Open ticket indicator"
 msgstr "نشانگر تیکت باز"
 
@@ -15611,11 +15661,11 @@ msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
-#: db/seeds/settings.rb:2120
+#: db/seeds/settings.rb:2149
 msgid "OpenID Connect"
 msgstr "OpenID Connect"
 
-#: db/seeds/settings.rb:2128
+#: db/seeds/settings.rb:2157
 msgid "OpenID Connect Options"
 msgstr "گزینه‌های OpenID Connect"
 
@@ -15727,7 +15777,7 @@ msgstr "ترتیب نمای کلی تیکت"
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
 #: app/graphql/gql/types/overview_type.rb:94
-#: db/seeds/object_manager_attributes.rb:98 db/seeds/settings.rb:141
+#: db/seeds/object_manager_attributes.rb:98 db/seeds/settings.rb:153
 #: lib/excel_sheet/ticket.rb:30
 msgid "Organization"
 msgstr "سازمان"
@@ -15984,15 +16034,15 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5969
+#: db/seeds/settings.rb:6246
 msgid "PGP Recipient Alias Configuration"
 msgstr "پیکربندی نام مستعار گیرنده PGP"
 
-#: db/seeds/settings.rb:5927
+#: db/seeds/settings.rb:6204
 msgid "PGP config"
 msgstr "پیکربندی PGP"
 
-#: db/seeds/settings.rb:5899
+#: db/seeds/settings.rb:6176
 msgid "PGP integration"
 msgstr "یکپارچه‌سازی PGP"
 
@@ -16000,11 +16050,11 @@ msgstr "یکپارچه‌سازی PGP"
 msgid "PGP signature does not cover the displayed message body"
 msgstr ""
 
-#: db/seeds/settings.rb:5941
+#: db/seeds/settings.rb:6218
 msgid "PGP signing for system notifications"
 msgstr "امضای PGP برای اعلان‌های سیستمی"
 
-#: db/seeds/settings.rb:2174
+#: db/seeds/settings.rb:2203
 msgid "PKCE"
 msgstr "PKCE"
 
@@ -16034,7 +16084,7 @@ msgstr "تیکت به‌روز شد."
 msgid "Packages"
 msgstr "پکیج‌های نرم‌افزاری"
 
-#: db/seeds/settings.rb:6759
+#: db/seeds/settings.rb:7061
 #, fuzzy
 #| msgid "Packages"
 msgid "Packages Token"
@@ -16111,7 +16161,7 @@ msgstr "کلمه عبور و احراز هویت"
 msgid "Password Access"
 msgstr "دسترسی با رمز عبور"
 
-#: db/seeds/settings.rb:1067
+#: db/seeds/settings.rb:1092
 msgid "Password Login"
 msgstr "کلمه عبور"
 
@@ -16139,23 +16189,23 @@ msgstr "رمز عبور بررسی نشد"
 msgid "Password for proxy connection"
 msgstr "رمز عبور برای اتصال پراکسی"
 
-#: db/seeds/settings.rb:597
+#: db/seeds/settings.rb:622
 msgid "Password for proxy connection."
 msgstr "رمز عبور برای اتصال پراکسی."
 
-#: db/seeds/settings.rb:2246
+#: db/seeds/settings.rb:2275
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "رمز عبور می‌بایست حداقل ۲ حرف کوچک و ۲ حرف بزرگ را شامل باشد."
 
-#: db/seeds/settings.rb:2272
+#: db/seeds/settings.rb:2301
 msgid "Password needs to contain at least one digit."
 msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
 
-#: db/seeds/settings.rb:2298
+#: db/seeds/settings.rb:2327
 msgid "Password needs to contain at least one special character."
 msgstr "رمز عبور می‌بایست حداقل یک کاراکتر خاص را شامل باشد."
 
-#: db/seeds/settings.rb:2206
+#: db/seeds/settings.rb:2235
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "رمز عبور بایستی شامل حداقل این تعداد کاراکتر باشد."
 
@@ -16242,7 +16292,7 @@ msgid "Permission"
 msgstr "دسترسی‌ها"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: db/seeds/settings.rb:2874
+#: db/seeds/settings.rb:2904
 msgid "Permission level for looking up tickets"
 msgstr "سطح مجوز برای جستجوی تیکت‌ها"
 
@@ -16357,15 +16407,15 @@ msgstr "مکان‌نما برای متن تولید شده توسط هوش مص
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5484
+#: db/seeds/settings.rb:5734
 msgid "Placetel Token"
 msgstr "توکن Placetel"
 
-#: db/seeds/settings.rb:5470
+#: db/seeds/settings.rb:5720
 msgid "Placetel config"
 msgstr "پیکربندی Placetel"
 
-#: db/seeds/settings.rb:5442
+#: db/seeds/settings.rb:5692
 msgid "Placetel integration"
 msgstr "ادغام Placetel"
 
@@ -16481,7 +16531,7 @@ msgstr ""
 "لطفاً توجه داشته باشید که نام‌های مستعار ایمیل باید از قبل در سمت Microsoft "
 "365 پیکربندی شوند. %l"
 
-#: db/seeds/settings.rb:2013
+#: db/seeds/settings.rb:2042
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
@@ -16638,7 +16688,7 @@ msgstr "طرح رنگی را که توسط سیستم عامل نشان داده
 msgid "Press the button below to finish the setup."
 msgstr "لطفا برای پایان عملیات نصب کلید زیر را فشار دهید."
 
-#: db/seeds/settings.rb:228
+#: db/seeds/settings.rb:243
 msgid "Pretty Date"
 msgstr "فرمت مناسب برای تاریخ"
 
@@ -16781,11 +16831,11 @@ msgstr "قوانین اولویت"
 msgid "Priority tagging rules"
 msgstr "قوانین اولویت‌بندی برچسب‌ها"
 
-#: db/seeds/settings.rb:2062
+#: db/seeds/settings.rb:2091
 msgid "Private key (PEM)"
 msgstr "کلید خصوصی (PEM)"
 
-#: db/seeds/settings.rb:2069
+#: db/seeds/settings.rb:2098
 msgid "Private key secret"
 msgstr "رمز کلید خصوصی"
 
@@ -16816,7 +16866,7 @@ msgstr "پردازش بالاسپاری‌های تیکت."
 msgid "Processing log"
 msgstr "دانلود لاگ‌های خطا"
 
-#: db/seeds/settings.rb:94
+#: db/seeds/settings.rb:106
 msgid "Product Name"
 msgstr "نام محصول"
 
@@ -16846,7 +16896,7 @@ msgstr "پروفایل ها"
 msgid "Project ID"
 msgstr "شناسه پروژه"
 
-#: db/seeds/settings.rb:2184
+#: db/seeds/settings.rb:2213
 msgid ""
 "Proof Key for Code Exchange is currently only supporting SHA256 as code "
 "challenge method."
@@ -16931,15 +16981,15 @@ msgstr "کاربر با موفقیت به‌روزرسانی شد."
 msgid "Providers"
 msgstr "تأمین کننده"
 
-#: db/seeds/settings.rb:594
+#: db/seeds/settings.rb:619
 msgid "Proxy Password"
 msgstr "رمزعبور پراکسی"
 
-#: db/seeds/settings.rb:545
+#: db/seeds/settings.rb:570
 msgid "Proxy Settings"
 msgstr "تنظیمات پروکسی"
 
-#: db/seeds/settings.rb:570
+#: db/seeds/settings.rb:595
 msgid "Proxy User"
 msgstr "کاربر پراکسی"
 
@@ -17052,7 +17102,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:27
-#: db/seeds/settings.rb:52
+#: db/seeds/settings.rb:58
 msgid ""
 "Put a message on the login page. To change it, click on the text area below "
 "and change it in-line."
@@ -17060,7 +17110,7 @@ msgstr ""
 "یک پیام در صفحه ورود قرار دهید. برای تغییر آن، روی ناحیه متنی زیر کلیک کنید "
 "و آن را درون خطی تغییر دهید."
 
-#: db/seeds/settings.rb:3870
+#: db/seeds/settings.rb:3942
 msgid ""
 "Puts Zammad into import mode. This disables some triggers and denies access "
 "to all users without the permission \"admin.maintenance\"."
@@ -17245,15 +17295,15 @@ msgstr ""
 "از کدهای بازیابی می‌توان برای دسترسی به حساب شما در صورت از دست دادن دسترسی "
 "به سایر روش‌های احراز هویت دو عاملی استفاده کرد."
 
-#: db/seeds/settings.rb:2935
+#: db/seeds/settings.rb:2965
 msgid "Recursive Ticket Triggers"
 msgstr "تریگرهای تیکت بازگشتی"
 
-#: db/seeds/settings.rb:6721
+#: db/seeds/settings.rb:7020
 msgid "Recursive hierarchical chunking"
 msgstr "تکه‌تکه کردن سلسله‌مراتبی بازگشتی"
 
-#: db/seeds/settings.rb:1097
+#: db/seeds/settings.rb:1122
 msgid ""
 "Redirect users from the login page directly to the third-party sign-in. "
 "Takes effect only if password login is disabled and exactly one third-party "
@@ -17271,7 +17321,7 @@ msgstr "در حال انتقال به صفحه تأیید هویت…"
 msgid "Redis version"
 msgstr "نسخه Redis"
 
-#: db/seeds/settings.rb:3480
+#: db/seeds/settings.rb:3513
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -17364,7 +17414,7 @@ msgstr "تأیید رمز عبور جدید"
 msgid "Relevance score threshold"
 msgstr "تأیید رمز عبور جدید"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:134
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr "بارگیری مجدد"
@@ -17706,7 +17756,7 @@ msgstr "درخواست ورود با رمز عبور در اینجا."
 msgid "Requesting the Grant"
 msgstr "درخواست اعطا"
 
-#: db/seeds/settings.rb:1849
+#: db/seeds/settings.rb:1878
 msgid "Require verified email domain"
 msgstr ""
 
@@ -17723,7 +17773,7 @@ msgstr "پارامتر مورد نیاز 'profile' وجود ندارد."
 msgid "Requirements"
 msgstr "نیازمندی‌ها"
 
-#: db/seeds/settings.rb:1859
+#: db/seeds/settings.rb:1888
 msgid ""
 "Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
 "to match the incoming email address, before trusting that address for "
@@ -17732,7 +17782,7 @@ msgid ""
 "blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
 
-#: db/seeds/settings.rb:6230
+#: db/seeds/settings.rb:6510
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr "تنظیم احراز هویت دوعاملی برای برخی نقش‌های کاربری الزامی است."
@@ -17979,7 +18029,7 @@ msgstr "تلاش مجدد برای دانلود رسانه ارسال شده ا�
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "بازنویسی بخش پیچیده و آسان کردن درک آن"
 
-#: db/seeds/settings.rb:6732
+#: db/seeds/settings.rb:7034
 msgid "Richtext Bubble Menu"
 msgstr "منوی حباب متن غنی"
 
@@ -18116,7 +18166,7 @@ msgstr ""
 "یک پروتکل) است که به طور گسترده برای ارسال پیام‌های امضا شده و رمزگذاری شده "
 "دیجیتالی پذیرفته شده است."
 
-#: db/seeds/settings.rb:5857
+#: db/seeds/settings.rb:6134
 msgid "S/MIME config"
 msgstr "پیکربندی S/MIME"
 
@@ -18126,21 +18176,21 @@ msgstr ""
 "S/MIME شما را قادر می‌سازد تا پیام‌های امضا شده و رمزگذاری شده دیجیتالی ارسال "
 "کنید."
 
-#: db/seeds/settings.rb:5829
+#: db/seeds/settings.rb:6106
 msgid "S/MIME integration"
 msgstr "ادغام S/MIME"
 
-#: db/seeds/settings.rb:5871
+#: db/seeds/settings.rb:6148
 msgid "S/MIME signing for system notifications"
 msgstr "امضای S/MIME برای اعلان‌های سیستمی"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
-#: db/seeds/settings.rb:1962
+#: db/seeds/settings.rb:1991
 msgid "SAML"
 msgstr "SAML"
 
-#: db/seeds/settings.rb:1970
+#: db/seeds/settings.rb:1999
 msgid "SAML App Credentials"
 msgstr "اعتبارنامه برنامه SAML"
 
@@ -18238,11 +18288,11 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:6073
+#: db/seeds/settings.rb:6353
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:289
+#: app/controllers/sessions_controller.rb:292
 msgid "SSO request from untrusted IP address."
 msgstr "درخواست SSO از آدرس IP غیرقابل اعتماد."
 
@@ -18398,11 +18448,11 @@ msgstr "برنامه‌ریز"
 msgid "Schedulers"
 msgstr "زمانبندی‌ها"
 
-#: db/seeds/settings.rb:2166
+#: db/seeds/settings.rb:2195
 msgid "Scopes"
 msgstr "دامنه‌ها"
 
-#: db/seeds/settings.rb:2171
+#: db/seeds/settings.rb:2200
 msgid ""
 "Scopes that are included, separated by a single space character. If unset, "
 "\"openid email profile\" is used."
@@ -18746,7 +18796,7 @@ msgstr "سازمان‌های ثانویه فقط زمانی مجاز هستند
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "سازمان‌های ثانویه نمی‌توانند شامل سازمان اصلی باشند."
 
-#: app/models/organization.rb:116 app/models/user.rb:993
+#: app/models/organization.rb:128 app/models/user.rb:993
 #, fuzzy
 #| msgid "Secondary organizations cannot include the primary organization."
 msgid "Secondary organizations cannot include the same organization twice."
@@ -18795,7 +18845,7 @@ msgstr "کلید امنیتی"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:6136
+#: db/seeds/settings.rb:6416
 msgid "Security Keys"
 msgstr "کلیدهای امنیتی"
 
@@ -18842,7 +18892,7 @@ msgstr ""
 "کلیدهای امنیتی، گواهی‌نامه‌های سخت‌افزاری یا نرم‌افزاری هستند که می‌توان از آن‌ها "
 "به عنوان احراز هویت دوعاملی استفاده کرد."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:128
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
 msgid "Security token verification failed"
 msgstr "تأیید توکن امنیتی ناموفق بود"
 
@@ -18931,7 +18981,7 @@ msgstr "انتخاب همه ورودی‌ها"
 msgid "Select attribute"
 msgstr "انتخاب ویژگی"
 
-#: db/seeds/settings.rb:906
+#: db/seeds/settings.rb:931
 msgid "Select default ticket type"
 msgstr "انتخاب نوع پیش‌فرض برای تیکت"
 
@@ -19113,11 +19163,11 @@ msgstr ""
 "ارسال یادآوری‌های خودکار به مشتریان که از آنها می‌خواهد پاسخ دهند اگر پنجره 24 "
 "ساعته در حال انقضا است."
 
-#: db/seeds/settings.rb:3551
+#: db/seeds/settings.rb:3584
 msgid "Send postmaster mail if mail too large"
 msgstr "ارسال ایمیل پست مستر اگر ایمیل خیلی بزرگ است"
 
-#: db/seeds/settings.rb:3554
+#: db/seeds/settings.rb:3587
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr "ارسال ایمیل رد پست مستر به فرستنده ایمیل اگر ایمیل خیلی بزرگ است."
 
@@ -19129,16 +19179,16 @@ msgstr "ارسال به مشتریان"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3368
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3401
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "فرستنده"
 
-#: db/seeds/settings.rb:3368
+#: db/seeds/settings.rb:3401
 msgid "Sender Format"
 msgstr "فرمت ارسال کننده"
 
-#: db/seeds/settings.rb:3396
+#: db/seeds/settings.rb:3429
 msgid "Sender Format Separator"
 msgstr "جداکننده قالب فرستنده"
 
@@ -19147,7 +19197,7 @@ msgstr "جداکننده قالب فرستنده"
 msgid "Sender Type"
 msgstr "نوع فرستنده"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3530
 msgid "Sender based on Reply-To header"
 msgstr "فرستنده بر اساس هدر Reply-To"
 
@@ -19175,7 +19225,7 @@ msgstr "درحال ارسال…"
 msgid "Sent successfully!"
 msgstr "ارسال موفقیت‌آمیز بود!"
 
-#: db/seeds/settings.rb:6722
+#: db/seeds/settings.rb:7021
 msgid "Sentence-based chunking"
 msgstr "تکه‌تکه کردن مبتنی بر جمله"
 
@@ -19193,7 +19243,7 @@ msgstr "جدا کردن مقادیر گوناگون با ;"
 msgid "September"
 msgstr "سپتامبر"
 
-#: db/seeds/settings.rb:4157
+#: db/seeds/settings.rb:4275
 msgid "Sequencer log level"
 msgstr "سطح گزارش توالی‌یاب"
 
@@ -19227,7 +19277,7 @@ msgstr "سرویس‌ها"
 msgid "Session"
 msgstr "نشست"
 
-#: db/seeds/settings.rb:1175
+#: db/seeds/settings.rb:1200
 msgid "Session Timeout"
 msgstr "زمان‌بندی نشست"
 
@@ -19248,7 +19298,7 @@ msgstr "تنظیم"
 msgid "Set a title for your ticket"
 msgstr "یک عنوان برای تیکت خود تنظیم کنید"
 
-#: db/seeds/settings.rb:5572
+#: db/seeds/settings.rb:5834
 msgid "Set agent limit"
 msgstr "تنظیم محدوده کارشناس"
 
@@ -19271,11 +19321,11 @@ msgstr "تنظیم به عنوان پیش‌فرض"
 msgid "Set authenticator app as default"
 msgstr "تنظیم برنامه احراز هویت به عنوان پیش‌فرض"
 
-#: db/seeds/settings.rb:934
+#: db/seeds/settings.rb:959
 msgid "Set available ticket types"
 msgstr "تنظیم انواع تیکت در دسترس"
 
-#: db/seeds/settings.rb:3892
+#: db/seeds/settings.rb:3967
 msgid "Set backend which is being used for import."
 msgstr "تنظیم بک‌اند که برای واردات استفاده می‌شود."
 
@@ -19308,7 +19358,7 @@ msgstr "تنظیم شناسه تماس بیرونی"
 msgid "Set security keys as default"
 msgstr "تنظیم کلیدهای امنیتی به عنوان پیش‌فرض"
 
-#: db/seeds/settings.rb:5734
+#: db/seeds/settings.rb:6011
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits."
@@ -19362,7 +19412,7 @@ msgstr "تنظیم کردن احراز هویت دوعاملی"
 msgid "Set up two-factor authentication: %s"
 msgstr "راه‌اندازی احراز هویت دو مرحله‌ای: %s"
 
-#: db/seeds/settings.rb:3500
+#: db/seeds/settings.rb:3533
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -19510,12 +19560,12 @@ msgstr "نمایش آیکون خوراک"
 msgid "Show Search Details"
 msgstr "نمایش جزئیات جستجو"
 
-#: db/seeds/settings.rb:891
+#: db/seeds/settings.rb:916
 msgid ""
 "Show additional notes for ticket creation depending on the selected type."
 msgstr "نمایش یادداشت‌های اضافی برای ایجاد تیکت بسته به نوع انتخاب شده."
 
-#: db/seeds/settings.rb:6338
+#: db/seeds/settings.rb:6618
 msgid "Show agents only their own activities in the activity stream."
 msgstr ""
 
@@ -19529,7 +19579,7 @@ msgstr "نمایش همه…"
 msgid "Show authenticator app secret"
 msgstr "نمایش رمز برنامه احراز کننده هویت"
 
-#: db/seeds/settings.rb:6108
+#: db/seeds/settings.rb:6388
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "نمایش هفته‌های تقویم در انتخابگر فیلدهای تاریخ/زمان"
 
@@ -19550,7 +19600,7 @@ msgstr "نمایش موارد کمتر"
 msgid "Show matching ticket(s) in the warning"
 msgstr "نمایش تیکت(های) منطبق در هشدار"
 
-#: db/seeds/settings.rb:2857
+#: db/seeds/settings.rb:2887
 msgid "Show matching tickets in the warning"
 msgstr "نمایش تیکت‌های منطبق در هشدار"
 
@@ -19580,7 +19630,7 @@ msgstr "نمایش اعلان‌ها"
 msgid "Show original"
 msgstr "اصلی"
 
-#: db/seeds/settings.rb:1070
+#: db/seeds/settings.rb:1095
 msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
 "third-party authentication is enabled."
@@ -19615,7 +19665,7 @@ msgid "Show ticket viewers"
 msgstr "نمایش بازدید کنندگان تیکت"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:4222
+#: db/seeds/settings.rb:4343
 msgid "Show time accounting dialog when updating matching tickets."
 msgstr "نمایش پنجره حسابگر زمان در هنگام به‌روزرسانی تیکت‌های مطابق."
 
@@ -19623,7 +19673,7 @@ msgstr "نمایش پنجره حسابگر زمان در هنگام به‌رو�
 msgid "Show title in form."
 msgstr "نمایش عنوان در فرم."
 
-#: db/seeds/settings.rb:2840
+#: db/seeds/settings.rb:2870
 msgid "Show to user roles"
 msgstr "نمایش به نقش‌های کاربری"
 
@@ -19656,7 +19706,7 @@ msgstr "بعنوان مثال: آخرین تغییرات تیکت‌ها، کا�
 msgid "Side panel footer"
 msgstr "فوتر پنل کناری"
 
-#: db/seeds/settings.rb:833
+#: db/seeds/settings.rb:858
 msgid "Sidebar Attachments"
 msgstr "پیوست‌های نوار کناری"
 
@@ -19762,7 +19812,7 @@ msgstr "امضاء"
 msgid "Signed"
 msgstr "امضا شده"
 
-#: db/seeds/settings.rb:2043
+#: db/seeds/settings.rb:2072
 msgid "Signing & Encrypting"
 msgstr "امضا و رمزنگاری کردن"
 
@@ -19770,7 +19820,7 @@ msgstr "امضا و رمزنگاری کردن"
 msgid "Signup Screen"
 msgstr "صفحه ثبت نام"
 
-#: db/seeds/settings.rb:2819
+#: db/seeds/settings.rb:2849
 msgid "Similar tickets found"
 msgstr "تیکت‌های مشابه یافت شد"
 
@@ -19778,7 +19828,7 @@ msgstr "تیکت‌های مشابه یافت شد"
 msgid "Simple Line Icons"
 msgstr "آیکون‌های خط ساده"
 
-#: db/seeds/settings.rb:420
+#: db/seeds/settings.rb:441
 msgid "Simple Storage (S3)"
 msgstr "ذخیره‌سازی ساده (S3)"
 
@@ -19800,11 +19850,11 @@ msgstr ""
 msgid "Simple Storage Service not reachable."
 msgstr "سرویس ذخیره‌سازی ساده قابل دسترسی نیست."
 
-#: db/seeds/settings.rb:1899
+#: db/seeds/settings.rb:1928
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
 
-#: db/seeds/settings.rb:1899
+#: db/seeds/settings.rb:1928
 msgid "Sina Weibo Open Portal"
 msgstr "پورتال باز Sina Weibo"
 
@@ -19833,7 +19883,7 @@ msgstr "جانوشت درختی تک انتخابی"
 msgid "Sipgate"
 msgstr "درگاه سیپ"
 
-#: db/seeds/settings.rb:1770
+#: db/seeds/settings.rb:1799
 msgid "Site"
 msgstr "سایت"
 
@@ -19872,7 +19922,7 @@ msgstr "زمان حل"
 msgid "Some Text"
 msgstr "یک عبارت"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:72
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -19880,7 +19930,7 @@ msgstr ""
 "برخی از تنظیمات سیستم تغییر کرده است، Zammad در حال راه‌اندازی مجدد است. لطفاً "
 "صبر کنید تا Zammad دوباره برگردد."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:91
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 "برخی از تنظیمات سیستم تغییر کرده است، لطفاً همه فرآیندهای Zammad را مجدداً "
@@ -20002,7 +20052,7 @@ msgstr "منابع"
 msgid "Spam protection"
 msgstr "محافظت در برابر اسپم"
 
-#: db/seeds/settings.rb:2295
+#: db/seeds/settings.rb:2324
 msgid "Special character required"
 msgstr "کاراکتر خاص (@, $, ...) موردنیاز است"
 
@@ -20166,7 +20216,7 @@ msgstr "وضعیت"
 msgid "State icon"
 msgstr "آیکون وضعیت"
 
-#: db/seeds/settings.rb:5606
+#: db/seeds/settings.rb:5873
 msgid "Stats Backend"
 msgstr "بک‌اند آمار"
 
@@ -20200,7 +20250,7 @@ msgstr "وضعیت:"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:58
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
-#: db/seeds/settings.rb:3111
+#: db/seeds/settings.rb:3141
 msgid "Stay on tab"
 msgstr "ماندن در همین برگه"
 
@@ -20240,7 +20290,7 @@ msgstr "توقف پس از تطبیق"
 msgid "Storage"
 msgstr "ذخیره سازی"
 
-#: db/seeds/settings.rb:406
+#: db/seeds/settings.rb:427
 msgid "Storage Method"
 msgstr "روش ذخیره سازی"
 
@@ -20248,15 +20298,15 @@ msgstr "روش ذخیره سازی"
 msgid "Store"
 msgstr "ذخیره کردن"
 
-#: db/seeds/settings.rb:5245
+#: db/seeds/settings.rb:5483
 msgid "Stores the GitHub configuration."
 msgstr "پیکربندی GitHub را ذخیره می‌کند."
 
-#: db/seeds/settings.rb:5203
+#: db/seeds/settings.rb:5441
 msgid "Stores the GitLab configuration."
 msgstr "پیکربندی GitLab را ذخیره می‌کند."
 
-#: db/seeds/settings.rb:3285
+#: db/seeds/settings.rb:3315
 msgid ""
 "Stores the credentials (e.g. site key and secret) of the selected CAPTCHA "
 "provider."
@@ -20264,14 +20314,14 @@ msgstr ""
 "اعتبارنامه‌های ارائه‌دهنده‌ی CAPTCHA انتخاب‌شده را ذخیره می‌کند (مثلاً کلید سایت و "
 "کلید مخفی)."
 
-#: db/seeds/settings.rb:6519
+#: db/seeds/settings.rb:6811
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
 "گزینه‌های خلاصه تیکت را ذخیره می‌کند (به عنوان مثال کدام محتوا قابل مشاهده "
 "است)."
 
-#: db/seeds/settings.rb:5998
+#: db/seeds/settings.rb:6278
 #, fuzzy
 #| msgid "Stores the GitLab configuration."
 msgid "Stores the translation service configuration."
@@ -20296,7 +20346,7 @@ msgstr "استان"
 msgid "Subject"
 msgstr "موضوع"
 
-#: db/seeds/settings.rb:3483
+#: db/seeds/settings.rb:3516
 msgid ""
 "Subject & References - Additional search for same article subject and same "
 "message ID in references header if no follow-up was recognized using default "
@@ -20456,7 +20506,7 @@ msgstr "یکشنبه"
 msgid "Sunday"
 msgstr "یکشنبه"
 
-#: db/seeds/settings.rb:5693
+#: db/seeds/settings.rb:5966
 msgid "Support of multilingual Knowledge Base."
 msgstr "پشتیبانی از پایگاه دانش چند زبانه."
 
@@ -20504,7 +20554,7 @@ msgstr "همگام‌سازی با کامپیوتر"
 msgid "System"
 msgstr "سیستم"
 
-#: db/seeds/settings.rb:3380
+#: db/seeds/settings.rb:3413
 msgid "System Address Display Name"
 msgstr "نام نمایشی آدرس سیستم"
 
@@ -20556,17 +20606,17 @@ msgstr ""
 "اشتراک گذاشت. این پلتفرم دارای یک رابط کاربری بسیار راحت مبتنی بر Weblate "
 "است، آن را امتحان کنید!"
 
-#: db/seeds/settings.rb:5766
+#: db/seeds/settings.rb:6043
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
 msgstr "پیکربندی سراسری مکانیسم نظرسنجی پرس و جو برای نمای کلی تیکت."
 
-#: db/seeds/settings.rb:291
+#: db/seeds/settings.rb:306
 msgid "SystemID"
 msgstr "شناسه سیستم"
 
-#: db/seeds/settings.rb:3096
+#: db/seeds/settings.rb:3126
 msgid "Tab behaviour after ticket action"
 msgstr "رفتار برگه پس از اقدام تیکت"
 
@@ -20632,7 +20682,7 @@ msgstr "برچسب‌گذاری شده %s"
 msgid "Tags"
 msgstr "برچسب‌ها"
 
-#: db/seeds/settings.rb:3511
+#: db/seeds/settings.rb:3544
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
@@ -20640,7 +20690,7 @@ msgstr ""
 "هدر Reply-To را به عنوان فرستنده/از ایمیل بگیرید و از نام واقعی منبع اصلی "
 "استفاده کنید."
 
-#: db/seeds/settings.rb:3510
+#: db/seeds/settings.rb:3543
 msgid "Take Reply-To header as sender/from of email."
 msgstr "هدر Reply-To را به عنوان فرستنده/از ایمیل بگیرید."
 
@@ -20974,6 +21024,11 @@ msgstr "امضا PGP نامعتبر است."
 msgid "The PGP signature key has been revoked."
 msgstr "کلید امضای PGP لغو شده است."
 
+#: app/controllers/sessions_controller.rb:57
+msgid ""
+"The SSO environment variables and headers contain different user logins."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
 msgstr "بات تلگرام قابل ذخیره نیست."
@@ -21094,10 +21149,17 @@ msgstr "این بند نمی‌تواند به عمومی تنظیم شود."
 msgid "The article does not belong to the specified ticket."
 msgstr "این بند به تیکت مشخص شده تعلق ندارد."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:253
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:290
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
+msgid ""
+"The article language detection is disabled. To avoid translating articles "
+"that are already in the target language, ask an administrator with access to "
+"the ticket settings to enable it."
 msgstr ""
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
@@ -21327,7 +21389,7 @@ msgstr ""
 "واحد انتخاب شده فقط برای نمایش استفاده می‌شود و بر مقادیر ذخیره شده تأثیر "
 "نمی‌گذارد."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 "تنظیمات سامانه تغییر نموده است لطفا مرورگر خود را مجددا بارگذاری نمایید."
@@ -21476,7 +21538,7 @@ msgstr ""
 msgid "The device could not be deleted."
 msgstr "دستگاه حذف نشد."
 
-#: db/seeds/settings.rb:2390
+#: db/seeds/settings.rb:2419
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "جداکننده بین TicketHook و شماره تیکت. به عنوان مثال ': '."
 
@@ -21647,7 +21709,7 @@ msgstr "نام هاست یافت نشد."
 msgid "The hours overlay"
 msgstr "همپوشانی ساعت"
 
-#: db/seeds/settings.rb:2365
+#: db/seeds/settings.rb:2394
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
@@ -21679,7 +21741,7 @@ msgstr "ایمپورت ناموفق بود."
 msgid "The import was successful."
 msgstr "درونبرد موفقیت‌آمیز بود."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:130
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -21997,7 +22059,7 @@ msgstr "رمز عبور ارائه شده نادرست است."
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "بارگذاری ارائه شده نامعتبر است. لطفاً نحو خود را بررسی کنید."
 
-#: app/controllers/application_controller/authenticates.rb:76
+#: app/controllers/application_controller/authenticates.rb:75
 #: app/controllers/integration/check_mk_controller.rb:142
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
 #: app/services/service/user/password_reset/update.rb:28
@@ -22074,7 +22136,7 @@ msgid "The required PGP passphrase is missing."
 msgstr "عبارت عبور مورد نیاز PGP وارد نشده است."
 
 #: app/controllers/users_controller.rb:662
-#: app/services/service/user/add_first_admin.rb:18
+#: app/services/service/user/add_first_admin.rb:16
 msgid "The required attribute 'email' is missing."
 msgstr "مقدار الزامی «ایمیل» وارد نشده است."
 
@@ -22114,7 +22176,7 @@ msgstr "پارامتر مورد نیاز 'application_id' وجود ندارد."
 msgid "The required parameter 'application_secret' is missing."
 msgstr "پارامتر مورد نیاز 'application_secret' وجود ندارد."
 
-#: app/controllers/channels_sms_controller.rb:100
+#: app/controllers/channels_sms_controller.rb:104
 msgid "The required parameter 'area' is missing."
 msgstr "پارامتر مورد نیاز 'area' وجود ندارد."
 
@@ -22149,7 +22211,7 @@ msgstr "پارامتر مورد نیاز 'group_id' وجود ندارد."
 msgid "The required parameter 'id' is missing."
 msgstr "پارامتر مورد نیاز 'id' وجود ندارد."
 
-#: lib/search_index_backend.rb:744
+#: lib/search_index_backend.rb:749
 msgid "The required parameter 'key' is missing."
 msgstr "مولفه الزامی «کلید» وارد نشده است."
 
@@ -22173,7 +22235,7 @@ msgstr "مولفه الزامی «نام» وارد نشده است."
 msgid "The required parameter 'options.adapter' is missing."
 msgstr "پارامتر مورد نیاز 'options.adapter' وجود ندارد."
 
-#: app/controllers/channels_sms_controller.rb:104
+#: app/controllers/channels_sms_controller.rb:108
 msgid "The required parameter 'params' is missing."
 msgstr "پارامتر مورد نیاز 'params' وجود ندارد."
 
@@ -22211,7 +22273,7 @@ msgstr "مولفه الزامی «ticket_number» وارد نشده است."
 msgid "The required parameter 'user_id' is missing."
 msgstr "مولفه الزامی «user_id» وارد نشده است."
 
-#: lib/search_index_backend.rb:745
+#: lib/search_index_backend.rb:750
 msgid "The required parameter 'value' is missing."
 msgstr "مولفه الزامی «مقدار» وارد نشده است."
 
@@ -22223,6 +22285,16 @@ msgstr "مولفه الزامی «شناسه گروه» وارد نشده است
 #: lib/ai/provider/custom_open_ai.rb:82 lib/content_translation/html.rb:17
 msgid "The response could not be processed."
 msgstr "پاسخ پردازش نشد."
+
+#: lib/ai/provider/anthropic.rb:13
+msgid "The response was cut off because it reached the maximum output length."
+msgstr ""
+
+#: lib/ai/provider/anthropic.rb:14
+msgid ""
+"The response was cut off because the request and the response together "
+"exceeded the context window of the model."
+msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22452,6 +22524,7 @@ msgstr ""
 "شما مفید خواهد بود."
 
 #: app/services/service/system/check_setup.rb:25
+#: app/services/service/user/add_first_admin.rb:39
 msgid ""
 "The system setup cannot be started, because there is another one running or "
 "it was completed before."
@@ -22491,12 +22564,12 @@ msgstr "شماره تیکت مقصد یافت نشد."
 msgid "The test run was successful."
 msgstr "اجرای آزمایشی موفقیت‌آمیز بود."
 
-#: db/seeds/settings.rb:3349
+#: db/seeds/settings.rb:3382
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "متن در ابتدای موضوع در ایمیل ارسال شده، به عنوان مثال FWD."
 
-#: db/seeds/settings.rb:3327
+#: db/seeds/settings.rb:3360
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -22612,7 +22685,7 @@ msgstr "اعتبارنامه دو عاملی که می‌خواهید حذف ک�
 msgid "The type of the private key is wrong."
 msgstr "نوع کلید خصوصی اشتباه است."
 
-#: app/controllers/settings_controller.rb:41
+#: app/controllers/settings_controller.rb:49
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
@@ -22638,7 +22711,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "'preferred_username' کاربر نمی‌تواند از 'id_token' استخراج شود."
 
-#: app/controllers/sessions_controller.rb:274
+#: app/controllers/sessions_controller.rb:277
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr "نام کاربری یا رمز اشتباه است."
@@ -22648,6 +22721,10 @@ msgstr "نام کاربری یا رمز اشتباه است."
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The value of the parameter 'payload->class_name' is invalid."
 msgstr "پارامتر مورد نیاز 'payload->class_name' وجود ندارد."
+
+#: app/models/setting/validation/backend_class.rb:14
+msgid "The value of this setting has an invalid format."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 #, fuzzy
@@ -23223,7 +23300,7 @@ msgstr ""
 "اجازه می‌دهد. شما می‌توانید توضیح نقش، دستورالعمل و زمینه آن، زمینه نهاد، "
 "ساختار نتیجه و تعریف اقدام را تعریف کنید."
 
-#: db/seeds/settings.rb:66
+#: db/seeds/settings.rb:72
 msgid "This is a default maintenance message. Click here to change."
 msgstr "این یک پیام نگهداری پیش‌فرض است. برای تغییر اینجا کلیک کنید."
 
@@ -23330,7 +23407,7 @@ msgstr ""
 "آماده نیست. ممکن است حاوی اشکالات یا ویژگی‌های ناقص باشد."
 
 #: app/controllers/application_controller/handles_errors.rb:117
-#: app/graphql/gql/zammad_schema.rb:113
+#: app/graphql/gql/zammad_schema.rb:114
 msgid "This object already exists."
 msgstr "این مورد قبلا ایجاد شده است."
 
@@ -23508,7 +23585,7 @@ msgstr ""
 "این سرویس مخاطبین تماس‌های دریافتی و یک لیست تماس‌گیرنده را در زمان واقعی به "
 "شما نشان می‌دهد."
 
-#: db/seeds/settings.rb:6762
+#: db/seeds/settings.rb:7064
 msgid ""
 "This setting defines the token to access the support.zammad.com instance for "
 "package remote commands."
@@ -23518,7 +23595,7 @@ msgstr ""
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr "این امضا غیرفعال است، در پاسخ گنجانده نخواهد شد."
 
-#: app/services/service/user/add_first_admin.rb:14
+#: app/services/service/user/add_first_admin.rb:34
 msgid ""
 "This system has already been configured and an administrator account exists."
 msgstr "این سیستم قبلاً پیکربندی شده است و یک حساب مدیریتی وجود دارد."
@@ -23726,11 +23803,11 @@ msgstr "تخصیص خودکار تیکت"
 msgid "Ticket Categorizer"
 msgstr "دسته‌بندی کننده تیکت"
 
-#: db/seeds/settings.rb:2467
+#: db/seeds/settings.rb:2496
 msgid "Ticket Conditions Expert Mode"
 msgstr "حالت کارشناسی شرایط تیکت"
 
-#: db/seeds/settings.rb:2493
+#: db/seeds/settings.rb:2522
 msgid "Ticket Conditions Regular Expression Operators"
 msgstr "عملگرهای عبارت منظم شرایط تیکت"
 
@@ -23750,43 +23827,43 @@ msgstr "تشخیص تیکت تکراری"
 msgid "Ticket Group Dispatcher"
 msgstr "توزیع کننده گروه تیکت"
 
-#: db/seeds/settings.rb:2362
+#: db/seeds/settings.rb:2391
 msgid "Ticket Hook"
 msgstr "قالب تیکت"
 
-#: db/seeds/settings.rb:2387
+#: db/seeds/settings.rb:2416
 msgid "Ticket Hook Divider"
 msgstr "جداکننده قلاب تیکت"
 
-#: db/seeds/settings.rb:2408
+#: db/seeds/settings.rb:2437
 msgid "Ticket Hook Position"
 msgstr "محل قرارگرفتن شماره تیکت"
 
-#: db/seeds/settings.rb:2440
+#: db/seeds/settings.rb:2469
 msgid "Ticket Last Contact Behaviour"
 msgstr "رفتار آخرین تماس تیکت"
 
-#: db/seeds/settings.rb:2519
+#: db/seeds/settings.rb:2548
 msgid "Ticket Number Format"
 msgstr "قالب شماره تیکت"
 
-#: db/seeds/settings.rb:2549
+#: db/seeds/settings.rb:2579
 msgid "Ticket Number Increment"
 msgstr "افزایش شماره تیکت"
 
-#: db/seeds/settings.rb:2606
+#: db/seeds/settings.rb:2636
 msgid "Ticket Number Increment Date"
 msgstr "تاریخ افزایش شماره تیکت"
 
-#: db/seeds/settings.rb:2908
+#: db/seeds/settings.rb:2938
 msgid "Ticket Number ignore system_id"
 msgstr "نادیده گرفتن system_id در شماره تیکت"
 
-#: db/seeds/settings.rb:6252
+#: db/seeds/settings.rb:6532
 msgid "Ticket Organization Reassignment"
 msgstr "سازمان واگذاری دوباره تیکت"
 
-#: db/seeds/settings.rb:5763
+#: db/seeds/settings.rb:6040
 msgid "Ticket Overview Query Polling"
 msgstr "Polling کوئری نمای کلی تیکت"
 
@@ -23807,7 +23884,7 @@ msgstr "اولویت‌بندی کننده تیکت"
 msgid "Ticket Priority"
 msgstr "اولویت تیکت"
 
-#: db/seeds/settings.rb:1013
+#: db/seeds/settings.rb:1038
 msgid "Ticket Priority Icons"
 msgstr "آیکون‌های اولویت تیکت"
 
@@ -23828,15 +23905,15 @@ msgstr "وضعیت تیکت"
 msgid "Ticket States"
 msgstr "وضعیت‌های تیکت"
 
-#: db/seeds/settings.rb:3346
+#: db/seeds/settings.rb:3379
 msgid "Ticket Subject Forward"
 msgstr "پیشوند موضوع هنگام فوروارد کردن ایمیل"
 
-#: db/seeds/settings.rb:3324
+#: db/seeds/settings.rb:3357
 msgid "Ticket Subject Reply"
 msgstr "پیشوند موضوع هنگام پاسخ به ایمیل"
 
-#: db/seeds/settings.rb:3303
+#: db/seeds/settings.rb:3336
 msgid "Ticket Subject Size"
 msgstr "اندازه عنوان تیکت"
 
@@ -23846,15 +23923,15 @@ msgstr "اشتراکهای تیکت"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6502
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6794
 msgid "Ticket Summary"
 msgstr "خلاصه تیکت"
 
-#: db/seeds/settings.rb:6516
+#: db/seeds/settings.rb:6808
 msgid "Ticket Summary Config"
 msgstr "پیکربندی خلاصه تیکت"
 
-#: db/seeds/settings.rb:6535
+#: db/seeds/settings.rb:6827
 msgid "Ticket Summary Selector"
 msgstr "انتخاب‌کننده خلاصه تیکت"
 
@@ -23881,11 +23958,11 @@ msgstr "استخراج‌کننده متن تیکت"
 msgid "Ticket Title Rewriter"
 msgstr "بازنویسی عنوان تیکت"
 
-#: db/seeds/settings.rb:2980
+#: db/seeds/settings.rb:3010
 msgid "Ticket Trigger Loop Protection Articles Total"
 msgstr "کل مقالات حفاظت از حلقه تریگر تیکت"
 
-#: db/seeds/settings.rb:2961
+#: db/seeds/settings.rb:2991
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "مقالات در هر تیکت حفاظت از حلقه تریگر تیکت"
 
@@ -23969,7 +24046,7 @@ msgstr "تیکت به‌روز شد."
 msgid "Ticket merged successfully"
 msgstr "تیکت با موفقیت ادغام شد"
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:77
 msgid "Ticket number"
 msgstr "شماره تیکت"
@@ -24245,7 +24322,7 @@ msgstr "تیکتهای کاربر"
 msgid "Tickets with \"%s\""
 msgstr "تیکت‌های با «%s»"
 
-#: db/seeds/settings.rb:2836
+#: db/seeds/settings.rb:2866
 msgid "Tickets with the same attributes were found."
 msgstr "تیکت‌هایی با ویژگی‌های مشابه یافت شد."
 
@@ -24259,27 +24336,27 @@ msgstr "زمان"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4192
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4313
 msgid "Time Accounting"
 msgstr "حسابداری زمانی"
 
-#: db/seeds/settings.rb:4255
+#: db/seeds/settings.rb:4376
 msgid "Time Accounting Custom Unit"
 msgstr "واحد سفارشی حسابداری زمان"
 
-#: db/seeds/settings.rb:4291
+#: db/seeds/settings.rb:4412
 msgid "Time Accounting Default Type"
 msgstr "نوع پیش‌فرض حسابداری زمان"
 
-#: db/seeds/settings.rb:4219
+#: db/seeds/settings.rb:4340
 msgid "Time Accounting Selector"
 msgstr "انتخابگر حسابداری زمان"
 
-#: db/seeds/settings.rb:4273
+#: db/seeds/settings.rb:4394
 msgid "Time Accounting Types"
 msgstr "انواع حسابداری زمان"
 
-#: db/seeds/settings.rb:4237
+#: db/seeds/settings.rb:4358
 msgid "Time Accounting Unit"
 msgstr "واحد حسابداری زمان"
 
@@ -24341,7 +24418,7 @@ msgid "Timeframe for the first response."
 msgstr "بازه زمانی اولین پاسخ."
 
 #: app/assets/javascripts/app/models/job.coffee:14
-#: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:207
+#: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:222
 #: lib/excel_sheet.rb:138
 msgid "Timezone"
 msgstr "منطقه زمانی"
@@ -24391,7 +24468,7 @@ msgstr "عنوان فرم"
 msgid "To"
 msgstr "گیرنده"
 
-#: db/seeds/settings.rb:3627
+#: db/seeds/settings.rb:3660
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -24504,7 +24581,7 @@ msgstr "تغییر وضعیت اطلاعات فراداده مقاله"
 msgid "Toggle dark mode"
 msgstr "تغییر حالت تاریک"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:183
 msgid "Toggle group"
 msgstr "تغییر وضعیت گروه"
 
@@ -24545,15 +24622,15 @@ msgstr "دسترسی توکن"
 msgid "Token authorization failed."
 msgstr "مجوز توکن ناموفق بود."
 
-#: db/seeds/settings.rb:5411
+#: db/seeds/settings.rb:5661
 msgid "Token for CTI."
 msgstr "توکن برای CTI."
 
-#: db/seeds/settings.rb:5315
+#: db/seeds/settings.rb:5565
 msgid "Token for Sipgate."
 msgstr "توکن برای Sipgate."
 
-#: db/seeds/settings.rb:3689
+#: db/seeds/settings.rb:3725
 msgid "Token for monitoring."
 msgstr "توکن مانیتورینگ."
 
@@ -24590,7 +24667,7 @@ msgstr "کل"
 msgid "Total accounted time"
 msgstr "کل زمان محاسبه شده"
 
-#: db/seeds/settings.rb:989
+#: db/seeds/settings.rb:1014
 msgid "Total display of the number of objects in a grouping."
 msgstr "نمایش کل تعداد اشیاء در یک گروه‌بندی."
 
@@ -24631,7 +24708,7 @@ msgstr "محتواهای جانوشت ترجمه"
 msgid "Translate section to English"
 msgstr "ترجمه بخش به انگلیسی"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:364
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:372
 msgid "Translate ticket articles into another language."
 msgstr ""
 
@@ -24643,13 +24720,13 @@ msgstr ""
 msgid "Translation"
 msgstr "ترجمه"
 
-#: db/seeds/settings.rb:5980
+#: db/seeds/settings.rb:6260
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translation Service"
 msgstr "منبع ترجمه"
 
-#: db/seeds/settings.rb:5995
+#: db/seeds/settings.rb:6275
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translation Service Config"
@@ -24756,7 +24833,7 @@ msgstr ""
 "می‌شوند، در حالی که تریگرهای فعال‌شده توسط رویدادهای زمانی، هنگامی که زمان‌های "
 "مشخصی فرا می‌رسند (مثلاً زمان در انتظار، تشدید) اجرا می‌شوند."
 
-#: db/seeds/settings.rb:6083
+#: db/seeds/settings.rb:6363
 msgid "Trusted SSO Proxy IPs"
 msgstr "آدرس‌های IP پروکسی SSO قابل اعتماد"
 
@@ -24834,23 +24911,23 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
-#: db/seeds/settings.rb:1417
+#: db/seeds/settings.rb:1446
 msgid "Twitter"
 msgstr "توییتر"
 
-#: db/seeds/settings.rb:1425
+#: db/seeds/settings.rb:1454
 msgid "Twitter App Credentials"
 msgstr "Twitter App Credentials"
 
-#: db/seeds/settings.rb:1418
+#: db/seeds/settings.rb:1447
 msgid "Twitter Developer Site"
 msgstr "سایت برنامه‌نویس توییتر"
 
-#: db/seeds/settings.rb:1432
+#: db/seeds/settings.rb:1461
 msgid "Twitter Key"
 msgstr "کلید توییتر"
 
-#: db/seeds/settings.rb:1438
+#: db/seeds/settings.rb:1467
 msgid "Twitter Secret"
 msgstr "رمز تویتر"
 
@@ -24958,11 +25035,11 @@ msgstr "نوع:"
 msgid "UID"
 msgstr "UID"
 
-#: db/seeds/settings.rb:2024
+#: db/seeds/settings.rb:2053
 msgid "UID Attribute Name"
 msgstr "نام مقدار UID"
 
-#: db/seeds/settings.rb:2158
+#: db/seeds/settings.rb:2187
 msgid "UID Field"
 msgstr "فیلد UID"
 
@@ -25091,7 +25168,7 @@ msgid "Unlink object"
 msgstr "لغو پیوند شیء"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:103
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:119
 #, fuzzy
 #| msgid "Link ticket"
 msgid "Unlink ticket"
@@ -25278,7 +25355,7 @@ msgstr "به‌روزرسانی پیش‌نویس مشترک"
 msgid "Update successful."
 msgstr "بروزرسانی موفقیت‌آمیز بود."
 
-#: db/seeds/settings.rb:6264
+#: db/seeds/settings.rb:6544
 msgid "Update the most recent tickets."
 msgstr "به‌روزرسانی تیکت‌های اخیر."
 
@@ -25337,9 +25414,9 @@ msgstr "زمان به‌روزرسانی"
 #: app/assets/javascripts/app/models/ticket.coffee:30
 #: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswerTable.vue:51
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
+#: app/frontend/shared/entities/organization/attributes.ts:38
+#: app/frontend/shared/entities/ticket/attributes.ts:120
+#: app/frontend/shared/entities/user/attributes.ts:41
 #: app/graphql/gql/types/overview_type.rb:115
 msgid "Updated at"
 msgstr "به‌روز شده در"
@@ -25361,9 +25438,9 @@ msgstr "به‌روز شده در"
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:66
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
+#: app/frontend/shared/entities/organization/attributes.ts:28
+#: app/frontend/shared/entities/ticket/attributes.ts:109
+#: app/frontend/shared/entities/user/attributes.ts:30
 #: app/graphql/gql/types/overview_type.rb:114
 msgid "Updated by"
 msgstr "به‌روز شده توسط"
@@ -25440,14 +25517,39 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Updated ticket article (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "    <blockquote type=\"cite\">\n"
+#| "    #{article.body_as_html}\n"
+#| "    </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
+#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
+#| "#{config.product_name}</a>\n"
+#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> reacted with a <%= h @objects[:article].preferences.dig('whatsapp', "
 "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
@@ -25618,7 +25720,7 @@ msgstr "برای هر URI از یک خط استفاده کنید"
 msgid "Use one of your safely stored recovery codes."
 msgstr "از یکی از کدهای بازیابی خود که به طور ایمن ذخیره کرده‌اید استفاده کنید."
 
-#: db/seeds/settings.rb:754
+#: db/seeds/settings.rb:779
 msgid ""
 "Use subject field for emails. If disabled, the ticket title will be used as "
 "subject."
@@ -25634,14 +25736,14 @@ msgstr "برای گرفتن عکس برای آواتار از دوربین اس�
 msgid "Use the left and right arrow keys to resize the column."
 msgstr "برای تغییر اندازه ستون از کلیدهای فلش چپ و راست استفاده کنید."
 
-#: db/seeds/settings.rb:2454
+#: db/seeds/settings.rb:2483
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
 msgstr ""
 "استفاده از زمان شروع آخرین رشته مشتری (که ممکن است شامل چندین مقاله باشد)."
 
-#: db/seeds/settings.rb:2453
+#: db/seeds/settings.rb:2482
 msgid "Use the time of the very last customer article."
 msgstr "استفاده از زمان آخرین مقاله مشتری."
 
@@ -25749,13 +25851,13 @@ msgstr "صندوق پستی کاربر"
 msgid "User Mismatch"
 msgstr "عدم تطابق کاربر"
 
-#: db/seeds/settings.rb:257
+#: db/seeds/settings.rb:272
 #, fuzzy
 #| msgid "Ticket Number Format"
 msgid "User Name Format"
 msgstr "قالب شماره تیکت"
 
-#: db/seeds/settings.rb:669
+#: db/seeds/settings.rb:694
 msgid "User Organization Selector - email"
 msgstr "انتخابگر سازمان کاربر - ایمیل"
 
@@ -25790,7 +25892,7 @@ msgstr "مستندات کاربر"
 msgid "User email could not be extracted from 'id_token'."
 msgstr "ایمیل کاربر نمی‌تواند از 'id_token' استخراج شود."
 
-#: db/seeds/settings.rb:1230
+#: db/seeds/settings.rb:1256
 msgid "User email for multiple users"
 msgstr "ایمیل کاربر برای چندین کاربر"
 
@@ -25836,7 +25938,7 @@ msgstr "کاربر بیکار است"
 msgid "User is inactive"
 msgstr "کاربر غیرفعال است"
 
-#: app/controllers/sessions_controller.rb:172
+#: app/controllers/sessions_controller.rb:175
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "کاربر غیرفعال است."
@@ -25905,7 +26007,7 @@ msgstr "نام‌کاربری / ایمیل"
 msgid "Username for proxy connection"
 msgstr "نام کاربری برای اتصال پروکسی"
 
-#: db/seeds/settings.rb:573
+#: db/seeds/settings.rb:598
 msgid "Username for proxy connection."
 msgstr "نام کاربری برای اتصال پروکسی."
 
@@ -26006,19 +26108,19 @@ msgstr "مقدار"
 msgid "Variables"
 msgstr "متغیرها"
 
-#: db/seeds/settings.rb:6677
+#: db/seeds/settings.rb:6969
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6691
+#: db/seeds/settings.rb:6984
 msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:6709
+#: db/seeds/settings.rb:7008
 msgid "Vector DB knowledge base chunking strategy"
 msgstr "استراتژی تکه‌تکه کردن پایگاه دانش برداری"
 
-#: db/seeds/settings.rb:6700
+#: db/seeds/settings.rb:6996
 #, fuzzy
 #| msgid "Vector DB knowledge base categories"
 msgid "Vector DB knowledge base excluded categories"
@@ -26036,7 +26138,7 @@ msgstr "ایمیل راستی‌آزمایی در صندوق یافت نشد."
 msgid "Verification email could not be sent."
 msgstr "ایمیل راستی‌آزمایی قابل ارسال نبود."
 
-#: db/seeds/settings.rb:2040
+#: db/seeds/settings.rb:2069
 msgid ""
 "Verification of the TLS connection to the IDP SSO target URL. Only relevant "
 "during setting up SAML authentication."
@@ -26236,12 +26338,12 @@ msgid "Warning"
 msgstr "هشدار"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
-#: db/seeds/settings.rb:2823
+#: db/seeds/settings.rb:2853
 msgid "Warning message"
 msgstr "پیام هشدار"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
-#: db/seeds/settings.rb:2806
+#: db/seeds/settings.rb:2836
 msgid "Warning title"
 msgstr "عنوان هشدار"
 
@@ -26264,13 +26366,13 @@ msgstr "وب"
 msgid "Web (in)"
 msgstr "وب سایت (ورودی)"
 
-#: db/seeds/settings.rb:6772
+#: db/seeds/settings.rb:7074
 #, fuzzy
 #| msgid "Paste Private Key"
 msgid "Web Push VAPID Private Key"
 msgstr "جایگذاری کلید خصوصی"
 
-#: db/seeds/settings.rb:6785
+#: db/seeds/settings.rb:7087
 msgid "Web Push VAPID Public Key"
 msgstr ""
 
@@ -26279,11 +26381,11 @@ msgstr ""
 msgid "Web Server Configuration"
 msgstr "تنظیمات سرور وب"
 
-#: db/seeds/settings.rb:351
+#: db/seeds/settings.rb:366
 msgid "WebSocket backend"
 msgstr "بک‌اند WebSocket"
 
-#: db/seeds/settings.rb:359
+#: db/seeds/settings.rb:377
 msgid "WebSocket port"
 msgstr "پورت WebSocket"
 
@@ -26353,11 +26455,11 @@ msgstr "هفته"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
-#: db/seeds/settings.rb:1898
+#: db/seeds/settings.rb:1927
 msgid "Weibo"
 msgstr "Weibo"
 
-#: db/seeds/settings.rb:1906
+#: db/seeds/settings.rb:1935
 msgid "Weibo App Credentials"
 msgstr "اعتبارنامه برنامه Weibo"
 
@@ -26474,7 +26576,7 @@ msgstr "منتشر خواهد شد"
 msgid "Will be published on"
 msgstr "منتشر خواهد شد در"
 
-#: db/seeds/settings.rb:144
+#: db/seeds/settings.rb:156
 msgid "Will be shown in the app and is included in email footers."
 msgstr "در داخل اپلیکیشن و همچنین پانویس ایمیل‌ها نمایش داده خواهد شد."
 
@@ -26574,11 +26676,11 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "آیا می‌خواهید در مورد رابط کاربری بتا به ما بازخورد دهید؟"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
-#: db/seeds/permissions.rb:251 db/seeds/settings.rb:6553
+#: db/seeds/permissions.rb:251 db/seeds/settings.rb:6845
 msgid "Writing Assistant"
 msgstr "دستیار نوشتار"
 
-#: db/seeds/settings.rb:6567
+#: db/seeds/settings.rb:6859
 msgid "Writing Assistant Fixed Instructions"
 msgstr "دستورالعمل‌های ثابت دستیار نوشتار"
 
@@ -26789,11 +26891,11 @@ msgstr ""
 "شما می‌توانید ایمیل‌های بایگانی شده را در هر زمان در Zammad با استفاده از "
 "عملکرد جستجو، مانند هر تیکت دیگر، پیدا کنید."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:314
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:322
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:314
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:322
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -27250,7 +27352,7 @@ msgstr "تنظیمات اشتراک تقویم شما به‌روزرسانی ش
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:23
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:31
 #: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:31
-#: db/seeds/settings.rb:1445
+#: db/seeds/settings.rb:1474
 msgid "Your callback URL"
 msgstr "آدرس لینک بازگشتی"
 
@@ -27330,7 +27432,7 @@ msgstr ""
 msgid "Zammad Foundation"
 msgstr "بنیاد Zammad"
 
-#: db/seeds/settings.rb:114
+#: db/seeds/settings.rb:126
 #: lib/auth/two_factor/authentication_method/authenticator_app.rb:38
 msgid "Zammad Helpdesk"
 msgstr "میز خدمت"
@@ -27350,7 +27452,7 @@ msgstr ""
 "Zammad در حال حاضر در حالت نگهداری است. فقط مدیران می‌توانند وارد شوند. لطفاً "
 "تا پایان پنجره نگهداری صبر کنید."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:70
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
 msgid "Zammad is restarting…"
 msgstr "سیستم درحال ری‌استارت شدن …"
 
@@ -27358,7 +27460,7 @@ msgstr "سیستم درحال ری‌استارت شدن …"
 msgid "Zammad looks like this for \"%s\""
 msgstr "سیستم ارتباط با مشتریان به نظر برای %s"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:89
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
 msgid "Zammad requires a restart!"
 msgstr "سیستم نیاز به ری‌استارت دارد!"
 
@@ -27430,7 +27532,7 @@ msgstr ""
 "\n"
 "پست مستر #{config.fqdn}\n"
 
-#: db/seeds/settings.rb:241
+#: db/seeds/settings.rb:256
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
 msgstr "مطلق - به عنوان مثال \"Monday 09:30\" یا \"Tuesday 23. Feb 14:20\""
 
@@ -27729,11 +27831,11 @@ msgstr "واحد سفارشی"
 msgid "d"
 msgstr "روز"
 
-#: app/models/concerns/can_be_published.rb:198
+#: app/models/concerns/can_be_published.rb:214
 msgid "date must be no earlier than internal date"
 msgstr "تاریخ نباید زودتر از تاریخ داخلی باشد"
 
-#: app/models/concerns/can_be_published.rb:204
+#: app/models/concerns/can_be_published.rb:220
 msgid "date must be no earlier than published date"
 msgstr "تاریخ نباید زودتر از تاریخ انتشار باشد"
 
@@ -27782,15 +27884,15 @@ msgstr "رسیده به مشتری"
 msgid "descending"
 msgstr "نزولی"
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:125
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:129
 msgid "detailed search"
 msgstr "جستجوی دقیق"
 
-#: db/seeds/settings.rb:1276
+#: db/seeds/settings.rb:1303
 msgid "developer password"
 msgstr "رمز برنامه‌نویس"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "disabled"
 msgstr "غیرفعال شد"
 
@@ -28042,7 +28144,7 @@ msgstr "ساعت"
 msgid "hours"
 msgstr "ساعت"
 
-#: db/seeds/settings.rb:2154
+#: db/seeds/settings.rb:2183
 msgid "https://example.com"
 msgstr "https://example.com"
 
@@ -28060,11 +28162,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5160
+#: db/seeds/settings.rb:5398
 msgid "i-doit config"
 msgstr "پیکربندی i-doit"
 
-#: db/seeds/settings.rb:5133
+#: db/seeds/settings.rb:5371
 msgid "i-doit integration"
 msgstr "ادغام i-doit"
 
@@ -28163,7 +28265,7 @@ msgstr "غیرفعال"
 msgid "internal"
 msgstr "داخلی"
 
-#: db/seeds/settings.rb:1260
+#: db/seeds/settings.rb:1286
 msgid "internal database"
 msgstr "پایگاه داده داخلی"
 
@@ -28345,7 +28447,7 @@ msgstr "تازه تغییر کرد به"
 msgid "just now"
 msgstr "همین حالا"
 
-#: db/seeds/settings.rb:2424
+#: db/seeds/settings.rb:2453
 msgid "left"
 msgstr "چپ"
 
@@ -28547,9 +28649,9 @@ msgstr "new,beta,desktop view,desktop ui"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:56
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:19
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:82
-#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:13
-#: db/seeds/settings.rb:656
+#: app/frontend/shared/components/EntityAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
+#: app/frontend/shared/entities/core/attributes/form/resolver/fields/active.ts:13
+#: db/seeds/settings.rb:681
 msgid "no"
 msgstr "خیر"
 
@@ -28580,7 +28682,7 @@ msgstr "هیچ رویداد آینده‌ای"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:3
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
-#: db/seeds/settings.rb:2426
+#: db/seeds/settings.rb:2455
 msgid "none"
 msgstr "هیچکدام"
 
@@ -28737,7 +28839,7 @@ msgstr "مرجع نباید تیکت چک‌لیست باشد."
 msgid "relative"
 msgstr "مرتبط"
 
-#: db/seeds/settings.rb:240
+#: db/seeds/settings.rb:255
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr "نسبی - به عنوان مثال \"2 hours ago\" یا \"2 days and 15 minutes ago\""
 
@@ -28774,7 +28876,7 @@ msgstr "پاسخ به همه"
 msgid "required"
 msgstr "الزامی"
 
-#: db/seeds/settings.rb:2425
+#: db/seeds/settings.rb:2454
 msgid "right"
 msgstr "راست"
 
@@ -28865,19 +28967,19 @@ msgstr "نمایش موارد بیشتر"
 msgid "shown"
 msgstr "نمایش‌شده"
 
-#: db/seeds/settings.rb:5312
+#: db/seeds/settings.rb:5562
 msgid "sipgate.io Token"
 msgstr "توکن sipgate.io"
 
-#: db/seeds/settings.rb:5346
+#: db/seeds/settings.rb:5596
 msgid "sipgate.io alternative FQDN"
 msgstr "FQDN جایگزین sipgate.io"
 
-#: db/seeds/settings.rb:5333
+#: db/seeds/settings.rb:5583
 msgid "sipgate.io config"
 msgstr "پیکربندی sipgate.io"
 
-#: db/seeds/settings.rb:5284
+#: db/seeds/settings.rb:5534
 msgid "sipgate.io integration"
 msgstr "ادغام sipgate.io"
 
@@ -28979,7 +29081,7 @@ msgstr "تیکت %s در این تیکت ادغام شد"
 msgid "till (relative)"
 msgstr "تا (نسبی)"
 
-#: db/seeds/settings.rb:242
+#: db/seeds/settings.rb:257
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
 msgstr "زمان - به عنوان مثال \"2018-08-30 14:30\""
 
@@ -29152,9 +29254,9 @@ msgstr "سال(ها)"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:55
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:18
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
-#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:12
-#: db/seeds/object_manager_attributes.rb:1533 db/seeds/settings.rb:655
+#: app/frontend/shared/components/EntityAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
+#: app/frontend/shared/entities/core/attributes/form/resolver/fields/active.ts:12
+#: db/seeds/object_manager_attributes.rb:1533 db/seeds/settings.rb:680
 msgid "yes"
 msgstr "بله"
 
@@ -30650,11 +30752,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~| msgid "Order"
 #~ msgid " Order"
 #~ msgstr "ترتیب"
-
-#, fuzzy
-#~| msgid "Reporting"
-#~ msgid "Sorting"
-#~ msgstr "گزارش‌دهی"
 
 #~ msgid "Activates lost password feature for users."
 #~ msgstr "فعالسازی ویژگی فراموشی رمز عبور برای کاربران."

@@ -45,7 +45,7 @@ msgstr "yyyy-mm-dd"
 msgid "FORMAT_DATETIME"
 msgstr "yyyy-mm-dd HH:MM"
 
-#: db/seeds/settings.rb:409
+#: db/seeds/settings.rb:430
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
@@ -626,7 +626,7 @@ msgstr "%s 분 전"
 msgid "%s months ago"
 msgstr "%s 달 전"
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:165
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:169
 msgid "%s more"
 msgstr "%s개 더"
 
@@ -660,6 +660,12 @@ msgstr "%s 객체가 업데이트됩니다."
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:208
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:44
 msgid "%s of %s"
+msgstr "%s / %s"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRating/FieldRatingInput.vue:24
+#, fuzzy
+#| msgid "%s of %s"
+msgid "%s of %s stars"
 msgstr "%s / %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
@@ -841,6 +847,10 @@ msgstr "%{name} 은 예약어입니다"
 msgid "'%s' is not a valid IP address or CIDR range."
 msgstr ""
 
+#: app/models/setting/validation/backend_class.rb:19
+msgid "'%s' is not a valid backend for this setting."
+msgstr ""
+
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr "(상태: %s)"
@@ -922,7 +932,7 @@ msgstr ""
 msgid "+ %s more"
 msgstr "%s개 더"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "1 day"
 msgstr "1일"
 
@@ -931,7 +941,7 @@ msgid "1 day ago"
 msgstr "1 일 전"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:32
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "1 hour"
 msgstr "1시간"
 
@@ -951,7 +961,7 @@ msgstr "1 분 전"
 msgid "1 month ago"
 msgstr "1개월 전"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "1 week"
 msgstr "일주일"
 
@@ -963,11 +973,11 @@ msgstr "1주 전"
 msgid "1 year ago"
 msgstr "1 년 전"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "2 hours"
 msgstr "2시간"
 
-#: db/seeds/settings.rb:2243
+#: db/seeds/settings.rb:2272
 msgid "2 lower case and 2 upper case characters"
 msgstr "소문자 2개, 대문자 2개"
 
@@ -975,7 +985,7 @@ msgstr "소문자 2개, 대문자 2개"
 msgid "2 normal"
 msgstr "2 normal"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "2 weeks"
 msgstr "2주"
 
@@ -989,11 +999,11 @@ msgstr "2시간"
 msgid "3 high"
 msgstr "3 high"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "3 weeks"
 msgstr "3주"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 msgid "4 weeks"
 msgstr "4주"
 
@@ -1047,7 +1057,7 @@ msgstr ""
 "담원이 이메일을 작성할 때나 트리거가 자동 회신을 보낼 때 사용되는 주소를 의미"
 "합니다"
 
-#: db/seeds/settings.rb:4147
+#: db/seeds/settings.rb:4264
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "자동으로 스케줄되는 활성 가져오기 백엔드 목록."
 
@@ -1063,7 +1073,7 @@ msgstr ""
 "새로운 세션이 계정에 만들어졌습니다. 이 세션에서는 충돌을 방지하기 위해 중지"
 "됩니다."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:152
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
 
@@ -1171,19 +1181,19 @@ msgstr "피드백 & 로그"
 msgid "AI Knowledge Base"
 msgstr "지식"
 
-#: db/seeds/settings.rb:6595
+#: db/seeds/settings.rb:6887
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer Suggestions"
 msgstr "지식 베이스 답변"
 
-#: db/seeds/settings.rb:6609
+#: db/seeds/settings.rb:6901
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer Suggestions Relevance Score"
 msgstr "지식 베이스 답변"
 
-#: db/seeds/settings.rb:6581
+#: db/seeds/settings.rb:6873
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer from Ticket"
@@ -1272,7 +1282,7 @@ msgid "AI error log"
 msgstr "AI 에러 로그"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee:6
-#: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6485
+#: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6777
 msgid "AI provider"
 msgstr "AI 제공자"
 
@@ -1350,7 +1360,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "API 키"
 
-#: db/seeds/settings.rb:3660
+#: db/seeds/settings.rb:3696
 msgid "API Password Access"
 msgstr "API 비밀번호 액세스"
 
@@ -1359,7 +1369,7 @@ msgstr "API 비밀번호 액세스"
 msgid "API Token"
 msgstr "API 토큰"
 
-#: db/seeds/settings.rb:3635
+#: db/seeds/settings.rb:3671
 msgid "API Token Access"
 msgstr "API 토큰 액세스"
 
@@ -1489,7 +1499,7 @@ msgstr "계정 시간"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:238
+#: app/controllers/channels_email_controller.rb:237
 msgid "Account already exists!"
 msgstr "계정이 이미 존재합니다!"
 
@@ -1517,14 +1527,14 @@ msgstr "집계된 시간"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
+#: app/frontend/shared/entities/ticket/attributes.ts:14
 #: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 #, fuzzy
 #| msgid "Accounted Time"
 msgid "Accounted time"
 msgstr "집계된 시간"
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:47
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:46
 #, fuzzy
 #| msgid "Accounted Time"
 msgid "Accounted time - %s"
@@ -1608,7 +1618,7 @@ msgstr "보안 키용 작업 메뉴 버튼"
 msgid "Actions"
 msgstr "활동들"
 
-#: db/seeds/settings.rb:2938
+#: db/seeds/settings.rb:2968
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "티켓 트리거의 재귀 처리를 활성화합니다."
 
@@ -1616,7 +1626,7 @@ msgstr "티켓 트리거의 재귀 처리를 활성화합니다."
 msgid "Activated by"
 msgstr "활성화한 사람"
 
-#: db/seeds/settings.rb:1150
+#: db/seeds/settings.rb:1175
 msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
@@ -2022,7 +2032,7 @@ msgstr "추가 채널"
 msgid "Additional actions"
 msgstr "추가 정보"
 
-#: db/seeds/settings.rb:3468
+#: db/seeds/settings.rb:3501
 msgid "Additional follow-up detection"
 msgstr "추가 후속 감지"
 
@@ -2034,7 +2044,7 @@ msgstr "추가 정보"
 msgid "Additional information and links"
 msgstr "추가 정보와 링크"
 
-#: db/seeds/settings.rb:888
+#: db/seeds/settings.rb:913
 msgid "Additional notes for ticket create types."
 msgstr "티켓 생성 유형에 대한 추가 메모."
 
@@ -2042,11 +2052,11 @@ msgstr "티켓 생성 유형에 대한 추가 메모."
 msgid "Address"
 msgstr "주소"
 
-#: db/seeds/settings.rb:548
+#: db/seeds/settings.rb:573
 msgid "Address of the proxy server for http and https resources."
 msgstr "HTTP와 HTTPS 리소스를 위한 프록시 서버 주소."
 
-#: db/seeds/settings.rb:3249
+#: db/seeds/settings.rb:3279
 msgid ""
 "Adds an invisible field to the web form and rejects submissions that fill it "
 "in, which automated clients tend to do."
@@ -2074,7 +2084,7 @@ msgstr "관리자 비밀번호 로그인"
 msgid "Admin documentation"
 msgstr "관리자 문서"
 
-#: db/seeds/permissions.rb:5 db/seeds/settings.rb:1190
+#: db/seeds/permissions.rb:5 db/seeds/settings.rb:1215
 msgid "Admin interface"
 msgstr "관리자 인터페이스"
 
@@ -2196,11 +2206,11 @@ msgstr "나이"
 msgid "Agent"
 msgstr "에이전트"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3414
 msgid "Agent Name"
 msgstr "에이전트 이름"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3414
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "상담원 이름 + FromSeparator + 시스템 주소 표시 이름"
 
@@ -2208,11 +2218,11 @@ msgstr "상담원 이름 + FromSeparator + 시스템 주소 표시 이름"
 msgid "Agent chat"
 msgstr "에이전트 채팅"
 
-#: db/seeds/settings.rb:3735
+#: db/seeds/settings.rb:3771
 msgid "Agent idle timeout"
 msgstr "상담원 유휴 시간 제한"
 
-#: app/models/role.rb:182 app/models/user.rb:834
+#: app/models/role.rb:195 app/models/user.rb:834
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니다."
 
@@ -2220,7 +2230,7 @@ msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니�
 msgid "Agent phone"
 msgstr "에이전트 전화"
 
-#: db/seeds/permissions.rb:432 db/seeds/settings.rb:1199
+#: db/seeds/permissions.rb:432 db/seeds/settings.rb:1224
 msgid "Agent tickets"
 msgstr "에이전트 티켓"
 
@@ -2362,7 +2372,7 @@ msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 "AI 에이전트가 가능한 모든 값에서 여러 카테고리를 선택할 수 있도록 허용합니다."
 
-#: db/seeds/settings.rb:6470
+#: db/seeds/settings.rb:6756
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2416,15 +2426,15 @@ msgstr "이 로케일에 대한 번역을 사용할 수 없음"
 msgid "Allow users to add new tags."
 msgstr "사용자가 새 태그를 추가 할 수 있습니다."
 
-#: db/seeds/settings.rb:4312
+#: db/seeds/settings.rb:4433
 msgid "Allow users to create new tags."
 msgstr "사용자가 새 태그를 생성할 수 있도록 허용합니다."
 
-#: db/seeds/settings.rb:6461
+#: db/seeds/settings.rb:6744
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr "사용자가 새 데스크톱 UI로 자동 전환할 수 있도록 허용합니다."
 
-#: db/seeds/settings.rb:1233
+#: db/seeds/settings.rb:1259
 msgid "Allow using one email address for multiple users."
 msgstr "여러 사용자가 하나의 이메일 주소를 함께 사용할 수 있도록 허용합니다."
 
@@ -2437,7 +2447,7 @@ msgstr "허용할 웹사이트(세미콜론(;)으로 구분)"
 msgid "Also notify via email"
 msgstr "또한 이메일을 통해 통지"
 
-#: db/seeds/settings.rb:5349
+#: db/seeds/settings.rb:5599
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr "내부 네트워크에서 Zammad를 운영하는 경우 콜백에 사용할 대체 FQDN."
@@ -2447,7 +2457,7 @@ msgstr "내부 네트워크에서 Zammad를 운영하는 경우 콜백에 사용
 msgid "Alternative Translations"
 msgstr "대체 번역"
 
-#: db/seeds/settings.rb:339
+#: db/seeds/settings.rb:354
 #, fuzzy
 #| msgid "Fully Qualified Domain Name"
 msgid "Alternative fully qualified domain name"
@@ -2655,19 +2665,19 @@ msgstr ""
 "죄송하지만 WhatsApp Business의 제한으로 인해 이런 유형의 메시지는 처리할 수 "
 "없습니다."
 
-#: db/seeds/settings.rb:1497
+#: db/seeds/settings.rb:1526
 msgid "App ID"
 msgstr "앱 ID"
 
-#: db/seeds/settings.rb:1503
+#: db/seeds/settings.rb:1532
 msgid "App Secret"
 msgstr "앱 시크릿"
 
-#: db/seeds/settings.rb:1842
+#: db/seeds/settings.rb:1871
 msgid "App Tenant ID"
 msgstr "앱 테넌트 ID"
 
-#: db/seeds/settings.rb:27
+#: db/seeds/settings.rb:30
 msgid "App Version"
 msgstr "앱 버전"
 
@@ -2679,11 +2689,11 @@ msgstr "앱 버전"
 msgid "App could not be verified."
 msgstr "앱을 확인 할 수 없습니다."
 
-#: db/seeds/settings.rb:1493
+#: db/seeds/settings.rb:1522
 msgid "App credentials for Facebook."
 msgstr "페이스북 앱 인증."
 
-#: db/seeds/settings.rb:1428
+#: db/seeds/settings.rb:1457
 msgid "App credentials for Twitter."
 msgstr "트위터 앱 인증."
 
@@ -2950,7 +2960,7 @@ msgstr "정말 진행하시겠습니까? 최근에 닫은 항목들이 손실됩
 msgid "Article"
 msgstr "기사"
 
-#: db/seeds/settings.rb:724
+#: db/seeds/settings.rb:749
 msgid "Article - visibility confirmation dialog"
 msgstr "기사 - 표시 여부 확인 대화상자"
 
@@ -2966,7 +2976,7 @@ msgstr "기사 개수"
 msgid "Article Language Detection"
 msgstr "기사 언어 감지"
 
-#: db/seeds/settings.rb:6010
+#: db/seeds/settings.rb:6290
 #, fuzzy
 #| msgid "Alternative Translations"
 msgid "Article Translation"
@@ -3082,7 +3092,7 @@ msgstr "최소 하나의 일치 규칙이 필요하지만 제공되지 않았습
 msgid "At least one object must be selected."
 msgstr "최소 하나의 항목을 선택해야 합니다."
 
-#: app/models/role.rb:159 app/models/user.rb:813
+#: app/models/role.rb:172 app/models/user.rb:813
 msgid "At least one user needs to have admin permissions."
 msgstr "최소 한 명의 사용자가 관리자 권한을 가져야 합니다."
 
@@ -3117,7 +3127,7 @@ msgstr "첨부 파일"
 msgid "Attachment"
 msgstr "첨부 파일"
 
-#: db/seeds/settings.rb:3482
+#: db/seeds/settings.rb:3515
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "첨부 파일 - 첨부 파일에서도 후속 작업을 검색합니다."
 
@@ -3178,7 +3188,7 @@ msgstr "속성"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "매핑에 '%s' 속성이 필요합니다"
 
-#: db/seeds/settings.rb:2029
+#: db/seeds/settings.rb:2058
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
@@ -3193,7 +3203,7 @@ msgid "Attributes"
 msgstr "속성"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:32
-#: db/seeds/settings.rb:2789
+#: db/seeds/settings.rb:2819
 msgid "Attributes to compare"
 msgstr "비교할 속성"
 
@@ -3257,13 +3267,13 @@ msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 msgid "Authentication required"
 msgstr "인증이 필요합니다"
 
-#: db/seeds/settings.rb:1255
+#: db/seeds/settings.rb:1281
 msgid "Authentication via %s"
 msgstr "%s을 통해 인증"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:6168
+#: db/seeds/settings.rb:6448
 msgid "Authenticator App"
 msgstr "인증 앱"
 
@@ -3300,19 +3310,19 @@ msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:11
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:7
-#: db/seeds/settings.rb:2635
+#: db/seeds/settings.rb:2665
 msgid "Auto Assignment"
 msgstr "자동 할당"
 
-#: db/seeds/settings.rb:2678
+#: db/seeds/settings.rb:2708
 msgid "Auto Assignment Ignored Users"
 msgstr "자동 할당 제외 사용자"
 
-#: db/seeds/settings.rb:2661
+#: db/seeds/settings.rb:2691
 msgid "Auto Assignment Selector"
 msgstr "자동 할당 선택자"
 
-#: db/seeds/settings.rb:6447
+#: db/seeds/settings.rb:6727
 msgid "Auto Shutdown"
 msgstr "자동 종료"
 
@@ -3320,7 +3330,7 @@ msgstr "자동 종료"
 msgid "Auto Wizard"
 msgstr "자동 마법사"
 
-#: db/seeds/settings.rb:4672
+#: db/seeds/settings.rb:4910
 msgid "Auto close"
 msgstr "자동 닫기"
 
@@ -3328,7 +3338,7 @@ msgstr "자동 닫기"
 msgid "Auto create"
 msgstr "자동 생성"
 
-#: db/seeds/settings.rb:4698
+#: db/seeds/settings.rb:4936
 msgid "Auto-close state"
 msgstr "자동 닫기 상태"
 
@@ -3344,27 +3354,27 @@ msgstr "AutoWizard가 비활성화되어 있습니다"
 msgid "Automated setup"
 msgstr "자동 설정"
 
-#: db/seeds/settings.rb:6024
+#: db/seeds/settings.rb:6304
 #, fuzzy
 #| msgid "Custom Translation"
 msgid "Automatic Article Translation"
 msgstr "사용자 정의 번역"
 
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6318
 #, fuzzy
 #| msgid "Alternative Translations"
 msgid "Automatic Article Translation Roles"
 msgstr "대체 번역"
 
-#: db/seeds/settings.rb:1094
+#: db/seeds/settings.rb:1119
 msgid "Automatic Third-party Login"
 msgstr ""
 
-#: db/seeds/settings.rb:1318
+#: db/seeds/settings.rb:1347
 msgid "Automatic account link on initial logon"
 msgstr "초기 로그온에 자동 계정 링크"
 
-#: db/seeds/settings.rb:1344
+#: db/seeds/settings.rb:1373
 msgid "Automatic account linking notification"
 msgstr "자동 계정 연결 알림"
 
@@ -3443,7 +3453,7 @@ msgid ""
 "won't be able to generate new ones. %l"
 msgstr ""
 
-#: db/seeds/settings.rb:931
+#: db/seeds/settings.rb:956
 msgid "Available types for a new ticket"
 msgstr "새 티켓에 사용 가능한 유형"
 
@@ -3499,7 +3509,7 @@ msgstr "평균 : %s%"
 msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
-#: db/seeds/settings.rb:3624
+#: db/seeds/settings.rb:3657
 msgid "BCC address for all outgoing emails"
 msgstr "모든 발신 이메일의 BCC 주소"
 
@@ -3660,7 +3670,7 @@ msgstr "바인드 비밀번호"
 msgid "Bind User"
 msgstr "바인드 사용자"
 
-#: db/seeds/settings.rb:3601
+#: db/seeds/settings.rb:3634
 msgid "Block Notifications"
 msgstr "블록 알림"
 
@@ -3698,7 +3708,7 @@ msgstr "파란색"
 msgid "Body"
 msgstr "본문"
 
-#: db/seeds/settings.rb:3481
+#: db/seeds/settings.rb:3514
 msgid "Body - Search for follow-up also in mail body."
 msgstr "본문 - 메일 본문에서도 후속 작업을 검색합니다."
 
@@ -3791,7 +3801,7 @@ msgstr ""
 msgid "But it's only available in these languages:"
 msgstr "하지만 다음 언어로만 제공됩니다:"
 
-#: db/seeds/settings.rb:3471
+#: db/seeds/settings.rb:3504
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -3825,13 +3835,13 @@ msgid "CA"
 msgstr "CA"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:41
-#: db/seeds/settings.rb:3271
+#: db/seeds/settings.rb:3301
 #, fuzzy
 #| msgid "AI provider"
 msgid "CAPTCHA provider"
 msgstr "AI 제공자"
 
-#: db/seeds/settings.rb:3282
+#: db/seeds/settings.rb:3312
 msgid "CAPTCHA provider options"
 msgstr ""
 
@@ -3878,19 +3888,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (일반)"
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5658
 msgid "CTI Token"
 msgstr "CTI 토큰"
 
-#: db/seeds/settings.rb:5395
+#: db/seeds/settings.rb:5645
 msgid "CTI config"
 msgstr "CTI 설정"
 
-#: db/seeds/settings.rb:5429
+#: db/seeds/settings.rb:5679
 msgid "CTI customer last activity"
 msgstr "CTI 고객 마지막 활동"
 
-#: db/seeds/settings.rb:5367
+#: db/seeds/settings.rb:5617
 msgid "CTI integration"
 msgstr "CTI 통합"
 
@@ -4192,7 +4202,7 @@ msgstr "생성자"
 msgid "Caution!"
 msgstr "주의!"
 
-#: db/seeds/settings.rb:2055
+#: db/seeds/settings.rb:2084
 msgid "Certificate (PEM)"
 msgstr "인증서 (PEM)"
 
@@ -4469,7 +4479,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:36
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:359 db/seeds/settings.rb:6280
+#: db/seeds/permissions.rb:359 db/seeds/settings.rb:6560
 msgid "Checklists"
 msgstr "체크섬"
 
@@ -4477,15 +4487,15 @@ msgstr "체크섬"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4819
+#: db/seeds/settings.rb:5057
 msgid "Checkmk integration"
 msgstr "Checkmk 통합"
 
-#: db/seeds/settings.rb:4940
+#: db/seeds/settings.rb:5178
 msgid "Checkmk token"
 msgstr "Checkmk 토큰"
 
-#: db/seeds/settings.rb:2556
+#: db/seeds/settings.rb:2586
 msgid "Checksum"
 msgstr "체크섬"
 
@@ -4729,11 +4739,11 @@ msgstr "값 지우기"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5531
+#: db/seeds/settings.rb:5781
 msgid "Clearbit config"
 msgstr "Clearbit 설정"
 
-#: db/seeds/settings.rb:5505
+#: db/seeds/settings.rb:5755
 msgid "Clearbit integration"
 msgstr "Clearbit 통합"
 
@@ -4745,7 +4755,7 @@ msgstr "여기를 클릭하세요"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "이중 인증 방법을 설정하려면 여기를 클릭하세요."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:52
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:56
 msgid "Click to edit…"
 msgstr "편집하려면 클릭하세요…"
 
@@ -4754,14 +4764,14 @@ msgstr "편집하려면 클릭하세요…"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:21
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:9
 #: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:9
-#: db/seeds/settings.rb:1562
+#: db/seeds/settings.rb:1591
 msgid "Client ID"
 msgstr "클라이언트 ID"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:17
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:17
 #: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:17
-#: db/seeds/settings.rb:1568
+#: db/seeds/settings.rb:1597
 msgid "Client Secret"
 msgstr "클라이언트 시크릿"
 
@@ -4782,7 +4792,7 @@ msgstr "복제"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:317
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:42
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:43
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4834,7 +4844,7 @@ msgstr "사이드 패널 닫기"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:41
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
-#: db/seeds/settings.rb:3108
+#: db/seeds/settings.rb:3138
 msgid "Close tab"
 msgstr "탭 닫기"
 
@@ -4857,7 +4867,7 @@ msgstr "티켓 종료 시 탭 닫기"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
-#: db/seeds/settings.rb:3109
+#: db/seeds/settings.rb:3139
 msgid "Close tab on ticket close"
 msgstr "티켓 종료 시 탭 닫기"
 
@@ -4890,7 +4900,7 @@ msgid "Closed tickets"
 msgstr "닫힌 티켓"
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:77
+#: app/frontend/shared/entities/ticket/attributes.ts:77
 #: app/graphql/gql/types/overview_type.rb:110
 msgid "Closing time"
 msgstr "마감 시간"
@@ -4914,7 +4924,7 @@ msgstr "이 요소 접기"
 msgid "Color %s highlight applied to \"%s\""
 msgstr ""
 
-#: db/seeds/settings.rb:962
+#: db/seeds/settings.rb:987
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "사이드바의 열린 티켓 표시기 색상 표현."
 
@@ -4926,7 +4936,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "통합 구독 URL"
 
-#: db/seeds/settings.rb:6086
+#: db/seeds/settings.rb:6366
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4968,7 +4978,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:6160
+#: db/seeds/settings.rb:6440
 msgid "Complete the sign-in with your security key."
 msgstr "보안 키로 로그인을 완료하세요."
 
@@ -5000,7 +5010,7 @@ msgstr "표시 Ticket 조건"
 msgid "Config"
 msgstr "구성"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:113
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
 msgid "Config has changed"
 msgstr "설정이 변경되었습니다"
 
@@ -5261,11 +5271,17 @@ msgstr ""
 msgid "Content could not be loaded."
 msgstr "콘텐츠를 불러올 수 없습니다."
 
+#: app/models/store.rb:162
+#, fuzzy
+#| msgid "Content could not be loaded."
+msgid "Content is not a resizable image."
+msgstr "콘텐츠를 불러올 수 없습니다."
+
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
 msgstr "콘텐츠 로더"
 
-#: app/models/store.rb:88
+#: app/models/store.rb:90
 msgid "Content preview could not be generated."
 msgstr "콘텐츠 미리보기를 생성할 수 없습니다."
 
@@ -5326,7 +5342,7 @@ msgstr "계속"
 msgid "Continue anyway"
 msgstr "어쨌든 계속"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:40
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:41
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -5470,7 +5486,7 @@ msgstr "토큰 복사"
 msgid "Copy user display name"
 msgstr "시크릿 복사"
 
-#: db/seeds/settings.rb:643
+#: db/seeds/settings.rb:668
 msgid "Core Workflow Ajax Mode"
 msgstr "코어 워크플로우 Ajax 모드"
 
@@ -5850,9 +5866,9 @@ msgstr "생성된 내부 게시물"
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:25
+#: app/frontend/shared/entities/organization/attributes.ts:21
+#: app/frontend/shared/entities/ticket/attributes.ts:102
+#: app/frontend/shared/entities/user/attributes.ts:22
 #: app/graphql/gql/types/overview_type.rb:113
 msgid "Created at"
 msgstr "생성 시점"
@@ -5876,9 +5892,9 @@ msgstr "생성 시점:"
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
 #: app/assets/javascripts/app/models/user.coffee:23
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
+#: app/frontend/shared/entities/organization/attributes.ts:11
+#: app/frontend/shared/entities/ticket/attributes.ts:91
+#: app/frontend/shared/entities/user/attributes.ts:11
 #: app/graphql/gql/types/overview_type.rb:112
 msgid "Created by"
 msgstr "생성자"
@@ -6019,6 +6035,12 @@ msgstr "사용자 정의 주소가 설정되지 않았습니다"
 msgid "Custom instructions"
 msgstr "사용자 정의 지시사항"
 
+#: app/models/core_workflow.rb:91
+#, fuzzy
+#| msgid "This feature is not enabled."
+msgid "Custom module '%s' is not available."
+msgstr "이 기능이 활성화되어 있지 않습니다."
+
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
@@ -6073,7 +6095,7 @@ msgstr "고객 및 에이전트 비율(역할 기반 사용자 수)"
 msgid "Customer intent"
 msgstr "고객 의도"
 
-#: db/seeds/settings.rb:3525
+#: db/seeds/settings.rb:3558
 msgid "Customer selection based on sender and receiver list"
 msgstr "송신자와 수신자 목록을 기반으로 고객 선택"
 
@@ -6085,7 +6107,7 @@ msgstr "송신자와 수신자 목록을 기반으로 고객 선택"
 msgid "Customer sentiment"
 msgstr "고객 감정"
 
-#: db/seeds/permissions.rb:441 db/seeds/settings.rb:1208
+#: db/seeds/permissions.rb:441 db/seeds/settings.rb:1233
 msgid "Customer tickets"
 msgstr "고객 티켓"
 
@@ -6131,49 +6153,49 @@ msgstr "다크 모드"
 #: app/assets/javascripts/app/controllers/dashboard.coffee:52
 #: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:31
-#: db/seeds/permissions.rb:203 db/seeds/settings.rb:5608
+#: db/seeds/permissions.rb:203 db/seeds/settings.rb:5875
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: db/seeds/settings.rb:6321
+#: db/seeds/settings.rb:6601
 #, fuzzy
 #| msgid "Activity Stream"
 msgid "Dashboard activity stream"
 msgstr "활동 스트림"
 
-#: db/seeds/settings.rb:6335
+#: db/seeds/settings.rb:6615
 #, fuzzy
 #| msgid "Delete old activity stream entries."
 msgid "Dashboard activity stream own activities"
 msgstr "오래된 활동 스트림 항목을 삭제합니다."
 
-#: db/seeds/settings.rb:6405
+#: db/seeds/settings.rb:6685
 msgid "Dashboard assigned tickets widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6391
+#: db/seeds/settings.rb:6671
 #, fuzzy
 #| msgid "Channel Distribution"
 msgid "Dashboard channel distribution widget"
 msgstr "접수 채널"
 
-#: db/seeds/settings.rb:6349
+#: db/seeds/settings.rb:6629
 #, fuzzy
 #| msgid "Dashboard"
 msgid "Dashboard first steps"
 msgstr "Dashboard"
 
-#: db/seeds/settings.rb:6377
+#: db/seeds/settings.rb:6657
 #, fuzzy
 #| msgid "Dashboard"
 msgid "Dashboard mood widget"
 msgstr "Dashboard"
 
-#: db/seeds/settings.rb:6433
+#: db/seeds/settings.rb:6713
 msgid "Dashboard reopening rate widget"
 msgstr ""
 
-#: db/seeds/settings.rb:6419
+#: db/seeds/settings.rb:6699
 #, fuzzy
 #| msgid "My tickets in process"
 msgid "Dashboard tickets in process widget"
@@ -6185,7 +6207,7 @@ msgstr "처리 중인 내 티켓"
 msgid "Dashboard views"
 msgstr "Dashboard"
 
-#: db/seeds/settings.rb:6363
+#: db/seeds/settings.rb:6643
 msgid "Dashboard waiting time widget"
 msgstr ""
 
@@ -6214,7 +6236,7 @@ msgid "DataPrivacyTasks"
 msgstr "데이터 개인정보 보호 작업"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:7
-#: db/seeds/settings.rb:418
+#: db/seeds/settings.rb:439
 msgid "Database"
 msgstr "데이터베이스"
 
@@ -6232,7 +6254,7 @@ msgstr "날짜"
 msgid "Date & time field"
 msgstr "날짜 및 시간 필드"
 
-#: db/seeds/settings.rb:2535
+#: db/seeds/settings.rb:2564
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "날짜(년.월.일.시스템ID.카운터)"
 
@@ -6304,7 +6326,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/profile/password.jst.eco:44
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:214
-#: db/seeds/settings.rb:903
+#: db/seeds/settings.rb:928
 msgid "Default"
 msgstr "기본"
 
@@ -6324,11 +6346,11 @@ msgstr "기본 동작"
 msgid "Default Notifications"
 msgstr "기본 알림"
 
-#: db/seeds/settings.rb:3757
+#: db/seeds/settings.rb:3793
 msgid "Default Screen"
 msgstr "기본 화면"
 
-#: db/seeds/settings.rb:2696
+#: db/seeds/settings.rb:2726
 msgid "Default Ticket Agent Notifications"
 msgstr "기본 티켓 에이전트 알림"
 
@@ -6337,7 +6359,7 @@ msgstr "기본 티켓 에이전트 알림"
 msgid "Default at Signup"
 msgstr "회원 가입시 기본"
 
-#: db/seeds/settings.rb:4336
+#: db/seeds/settings.rb:4457
 msgid "Default calendar tickets subscriptions"
 msgstr "기본 캘린더 티켓 구독"
 
@@ -6376,7 +6398,7 @@ msgstr "기본 시간 차이(시간)"
 msgid "Default time diff (minutes)"
 msgstr "기본 시간 차이(분)"
 
-#: db/seeds/settings.rb:903
+#: db/seeds/settings.rb:928
 msgid "Default type for a new ticket"
 msgstr "새 티켓의 기본 유형"
 
@@ -6385,44 +6407,44 @@ msgid "Default value is required."
 msgstr "기본값이 필요합니다."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
-#: db/seeds/settings.rb:2681
+#: db/seeds/settings.rb:2711
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr "특정 사용자 (예 : 임원)에 대한 \"자동 할당\"의 예외를 정의합니다."
 
-#: db/seeds/settings.rb:3860
+#: db/seeds/settings.rb:3929
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
 msgstr "Elasticsearch에서 asciifolding 분석기를 사용할지 정의합니다."
 
-#: db/seeds/settings.rb:3824
+#: db/seeds/settings.rb:3881
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "Elasticsearch의 최대 첨부 파일 크기를 정의합니다."
 
-#: db/seeds/settings.rb:3833
+#: db/seeds/settings.rb:3893
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Elasticsearch의 최대 페이로드 크기를 정의합니다."
 
-#: db/seeds/settings.rb:3851
+#: db/seeds/settings.rb:3917
 msgid "Define model configuration for Elasticsearch."
 msgstr "Elasticsearch의 모델 구성을 정의합니다."
 
-#: db/seeds/settings.rb:3842
+#: db/seeds/settings.rb:3905
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Elasticsearch의 파이프라인 이름을 정의합니다."
 
-#: db/seeds/settings.rb:4491
+#: db/seeds/settings.rb:4669
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
 "후속 조치가 생성되는지 확인할 postmaster 필터를 정의합니다(관리자 설정 기반)."
 
-#: db/seeds/settings.rb:4419
+#: db/seeds/settings.rb:4565
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "아카이브 사서함을 가져올 postmaster 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4416
+#: db/seeds/settings.rb:4562
 msgid "Define postmaster filter."
 msgstr "postmaster 필터를 정의합니다."
 
@@ -6439,7 +6461,7 @@ msgstr ""
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
-#: db/seeds/settings.rb:2699
+#: db/seeds/settings.rb:2729
 msgid "Define the default agent notifications for new users."
 msgstr "새 사용자의 기본 에이전트 알림을 정의합니다."
 
@@ -6449,7 +6471,7 @@ msgid ""
 "text. For examples, please refer to our documentation."
 msgstr ""
 
-#: db/seeds/settings.rb:1044
+#: db/seeds/settings.rb:1069
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr "개요에 표시되는 최대 티켓 수를 정의합니다."
 
@@ -6467,27 +6489,27 @@ msgstr ""
 msgid "Define which ticket article(s) should be analyzed."
 msgstr "티켓을 생성하기 전에 확인할 티켓 속성을 정의합니다."
 
-#: db/seeds/settings.rb:3806
+#: db/seeds/settings.rb:3857
 msgid "Defines Elasticsearch SSL verification."
 msgstr "Elasticsearch SSL 검증을 정의합니다."
 
-#: db/seeds/settings.rb:3797
+#: db/seeds/settings.rb:3845
 msgid "Defines Elasticsearch index name."
 msgstr "Elasticsearch 인덱스 이름을 정의합니다."
 
-#: db/seeds/settings.rb:4073
+#: db/seeds/settings.rb:4178
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "Freshdesk 엔드포인트 인증 API 키를 정의합니다."
 
-#: db/seeds/settings.rb:3788
+#: db/seeds/settings.rb:3833
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "Elasticsearch의 HTTP 기본 인증 비밀번호를 정의합니다."
 
-#: db/seeds/settings.rb:3779
+#: db/seeds/settings.rb:3821
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "Elasticsearch의 HTTP 기본 인증 사용자를 정의합니다."
 
-#: db/seeds/settings.rb:3980
+#: db/seeds/settings.rb:4070
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
@@ -6495,7 +6517,7 @@ msgstr ""
 "HTTP 기본 인증 비밀번호를 정의합니다(OTRS가 HTTP 기본 인증으로 보호되는 경우"
 "에만)."
 
-#: db/seeds/settings.rb:3961
+#: db/seeds/settings.rb:4048
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
@@ -6503,47 +6525,47 @@ msgstr ""
 "HTTP 기본 인증 사용자를 정의합니다(OTRS가 HTTP 기본 인증으로 보호되는 경우에"
 "만)."
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4242
 msgid "Defines Kayako endpoint authentication password."
 msgstr "Kayako 엔드포인트 인증 비밀번호를 정의합니다."
 
-#: db/seeds/settings.rb:4110
+#: db/seeds/settings.rb:4221
 msgid "Defines Kayako endpoint authentication user."
 msgstr "Kayako 엔드포인트 인증 사용자를 정의합니다."
 
-#: db/seeds/settings.rb:3942
+#: db/seeds/settings.rb:4026
 msgid "Defines OTRS endpoint authentication key."
 msgstr "OTRS 엔드포인트 인증 키를 정의합니다."
 
-#: db/seeds/settings.rb:4017
+#: db/seeds/settings.rb:4113
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "Zendesk 엔드포인트 인증 API 키를 정의합니다."
 
-#: db/seeds/settings.rb:4036
+#: db/seeds/settings.rb:4135
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "Zendesk 엔드포인트 인증 사용자를 정의합니다."
 
-#: db/seeds/settings.rb:4055
+#: db/seeds/settings.rb:4157
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "사용자, 티켓, 상태 및 게시물을 가져올 Freshdesk 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:4092
+#: db/seeds/settings.rb:4200
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr "사용자, 티켓, 상태 및 게시물을 가져올 Kayako 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:3999
+#: db/seeds/settings.rb:4092
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr "사용자, 티켓, 상태 및 게시물을 가져올 Zendesk 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:5609
+#: db/seeds/settings.rb:5876
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr "자동으로 예약되는 대시보드 통계 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:3206
+#: db/seeds/settings.rb:3236
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
@@ -6551,7 +6573,7 @@ msgstr ""
 "하루에 하나의 IP 주소에서 웹 양식을 통해 생성할 수 있는 티켓 수의 제한을 정의"
 "합니다."
 
-#: db/seeds/settings.rb:3185
+#: db/seeds/settings.rb:3215
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
@@ -6559,21 +6581,21 @@ msgstr ""
 "한 시간에 하나의 IP 주소에서 웹 양식을 통해 생성할 수 있는 티켓 수의 제한을 "
 "정의합니다."
 
-#: db/seeds/settings.rb:3227
+#: db/seeds/settings.rb:3257
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr "하루에 웹 양식을 통해 생성할 수 있는 티켓 수의 제한을 정의합니다."
 
-#: db/seeds/settings.rb:2324
+#: db/seeds/settings.rb:2353
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "로그인 실패 횟수 후 계정이 비활성화됩니다."
 
-#: db/seeds/settings.rb:3924
+#: db/seeds/settings.rb:4005
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr "사용자, 티켓, 상태 및 게시물을 가져올 OTRS 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:342
+#: db/seeds/settings.rb:357
 msgid ""
 "Defines an additional fully qualified domain name of the system, which is "
 "accepted as an origin for WebSocket connections."
@@ -6597,11 +6619,11 @@ msgstr ""
 "티켓 테이블에서 이 우선순위의 선택적 아이콘을 정의합니다. 중요는 느낌표로, 낮"
 "은 우선순위는 아래쪽 화살표로 표시됩니다."
 
-#: db/seeds/settings.rb:3815
+#: db/seeds/settings.rb:3869
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr "Elasticsearch에서 무시할 첨부 파일 확장자를 정의합니다."
 
-#: db/seeds/settings.rb:3770
+#: db/seeds/settings.rb:3809
 msgid "Defines endpoint of Elasticsearch."
 msgstr "Elasticsearch의 엔드포인트를 정의합니다."
 
@@ -6611,7 +6633,7 @@ msgid ""
 "ticket zoom."
 msgstr "티켓 줌에서 요약을 생성하는 시점을 전역적으로 정의합니다."
 
-#: db/seeds/settings.rb:3074
+#: db/seeds/settings.rb:3104
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
@@ -6619,7 +6641,7 @@ msgstr ""
 "고객이 웹 인터페이스에서 티켓을 생성할 수 있는 그룹을 정의합니다. 아무것도 선"
 "택하지 않으면 모든 그룹을 사용할 수 있습니다."
 
-#: db/seeds/settings.rb:3371
+#: db/seeds/settings.rb:3404
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
@@ -6627,12 +6649,12 @@ msgstr ""
 "답장과 이메일 티켓에서 발송되는 이메일의 From 필드를 어떻게 표시할지 정의합니"
 "다."
 
-#: db/seeds/settings.rb:2443
+#: db/seeds/settings.rb:2472
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr "티켓의 마지막 고객 접촉 시간을 어떻게 계산할지 정의합니다."
 
-#: db/seeds/settings.rb:354
+#: db/seeds/settings.rb:369
 #, fuzzy
 #| msgid ""
 #| "Defines how to reach websocket server. \"websocket\" is default on "
@@ -6644,29 +6666,29 @@ msgstr ""
 "웹소켓 서버에 연결하는 방법을 정의합니다. 프로덕션 기본값은 \"websocket\"이"
 "고 CI에서는 \"websocketPort\"를 사용합니다"
 
-#: db/seeds/settings.rb:260
+#: db/seeds/settings.rb:275
 msgid ""
 "Defines how user names are displayed in dropdowns, overviews and selection "
 "fields."
 msgstr ""
 
-#: db/seeds/settings.rb:4822
+#: db/seeds/settings.rb:5060
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "Checkmk(https://checkmk.com/) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5508
+#: db/seeds/settings.rb:5758
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Clearbit(http://www.clearbit.com) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5109
+#: db/seeds/settings.rb:5347
 msgid "Defines if Exchange is enabled or not."
 msgstr "Exchange 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4626
+#: db/seeds/settings.rb:4864
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Icinga(http://www.icinga.org) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5719
+#: db/seeds/settings.rb:5995
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -6674,39 +6696,39 @@ msgstr ""
 "지식베이스 권한이 없는 사용자에게도 지식베이스 내비게이션 버튼을 표시할지 정"
 "의합니다."
 
-#: db/seeds/settings.rb:5704
+#: db/seeds/settings.rb:5980
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "지식베이스 내비게이션 버튼 활성화 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5056
+#: db/seeds/settings.rb:5294
 msgid "Defines if LDAP is enabled or not."
 msgstr "LDAP 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4955
+#: db/seeds/settings.rb:5193
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "Monit(https://mmonit.com/monit/) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4724
+#: db/seeds/settings.rb:4962
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Nagios(http://www.nagios.org) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5902
+#: db/seeds/settings.rb:6179
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "PGP 암호화를 사용할지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5445
+#: db/seeds/settings.rb:5695
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Placetel(http://www.placetel.de) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5832
+#: db/seeds/settings.rb:6109
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "S/MIME 암호화 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:3047
+#: db/seeds/settings.rb:3077
 msgid "Defines if a customer can create tickets via the web interface."
 msgstr "고객이 웹 인터페이스를 통해 티켓을 생성할 수 있는지를 정의합니다."
 
-#: db/seeds/settings.rb:5983
+#: db/seeds/settings.rb:6263
 #, fuzzy
 #| msgid "Defines if the AI provider is configured."
 msgid "Defines if a translation service is configured."
@@ -6716,11 +6738,11 @@ msgstr "AI 공급자가 구성되었는지 정의합니다."
 msgid "Defines if application is in init mode."
 msgstr "애플리케이션을 초기화 모드로 둘지 정의합니다."
 
-#: db/seeds/settings.rb:87
+#: db/seeds/settings.rb:96
 msgid "Defines if application is used as online service."
 msgstr "애플리케이션을 온라인 서비스로 사용할지 정의합니다."
 
-#: db/seeds/settings.rb:6111
+#: db/seeds/settings.rb:6391
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -6728,11 +6750,11 @@ msgstr ""
 "날짜/시간 필드 선택기에서 주차를 표시해 올바른 날짜를 쉽게 선택할 수 있게 할"
 "지 정의합니다."
 
-#: db/seeds/settings.rb:5370
+#: db/seeds/settings.rb:5620
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "범용 CTI 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:6203
+#: db/seeds/settings.rb:6483
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -6740,41 +6762,41 @@ msgstr ""
 "다른 2단계 인증 방법에 접근할 수 없게 되었을 때 사용자가 복구 코드를 쓸 수 있"
 "는지 정의합니다."
 
-#: db/seeds/settings.rb:5287
+#: db/seeds/settings.rb:5537
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "sipgate.io(http://www.sipgate.io) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5944
+#: db/seeds/settings.rb:6221
 #, fuzzy
 #| msgid "Defines if the time accounting types are enabled."
 msgid "Defines if system notification emails are PGP signed."
 msgstr "시간 정산 유형을 활성화할지 정의합니다."
 
-#: db/seeds/settings.rb:5874
+#: db/seeds/settings.rb:6151
 #, fuzzy
 #| msgid "Defines if the time accounting types are enabled."
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr "시간 정산 유형을 활성화할지 정의합니다."
 
-#: db/seeds/settings.rb:6488
+#: db/seeds/settings.rb:6780
 msgid "Defines if the AI provider is configured."
 msgstr "AI 공급자가 구성되었는지 정의합니다."
 
-#: db/seeds/settings.rb:5218
+#: db/seeds/settings.rb:5456
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "GitHub(http://www.github.com) 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5414
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "GitLab(http://www.gitlab.com) 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5972
+#: db/seeds/settings.rb:6249
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "PGP 수신자 별칭 구성을 활성화할지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:727
+#: db/seeds/settings.rb:752
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
@@ -6782,7 +6804,7 @@ msgstr ""
 "게시물 가시성을 \"public\"으로 변경할 때 상담원이 확인 대화 상자를 승인해야 "
 "하는지 정의합니다."
 
-#: db/seeds/settings.rb:77
+#: db/seeds/settings.rb:83
 msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
@@ -6790,7 +6812,7 @@ msgstr ""
 "애플리케이션을 개발자 모드로 둘지 정의합니다(모든 사용자가 동일한 비밀번호를 "
 "사용하고 이메일 전송 없이 비밀번호 재설정이 동작)."
 
-#: db/seeds/settings.rb:6735
+#: db/seeds/settings.rb:7037
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6798,7 +6820,7 @@ msgstr ""
 "리치 텍스트 편집기의 버블 메뉴 기능을 활성화할지 정의합니다. 글쓰기 도우미가 "
 "켜져 있으면 이 설정은 무시됩니다."
 
-#: db/seeds/settings.rb:6255
+#: db/seeds/settings.rb:6535
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6806,7 +6828,7 @@ msgstr ""
 "사용자의 기본 조직을 변경할 때 해당 사용자의 최근 100개 티켓도 업데이트할지 "
 "정의합니다."
 
-#: db/seeds/settings.rb:646
+#: db/seeds/settings.rb:671
 #, fuzzy
 #| msgid ""
 #| "Defines if the core workflow communication should run over ajax instead "
@@ -6816,24 +6838,24 @@ msgid ""
 "WebSocket."
 msgstr "핵심 워크플로 통신을 웹소켓 대신 AJAX로 실행할지 정의합니다."
 
-#: db/seeds/settings.rb:672
+#: db/seeds/settings.rb:697
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr "사용자/조직 위젯 결과에 이메일을 표시할지 정의합니다."
 
-#: db/seeds/settings.rb:5136
+#: db/seeds/settings.rb:5374
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr "i-doit(https://www.i-doit.org/) 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:2470
+#: db/seeds/settings.rb:2499
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr "티켓 조건 편집기에서 복잡한 논리식을 지원할지 정의합니다."
 
-#: db/seeds/settings.rb:2496
+#: db/seeds/settings.rb:2525
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
@@ -6841,36 +6863,36 @@ msgstr ""
 "티켓 조건 편집기에서 트리거와 티켓 자동 할당을 위한 정규식 연산자를 지원할지 "
 "정의합니다."
 
-#: db/seeds/settings.rb:4276
+#: db/seeds/settings.rb:4397
 msgid "Defines if the time accounting types are enabled."
 msgstr "시간 정산 유형을 활성화할지 정의합니다."
 
-#: db/seeds/settings.rb:6171
+#: db/seeds/settings.rb:6451
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr "2단계 인증 방법 중 인증 앱 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:6139
+#: db/seeds/settings.rb:6419
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr "2단계 인증 방법 중 보안 키 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:3128
+#: db/seeds/settings.rb:3158
 msgid "Defines if tickets can be created via web form."
 msgstr "웹 양식을 통해 티켓을 생성할 수 있는지 정의합니다."
 
-#: db/seeds/settings.rb:4675
+#: db/seeds/settings.rb:4913
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "서비스가 복구되면 티켓을 닫을지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4527
+#: db/seeds/settings.rb:4721
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "관리자 인터페이스에서 관리하는 항목을 위한 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4428
+#: db/seeds/settings.rb:4578
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
@@ -6878,7 +6900,7 @@ msgstr ""
 "이메일이 Zammad에서 생성된 것인지 확인하고 기사 발신자를 설정하는 포스트마스"
 "터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4437
+#: db/seeds/settings.rb:4591
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -6886,17 +6908,17 @@ msgstr ""
 "이메일이 자체 생성된 알림인지 확인하고 그렇다면 이메일 루프를 막기 위해 무시"
 "하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4464
+#: db/seeds/settings.rb:4630
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "보안 메일을 처리하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4590
+#: db/seeds/settings.rb:4812
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "올바른 후속 처리를 위해 Jira 메일을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4572
+#: db/seeds/settings.rb:4786
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6904,7 +6926,7 @@ msgstr ""
 "올바른 후속 처리를 위해 ServiceNow 메일을 식별하는 포스트마스터 필터를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:4374
+#: db/seeds/settings.rb:4500
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
@@ -6912,18 +6934,18 @@ msgstr ""
 "자동 회신을 식별해 Zammad에서 자동 회신을 보내지 않도록 하는 포스트마스터 필"
 "터를 정의합니다."
 
-#: db/seeds/settings.rb:4392
+#: db/seeds/settings.rb:4526
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr "병합된 티켓의 후속 티켓을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4383
+#: db/seeds/settings.rb:4513
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 "관리자 설정을 기준으로 후속 티켓을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4482
+#: db/seeds/settings.rb:4656
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6931,7 +6953,7 @@ msgstr ""
 "부재중 이메일을 식별해 후속 여부를 감지하고 현재 티켓 상태를 유지하는 포스트"
 "마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4509
+#: db/seeds/settings.rb:4695
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6939,7 +6961,7 @@ msgstr ""
 "포스트마스터 바운스를 식별하고, 영구적으로 배달이 실패하면 알림 전송을 중단하"
 "는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4500
+#: db/seeds/settings.rb:4682
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify postmaster bounces; and handles "
@@ -6951,7 +6973,7 @@ msgstr ""
 "포스트마스터 바운스를 식별해 원본 티켓의 후속으로 처리하는 포스트마스터 필터"
 "를 정의합니다."
 
-#: db/seeds/settings.rb:4518
+#: db/seeds/settings.rb:4708
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6959,19 +6981,19 @@ msgstr ""
 "포스트마스터 바운스를 식별해 영구적으로 배달이 실패할 경우 티켓을 다시 여는 "
 "포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4455
+#: db/seeds/settings.rb:4617
 msgid "Defines postmaster filter to identify sender user."
 msgstr "발신 사용자를 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4446
+#: db/seeds/settings.rb:4604
 msgid "Defines postmaster filter to identify session user."
 msgstr "세션 사용자를 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4617
+#: db/seeds/settings.rb:4851
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "티켓 그룹을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4554
+#: db/seeds/settings.rb:4760
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6979,28 +7001,28 @@ msgstr ""
 "Checkmk(http://mathias-kettner.com/check_mk.html) 이메일을 처리하는 포스트마"
 "스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4536
+#: db/seeds/settings.rb:4734
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Icinga(http://www.icinga.org) 이메일을 처리하는 포스트마스터 필터를 정의합니"
 "다."
 
-#: db/seeds/settings.rb:4563
+#: db/seeds/settings.rb:4773
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Monit(https://mmonit.com/monit/) 이메일을 처리하는 포스트마스터 필터를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:4545
+#: db/seeds/settings.rb:4747
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 "Nagios(http://www.nagios.org) 이메일을 처리하는 포스트마스터 필터를 정의합니"
 "다."
 
-#: db/seeds/settings.rb:4365
+#: db/seeds/settings.rb:4487
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
@@ -7008,7 +7030,7 @@ msgstr ""
 "신뢰할 수 없는 소스의 X-Zammad 헤더를 제거하는 포스트마스터 필터를 정의합니"
 "다."
 
-#: db/seeds/settings.rb:4473
+#: db/seeds/settings.rb:4643
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify auto responses to prevent auto "
@@ -7020,14 +7042,14 @@ msgstr ""
 "자동 회신을 식별해 Zammad에서 자동 회신을 보내지 않도록 하는 포스트마스터 필"
 "터를 정의합니다."
 
-#: db/seeds/settings.rb:4401
+#: db/seeds/settings.rb:4539
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr ""
 "그룹 후속 배정을 기준으로 소유자를 설정하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4410
+#: db/seeds/settings.rb:4552
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
@@ -7035,7 +7057,7 @@ msgstr ""
 "Reply-To 헤더를 기준으로 이메일 발신자를 설정하는 포스트마스터 필터를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:4608
+#: db/seeds/settings.rb:4838
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -7043,74 +7065,74 @@ msgstr ""
 "내부 기사에 대한 답장이거나 마지막 발신 이메일이 내부용이면 게시물 가시성을 "
 "내부로 설정하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4362
+#: db/seeds/settings.rb:4484
 msgid "Defines postmaster filter."
 msgstr "포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:231
+#: db/seeds/settings.rb:246
 msgid "Defines pretty date format."
 msgstr "보기 쉬운 날짜 형식을 정의합니다."
 
-#: db/seeds/settings.rb:5598
+#: db/seeds/settings.rb:5863
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "HTML 살균기의 처리 제한 시간을 정의합니다."
 
-#: db/seeds/settings.rb:5257
+#: db/seeds/settings.rb:5495
 msgid "Defines sync transaction backend."
 msgstr "동기화 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:3274
+#: db/seeds/settings.rb:3304
 msgid ""
 "Defines the CAPTCHA provider used to protect the web form. Leave empty to "
 "disable. The list of available providers is derived from the registered "
 "FormSpamProtection::Captcha backends."
 msgstr ""
 
-#: db/seeds/settings.rb:5586
+#: db/seeds/settings.rb:5851
 msgid "Defines the CSS font information for HTML emails."
 msgstr "HTML 이메일에 사용할 CSS 글꼴 정보를 정의합니다."
 
-#: db/seeds/settings.rb:5398
+#: db/seeds/settings.rb:5648
 msgid "Defines the CTI config."
 msgstr "CTI 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4943
+#: db/seeds/settings.rb:5181
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "업데이트를 허용할 Checkmk 토큰을 정의합니다."
 
-#: db/seeds/settings.rb:5534
+#: db/seeds/settings.rb:5784
 msgid "Defines the Clearbit config."
 msgstr "Clearbit 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5096
+#: db/seeds/settings.rb:5334
 msgid "Defines the Exchange OAuth config."
 msgstr "Exchange OAuth 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5083
+#: db/seeds/settings.rb:5321
 msgid "Defines the Exchange config."
 msgstr "Exchange 구성을 정의합니다."
 
-#: db/seeds/settings.rb:381
+#: db/seeds/settings.rb:402
 msgid "Defines the HTTP protocol of your instance."
 msgstr "인스턴스의 HTTP 프로토콜을 정의합니다."
 
-#: db/seeds/settings.rb:5930
+#: db/seeds/settings.rb:6207
 msgid "Defines the PGP config."
 msgstr "PGP 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5473
+#: db/seeds/settings.rb:5723
 msgid "Defines the Placetel config."
 msgstr "Placetel 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5860
+#: db/seeds/settings.rb:6137
 msgid "Defines the S/MIME config."
 msgstr "S/MIME 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5575
+#: db/seeds/settings.rb:5837
 msgid "Defines the agent limit."
 msgstr "에이전트 한도를 정의합니다."
 
-#: db/seeds/settings.rb:467
+#: db/seeds/settings.rb:489
 msgid ""
 "Defines the backend for geo IP lookups. Also shows location of an IP address "
 "if it is traceable."
@@ -7118,74 +7140,74 @@ msgstr ""
 "지오 IP 조회에 사용할 백엔드를 정의하며, 추적 가능한 경우 해당 IP 주소의 위치"
 "도 표시합니다."
 
-#: db/seeds/settings.rb:521
+#: db/seeds/settings.rb:545
 msgid ""
 "Defines the backend for geo calendar lookups. Used for initial calendar "
 "succession."
 msgstr ""
 "지오 캘린더 조회에 사용할 백엔드를 정의합니다. 초기 캘린더 승계에 사용됩니다."
 
-#: db/seeds/settings.rb:494
+#: db/seeds/settings.rb:517
 msgid ""
 "Defines the backend for geo location lookups to store geo locations for "
 "addresses."
 msgstr ""
 "주소의 지리적 위치를 저장하기 위한 지오 로케이션 조회 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:440
+#: db/seeds/settings.rb:461
 msgid "Defines the backend for user and organization image lookups."
 msgstr "사용자와 조직 이미지 조회에 사용할 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:187
+#: db/seeds/settings.rb:199
 msgid "Defines the backend service for ticket article language detection."
 msgstr "티켓 아티클 언어를 감지할 백엔드 서비스를 정의합니다."
 
-#: db/seeds/settings.rb:6712
+#: db/seeds/settings.rb:7011
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
-#: db/seeds/settings.rb:2983
+#: db/seeds/settings.rb:3013
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr "전역적으로 분당 생성할 수 있는 아티클 수를 정의합니다."
 
-#: db/seeds/settings.rb:2964
+#: db/seeds/settings.rb:2994
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr "티켓별로 분당 생성할 수 있는 아티클 수를 정의합니다."
 
-#: db/seeds/settings.rb:4258
+#: db/seeds/settings.rb:4379
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr "시간 정산 입력 필드 옆에 표시할 사용자 지정 단위를 정의합니다."
 
-#: db/seeds/settings.rb:4339
+#: db/seeds/settings.rb:4460
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "캘린더 티켓 구독의 기본 설정을 정의합니다."
 
-#: db/seeds/settings.rb:3760
+#: db/seeds/settings.rb:3796
 msgid "Defines the default screen."
 msgstr "기본 화면을 정의합니다."
 
-#: db/seeds/settings.rb:167
+#: db/seeds/settings.rb:179
 msgid "Defines the default system language."
 msgstr "시스템 기본 언어를 정의합니다."
 
-#: db/seeds/settings.rb:210
+#: db/seeds/settings.rb:225
 msgid "Defines the default system timezone."
 msgstr "시스템 기본 표준시간대를 정의합니다."
 
-#: db/seeds/settings.rb:4294
+#: db/seeds/settings.rb:4415
 msgid "Defines the default time accounting type."
 msgstr "기본 시간 정산 유형을 정의합니다."
 
-#: db/seeds/settings.rb:699
+#: db/seeds/settings.rb:724
 msgid "Defines the default visibility for new notes."
 msgstr "새 메모의 기본 가시성을 정의합니다."
 
-#: db/seeds/settings.rb:5432
+#: db/seeds/settings.rb:5682
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -7193,13 +7215,13 @@ msgstr ""
 "통화 중 고객 활동으로 간주할 시간(초)을 정의하며, 이 시간이 지나면 사용자 프"
 "로필 대화 상자가 표시됩니다."
 
-#: db/seeds/settings.rb:6570
+#: db/seeds/settings.rb:6862
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
 msgstr "AI 글쓰기 도우미가 출력 서식을 결정할 때 따를 고정 지침을 정의합니다."
 
-#: db/seeds/settings.rb:319
+#: db/seeds/settings.rb:334
 msgid ""
 "Defines the fully qualified domain name of the system. This setting is used "
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
@@ -7208,31 +7230,31 @@ msgstr ""
 "시스템의 정규화된 도메인 이름을 정의합니다. 이 값은 애플리케이션 전반의 메시"
 "지에서 #{setting.fqdn} 변수로 사용되어 시스템 내 티켓 링크를 생성합니다."
 
-#: db/seeds/settings.rb:4871
+#: db/seeds/settings.rb:5109
 msgid "Defines the group of created tickets."
 msgstr "생성된 티켓의 그룹을 정의합니다."
 
-#: db/seeds/settings.rb:3162
+#: db/seeds/settings.rb:3192
 msgid "Defines the group of tickets created via web form."
 msgstr "웹 양식으로 생성된 티켓을 배정할 그룹을 정의합니다."
 
-#: db/seeds/settings.rb:5163
+#: db/seeds/settings.rb:5401
 msgid "Defines the i-doit config."
 msgstr "i-doit 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4160
+#: db/seeds/settings.rb:4278
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr "시퀀서의 다양한 로깅 작업에 사용할 로그 레벨을 정의합니다."
 
-#: db/seeds/settings.rb:121
+#: db/seeds/settings.rb:133
 msgid "Defines the logo of the application, shown in the web interface."
 msgstr "웹 인터페이스에 표시되는 응용 프로그램의 로고를 정의합니다."
 
-#: db/seeds/settings.rb:3421
+#: db/seeds/settings.rb:3454
 msgid "Defines the maximum accepted email size in MB."
 msgstr "허용되는 최대 이메일 크기(MB)를 정의합니다."
 
-#: db/seeds/settings.rb:1057
+#: db/seeds/settings.rb:1082
 msgid ""
 "Defines the maximum number of allowed open tabs before auto cleanup removes "
 "surplus tabs when creating new tabs."
@@ -7240,13 +7262,13 @@ msgstr ""
 "새 탭을 만들 때 초과 탭이 자동으로 정리되기 전에 허용되는 최대 열린 탭 수를 "
 "정의합니다."
 
-#: db/seeds/settings.rb:6612
+#: db/seeds/settings.rb:6904
 msgid ""
 "Defines the minimum relevance score (in percent) a knowledge base answer "
 "must reach to be suggested in the ticket sidebar."
 msgstr ""
 
-#: db/seeds/settings.rb:97
+#: db/seeds/settings.rb:109
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
@@ -7254,23 +7276,23 @@ msgstr ""
 "웹 인터페이스와 브라우저 탭, 제목 표시줄에 표시될 애플리케이션 이름을 정의합"
 "니다."
 
-#: db/seeds/settings.rb:2877
+#: db/seeds/settings.rb:2907
 msgid "Defines the permission level used for lookups."
 msgstr "조회에 사용할 권한 수준을 정의합니다."
 
-#: db/seeds/settings.rb:362
+#: db/seeds/settings.rb:380
 #, fuzzy
 #| msgid "Defines the port of the websocket server."
 msgid "Defines the port of the WebSocket server."
 msgstr "웹소켓 서버 포트를 정의합니다."
 
-#: db/seeds/settings.rb:6775
+#: db/seeds/settings.rb:7077
 #, fuzzy
 #| msgid "Defines the transaction backend to send agent notifications."
 msgid "Defines the private key used to sign web push notifications."
 msgstr "상담원 알림을 전송할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:6788
+#: db/seeds/settings.rb:7090
 #, fuzzy
 #| msgid "Defines the transaction backend to send agent notifications."
 msgid ""
@@ -7281,30 +7303,30 @@ msgstr "상담원 알림을 전송할 트랜잭션 백엔드를 정의합니다.
 msgid "Defines the random application secret."
 msgstr "애플리케이션의 임의 시크릿을 정의합니다."
 
-#: db/seeds/settings.rb:4652
+#: db/seeds/settings.rb:4890
 msgid "Defines the sender email address of Icinga emails."
 msgstr "Icinga 이메일에 사용할 발신 주소를 정의합니다."
 
-#: db/seeds/settings.rb:4750
+#: db/seeds/settings.rb:4988
 msgid "Defines the sender email address of Nagios emails."
 msgstr "Nagios 이메일에 사용할 발신 주소를 정의합니다."
 
-#: db/seeds/settings.rb:4848
+#: db/seeds/settings.rb:5086
 msgid "Defines the sender email address of the service emails."
 msgstr "서비스 전자 메일의 보낸 사람의 이메일 주소를 정의합니다."
 
-#: db/seeds/settings.rb:3581
+#: db/seeds/settings.rb:3614
 msgid "Defines the sender of email notifications."
 msgstr "전자 메일 알림의 보낸 사람을 정의합니다."
 
-#: db/seeds/settings.rb:3399
+#: db/seeds/settings.rb:3432
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
 msgstr ""
 "상담원의 실명과 지정된 그룹 이메일 주소 사이에 사용할 구분자를 정의합니다."
 
-#: db/seeds/settings.rb:1178
+#: db/seeds/settings.rb:1203
 msgid ""
 "Defines the session timeout for inactivity of users. Based on the assigned "
 "permissions the highest timeout value will be used, otherwise the default."
@@ -7312,15 +7334,15 @@ msgstr ""
 "사용자 비활성 시 세션 타임아웃을 정의합니다. 할당된 권한 중 가장 큰 타임아웃"
 "이 적용되고, 그렇지 않으면 기본값이 사용됩니다."
 
-#: db/seeds/settings.rb:5336
+#: db/seeds/settings.rb:5586
 msgid "Defines the sipgate.io config."
 msgstr "sipgate.io 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4701
+#: db/seeds/settings.rb:4939
 msgid "Defines the state of auto-closed tickets."
 msgstr "자동으로 닫힌 티켓의 상태를 정의합니다."
 
-#: db/seeds/settings.rb:294
+#: db/seeds/settings.rb:309
 msgid ""
 "Defines the system identifier. Every ticket number contains this ID. This "
 "ensures that only tickets which belong to your system will be processed as "
@@ -7329,36 +7351,36 @@ msgstr ""
 "시스템 식별자를 정의합니다. 모든 티켓 번호에 이 ID가 포함되어 시스템에 속한 "
 "티켓만 후속으로 처리됩니다(두 Zammad 인스턴스 간 통신 시 유용)."
 
-#: db/seeds/settings.rb:3099
+#: db/seeds/settings.rb:3129
 msgid "Defines the tab behaviour after a ticket action."
 msgstr "티켓 작업 후 탭 동작을 정의합니다."
 
-#: db/seeds/settings.rb:2894
+#: db/seeds/settings.rb:2924
 msgid "Defines the ticket states used for lookups."
 msgstr "조회에 사용할 티켓 상태를 정의합니다."
 
-#: db/seeds/settings.rb:5731
+#: db/seeds/settings.rb:6008
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr "직접 작성한 노트를 삭제할 수 있는 시간 범위를 정의합니다."
 
-#: db/seeds/settings.rb:5487
+#: db/seeds/settings.rb:5737
 msgid "Defines the token for Placetel."
 msgstr "Placetel 토큰을 정의합니다."
 
-#: db/seeds/settings.rb:5278
+#: db/seeds/settings.rb:5524
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr "이메일에서 고객 서명을 감지할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5260
+#: db/seeds/settings.rb:5498
 msgid "Defines the transaction backend to execute triggers."
 msgstr "트리거를 실행할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5511
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "상담원 알림을 전송할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5556
+#: db/seeds/settings.rb:5810
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -7366,11 +7388,11 @@ msgstr ""
 "객체에서 발신자 ID를 감지해 CTI 조회용으로 저장하는 트랜잭션 백엔드를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:5565
+#: db/seeds/settings.rb:5823
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr "시간 기반 트리거를 실행할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5547
+#: db/seeds/settings.rb:5797
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -7379,32 +7401,32 @@ msgstr ""
 "백엔드를 정의합니다."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:4240
+#: db/seeds/settings.rb:4361
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr "시간 정산 입력 필드 옆에 표시할 단위를 정의합니다."
 
-#: db/seeds/settings.rb:2826
+#: db/seeds/settings.rb:2856
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr "일치하는 티켓이 있을 때 표시할 경고 메시지를 정의합니다."
 
-#: db/seeds/settings.rb:2809
+#: db/seeds/settings.rb:2839
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr "일치하는 티켓이 있을 때 표시할 경고 제목을 정의합니다."
 
-#: db/seeds/settings.rb:5266
+#: db/seeds/settings.rb:5508
 msgid "Defines transaction backend."
 msgstr "트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:2860
+#: db/seeds/settings.rb:2890
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
 "이미 존재하는 티켓이 있을 때 일치하는 티켓을 표시할지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:6703
+#: db/seeds/settings.rb:6999
 msgid ""
 "Defines which knowledge base categories are excluded from the vector "
 "database. Sub-categories of an excluded category are excluded as well. Note "
@@ -7412,15 +7434,15 @@ msgid ""
 "this list, so that its answers get indexed."
 msgstr ""
 
-#: db/seeds/settings.rb:3297
+#: db/seeds/settings.rb:3327
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6479
+#: db/seeds/settings.rb:6768
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
-#: db/seeds/settings.rb:2792
+#: db/seeds/settings.rb:2822
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr "티켓을 생성하기 전에 확인할 티켓 속성을 정의합니다."
 
@@ -7430,7 +7452,7 @@ msgstr "티켓을 생성하기 전에 확인할 티켓 속성을 정의합니다
 msgid "Defines which tickets can use the ticket summary sidebar."
 msgstr "웹 양식을 통해 티켓을 생성할 수 있는지 정의합니다."
 
-#: db/seeds/settings.rb:6041
+#: db/seeds/settings.rb:6321
 #, fuzzy
 #| msgid ""
 #| "Defines which user roles will receive a warning in case of matching "
@@ -7438,7 +7460,7 @@ msgstr "웹 양식을 통해 티켓을 생성할 수 있는지 정의합니다."
 msgid "Defines which user roles automatic article translation applies to."
 msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 정의합니다."
 
-#: db/seeds/settings.rb:2843
+#: db/seeds/settings.rb:2873
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 정의합니다."
@@ -7741,19 +7763,19 @@ msgstr "디자이너"
 msgid "Desktop"
 msgstr "데스크톱"
 
-#: db/seeds/settings.rb:6458
+#: db/seeds/settings.rb:6741
 #, fuzzy
 #| msgid "New BETA UI Switch"
 msgid "Desktop BETA UI Switch"
 msgstr "새 BETA UI 전환"
 
-#: db/seeds/settings.rb:6467
+#: db/seeds/settings.rb:6753
 #, fuzzy
 #| msgid "UI Desktop Beta Switch"
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "UI 데스크톱 베타 전환"
 
-#: db/seeds/settings.rb:6476
+#: db/seeds/settings.rb:6765
 #, fuzzy
 #| msgid "UI Desktop Beta Switch"
 msgid "Desktop BETA UI Switch Roles"
@@ -7788,7 +7810,7 @@ msgid "Destination group > Sending email address"
 msgstr "대상 그룹 > 발신 이메일 주소"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
-#: db/seeds/settings.rb:2763
+#: db/seeds/settings.rb:2793
 msgid "Detect Duplicate Ticket Creation"
 msgstr "중복 티켓 생성 감지"
 
@@ -7806,7 +7828,7 @@ msgstr "감지된 언어"
 msgid "Developer API (api-free.deepl.com)"
 msgstr ""
 
-#: db/seeds/settings.rb:74
+#: db/seeds/settings.rb:80
 msgid "Developer System"
 msgstr "개발자 시스템"
 
@@ -7877,7 +7899,7 @@ msgstr ""
 "사용자가 사서함에 액세스할 수 있는지 확인하셨나요? 아니라면 이 채널을 제거하"
 "고 다른 유형의 사서함으로 전환하는 것도 고려하세요. %l"
 
-#: db/seeds/settings.rb:2269
+#: db/seeds/settings.rb:2298
 msgid "Digit required"
 msgstr "숫자 필수"
 
@@ -7912,7 +7934,7 @@ msgstr "알림 취소"
 msgid "Disable the banner for the BETA switch"
 msgstr "베타 전환 배너 숨기기"
 
-#: db/seeds/settings.rb:1373
+#: db/seeds/settings.rb:1402
 msgid "Disables user creation on logon with a third-party application."
 msgstr "타사 애플리케이션으로 로그인할 때 사용자 생성을 비활성화합니다."
 
@@ -7999,7 +8021,7 @@ msgid "Display Zammad with the new BETA user interface"
 msgstr "새 베타 사용자 인터페이스로 Zammad 표시"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
-#: db/seeds/settings.rb:1977
+#: db/seeds/settings.rb:2006
 msgid "Display name"
 msgstr "표시 이름"
 
@@ -8025,7 +8047,7 @@ msgstr ""
 msgid "Do not sign email"
 msgstr "이메일에 서명하지 않음"
 
-#: db/seeds/settings.rb:6265
+#: db/seeds/settings.rb:6545
 msgid "Do not update any tickets."
 msgstr "티켓을 업데이트하지 않습니다."
 
@@ -8463,47 +8485,47 @@ msgstr "고객 편집"
 msgid "Editor"
 msgstr "편집자"
 
-#: db/seeds/settings.rb:3857
+#: db/seeds/settings.rb:3926
 msgid "Elasticsearch Asciifolding Configuration"
 msgstr "Elasticsearch Asciifolding 구성"
 
-#: db/seeds/settings.rb:3812
+#: db/seeds/settings.rb:3866
 msgid "Elasticsearch Attachment Extensions"
 msgstr "Elasticsearch 첨부 파일 확장자"
 
-#: db/seeds/settings.rb:3821
+#: db/seeds/settings.rb:3878
 msgid "Elasticsearch Attachment Size"
 msgstr "Elasticsearch 첨부 파일 크기"
 
-#: db/seeds/settings.rb:3794
+#: db/seeds/settings.rb:3842
 msgid "Elasticsearch Endpoint Index"
 msgstr "Elasticsearch 엔드포인트 인덱스"
 
-#: db/seeds/settings.rb:3785
+#: db/seeds/settings.rb:3830
 msgid "Elasticsearch Endpoint Password"
 msgstr "Elasticsearch 엔드포인트 비밀번호"
 
-#: db/seeds/settings.rb:3767
+#: db/seeds/settings.rb:3806
 msgid "Elasticsearch Endpoint URL"
 msgstr "Elasticsearch 엔드포인트 URL"
 
-#: db/seeds/settings.rb:3776
+#: db/seeds/settings.rb:3818
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch 엔드포인트 사용자"
 
-#: db/seeds/settings.rb:3848
+#: db/seeds/settings.rb:3914
 msgid "Elasticsearch Model Configuration"
 msgstr "Elasticsearch 모델 구성"
 
-#: db/seeds/settings.rb:3839
+#: db/seeds/settings.rb:3902
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch 파이프라인 이름"
 
-#: db/seeds/settings.rb:3803
+#: db/seeds/settings.rb:3854
 msgid "Elasticsearch SSL verification"
 msgstr "Elasticsearch SSL 검증"
 
-#: db/seeds/settings.rb:3830
+#: db/seeds/settings.rb:3890
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch 총 페이로드 크기"
 
@@ -8558,15 +8580,15 @@ msgstr "이메일(수신)"
 msgid "Email (out)"
 msgstr "이메일(발신)"
 
-#: db/seeds/settings.rb:778
+#: db/seeds/settings.rb:803
 msgid "Email - full quote"
 msgstr "이메일 - 전체 견적"
 
-#: db/seeds/settings.rb:805
+#: db/seeds/settings.rb:830
 msgid "Email - quote header"
 msgstr "이메일 - 인용 헤더"
 
-#: db/seeds/settings.rb:751
+#: db/seeds/settings.rb:776
 msgid "Email - subject field"
 msgstr "이메일 - 주제 필드"
 
@@ -8756,12 +8778,12 @@ msgstr "사용"
 msgid "Enable AI provider"
 msgstr "AI 제공자"
 
-#: db/seeds/settings.rb:3708
+#: db/seeds/settings.rb:3744
 msgid "Enable Chat"
 msgstr "채팅 사용"
 
 #: app/assets/javascripts/app/views/api/access.jst.eco:27
-#: db/seeds/settings.rb:3663
+#: db/seeds/settings.rb:3699
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -8776,7 +8798,7 @@ msgstr ""
 "토큰(사용자 이름/이메일과 비밀번호 대신)을 사용해 REST API를 활성화합니다. 모"
 "든 사용자가 프로필에서 자신의 액세스 토큰을 만들어야 합니다."
 
-#: db/seeds/settings.rb:3638
+#: db/seeds/settings.rb:3674
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
@@ -8784,11 +8806,11 @@ msgstr ""
 "토큰(사용자 이름/이메일과 비밀번호 대신)을 사용해 REST API를 활성화합니다. "
 "각 사용자는 프로필에서 자신의 액세스 토큰을 만들어야 합니다."
 
-#: db/seeds/settings.rb:6200
+#: db/seeds/settings.rb:6480
 msgid "Enable Recovery Codes"
 msgstr "복구 코드 활성화"
 
-#: db/seeds/settings.rb:3044
+#: db/seeds/settings.rb:3074
 msgid "Enable Ticket creation"
 msgstr "Ticket 생성을 활성화"
 
@@ -8800,7 +8822,7 @@ msgstr ""
 "활동 유형 선택을 활성화합니다. 상담원은 시간을 기록할 때 아래 유형 중 하나를 "
 "선택할 수 있습니다."
 
-#: db/seeds/settings.rb:2664
+#: db/seeds/settings.rb:2694
 msgid "Enable auto assignment for following matching tickets."
 msgstr "일치하는 후속 티켓에 대한 자동 할당을 활성화합니다."
 
@@ -8808,7 +8830,7 @@ msgstr "일치하는 후속 티켓에 대한 자동 할당을 활성화합니다
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "상담원이 티켓을 처음 열 때 자동으로 배정되도록 합니다."
 
-#: db/seeds/settings.rb:6283
+#: db/seeds/settings.rb:6563
 msgid "Enable checklists."
 msgstr "체크리스트를 활성화합니다."
 
@@ -8822,7 +8844,7 @@ msgid ""
 "submissions)."
 msgstr ""
 
-#: db/seeds/settings.rb:808
+#: db/seeds/settings.rb:833
 msgid ""
 "Enable if you want a timestamped reply header to be automatically inserted "
 "in front of quoted messages."
@@ -8830,7 +8852,7 @@ msgstr ""
 "인용 메시지 앞에 타임스탬프가 있는 회신 헤더를 자동으로 삽입하려면 활성화하세"
 "요."
 
-#: db/seeds/settings.rb:781
+#: db/seeds/settings.rb:806
 msgid ""
 "Enable if you want to quote the full email in your answer. The quoted email "
 "will be put at the end of your answer. If you just want to quote a certain "
@@ -8841,13 +8863,13 @@ msgstr ""
 "가됩니다. 특정 문구만 인용하려면 텍스트를 선택하고 ‘답장’을 누르면 됩니다(이 "
 "기능은 항상 사용할 수 있습니다)."
 
-#: db/seeds/settings.rb:6584
+#: db/seeds/settings.rb:6876
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
 
-#: db/seeds/settings.rb:6450
+#: db/seeds/settings.rb:6730
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -8856,7 +8878,7 @@ msgstr ""
 "중요한 설정 변경 후 Zammad 프로세스를 자동으로 종료할지 선택합니다. systemd"
 "나 Docker처럼 자동 재시작 정책을 지원하는 프로세스 관리자에서만 사용하세요."
 
-#: db/seeds/settings.rb:6027
+#: db/seeds/settings.rb:6307
 #, fuzzy
 #| msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgid ""
@@ -8864,7 +8886,7 @@ msgid ""
 "opens a ticket."
 msgstr "상담원이 티켓을 처음 열 때 자동으로 배정되도록 합니다."
 
-#: db/seeds/settings.rb:6598
+#: db/seeds/settings.rb:6890
 msgid ""
 "Enable or disable the display of AI suggested knowledge base answers in the "
 "ticket sidebar."
@@ -8879,7 +8901,7 @@ msgstr ""
 "Zammad의 유지 관리 모드를 켜거나 끕니다. 켜면 _모든 비관리자가 로그아웃되고_ "
 "_관리자만 새 세션을 시작할 수 있습니다_."
 
-#: db/seeds/settings.rb:40
+#: db/seeds/settings.rb:46
 msgid ""
 "Enable or disable the maintenance mode of Zammad. If enabled, all non-"
 "administrators get logged out and only administrators can start a new "
@@ -8888,41 +8910,41 @@ msgstr ""
 "Zammad의 유지 관리 모드를 켜거나 끕니다. 켜면 비관리자는 모두 로그아웃되고 관"
 "리자만 새 세션을 시작할 수 있습니다."
 
-#: db/seeds/settings.rb:6505
+#: db/seeds/settings.rb:6797
 msgid "Enable or disable the ticket summary."
 msgstr "티켓 요약 기능을 켜거나 끕니다."
 
-#: db/seeds/settings.rb:6013
+#: db/seeds/settings.rb:6293
 #, fuzzy
 #| msgid "Enable or disable the ticket summary."
 msgid "Enable or disable the translation of ticket articles."
 msgstr "티켓 요약 기능을 켜거나 끕니다."
 
-#: db/seeds/settings.rb:6680
+#: db/seeds/settings.rb:6972
 msgid ""
 "Enable or disable the vector database, which is used for storing and "
 "retrieving vectorized data. Elasticsearch is used as the vector database "
 "backend."
 msgstr ""
 
-#: db/seeds/settings.rb:6556
+#: db/seeds/settings.rb:6848
 msgid "Enable or disable the writing assistant text tools."
 msgstr "글쓰기 도우미 텍스트 도구를 켜거나 끕니다."
 
 #: app/assets/javascripts/app/views/api/access.jst.eco:45
-#: db/seeds/settings.rb:6640
+#: db/seeds/settings.rb:6932
 msgid ""
 "Enable the MCP server, so that AI clients can use Zammad with personal "
 "access tokens."
 msgstr ""
 
-#: db/seeds/settings.rb:6324
+#: db/seeds/settings.rb:6604
 #, fuzzy
 #| msgid "Delete old activity stream entries."
 msgid "Enable the activity stream on the dashboard."
 msgstr "오래된 활동 스트림 항목을 삭제합니다."
 
-#: db/seeds/settings.rb:6408
+#: db/seeds/settings.rb:6688
 msgid "Enable the assigned tickets widget on the dashboard."
 msgstr ""
 
@@ -8930,45 +8952,45 @@ msgstr ""
 msgid "Enable the banner for the BETA switch"
 msgstr "베타 전환 배너를 표시합니다"
 
-#: db/seeds/settings.rb:6394
+#: db/seeds/settings.rb:6674
 msgid "Enable the channel distribution widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6310
+#: db/seeds/settings.rb:6590
 msgid "Enable the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6352
+#: db/seeds/settings.rb:6632
 msgid "Enable the first steps tab on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6380
+#: db/seeds/settings.rb:6660
 msgid "Enable the mood widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6436
+#: db/seeds/settings.rb:6716
 msgid "Enable the reopening rate widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6422
+#: db/seeds/settings.rb:6702
 msgid "Enable the tickets in process widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:6366
+#: db/seeds/settings.rb:6646
 msgid "Enable the waiting time widget on the dashboard."
 msgstr ""
 
-#: db/seeds/settings.rb:2638
+#: db/seeds/settings.rb:2668
 msgid "Enable ticket auto assignment."
 msgstr "티켓 자동 할당을 활성화합니다."
 
-#: db/seeds/settings.rb:6538
+#: db/seeds/settings.rb:6830
 #, fuzzy
 #| msgid "Enable auto assignment for following matching tickets."
 msgid "Enable ticket summary for following matching tickets."
 msgstr "일치하는 후속 티켓에 대한 자동 할당을 활성화합니다."
 
-#: db/seeds/settings.rb:4195
+#: db/seeds/settings.rb:4316
 msgid "Enable time accounting."
 msgstr "시간 정산을 활성화합니다."
 
@@ -8976,7 +8998,7 @@ msgstr "시간 정산을 활성화합니다."
 msgid "Enable/disable inline translations"
 msgstr "인라인 번역을 활성화 / 비활성화"
 
-#: db/seeds/settings.rb:3711
+#: db/seeds/settings.rb:3747
 msgid "Enable/disable online chat."
 msgstr "온라인 채팅을 켜거나 끕니다."
 
@@ -8984,19 +9006,19 @@ msgstr "온라인 채팅을 켜거나 끕니다."
 msgid "Enabled"
 msgstr "사용 중"
 
-#: db/seeds/settings.rb:863
+#: db/seeds/settings.rb:888
 msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "모든 첨부 파일 개요를 표시하는 사이드바를 활성화합니다."
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:12
-#: db/seeds/settings.rb:2766
+#: db/seeds/settings.rb:2796
 msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
 "같은 속성의 티켓이 있을 때 티켓 생성 과정에서 사용자에게 경고를 표시합니다."
 
-#: db/seeds/settings.rb:6055
+#: db/seeds/settings.rb:6335
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -9008,22 +9030,22 @@ msgstr ""
 msgid "Enables console logging."
 msgstr "콘솔 로깅을 사용합니다."
 
-#: db/seeds/settings.rb:1016
+#: db/seeds/settings.rb:1041
 msgid "Enables display of ticket priority icons in UI."
 msgstr "UI에 티켓 우선순위 아이콘을 표시합니다."
 
-#: db/seeds/settings.rb:836
+#: db/seeds/settings.rb:861
 msgid "Enables preview of attachments."
 msgstr "첨부 파일 미리 보기를 활성화합니다."
 
-#: db/seeds/settings.rb:1347
+#: db/seeds/settings.rb:1376
 msgid ""
 "Enables sending of an email notification to a user when they link their "
 "account with a third-party application."
 msgstr ""
 "사용자가 계정을 서드파티 애플리케이션과 연결할 때 이메일 알림을 보냅니다."
 
-#: db/seeds/settings.rb:1321
+#: db/seeds/settings.rb:1350
 msgid ""
 "Enables the automatic linking of an existing account on initial login via a "
 "third party application. If this is disabled, an existing user must first "
@@ -9034,48 +9056,48 @@ msgstr ""
 "성화하면 사용자가 먼저 Zammad에 로그인한 뒤 프로필 → 연결된 계정에서 \"타사"
 "\" 계정을 연결해야 합니다."
 
-#: db/seeds/settings.rb:1258
+#: db/seeds/settings.rb:1284
 msgid "Enables user authentication via %s."
 msgstr "%s를 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1399
+#: db/seeds/settings.rb:1428
 msgid ""
 "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgstr "%s를 통한 사용자 인증을 활성화합니다. 먼저 [%s](%s)에 앱을 등록하세요."
 
-#: db/seeds/settings.rb:1688
+#: db/seeds/settings.rb:1717
 msgid "Enables user authentication via GitHub."
 msgstr "GitHub를 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1753
+#: db/seeds/settings.rb:1782
 msgid "Enables user authentication via GitLab."
 msgstr "GitLab을 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1558
+#: db/seeds/settings.rb:1587
 msgid "Enables user authentication via Google."
 msgstr "Google을 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1623
+#: db/seeds/settings.rb:1652
 msgid "Enables user authentication via LinkedIn."
 msgstr "LinkedIn을 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1825
+#: db/seeds/settings.rb:1854
 msgid "Enables user authentication via Microsoft 365."
 msgstr "Microsoft 365를 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:2131
+#: db/seeds/settings.rb:2160
 msgid "Enables user authentication via OpenID Connect."
 msgstr "OpenID Connect를 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1973
+#: db/seeds/settings.rb:2002
 msgid "Enables user authentication via SAML."
 msgstr "SAML을 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1909
+#: db/seeds/settings.rb:1938
 msgid "Enables user authentication via Weibo."
 msgstr "Weibo를 통한 사용자 인증을 활성화합니다."
 
-#: db/seeds/settings.rb:1124
+#: db/seeds/settings.rb:1149
 msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
@@ -9155,11 +9177,11 @@ msgstr "엔드 포인트"
 msgid "Endpoint Settings"
 msgstr "엔드포인트 설정"
 
-#: db/seeds/settings.rb:6227
+#: db/seeds/settings.rb:6507
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "2단계 인증 설정을 강제합니다"
 
-#: db/seeds/settings.rb:6234
+#: db/seeds/settings.rb:6514
 msgid "Enforced for user roles"
 msgstr "강제 적용할 사용자 역할"
 
@@ -9446,7 +9468,7 @@ msgid "Escalation Times"
 msgstr "에스컬레이션 시간"
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:21
+#: app/frontend/shared/entities/ticket/attributes.ts:21
 #: app/graphql/gql/types/overview_type.rb:102
 msgid "Escalation at"
 msgstr "에스컬레이션 시점"
@@ -9456,7 +9478,7 @@ msgstr "에스컬레이션 시점"
 msgid "Escalation at (Close Time)"
 msgstr "에스컬레이션 시점(종료 기준)"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:42
+#: app/frontend/shared/entities/ticket/attributes.ts:42
 #, fuzzy
 #| msgid "Escalation at (Close Time)"
 msgid "Escalation at (Close time)"
@@ -9467,7 +9489,7 @@ msgstr "에스컬레이션 시점(종료 기준)"
 msgid "Escalation at (First Response Time)"
 msgstr "에스컬레이션 시점(첫 응답 기준)"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:28
+#: app/frontend/shared/entities/ticket/attributes.ts:28
 #, fuzzy
 #| msgid "Escalation at (First Response Time)"
 msgid "Escalation at (First response time)"
@@ -9478,7 +9500,7 @@ msgstr "에스컬레이션 시점(첫 응답 기준)"
 msgid "Escalation at (Update Time)"
 msgstr "에스컬레이션 시점(업데이트 기준)"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:35
+#: app/frontend/shared/entities/ticket/attributes.ts:35
 #, fuzzy
 #| msgid "Escalation at (Update Time)"
 msgid "Escalation at (Update time)"
@@ -9564,15 +9586,15 @@ msgstr "예외 사용자"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:5093
+#: db/seeds/settings.rb:5331
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:5080
+#: db/seeds/settings.rb:5318
 msgid "Exchange config"
 msgstr "Exchange 구성"
 
-#: db/seeds/settings.rb:5106
+#: db/seeds/settings.rb:5344
 msgid "Exchange integration"
 msgstr "Exchange 통합"
 
@@ -9685,7 +9707,7 @@ msgstr "확장 검색"
 msgid "External data source field"
 msgstr "외부 데이터 소스 필드"
 
-#: lib/search_index_backend.rb:821
+#: lib/search_index_backend.rb:826
 msgid "Extract zammad-attachment information from arrays"
 msgstr "배열에서 zammad 첨부 정보를 추출"
 
@@ -9702,7 +9724,7 @@ msgstr "만료일"
 #: app/controllers/first_steps_controller.rb:27
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:47
-#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1481
+#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1510
 msgid "Facebook"
 msgstr "페이스 북"
 
@@ -9714,7 +9736,7 @@ msgstr "Facebook 앱 ID"
 msgid "Facebook Account"
 msgstr "Facebook 계정"
 
-#: db/seeds/settings.rb:1490
+#: db/seeds/settings.rb:1519
 msgid "Facebook App Credentials"
 msgstr "Facebook 앱 자격 증명"
 
@@ -9722,7 +9744,7 @@ msgstr "Facebook 앱 자격 증명"
 msgid "Facebook App Secret"
 msgstr "Facebook 앱 시크릿"
 
-#: db/seeds/settings.rb:1482
+#: db/seeds/settings.rb:1511
 msgid "Facebook Developer Site"
 msgstr "Facebook 개발자 사이트"
 
@@ -9854,7 +9876,7 @@ msgstr "피드백 & 로그"
 msgid "Feedback Form"
 msgstr "피드백 폼"
 
-#: db/seeds/settings.rb:2163
+#: db/seeds/settings.rb:2192
 msgid "Field that uniquely identifies the user. If unset, \"sub\" is used."
 msgstr ""
 "사용자를 고유하게 식별할 필드입니다. 비워 두면 \"sub\" 값이 사용됩니다."
@@ -9880,7 +9902,7 @@ msgid "Filepath to Zammad directory"
 msgstr "Zammad 디렉터리 경로"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:5
-#: db/seeds/settings.rb:419
+#: db/seeds/settings.rb:440
 msgid "Filesystem"
 msgstr "파일 시스템"
 
@@ -9993,7 +10015,7 @@ msgid "First name"
 msgstr "이름"
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:70
+#: app/frontend/shared/entities/ticket/attributes.ts:70
 #: app/graphql/gql/types/overview_type.rb:109
 msgid "First response"
 msgstr "첫 번째 응답"
@@ -10005,7 +10027,7 @@ msgstr "첫 번째 응답"
 msgid "First response time"
 msgstr "첫 번째 응답 시간"
 
-#: db/seeds/settings.rb:269
+#: db/seeds/settings.rb:284
 #, fuzzy
 #| msgid "First name"
 msgid "Firstname Lastname"
@@ -10172,11 +10194,11 @@ msgstr "비밀번호를 잊어 버렸습니까?"
 msgid "Form"
 msgstr "형태"
 
-#: db/seeds/settings.rb:3294
+#: db/seeds/settings.rb:3324
 msgid "Form Allowed Parameters"
 msgstr ""
 
-#: app/graphql/gql/queries/form_updater.rb:34
+#: app/graphql/gql/queries/form_updater.rb:36
 msgid "FormSchema could not be found."
 msgstr "FormSchema를 찾을 수 없습니다."
 
@@ -10324,7 +10346,7 @@ msgstr "전체 이름"
 msgid "Full name"
 msgstr "전체 이름"
 
-#: db/seeds/settings.rb:316
+#: db/seeds/settings.rb:331
 msgid "Fully Qualified Domain Name"
 msgstr "정규화 된 도메인 이름"
 
@@ -10399,15 +10421,15 @@ msgstr "텍스트 생성 중…"
 msgid "Generic API to integrate VoIP service provider with real-time push."
 msgstr "실시간 푸시로 VoIP 서비스 공급자를 통합하기 위한 범용 API입니다."
 
-#: db/seeds/settings.rb:518
+#: db/seeds/settings.rb:542
 msgid "Geo Calendar Service"
 msgstr "지오 달력 서비스"
 
-#: db/seeds/settings.rb:464
+#: db/seeds/settings.rb:486
 msgid "Geo IP Service"
 msgstr "지오 IP 서비스"
 
-#: db/seeds/settings.rb:491
+#: db/seeds/settings.rb:514
 msgid "Geo Location Service"
 msgstr "지리적 위치 서비스"
 
@@ -10427,7 +10449,7 @@ msgstr "시작하기"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:6192
+#: db/seeds/settings.rb:6472
 msgid "Get the security code from the authenticator app on your device."
 msgstr "기기에서 인증 앱을 열어 보안 코드를 가져오세요."
 
@@ -10445,23 +10467,23 @@ msgstr "브라우저에서 키 정보를 가져오는 중…"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
-#: db/seeds/settings.rb:1677
+#: db/seeds/settings.rb:1706
 msgid "GitHub"
 msgstr "GitHub"
 
-#: db/seeds/settings.rb:1685
+#: db/seeds/settings.rb:1714
 msgid "GitHub App Credentials"
 msgstr "GitHub 앱 자격 증명"
 
-#: db/seeds/settings.rb:1678
+#: db/seeds/settings.rb:1707
 msgid "GitHub OAuth Applications"
 msgstr "GitHub OAuth 애플리케이션"
 
-#: db/seeds/settings.rb:5242
+#: db/seeds/settings.rb:5480
 msgid "GitHub config"
 msgstr "GitHub 구성"
 
-#: db/seeds/settings.rb:5215
+#: db/seeds/settings.rb:5453
 msgid "GitHub integration"
 msgstr "GitHub 통합"
 
@@ -10478,23 +10500,23 @@ msgstr "GitHub: 이슈 연결"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
-#: db/seeds/settings.rb:1742
+#: db/seeds/settings.rb:1771
 msgid "GitLab"
 msgstr "GitLab"
 
-#: db/seeds/settings.rb:1750
+#: db/seeds/settings.rb:1779
 msgid "GitLab App Credentials"
 msgstr "GitLab 앱 자격 증명"
 
-#: db/seeds/settings.rb:1743
+#: db/seeds/settings.rb:1772
 msgid "GitLab Applications"
 msgstr "GitLab 애플리케이션"
 
-#: db/seeds/settings.rb:5200
+#: db/seeds/settings.rb:5438
 msgid "GitLab config"
 msgstr "GitLab 구성"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5411
 msgid "GitLab integration"
 msgstr "GitLab 통합"
 
@@ -10580,15 +10602,15 @@ msgstr "작별 메시지"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
-#: db/seeds/settings.rb:1547
+#: db/seeds/settings.rb:1576
 msgid "Google"
 msgstr "Google"
 
-#: db/seeds/settings.rb:1548
+#: db/seeds/settings.rb:1577
 msgid "Google API Console Site"
 msgstr "Google API 콘솔 사이트"
 
-#: db/seeds/settings.rb:1555
+#: db/seeds/settings.rb:1584
 msgid "Google App Credentials"
 msgstr "Google 앱 자격 증명"
 
@@ -10653,7 +10675,7 @@ msgstr "환영"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
-#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3071
+#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3101
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
 msgstr "그룹"
@@ -10703,11 +10725,11 @@ msgid "Group permissions"
 msgstr "그룹 권한"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
-#: db/seeds/settings.rb:3071
+#: db/seeds/settings.rb:3101
 msgid "Group selection for Ticket creation"
 msgstr "Ticket 생성을위한 그룹 선택"
 
-#: db/seeds/settings.rb:3159
+#: db/seeds/settings.rb:3189
 msgid "Group selection for ticket creation"
 msgstr "티켓 생성 시 사용할 그룹 선택"
 
@@ -10749,11 +10771,11 @@ msgstr ""
 msgid "HMAC signature token"
 msgstr "HMAC SHA1 서명 토큰"
 
-#: db/seeds/settings.rb:5583
+#: db/seeds/settings.rb:5848
 msgid "HTML Email CSS Font"
 msgstr "HTML 이메일 CSS 글꼴"
 
-#: db/seeds/settings.rb:5595
+#: db/seeds/settings.rb:5860
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "HTML 살균기 처리 제한 시간"
 
@@ -10781,7 +10803,7 @@ msgstr "HTTP 기본 인증 사용자 이름"
 msgid "HTTP Log"
 msgstr "HTTP 로그"
 
-#: db/seeds/settings.rb:378
+#: db/seeds/settings.rb:399
 msgid "HTTP type"
 msgstr "HTTP 유형"
 
@@ -11077,11 +11099,11 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "조직이 비활성화되었습니다."
 
-#: db/seeds/settings.rb:5747
+#: db/seeds/settings.rb:6024
 msgid "Highlights if the note a user is writing is public or private"
 msgstr "사용자가 작성 중인 노트가 공개인지 비공개인지 강조 표시합니다"
 
-#: db/seeds/settings.rb:5744
+#: db/seeds/settings.rb:6021
 msgid "Hint for adding an article to an existing ticket."
 msgstr "기존 티켓에 아티클을 추가할 때 표시할 힌트입니다."
 
@@ -11112,7 +11134,7 @@ msgstr "휴일을 iCalendar 피드"
 msgid "Home"
 msgstr "홈"
 
-#: db/seeds/settings.rb:3246
+#: db/seeds/settings.rb:3276
 msgid "Honeypot spam protection"
 msgstr ""
 
@@ -11203,19 +11225,19 @@ msgstr "ID"
 msgid "ID:"
 msgstr "ID:"
 
-#: db/seeds/settings.rb:1984
+#: db/seeds/settings.rb:2013
 msgid "IDP SSO target URL"
 msgstr "IDP SSO 대상 URL"
 
-#: db/seeds/settings.rb:1992
+#: db/seeds/settings.rb:2021
 msgid "IDP Single Logout target URL"
 msgstr "IDP 단일 로그아웃 대상 URL"
 
-#: db/seeds/settings.rb:2000
+#: db/seeds/settings.rb:2029
 msgid "IDP certificate"
 msgstr "IDP 인증서"
 
-#: db/seeds/settings.rb:2008
+#: db/seeds/settings.rb:2037
 msgid "IDP certificate fingerprint"
 msgstr "IDP 인증서 지문"
 
@@ -11227,7 +11249,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4623
+#: db/seeds/settings.rb:4861
 msgid "Icinga integration"
 msgstr "Icinga 통합"
 
@@ -11251,7 +11273,7 @@ msgid ""
 "your current selections will be lost. Do you want to continue?"
 msgstr ""
 
-#: db/seeds/settings.rb:2142 lib/excel_sheet/ai/analytics/errors.rb:24
+#: db/seeds/settings.rb:2171 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
 msgid "Identifier"
 msgstr "식별자"
@@ -11260,7 +11282,7 @@ msgstr "식별자"
 msgid "Identifier of the chat topic."
 msgstr "채팅 주제의 식별자입니다."
 
-#: db/seeds/settings.rb:3738
+#: db/seeds/settings.rb:3774
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr "상담원을 자동으로 오프라인 처리하기까지의 유휴 시간(초)입니다."
 
@@ -11295,7 +11317,7 @@ msgid ""
 "automatically."
 msgstr "호스트와 서비스가 다시 복구되는 경우, Ticket은 자동으로 종료됩니다."
 
-#: db/seeds/settings.rb:3528
+#: db/seeds/settings.rb:3561
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -11303,7 +11325,7 @@ msgstr ""
 "보낸 사람이 대리인 인 경우, 고객과받는 사람 목록의 첫 번째 사용자를 설정합니"
 "다."
 
-#: db/seeds/settings.rb:3604
+#: db/seeds/settings.rb:3637
 #, fuzzy
 #| msgid "If this regex matches, no notification will be sent by the sender."
 msgid "If this regex matches, no notification will be sent to the sender."
@@ -11387,7 +11409,7 @@ msgstr "추가 이메일 주소를 사용하려면 나중에 구성할 수 있�
 msgid "Ignore Escalation"
 msgstr "단계적 확대"
 
-#: db/seeds/settings.rb:3898
+#: db/seeds/settings.rb:3976
 msgid "Ignore Escalation/SLA Information"
 msgstr "에스컬레이션/SLA 정보를 무시"
 
@@ -11395,11 +11417,11 @@ msgstr "에스컬레이션/SLA 정보를 무시"
 msgid "Ignore Message"
 msgstr "메시지 무시"
 
-#: db/seeds/settings.rb:3901
+#: db/seeds/settings.rb:3979
 msgid "Ignore escalation/SLA information for import."
 msgstr "가져오기 시 에스컬레이션/SLA 정보를 무시합니다."
 
-#: db/seeds/settings.rb:2915
+#: db/seeds/settings.rb:2945
 msgid "Ignore system_id"
 msgstr "system_id 무시"
 
@@ -11407,7 +11429,7 @@ msgstr "system_id 무시"
 msgid "Image"
 msgstr "이미지"
 
-#: db/seeds/settings.rb:437
+#: db/seeds/settings.rb:458
 msgid "Image Service"
 msgstr "이미지 서비스"
 
@@ -11416,6 +11438,10 @@ msgstr "이미지 서비스"
 #| msgid "Ticket actions"
 msgid "Image actions"
 msgstr "티켓 작업"
+
+#: app/models/store.rb:169
+msgid "Image exceeds the maximum resizable pixel count."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -11471,51 +11497,51 @@ msgstr "%s 가져오기"
 msgid "Import API key could not be extracted from URL."
 msgstr "URL에서 가져오기 API 키를 추출할 수 없습니다."
 
-#: db/seeds/settings.rb:4070
+#: db/seeds/settings.rb:4175
 msgid "Import API key for requesting the Freshdesk API"
 msgstr "Freshdesk API 호출에 사용할 가져오기 API 키"
 
-#: db/seeds/settings.rb:4014
+#: db/seeds/settings.rb:4110
 msgid "Import API key for requesting the Zendesk API"
 msgstr "Zendesk API 호출에 사용할 가져오기 API 키"
 
-#: db/seeds/settings.rb:3889
+#: db/seeds/settings.rb:3964
 msgid "Import Backend"
 msgstr "가져오기 백엔드"
 
-#: db/seeds/settings.rb:4144
+#: db/seeds/settings.rb:4261
 msgid "Import Backends"
 msgstr "가져오기 백엔드"
 
-#: db/seeds/settings.rb:3921
+#: db/seeds/settings.rb:4002
 msgid "Import Endpoint"
 msgstr "가져 오기 엔드 포인트"
 
-#: db/seeds/settings.rb:3939
+#: db/seeds/settings.rb:4023
 msgid "Import Key"
 msgstr "키 가져 오기"
 
-#: db/seeds/settings.rb:3867
+#: db/seeds/settings.rb:3939
 msgid "Import Mode"
 msgstr "가져 오기 모드"
 
-#: db/seeds/settings.rb:3977
+#: db/seeds/settings.rb:4067
 msgid "Import Password for HTTP basic authentication"
 msgstr "HTTP 기본 인증용 가져오기 비밀번호"
 
-#: db/seeds/settings.rb:4125
+#: db/seeds/settings.rb:4239
 msgid "Import Password for requesting the Kayako API"
 msgstr "Kayako API 호출용 가져오기 비밀번호"
 
-#: db/seeds/settings.rb:3958
+#: db/seeds/settings.rb:4045
 msgid "Import User for HTTP basic authentication"
 msgstr "HTTP 기본 인증용 가져오기 사용자"
 
-#: db/seeds/settings.rb:4107
+#: db/seeds/settings.rb:4218
 msgid "Import User for requesting the Kayako API"
 msgstr "Kayako API 호출용 가져오기 사용자"
 
-#: db/seeds/settings.rb:4033
+#: db/seeds/settings.rb:4132
 msgid "Import User for requesting the Zendesk API"
 msgstr "Zendesk API 호출용 가져오기 사용자"
 
@@ -11685,7 +11711,7 @@ msgstr "자격 증명이 완전하지 않습니다"
 msgid "Incomplete ticket checklist"
 msgstr "미완료 티켓 체크리스트"
 
-#: db/seeds/settings.rb:2534
+#: db/seeds/settings.rb:2563
 msgid "Increment (SystemID.Counter)"
 msgstr "증분(SystemID.Counter)"
 
@@ -11737,7 +11763,7 @@ msgstr ""
 "서 마이그레이션 진행 상황을 추적하여 가져오기가 성공적으로 완료되면 알림을 받"
 "을 수 있습니다."
 
-#: app/models/store.rb:100
+#: app/models/store.rb:102
 msgid "Inline content could not be generated."
 msgstr "인라인 콘텐츠를 생성할 수 없습니다."
 
@@ -11920,7 +11946,7 @@ msgstr "게시물을 삭제할 수 없습니다."
 msgid "Internal error"
 msgstr "내부 오류"
 
-#: db/seeds/settings.rb:6694
+#: db/seeds/settings.rb:6987
 msgid ""
 "Internal record of the embedding model and vector size the knowledge base "
 "index was last built with. Used to detect a stale index by comparison, "
@@ -11940,7 +11966,7 @@ msgstr "게시됨"
 msgid "Internally published at"
 msgstr "게시됨"
 
-#: app/models/import_job.rb:188
+#: app/models/import_job.rb:185
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
 "manually or wait until the next execution time."
@@ -12000,11 +12026,11 @@ msgstr ""
 msgid "Invalid auto wizard file."
 msgstr "자동 마법사 파일이 잘못되었습니다."
 
-#: app/controllers/long_polling_controller.rb:82
+#: app/controllers/long_polling_controller.rb:83
 msgid "Invalid client_id in receive loop!"
 msgstr "수신 루프의 client_id가 잘못되었습니다!"
 
-#: app/controllers/long_polling_controller.rb:50
+#: app/controllers/long_polling_controller.rb:51
 msgid "Invalid client_id received!"
 msgstr "잘못된 client_id를 받았습니다!"
 
@@ -12216,7 +12242,7 @@ msgstr "이슈 URL"
 msgid "Issue status"
 msgstr "이슈 상태"
 
-#: db/seeds/settings.rb:2150
+#: db/seeds/settings.rb:2179
 msgid "Issuer"
 msgstr "발급자"
 
@@ -12414,11 +12440,11 @@ msgstr "지식"
 msgid "Knowledge Base Reader"
 msgstr "지식 베이스 읽기 권한자"
 
-#: db/seeds/settings.rb:5701
+#: db/seeds/settings.rb:5977
 msgid "Knowledge Base active"
 msgstr "지식 베이스 활성화"
 
-#: db/seeds/settings.rb:5716
+#: db/seeds/settings.rb:5992
 msgid "Knowledge Base active publicly"
 msgstr "지식 베이스 공개 활성화"
 
@@ -12428,7 +12454,7 @@ msgstr "지식 베이스 공개 활성화"
 msgid "Knowledge Base language"
 msgstr "지식 베이스 답변"
 
-#: db/seeds/settings.rb:5690
+#: db/seeds/settings.rb:5963
 msgid "Knowledge Base multilingual support"
 msgstr "지식 베이스 다국어 지원"
 
@@ -12515,7 +12541,7 @@ msgstr ""
 msgid "Knowledge base navigation"
 msgstr "지식 베이스 활성화"
 
-#: db/seeds/settings.rb:6663
+#: db/seeds/settings.rb:6955
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base self-hosted video servers"
@@ -12530,7 +12556,7 @@ msgstr "심플 스토리지 서비스를 사용할 수 없습니다."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
-#: app/models/audit_log/object_type_labels.rb:11 db/seeds/settings.rb:1292
+#: app/models/audit_log/object_type_labels.rb:11 db/seeds/settings.rb:1320
 msgid "LDAP"
 msgstr "LDAP"
 
@@ -12538,7 +12564,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "LDAP 호스트"
 
-#: db/seeds/settings.rb:5053
+#: db/seeds/settings.rb:5291
 msgid "LDAP integration"
 msgstr "LDAP 통합"
 
@@ -12571,7 +12597,7 @@ msgstr "랜딩 페이지 레이아웃"
 msgid "Language"
 msgstr "언어"
 
-#: db/seeds/settings.rb:184
+#: db/seeds/settings.rb:196
 msgid "Language Detection Service"
 msgstr "지리적 위치 서비스"
 
@@ -12638,28 +12664,28 @@ msgid "Last changed"
 msgstr "마지막 변경"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:84
+#: app/frontend/shared/entities/ticket/attributes.ts:84
 #: app/graphql/gql/types/overview_type.rb:111
 msgid "Last closing time"
 msgstr "마지막 종료 시간"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:21
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:49
+#: app/frontend/shared/entities/ticket/attributes.ts:49
 #: app/graphql/gql/types/overview_type.rb:106
 msgid "Last contact"
 msgstr "마지막 연락"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/ticket.coffee:22
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:56
+#: app/frontend/shared/entities/ticket/attributes.ts:56
 #: app/graphql/gql/types/overview_type.rb:107
 msgid "Last contact (agent)"
 msgstr "마지막 연락 (에이전트)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:248
 #: app/assets/javascripts/app/models/ticket.coffee:23
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:63
+#: app/frontend/shared/entities/ticket/attributes.ts:63
 #: app/graphql/gql/types/overview_type.rb:108
 msgid "Last contact (customer)"
 msgstr "마지막 연락 (고객)"
@@ -12679,7 +12705,7 @@ msgstr "마지막 로그인"
 msgid "Last name"
 msgstr "성"
 
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:127
+#: app/frontend/shared/entities/ticket/attributes.ts:127
 msgid "Last owner update"
 msgstr "마지막 담당자 업데이트"
 
@@ -12713,13 +12739,13 @@ msgstr "최신 업데이트가 있음"
 msgid "Last used"
 msgstr "마지막 사용"
 
-#: db/seeds/settings.rb:270
+#: db/seeds/settings.rb:285
 #, fuzzy
 #| msgid "Last name"
 msgid "Lastname Firstname"
 msgstr "성"
 
-#: db/seeds/settings.rb:271
+#: db/seeds/settings.rb:286
 #, fuzzy
 #| msgid "Last name"
 msgid "Lastname, Firstname"
@@ -12813,15 +12839,15 @@ msgstr "특정 그룹으로 알림 제한"
 msgid "Limit priorities and provide optional descriptions"
 msgstr "우선순위를 제한하고 선택적 설명을 제공합니다"
 
-#: db/seeds/settings.rb:3203
+#: db/seeds/settings.rb:3233
 msgid "Limit tickets by IP per day"
 msgstr "IP당 일일 티켓 제한"
 
-#: db/seeds/settings.rb:3182
+#: db/seeds/settings.rb:3212
 msgid "Limit tickets by IP per hour"
 msgstr "IP당 시간당 티켓 제한"
 
-#: db/seeds/settings.rb:3224
+#: db/seeds/settings.rb:3254
 msgid "Limit tickets per day"
 msgstr "일일 티켓 제한"
 
@@ -12932,7 +12958,7 @@ msgstr "링크 텍스트"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkTicketFlyout.vue:106
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:139
 msgid "Link ticket"
 msgstr "티켓 연결"
 
@@ -12967,15 +12993,15 @@ msgstr "링크 된 계정"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
-#: db/seeds/settings.rb:1612
+#: db/seeds/settings.rb:1641
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: db/seeds/settings.rb:1620
+#: db/seeds/settings.rb:1649
 msgid "LinkedIn App Credentials"
 msgstr "LinkedIn 앱 자격 증명"
 
-#: db/seeds/settings.rb:1613
+#: db/seeds/settings.rb:1642
 msgid "LinkedIn Developer Site"
 msgstr "LinkedIn 개발자 사이트"
 
@@ -12991,7 +13017,7 @@ msgstr "설치된 애드온 목록"
 msgid "List of issue labels"
 msgstr "이슈 레이블 목록"
 
-#: db/seeds/settings.rb:6666
+#: db/seeds/settings.rb:6958
 msgid ""
 "List of self-hosted video servers. This list is used for content security "
 "policy."
@@ -13061,7 +13087,7 @@ msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr "로컬 MTA(Sendmail/Postfix/Exim/…) - 서버 설정 사용"
 
 #: app/assets/javascripts/app/models/job.coffee:13
-#: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:164
+#: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:176
 #: lib/excel_sheet/ai/analytics/errors.rb:27
 #: lib/excel_sheet/ai/analytics/with_usage.rb:27
 msgid "Locale"
@@ -13134,7 +13160,7 @@ msgstr "로그인 화면"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:14
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:20
-#: db/seeds/settings.rb:118
+#: db/seeds/settings.rb:130
 msgid "Logo"
 msgstr "로고"
 
@@ -13146,7 +13172,7 @@ msgstr "로그아웃"
 msgid "Logs"
 msgstr ""
 
-#: db/seeds/settings.rb:1147
+#: db/seeds/settings.rb:1172
 msgid "Lost Password"
 msgstr "비밀번호 분실"
 
@@ -13169,7 +13195,7 @@ msgid "MAC address (unique identifier of the report)"
 msgstr "MAC 주소(보고서의 고유 식별자)"
 
 #: app/assets/javascripts/app/views/api/access.jst.eco:42
-#: db/seeds/settings.rb:6637
+#: db/seeds/settings.rb:6929
 msgid "MCP server"
 msgstr ""
 
@@ -13224,15 +13250,15 @@ msgstr "메인 사이드바"
 msgid "Maintenance"
 msgstr "유지보수"
 
-#: db/seeds/settings.rb:49
+#: db/seeds/settings.rb:55
 msgid "Maintenance Login"
 msgstr "유지보수 로그인"
 
-#: db/seeds/settings.rb:37
+#: db/seeds/settings.rb:43
 msgid "Maintenance Mode"
 msgstr "유지보수 모드"
 
-#: app/controllers/application_controller/authenticates.rb:127
+#: app/controllers/application_controller/authenticates.rb:124
 msgid "Maintenance mode enabled!"
 msgstr "유지보수 모드가 활성화되었습니다!"
 
@@ -13640,7 +13666,7 @@ msgid "Match none (NOT)"
 msgstr "일치 없음 (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: db/seeds/settings.rb:2891
+#: db/seeds/settings.rb:2921
 msgid "Match tickets in following states"
 msgstr "다음 상태의 티켓 일치"
 
@@ -13669,7 +13695,7 @@ msgstr "최대 동시 채팅 수"
 msgid "Max. length"
 msgstr "최대 길이"
 
-#: db/seeds/settings.rb:3306
+#: db/seeds/settings.rb:3339
 msgid "Max. length of the subject in an email reply."
 msgstr "이메일 회신의 제목 최대 길이."
 
@@ -13693,27 +13719,27 @@ msgstr "최대값은 최소값보다 크거나 같아야 합니다"
 msgid "Maximal value must be lower than 2147483648"
 msgstr "최대값은 2147483648보다 작아야 합니다"
 
-#: db/seeds/settings.rb:3418
+#: db/seeds/settings.rb:3451
 msgid "Maximum Email Size"
 msgstr "최대 이메일 크기"
 
-#: db/seeds/settings.rb:2999
+#: db/seeds/settings.rb:3029
 msgid "Maximum Recursive Ticket Triggers Depth"
 msgstr "최대 재귀 티켓 트리거 깊이"
 
-#: db/seeds/settings.rb:2321
+#: db/seeds/settings.rb:2350
 msgid "Maximum failed logins"
 msgstr "최대 로그인 실패 횟수"
 
-#: db/seeds/settings.rb:1054
+#: db/seeds/settings.rb:1079
 msgid "Maximum number of open tabs."
 msgstr "최대 열린 탭 수."
 
-#: db/seeds/settings.rb:3002
+#: db/seeds/settings.rb:3032
 msgid "Maximum number of recursively executed triggers."
 msgstr "재귀적으로 실행되는 트리거의 최대 수."
 
-#: db/seeds/settings.rb:1041
+#: db/seeds/settings.rb:1066
 msgid "Maximum number of ticket shown in overviews"
 msgstr "개요에 표시되는 최대 티켓 수"
 
@@ -13828,7 +13854,7 @@ msgstr "메시지 상태"
 msgid "Message after sending form"
 msgstr "양식 전송 후 메시지"
 
-#: db/seeds/settings.rb:64
+#: db/seeds/settings.rb:70
 msgid "Message for login page."
 msgstr "로그인 페이지 메시지."
 
@@ -13872,11 +13898,11 @@ msgstr "메서드 (AJAX 엔드포인트)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
-#: db/seeds/settings.rb:1814
+#: db/seeds/settings.rb:1843
 msgid "Microsoft"
 msgstr "Microsoft"
 
-#: db/seeds/settings.rb:1822
+#: db/seeds/settings.rb:1851
 msgid "Microsoft 365 App Credentials"
 msgstr "Microsoft 365 앱 자격 증명"
 
@@ -13890,7 +13916,7 @@ msgstr "Microsoft 365 Graph 이메일"
 msgid "Microsoft 365 IMAP Email"
 msgstr "Microsoft 365 IMAP 이메일"
 
-#: db/seeds/settings.rb:1815
+#: db/seeds/settings.rb:1844
 msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft 애플리케이션 등록 포털"
 
@@ -13933,7 +13959,7 @@ msgstr "마이그레이터가 OTRS 출력을 읽을 수 없습니다!"
 msgid "Milestone"
 msgstr "마일스톤"
 
-#: db/seeds/settings.rb:2566
+#: db/seeds/settings.rb:2596
 msgid "Min. size of number"
 msgstr "숫자의 최소 크기"
 
@@ -13953,7 +13979,7 @@ msgstr "최소값은 -2147483648보다 커야 합니다"
 msgid "Minimal value must be lower than 2147483648"
 msgstr "최소값은 2147483648보다 작아야 합니다"
 
-#: db/seeds/settings.rb:2203
+#: db/seeds/settings.rb:2232
 msgid "Minimum length"
 msgstr "최소 길이"
 
@@ -14043,7 +14069,7 @@ msgstr "월요일"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4952
+#: db/seeds/settings.rb:5190
 msgid "Monit integration"
 msgstr "Monit 통합"
 
@@ -14053,7 +14079,7 @@ msgstr "Monit 통합"
 msgid "Monitoring"
 msgstr "모니터링"
 
-#: db/seeds/settings.rb:3686
+#: db/seeds/settings.rb:3722
 msgid "Monitoring Token"
 msgstr "모니터링 토큰"
 
@@ -14181,7 +14207,7 @@ msgstr "처리 중인 내 티켓"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4721
+#: db/seeds/settings.rb:4959
 msgid "Nagios integration"
 msgstr "Nagios 통합"
 
@@ -14262,7 +14288,7 @@ msgstr "Nagios 통합"
 msgid "Name"
 msgstr "이름"
 
-#: db/seeds/settings.rb:2016
+#: db/seeds/settings.rb:2045
 msgid "Name Identifier Format"
 msgstr "이름 식별자 형식"
 
@@ -14324,7 +14350,7 @@ msgstr "user_id 또는 organization_id 매개변수가 필요합니다"
 msgid "Negative feedback"
 msgstr "부정적 피드백"
 
-#: app/controllers/sessions_controller.rb:58
+#: app/controllers/sessions_controller.rb:56
 msgid ""
 "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
 "header could be found."
@@ -14462,7 +14488,7 @@ msgid "New Source"
 msgstr "새 소스"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4309
+#: db/seeds/settings.rb:4430
 msgid "New Tags"
 msgstr "새 태그"
 
@@ -14499,11 +14525,11 @@ msgstr "새 트리거"
 msgid "New User"
 msgstr "새 사용자"
 
-#: db/seeds/settings.rb:1121
+#: db/seeds/settings.rb:1146
 msgid "New User Accounts"
 msgstr "새 사용자 계정"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:150
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:151
 msgid "New Version"
 msgstr "새 버전"
 
@@ -14710,7 +14736,7 @@ msgstr "다음 페이지"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
-#: db/seeds/settings.rb:3110
+#: db/seeds/settings.rb:3140
 msgid "Next in overview"
 msgstr "개요에서 다음"
 
@@ -14802,7 +14828,7 @@ msgstr "Microsoft 365 앱이 구성되지 않았습니다!"
 msgid "No Microsoft Graph app configured!"
 msgstr "Microsoft Graph 앱이 구성되지 않았습니다!"
 
-#: db/seeds/settings.rb:618
+#: db/seeds/settings.rb:643
 msgid "No Proxy"
 msgstr "프록시 없음"
 
@@ -14995,7 +15021,7 @@ msgid "No linked issues"
 msgstr "연결된 이슈 없음"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:134
 msgid "No links added yet."
 msgstr "아직 링크가 추가되지 않았습니다."
 
@@ -15029,11 +15055,17 @@ msgid "No private key found."
 msgstr "개인 키를 찾을 수 없습니다."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
-#: db/seeds/settings.rb:621
+#: db/seeds/settings.rb:646
 msgid ""
 "No proxy for these comma-separated addresses. Supports wildcards like "
 "*.example.com. Note: Loopback addresses are always excluded from proxying."
 msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRating/FieldRatingInput.vue:24
+#, fuzzy
+#| msgid "Reporting"
+msgid "No rating"
+msgstr "보고"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:260
 msgid "No recent searches"
@@ -15053,7 +15085,7 @@ msgstr "상태 메시지를 처리할 관련 게시물을 찾을 수 없습니�
 msgid "No related knowledge base answer links."
 msgstr "지식 베이스 답변을 삽입"
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:171
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:175
 msgid "No results for this query."
 msgstr "이 쿼리에 대한 결과 없음."
 
@@ -15095,7 +15127,7 @@ msgstr ""
 msgid "No session available."
 msgstr "사용 가능한 세션 없음."
 
-#: lib/stats.rb:21
+#: lib/stats.rb:10
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "'Dashboard::Stats' 영역의 설정이 정의되지 않았습니다"
 
@@ -15180,7 +15212,7 @@ msgstr "읽지 않은 알림이 없습니다. :)"
 msgid "No unread notifications."
 msgstr "읽지 않은 알림 없음."
 
-#: db/seeds/settings.rb:1370
+#: db/seeds/settings.rb:1399
 msgid "No user creation on logon"
 msgstr "로그인 시 사용자 생성 안 함"
 
@@ -15217,7 +15249,7 @@ msgstr "아니요, 괜찮습니다"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:60
-#: app/graphql/gql/types/ticket_type.rb:105 db/seeds/settings.rb:2048
+#: app/graphql/gql/types/ticket_type.rb:105 db/seeds/settings.rb:2077
 msgid "None"
 msgstr "없음"
 
@@ -15275,7 +15307,7 @@ msgstr "권한 없음"
 msgid "Not authorized (feature not possible)"
 msgstr "권한 없음(기능 사용 불가)"
 
-#: app/controllers/application_controller/authenticates.rb:117
+#: app/controllers/application_controller/authenticates.rb:114
 msgid "Not authorized (token expired)!"
 msgstr "권한 없음(토큰 만료)!"
 
@@ -15341,7 +15373,7 @@ msgstr ""
 msgid "Note"
 msgstr "노트"
 
-#: db/seeds/settings.rb:696
+#: db/seeds/settings.rb:721
 msgid "Note - default visibility"
 msgstr "주 - 기본 가시성"
 
@@ -15388,7 +15420,7 @@ msgstr "알림:"
 msgid "Notification"
 msgstr "알림"
 
-#: db/seeds/settings.rb:3578
+#: db/seeds/settings.rb:3611
 msgid "Notification Sender"
 msgstr "알림 발신자"
 
@@ -15505,8 +15537,14 @@ msgstr "OAuth 구성"
 msgid "OAuth URLs are:"
 msgstr "OAuth URL:"
 
-#: app/controllers/application_controller/authenticates.rb:79
+#: app/controllers/application_controller/authenticates.rb:76
 msgid "OAuth2 token is expired!"
+msgstr "OAuth2 토큰이 만료되었습니다!"
+
+#: app/controllers/application_controller/authenticates.rb:77
+#, fuzzy
+#| msgid "OAuth2 token is expired!"
+msgid "OAuth2 token is revoked!"
 msgstr "OAuth2 토큰이 만료되었습니다!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
@@ -15672,7 +15710,7 @@ msgstr "온라인"
 msgid "Online Forms"
 msgstr "온라인 양식"
 
-#: db/seeds/settings.rb:84
+#: db/seeds/settings.rb:93
 msgid "Online Service"
 msgstr "온라인 서비스"
 
@@ -15699,11 +15737,11 @@ msgstr ""
 "이 언어의 %s%%만 번역되었습니다. Zammad 개선을 위해 번역 완료에 도움을 주세"
 "요."
 
-#: db/seeds/settings.rb:2051
+#: db/seeds/settings.rb:2080
 msgid "Only Encrypting"
 msgstr "암호화만"
 
-#: db/seeds/settings.rb:2050
+#: db/seeds/settings.rb:2079
 msgid "Only Signing"
 msgstr "서명만"
 
@@ -15727,6 +15765,12 @@ msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr "알려진 신뢰할 수 있고 검증된 소스의 패키지만 설치해야 합니다."
 
+#: app/controllers/long_polling_controller.rb:92
+#, fuzzy
+#| msgid "Enables user authentication via %s."
+msgid "Only session based authentication is supported!"
+msgstr "%s를 통한 사용자 인증을 활성화합니다."
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:21
@@ -15736,7 +15780,11 @@ msgid ""
 "list."
 msgstr "최근 20개의 레코드만 표시됩니다. 전체 목록을 보려면 다운로드하세요."
 
-#: db/seeds/settings.rb:30
+#: app/controllers/settings_controller.rb:32
+msgid "Only the product logo can be updated with an image."
+msgstr ""
+
+#: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
 msgstr "현재 웹 앱 버전을 클라이언트에 전파하기 위해 내부적으로만 사용됩니다."
 
@@ -15861,7 +15909,7 @@ msgstr "월 오버레이 열기"
 msgid "Open the years overlay"
 msgstr "연도 오버레이 열기"
 
-#: db/seeds/settings.rb:959
+#: db/seeds/settings.rb:984
 msgid "Open ticket indicator"
 msgstr "열린 티켓 표시기"
 
@@ -15884,11 +15932,11 @@ msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
-#: db/seeds/settings.rb:2120
+#: db/seeds/settings.rb:2149
 msgid "OpenID Connect"
 msgstr "OpenID Connect"
 
-#: db/seeds/settings.rb:2128
+#: db/seeds/settings.rb:2157
 msgid "OpenID Connect Options"
 msgstr "OpenID Connect 옵션"
 
@@ -16000,7 +16048,7 @@ msgstr "티켓 개요 순서"
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
 #: app/graphql/gql/types/overview_type.rb:94
-#: db/seeds/object_manager_attributes.rb:98 db/seeds/settings.rb:141
+#: db/seeds/object_manager_attributes.rb:98 db/seeds/settings.rb:153
 #: lib/excel_sheet/ticket.rb:30
 msgid "Organization"
 msgstr "조직"
@@ -16278,15 +16326,15 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5969
+#: db/seeds/settings.rb:6246
 msgid "PGP Recipient Alias Configuration"
 msgstr "PGP 수신자 별칭 구성"
 
-#: db/seeds/settings.rb:5927
+#: db/seeds/settings.rb:6204
 msgid "PGP config"
 msgstr "PGP 구성"
 
-#: db/seeds/settings.rb:5899
+#: db/seeds/settings.rb:6176
 msgid "PGP integration"
 msgstr "PGP 통합"
 
@@ -16294,13 +16342,13 @@ msgstr "PGP 통합"
 msgid "PGP signature does not cover the displayed message body"
 msgstr ""
 
-#: db/seeds/settings.rb:5941
+#: db/seeds/settings.rb:6218
 #, fuzzy
 #| msgid "Unread notifications"
 msgid "PGP signing for system notifications"
 msgstr "읽지 않은 알림"
 
-#: db/seeds/settings.rb:2174
+#: db/seeds/settings.rb:2203
 msgid "PKCE"
 msgstr "PKCE"
 
@@ -16330,7 +16378,7 @@ msgstr "티켓이 성공적으로 업데이트되었습니다."
 msgid "Packages"
 msgstr "패키지"
 
-#: db/seeds/settings.rb:6759
+#: db/seeds/settings.rb:7061
 #, fuzzy
 #| msgid "Packages"
 msgid "Packages Token"
@@ -16407,7 +16455,7 @@ msgstr "인증"
 msgid "Password Access"
 msgstr "암호 액세스"
 
-#: db/seeds/settings.rb:1067
+#: db/seeds/settings.rb:1092
 msgid "Password Login"
 msgstr "암호"
 
@@ -16435,23 +16483,23 @@ msgstr "비밀번호를 확인할 수 없습니다"
 msgid "Password for proxy connection"
 msgstr "프록시 연결 비밀번호"
 
-#: db/seeds/settings.rb:597
+#: db/seeds/settings.rb:622
 msgid "Password for proxy connection."
 msgstr "프록시 연결 비밀번호."
 
-#: db/seeds/settings.rb:2246
+#: db/seeds/settings.rb:2275
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "비밀번호는 소문자 2개와 대문자 2개를 포함해야 합니다."
 
-#: db/seeds/settings.rb:2272
+#: db/seeds/settings.rb:2301
 msgid "Password needs to contain at least one digit."
 msgstr "비밀번호는 최소한 하나의 숫자를 포함해야 합니다."
 
-#: db/seeds/settings.rb:2298
+#: db/seeds/settings.rb:2327
 msgid "Password needs to contain at least one special character."
 msgstr "비밀번호는 최소한 하나의 특수 문자를 포함해야 합니다."
 
-#: db/seeds/settings.rb:2206
+#: db/seeds/settings.rb:2235
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "비밀번호는 최소한의 문자 수를 가져야 합니다."
 
@@ -16540,7 +16588,7 @@ msgid "Permission"
 msgstr "권한"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: db/seeds/settings.rb:2874
+#: db/seeds/settings.rb:2904
 msgid "Permission level for looking up tickets"
 msgstr "티켓 조회 권한 수준"
 
@@ -16656,15 +16704,15 @@ msgstr "AI 생성 텍스트 자리표시자"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5484
+#: db/seeds/settings.rb:5734
 msgid "Placetel Token"
 msgstr "Placetel 토큰"
 
-#: db/seeds/settings.rb:5470
+#: db/seeds/settings.rb:5720
 msgid "Placetel config"
 msgstr "Placetel 구성"
 
-#: db/seeds/settings.rb:5442
+#: db/seeds/settings.rb:5692
 msgid "Placetel integration"
 msgstr "Placetel 통합"
 
@@ -16777,7 +16825,7 @@ msgid ""
 "side beforehand. %l"
 msgstr "이메일 별칭은 Microsoft 365 측에서 미리 구성해야 합니다. %l"
 
-#: db/seeds/settings.rb:2013
+#: db/seeds/settings.rb:2042
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
@@ -16935,7 +16983,7 @@ msgstr "운영 체제에서 표시한 색 구성표를 선호합니다."
 msgid "Press the button below to finish the setup."
 msgstr "설정을 완료하려면 아래 버튼을 누르세요."
 
-#: db/seeds/settings.rb:228
+#: db/seeds/settings.rb:243
 msgid "Pretty Date"
 msgstr "예쁜 날짜"
 
@@ -17090,11 +17138,11 @@ msgstr "우선순위"
 msgid "Priority tagging rules"
 msgstr "우선순위"
 
-#: db/seeds/settings.rb:2062
+#: db/seeds/settings.rb:2091
 msgid "Private key (PEM)"
 msgstr "개인 키 (PEM)"
 
-#: db/seeds/settings.rb:2069
+#: db/seeds/settings.rb:2098
 msgid "Private key secret"
 msgstr "개인 키 비밀"
 
@@ -17125,7 +17173,7 @@ msgstr "티켓 에스컬레이션을 처리합니다."
 msgid "Processing log"
 msgstr "오류 로그 다운로드"
 
-#: db/seeds/settings.rb:94
+#: db/seeds/settings.rb:106
 msgid "Product Name"
 msgstr "제품 이름"
 
@@ -17155,7 +17203,7 @@ msgstr "프로필"
 msgid "Project ID"
 msgstr ""
 
-#: db/seeds/settings.rb:2184
+#: db/seeds/settings.rb:2213
 msgid ""
 "Proof Key for Code Exchange is currently only supporting SHA256 as code "
 "challenge method."
@@ -17239,15 +17287,15 @@ msgstr "사용자가 성공적으로 업데이트되었습니다."
 msgid "Providers"
 msgstr "제공자"
 
-#: db/seeds/settings.rb:594
+#: db/seeds/settings.rb:619
 msgid "Proxy Password"
 msgstr "프록시 비밀번호"
 
-#: db/seeds/settings.rb:545
+#: db/seeds/settings.rb:570
 msgid "Proxy Settings"
 msgstr "프록시 설정"
 
-#: db/seeds/settings.rb:570
+#: db/seeds/settings.rb:595
 msgid "Proxy User"
 msgstr "프록시 사용자"
 
@@ -17364,7 +17412,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:27
-#: db/seeds/settings.rb:52
+#: db/seeds/settings.rb:58
 msgid ""
 "Put a message on the login page. To change it, click on the text area below "
 "and change it in-line."
@@ -17372,7 +17420,7 @@ msgstr ""
 "로그인 페이지에 메시지를 넣습니다. 변경하려면 아래 텍스트 영역을 클릭하고 인"
 "라인으로 변경하세요."
 
-#: db/seeds/settings.rb:3870
+#: db/seeds/settings.rb:3942
 msgid ""
 "Puts Zammad into import mode. This disables some triggers and denies access "
 "to all users without the permission \"admin.maintenance\"."
@@ -17565,15 +17613,15 @@ msgstr ""
 "다른 이중 인증 방법에 대한 액세스를 잃은 경우 복구 코드를 사용하여 계정에 액"
 "세스할 수 있습니다."
 
-#: db/seeds/settings.rb:2935
+#: db/seeds/settings.rb:2965
 msgid "Recursive Ticket Triggers"
 msgstr "재귀 티켓 트리거"
 
-#: db/seeds/settings.rb:6721
+#: db/seeds/settings.rb:7020
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
-#: db/seeds/settings.rb:1097
+#: db/seeds/settings.rb:1122
 msgid ""
 "Redirect users from the login page directly to the third-party sign-in. "
 "Takes effect only if password login is disabled and exactly one third-party "
@@ -17591,7 +17639,7 @@ msgstr ""
 msgid "Redis version"
 msgstr "Redis 버전"
 
-#: db/seeds/settings.rb:3480
+#: db/seeds/settings.rb:3513
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr "참조 - In-Reply-To 또는 References 헤더에서도 후속 작업을 검색합니다."
@@ -17687,7 +17735,7 @@ msgstr "새 비밀번호 확인"
 msgid "Relevance score threshold"
 msgstr "새 비밀번호 확인"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:134
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 #, fuzzy
 #| msgid "Upload"
@@ -18047,7 +18095,7 @@ msgstr "여기에서 비밀번호 로그인을 요청하세요."
 msgid "Requesting the Grant"
 msgstr "권한 요청 중"
 
-#: db/seeds/settings.rb:1849
+#: db/seeds/settings.rb:1878
 msgid "Require verified email domain"
 msgstr ""
 
@@ -18064,7 +18112,7 @@ msgstr "필수 매개변수 'profile'이 누락되었습니다."
 msgid "Requirements"
 msgstr "요구사항"
 
-#: db/seeds/settings.rb:1859
+#: db/seeds/settings.rb:1888
 msgid ""
 "Requires the \"xms_edov\" ID token claim to be true, and the \"email\" claim "
 "to match the incoming email address, before trusting that address for "
@@ -18073,7 +18121,7 @@ msgid ""
 "blocks all Microsoft 365 account auto-linking by email."
 msgstr ""
 
-#: db/seeds/settings.rb:6230
+#: db/seeds/settings.rb:6510
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr "특정 사용자 역할에 대해 이중 인증 설정이 필요합니다."
@@ -18322,7 +18370,7 @@ msgstr "WhatsApp를 통해 전송된 미디어 다운로드 재시도에 실패�
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "복잡한 섹션을 다시 작성하여 이해하기 쉽게 만들기"
 
-#: db/seeds/settings.rb:6732
+#: db/seeds/settings.rb:7034
 msgid "Richtext Bubble Menu"
 msgstr "리치텍스트 버블 메뉴"
 
@@ -18458,7 +18506,7 @@ msgstr ""
 "S/MIME(Secure/Multipurpose Internet Mail Extensions)은 디지털 서명 및 암호화"
 "된 메시지를 보내기 위해 널리 사용되는 방법(또는 더 정확히는 프로토콜)입니다."
 
-#: db/seeds/settings.rb:5857
+#: db/seeds/settings.rb:6134
 msgid "S/MIME config"
 msgstr "S/MIME 구성"
 
@@ -18466,21 +18514,21 @@ msgstr "S/MIME 구성"
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr "S/MIME을 사용하면 디지털 서명 및 암호화된 메시지를 보낼 수 있습니다."
 
-#: db/seeds/settings.rb:5829
+#: db/seeds/settings.rb:6106
 msgid "S/MIME integration"
 msgstr "S/MIME 통합"
 
-#: db/seeds/settings.rb:5871
+#: db/seeds/settings.rb:6148
 msgid "S/MIME signing for system notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
-#: db/seeds/settings.rb:1962
+#: db/seeds/settings.rb:1991
 msgid "SAML"
 msgstr "SAML"
 
-#: db/seeds/settings.rb:1970
+#: db/seeds/settings.rb:1999
 msgid "SAML App Credentials"
 msgstr "SAML 앱 자격 증명"
 
@@ -18578,11 +18626,11 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:6073
+#: db/seeds/settings.rb:6353
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:289
+#: app/controllers/sessions_controller.rb:292
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -18744,11 +18792,11 @@ msgstr "스케줄러"
 msgid "Schedulers"
 msgstr "스케줄러"
 
-#: db/seeds/settings.rb:2166
+#: db/seeds/settings.rb:2195
 msgid "Scopes"
 msgstr "범위"
 
-#: db/seeds/settings.rb:2171
+#: db/seeds/settings.rb:2200
 msgid ""
 "Scopes that are included, separated by a single space character. If unset, "
 "\"openid email profile\" is used."
@@ -19107,7 +19155,7 @@ msgstr "보조 조직은 주 조직이 지정된 경우에만 허용됩니다."
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "보조 조직에는 주 조직을 포함할 수 없습니다."
 
-#: app/models/organization.rb:116 app/models/user.rb:993
+#: app/models/organization.rb:128 app/models/user.rb:993
 #, fuzzy
 #| msgid "Secondary organizations cannot include the primary organization."
 msgid "Secondary organizations cannot include the same organization twice."
@@ -19158,7 +19206,7 @@ msgstr "보안 키"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:6136
+#: db/seeds/settings.rb:6416
 msgid "Security Keys"
 msgstr "보안 키"
 
@@ -19211,7 +19259,7 @@ msgstr ""
 "보안 키는 이중 인증 방법으로 사용할 수 있는 하드웨어 또는 소프트웨어 자격 증"
 "명입니다."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:128
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
 #, fuzzy
 #| msgid "Security key verification failed."
 msgid "Security token verification failed"
@@ -19304,7 +19352,7 @@ msgstr "모든 항목 선택"
 msgid "Select attribute"
 msgstr "항목 선택"
 
-#: db/seeds/settings.rb:906
+#: db/seeds/settings.rb:931
 msgid "Select default ticket type"
 msgstr "기본 티켓 유형 선택"
 
@@ -19499,11 +19547,11 @@ msgid ""
 "hour window is about to expire."
 msgstr "24시간 창이 만료되기 전에 고객에게 자동 알림을 보내 답변을 요청합니다."
 
-#: db/seeds/settings.rb:3551
+#: db/seeds/settings.rb:3584
 msgid "Send postmaster mail if mail too large"
 msgstr "메일이 너무 크면 postmaster 메일 보내기"
 
-#: db/seeds/settings.rb:3554
+#: db/seeds/settings.rb:3587
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr "메일이 너무 크면 메일 발신자에게 postmaster 거부 메일 보내기."
 
@@ -19515,16 +19563,16 @@ msgstr "클라이언트에게 보내기"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3368
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3401
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "발신자"
 
-#: db/seeds/settings.rb:3368
+#: db/seeds/settings.rb:3401
 msgid "Sender Format"
 msgstr "발신자 형식"
 
-#: db/seeds/settings.rb:3396
+#: db/seeds/settings.rb:3429
 msgid "Sender Format Separator"
 msgstr "발신자 형식 구분자"
 
@@ -19533,7 +19581,7 @@ msgstr "발신자 형식 구분자"
 msgid "Sender Type"
 msgstr "발신자 유형"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3530
 msgid "Sender based on Reply-To header"
 msgstr "Reply-To 헤더 기반 발신자"
 
@@ -19563,7 +19611,7 @@ msgstr "전송 중…"
 msgid "Sent successfully!"
 msgstr "성공적으로 전송되었습니다!"
 
-#: db/seeds/settings.rb:6722
+#: db/seeds/settings.rb:7021
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -19581,7 +19629,7 @@ msgstr "여러 값을 ;로 구분"
 msgid "September"
 msgstr "9월"
 
-#: db/seeds/settings.rb:4157
+#: db/seeds/settings.rb:4275
 msgid "Sequencer log level"
 msgstr "시퀀서 로그 수준"
 
@@ -19615,7 +19663,7 @@ msgstr "서비스"
 msgid "Session"
 msgstr "세션"
 
-#: db/seeds/settings.rb:1175
+#: db/seeds/settings.rb:1200
 msgid "Session Timeout"
 msgstr "세션 타임아웃"
 
@@ -19636,7 +19684,7 @@ msgstr "설정"
 msgid "Set a title for your ticket"
 msgstr "티켓 제목 설정"
 
-#: db/seeds/settings.rb:5572
+#: db/seeds/settings.rb:5834
 msgid "Set agent limit"
 msgstr "에이전트 제한 설정"
 
@@ -19659,11 +19707,11 @@ msgstr "기본값으로 설정"
 msgid "Set authenticator app as default"
 msgstr "인증 앱을 기본값으로 설정"
 
-#: db/seeds/settings.rb:934
+#: db/seeds/settings.rb:959
 msgid "Set available ticket types"
 msgstr "사용 가능한 티켓 유형 설정"
 
-#: db/seeds/settings.rb:3892
+#: db/seeds/settings.rb:3967
 msgid "Set backend which is being used for import."
 msgstr "가져오기에 사용할 백엔드 설정."
 
@@ -19698,7 +19746,7 @@ msgstr "발신 발신자 ID 설정"
 msgid "Set security keys as default"
 msgstr "보안 키를 기본값으로 설정"
 
-#: db/seeds/settings.rb:5734
+#: db/seeds/settings.rb:6011
 #, fuzzy
 #| msgid ""
 #| "Set timeframe in seconds. If it's set to 0 you can delete notes without "
@@ -19758,7 +19806,7 @@ msgstr "이중 인증 설정"
 msgid "Set up two-factor authentication: %s"
 msgstr "이중 인증 설정"
 
-#: db/seeds/settings.rb:3500
+#: db/seeds/settings.rb:3533
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -19912,12 +19960,12 @@ msgstr "피드 아이콘 표시"
 msgid "Show Search Details"
 msgstr "검색 상세 정보 표시"
 
-#: db/seeds/settings.rb:891
+#: db/seeds/settings.rb:916
 msgid ""
 "Show additional notes for ticket creation depending on the selected type."
 msgstr "선택한 유형에 따라 티켓 생성 시 추가 노트 표시."
 
-#: db/seeds/settings.rb:6338
+#: db/seeds/settings.rb:6618
 msgid "Show agents only their own activities in the activity stream."
 msgstr ""
 
@@ -19931,7 +19979,7 @@ msgstr "모두 보기…"
 msgid "Show authenticator app secret"
 msgstr "인증 앱 비밀번호 표시"
 
-#: db/seeds/settings.rb:6108
+#: db/seeds/settings.rb:6388
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "날짜/날짜시간 필드 선택기에서 캘린더 주 표시"
 
@@ -19954,7 +20002,7 @@ msgstr "간략히 보기"
 msgid "Show matching ticket(s) in the warning"
 msgstr "경고에 일치하는 티켓 표시"
 
-#: db/seeds/settings.rb:2857
+#: db/seeds/settings.rb:2887
 msgid "Show matching tickets in the warning"
 msgstr "경고에 일치하는 티켓 표시"
 
@@ -19986,7 +20034,7 @@ msgstr "알림 표시"
 msgid "Show original"
 msgstr "기발한"
 
-#: db/seeds/settings.rb:1070
+#: db/seeds/settings.rb:1095
 msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
 "third-party authentication is enabled."
@@ -20025,7 +20073,7 @@ msgid "Show ticket viewers"
 msgstr "티켓 조회자 표시"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:4222
+#: db/seeds/settings.rb:4343
 msgid "Show time accounting dialog when updating matching tickets."
 msgstr "일치하는 티켓 업데이트 시 시간 회계 대화상자 표시."
 
@@ -20033,7 +20081,7 @@ msgstr "일치하는 티켓 업데이트 시 시간 회계 대화상자 표시."
 msgid "Show title in form."
 msgstr "양식에 제목 표시."
 
-#: db/seeds/settings.rb:2840
+#: db/seeds/settings.rb:2870
 msgid "Show to user roles"
 msgstr "사용자 역할에 표시"
 
@@ -20066,7 +20114,7 @@ msgstr "예: 최근 변경된 티켓, 사용자 또는 조직"
 msgid "Side panel footer"
 msgstr "사이드 패널 푸터"
 
-#: db/seeds/settings.rb:833
+#: db/seeds/settings.rb:858
 msgid "Sidebar Attachments"
 msgstr "사이드바 첨부 파일"
 
@@ -20174,7 +20222,7 @@ msgstr "서명"
 msgid "Signed"
 msgstr "서명됨"
 
-#: db/seeds/settings.rb:2043
+#: db/seeds/settings.rb:2072
 msgid "Signing & Encrypting"
 msgstr "서명 및 암호화"
 
@@ -20182,7 +20230,7 @@ msgstr "서명 및 암호화"
 msgid "Signup Screen"
 msgstr "가입 화면"
 
-#: db/seeds/settings.rb:2819
+#: db/seeds/settings.rb:2849
 msgid "Similar tickets found"
 msgstr "유사한 티켓 발견"
 
@@ -20190,7 +20238,7 @@ msgstr "유사한 티켓 발견"
 msgid "Simple Line Icons"
 msgstr "심플 라인 아이콘"
 
-#: db/seeds/settings.rb:420
+#: db/seeds/settings.rb:441
 msgid "Simple Storage (S3)"
 msgstr "심플 스토리지 (S3)"
 
@@ -20211,11 +20259,11 @@ msgstr "심플 스토리지 서비스 오작동. Zammad 관리자에게 문의�
 msgid "Simple Storage Service not reachable."
 msgstr "심플 스토리지 서비스에 연결할 수 없습니다."
 
-#: db/seeds/settings.rb:1899
+#: db/seeds/settings.rb:1928
 msgid "Sina Weibo"
 msgstr "시나 웨이보"
 
-#: db/seeds/settings.rb:1899
+#: db/seeds/settings.rb:1928
 msgid "Sina Weibo Open Portal"
 msgstr "시나 웨이보 오픈 포털"
 
@@ -20243,7 +20291,7 @@ msgstr "단일 트리 선택 필드"
 msgid "Sipgate"
 msgstr "Sipgate"
 
-#: db/seeds/settings.rb:1770
+#: db/seeds/settings.rb:1799
 msgid "Site"
 msgstr "사이트"
 
@@ -20286,7 +20334,7 @@ msgstr "해결 시간"
 msgid "Some Text"
 msgstr "일부 텍스트"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:72
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -20294,7 +20342,7 @@ msgstr ""
 "일부 시스템 설정이 변경되어 Zammad가 재시작 중입니다. Zammad가 다시 시작될 때"
 "까지 기다려주세요."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:91
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 "일부 시스템 설정이 변경되었습니다. 모든 Zammad 프로세스를 재시작하세요!"
@@ -20423,7 +20471,7 @@ msgstr "소스"
 msgid "Spam protection"
 msgstr "알림 저장"
 
-#: db/seeds/settings.rb:2295
+#: db/seeds/settings.rb:2324
 msgid "Special character required"
 msgstr "특수 문자 필요"
 
@@ -20604,7 +20652,7 @@ msgstr "상태"
 msgid "State icon"
 msgstr "상태 아이콘"
 
-#: db/seeds/settings.rb:5606
+#: db/seeds/settings.rb:5873
 msgid "Stats Backend"
 msgstr "통계 백엔드"
 
@@ -20640,7 +20688,7 @@ msgstr "상태:"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:58
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/behaviorOptions.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
-#: db/seeds/settings.rb:3111
+#: db/seeds/settings.rb:3141
 msgid "Stay on tab"
 msgstr "탭에 유지"
 
@@ -20680,7 +20728,7 @@ msgstr "일치 후 중지"
 msgid "Storage"
 msgstr "저장소"
 
-#: db/seeds/settings.rb:406
+#: db/seeds/settings.rb:427
 msgid "Storage Method"
 msgstr "저장 방법"
 
@@ -20688,26 +20736,26 @@ msgstr "저장 방법"
 msgid "Store"
 msgstr "저장소"
 
-#: db/seeds/settings.rb:5245
+#: db/seeds/settings.rb:5483
 msgid "Stores the GitHub configuration."
 msgstr "GitHub 구성을 저장합니다."
 
-#: db/seeds/settings.rb:5203
+#: db/seeds/settings.rb:5441
 msgid "Stores the GitLab configuration."
 msgstr "GitLab 구성을 저장합니다."
 
-#: db/seeds/settings.rb:3285
+#: db/seeds/settings.rb:3315
 msgid ""
 "Stores the credentials (e.g. site key and secret) of the selected CAPTCHA "
 "provider."
 msgstr ""
 
-#: db/seeds/settings.rb:6519
+#: db/seeds/settings.rb:6811
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr "티켓 요약 옵션을 저장합니다(예: 표시되는 콘텐츠)."
 
-#: db/seeds/settings.rb:5998
+#: db/seeds/settings.rb:6278
 #, fuzzy
 #| msgid "Stores the GitLab configuration."
 msgid "Stores the translation service configuration."
@@ -20732,7 +20780,7 @@ msgstr "거리"
 msgid "Subject"
 msgstr "제목"
 
-#: db/seeds/settings.rb:3483
+#: db/seeds/settings.rb:3516
 msgid ""
 "Subject & References - Additional search for same article subject and same "
 "message ID in references header if no follow-up was recognized using default "
@@ -20898,7 +20946,7 @@ msgstr "일"
 msgid "Sunday"
 msgstr "일요일"
 
-#: db/seeds/settings.rb:5693
+#: db/seeds/settings.rb:5966
 msgid "Support of multilingual Knowledge Base."
 msgstr "다국어 지식 베이스 지원"
 
@@ -20946,7 +20994,7 @@ msgstr "컴퓨터와 동기화"
 msgid "System"
 msgstr "시스템"
 
-#: db/seeds/settings.rb:3380
+#: db/seeds/settings.rb:3413
 msgid "System Address Display Name"
 msgstr "시스템 주소 표시 이름"
 
@@ -21001,17 +21049,17 @@ msgstr ""
 "시스템 번역은 공개 플랫폼 %l에서 커뮤니티와 기여하고 공유할 수 있습니다. "
 "Weblate 기반의 편리한 사용자 인터페이스를 제공하니 한번 사용해보세요!"
 
-#: db/seeds/settings.rb:5766
+#: db/seeds/settings.rb:6043
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
 msgstr "티켓 개요에 대한 쿼리 폴링 메커니즘의 시스템 전체 구성."
 
-#: db/seeds/settings.rb:291
+#: db/seeds/settings.rb:306
 msgid "SystemID"
 msgstr "시스템 ID"
 
-#: db/seeds/settings.rb:3096
+#: db/seeds/settings.rb:3126
 msgid "Tab behaviour after ticket action"
 msgstr "티켓 작업 후 탭 동작"
 
@@ -21083,7 +21131,7 @@ msgstr "%s 생성됨"
 msgid "Tags"
 msgstr "태그"
 
-#: db/seeds/settings.rb:3511
+#: db/seeds/settings.rb:3544
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
@@ -21091,7 +21139,7 @@ msgstr ""
 "Reply-To 헤더를 이메일의 발신자/보낸 사람으로 사용하고 원본의 실제 이름을 사"
 "용합니다."
 
-#: db/seeds/settings.rb:3510
+#: db/seeds/settings.rb:3543
 msgid "Take Reply-To header as sender/from of email."
 msgstr "Reply-To 헤더를 이메일의 발신자/보낸 사람으로 사용합니다."
 
@@ -21426,6 +21474,11 @@ msgstr "PGP 서명이 유효하지 않습니다."
 msgid "The PGP signature key has been revoked."
 msgstr "PGP 서명 키가 취소되었습니다."
 
+#: app/controllers/sessions_controller.rb:57
+msgid ""
+"The SSO environment variables and headers contain different user logins."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
 msgstr "Telegram 봇을 저장할 수 없습니다."
@@ -21543,10 +21596,17 @@ msgstr "게시물을 공개로 설정할 수 없습니다."
 msgid "The article does not belong to the specified ticket."
 msgstr "게시물이 지정된 티켓에 속하지 않습니다."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:253
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:290
 msgid ""
 "The article language detection is disabled. Enable it to avoid translating "
 "articles that are already in the target language. %l"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
+msgid ""
+"The article language detection is disabled. To avoid translating articles "
+"that are already in the target language, ask an administrator with access to "
+"the ticket settings to enable it."
 msgstr ""
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
@@ -21775,7 +21835,7 @@ msgid ""
 msgstr ""
 "선택한 단위는 표시용으로만 사용되며 저장된 값에는 영향을 주지 않습니다."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "Zammad 구성이 변경되었습니다. 브라우저를 다시 로드하세요."
 
@@ -21915,7 +21975,7 @@ msgstr ""
 msgid "The device could not be deleted."
 msgstr "기기를 삭제할 수 없습니다."
 
-#: db/seeds/settings.rb:2390
+#: db/seeds/settings.rb:2419
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "TicketHook과 티켓 번호 사이의 구분자입니다. 예: ': '."
 
@@ -22087,7 +22147,7 @@ msgstr "호스트 이름을 찾을 수 없습니다."
 msgid "The hours overlay"
 msgstr "시간 오버레이"
 
-#: db/seeds/settings.rb:2365
+#: db/seeds/settings.rb:2394
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
@@ -22118,7 +22178,7 @@ msgstr "가져오기에 실패했습니다."
 msgid "The import was successful."
 msgstr "가져오기에 성공했습니다."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:130
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -22440,7 +22500,7 @@ msgstr "제공된 비밀번호가 유효하지 않습니다."
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "제공된 페이로드가 유효하지 않습니다. 구문을 확인하세요."
 
-#: app/controllers/application_controller/authenticates.rb:76
+#: app/controllers/application_controller/authenticates.rb:75
 #: app/controllers/integration/check_mk_controller.rb:142
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
 #: app/services/service/user/password_reset/update.rb:28
@@ -22517,7 +22577,7 @@ msgid "The required PGP passphrase is missing."
 msgstr "필수 PGP 암호문이 없습니다."
 
 #: app/controllers/users_controller.rb:662
-#: app/services/service/user/add_first_admin.rb:18
+#: app/services/service/user/add_first_admin.rb:16
 msgid "The required attribute 'email' is missing."
 msgstr "필수 속성 'email'이(가) 없습니다."
 
@@ -22557,7 +22617,7 @@ msgstr "필수 매개변수 'application_id'이(가) 없습니다."
 msgid "The required parameter 'application_secret' is missing."
 msgstr "필수 매개변수 'application_secret'이(가) 없습니다."
 
-#: app/controllers/channels_sms_controller.rb:100
+#: app/controllers/channels_sms_controller.rb:104
 msgid "The required parameter 'area' is missing."
 msgstr "필수 매개변수 'area'이(가) 없습니다."
 
@@ -22592,7 +22652,7 @@ msgstr "필수 매개변수 'group_id'이(가) 없습니다."
 msgid "The required parameter 'id' is missing."
 msgstr "필수 매개변수 'id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:744
+#: lib/search_index_backend.rb:749
 msgid "The required parameter 'key' is missing."
 msgstr "필수 매개변수 'key'이(가) 없습니다."
 
@@ -22616,7 +22676,7 @@ msgstr "필수 매개변수 'name'이(가) 없습니다."
 msgid "The required parameter 'options.adapter' is missing."
 msgstr "필수 매개변수 'options.adapter'이(가) 없습니다."
 
-#: app/controllers/channels_sms_controller.rb:104
+#: app/controllers/channels_sms_controller.rb:108
 msgid "The required parameter 'params' is missing."
 msgstr "필수 매개변수 'params'이(가) 없습니다."
 
@@ -22654,7 +22714,7 @@ msgstr "필수 매개변수 'ticket_number'이(가) 없습니다."
 msgid "The required parameter 'user_id' is missing."
 msgstr "필수 매개변수 'user_id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:745
+#: lib/search_index_backend.rb:750
 msgid "The required parameter 'value' is missing."
 msgstr "필수 매개변수 'value'이(가) 없습니다."
 
@@ -22666,6 +22726,16 @@ msgstr "필수 값 'group_id'이(가) 없습니다."
 #: lib/ai/provider/custom_open_ai.rb:82 lib/content_translation/html.rb:17
 msgid "The response could not be processed."
 msgstr "응답을 처리할 수 없습니다."
+
+#: lib/ai/provider/anthropic.rb:13
+msgid "The response was cut off because it reached the maximum output length."
+msgstr ""
+
+#: lib/ai/provider/anthropic.rb:14
+msgid ""
+"The response was cut off because the request and the response together "
+"exceeded the context window of the model."
+msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22883,6 +22953,7 @@ msgstr ""
 "이 JSON 파일은 문제를 식별하는 데 도움이 됩니다."
 
 #: app/services/service/system/check_setup.rb:25
+#: app/services/service/user/add_first_admin.rb:39
 msgid ""
 "The system setup cannot be started, because there is another one running or "
 "it was completed before."
@@ -22922,12 +22993,12 @@ msgstr "대상 티켓 번호를 찾을 수 없습니다."
 msgid "The test run was successful."
 msgstr "테스트 실행이 성공했습니다."
 
-#: db/seeds/settings.rb:3349
+#: db/seeds/settings.rb:3382
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "이메일 전달 시 제목 앞에 붙는 텍스트입니다. 예: FWD."
 
-#: db/seeds/settings.rb:3327
+#: db/seeds/settings.rb:3360
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -23044,7 +23115,7 @@ msgstr "삭제하려는 이중 인증 자격 증명이 존재하지 않습니다
 msgid "The type of the private key is wrong."
 msgstr "개인 키의 유형이 잘못되었습니다."
 
-#: app/controllers/settings_controller.rb:41
+#: app/controllers/settings_controller.rb:49
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
@@ -23070,7 +23141,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "사용자의 'preferred_username'을(를) 'id_token'에서 추출할 수 없습니다."
 
-#: app/controllers/sessions_controller.rb:274
+#: app/controllers/sessions_controller.rb:277
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr "사용자 이름 또는 비밀번호가 올바르지 않습니다."
@@ -23080,6 +23151,10 @@ msgstr "사용자 이름 또는 비밀번호가 올바르지 않습니다."
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The value of the parameter 'payload->class_name' is invalid."
 msgstr "필수 매개변수 'payload->class_name'이(가) 없습니다."
+
+#: app/models/setting/validation/backend_class.rb:14
+msgid "The value of this setting has an invalid format."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 #, fuzzy
@@ -23643,7 +23718,7 @@ msgstr ""
 "니다. 역할 설명, 지시 및 컨텍스트, 엔티티 컨텍스트, 결과 구조 및 작업 정의를 "
 "정의할 수 있습니다."
 
-#: db/seeds/settings.rb:66
+#: db/seeds/settings.rb:72
 msgid "This is a default maintenance message. Click here to change."
 msgstr "이것은 기본 유지보수 메시지입니다. 변경하려면 여기를 클릭하세요."
 
@@ -23752,7 +23827,7 @@ msgstr ""
 "다. 버그나 불완전한 기능이 포함될 수 있습니다."
 
 #: app/controllers/application_controller/handles_errors.rb:117
-#: app/graphql/gql/zammad_schema.rb:113
+#: app/graphql/gql/zammad_schema.rb:114
 msgid "This object already exists."
 msgstr "이 객체가 이미 존재합니다."
 
@@ -23894,7 +23969,7 @@ msgid ""
 "realtime."
 msgstr "이 서비스는 실시간으로 수신 전화의 연락처와 발신자 목록을 보여줍니다."
 
-#: db/seeds/settings.rb:6762
+#: db/seeds/settings.rb:7064
 msgid ""
 "This setting defines the token to access the support.zammad.com instance for "
 "package remote commands."
@@ -23904,7 +23979,7 @@ msgstr ""
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr "이 서명이 비활성화되어 있어 답장에 포함되지 않습니다."
 
-#: app/services/service/user/add_first_admin.rb:14
+#: app/services/service/user/add_first_admin.rb:34
 msgid ""
 "This system has already been configured and an administrator account exists."
 msgstr "이 시스템은 이미 구성되었으며 관리자 계정이 존재합니다."
@@ -24117,11 +24192,11 @@ msgstr "티켓 자동 할당"
 msgid "Ticket Categorizer"
 msgstr "티켓 분류기"
 
-#: db/seeds/settings.rb:2467
+#: db/seeds/settings.rb:2496
 msgid "Ticket Conditions Expert Mode"
 msgstr "티켓 조건 전문가 모드"
 
-#: db/seeds/settings.rb:2493
+#: db/seeds/settings.rb:2522
 msgid "Ticket Conditions Regular Expression Operators"
 msgstr "티켓 조건 정규식 연산자"
 
@@ -24141,43 +24216,43 @@ msgstr "티켓 중복 감지"
 msgid "Ticket Group Dispatcher"
 msgstr "티켓 그룹 디스패처"
 
-#: db/seeds/settings.rb:2362
+#: db/seeds/settings.rb:2391
 msgid "Ticket Hook"
 msgstr "티켓 후크"
 
-#: db/seeds/settings.rb:2387
+#: db/seeds/settings.rb:2416
 msgid "Ticket Hook Divider"
 msgstr "티켓 후크 구분자"
 
-#: db/seeds/settings.rb:2408
+#: db/seeds/settings.rb:2437
 msgid "Ticket Hook Position"
 msgstr "티켓 후크 위치"
 
-#: db/seeds/settings.rb:2440
+#: db/seeds/settings.rb:2469
 msgid "Ticket Last Contact Behaviour"
 msgstr "티켓 마지막 연락 동작"
 
-#: db/seeds/settings.rb:2519
+#: db/seeds/settings.rb:2548
 msgid "Ticket Number Format"
 msgstr "티켓 번호 형식"
 
-#: db/seeds/settings.rb:2549
+#: db/seeds/settings.rb:2579
 msgid "Ticket Number Increment"
 msgstr "티켓 번호 증가"
 
-#: db/seeds/settings.rb:2606
+#: db/seeds/settings.rb:2636
 msgid "Ticket Number Increment Date"
 msgstr "티켓 번호 증가 날짜"
 
-#: db/seeds/settings.rb:2908
+#: db/seeds/settings.rb:2938
 msgid "Ticket Number ignore system_id"
 msgstr "티켓 번호 system_id 무시"
 
-#: db/seeds/settings.rb:6252
+#: db/seeds/settings.rb:6532
 msgid "Ticket Organization Reassignment"
 msgstr "티켓 조직 재할당"
 
-#: db/seeds/settings.rb:5763
+#: db/seeds/settings.rb:6040
 msgid "Ticket Overview Query Polling"
 msgstr "티켓 개요 쿼리 폴링"
 
@@ -24198,7 +24273,7 @@ msgstr "티켓 우선순위 지정기"
 msgid "Ticket Priority"
 msgstr "티켓 우선순위"
 
-#: db/seeds/settings.rb:1013
+#: db/seeds/settings.rb:1038
 msgid "Ticket Priority Icons"
 msgstr "티켓 우선순위 아이콘"
 
@@ -24219,15 +24294,15 @@ msgstr "티켓 상태"
 msgid "Ticket States"
 msgstr "티켓 상태"
 
-#: db/seeds/settings.rb:3346
+#: db/seeds/settings.rb:3379
 msgid "Ticket Subject Forward"
 msgstr "티켓 제목 전달"
 
-#: db/seeds/settings.rb:3324
+#: db/seeds/settings.rb:3357
 msgid "Ticket Subject Reply"
 msgstr "티켓 제목 답글"
 
-#: db/seeds/settings.rb:3303
+#: db/seeds/settings.rb:3336
 msgid "Ticket Subject Size"
 msgstr "티켓 제목 크기"
 
@@ -24237,15 +24312,15 @@ msgstr "Ticket 구독"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6502
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6794
 msgid "Ticket Summary"
 msgstr "티켓 요약"
 
-#: db/seeds/settings.rb:6516
+#: db/seeds/settings.rb:6808
 msgid "Ticket Summary Config"
 msgstr "티켓 요약 구성"
 
-#: db/seeds/settings.rb:6535
+#: db/seeds/settings.rb:6827
 #, fuzzy
 #| msgid "Ticket Selector"
 msgid "Ticket Summary Selector"
@@ -24278,11 +24353,11 @@ msgstr "Ticket 선택기"
 msgid "Ticket Title Rewriter"
 msgstr "티켓 제목 재작성기"
 
-#: db/seeds/settings.rb:2980
+#: db/seeds/settings.rb:3010
 msgid "Ticket Trigger Loop Protection Articles Total"
 msgstr "티켓 트리거 루프 보호 게시물 총계"
 
-#: db/seeds/settings.rb:2961
+#: db/seeds/settings.rb:2991
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "티켓당 티켓 트리거 루프 보호 게시물"
 
@@ -24368,7 +24443,7 @@ msgstr "티켓이 성공적으로 업데이트되었습니다."
 msgid "Ticket merged successfully"
 msgstr "티켓이 성공적으로 병합되었습니다"
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:77
 #, fuzzy
 #| msgid "Ticket Owner"
@@ -24652,7 +24727,7 @@ msgstr "사용자의 티켓"
 msgid "Tickets with \"%s\""
 msgstr "\"%s\"가 있는 티켓"
 
-#: db/seeds/settings.rb:2836
+#: db/seeds/settings.rb:2866
 msgid "Tickets with the same attributes were found."
 msgstr "동일한 속성을 가진 티켓이 발견되었습니다."
 
@@ -24666,27 +24741,27 @@ msgstr "시각"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4192
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4313
 msgid "Time Accounting"
 msgstr "시간 회계"
 
-#: db/seeds/settings.rb:4255
+#: db/seeds/settings.rb:4376
 msgid "Time Accounting Custom Unit"
 msgstr "시간 회계 사용자 지정 단위"
 
-#: db/seeds/settings.rb:4291
+#: db/seeds/settings.rb:4412
 msgid "Time Accounting Default Type"
 msgstr "시간 회계 기본 유형"
 
-#: db/seeds/settings.rb:4219
+#: db/seeds/settings.rb:4340
 msgid "Time Accounting Selector"
 msgstr "시간 회계 선택기"
 
-#: db/seeds/settings.rb:4273
+#: db/seeds/settings.rb:4394
 msgid "Time Accounting Types"
 msgstr "시간 회계 유형"
 
-#: db/seeds/settings.rb:4237
+#: db/seeds/settings.rb:4358
 msgid "Time Accounting Unit"
 msgstr "시간 회계 단위"
 
@@ -24750,7 +24825,7 @@ msgid "Timeframe for the first response."
 msgstr "첫 번째 응답을 위한 기간."
 
 #: app/assets/javascripts/app/models/job.coffee:14
-#: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:207
+#: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:222
 #: lib/excel_sheet.rb:138
 msgid "Timezone"
 msgstr "시간대"
@@ -24800,7 +24875,7 @@ msgstr "양식의 제목"
 msgid "To"
 msgstr "에"
 
-#: db/seeds/settings.rb:3627
+#: db/seeds/settings.rb:3660
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -24913,7 +24988,7 @@ msgstr "기사 메타 정보"
 msgid "Toggle dark mode"
 msgstr "다크 모드 전환"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:179
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:183
 #, fuzzy
 #| msgid "Toggle Group"
 msgid "Toggle group"
@@ -24958,15 +25033,15 @@ msgstr "토큰 액세스"
 msgid "Token authorization failed."
 msgstr "토큰 인증에 실패했습니다."
 
-#: db/seeds/settings.rb:5411
+#: db/seeds/settings.rb:5661
 msgid "Token for CTI."
 msgstr "CTI용 토큰."
 
-#: db/seeds/settings.rb:5315
+#: db/seeds/settings.rb:5565
 msgid "Token for Sipgate."
 msgstr "Sipgate용 토큰."
 
-#: db/seeds/settings.rb:3689
+#: db/seeds/settings.rb:3725
 msgid "Token for monitoring."
 msgstr "모니터링용 토큰."
 
@@ -25005,7 +25080,7 @@ msgstr "총 : %s"
 msgid "Total accounted time"
 msgstr "차지 시간"
 
-#: db/seeds/settings.rb:989
+#: db/seeds/settings.rb:1014
 msgid "Total display of the number of objects in a grouping."
 msgstr "그룹화에서 객체 수의 총 표시."
 
@@ -25050,7 +25125,7 @@ msgstr "필드 내용 번역"
 msgid "Translate section to English"
 msgstr "필드 내용 번역"
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:364
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:372
 msgid "Translate ticket articles into another language."
 msgstr ""
 
@@ -25062,13 +25137,13 @@ msgstr ""
 msgid "Translation"
 msgstr "번역"
 
-#: db/seeds/settings.rb:5980
+#: db/seeds/settings.rb:6260
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translation Service"
 msgstr "번역 소스"
 
-#: db/seeds/settings.rb:5995
+#: db/seeds/settings.rb:6275
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translation Service Config"
@@ -25175,7 +25250,7 @@ msgstr ""
 "간 이벤트로 활성화된 트리거는 특정 시간에 도달했을 때 실행됩니다(예: 대기 시"
 "간, 에스컬레이션)."
 
-#: db/seeds/settings.rb:6083
+#: db/seeds/settings.rb:6363
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -25253,23 +25328,23 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
-#: db/seeds/settings.rb:1417
+#: db/seeds/settings.rb:1446
 msgid "Twitter"
 msgstr "Twitter"
 
-#: db/seeds/settings.rb:1425
+#: db/seeds/settings.rb:1454
 msgid "Twitter App Credentials"
 msgstr "Twitter 앱 자격 증명"
 
-#: db/seeds/settings.rb:1418
+#: db/seeds/settings.rb:1447
 msgid "Twitter Developer Site"
 msgstr "Twitter 개발자 사이트"
 
-#: db/seeds/settings.rb:1432
+#: db/seeds/settings.rb:1461
 msgid "Twitter Key"
 msgstr "Twitter 키"
 
-#: db/seeds/settings.rb:1438
+#: db/seeds/settings.rb:1467
 msgid "Twitter Secret"
 msgstr "Twitter 비밀"
 
@@ -25384,11 +25459,11 @@ msgstr "유형:"
 msgid "UID"
 msgstr "UID"
 
-#: db/seeds/settings.rb:2024
+#: db/seeds/settings.rb:2053
 msgid "UID Attribute Name"
 msgstr "UID 속성 이름"
 
-#: db/seeds/settings.rb:2158
+#: db/seeds/settings.rb:2187
 msgid "UID Field"
 msgstr "UID 필드"
 
@@ -25515,7 +25590,7 @@ msgid "Unlink object"
 msgstr "객체 연결 해제"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:103
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:119
 #, fuzzy
 #| msgid "Link ticket"
 msgid "Unlink ticket"
@@ -25723,7 +25798,7 @@ msgstr "공유 초안 업데이트"
 msgid "Update successful."
 msgstr "업데이트 성공."
 
-#: db/seeds/settings.rb:6264
+#: db/seeds/settings.rb:6544
 msgid "Update the most recent tickets."
 msgstr "가장 최근 티켓을 업데이트합니다."
 
@@ -25784,9 +25859,9 @@ msgstr "업데이트 시간"
 #: app/assets/javascripts/app/models/ticket.coffee:30
 #: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswerTable.vue:51
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
+#: app/frontend/shared/entities/organization/attributes.ts:38
+#: app/frontend/shared/entities/ticket/attributes.ts:120
+#: app/frontend/shared/entities/user/attributes.ts:41
 #: app/graphql/gql/types/overview_type.rb:115
 msgid "Updated at"
 msgstr "업데이트 시간"
@@ -25808,9 +25883,9 @@ msgstr "업데이트 시간"
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:66
-#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
-#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
-#: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
+#: app/frontend/shared/entities/organization/attributes.ts:28
+#: app/frontend/shared/entities/ticket/attributes.ts:109
+#: app/frontend/shared/entities/user/attributes.ts:30
 #: app/graphql/gql/types/overview_type.rb:114
 msgid "Updated by"
 msgstr "업데이트한 사람"
@@ -25888,14 +25963,39 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Updated ticket article (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "    <blockquote type=\"cite\">\n"
+#| "    #{article.body_as_html}\n"
+#| "    </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
+#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
+#| "#{config.product_name}</a>\n"
+#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> reacted with a <%= h @objects[:article].preferences.dig('whatsapp', "
 "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
@@ -26063,7 +26163,7 @@ msgstr "URI당 한 줄 사용"
 msgid "Use one of your safely stored recovery codes."
 msgstr "안전하게 저장된 복구 코드 중 하나를 사용하세요."
 
-#: db/seeds/settings.rb:754
+#: db/seeds/settings.rb:779
 msgid ""
 "Use subject field for emails. If disabled, the ticket title will be used as "
 "subject."
@@ -26079,14 +26179,14 @@ msgstr "아바타 사진을 찍기 위해 카메라를 사용하세요."
 msgid "Use the left and right arrow keys to resize the column."
 msgstr ""
 
-#: db/seeds/settings.rb:2454
+#: db/seeds/settings.rb:2483
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
 msgstr ""
 "마지막 고객 스레드의 시작 시간을 사용합니다(여러 게시물로 구성될 수 있음)."
 
-#: db/seeds/settings.rb:2453
+#: db/seeds/settings.rb:2482
 msgid "Use the time of the very last customer article."
 msgstr "가장 마지막 고객 게시물의 시간을 사용합니다."
 
@@ -26198,13 +26298,13 @@ msgstr "사용자 사서함"
 msgid "User Mismatch"
 msgstr "사용자 불일치"
 
-#: db/seeds/settings.rb:257
+#: db/seeds/settings.rb:272
 #, fuzzy
 #| msgid "Ticket Number Format"
 msgid "User Name Format"
 msgstr "티켓 번호 형식"
 
-#: db/seeds/settings.rb:669
+#: db/seeds/settings.rb:694
 msgid "User Organization Selector - email"
 msgstr "사용자 조직 선택기 - 이메일"
 
@@ -26241,7 +26341,7 @@ msgstr "사용자 문서"
 msgid "User email could not be extracted from 'id_token'."
 msgstr "'id_token'에서 사용자 이메일을 추출할 수 없습니다."
 
-#: db/seeds/settings.rb:1230
+#: db/seeds/settings.rb:1256
 msgid "User email for multiple users"
 msgstr "여러 사용자용 사용자 이메일"
 
@@ -26286,7 +26386,7 @@ msgstr "사용자가 유휴 상태입니다"
 msgid "User is inactive"
 msgstr "사용자가 비활성 상태입니다"
 
-#: app/controllers/sessions_controller.rb:172
+#: app/controllers/sessions_controller.rb:175
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "사용자가 비활성 상태입니다."
@@ -26356,7 +26456,7 @@ msgstr "사용자 이름 / 이메일"
 msgid "Username for proxy connection"
 msgstr "프록시 연결을위한 사용자 이름."
 
-#: db/seeds/settings.rb:573
+#: db/seeds/settings.rb:598
 msgid "Username for proxy connection."
 msgstr "프록시 연결을위한 사용자 이름."
 
@@ -26456,21 +26556,21 @@ msgstr "값"
 msgid "Variables"
 msgstr "변수"
 
-#: db/seeds/settings.rb:6677
+#: db/seeds/settings.rb:6969
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6691
+#: db/seeds/settings.rb:6984
 msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:6709
+#: db/seeds/settings.rb:7008
 #, fuzzy
 #| msgid "Access to the knowledge base interface."
 msgid "Vector DB knowledge base chunking strategy"
 msgstr "지식 삭제 지식 베이스 인터페이스에 대한 접근 권한."
 
-#: db/seeds/settings.rb:6700
+#: db/seeds/settings.rb:6996
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "Vector DB knowledge base excluded categories"
@@ -26488,7 +26588,7 @@ msgstr "사서함에서 확인 이메일을 찾을 수 없습니다."
 msgid "Verification email could not be sent."
 msgstr "확인 이메일을 보낼 수 없습니다."
 
-#: db/seeds/settings.rb:2040
+#: db/seeds/settings.rb:2069
 msgid ""
 "Verification of the TLS connection to the IDP SSO target URL. Only relevant "
 "during setting up SAML authentication."
@@ -26689,12 +26789,12 @@ msgid "Warning"
 msgstr "경고"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
-#: db/seeds/settings.rb:2823
+#: db/seeds/settings.rb:2853
 msgid "Warning message"
 msgstr "경고 메시지"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
-#: db/seeds/settings.rb:2806
+#: db/seeds/settings.rb:2836
 msgid "Warning title"
 msgstr "경고 제목"
 
@@ -26717,13 +26817,13 @@ msgstr "웹"
 msgid "Web (in)"
 msgstr "웹 (수신)"
 
-#: db/seeds/settings.rb:6772
+#: db/seeds/settings.rb:7074
 #, fuzzy
 #| msgid "Paste Private Key"
 msgid "Web Push VAPID Private Key"
 msgstr "개인 키 붙여넣기"
 
-#: db/seeds/settings.rb:6785
+#: db/seeds/settings.rb:7087
 msgid "Web Push VAPID Public Key"
 msgstr ""
 
@@ -26732,13 +26832,13 @@ msgstr ""
 msgid "Web Server Configuration"
 msgstr "웹 서버 구성"
 
-#: db/seeds/settings.rb:351
+#: db/seeds/settings.rb:366
 #, fuzzy
 #| msgid "Websocket backend"
 msgid "WebSocket backend"
 msgstr "Websocket 백엔드"
 
-#: db/seeds/settings.rb:359
+#: db/seeds/settings.rb:377
 #, fuzzy
 #| msgid "Websocket port"
 msgid "WebSocket port"
@@ -26809,11 +26909,11 @@ msgstr "주"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
-#: db/seeds/settings.rb:1898
+#: db/seeds/settings.rb:1927
 msgid "Weibo"
 msgstr "Weibo"
 
-#: db/seeds/settings.rb:1906
+#: db/seeds/settings.rb:1935
 msgid "Weibo App Credentials"
 msgstr "Weibo 앱 자격 증명"
 
@@ -26935,7 +27035,7 @@ msgstr "게시 예정"
 msgid "Will be published on"
 msgstr "게시 예정일"
 
-#: db/seeds/settings.rb:144
+#: db/seeds/settings.rb:156
 msgid "Will be shown in the app and is included in email footers."
 msgstr "앱에 표시되며 이메일 바닥글에 포함됩니다."
 
@@ -27035,11 +27135,11 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "피드백 보내기"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
-#: db/seeds/permissions.rb:251 db/seeds/settings.rb:6553
+#: db/seeds/permissions.rb:251 db/seeds/settings.rb:6845
 msgid "Writing Assistant"
 msgstr "작성 도우미"
 
-#: db/seeds/settings.rb:6567
+#: db/seeds/settings.rb:6859
 msgid "Writing Assistant Fixed Instructions"
 msgstr "작성 도우미 고정 지침"
 
@@ -27245,11 +27345,11 @@ msgstr ""
 "다른 티켓과 마찬가지로 검색 기능을 사용하여 언제든지 Zammad에서 보관된 이메일"
 "을 찾을 수 있습니다."
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:314
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:322
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:314
+#: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:322
 msgid "You can find relevant AI provider logs under AI > Feedback & Logs. %l"
 msgstr ""
 
@@ -27711,7 +27811,7 @@ msgstr "캘린더 구독 설정이 업데이트되었습니다."
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:23
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:31
 #: app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco:31
-#: db/seeds/settings.rb:1445
+#: db/seeds/settings.rb:1474
 msgid "Your callback URL"
 msgstr "콜백 URL"
 
@@ -27790,7 +27890,7 @@ msgstr ""
 msgid "Zammad Foundation"
 msgstr "Zammad Foundation"
 
-#: db/seeds/settings.rb:114
+#: db/seeds/settings.rb:126
 #: lib/auth/two_factor/authentication_method/authenticator_app.rb:38
 msgid "Zammad Helpdesk"
 msgstr "Zammad 헬프데스크"
@@ -27810,7 +27910,7 @@ msgstr ""
 "Zammad가 현재 유지 관리 모드입니다. 관리자만 로그인할 수 있습니다. 유지 관리 "
 "기간이 끝날 때까지 기다려주세요."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:70
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:71
 msgid "Zammad is restarting…"
 msgstr "Zammad가 재시작 중…"
 
@@ -27818,7 +27918,7 @@ msgstr "Zammad가 재시작 중…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad가 \"%s\"에게는 다음과 같이 보입니다"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:89
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:90
 msgid "Zammad requires a restart!"
 msgstr "Zammad 재시작이 필요합니다!"
 
@@ -27889,7 +27989,7 @@ msgstr ""
 "\n"
 "#{config.fqdn}의 우편 관리자\n"
 
-#: db/seeds/settings.rb:241
+#: db/seeds/settings.rb:256
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
 msgstr "절대값 - 예: \"월요일 09:30\" 또는 \"화요일 2월 23일 14:20\""
 
@@ -28190,11 +28290,11 @@ msgstr "사용자 지정 단위"
 msgid "d"
 msgstr "일"
 
-#: app/models/concerns/can_be_published.rb:198
+#: app/models/concerns/can_be_published.rb:214
 msgid "date must be no earlier than internal date"
 msgstr "날짜는 내부 날짜보다 이전일 수 없습니다"
 
-#: app/models/concerns/can_be_published.rb:204
+#: app/models/concerns/can_be_published.rb:220
 msgid "date must be no earlier than published date"
 msgstr "날짜는 게시 날짜보다 이전일 수 없습니다"
 
@@ -28245,15 +28345,15 @@ msgstr "고객에게 전달됨"
 msgid "descending"
 msgstr "내림차순"
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:125
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:129
 msgid "detailed search"
 msgstr "상세 검색"
 
-#: db/seeds/settings.rb:1276
+#: db/seeds/settings.rb:1303
 msgid "developer password"
 msgstr "개발자 비밀번호"
 
-#: db/seeds/settings.rb:1173
+#: db/seeds/settings.rb:1198
 #, fuzzy
 #| msgid "Disable"
 msgid "disabled"
@@ -28508,7 +28608,7 @@ msgstr "시간"
 msgid "hours"
 msgstr "시간"
 
-#: db/seeds/settings.rb:2154
+#: db/seeds/settings.rb:2183
 msgid "https://example.com"
 msgstr "https://example.com"
 
@@ -28526,11 +28626,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5160
+#: db/seeds/settings.rb:5398
 msgid "i-doit config"
 msgstr "i-doit 구성"
 
-#: db/seeds/settings.rb:5133
+#: db/seeds/settings.rb:5371
 msgid "i-doit integration"
 msgstr "i-doit 통합"
 
@@ -28631,7 +28731,7 @@ msgstr "비활성"
 msgid "internal"
 msgstr "내부"
 
-#: db/seeds/settings.rb:1260
+#: db/seeds/settings.rb:1286
 msgid "internal database"
 msgstr "내부 데이터베이스"
 
@@ -28813,7 +28913,7 @@ msgstr "방금 다음으로 변경됨"
 msgid "just now"
 msgstr "방금"
 
-#: db/seeds/settings.rb:2424
+#: db/seeds/settings.rb:2453
 msgid "left"
 msgstr "왼쪽"
 
@@ -29023,9 +29123,9 @@ msgstr "새로운,베타,데스크톱 뷰,데스크톱 UI"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:56
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:19
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:82
-#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:13
-#: db/seeds/settings.rb:656
+#: app/frontend/shared/components/EntityAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
+#: app/frontend/shared/entities/core/attributes/form/resolver/fields/active.ts:13
+#: db/seeds/settings.rb:681
 msgid "no"
 msgstr "아니오"
 
@@ -29060,7 +29160,7 @@ msgstr "예정된 이벤트"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:3
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
-#: db/seeds/settings.rb:2426
+#: db/seeds/settings.rb:2455
 msgid "none"
 msgstr "없음"
 
@@ -29221,7 +29321,7 @@ msgstr "참조는 체크리스트 티켓이 아니어야 합니다."
 msgid "relative"
 msgstr "상대"
 
-#: db/seeds/settings.rb:240
+#: db/seeds/settings.rb:255
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr "상대값 - 예: \"2시간 전\" 또는 \"2일 15분 전\""
 
@@ -29258,7 +29358,7 @@ msgstr "전체 답장"
 msgid "required"
 msgstr "필수"
 
-#: db/seeds/settings.rb:2425
+#: db/seeds/settings.rb:2454
 msgid "right"
 msgstr "오른쪽"
 
@@ -29349,19 +29449,19 @@ msgstr "더 보기"
 msgid "shown"
 msgstr "표시됨"
 
-#: db/seeds/settings.rb:5312
+#: db/seeds/settings.rb:5562
 msgid "sipgate.io Token"
 msgstr "sipgate.io 토큰"
 
-#: db/seeds/settings.rb:5346
+#: db/seeds/settings.rb:5596
 msgid "sipgate.io alternative FQDN"
 msgstr "sipgate.io 대체 FQDN"
 
-#: db/seeds/settings.rb:5333
+#: db/seeds/settings.rb:5583
 msgid "sipgate.io config"
 msgstr "sipgate.io 구성"
 
-#: db/seeds/settings.rb:5284
+#: db/seeds/settings.rb:5534
 msgid "sipgate.io integration"
 msgstr "sipgate.io 통합"
 
@@ -29465,7 +29565,7 @@ msgstr "티켓 %s이(가) 이 티켓으로 병합되었습니다"
 msgid "till (relative)"
 msgstr "까지 (상대)"
 
-#: db/seeds/settings.rb:242
+#: db/seeds/settings.rb:257
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
 msgstr "타임스탬프 - 예: \"2018-08-30 14:30\""
 
@@ -29644,9 +29744,9 @@ msgstr "년"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:55
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:18
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
-#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:12
-#: db/seeds/object_manager_attributes.rb:1533 db/seeds/settings.rb:655
+#: app/frontend/shared/components/EntityAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
+#: app/frontend/shared/entities/core/attributes/form/resolver/fields/active.ts:12
+#: db/seeds/object_manager_attributes.rb:1533 db/seeds/settings.rb:680
 msgid "yes"
 msgstr "예"
 
@@ -31070,11 +31170,6 @@ msgstr "∅ 오늘 대기 시간"
 #~| msgid "Order"
 #~ msgid " Order"
 #~ msgstr "주문"
-
-#, fuzzy
-#~| msgid "Reporting"
-#~ msgid "Sorting"
-#~ msgstr "보고"
 
 #~ msgid "Activates lost password feature for users."
 #~ msgstr "사용자를위한 암호 기능을 상실 활성화합니다."
