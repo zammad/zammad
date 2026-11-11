@@ -1015,7 +1015,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:181
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
-#: app/graphql/gql/types/overview_type.rb:101
+#: app/graphql/gql/types/overview_type.rb:97
 msgid "Accounted Time"
 msgstr ""
 
@@ -1370,7 +1370,7 @@ msgstr ""
 msgid "Add condition"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:133
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:136
 msgid "Add email"
 msgstr ""
 
@@ -1852,7 +1852,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:148
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:149
 msgid "An error occurred during the operation."
 msgstr ""
 
@@ -2281,7 +2281,7 @@ msgid "Article uses different security mechanism."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:15
-#: app/graphql/gql/types/overview_type.rb:100
+#: app/graphql/gql/types/overview_type.rb:96
 msgid "Article#"
 msgstr ""
 
@@ -2845,7 +2845,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/ticket_overview.jst.eco:30
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketContentPopover.vue:147
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:125
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:53
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:56
 msgid "Be sure to check AI-generated content for accuracy."
 msgstr ""
 
@@ -2867,7 +2867,7 @@ msgstr ""
 msgid "Before you start, make sure to check the following points to ensure a smooth migration and usage of your Zammad instance:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:266
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:273
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:93
 msgid "Begin forwarded message"
 msgstr ""
@@ -3202,7 +3202,7 @@ msgid "Can't update password, your entered passwords do not match. Please try ag
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:467
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:474
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:402
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:18
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
@@ -3567,7 +3567,7 @@ msgstr ""
 msgid "Check item"
 msgstr ""
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:489
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -3975,7 +3975,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
 #: app/frontend/shared/entities/ticket/attributes.ts:77
-#: app/graphql/gql/types/overview_type.rb:110
+#: app/graphql/gql/types/overview_type.rb:106
 msgid "Closing time"
 msgstr ""
 
@@ -4802,7 +4802,7 @@ msgstr ""
 #: app/frontend/shared/entities/organization/attributes.ts:21
 #: app/frontend/shared/entities/ticket/attributes.ts:102
 #: app/frontend/shared/entities/user/attributes.ts:22
-#: app/graphql/gql/types/overview_type.rb:113
+#: app/graphql/gql/types/overview_type.rb:109
 msgid "Created at"
 msgstr ""
 
@@ -4828,7 +4828,7 @@ msgstr ""
 #: app/frontend/shared/entities/organization/attributes.ts:11
 #: app/frontend/shared/entities/ticket/attributes.ts:91
 #: app/frontend/shared/entities/user/attributes.ts:11
-#: app/graphql/gql/types/overview_type.rb:112
+#: app/graphql/gql/types/overview_type.rb:108
 msgid "Created by"
 msgstr ""
 
@@ -4985,7 +4985,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:36
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
-#: app/graphql/gql/types/overview_type.rb:93
+#: app/graphql/gql/types/overview_type.rb:89
 #: db/seeds/object_manager_attributes.rb:63
 #: db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4
@@ -6752,7 +6752,7 @@ msgstr ""
 msgid "Download file: %s"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:95
 msgid "Download original email"
 msgstr ""
 
@@ -6763,7 +6763,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/email_unprocessable.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:50
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:103
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:106
 msgid "Download raw email"
 msgstr ""
 
@@ -7025,7 +7025,7 @@ msgstr ""
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
-#: lib/search_index_backend.rb:481
+#: lib/search_index_backend.rb:485
 msgid "Elasticsearch is not reachable. It's possible that it's not running. Please check whether it is installed."
 msgstr ""
 
@@ -7054,7 +7054,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:135
 #: db/seeds/object_manager_attributes.rb:923
 #: db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
@@ -7774,12 +7774,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
 #: app/frontend/shared/entities/ticket/attributes.ts:21
-#: app/graphql/gql/types/overview_type.rb:102
+#: app/graphql/gql/types/overview_type.rb:98
 msgid "Escalation at"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:20
-#: app/graphql/gql/types/overview_type.rb:105
+#: app/graphql/gql/types/overview_type.rb:101
 msgid "Escalation at (Close Time)"
 msgstr ""
 
@@ -7788,7 +7788,7 @@ msgid "Escalation at (Close time)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:18
-#: app/graphql/gql/types/overview_type.rb:103
+#: app/graphql/gql/types/overview_type.rb:99
 msgid "Escalation at (First Response Time)"
 msgstr ""
 
@@ -7797,7 +7797,7 @@ msgid "Escalation at (First response time)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:19
-#: app/graphql/gql/types/overview_type.rb:104
+#: app/graphql/gql/types/overview_type.rb:100
 msgid "Escalation at (Update Time)"
 msgstr ""
 
@@ -7974,7 +7974,7 @@ msgstr ""
 msgid "External data source field"
 msgstr ""
 
-#: lib/search_index_backend.rb:826
+#: lib/search_index_backend.rb:830
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -8259,7 +8259,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
 #: app/frontend/shared/entities/ticket/attributes.ts:70
-#: app/graphql/gql/types/overview_type.rb:109
+#: app/graphql/gql/types/overview_type.rb:105
 msgid "First response"
 msgstr ""
 
@@ -8311,12 +8311,12 @@ msgstr ""
 msgid "Folders"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:55
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:58
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 msgid "Follow up"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:77
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:80
 msgid "Follow up to all"
 msgstr ""
 
@@ -8490,7 +8490,7 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:64
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:67
 msgid "Forward"
 msgstr ""
 
@@ -8873,7 +8873,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:37
-#: app/graphql/gql/types/overview_type.rb:95
+#: app/graphql/gql/types/overview_type.rb:91
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
@@ -10056,19 +10056,19 @@ msgstr ""
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:36
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:39
 msgid "Invalid knowledge base locale."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:193
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:199
+#: app/controllers/tickets_controller.rb:203
 msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:196
+#: app/controllers/tickets_controller.rb:200
 msgid "Invalid link structure (Object)"
 msgstr ""
 
@@ -10582,28 +10582,28 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
 #: app/frontend/shared/entities/ticket/attributes.ts:84
-#: app/graphql/gql/types/overview_type.rb:111
+#: app/graphql/gql/types/overview_type.rb:107
 msgid "Last closing time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/frontend/shared/entities/ticket/attributes.ts:49
-#: app/graphql/gql/types/overview_type.rb:106
+#: app/graphql/gql/types/overview_type.rb:102
 msgid "Last contact"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/frontend/shared/entities/ticket/attributes.ts:56
-#: app/graphql/gql/types/overview_type.rb:107
+#: app/graphql/gql/types/overview_type.rb:103
 msgid "Last contact (agent)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:248
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/frontend/shared/entities/ticket/attributes.ts:63
-#: app/graphql/gql/types/overview_type.rb:108
+#: app/graphql/gql/types/overview_type.rb:104
 msgid "Last contact (customer)"
 msgstr ""
 
@@ -12148,7 +12148,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:418
+#: app/controllers/tickets_controller.rb:422
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -12702,7 +12702,7 @@ msgstr ""
 msgid "No knowledge base content is available yet."
 msgstr ""
 
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:35
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:38
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:58
 msgid "No knowledge base locale configured."
 msgstr ""
@@ -12819,7 +12819,7 @@ msgstr ""
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:79
 #: app/controllers/ticket_articles_controller.rb:240
-#: app/controllers/tickets_controller.rb:461
+#: app/controllers/tickets_controller.rb:465
 #: app/controllers/users_controller.rb:561
 msgid "No source data submitted!"
 msgstr ""
@@ -12885,7 +12885,7 @@ msgstr ""
 msgid "No user creation on logon"
 msgstr ""
 
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:59
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:27
 msgid "No valid knowledge base category provided."
 msgstr ""
 
@@ -13153,7 +13153,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
-#: app/graphql/gql/types/overview_type.rb:91
+#: app/graphql/gql/types/overview_type.rb:87
 msgid "Number"
 msgstr ""
 
@@ -13291,7 +13291,7 @@ msgstr ""
 msgid "Ollama"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:507
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
 msgid "On %s, %s wrote:"
 msgstr ""
@@ -13641,7 +13641,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
-#: app/graphql/gql/types/overview_type.rb:94
+#: app/graphql/gql/types/overview_type.rb:90
 #: db/seeds/object_manager_attributes.rb:98
 #: db/seeds/settings.rb:153
 #: lib/excel_sheet/ticket.rb:30
@@ -13872,7 +13872,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketAttributePopover.vue:57
-#: app/graphql/gql/types/overview_type.rb:96
+#: app/graphql/gql/types/overview_type.rb:92
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
 #: app/views/messaging/ticket_create/zh-tw.md.erb:4
@@ -14121,7 +14121,7 @@ msgid "Pending tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:13
-#: app/graphql/gql/types/overview_type.rb:98
+#: app/graphql/gql/types/overview_type.rb:94
 #: db/seeds/object_manager_attributes.rb:316
 msgid "Pending till"
 msgstr ""
@@ -14368,7 +14368,7 @@ msgstr ""
 msgid "Please proceed to login"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:470
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:477
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
@@ -14612,7 +14612,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:14
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:39
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco:30
-#: app/graphql/gql/types/overview_type.rb:99
+#: app/graphql/gql/types/overview_type.rb:95
 #: db/seeds/object_manager_attributes.rb:360
 #: lib/excel_sheet/ticket.rb:26
 msgid "Priority"
@@ -15385,7 +15385,7 @@ msgid "Replacement agent"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:114
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:55
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:58
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
@@ -15394,7 +15394,7 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:77
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:80
 msgid "Reply all"
 msgstr ""
 
@@ -17667,7 +17667,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
 #: app/assets/javascripts/app/views/package.jst.eco:69
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
-#: app/graphql/gql/types/overview_type.rb:97
+#: app/graphql/gql/types/overview_type.rb:93
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
 #: app/views/messaging/ticket_create/zh-tw.md.erb:5
@@ -18231,7 +18231,7 @@ msgstr ""
 msgid "Text field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:466
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:473
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:401
 msgid "Text missing"
 msgstr ""
@@ -18249,7 +18249,7 @@ msgstr ""
 msgid "Text modules are …"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:484
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:491
 msgid "Text needed"
 msgstr ""
 
@@ -18954,7 +18954,7 @@ msgstr ""
 msgid "The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:483
+#: lib/search_index_backend.rb:487
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
@@ -19360,7 +19360,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:749
+#: lib/search_index_backend.rb:753
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -19420,7 +19420,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:750
+#: lib/search_index_backend.rb:754
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -19497,7 +19497,7 @@ msgstr ""
 msgid "The server presented a certificate that could not be verified."
 msgstr ""
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid "The server returned a redirect response, but the current operation does not allow redirects."
 msgstr ""
 
@@ -19560,7 +19560,7 @@ msgstr ""
 msgid "The sorting mode you save here will apply to categories added later."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:372
+#: app/controllers/tickets_controller.rb:376
 msgid "The source ticket could not be found."
 msgstr ""
 
@@ -19625,7 +19625,7 @@ msgstr ""
 msgid "The tag could not be removed."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:363
+#: app/controllers/tickets_controller.rb:367
 msgid "The target ticket number could not be found."
 msgstr ""
 
@@ -20951,7 +20951,7 @@ msgid "Tickets bulk edit"
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:233
-#: app/controllers/tickets_controller.rb:454
+#: app/controllers/tickets_controller.rb:458
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -21090,7 +21090,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:57
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:151
-#: app/graphql/gql/types/overview_type.rb:92
+#: app/graphql/gql/types/overview_type.rb:88
 #: db/seeds/object_manager_attributes.rb:34
 #: lib/excel_sheet/ticket.rb:24
 msgid "Title"
@@ -21257,7 +21257,7 @@ msgstr ""
 msgid "Token-based API access has been disabled by the administrator."
 msgstr ""
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -21973,7 +21973,7 @@ msgstr ""
 #: app/frontend/shared/entities/organization/attributes.ts:38
 #: app/frontend/shared/entities/ticket/attributes.ts:120
 #: app/frontend/shared/entities/user/attributes.ts:41
-#: app/graphql/gql/types/overview_type.rb:115
+#: app/graphql/gql/types/overview_type.rb:111
 msgid "Updated at"
 msgstr ""
 
@@ -21997,7 +21997,7 @@ msgstr ""
 #: app/frontend/shared/entities/organization/attributes.ts:28
 #: app/frontend/shared/entities/ticket/attributes.ts:109
 #: app/frontend/shared/entities/user/attributes.ts:30
-#: app/graphql/gql/types/overview_type.rb:114
+#: app/graphql/gql/types/overview_type.rb:110
 msgid "Updated by"
 msgstr ""
 
@@ -23542,7 +23542,7 @@ msgstr ""
 msgid "Zammad Helpdesk"
 msgstr ""
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr ""
 
@@ -24116,7 +24116,7 @@ msgstr ""
 msgid "for an agent to respond"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:61
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:68
 msgid "forward"
 msgstr ""
 
@@ -24895,7 +24895,7 @@ msgstr ""
 msgid "reply"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:53
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:60
 msgid "reply all"
 msgstr ""
 

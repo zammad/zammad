@@ -1,8 +1,8 @@
-Оновлено текст заявки (#{ticket.title})
+Оновлено статтю з заявки (#{ticket.title})
 
-<div>Вітаю #{recipient.firstname},</div>
-<br>
-<div>
+<DIV>Привіт, #{recipient.firstname},</DIV>
+<BR>
+<DIV>
 <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> відреагував <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> на повідомлення від #{article.created_by.fullname}:
 </div>
 <br>
@@ -14,6 +14,6 @@
   </div>
 <% end %>
 <br>
-<div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Переглянути в #{config.product_name}</a>
+<DIV>
+  <A href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Переглянути це в #{config.product_name}</A></DIV>
 </div>
