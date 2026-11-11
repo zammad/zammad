@@ -16,6 +16,7 @@ import addonWeavePlugin from './app/frontend/build/addonWeave/plugin.mjs'
 import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
 import { discoverSkinMarkerClashes } from './app/frontend/build/skinMarker/discoverClashes.mjs'
 import skinMarkerPlugin from './app/frontend/build/skinMarker/plugin.mjs'
+import { vendorChunkGroups } from './app/frontend/build/vendorChunks.mjs'
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
@@ -121,67 +122,30 @@ export default defineConfig(async ({ mode, command }) => {
     build: {
       rolldownOptions: {
         output: {
-          manualChunks(id) {
-            const manualChunksMap = {
-              lodash: ['lodash-es'],
-              vue: ['vue', 'vue-router', 'pinia'],
-              linkifyjs: ['linkifyjs', 'linkify-string'],
-              graphql: [
-                'graphql',
-                // 🚨 'graphql-ruby-client',
-                // Important: don't include the package root here, it pulls in the Node-only `sync` entry
-                // which imports fs/path/crypto/http/... and triggers Vite "externalized for browser" warnings.
-                'graphql-ruby-client/subscriptions/ActionCableLink',
-                'graphql-tag',
-                '@apollo/client',
-                '@vue/apollo-composable',
-                'rxjs',
-                '@rails/actioncable',
-              ],
-              formkit: [
-                '@formkit/core',
-                '@formkit/dev',
-                // '@formkit/drag-and-drop', # is not used in mobile
-                '@formkit/i18n',
-                '@formkit/inputs',
-                '@formkit/rules',
-                '@formkit/themes',
-                '@formkit/utils',
-                '@formkit/validation',
-                '@formkit/vue',
-              ],
-            }
-
-            if (!id.includes('node_modules')) return undefined
-
-            for (const [chunkName, packages] of Object.entries(manualChunksMap)) {
-              if (
-                packages.some(
-                  (pkg) =>
-                    id.includes(`node_modules/${pkg}/`) ||
-                    id.includes(`node_modules/.pnpm/${pkg.replace('/', '+').replace('@', '')}`),
-                )
-              ) {
-                return chunkName
-              }
-            }
-
-            return undefined
-          },
+          codeSplitting: { groups: vendorChunkGroups },
         },
       },
     },
     resolve: {
       preserveSymlinks: isEnvBooleanSet(process.env.PRESERVE_SYMLINKS),
-      alias: {
-        '^vue-easy-lightbox$': 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
+      alias: [
+        {
+          find: '^vue-easy-lightbox$',
+          replacement: 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
+        },
+        // vue3-draggable-resizable ships CommonJS, whose `require('vue')` resolves to the CJS
+        // build that includes the template compiler. The runtime build is enough.
+        ...(isBuild ? [{ find: /^vue$/, replacement: 'vue/dist/vue.runtime.esm-bundler.js' }] : []),
         // In non-test builds, alias fake-timers to a tiny shim so Vite doesn't resolve Node core deps
         ...(isTesting
-          ? {}
-          : {
-              '@sinonjs/fake-timers': resolve(dir, 'app/frontend/build/shims/fake-timers.ts'),
-            }),
-      },
+          ? []
+          : [
+              {
+                find: '@sinonjs/fake-timers',
+                replacement: resolve(dir, 'app/frontend/build/shims/fake-timers.ts'),
+              },
+            ]),
+      ],
     },
     server: {
       https,
