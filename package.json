@@ -121,7 +121,7 @@
     "@floating-ui/dom": "^1.8.0",
     "@formkit/core": "^2.4.0",
     "@formkit/dev": "^2.4.0",
-    "@formkit/drag-and-drop": "^0.6.3",
+    "@formkit/drag-and-drop": "^0.7.0",
     "@formkit/i18n": "^2.4.0",
     "@formkit/inputs": "^2.4.0",
     "@formkit/rules": "^2.4.0",
