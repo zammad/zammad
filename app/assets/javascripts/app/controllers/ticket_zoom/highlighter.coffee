@@ -38,8 +38,6 @@ class App.TicketZoomHighlighter extends App.Controller
 
     return if @ticket.currentView() isnt 'agent'
 
-    @currentHighlights = {}
-
     rangy.init()
 
     @highlighter = rangy.createHighlighter(document, 'TextRange')
@@ -99,9 +97,11 @@ class App.TicketZoomHighlighter extends App.Controller
     return if !article.preferences.highlight
     return if _.isEmpty(article.preferences.highlight)
     return if article.preferences.highlight is 'type:TextRange'
-    return if @currentHighlights[ticket_article_id] is article.preferences.highlight
-    @currentHighlights[ticket_article_id] = article.preferences.highlight
+
+    # deserialize replaces all highlights, keep the ones of the other articles
+    others = _.reject(@highlighter.highlights, (highlight) -> highlight.containerElementId is "article-content-#{ticket_article_id}")
     @highlighter.deserialize(article.preferences.highlight)
+    @highlighter.highlights = others.concat(@highlighter.highlights)
 
   # the serialization creates one string for the entire ticket
   # containing the offsets and the highlight classes

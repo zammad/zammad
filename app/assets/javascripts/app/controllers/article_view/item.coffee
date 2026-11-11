@@ -48,12 +48,9 @@ class App.ArticleViewItem extends App.ControllerObserver
 
   setHighlighter: =>
     return if @el.is(':hidden')
-    # use delay do no ui blocking
-    #@highlighter.loadHighlights(@object_id)
-    d = =>
-      if @highlighter
-        @highlighter.loadHighlights(@object_id)
-    @delay(d, 200)
+
+    # no delay, hidden tickets are detached and rangy would fall back to the whole document
+    @highlighter?.loadHighlights(@object_id)
 
   # Look up the time accounting entry of the given article
   getArticleTimeAccounting: (article_id) =>
