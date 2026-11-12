@@ -1,0 +1,10 @@
+mutation chatSessionMessageAdd($sessionId: ID!, $content: String!) {
+  chatSessionMessageAdd(sessionId: $sessionId, content: $content) {
+    message {
+      ...chatMessageAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

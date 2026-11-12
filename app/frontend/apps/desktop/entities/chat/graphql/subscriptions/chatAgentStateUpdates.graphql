@@ -1,0 +1,7 @@
+subscription chatAgentStateUpdates {
+  chatAgentStateUpdates {
+    agentState {
+      ...chatAgentStateAttributes
+    }
+  }
+}

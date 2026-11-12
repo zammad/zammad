@@ -254,6 +254,45 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
 
+  # Served through Service::Search like users and organizations. What is found, with the search index
+  #   and without, and for whom, is covered in spec/models/chat/session/search_spec.rb.
+  context 'when searching chat sessions', authenticated_as: :agent do
+    let(:query) do
+      <<~QUERY
+        query search($search: String, $onlyIn: EnumSearchableModels!) {
+          search(search: $search, onlyIn: $onlyIn) {
+            totalCount
+            items {
+              ... on ChatSession {
+                __typename
+                id
+                name
+                state
+              }
+            }
+          }
+        }
+      QUERY
+    end
+
+    let(:agent)     { create(:agent) }
+    let(:session)   { create(:'chat/session', chat: create(:chat), state: 'closed', user: create(:agent), name: 'Ocarina lesson') }
+    let(:variables) { { search: 'ocarina', onlyIn: 'Chat__Session' } }
+
+    before do
+      Setting.set('chat', true)
+      Setting.set('es_url', nil)
+      session
+      gql.execute(query, variables:)
+    end
+
+    it 'returns the sessions found' do
+      expect(gql.result.data).to eq({ 'items' => [{ '__typename' => 'ChatSession', 'id' => gql.id(session), 'name' => 'Ocarina lesson', 'state' => 'closed' }], 'totalCount' => 1 })
+    end
+
+    it_behaves_like 'graphql responds with error if unauthenticated'
+  end
+
   # The one searchable model this query does not serve through Service::Search - see
   #   Gql::Concerns::SearchesKnowledgeBaseAnswers for why. What is covered here is the routing and
   #   the payload it produces; the search mode behind it belongs to Service::KnowledgeBase::Search

@@ -1,0 +1,10 @@
+mutation chatPreferencesUpdate($preferences: ChatPreferencesInput!) {
+  chatPreferencesUpdate(preferences: $preferences) {
+    preferences {
+      ...chatPreferencesAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

@@ -91,13 +91,19 @@ export interface FieldEditorContext {
   removeSignature(): void
   focus(): void
   getEditorValue(type: EditorContentType): string
+  // Hands over the images that were pasted or dropped but are still being read, as the HTML they
+  //   would have had in the content, which they no longer reach. Nothing when none is on its way;
+  //   not offered before the editor is loaded.
+  takeImagesOnTheirWay?(): Promise<string> | undefined
   // Only offered by editors with the knowledge base mention (`??`).
   insertKnowledgeBaseAnswer?(translationId: ID): void
   signature?: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null
   signatureEnabled?: boolean
 }
 
-export type EditorExtensionSet = 'basic'
+// `reduced`: paragraphs, line breaks, links and images that stay embedded in the HTML, with text
+//   modules as the only suggestions.
+export type EditorExtensionSet = 'basic' | 'reduced'
 
 export interface FieldEditorProps {
   placeholder?: string

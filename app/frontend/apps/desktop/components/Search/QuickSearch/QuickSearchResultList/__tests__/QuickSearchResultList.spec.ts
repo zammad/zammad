@@ -493,6 +493,73 @@ describe('QuickSearchResultList', () => {
   })
 })
 
+describe('QuickSearchResultList chat sessions', () => {
+  const mockSessions = (totalCount: number, ...names: (string | null)[]) => {
+    mockQuickSearchQuery(
+      quickSearchGroups({
+        [EnumSearchableModels.Organization]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.User]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.Ticket]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.KnowledgeBaseAnswerTranslation]: { totalCount: 0, items: [] },
+        [EnumSearchableModels.ChatSession]: {
+          totalCount,
+          items: names.map((name, index) => ({
+            __typename: 'ChatSession' as const,
+            id: convertToGraphQLId('Chat::Session', index + 1),
+            internalId: index + 1,
+            name,
+          })),
+        },
+      }),
+    )
+  }
+
+  it('renders the group for a chat agent while the chat feature is on', async () => {
+    mockPermissions(['chat.agent'])
+    mockApplicationConfig({ chat: true })
+    mockSessions(1, 'VPN setup')
+
+    const wrapper = await renderQuickSearchResultList('vpn')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(wrapper.getByText('Found chat sessions')).toBeInTheDocument()
+    expect(wrapper.getByRole('link', { name: '#1 VPN setup' })).toBeInTheDocument()
+  })
+
+  it('omits the group while the chat feature is off', async () => {
+    mockPermissions(['chat.agent'])
+    mockApplicationConfig({ chat: false })
+    mockSessions(1, 'VPN setup')
+
+    const wrapper = await renderQuickSearchResultList('vpn')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(wrapper.queryByText('Found chat sessions')).not.toBeInTheDocument()
+  })
+
+  it('links to the detailed search for the sessions it does not show', async () => {
+    mockPermissions(['chat.agent'])
+    mockApplicationConfig({ chat: true })
+    mockSessions(12, 'VPN setup', null)
+
+    const wrapper = await renderQuickSearchResultList('vpn')
+
+    await waitForQuickSearchQueryCalls()
+
+    expect(wrapper.getByRole('link', { name: '#2' })).toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByRole('link', { name: '10 more' }))
+
+    const router = getTestRouter()
+
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
+
+    expect(router.currentRoute.value.query).toEqual({ entity: EnumSearchableModels.ChatSession })
+  })
+})
+
 // The fourth result group, and the first one gated by `show` rather than by `permissions` - see
 //   plugins/knowledgeBaseAnswer.ts for why it has to be.
 describe('QuickSearchResultList knowledge base answers', () => {

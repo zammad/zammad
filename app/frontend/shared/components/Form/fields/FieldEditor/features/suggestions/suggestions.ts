@@ -7,7 +7,9 @@ import { watch, type WatchSource, type WatchStopHandle } from 'vue'
 import {
   claimInlineImages,
   getEditorFormId,
+  inlineImageUploadsPluginKey,
 } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
+import { SUGGESTIONS_LOADING_ATTRIBUTE } from '#shared/components/Form/fields/FieldEditor/features/suggestions/constants.ts'
 import type { MentionType } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { setFloatingPopover } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import { getEditorComponents } from '#shared/components/Form/initializeFieldEditor.ts'
@@ -54,10 +56,26 @@ const setEditorAttr = (editor: Editor, name: string, value: string | null) => {
 export default function buildMentionExtension<T>(
   options: MentionOptions<T>,
 ): Omit<SuggestionOptions, 'editor'> {
+  // A query overtaken by the next one settles early with the entries of the one before, so the
+  //   entries are only current once no query is left open.
+  let openQueries = 0
+
+  const items: MentionOptions<T>['items'] = async (props) => {
+    openQueries += 1
+    setEditorAttr(props.editor, SUGGESTIONS_LOADING_ATTRIBUTE, 'true')
+
+    try {
+      return await options.items(props)
+    } finally {
+      openQueries -= 1
+      if (!openQueries) setEditorAttr(props.editor, SUGGESTIONS_LOADING_ATTRIBUTE, null)
+    }
+  }
+
   return {
     char: options.activator,
     allowSpaces: options.allowSpaces ?? true,
-    items: options.items,
+    items,
     pluginKey: new PluginKey(options.type),
     command({ editor, range, props }) {
       // increase range.to by one when the next node is of type "text"
@@ -72,8 +90,10 @@ export default function buildMentionExtension<T>(
       }
 
       const insert = (content: Content) => {
-        // Images of an inserted text module or answer belong to this draft, like pasted ones.
-        if (typeof content === 'string') claimInlineImages(getEditorFormId(editor), content)
+        // Images of an inserted text module or answer belong to this draft, like pasted ones -
+        //   where the editor uploads its images at all.
+        if (typeof content === 'string' && inlineImageUploadsPluginKey.get(editor.state))
+          claimInlineImages(getEditorFormId(editor), content)
 
         editor.chain().focus().insertContentAt(range, content).run()
       }

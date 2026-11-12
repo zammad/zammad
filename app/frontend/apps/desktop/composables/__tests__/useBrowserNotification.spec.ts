@@ -92,6 +92,15 @@ describe('useBrowserNotificationPermissionRequest', () => {
     expect(requestPermissionSpy).toHaveBeenCalledOnce()
   })
 
+  it('asks a chat-only agent after the first key press', async () => {
+    startSession(['chat.agent'])
+
+    window.dispatchEvent(new Event('keydown'))
+    await waitForNextTick()
+
+    expect(requestPermissionSpy).toHaveBeenCalledOnce()
+  })
+
   it.each(['Escape', 'Shift', 'Control', 'Alt', 'Meta'])(
     'does not spend the request on a %s key press',
     async (key) => {

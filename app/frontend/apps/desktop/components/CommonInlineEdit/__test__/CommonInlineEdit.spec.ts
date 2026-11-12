@@ -157,6 +157,40 @@ describe('CommonInlineEdit', () => {
     expect(wrapper.emitted()['cancel-edit']).toBeTruthy()
   })
 
+  // A flyout or dialog around the editor listens for Escape on the window and would close too.
+  it('keeps the escape that cancels to itself', async () => {
+    const onWindowEscape = vi.fn()
+
+    window.addEventListener('keydown', onWindowEscape)
+    onTestFinished(() => window.removeEventListener('keydown', onWindowEscape))
+
+    const wrapper = renderInlineEdit()
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
+
+    await wrapper.events.keyboard('{esc}')
+
+    expect(wrapper.emitted()['cancel-edit']).toBeTruthy()
+    expect(onWindowEscape).not.toHaveBeenCalled()
+  })
+
+  it('passes an escape on while it is not being edited', async () => {
+    const onWindowEscape = vi.fn()
+
+    window.addEventListener('keydown', onWindowEscape)
+    onTestFinished(() => window.removeEventListener('keydown', onWindowEscape))
+
+    const wrapper = renderInlineEdit()
+
+    wrapper.getByRole('button').focus()
+
+    await wrapper.events.keyboard('{esc}')
+
+    expect(onWindowEscape).toHaveBeenCalledOnce()
+  })
+
   it.each([
     ['composing', { isComposing: true }],
     ['committing a composition in Safari', { keyCode: 229 }],

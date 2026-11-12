@@ -143,6 +143,68 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     end
   end
 
+  context 'when the agent accepts a chat session' do
+    before { allow(Chat).to receive(:broadcast_agent_state_update) }
+
+    # The claim leaves the index to the save that adds the client of the agent as recipient.
+    it 'tells the search index about the session', performs_jobs: true do
+      allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+      chat_session
+      subject_as_agent
+      clear_jobs
+
+      expect { subject_as_agent.run }.to have_enqueued_job(SearchIndexJob).with('Chat::Session', chat_session.id)
+    end
+
+    # After a transfer, the client of the agent who accepts the session again takes part already, so nothing is saved.
+    it 'tells the search index about a session its client took part in before', performs_jobs: true do
+      allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+      chat_session.add_recipient(client_id, true)
+      subject_as_agent
+      clear_jobs
+
+      expect { subject_as_agent.run }.to have_enqueued_job(SearchIndexJob).with('Chat::Session', chat_session.id)
+    end
+
+    it 'tells the agents of the topic, the accepting agent included' do
+      subject_as_agent.run
+
+      expect(Chat).to have_received(:broadcast_agent_state_update).with([chat.id], agent_ids: [agent.id])
+    end
+
+    # The old interface greets from the browser of the agent, the server doing it as well would greet twice.
+    it 'leaves the greeting to the browser of the agent', :aggregate_failures, performs_jobs: true do
+      agent.preferences[:chat][:phrase] = { chat.id.to_s => 'Hello, I am Erika' }
+      agent.save!
+      chat_session
+      subject_as_agent
+      clear_jobs
+
+      expect { subject_as_agent.run }.not_to have_enqueued_job(ChatGreetingJob)
+      expect(Sessions.queue(customer_client_id).pluck('event')).to eq(%w[chat_session_start])
+    end
+  end
+
+  context 'when another agent claimed the only waiting session first' do
+    let(:other_agent) { create(:agent, preferences: { chat: { active: { chat.id.to_s => 'on' } } }) }
+
+    before do
+      chat_session
+      Chat::Session.claim_next([chat.id], other_agent)
+    end
+
+    it 'answers that no session is available and leaves the session to the other agent', :aggregate_failures do
+      expect(subject_as_agent.run).to eq(
+        event: 'chat_session_start',
+        data:  {
+          state:   'failed',
+          message: 'No session available.',
+        },
+      )
+      expect(chat_session.reload).to have_attributes(state: 'running', user_id: other_agent.id)
+    end
+  end
+
   context 'when starting a chat session as agent with alternative_name and no avatar_state' do
     it 'send out chat_session_start to customer (with prepared agent information) and agent' do
       agent.preferences[:chat] ||= {}

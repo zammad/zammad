@@ -12,6 +12,8 @@ class UserPolicy < ApplicationPolicy
     return true if user.permissions?('ticket.agent')
     # The caller log shows the matched customers to every phone agent, with the fields the old UI ships to that role.
     return customer_field_scope if user.permissions?('cti.agent')
+    # The chat panel shows the available agents and a session's agent to every chat agent, with the same fields.
+    return customer_field_scope if user.permissions?('chat.agent')
 
     return false if !user.permissions?('ticket.customer')
 

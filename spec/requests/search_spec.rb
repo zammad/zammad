@@ -66,6 +66,22 @@ RSpec.describe 'Search', type: :request do
         ), 'assets' => include_assets_of(ticket1, ticket2, ticket3, agent))
       end
 
+      # The old UI's search; what the new UI gets from the GraphQL search must not change it.
+      context 'with a chat session' do
+        let(:chat_session) { create(:'chat/session', chat: create(:chat), state: 'closed', user: agent, name: "#{term} chat") }
+
+        before do
+          Setting.set('chat', true)
+          chat_session
+          searchindex_model_reload([Chat::Session])
+          post '/api/v1/search', params: params, as: :json
+        end
+
+        it 'returns the chat session among the results' do
+          expect(json_response['result']).to include(include('type' => 'ChatSession', 'id' => chat_session.id))
+        end
+      end
+
       it 'returns flattened search results when searching for multiple objects' do
         post '/api/v1/search/ticket-user', params: params, as: :json
 

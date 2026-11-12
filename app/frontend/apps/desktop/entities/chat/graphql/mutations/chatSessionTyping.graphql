@@ -1,0 +1,8 @@
+mutation chatSessionTyping($sessionId: ID!) {
+  chatSessionTyping(sessionId: $sessionId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

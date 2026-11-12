@@ -11,7 +11,9 @@ import { common, createLowlight } from 'lowlight'
 
 import AiAssistantTextTools from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import HardBreakPlain from '#shared/components/Form/fields/FieldEditor/extensions/HardBreakPlain.ts'
-import Image from '#shared/components/Form/fields/FieldEditor/extensions/Image.ts'
+import Image, {
+  EmbeddedImage,
+} from '#shared/components/Form/fields/FieldEditor/extensions/Image.ts'
 import { IndentExtension } from '#shared/components/Form/fields/FieldEditor/extensions/Indent.ts'
 import KnowledgeBaseSuggestion from '#shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts'
 import Link from '#shared/components/Form/fields/FieldEditor/extensions/Link.ts'
@@ -117,6 +119,42 @@ export const getPlainExtensions = (
   }),
 ]
 
+// HTML without formatting: paragraphs, line breaks and the links that come with inserted content,
+//   as their address is part of what is said. The limit counts the text, not the HTML, as an
+//   embedded image would use it up on its own.
+export const getReducedExtensions = (
+  placeholder = '',
+  meta: FieldEditorProps['meta'],
+): Extensions => [
+  StarterKit.configure({
+    blockquote: false,
+    bold: false,
+    bulletList: false,
+    code: false,
+    codeBlock: false,
+    heading: false,
+    horizontalRule: false,
+    italic: false,
+    link: {
+      openOnClick: false,
+      autolink: false,
+    },
+    listItem: false,
+    listKeymap: false,
+    orderedList: false,
+    strike: false,
+    underline: false,
+  }),
+  PlainCharacterCount.configure(
+    meta?.footer?.maxlength && !meta?.footer?.allowExceedMaxLength
+      ? { limit: meta.footer.maxlength }
+      : {},
+  ),
+  Placeholder.configure({
+    placeholder,
+  }),
+]
+
 export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta']): Extensions => [
   StarterKit.configure({
     blockquote: false,
@@ -186,7 +224,7 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
 export const getCustomExtensions = (
   context: Ref<FormFieldContext<FieldEditorProps>>,
 ): Extensions => [
-  Image,
+  context.value.extensionSet === 'reduced' ? EmbeddedImage : Image,
   Signature,
   UserMention(context),
   KnowledgeBaseSuggestion(context),

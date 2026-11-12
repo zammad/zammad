@@ -173,9 +173,12 @@ const handleEnterKey = (event: KeyboardEvent) => {
   submitEdit()
 }
 
+// The Escape that ends the editing is the editor's: a flyout or dialog around it listens for one
+//   on the window and would close as well. Without an editing to end, it goes on to them.
 const handleEscapeKey = (event: KeyboardEvent) => {
   if (isComposing(event)) return
 
+  if (isEditing.value) event.stopPropagation()
   stopEditing()
 }
 

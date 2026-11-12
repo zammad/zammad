@@ -3,6 +3,9 @@
 class Chat < ApplicationModel
   include ChecksHtmlSanitized
 
+  # An agent stores the greetings of a chat as one string.
+  PHRASE_SEPARATOR = ';'.freeze
+
   has_many :sessions, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
@@ -140,6 +143,29 @@ returns
     return [] if chat_ids.blank?
 
     chat_ids
+  end
+
+=begin
+
+get the greetings an agent stored for a chat, from their chat preferences
+
+  phrases = Chat.agent_phrases(User.find(123).preferences[:chat], 1)
+
+returns
+
+  ['Hello, I am Erika', 'Good day']
+
+=end
+
+  def self.agent_phrases(chat_preferences, chat_id)
+    agent_chat_preference(chat_preferences, :phrase, chat_id).to_s.split(PHRASE_SEPARATOR).map(&:strip).compact_blank
+  end
+
+  # The old interface stores the chat id as a string key, other writers as a number.
+  def self.agent_chat_preference(chat_preferences, key, chat_id)
+    values = chat_preferences&.dig(key) || {}
+
+    values[chat_id.to_s] || values[chat_id.to_i]
   end
 
 =begin
@@ -392,7 +418,7 @@ returns
 
 =end
 
-  def self.available_agents_with_concurrent(chat_ids, diff = 2.minutes)
+  def self.available_agents_with_concurrent(chat_ids, diff = Chat::Agent::HEARTBEAT_WINDOW)
     agents = {}
     Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each do |record|
       user = User.lookup(id: record.updated_by_id)
@@ -416,7 +442,7 @@ returns
 
 =end
 
-  def self.active_agent_count(chat_ids, diff = 2.minutes)
+  def self.active_agent_count(chat_ids, diff = Chat::Agent::HEARTBEAT_WINDOW)
     count = 0
     Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each do |record|
       user = User.lookup(id: record.updated_by_id)
@@ -440,7 +466,7 @@ returns
 
 =end
 
-  def self.active_agents(chat_ids, diff = 2.minutes)
+  def self.active_agents(chat_ids, diff = Chat::Agent::HEARTBEAT_WINDOW)
     users = []
     Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each do |record|
       user = User.lookup(id: record.updated_by_id)
@@ -464,7 +490,7 @@ returns
 
 =end
 
-  def self.seads_total(chat_ids, diff = 2.minutes)
+  def self.seads_total(chat_ids, diff = Chat::Agent::HEARTBEAT_WINDOW)
     total = 0
     available_agents_with_concurrent(chat_ids, diff).each_value do |concurrent|
       total += concurrent
@@ -484,7 +510,7 @@ returns
 
 =end
 
-  def self.seads_available(chat_ids, diff = 2.minutes)
+  def self.seads_available(chat_ids, diff = Chat::Agent::HEARTBEAT_WINDOW)
     seads_total(chat_ids, diff) - active_chat_count(chat_ids)
   end
 
@@ -494,13 +520,20 @@ broadcast new agent status to all agents
 
   Chat.broadcast_agent_state_update(chat_ids)
 
-optional you can ignore it for dedicated user
+optional you can ignore it for dedicated user, who gets the answer as reply of their legacy client
+(the subscription of the new UI is triggered for them regardless)
 
   Chat.broadcast_agent_state_update(chat_ids, ignore_user_id)
 
+optional you can name agents whose own sessions changed: the subscription of the new UI reaches them
+whatever chats they handle
+
+  Chat.broadcast_agent_state_update(chat_ids, agent_ids: [chat_session.user_id])
+
 =end
 
-  def self.broadcast_agent_state_update(chat_ids, ignore_user_id = nil)
+  def self.broadcast_agent_state_update(chat_ids, ignore_user_id = nil, agent_ids: [])
+    trigger_agent_state_subscriptions(chat_ids, agent_ids)
 
     # send broadcast to agents
     Chat::Agent.where('active = ? OR updated_at > ?', true, 8.hours.ago).each do |item|
@@ -515,6 +548,16 @@ optional you can ignore it for dedicated user
         data:  Chat.agent_state(item.updated_by_id),
       }
       Sessions.send_to(item.updated_by_id, data)
+    end
+  end
+
+  # Every chat agent of the topics, not only those with a stored availability: the old UI creates it
+  #   by opening the chat page, the new one does not.
+  def self.trigger_agent_state_subscriptions(chat_ids, agent_ids)
+    User.with_permissions('chat.agent').each do |user|
+      next if agent_ids.exclude?(user.id) && !agent_active_chat?(user, chat_ids)
+
+      Gql::Subscriptions::Chat::AgentStateUpdates.trigger_for(user)
     end
   end
 
@@ -577,6 +620,9 @@ optional you can put the max oldest chat sessions as argument
 =end
 
   def self.cleanup_close(diff = 5.minutes)
+    closed_chat_ids = []
+    closed_agent_ids = []
+
     Chat::Session
       .where.not(state: 'closed')
       .where(updated_at: ...diff.ago)
@@ -594,7 +640,13 @@ optional you can put the max oldest chat sessions as argument
           },
         }
         chat_session.send_to_recipients(message)
+
+        closed_chat_ids.push chat_session.chat_id
+        closed_agent_ids.push chat_session.user_id
       end
+
+    # The queues and the running sessions the agents see changed.
+    broadcast_agent_state_update(closed_chat_ids.uniq, agent_ids: closed_agent_ids.compact.uniq) if closed_chat_ids.present?
 
     true
   end

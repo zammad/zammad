@@ -45,6 +45,11 @@ query quickSearch($search: String!, $onlyIn: [EnumSearchableModels!]!, $limit: I
           }
         }
       }
+      ... on ChatSession {
+        id
+        internalId
+        name
+      }
     }
   }
 }

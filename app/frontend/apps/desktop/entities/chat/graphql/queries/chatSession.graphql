@@ -1,0 +1,9 @@
+query chatSession($sessionId: ID!) {
+  chatSession(sessionId: $sessionId) {
+    ...chatSessionAttributes
+    tags
+    messages {
+      ...chatMessageAttributes
+    }
+  }
+}

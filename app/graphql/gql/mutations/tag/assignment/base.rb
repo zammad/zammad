@@ -10,7 +10,7 @@ module Gql::Mutations
           object_id,
           user:  context.current_user,
           query: :agent_update_access?,
-          type:  [::Ticket, ::KnowledgeBase::Answer]
+          type:  [::Ticket, ::KnowledgeBase::Answer, ::Chat::Session]
         )
     end
   end

@@ -54,7 +54,7 @@ return is sent as message back to peer
       chat_session.save
 
       # set state update to all agents
-      Chat.broadcast_agent_state_update([chat_session.chat_id])
+      Chat.broadcast_agent_state_update([chat_session.chat_id], agent_ids: [chat_session.user_id])
 
       # send position update to other waiting sessions
       Chat.broadcast_customer_state_update(chat_session.chat_id)

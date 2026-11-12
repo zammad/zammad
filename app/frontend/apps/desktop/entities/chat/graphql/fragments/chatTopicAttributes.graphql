@@ -1,0 +1,6 @@
+fragment chatTopicAttributes on ChatTopic {
+  id
+  internalId
+  name
+  active
+}

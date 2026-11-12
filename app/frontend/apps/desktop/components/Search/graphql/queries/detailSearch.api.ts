@@ -79,6 +79,13 @@ export const DetailSearchDocument = gql`
         shared
         active
       }
+      ... on ChatSession {
+        id
+        internalId
+        name
+        sessionState: state
+        createdAt
+      }
       ... on KnowledgeBaseAnswerTranslation {
         id
         title

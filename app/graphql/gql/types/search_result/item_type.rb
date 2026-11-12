@@ -8,7 +8,7 @@ module Gql::Types
     #   searchable unit (it carries the title and the body that are indexed), and it is what the
     #   result list renders. It is also the one model here that Service::Search does not serve - see
     #   Gql::Concerns::SearchesKnowledgeBaseAnswers for why, and for what serves it instead.
-    SEARCHABLE_MODELS = [::Ticket, ::User, ::Organization, ::KnowledgeBase::Answer::Translation].freeze
+    SEARCHABLE_MODELS = [::Ticket, ::User, ::Organization, ::KnowledgeBase::Answer::Translation, ::Chat::Session].freeze
 
     # TODO: static list for now. Change this to Models.searchable when there is full support from GraphQL types.
     def self.searchable_models

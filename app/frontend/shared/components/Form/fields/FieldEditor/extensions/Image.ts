@@ -5,7 +5,9 @@ import { VueNodeViewRenderer } from '@tiptap/vue-3'
 
 import ImageHandler from '#shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue'
 import { createInlineImageUploads } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
-import { dataURLToBlob } from '#shared/utils/files.ts'
+import { dataURLToBlob, type ImageFileData } from '#shared/utils/files.ts'
+
+import type { Command } from '@tiptap/core'
 
 const getAttributeFromElement = (element: Element, attr: 'width' | 'height') => {
   const htmlElement = element as HTMLElement
@@ -27,7 +29,27 @@ const getAttributeFromElement = (element: Element, attr: 'width' | 'height') => 
   return Number.isFinite(numeric) ? String(numeric) : null
 }
 
-export default Image.extend<ImageOptions>({
+const insertImages =
+  (toSrc: (image: ImageFileData) => string) =>
+  (images: ImageFileData[]): Command =>
+  ({ chain }) =>
+    chain()
+      .focus()
+      .insertContent([
+        ...images.map((image) => ({
+          type: 'image',
+          attrs: {
+            src: toSrc(image),
+            alt: image.name,
+            type: image.type,
+            content: image.content,
+          },
+        })),
+        { type: 'paragraph' },
+      ])
+      .run()
+
+const ZammadImage = Image.extend<ImageOptions>({
   addProseMirrorPlugins() {
     return [...(this.parent?.() || []), createInlineImageUploads(this.editor)]
   },
@@ -92,32 +114,45 @@ export default Image.extend<ImageOptions>({
   },
   addCommands() {
     return {
-      setImages:
-        (attributes) =>
-        ({ chain }) => {
-          return chain()
-            .focus()
-            .insertContent([
-              ...attributes.map((image) => {
-                return {
-                  type: 'image',
-                  attrs: {
-                    src: URL.createObjectURL(dataURLToBlob(image.content)),
-                    alt: image.name,
-                    type: image.type,
-                    content: image.content,
-                  },
-                }
-              }),
-              {
-                type: 'paragraph',
-              },
-            ])
-            .run()
-        },
+      setImages: insertImages((image) => URL.createObjectURL(dataURLToBlob(image.content))),
     }
   },
 }).configure({
   inline: true,
   allowBase64: true,
+})
+
+export default ZammadImage
+
+// For HTML read where Zammad's attachments cannot be loaded, like the chat widget on a foreign site:
+//   the image is not uploaded and leaves the editor as the data URL it was pasted as. An image of
+//   pasted HTML is only kept when it is embedded too, so no foreign server learns who reads it.
+export const EmbeddedImage = ZammadImage.extend({
+  addProseMirrorPlugins() {
+    return []
+  },
+
+  parseHTML() {
+    return [{ tag: 'img[src^="data:image/"]' }]
+  },
+
+  // No preview URL that would have to be revoked: nothing is uploaded, the data URL stays the source.
+  addCommands() {
+    return {
+      setImages: insertImages((image) => image.content),
+    }
+  },
+
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+
+      // The widget shows a message as it is, in a bubble with no rule for images of its own. The
+      //   height follows the width, so a resized image keeps its ratio in a narrower bubble.
+      style: {
+        default: null,
+        renderHTML: () => ({ style: 'max-width: 100%; height: auto;' }),
+      },
+    }
+  },
 })

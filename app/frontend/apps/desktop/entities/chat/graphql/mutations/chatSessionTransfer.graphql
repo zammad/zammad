@@ -1,0 +1,10 @@
+mutation chatSessionTransfer($sessionId: ID!, $topicId: ID!) {
+  chatSessionTransfer(sessionId: $sessionId, topicId: $topicId) {
+    session {
+      ...chatSessionAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

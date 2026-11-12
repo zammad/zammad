@@ -1,0 +1,13 @@
+fragment chatPreferencesAttributes on ChatPreferences {
+  maxWindows
+  alternativeName
+  avatarEnabled
+  topics {
+    topic {
+      ...chatTopicAttributes
+    }
+    active
+    phrases
+  }
+  hasTicketCreateAccess
+}

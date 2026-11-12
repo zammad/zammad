@@ -1,0 +1,22 @@
+fragment chatSessionAttributes on ChatSession {
+  id
+  internalId
+  state
+  name
+  url
+  remoteIp
+  dnsName
+  geoIp {
+    countryName
+    countryCode
+    cityName
+  }
+  createdAt
+  updatedAt
+  topic {
+    ...chatTopicAttributes
+  }
+  user {
+    ...chatAgentAttributes
+  }
+}

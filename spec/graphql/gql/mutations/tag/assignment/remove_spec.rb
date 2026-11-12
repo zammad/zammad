@@ -27,9 +27,11 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Remove, :aggregate_failures, typ
     end
 
     let(:object) { create(:ticket).tap { |t| t.tag_add(tag, 1) } }
-    let(:tag) { 'tag1' }
+    let(:tag)          { 'tag1' }
+    let(:chat_enabled) { true }
 
     before do
+      Setting.set('chat', chat_enabled)
       gql.execute(query, variables: variables)
     end
 
@@ -65,5 +67,38 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Remove, :aggregate_failures, typ
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'
+
+    context 'when removing a tag from a chat session', authenticated_as: :user do
+      let(:session_owner) { create(:agent) }
+      let(:object) do
+        create(:'chat/session', chat: create(:chat), state: 'closed', user: session_owner).tap { |s| s.tag_add(tag, 1) }
+      end
+
+      context 'when the user ran the session' do
+        let(:user) { session_owner }
+
+        it 'removes the tag' do
+          expect(gql.result.data[:success]).to be(true)
+          expect(object.reload.tag_list).to eq([])
+        end
+      end
+
+      context 'when another agent ran the session' do
+        let(:user) { create(:agent) }
+
+        it 'raises an error' do
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        end
+      end
+
+      context 'when chat is disabled' do
+        let(:user)         { session_owner }
+        let(:chat_enabled) { false }
+
+        it 'raises an error' do
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        end
+      end
+    end
   end
 end

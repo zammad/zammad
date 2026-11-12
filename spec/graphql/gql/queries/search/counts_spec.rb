@@ -127,6 +127,54 @@ RSpec.describe Gql::Queries::Search::Counts, type: :graphql do
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
 
+  context 'when counting chat sessions' do
+    let(:query) do
+      <<~QUERY
+        query searchCounts($search: String, $onlyIn: [EnumSearchableModels!]!) {
+          searchCounts(search: $search, onlyIn: $onlyIn) {
+            model
+            totalCount
+          }
+        }
+      QUERY
+    end
+
+    let(:chat_enabled) { true }
+    let(:session)      { create(:'chat/session', chat: create(:chat), state: 'closed', user: create(:agent), name: 'Ocarina lesson') }
+    let(:variables)    { { search: 'ocarina', onlyIn: %w[Ticket Chat__Session] } }
+
+    before do
+      Setting.set('es_url', nil)
+      Setting.set('chat', chat_enabled)
+      session
+      gql.execute(query, variables:)
+    end
+
+    context 'with a chat agent', authenticated_as: :agent do
+      let(:agent) { create(:agent) }
+
+      it 'counts the sessions after the models with a higher priority' do
+        expect(gql.result.data).to eq([{ 'model' => 'Ticket', 'totalCount' => 0 }, { 'model' => 'Chat__Session', 'totalCount' => 1 }])
+      end
+
+      context 'when the chat feature is switched off' do
+        let(:chat_enabled) { false }
+
+        it 'omits the model' do
+          expect(gql.result.data).to eq([{ 'model' => 'Ticket', 'totalCount' => 0 }])
+        end
+      end
+    end
+
+    context 'with a user without the chat.agent permission', authenticated_as: :user do
+      let(:user) { create(:user, roles: [create(:role, permission_names: 'ticket.agent')]) }
+
+      it 'omits the model' do
+        expect(gql.result.data).to eq([{ 'model' => 'Ticket', 'totalCount' => 0 }])
+      end
+    end
+  end
+
   # Counted through a different backend than every other model here - see
   #   Gql::Concerns::SearchesKnowledgeBaseAnswers.
   context 'when counting knowledge base answers' do

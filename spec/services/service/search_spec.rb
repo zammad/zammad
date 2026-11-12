@@ -35,6 +35,16 @@ RSpec.describe Service::Search do
       expect(service_result.flattened).to eq [customer, organization]
     end
 
+    context 'with chat sessions' do
+      let(:objects) { [Chat::Session, User, Organization, Ticket] }
+
+      before { Setting.set('chat', true) }
+
+      it 'lists them last, by their priority' do
+        expect(service_result.result.keys).to eq [Ticket, User, Organization, Chat::Session]
+      end
+    end
+
     context 'when objects are restricted' do
       let(:objects) { [User] }
 

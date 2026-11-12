@@ -7,7 +7,7 @@ import { readonly, ref, watch } from 'vue'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 // Permissions of the features that show browser notifications.
-const ENTITLED_PERMISSIONS = ['ticket.agent', 'cti.agent']
+const ENTITLED_PERMISSIONS = ['ticket.agent', 'cti.agent', 'chat.agent']
 
 // Keys the browsers do not count as an activating gesture.
 const NON_ACTIVATING_KEYS = new Set(['Escape', 'Shift', 'Control', 'Alt', 'AltGraph', 'Meta'])

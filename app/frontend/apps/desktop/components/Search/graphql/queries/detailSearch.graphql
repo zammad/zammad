@@ -79,6 +79,14 @@ query detailSearch(
         shared
         active
       }
+      ... on ChatSession {
+        id
+        internalId
+        name
+        # Aliased: the ticket's `state` above is an object.
+        sessionState: state
+        createdAt
+      }
       ... on KnowledgeBaseAnswerTranslation {
         id
         title

@@ -82,9 +82,14 @@ module.exports = plugin(
               transform: 'rotate(10deg) translateX(1px)',
             },
           },
+          sonar: {
+            from: { transform: 'scale(1)', opacity: '0.9' },
+            to: { transform: 'scale(1.35)', opacity: '0' },
+          },
         },
         animation: {
           'ping-once': 'ping .3s cubic-bezier(0, 0, 0.2, 1)',
+          sonar: 'sonar 1.6s cubic-bezier(0, 0, 0.2, 1) infinite',
           vibrate: 'vibrate 3s ease-in-out infinite',
         },
       },

@@ -1,0 +1,13 @@
+fragment chatAgentAttributes on User {
+  id
+  internalId
+  firstname
+  lastname
+  fullname
+  image
+  vip
+  outOfOffice
+  outOfOfficeStartAt
+  outOfOfficeEndAt
+  active
+}

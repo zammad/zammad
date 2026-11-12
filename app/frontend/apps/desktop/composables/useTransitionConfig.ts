@@ -9,6 +9,7 @@ import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 //   The keys in strict PascalCase format are currently unused in the codebase.
 //   However, they are enforced by our linting rules and are kept for future usage.
 export enum TransitionName {
+  ChatWindow = 'chat-window',
   Collapse = 'collapse',
   CollapseHeight = 'collapse-height',
   Fade = 'fade',
@@ -23,6 +24,7 @@ export enum TransitionName {
 
 // `undefined` means that the transition should be disabled when reduced motion is preferred.
 const REDUCED_MOTION_TRANSITION_MAP: Record<string, string | undefined> = {
+  'chat-window': undefined,
   collapse: 'fade-quick', // keep in place in order to fix the issue with common select options not being shown
   'collapse-height': undefined,
   fade: undefined,

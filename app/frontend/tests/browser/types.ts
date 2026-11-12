@@ -16,4 +16,6 @@ export interface MountOptions {
   // Applied before the component is set up, which may read them only once.
   config?: Partial<ConfigList>
   permissions?: string[]
+  // The signed-in user, for a component that tells their records from others'; needs `permissions`.
+  userId?: string
 }

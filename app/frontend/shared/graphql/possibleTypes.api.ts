@@ -37,6 +37,7 @@ export type PossibleTypesResultData = {
       "User"
     ],
     "Item": [
+      "ChatSession",
       "KnowledgeBaseAnswerTranslation",
       "Organization",
       "Ticket",
@@ -113,6 +114,7 @@ const result: PossibleTypesResultData = {
       "User"
     ],
     "Item": [
+      "ChatSession",
       "KnowledgeBaseAnswerTranslation",
       "Organization",
       "Ticket",

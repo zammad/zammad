@@ -6,6 +6,7 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
   include FormUpdater::Concerns::AppliesTicketTemplate
   include FormUpdater::Concerns::AppliesTicketSharedDraft
   include FormUpdater::Concerns::AppliesSplitTicketArticle
+  include FormUpdater::Concerns::AppliesChatSession
   include FormUpdater::Concerns::ChecksCoreWorkflow
   include FormUpdater::Concerns::HasSecurityOptions
   include FormUpdater::Concerns::ProvidesInitialValues
@@ -13,8 +14,9 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
 
   core_workflow_screen 'create_middle'
 
-  # The customer a ticket create screen was opened for (and a split article) arrive with the first
-  #   round trip and nothing follows them, so without this the tab would be reopened without them.
+  # The customer a ticket create screen was opened for (and a split article or a chat session) arrive
+  #   with the first round trip and nothing follows them, so without this the tab would be reopened
+  #   without them.
   store_state_on_initial
 
   def self.required_permissions

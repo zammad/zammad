@@ -8,7 +8,7 @@ import type {
 
 import type { App } from 'vue'
 
-const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
+export const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
   './cache/initializer/*.ts',
   { eager: true },
 )

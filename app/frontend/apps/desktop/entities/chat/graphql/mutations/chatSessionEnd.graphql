@@ -1,0 +1,10 @@
+mutation chatSessionEnd($sessionId: ID!) {
+  chatSessionEnd(sessionId: $sessionId) {
+    session {
+      ...chatSessionAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

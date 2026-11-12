@@ -81,4 +81,40 @@ RSpec.describe Chat::Agent, type: :model do
       end
     end
   end
+
+  describe '.beating?' do
+    let(:user) { create(:agent) }
+
+    def agent_updated(time)
+      create(:'chat/agent', updated_by: user).tap { |record| record.update_columns(updated_at: time) }
+    end
+
+    it 'is true within two minutes of the last beat' do
+      agent_updated(1.minute.ago)
+
+      expect(described_class.beating?(user.id)).to be(true)
+    end
+
+    it 'is false after that' do
+      agent_updated(3.minutes.ago)
+
+      expect(described_class.beating?(user.id)).to be(false)
+    end
+
+    it 'is true whether the agent is available or not' do
+      agent_updated(1.minute.ago).update!(active: false)
+
+      expect(described_class.beating?(user.id)).to be(true)
+    end
+
+    it 'is false for an agent without a record' do
+      expect(described_class.beating?(user.id)).to be(false)
+    end
+
+    it 'does not take the beat of another agent for it' do
+      create(:'chat/agent', updated_by: create(:agent))
+
+      expect(described_class.beating?(user.id)).to be(false)
+    end
+  end
 end

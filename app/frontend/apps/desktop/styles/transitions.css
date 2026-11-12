@@ -117,6 +117,30 @@
   transform: translateY(-100%);
 }
 
+/*
+ * A chat window scales in and grows into its share of the row over the old interface's 500 ms, and
+ * leaves the same way in reverse, its neighbours taking the space as it shrinks; the window stays
+ * in the row until its leave ends.
+ */
+.chat-window-enter-active,
+.chat-window-leave-active {
+  transition:
+    transform 0.5s ease,
+    flex-basis 0.5s ease,
+    flex-grow 0.5s ease;
+}
+
+.chat-window-move {
+  transition: transform 0.5s ease;
+}
+
+.chat-window-enter-from,
+.chat-window-leave-to {
+  flex-basis: 0;
+  flex-grow: 0;
+  transform: scale(0);
+}
+
 .collapse-height-enter-active,
 .collapse-height-leave-active {
   display: grid;

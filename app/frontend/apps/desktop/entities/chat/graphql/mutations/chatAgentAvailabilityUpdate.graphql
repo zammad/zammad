@@ -1,0 +1,8 @@
+mutation chatAgentAvailabilityUpdate($active: Boolean!) {
+  chatAgentAvailabilityUpdate(active: $active) {
+    active
+    errors {
+      ...errors
+    }
+  }
+}

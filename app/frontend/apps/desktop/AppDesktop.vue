@@ -28,6 +28,7 @@ import { initializeConfirmationDialog } from '#desktop/components/CommonConfirma
 import CommonImageViewer from '#desktop/components/CommonImageViewer/CommonImageViewer.vue'
 import { useBrowserNotificationPermissionRequest } from '#desktop/composables/useBrowserNotification.ts'
 import { useConnection } from '#desktop/composables/useConnection.ts'
+import { useChatSessionStores } from '#desktop/entities/chat/composables/useChatSessionStores.ts'
 import { useCtiCallNotification } from '#desktop/entities/cti/composables/useCtiCallNotification.ts'
 import { useCtiCallPickup } from '#desktop/entities/cti/composables/useCtiCallPickup.ts'
 import { useTicketOverviewsStore } from '#desktop/entities/ticket/stores/ticketOverviews.ts'
@@ -139,6 +140,9 @@ useCtiCallPickup()
 
 // Also at the app level: the agent is on any screen, or none, when a call rings.
 useCtiCallNotification()
+
+// Likewise for a waiting customer, an unanswered chat and a customer's message.
+useChatSessionStores()
 
 useBrowserNotificationPermissionRequest()
 </script>

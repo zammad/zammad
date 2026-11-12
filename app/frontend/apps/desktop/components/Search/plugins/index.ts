@@ -17,10 +17,6 @@ const plugins = import.meta.glob<SearchPlugin>(
 
 export const searchPlugins = Object.values(plugins)
 
-export const sortedByPriorityPlugins = searchPlugins.sort((a, b) => a.priority - b.priority)
-
-export const sortedByNamePlugins = searchPlugins.sort((a, b) => a.name.localeCompare(b.name))
-
 export const searchPluginByName = keyBy(searchPlugins, 'name')
 
 export const getSearchPlugin = (name: string) => searchPluginByName[name]
@@ -36,12 +32,13 @@ export const useSearchPlugins = () => {
     ),
   )
 
+  // Copied before sorting: `sort` is in place, and the two orders are of one list.
   const sortedByPriorityPlugins = computed(() =>
-    plugins.value.sort((a, b) => a.priority - b.priority),
+    [...plugins.value].sort((a, b) => a.priority - b.priority),
   )
 
   const sortedByNamePlugins = computed(() =>
-    plugins.value.sort((a, b) => a.name.localeCompare(b.name)),
+    [...plugins.value].sort((a, b) => a.name.localeCompare(b.name)),
   )
 
   const searchPluginNames = computed(() => plugins.value.map((plugin) => plugin.name))

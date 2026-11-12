@@ -40,18 +40,17 @@ describe('CommonDivider.vue', () => {
     expect(container).toHaveClass('py-2.5')
   })
 
-  it.each(['neutral', 'gray'])('supports variant %s prop', (variant) => {
+  it.each([
+    ['neutral', ['bg-neutral-100', 'dark:bg-gray-900']],
+    ['gray', ['bg-white', 'dark:bg-gray-200']],
+    ['muted', ['bg-muted']],
+  ])('supports variant %s prop', (variant, classes) => {
     const view = renderComponent(CommonDivider, {
       props: {
         variant,
       },
     })
 
-    const separator = view.getByRole('separator')
-
-    if (variant === 'gray') expect(separator).toHaveClasses(['bg-white', 'dark:bg-gray-200'])
-    else if (variant === 'stone')
-      expect(separator).toHaveClasses(['bg-stone-200', 'dark:bg-neutral-500'])
-    else expect(separator).toHaveClasses(['bg-neutral-100', 'dark:bg-gray-900'])
+    expect(view.getByRole('separator')).toHaveClasses(classes)
   })
 })

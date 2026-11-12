@@ -11,11 +11,12 @@ RSpec.describe Gql::Types::SearchResult::ItemType do
                                                    Gql::Types::UserType,
                                                    Gql::Types::OrganizationType,
                                                    Gql::Types::KnowledgeBase::Answer::TranslationType,
+                                                   Gql::Types::Chat::SessionType,
                                                  ])
   end
 
   it 'exposes exactly the built-in searchable models' do
-    expect(described_class.searchable_models).to eq([Ticket, User, Organization, KnowledgeBase::Answer::Translation])
+    expect(described_class.searchable_models).to eq([Ticket, User, Organization, KnowledgeBase::Answer::Translation, Chat::Session])
   end
 
   # The namespace separator cannot survive into a GraphQL enum value, so it is encoded rather than

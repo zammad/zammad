@@ -31,6 +31,6 @@ class ChatLeaveJob < ApplicationJob
     }
     chat_session.send_to_recipients(message, client_id)
 
-    Chat.broadcast_agent_state_update([chat_session.chat_id])
+    Chat.broadcast_agent_state_update([chat_session.chat_id], agent_ids: [chat_session.user_id])
   end
 end

@@ -53,13 +53,54 @@ describe('useSearchPlugins', () => {
   //   has nothing to put in the tab panel it just created. `detailSearchComponent` and
   //   `detailSearchHeaders` are optional on SearchPlugin, so nothing but this asserts it.
   it('leaves every plugin with a table to render', () => {
-    mockPermissions(['ticket.agent', 'admin.user', 'admin.organization', 'knowledge_base.reader'])
-    mockApplicationConfig({ kb_active: true })
+    mockPermissions([
+      'ticket.agent',
+      'admin.user',
+      'admin.organization',
+      'knowledge_base.reader',
+      'chat.agent',
+    ])
+    mockApplicationConfig({ kb_active: true, chat: true })
 
     const { plugins } = useSearchPlugins()
 
+    expect(plugins.value.map((plugin) => plugin.name)).toContain(EnumSearchableModels.ChatSession)
     expect(
       plugins.value.every((plugin) => plugin.detailSearchComponent && plugin.detailSearchHeaders),
     ).toBe(true)
+  })
+
+  // Gated like the old UI's search: the permission and the setting, both.
+  describe('the chat session plugin', () => {
+    it('is offered to a chat agent while the chat feature is on', () => {
+      mockPermissions(['chat.agent'])
+      mockApplicationConfig({ chat: true })
+
+      const { plugins } = useSearchPlugins()
+
+      expect(plugins.value.map((plugin) => plugin.name)).toContain(EnumSearchableModels.ChatSession)
+    })
+
+    it('is withheld without the permission', () => {
+      mockPermissions(['ticket.agent'])
+      mockApplicationConfig({ chat: true })
+
+      const { plugins } = useSearchPlugins()
+
+      expect(plugins.value.map((plugin) => plugin.name)).not.toContain(
+        EnumSearchableModels.ChatSession,
+      )
+    })
+
+    it('is withheld while the chat feature is off', () => {
+      mockPermissions(['chat.agent'])
+      mockApplicationConfig({ chat: false })
+
+      const { plugins } = useSearchPlugins()
+
+      expect(plugins.value.map((plugin) => plugin.name)).not.toContain(
+        EnumSearchableModels.ChatSession,
+      )
+    })
   })
 })

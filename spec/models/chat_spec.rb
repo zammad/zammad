@@ -495,6 +495,180 @@ RSpec.describe Chat, type: :model do
     end
   end
 
+  describe '.agent_phrases' do
+    subject(:phrases) { described_class.agent_phrases(chat_preferences, chat.id) }
+
+    let(:chat)             { create(:chat) }
+    let(:other_chat)       { create(:chat, name: 'other') }
+    let(:chat_preferences) { { phrase: { chat.id.to_s => ' Hello, I am Erika;Good day ;; ' } } }
+
+    it 'returns the greetings without the blank ones and the spaces around' do
+      expect(phrases).to eq(['Hello, I am Erika', 'Good day'])
+    end
+
+    context 'with the chat id stored as a number' do
+      let(:chat_preferences) { { phrase: { chat.id => 'Hello, I am Erika' } } }
+
+      it 'returns the greetings' do
+        expect(phrases).to eq(['Hello, I am Erika'])
+      end
+    end
+
+    context 'with greetings of another chat only' do
+      let(:chat_preferences) { { phrase: { other_chat.id.to_s => 'Hello, I am Erika' } } }
+
+      it 'returns none' do
+        expect(phrases).to eq([])
+      end
+    end
+
+    context 'without chat preferences' do
+      let(:chat_preferences) { nil }
+
+      it 'returns none' do
+        expect(phrases).to eq([])
+      end
+    end
+  end
+
+  describe '.broadcast_agent_state_update' do
+    let(:support)           { create(:chat, name: 'Support') }
+    let(:sales)             { create(:chat, name: 'Sales') }
+    let!(:agent)            { create(:agent, preferences: { chat: { active: { support.id.to_s => 'on' } } }) }
+    let!(:colleague)        { create(:agent, preferences: { chat: { active: { support.id.to_s => 'on' } } }) }
+    let!(:sales_agent)      { create(:agent, preferences: { chat: { active: { sales.id.to_s => 'on' } } }) }
+    let!(:customer)         { create(:customer, preferences: { chat: { active: { support.id.to_s => 'on' } } }) }
+    let(:subscription_stub) { Gql::Subscriptions::Chat::AgentStateUpdates }
+
+    before do
+      allow(subscription_stub).to receive(:trigger_for)
+      allow(Sessions).to receive(:send_to)
+    end
+
+    # The old UI stores an availability by opening the chat page, the new one does not.
+    it 'triggers the subscription for each chat agent of the topics without a stored availability', :aggregate_failures do
+      described_class.broadcast_agent_state_update([support.id])
+
+      expect(subscription_stub).to have_received(:trigger_for).with(agent)
+      expect(subscription_stub).to have_received(:trigger_for).with(colleague)
+      expect(subscription_stub).not_to have_received(:trigger_for).with(sales_agent)
+      expect(subscription_stub).not_to have_received(:trigger_for).with(customer)
+    end
+
+    # The agent who made the change gets the legacy state as the reply of their client, but their other
+    #   windows of the new UI have no reply to wait for.
+    it 'triggers the subscription for the agent who made the change as well', :aggregate_failures do
+      described_class.broadcast_agent_state_update([support.id], agent.id)
+
+      expect(subscription_stub).to have_received(:trigger_for).with(agent)
+      expect(subscription_stub).to have_received(:trigger_for).with(colleague)
+    end
+
+    # The session of an agent can sit in a topic they switched off, which they still see in their windows.
+    it 'triggers the subscription for the named agents whatever topics they handle', :aggregate_failures do
+      described_class.broadcast_agent_state_update([support.id], agent_ids: [sales_agent.id])
+
+      expect(subscription_stub).to have_received(:trigger_for).with(sales_agent).once
+      expect(subscription_stub).to have_received(:trigger_for).with(agent)
+    end
+
+    it 'does not trigger the subscription for a named user without the chat permission' do
+      described_class.broadcast_agent_state_update([support.id], agent_ids: [customer.id])
+
+      expect(subscription_stub).not_to have_received(:trigger_for).with(customer)
+    end
+
+    context 'with stored availabilities' do
+      before do
+        [agent, colleague, sales_agent].each { |user| create(:'chat/agent', updated_by: user, created_by: user) }
+      end
+
+      it 'still leaves the legacy state to the reply for the agent who made the change', :aggregate_failures do
+        described_class.broadcast_agent_state_update([support.id], agent.id)
+
+        expect(Sessions).to have_received(:send_to).with(colleague.id, hash_including(event: 'chat_status_agent'))
+        expect(Sessions).not_to have_received(:send_to).with(agent.id, anything)
+      end
+    end
+  end
+
+  describe '.cleanup_close' do
+    let(:chat) { create(:chat, name: 'Support') }
+
+    def waiting_session(updated_at:)
+      create(:'chat/session', chat:, state: 'waiting', preferences: { participants: [SecureRandom.uuid] }).tap do |session|
+        session.update_columns(updated_at:)
+      end
+    end
+
+    before do
+      allow(described_class).to receive(:broadcast_agent_state_update)
+    end
+
+    it 'closes the sessions nobody takes part in any more' do
+      session = waiting_session(updated_at: 10.minutes.ago)
+
+      described_class.cleanup_close
+
+      expect(session.reload.state).to eq('closed')
+    end
+
+    it 'tells the agents of each affected topic once', :aggregate_failures do
+      waiting_session(updated_at: 10.minutes.ago)
+      waiting_session(updated_at: 10.minutes.ago)
+
+      described_class.cleanup_close
+
+      expect(described_class).to have_received(:broadcast_agent_state_update).with([chat.id], agent_ids: []).once
+    end
+
+    it 'keeps the agents out of it while nothing was closed', :aggregate_failures do
+      session = waiting_session(updated_at: 1.minute.ago)
+
+      described_class.cleanup_close
+
+      expect(session.reload.state).to eq('waiting')
+      expect(described_class).not_to have_received(:broadcast_agent_state_update)
+    end
+
+    # An agent of the new UI is no client of the legacy websocket, their beat keeps the session.
+    context 'with a running session of an agent without a client' do
+      let(:agent)           { create(:agent) }
+      let(:customer_client) { SecureRandom.uuid }
+      let!(:session) do
+        create(:'chat/session', chat:, state: 'running', user: agent, preferences: { participants: [customer_client] }).tap do |record|
+          record.update_columns(updated_at: 10.minutes.ago)
+        end
+      end
+
+      def beat(time)
+        create(:'chat/agent', updated_by: agent).update_columns(updated_at: time)
+      end
+
+      before { Sessions.create(customer_client, {}, {}) }
+
+      after { Sessions.destroy(customer_client) }
+
+      it 'keeps it open while the agent beats', :aggregate_failures do
+        beat(1.minute.ago)
+
+        described_class.cleanup_close
+
+        expect(session.reload.state).to eq('running')
+        expect(described_class).not_to have_received(:broadcast_agent_state_update)
+      end
+
+      it 'closes it once the beat of the agent is stale and tells the agent', :aggregate_failures do
+        beat(3.minutes.ago)
+
+        described_class.cleanup_close
+
+        expect(session.reload.state).to eq('closed')
+        expect(described_class).to have_received(:broadcast_agent_state_update).with([chat.id], agent_ids: [agent.id])
+      end
+    end
+  end
+
   describe '#blocked_ip?' do
     let(:chat) { create(:chat, name: 'ip test', block_ip: '127.0.0.1;127.0.0.2;127.1.0.*') }
 

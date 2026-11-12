@@ -71,6 +71,7 @@
 - `assets/patch-check.svg`
 - `assets/pencil-square.svg`
 - `assets/pencil.svg`
+- `assets/person-workspace.svg`
 - `assets/person-x.svg`
 - `assets/phone.svg`
 - `assets/pin-angle.svg`
@@ -112,6 +113,7 @@
 - `assets/wrench.svg`
 - `assets/x-circle.svg`
 - `assets/x-lg.svg`
+- `assets/x-square.svg`
 - `assets/x.svg`
 - `assets/zoom-in.svg`
 - `assets/zoom-out.svg`

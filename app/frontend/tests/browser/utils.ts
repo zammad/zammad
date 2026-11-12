@@ -14,29 +14,24 @@ import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
 import createCache from '#shared/server/apollo/cache.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import initializeStore from '#shared/stores/index.ts'
+import initializeStore, { resetAndDisposeStores } from '#shared/stores/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts'
 
-import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
-import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
-import initializeGlobalDirectives from '#mobile/initializer/initializeGlobalDirectives.ts'
-import { initializeMobileIcons } from '#mobile/initializer/initializeMobileIcons.ts'
-import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
-import { cacheInitializerModules } from '#mobile/server/apollo/index.ts'
+import { getBrowserApp } from './app.ts'
 
 import type { RouteResponse } from './commands.mts'
 import type { MountOptions } from './types.ts'
 import type { App, Component } from 'vue'
 
 // The store outlives the test, so a mount without permissions must not see those of an earlier one.
-const mockPermissions = (permissions?: string[]) => {
+const mockPermissions = (permissions?: string[], userId = '123') => {
   const session = useSessionStore()
 
   session.user = permissions
     ? ({
         __typename: 'User',
-        id: '123',
+        id: userId,
         internalId: 1,
         objectAttributeValues: [],
         permissions: { __typename: 'UserPermission', names: permissions },
@@ -47,28 +42,29 @@ const mockPermissions = (permissions?: string[]) => {
 export const mountComponent = (
   component: Component,
   props: Record<string, unknown> = {},
-  { config, permissions }: MountOptions = {},
+  { config, permissions, userId }: MountOptions = {},
 ) => {
+  const { name, plugins: appPlugins } = getBrowserApp()
+
   const router = createRouter({
     history: createMemoryHistory('/'),
     routes: [{ path: '/', component: { template: '<div />' } }],
   })
 
   const plugins = [
-    () => initializeAppName('mobile'),
+    () => initializeAppName(name),
     initializeStore,
     () => Object.assign(useApplicationStore().config, config),
-    () => mockPermissions(permissions),
-    initializeGlobalComponentStyles,
+    () => mockPermissions(permissions, userId),
+    ...appPlugins,
     initializeGlobalComponents,
-    initializeGlobalDirectives,
     initializeGlobalProperties,
-    initializeMobileIcons,
-    initializeForm,
-    initializeFormFields,
-    initializeMobileVisuals,
     (app: App) => router.install(app),
   ]
+
+  // The store outlives the test as well: what a logout disposes ends here, so the next mount does
+  //   not start from the stores of this one.
+  onTestFinished(() => resetAndDisposeStores(true))
 
   return render(component, { props, global: { plugins } })
 }
@@ -85,7 +81,7 @@ export const mountFormField = (
 
 export const mockApolloClient = () => {
   const client = createMockClient({
-    cache: createCache(cacheInitializerModules),
+    cache: createCache(getBrowserApp().cacheInitializerModules),
     queryDeduplication: true,
   })
   provideApolloClient(client)

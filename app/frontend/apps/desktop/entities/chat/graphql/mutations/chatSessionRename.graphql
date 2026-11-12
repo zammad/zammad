@@ -1,0 +1,10 @@
+mutation chatSessionRename($sessionId: ID!, $name: String!) {
+  chatSessionRename(sessionId: $sessionId, name: $name) {
+    session {
+      ...chatSessionAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

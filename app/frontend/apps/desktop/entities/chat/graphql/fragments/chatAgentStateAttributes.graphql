@@ -1,0 +1,22 @@
+fragment chatAgentStateAttributes on ChatAgentState {
+  active
+  topics {
+    ...chatTopicAttributes
+  }
+  waitingQueues {
+    topic {
+      ...chatTopicAttributes
+    }
+    sessions {
+      ...chatSessionAttributes
+    }
+  }
+  runningSessions {
+    ...chatSessionAttributes
+  }
+  availableAgents {
+    ...chatAgentAttributes
+  }
+  seatsAvailable
+  seatsTotal
+}

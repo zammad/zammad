@@ -184,7 +184,10 @@ importing `#tests/graphql/builders/mocks.ts` or by importing a
 `*.browser.spec.ts` files run in Chromium through Vitest's Playwright
 provider, not in jsdom. `vitest.config.mjs` defines the suites as projects:
 `unit` (jsdom) and `build` (plain Node, the specs under `app/frontend/build/`),
-both run by `pnpm test`, and `browser` (`pnpm test:browser`). The browser always runs
+both run by `pnpm test`, and `browser` (`pnpm test:browser`). The browser
+setup (`tests/browser/setup.ts`) tells the apps apart by the spec's path: a
+spec under `apps/desktop/` runs with the desktop app's stylesheet, form, icons
+and visuals in a laptop viewport, every other one with the mobile app's. The browser always runs
 in a Playwright server container, also locally, so that reference
 screenshots (`__screenshots__/`) are the same for everyone:
 

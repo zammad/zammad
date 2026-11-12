@@ -51,6 +51,11 @@ export const QuickSearchDocument = gql`
           }
         }
       }
+      ... on ChatSession {
+        id
+        internalId
+        name
+      }
     }
   }
 }

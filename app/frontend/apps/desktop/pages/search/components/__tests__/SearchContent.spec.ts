@@ -3,6 +3,7 @@
 import { within, waitFor } from '@testing-library/vue'
 import { computed } from 'vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -14,9 +15,15 @@ import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
-import { EnumSearchableModels, EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import {
+  EnumChatSessionState,
+  EnumOrderDirection,
+  EnumSearchableModels,
+  EnumTicketStateColorCode,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { DetailSearchDocument } from '#desktop/components/Search/graphql/queries/detailSearch.api.ts'
 import {
   mockDetailSearchQuery,
   waitForDetailSearchQueryCalls,
@@ -405,5 +412,86 @@ describe('SearchContent', () => {
     const calls = await waitForSearchCountsQueryCalls()
 
     expect(calls[0].variables.onlyIn).toContain(EnumSearchableModels.KnowledgeBaseAnswerTranslation)
+  })
+
+  describe('chat sessions', () => {
+    beforeEach(() => {
+      mockPermissions(['ticket.agent', 'chat.agent'])
+      mockApplicationConfig({ chat: true })
+
+      mockDetailSearchQuery((variables) => ({
+        search:
+          variables.onlyIn === EnumSearchableModels.ChatSession
+            ? {
+                totalCount: 1,
+                items: [
+                  {
+                    __typename: 'ChatSession',
+                    id: convertToGraphQLId('Chat::Session', 5),
+                    internalId: 5,
+                    name: 'VPN setup',
+                    sessionState: EnumChatSessionState.Closed,
+                    createdAt: '2026-11-03T11:00:00Z',
+                  },
+                ],
+              }
+            : { totalCount: 0, items: [] },
+      }))
+    })
+
+    it('offers their tab with the count of the sessions found', async () => {
+      mockSearchCountsQuery({
+        searchCounts: [{ model: EnumSearchableModels.ChatSession, totalCount: 3 }],
+      })
+
+      const wrapper = renderSearchContent({ searchTerm: 'vpn' })
+
+      const calls = await waitForSearchCountsQueryCalls()
+
+      expect(calls[0].variables.onlyIn).toContain(EnumSearchableModels.ChatSession)
+
+      await waitFor(() =>
+        expect(wrapper.getByRole('tab', { name: 'Chat session' })).toHaveTextContent('3'),
+      )
+    })
+
+    it('lists the sessions found and has the search sort them', async () => {
+      mockSearchCountsQuery({ searchCounts: [] })
+
+      const wrapper = renderSearchContent({ searchTerm: 'vpn' })
+
+      await wrapper.events.click(await wrapper.findByRole('tab', { name: 'Chat session' }))
+
+      const table = await wrapper.findByRole('table', {
+        name: 'Search result for: Chat session',
+      })
+
+      expect(within(table).getByRole('link', { name: '5' })).toBeInTheDocument()
+      expect(within(table).getByText('VPN setup')).toBeInTheDocument()
+
+      await wrapper.events.click(
+        within(table).getByRole('button', { name: 'Sort by Number ascending' }),
+      )
+
+      await waitFor(() =>
+        expect(getGraphQLMockCalls(DetailSearchDocument).at(-1)?.variables).toMatchObject({
+          onlyIn: EnumSearchableModels.ChatSession,
+          orderBy: 'id',
+          orderDirection: EnumOrderDirection.Ascending,
+        }),
+      )
+    })
+
+    it('offers no tab while the chat feature is off', async () => {
+      mockApplicationConfig({ chat: false })
+      mockSearchCountsQuery({ searchCounts: [] })
+
+      const wrapper = renderSearchContent({ searchTerm: 'vpn' })
+
+      const calls = await waitForSearchCountsQueryCalls()
+
+      expect(calls[0].variables.onlyIn).not.toContain(EnumSearchableModels.ChatSession)
+      expect(wrapper.queryByRole('tab', { name: 'Chat session' })).not.toBeInTheDocument()
+    })
   })
 })

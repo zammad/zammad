@@ -23,7 +23,7 @@ class Sessions::Event::ChatTransfer < Sessions::Event::ChatBase
     chat_session.save
 
     # send state update with sessions to agents
-    Chat.broadcast_agent_state_update(chat_ids_to_notify)
+    Chat.broadcast_agent_state_update(chat_ids_to_notify, agent_ids: [chat_session.user_id])
 
     # send transfer message to client
     message = {

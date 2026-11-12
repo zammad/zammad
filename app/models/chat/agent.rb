@@ -3,6 +3,13 @@
 class Chat::Agent < ApplicationModel
   include HasDefaultModelUserRelations
 
+  # How long an agent counts as present after their last beat, which both UIs send about every minute.
+  HEARTBEAT_WINDOW = 2.minutes
+
+  def self.beating?(user_id)
+    where(updated_by_id: user_id).exists?(['updated_at > ?', HEARTBEAT_WINDOW.ago])
+  end
+
   def seads_available
     concurrent - active_chat_count
   end

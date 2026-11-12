@@ -1,0 +1,8 @@
+mutation chatAgentHeartbeat {
+  chatAgentHeartbeat {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -61,6 +61,27 @@ RSpec.describe Sessions::Event::ChatTransfer do
     end
   end
 
+  context 'when transferring a chat session of an agent' do
+    let(:chat_session) do
+      Sessions.create(customer_client_id, { 'id' => customer.id }, {})
+      Sessions.queue(customer_client_id)
+      Chat::Session.create(
+        chat_id:     chat.id,
+        user_id:     agent.id,
+        preferences: { participants: [customer_client_id] },
+        state:       'running',
+      )
+    end
+
+    before { allow(Chat).to receive(:broadcast_agent_state_update) }
+
+    it 'tells the agents of both chats, the agent of the session included' do
+      subject_as_agent.run
+
+      expect(Chat).to have_received(:broadcast_agent_state_update).with([chat.id, chat_transfer_into.id], agent_ids: [agent.id])
+    end
+  end
+
   context 'when transferring a chat session as agent' do
     it 'send out chat_session_notice to customer and agent and set chat session to waiting' do
       expect(subject_as_agent.run).to be_nil

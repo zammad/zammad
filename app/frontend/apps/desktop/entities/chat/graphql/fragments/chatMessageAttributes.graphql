@@ -1,0 +1,8 @@
+fragment chatMessageAttributes on ChatMessage {
+  id
+  content
+  createdAt
+  createdBy {
+    ...chatAgentAttributes
+  }
+}

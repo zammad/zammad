@@ -1,0 +1,10 @@
+mutation chatSessionAccept($topicId: ID) {
+  chatSessionAccept(topicId: $topicId) {
+    session {
+      ...chatSessionAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

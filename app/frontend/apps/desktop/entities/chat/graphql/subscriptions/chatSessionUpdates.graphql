@@ -1,0 +1,11 @@
+subscription chatSessionUpdates($sessionId: ID!) {
+  chatSessionUpdates(sessionId: $sessionId) {
+    message {
+      ...chatMessageAttributes
+    }
+    typing
+    notice
+    leftBy
+    closedBy
+  }
+}

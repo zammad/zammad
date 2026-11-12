@@ -121,6 +121,16 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
       end
     end
 
+    # The chat composer knows no ticket, customer or group.
+    context 'without any record to render with' do
+      let(:variables)    { { query: query_string, limit: limit } }
+      let(:query_string) { text_modules.first.name }
+
+      it 'fills in the current user and leaves a dash for everything else' do
+        expect(gql.result.data.first).to include('renderedContent' => "t:--c:--u:#{agent.fullname}-g:--o:--m:-")
+      end
+    end
+
     context 'when sending an empty search string' do
       let(:query_string) { '   ' }
       let(:limit)        { 3 }

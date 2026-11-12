@@ -6,11 +6,14 @@ import { type Editor } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
 import { computed, onMounted, onUnmounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { getButtonGroup } from '#shared/components/EntityAttributes/attributes/AttributeRichtext/initializeRichtextButtons.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { useAttachments } from '#shared/components/Form/fields/FieldEditor/composables/useAttachments.ts'
 import { useSignatureHandling } from '#shared/components/Form/fields/FieldEditor/composables/useSignatureHandling.ts'
 import { EXTENSION_NAME as knowledgeBaseMentionExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts'
+import { EXTENSION_NAME as textModuleExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts'
 import { EXTENSION_NAME as userMentionExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import {
   imageExtensionName,
@@ -18,6 +21,7 @@ import {
   getDisabledExtensionNames,
   getHtmlExtensions,
   getPlainExtensions,
+  getReducedExtensions,
   PlaceholderExtensionName,
 } from '#shared/components/Form/fields/FieldEditor/extensions.ts'
 import { forgetInlineImages } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
@@ -34,6 +38,7 @@ import {
 } from '#shared/components/Form/initializeFieldEditor.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { allowedImageTypes } from '#shared/utils/files.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -56,12 +61,52 @@ const placeholder = props.context.placeholder
     ? __('Click to edit…')
     : ''
 
+// The reduced set's HTML ends up where a block brings spacing of its own, like the message bubble
+//   of the chat widget: the paragraphs become lines of the text.
+const paragraphsAsLines = (html: string) => {
+  const { body } = new DOMParser().parseFromString(html, 'text/html')
+
+  // The direction belonged to the paragraph; on a line break or an image it says nothing.
+  body.querySelectorAll('[dir]').forEach((element) => element.removeAttribute('dir'))
+
+  return Array.from(body.children)
+    .map((paragraph) => paragraph.innerHTML)
+    .join('<br>')
+    .replace(/^(<br>)+|(<br>)+$/g, '')
+}
+
+// The way back: each line becomes a paragraph again. Written as lines, a break before an image or a
+//   link would not survive the cleanup of the HTML, which takes it for one before a block.
+const linesAsParagraphs = (html: string) => {
+  const { body } = new DOMParser().parseFromString(html, 'text/html')
+
+  if (body.querySelector(':scope > p')) return html
+
+  const lines: Node[][] = [[]]
+
+  body.childNodes.forEach((node) => {
+    if (node.nodeName === 'BR') lines.push([])
+    else lines.at(-1)!.push(node)
+  })
+
+  return lines
+    .map((nodes) => {
+      const paragraph = document.createElement('p')
+
+      paragraph.append(...nodes)
+
+      return paragraph.outerHTML
+    })
+    .join('')
+}
+
 const getEditorContent = (editor: Editor, type: EditorContentType) => {
   if (type === 'text/plain') return editor.getText()
+  if (editor.isEmpty) return ''
 
   const content = editor.getHTML()
 
-  return editor.isEmpty ? '' : content
+  return props.context.extensionSet === 'reduced' ? paragraphsAsLines(content) : content
 }
 
 const actionBarComponent = getEditorComponents().actionBar
@@ -99,14 +144,40 @@ if (props.context.extensionSet === 'basic') {
   disableExtension(TableKitExtensionName)
 }
 
+const isReduced = props.context.extensionSet === 'reduced'
+
+const toEditorHtml = (html: string) => htmlCleanup(isReduced ? linesAsParagraphs(html) : html)
+
+const clipboardHtmlHasText = (clipboardData: DataTransfer) => {
+  const html = clipboardData.getData('text/html')
+  if (!html) return false
+
+  return Boolean(new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim())
+}
+
+// The reduced set keeps the image and the text modules: no signature, other suggestions or AI tools.
+const reducedExtensionNames = new Set([imageExtensionName, textModuleExtensionName])
+
+if (isReduced) {
+  customExtensions.forEach((extension) => {
+    if (!reducedExtensionNames.has(extension.name))
+      disableExtension(extension.name as EditorCustomExtensions)
+  })
+}
+
 if (placeholder === '') disableExtension(PlaceholderExtensionName)
 
 // TODO: extensions are in general not reactive in TipTap, we need to check if all things are working as expected.
 // TODO: Maybe we need a re-creation of the editor in some edge cases... plain <-> html (check against simple channels...)
 const editorExtensions = computed(() => {
-  const baseExtensions = isPlainText.value
-    ? getPlainExtensions(placeholder, props.context?.meta)
-    : getHtmlExtensions(placeholder, props.context?.meta)
+  const getBaseExtensions = () => {
+    if (isPlainText.value) return getPlainExtensions
+    if (isReduced) return getReducedExtensions
+
+    return getHtmlExtensions
+  }
+
+  const baseExtensions = getBaseExtensions()(placeholder, props.context?.meta)
 
   const availableExtensions = [...baseExtensions, ...customExtensions].filter((extension) => {
     const { name, options } = extension
@@ -123,10 +194,62 @@ const editorExtensions = computed(() => {
 const showActionBar = ref(false)
 const editorValue = ref<string>(VITE_TEST_MODE ? props.context._value : '')
 
-const { hasImageExtension, loadFiles } = useAttachments(
+const { hasImageExtension, loadFiles, takeImagesOnTheirWay } = useAttachments(
   editorExtensions.value,
   props.context.formId,
 )
+
+const { notify } = useNotifications()
+
+const isAllowedImage = (file: File) => allowedImageTypes().includes(file.type)
+
+// The reduced set has no attachments to take any other file, so it says so instead of ignoring it.
+const rejectFiles = () =>
+  notify({
+    id: 'editor-file-not-added',
+    type: NotificationTypes.Warn,
+    message: __('This file cannot be added. You can add images in these formats: %s.'),
+    messagePlaceholder: [
+      allowedImageTypes()
+        .map((type) => type.replace('image/', '').toUpperCase())
+        .join(', '),
+    ],
+  })
+
+const pasteFilesInstead = (event: ClipboardEvent, currentEditor: Editor | undefined) => {
+  const { clipboardData } = event
+  if (!clipboardData || clipboardHtmlHasText(clipboardData)) return false
+
+  const files = Array.from(clipboardData.items)
+    .filter((item) => item.kind === 'file')
+    .map((item) => item.getAsFile())
+    .filter((file): file is File => file !== null)
+
+  if (!files.length) return false
+
+  event.preventDefault()
+
+  const image = files.find(isAllowedImage)
+
+  if (image) loadFiles([image], currentEditor, { attachNonInlineFiles: false })
+  else rejectFiles()
+
+  return true
+}
+
+const dropFilesInstead = (event: DragEvent, currentEditor: Editor | undefined) => {
+  const files = Array.from(event.dataTransfer?.files || [])
+  if (!files.length) return false
+
+  event.preventDefault()
+
+  const images = files.filter(isAllowedImage)
+
+  if (images.length) loadFiles(images, currentEditor, { attachNonInlineFiles: false })
+  if (images.length < files.length) rejectFiles()
+
+  return true
+}
 
 const wrapperElement = useTemplateRef('wrapper')
 
@@ -168,6 +291,10 @@ const editor = useEditor({
     handlePaste(view, event) {
       if (!hasImageExtension.value) return
 
+      // "Copy image" puts the picture's HTML, pointing elsewhere, before the picture itself. The
+      //   reduced set keeps no image from elsewhere, so it takes the picture, as the old interface does.
+      if (isReduced) return pasteFilesInstead(event, editor.value)
+
       const items = Array.from(event.clipboardData?.items || [])
       for (const item of items) {
         if (item.type.startsWith('image')) {
@@ -193,6 +320,8 @@ const editor = useEditor({
     handleDrop(view, event) {
       if (!hasImageExtension.value) return
 
+      if (isReduced) return dropFilesInstead(event, editor.value)
+
       const e = event as unknown as InputEvent
       const files = e.dataTransfer?.files || null
       const loaded = loadFiles(files, editor.value, {
@@ -208,7 +337,7 @@ const editor = useEditor({
   editable: props.context.disabled !== true,
   content:
     currentValue.value && contentType.value === 'text/html'
-      ? htmlCleanup(currentValue.value)
+      ? toEditorHtml(currentValue.value)
       : currentValue.value,
   onUpdate({ editor }) {
     if (!applyingSignature) userHasEditedContent = true
@@ -300,7 +429,7 @@ const setEditorContent = (
 ) => {
   if (!editor.value || content === undefined) return
 
-  editor.value.commands.setContent(contentType === 'text/html' ? htmlCleanup(content) : content, {
+  editor.value.commands.setContent(contentType === 'text/html' ? toEditorHtml(content) : content, {
     emitUpdate,
   })
 }
@@ -349,11 +478,20 @@ onUnmounted(() => {
   props.context.node.off(resetKey)
 })
 
-const focusEditor = () => {
-  const view = editor.value?.view
-  view?.focus()
+const focusView = () => {
+  editor.value?.view.focus()
 
   testFlags.set(`${props.context.formId}.${props.context.node.name}.editor.focused`)
+}
+
+const focusEditor = () => {
+  // tiptap moves the editor into the page a moment after it is mounted, and it takes no focus before.
+  if (editor.value && !editor.value.view.dom.isConnected) {
+    requestAnimationFrame(focusView)
+    return
+  }
+
+  focusView()
 }
 
 // focus editor when clicked on its label
@@ -385,6 +523,7 @@ const editorCustomContext = {
   },
   addSignature,
   removeSignature,
+  takeImagesOnTheirWay: () => (editor.value ? takeImagesOnTheirWay(editor.value) : undefined),
   focus: focusEditor,
   // Set either way, to replace the queued variant the wrapper offers until the editor is loaded.
   insertKnowledgeBaseAnswer: editorExtensions.value.some(
@@ -396,13 +535,17 @@ const editorCustomContext = {
     : undefined,
 }
 
+// The editor cannot take the focus before it is mounted, so until then the wrapper keeps queueing it.
 // eslint-disable-next-line vue/no-mutating-props
-Object.assign(props.context, editorCustomContext)
+Object.assign(props.context, { ...editorCustomContext, focus: props.context.focus })
 
 onMounted(() => {
   const onLoad = props.context.onLoad as ((context: FieldEditorContext) => void)[]
   onLoad.forEach((fn) => fn(editorCustomContext))
   onLoad.length = 0
+
+  // eslint-disable-next-line vue/no-mutating-props
+  props.context.focus = focusEditor
 
   if (contentWrittenBeforeMount !== undefined) {
     setEditorContent(contentWrittenBeforeMount, contentType.value, true)
@@ -486,6 +629,8 @@ const reclaimEditorFocus = (event: MouseEvent) => {
         wrapperInlineDesktopClasses,
         {
           [classes.input.inlineContainer]: isInlineMode,
+          // No action bar above it to fit the outline to.
+          'rounded-t-lg': isReduced,
         },
       ]"
       data-field="wrapper"
@@ -518,8 +663,10 @@ const reclaimEditorFocus = (event: MouseEvent) => {
       />
     </div>
 
+    <!-- Without formatting there is nothing for the action bar to offer. -->
     <component
       :is="actionBarComponent"
+      v-if="!isReduced"
       :class="{
         invisible: isInlineMode && !isEditing,
       }"

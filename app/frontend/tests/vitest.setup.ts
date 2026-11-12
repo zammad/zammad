@@ -196,7 +196,7 @@ vi.mock('#shared/components/Form/fields/FieldEditor/FieldEditorWrapper.vue', asy
 
       // eslint-disable-next-line vue/no-mutating-props
       Object.assign(props.context, {
-        focus: vi.fn(),
+        focus: vi.fn(() => document.getElementById(props.context.id)?.focus()),
         addSignature: vi.fn(),
         removeSignature: vi.fn(),
       })
