@@ -18,4 +18,5 @@
 - What was the root cause, and how was it addressed?
 - Has the issue been reproduced and resolved?
 - Are scenarios covered by tests or manual validation?
+- Is UAT needed? Does the fix work in the real-world scenario where the bug appeared?
 - Is backporting to stable necessary?

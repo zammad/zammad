@@ -18,5 +18,6 @@
 - Were the new behaviors manually tested?
 - Does the implementation match the original specification or ticket?
 - Is the new code consistent with the code style and naming conventions?
+- Is UAT needed (always for stories)? Does it solve the real-world scenario, not only the acceptance criteria?
 - Are relevant edge cases covered in tests?
 - Will this feature impact performance, scalability, or accessibility?
