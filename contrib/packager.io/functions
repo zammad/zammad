@@ -219,6 +219,17 @@ function update_translations () {
   zammad run rails r 'Translation.sync'
 }
 
+function is_service_running () {
+  local svc="$1"
+  if [ "${INIT_CMD}" == "systemctl" ]; then
+    systemctl is-active --quiet "${svc}"
+  elif [ "${INIT_CMD}" == "initctl" ]; then
+    initctl status "${svc}" 2>/dev/null | grep -q "start/running"
+  else
+    service "${svc}" status > /dev/null 2>&1
+  fi
+}
+
 function create_webserver_config () {
   if [ "${OS}" == "DEBIAN" ]; then
     if [ ! -f "${WEBSERVER_CONF}" ]; then
@@ -242,8 +253,32 @@ function create_webserver_config () {
   echo "# Creating webserver bootstart"
   ${INIT_CMD} enable ${WEBSERVER_CMD}
 
-  echo "# Restarting webserver ${WEBSERVER_CMD} - please check if all required modules are enabled in case webserver fails to start."
-  ${INIT_CMD} restart ${WEBSERVER_CMD}
+  echo "# Applying webserver configuration for ${WEBSERVER_CMD} - please check if all required modules are enabled in case webserver fails to start."
+  if is_service_running "${WEBSERVER_CMD}"; then
+    if [ "${WEBSERVER}" == "nginx" ]; then
+      if nginx -t; then
+        nginx -s reload || ${INIT_CMD} restart ${WEBSERVER_CMD} || true
+      else
+        echo "# WARNING: Invalid nginx configuration detected, skipping reload/restart."
+      fi
+    elif [ "${WEBSERVER}" == "apache2" ]; then
+      APACHE_CTL=$(command -v apache2ctl || command -v apachectl)
+      if [ -n "${APACHE_CTL}" ]; then
+        if ${APACHE_CTL} configtest; then
+          ${APACHE_CTL} graceful || ${INIT_CMD} restart ${WEBSERVER_CMD} || true
+        else
+          echo "# WARNING: Invalid ${WEBSERVER_CMD} configuration detected, skipping reload/restart."
+        fi
+      else
+        ${INIT_CMD} restart ${WEBSERVER_CMD} || true
+      fi
+    else
+      ${INIT_CMD} restart ${WEBSERVER_CMD} || true
+    fi
+  else
+    echo "# ${WEBSERVER_CMD} is not running yet, starting it for the first time..."
+    ${INIT_CMD} start ${WEBSERVER_CMD} || true
+  fi
 }
 
 function enforce_redis () {
