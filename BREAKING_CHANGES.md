@@ -2,22 +2,6 @@
 
 ## Upcoming releases
 
-### Switching into another user's session will require the `admin.user` permission
-
-**Who is affected?** Admins of systems that gave the `admin.session` permission to a role without
-`admin.user` and use that role to switch into other users' sessions through
-`GET /api/v1/sessions/switch/:id`.
-
-The endpoint has been permitted for users with either `admin.session` or `admin.user`. `admin.session`
-is meant for listing and ending active sessions; the "View from user's perspective" action in the user
-management already requires `admin.user`, as does impersonating a user through the `From` (formerly
-`X-On-Behalf-Of`) header. Starting with Zammad 7.4, the endpoint will require `admin.user`, and requests
-from users with only `admin.session` will receive `403 Forbidden`.
-
-⚠️ Grant `admin.user` to such roles before updating to Zammad 7.4, or stop relying on the switch.
-
-**Related issue:** [#6506](https://github.com/zammad/zammad/issues/6506)
-
 ### `String#utf8_encode` and `Object#to_utf8` will be removed
 
 **Who is affected?** Developers of third-party packages, patches or add-ons that still call
@@ -86,6 +70,24 @@ Until then they emit a deprecation warning and return the value that always appl
 instead.
 
 **Related issue:** [#5580](https://github.com/zammad/zammad/issues/5580)
+
+## 7.4
+
+### Switching into another user's session requires the `admin.user` permission
+
+**Who is affected?** Admins of systems that gave the `admin.session` permission to a role without
+`admin.user` and use that role to switch into other users' sessions through
+`GET /api/v1/sessions/switch/:id`.
+
+The endpoint was permitted for users with either `admin.session` or `admin.user`. `admin.session` is
+meant for listing and ending active sessions; the "View from user's perspective" action in the user
+management already requires `admin.user`, as does impersonating a user through the `From` (formerly
+`X-On-Behalf-Of`) header. The restriction was announced with Zammad 7.3: the endpoint now requires
+`admin.user`, and requests from users with only `admin.session` receive `403 Forbidden`.
+
+⚠️ Grant `admin.user` to such roles, or stop relying on the switch.
+
+**Related issue:** [#6506](https://github.com/zammad/zammad/issues/6506)
 
 ## 7.3
 

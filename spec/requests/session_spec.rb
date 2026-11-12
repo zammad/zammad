@@ -5,11 +5,12 @@ require 'rails_helper'
 RSpec.describe 'Sessions endpoints', type: :request do
 
   describe 'GET /api/v1/sessions/switch/:id' do
-    let(:admin) { create(:admin) }
-    let(:agent) { create(:agent) }
+    let(:admin)          { create(:admin) }
+    let(:agent)          { create(:agent) }
+    let(:switching_user) { admin }
 
     before do
-      authenticated_as(admin)
+      authenticated_as(switching_user, via: :browser)
       get "/api/v1/sessions/switch/#{agent.id}", as: :json
     end
 
@@ -20,6 +21,41 @@ RSpec.describe 'Sessions endpoints', type: :request do
         auditable_name: "#{admin.fullname} → #{agent.fullname}",
         source_ip:      '127.0.0.1'
       )
+    end
+
+    context 'when the user has only the admin.user permission' do
+      let(:switching_user) { create(:user, roles: [create(:role, permission_names: ['admin.user'])]) }
+
+      it 'switches to the other user', :aggregate_failures do
+        expect(response).to have_http_status(:ok)
+        expect(request.session[:user_id]).to eq(agent.id)
+        expect(request.session[:switched_from_user_id]).to eq(switching_user.id)
+      end
+
+      it 'switches back to the original user', :aggregate_failures do
+        get '/api/v1/sessions/switch_back', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(request.session[:user_id]).to eq(switching_user.id)
+        expect(request.session[:switched_from_user_id]).to be_nil
+      end
+    end
+
+    context 'when the user has only the admin.session permission' do
+      let(:switching_user) { create(:user, roles: [create(:role, permission_names: ['admin.session'])]) }
+
+      it 'refuses the switch and leaves the session unchanged', :aggregate_failures do
+        expect(response).to have_http_status(:forbidden)
+
+        get '/api/v1/users/me', as: :json
+
+        expect(json_response['id']).to eq(switching_user.id)
+        expect(request.session[:switched_from_user_id]).to be_nil
+      end
+
+      it 'creates no audit log entry' do
+        expect(AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_to')).to be_nil
+      end
     end
   end
 
