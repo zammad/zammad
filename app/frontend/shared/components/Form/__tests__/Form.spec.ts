@@ -9,6 +9,7 @@ import type {
   ExtendedMountingOptions,
   ExtendedRenderResult,
 } from '#tests/support/components/index.ts'
+import createMockClient from '#tests/support/mock-apollo-client.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 
@@ -20,6 +21,7 @@ import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/fr
 import UserError from '#shared/errors/UserError.ts'
 import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import getWebsocketContext from '#shared/server/apollo/utils/getWebsocketContext.ts'
 import type { FormUpdaterAdditionalParams } from '#shared/types/form.ts'
 
 import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
@@ -1499,5 +1501,75 @@ describe('Form.vue - Same-tick value changes', () => {
       customerId: 'customer-123',
       organizationId: 'org-123',
     })
+  })
+})
+
+describe('Form.vue - Form updater requests', () => {
+  const mockFormUpdater = () =>
+    mockGraphQLApi(FormUpdaterDocument).willBehave(() => ({
+      data: {
+        formUpdater: {
+          fields: {},
+          flags: {},
+        },
+      },
+    }))
+
+  const renderFormWithUpdaterField = () =>
+    renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      schema: [
+        {
+          type: 'text',
+          name: 'customerId',
+          label: 'Customer',
+          triggerFormUpdater: true,
+        },
+      ],
+    })
+
+  it('sends the initial request over HTTP and a refetch over the websocket', async () => {
+    const mockFormUpdaterApi = mockFormUpdater()
+
+    const { link } = createMockClient([])
+    const request = link.request.bind(link)
+
+    // The transport is decided per request, so it has to be read while the request passes the link.
+    const websocketActive: boolean[] = []
+    vi.spyOn(link, 'request').mockImplementation((operation, forward) => {
+      if (operation.operationName === 'formUpdater') {
+        websocketActive.push(getWebsocketContext(operation).active)
+      }
+
+      return request(operation, forward)
+    })
+
+    const { view, form } = await renderFormWithUpdaterField()
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave === 2)
+
+    expect(websocketActive).toEqual([false, true])
+  })
+
+  it('sends one request for the initial load and one for a field change', async () => {
+    const mockFormUpdaterApi = mockFormUpdater()
+
+    const { view, form } = await renderFormWithUpdaterField()
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    expect(mockFormUpdaterApi.calls.behave).toBe(1)
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave === 2)
+    await getNode('form-ticket-create')?.settled
+    await waitForNextTick(true)
+
+    expect(mockFormUpdaterApi.calls.behave).toBe(2)
   })
 })

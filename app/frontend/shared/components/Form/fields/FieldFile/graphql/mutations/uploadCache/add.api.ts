@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const FormUploadCacheAddDocument = gql`
     mutation formUploadCacheAdd($formId: FormId!, $files: [UploadCacheFileInput!]!) {
@@ -17,7 +15,7 @@ export const FormUploadCacheAddDocument = gql`
   }
 }
     `;
-export function useFormUploadCacheAddMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>> = {}) {
+export function useFormUploadCacheAddMutation(options: VueApolloComposable.useMutation.Options<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>(FormUploadCacheAddDocument, options);
 }
-export type FormUploadCacheAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>;
+export type FormUploadCacheAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>;

@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AppMaintenanceDocument = gql`
     subscription appMaintenance {
@@ -12,7 +10,7 @@ export const AppMaintenanceDocument = gql`
   }
 }
     `;
-export function useAppMaintenanceSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>(AppMaintenanceDocument, {}, options);
+export function useAppMaintenanceSubscription(options: VueApolloComposable.useSubscription.Options<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>(AppMaintenanceDocument, options);
 }
-export type AppMaintenanceSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>;
+export type AppMaintenanceSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>;

@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AiTextToolUpdatesDocument = gql`
     subscription aiTextToolUpdates {
@@ -14,7 +12,7 @@ export const AiTextToolUpdatesDocument = gql`
   }
 }
     `;
-export function useAiTextToolUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables>(AiTextToolUpdatesDocument, {}, options);
+export function useAiTextToolUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables>(AiTextToolUpdatesDocument, options);
 }
-export type AiTextToolUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables>;
+export type AiTextToolUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.AiTextToolUpdatesSubscription, Types.AiTextToolUpdatesSubscriptionVariables>;

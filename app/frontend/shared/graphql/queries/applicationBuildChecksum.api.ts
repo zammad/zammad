@@ -1,19 +1,17 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ApplicationBuildChecksumDocument = gql`
     query applicationBuildChecksum {
   applicationBuildChecksum
 }
     `;
-export function useApplicationBuildChecksumQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, {}, options);
+export function useApplicationBuildChecksumQuery(options: VueApolloComposable.useQuery.Options<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables> = {}) {
+  return VueApolloComposable.useQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, options);
 }
-export function useApplicationBuildChecksumLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, {}, options);
+export function useApplicationBuildChecksumLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, options);
 }
-export type ApplicationBuildChecksumQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>;
+export type ApplicationBuildChecksumQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>;

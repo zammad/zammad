@@ -22,7 +22,7 @@ const ACTIVATOR = '::'
 const LIMIT_QUERY_MODULES = 10
 
 export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
-  const queryHandler = new QueryHandler(useTextModuleSuggestionsLazyQuery({ query: '' }))
+  const queryHandler = new QueryHandler(useTextModuleSuggestionsLazyQuery())
 
   const getTextModules = async (query: string) => {
     const { meta: editorMeta = {}, formId } = context.value

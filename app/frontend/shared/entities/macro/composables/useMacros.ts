@@ -20,12 +20,10 @@ export const macroScreenBehaviourMapping: Record<string, EnumTicketScreenBehavio
 
 export const useMacros = (selector: Ref<TicketMacrosSelectorInput>) => {
   const macroQuery = new QueryHandler(
-    useMacrosQuery(
-      () => ({
-        selector: selector.value,
-      }),
-      () => ({ enabled: !isEmpty(selector.value) }),
-    ),
+    useMacrosQuery({
+      variables: { selector },
+      enabled: () => !isEmpty(selector.value),
+    }),
   )
 
   const { activate, deactivate } = useMacroStore()

@@ -27,8 +27,6 @@ import type { FormKitNode } from '@formkit/core'
 export const EXTENSION_NAME = 'aiAssistantTextTools'
 
 const createAiTextToolsController = () => {
-  let mutationCancelled = false
-
   const createAbortableMutation = () => {
     const abortController = new AbortController()
     const textToolsMutation = new MutationHandler(
@@ -39,9 +37,9 @@ const createAiTextToolsController = () => {
         errorNotificationMessage: __(
           'Writing assistant could not generate text. Please try again or contact your administrator.',
         ),
-        errorCallback: (error) => {
-          return !(mutationCancelled && error.type === GraphQLErrorTypes.NetworkError)
-        },
+        // The abort fails the request a tick later, so only the signal still knows it was ours.
+        errorCallback: (error) =>
+          !(abortController.signal.aborted && error.type === GraphQLErrorTypes.NetworkError),
       },
     )
 
@@ -54,15 +52,6 @@ const createAiTextToolsController = () => {
 
   return {
     mutation: createAbortableMutation(),
-    get isCancelled() {
-      return mutationCancelled
-    },
-    cancel: () => {
-      mutationCancelled = true
-    },
-    reset: () => {
-      mutationCancelled = false
-    },
     recreate() {
       this.mutation = createAbortableMutation()
     },
@@ -130,10 +119,8 @@ const setupEventHandlers = (
   const { notify } = useNotifications()
 
   editor.on('cancel-ai-assistant-text-tools-updates', () => {
-    controller.cancel()
     controller.mutation.abort()
     controller.recreate()
-    controller.reset()
   })
 
   editor.on('update', () => {
@@ -216,10 +203,12 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
             })
 
             const queryHandler = new QueryHandler(
-              useAiAssistanceTextToolsListQuery(() => ({
-                groupId: groupId.value ? convertToGraphQLId('Group', groupId.value) : undefined,
-                ticketId: ticketId ? convertToGraphQLId('Ticket', ticketId) : undefined,
-              })),
+              useAiAssistanceTextToolsListQuery({
+                variables: () => ({
+                  groupId: groupId.value ? convertToGraphQLId('Group', groupId.value) : undefined,
+                  ticketId: ticketId ? convertToGraphQLId('Ticket', ticketId) : undefined,
+                }),
+              }),
             )
 
             queryHandler.watchOnResult(({ aiAssistanceTextToolsList }) => {

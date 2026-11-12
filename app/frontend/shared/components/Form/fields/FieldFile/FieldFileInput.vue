@@ -56,10 +56,10 @@ const uploadFilesWithContent = computed<FieldFileUploaded[]>(() => {
   })
 })
 
-const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation({}))
+const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation())
 const addFileLoading = addFileMutation.loading()
 
-const removeFileMutation = new MutationHandler(useFormUploadCacheRemoveMutation({}))
+const removeFileMutation = new MutationHandler(useFormUploadCacheRemoveMutation())
 const removeFileLoading = addFileMutation.loading()
 
 const canInteract = computed(

@@ -42,7 +42,7 @@ export const useAiAssistantTextToolsStore = defineStore('aiTextTools', () => {
   const enabled = computed(() => !!usageKeys.value.length && isTextToolsFeatureActive.value)
 
   const textToolsSubscription = new SubscriptionHandler(
-    useAiTextToolUpdatesSubscription(() => ({ enabled: enabled.value })),
+    useAiTextToolUpdatesSubscription({ enabled: () => enabled.value }),
   )
 
   textToolsSubscription.onResult(({ data }) => {

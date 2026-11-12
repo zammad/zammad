@@ -319,6 +319,7 @@ const getQueryDefaults = (
 class MockLink extends ApolloLink {
   request(operation: ApolloLink.Operation): Observable<ApolloLink.Result> {
     const { query, variables } = operation
+    const { fetchOptions } = operation.getContext()
     const definition = query.definitions[0]
     if (definition.kind !== Kind.OPERATION_DEFINITION) {
       throw new Error(`Cannot mock a document without an operation: ${print(query)}`)
@@ -340,15 +341,33 @@ class MockLink extends ApolloLink {
         throw err
       }
 
+      // Like the HTTP link, an aborted request fails instead of answering later.
+      const signal: AbortSignal | undefined = fetchOptions?.signal
+      const onAbort = (cancel: () => void) => {
+        const abort = () => {
+          cancel()
+          observer.error(signal?.reason)
+        }
+
+        if (signal?.aborted) abort()
+        else signal?.addEventListener('abort', abort, { once: true })
+
+        return () => signal?.removeEventListener('abort', abort)
+      }
+
       // Apollo Client 3 delivered link results in a later task, and specs rely on
       //  observing the loading state in between - keep that contract.
       const emitLater = (emit: () => void) => {
         let cancelled = false
+        const stopListening = onAbort(() => {
+          cancelled = true
+        })
         queueMicrotask(() => {
           if (!cancelled) emit()
         })
         return () => {
           cancelled = true
+          stopListening()
         }
       }
 
@@ -410,6 +429,9 @@ class MockLink extends ApolloLink {
           mockCalls.set(queryKey, calls)
 
           let cancelled = false
+          const stopListening = onAbort(() => {
+            cancelled = true
+          })
 
           defaultsValue
             .then((value) => {
@@ -426,6 +448,7 @@ class MockLink extends ApolloLink {
 
           return () => {
             cancelled = true
+            stopListening()
           }
         }
 

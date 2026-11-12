@@ -113,7 +113,7 @@ const queryVariables = computed<FormUpdaterQueryVariables>(() => {
       }
 })
 
-const queryHandler = new QueryHandler(useFormUpdaterQuery(queryVariables))
+const queryHandler = new QueryHandler(useFormUpdaterQuery({ variables: queryVariables }))
 
 const isLoading = queryHandler.loadingWithoutCachedResult()
 

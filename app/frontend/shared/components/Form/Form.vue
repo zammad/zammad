@@ -1391,7 +1391,8 @@ const initializeFormSchema = () => {
 
     formUpdaterScope.run(() => {
       formUpdaterQueryHandler = new QueryHandler(
-        useFormUpdaterQuery(formUpdaterVariables as Ref<FormUpdaterQueryVariables>, () => ({
+        useFormUpdaterQuery({
+          variables: formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
           context: {
             batch: {
               active: false,
@@ -1400,12 +1401,15 @@ const initializeFormSchema = () => {
               // Send the initial form load over HTTP — the WebSocket connection
               // is busy with many other messages during the initial render and
               // becomes a bottleneck. Subsequent refetches stay on ActionCable.
-              active: !formUpdaterVariables.value?.meta.initial,
+              // A getter, because the context is set up once and read per request.
+              get active() {
+                return !formUpdaterVariables.value?.meta.initial
+              },
             },
             skipSubscriptions: ['userCurrentTaskbarItemStateUpdates'],
           },
           fetchPolicy: 'no-cache',
-        })),
+        }),
       )
     })
 

@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const MentionSuggestionsDocument = gql`
     query mentionSuggestions($query: String!, $groupId: ID!) {
@@ -21,10 +19,10 @@ export const MentionSuggestionsDocument = gql`
   }
 }
     `;
-export function useMentionSuggestionsQuery(variables: Types.MentionSuggestionsQueryVariables | VueCompositionApi.Ref<Types.MentionSuggestionsQueryVariables> | ReactiveFunction<Types.MentionSuggestionsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>(MentionSuggestionsDocument, variables, options);
+export function useMentionSuggestionsQuery(options: VueApolloComposable.useQuery.Options<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>(MentionSuggestionsDocument, options);
 }
-export function useMentionSuggestionsLazyQuery(variables?: Types.MentionSuggestionsQueryVariables | VueCompositionApi.Ref<Types.MentionSuggestionsQueryVariables> | ReactiveFunction<Types.MentionSuggestionsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>(MentionSuggestionsDocument, variables, options);
+export function useMentionSuggestionsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>(MentionSuggestionsDocument, options);
 }
-export type MentionSuggestionsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>;
+export type MentionSuggestionsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.MentionSuggestionsQuery, Types.MentionSuggestionsQueryVariables>;

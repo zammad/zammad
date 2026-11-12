@@ -21,9 +21,7 @@ export const useMacroStore = defineStore('macro', () => {
 
   const enabled = computed(() => usageKeys.value.length > 0)
 
-  const macroSubscription = new SubscriptionHandler(
-    useMacrosUpdateSubscription(() => ({ enabled })),
-  )
+  const macroSubscription = new SubscriptionHandler(useMacrosUpdateSubscription({ enabled }))
 
   macroSubscription.onResult((data) => {
     const macroId = data.data?.macrosUpdate.macroId

@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerSuggestionContentTransformDocument = gql`
     mutation knowledgeBaseAnswerSuggestionContentTransform($translationId: ID!, $formId: FormId!) {
@@ -26,7 +24,7 @@ export const KnowledgeBaseAnswerSuggestionContentTransformDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseAnswerSuggestionContentTransformMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerSuggestionContentTransformMutation, Types.KnowledgeBaseAnswerSuggestionContentTransformMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerSuggestionContentTransformMutation, Types.KnowledgeBaseAnswerSuggestionContentTransformMutationVariables>> = {}) {
+export function useKnowledgeBaseAnswerSuggestionContentTransformMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseAnswerSuggestionContentTransformMutation, Types.KnowledgeBaseAnswerSuggestionContentTransformMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseAnswerSuggestionContentTransformMutation, Types.KnowledgeBaseAnswerSuggestionContentTransformMutationVariables>(KnowledgeBaseAnswerSuggestionContentTransformDocument, options);
 }
-export type KnowledgeBaseAnswerSuggestionContentTransformMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseAnswerSuggestionContentTransformMutation, Types.KnowledgeBaseAnswerSuggestionContentTransformMutationVariables>;
+export type KnowledgeBaseAnswerSuggestionContentTransformMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseAnswerSuggestionContentTransformMutation, Types.KnowledgeBaseAnswerSuggestionContentTransformMutationVariables>;

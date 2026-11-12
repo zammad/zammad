@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ConfigUpdatesDocument = gql`
     subscription configUpdates {
@@ -15,7 +13,7 @@ export const ConfigUpdatesDocument = gql`
   }
 }
     `;
-export function useConfigUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>(ConfigUpdatesDocument, {}, options);
+export function useConfigUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>(ConfigUpdatesDocument, options);
 }
-export type ConfigUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>;
+export type ConfigUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>;

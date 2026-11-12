@@ -3,9 +3,7 @@ import * as Types from '#shared/graphql/types.ts';
 import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../../../../../../../entities/organization/graphql/fragments/organizationAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../../../../graphql/fragments/objectAttributeValues.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AutocompleteSearchOrganizationDocument = gql`
     query autocompleteSearchOrganization($input: AutocompleteSearchOrganizationInput!) {
@@ -24,10 +22,10 @@ export const AutocompleteSearchOrganizationDocument = gql`
 }
     ${OrganizationAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}`;
-export function useAutocompleteSearchOrganizationQuery(variables: Types.AutocompleteSearchOrganizationQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchOrganizationQueryVariables> | ReactiveFunction<Types.AutocompleteSearchOrganizationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>(AutocompleteSearchOrganizationDocument, variables, options);
+export function useAutocompleteSearchOrganizationQuery(options: VueApolloComposable.useQuery.Options<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>(AutocompleteSearchOrganizationDocument, options);
 }
-export function useAutocompleteSearchOrganizationLazyQuery(variables?: Types.AutocompleteSearchOrganizationQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchOrganizationQueryVariables> | ReactiveFunction<Types.AutocompleteSearchOrganizationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>(AutocompleteSearchOrganizationDocument, variables, options);
+export function useAutocompleteSearchOrganizationLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>(AutocompleteSearchOrganizationDocument, options);
 }
-export type AutocompleteSearchOrganizationQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>;
+export type AutocompleteSearchOrganizationQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.AutocompleteSearchOrganizationQuery, Types.AutocompleteSearchOrganizationQueryVariables>;

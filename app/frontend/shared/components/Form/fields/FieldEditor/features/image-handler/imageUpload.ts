@@ -25,7 +25,7 @@ export const uploadInlineImages = async (
   files: UploadCacheFileInput[],
   options: { errorShowNotification?: boolean } = {},
 ) => {
-  const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation({}), options)
+  const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation(), options)
 
   const response = await addFileMutation.send({
     formId,

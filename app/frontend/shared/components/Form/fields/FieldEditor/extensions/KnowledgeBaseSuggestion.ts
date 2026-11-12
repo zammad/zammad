@@ -37,11 +37,7 @@ const toRelatedMention = (
 ): MentionKnowledgeBaseRelatedItem => ({ ...answer, section })
 
 export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
-  const queryHandler = new QueryHandler(
-    useKnowledgeBaseAnswerSuggestionsLazyQuery({
-      query: '',
-    }),
-  )
+  const queryHandler = new QueryHandler(useKnowledgeBaseAnswerSuggestionsLazyQuery())
 
   const getKnowledgeBaseMentions = async (query: string) => {
     const { data } = await queryHandler.query({ variables: { query } })
@@ -67,7 +63,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   }
 
   const translateHandler = new MutationHandler(
-    useKnowledgeBaseAnswerSuggestionContentTransformMutation({}),
+    useKnowledgeBaseAnswerSuggestionContentTransformMutation(),
   )
 
   // Shared by `??` and the insert from outside the editor, so both bring the same content.

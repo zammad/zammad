@@ -93,7 +93,7 @@ export const useEntityAttributesStore = defineStore('entityAttributes', () => {
     storeScope.run(() => {
       const handler = new QueryHandler(
         useObjectManagerFrontendAttributesQuery({
-          object,
+          variables: { object },
         }),
       )
       const attributesRaw = handler.result()

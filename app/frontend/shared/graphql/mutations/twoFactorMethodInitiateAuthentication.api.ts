@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TwoFactorMethodInitiateAuthenticationDocument = gql`
     mutation twoFactorMethodInitiateAuthentication($login: String!, $password: String!, $twoFactorMethod: EnumTwoFactorAuthenticationMethod!) {
@@ -20,7 +18,7 @@ export const TwoFactorMethodInitiateAuthenticationDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTwoFactorMethodInitiateAuthenticationMutation(options: VueApolloComposable.UseMutationOptions<Types.TwoFactorMethodInitiateAuthenticationMutation, Types.TwoFactorMethodInitiateAuthenticationMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TwoFactorMethodInitiateAuthenticationMutation, Types.TwoFactorMethodInitiateAuthenticationMutationVariables>> = {}) {
+export function useTwoFactorMethodInitiateAuthenticationMutation(options: VueApolloComposable.useMutation.Options<Types.TwoFactorMethodInitiateAuthenticationMutation, Types.TwoFactorMethodInitiateAuthenticationMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TwoFactorMethodInitiateAuthenticationMutation, Types.TwoFactorMethodInitiateAuthenticationMutationVariables>(TwoFactorMethodInitiateAuthenticationDocument, options);
 }
-export type TwoFactorMethodInitiateAuthenticationMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TwoFactorMethodInitiateAuthenticationMutation, Types.TwoFactorMethodInitiateAuthenticationMutationVariables>;
+export type TwoFactorMethodInitiateAuthenticationMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TwoFactorMethodInitiateAuthenticationMutation, Types.TwoFactorMethodInitiateAuthenticationMutationVariables>;

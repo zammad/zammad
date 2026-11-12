@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ObjectManagerFrontendAttributesDocument = gql`
     query objectManagerFrontendAttributes($object: EnumObjectManagerObjects!) {
@@ -23,10 +21,10 @@ export const ObjectManagerFrontendAttributesDocument = gql`
   }
 }
     `;
-export function useObjectManagerFrontendAttributesQuery(variables: Types.ObjectManagerFrontendAttributesQueryVariables | VueCompositionApi.Ref<Types.ObjectManagerFrontendAttributesQueryVariables> | ReactiveFunction<Types.ObjectManagerFrontendAttributesQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>(ObjectManagerFrontendAttributesDocument, variables, options);
+export function useObjectManagerFrontendAttributesQuery(options: VueApolloComposable.useQuery.Options<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>(ObjectManagerFrontendAttributesDocument, options);
 }
-export function useObjectManagerFrontendAttributesLazyQuery(variables?: Types.ObjectManagerFrontendAttributesQueryVariables | VueCompositionApi.Ref<Types.ObjectManagerFrontendAttributesQueryVariables> | ReactiveFunction<Types.ObjectManagerFrontendAttributesQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>(ObjectManagerFrontendAttributesDocument, variables, options);
+export function useObjectManagerFrontendAttributesLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>(ObjectManagerFrontendAttributesDocument, options);
 }
-export type ObjectManagerFrontendAttributesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>;
+export type ObjectManagerFrontendAttributesQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.ObjectManagerFrontendAttributesQuery, Types.ObjectManagerFrontendAttributesQueryVariables>;

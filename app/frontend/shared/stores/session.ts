@@ -127,9 +127,9 @@ export const useSessionStore = defineStore(
           const scope = effectScope()
           scope.run(() => {
             currentUserUpdateSubscription = new SubscriptionHandler(
-              useCurrentUserUpdatesSubscription(() => ({
-                userId: userId.value,
-              })),
+              useCurrentUserUpdatesSubscription({
+                variables: { userId },
+              }),
             )
 
             currentUserUpdateSubscription.onResult((result) => {

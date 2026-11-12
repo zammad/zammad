@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AiAnalyticsUsageDocument = gql`
     mutation aiAnalyticsUsage($aiAnalyticsRunId: ID!, $input: AIAnalyticsUsageInput!) {
@@ -14,7 +12,7 @@ export const AiAnalyticsUsageDocument = gql`
   }
 }
     `;
-export function useAiAnalyticsUsageMutation(options: VueApolloComposable.UseMutationOptions<Types.AiAnalyticsUsageMutation, Types.AiAnalyticsUsageMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AiAnalyticsUsageMutation, Types.AiAnalyticsUsageMutationVariables>> = {}) {
+export function useAiAnalyticsUsageMutation(options: VueApolloComposable.useMutation.Options<Types.AiAnalyticsUsageMutation, Types.AiAnalyticsUsageMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.AiAnalyticsUsageMutation, Types.AiAnalyticsUsageMutationVariables>(AiAnalyticsUsageDocument, options);
 }
-export type AiAnalyticsUsageMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.AiAnalyticsUsageMutation, Types.AiAnalyticsUsageMutationVariables>;
+export type AiAnalyticsUsageMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.AiAnalyticsUsageMutation, Types.AiAnalyticsUsageMutationVariables>;

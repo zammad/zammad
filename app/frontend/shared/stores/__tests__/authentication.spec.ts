@@ -2,6 +2,7 @@
 
 import { ApolloClient, ApolloLink, execute, gql, InMemoryCache, Observable } from '@apollo/client'
 import { createPinia, setActivePinia } from 'pinia'
+import { getCurrentScope } from 'vue'
 
 import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 
@@ -126,6 +127,25 @@ describe('Authentication Store', () => {
 
     expect(authentication.authenticated).toBe(false)
     expect(useSessionStore().id).toBe(null)
+  })
+
+  // The logout creates its mutation inside the action, where no effect scope
+  //  is active. Only the native query composables warn outside a scope; this
+  //  pins that the mutation stays silent there.
+  it('logs out outside an effect scope without a warning', async () => {
+    mockGraphQLApi(LogoutDocument).willResolve({
+      logout: {
+        success: true,
+        errors: null,
+        externalLogoutUrl: null,
+      },
+    })
+
+    expect(getCurrentScope()).toBeUndefined()
+
+    await authenticateStore().logout()
+
+    expect(console.warn).not.toHaveBeenCalled()
   })
 
   it('pauses the automatic third-party login redirect after a logout', async () => {

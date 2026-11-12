@@ -27,12 +27,7 @@ const ACTIVATOR = '@@'
 
 export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   const app = useApplicationStore()
-  const queryMentionsHandler = new QueryHandler(
-    useMentionSuggestionsLazyQuery({
-      query: '',
-      groupId: '',
-    }),
-  )
+  const queryMentionsHandler = new QueryHandler(useMentionSuggestionsLazyQuery())
 
   const getUserMentions = async (query: string, group: string) => {
     const { data } = await queryMentionsHandler.query({
