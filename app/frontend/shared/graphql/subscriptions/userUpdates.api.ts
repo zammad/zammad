@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { UserDetailAttributesFragmentDoc } from '../fragments/userDetailAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../fragments/objectAttributeValues.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -28,7 +29,8 @@ export const UserUpdatesDocument = gql`
     }
   }
 }
-    ${UserDetailAttributesFragmentDoc}`;
+    ${UserDetailAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}`;
 export function useUserUpdatesSubscription(variables: Types.UserUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserUpdatesSubscription, Types.UserUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserUpdatesSubscription, Types.UserUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserUpdatesSubscription, Types.UserUpdatesSubscriptionVariables>> = {}) {
   return VueApolloComposable.useSubscription<Types.UserUpdatesSubscription, Types.UserUpdatesSubscriptionVariables>(UserUpdatesDocument, variables, options);
 }

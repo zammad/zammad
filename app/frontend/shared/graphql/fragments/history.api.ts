@@ -100,7 +100,7 @@ export const HistoryEventFragmentDoc = gql`
   attribute
   changes
 }
-    ${HistoryEventObjectFragmentDoc}`;
+    `;
 export const HistoryGroupFragmentDoc = gql`
     fragment HistoryGroup on HistoryGroup {
   createdAt
@@ -113,5 +113,4 @@ export const HistoryGroupFragmentDoc = gql`
     }
   }
 }
-    ${HistoryIssuerFragmentDoc}
-${HistoryEventFragmentDoc}`;
+    `;

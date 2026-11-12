@@ -1,7 +1,6 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { ObjectAttributeValuesFragmentDoc } from './objectAttributeValues.api';
 export const UserDetailAttributesFragmentDoc = gql`
     fragment userDetailAttributes on User {
   id
@@ -52,4 +51,4 @@ export const UserDetailAttributesFragmentDoc = gql`
     totalCount
   }
 }
-    ${ObjectAttributeValuesFragmentDoc}`;
+    `;

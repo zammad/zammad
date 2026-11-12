@@ -1,8 +1,6 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { KnowledgeBaseCategoryPolicyFragmentDoc } from './knowledgeBaseCategoryPolicy.api';
-import { KnowledgeBaseCategoryPreInfoFragmentDoc } from './knowledgeBaseCategoryPreInfo.api';
 export const KnowledgeBaseCategoryGridAttributesFragmentDoc = gql`
     fragment knowledgeBaseCategoryGridAttributes on KnowledgeBaseCategory {
   id
@@ -25,5 +23,4 @@ export const KnowledgeBaseCategoryGridAttributesFragmentDoc = gql`
   ...knowledgeBaseCategoryPolicy
   ...knowledgeBaseCategoryPreInfo
 }
-    ${KnowledgeBaseCategoryPolicyFragmentDoc}
-${KnowledgeBaseCategoryPreInfoFragmentDoc}`;
+    `;

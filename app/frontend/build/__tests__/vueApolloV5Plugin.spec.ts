@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest'
 const { buildSchema, parse } = require('graphql')
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { plugin } = require('../vueApolloV5Plugin.js')
+const { plugin, validate } = require('../vueApolloV5Plugin.js')
 
 const schema = buildSchema(`
   type Query {
@@ -182,5 +182,15 @@ describe('vueApolloV5Plugin', () => {
       }
           \`;"
     `)
+  })
+
+  it('accepts a TypeScript output file passed in the info argument', async () => {
+    await expect(validate(schema, [], {}, { outputFile: 'user.api.ts' })).resolves.toBeUndefined()
+  })
+
+  it('rejects an output file that is not TypeScript', async () => {
+    await expect(validate(schema, [], {}, { outputFile: 'user.api.js' })).rejects.toThrow(
+      'Plugin "vue-apollo-v5" requires extension to be ".ts" or ".tsx"!',
+    )
   })
 })

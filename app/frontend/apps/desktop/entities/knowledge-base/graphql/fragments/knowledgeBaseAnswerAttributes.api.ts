@@ -1,9 +1,6 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { KnowledgeBaseAnswerPolicyFragmentDoc } from './knowledgeBaseAnswerPolicy.api';
-import { KnowledgeBaseAnswerPreInfoFragmentDoc } from './knowledgeBaseAnswerPreInfo.api';
-import { KnowledgeBaseCategoryBreadcrumbFragmentDoc } from './knowledgeBaseCategoryBreadcrumb.api';
 export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     fragment knowledgeBaseAnswerAttributes on KnowledgeBaseAnswer {
   ...knowledgeBaseAnswerPolicy
@@ -70,6 +67,4 @@ export const KnowledgeBaseAnswerAttributesFragmentDoc = gql`
     preferences
   }
 }
-    ${KnowledgeBaseAnswerPolicyFragmentDoc}
-${KnowledgeBaseAnswerPreInfoFragmentDoc}
-${KnowledgeBaseCategoryBreadcrumbFragmentDoc}`;
+    `;

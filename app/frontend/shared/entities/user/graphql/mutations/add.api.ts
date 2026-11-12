@@ -2,6 +2,8 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { UserAttributesFragmentDoc } from '../../../../graphql/fragments/userAttributes.api';
+import { UserPersonalSettingsFragmentDoc } from '../../../../graphql/fragments/userPersonalSettings.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
@@ -19,6 +21,8 @@ export const UserAddDocument = gql`
   }
 }
     ${UserAttributesFragmentDoc}
+${UserPersonalSettingsFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${ErrorsFragmentDoc}`;
 export function useUserAddMutation(options: VueApolloComposable.UseMutationOptions<Types.UserAddMutation, Types.UserAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserAddMutation, Types.UserAddMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.UserAddMutation, Types.UserAddMutationVariables>(UserAddDocument, options);

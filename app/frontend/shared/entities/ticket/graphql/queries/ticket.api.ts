@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { TicketMentionFragmentDoc } from '../fragments/ticketMention.api';
 import { ReferencingTicketFragmentDoc } from '../fragments/referencingTicket.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
@@ -39,6 +40,7 @@ export const TicketDocument = gql`
   }
 }
     ${TicketAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${TicketMentionFragmentDoc}
 ${ReferencingTicketFragmentDoc}`;
 export function useTicketQuery(variables: Types.TicketQueryVariables | VueCompositionApi.Ref<Types.TicketQueryVariables> | ReactiveFunction<Types.TicketQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketQuery, Types.TicketQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketQuery, Types.TicketQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketQuery, Types.TicketQueryVariables>> = {}) {

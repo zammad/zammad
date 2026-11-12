@@ -8,6 +8,8 @@ minimumReleaseAgeExclude:
   - '@vitest/spy@5.0.0'
   - vitest@5.0.0
   - '@vue/apollo-composable@5.0.0-beta.1'
+  - '@graphql-codegen/near-operation-file-preset@6.0.0'
+  - '@graphql-codegen/typescript-vue-apollo@6.0.0'
 overrides:
   # @graphql-codegen/cli >= 7.4 loads the CommonJS build of each plugin, whose require() of the ESM-only
   # auto-bind 5 lacks __esModule inside Vitest and breaks codegen in specs.

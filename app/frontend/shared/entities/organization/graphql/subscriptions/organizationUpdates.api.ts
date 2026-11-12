@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../fragments/organizationAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { OrganizationMembersWithFetchMoreFragmentDoc } from '../fragments/organizationMembersWithFetchMore.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
@@ -26,6 +27,7 @@ export const OrganizationUpdatesDocument = gql`
   }
 }
     ${OrganizationAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${OrganizationMembersWithFetchMoreFragmentDoc}`;
 export function useOrganizationUpdatesSubscription(variables: Types.OrganizationUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.OrganizationUpdatesSubscriptionVariables> | ReactiveFunction<Types.OrganizationUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>> = {}) {
   return VueApolloComposable.useSubscription<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>(OrganizationUpdatesDocument, variables, options);

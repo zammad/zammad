@@ -2,6 +2,9 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { CurrentUserAttributesFragmentDoc } from '../fragments/currentUserAttributes.api';
+import { UserAttributesFragmentDoc } from '../fragments/userAttributes.api';
+import { UserPersonalSettingsFragmentDoc } from '../fragments/userPersonalSettings.api';
+import { ObjectAttributeValuesFragmentDoc } from '../fragments/objectAttributeValues.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -12,7 +15,10 @@ export const CurrentUserDocument = gql`
     ...currentUserAttributes
   }
 }
-    ${CurrentUserAttributesFragmentDoc}`;
+    ${CurrentUserAttributesFragmentDoc}
+${UserAttributesFragmentDoc}
+${UserPersonalSettingsFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}`;
 export function useCurrentUserQuery(options: VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>(CurrentUserDocument, {}, options);
 }

@@ -17,7 +17,7 @@ export const TextModuleSuggestionsDocument = gql`
     name
     keywords
     renderedContent(
-      templateRenderContext: {ticketId: $ticketId, customerId: $customerId}
+      templateRenderContext: { ticketId: $ticketId, customerId: $customerId }
     )
   }
 }

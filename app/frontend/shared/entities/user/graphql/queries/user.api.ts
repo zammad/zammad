@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { UserDetailAttributesFragmentDoc } from '../../../../graphql/fragments/userDetailAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -26,7 +27,8 @@ export const UserDocument = gql`
     }
   }
 }
-    ${UserDetailAttributesFragmentDoc}`;
+    ${UserDetailAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}`;
 export function useUserQuery(variables: Types.UserQueryVariables | VueCompositionApi.Ref<Types.UserQueryVariables> | ReactiveFunction<Types.UserQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserQuery, Types.UserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserQuery, Types.UserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserQuery, Types.UserQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.UserQuery, Types.UserQueryVariables>(UserDocument, variables, options);
 }

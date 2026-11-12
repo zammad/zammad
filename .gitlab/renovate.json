@@ -124,11 +124,6 @@
       "groupSlug": "node-version"
     },
     {
-      "description": "Pinned to 5.2.1: later versions need visitor-plugin-common 7.2.2 or newer, but typescript-vue-apollo 5.x depends on visitor-plugin-common ^6. Lift the pin with the move to typescript-vue-apollo 6, which requires the v8 codegen packages.",
-      "matchPackageNames": ["@graphql-codegen/near-operation-file-preset"],
-      "enabled": false
-    },
-    {
       "matchCategories": ["js"],
       "groupName": "Eslint packages",
       "groupSlug": "eslint",

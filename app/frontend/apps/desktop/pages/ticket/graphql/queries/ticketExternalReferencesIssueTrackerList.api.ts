@@ -9,7 +9,7 @@ export const TicketExternalReferencesIssueTrackerItemListDocument = gql`
     query ticketExternalReferencesIssueTrackerItemList($issueTrackerType: EnumTicketExternalReferencesIssueTrackerType!, $ticketId: ID, $issueTrackerLinks: [UriHttpString!]) {
   ticketExternalReferencesIssueTrackerItemList(
     issueTrackerType: $issueTrackerType
-    input: {issueTrackerLinks: $issueTrackerLinks, ticketId: $ticketId}
+    input: { issueTrackerLinks: $issueTrackerLinks, ticketId: $ticketId }
   ) {
     assignees
     issueId

@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { TicketMentionFragmentDoc } from '../fragments/ticketMention.api';
 import { ReferencingTicketFragmentDoc } from '../fragments/referencingTicket.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
@@ -41,6 +42,7 @@ export const TicketUpdatesDocument = gql`
   }
 }
     ${TicketAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${TicketMentionFragmentDoc}
 ${ReferencingTicketFragmentDoc}`;
 export function useTicketUpdatesSubscription(variables: Types.TicketUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.TicketUpdatesSubscriptionVariables> | ReactiveFunction<Types.TicketUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.TicketUpdatesSubscription, Types.TicketUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.TicketUpdatesSubscription, Types.TicketUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.TicketUpdatesSubscription, Types.TicketUpdatesSubscriptionVariables>> = {}) {

@@ -2,6 +2,8 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { UserCurrentTaskbarItemAttributesFragmentDoc } from '../fragments/userCurrentTaskbarItemAttributes.api';
+import { TicketTaskbarTabAttributesFragmentDoc } from '../../../../../../../shared/entities/ticket/graphql/fragments/ticketTaskbarTabAttributes.api';
+import { KnowledgeBaseAnswerTaskbarTabAttributesFragmentDoc } from '../../../../knowledge-base/graphql/fragments/knowledgeBaseAnswerTaskbarTabAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../../shared/graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
@@ -19,6 +21,8 @@ export const UserCurrentTaskbarItemTouchLastContactDocument = gql`
   }
 }
     ${UserCurrentTaskbarItemAttributesFragmentDoc}
+${TicketTaskbarTabAttributesFragmentDoc}
+${KnowledgeBaseAnswerTaskbarTabAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
 export function useUserCurrentTaskbarItemTouchLastContactMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables>(UserCurrentTaskbarItemTouchLastContactDocument, options);

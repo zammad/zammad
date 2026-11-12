@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/ticketAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../../../shared/graphql/fragments/objectAttributeValues.api';
 import { TicketMentionFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/ticketMention.api';
 import { ReferencingTicketFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/referencingTicket.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
@@ -39,6 +40,7 @@ export const TicketWithMentionLimitDocument = gql`
   }
 }
     ${TicketAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${TicketMentionFragmentDoc}
 ${ReferencingTicketFragmentDoc}`;
 export function useTicketWithMentionLimitQuery(variables: Types.TicketWithMentionLimitQueryVariables | VueCompositionApi.Ref<Types.TicketWithMentionLimitQueryVariables> | ReactiveFunction<Types.TicketWithMentionLimitQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketWithMentionLimitQuery, Types.TicketWithMentionLimitQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketWithMentionLimitQuery, Types.TicketWithMentionLimitQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketWithMentionLimitQuery, Types.TicketWithMentionLimitQueryVariables>> = {}) {

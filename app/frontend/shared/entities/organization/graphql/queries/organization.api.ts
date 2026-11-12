@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../fragments/organizationAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { OrganizationMembersWithFetchMoreFragmentDoc } from '../fragments/organizationMembersWithFetchMore.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
@@ -24,6 +25,7 @@ export const OrganizationDocument = gql`
   }
 }
     ${OrganizationAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${OrganizationMembersWithFetchMoreFragmentDoc}`;
 export function useOrganizationQuery(variables: Types.OrganizationQueryVariables | VueCompositionApi.Ref<Types.OrganizationQueryVariables> | ReactiveFunction<Types.OrganizationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.OrganizationQuery, Types.OrganizationQueryVariables>(OrganizationDocument, variables, options);

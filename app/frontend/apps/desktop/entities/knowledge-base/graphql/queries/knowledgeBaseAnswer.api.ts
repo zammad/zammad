@@ -2,6 +2,9 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseAnswerAttributesFragmentDoc } from '../fragments/knowledgeBaseAnswerAttributes.api';
+import { KnowledgeBaseAnswerPolicyFragmentDoc } from '../fragments/knowledgeBaseAnswerPolicy.api';
+import { KnowledgeBaseAnswerPreInfoFragmentDoc } from '../fragments/knowledgeBaseAnswerPreInfo.api';
+import { KnowledgeBaseCategoryBreadcrumbFragmentDoc } from '../fragments/knowledgeBaseCategoryBreadcrumb.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -13,7 +16,10 @@ export const KnowledgeBaseAnswerDocument = gql`
     ...knowledgeBaseAnswerAttributes
   }
 }
-    ${KnowledgeBaseAnswerAttributesFragmentDoc}`;
+    ${KnowledgeBaseAnswerAttributesFragmentDoc}
+${KnowledgeBaseAnswerPolicyFragmentDoc}
+${KnowledgeBaseAnswerPreInfoFragmentDoc}
+${KnowledgeBaseCategoryBreadcrumbFragmentDoc}`;
 export function useKnowledgeBaseAnswerQuery(variables: Types.KnowledgeBaseAnswerQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseAnswerQueryVariables> | ReactiveFunction<Types.KnowledgeBaseAnswerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>(KnowledgeBaseAnswerDocument, variables, options);
 }

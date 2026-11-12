@@ -1,7 +1,6 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 export const TicketAttributesFragmentDoc = gql`
     fragment ticketAttributes on Ticket {
   id
@@ -109,4 +108,4 @@ export const TicketAttributesFragmentDoc = gql`
     gitlab
   }
 }
-    ${ObjectAttributeValuesFragmentDoc}`;
+    `;

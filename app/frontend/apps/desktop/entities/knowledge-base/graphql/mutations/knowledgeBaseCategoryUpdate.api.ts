@@ -2,6 +2,8 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseCategoryGridAttributesFragmentDoc } from '../fragments/knowledgeBaseCategoryGridAttributes.api';
+import { KnowledgeBaseCategoryPolicyFragmentDoc } from '../fragments/knowledgeBaseCategoryPolicy.api';
+import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '../fragments/knowledgeBaseCategoryPreInfo.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
@@ -23,6 +25,8 @@ export const KnowledgeBaseCategoryUpdateDocument = gql`
   }
 }
     ${KnowledgeBaseCategoryGridAttributesFragmentDoc}
+${KnowledgeBaseCategoryPolicyFragmentDoc}
+${KnowledgeBaseCategoryPreInfoFragmentDoc}
 ${ErrorsFragmentDoc}`;
 export function useKnowledgeBaseCategoryUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables>(KnowledgeBaseCategoryUpdateDocument, options);

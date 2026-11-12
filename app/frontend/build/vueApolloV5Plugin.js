@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 // GraphQL Code Generator plugin emitting the native @vue/apollo-composable v5
-// shape. The stock typescript-vue-apollo plugin (5.0.1) still generates the v4
+// shape. The stock typescript-vue-apollo plugin still generates the v4
 // three-argument API (useQuery(doc, variables, options)); v5 moved variables
 // into a single options argument, replaced UseXOptions/UseXReturn with the
 // namespaced useX.Options/useX.Result types, and needs neither the
@@ -115,7 +115,7 @@ const plugin = (schema, documents, config) => {
   }
 }
 
-const validate = async (_schema, _documents, _config, outputFile) => {
+const validate = async (_schema, _documents, _config, { outputFile }) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "vue-apollo-v5" requires extension to be ".ts" or ".tsx"!`)
   }

@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable/compat';
 import * as VueCompositionApi from 'vue';
@@ -19,6 +20,7 @@ export const TicketCreateDocument = gql`
   }
 }
     ${TicketAttributesFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}
 ${ErrorsFragmentDoc}`;
 export function useTicketCreateMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketCreateMutation, Types.TicketCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketCreateMutation, Types.TicketCreateMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketCreateMutation, Types.TicketCreateMutationVariables>(TicketCreateDocument, options);

@@ -9,7 +9,7 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const TicketExternalReferencesIdoitObjectListDocument = gql`
     query ticketExternalReferencesIdoitObjectList($ticketId: ID, $idoitObjectIds: [Int!]) {
   ticketExternalReferencesIdoitObjectList(
-    input: {ticketId: $ticketId, idoitObjectIds: $idoitObjectIds}
+    input: { ticketId: $ticketId, idoitObjectIds: $idoitObjectIds }
   ) {
     ...IdoitObjectAttributes
   }
