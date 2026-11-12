@@ -79,6 +79,15 @@ describe('CommonSectionCollapse', () => {
     expect(view.getByRole('navigation', { name: 'a11y' })).toBeInTheDocument()
   })
 
+  it('groups the section under its title', () => {
+    const view = renderCommonSectionCollapse()
+
+    const section = view.getByRole('group', { name: 'foobar' })
+
+    expect(within(section).getByRole('heading', { level: 3 })).toBeInTheDocument()
+    expect(within(section).getByRole('navigation')).toBeInTheDocument()
+  })
+
   it('supports no collapse (title only) mode', async () => {
     const view = renderCommonSectionCollapse({
       noCollapse: true,

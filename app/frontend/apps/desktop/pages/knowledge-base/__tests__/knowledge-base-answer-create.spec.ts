@@ -162,7 +162,7 @@ describe('knowledge base answer create', () => {
     expect(await view.findByLabelText('Title')).toBeInTheDocument()
     expect(view.getByLabelText('Text')).toBeInTheDocument()
     expect(view.getByText('Attach files')).toBeInTheDocument()
-    expect(view.getByLabelText('Tags')).toBeInTheDocument()
+    expect(view.getByRole('combobox', { name: 'Tags' })).toBeInTheDocument()
   })
 
   it('renders the title field, with the breadcrumb as the heading', async () => {

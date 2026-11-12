@@ -33,6 +33,11 @@ module PlaywrightNative
       main_content.get_by_role('button', name: 'Add internal note', exact: true).filter(hasText: 'Add internal note')
     end
 
+    # An article of a ticket with its actions. Its body is an article of its own inside.
+    def ticket_article(text)
+      main_content.get_by_role('article').filter(hasText: text).filter(has: page.get_by_role('button', name: 'Action menu button'))
+    end
+
     # The body rows of a table, without its header row.
     def table_rows(caption, within: page)
       within.get_by_role('table', name: caption).get_by_role('row').filter(has: page.get_by_role('cell'))

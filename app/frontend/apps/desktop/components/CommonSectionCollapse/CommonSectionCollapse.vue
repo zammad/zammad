@@ -74,7 +74,12 @@ watch(
 
 <template>
   <!--  eslint-disable vuejs-accessibility/no-static-element-interactions-->
-  <div class="flex flex-col gap-1" :class="{ 'overflow-y-auto outline-none': scrollable }">
+  <div
+    class="flex flex-col gap-1"
+    :class="{ 'overflow-y-auto outline-none': scrollable }"
+    :role="title ? 'group' : undefined"
+    :aria-label="title ? $t(title) : undefined"
+  >
     <header
       v-if="!noHeader"
       :id="headerId"

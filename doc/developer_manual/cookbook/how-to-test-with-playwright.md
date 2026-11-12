@@ -20,6 +20,8 @@ TEST_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/s
 - A failed example leaves a screenshot in `tmp/screenshots/` and a trace in
   `tmp/playwright-traces/`. Open the trace with
   `pnpm exec playwright show-trace <file>`: every step with the page as it was.
+  An example with `required_envs` leaves neither: it works with real credentials, which a
+  trace keeps in its action log.
 
 ## Writing a spec
 
@@ -51,6 +53,9 @@ Playwright for JavaScript and Python, so the
 has loaded. `reload_page` reloads the page and waits the same way. An example with
 `app: :mobile` runs in a phone-sized viewport.
 
+`open_desktop_ticket(ticket)` opens a ticket of the desktop view and waits until its form
+is ready for input.
+
 ### Several tabs
 
 `open_tab` opens another tab of the same browser, it shares the login and the storage
@@ -75,6 +80,25 @@ Examples start logged in as the `authenticated_as` user. With `authenticated_as:
 `sign_in(username:, password:, remember_me:)` fills the login form of the desktop view and
 of the mobile app.
 
+### Several users
+
+`as_user` gives another user a browser of their own and signs them in through the login
+form, so the user needs a password (`test` by default). Inside the block the helpers act
+on that user's page and `open_tab` opens that user's tabs, the browser is closed afterwards:
+
+```ruby
+let(:other_agent) { create(:agent, password: 'test', groups: [group]) }
+
+as_user(other_agent) do
+  open_desktop("/tickets/#{ticket.id}")
+  add_internal_note_button.click
+end
+```
+
+The login of the `authenticated_as` user is switched off inside the block, as it would
+sign in the other browser as well. A failure inside the block keeps a screenshot and a
+trace of that browser, named after the user's login.
+
 ### Finding elements
 
 Find elements like assistive technology does: by role and accessible name, form
@@ -91,15 +115,16 @@ app. Prefer fixing the app over a CSS selector.
 
 Page areas (`spec/support/playwright/page_areas.rb`):
 
-| Helper                | Finds                                             |
-| --------------------- | ------------------------------------------------- |
-| `main_content`        | the main area                                     |
-| `page_navigation`     | the left navigation                               |
-| `main_sidebar`        | the left sidebar with the quick search            |
-| `content_sidebar`     | the sidebar next to the content, e.g. of a ticket |
-| `flyout(title)`       | the flyout with this title                        |
-| `notification(text)`  | the notification with this text                   |
-| `table_rows(caption)` | the body rows of the table with this caption      |
+| Helper                 | Finds                                                    |
+| ---------------------- | -------------------------------------------------------- |
+| `main_content`         | the main area                                            |
+| `page_navigation`      | the left navigation                                      |
+| `main_sidebar`         | the left sidebar with the quick search                   |
+| `content_sidebar`      | the sidebar next to the content, e.g. of a ticket        |
+| `flyout(title)`        | the flyout with this title                               |
+| `notification(text)`   | the notification with this text                          |
+| `table_rows(caption)`  | the body rows of the table with this caption             |
+| `ticket_article(text)` | the article of a ticket with this text, with its actions |
 
 ### Forms
 
@@ -113,6 +138,7 @@ search_for_option('Group', group.name)                  # autocompletes and tree
 search_for_option('CC', email) { |menu| menu.get_by_role('button').click }
 expect(selected_options('Priority')).to have_text('3 high')
 type_in_editor('Text', 'Bold text', :enter)             # a symbol presses that key
+mention_in_editor('Text', agent)                        # picks the user from the suggestions
 expect(editor('Text')).to contain_text('Bold text')
 ```
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Split, Link and Subscribe', app: :desktop_view, authenticated_as: :agent1, type: :system do
+RSpec.describe 'Desktop > Ticket > Split, Link and Subscribe', app: :desktop_view, authenticated_as: :agent1, type: :playwright do
   let(:agent1)  { create(:agent, password: 'test', groups: [group]) }
   let!(:agent2) { create(:agent, password: 'test', groups: [group]) }
   let(:group)   { create(:group) }
@@ -14,80 +14,50 @@ RSpec.describe 'Desktop > Ticket > Split, Link and Subscribe', app: :desktop_vie
     end
   end
 
-  context 'when using ticket split, link and subscribe' do
-    before do
-      visit "/tickets/#{ticket.id}"
+  def related_tickets
+    content_sidebar.get_by_role('group', name: 'Related tickets')
+  end
 
-      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+  it 'splits an article into a linked ticket and notifies its subscriber', performs_jobs: true do
+    open_desktop_ticket(ticket)
+
+    ticket_article('And a follow-up question.').get_by_role('button', name: 'Action menu button').click
+    page.get_by_role('menuitem', name: 'Split').click
+    wait_for_form_to_settle('ticket-create')
+    page.get_by_role('button', name: 'Create', exact: true).click
+
+    expect(notification('Ticket has been created successfully.')).to be_visible
+
+    split_ticket = Ticket.last
+    wait_for_form_to_settle("form-ticket-edit-#{split_ticket.id}")
+
+    select_option('Owner', agent2.fullname)
+    content_sidebar.get_by_role('switch', name: 'Subscribe me').click
+    page.get_by_role('button', name: 'Update', exact: true).click
+
+    expect(notification('Ticket updated successfully.')).to be_visible
+    expect(related_tickets).to contain_text('Parent')
+    expect(related_tickets.get_by_role('link', name: ticket.title, exact: true)).to be_visible
+
+    open_desktop_ticket(ticket)
+
+    expect(related_tickets).to contain_text('Child')
+    expect(related_tickets.get_by_role('link', name: split_ticket.title, exact: true)).to be_visible
+
+    as_user(agent2) do
+      open_desktop_ticket(split_ticket)
+
+      add_internal_note_button.click
+      type_in_editor('Text', 'Some reply.')
+      page.get_by_role('button', name: 'Update', exact: true).click
+
+      expect(notification('Ticket updated successfully.')).to be_visible
     end
 
-    it 'works correctly', performs_jobs: true, retry: 0 do
-      # Split ticket.
-      within "#article-#{ticket.articles.last.id}" do
-        click_on('Action menu button')
-      end
+    perform_enqueued_jobs
 
-      click_on('Split')
+    page.get_by_role('button', name: 'Show notifications').click
 
-      wait_for_form_to_settle('ticket-create')
-
-      click_on('Create')
-
-      expect(page).to have_text('Ticket has been created successfully.')
-
-      # Make changes and subscribe.
-      within_form(form_updater_gql_number: 2) do
-        find_select('Owner').select_option(agent2.fullname)
-        find_toggle('Subscribe me').toggle_on
-      end
-
-      click_on('Update')
-
-      expect(page).to have_text('Ticket updated successfully.')
-
-      # Check links.
-      within '#ticket-links' do
-        expect(page).to have_text('Parent').and(have_text(ticket.title))
-      end
-
-      visit "/tickets/#{ticket.id}"
-
-      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
-
-      within '#ticket-links' do
-        expect(page).to have_text('Child').and(have_text(Ticket.last.title))
-      end
-
-      # Create reply with another agent.
-      using_session :agent2 do
-        login(username: agent2.login, password: 'test')
-
-        visit "/tickets/#{Ticket.last.id}"
-
-        wait_for_form_to_settle("form-ticket-edit-#{Ticket.last.id}")
-
-        find('button', text: 'Add internal note').click
-
-        within_form(form_updater_gql_number: 2) do
-          find_editor('Text').type('Some reply.')
-        end
-
-        click_on('Update')
-
-        expect(page).to have_text('Ticket updated successfully.')
-
-        # Simulate the second agent closing their browser.
-        #   Quit the driver directly: Capybara::Playwright::Driver#quit is private,
-        #   so Session#quit would silently skip it and leave the browser running.
-        page.driver.send(:quit)
-      end
-
-      # Check that notification was created.
-      perform_enqueued_jobs
-
-      click_on 'Show notifications'
-
-      expect(page).to have_text("#{agent2.fullname} updated ticket")
-    end
+    expect(page.get_by_text("#{agent2.fullname} updated ticket")).to be_visible
   end
 end

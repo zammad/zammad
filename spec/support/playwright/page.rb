@@ -25,22 +25,6 @@ module PlaywrightNative
 
     attr_reader :browser_context
 
-    def open_desktop(route)
-      page.goto("/desktop#{route}")
-      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
-    end
-
-    def open_mobile(route)
-      page.goto("/mobile#{route}")
-      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
-    end
-
-    # The reloaded app has to load again, like after open_desktop and open_mobile.
-    def reload_page
-      page.reload
-      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
-    end
-
     SCROLL_OFFSET = <<~JS.freeze
       (element) => {
         for (let area = element.parentElement; area; area = area.parentElement) {
@@ -63,20 +47,6 @@ module PlaywrightNative
       raise "Scroll offset #{offset} not reached, it is #{scroll_offset(element)}"
     end
 
-    # Another tab of the same browser, it shares the cookies and the storage of `page`.
-    def open_tab
-      browser_context.new_page
-    end
-
-    # The helpers act on `page`, so a block of them acts on another tab this way.
-    def on_tab(tab)
-      previous = page
-      @page = tab
-      yield
-    ensure
-      @page = previous
-    end
-
     def self.new_context(example)
       context = Browser.browser.new_context(
         baseURL:           AppServer.url,
@@ -88,25 +58,33 @@ module PlaywrightNative
         permissions:       Browser.chromium? ? %w[clipboard-read clipboard-write] : [],
       )
       context.set_default_timeout(PLAYWRIGHT_TIMEOUT * 1000)
-      context.tracing.start(screenshots: true, snapshots: true)
+      context.tracing.start(screenshots: true, snapshots: true) if keep_artifacts?(example)
       context
+    end
+
+    # Examples with required_envs work with real credentials, which a trace keeps in its action
+    #   log and a screenshot may show - and those of a failed example end up in the CI artifacts.
+    def self.keep_artifacts?(example)
+      example.metadata[:required_envs].blank?
     end
 
     def self.screen_size(example)
       example.metadata[:screen_size] || (example.metadata[:app] == :mobile ? :mobile : :desktop)
     end
 
-    def self.collect_js_errors(context)
-      [].tap do |errors|
-        context.on('weberror', ->(web_error) { errors << "Uncaught #{[web_error.error.name.presence, web_error.error.message].compact.join(': ')}" })
-        context.on('console', ->(message) { errors << message.text if message.type == 'error' })
-      end
+    def self.collect_js_errors(context, errors = [])
+      context.on('weberror', ->(web_error) { errors << "Uncaught #{[web_error.error.name.presence, web_error.error.message].compact.join(': ')}" })
+      context.on('console', ->(message) { errors << message.text if message.type == 'error' })
+
+      errors
     end
 
     # Keeps a screenshot and the trace of a failed example, like Playwright's retain-on-failure.
-    def self.close_context(context, example, page)
-      if example.exception
-        keep_failure_artifacts(context, example, page)
+    def self.close_context(context, example, page, failed: example.exception.present?, name: nil)
+      return if !keep_artifacts?(example)
+
+      if failed
+        keep_failure_artifacts(context, example, page, name)
       else
         within_browser_timeout { context.tracing.stop }
       end
@@ -114,8 +92,8 @@ module PlaywrightNative
       within_browser_timeout { context.close }
     end
 
-    def self.keep_failure_artifacts(context, example, page)
-      file_name = example.id.delete_prefix('./').gsub(%r{[^\w-]+}, '_')
+    def self.keep_failure_artifacts(context, example, page, name)
+      file_name = [example.id.delete_prefix('./'), name].compact.join('_').gsub(%r{[^\w-]+}, '_')
 
       # The trace tells more than the screenshot, so a failed screenshot must not cost it.
       if page

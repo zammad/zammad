@@ -556,7 +556,7 @@ describe('knowledge base answer edit', () => {
     expect(sidebar).toContainElement(view.getByLabelText('Visibility'))
     expect(sidebar).toContainElement(view.getByLabelText('Category'))
     expect(
-      view.queryByLabelText('Tags'),
+      view.queryByRole('combobox', { name: 'Tags' }),
       'tags are edited from the sidebar, not this form',
     ).not.toBeInTheDocument()
   })

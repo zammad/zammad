@@ -53,8 +53,6 @@ module PlaywrightNative
     end
 
     def self.finish_example
-      # Firefox may keep the websocket of a closed context open, its connection would never end.
-      ActionCable.server.connections.dup.each(&:close)
       wait_until_idle
 
       error = @middleware.take_error
@@ -64,19 +62,48 @@ module PlaywrightNative
     # Its threads share the example's database connection, so work left over from the closed
     #   browser - a queued request, the websocket's close - deadlocks with the next example.
     def self.wait_until_idle
-      Timeout.timeout(PLAYWRIGHT_TIMEOUT) { sleep 0.01 while busy.any? }
+      closing = Set.new.compare_by_identity
+
+      Timeout.timeout(PLAYWRIGHT_TIMEOUT) do
+        loop do
+          end_cable_connections(closing)
+          break if busy.none?
+
+          sleep 0.01
+        end
+      end
     rescue Timeout::Error
       raise "The app server is still busy after the example: #{busy.join(', ')}"
     end
 
-    def self.busy
+    # Firefox may keep the websocket of a closed context open, its connection would never end.
+    #   And a connection that opens while its browser goes away may register itself after its
+    #   websocket closed. Nothing ends that one anymore, so it gets its close handling here.
+    def self.end_cable_connections(closing)
+      ActionCable.server.connections.dup.each do |connection|
+        next if closing.include?(connection)
+
+        if connection.send(:websocket).alive?
+          closing << connection
+          connection.close
+        elsif !cable_work?
+          connection.send(:handle_close)
+        end
+      end
+    end
+
+    def self.cable_work?
       cable_workers = ActionCable.server.worker_pool.executor
 
+      cable_workers.active_count.positive? || cable_workers.queue_length.positive?
+    end
+
+    def self.busy
       {
         'requests'          => !@middleware.idle?,
         'queued requests'   => @server.stats[:busy_threads].positive?,
         'cable connections' => ActionCable.server.connections.any?,
-        'cable work'        => cable_workers.active_count.positive? || cable_workers.queue_length.positive?,
+        'cable work'        => cable_work?,
       }.select { |_name, busy| busy }.keys
     end
   end

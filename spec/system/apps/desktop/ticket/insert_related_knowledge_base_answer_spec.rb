@@ -31,8 +31,7 @@ RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :
   end
 
   before do
-    open_desktop("/tickets/#{ticket.id}")
-    wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+    open_desktop_ticket(ticket)
   end
 
   it 'offers the linked and the suggested answer before a search term is typed, and inserts one with its attachment' do

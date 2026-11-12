@@ -74,8 +74,11 @@ export const getCoreDesktopClasses: FormThemeExtension = (classes: FormThemeClas
       wrapper:
         'inline-flex items-center cursor-pointer select-none [&:has(:focus-visible)]:outline [&:has(:focus-visible)]:outline-1 [&:has(:focus-visible)]:outline-offset-1 [&:has(:focus-visible)]:rounded-xs [&:has(:focus-visible)]:outline-blue-800',
       label: 'mb-0! text-sm text-normal formkit-required:after:invisible',
-      inner: 'w-5 h-5 flex justify-center items-center ltr:mr-1 rtl:ml-1 formkit-label-hidden:m-0',
-      input: 'peer appearance-none focus:outline-hidden focus:ring-0 focus:ring-offset-0',
+      inner:
+        'relative isolate w-5 h-5 flex justify-center items-center ltr:mr-1 rtl:ml-1 formkit-label-hidden:m-0',
+      // The input covers the styled box, so the checkbox itself takes the click.
+      input:
+        'peer absolute inset-0 z-10 h-full w-full cursor-pointer appearance-none focus:outline-hidden focus:ring-0 focus:ring-offset-0',
       decorator:
         'w-3 h-3 relative border rounded-xs bg-transparent peer-hover:border-black dark:peer-hover:border-white formkit-is-checked:peer-hover:border-black formkit-is-checked:peer-hover:text-contrast dark:formkit-is-checked:peer-hover:border-white',
       decoratorIcon:

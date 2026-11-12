@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view, authenticated_as: :agent, type: :system do
+RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view, authenticated_as: :agent, type: :playwright do
   let(:group)    { create(:group) }
-  let(:agent)    { create(:agent, password: 'test', groups: [group]) }
+  let(:agent)    { create(:agent, groups: [group]) }
   let(:ticket)   { create(:ticket, group:, title: 'Inline image test') }
   let(:image)    { Rails.root.join('spec/fixtures/files/image/small.png').binread }
   let(:cid)      { '20260928.1234@zammad.example.com' }
@@ -24,29 +24,20 @@ RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view,
     end
   end
 
-  def open_ticket
-    visit "/tickets/#{ticket.id}"
-
-    wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
-  end
-
   def reply_to_article
-    within "#article-#{article.id}" do
-      find('button', exact_text: 'Reply', visible: :all).click
-    end
+    ticket_article('Screenshot:').get_by_role('button', name: 'Reply', exact: true).click
   end
 
+  # The quoted image is uploaded again for the reply, it shows the copy once it is done.
   def quoted_image_src
-    src = nil
+    image = editor('Text').get_by_role('img').first
+    expect(image).to have_attribute('src', %r{/api/v1/attachments/\d+$})
 
-    wait.until do
-      # The image appears asynchronously, `first` would wrap a missing one instead of returning nil.
-      images = find_editor('Text').input_element.all('img:not(.ProseMirror-separator)', visible: :all, wait: false)
-      src    = images.first&.[](:src)
-      src&.match?(%r{/api/v1/attachments/\d+\z})
-    end
+    image.get_attribute('src')
+  end
 
-    src
+  def inline_images_failure?
+    test_flag_set?('editor.inlineImagesFailure')
   end
 
   def upload_cache_items
@@ -54,26 +45,25 @@ RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view,
   end
 
   def submit_reply
-    click_on 'Update'
+    page.get_by_role('button', name: 'Update', exact: true).click
 
-    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
+    expect(notification('Ticket updated successfully.')).to be_visible
   end
 
   before do
     Setting.set('ui_ticket_zoom_article_email_full_quote', true)
-    wait_for_setting('ui_ticket_zoom_article_email_full_quote', true)
 
     article
   end
 
   it 'gives the reply its own copy of the quoted image' do
-    open_ticket
+    open_desktop_ticket(ticket)
     reply_to_article
 
     expect(quoted_image_src).to end_with("/api/v1/attachments/#{upload_cache_items.sole.id}")
-    expect(page.evaluate_script("window.testFlags.get('editor.inlineImagesFailure', true)")).to be_falsey
+    expect(inline_images_failure?).to be_falsey
 
-    find_editor('Text').type('Please see below.')
+    type_in_editor('Text', 'Please see below.')
     submit_reply
 
     reply = ticket.articles.reload.last
@@ -86,21 +76,17 @@ RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view,
   end
 
   context 'when the ticket is opened from an online notification and the group has a signature' do
-    let(:group)        { create(:group, signature: create(:signature)) }
-    let(:other_agent)  { create(:agent, groups: [group]) }
-    let(:notification) { create(:online_notification, user: agent, created_by: other_agent, updated_by: other_agent, o: ticket, type_name: 'create') }
+    let(:group)               { create(:group, signature: create(:signature)) }
+    let(:other_agent)         { create(:agent, groups: [group]) }
+    let(:online_notification) { create(:online_notification, user: agent, created_by: other_agent, updated_by: other_agent, o: ticket, type_name: 'create') }
 
     before do
-      notification
+      online_notification
 
-      visit '/'
-      wait_for_subscription_update('onlineNotificationsCount', number: 1)
+      open_desktop('/')
 
-      find('button[aria-label="Show notifications"]').click
-
-      within('[role="region"]') do
-        click_on "#{other_agent.fullname} created ticket"
-      end
+      page.get_by_role('button', name: 'Show notifications').click
+      page.get_by_role('link', name: "#{other_agent.fullname} created ticket").click
 
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
     end
@@ -110,18 +96,19 @@ RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view,
       wait_for_test_flag('editor.signatureAdd')
 
       expect(quoted_image_src).to end_with("/api/v1/attachments/#{upload_cache_items.sole.id}")
-      expect(page.evaluate_script("window.testFlags.get('editor.inlineImagesFailure', true)")).to be_falsey
+      expect(inline_images_failure?).to be_falsey
     end
   end
 
   context 'with the same ticket open in another browser tab' do
+    let(:other_tab) { open_tab }
+
     before do
-      open_ticket
+      open_desktop_ticket(ticket)
       wait_for_subscription_start('userCurrentTaskbarItemStateUpdates')
 
-      using_session(:other_tab) do
-        login(username: agent.login, password: 'test')
-        open_ticket
+      on_tab(other_tab) do
+        open_desktop_ticket(ticket)
         wait_for_subscription_start('userCurrentTaskbarItemStateUpdates')
       end
     end
@@ -131,7 +118,7 @@ RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view,
 
       src = quoted_image_src
 
-      using_session(:other_tab) do
+      on_tab(other_tab) do
         expect(quoted_image_src).to eq(src)
         expect(upload_cache_items.count).to eq(1)
 
@@ -141,7 +128,7 @@ RSpec.describe 'Desktop > Ticket > Reply with inline image', app: :desktop_view,
       expect(ticket.articles.reload.last.attachments).to contain_exactly(have_attributes(content: image))
 
       # The sent draft is reset in this tab as well, so nothing points at its removed copies anymore.
-      expect(page).to have_no_css('img[src*="/api/v1/attachments/"]', visible: :all)
+      expect(page.locator('img[src*="/api/v1/attachments/"]')).to have_count(0)
     end
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated_as: :agent, current_user_id: 1, type: :system do
+RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated_as: :agent, current_user_id: 1, type: :playwright do
   let(:agent)       { create(:agent, groups: [group]) }
   let(:other_agent) { create(:agent, password: 'test', groups: [group]) }
   let(:customer)    { create(:customer) }
@@ -40,39 +40,40 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
   end
 
   it 'works as expected' do
+    open_desktop('/')
+
     create_ticket(main_title, agent, checklist_template_main)
+    main_ticket = Ticket.last
     create_ticket(it_title, other_agent, checklist_template_sub)
+    it_ticket = Ticket.last
 
-    add_sub_ticket_to_main_checklist
-    add_article_to_main_ticket
+    add_sub_ticket_to_main_checklist(it_ticket)
+    add_internal_note('Some notes about the new employee onboarding.')
 
-    check_all_checkboxes
-    verify_referenced_ticket_state('open')
+    check_all_checkboxes(main_ticket)
+    expect_referenced_ticket_state(it_ticket, 'open')
     try_closing
-    verify_checklist_badge
+    expect(checklist_badge).to contain_text('5 of 6')
 
-    using_session :agent2 do
-      login(username: other_agent.login, password: 'test')
+    as_user(other_agent) do
+      open_desktop_ticket(it_ticket)
 
-      visit "/tickets/#{Ticket.last.id}"
-      wait_for_form_to_settle("form-ticket-edit-#{Ticket.last.id}")
-
-      add_article_to_it_ticket
-      check_all_checkboxes
+      add_internal_note('Some notes about the new employee onboarding.', mention: agent)
+      check_all_checkboxes(it_ticket)
       close_ticket
-      wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql', number: 2)
 
-      wait.until do
-        Ticket.last.reload.state.name == 'closed'
-      end
-
-      # Simulate the second agent closing their browser.
-      #   Quit the driver directly: Capybara::Playwright::Driver#quit is private,
-      #   so Session#quit would silently skip it and leave the browser running.
-      page.driver.send(:quit)
+      wait_until('The IT ticket is not closed') { it_ticket.reload.state.name == 'closed' }
     end
 
-    close_and_verify
+    expect_referenced_ticket_state(it_ticket, 'closed')
+    expect(checklist_badge).to have_count(0)
+
+    # The form kept the state of the first attempt.
+    content_sidebar.get_by_role('button', name: 'Ticket', exact: true).click
+    expect(selected_options('State')).to have_text('closed')
+    page.get_by_role('button', name: 'Update', exact: true).click
+
+    wait_until('The main ticket is not closed') { main_ticket.reload.state.name == 'closed' }
   end
 
   context 'when editing a checklist item that wraps' do
@@ -82,143 +83,101 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
     before do
       create(:checklist_item, checklist: create(:checklist, :empty, ticket:), text: item_text)
 
-      visit "/tickets/#{ticket.id}"
-      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+      open_desktop_ticket(ticket)
       open_checklist
     end
 
     it 'keeps the text wrapped, with the caret where it was clicked' do
-      label = find('#ticketSidebar li [data-test-id="common-label"]', text: item_text)
-      label.click(x: 5, y: 5, offset: :top_left)
+      content_sidebar.get_by_role('button', name: 'Start editing').filter(hasText: item_text).click(position: { x: 5, y: 5 })
 
-      field       = find('#ticketSidebar li textarea:focus')
-      line_height = field.evaluate_script('parseFloat(getComputedStyle(this).lineHeight)')
+      textbox = content_sidebar.get_by_role('textbox', name: 'Text or ticket identifier')
+      expect(textbox).to be_focused
 
-      expect(field.evaluate_script('this.selectionStart')).to be < 'A rather'.length
-      expect(field.evaluate_script('this.getBoundingClientRect().height')).to be > line_height
+      line_height = textbox.evaluate('(textbox) => parseFloat(getComputedStyle(textbox).lineHeight)')
+
+      expect(textbox.evaluate('(textbox) => textbox.selectionStart')).to be < 'A rather'.length
+      expect(textbox.evaluate('(textbox) => textbox.getBoundingClientRect().height')).to be > line_height
     end
   end
 
   def create_ticket(title, owner, checklist_template)
-    visit '/ticket/create'
+    main_sidebar.get_by_role('link', name: 'New ticket').click
     wait_for_form_to_settle('ticket-create')
 
-    within_form(form_updater_gql_number: 1) do
-      find_input('Title').type(title)
-      find_input('Customer').search_for_option(customer.email, label: customer.fullname)
-      find_select('Owner').select_option(owner.fullname)
-      find_editor('Text').type('Onboarding ticket')
-    end
+    fill_field('Title', title)
+    search_for_option('Customer', customer.email, option: customer.fullname)
+    select_option('Owner', owner.fullname)
+    type_in_editor('Text', 'Onboarding ticket')
+    page.get_by_role('button', name: 'Create', exact: true).click
 
-    click_on 'Create'
+    expect(notification('Ticket has been created successfully')).to be_visible
 
     open_checklist
 
-    click_on 'Add from a template'
-    click_on checklist_template.name
+    content_sidebar.get_by_role('button', name: 'Add from a template').click
+    page.get_by_role('button', name: checklist_template.name).click
+
+    expect(content_sidebar.get_by_role('listitem')).to have_count(checklist_template.items.count)
   end
 
   def open_checklist
-    find('button[aria-label="Checklist"]').click
+    content_sidebar.get_by_role('button', name: 'Checklist', exact: true).click
   end
 
-  def ticket_hook(ticket)
-    ticket_hook         = Setting.get('ticket_hook')
-    ticket_hook_divider = Setting.get('ticket_hook_divider')
-
-    "#{ticket_hook}#{ticket_hook_divider}#{ticket.number}"
+  # Both ticket headers carry the badge, the one swapped out only turns inert.
+  def checklist_badge
+    main_content.get_by_role('button', name: 'Open checklist').filter(visible: true)
   end
 
-  def add_sub_ticket_to_main_checklist
-    click_on main_title
+  def add_sub_ticket_to_main_checklist(sub_ticket)
+    main_sidebar.get_by_role('link', name: main_title).click
     open_checklist
 
-    find('#ticketSidebar li [data-test-id="common-label"]', text: 'IT to-dos').click
-    # Target the inline edit field via its placeholder: a bare 'input' selector is ambiguous
-    #   under Playwright, whose visibility check also counts the appearance-none checkbox inputs.
-    find('#ticketSidebar textarea[placeholder="Text or ticket identifier"]').fill_in with: ticket_hook(Ticket.last)
-    find('#ticketSidebar button[aria-label="Save changes"]').click
-    wait_for_gql('apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.graphql')
+    content_sidebar.get_by_role('button', name: 'Start editing').filter(hasText: 'IT to-dos').click
+    content_sidebar.get_by_role('textbox', name: 'Text or ticket identifier').fill("#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{sub_ticket.number}")
+    content_sidebar.get_by_role('button', name: 'Save changes').click
+
+    expect(content_sidebar.get_by_role('link', name: sub_ticket.title)).to be_visible
   end
 
-  def add_article_to_main_ticket
-    within 'main' do
-      find('button', text: 'Add internal note').click
-      find_editor('Text').type('Some notes about the new employee onboarding.')
-    end
+  def add_internal_note(text, mention: nil)
+    add_internal_note_button.click
+    type_in_editor('Text', "#{text} ")
+    mention_in_editor('Text', mention) if mention
 
-    click_on 'Update'
-    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
+    page.get_by_role('button', name: 'Update', exact: true).click
+
+    expect(notification('Ticket updated successfully.')).to be_visible
   end
 
-  def add_article_to_it_ticket
-    within 'main' do
-      find('button', text: 'Add internal note').click
-      find_editor('Text').type('Some notes about the new employee onboarding.')
-      find_editor('Text').type("ping @@#{agent.firstname}")
-    end
-
-    find('li', text: agent.fullname).click
-    wait_for_form_updater
-
-    click_on 'Update'
-    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
-  end
-
-  def check_all_checkboxes
+  # A ticket item has no checkbox, its ticket's state checks it.
+  def check_all_checkboxes(ticket)
     open_checklist
 
-    checkboxes = find_all('#ticketSidebar input[type=checkbox]', visible: :all)
+    checkboxes = content_sidebar.get_by_role('checkbox')
+    expect(checkboxes.first).to be_visible
 
-    checkboxes.each do |elem|
-      elem.sibling('span').click
-    end
+    checkboxes.all.each(&:check)
 
-    wait_for_gql('apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.graphql', number: checkboxes.count)
+    # A checkbox is checked before the server knows, and closing the ticket asks the server.
+    wait_until('The checklist items are not checked') { ticket.reload.checklist.items.where(ticket_id: nil).incomplete.none? }
   end
 
-  def verify_referenced_ticket_state(state)
-    expect(page).to have_css('#ticketSidebar li svg') do |elem|
-      elem[:'aria-labelledby'] == "ticket-#{Ticket.maximum(:id)}" && elem[:'aria-roledescription'] == "(ticket status: #{state})"
-    end
+  def expect_referenced_ticket_state(ticket, state)
+    status = content_sidebar.get_by_role('link', name: ticket.title).get_by_role('status')
+
+    expect(status).to have_attribute('aria-roledescription', "(ticket status: #{state})")
   end
 
   def try_closing
     close_ticket
 
-    expect(page).to have_text('Incomplete ticket checklist')
-
-    click_on 'Yes, open the checklist'
-  end
-
-  def verify_checklist_badge
-    expect(page).to have_text("CHECKED\n5 of 6")
+    page.get_by_role('dialog', name: 'Incomplete ticket checklist').get_by_role('button', name: 'Yes, open the checklist').click
   end
 
   def close_ticket
-    dismiss_notification
-
-    find('#ticketSidebar + div button[aria-label="Ticket"]').click
-
-    find_select('State').select_option('closed')
-
-    click_on 'Update'
-  end
-
-  def dismiss_notification
-    find('button[aria-label="Hide notification"]', wait: 0).click
-  rescue Capybara::ElementNotFound
-    nil
-  end
-
-  def close_and_verify
-    verify_referenced_ticket_state('closed')
-    expect(page).to have_no_text('CHECKED')
-    close_ticket
-    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql', number: 2)
-
-    wait.until do
-      Ticket.second_to_last.reload.state.name == 'closed'
-    end
+    content_sidebar.get_by_role('button', name: 'Ticket', exact: true).click
+    select_option('State', 'closed')
+    page.get_by_role('button', name: 'Update', exact: true).click
   end
 end

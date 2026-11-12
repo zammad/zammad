@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authenticated_as: :agent1, type: :system do
+RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authenticated_as: :agent1, type: :playwright do
   let(:agent1) { create(:agent, password: 'test', groups: [group]) }
   let(:agent2) { create(:agent, password: 'test', groups: [group]) }
   let(:group)  { create(:group) }
@@ -13,171 +13,98 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
     end
   end
 
-  context 'when using shared drafts' do
-    before do
-      agent2
+  before do
+    agent2
+  end
 
-      visit "/ticket/#{ticket.id}"
+  def update_button
+    page.get_by_role('button', name: 'Update', exact: true)
+  end
 
+  def save_as_draft
+    page.get_by_role('button', name: 'Drafts & macros').click
+    page.get_by_role('menuitem', name: 'Save as draft').click
+  end
+
+  def discard_changes
+    page.get_by_role('button', name: 'Discard your unsaved changes').click
+    page.get_by_role('dialog').get_by_role('button', name: 'Discard changes').click
+  end
+
+  # The draft replaces what is typed so far, which asks for a confirmation.
+  def apply_draft
+    type_in_editor('Text', 'force overwrite dialog')
+
+    page.get_by_role('button', name: 'Draft available').click
+    flyout('Apply shared draft').get_by_role('button', name: 'Apply').click
+    page.get_by_role('dialog').get_by_role('button', name: 'Overwrite content').click
+
+    expect(editor('Text')).to not_contain_text('force overwrite dialog')
+  end
+
+  def add_internal_note_mentioning(text, user)
+    add_internal_note_button.click
+    type_in_editor('Text', "#{text} ")
+    mention_in_editor('Text', user)
+    update_button.click
+
+    expect(notification('Ticket updated successfully.')).to be_visible
+  end
+
+  def close_tab
+    main_sidebar.get_by_role('treeitem').filter(hasText: ticket.title).get_by_role('button', name: 'Close this tab').click
+  end
+
+  it 'hands a shared draft over to another agent and back', performs_jobs: true do
+    open_desktop_ticket(ticket)
+
+    add_internal_note_button.click
+    type_in_editor('Text', 'article text content')
+    select_option('Priority', '3 high')
+    save_as_draft
+
+    expect(notification('Shared draft has been created successfully.')).to be_visible
+    expect(ticket.reload.shared_draft.body).to include('article text content')
+
+    discard_changes
+    add_internal_note_mentioning('Can we send this to the customer?', agent2)
+    close_tab
+
+    perform_enqueued_jobs
+
+    as_user(agent2) do
+      page.get_by_role('button', name: 'Show notifications').click
+      page.get_by_role('link', name: "#{agent1.fullname} updated ticket").click
+
+      expect(page).to have_url(%r{/tickets/#{ticket.id}$})
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
-    end
 
-    def close_tab
-      return if page.has_no_css?('#taskbarTabListExpanded', wait: 0)
+      add_internal_note_button.click
+      apply_draft
 
-      within '#taskbarTabListExpanded' do
-        within('li', text: ticket.title) { find('button[aria-label="Close this tab"]', visible: :all).click }
-      end
-    end
+      editor('Text').click
+      page.keyboard.press('ControlOrMeta+A')
+      type_in_editor('Text', 'article text content - now with modification')
 
-    def dismiss_notification
-      find('button[aria-label="Hide notification"]', wait: 0).click
-    rescue Capybara::ElementNotFound
-      nil
-    end
+      save_as_draft
+      page.get_by_role('dialog').get_by_role('button', name: 'Overwrite draft').click
 
-    it 'works correctly', performs_jobs: true do
-      find('button', text: 'Add internal note').click
+      wait_until('The shared draft is not overwritten') { ticket.reload.shared_draft.body.include?('article text content - now with modification') }
 
-      wait_for_form_updater(2)
-
-      within_form(form_updater_gql_number: 2) do
-        find_editor('Text').type('article text content')
-        find_select('Priority').select_option('3 high')
-      end
-
-      # Create draft
-      click_on('Drafts & macros')
-      click_on('Save as draft')
-
-      wait_for_gql('shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomCreate.graphql')
-
-      expect(page).to have_text('Shared draft has been created successfully.')
-      expect(ticket.shared_draft.body).to include('article text content')
-
-      # Create an internal note for agent2
-      click_on('Discard your unsaved changes')
-      click_on('Discard changes')
-
-      find('button', text: 'Add internal note').click
-
-      wait_for_form_updater(5)
-
-      within_form(form_updater_gql_number: 5) do
-        find_editor('Text').type("Can we send this to the customer?  @@#{agent2.firstname}")
-      end
-
-      find('li', text: agent2.fullname).click
-
-      wait_for_form_updater(7)
-
-      click_on('Update')
-
-      expect(page).to have_text('Ticket updated successfully.')
-
+      discard_changes
+      add_internal_note_mentioning("I changed it slightly, it's ready now.", agent1)
       close_tab
-
-      # Add notification for agent2 from article mention.
-      perform_enqueued_jobs
-
-      # Switch to agent2
-      using_session :agent2 do
-        login(username: agent2.login, password: 'test')
-
-        # Open ticket from notifications.
-        dismiss_notification
-        click_on 'Show notifications'
-        find('a', text: "#{agent1.fullname} updated ticket").click
-
-        expect(page).to have_current_route("tickets/#{ticket.id}")
-
-        wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
-
-        # Modify draft
-        find('button', text: 'Add internal note').click
-
-        wait_for_form_updater(2)
-
-        within_form(form_updater_gql_number: 2) do
-          find_editor('Text').type('force overwrite dialog')
-        end
-
-        click_on('Draft available')
-        click_on('Apply')
-        click_on('Overwrite content')
-
-        wait_for_form_updater(4)
-
-        within_form(form_updater_gql_number: 4) do
-          find_editor('Text').clear.type('article text content - now with modification')
-        end
-
-        click_on('Drafts & macros')
-        click_on('Save as draft')
-        click_on('Overwrite draft')
-
-        wait_for_gql('shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomUpdate.graphql')
-
-        expect(ticket.reload.shared_draft.body).to include('article text content - now with modification')
-
-        # Create an internal note for agent1
-        click_on('Discard your unsaved changes')
-        click_on('Discard changes')
-
-        wait_for_form_updater(7)
-
-        find('button', text: 'Add internal note').click
-
-        wait_for_form_updater(8)
-
-        within_form(form_updater_gql_number: 8) do
-          find_editor('Text').type("I changed it slightly, it's ready now.  @@#{agent1.firstname}")
-        end
-
-        find('li', text: agent1.fullname).click
-
-        wait_for_form_updater(10)
-
-        click_on('Update')
-
-        expect(page).to have_text('Ticket updated successfully.')
-
-        close_tab
-
-        # Simulate the second agent closing their browser.
-        #   Quit the driver directly: Capybara::Playwright::Driver#quit is private,
-        #   so Session#quit would silently skip it and leave the browser running.
-        page.driver.send(:quit)
-      end
-
-      # Back to agent1
-      visit "/ticket/#{ticket.id}"
-
-      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
-
-      # Apply the draft
-      find('button', text: 'Add internal note').click
-
-      wait_for_form_updater(2)
-
-      within_form(form_updater_gql_number: 2) do
-        find_editor('Text').type('force overwrite dialog')
-      end
-
-      click_on('Draft available')
-      click_on('Apply')
-      click_on('Overwrite content')
-
-      wait_for_form_updater(4)
-
-      click_on('Update')
-
-      wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
-
-      expect(page).to have_no_text('Draft available')
-
-      expect(ticket.articles.count).to eq(4)
-      expect(ticket.articles.last.body).to include('article text content - now with modification')
     end
+
+    open_desktop_ticket(ticket)
+
+    add_internal_note_button.click
+    apply_draft
+    update_button.click
+
+    expect(notification('Ticket updated successfully.')).to be_visible
+    expect(page.get_by_role('button', name: 'Draft available')).to have_count(0)
+    expect(ticket.articles.count).to eq(4)
+    expect(ticket.articles.last.body).to include('article text content - now with modification')
   end
 end

@@ -103,13 +103,18 @@ Capybara replaces its Capybara version, never keep both.
 - Find elements by role and accessible name, form fields by their label —
   `page.get_by_role('button', name: 'Create', exact: true)`. No CSS classes,
   ids or `data-test-id`; a missing accessible name is an app bug.
-- Open the app with `open_desktop(route)` or `open_mobile(route)`; another tab
+- Open the app with `open_desktop(route)` or `open_mobile(route)`, a ticket of
+  the desktop view with `open_desktop_ticket(ticket)`; another tab
   with `open_tab`, the helpers act on it inside `on_tab(tab) { … }`.
+- Another user acts inside `as_user(user) { … }`: a browser of their own,
+  signed in through the login form (password `test`), closed afterwards.
 - Page areas: `main_content`, `page_navigation`, `main_sidebar`,
-  `content_sidebar`, `flyout(title)`, `notification(text)`, `table_rows(caption)`.
+  `content_sidebar`, `flyout(title)`, `notification(text)`, `table_rows(caption)`,
+  `ticket_article(text)`.
 - Forms: `fill_field`, `select_option`, `search_for_option` (autocomplete and
   tree select), `selected_options`, all with `within:`. They wait for the form
-  updater themselves — never count form updater calls. `sign_in` fills the
+  updater themselves — never count form updater calls. `type_in_editor` types
+  into a rich text editor, `mention_in_editor` mentions a user. `sign_in` fills the
   login form for `authenticated_as: false`.
 - `have_text` is the whole text, `contain_text` a part; negations are
   `not_contain_text` etc. Compare plain Ruby arrays with `eq([])`, Playwright's

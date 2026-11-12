@@ -23,11 +23,6 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
     end
   end
 
-  def open_ticket(ticket)
-    open_desktop("/tickets/#{ticket.id}")
-    wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
-  end
-
   def switch_to_tab(title)
     main_sidebar.get_by_role('link', name: title).click
   end
@@ -50,7 +45,7 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
   end
 
   it 'history flyout stays around when switching between taskbars' do
-    open_ticket(ticket)
+    open_desktop_ticket(ticket)
 
     wait_for_header_swap
 
@@ -77,8 +72,8 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
   end
 
   it 'keeps new article form pinned and other ticket scrolling in place' do
-    open_ticket(ticket)
-    open_ticket(other_ticket)
+    open_desktop_ticket(ticket)
+    open_desktop_ticket(other_ticket)
 
     add_internal_note_button.click
     type_in_editor('Text', 'Call content here')

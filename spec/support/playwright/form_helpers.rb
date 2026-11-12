@@ -38,6 +38,15 @@ module PlaywrightNative
       end
     end
 
+    # Types the mention and picks the user from the suggestions, which subscribes them.
+    def mention_in_editor(label, user, within: page)
+      type_in_editor(label, "@@#{user.firstname}", within:)
+
+      after_form_update_of(field(label, within:)) do
+        page.get_by_role('listbox', name: 'Users').get_by_role('option', name: user.fullname).click
+      end
+    end
+
     def select_option(label, option, within: page)
       choose_from_menu(label, within:) do |_combobox, menu|
         menu.get_by_role('option', name: option).click

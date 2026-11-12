@@ -8,8 +8,7 @@ RSpec.describe 'Desktop > Ticket > Taskbar state sync between browser tabs', app
   let(:ticket) { create(:ticket, group:).tap { |ticket| create(:ticket_article, ticket:) } }
 
   def open_ticket
-    open_desktop("/tickets/#{ticket.id}")
-    wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+    open_desktop_ticket(ticket)
     wait_for_subscription_start('userCurrentTaskbarItemStateUpdates')
   end
 
