@@ -182,8 +182,9 @@ importing `#tests/graphql/builders/mocks.ts` or by importing a
 ### Browser specs (Vitest browser mode)
 
 `*.browser.spec.ts` files run in Chromium through Vitest's Playwright
-provider, not in jsdom. `vitest.config.mjs` defines both suites as projects:
-`unit` (jsdom, `pnpm test`) and `browser` (`pnpm test:browser`). The browser always runs
+provider, not in jsdom. `vitest.config.mjs` defines the suites as projects:
+`unit` (jsdom) and `build` (plain Node, the specs under `app/frontend/build/`),
+both run by `pnpm test`, and `browser` (`pnpm test:browser`). The browser always runs
 in a Playwright server container, also locally, so that reference
 screenshots (`__screenshots__/`) are the same for everyone:
 

@@ -42,7 +42,7 @@ export default defineConfig(async (env) => ({
         test: {
           name: 'unit',
           globals: true,
-          exclude: ['**/node_modules/**', '**/.git/**', '**/*.browser.spec.ts'],
+          exclude: ['**/node_modules/**', '**/.git/**', '**/*.browser.spec.ts', 'build/**'],
           setupFiles: ['./tests/vitest.setup.ts'],
           environment: 'jsdom',
           pool: 'vmForks',
@@ -71,6 +71,18 @@ export default defineConfig(async (env) => ({
               replacement: join(dirname(require.resolve('date-fns/package.json')), 'index.cjs'),
             },
           ],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'build',
+          include: ['build/**/*.spec.?(c|m)[jt]s'],
+          environment: 'node',
+          // The VM pools hand a require()d ES module to CommonJS code without `__esModule`, which breaks
+          // the code generator packages: their CommonJS builds require the ESM-only auto-bind.
+          pool: 'forks',
+          testTimeout: isCI ? 30_000 : 5_000,
         },
       },
       {

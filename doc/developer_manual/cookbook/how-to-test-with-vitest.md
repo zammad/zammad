@@ -6,11 +6,13 @@ and are starting from `develop` branch.
 Switching between running tests and doing development work (by running `dev` from `/bin`)
 should be effortless without any issues.
 
-The frontend tests are implemented in Vitest, which runs them as two projects (see `vitest.config.mjs`):
+The frontend tests are implemented in Vitest, which runs them as three projects (see `vitest.config.mjs`):
 
 - **Unit tests** (`*.spec.ts`) run in jsdom. For the Vue.js 3 component tests we use the "Testing Library", which is
   an offset of the Vue test utils suite. As an addition to the normal unit tests and component tests, we have a suite
   for frontend integration tests.
+- **Build tooling tests** (`*.spec.ts` under `app/frontend/build/`) cover the Vite and code generator plugins and run
+  in plain Node. `pnpm test` runs them together with the unit tests.
 - **Browser tests** (`*.browser.spec.ts`) run in a real Chromium through Vitest browser mode and Playwright. We use
   them where jsdom is not enough, for example for the editor, layout and visual regression screenshots.
 

@@ -23,7 +23,7 @@
     "lint:md": "pnpm lint:md:cmd '*.md' '**/*.md' '#.agents' '#.claude' '#node_modules' '#**/node_modules' '#tmp'",
     "lint:md:fix": "pnpm lint:md --fix",
     "lint:md:cmd": "pnpm exec markdownlint-cli2",
-    "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest --project unit",
+    "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest --project unit --project build",
     "test:browser": "TZ=utc vitest --project browser",
     "playwright:install": "playwright install chromium",
     "playwright:server": "docker run --rm --init --ipc=host -p 127.0.0.1:4444:4444 mcr.microsoft.com/playwright:v1.64.1-noble npx --yes playwright@1.64.1 run-server --host 0.0.0.0 --port 4444",
