@@ -7,7 +7,8 @@ class Sequencer::Unit::Import::Ldap::Sources::Configs < Sequencer::Unit::Base
   def process
     result = []
     @ldap_config_set = false
-    LdapSource.active.find_each do |source|
+    # find_each would ignore the prio order (#5057)
+    LdapSource.active.each do |source|
       next if source.preferences.blank?
 
       result << source_config(source)

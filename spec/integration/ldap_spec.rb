@@ -70,6 +70,44 @@ RSpec.describe 'Ldap import', integration: true, required_envs: %w[IMPORT_LDAP_E
     end
   end
 
+  context 'when multiple sources contain the same users (#5057)' do
+    let(:source_admins) do
+      create(:ldap_source, :with_config).tap do |source|
+        source.preferences['group_role_map']   = { 'cn=admin,ou=groups,dc=foo,dc=example,dc=com' => ['1'] }
+        source.preferences['unassigned_users'] = 'skip_sync'
+        source.save!
+      end
+    end
+    let(:source_agents) do
+      create(:ldap_source, :with_config).tap do |source|
+        source.preferences['group_role_map']   = { 'cn=1st level,ou=groups,dc=foo,dc=example,dc=com' => ['2'] }
+        source.preferences['unassigned_users'] = 'skip_sync'
+        source.save!
+      end
+    end
+
+    before do
+      Setting.set('ldap_integration', true)
+      TCR.turned_off do
+        source_admins
+        source_agents
+        source_admins.update!(prio: 99)
+        ImportJob.start_registered
+      end
+    end
+
+    it 'does let the last source of the list win', :aggregate_failures do
+      expect(LdapSource.pluck(:id)).to eq([source_agents.id, source_admins.id])
+
+      user_ab = User.find_by(login: 'ab')
+      expect(user_ab.active).to be(true)
+      expect(user_ab.roles.map(&:name)).to eq(['Admin'])
+      expect(user_ab.source).to eq("Ldap::#{source_admins.id}")
+
+      expect(User.find_by(login: 'lb').active).to be(false)
+    end
+  end
+
   context 'when importing' do
     before do
       before_hook if defined? before_hook
