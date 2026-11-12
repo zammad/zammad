@@ -5,7 +5,7 @@ class App.Signature extends App.Model
 
   @configure_attributes = [
     { name: 'name',           display: __('Name'),          tag: 'input',    type: 'text', limit: 100, 'null': false },
-    { name: 'body',           display: __('Text'),          tag: 'richtext',               limit: 500, 'null': true, plugins: [
+    { name: 'body',           display: __('Text'),          tag: 'richtext', bubble_menu: true, limit: 500, 'null': true, plugins: [
       {
         controller: 'WidgetPlaceholder'
         params:
