@@ -44,6 +44,22 @@ function check_zammad_ready {
   done
 }
 
+function check_railsserver_ready {
+  check_no_restore_running
+
+  # nginx only proxies to the railsserver, so it waits for it instead of booting Rails itself.
+  # The railsserver only starts listening once Zammad is ready.
+  echo 'Checking if the railsserver is ready...'
+
+  # Strip possible surrounding brackets from IPv6 addresses.
+  CLEAN_RAILSSERVER_HOST=${ZAMMAD_RAILSSERVER_HOST#[}; CLEAN_RAILSSERVER_HOST=${CLEAN_RAILSSERVER_HOST%]}
+
+  until (echo > /dev/tcp/"${CLEAN_RAILSSERVER_HOST}/${ZAMMAD_RAILSSERVER_PORT}") &> /dev/null; do
+    echo "  waiting for railsserver to be ready..."
+    sleep 2
+  done
+}
+
 function check_postgresql_ready {
   echo 'Checking if PostgreSQL is ready...'
 
@@ -137,7 +153,7 @@ if [ "$1" = 'zammad-init' ]; then
 
 # zammad nginx
 elif [ "$1" = 'zammad-nginx' ]; then
-  check_zammad_ready
+  check_railsserver_ready
 
   # configure nginx
 
