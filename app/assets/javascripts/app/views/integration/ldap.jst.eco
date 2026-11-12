@@ -68,10 +68,12 @@
         <tr>
           <th width="40%"><%- @T('%s Attribute', 'LDAP') %>
           <th width="60%"><%- @T('%s Attribute', 'Zammad') %>
-        <% for key, value of @config.user_attributes: %>
-          <tr>
-            <td class="settings-list-row-control"><%= key %>
-            <td class="settings-list-row-control"><%= value %>
+        <% for key, values of @config.user_attributes: %>
+          <% for value in [].concat(values): %>
+            <tr>
+              <td class="settings-list-row-control"><%= key %>
+              <td class="settings-list-row-control"><%= value %>
+          <% end %>
         <% end %>
       </thead>
       <tbody>
