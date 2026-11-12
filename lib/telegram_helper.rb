@@ -265,9 +265,11 @@ returns
       user = User.find(auth.user_id)
       user.update!(user_data)
     else
-      if message_user[:username]
-        user_data[:note] = "Telegram @#{message_user[:username]}"
-      end
+      user_data[:note] = if message_user[:username]
+                           "Telegram @#{message_user[:username]}"
+                         else
+                           "Telegram ID: #{message_user[:id]}"
+                         end
       user_data[:active]   = true
       user_data[:role_ids] = Role.signup_role_ids
       user                 = User.create(user_data)

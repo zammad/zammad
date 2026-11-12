@@ -171,6 +171,22 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(ticket.articles.first.content_type).to eq('text/plain')
         end
 
+        it 'notes the Telegram username on a new user' do
+          post callback_url, params: read_message('private', 'text'), as: :json
+
+          expect(Ticket.last.customer).to have_attributes(login: 'testusername', note: 'Telegram @Testusername')
+        end
+
+        it 'notes the Telegram ID on a new user without username' do
+          message = read_message('private', 'text')
+          message['message']['from'].delete('username')
+          message['message']['chat'].delete('username')
+
+          post callback_url, params: message, as: :json
+
+          expect(Ticket.last.customer).to have_attributes(login: '111111', note: 'Telegram ID: 111111')
+        end
+
         it 'ignore same text message' do
           post callback_url, params: read_message('private', 'text'), as: :json
           expect(response).to have_http_status(:ok)
