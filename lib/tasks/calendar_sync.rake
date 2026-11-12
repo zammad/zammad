@@ -3,10 +3,6 @@
 namespace :calendar do
   desc 'Sync all calendar iCal feeds'
   task sync: :environment do
-    Calendar.find_each do |calendar|
-      calendar.sync_ical
-    rescue => e
-      Rails.logger.error "Calendar ##{calendar.id}: #{e.message}"
-    end
+    Calendar.sync
   end
 end

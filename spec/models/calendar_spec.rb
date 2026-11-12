@@ -6,8 +6,6 @@ require 'models/concerns/has_audit_logs_examples'
 RSpec.describe Calendar, type: :model do
   subject(:calendar) { create(:calendar) }
 
-  let(:feed) { Digest::MD5.hexdigest(calendar.ical_url) }
-
   it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
 
   describe 'attributes' do
@@ -63,80 +61,55 @@ RSpec.describe Calendar, type: :model do
         end
       end
     end
+  end
 
-    describe '#public_holidays' do
-      subject(:calendar) do
-        create(:calendar, ical_url: 'http://test/calendar1.ics')
-      end
+  describe '.sync' do
+    let(:calendar_ical_sync_service) { Service::Calendar::Ical::Sync }
+    let(:broken_calendar)            { create(:calendar, ical_url: 'http://test/calendar1.ics', default: false) }
+    let(:working_calendar)           { create(:calendar, ical_url: 'http://test/calendar2.ics', default: false) }
 
+    before do
+      allow(calendar_ical_sync_service).to receive(:execute) # the stub has to be in place before the create-time sync
+
+      broken_calendar
+      working_calendar
+    end
+
+    context 'when one calendar raises' do
       before do
-        allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
-        stub_request(:get, 'http://test/calendar1.ics')
-          .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
-        stub_request(:get, 'http://test/calendar3.ics')
-          .to_return(body: Rails.root.join('test/data/calendar/calendar3.ics').read)
-        stub_request(:get, 'http://test/calendar4.ics')
-          .to_return(body: Rails.root.join('test/data/calendar/calendar4.ics').read)
-        travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
+        allow(Rails.logger).to receive(:error)
+        allow(calendar_ical_sync_service)
+          .to receive(:execute).with(calendar: broken_calendar).and_raise('feed is broken')
       end
 
-      context 'on creation' do
-        it 'is computed from iCal event data (implicitly via #sync), from one year before to three years after' do
-          expect(calendar.public_holidays).to eq(
-            '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-          )
-        end
+      it 'syncs the remaining calendars' do
+        described_class.sync
 
-        context 'when the host time zone is east of UTC', time_zone: 'Europe/Berlin' do
-          it 'keeps recurring all-day events on their day' do
-            expect(calendar.public_holidays.keys).to eq(%w[2016-12-24 2017-12-24 2018-12-24 2019-12-24 2020-12-24])
-          end
-        end
+        expect(calendar_ical_sync_service).to have_received(:execute).with(calendar: working_calendar)
+      end
 
-        context 'with one-time and n-time (recurring) events' do
-          subject(:calendar) do
-            create(:calendar, ical_url: 'http://test/calendar3.ics')
-          end
+      it 'logs the error of the failing calendar' do
+        described_class.sync
 
-          it 'accurately computes/imports events' do
-            expect(calendar.public_holidays).to eq(
-              '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2016-12-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
-              '2016-12-28' => { 'active' => true, 'summary' => 'day5', 'feed' => feed },
-              '2017-01-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
-              '2017-02-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
-              '2017-03-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
-              '2017-04-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
-              '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            )
-          end
-        end
+        expect(Rails.logger).to have_received(:error).with("Calendar ##{broken_calendar.id}: #<RuntimeError: feed is broken>")
+      end
 
-        context 'with timed recurring events' do
-          subject(:calendar) do
-            create(:calendar, ical_url: 'http://test/calendar4.ics')
-          end
+      it 'logs the backtrace of the failing calendar' do
+        described_class.sync
 
-          it 'stores each occurrence on its day in the event time zone' do
-            expect(calendar.public_holidays).to eq(
-              '2017-01-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
-              '2017-01-12' => { 'active' => true, 'summary' => 'custom zone shift', 'feed' => feed },
-              '2017-01-19' => { 'active' => true, 'summary' => 'evening shift', 'feed' => feed },
-              '2017-02-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
-              '2017-02-12' => { 'active' => true, 'summary' => 'custom zone shift', 'feed' => feed },
-              '2017-02-19' => { 'active' => true, 'summary' => 'evening shift', 'feed' => feed },
-              '2017-03-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
-              '2017-04-05' => { 'active' => true, 'summary' => 'night shift', 'feed' => feed },
-            )
-          end
-        end
+        expect(Rails.logger).to have_received(:error).with(%r{app/models/calendar\.rb})
+      end
+    end
+
+    # the scheduler job re-raises this one on purpose, so that the process manager restarts the process
+    context 'when a calendar raises ActiveRecord::AdapterError' do
+      before do
+        allow(calendar_ical_sync_service)
+          .to receive(:execute).with(calendar: broken_calendar).and_raise(ActiveRecord::AdapterError)
+      end
+
+      it 'lets the error through' do
+        expect { described_class.sync }.to raise_error(ActiveRecord::AdapterError)
       end
     end
   end
@@ -145,6 +118,8 @@ RSpec.describe Calendar, type: :model do
     subject(:calendar) do
       create(:calendar, ical_url: 'http://test/calendar1.ics', default: false)
     end
+
+    let(:calendar_ical_sync_service) { Service::Calendar::Ical::Sync }
 
     before do
       allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
@@ -155,102 +130,65 @@ RSpec.describe Calendar, type: :model do
       travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
     end
 
-    context 'when called explicitly after creation' do
-      it 'writes #public_holidays to the cache (valid for 1 day)' do
-        expect(Rails.cache.read("CalendarIcal::#{calendar.id}")).to be_nil
+    it 'delegates to the sync service' do
+      calendar # create and sync before counting calls
+      allow(calendar_ical_sync_service).to receive(:execute)
 
-        expect { calendar.sync_ical }
-          .to change { Rails.cache.read("CalendarIcal::#{calendar.id}") }
-          .to(calendar.attributes.slice('public_holidays', 'ical_url').symbolize_keys)
+      calendar.sync_ical
+
+      expect(calendar_ical_sync_service).to have_received(:execute).with(calendar: calendar)
+    end
+
+    context 'without an iCal URL' do
+      before do
+        calendar # create and sync before counting calls
+        allow(calendar_ical_sync_service).to receive(:execute)
       end
 
-      context 'and neither current date nor iCal URL have changed' do
-        it 'is idempotent' do
-          expect { calendar.sync_ical }
-            .not_to change(calendar, :public_holidays)
-        end
+      it 'does not sync' do
+        calendar.ical_url = nil
 
-        it 'does not create a background job for escalation rebuild' do
-          calendar # create and sync (1 inital background job is created)
-          expect { calendar.sync_ical } # a second sync right after calendar create
-            .to not_change { Delayed::Job.count }
-        end
+        expect(calendar.sync_ical).to be(false)
+        expect(calendar_ical_sync_service).not_to have_received(:execute)
       end
 
-      context 'and current date has changed but neither public_holidays nor iCal URL have changed (past cache expiry)' do
-        before do
-          calendar  # create and sync
-          travel 2.days
-        end
+      it 'does not sync for a blank URL either' do
+        calendar.ical_url = ''
 
-        it 'is idempotent' do
-          expect { calendar.sync_ical }
-            .not_to change(calendar, :public_holidays)
-        end
+        expect(calendar.sync_ical).to be(false)
+        expect(calendar_ical_sync_service).not_to have_received(:execute)
+      end
+    end
 
-        it 'does not create a background job for escalation rebuild' do
-          expect { calendar.sync_ical }
-            .not_to change(Delayed::Job, :count)
-        end
+    context 'when the feed brings new events', :performs_jobs do
+      before do
+        calendar      # create and sync
+        travel 1.year # reach the next recurrence, so the feed changes #public_holidays
+        clear_jobs    # clear (speak: process) created jobs
       end
 
-      context 'and current date has changed (past cache expiry)', performs_jobs: true do
-        before do
-          calendar  # create and sync
-          clear_jobs # clear (speak: process) created jobs
-          travel 1.year
-        end
+      it 'does create a background job for escalation rebuild' do
+        expect { calendar.sync_ical }.to have_enqueued_job(TicketEscalationRebuildJob)
+      end
+    end
 
-        it 'appends newly computed event data to #public_holidays' do
-          expect { calendar.sync_ical }.to change(calendar, :public_holidays).to(
-            '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-            '2021-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-          )
-        end
-
-        it 'does create a background job for escalation rebuild' do
-          expect { calendar.sync_ical }.to have_enqueued_job(TicketEscalationRebuildJob)
-        end
+    context 'when the feed is unchanged', :performs_jobs do
+      before do
+        calendar   # create and sync
+        clear_jobs # clear (speak: process) created jobs, dropping their ActiveJobLock
       end
 
-      context 'and iCal URL has changed' do
-        before { calendar.assign_attributes(ical_url: 'http://test/calendar2.ics') }
-
-        it 'replaces #public_holidays with event data computed from new iCal URL' do
-          expect { calendar.save }
-            .to change(calendar, :public_holidays).to(
-              '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2016-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
-              '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2017-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
-              '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2018-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
-              '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2019-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
-              '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
-              '2020-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
-            )
-        end
+      it 'does not create a background job for escalation rebuild' do
+        expect { calendar.sync_ical } # a second sync right after calendar create
+          .not_to have_enqueued_job(TicketEscalationRebuildJob)
       end
+    end
 
-      context 'when verifying that no duplicate events are synced' do
-        before do
-          stub_request(:get, 'http://test/calendar_duplicate_check.ics')
-            .to_return(body: Rails.root.join('test/data/calendar/calendar_duplicate_check.ics').read)
-          calendar.assign_attributes(ical_url: 'http://test/calendar_duplicate_check.ics')
-          calendar.sync_ical
-        end
+    context 'when the iCal URL changes on save' do
+      before { calendar.assign_attributes(ical_url: 'http://test/calendar2.ics') }
 
-        it 'does not create duplicate events' do
-          expect(calendar.public_holidays).to eq(
-            '2019-01-01' => { 'active' => true, 'feed' => feed, 'summary' => 'Neujahrstag' },
-            '2019-04-22' => { 'active' => true, 'feed' => feed, 'summary' => 'Ostermontag' },
-          )
-        end
+      it 'syncs on save' do
+        expect { calendar.save }.to change(calendar, :public_holidays)
       end
     end
   end
@@ -269,11 +207,30 @@ RSpec.describe Calendar, type: :model do
     context 'when ical_url has not changed' do
       it 'does not sync on save' do
         calendar # force creation before setting expectation
-        allow(described_class).to receive(:fetch_parse).and_call_original
+        allow(Service::Calendar::Ical::Fetch).to receive(:execute).and_call_original
 
         calendar.update!(name: "#{calendar.name} updated")
 
-        expect(described_class).not_to have_received(:fetch_parse)
+        expect(Service::Calendar::Ical::Fetch).not_to have_received(:execute)
+      end
+    end
+
+    context 'when ical_url has changed' do
+      it 'leaves the saving to the enclosing save' do
+        calendar # force creation before setting expectation
+        allow(Service::Calendar::Ical::Sync).to receive(:execute)
+
+        calendar.update!(ical_url: 'http://test/calendar2.ics')
+
+        expect(Service::Calendar::Ical::Sync)
+          .to have_received(:execute).with(calendar: calendar, save: false)
+      end
+    end
+
+    context 'when ical_url is removed' do
+      it 'drops the entries of the former feed' do
+        expect { calendar.update!(ical_url: nil) }
+          .to change { calendar.reload.public_holidays }.to({})
       end
     end
   end
@@ -549,29 +506,6 @@ RSpec.describe Calendar, type: :model do
   describe '.timezones' do
     it 'includes known zones' do
       expect(described_class.timezones.keys).to include('GMT', 'Europe/Berlin', 'Atlantic/Reykjavik')
-    end
-  end
-
-  describe '#sync_ical error handling' do
-    let(:calendar) { create(:calendar) }
-
-    it 'logs errors to last_log on invalid HTTP response' do
-      error = instance_double(UserAgent::Result, success?: false, error: 'No such file https://example.com/cal.ics, 404!')
-      allow(UserAgent).to receive(:get).and_return(error)
-
-      calendar.update_column(:ical_url, 'https://example.com/cal.ics')
-      expect { calendar.sync_ical }.not_to raise_error
-      expect(calendar.last_log).to include('No such file')
-    end
-
-    it 'logs errors to last_log on HostnameSafetyCheck error' do
-      allow(HostnameSafetyCheck).to receive(:validate!).and_raise(
-        HostnameSafetyCheck::LoopbackIpError.new('127.0.0.1')
-      )
-
-      calendar.update_column(:ical_url, 'http://127.0.0.1/cal.ics')
-      expect { calendar.sync_ical }.not_to raise_error
-      expect(calendar.last_log).to include('The hostname is a loopback IP')
     end
   end
 

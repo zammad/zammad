@@ -29,7 +29,9 @@ class CalendarPublicHolidayResync < ActiveRecord::Migration[8.1]
   end
 
   def fetch(calendar)
-    Calendar.fetch_parse(calendar.ical_url)
+    Service::Calendar::Ical::Parse.execute(
+      body: Service::Calendar::Ical::Fetch.execute(url: calendar.ical_url),
+    )
   rescue => e
     Rails.logger.error "Calendar #{calendar.id}: public holidays left unchanged, feed could not be fetched (#{e.message})"
     nil

@@ -63,11 +63,11 @@ RSpec.describe CalendarPublicHolidayResync, type: :db_migration do
       end
 
       it 'fetches the feed only once' do
-        allow(Calendar).to receive(:fetch_parse).and_call_original
+        allow(Service::Calendar::Ical::Fetch).to receive(:execute).and_call_original
 
         migrate
 
-        expect(Calendar).to have_received(:fetch_parse).once
+        expect(Service::Calendar::Ical::Fetch).to have_received(:execute).once
       end
 
       context 'when the feed cannot be fetched' do
@@ -186,11 +186,11 @@ RSpec.describe CalendarPublicHolidayResync, type: :db_migration do
       let(:stored_holidays) { custom_holiday }
 
       it 'does not fetch the feed' do
-        allow(Calendar).to receive(:fetch_parse).and_call_original
+        allow(Service::Calendar::Ical::Fetch).to receive(:execute).and_call_original
 
         migrate
 
-        expect(Calendar).not_to have_received(:fetch_parse)
+        expect(Service::Calendar::Ical::Fetch).not_to have_received(:execute)
       end
 
       it 'does not touch the calendar' do
