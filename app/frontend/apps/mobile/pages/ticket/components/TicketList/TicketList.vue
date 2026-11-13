@@ -42,7 +42,8 @@ const ticketsQueryVariables = computed(() => {
 })
 
 const ticketsQuery = new QueryHandler(
-  useTicketsByOverviewSlimQuery(ticketsQueryVariables, {
+  useTicketsByOverviewSlimQuery({
+    variables: ticketsQueryVariables,
     fetchPolicy: 'cache-first',
     nextFetchPolicy: 'cache-first',
   }),

@@ -4,6 +4,7 @@ import { getGraphQLMockCalls, mockGraphQLResult } from '#tests/graphql/builders/
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { setupView } from '#tests/support/mock-user.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { type SearchQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -71,6 +72,27 @@ describe('visiting search page', () => {
     })
 
     expect(view.getByRole('tab', { name: 'Organizations' })).toHaveFocus()
+  })
+
+  it('doesnt search again when the search field is emptied', async () => {
+    const mocker = mockGraphQLResult<SearchQuery>(SearchDocument, {
+      search: {
+        items: [],
+        totalCount: 0,
+      },
+    })
+
+    const view = await visitView('/search/user?search=search', { mockApollo: false })
+
+    const mockCalls = await mocker.waitForCalls()
+
+    expect(mockCalls).toHaveLength(1)
+
+    await view.events.clear(view.getByPlaceholderText('Search…'))
+    await waitForNextTick(true)
+
+    expect(getTestRouter().currentRoute.value.query.search).toBe('')
+    expect(getGraphQLMockCalls(SearchDocument)).toHaveLength(1)
   })
 
   it('renders correctly if queries are passed down', async () => {

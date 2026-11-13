@@ -13,6 +13,16 @@ const path = require('path')
 
 // Repo-relative POSIX paths, one per line.
 const vueApolloV5Documents = new Set([
+  'app/frontend/apps/mobile/entities/ticket/graphql/queries/overviewOrder.graphql',
+  'app/frontend/apps/mobile/entities/ticket/graphql/queries/overviewTicketCount.graphql',
+  'app/frontend/apps/mobile/entities/ticket/graphql/queries/overviews.graphql',
+  'app/frontend/apps/mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.graphql',
+  'app/frontend/apps/mobile/entities/ticket/graphql/subscriptions/ticketOverviewUpdates.graphql',
+  'app/frontend/apps/mobile/pages/account/graphql/queries/userCurrentAvatarActive.graphql',
+  'app/frontend/apps/mobile/pages/search/graphql/queries/searchOverview.graphql',
+  'app/frontend/apps/mobile/pages/ticket/graphql/mutations/live-user/delete.graphql',
+  'app/frontend/apps/mobile/pages/ticket/graphql/mutations/live-user/ticketLiveUserUpsert.graphql',
+  'app/frontend/apps/mobile/pages/ticket/graphql/queries/ticketsByOverviewSlim.graphql',
   'app/frontend/shared/graphql/queries/about.graphql',
   'app/frontend/shared/graphql/queries/applicationConfig.graphql',
   'app/frontend/shared/graphql/queries/locales.graphql',

@@ -19,7 +19,7 @@ import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectio
 import type { MenuItem } from '#mobile/components/CommonSectionMenu/index.ts'
 
 import SearchResults from '../components/SearchResults.vue'
-import { useSearchLazyQuery } from '../graphql/queries/searchOverview.api.ts'
+import { useSearchQuery } from '../graphql/queries/searchOverview.api.ts'
 import { useSearchPlugins } from '../plugins/index.ts'
 
 import type { LocationQueryRaw } from 'vue-router'
@@ -50,13 +50,13 @@ const model = computed(() => {
 })
 
 const searchQuery = new QueryHandler(
-  useSearchLazyQuery(
-    () => ({
-      search: filter.value,
-      onlyIn: model.value,
-    }),
-    () => ({ enabled: canSearch.value }),
-  ),
+  useSearchQuery({
+    variables: {
+      search: filter,
+      onlyIn: model,
+    },
+    enabled: () => canSearch.value && !!props.type,
+  }),
 )
 
 const loading = searchQuery.loadingWithoutCachedResult()
@@ -103,10 +103,6 @@ const loadByFilter = async (filterQuery: string) => {
   }
 
   addSearch(filterQuery)
-
-  if (searchQuery.isFirstRun()) {
-    searchQuery.load()
-  }
 }
 
 // load data after a few ms to not overload the api

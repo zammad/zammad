@@ -15,14 +15,12 @@ export const useTicketOverviews = () => {
   const overviews = useTicketOverviewsStore()
 
   const ticketOverviewTicketCountHandler = new QueryHandler(
-    useTicketOverviewTicketCountLazyQuery(
-      {
+    useTicketOverviewTicketCountLazyQuery({
+      variables: {
         ignoreUserConditions: false,
       },
-      {
-        pollInterval: POLLING_INTERVAL,
-      },
-    ),
+      pollInterval: POLLING_INTERVAL,
+    }),
   )
 
   onMounted(() => {

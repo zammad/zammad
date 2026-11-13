@@ -23,7 +23,9 @@ export type TicketOverview = Pick<Overview, 'id' | 'name' | 'organizationShared'
 export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const ticketOverviewHandler = new QueryHandler(
     useTicketOverviewsQuery({
-      withTicketCount: true,
+      variables: {
+        withTicketCount: true,
+      },
     }),
   )
 
