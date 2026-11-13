@@ -40,7 +40,7 @@ class ProviderConnections extends App.ControllerAIFeatureBase
       "#{value} <span class=\"badge badge--ghost\">#{App.i18n.translateInline('Image text recognition')}</span>"
 
     callbackProviderAttribute = (value, object) ->
-      App.Config.get('AIProviders')[object.provider]?.label
+      App.i18n.translateInline(App.Config.get('AIProviders')[object.provider]?.label)
 
     @genericController = new ProviderConnectionsIndex(
       el:            @el
@@ -527,7 +527,7 @@ ProviderConnectionFormMixin =
 
       # Provider comes first: selecting it pre-fills the name below.
       attributes.push(
-        { name: 'provider', display: __('Type'), tag: 'select', options: sortedOptions, null: false, nulloption: true, value: providerKey, customsort: 'on' }
+        { name: 'provider', display: __('Type'), tag: 'select', options: sortedOptions, null: false, nulloption: true, value: providerKey, customsort: 'on', translate: true }
       )
 
     attributes.push(

@@ -59,7 +59,7 @@
           <div class="js-ticketSummaryGenerationConfigSelect"></div>
           <span class="help-block"><%- @T('You can overwrite this setting for specific groups in the group manager. %l', '#manage/groups') %></span>
         </div>
-        <button type="submit" class="btn btn--primary">Submit</button>
+        <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
       </div>
     </form>
   </div>
