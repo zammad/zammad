@@ -90,6 +90,7 @@ const showAIKnowledgeBaseDraft = computed(
           :linked-answers="linkedAnswers"
           :is-ticket-editable="isTicketEditable"
           :can-insert-answer="canInsertAnswer"
+          :show-ai-suggested-answers="showAiSuggestedAnswers"
           @unlink="handleUnlinkAnswer"
           @insert="insertAnswer"
         />

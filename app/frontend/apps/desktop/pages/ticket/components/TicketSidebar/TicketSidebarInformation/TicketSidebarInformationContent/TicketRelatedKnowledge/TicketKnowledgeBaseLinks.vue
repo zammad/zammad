@@ -11,6 +11,7 @@ interface Props {
   linkedAnswers: KnowledgeBaseAnswerTranslationFragment[]
   isTicketEditable: boolean
   canInsertAnswer: boolean
+  showAiSuggestedAnswers: boolean
 }
 
 defineProps<Props>()
@@ -22,11 +23,11 @@ defineEmits<{
 </script>
 
 <template>
-  <CommonLabel tag="h3" size="small" class="text-muted!">
+  <CommonLabel v-if="showAiSuggestedAnswers" tag="h3" size="small" class="text-muted!">
     {{ $t('Linked') }}
   </CommonLabel>
 
-  <ul>
+  <ul class="mb-1">
     <TicketKnowledgeBaseAnswer
       v-for="translation in linkedAnswers"
       :key="translation.id"

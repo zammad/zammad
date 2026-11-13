@@ -60,12 +60,14 @@ const renderLinks = (
   linkedAnswers = [linkedAnswer(1, 'Reset your password')],
   isTicketEditable = true,
   canInsertAnswer = false,
+  showAiSuggestedAnswers = false,
 ) =>
   renderComponent(TicketKnowledgeBaseLinks, {
     props: {
       linkedAnswers,
       isTicketEditable,
       canInsertAnswer,
+      showAiSuggestedAnswers,
     },
     router: true,
     routerRoutes: [
@@ -97,8 +99,6 @@ describe('TicketKnowledgeBaseLinks', () => {
       linkedAnswer(2, 'Internal runbook', EnumKnowledgeBaseVisibility.Internal),
     ])
 
-    expect(wrapper.getByText('Linked')).toBeInTheDocument()
-
     const first = await wrapper.findByText('Reset your password')
     expect(first).toBeInTheDocument()
     expect(first.closest('a')).toHaveAttribute(
@@ -108,6 +108,19 @@ describe('TicketKnowledgeBaseLinks', () => {
 
     expect(wrapper.getByIconName('kb-published')).toBeInTheDocument()
     expect(wrapper.getByIconName('kb-internal')).toBeInTheDocument()
+  })
+
+  it('titles the list while the suggestions are shown alongside it', () => {
+    const wrapper = renderLinks([linkedAnswer(1, 'Reset your password')], true, false, true)
+
+    expect(wrapper.getByText('Linked')).toBeInTheDocument()
+  })
+
+  // Without suggestions there is nothing to set the linked answers apart from.
+  it('leaves the list untitled while no suggestions are shown', () => {
+    const wrapper = renderLinks()
+
+    expect(wrapper.queryByText('Linked')).not.toBeInTheDocument()
   })
 
   it('links to the public answer page when no knowledge base is browsable', async () => {

@@ -145,7 +145,7 @@ Owner: product · last reviewed 2026-08
   retrieval, or that credits AI for a step it only fed into._
 
   This is the one principle in the file that cost a whole story to learn — `zammad/zammad#6323`
-  renamed "Suggested by AI" to "Suggested knowledge" because the label overstated a similarity
+  renamed "Suggested by AI" to "Suggested" because the label overstated a similarity
   search. It is also the product-level form of the company's stated commitment to AI that is "safe,
   transparent, and aligned with our values".
 

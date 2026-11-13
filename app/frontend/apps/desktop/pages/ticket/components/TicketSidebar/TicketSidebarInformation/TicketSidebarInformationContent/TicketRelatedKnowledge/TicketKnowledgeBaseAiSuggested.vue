@@ -7,6 +7,7 @@ import { getKnowledgeBaseAnswerLink } from '#desktop/entities/knowledge-base/uti
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import { useKnowledgeBaseAnswerLinks } from './composables/useKnowledgeBaseAnswerLinks.ts'
+import TicketKnowledgeBaseAiSuggestionsError from './TicketKnowledgeBaseAiSuggestionsError.vue'
 import TicketKnowledgeBaseAnswer from './TicketKnowledgeBaseAnswer.vue'
 import TicketKnowledgeBaseAnswerSkeleton from './TicketKnowledgeBaseAnswerSkeleton.vue'
 
@@ -38,28 +39,17 @@ const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetT
 
 <template>
   <CommonLabel tag="h3" size="small" class="text-muted!">
-    {{ $t('Suggested knowledge') }}
+    {{ $t('Suggested') }}
   </CommonLabel>
-  <div v-if="hasError" class="flex flex-col items-end gap-3">
-    <CommonAlert class="self-stretch" variant="danger">
-      <div class="flex flex-col gap-1.5">
-        <CommonLabel class="text-red-500 dark:text-red-500">
-          {{
-            $t(
-              'The suggestions could not be generated. Please try again later or contact your administrator.',
-            )
-          }}
-        </CommonLabel>
-        <CommonLabel v-if="errorDetail" class="wrap-anywhere text-red-500 dark:text-red-500">
-          {{ $t('API server error: %s', $t(errorDetail)) }}
-        </CommonLabel>
-      </div>
-    </CommonAlert>
-    <CommonButton variant="tertiary" @click="$emit('retry')">{{ $t('Retry') }}</CommonButton>
-  </div>
+  <TicketKnowledgeBaseAiSuggestionsError
+    v-if="hasError"
+    class="mb-1"
+    :error-detail="errorDetail"
+    @retry="$emit('retry')"
+  />
 
   <CommonLoader v-else :loading="loading || pending">
-    <ul v-if="answers.length">
+    <ul v-if="answers.length" class="mb-1">
       <TicketKnowledgeBaseAnswer
         v-for="answer in answers"
         :key="answer.translation.id"
@@ -99,7 +89,7 @@ const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetT
 
     <!-- Not "no answers found": the best matches may all be linked already, and those are listed
     above rather than suggested again. -->
-    <CommonLabel v-else size="small" class="text-muted!">
+    <CommonLabel v-else class="mb-1" size="small">
       {{ $t('No suggestions.') }}
     </CommonLabel>
 

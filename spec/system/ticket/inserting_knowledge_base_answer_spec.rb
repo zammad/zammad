@@ -136,7 +136,7 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
       expect(page).to have_selector(:text_module, target_translation.id)
       expect(all('.shortcut > ul > li').map(&:text)).to eq [
         'Start typing to search in Knowledge Base…',
-        'Related knowledge',
+        'Linked knowledge',
         "#{category_title}\n#{target_translation.title}",
         'Suggested knowledge',
         "#{category_title}\n#{suggested_translation.title}",
@@ -167,12 +167,12 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
 
     it 'replaces the list with the search results when typing' do
       field.send_keys('??')
-      expect(page).to have_css('.shortcut li.dropdown-header', text: 'Related knowledge')
+      expect(page).to have_css('.shortcut li.dropdown-header', text: 'Linked knowledge')
 
       target_translation.title.slice(0, 3).chars.each { |letter| field.send_keys(letter) }
 
       expect(page).to have_css(".shortcut > ul > li.with-category[data-id='#{target_translation.id}']")
-      expect(page).to have_no_css('.shortcut li.dropdown-header', text: 'Related knowledge')
+      expect(page).to have_no_css('.shortcut li.dropdown-header', text: 'Linked knowledge')
     end
 
     context 'when the knowledge base has several locales' do

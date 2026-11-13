@@ -1,4 +1,5 @@
 <label><%- @T('Related knowledge') %></label>
+<% if @suggestionsEnabled and @list.length: %><div class="list-title"><%- @T('Linked') %></div><% end %>
 <ol class="tasks tasks--standalone">
   <% for item in @list: %>
     <li class="task">
@@ -33,7 +34,7 @@
 <% end %>
 <div class="js-kb-link-search"></div>
 <% if @suggestionsEnabled: %>
-  <label class="kb-suggestions-title"><%- @T('Suggested knowledge') %></label>
+  <div class="list-title kb-suggestions-title"><%- @T('Suggested') %></div>
   <% if not @suggestionsLoaded: %>
     <p class="text-muted"><%- @T('Searching for related answers…') %></p>
   <% else if @suggestionsError: %>

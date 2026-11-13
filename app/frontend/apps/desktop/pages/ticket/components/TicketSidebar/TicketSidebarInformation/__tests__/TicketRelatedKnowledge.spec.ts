@@ -146,7 +146,7 @@ describe('TicketRelatedKnowledge', () => {
 
     const wrapper = renderRelatedKnowledge({ showAiSuggestedAnswers: true })
 
-    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested')).toBeInTheDocument()
     expect(wrapper.getByRole('button', { name: 'Add AI draft' })).toBeInTheDocument()
   })
 
@@ -168,7 +168,7 @@ describe('TicketRelatedKnowledge', () => {
 
     const wrapper = renderRelatedKnowledge({ showAiSuggestedAnswers: true })
 
-    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested')).toBeInTheDocument()
     expect(wrapper.queryByRole('button', { name: 'Add AI draft' })).not.toBeInTheDocument()
   })
 
@@ -180,8 +180,24 @@ describe('TicketRelatedKnowledge', () => {
       linkedAnswerIds: [convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)],
     })
 
-    expect(await wrapper.findByText('Linked')).toBeInTheDocument()
     expect(await wrapper.findByText('Reset your password')).toBeInTheDocument()
+    // Without suggestions there is nothing to set the linked answers apart from, so they go
+    //   without their heading.
+    expect(wrapper.queryByText('Linked')).not.toBeInTheDocument()
+  })
+
+  it('sets the linked answers apart from the AI suggestions shown alongside them', async () => {
+    mockPermissions(['ticket.agent'])
+    enableKnowledgeBaseAi()
+
+    const wrapper = renderRelatedKnowledge({
+      linkedAnswers: [buildLinkedAnswer(1, 'Reset your password')],
+      linkedAnswerIds: [convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)],
+      showAiSuggestedAnswers: true,
+    })
+
+    expect(await wrapper.findByText('Linked')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested')).toBeInTheDocument()
   })
 
   it('unlinks an answer and re-runs the AI suggestions search, so it can be suggested again', async () => {
@@ -209,7 +225,7 @@ describe('TicketRelatedKnowledge', () => {
     })
 
     // The search runs on the server and excluded the answer while it was linked, so the
-    //   unlinked answer can only reappear under "Suggested knowledge" by re-running it.
+    //   unlinked answer can only reappear under "Suggested" by re-running it.
     expect(wrapper.emitted('refresh-ai-suggested-answers')).toHaveLength(1)
   })
 
@@ -220,7 +236,7 @@ describe('TicketRelatedKnowledge', () => {
     const translation = buildLinkedAnswer(1, 'Duplicate charge on latest invoice')
 
     // A suggestions response that was still in flight while the answer got linked carries it
-    //   along; it must not show up under both "Linked" and "Suggested knowledge".
+    //   along; it must not show up under both "Linked" and "Suggested".
     const wrapper = renderRelatedKnowledge({
       linkedAnswers: [translation],
       linkedAnswerIds: [translation.id],
@@ -234,7 +250,7 @@ describe('TicketRelatedKnowledge', () => {
       ],
     })
 
-    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested')).toBeInTheDocument()
 
     // Listed once, under "Linked" — the suggestions fall back to their empty state.
     expect(await wrapper.findAllByText('Duplicate charge on latest invoice')).toHaveLength(1)
@@ -264,7 +280,7 @@ describe('TicketRelatedKnowledge', () => {
       ],
     })
 
-    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested')).toBeInTheDocument()
     expect(await wrapper.findByText('Doppelte Abbuchung')).toBeInTheDocument()
     expect(wrapper.queryByText('Duplicate charge')).not.toBeInTheDocument()
     expect(wrapper.getByText('No suggestions.')).toBeInTheDocument()
@@ -285,7 +301,7 @@ describe('TicketRelatedKnowledge', () => {
 
     const wrapper = renderRelatedKnowledge()
 
-    expect(wrapper.queryByText('Suggested knowledge')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Suggested')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('button', { name: 'Add AI draft' })).not.toBeInTheDocument()
   })
 })

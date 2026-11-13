@@ -733,7 +733,7 @@
     }
 
     var elements = [hint.addClass('dropdown-header')]
-      .concat(section(App.i18n.translateInline('Related knowledge'), related.linked))
+      .concat(section(App.i18n.translateInline('Linked knowledge'), related.linked))
       .concat(section(App.i18n.translateInline('Suggested knowledge'), related.suggested))
 
     textmodule.appendResults(elements)

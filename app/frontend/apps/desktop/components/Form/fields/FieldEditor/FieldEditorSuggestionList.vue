@@ -61,7 +61,7 @@ const emptyMessage = computed(() => {
 })
 
 const relatedSectionLabels: Record<MentionKnowledgeBaseRelatedSection, string> = {
-  linked: __('Linked'),
+  linked: __('Linked knowledge'),
   suggested: __('Suggested knowledge'),
 }
 

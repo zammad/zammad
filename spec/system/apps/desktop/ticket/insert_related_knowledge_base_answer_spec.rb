@@ -41,7 +41,7 @@ RSpec.describe 'Desktop > Ticket > Insert related knowledge base answer', app: :
     answers = page.get_by_role('listbox', name: 'Knowledge base articles')
     expect(answers).to contain_text('Start typing to search in knowledge base…')
 
-    linked    = answers.get_by_role('group', name: 'Linked', exact: true).get_by_role('option')
+    linked    = answers.get_by_role('group', name: 'Linked knowledge', exact: true).get_by_role('option')
     suggested = answers.get_by_role('group', name: 'Suggested knowledge', exact: true).get_by_role('option')
 
     expect(linked).to have_count(1)

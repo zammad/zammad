@@ -5,7 +5,6 @@ import { toRef } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 
@@ -15,6 +14,7 @@ import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswer } from '../composables/
 
 import TicketKnowledgeBaseAiDraftFlyoutAnswer from './TicketKnowledgeBaseAiDraftFlyoutAnswer.vue'
 import TicketKnowledgeBaseAiDraftFlyoutAnswerSkeleton from './TicketKnowledgeBaseAiDraftFlyoutAnswerSkeleton.vue'
+import TicketKnowledgeBaseAiSuggestionsError from './TicketKnowledgeBaseAiSuggestionsError.vue'
 
 interface Props {
   name: string
@@ -86,23 +86,11 @@ const { answers, loading, pending, hasError, errorDetail, retrySearch } =
       </CommonAlert>
 
       <template v-else>
-        <div v-if="hasError" class="flex flex-col items-end gap-3">
-          <CommonAlert class="self-stretch" variant="danger">
-            <div class="flex flex-col gap-1.5">
-              <CommonLabel class="text-red-500 dark:text-red-500">
-                {{
-                  $t(
-                    'The suggestions could not be generated. Please try again later or contact your administrator.',
-                  )
-                }}
-              </CommonLabel>
-              <CommonLabel v-if="errorDetail" class="wrap-anywhere text-red-500 dark:text-red-500">
-                {{ $t('API server error: %s', $t(errorDetail)) }}
-              </CommonLabel>
-            </div>
-          </CommonAlert>
-          <CommonButton variant="tertiary" @click="retrySearch">{{ $t('Retry') }}</CommonButton>
-        </div>
+        <TicketKnowledgeBaseAiSuggestionsError
+          v-if="hasError"
+          :error-detail="errorDetail"
+          @retry="retrySearch"
+        />
 
         <CommonLoader v-else :loading="loading || pending">
           <div v-if="answers.length" class="space-y-4">

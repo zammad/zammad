@@ -84,19 +84,24 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       within :active_content, '.link_kb_answers' do
         # The AI suggestion is offered with a one-click link (plus) control, and is not linked yet.
         # Its relevance score is shown, because the current user is an administrator.
+        # The sub-titles render uppercase via CSS `text-transform`, which Capybara's rendered text
+        #   picks up - matched case-insensitively rather than asserting on that styling.
         expect(page)
           .to have_css('.js-kb-suggestion-add')
           .and(have_text(translation.title))
           .and(have_text('90%'))
           .and(have_no_css('.js-delete'))
+          .and(have_no_css('.list-title', text: %r{\ALinked\z}i))
 
         find('.js-kb-suggestion-add').click
 
         # It became a permanent link (an unlink control appears) and is no longer offered as a suggestion.
+        #   The linked list gets its sub-title now that it has an entry to set apart from the suggestions.
         expect(page)
           .to have_css('.js-delete')
           .and(have_text(translation.title))
           .and(have_no_css('.js-kb-suggestion-add'))
+          .and(have_css('.list-title', text: %r{\ALinked\z}i))
       end
     end
 
@@ -235,7 +240,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     it 'shows neither AI suggestions nor the draft generation action' do
       within :active_content, '.link_kb_answers' do
         expect(page)
-          .to have_no_text('Suggested knowledge')
+          .to have_no_text(%r{Suggested}i)
           .and(have_no_css('.js-kb-ai-generate'))
 
         expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
@@ -273,14 +278,14 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       within :active_content, '.link_kb_answers' do
         # The title renders uppercase via CSS `text-transform`, which Capybara's rendered text
         #   picks up - matched case-insensitively rather than asserting on that styling.
-        expect(page).to have_text(%r{Suggested knowledge}i).and(have_css('.js-kb-ai-generate'))
+        expect(page).to have_text(%r{Suggested}i).and(have_css('.js-kb-ai-generate'))
       end
 
       Setting.set('vectordb_enabled', false)
 
       within :active_content, '.link_kb_answers' do
         expect(page)
-          .to have_no_text(%r{Suggested knowledge}i, wait: 15)
+          .to have_no_text(%r{Suggested}i, wait: 15)
           .and(have_no_css('.js-kb-ai-generate'))
       end
     end
@@ -543,7 +548,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       it 'still checks for duplicate answers in the generation modal' do
         within :active_content, '.link_kb_answers' do
           expect(page).to have_css('.js-kb-ai-generate')
-          expect(page).to have_no_text('Suggested knowledge')
+          expect(page).to have_no_text(%r{Suggested}i)
           expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
 
           find('.js-kb-ai-generate').click
@@ -699,6 +704,10 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
           expect(page)
             .to have_text(draft_translation.title)
             .and(have_text(internal_translation.title))
+
+          # Without suggestions there is nothing to set the linked answers apart from, so their list
+          #   goes without a sub-title.
+          expect(page).to have_no_css('.list-title')
         end
       end
     end
