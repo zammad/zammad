@@ -4,6 +4,25 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
 
+  context 'with a non-English locale', authenticated_as: :admin do
+    let(:admin)  { create(:admin, preferences: { locale: 'de-de' }) }
+    let(:source) { 'Submit' }
+    let(:target) { "[TRANSLATED] #{source}" }
+
+    before do
+      Translation.where(locale: 'de-de', source:).destroy_all
+      create(:translation, locale: 'de-de', source:, target:)
+
+      visit '/#ai/ticket_summary'
+    end
+
+    it 'translates the summary generation submit button (#6543)' do
+      within :active_content do
+        expect(page).to have_button(target)
+      end
+    end
+  end
+
   context 'with ticket summary service options', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
