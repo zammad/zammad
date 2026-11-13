@@ -6,6 +6,9 @@ on:
     # Run every on Friday to ensure everything works as expected.
     - cron:  '0 6 * * 5'
 
+permissions:
+  contents: read
+
 jobs:
   CI:
     runs-on: ubuntu-latest
@@ -30,17 +33,19 @@ jobs:
       CI_SKIP_DB_RESET: 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
       - name: Install pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@v6.1.1
       - name: Use Node.js 26
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 26
           cache: 'pnpm'
       - name: Cache Rubygems
         id: cache-bundler
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
@@ -48,14 +53,14 @@ jobs:
         run: .github/workflows/ci/pre.sh
       - name: Cache ESLint
         id: cache-eslint
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: tmp/cache/.eslintcache.js
           key: ${{ runner.os }}-cache-eslint-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Lint
         run: .github/workflows/ci/lint.sh
       - name: Markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v25
+        uses: DavidAnson/markdownlint-cli2-action@v25.0.0
         with:
           globs: |
             *.md
