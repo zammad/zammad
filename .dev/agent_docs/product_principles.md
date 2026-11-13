@@ -14,9 +14,9 @@ story could not find it.
 
 ## Consumers
 
-| Consumer             | Lives in    | Uses these principles for                                    |
-| -------------------- | ----------- | ------------------------------------------------------------ |
-| `refine-story` skill | skills repo | Checking a story and its design against the product's stance |
+| Consumer                    | Lives in    | Uses these principles for                                    |
+| --------------------------- | ----------- | ------------------------------------------------------------ |
+| `zammad-refine-story` skill | skills repo | Checking a story and its design against the product's stance |
 
 ## How to cite and change
 
