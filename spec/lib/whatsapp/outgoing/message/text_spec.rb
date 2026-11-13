@@ -31,6 +31,27 @@ RSpec.describe Whatsapp::Outgoing::Message::Text do
       it 'returns sent message id' do
         expect(instance.deliver(body:)).to eq(response)
       end
+
+      it 'sends to the phone number' do
+        expect_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text)
+          .with(sender_id: params[:phone_number_id].to_i, recipient_number: params[:recipient_number].to_i, recipient: nil, message: body)
+          .and_return(internal_response)
+
+        instance.deliver(body:)
+      end
+
+      context 'with a BSUID recipient' do
+        let(:bsuid) { "MY.#{Faker::Number.unique.number(digits: 15)}" }
+        let(:params) { super().except(:recipient_number).merge(recipient: bsuid) }
+
+        it 'sends to the BSUID without a phone number' do
+          expect_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text)
+            .with(sender_id: params[:phone_number_id].to_i, recipient_number: nil, recipient: bsuid, message: body)
+            .and_return(internal_response)
+
+          expect(instance.deliver(body:)).to eq(response)
+        end
+      end
     end
 
     context 'with unsuccessful response' do
