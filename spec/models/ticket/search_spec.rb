@@ -241,6 +241,66 @@ RSpec.describe Ticket::Search do
     end
   end
 
+  describe 'Ticket Search: search by id does not work for customers and returns wrong results for users with agent and customer access #6551', searchindex: true do
+    let(:group)          { create(:group) }
+    let(:customer)       { create(:customer) }
+    let(:agent)          { create(:agent, groups: [group]) }
+    let(:agent_customer) { create(:agent_and_customer, groups: [create(:group)]) }
+
+    before do
+      Setting.set('ticket_hook', 'Ticket-ID: #')
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    def search(query)
+      Ticket.search(current_user: user, query: query)
+    end
+
+    shared_examples 'search for tickets by id or number' do
+      it 'finds the ticket by its id' do
+        expect(search("id:#{ticket.id}")).to eq([ticket])
+      end
+
+      it 'finds the ticket by an id range' do
+        expect(search("id:>#{ticket.id - 1}")).to eq([ticket])
+      end
+
+      it 'does not find the ticket by its number in an id range' do
+        expect(search("id:>#{ticket.number}")).to eq([])
+      end
+
+      it 'finds the ticket by its number' do
+        expect(search(ticket.number)).to eq([ticket])
+      end
+
+      it 'finds the ticket by its number via field syntax' do
+        expect(search("number:#{ticket.number}")).to eq([ticket])
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user)   { customer }
+      let(:ticket) { create(:ticket, group:, customer:) }
+
+      include_examples 'search for tickets by id or number'
+    end
+
+    context 'when user is agent' do
+      let(:user)   { agent }
+      let(:ticket) { create(:ticket, group:, customer:) }
+
+      include_examples 'search for tickets by id or number'
+    end
+
+    context 'when user is agent and customer' do
+      let(:user)   { agent_customer }
+      let(:ticket) { create(:ticket, group:, customer: agent_customer) }
+
+      include_examples 'search for tickets by id or number'
+    end
+  end
+
   describe 'internal article access' do
     let(:group)          { create(:group) }
     let(:other_group)    { create(:group) }

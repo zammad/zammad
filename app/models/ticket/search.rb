@@ -6,6 +6,7 @@ module Ticket::Search
   include CanSearch
 
   CUSTOMER_SEARCH_FIELDS         = %w[title number hook_number state.name customer.firstname customer.lastname organization.name].freeze
+  CUSTOMER_SEARCH_SYNTAX_FIELDS  = (CUSTOMER_SEARCH_FIELDS + %w[id]).freeze
   CUSTOMER_SEARCH_ARTICLE_FIELDS = %w[article.subject article.body article.from article.to article.cc article.attachment._name article.attachment.content].freeze
 
   # Ticket attributes without customer access, see also TicketPolicy#customer_field_scope.
@@ -217,11 +218,11 @@ returns if user has no permissions to search
       }
     end
 
-    # Field syntax stays available for the customer visible fields, all other field references become literal text.
+    # Field syntax stays available for the customer visible fields and the id, all other field references become literal text.
     def search_query_condition_customer_query(query)
       query.gsub(%r{([\w.*?\\]*)(?<!\\):}) do
         field = Regexp.last_match(1)
-        CUSTOMER_SEARCH_FIELDS.include?(field) ? "#{field}:" : "#{field}\\:"
+        CUSTOMER_SEARCH_SYNTAX_FIELDS.include?(field) ? "#{field}:" : "#{field}\\:"
       end
     end
 
