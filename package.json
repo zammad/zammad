@@ -117,7 +117,7 @@
     "vue-tsc": "^3.3.11"
   },
   "dependencies": {
-    "@apollo/client": "^4.3.7",
+    "@apollo/client": "^4.3.8",
     "@floating-ui/dom": "^1.8.0",
     "@formkit/core": "^2.4.0",
     "@formkit/dev": "^2.4.0",
