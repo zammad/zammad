@@ -11,11 +11,11 @@ read and how to turn a violation into a useful comment. When a convention change
 
 ## Consumers
 
-| Consumer                        | Lives in    | Uses these rules for                        |
-| ------------------------------- | ----------- | ------------------------------------------- |
-| `.dev/agents/code-reviewer.md`  | core repo   | Reviewing changes in a fresh context        |
-| `code-review` skill             | skills repo | Local review, delegates to the agent above  |
-| `review-mr` skill               | skills repo | Reviewing a GitLab MR interactively         |
+| Consumer                       | Lives in    | Uses these rules for                       |
+| ------------------------------ | ----------- | ------------------------------------------ |
+| `.dev/agents/code-reviewer.md` | core repo   | Reviewing changes in a fresh context       |
+| `zammad-code-review` skill     | skills repo | Local review, delegates to the agent above |
+| `zammad-review-mr` skill       | skills repo | Reviewing a GitLab MR interactively        |
 
 When a rule changes, it changes **here** and every consumer picks it up. Do not copy rule text into
 a consumer.

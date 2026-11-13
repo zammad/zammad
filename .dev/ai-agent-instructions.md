@@ -111,11 +111,11 @@ GitHub hosts a read-only mirror. The agent uses the **GitHub MCP server** for
 issues and **`glab` CLI** for GitLab operations.
 
 Stories are refined and broken down into task issues before this lifecycle
-starts (`/refine-story` → `/plan-story`). Bugs skip that and enter it directly.
+starts (`/zammad-refine-story` → `/zammad-plan-story`). Bugs skip that and enter it directly.
 
-Lifecycle: Understand → Research → Plan → Branch (`/prepare-issue-branch`) →
-Implement → Test → Review → Commit → MR (`/create-mr`) → Cherry-pick
-(`/cherry-pick-to-stable`)
+Lifecycle: Understand → Research → Plan → Branch (`/zammad-prepare-issue-branch`) →
+Implement → Test → Review → Commit → MR (`/zammad-create-mr`) → Cherry-pick
+(`/zammad-cherry-pick-to-stable`)
 
 See `.dev/agent_docs/development_workflow.md` for the full lifecycle and
 workflow rules.
